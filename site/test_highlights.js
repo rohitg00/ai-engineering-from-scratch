@@ -740,3 +740,410 @@ test('ambiguous exact matches are flagged, and exact-only or no-whole-text searc
   assert.equal(Anchor.locate(far.text, selector2, { wholeText: false }), null);
   assert.equal(Anchor.locate(far.text, selector2, { exactOnly: true }), null);
 });
+
+const vm = require('node:vm');
+const StoreModule = require('./highlights-store');
+
+const UI_PATH = 'phases/01-math-foundations/04-gradient-descent';
+const STORE_KEY = 'aifs:highlights:v2';
+
+function parseCompound(text) {
+  const parts = { tag: '', classes: [], attrs: [], nots: [] };
+  const pattern = /^([a-zA-Z]+)|\.([\w-]+)|\[([\w-]+)(?:="([^"]*)")?\]|:not\(([^)]*)\)/g;
+  let match;
+  while ((match = pattern.exec(text))) {
+    if (match[1]) parts.tag = match[1].toUpperCase();
+    else if (match[2]) parts.classes.push(match[2]);
+    else if (match[3]) parts.attrs.push([match[3], match[4]]);
+    else if (match[5]) parts.nots.push(parseCompound(match[5]));
+  }
+  return parts;
+}
+
+function matchCompound(node, parts) {
+  if (!node || node.nodeType !== 1) return false;
+  if (parts.tag && node.tagName !== parts.tag) return false;
+  const classes = node.className.split(/\s+/);
+  if (!parts.classes.every(name => classes.includes(name))) return false;
+  for (const [name, value] of parts.attrs) {
+    const actual = node.getAttribute(name);
+    if (actual === null || (value !== undefined && actual !== value)) return false;
+  }
+  return !parts.nots.some(inner => matchCompound(node, inner));
+}
+
+function matchSelector(node, selector) {
+  return selector.split(',').some(single => {
+    const chain = single.trim().split(/\s+/).filter(token => token !== '>').map(parseCompound);
+    if (!matchCompound(node, chain[chain.length - 1])) return false;
+    let at = node.parentNode;
+    for (let i = chain.length - 2; i >= 0; i--) {
+      while (at && !matchCompound(at, chain[i])) at = at.parentNode;
+      if (!at) return false;
+      at = at.parentNode;
+    }
+    return true;
+  });
+}
+
+class UiText {
+  constructor(value) { this.nodeType = 3; this.nodeValue = String(value); this.parentNode = null; }
+  get textContent() { return this.nodeValue; }
+}
+
+class UiElement {
+  constructor(doc, tag) {
+    this.ownerDocument = doc;
+    this.nodeType = 1;
+    this.tagName = tag.toUpperCase();
+    this.childNodes = [];
+    this.parentNode = null;
+    this.attributes = {};
+    this.listeners = {};
+    this.className = '';
+    this.hidden = false;
+    this.disabled = false;
+    this.readOnly = false;
+    this.value = '';
+    this.title = '';
+    this.style = {};
+    this.offsetWidth = 100;
+    this.offsetHeight = 20;
+    const self = this;
+    this.classList = {
+      add: (...names) => names.forEach(name => { if (!self.classList.contains(name)) self.className = (self.className + ' ' + name).trim(); }),
+      remove: (...names) => { self.className = self.className.split(/\s+/).filter(name => name && !names.includes(name)).join(' '); },
+      contains: name => self.className.split(/\s+/).includes(name),
+    };
+  }
+  get id() { return this.attributes.id || ''; }
+  set id(value) { this.attributes.id = String(value); }
+  getAttribute(name) {
+    if (name === 'class') return this.className || null;
+    if (name === 'hidden') return this.hidden ? '' : null;
+    if (name === 'disabled') return this.disabled ? '' : null;
+    return Object.prototype.hasOwnProperty.call(this.attributes, name) ? this.attributes[name] : null;
+  }
+  setAttribute(name, value) {
+    if (name === 'class') this.className = String(value);
+    else this.attributes[name] = String(value);
+  }
+  hasAttribute(name) { return this.getAttribute(name) !== null; }
+  removeAttribute(name) { delete this.attributes[name]; }
+  get textContent() { return this.childNodes.map(child => child.textContent).join(''); }
+  set textContent(value) {
+    this.childNodes.forEach(child => { child.parentNode = null; });
+    this.childNodes = [];
+    if (value !== '' && value !== null && value !== undefined) this.appendChild(new UiText(value));
+  }
+  appendChild(child) {
+    if (child.parentNode) child.parentNode.removeChild(child);
+    this.childNodes.push(child);
+    child.parentNode = this;
+    return child;
+  }
+  removeChild(child) {
+    this.childNodes.splice(this.childNodes.indexOf(child), 1);
+    child.parentNode = null;
+    return child;
+  }
+  remove() { if (this.parentNode) this.parentNode.removeChild(this); }
+  contains(node) {
+    for (let at = node; at; at = at.parentNode) if (at === this) return true;
+    return false;
+  }
+  get isConnected() { return this.ownerDocument.documentElement.contains(this); }
+  addEventListener(type, fn) { (this.listeners[type] = this.listeners[type] || []).push(fn); }
+  descendants(out = []) {
+    for (const child of this.childNodes) {
+      if (child.nodeType !== 1) continue;
+      out.push(child);
+      child.descendants(out);
+    }
+    return out;
+  }
+  querySelectorAll(selector) { return this.descendants().filter(node => matchSelector(node, selector)); }
+  querySelector(selector) { return this.querySelectorAll(selector)[0] || null; }
+  matches(selector) { return matchSelector(this, selector); }
+  closest(selector) {
+    for (let at = this; at && at.nodeType === 1; at = at.parentNode) if (matchSelector(at, selector)) return at;
+    return null;
+  }
+  focus() { this.ownerDocument.activeElement = this; }
+  getBoundingClientRect() { return { top: 0, bottom: 0, left: 0, right: 0, width: 0, height: 0 }; }
+  click() {
+    const event = { type: 'click', target: this, detail: 1, preventDefault() {}, stopPropagation() {} };
+    for (let at = this; at; at = at.parentNode) (at.listeners.click || []).forEach(fn => fn.call(at, event));
+    (this.ownerDocument.listeners.click || []).forEach(fn => fn(event));
+  }
+}
+
+class UiDocument {
+  constructor() {
+    this.listeners = {};
+    this.readyState = 'complete';
+    this.documentElement = new UiElement(this, 'html');
+    this.body = this.documentElement.appendChild(new UiElement(this, 'body'));
+    this.activeElement = this.body;
+  }
+  createElement(tag) { return new UiElement(this, tag); }
+  createRange() { return {}; }
+  addEventListener(type, fn) { (this.listeners[type] = this.listeners[type] || []).push(fn); }
+  querySelector(selector) { return this.documentElement.querySelector(selector); }
+  querySelectorAll(selector) { return this.documentElement.querySelectorAll(selector); }
+  getElementById(id) { return this.documentElement.descendants().find(node => node.id === id) || null; }
+}
+
+const anchorStub = {
+  buildModel: () => ({ text: '', segments: [], sections: [] }),
+  locate: () => null,
+  sectionById: () => null,
+  approximate: () => null,
+  wrap: () => ({ marks: [], atoms: [] }),
+  unwrap() {},
+};
+
+function uiStorage() {
+  const data = new Map();
+  return { data, getItem: key => (data.has(key) ? data.get(key) : null), setItem: (key, value) => { data.set(key, String(value)); }, removeItem: key => { data.delete(key); } };
+}
+
+function uiPage({ hash = '', readyState = 'complete' } = {}) {
+  const storage = uiStorage();
+  const storeListeners = [];
+  const store = StoreModule.create({ localStorage: storage, addEventListener: (name, fn) => { if (name === 'storage') storeListeners.push(fn); } });
+  const doc = new UiDocument();
+  doc.readyState = readyState;
+  const listeners = {};
+  const win = {
+    document: doc,
+    console,
+    navigator: {},
+    AIFSHighlightAnchor: anchorStub,
+    AIFSHighlightStore: store,
+    innerWidth: 1280,
+    pageXOffset: 0,
+    pageYOffset: 0,
+    location: { hash, pathname: '/lesson.html', search: '', origin: 'https://example.test' },
+    history: { replaceState() {} },
+    getSelection: () => ({ isCollapsed: true, rangeCount: 0, removeAllRanges() {} }),
+    matchMedia: () => ({ matches: false }),
+    setTimeout: () => 0,
+    clearTimeout() {},
+    addEventListener: (name, fn) => { (listeners[name] = listeners[name] || []).push(fn); },
+  };
+  win.window = win;
+  vm.createContext(win);
+  vm.runInContext(fs.readFileSync(path.join(__dirname, 'highlights.js'), 'utf8'), win);
+  const article = doc.body.appendChild(doc.createElement('article'));
+  const otherTab = () => StoreModule.create({ localStorage: storage, addEventListener() {} });
+  const page = {
+    win, doc, store, storage, article, listeners, otherTab,
+    mount: () => win.AIFSHighlights.mount(article, { path: UI_PATH, lang: 'en', title: 'GD' }),
+    fire: name => (listeners[name] || []).forEach(fn => fn({ type: name })),
+    syncFromOtherTab: () => storeListeners.forEach(fn => fn({ key: STORE_KEY })),
+    find: selector => doc.querySelector(selector),
+    openPanel: () => doc.querySelector('.aifs-hl-launch').click(),
+    rowButton: (id, action) => doc.querySelector(`.aifs-hl-item[data-hl-id="${id}"] button[data-action="${action}"]`),
+    note: () => doc.getElementById('aifsHlNote'),
+    editor: () => doc.querySelector('.aifs-hl-editor'),
+  };
+  return page;
+}
+
+function uiItem(exact, note = '') {
+  return { lang: 'en', color: 'yellow', note, quote: { exact, prefix: '', suffix: '' }, position: { start: exact.length, end: exact.length * 2, length: 100 } };
+}
+
+test('opening the editor on another highlight saves the note typed for the first one', () => {
+  const page = uiPage();
+  const a = page.store.add(UI_PATH, uiItem('first passage', 'old a'));
+  const b = page.store.add(UI_PATH, uiItem('second passage', 'note b'));
+  page.mount();
+  page.openPanel();
+  page.rowButton(a.id, 'edit').click();
+  assert.equal(page.note().value, 'old a');
+  page.note().value = 'typed for a';
+  page.rowButton(b.id, 'edit').click();
+  assert.equal(page.store.items(UI_PATH).find(item => item.id === a.id).note, 'typed for a');
+  assert.equal(page.note().value, 'note b');
+  assert.equal(page.editor().hidden, false);
+});
+
+test('a note that cannot be saved keeps its editor open with the typed text and says why', () => {
+  const page = uiPage();
+  const a = page.store.add(UI_PATH, uiItem('first passage', 'old a'));
+  const b = page.store.add(UI_PATH, uiItem('second passage', 'note b'));
+  page.mount();
+  page.openPanel();
+  page.rowButton(a.id, 'edit').click();
+  page.note().value = 'typed for a';
+  const realUpdate = page.store.update;
+  page.store.update = () => null;
+  page.rowButton(b.id, 'edit').click();
+  assert.equal(page.note().value, 'typed for a');
+  assert.equal(page.editor().hidden, false);
+  assert.match(page.find('.aifs-hl-editor-status').textContent, /could not be saved/);
+  page.store.update = realUpdate;
+  page.rowButton(b.id, 'edit').click();
+  assert.equal(page.store.items(UI_PATH).find(item => item.id === a.id).note, 'typed for a');
+  assert.equal(page.note().value, 'note b');
+});
+
+test('a note kept only in memory after a quota failure moves on and says the tab must stay open', () => {
+  const page = uiPage();
+  const a = page.store.add(UI_PATH, uiItem('first passage', 'old a'));
+  const b = page.store.add(UI_PATH, uiItem('second passage', 'note b'));
+  page.mount();
+  page.openPanel();
+  page.win.setTimeout = fn => { fn(); return 0; };
+  page.rowButton(a.id, 'edit').click();
+  page.note().value = 'typed for a';
+  page.storage.setItem = () => { const error = new Error('full'); error.name = 'QuotaExceededError'; throw error; };
+  page.rowButton(b.id, 'edit').click();
+  assert.equal(page.store.items(UI_PATH).find(item => item.id === a.id).note, 'typed for a');
+  assert.equal(page.note().value, 'note b');
+  assert.equal(page.store.info().lastError, 'quota');
+  assert.match(page.find('.aifs-hl-sr').textContent, /Browser storage is full/);
+});
+
+test('saving a dirty note before showing the toolbar puts back the selection the repaint dropped', () => {
+  const saved = { buildModel: anchorStub.buildModel, normalizedToRaw: anchorStub.normalizedToRaw, rawToNormalized: anchorStub.rawToNormalized };
+  const page = uiPage();
+  const textNode = page.article.appendChild(new UiText('select these words please'));
+  const segments = [{ node: textNode, start: 0, end: textNode.nodeValue.length, atomic: false, unit: false }];
+  anchorStub.buildModel = () => ({ text: textNode.nodeValue, normalized: { text: textNode.nodeValue }, segments, sections: [] });
+  anchorStub.normalizedToRaw = (_, start, end) => ({ start, end });
+  anchorStub.rawToNormalized = (_, start, end) => ({ start, end });
+  try {
+    const makeRange = (startOffset, endOffset) => ({
+      startContainer: textNode, startOffset, endContainer: textNode, endOffset, commonAncestorContainer: textNode,
+      intersectsNode: node => node === textNode,
+      getBoundingClientRect: () => ({ top: 200, bottom: 220, left: 0, right: 10, width: 10, height: 20 }),
+    });
+    let current = makeRange(7, 12);
+    const selection = {
+      get isCollapsed() { return !current || current.startOffset === current.endOffset; },
+      get rangeCount() { return current ? 1 : 0; },
+      getRangeAt: () => current,
+      removeAllRanges() { current = null; },
+      addRange(range) { current = range; },
+    };
+    page.win.getSelection = () => selection;
+    page.doc.createRange = () => {
+      const range = makeRange(0, 0);
+      range.setStart = (node, offset) => { range.startContainer = node; range.startOffset = offset; };
+      range.setEnd = (node, offset) => { range.endContainer = node; range.endOffset = offset; };
+      return range;
+    };
+    const a = page.store.add(UI_PATH, uiItem('first passage', 'old a'));
+    page.mount();
+    page.openPanel();
+    page.rowButton(a.id, 'edit').click();
+    page.note().value = 'typed for a';
+    page.store.onChange(() => { current = makeRange(0, 0); });
+    page.doc.listeners.keydown.forEach(fn => fn({ altKey: true, ctrlKey: false, metaKey: false, code: 'KeyH', key: 'h', target: page.article, preventDefault() {} }));
+    assert.equal(page.store.items(UI_PATH)[0].note, 'typed for a');
+    assert.deepEqual([current.startOffset, current.endOffset], [7, 12]);
+    assert.equal(page.find('.aifs-hl-toolbar').hidden, false);
+  } finally {
+    Object.assign(anchorStub, saved);
+  }
+});
+
+test('closing an untouched editor keeps a note another tab changed, and typed text still wins', () => {
+  const page = uiPage();
+  const a = page.store.add(UI_PATH, uiItem('first passage', 'base'));
+  page.mount();
+  page.openPanel();
+  page.rowButton(a.id, 'edit').click();
+  page.otherTab().update(UI_PATH, a.id, { note: 'from the other tab' });
+  page.syncFromOtherTab();
+  assert.equal(page.note().value, 'from the other tab');
+  page.find('.aifs-hl-editor .aifs-hl-btn:not(.aifs-hl-btn-primary):not(.aifs-hl-btn-danger)').click();
+  assert.equal(page.editor().hidden, true);
+  assert.equal(page.store.items(UI_PATH)[0].note, 'from the other tab');
+
+  page.rowButton(a.id, 'edit').click();
+  page.note().value = 'my words';
+  page.otherTab().update(UI_PATH, a.id, { note: 'remote again' });
+  page.syncFromOtherTab();
+  assert.equal(page.note().value, 'my words');
+  page.find('.aifs-hl-editor .aifs-hl-btn:not(.aifs-hl-btn-primary):not(.aifs-hl-btn-danger)').click();
+  assert.equal(page.store.items(UI_PATH)[0].note, 'my words');
+});
+
+test('the editor closes without saving when its highlight is deleted here or in another tab', () => {
+  const page = uiPage();
+  const a = page.store.add(UI_PATH, uiItem('first passage', 'a'));
+  const b = page.store.add(UI_PATH, uiItem('second passage', 'b'));
+  page.mount();
+  page.openPanel();
+  page.rowButton(a.id, 'edit').click();
+  page.note().value = 'unsaved';
+  page.otherTab().remove(UI_PATH, a.id);
+  page.syncFromOtherTab();
+  assert.equal(page.editor().hidden, true);
+  assert.deepEqual(page.store.items(UI_PATH).map(item => item.id), [b.id]);
+
+  page.rowButton(b.id, 'edit').click();
+  assert.equal(page.editor().hidden, false);
+  page.rowButton(b.id, 'delete').click();
+  assert.equal(page.editor().hidden, true);
+  assert.deepEqual(page.store.items(UI_PATH), []);
+});
+
+test('find again is cancelled with a message when its highlight is deleted, and when the panel opens again', () => {
+  const page = uiPage();
+  const a = page.store.add(UI_PATH, uiItem('first passage'));
+  const b = page.store.add(UI_PATH, uiItem('second passage'));
+  page.mount();
+  page.openPanel();
+  page.win.AIFSHighlights.settle();
+  page.rowButton(a.id, 'find').click();
+  page.otherTab().remove(UI_PATH, a.id);
+  page.syncFromOtherTab();
+  assert.match(page.find('.aifs-hl-toast').textContent, /deleted.*cancelled/);
+
+  page.rowButton(b.id, 'find').click();
+  assert.match(page.find('.aifs-hl-toast').textContent, /Select the text/);
+  page.find('.aifs-hl-launch').click();
+  page.find('.aifs-hl-launch').click();
+  page.otherTab().remove(UI_PATH, b.id);
+  page.syncFromOtherTab();
+  assert.match(page.find('.aifs-hl-toast').textContent, /Select the text/);
+});
+
+test('removing the share fragment from the address ends share-link mode', () => {
+  const owner = StoreModule.create({ localStorage: uiStorage(), addEventListener() {} });
+  owner.add(UI_PATH, uiItem('shared passage', 'from a friend'), { title: 'GD' });
+  const page = uiPage({ hash: '#aifs-share=' + owner.share(UI_PATH) });
+  page.mount();
+  assert.equal(page.find('.aifs-hl-sharebar').hidden, false);
+  page.win.location.hash = '';
+  page.fire('hashchange');
+  assert.equal(page.find('.aifs-hl-sharebar').hidden, true);
+  page.win.location.hash = '#aifs-share=' + owner.share(UI_PATH);
+  page.fire('hashchange');
+  assert.equal(page.find('.aifs-hl-sharebar').hidden, false);
+});
+
+test('closing the panel clears the share link notice so storage warnings can show again', () => {
+  const page = uiPage();
+  page.store.add(UI_PATH, uiItem('first passage'));
+  page.mount();
+  page.openPanel();
+  page.find('.aifs-hl-panel-foot').querySelectorAll('button')[3].click();
+  assert.ok(page.find('.aifs-hl-notice').querySelector('input'));
+  page.find('.aifs-hl-panel-head button').click();
+  assert.equal(page.find('.aifs-hl-notice').hidden, true);
+  assert.equal(page.find('.aifs-hl-notice').querySelector('input'), null);
+});
+
+test('remounting while the page loads does not stack load listeners for the deep link', () => {
+  const page = uiPage({ hash: '#hl-abc', readyState: 'loading' });
+  page.mount();
+  page.mount();
+  page.mount();
+  assert.ok((page.listeners.load || []).length <= 1);
+});

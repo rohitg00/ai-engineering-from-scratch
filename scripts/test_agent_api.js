@@ -73,28 +73,31 @@ test('local clients have independent quotas and cannot rotate forwarding headers
   assert.equal(head.status, 429); assert.equal(head.body, '');
 });
 
-test('Vercel quotas use only the platform client IP and canonicalize IPv6', async () => {
+test('Vercel quotas use only the platform client IP and key IPv6 clients by /64', async () => {
   const handler = catalog.createHandler({ limit: createLimiter({ limit: 1, vercel: true }) });
   const headers = { 'x-vercel-forwarded-for': '2001:db8::1' };
   assert.equal((await invoke(handler, { headers })).status, 200);
   assert.equal((await invoke(handler, { headers: { ...headers, 'x-forwarded-for': '192.0.2.2' }, address: '192.0.2.9' })).status, 429);
   assert.equal((await invoke(handler, { headers: { 'x-vercel-forwarded-for': '2001:0db8:0:0:0:0:0:1' } })).status, 429);
-  assert.equal((await invoke(handler, { headers: { 'x-vercel-forwarded-for': '2001:db8::2' } })).status, 200);
+  assert.equal((await invoke(handler, { headers: { 'x-vercel-forwarded-for': '2001:db8::2' } })).status, 429);
+  assert.equal((await invoke(handler, { headers: { 'x-vercel-forwarded-for': '2001:db8:0:0:ffff::9' } })).status, 429);
+  assert.equal((await invoke(handler, { headers: { 'x-vercel-forwarded-for': '2001:db8:0:1::1' } })).status, 200);
   assert.equal((await invoke(handler)).status, 200);
   for (const value of ['invalid', 'fe80::1%lo0', '192.0.2.1, 192.0.2.2', ['192.0.2.1'], 'x'.repeat(10000)]) {
     assert.equal((await invoke(handler, { headers: { 'x-vercel-forwarded-for': value }, address: '192.0.2.10' })).status, 429);
   }
 });
 
-test('client tracking is bounded without evicting active quotas and recovers on reset', async () => {
+test('client tracking is bounded by evicting the oldest client and recovers on reset', async () => {
   let time = 1000;
   const handler = catalog.createHandler({ limit: createLimiter({ limit: 2, maxClients: 2, now: () => time, vercel: false }) });
   for (const address of ['192.0.2.1', '192.0.2.2']) assert.equal((await invoke(handler, { address })).status, 200);
   const capacity = await invoke(handler, { address: '192.0.2.3' });
-  assert.equal(capacity.status, 429); assert.match(capacity.json.detail, /track another client/);
-  assert.match(capacity.headers.ratelimit, /r=0/);
-  assert.equal((await invoke(handler)).status, 200);
-  assert.equal((await invoke(handler)).status, 429);
+  assert.equal(capacity.status, 200);
+  assert.equal((await invoke(handler, { address: '192.0.2.2' })).status, 200);
+  assert.equal((await invoke(handler, { address: '192.0.2.2' })).status, 429);
+  assert.equal((await invoke(handler, { address: '192.0.2.3' })).status, 200);
+  assert.equal((await invoke(handler, { address: '192.0.2.3' })).status, 429);
   time = 61000;
   assert.equal((await invoke(handler, { address: '192.0.2.3' })).status, 200);
   time = 500;

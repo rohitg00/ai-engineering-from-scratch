@@ -223,3 +223,71 @@ test('a solved record without a version asks for a new pass when a version arriv
   store.open('rope', 'v1');
   assert.equal(store.status('rope'), 'attempted');
 });
+
+test('progress saved by a newer schema stays intact and the page does not write over it', () => {
+  const text = JSON.stringify({ schemaVersion: 2, problems: { rope: { status: 'solved', extra: true } } });
+  const storage = memoryStorage({ [Store.STORAGE_KEY]: text });
+  const store = Store.create({ localStorage: storage, now: () => NOON });
+  assert.equal(store.status('rope'), 'new');
+  store.record('rope', 'submit', 1, 1);
+  store.open('bm25', 'v1');
+  assert.equal(store.status('rope'), 'solved');
+  assert.equal(store.writable(), false);
+  assert.equal(storage.getItem(Store.STORAGE_KEY), text);
+  assert.equal(storage.getItem(Store.BACKUP_KEY), text);
+});
+
+test('after a failed write the store still reads other tabs and merges before it writes again', () => {
+  const storage = memoryStorage();
+  const tab = Store.create({ localStorage: storage, now: () => NOON });
+  tab.record('rope', 'run', 0, 1);
+  const setItem = storage.setItem;
+  storage.setItem = () => { throw new Error('quota'); };
+  tab.record('rope', 'submit', 4, 4);
+  assert.equal(tab.writable(), false);
+  storage.setItem = setItem;
+  const other = Store.create({ localStorage: storage, now: () => NOON + 1000 });
+  other.record('bm25', 'submit', 2, 2);
+  assert.equal(tab.status('bm25'), 'solved');
+  assert.equal(tab.status('rope'), 'solved');
+  tab.record('kmeans-step', 'run', 0, 1);
+  assert.equal(tab.writable(), true);
+  const saved = JSON.parse(storage.getItem(Store.STORAGE_KEY));
+  assert.equal(saved.problems.bm25.status, 'solved');
+  assert.equal(saved.problems.rope.status, 'solved');
+  assert.equal(saved.problems['kmeans-step'].status, 'attempted');
+});
+
+test('a solve kept in memory survives another tab opening the same problem later', () => {
+  const storage = memoryStorage();
+  const tab = Store.create({ localStorage: storage, now: () => NOON });
+  tab.record('rope', 'run', 0, 1);
+  const setItem = storage.setItem;
+  storage.setItem = () => { throw new Error('quota'); };
+  tab.record('rope', 'submit', 4, 4);
+  storage.setItem = setItem;
+  const other = Store.create({ localStorage: storage, now: () => NOON + 1000 });
+  other.open('rope');
+  assert.equal(JSON.parse(storage.getItem(Store.STORAGE_KEY)).problems.rope.status, 'attempted');
+  tab.record('kmeans-step', 'run', 0, 1);
+  const saved = JSON.parse(storage.getItem(Store.STORAGE_KEY));
+  assert.equal(saved.problems.rope.status, 'solved');
+  assert.equal(saved.problems.rope.openedAt, NOON + 1000);
+});
+
+test('an attempt kept in memory survives another tab opening the same problem later', () => {
+  const storage = memoryStorage();
+  const tab = Store.create({ localStorage: storage, now: () => NOON });
+  const setItem = storage.setItem;
+  storage.setItem = () => { throw new Error('quota'); };
+  tab.record('rope', 'run', 0, 1);
+  storage.setItem = setItem;
+  const other = Store.create({ localStorage: storage, now: () => NOON + 1000 });
+  other.open('rope');
+  assert.equal(JSON.parse(storage.getItem(Store.STORAGE_KEY)).problems.rope.status, 'new');
+  tab.record('kmeans-step', 'run', 0, 1);
+  const saved = JSON.parse(storage.getItem(Store.STORAGE_KEY));
+  assert.equal(saved.problems.rope.status, 'attempted');
+  assert.equal(saved.problems.rope.attemptedAt, NOON);
+  assert.equal(saved.problems.rope.openedAt, NOON + 1000);
+});

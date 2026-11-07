@@ -263,6 +263,8 @@
     watchdog: null,
     observer: null,
     refreshTimer: null,
+    refreshPending: false,
+    gestureRetry: null,
     navigationTarget: '',
   };
 
@@ -702,8 +704,42 @@
     clearTimeout(state.refreshTimer);
     state.refreshTimer = setTimeout(function () {
       state.refreshTimer = null;
-      refreshQueue(true);
+      if (isPaused()) state.refreshPending = true;
+      else refreshQueue(true);
     }, 90);
+  }
+
+  function applyPendingRefresh() {
+    if (!state.refreshPending) return false;
+    state.refreshPending = false;
+    if (!refreshQueue(false)) stop();
+    return true;
+  }
+
+  function chunkIndexFor(chunk, near) {
+    var best = -1;
+    for (var i = 0; i < state.chunks.length; i++) {
+      var candidate = state.chunks[i];
+      if (candidate.text !== chunk.text) continue;
+      if (chunk.el && candidate.el === chunk.el) return i;
+      if (best < 0 || Math.abs(i - near) < Math.abs(best - near)) best = i;
+    }
+    return best;
+  }
+
+  function neighbourIndex(old, was, delta) {
+    var target = old[was + delta];
+    var found = target ? chunkIndexFor(target, was + delta) : -1;
+    if (found >= 0) return found;
+    var anchor = old[was - (delta > 0 ? 1 : -1)];
+    var at = anchor ? chunkIndexFor(anchor, was - (delta > 0 ? 1 : -1)) : -1;
+    if (at >= 0) return at + (delta > 0 ? 1 : -1);
+    return delta > 0 ? (target ? state.index + delta : state.chunks.length) : state.index + delta;
+  }
+
+  function keptChunk(before) {
+    var after = state.chunks[state.index];
+    return !!(before && after && after.text === before.text);
   }
 
   function nonNarrationClasses(value) {
@@ -753,6 +789,7 @@
   function disconnectQueueObserver() {
     clearTimeout(state.refreshTimer);
     state.refreshTimer = null;
+    state.refreshPending = false;
     if (state.observer) state.observer.disconnect();
     state.observer = null;
   }
@@ -878,6 +915,8 @@
       return false;
     }
     cancelSpeech();
+    disarmGestureFallback();
+    state.refreshPending = false;
     state.index = fromEl ? indexOfBlock(fromEl) : 0;
     state.mode = 'playing';
     state.message = '';
@@ -901,6 +940,20 @@
   function resume() {
     if (!isPaused()) return;
     state.mode = 'playing';
+    var before = state.chunks[state.index];
+    if (applyPendingRefresh()) {
+      if (!isActive()) return;
+      if (keptChunk(before)) {
+        highlight(state.chunks[state.index].el);
+        synth.resume();
+        render();
+        return;
+      }
+      cancelSpeech();
+      render();
+      speakCurrent();
+      return;
+    }
     synth.resume();
     render();
   }
@@ -916,6 +969,7 @@
     clearResumeTarget();
     stopWatchdog();
     disconnectQueueObserver();
+    disarmGestureFallback();
     cancelSpeech();
     highlight(null);
     hideSelectionButton();
@@ -928,6 +982,7 @@
     clearResumeTarget();
     stopWatchdog();
     disconnectQueueObserver();
+    disarmGestureFallback();
     cancelSpeech();
     highlight(null);
     render();
@@ -1007,11 +1062,14 @@
    */
   function armGestureFallback() {
     if (synth.speaking) return;
+    disarmGestureFallback();
     var retry = function () {
-      document.removeEventListener('pointerdown', retry, true);
-      document.removeEventListener('keydown', retry, true);
-      if (isPlaying() && !synth.speaking) speakCurrent();
+      disarmGestureFallback();
+      if (!isPlaying() || synth.speaking) return;
+      cancelSpeech();
+      speakCurrent();
     };
+    state.gestureRetry = retry;
     document.addEventListener('pointerdown', retry, true);
     document.addEventListener('keydown', retry, true);
     setTimeout(function () {
@@ -1021,9 +1079,22 @@
     }, 1200);
   }
 
+  function disarmGestureFallback() {
+    var retry = state.gestureRetry;
+    if (!retry) return;
+    state.gestureRetry = null;
+    document.removeEventListener('pointerdown', retry, true);
+    document.removeEventListener('keydown', retry, true);
+  }
+
   function jump(delta) {
     if (!isPlaying() && !isPaused()) return;
-    var next = state.index + delta;
+    var before = state.chunks[state.index];
+    var was = state.index;
+    var old = state.chunks.slice();
+    var lost = applyPendingRefresh() && !keptChunk(before);
+    if (!isActive()) return;
+    var next = lost ? neighbourIndex(old, was, delta) : state.index + delta;
     if (next < 0) next = 0;
     if (next >= state.chunks.length) {
       stop();
@@ -1045,7 +1116,9 @@
    */
   function cancelSpeech() {
     state.seq++;
-    if (supported) synth.cancel();
+    if (!supported) return;
+    if (synth.paused) synth.resume();
+    synth.cancel();
   }
 
   /**
@@ -1134,8 +1207,16 @@
 
   /* ------------------------------------------------------------------ ui */
 
+  function setBarControlsDisabled(disabled) {
+    if (!els.bar) return;
+    Array.prototype.forEach.call(els.bar.querySelectorAll('button,select'), function (control) {
+      control.disabled = disabled;
+    });
+  }
+
   function flash(msg) {
     if (!els.bar) return;
+    if (!isActive()) setBarControlsDisabled(true);
     els.bar.hidden = false;
     els.bar.classList.add('is-visible');
     els.status.textContent = msg;
@@ -1187,6 +1268,7 @@
     // Collapsed, the puck's speaker icon is the only playback feedback left.
     els.bar.classList.toggle('is-reading', isPlaying() || isWaiting());
     if (!active) return;
+    setBarControlsDisabled(false);
     els.playPause.textContent = isPaused() ? '▶' : '⏸';
     els.playPause.setAttribute('aria-label', isPaused() ? 'Resume' : 'Pause');
     els.playPause.disabled = isWaiting() || state.mode === 'error';
@@ -1543,6 +1625,10 @@
 
     bar.addEventListener('pointermove', function (e) {
       if (!active) return;
+      if (e.buttons != null && !(e.buttons & 1)) {
+        end(e);
+        return;
+      }
       var dx = e.clientX - startX;
       var dy = e.clientY - startY;
       if (!moved && Math.abs(dx) < DRAG_SLOP && Math.abs(dy) < DRAG_SLOP) return;
@@ -1569,8 +1655,8 @@
     var end = function (e) {
       if (!active) return;
       active = false;
-      if (!moved) return;
       bar.classList.remove('is-dragging');
+      if (!moved) return;
       if (bar.releasePointerCapture && e.pointerId != null) {
         try {
           bar.releasePointerCapture(e.pointerId);
@@ -1589,6 +1675,11 @@
       // gesture emits no click, so arming the guard there would eat the next
       // real one instead.
       state.dragged = e.type === 'pointerup';
+      if (state.dragged) {
+        setTimeout(function () {
+          state.dragged = false;
+        }, 0);
+      }
     };
 
     bar.addEventListener('pointerup', end);
@@ -1817,7 +1908,11 @@
     pause: pause,
     resume: resume,
     stop: stop,
-    refresh: function () { return refreshQueue(false); },
+    refresh: function () {
+      if (!isPaused()) return refreshQueue(false);
+      state.refreshPending = true;
+      return true;
+    },
     getState: stateSnapshot,
   };
 

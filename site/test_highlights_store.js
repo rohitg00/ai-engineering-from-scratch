@@ -386,6 +386,24 @@ test('an import that only fills a missing page title is saved', () => {
   assert.ok(item);
 });
 
+test('a page title imported while storage was full survives a reload from another tab', () => {
+  const storage = memoryStorage();
+  const win = fakeWindow(storage);
+  const store = StoreModule.create(win);
+  store.add(LESSON_PATH, sampleItem());
+  const exported = JSON.parse(store.exportJson());
+  exported.pages[LESSON_PATH].title = 'Gradient Descent';
+  const realSet = storage.setItem;
+  storage.setItem = () => { const error = new Error('quota'); error.name = 'QuotaExceededError'; throw error; };
+  store.importJson(JSON.stringify(exported));
+  storage.setItem = realSet;
+  StoreModule.create(fakeWindow(storage)).add(MANUAL_PATH, sampleItem({ note: 'other tab' }));
+  win.dispatch('storage', { key: KEY });
+  assert.equal(store.page(LESSON_PATH).title, 'Gradient Descent');
+  store.add(LESSON_PATH, sampleItem({ quote: { exact: 'later' } }));
+  assert.equal(JSON.parse(storage.getItem(KEY)).pages[LESSON_PATH].title, 'Gradient Descent');
+});
+
 test('markdown export escapes notes and quotes so they stay plain text', () => {
   const { store } = storeWith();
   store.add(LESSON_PATH, sampleItem({ note: '<img src=x onerror=alert(1)> [click](javascript:alert(1)) `code` *bold*', quote: { exact: '<script>x</script> & more' } }), { title: '<b>Title</b>' });
@@ -516,4 +534,51 @@ test('confirming or re-attaching a highlight clears its saved original quote', (
   assert.equal(store.items(LESSON_PATH)[0].originalQuote.exact, 'old text');
   store.update(LESSON_PATH, item.id, { status: 'anchored', review: 'confirmed', originalQuote: null });
   assert.equal(store.items(LESSON_PATH)[0].originalQuote, null);
+});
+
+test('the last error belongs to the latest operation and clears when an operation succeeds', () => {
+  const { store } = storeWith();
+  const big = 'x'.repeat(19000);
+  let i = 0;
+  while (store.add(`phases/0${i % 9}-a/${i}-b`, sampleItem({ quote: { exact: big + i } }))) i++;
+  assert.equal(store.info().lastError, 'full');
+  const first = store.pages()[0];
+  assert.ok(store.update(first.path, first.items[0].id, { color: 'pink' }));
+  assert.equal(store.info().lastError, '');
+  assert.equal(store.info().operationError, '');
+  const sharer = storeWith().store;
+  for (let k = 0; k < 30; k++) sharer.add(MANUAL_PATH, sampleItem({ quote: { exact: 'z'.repeat(19000) + k } }));
+  assert.equal(sharer.share(MANUAL_PATH), '');
+  assert.equal(sharer.info().operationError, 'share-too-large');
+  assert.equal(sharer.share('phases/none/x'), '');
+  assert.equal(sharer.info().operationError, '');
+});
+
+test('a load warning stays visible while operation errors come and go', () => {
+  const { store } = storeWith({ [KEY]: '{not json' });
+  assert.ok(store.add(LESSON_PATH, sampleItem()));
+  assert.equal(store.info().lastError, 'unreadable');
+  assert.equal(store.info().operationError, '');
+});
+
+test('a tab with unsaved changes does not bring back highlights another tab deleted', () => {
+  const storage = memoryStorage();
+  const win = fakeWindow(storage);
+  const store = StoreModule.create(win);
+  const kept = store.add(LESSON_PATH, sampleItem({ note: 'kept' }));
+  const doomed = store.add(LESSON_PATH, sampleItem({ note: 'deleted elsewhere', quote: { exact: 'doomed' } }));
+  const realSet = storage.setItem;
+  storage.setItem = () => { const error = new Error('quota'); error.name = 'QuotaExceededError'; throw error; };
+  const local = store.add(LESSON_PATH, sampleItem({ note: 'only here', quote: { exact: 'local' } }));
+  store.update(LESSON_PATH, kept.id, { note: 'kept and edited here' });
+  storage.setItem = realSet;
+  StoreModule.create(fakeWindow(storage)).remove(LESSON_PATH, doomed.id);
+  win.dispatch('storage', { key: KEY });
+  assert.deepEqual(store.items(LESSON_PATH).map(item => item.note).sort(), ['kept and edited here', 'only here']);
+  StoreModule.create(fakeWindow(storage)).add(LESSON_PATH, sampleItem({ note: 'other tab', quote: { exact: 'other' } }));
+  win.dispatch('storage', { key: KEY });
+  store.add(LESSON_PATH, sampleItem({ note: 'later', quote: { exact: 'later' } }));
+  const saved = JSON.parse(storage.getItem(KEY)).pages[LESSON_PATH].items;
+  assert.deepEqual(saved.map(item => item.note).sort(), ['kept and edited here', 'later', 'only here', 'other tab']);
+  assert.ok(saved.some(item => item.id === local.id));
 });

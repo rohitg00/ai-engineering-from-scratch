@@ -77,6 +77,41 @@
     return state;
   }
 
+  function touched(item) {
+    return Math.max(item.openedAt, item.attemptedAt, item.solvedAt);
+  }
+
+  function mergeStates(stored, mine) {
+    var state = normalizeState(stored);
+    var ours = normalizeState(mine);
+    Object.keys(ours.problems).forEach(function (id) {
+      var item = ours.problems[id];
+      var other = own(state.problems, id) ? state.problems[id] : null;
+      if (!other) {
+        state.problems[id] = item;
+        return;
+      }
+      var base = touched(item) >= touched(other) ? item : other;
+      var rest = base === item ? other : item;
+      ['runs', 'submits', 'hints', 'best', 'total', 'openedAt', 'attemptedAt'].forEach(function (field) {
+        base[field] = Math.max(item[field], other[field]);
+      });
+      if (rest.status === 'solved' && base.status !== 'solved' && rest.version === base.version) {
+        base.status = 'solved';
+        base.solvedAt = rest.solvedAt;
+      } else if (rest.status !== 'new' && base.status === 'new') {
+        base.status = 'attempted';
+      }
+      state.problems[id] = base;
+    });
+    Object.keys(ours.days).forEach(function (day) {
+      state.days[day] = Math.max(state.days[day] || 0, ours.days[day]);
+    });
+    if (ours.lastOpened && ours.updatedAt >= state.updatedAt) state.lastOpened = ours.lastOpened;
+    state.updatedAt = Math.max(state.updatedAt, ours.updatedAt);
+    return normalizeState(state);
+  }
+
   function dayKey(date) {
     var d = date instanceof Date ? date : new Date(date);
     var month = String(d.getMonth() + 1);
@@ -103,6 +138,7 @@
     var memory = emptyState();
     var memoryCode = {};
     var writable = true;
+    var locked = false;
     var codeWritable = true;
     var listeners = [];
 
@@ -132,25 +168,37 @@
       } catch (_) {}
     }
 
+    function backup(text) {
+      if (readRaw(BACKUP_KEY) === null) writeRaw(BACKUP_KEY, text);
+    }
+
     function load() {
-      if (!writable) return memory;
+      if (locked) return memory;
       var text = readRaw(STORAGE_KEY);
       if (text === null) return memory;
+      var stored;
       try {
         var parsed = JSON.parse(text);
-        if (!parsed || typeof parsed !== 'object' || (parsed.schemaVersion !== undefined && parsed.schemaVersion > SCHEMA_VERSION)) throw new Error('unknown schema');
-        memory = normalizeState(parsed);
+        if (!parsed || typeof parsed !== 'object') throw new Error('unreadable');
+        if (parsed.schemaVersion !== undefined && parsed.schemaVersion > SCHEMA_VERSION) {
+          locked = true;
+          backup(text);
+          return memory;
+        }
+        stored = normalizeState(parsed);
       } catch (_) {
-        if (readRaw(BACKUP_KEY) === null) writeRaw(BACKUP_KEY, text);
-        memory = emptyState();
+        if (!writable) return memory;
+        backup(text);
+        stored = emptyState();
       }
+      memory = writable ? stored : mergeStates(stored, memory);
       return memory;
     }
 
     function save(state) {
       state.updatedAt = now();
       memory = state;
-      writable = writeRaw(STORAGE_KEY, JSON.stringify(state));
+      writable = !locked && writeRaw(STORAGE_KEY, JSON.stringify(state));
       for (var i = 0; i < listeners.length; i++) {
         try { listeners[i](state); } catch (_) {}
       }

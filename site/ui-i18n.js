@@ -223,11 +223,11 @@
     var sequence = ++request;
     loadDictionary(lang, function (dict) {
       if (sequence !== request) return;
-      active = dict ? lang : 'en';
+      active = lang || 'en';
       if (!dict && !touched) return;
       touched = true;
       applyTree(root.document.body, dict);
-      applyDir(active);
+      if (dict) applyDir(active);
       observe();
     });
   }

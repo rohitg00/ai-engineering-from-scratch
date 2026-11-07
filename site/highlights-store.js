@@ -378,6 +378,8 @@
     var persistent = !!storage;
     var readOnly = false;
     var lastError = '';
+    var loadError = '';
+    var storedRaw = '';
     var listeners = [];
 
     function readKey(key) {
@@ -414,8 +416,10 @@
     function fromStorage() {
       var raw = readKey(STORAGE_KEY);
       var migrated = false;
+      storedRaw = raw || '';
       if (!raw) {
         var legacy = readKey(LEGACY_KEY);
+        storedRaw = legacy || '';
         if (!legacy) return emptyState();
         raw = legacy;
         migrated = true;
@@ -423,14 +427,14 @@
       var parsed = parse(raw);
       if (parsed && typeof parsed === 'object' && Number(parsed.schemaVersion) > SCHEMA_VERSION) {
         readOnly = true;
-        lastError = 'newer-schema';
+        loadError = 'newer-schema';
         return normalizeState(parsed).state;
       }
       readOnly = false;
       var result = normalizeState(migrate(parsed));
       if (!result.valid || result.skipped) {
         backupUnreadable(raw);
-        lastError = result.valid ? 'skipped-invalid' : 'unreadable';
+        loadError = result.valid ? 'skipped-invalid' : 'unreadable';
       }
       if (migrated && result.valid && storage) {
         try {
@@ -446,12 +450,18 @@
       return memory;
     }
 
+    function storedState() {
+      var parsed = storedRaw ? parse(storedRaw) : null;
+      return parsed ? normalizeState(migrate(parsed)).state : emptyState();
+    }
+
     function mergeStored() {
       var unsaved = dirty && memory ? memory : null;
+      var previous = unsaved ? storedState() : null;
       memory = null;
       readOnly = false;
       load();
-      if (unsaved && !readOnly) memory = keepUnsaved(memory, unsaved);
+      if (unsaved && !readOnly) memory = keepUnsaved(memory, unsaved, previous);
     }
 
     function fresh() {
@@ -483,11 +493,13 @@
       memory = state;
       if (storage) {
         try {
-          storage.setItem(STORAGE_KEY, JSON.stringify(state));
+          var serialized = JSON.stringify(state);
+          storage.setItem(STORAGE_KEY, serialized);
+          storedRaw = serialized;
           persistent = true;
           dirty = false;
           unsavedRemovals = Object.create(null);
-          if (lastError === 'quota' || lastError === 'write-failed') lastError = '';
+          lastError = '';
         } catch (error) {
           persistent = false;
           dirty = true;
@@ -525,6 +537,7 @@
     }
 
     function add(path, raw, meta) {
+      lastError = '';
       if (!PATH_PATTERN.test(String(path || ''))) return null;
       var item = normalizeItem(Object.assign({}, raw, { id: newId(), createdAt: Date.now(), updatedAt: Date.now() }));
       if (!item) return null;
@@ -550,6 +563,7 @@
     }
 
     function update(path, id, patch) {
+      lastError = '';
       var state = writable();
       if (!state || !own(state.pages, path)) return null;
       var current = state.pages[path];
@@ -593,6 +607,7 @@
     }
 
     function removeMany(selection) {
+      lastError = '';
       var state = writable();
       if (!state) return 0;
       var removed = 0;
@@ -681,6 +696,7 @@
     }
 
     function importJson(source) {
+      lastError = '';
       var empty = { ok: false, error: '', added: 0, updated: 0, unchanged: 0, conflicts: 0, skipped: 0 };
       var parsed = null;
       try {
@@ -720,6 +736,7 @@
     }
 
     function share(path, ids) {
+      lastError = '';
       var payload = sharePayload(load(), path, ids);
       if (!payload) return '';
       var encoded = encodeShare(payload);
@@ -731,6 +748,7 @@
     }
 
     function addShared(shared, indexes) {
+      lastError = '';
       if (!shared || !PATH_PATTERN.test(shared.path)) return 0;
       var state = writable();
       if (!state) return 0;
@@ -777,20 +795,30 @@
       };
     }
 
-    function keepUnsaved(base, local) {
+    function keepUnsaved(base, local, stored) {
+      var known = Object.create(null);
+      for (var storedPath in stored.pages) {
+        if (!own(stored.pages, storedPath)) continue;
+        stored.pages[storedPath].items.forEach(function (item) {
+          known[storedPath + '\u0000' + item.id] = JSON.stringify(item);
+        });
+      }
       for (var path in local.pages) {
         if (!own(local.pages, path)) continue;
         var localPage = local.pages[path];
-        if (!own(base.pages, path)) {
-          base.pages[path] = localPage;
-          continue;
-        }
+        var changed = localPage.items.filter(function (item) {
+          return known[path + '\u0000' + item.id] !== JSON.stringify(item);
+        });
+        if (own(base.pages, path) && !base.pages[path].title && localPage.title) base.pages[path].title = localPage.title;
+        if (!changed.length) continue;
+        if (!own(base.pages, path)) base.pages[path] = { kind: localPage.kind, title: localPage.title, url: localPage.url, items: [] };
         var target = base.pages[path];
         if (!target.title) target.title = localPage.title;
-        localPage.items.forEach(function (item) {
+        changed.forEach(function (item) {
           for (var i = 0; i < target.items.length; i++) {
             if (target.items[i].id !== item.id) continue;
-            if (item.updatedAt > target.items[i].updatedAt) target.items[i] = item;
+            var untouched = known[path + '\u0000' + item.id] === JSON.stringify(target.items[i]);
+            if (untouched || item.updatedAt > target.items[i].updatedAt) target.items[i] = item;
             return;
           }
           target.items.push(item);
@@ -840,7 +868,7 @@
       itemUrl: itemUrl,
       info: function () {
         load();
-        return { persistent: persistent, readOnly: readOnly, lastError: lastError };
+        return { persistent: persistent, readOnly: readOnly, lastError: lastError || loadError, operationError: lastError };
       }
     };
   }

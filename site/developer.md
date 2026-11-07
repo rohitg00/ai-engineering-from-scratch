@@ -43,9 +43,11 @@ Platform-level failures may occur before the application runs.
 
 ## Rate limits
 
-Catalog, resource, and MCP handlers each enforce 120 requests per client IP per
-60-second fixed window on each running function instance. One client's requests
-do not consume another IP's allowance. Clients sharing a public IP share a quota.
+Catalog, resource, and MCP handlers each enforce 120 requests per client per
+60-second fixed window on each running function instance. A client is one IPv4
+address or one IPv6 /64 prefix. One client's requests do not consume another
+client's allowance. Clients sharing a public IPv4 address or an IPv6 /64 share a
+quota.
 Uncached responses send `RateLimit-Policy: "client-instance";q=120;w=60` and
 `RateLimit: "client-instance";r=119;t=60`, where `r` is requests remaining and `t`
 is seconds until reset. A rejected request gets 429 and `Retry-After` in seconds.

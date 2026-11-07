@@ -56,6 +56,15 @@
     return next;
   }
 
+  function autoPinTarget(candidates, pinned) {
+    if (pinned && !pinned.auto) return null;
+    var best = null;
+    for (var i = 0; i < candidates.length; i++) {
+      if (!best || candidates[i].bottom > best.bottom) best = candidates[i];
+    }
+    return best ? best.entry : null;
+  }
+
   function daysAgo(then, now) {
     var days = Math.floor((now - then) / DAY);
     if (days <= 0) return 'today';
@@ -70,6 +79,7 @@
     stepAt: stepAt,
     nextRevisit: nextRevisit,
     recordRevisit: recordRevisit,
+    autoPinTarget: autoPinTarget,
     daysAgo: daysAgo
   };
 
@@ -104,7 +114,12 @@
   }
 
   function writeJson(key, value) {
-    try { root.localStorage.setItem(key, JSON.stringify(value)); } catch (_) {}
+    try {
+      root.localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 
   function headerOffset() {
@@ -167,6 +182,7 @@
 
     function pin(entry, auto) {
       if (pinned === entry) return;
+      if (auto && pinned && !pinned.auto) return;
       unpin(false);
       entry.bar.style.minHeight = entry.figure.offsetHeight + 'px';
       entry.auto = Boolean(auto);
@@ -269,6 +285,8 @@
       frame = 0;
       var line = scrollTop() + readingLine();
       var split = root.innerWidth >= SPLIT_MIN_WIDTH;
+      var top = headerOffset();
+      var candidates = [];
       syncs.forEach(function (sync) {
         var tops = sync.steps.map(pageTop);
         var end = sync.end ? pageTop(sync.end) : null;
@@ -282,10 +300,13 @@
         if (!entry) return;
         var inside = index >= 0;
         if (!inside) entry.dismissed = false;
-        var placeAbove = entry.bar.getBoundingClientRect().bottom < headerOffset();
-        if (split && inside && placeAbove && !entry.dismissed) dock.pin(entry, true);
+        var bottom = entry.bar.getBoundingClientRect().bottom;
+        var placeAbove = bottom < top;
+        if (split && inside && placeAbove && !entry.dismissed) candidates.push({ entry: entry, bottom: bottom });
         else if (dock.pinned() === entry && entry.auto && (!inside || !placeAbove || !split)) dock.unpin(false);
       });
+      var target = autoPinTarget(candidates, dock.pinned());
+      if (target) dock.pin(target, true);
     }
 
     function schedule() { if (!frame) frame = root.requestAnimationFrame(update); }
@@ -373,8 +394,15 @@
     status.setAttribute('aria-live', 'polite');
     card.appendChild(status);
 
+    var recorded = false;
+
     function finish(outcome, message) {
-      writeJson(REVISIT_KEY, recordRevisit(readJson(REVISIT_KEY) || {}, path, outcome, Date.now()));
+      if (recorded) return;
+      if (!writeJson(REVISIT_KEY, recordRevisit(readJson(REVISIT_KEY) || {}, path, outcome, Date.now()))) {
+        status.textContent = 'This browser did not save your answer. Try again.';
+        return;
+      }
+      recorded = true;
       actions.hidden = true;
       status.textContent = message;
     }
@@ -386,7 +414,7 @@
       finish('recalled', nextDays ? 'Good. You will see it again in ' + nextDays + ' days.' : 'Good. This lesson is now retired from review.');
     });
     on(open, 'click', function () {
-      writeJson(REVISIT_KEY, recordRevisit(readJson(REVISIT_KEY) || {}, path, 'forgot', Date.now()));
+      finish('forgot', 'Opening the lesson. It will come back for review tomorrow.');
     });
     on(later, 'click', function () { finish('later', 'Snoozed. It will come back on a later visit.'); });
 

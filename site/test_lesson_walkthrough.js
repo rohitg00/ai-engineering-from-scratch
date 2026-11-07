@@ -75,3 +75,122 @@ test('ages read as plain words', () => {
   assert.equal(daysAgo(T0, T0 + DAY), 'yesterday');
   assert.equal(daysAgo(T0, T0 + 6 * DAY), '6 days ago');
 });
+
+const { autoPinTarget } = walk;
+
+test('an automatic pin never replaces a figure the reader pinned by hand', () => {
+  const manual = { auto: false };
+  const candidate = { auto: false };
+  assert.equal(autoPinTarget([{ entry: candidate, bottom: 10 }], manual), null);
+});
+
+test('only the closest of several figures in view is pinned automatically', () => {
+  const far = {};
+  const near = {};
+  assert.equal(autoPinTarget([{ entry: far, bottom: -400 }, { entry: near, bottom: 20 }], null), near);
+  assert.equal(autoPinTarget([{ entry: near, bottom: 20 }, { entry: far, bottom: -400 }], { auto: true }), near);
+  assert.equal(autoPinTarget([], null), null);
+});
+
+function fakeElement(tag) {
+  return {
+    tagName: tag.toUpperCase(),
+    children: [],
+    parentNode: null,
+    listeners: {},
+    attributes: {},
+    style: {},
+    dataset: {},
+    hidden: false,
+    textContent: '',
+    className: '',
+    classList: { add() {}, remove() {}, toggle() {}, contains() { return false; } },
+    appendChild(child) { child.parentNode = this; this.children.push(child); return child; },
+    insertBefore(child) { return this.appendChild(child); },
+    remove() {},
+    setAttribute(name, value) { this.attributes[name] = String(value); },
+    getAttribute(name) { return name in this.attributes ? this.attributes[name] : null; },
+    removeAttribute(name) { delete this.attributes[name]; },
+    addEventListener(type, fn) { (this.listeners[type] = this.listeners[type] || []).push(fn); },
+    removeEventListener(type, fn) { this.listeners[type] = (this.listeners[type] || []).filter(f => f !== fn); },
+    click() { (this.listeners.click || []).slice().forEach(fn => fn({ type: 'click', target: this, preventDefault() {} })); },
+    querySelector() { return null; },
+    querySelectorAll() { return []; },
+  };
+}
+
+function findByText(node, text) {
+  if (node.textContent === text) return node;
+  for (const child of node.children) {
+    const found = findByText(child, text);
+    if (found) return found;
+  }
+  return null;
+}
+
+function mountRevisitCard() {
+  const vm = require('node:vm');
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const store = new Map();
+  const now = Date.now();
+  store.set('aifs:progress:v2', JSON.stringify({ lessons: { 'phases/a/old': { completedAt: now - 10 * DAY } } }));
+  const doc = fakeElement('document');
+  doc.body = fakeElement('body');
+  doc.documentElement = fakeElement('html');
+  doc.createElement = fakeElement;
+  const window = {
+    document: doc,
+    innerWidth: 1000,
+    innerHeight: 800,
+    localStorage: { getItem: key => (store.has(key) ? store.get(key) : null), setItem: (key, value) => store.set(key, String(value)) },
+    matchMedia: () => ({ matches: false }),
+    addEventListener() {},
+    removeEventListener() {},
+    PHASES: [{ name: 'Phase A', lessons: [{ name: 'Old lesson', url: 'old', summary: 'A summary.' }] }],
+    AIFSProgress: { extractPath: () => 'phases/a/old' },
+  };
+  const context = vm.createContext({ window, Node: { DOCUMENT_POSITION_FOLLOWING: 4 }, CustomEvent: function () {} });
+  vm.runInContext(fs.readFileSync(path.join(__dirname, 'lesson-walkthrough.js'), 'utf8'), context);
+  const article = fakeElement('article');
+  window.AIFSWalkthrough.mount(article, { path: 'phases/a/current' });
+  const card = article.children[0];
+  return {
+    store,
+    window,
+    status: card.children[card.children.length - 1],
+    actions: findByText(card, 'I could explain it').parentNode,
+    recalled: findByText(card, 'I could explain it'),
+    open: findByText(card, 'Not yet. Open the lesson'),
+  };
+}
+
+test('opening the lesson from the revisit prompt records one outcome and closes the choice', () => {
+  const card = mountRevisitCard();
+  card.open.click();
+  assert.equal(card.actions.hidden, true);
+  assert.equal(JSON.parse(card.store.get('aifs:revisit:v1'))['phases/a/old'].step, 0);
+  card.recalled.click();
+  assert.equal(JSON.parse(card.store.get('aifs:revisit:v1'))['phases/a/old'].step, 0);
+});
+
+test('a recalled revisit cannot also be recorded as forgotten', () => {
+  const card = mountRevisitCard();
+  card.recalled.click();
+  card.open.click();
+  assert.equal(JSON.parse(card.store.get('aifs:revisit:v1'))['phases/a/old'].step, 1);
+});
+
+test('a revisit answer that storage refuses keeps the choice open for a retry', () => {
+  const card = mountRevisitCard();
+  const setItem = card.window.localStorage.setItem;
+  card.window.localStorage.setItem = () => { throw new Error('quota'); };
+  card.recalled.click();
+  assert.equal(card.actions.hidden, false);
+  assert.equal(card.store.has('aifs:revisit:v1'), false);
+  assert.match(card.status.textContent, /did not save/);
+  card.window.localStorage.setItem = setItem;
+  card.recalled.click();
+  assert.equal(card.actions.hidden, true);
+  assert.equal(JSON.parse(card.store.get('aifs:revisit:v1'))['phases/a/old'].step, 1);
+});

@@ -3,7 +3,7 @@ const schemas = require('../lib/agent-schemas');
 const { quality, send, problem, apiHeaders, createLimiter } = require('../lib/agent-http');
 
 const PROTOCOL = '2025-11-25';
-const VERSIONS = [PROTOCOL, '2025-03-26'];
+const VERSIONS = [PROTOCOL, '2025-06-18', '2025-03-26'];
 const annotations = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false };
 const TOOLS = [
   { name: 'search_curriculum', description: 'Search published AI Engineering from Scratch lessons and projects. Returns stable paths for read_resource. Does not run code.', inputSchema: schemas.searchInput, outputSchema: schemas.searchOutput, annotations },
@@ -28,9 +28,12 @@ async function readBody(req) {
     body = Buffer.concat(chunks);
   }
   if (Buffer.isBuffer(body)) body = body.toString('utf8');
-  const encoded = typeof body === 'string' ? body : JSON.stringify(body);
-  if (Buffer.byteLength(encoded) > 65536) throw new RangeError('Request body exceeds 64 KiB.');
-  return JSON.parse(encoded);
+  if (typeof body !== 'string') {
+    if (body !== null && typeof body === 'object' && Buffer.byteLength(JSON.stringify(body)) > 65536) throw new RangeError('Request body exceeds 64 KiB.');
+    return body;
+  }
+  if (Buffer.byteLength(body) > 65536) throw new RangeError('Request body exceeds 64 KiB.');
+  return JSON.parse(body);
 }
 
 function object(value) { return value !== null && typeof value === 'object' && !Array.isArray(value); }

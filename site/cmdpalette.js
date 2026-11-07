@@ -242,7 +242,8 @@
     if (!_isOpen) return;
     var input = _inputEl();
     var query = input ? input.value.trim() : '';
-    renderResults(query ? search(query) : []);
+    renderResults(query ? search(query) : [], true);
+    searchPages(query);
   }
 
   // ── Scoring ──────────────────────────────────────────────────────────
@@ -465,6 +466,7 @@
 
     createPaletteDOM();
     document.body.setAttribute(BODY_ATTR, '');
+    try { document.dispatchEvent(new CustomEvent('aifs:overlayopen', { detail: { source: 'palette' } })); } catch (_) {}
 
     var pal = _palEl();
     if (pal) {
@@ -480,7 +482,20 @@
       input.focus();
       var q = input.value.trim();
       renderResults(q ? search(q) : []);
+      searchPages(q);
     }
+  }
+
+  function _focusable(el) {
+    return !!(el && typeof el.focus === 'function' && el.isConnected && el.getClientRects && el.getClientRects().length);
+  }
+
+  function _visibleTrigger() {
+    var candidates = document.querySelectorAll('[data-cmd-palette], .header-menu-toggle');
+    for (var i = 0; i < candidates.length; i++) {
+      if (_focusable(candidates[i])) return candidates[i];
+    }
+    return null;
   }
 
   function close() {
@@ -501,17 +516,18 @@
 
     // Return focus to wherever the user was before
     try {
-      if (_prevFocus && typeof _prevFocus.focus === 'function') {
-        _prevFocus.focus();
-      }
+      var target = _focusable(_prevFocus) ? _prevFocus : _visibleTrigger();
+      if (target) target.focus();
     } catch (_) { /* element may have been removed from DOM */ }
     _prevFocus = null;
   }
 
   // ── Render results ───────────────────────────────────────────────────
-  function renderResults(results) {
+  function renderResults(results, keepActive) {
     var list = _listEl();
     if (!list) return;
+    var previous = keepActive && _activeIdx >= 0 ? list.querySelectorAll('.cp-item')[_activeIdx] : null;
+    var previousHref = previous ? previous.getAttribute('data-href') : '';
 
     var query = (_inputEl() ? _inputEl().value : '').trim();
 
@@ -646,6 +662,14 @@
       items[j].addEventListener('click',     _onItemClick);
       items[j].addEventListener('mousemove', _onItemMouseMove);
     }
+    if (!previousHref) return;
+    for (var k = 0; k < items.length; k++) {
+      if (items[k].getAttribute('data-href') === previousHref) {
+        _activeIdx = k;
+        _updateActive(items);
+        return;
+      }
+    }
   }
 
   function loadPagefind() {
@@ -655,7 +679,10 @@
           pagefind.init();
           return pagefind;
         });
-      }).catch(function () { return null; });
+      }).catch(function () {
+        _pagefind = null;
+        return null;
+      });
     }
     return _pagefind;
   }
@@ -761,7 +788,7 @@
       });
     }).then(function (merged) {
       if (!merged || !merged.pages.length || !isCurrent() || !_isOpen) return;
-      renderResults(mergePages(merged.local, merged.pages, PAGE_RESULTS));
+      renderResults(mergePages(merged.local, merged.pages, PAGE_RESULTS), true);
     }).catch(function () {});
   }
 
@@ -805,6 +832,7 @@
   }
 
   function _onDialogKeyDown(e) {
+    if (e.isComposing || e.keyCode === 229) return;
     if (e.key === 'Escape') {
       e.preventDefault();
       e.stopPropagation();
@@ -864,6 +892,15 @@
   }
 
   // ── Global keyboard shortcut (Cmd/Ctrl+K) ────────────────────────────
+  if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+    window.addEventListener('keydown', function (e) {
+      if (!_isOpen || e.key !== 'Escape' || e.isComposing || e.keyCode === 229) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      close();
+    }, true);
+  }
+
   if (typeof document !== 'undefined') {
     document.addEventListener('keydown', function (e) {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {

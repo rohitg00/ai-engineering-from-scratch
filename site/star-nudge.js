@@ -41,7 +41,22 @@
     return Object.assign({}, state, { done: true });
   }
 
-  var api = { KEY: KEY, RULES: RULES, fresh: fresh, visit: visit, nextAsk: nextAsk, asked: asked, starred: starred };
+  var BUSY = [
+    'dialog[open]',
+    'body[data-palette-open]',
+    '#cmdPalette.cp-open',
+    '#modalOverlay.open',
+    '.mermaid-modal-overlay.open',
+    '#aifsThemeMenu:not([hidden])',
+    '.lang-panel:not([hidden])',
+    '.header-menu-toggle[aria-expanded="true"]'
+  ].join(', ');
+
+  function busyIn(doc) {
+    return Boolean(doc.querySelector(BUSY));
+  }
+
+  var api = { KEY: KEY, RULES: RULES, BUSY: BUSY, busyIn: busyIn, fresh: fresh, visit: visit, nextAsk: nextAsk, asked: asked, starred: starred };
   if (typeof module === 'object' && module.exports) {
     module.exports = api;
     return;
@@ -92,9 +107,7 @@
   });
 
   function busy() {
-    if (doc.querySelector('dialog[open], [aria-modal="true"]:not([hidden])')) return true;
-    var menu = doc.querySelector('.header-menu-toggle[aria-expanded="true"]');
-    return Boolean(menu);
+    return busyIn(doc);
   }
 
   function anchor() {
@@ -175,7 +188,7 @@
     if (note && button) place(button);
   }
   function onKey(event) {
-    if (event.key === 'Escape') hide();
+    if (event.key === 'Escape' && !event.defaultPrevented) hide();
   }
 
   function hide() {
