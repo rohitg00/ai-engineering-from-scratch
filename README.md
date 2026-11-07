@@ -392,6 +392,8 @@ flowchart TB
   P16 --> P19["Phase 19 — Capstone Projects"]
   P17 --> P19
   P18 --> P19
+  classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
+  class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
 
 <a id="contents"></a>
@@ -1249,6 +1251,8 @@ flowchart LR
   C --> B["BUILD IT<br/><sub>raw math, no frameworks</sub>"]
   B --> U["USE IT<br/><sub>same thing in PyTorch / sklearn</sub>"]
   U --> S["SHIP IT<br/><sub>prompt · skill · agent · MCP</sub>"]
+  classDef beat fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
+  class M,Pr,C,B,U,S beat
 ```
 
 ## Every lesson ships something
