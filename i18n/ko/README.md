@@ -329,6 +329,8 @@ flowchart TB
   P16 --> P19["19단계 — 캡스톤 프로젝트"]
   P17 --> P19
   P18 --> P19
+  classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
+  class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
 
 <a id="contents"></a>
@@ -1144,6 +1146,8 @@ flowchart LR
   C --> B["직접 만들기<br/><sub>기초 수학, 프레임워크 없이</sub>"]
   B --> U["사용하기<br/><sub>PyTorch / sklearn으로 같은 작업</sub>"]
   U --> S["배포하기<br/><sub>프롬프트 · 스킬 · 에이전트 · MCP</sub>"]
+  classDef beat fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
+  class M,Pr,C,B,U,S beat
 ```
 
 ## 모든 레슨은 산출물을 만듭니다

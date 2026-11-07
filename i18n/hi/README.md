@@ -329,6 +329,8 @@ flowchart TB
   P16 --> P19["चरण 19 — समापन परियोजनाएँ"]
   P17 --> P19
   P18 --> P19
+  classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
+  class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
 
 <a id="contents"></a>
@@ -1141,6 +1143,8 @@ flowchart LR
   C --> B["खुद बनाएँ<br/><sub>मूल गणित, बिना फ्रेमवर्क</sub>"]
   B --> U["इस्तेमाल करें<br/><sub>PyTorch / sklearn में वही विधि</sub>"]
   U --> S["उपयोग के लिए जारी करें<br/><sub>प्रॉम्प्ट · कौशल · एजेंट · MCP</sub>"]
+  classDef beat fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
+  class M,Pr,C,B,U,S beat
 ```
 
 ## हर पाठ के साथ कुछ बनता है

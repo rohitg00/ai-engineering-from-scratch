@@ -329,6 +329,8 @@ flowchart TB
   P16 --> P19["Giai đoạn 19: Đồ án tổng hợp"]
   P17 --> P19
   P18 --> P19
+  classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
+  class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
 
 <a id="contents"></a>
@@ -1143,6 +1145,8 @@ flowchart LR
   C --> B["XÂY DỰNG<br/><sub>toán cơ bản, không framework</sub>"]
   B --> U["SỬ DỤNG<br/><sub>cùng việc đó trong PyTorch / sklearn</sub>"]
   U --> S["PHÁT HÀNH<br/><sub>prompt · skill · tác tử · MCP</sub>"]
+  classDef beat fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
+  class M,Pr,C,B,U,S beat
 ```
 
 ## Mỗi bài học đều có sản phẩm

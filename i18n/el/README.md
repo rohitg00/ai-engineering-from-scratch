@@ -329,6 +329,8 @@ flowchart TB
   P16 --> P19["Φάση 19: Ολοκληρωμένα έργα"]
   P17 --> P19
   P18 --> P19
+  classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
+  class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
 
 <a id="contents"></a>
@@ -1143,6 +1145,8 @@ flowchart LR
   C --> B["ΚΑΤΑΣΚΕΥΑΣΕ ΤΟ<br/><sub>καθαρά μαθηματικά, χωρίς πλαίσια</sub>"]
   B --> U["ΧΡΗΣΙΜΟΠΟΙΗΣΕ ΤΟ<br/><sub>το ίδιο σε PyTorch / sklearn</sub>"]
   U --> S["ΔΙΑΘΕΣΕ ΤΟ<br/><sub>προτροπή · δεξιότητα · πράκτορας · MCP</sub>"]
+  classDef beat fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
+  class M,Pr,C,B,U,S beat
 ```
 
 ## Κάθε μάθημα δίνει ένα αποτέλεσμα
