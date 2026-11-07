@@ -191,6 +191,37 @@ The tests prove boundaries that normal demos miss:
 - malformed and unsupported legacy results leave the peer unavailable;
 - a successfully selected era is cached for the transport lifetime.
 
+### Optional real HTTP peer: Parallel Search
+
+Run the same discovery, merge, and routing code against
+[Parallel Search MCP](https://docs.parallel.ai/integrations/mcp/search-mcp).
+It provides free web search in Fast mode and page fetching without an account
+or API key. The example uses Python 3.10+ and only the standard library.
+From this lesson's directory, install into an isolated environment and run:
+
+```bash
+python3 -m venv .venv
+.venv/bin/python code/parallel_search.py search "MCP Streamable HTTP transport"
+.venv/bin/python code/parallel_search.py fetch https://modelcontextprotocol.io/specification/2025-11-25/basic/transports
+```
+
+Each command discovers `web_search` and `web_fetch`, registers them with
+`MultiServerClient`, routes one call, and prints the MCP result with source URLs
+and excerpts. This is direct tool execution; it does not run an LLM agent loop.
+Queries and fetched URLs are sent to Parallel. Anonymous access has rate limits;
+a rate-limit error prints `Retry-After` rather than retrying automatically.
+
+`parallel_search.py` pins the HTTP endpoint, sets a project User-Agent on every
+POST, accepts JSON or SSE responses, and forwards the client's probe timeout to
+the HTTP transport. It also retains the negotiated protocol header and optional
+HTTP session header after initialization. The initial discovery probe omits the
+HTTP version header because this pinned older server rejects the modern header
+before JSON-RPC dispatch. As checked on 2026-10-11, this endpoint
+negotiates `2025-11-25`, so only this peer is explicitly allowlisted for the
+lesson's legacy compatibility branch. The client still requires a valid positive
+initialization result before selecting that era. New modern servers and the
+in-process `main.py` demo continue to use the current protocol.
+
 ## Ship It
 
 This lesson ships `outputs/skill-mcp-client-harness.md`. It scaffolds modern request stamping, stdio era negotiation, deterministic namespace merge, routing, and a fail-closed legacy compatibility branch.
