@@ -3,7 +3,7 @@
 > أخذ العينات هو كيفية استكشاف الذكاء الاصطناعي مساحة الإمكانيات.
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06-07 (Probability, Bayes' Theorem)
 **Time:** ~120 minutes
 
@@ -608,6 +608,8 @@ def gumbel_softmax(logits, temperature):
 أظهر كيف أن انخفاض درجة الحرارة يجعل الخروج يقترب من متجه واحد حار.
 
 التنفيذ الكامل مع جميع التصورات في `code/sampling.py`. . .
+
+منفذ النسخة النسخة هو في `code/sampling.ts`يستخدم مولد عشوائي خاص به، لذا فإن أرقامه عشوائية تختلف عن إصدار Python.
 
 ## استخدمها
 

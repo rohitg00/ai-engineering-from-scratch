@@ -3,7 +3,7 @@
 > الجهاز هو اللغة المشتركة بين البيانات والتعلم العميق كل صورة، كل جملة، كل تراجع يتدفق من خلالها
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -107,7 +107,12 @@ tensor-broadcast
 
 ## بناءها
 
-الرمز يعيش في`code/tensors.py`كل خطوة تشير إلى التنفيذ هناك.
+الرمز يعيش في`code/tensors.py`كل خطوة تشير إلى التنفيذ هناك.`code/tensors.ts`يطبخ نفس النتائج
+
+```bash
+python3 code/tensors.py
+npx tsx code/tensors.ts
+```
 
 ### الخطوة الأولى: تخزين التنفس والخطوات
 

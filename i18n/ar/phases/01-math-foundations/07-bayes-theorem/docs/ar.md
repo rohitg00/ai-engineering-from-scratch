@@ -3,7 +3,7 @@
 > الاحتمال يتعلق بما تتوقعه، نظرية بايز يتعلق بما تتعلمينه
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 إضافة 1 لكل عدد يضمن عدم وجود احتمال هو أبدا صفر.
 
+كلمة لم تظهر أبدا في أي رسالة تدريبية ليست في المفردات. `predict`يفرض ذلك لأنه لا يقدم أي دليل على أي من الفصول.
+
 ### الحد الأقصى a posteriori (MAP)
 
 يسأل MLE: ما هي المعايير التي تسمح لها بالتحقيق أقصى قدر $P(\text{data} \mid \text{parameters})$- ماذا ؟
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ for msg, pred in zip(test_messages, predictions):
 
 ## أرسله
 
-فمجموعة NaiveBayes التي تم بناؤها هنا تظهر خط الأنابيب الكامل: التكنولوجيا، وتقدير الاحتمالات مع تسطيح Laplace، وتنبؤ الفضاء السجل.`code/bayes.py`تعمل من نهاية إلى نهاية بدون أي اعتمادات خارج مكتبة Python القياسية.
+فمجموعة NaiveBayes التي تم بناؤها هنا تظهر خط الأنابيب الكامل: التكنولوجيا، وتقدير الاحتمالات مع تسطيح Laplace، وتنبؤ الفضاء السجل.`code/bayes.py`يعمل من نهاية إلى نهاية دون أي اعتمادات خارج مكتبة بايثون القياسية.`code/bayes.ts`يستخدم فقط مكتبة Node القياسية.
 
 ### الاولى المتزوجة
 

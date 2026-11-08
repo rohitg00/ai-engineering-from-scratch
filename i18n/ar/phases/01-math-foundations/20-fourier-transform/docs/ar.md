@@ -3,7 +3,7 @@
 > كل إشارة هي مجموع موجات الصين، تحويل فوريير يخبرك عن أي موجات
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -426,7 +426,7 @@ spectrogram = np.abs(Zxx) ** 2
 
 ## أرسله
 
-أركض`code/fourier.py`لإنتاج`outputs/prompt-spectral-analyzer.md`. . .
+أركض`code/fourier.py`لإنتاج`outputs/prompt-spectral-analyzer.md`نسخة "تايب سكريبت"`code/fourier.ts`، يكتب نفس الملف
 
 ## التمارين
 

@@ -3,7 +3,7 @@
 > نظرية المعلومات تقيس المفاجأة وظائف الخسارة بنيت عليها
 
 **Type:** Learn
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > المشاكل الملتوية لديها وادي واحد شبكات عصبية لديها ملايين معرفة الفرق مهم
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > نقطة العبور هي مجرد تجريئة لا تسرب، ستقوم بتعضيك أثناء التدريب، ولن تلاحظها
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04
 **Time:** ~120 minutes
 
@@ -558,7 +558,7 @@ check_tensor("bad",  [1.0, float('nan'), 3.0])
 check_tensor("ugly", [1.0, float('inf'), 3.0])
 ```
 
-انظر`code/numerical.py`للتنفيذات الكاملة مع إثبات جميع الحالات المحتملة.
+انظر`code/numerical.py`لتنفيذ كامل مع جميع الحالات الحافة المثبتة.`code/numerical.ts`هو منفذ TypeScript مع نفس الوظائف والإعراضات.
 
 ## أرسله
 

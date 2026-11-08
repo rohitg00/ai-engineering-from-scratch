@@ -3,7 +3,7 @@
 > الإحصاءات هي كيف تعرف ما إذا كان نموذجك يعمل فعلاً أو كان محظوظاً
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06 (Probability and Distributions), 07 (Bayes' Theorem)
 **Time:** ~120 minutes
 

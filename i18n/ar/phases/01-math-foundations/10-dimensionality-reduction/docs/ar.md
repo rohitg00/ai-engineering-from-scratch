@@ -3,7 +3,7 @@
 > البيانات الابعاد العالي لديها بنية يمكنك العثور عليها بالنظر من الزاوية الصحيحة
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -197,6 +197,13 @@ pca-axes
 ```
 
 ## بناءها
+
+منفذ النسخة النسخة هو في `code/dim_reduction.ts`الـ (منست) يحتاج إلى تعلم (سكيت) لذا يعملون فقط في (بايتون)
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
 
 ### الخطوة الأولى: PCA من الصفر
 

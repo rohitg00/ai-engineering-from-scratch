@@ -3,7 +3,7 @@
 > الرسوم البيانية هي بنية البيانات للعلاقات. إذا كانت البيانات لديك اتصالات، فأنت بحاجة إلى نظرية الرسوم البيانية.
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-03 (linear algebra, matrices)
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > الحل$Ax = b$هي أقدم مشكلة في الرياضيات التي لا تزال تشغيل شبكة عصبية.
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors & Matrices), 03 (Matrix Transformations)
 **Time:** ~120 minutes
 
@@ -546,6 +546,7 @@ print(f"Ridge weights (sklearn): {ridge_sk.coef_}")
 
 هذا الدرس ينتج عن:
 - `code/linear_systems.py`تحتوي على تنفيذات من الصفر من القضاء على غوس، وتفكيك LU، وتفكيك Cholesky، أقل مربعات، وانخفاض التسلسل
+- `code/linear_systems.ts`يُقارن مع حلول مرجعية صغيرة من الصفر، لأن TypeScript لا تمتلك NumPy.
 - إثبات عمل بأن المعادلات الطبيعية والإرجاع السلكي للكلارن ينتج نفس الوزن
 
 ## التمارين

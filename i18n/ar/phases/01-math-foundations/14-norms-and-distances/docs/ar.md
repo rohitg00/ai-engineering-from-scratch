@@ -3,7 +3,7 @@
 > وظيفتك المسافة تعريف ما تعنيه "مثل" اختر خطأ وكل شيء أسفل التيار ينكسر.
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -436,7 +436,7 @@ norm-unit-balls
 
 ### الخطوة الأولى: جميع وظائف القاعدة والمسافة
 
-انظر`code/distances.py`كل وظيفة بنيت من الصفر باستخدام فقط الرياضيات الأساسية Python.
+انظر`code/distances.py`كل وظيفة بنيت من الصفر باستخدام فقط الرياضيات الأساسية Python. الملف `code/distances.ts`هو منفذ TypeScript مع نفس الوظائف والإعراضات.
 
 ### الخطوة الثانية: نفس البيانات، مسافات مختلفة، جيران مختلفين
 
