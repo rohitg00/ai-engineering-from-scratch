@@ -286,7 +286,9 @@ class BatchNorm extends Module {
     if (x.length !== this.size) throw new Error(`BatchNorm expects ${this.size} features, got ${x.length}`);
     if (this.training) {
       for (let j = 0; j < this.size; j++) {
-        this.runningMean[j] = (1 - this.momentum) * this.runningMean[j] + this.momentum * x[j];
+        const delta = x[j] - this.runningMean[j];
+        this.runningMean[j] += this.momentum * delta;
+        this.runningVar[j] = (1 - this.momentum) * (this.runningVar[j] + this.momentum * delta * delta);
       }
       const stdInv = this.runningVar.map((v) => 1.0 / Math.sqrt(v + this.eps));
       this.stdInv = stdInv;

@@ -180,7 +180,9 @@ class BatchNorm(Module):
     def forward(self, x):
         if self.training:
             for j in range(self.size):
-                self.running_mean[j] = (1 - self.momentum) * self.running_mean[j] + self.momentum * x[j]
+                delta = x[j] - self.running_mean[j]
+                self.running_mean[j] += self.momentum * delta
+                self.running_var[j] = (1 - self.momentum) * (self.running_var[j] + self.momentum * delta * delta)
 
             self.std_inv = [1.0 / math.sqrt(v + self.eps) for v in self.running_var]
             self.x_norm = [(x[j] - self.running_mean[j]) * self.std_inv[j] for j in range(self.size)]
