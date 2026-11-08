@@ -3,7 +3,7 @@
 > O ponto flutuante é uma abstração que vai morder-te durante o treino e não vais ver que vai acontecer.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04
 **Time:** ~120 minutes
 
@@ -558,7 +558,7 @@ check_tensor("bad",  [1.0, float('nan'), 3.0])
 check_tensor("ugly", [1.0, float('inf'), 3.0])
 ```
 
-Veja .`code/numerical.py`para implementações completas com todas as demonstrações de casos de risco.
+Veja .`code/numerical.py`Para implementações completas, com todos os casos de ponta demonstrados.`code/numerical.ts`é uma porta TypeScript com as mesmas funções e demos.
 
 ## Envia-o
 

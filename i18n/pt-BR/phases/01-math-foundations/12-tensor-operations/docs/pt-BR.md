@@ -3,7 +3,7 @@
 > Tensores são a linguagem comum entre dados e aprendizagem profunda.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -107,7 +107,12 @@ tensor-broadcast
 
 ## Construí-lo
 
-O código vive em`code/tensors.py`Cada passo refere-se à aplicação.
+O código vive em`code/tensors.py`Cada passo refere-se à implementação lá.`code/tensors.ts`Imprime a mesma saída.
+
+```bash
+python3 code/tensors.py
+npx tsx code/tensors.ts
+```
 
 ### Passo 1: armazenamento de tensão e passos
 
