@@ -3,7 +3,7 @@
 > Perceptron sinir ağlarının atomudur. Açın ve ağırlıkları, önyargıları ve bir kararı bulacaksınız.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra Intuition)
 **Time:** ~60 minutes
 

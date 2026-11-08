@@ -3,7 +3,7 @@
 > Geri yayılma öğrenmeyi mümkün kılan algoritmadır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Lesson 03.02 (Multi-Layer Networks)
 **Time:** ~120 minutes
 
