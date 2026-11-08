@@ -3,7 +3,7 @@
 > बैकप्रॉपेगेशन वह एल्गोरिथ्म है जो सीखने को संभव बनाता है। इसके बिना, तंत्रिका नेटवर्क केवल महंगे यादृच्छिक संख्या जनरेटर हैं।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Lesson 03.02 (Multi-Layer Networks)
 **Time:** ~120 minutes
 

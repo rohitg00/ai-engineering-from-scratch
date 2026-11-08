@@ -3,7 +3,7 @@
 > पर्सेप्ट्रॉन तंत्रिका नेटवर्क का परमाणु है इसे खोलकर आपको वजन, पूर्वाग्रह और निर्णय मिलता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra Intuition)
 **Time:** ~60 minutes
 
