@@ -3,7 +3,7 @@
 > टेन्सर डेटा और गहन सीखने के बीच आम भाषा है. हर छवि, हर वाक्य, हर ग्रेडिएंट उनके माध्यम से बहता है.
 
 **Type:** Build
-**Language:**पायथन
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -107,7 +107,12 @@ tensor-broadcast
 
 ## इसे बनाओ
 
-कोड में रहता है `code/tensors.py`. प्रत्येक चरण में वहाँ के कार्यान्वयन का उल्लेख किया गया है।
+कोड में रहता है `code/tensors.py`. प्रत्येक चरण वहाँ कार्यान्वयन का संदर्भित करता है.`code/tensors.ts`एक ही आउटपुट प्रिंट करता है।
+
+```bash
+python3 code/tensors.py
+npx tsx code/tensors.ts
+```
 
 ### चरण 1: टेंसर भंडारण और कदम
 

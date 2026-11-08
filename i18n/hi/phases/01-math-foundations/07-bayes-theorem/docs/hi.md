@@ -3,7 +3,7 @@
 > संभावना के बारे में आप क्या उम्मीद है. बेयज़ का प्रमेय के बारे में आप क्या सीखते हैं.
 
 **Type:** Build
-**Language:**पायथन
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 प्रत्येक गणना में 1 जोड़ने से कोई संभावना कभी शून्य नहीं होती है।
 
+एक शब्द जो किसी भी प्रशिक्षण संदेश में कभी नहीं आया है वह शब्दावली में नहीं है। `predict`इसे छोड़ देता है, क्योंकि यह किसी भी वर्ग के लिए कोई सबूत नहीं देता है।
+
 ### अधिकतम एक बाद में (MAP)
 
 एमएलई पूछता हैः कौन से पैरामीटर अधिकतम $P(\text{data} \mid \text{parameters})$?
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ for msg, pred in zip(test_messages, predictions):
 
 ## इसे भेजें
 
-यहाँ निर्मित NaiveBayes वर्ग पूरी पाइपलाइन का प्रदर्शन करता हैः टोकनकरण, लैपलेस चिकनाई के साथ संभावना अनुमान, लॉग-स्पेस भविष्यवाणी।`code/bayes.py`पायथन के मानक पुस्तकालय से परे कोई निर्भरता के साथ अंत-से-अंत चलाता है।
+यहाँ निर्मित NaiveBayes वर्ग पूरी पाइपलाइन का प्रदर्शन करता हैः टोकनकरण, लैपलेस चिकनाई के साथ संभावना अनुमान, लॉग-स्पेस भविष्यवाणी।`code/bayes.py`पायथन के मानक पुस्तकालय से परे कोई निर्भरता के साथ अंत-से-अंत चलाता है।`code/bayes.ts`केवल नोड मानक पुस्तकालय का उपयोग करता है।
 
 ### पूर्ववर्ती विवाह
 

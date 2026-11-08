@@ -3,7 +3,7 @@
 > प्रत्येक संकेत सिनेस तरंगों का योग है. फ़ूरियर परिवर्तन आपको बताता है कि कौन से हैं.
 
 **Type:** Build
-**Language:**पायथन
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -426,7 +426,7 @@ spectrogram = np.abs(Zxx) ** 2
 
 ## इसे भेजें
 
-दौड़ें`code/fourier.py`उत्पन्न करने के लिए `outputs/prompt-spectral-analyzer.md`. .
+दौड़ें`code/fourier.py`उत्पन्न करने के लिए `outputs/prompt-spectral-analyzer.md`. टाइपस्क्रिप्ट संस्करण, `code/fourier.ts`, वही फाइल लिखता है।
 
 ## व्यायाम
 

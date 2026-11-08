@@ -3,7 +3,7 @@
 > संकुचित समस्याओं में एक घाटी होती है, न्यूरल नेटवर्क में लाखों होते हैं। अंतर को जानना महत्वपूर्ण है।
 
 **Type:** Build
-**Language:**पायथन
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
 **Time:** ~90 minutes
 

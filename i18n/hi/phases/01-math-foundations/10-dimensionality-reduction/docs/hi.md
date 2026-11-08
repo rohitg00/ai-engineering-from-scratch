@@ -3,7 +3,7 @@
 > उच्च आयामी डेटा में संरचना है. आप इसे सही कोण से देख कर पा सकते हैं.
 
 **Type:** Build
-**Language:**पायथन
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -197,6 +197,13 @@ pca-axes
 ```
 
 ## इसे बनाओ
+
+टाइपस्क्रिप्ट पोर्ट में है `code/dim_reduction.ts`MNIST डेमो scikit-लर्निंग की जरूरत है, तो वे केवल पायथन में चल रहे हैं.
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
 
 ### चरण 1: पीसीए खरोंच से
 

@@ -3,7 +3,7 @@
 > फ्लोटिंग प्वाइंट एक लीक अमूर्तता है. यह प्रशिक्षण के दौरान आप काट देगा, और आप इसे आने के लिए नहीं देखेंगे.
 
 **Type:** Build
-**Language:**पायथन
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04
 **Time:** ~120 minutes
 
@@ -558,7 +558,7 @@ check_tensor("bad",  [1.0, float('nan'), 3.0])
 check_tensor("ugly", [1.0, float('inf'), 3.0])
 ```
 
-देखो`code/numerical.py`सभी एज केस के साथ पूर्ण कार्यान्वयन के लिए।
+देखो`code/numerical.py`सभी एज केस के साथ पूर्ण कार्यान्वयन के लिए प्रदर्शित किया गया।`code/numerical.ts`एक प्रकार के स्क्रिप्ट पोर्ट के साथ एक ही कार्यों और डेमो है।
 
 ## इसे भेजें
 

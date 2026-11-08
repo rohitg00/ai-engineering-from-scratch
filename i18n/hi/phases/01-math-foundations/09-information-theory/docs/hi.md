@@ -3,7 +3,7 @@
 > सूचना सिद्धांत आश्चर्य का उपाय करता है। हानि फ़ंक्शन उस पर निर्मित हैं।
 
 **Type:** Learn
-**Language:**पायथन
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability)
 **Time:** ~60 minutes
 

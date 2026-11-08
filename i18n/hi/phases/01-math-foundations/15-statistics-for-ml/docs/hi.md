@@ -3,7 +3,7 @@
 > सांख्यिकी यह है कि आप कैसे जानते हैं कि आपका मॉडल वास्तव में काम करता है या सिर्फ भाग्यशाली था।
 
 **Type:** Build
-**Language:**पायथन
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06 (Probability and Distributions), 07 (Bayes' Theorem)
 **Time:** ~120 minutes
 

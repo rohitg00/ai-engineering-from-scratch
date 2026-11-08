@@ -3,7 +3,7 @@
 > हल करना $Ax = b$गणित में सबसे पुरानी समस्या है जो अभी भी आपके तंत्रिका नेटवर्क को चलाती है।
 
 **Type:** Build
-**Language:**पायथन
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors & Matrices), 03 (Matrix Transformations)
 **Time:** ~120 minutes
 
@@ -546,6 +546,7 @@ print(f"Ridge weights (sklearn): {ridge_sk.coef_}")
 
 इस पाठ से उत्पन्न होता हैः
 - `code/linear_systems.py`जिसमें गॉसियन उन्मूलन, LU विघटन, चोलेस्की विघटन, न्यूनतम वर्ग और रिज रेग्रिशन के खरोंच से लागू होते हैं
+- `code/linear_systems.ts`यह स्क्रैच से छोटे संदर्भ समाधानों के साथ तुलना करता है, क्योंकि टाइपस्क्रिप्ट में कोई NumPy नहीं है।
 - एक कामकाजी प्रदर्शन कि सामान्य समीकरण और sklearn के रैखिक regression समान वजन पैदा
 
 ## व्यायाम
