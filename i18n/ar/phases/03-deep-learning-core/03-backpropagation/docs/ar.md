@@ -3,7 +3,7 @@
 > التنشر الخلفي هو الخوارزمية التي تجعل التعلم ممكنًا. بدونها، الشبكات العصبية هي مجرد مولدات أرقام عشوائية مكلفة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Lesson 03.02 (Multi-Layer Networks)
 **Time:** ~120 minutes
 

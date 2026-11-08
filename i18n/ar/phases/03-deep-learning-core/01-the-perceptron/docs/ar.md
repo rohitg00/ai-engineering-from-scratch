@@ -3,7 +3,7 @@
 > إنّ الـ (بيرسبترون) هو ذرة الشبكات العصبية، فلتفتحه وتجد الوزن، والتحيز، والقرار.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra Intuition)
 **Time:** ~60 minutes
 
