@@ -3,7 +3,7 @@
 > A estatística é como se sabe se o seu modelo funciona ou só teve sorte.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06 (Probability and Distributions), 07 (Bayes' Theorem)
 **Time:** ~120 minutes
 

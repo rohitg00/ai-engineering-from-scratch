@@ -3,7 +3,7 @@
 > A amostragem é como a IA explora o espaço das possibilidades.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06-07 (Probability, Bayes' Theorem)
 **Time:** ~120 minutes
 
@@ -608,6 +608,8 @@ def gumbel_softmax(logits, temperature):
 Mostre como a diminuição da temperatura faz com que a saída se aproxime de um vetor de um só-quente.
 
 Implementações completas com todas as visualizações estão em `code/sampling.py`- Não .
+
+O port TypeScript está em `code/sampling.ts`Ele usa seu próprio gerador aleatório sementeado, por isso os números aleatórios diferem da saída Python.
 
 ## Usá-lo
 

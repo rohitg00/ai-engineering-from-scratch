@@ -3,7 +3,7 @@
 > Os dados de alta dimensão têm estrutura.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -197,6 +197,13 @@ pca-axes
 ```
 
 ## Construí-lo
+
+O port TypeScript está em `code/dim_reduction.ts`Os demos do MNIST precisam de aprendizado de scikit, por isso só funcionam em Python.
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
 
 ### Passo 1: PCA a partir do zero
 

@@ -3,7 +3,7 @@
 > Cada sinal é uma soma de ondas sinusais.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -426,7 +426,7 @@ A matriz do espectrograma tem forma (n_frequências, n_time_frames). Cada coluna
 
 ## Envia-o
 
-Corra .`code/fourier.py`para gerar `outputs/prompt-spectral-analyzer.md`- Não .
+Corra .`code/fourier.py`para gerar `outputs/prompt-spectral-analyzer.md`A versão do TypeScript,`code/fourier.ts`, escreve o mesmo ficheiro.
 
 ## Exercícios
 
