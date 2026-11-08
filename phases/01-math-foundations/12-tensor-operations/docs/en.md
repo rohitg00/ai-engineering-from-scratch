@@ -3,7 +3,7 @@
 > Tensors are the common language between data and deep learning. Every image, every sentence, every gradient flows through them.
 
 **Type:** Build
-**Language:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -107,7 +107,12 @@ tensor-broadcast
 
 ## Build It
 
-The code lives in `code/tensors.py`. Each step references the implementation there.
+The code lives in `code/tensors.py`. Each step references the implementation there. The TypeScript port in `code/tensors.ts` prints the same output.
+
+```bash
+python3 code/tensors.py
+npx tsx code/tensors.ts
+```
 
 ### Step 1: Tensor storage and strides
 

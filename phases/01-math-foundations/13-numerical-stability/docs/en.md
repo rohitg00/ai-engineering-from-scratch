@@ -3,7 +3,7 @@
 > Floating point is a leaky abstraction. It will bite you during training, and you will not see it coming.
 
 **Type:** Build
-**Language:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04
 **Time:** ~120 minutes
 
@@ -558,7 +558,7 @@ check_tensor("bad",  [1.0, float('nan'), 3.0])
 check_tensor("ugly", [1.0, float('inf'), 3.0])
 ```
 
-See `code/numerical.py` for complete implementations with all edge cases demonstrated.
+See `code/numerical.py` for complete implementations with all edge cases demonstrated. The file `code/numerical.ts` is a TypeScript port with the same functions and demos.
 
 ## Ship It
 

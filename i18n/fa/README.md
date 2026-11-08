@@ -345,10 +345,10 @@ flowchart TB
 
 | # | درس | نوع | زبان |
 |:---:|--------|:----:|------|
-| 01 | [محیط توسعه](../../phases/00-setup-and-tooling/01-dev-environment/) | بسازید | Python |
+| 01 | [محیط توسعه](../../phases/00-setup-and-tooling/01-dev-environment/) | بسازید | Python, TypeScript, Rust |
 | 02 | [Git و همکاری](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | بیاموزید | — |
 | 03 | [راه‌اندازی GPU و ابر](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | بسازید | Python |
-| 04 | [APIها و کلیدها](../../phases/00-setup-and-tooling/04-apis-and-keys/) | بسازید | Python |
+| 04 | [APIها و کلیدها](../../phases/00-setup-and-tooling/04-apis-and-keys/) | بسازید | Python, TypeScript |
 | 05 | [دفترچه‌های Jupyter](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | بسازید | Python |
 | 06 | [محیط‌های Python](../../phases/00-setup-and-tooling/06-python-environments/) | بسازید | Shell |
 | 07 | [Docker برای هوش مصنوعی](../../phases/00-setup-and-tooling/07-docker-for-ai/) | بسازید | Docker |
@@ -368,24 +368,24 @@ flowchart TB
 | 01 | [درک شهودی جبر خطی](../../phases/01-math-foundations/01-linear-algebra-intuition/) | بیاموزید | Python, Julia |
 | 02 | [بردارها، ماتریس‌ها و عملیات](../../phases/01-math-foundations/02-vectors-matrices-operations/) | بسازید | Python, Julia |
 | 03 | [تبدیل‌های ماتریسی و مقادیر ویژه](../../phases/01-math-foundations/03-matrix-transformations/) | بسازید | Python, Julia |
-| 04 | [حساب دیفرانسیل برای ML: مشتق و گرادیان](../../phases/01-math-foundations/04-calculus-for-ml/) | بیاموزید | Python |
-| 05 | [قاعدهٔ زنجیره‌ای و مشتق‌گیری خودکار](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | بسازید | Python |
-| 06 | [احتمال و توزیع‌ها](../../phases/01-math-foundations/06-probability-and-distributions/) | بیاموزید | Python |
-| 07 | [قضیهٔ بیز و تفکر آماری](../../phases/01-math-foundations/07-bayes-theorem/) | بسازید | Python |
-| 08 | [بهینه‌سازی: خانوادهٔ نزول گرادیان](../../phases/01-math-foundations/08-optimization/) | بسازید | Python |
-| 09 | [نظریهٔ اطلاعات: آنتروپی و واگرایی KL](../../phases/01-math-foundations/09-information-theory/) | بیاموزید | Python |
-| 10 | [کاهش بُعد: PCA، t-SNE، UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | بسازید | Python |
+| 04 | [حساب دیفرانسیل برای ML: مشتق و گرادیان](../../phases/01-math-foundations/04-calculus-for-ml/) | بیاموزید | Python, Julia |
+| 05 | [قاعدهٔ زنجیره‌ای و مشتق‌گیری خودکار](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | بسازید | Python, Julia |
+| 06 | [احتمال و توزیع‌ها](../../phases/01-math-foundations/06-probability-and-distributions/) | بیاموزید | Python, Julia |
+| 07 | [قضیهٔ بیز و تفکر آماری](../../phases/01-math-foundations/07-bayes-theorem/) | بسازید | Python, TypeScript |
+| 08 | [بهینه‌سازی: خانوادهٔ نزول گرادیان](../../phases/01-math-foundations/08-optimization/) | بسازید | Python, Julia |
+| 09 | [نظریهٔ اطلاعات: آنتروپی و واگرایی KL](../../phases/01-math-foundations/09-information-theory/) | بیاموزید | Python, TypeScript |
+| 10 | [کاهش بُعد: PCA، t-SNE، UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | بسازید | Python, TypeScript |
 | 11 | [تجزیهٔ مقادیر منفرد](../../phases/01-math-foundations/11-singular-value-decomposition/) | بسازید | Python, Julia |
-| 12 | [عملیات تنسوری](../../phases/01-math-foundations/12-tensor-operations/) | بسازید | Python |
-| 13 | [پایداری عددی](../../phases/01-math-foundations/13-numerical-stability/) | بسازید | Python |
-| 14 | [نُرم‌ها و فاصله‌ها](../../phases/01-math-foundations/14-norms-and-distances/) | بسازید | Python |
-| 15 | [آمار برای ML](../../phases/01-math-foundations/15-statistics-for-ml/) | بسازید | Python |
-| 16 | [روش‌های نمونه‌گیری](../../phases/01-math-foundations/16-sampling-methods/) | بسازید | Python |
-| 17 | [دستگاه‌های خطی](../../phases/01-math-foundations/17-linear-systems/) | بسازید | Python |
-| 18 | [بهینه‌سازی محدب](../../phases/01-math-foundations/18-convex-optimization/) | بسازید | Python |
+| 12 | [عملیات تنسوری](../../phases/01-math-foundations/12-tensor-operations/) | بسازید | Python, TypeScript |
+| 13 | [پایداری عددی](../../phases/01-math-foundations/13-numerical-stability/) | بسازید | Python, TypeScript |
+| 14 | [نُرم‌ها و فاصله‌ها](../../phases/01-math-foundations/14-norms-and-distances/) | بسازید | Python, TypeScript |
+| 15 | [آمار برای ML](../../phases/01-math-foundations/15-statistics-for-ml/) | بسازید | Python, TypeScript |
+| 16 | [روش‌های نمونه‌گیری](../../phases/01-math-foundations/16-sampling-methods/) | بسازید | Python, TypeScript |
+| 17 | [دستگاه‌های خطی](../../phases/01-math-foundations/17-linear-systems/) | بسازید | Python, TypeScript |
+| 18 | [بهینه‌سازی محدب](../../phases/01-math-foundations/18-convex-optimization/) | بسازید | Python, TypeScript |
 | 19 | [اعداد مختلط برای هوش مصنوعی](../../phases/01-math-foundations/19-complex-numbers/) | بیاموزید | Python |
-| 20 | [تبدیل فوریه](../../phases/01-math-foundations/20-fourier-transform/) | بسازید | Python |
-| 21 | [نظریهٔ گراف برای ML](../../phases/01-math-foundations/21-graph-theory/) | بسازید | Python |
+| 20 | [تبدیل فوریه](../../phases/01-math-foundations/20-fourier-transform/) | بسازید | Python, TypeScript |
+| 21 | [نظریهٔ گراف برای ML](../../phases/01-math-foundations/21-graph-theory/) | بسازید | Python, TypeScript |
 | 22 | [فرایندهای تصادفی](../../phases/01-math-foundations/22-stochastic-processes/) | بیاموزید | Python |
 
 </details>
@@ -397,14 +397,14 @@ flowchart TB
 | # | درس | نوع | زبان |
 |:---:|--------|:----:|------|
 | 01 | [یادگیری ماشین چیست](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | بیاموزید | Python |
-| 02 | [رگرسیون خطی از ابتدا](../../phases/02-ml-fundamentals/02-linear-regression/) | بسازید | Python |
-| 03 | [رگرسیون لجستیک و دسته‌بندی](../../phases/02-ml-fundamentals/03-logistic-regression/) | بسازید | Python |
+| 02 | [رگرسیون خطی از ابتدا](../../phases/02-ml-fundamentals/02-linear-regression/) | بسازید | Python, Rust, Julia |
+| 03 | [رگرسیون لجستیک و دسته‌بندی](../../phases/02-ml-fundamentals/03-logistic-regression/) | بسازید | Python, Rust, Julia |
 | 04 | [درخت تصمیم و جنگل تصادفی](../../phases/02-ml-fundamentals/04-decision-trees/) | بسازید | Python |
-| 05 | [ماشین‌های بردار پشتیبان](../../phases/02-ml-fundamentals/05-support-vector-machines/) | بسازید | Python |
+| 05 | [ماشین‌های بردار پشتیبان](../../phases/02-ml-fundamentals/05-support-vector-machines/) | بسازید | Python, Julia |
 | 06 | [KNN و معیارهای فاصله](../../phases/02-ml-fundamentals/06-knn-and-distances/) | بسازید | Python |
 | 07 | [یادگیری بدون نظارت: K-Means، DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | بسازید | Python |
 | 08 | [مهندسی و انتخاب ویژگی](../../phases/02-ml-fundamentals/08-feature-engineering/) | بسازید | Python |
-| 09 | [ارزیابی مدل: معیارها و اعتبارسنجی متقاطع](../../phases/02-ml-fundamentals/09-model-evaluation/) | بسازید | Python |
+| 09 | [ارزیابی مدل: معیارها و اعتبارسنجی متقاطع](../../phases/02-ml-fundamentals/09-model-evaluation/) | بسازید | Python, Julia |
 | 10 | [سوگیری، واریانس و منحنی یادگیری](../../phases/02-ml-fundamentals/10-bias-variance/) | بیاموزید | Python |
 | 11 | [روش‌های تجمیعی: Boosting، Bagging، Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | بسازید | Python |
 | 12 | [تنظیم ابرپارامترها](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | بسازید | Python |
@@ -426,11 +426,11 @@ flowchart TB
 
 | # | درس | نوع | زبان |
 |:---:|--------|:----:|------|
-| 01 | [پرسپترون: نقطهٔ آغاز](../../phases/03-deep-learning-core/01-the-perceptron/) | بسازید | Python |
+| 01 | [پرسپترون: نقطهٔ آغاز](../../phases/03-deep-learning-core/01-the-perceptron/) | بسازید | Python, Rust, Julia |
 | 02 | [شبکه‌های چندلایه و گذر رو به جلو](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بسازید | Python |
-| 03 | [پس‌انتشار از ابتدا](../../phases/03-deep-learning-core/03-backpropagation/) | بسازید | Python |
-| 04 | [توابع فعال‌سازی: ReLU، Sigmoid، GELU و دلیل استفاده](../../phases/03-deep-learning-core/04-activation-functions/) | بسازید | Python |
-| 05 | [توابع زیان: MSE، آنتروپی متقاطع، تقابلی](../../phases/03-deep-learning-core/05-loss-functions/) | بسازید | Python |
+| 03 | [پس‌انتشار از ابتدا](../../phases/03-deep-learning-core/03-backpropagation/) | بسازید | Python, Rust, Julia |
+| 04 | [توابع فعال‌سازی: ReLU، Sigmoid، GELU و دلیل استفاده](../../phases/03-deep-learning-core/04-activation-functions/) | بسازید | Python, Julia |
+| 05 | [توابع زیان: MSE، آنتروپی متقاطع، تقابلی](../../phases/03-deep-learning-core/05-loss-functions/) | بسازید | Python, Julia |
 | 06 | [بهینه‌سازها: SGD، Momentum، Adam، AdamW](../../phases/03-deep-learning-core/06-optimizers/) | بسازید | Python |
 | 07 | [منظم‌سازی: Dropout، کاهش وزن، BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بسازید | Python |
 | 08 | [مقداردهی اولیهٔ وزن‌ها و پایداری آموزش](../../phases/03-deep-learning-core/08-weight-initialization/) | بسازید | Python |
@@ -462,7 +462,7 @@ flowchart TB
 | 12 | [درک ویدئو: مدل‌سازی زمانی](../../phases/04-computer-vision/12-video-understanding/) | بسازید | Python |
 | 13 | [بینایی 3D: ابرنقاط و NeRF](../../phases/04-computer-vision/13-3d-vision-nerf/) | بسازید | Python |
 | 14 | [ترنسفورمرهای بینایی (ViT)](../../phases/04-computer-vision/14-vision-transformers/) | بسازید | Python |
-| 15 | [بینایی بلادرنگ: استقرار در لبه](../../phases/04-computer-vision/15-real-time-edge/) | بسازید | Python |
+| 15 | [بینایی بلادرنگ: استقرار در لبه](../../phases/04-computer-vision/15-real-time-edge/) | بسازید | Python, Rust |
 | 16 | [ساخت خط لولهٔ کامل بینایی](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | بسازید | Python |
 | 17 | [بینایی خودنظارتی: SimCLR، DINO، MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | بسازید | Python |
 | 18 | [بینایی با واژگان باز: CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | بسازید | Python |
@@ -503,11 +503,11 @@ flowchart TB
 | 16 | [تولید متن](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | بسازید | Python |
 | 17 | [چت‌بات‌ها: از قواعد تا شبکهٔ عصبی](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | بسازید | Python |
 | 18 | [پردازش زبان طبیعی چندزبانه](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | بسازید | Python |
-| 19 | [توکن‌سازی زیرواژه: BPE، WordPiece، Unigram، SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | بیاموزید | Python |
+| 19 | [توکن‌سازی زیرواژه: BPE، WordPiece، Unigram، SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | بیاموزید | Python, TypeScript |
 | 20 | [خروجی ساخت‌یافته و رمزگشایی مقید](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | بسازید | Python |
 | 21 | [NLI و استلزام متنی](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | بیاموزید | Python |
 | 22 | [بررسی عمیق مدل‌های تعبیه](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | بیاموزید | Python |
-| 23 | [راهبردهای قطعه‌بندی برای RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | بسازید | Python |
+| 23 | [راهبردهای قطعه‌بندی برای RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | بسازید | Python, TypeScript |
 | 24 | [حل هم‌مرجعی](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | بیاموزید | Python |
 | 25 | [پیوند موجودیت و رفع ابهام](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | بسازید | Python |
 | 26 | [استخراج رابطه و ساخت گراف دانش](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | بسازید | Python |
@@ -533,7 +533,7 @@ flowchart TB
 | 08 | [همانندسازی و تبدیل صدا](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | بسازید | Python |
 | 09 | [تولید موسیقی](../../phases/06-speech-and-audio/09-music-generation) | بسازید | Python |
 | 10 | [مدل‌های صوتی‌زبانی](../../phases/06-speech-and-audio/10-audio-language-models) | بسازید | Python |
-| 11 | [پردازش بلادرنگ صوت](../../phases/06-speech-and-audio/11-real-time-audio-processing) | بسازید | Python |
+| 11 | [پردازش بلادرنگ صوت](../../phases/06-speech-and-audio/11-real-time-audio-processing) | بسازید | Python, Rust |
 | 12 | [ساخت خط لولهٔ دستیار صوتی](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | بسازید | Python |
 | 13 | [کدک‌های عصبی صوت: EnCodec، SNAC، Mimi، DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | بیاموزید | Python |
 | 14 | [تشخیص فعالیت صوتی و نوبت‌گیری](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | بسازید | Python |
@@ -549,11 +549,11 @@ flowchart TB
 
 | # | درس | نوع | زبان |
 |:---:|--------|:----:|------|
-| 01 | [چرا ترنسفورمر: مشکلات RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | بیاموزید | Python |
-| 02 | [خودتوجهی از ابتدا](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | بسازید | Python |
-| 03 | [توجه چندسری](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | بسازید | Python |
-| 04 | [رمزگذاری موقعیت: Sinusoidal، RoPE، ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | بسازید | Python |
-| 05 | [ترنسفورمر کامل: رمزگذار و رمزگشا](../../phases/07-transformers-deep-dive/05-full-transformer/) | بسازید | Python |
+| 01 | [چرا ترنسفورمر: مشکلات RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | بیاموزید | Python, Julia |
+| 02 | [خودتوجهی از ابتدا](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | بسازید | Python, Rust, Julia |
+| 03 | [توجه چندسری](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | بسازید | Python, Rust |
+| 04 | [رمزگذاری موقعیت: Sinusoidal، RoPE، ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | بسازید | Python, Rust, Julia |
+| 05 | [ترنسفورمر کامل: رمزگذار و رمزگشا](../../phases/07-transformers-deep-dive/05-full-transformer/) | بسازید | Python, Julia |
 | 06 | [BERT: مدل‌سازی زبان با پوشاندن توکن](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | بسازید | Python |
 | 07 | [GPT: مدل‌سازی علّی زبان](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | بسازید | Python |
 | 08 | [T5، BART: مدل‌های رمزگذار-رمزگشا](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | بیاموزید | Python |
@@ -622,15 +622,15 @@ flowchart TB
 | 01 | [توکن‌سازها: BPE، WordPiece، SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | بسازید | Python, Rust |
 | 02 | [ساخت توکن‌ساز از ابتدا](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | بسازید | Python |
 | 03 | [خط لولهٔ داده برای پیش‌آموزش](../../phases/10-llms-from-scratch/03-data-pipelines/) | بسازید | Python |
-| 04 | [پیش‌آموزش یک GPT کوچک (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | بسازید | Python |
+| 04 | [پیش‌آموزش یک GPT کوچک (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | بسازید | Python, Rust |
 | 05 | [آموزش توزیع‌شده، FSDP، DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | بسازید | Python |
 | 06 | [تنظیم دستور با SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | بسازید | Python |
 | 07 | [RLHF: مدل پاداش و PPO](../../phases/10-llms-from-scratch/07-rlhf/) | بسازید | Python |
 | 08 | [DPO: بهینه‌سازی مستقیم ترجیح](../../phases/10-llms-from-scratch/08-dpo/) | بسازید | Python |
 | 09 | [هوش مصنوعی مبتنی بر قانون اساسی و خودبهبودی](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | بسازید | Python |
 | 10 | [ارزیابی: معیارهای محک و آزمون‌ها](../../phases/10-llms-from-scratch/10-evaluation/) | بسازید | Python |
-| 11 | [کوانتیزه‌سازی: INT8، GPTQ، AWQ، GGUF](../../phases/10-llms-from-scratch/11-quantization/) | بسازید | Python |
-| 12 | [بهینه‌سازی استنتاج](../../phases/10-llms-from-scratch/12-inference-optimization/) | بسازید | Python |
+| 11 | [کوانتیزه‌سازی: INT8، GPTQ، AWQ، GGUF](../../phases/10-llms-from-scratch/11-quantization/) | بسازید | Python, Rust |
+| 12 | [بهینه‌سازی استنتاج](../../phases/10-llms-from-scratch/12-inference-optimization/) | بسازید | Python, Rust |
 | 13 | [ساخت خط لولهٔ کامل LLM](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | بسازید | Python |
 | 14 | [مدل‌های باز: بررسی معماری](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | بیاموزید | Python |
 | 15 | [رمزگشایی حدسی و EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | بسازید | Python |
@@ -652,18 +652,18 @@ flowchart TB
 
 | # | درس | نوع | زبان |
 |:---:|--------|:----:|------|
-| 01 | [مهندسی پرامپت: روش‌ها و الگوها](../../phases/11-llm-engineering/01-prompt-engineering/) | بسازید | Python |
+| 01 | [مهندسی پرامپت: روش‌ها و الگوها](../../phases/11-llm-engineering/01-prompt-engineering/) | بسازید | Python, TypeScript |
 | 02 | [Few-Shot، CoT، Tree-of-Thought](../../phases/11-llm-engineering/02-few-shot-cot/) | بسازید | Python |
-| 03 | [خروجی‌های ساخت‌یافته](../../phases/11-llm-engineering/03-structured-outputs/) | بسازید | Python |
-| 04 | [تعبیه‌ها و بازنمایی برداری](../../phases/11-llm-engineering/04-embeddings/) | بسازید | Python |
-| 05 | [مهندسی زمینه](../../phases/11-llm-engineering/05-context-engineering/) | بسازید | Python |
-| 06 | [RAG: تولید تقویت‌شده با بازیابی](../../phases/11-llm-engineering/06-rag/) | بسازید | Python |
+| 03 | [خروجی‌های ساخت‌یافته](../../phases/11-llm-engineering/03-structured-outputs/) | بسازید | Python, TypeScript |
+| 04 | [تعبیه‌ها و بازنمایی برداری](../../phases/11-llm-engineering/04-embeddings/) | بسازید | Python, TypeScript |
+| 05 | [مهندسی زمینه](../../phases/11-llm-engineering/05-context-engineering/) | بسازید | Python, TypeScript |
+| 06 | [RAG: تولید تقویت‌شده با بازیابی](../../phases/11-llm-engineering/06-rag/) | بسازید | Python, TypeScript |
 | 07 | [RAG پیشرفته: قطعه‌بندی و بازرتبه‌بندی](../../phases/11-llm-engineering/07-advanced-rag/) | بسازید | Python |
 | 08 | [تنظیم دقیق با LoRA و QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | بسازید | Python |
-| 09 | [فراخوانی تابع و استفاده از ابزار](../../phases/11-llm-engineering/09-function-calling/) | بسازید | Python |
+| 09 | [فراخوانی تابع و استفاده از ابزار](../../phases/11-llm-engineering/09-function-calling/) | بسازید | Python, TypeScript |
 | 10 | [ارزیابی و آزمون](../../phases/11-llm-engineering/10-evaluation/) | بسازید | Python |
 | 11 | [ذخیرهٔ نهان، محدودسازی نرخ و هزینه](../../phases/11-llm-engineering/11-caching-cost/) | بسازید | Python |
-| 12 | [حفاظ‌ها و ایمنی](../../phases/11-llm-engineering/12-guardrails/) | بسازید | Python |
+| 12 | [حفاظ‌ها و ایمنی](../../phases/11-llm-engineering/12-guardrails/) | بسازید | Python, TypeScript |
 | 13 | [ساخت برنامهٔ LLM برای محیط عملیاتی](../../phases/11-llm-engineering/13-production-app/) | بسازید | Python |
 | 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | بسازید | Python |
 | 15 | [ذخیرهٔ نهان پرامپت و زمینه](../../phases/11-llm-engineering/15-prompt-caching/) | بسازید | Python |
@@ -712,7 +712,7 @@ flowchart TB
 
 | # | درس | نوع | زبان |
 |:---:|--------|:----:|------|
-| 01 | [رابط ابزار](../../phases/13-tools-and-protocols/01-the-tool-interface/) | بیاموزید | Python |
+| 01 | [رابط ابزار](../../phases/13-tools-and-protocols/01-the-tool-interface/) | بیاموزید | Python, TypeScript |
 | 02 | [بررسی عمیق فراخوانی تابع](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | بسازید | Python |
 | 03 | [فراخوانی موازی و جریانی ابزار](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | بسازید | Python |
 | 04 | [خروجی ساخت‌یافته](../../phases/13-tools-and-protocols/04-structured-output/) | بسازید | Python |
@@ -730,7 +730,7 @@ flowchart TB
 | 16 | [مجوزدهی MCP: CIMD، اتصال به صادرکننده، PKCE و ارتقای احراز هویت](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | بسازید | Python |
 | 17 | [دروازه‌های MCP بدون حالت و پذیرش در رجیستری](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | بیاموزید | Python |
 | 18 | [احراز هویت MCP در عملیات: ثبت‌نام و توکن وابسته به صادرکننده](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | بسازید | Python |
-| 19 | [پروتکل A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | بسازید | Python |
+| 19 | [پروتکل A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | بسازید | Python, TypeScript |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | بسازید | Python |
 | 21 | [لایهٔ مسیریابی LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | بیاموزید | Python |
 | 22 | [Agent Skills: قرارداد قابل‌حمل و مرز زمان اجرا](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | بسازید | Python |
@@ -770,24 +770,24 @@ flowchart TB
 
 | # | درس | نوع | زبان |
 |:---:|--------|:----:|------|
-| 01 | [حلقهٔ عامل](../../phases/14-agent-engineering/01-the-agent-loop/) | بسازید | Python |
+| 01 | [حلقهٔ عامل](../../phases/14-agent-engineering/01-the-agent-loop/) | بسازید | Python, TypeScript |
 | 02 | [ReWOO و برنامه‌ریزی سپس اجرا](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | بسازید | Python |
 | 03 | [Reflexion و یادگیری تقویتی کلامی](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | بسازید | Python |
 | 04 | [Tree of Thoughts و LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | بسازید | Python |
 | 05 | [Self-Refine و CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | بسازید | Python |
-| 06 | [استفاده از ابزار و فراخوانی تابع](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | بسازید | Python |
+| 06 | [استفاده از ابزار و فراخوانی تابع](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | بسازید | Python, TypeScript |
 | 07 | [حافظهٔ عامل: زمینهٔ مجازی و صفحه‌بندی حافظه](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | بسازید | Python |
 | 08 | [بلوک‌های حافظه و محاسبه در زمان استراحت](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | بسازید | Python |
 | 09 | [حافظهٔ ترکیبی: بردار، گراف و KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | بسازید | Python |
 | 10 | [کتابخانهٔ مهارت و یادگیری مادام‌العمر (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | بسازید | Python |
 | 11 | [برنامه‌ریزی با HTN و جست‌وجوی تکاملی](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | بسازید | Python |
 | 12 | [الگوهای گردش‌کار Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | بسازید | Python |
-| 13 | [هماهنگ‌سازی گراف حالت‌دار: اجرای ماندگار و نقاط وارسی](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | بسازید | Python |
+| 13 | [هماهنگ‌سازی گراف حالت‌دار: اجرای ماندگار و نقاط وارسی](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | بسازید | Python, TypeScript |
 | 14 | [مدل Actor برای عامل‌ها](../../phases/14-agent-engineering/14-autogen-actor-model/) | بسازید | Python |
 | 15 | [تیم عامل‌های نقش‌محور: نقش، وظیفه، فرایند](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | بسازید | Python |
 | 16 | [OpenAI Agents SDK: تحویل، حفاظ، ردیابی](../../phases/14-agent-engineering/16-openai-agents-sdk/) | بسازید | Python |
 | 17 | [بستر اجرا به‌عنوان کتابخانه: زیرعامل‌ها و ذخیرهٔ نشست](../../phases/14-agent-engineering/17-claude-agent-sdk/) | بسازید | Python |
-| 18 | [محیط‌های اجرای عامل برای عملیات](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | بیاموزید | Python |
+| 18 | [محیط‌های اجرای عامل برای عملیات](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | بیاموزید | Python, TypeScript |
 | 19 | [محک‌ها: SWE-bench، GAIA، AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | بیاموزید | Python |
 | 20 | [محک‌ها: WebArena و OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | بیاموزید | Python |
 | 21 | [استفاده از رایانه: Claude، OpenAI CUA، Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | بسازید | Python |
@@ -914,14 +914,14 @@ flowchart TB
 | 10 | [کاهش شروع سرد برای LLM بدون سرور](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | بیاموزید | Python |
 | 11 | [سرویس‌دهی LLM چندمنطقه‌ای و محلی‌بودن کش KV](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | بیاموزید | Python |
 | 12 | [استنتاج در لبه: ANE، Hexagon، WebGPU، Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | بیاموزید | Python |
-| 13 | [انتخاب مجموعهٔ ابزار مشاهده‌پذیری LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | بیاموزید | Python |
-| 14 | [اقتصاد کش پرامپت و کش معنایی](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | بیاموزید | Python |
-| 15 | [API دسته‌ای: تخفیف 50% به‌عنوان استاندارد صنعت](../../phases/17-infrastructure-and-production/15-batch-apis/) | بیاموزید | Python |
-| 16 | [مسیریابی مدل به‌عنوان جزء پایهٔ کاهش هزینه](../../phases/17-infrastructure-and-production/16-model-routing/) | بیاموزید | Python |
+| 13 | [انتخاب مجموعهٔ ابزار مشاهده‌پذیری LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | بیاموزید | Python, TypeScript |
+| 14 | [اقتصاد کش پرامپت و کش معنایی](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | بیاموزید | Python, TypeScript |
+| 15 | [API دسته‌ای: تخفیف 50% به‌عنوان استاندارد صنعت](../../phases/17-infrastructure-and-production/15-batch-apis/) | بیاموزید | Python, TypeScript |
+| 16 | [مسیریابی مدل به‌عنوان جزء پایهٔ کاهش هزینه](../../phases/17-infrastructure-and-production/16-model-routing/) | بیاموزید | Python, TypeScript |
 | 17 | [جداسازی prefill/decode: NVIDIA Dynamo و llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | بیاموزید | Python |
 | 18 | [مجموعهٔ سرویس‌دهی عملیاتی: انتقال KV و مسیریابی آگاه از کش](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | بیاموزید | Python |
-| 19 | [دروازه‌های AI: LiteLLM، Portkey، Kong، Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | بیاموزید | Python |
-| 20 | [استقرار سایه، قناری و تدریجی](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | بیاموزید | Python |
+| 19 | [دروازه‌های AI: LiteLLM، Portkey، Kong، Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | بیاموزید | Python, TypeScript |
+| 20 | [استقرار سایه، قناری و تدریجی](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | بیاموزید | Python, TypeScript |
 | 21 | [آزمون A/B قابلیت‌های LLM: GrowthBook و Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | بیاموزید | Python |
 | 22 | [آزمون بار APIهای LLM: k6، LLMPerf، GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | بسازید | Python |
 | 23 | [SRE برای AI: پاسخ چندعاملی به رخداد](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | بیاموزید | Python |

@@ -346,10 +346,10 @@ flowchart TB
 
 | # | 레슨 | 유형 | 언어 |
 |:---:|--------|:----:|------|
-| 01 | [개발 환경](../../phases/00-setup-and-tooling/01-dev-environment/) | 구현 | Python |
+| 01 | [개발 환경](../../phases/00-setup-and-tooling/01-dev-environment/) | 구현 | Python, TypeScript, Rust |
 | 02 | [Git과 협업](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | 학습 | — |
 | 03 | [GPU 설정과 클라우드](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | 구현 | Python |
-| 04 | [API와 키](../../phases/00-setup-and-tooling/04-apis-and-keys/) | 구현 | Python |
+| 04 | [API와 키](../../phases/00-setup-and-tooling/04-apis-and-keys/) | 구현 | Python, TypeScript |
 | 05 | [Jupyter 노트북](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | 구현 | Python |
 | 06 | [Python 환경](../../phases/00-setup-and-tooling/06-python-environments/) | 구현 | Shell |
 | 07 | [AI용 Docker](../../phases/00-setup-and-tooling/07-docker-for-ai/) | 구현 | Docker |
@@ -369,24 +369,24 @@ flowchart TB
 | 01 | [선형대수 직관](../../phases/01-math-foundations/01-linear-algebra-intuition/) | 학습 | Python, Julia |
 | 02 | [벡터, 행렬과 연산](../../phases/01-math-foundations/02-vectors-matrices-operations/) | 구현 | Python, Julia |
 | 03 | [행렬 변환과 고윳값](../../phases/01-math-foundations/03-matrix-transformations/) | 구현 | Python, Julia |
-| 04 | [머신러닝을 위한 미적분: 도함수와 기울기](../../phases/01-math-foundations/04-calculus-for-ml/) | 학습 | Python |
-| 05 | [연쇄 법칙과 자동 미분](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | 구현 | Python |
-| 06 | [확률과 분포](../../phases/01-math-foundations/06-probability-and-distributions/) | 학습 | Python |
-| 07 | [베이즈 정리와 통계적 사고](../../phases/01-math-foundations/07-bayes-theorem/) | 구현 | Python |
-| 08 | [최적화: 경사 하강법 계열](../../phases/01-math-foundations/08-optimization/) | 구현 | Python |
-| 09 | [정보 이론: 엔트로피와 KL 발산](../../phases/01-math-foundations/09-information-theory/) | 학습 | Python |
-| 10 | [차원 축소: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | 구현 | Python |
+| 04 | [머신러닝을 위한 미적분: 도함수와 기울기](../../phases/01-math-foundations/04-calculus-for-ml/) | 학습 | Python, Julia |
+| 05 | [연쇄 법칙과 자동 미분](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | 구현 | Python, Julia |
+| 06 | [확률과 분포](../../phases/01-math-foundations/06-probability-and-distributions/) | 학습 | Python, Julia |
+| 07 | [베이즈 정리와 통계적 사고](../../phases/01-math-foundations/07-bayes-theorem/) | 구현 | Python, TypeScript |
+| 08 | [최적화: 경사 하강법 계열](../../phases/01-math-foundations/08-optimization/) | 구현 | Python, Julia |
+| 09 | [정보 이론: 엔트로피와 KL 발산](../../phases/01-math-foundations/09-information-theory/) | 학습 | Python, TypeScript |
+| 10 | [차원 축소: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | 구현 | Python, TypeScript |
 | 11 | [특이값 분해](../../phases/01-math-foundations/11-singular-value-decomposition/) | 구현 | Python, Julia |
-| 12 | [텐서 연산](../../phases/01-math-foundations/12-tensor-operations/) | 구현 | Python |
-| 13 | [수치 안정성](../../phases/01-math-foundations/13-numerical-stability/) | 구현 | Python |
-| 14 | [노름과 거리](../../phases/01-math-foundations/14-norms-and-distances/) | 구현 | Python |
-| 15 | [머신러닝을 위한 통계](../../phases/01-math-foundations/15-statistics-for-ml/) | 구현 | Python |
-| 16 | [샘플링 방법](../../phases/01-math-foundations/16-sampling-methods/) | 구현 | Python |
-| 17 | [선형 시스템](../../phases/01-math-foundations/17-linear-systems/) | 구현 | Python |
-| 18 | [볼록 최적화](../../phases/01-math-foundations/18-convex-optimization/) | 구현 | Python |
+| 12 | [텐서 연산](../../phases/01-math-foundations/12-tensor-operations/) | 구현 | Python, TypeScript |
+| 13 | [수치 안정성](../../phases/01-math-foundations/13-numerical-stability/) | 구현 | Python, TypeScript |
+| 14 | [노름과 거리](../../phases/01-math-foundations/14-norms-and-distances/) | 구현 | Python, TypeScript |
+| 15 | [머신러닝을 위한 통계](../../phases/01-math-foundations/15-statistics-for-ml/) | 구현 | Python, TypeScript |
+| 16 | [샘플링 방법](../../phases/01-math-foundations/16-sampling-methods/) | 구현 | Python, TypeScript |
+| 17 | [선형 시스템](../../phases/01-math-foundations/17-linear-systems/) | 구현 | Python, TypeScript |
+| 18 | [볼록 최적화](../../phases/01-math-foundations/18-convex-optimization/) | 구현 | Python, TypeScript |
 | 19 | [AI를 위한 복소수](../../phases/01-math-foundations/19-complex-numbers/) | 학습 | Python |
-| 20 | [푸리에 변환](../../phases/01-math-foundations/20-fourier-transform/) | 구현 | Python |
-| 21 | [머신러닝을 위한 그래프 이론](../../phases/01-math-foundations/21-graph-theory/) | 구현 | Python |
+| 20 | [푸리에 변환](../../phases/01-math-foundations/20-fourier-transform/) | 구현 | Python, TypeScript |
+| 21 | [머신러닝을 위한 그래프 이론](../../phases/01-math-foundations/21-graph-theory/) | 구현 | Python, TypeScript |
 | 22 | [확률 과정](../../phases/01-math-foundations/22-stochastic-processes/) | 학습 | Python |
 
 </details>
@@ -398,14 +398,14 @@ flowchart TB
 | # | 레슨 | 유형 | 언어 |
 |:---:|--------|:----:|------|
 | 01 | [머신러닝이란 무엇인가](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | 학습 | Python |
-| 02 | [처음부터 구현하는 선형 회귀](../../phases/02-ml-fundamentals/02-linear-regression/) | 구현 | Python |
-| 03 | [로지스틱 회귀와 분류](../../phases/02-ml-fundamentals/03-logistic-regression/) | 구현 | Python |
+| 02 | [처음부터 구현하는 선형 회귀](../../phases/02-ml-fundamentals/02-linear-regression/) | 구현 | Python, Rust, Julia |
+| 03 | [로지스틱 회귀와 분류](../../phases/02-ml-fundamentals/03-logistic-regression/) | 구현 | Python, Rust, Julia |
 | 04 | [결정 트리와 랜덤 포레스트](../../phases/02-ml-fundamentals/04-decision-trees/) | 구현 | Python |
-| 05 | [서포트 벡터 머신](../../phases/02-ml-fundamentals/05-support-vector-machines/) | 구현 | Python |
+| 05 | [서포트 벡터 머신](../../phases/02-ml-fundamentals/05-support-vector-machines/) | 구현 | Python, Julia |
 | 06 | [k-최근접 이웃(KNN)과 거리 척도](../../phases/02-ml-fundamentals/06-knn-and-distances/) | 구현 | Python |
 | 07 | [비지도 학습: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | 구현 | Python |
 | 08 | [특성 공학과 선택](../../phases/02-ml-fundamentals/08-feature-engineering/) | 구현 | Python |
-| 09 | [모델 평가: 지표와 교차 검증](../../phases/02-ml-fundamentals/09-model-evaluation/) | 구현 | Python |
+| 09 | [모델 평가: 지표와 교차 검증](../../phases/02-ml-fundamentals/09-model-evaluation/) | 구현 | Python, Julia |
 | 10 | [편향, 분산과 학습 곡선](../../phases/02-ml-fundamentals/10-bias-variance/) | 학습 | Python |
 | 11 | [앙상블 기법: 부스팅, 배깅, 스태킹](../../phases/02-ml-fundamentals/11-ensemble-methods/) | 구현 | Python |
 | 12 | [하이퍼파라미터 튜닝](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | 구현 | Python |
@@ -427,11 +427,11 @@ flowchart TB
 
 | # | 레슨 | 유형 | 언어 |
 |:---:|--------|:----:|------|
-| 01 | [퍼셉트론: 모든 것의 시작](../../phases/03-deep-learning-core/01-the-perceptron/) | 구현 | Python |
+| 01 | [퍼셉트론: 모든 것의 시작](../../phases/03-deep-learning-core/01-the-perceptron/) | 구현 | Python, Rust, Julia |
 | 02 | [다층 신경망과 순전파](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 구현 | Python |
-| 03 | [처음부터 구현하는 역전파](../../phases/03-deep-learning-core/03-backpropagation/) | 구현 | Python |
-| 04 | [활성화 함수: ReLU, Sigmoid, GELU와 그 역할](../../phases/03-deep-learning-core/04-activation-functions/) | 구현 | Python |
-| 05 | [손실 함수: MSE, 교차 엔트로피, 대조 손실](../../phases/03-deep-learning-core/05-loss-functions/) | 구현 | Python |
+| 03 | [처음부터 구현하는 역전파](../../phases/03-deep-learning-core/03-backpropagation/) | 구현 | Python, Rust, Julia |
+| 04 | [활성화 함수: ReLU, Sigmoid, GELU와 그 역할](../../phases/03-deep-learning-core/04-activation-functions/) | 구현 | Python, Julia |
+| 05 | [손실 함수: MSE, 교차 엔트로피, 대조 손실](../../phases/03-deep-learning-core/05-loss-functions/) | 구현 | Python, Julia |
 | 06 | [최적화 알고리즘: SGD, 모멘텀, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 구현 | Python |
 | 07 | [정규화: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 구현 | Python |
 | 08 | [가중치 초기화와 학습 안정성](../../phases/03-deep-learning-core/08-weight-initialization/) | 구현 | Python |
@@ -463,7 +463,7 @@ flowchart TB
 | 12 | [동영상 이해: 시간 모델링](../../phases/04-computer-vision/12-video-understanding/) | 구현 | Python |
 | 13 | [3D 비전: 포인트 클라우드와 NeRF](../../phases/04-computer-vision/13-3d-vision-nerf/) | 구현 | Python |
 | 14 | [비전 트랜스포머(ViT)](../../phases/04-computer-vision/14-vision-transformers/) | 구현 | Python |
-| 15 | [실시간 비전: 엣지 배포](../../phases/04-computer-vision/15-real-time-edge/) | 구현 | Python |
+| 15 | [실시간 비전: 엣지 배포](../../phases/04-computer-vision/15-real-time-edge/) | 구현 | Python, Rust |
 | 16 | [완전한 비전 파이프라인 구축](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | 구현 | Python |
 | 17 | [자기 지도 비전: SimCLR, DINO, MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | 구현 | Python |
 | 18 | [오픈 보캐뷸러리 비전: CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | 구현 | Python |
@@ -504,11 +504,11 @@ flowchart TB
 | 16 | [텍스트 생성](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | 구현 | Python |
 | 17 | [챗봇: 규칙 기반에서 신경망 기반으로](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | 구현 | Python |
 | 18 | [다국어 NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | 구현 | Python |
-| 19 | [서브워드 토큰화: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | 학습 | Python |
+| 19 | [서브워드 토큰화: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | 학습 | Python, TypeScript |
 | 20 | [구조화된 출력과 제약 디코딩](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | 구현 | Python |
 | 21 | [자연어 추론(NLI)과 텍스트 함의](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | 학습 | Python |
 | 22 | [임베딩 모델 심층 분석](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | 학습 | Python |
-| 23 | [RAG 청킹 전략](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | 구현 | Python |
+| 23 | [RAG 청킹 전략](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | 구현 | Python, TypeScript |
 | 24 | [상호 참조 해결](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | 학습 | Python |
 | 25 | [엔티티 연결과 중의성 해소](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | 구현 | Python |
 | 26 | [관계 추출과 지식 그래프 구축](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | 구현 | Python |
@@ -534,7 +534,7 @@ flowchart TB
 | 08 | [음성 복제와 음성 변환](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | 구현 | Python |
 | 09 | [음악 생성](../../phases/06-speech-and-audio/09-music-generation) | 구현 | Python |
 | 10 | [오디오-언어 모델](../../phases/06-speech-and-audio/10-audio-language-models) | 구현 | Python |
-| 11 | [실시간 오디오 처리](../../phases/06-speech-and-audio/11-real-time-audio-processing) | 구현 | Python |
+| 11 | [실시간 오디오 처리](../../phases/06-speech-and-audio/11-real-time-audio-processing) | 구현 | Python, Rust |
 | 12 | [음성 비서 파이프라인 구축](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | 구현 | Python |
 | 13 | [신경망 오디오 코덱: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | 학습 | Python |
 | 14 | [음성 활동 감지와 발화 차례 전환](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | 구현 | Python |
@@ -550,11 +550,11 @@ flowchart TB
 
 | # | 레슨 | 유형 | 언어 |
 |:---:|--------|:----:|------|
-| 01 | [트랜스포머가 필요한 이유: RNN의 한계](../../phases/07-transformers-deep-dive/01-why-transformers/) | 학습 | Python |
-| 02 | [처음부터 구현하는 셀프 어텐션](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | 구현 | Python |
-| 03 | [멀티헤드 어텐션](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | 구현 | Python |
-| 04 | [위치 인코딩: 사인파, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | 구현 | Python |
-| 05 | [트랜스포머 전체: 인코더와 디코더](../../phases/07-transformers-deep-dive/05-full-transformer/) | 구현 | Python |
+| 01 | [트랜스포머가 필요한 이유: RNN의 한계](../../phases/07-transformers-deep-dive/01-why-transformers/) | 학습 | Python, Julia |
+| 02 | [처음부터 구현하는 셀프 어텐션](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | 구현 | Python, Rust, Julia |
+| 03 | [멀티헤드 어텐션](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | 구현 | Python, Rust |
+| 04 | [위치 인코딩: 사인파, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | 구현 | Python, Rust, Julia |
+| 05 | [트랜스포머 전체: 인코더와 디코더](../../phases/07-transformers-deep-dive/05-full-transformer/) | 구현 | Python, Julia |
 | 06 | [BERT: 마스크 언어 모델링](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | 구현 | Python |
 | 07 | [GPT: 인과 언어 모델링](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | 구현 | Python |
 | 08 | [T5, BART: 인코더-디코더 모델](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | 학습 | Python |
@@ -623,15 +623,15 @@ flowchart TB
 | 01 | [토크나이저: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | 구현 | Python, Rust |
 | 02 | [토크나이저를 처음부터 만들기](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | 구현 | Python |
 | 03 | [사전 학습을 위한 데이터 파이프라인](../../phases/10-llms-from-scratch/03-data-pipelines/) | 구현 | Python |
-| 04 | [미니 GPT(1억 2,400만 매개변수) 사전 학습](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | 구현 | Python |
+| 04 | [미니 GPT(1억 2,400만 매개변수) 사전 학습](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | 구현 | Python, Rust |
 | 05 | [분산 학습, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | 구현 | Python |
 | 06 | [지시 튜닝: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | 구현 | Python |
 | 07 | [RLHF: 보상 모델과 PPO](../../phases/10-llms-from-scratch/07-rlhf/) | 구현 | Python |
 | 08 | [DPO: 직접 선호 최적화](../../phases/10-llms-from-scratch/08-dpo/) | 구현 | Python |
 | 09 | [Constitutional AI와 자기 개선](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | 구현 | Python |
 | 10 | [평가: 벤치마크와 평가](../../phases/10-llms-from-scratch/10-evaluation/) | 구현 | Python |
-| 11 | [양자화: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | 구현 | Python |
-| 12 | [추론 최적화](../../phases/10-llms-from-scratch/12-inference-optimization/) | 구현 | Python |
+| 11 | [양자화: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | 구현 | Python, Rust |
+| 12 | [추론 최적화](../../phases/10-llms-from-scratch/12-inference-optimization/) | 구현 | Python, Rust |
 | 13 | [완전한 LLM 파이프라인 구축](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | 구현 | Python |
 | 14 | [오픈 모델: 아키텍처 살펴보기](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | 학습 | Python |
 | 15 | [추측 디코딩과 EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | 구현 | Python |
@@ -653,18 +653,18 @@ flowchart TB
 
 | # | 레슨 | 유형 | 언어 |
 |:---:|--------|:----:|------|
-| 01 | [프롬프트 엔지니어링: 기법과 패턴](../../phases/11-llm-engineering/01-prompt-engineering/) | 구현 | Python |
+| 01 | [프롬프트 엔지니어링: 기법과 패턴](../../phases/11-llm-engineering/01-prompt-engineering/) | 구현 | Python, TypeScript |
 | 02 | [퓨샷, CoT, Tree-of-Thought](../../phases/11-llm-engineering/02-few-shot-cot/) | 구현 | Python |
-| 03 | [구조화된 출력](../../phases/11-llm-engineering/03-structured-outputs/) | 구현 | Python |
-| 04 | [임베딩과 벡터 표현](../../phases/11-llm-engineering/04-embeddings/) | 구현 | Python |
-| 05 | [컨텍스트 엔지니어링](../../phases/11-llm-engineering/05-context-engineering/) | 구현 | Python |
-| 06 | [RAG: 검색 증강 생성](../../phases/11-llm-engineering/06-rag/) | 구현 | Python |
+| 03 | [구조화된 출력](../../phases/11-llm-engineering/03-structured-outputs/) | 구현 | Python, TypeScript |
+| 04 | [임베딩과 벡터 표현](../../phases/11-llm-engineering/04-embeddings/) | 구현 | Python, TypeScript |
+| 05 | [컨텍스트 엔지니어링](../../phases/11-llm-engineering/05-context-engineering/) | 구현 | Python, TypeScript |
+| 06 | [RAG: 검색 증강 생성](../../phases/11-llm-engineering/06-rag/) | 구현 | Python, TypeScript |
 | 07 | [고급 RAG: 청킹과 재순위화](../../phases/11-llm-engineering/07-advanced-rag/) | 구현 | Python |
 | 08 | [LoRA와 QLoRA를 활용한 파인튜닝](../../phases/11-llm-engineering/08-fine-tuning-lora/) | 구현 | Python |
-| 09 | [함수 호출과 도구 사용](../../phases/11-llm-engineering/09-function-calling/) | 구현 | Python |
+| 09 | [함수 호출과 도구 사용](../../phases/11-llm-engineering/09-function-calling/) | 구현 | Python, TypeScript |
 | 10 | [평가와 테스트](../../phases/11-llm-engineering/10-evaluation/) | 구현 | Python |
 | 11 | [캐싱, 속도 제한과 비용](../../phases/11-llm-engineering/11-caching-cost/) | 구현 | Python |
-| 12 | [가드레일과 안전성](../../phases/11-llm-engineering/12-guardrails/) | 구현 | Python |
+| 12 | [가드레일과 안전성](../../phases/11-llm-engineering/12-guardrails/) | 구현 | Python, TypeScript |
 | 13 | [프로덕션용 LLM 앱 구축](../../phases/11-llm-engineering/13-production-app/) | 구현 | Python |
 | 14 | [Model Context Protocol(MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | 구현 | Python |
 | 15 | [프롬프트 캐싱과 컨텍스트 캐싱](../../phases/11-llm-engineering/15-prompt-caching/) | 구현 | Python |
@@ -713,7 +713,7 @@ flowchart TB
 
 | # | 레슨 | 유형 | 언어 |
 |:---:|--------|:----:|------|
-| 01 | [도구 인터페이스](../../phases/13-tools-and-protocols/01-the-tool-interface/) | 학습 | Python |
+| 01 | [도구 인터페이스](../../phases/13-tools-and-protocols/01-the-tool-interface/) | 학습 | Python, TypeScript |
 | 02 | [함수 호출 심층 분석](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | 구현 | Python |
 | 03 | [도구 호출 병렬화와 스트리밍](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | 구현 | Python |
 | 04 | [구조화된 출력](../../phases/13-tools-and-protocols/04-structured-output/) | 구현 | Python |
@@ -731,7 +731,7 @@ flowchart TB
 | 16 | [MCP 권한 부여: CIMD, 발급자 바인딩, PKCE, 단계별 인증 강화](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | 구현 | Python |
 | 17 | [무상태 MCP 게이트웨이와 레지스트리 등록 심사](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | 학습 | Python |
 | 18 | [프로덕션 MCP 인증: 발급자에 연결된 등록과 토큰](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | 구현 | Python |
-| 19 | [A2A 프로토콜](../../phases/13-tools-and-protocols/19-a2a-protocol/) | 구현 | Python |
+| 19 | [A2A 프로토콜](../../phases/13-tools-and-protocols/19-a2a-protocol/) | 구현 | Python, TypeScript |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | 구현 | Python |
 | 21 | [LLM 라우팅 계층](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | 학습 | Python |
 | 22 | [Agent Skills: 이식 가능한 계약과 런타임 경계](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | 구현 | Python |
@@ -771,24 +771,24 @@ flowchart TB
 
 | # | 레슨 | 유형 | 언어 |
 |:---:|--------|:----:|------|
-| 01 | [에이전트 루프](../../phases/14-agent-engineering/01-the-agent-loop/) | 구현 | Python |
+| 01 | [에이전트 루프](../../phases/14-agent-engineering/01-the-agent-loop/) | 구현 | Python, TypeScript |
 | 02 | [ReWOO와 계획-실행 방식](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | 구현 | Python |
 | 03 | [Reflexion과 언어 기반 강화학습](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | 구현 | Python |
 | 04 | [Tree of Thoughts와 LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | 구현 | Python |
 | 05 | [Self-Refine과 CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | 구현 | Python |
-| 06 | [도구 사용과 함수 호출](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | 구현 | Python |
+| 06 | [도구 사용과 함수 호출](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | 구현 | Python, TypeScript |
 | 07 | [에이전트 메모리: 가상 컨텍스트와 메모리 페이징](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | 구현 | Python |
 | 08 | [메모리 블록과 슬립 타임 컴퓨팅](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | 구현 | Python |
 | 09 | [하이브리드 메모리: 벡터 + 그래프 + KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | 구현 | Python |
 | 10 | [스킬 라이브러리와 평생 학습(Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | 구현 | Python |
 | 11 | [HTN과 진화 탐색을 활용한 계획](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | 구현 | Python |
 | 12 | [Anthropic의 워크플로 패턴](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | 구현 | Python |
-| 13 | [상태 유지 그래프 오케스트레이션: 지속성 있는 실행과 체크포인트](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | 구현 | Python |
+| 13 | [상태 유지 그래프 오케스트레이션: 지속성 있는 실행과 체크포인트](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | 구현 | Python, TypeScript |
 | 14 | [에이전트를 위한 액터 모델](../../phases/14-agent-engineering/14-autogen-actor-model/) | 구현 | Python |
 | 15 | [역할 기반 에이전트 팀: 역할, 작업, 프로세스](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | 구현 | Python |
 | 16 | [OpenAI Agents SDK: 핸드오프, 가드레일, 트레이싱](../../phases/14-agent-engineering/16-openai-agents-sdk/) | 구현 | Python |
 | 17 | [라이브러리로서의 하네스: 하위 에이전트와 세션 저장소](../../phases/14-agent-engineering/17-claude-agent-sdk/) | 구현 | Python |
-| 18 | [프로덕션 에이전트 런타임](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | 학습 | Python |
+| 18 | [프로덕션 에이전트 런타임](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | 학습 | Python, TypeScript |
 | 19 | [벤치마크: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | 학습 | Python |
 | 20 | [벤치마크: WebArena와 OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | 학습 | Python |
 | 21 | [컴퓨터 사용: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | 구현 | Python |
@@ -915,14 +915,14 @@ flowchart TB
 | 10 | [서버리스 LLM의 콜드 스타트 완화](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | 학습 | Python |
 | 11 | [다중 리전 LLM 서빙과 KV 캐시 지역성](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | 학습 | Python |
 | 12 | [엣지 추론: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | 학습 | Python |
-| 13 | [LLM 관측 가능성 스택 선택](../../phases/17-infrastructure-and-production/13-llm-observability/) | 학습 | Python |
-| 14 | [프롬프트 캐싱과 시맨틱 캐싱의 경제성](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | 학습 | Python |
-| 15 | [배치 API: 50% 할인이 업계 표준이 되기까지](../../phases/17-infrastructure-and-production/15-batch-apis/) | 학습 | Python |
-| 16 | [비용 절감 수단으로서의 모델 라우팅](../../phases/17-infrastructure-and-production/16-model-routing/) | 학습 | Python |
+| 13 | [LLM 관측 가능성 스택 선택](../../phases/17-infrastructure-and-production/13-llm-observability/) | 학습 | Python, TypeScript |
+| 14 | [프롬프트 캐싱과 시맨틱 캐싱의 경제성](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | 학습 | Python, TypeScript |
+| 15 | [배치 API: 50% 할인이 업계 표준이 되기까지](../../phases/17-infrastructure-and-production/15-batch-apis/) | 학습 | Python, TypeScript |
+| 16 | [비용 절감 수단으로서의 모델 라우팅](../../phases/17-infrastructure-and-production/16-model-routing/) | 학습 | Python, TypeScript |
 | 17 | [프리필/디코드 분리: NVIDIA Dynamo와 llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | 학습 | Python |
 | 18 | [프로덕션 서빙 스택: KV 오프로딩과 캐시 인식 라우팅](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | 학습 | Python |
-| 19 | [AI 게이트웨이: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | 학습 | Python |
-| 20 | [섀도, 카나리, 점진적 배포](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | 학습 | Python |
+| 19 | [AI 게이트웨이: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | 학습 | Python, TypeScript |
+| 20 | [섀도, 카나리, 점진적 배포](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | 학습 | Python, TypeScript |
 | 21 | [LLM 기능 A/B 테스트: GrowthBook과 Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | 학습 | Python |
 | 22 | [LLM API 부하 테스트: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | 구현 | Python |
 | 23 | [AI를 위한 SRE: 멀티 에이전트 사고 대응](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | 학습 | Python |

@@ -345,10 +345,10 @@ flowchart TB
 
 | No. | Ders | Tür | Dil |
 |:---:|--------|:----:|------|
-| 01 | [Geliştirme Ortamı](../../phases/00-setup-and-tooling/01-dev-environment/) | Uygulama | Python |
+| 01 | [Geliştirme Ortamı](../../phases/00-setup-and-tooling/01-dev-environment/) | Uygulama | Python, TypeScript, Rust |
 | 02 | [Git ve İşbirliği](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | Öğrenme | — |
 | 03 | [GPU Kurulumu ve Bulut](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | Uygulama | Python |
-| 04 | [API’ler ve Anahtarlar](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Uygulama | Python |
+| 04 | [API’ler ve Anahtarlar](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Uygulama | Python, TypeScript |
 | 05 | [Jupyter Not Defterleri](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | Uygulama | Python |
 | 06 | [Python Ortamları](../../phases/00-setup-and-tooling/06-python-environments/) | Uygulama | Shell |
 | 07 | [Yapay Zekâ için Docker](../../phases/00-setup-and-tooling/07-docker-for-ai/) | Uygulama | Docker |
@@ -368,24 +368,24 @@ flowchart TB
 | 01 | [Lineer Cebire Sezgisel Yaklaşım](../../phases/01-math-foundations/01-linear-algebra-intuition/) | Öğrenme | Python, Julia |
 | 02 | [Vektörler, Matrisler ve İşlemler](../../phases/01-math-foundations/02-vectors-matrices-operations/) | Uygulama | Python, Julia |
 | 03 | [Matris Dönüşümleri ve Özdeğerler](../../phases/01-math-foundations/03-matrix-transformations/) | Uygulama | Python, Julia |
-| 04 | [Makine Öğrenimi için Kalkülüs: Türevler ve Gradyanlar](../../phases/01-math-foundations/04-calculus-for-ml/) | Öğrenme | Python |
-| 05 | [Zincir Kuralı ve Otomatik Türev](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Uygulama | Python |
-| 06 | [Olasılık ve Dağılımlar](../../phases/01-math-foundations/06-probability-and-distributions/) | Öğrenme | Python |
-| 07 | [Bayes Teoremi ve İstatistiksel Düşünme](../../phases/01-math-foundations/07-bayes-theorem/) | Uygulama | Python |
-| 08 | [Optimizasyon: Gradyan İnişi Yöntemleri](../../phases/01-math-foundations/08-optimization/) | Uygulama | Python |
-| 09 | [Bilgi Kuramı: Entropi ve KL Ayrışımı](../../phases/01-math-foundations/09-information-theory/) | Öğrenme | Python |
-| 10 | [Boyut İndirgeme: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Uygulama | Python |
+| 04 | [Makine Öğrenimi için Kalkülüs: Türevler ve Gradyanlar](../../phases/01-math-foundations/04-calculus-for-ml/) | Öğrenme | Python, Julia |
+| 05 | [Zincir Kuralı ve Otomatik Türev](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Uygulama | Python, Julia |
+| 06 | [Olasılık ve Dağılımlar](../../phases/01-math-foundations/06-probability-and-distributions/) | Öğrenme | Python, Julia |
+| 07 | [Bayes Teoremi ve İstatistiksel Düşünme](../../phases/01-math-foundations/07-bayes-theorem/) | Uygulama | Python, TypeScript |
+| 08 | [Optimizasyon: Gradyan İnişi Yöntemleri](../../phases/01-math-foundations/08-optimization/) | Uygulama | Python, Julia |
+| 09 | [Bilgi Kuramı: Entropi ve KL Ayrışımı](../../phases/01-math-foundations/09-information-theory/) | Öğrenme | Python, TypeScript |
+| 10 | [Boyut İndirgeme: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Uygulama | Python, TypeScript |
 | 11 | [Tekil Değer Ayrışımı](../../phases/01-math-foundations/11-singular-value-decomposition/) | Uygulama | Python, Julia |
-| 12 | [Tensör İşlemleri](../../phases/01-math-foundations/12-tensor-operations/) | Uygulama | Python |
-| 13 | [Sayısal Kararlılık](../../phases/01-math-foundations/13-numerical-stability/) | Uygulama | Python |
-| 14 | [Normlar ve Uzaklıklar](../../phases/01-math-foundations/14-norms-and-distances/) | Uygulama | Python |
-| 15 | [Makine Öğrenimi için İstatistik](../../phases/01-math-foundations/15-statistics-for-ml/) | Uygulama | Python |
-| 16 | [Örnekleme Yöntemleri](../../phases/01-math-foundations/16-sampling-methods/) | Uygulama | Python |
-| 17 | [Doğrusal Sistemler](../../phases/01-math-foundations/17-linear-systems/) | Uygulama | Python |
-| 18 | [Konveks Optimizasyon](../../phases/01-math-foundations/18-convex-optimization/) | Uygulama | Python |
+| 12 | [Tensör İşlemleri](../../phases/01-math-foundations/12-tensor-operations/) | Uygulama | Python, TypeScript |
+| 13 | [Sayısal Kararlılık](../../phases/01-math-foundations/13-numerical-stability/) | Uygulama | Python, TypeScript |
+| 14 | [Normlar ve Uzaklıklar](../../phases/01-math-foundations/14-norms-and-distances/) | Uygulama | Python, TypeScript |
+| 15 | [Makine Öğrenimi için İstatistik](../../phases/01-math-foundations/15-statistics-for-ml/) | Uygulama | Python, TypeScript |
+| 16 | [Örnekleme Yöntemleri](../../phases/01-math-foundations/16-sampling-methods/) | Uygulama | Python, TypeScript |
+| 17 | [Doğrusal Sistemler](../../phases/01-math-foundations/17-linear-systems/) | Uygulama | Python, TypeScript |
+| 18 | [Konveks Optimizasyon](../../phases/01-math-foundations/18-convex-optimization/) | Uygulama | Python, TypeScript |
 | 19 | [Yapay Zekâ için Karmaşık Sayılar](../../phases/01-math-foundations/19-complex-numbers/) | Öğrenme | Python |
-| 20 | [Fourier Dönüşümü](../../phases/01-math-foundations/20-fourier-transform/) | Uygulama | Python |
-| 21 | [Makine Öğrenimi için Graf Teorisi](../../phases/01-math-foundations/21-graph-theory/) | Uygulama | Python |
+| 20 | [Fourier Dönüşümü](../../phases/01-math-foundations/20-fourier-transform/) | Uygulama | Python, TypeScript |
+| 21 | [Makine Öğrenimi için Graf Teorisi](../../phases/01-math-foundations/21-graph-theory/) | Uygulama | Python, TypeScript |
 | 22 | [Stokastik Süreçler](../../phases/01-math-foundations/22-stochastic-processes/) | Öğrenme | Python |
 
 </details>
@@ -397,14 +397,14 @@ flowchart TB
 | No. | Ders | Tür | Dil |
 |:---:|--------|:----:|------|
 | 01 | [Makine Öğrenimi Nedir?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Öğrenme | Python |
-| 02 | [Sıfırdan Doğrusal Regresyon](../../phases/02-ml-fundamentals/02-linear-regression/) | Uygulama | Python |
-| 03 | [Lojistik Regresyon ve Sınıflandırma](../../phases/02-ml-fundamentals/03-logistic-regression/) | Uygulama | Python |
+| 02 | [Sıfırdan Doğrusal Regresyon](../../phases/02-ml-fundamentals/02-linear-regression/) | Uygulama | Python, Rust, Julia |
+| 03 | [Lojistik Regresyon ve Sınıflandırma](../../phases/02-ml-fundamentals/03-logistic-regression/) | Uygulama | Python, Rust, Julia |
 | 04 | [Karar Ağaçları ve Rastgele Ormanlar](../../phases/02-ml-fundamentals/04-decision-trees/) | Uygulama | Python |
-| 05 | [Destek Vektör Makineleri](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Uygulama | Python |
+| 05 | [Destek Vektör Makineleri](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Uygulama | Python, Julia |
 | 06 | [K-En Yakın Komşu ve Uzaklık Ölçütleri](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Uygulama | Python |
 | 07 | [Denetimsiz Öğrenme: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Uygulama | Python |
 | 08 | [Özellik Mühendisliği ve Seçimi](../../phases/02-ml-fundamentals/08-feature-engineering/) | Uygulama | Python |
-| 09 | [Model Değerlendirme: Metrikler ve Çapraz Doğrulama](../../phases/02-ml-fundamentals/09-model-evaluation/) | Uygulama | Python |
+| 09 | [Model Değerlendirme: Metrikler ve Çapraz Doğrulama](../../phases/02-ml-fundamentals/09-model-evaluation/) | Uygulama | Python, Julia |
 | 10 | [Yanlılık, Varyans ve Öğrenme Eğrisi](../../phases/02-ml-fundamentals/10-bias-variance/) | Öğrenme | Python |
 | 11 | [Topluluk Yöntemleri: Boosting, Bagging, Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Uygulama | Python |
 | 12 | [Hiperparametre Ayarı](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | Uygulama | Python |
@@ -426,11 +426,11 @@ flowchart TB
 
 | No. | Ders | Tür | Dil |
 |:---:|--------|:----:|------|
-| 01 | [Perceptron: Her Şeyin Başladığı Yer](../../phases/03-deep-learning-core/01-the-perceptron/) | Uygulama | Python |
+| 01 | [Perceptron: Her Şeyin Başladığı Yer](../../phases/03-deep-learning-core/01-the-perceptron/) | Uygulama | Python, Rust, Julia |
 | 02 | [Çok Katmanlı Ağlar ve İleri Geçiş](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Uygulama | Python |
-| 03 | [Geri Yayılımı Sıfırdan Uygulama](../../phases/03-deep-learning-core/03-backpropagation/) | Uygulama | Python |
-| 04 | [Aktivasyon Fonksiyonları: ReLU, Sigmoid, GELU ve Neden Kullanılırlar?](../../phases/03-deep-learning-core/04-activation-functions/) | Uygulama | Python |
-| 05 | [Kayıp Fonksiyonları: MSE, Çapraz Entropi, Kontrastif Kayıp](../../phases/03-deep-learning-core/05-loss-functions/) | Uygulama | Python |
+| 03 | [Geri Yayılımı Sıfırdan Uygulama](../../phases/03-deep-learning-core/03-backpropagation/) | Uygulama | Python, Rust, Julia |
+| 04 | [Aktivasyon Fonksiyonları: ReLU, Sigmoid, GELU ve Neden Kullanılırlar?](../../phases/03-deep-learning-core/04-activation-functions/) | Uygulama | Python, Julia |
+| 05 | [Kayıp Fonksiyonları: MSE, Çapraz Entropi, Kontrastif Kayıp](../../phases/03-deep-learning-core/05-loss-functions/) | Uygulama | Python, Julia |
 | 06 | [En İyileyiciler: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Uygulama | Python |
 | 07 | [Düzenlileştirme: Dropout, Ağırlık Sönümleme, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Uygulama | Python |
 | 08 | [Ağırlık Başlatma ve Eğitim Kararlılığı](../../phases/03-deep-learning-core/08-weight-initialization/) | Uygulama | Python |
@@ -462,7 +462,7 @@ flowchart TB
 | 12 | [Video Anlama: Zamansal Modelleme](../../phases/04-computer-vision/12-video-understanding/) | Uygulama | Python |
 | 13 | [3B Görü: Nokta Bulutları ve NeRF’ler](../../phases/04-computer-vision/13-3d-vision-nerf/) | Uygulama | Python |
 | 14 | [Görsel Transformer’lar (ViT)](../../phases/04-computer-vision/14-vision-transformers/) | Uygulama | Python |
-| 15 | [Gerçek Zamanlı Görü: Uçta Dağıtım](../../phases/04-computer-vision/15-real-time-edge/) | Uygulama | Python |
+| 15 | [Gerçek Zamanlı Görü: Uçta Dağıtım](../../phases/04-computer-vision/15-real-time-edge/) | Uygulama | Python, Rust |
 | 16 | [Eksiksiz Bir Görü İş Hattı Kurun](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | Uygulama | Python |
 | 17 | [Kendinden Denetimli Görü: SimCLR, DINO, MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | Uygulama | Python |
 | 18 | [Açık Söz Dağarcıklı Görü: CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | Uygulama | Python |
@@ -503,11 +503,11 @@ flowchart TB
 | 16 | [Metin Üretimi](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Uygulama | Python |
 | 17 | [Kural Tabanlıdan Sinir Ağı Tabanlıya Sohbet Robotları](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Uygulama | Python |
 | 18 | [Çok Dilli NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Uygulama | Python |
-| 19 | [Alt Sözcük Tokenleştirme: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Öğrenme | Python |
+| 19 | [Alt Sözcük Tokenleştirme: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Öğrenme | Python, TypeScript |
 | 20 | [Yapılandırılmış Çıktılar ve Kısıtlı Kod Çözümleme](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Uygulama | Python |
 | 21 | [Doğal Dil Çıkarımı (NLI) ve Metinsel Gerektirme](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Öğrenme | Python |
 | 22 | [Gömme Modellerine Derinlemesine Bakış](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Öğrenme | Python |
-| 23 | [RAG için Parçalama Stratejileri](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Uygulama | Python |
+| 23 | [RAG için Parçalama Stratejileri](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Uygulama | Python, TypeScript |
 | 24 | [Eşgönderim Çözümleme](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Öğrenme | Python |
 | 25 | [Varlık Bağlama ve Belirsizlik Giderme](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Uygulama | Python |
 | 26 | [İlişki Çıkarımı ve Bilgi Grafiği Oluşturma](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Uygulama | Python |
@@ -533,7 +533,7 @@ flowchart TB
 | 08 | [Ses Klonlama ve Dönüştürme](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Uygulama | Python |
 | 09 | [Müzik Üretimi](../../phases/06-speech-and-audio/09-music-generation) | Uygulama | Python |
 | 10 | [Ses-Dil Modelleri](../../phases/06-speech-and-audio/10-audio-language-models) | Uygulama | Python |
-| 11 | [Gerçek Zamanlı Ses İşleme](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Uygulama | Python |
+| 11 | [Gerçek Zamanlı Ses İşleme](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Uygulama | Python, Rust |
 | 12 | [Sesli Asistan İş Hattı Kurun](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Uygulama | Python |
 | 13 | [Sinirsel Ses Kodlayıcıları: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Öğrenme | Python |
 | 14 | [Konuşma Etkinliği Algılama ve Söz Sırası Yönetimi](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Uygulama | Python |
@@ -549,11 +549,11 @@ flowchart TB
 
 | No. | Ders | Tür | Dil |
 |:---:|--------|:----:|------|
-| 01 | [Transformer’lar Neden Kullanılır? RNN’lerin Sorunları](../../phases/07-transformers-deep-dive/01-why-transformers/) | Öğrenme | Python |
-| 02 | [Kendine Dikkati Sıfırdan Uygulama](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Uygulama | Python |
-| 03 | [Çok Başlıklı Dikkat](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Uygulama | Python |
-| 04 | [Konumsal Kodlama: Sinüzoidal, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Uygulama | Python |
-| 05 | [Transformer’ın Tamamı: Kodlayıcı ve Çözücü](../../phases/07-transformers-deep-dive/05-full-transformer/) | Uygulama | Python |
+| 01 | [Transformer’lar Neden Kullanılır? RNN’lerin Sorunları](../../phases/07-transformers-deep-dive/01-why-transformers/) | Öğrenme | Python, Julia |
+| 02 | [Kendine Dikkati Sıfırdan Uygulama](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Uygulama | Python, Rust, Julia |
+| 03 | [Çok Başlıklı Dikkat](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Uygulama | Python, Rust |
+| 04 | [Konumsal Kodlama: Sinüzoidal, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Uygulama | Python, Rust, Julia |
+| 05 | [Transformer’ın Tamamı: Kodlayıcı ve Çözücü](../../phases/07-transformers-deep-dive/05-full-transformer/) | Uygulama | Python, Julia |
 | 06 | [BERT: Maskeli Dil Modelleme](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Uygulama | Python |
 | 07 | [GPT: Nedensel Dil Modelleme](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Uygulama | Python |
 | 08 | [T5 ve BART: Kodlayıcı-Çözücü Modelleri](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Öğrenme | Python |
@@ -622,15 +622,15 @@ flowchart TB
 | 01 | [Tokenizer’lar: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Uygulama | Python, Rust |
 | 02 | [Sıfırdan Tokenizer Geliştirme](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Uygulama | Python |
 | 03 | [Ön Eğitim için Veri İş Hatları](../../phases/10-llms-from-scratch/03-data-pipelines/) | Uygulama | Python |
-| 04 | [Mini GPT’yi Ön Eğitimden Geçirme (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Uygulama | Python |
+| 04 | [Mini GPT’yi Ön Eğitimden Geçirme (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Uygulama | Python, Rust |
 | 05 | [Dağıtık Eğitim, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Uygulama | Python |
 | 06 | [Talimat İnce Ayarı: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Uygulama | Python |
 | 07 | [RLHF: Ödül Modeli ve PPO](../../phases/10-llms-from-scratch/07-rlhf/) | Uygulama | Python |
 | 08 | [DPO: Doğrudan Tercih Optimizasyonu](../../phases/10-llms-from-scratch/08-dpo/) | Uygulama | Python |
 | 09 | [Anayasal Yapay Zekâ ve Kendini Geliştirme](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | Uygulama | Python |
 | 10 | [Değerlendirme: Kıyaslamalar ve Sınamalar](../../phases/10-llms-from-scratch/10-evaluation/) | Uygulama | Python |
-| 11 | [Nicemleme: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Uygulama | Python |
-| 12 | [Çıkarım İyileştirmesi](../../phases/10-llms-from-scratch/12-inference-optimization/) | Uygulama | Python |
+| 11 | [Nicemleme: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Uygulama | Python, Rust |
+| 12 | [Çıkarım İyileştirmesi](../../phases/10-llms-from-scratch/12-inference-optimization/) | Uygulama | Python, Rust |
 | 13 | [Eksiksiz Bir LLM İş Hattı Kurma](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Uygulama | Python |
 | 14 | [Açık Modeller: Mimari İncelemeleri](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Öğrenme | Python |
 | 15 | [Spekülatif Kod Çözümleme ve EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Uygulama | Python |
@@ -652,18 +652,18 @@ flowchart TB
 
 | No. | Ders | Tür | Dil |
 |:---:|--------|:----:|------|
-| 01 | [İstem Mühendisliği: Teknikler ve Örüntüler](../../phases/11-llm-engineering/01-prompt-engineering/) | Uygulama | Python |
+| 01 | [İstem Mühendisliği: Teknikler ve Örüntüler](../../phases/11-llm-engineering/01-prompt-engineering/) | Uygulama | Python, TypeScript |
 | 02 | [Few-Shot, CoT ve Tree-of-Thought](../../phases/11-llm-engineering/02-few-shot-cot/) | Uygulama | Python |
-| 03 | [Yapılandırılmış Çıktılar](../../phases/11-llm-engineering/03-structured-outputs/) | Uygulama | Python |
-| 04 | [Gömme Vektörleri ve Vektör Temsilleri](../../phases/11-llm-engineering/04-embeddings/) | Uygulama | Python |
-| 05 | [Bağlam Mühendisliği](../../phases/11-llm-engineering/05-context-engineering/) | Uygulama | Python |
-| 06 | [RAG: Getirim Artırımlı Üretim](../../phases/11-llm-engineering/06-rag/) | Uygulama | Python |
+| 03 | [Yapılandırılmış Çıktılar](../../phases/11-llm-engineering/03-structured-outputs/) | Uygulama | Python, TypeScript |
+| 04 | [Gömme Vektörleri ve Vektör Temsilleri](../../phases/11-llm-engineering/04-embeddings/) | Uygulama | Python, TypeScript |
+| 05 | [Bağlam Mühendisliği](../../phases/11-llm-engineering/05-context-engineering/) | Uygulama | Python, TypeScript |
+| 06 | [RAG: Getirim Artırımlı Üretim](../../phases/11-llm-engineering/06-rag/) | Uygulama | Python, TypeScript |
 | 07 | [İleri RAG: Parçalama ve Yeniden Sıralama](../../phases/11-llm-engineering/07-advanced-rag/) | Uygulama | Python |
 | 08 | [LoRA ve QLoRA ile İnce Ayar](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Uygulama | Python |
-| 09 | [Fonksiyon Çağırma ve Araç Kullanımı](../../phases/11-llm-engineering/09-function-calling/) | Uygulama | Python |
+| 09 | [Fonksiyon Çağırma ve Araç Kullanımı](../../phases/11-llm-engineering/09-function-calling/) | Uygulama | Python, TypeScript |
 | 10 | [Değerlendirme ve Sınama](../../phases/11-llm-engineering/10-evaluation/) | Uygulama | Python |
 | 11 | [Önbellekleme, İstek Sınırlama ve Maliyet](../../phases/11-llm-engineering/11-caching-cost/) | Uygulama | Python |
-| 12 | [Koruma Önlemleri ve Güvenlik](../../phases/11-llm-engineering/12-guardrails/) | Uygulama | Python |
+| 12 | [Koruma Önlemleri ve Güvenlik](../../phases/11-llm-engineering/12-guardrails/) | Uygulama | Python, TypeScript |
 | 13 | [Üretim Ortamına Uygun Bir LLM Uygulaması Kurma](../../phases/11-llm-engineering/13-production-app/) | Uygulama | Python |
 | 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Uygulama | Python |
 | 15 | [İstem Önbelleği ve Bağlam Önbelleği](../../phases/11-llm-engineering/15-prompt-caching/) | Uygulama | Python |
@@ -712,7 +712,7 @@ flowchart TB
 
 | No. | Ders | Tür | Dil |
 |:---:|--------|:----:|------|
-| 01 | [Araç Arayüzü](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Öğrenme | Python |
+| 01 | [Araç Arayüzü](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Öğrenme | Python, TypeScript |
 | 02 | [Fonksiyon Çağırmayı Derinlemesine İnceleme](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Uygulama | Python |
 | 03 | [Paralel ve Akışlı Araç Çağrıları](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Uygulama | Python |
 | 04 | [Yapılandırılmış Çıktı](../../phases/13-tools-and-protocols/04-structured-output/) | Uygulama | Python |
@@ -730,7 +730,7 @@ flowchart TB
 | 16 | [MCP Yetkilendirmesi: CIMD, Veren Bağlama, PKCE ve Ek Doğrulama](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Uygulama | Python |
 | 17 | [Durumsuz MCP Ağ Geçitleri ve Kayıt Defterine Kabul](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Öğrenme | Python |
 | 18 | [Üretimde MCP Yetkilendirmesi: Veren Bağlı Kayıt ve Token’lar](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Uygulama | Python |
-| 19 | [A2A Protokolü](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Uygulama | Python |
+| 19 | [A2A Protokolü](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Uygulama | Python, TypeScript |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Uygulama | Python |
 | 21 | [LLM Yönlendirme Katmanı](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Öğrenme | Python |
 | 22 | [Agent Skills: Taşınabilir Sözleşme ve Çalışma Zamanı Sınırı](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Uygulama | Python |
@@ -770,24 +770,24 @@ flowchart TB
 
 | No. | Ders | Tür | Dil |
 |:---:|--------|:----:|------|
-| 01 | [Ajan Döngüsü](../../phases/14-agent-engineering/01-the-agent-loop/) | Uygulama | Python |
+| 01 | [Ajan Döngüsü](../../phases/14-agent-engineering/01-the-agent-loop/) | Uygulama | Python, TypeScript |
 | 02 | [ReWOO ve Planla-Çalıştır](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Uygulama | Python |
 | 03 | [Reflexion ve Sözel Pekiştirmeli Öğrenme](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Uygulama | Python |
 | 04 | [Düşünce Ağacı ve LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Uygulama | Python |
 | 05 | [Self-Refine ve CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Uygulama | Python |
-| 06 | [Araç Kullanımı ve Fonksiyon Çağırma](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Uygulama | Python |
+| 06 | [Araç Kullanımı ve Fonksiyon Çağırma](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Uygulama | Python, TypeScript |
 | 07 | [Ajan Belleği: Sanal Bağlam ve Bellek Sayfalama](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Uygulama | Python |
 | 08 | [Bellek Blokları ve Uyku Zamanı Hesaplama](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Uygulama | Python |
 | 09 | [Hibrit Bellek: Vektör, Graf ve KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Uygulama | Python |
 | 10 | [Beceri Kütüphaneleri ve Yaşam Boyu Öğrenme (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Uygulama | Python |
 | 11 | [HTN ve Evrimsel Aramayla Planlama](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Uygulama | Python |
 | 12 | [Anthropic’in İş Akışı Örüntüleri](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Uygulama | Python |
-| 13 | [Durum Tutan Graf Orkestrasyonu: Kalıcı Yürütme ve Denetim Noktaları](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Uygulama | Python |
+| 13 | [Durum Tutan Graf Orkestrasyonu: Kalıcı Yürütme ve Denetim Noktaları](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Uygulama | Python, TypeScript |
 | 14 | [Ajanlar için Aktör Modeli](../../phases/14-agent-engineering/14-autogen-actor-model/) | Uygulama | Python |
 | 15 | [Role Dayalı Ajan Ekipleri: Roller, Görevler ve Süreçler](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Uygulama | Python |
 | 16 | [OpenAI Agents SDK: Devirler, Koruma Önlemleri ve İzleme](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Uygulama | Python |
 | 17 | [Kütüphane Olarak Ajan Çalışma Çerçevesi: Alt Ajanlar ve Oturum Deposu](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Uygulama | Python |
-| 18 | [Üretim Ortamında Ajan Çalışma Zamanları](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Öğrenme | Python |
+| 18 | [Üretim Ortamında Ajan Çalışma Zamanları](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Öğrenme | Python, TypeScript |
 | 19 | [Kıyaslamalar: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Öğrenme | Python |
 | 20 | [Kıyaslamalar: WebArena ve OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Öğrenme | Python |
 | 21 | [Bilgisayar Kullanım Ajanları: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Uygulama | Python |
@@ -914,14 +914,14 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 10 | [Sunucusuz LLM’lerde Soğuk Başlangıcı Önleme](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Öğrenme | Python |
 | 11 | [Çok Bölgeli LLM Sunumu ve KV Önbellek Yerelliği](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Öğrenme | Python |
 | 12 | [Uçta Çıkarım: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Öğrenme | Python |
-| 13 | [LLM Gözlemlenebilirlik Yığınını Seçme](../../phases/17-infrastructure-and-production/13-llm-observability/) | Öğrenme | Python |
-| 14 | [İstem Önbelleği ve Anlamsal Önbelleklemenin Ekonomisi](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Öğrenme | Python |
-| 15 | [Toplu API’ler: Sektör Standardı Hâline Gelen %50 İndirim](../../phases/17-infrastructure-and-production/15-batch-apis/) | Öğrenme | Python |
-| 16 | [Maliyet Azaltma Temeli Olarak Model Yönlendirme](../../phases/17-infrastructure-and-production/16-model-routing/) | Öğrenme | Python |
+| 13 | [LLM Gözlemlenebilirlik Yığınını Seçme](../../phases/17-infrastructure-and-production/13-llm-observability/) | Öğrenme | Python, TypeScript |
+| 14 | [İstem Önbelleği ve Anlamsal Önbelleklemenin Ekonomisi](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Öğrenme | Python, TypeScript |
+| 15 | [Toplu API’ler: Sektör Standardı Hâline Gelen %50 İndirim](../../phases/17-infrastructure-and-production/15-batch-apis/) | Öğrenme | Python, TypeScript |
+| 16 | [Maliyet Azaltma Temeli Olarak Model Yönlendirme](../../phases/17-infrastructure-and-production/16-model-routing/) | Öğrenme | Python, TypeScript |
 | 17 | [Ayrıştırılmış Prefill/Decode: NVIDIA Dynamo ve llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Öğrenme | Python |
 | 18 | [Üretim Sunum Yığını: KV Dış Kaynak Kullanımı ve Önbellek Farkındalıklı Yönlendirme](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Öğrenme | Python |
-| 19 | [Yapay Zekâ Ağ Geçitleri: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Öğrenme | Python |
-| 20 | [Gölge, Kanarya ve Aşamalı Dağıtım](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Öğrenme | Python |
+| 19 | [Yapay Zekâ Ağ Geçitleri: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Öğrenme | Python, TypeScript |
+| 20 | [Gölge, Kanarya ve Aşamalı Dağıtım](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Öğrenme | Python, TypeScript |
 | 21 | [LLM Özelliklerinde A/B Testi: GrowthBook ve Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Öğrenme | Python |
 | 22 | [LLM API’leri için Yük Testi: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Uygulama | Python |
 | 23 | [Yapay Zekâ için SRE: Çok Ajanlı Olay Müdahalesi](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Öğrenme | Python |

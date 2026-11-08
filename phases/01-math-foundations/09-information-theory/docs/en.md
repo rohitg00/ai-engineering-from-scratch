@@ -3,7 +3,7 @@
 > Information theory measures surprise. Loss functions are built on it.
 
 **Type:** Learn
-**Language:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability)
 **Time:** ~60 minutes
 

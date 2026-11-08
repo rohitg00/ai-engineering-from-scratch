@@ -345,10 +345,10 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [Середовище розробки](../../phases/00-setup-and-tooling/01-dev-environment/) | Створіть | Python |
+| 01 | [Середовище розробки](../../phases/00-setup-and-tooling/01-dev-environment/) | Створіть | Python, TypeScript, Rust |
 | 02 | [Git і співпраця](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | Вивчіть | — |
 | 03 | [Налаштування GPU та хмара](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | Створіть | Python |
-| 04 | [API й ключі](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Створіть | Python |
+| 04 | [API й ключі](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Створіть | Python, TypeScript |
 | 05 | [Блокноти Jupyter](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | Створіть | Python |
 | 06 | [Середовища Python](../../phases/00-setup-and-tooling/06-python-environments/) | Створіть | Shell |
 | 07 | [Docker для AI](../../phases/00-setup-and-tooling/07-docker-for-ai/) | Створіть | Docker |
@@ -368,24 +368,24 @@ flowchart TB
 | 01 | [Інтуїція лінійної алгебри](../../phases/01-math-foundations/01-linear-algebra-intuition/) | Вивчіть | Python, Julia |
 | 02 | [Вектори, матриці й операції](../../phases/01-math-foundations/02-vectors-matrices-operations/) | Створіть | Python, Julia |
 | 03 | [Матричні перетворення та власні значення](../../phases/01-math-foundations/03-matrix-transformations/) | Створіть | Python, Julia |
-| 04 | [Математичний аналіз для ML: похідні й градієнти](../../phases/01-math-foundations/04-calculus-for-ml/) | Вивчіть | Python |
-| 05 | [Ланцюгове правило й автоматичне диференціювання](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Створіть | Python |
-| 06 | [Імовірність і розподіли](../../phases/01-math-foundations/06-probability-and-distributions/) | Вивчіть | Python |
-| 07 | [Теорема Баєса та статистичне мислення](../../phases/01-math-foundations/07-bayes-theorem/) | Створіть | Python |
-| 08 | [Оптимізація: різновиди градієнтного спуску](../../phases/01-math-foundations/08-optimization/) | Створіть | Python |
-| 09 | [Теорія інформації: ентропія та KL-дивергенція](../../phases/01-math-foundations/09-information-theory/) | Вивчіть | Python |
-| 10 | [Зменшення розмірності: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Створіть | Python |
+| 04 | [Математичний аналіз для ML: похідні й градієнти](../../phases/01-math-foundations/04-calculus-for-ml/) | Вивчіть | Python, Julia |
+| 05 | [Ланцюгове правило й автоматичне диференціювання](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Створіть | Python, Julia |
+| 06 | [Імовірність і розподіли](../../phases/01-math-foundations/06-probability-and-distributions/) | Вивчіть | Python, Julia |
+| 07 | [Теорема Баєса та статистичне мислення](../../phases/01-math-foundations/07-bayes-theorem/) | Створіть | Python, TypeScript |
+| 08 | [Оптимізація: різновиди градієнтного спуску](../../phases/01-math-foundations/08-optimization/) | Створіть | Python, Julia |
+| 09 | [Теорія інформації: ентропія та KL-дивергенція](../../phases/01-math-foundations/09-information-theory/) | Вивчіть | Python, TypeScript |
+| 10 | [Зменшення розмірності: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Створіть | Python, TypeScript |
 | 11 | [Сингулярний розклад](../../phases/01-math-foundations/11-singular-value-decomposition/) | Створіть | Python, Julia |
-| 12 | [Операції з тензорами](../../phases/01-math-foundations/12-tensor-operations/) | Створіть | Python |
-| 13 | [Чисельна стійкість](../../phases/01-math-foundations/13-numerical-stability/) | Створіть | Python |
-| 14 | [Норми й відстані](../../phases/01-math-foundations/14-norms-and-distances/) | Створіть | Python |
-| 15 | [Статистика для ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Створіть | Python |
-| 16 | [Методи вибірки](../../phases/01-math-foundations/16-sampling-methods/) | Створіть | Python |
-| 17 | [Лінійні системи](../../phases/01-math-foundations/17-linear-systems/) | Створіть | Python |
-| 18 | [Опукла оптимізація](../../phases/01-math-foundations/18-convex-optimization/) | Створіть | Python |
+| 12 | [Операції з тензорами](../../phases/01-math-foundations/12-tensor-operations/) | Створіть | Python, TypeScript |
+| 13 | [Чисельна стійкість](../../phases/01-math-foundations/13-numerical-stability/) | Створіть | Python, TypeScript |
+| 14 | [Норми й відстані](../../phases/01-math-foundations/14-norms-and-distances/) | Створіть | Python, TypeScript |
+| 15 | [Статистика для ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Створіть | Python, TypeScript |
+| 16 | [Методи вибірки](../../phases/01-math-foundations/16-sampling-methods/) | Створіть | Python, TypeScript |
+| 17 | [Лінійні системи](../../phases/01-math-foundations/17-linear-systems/) | Створіть | Python, TypeScript |
+| 18 | [Опукла оптимізація](../../phases/01-math-foundations/18-convex-optimization/) | Створіть | Python, TypeScript |
 | 19 | [Комплексні числа для AI](../../phases/01-math-foundations/19-complex-numbers/) | Вивчіть | Python |
-| 20 | [Перетворення Фур'є](../../phases/01-math-foundations/20-fourier-transform/) | Створіть | Python |
-| 21 | [Теорія графів для ML](../../phases/01-math-foundations/21-graph-theory/) | Створіть | Python |
+| 20 | [Перетворення Фур'є](../../phases/01-math-foundations/20-fourier-transform/) | Створіть | Python, TypeScript |
+| 21 | [Теорія графів для ML](../../phases/01-math-foundations/21-graph-theory/) | Створіть | Python, TypeScript |
 | 22 | [Стохастичні процеси](../../phases/01-math-foundations/22-stochastic-processes/) | Вивчіть | Python |
 
 </details>
@@ -397,14 +397,14 @@ flowchart TB
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
 | 01 | [Що таке машинне навчання](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Вивчіть | Python |
-| 02 | [Лінійна регресія з нуля](../../phases/02-ml-fundamentals/02-linear-regression/) | Створіть | Python |
-| 03 | [Логістична регресія та класифікація](../../phases/02-ml-fundamentals/03-logistic-regression/) | Створіть | Python |
+| 02 | [Лінійна регресія з нуля](../../phases/02-ml-fundamentals/02-linear-regression/) | Створіть | Python, Rust, Julia |
+| 03 | [Логістична регресія та класифікація](../../phases/02-ml-fundamentals/03-logistic-regression/) | Створіть | Python, Rust, Julia |
 | 04 | [Дерева рішень і випадкові ліси](../../phases/02-ml-fundamentals/04-decision-trees/) | Створіть | Python |
-| 05 | [Метод опорних векторів](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Створіть | Python |
+| 05 | [Метод опорних векторів](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Створіть | Python, Julia |
 | 06 | [KNN і метрики відстані](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Створіть | Python |
 | 07 | [Навчання без учителя: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Створіть | Python |
 | 08 | [Побудова й відбір ознак](../../phases/02-ml-fundamentals/08-feature-engineering/) | Створіть | Python |
-| 09 | [Оцінювання моделей: метрики та перехресна перевірка](../../phases/02-ml-fundamentals/09-model-evaluation/) | Створіть | Python |
+| 09 | [Оцінювання моделей: метрики та перехресна перевірка](../../phases/02-ml-fundamentals/09-model-evaluation/) | Створіть | Python, Julia |
 | 10 | [Зміщення, дисперсія та крива навчання](../../phases/02-ml-fundamentals/10-bias-variance/) | Вивчіть | Python |
 | 11 | [Ансамблеві методи: бустинг, бегінг і стекінг](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Створіть | Python |
 | 12 | [Налаштування гіперпараметрів](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | Створіть | Python |
@@ -426,11 +426,11 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [Перцептрон: із чого все почалося](../../phases/03-deep-learning-core/01-the-perceptron/) | Створіть | Python |
+| 01 | [Перцептрон: із чого все почалося](../../phases/03-deep-learning-core/01-the-perceptron/) | Створіть | Python, Rust, Julia |
 | 02 | [Багатошарові мережі та прямий прохід](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Створіть | Python |
-| 03 | [Зворотне поширення з нуля](../../phases/03-deep-learning-core/03-backpropagation/) | Створіть | Python |
-| 04 | [Функції активації: ReLU, Sigmoid, GELU і причини вибору](../../phases/03-deep-learning-core/04-activation-functions/) | Створіть | Python |
-| 05 | [Функції втрат: MSE, перехресна ентропія та контрастивні втрати](../../phases/03-deep-learning-core/05-loss-functions/) | Створіть | Python |
+| 03 | [Зворотне поширення з нуля](../../phases/03-deep-learning-core/03-backpropagation/) | Створіть | Python, Rust, Julia |
+| 04 | [Функції активації: ReLU, Sigmoid, GELU і причини вибору](../../phases/03-deep-learning-core/04-activation-functions/) | Створіть | Python, Julia |
+| 05 | [Функції втрат: MSE, перехресна ентропія та контрастивні втрати](../../phases/03-deep-learning-core/05-loss-functions/) | Створіть | Python, Julia |
 | 06 | [Оптимізатори: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Створіть | Python |
 | 07 | [Регуляризація: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Створіть | Python |
 | 08 | [Ініціалізація ваг і стабільність навчання](../../phases/03-deep-learning-core/08-weight-initialization/) | Створіть | Python |
@@ -462,7 +462,7 @@ flowchart TB
 | 12 | [Розуміння відео: часове моделювання](../../phases/04-computer-vision/12-video-understanding/) | Створіть | Python |
 | 13 | [Тривимірний зір: хмари точок і NeRF](../../phases/04-computer-vision/13-3d-vision-nerf/) | Створіть | Python |
 | 14 | [Vision Transformers (ViT) для комп'ютерного зору](../../phases/04-computer-vision/14-vision-transformers/) | Створіть | Python |
-| 15 | [Зір у реальному часі: розгортання на периферійних пристроях](../../phases/04-computer-vision/15-real-time-edge/) | Створіть | Python |
+| 15 | [Зір у реальному часі: розгортання на периферійних пристроях](../../phases/04-computer-vision/15-real-time-edge/) | Створіть | Python, Rust |
 | 16 | [Створіть повний конвеєр комп'ютерного зору](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | Створіть | Python |
 | 17 | [Самокероване навчання зору: SimCLR, DINO, MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | Створіть | Python |
 | 18 | [Зір із відкритим словником: CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | Створіть | Python |
@@ -503,11 +503,11 @@ flowchart TB
 | 16 | [Генерація тексту](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Створіть | Python |
 | 17 | [Чатботи: від правил до нейронних мереж](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Створіть | Python |
 | 18 | [Багатомовна обробка природної мови](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Створіть | Python |
-| 19 | [Токенізація частин слів: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Вивчіть | Python |
+| 19 | [Токенізація частин слів: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Вивчіть | Python, TypeScript |
 | 20 | [Структуровані результати й декодування з обмеженнями](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Створіть | Python |
 | 21 | [NLI та логічне слідування в тексті](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Вивчіть | Python |
 | 22 | [Поглиблений огляд моделей векторних подань](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Вивчіть | Python |
-| 23 | [Стратегії поділу тексту для RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Створіть | Python |
+| 23 | [Стратегії поділу тексту для RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Створіть | Python, TypeScript |
 | 24 | [Розв'язання кореференції](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Вивчіть | Python |
 | 25 | [Пов'язування сутностей та усунення неоднозначності](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Створіть | Python |
 | 26 | [Видобування зв'язків і побудова графів знань](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Створіть | Python |
@@ -533,7 +533,7 @@ flowchart TB
 | 08 | [Клонування та перетворення голосу](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Створіть | Python |
 | 09 | [Генерація музики](../../phases/06-speech-and-audio/09-music-generation) | Створіть | Python |
 | 10 | [Аудіомовні моделі](../../phases/06-speech-and-audio/10-audio-language-models) | Створіть | Python |
-| 11 | [Обробка аудіо в реальному часі](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Створіть | Python |
+| 11 | [Обробка аудіо в реальному часі](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Створіть | Python, Rust |
 | 12 | [Створіть конвеєр голосового помічника](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Створіть | Python |
 | 13 | [Нейронні аудіокодеки: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Вивчіть | Python |
 | 14 | [Виявлення голосової активності й чергування реплік](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Створіть | Python |
@@ -549,11 +549,11 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [Чому Transformers: проблеми RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | Вивчіть | Python |
-| 02 | [Самоувага з нуля](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Створіть | Python |
-| 03 | [Багатоголова увага](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Створіть | Python |
-| 04 | [Позиційне кодування: синусоїдальне, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Створіть | Python |
-| 05 | [Повний Transformer: кодувальник і декодувальник](../../phases/07-transformers-deep-dive/05-full-transformer/) | Створіть | Python |
+| 01 | [Чому Transformers: проблеми RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | Вивчіть | Python, Julia |
+| 02 | [Самоувага з нуля](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Створіть | Python, Rust, Julia |
+| 03 | [Багатоголова увага](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Створіть | Python, Rust |
+| 04 | [Позиційне кодування: синусоїдальне, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Створіть | Python, Rust, Julia |
+| 05 | [Повний Transformer: кодувальник і декодувальник](../../phases/07-transformers-deep-dive/05-full-transformer/) | Створіть | Python, Julia |
 | 06 | [BERT: моделювання мови з маскуванням](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Створіть | Python |
 | 07 | [GPT: причинне моделювання мови](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Створіть | Python |
 | 08 | [T5, BART: моделі кодувальника-декодувальника](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Вивчіть | Python |
@@ -622,15 +622,15 @@ flowchart TB
 | 01 | [Токенізатори: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Створіть | Python, Rust |
 | 02 | [Побудова токенізатора з нуля](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Створіть | Python |
 | 03 | [Конвеєри даних для попереднього навчання](../../phases/10-llms-from-scratch/03-data-pipelines/) | Створіть | Python |
-| 04 | [Попереднє навчання Mini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Створіть | Python |
+| 04 | [Попереднє навчання Mini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Створіть | Python, Rust |
 | 05 | [Розподілене навчання, FSDP і DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Створіть | Python |
 | 06 | [Навчання за інструкціями: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Створіть | Python |
 | 07 | [RLHF: модель винагороди та PPO](../../phases/10-llms-from-scratch/07-rlhf/) | Створіть | Python |
 | 08 | [DPO: пряма оптимізація вподобань](../../phases/10-llms-from-scratch/08-dpo/) | Створіть | Python |
 | 09 | [Конституційний AI і самовдосконалення](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | Створіть | Python |
 | 10 | [Оцінювання: бенчмарки й тести](../../phases/10-llms-from-scratch/10-evaluation/) | Створіть | Python |
-| 11 | [Квантування: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Створіть | Python |
-| 12 | [Оптимізація інференсу](../../phases/10-llms-from-scratch/12-inference-optimization/) | Створіть | Python |
+| 11 | [Квантування: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Створіть | Python, Rust |
+| 12 | [Оптимізація інференсу](../../phases/10-llms-from-scratch/12-inference-optimization/) | Створіть | Python, Rust |
 | 13 | [Побудова повного конвеєра LLM](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Створіть | Python |
 | 14 | [Відкриті моделі: огляди архітектур](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Вивчіть | Python |
 | 15 | [Спекулятивне декодування й EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Створіть | Python |
@@ -652,18 +652,18 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [Інженерія промптів: техніки й шаблони](../../phases/11-llm-engineering/01-prompt-engineering/) | Створіть | Python |
+| 01 | [Інженерія промптів: техніки й шаблони](../../phases/11-llm-engineering/01-prompt-engineering/) | Створіть | Python, TypeScript |
 | 02 | [Few-Shot, CoT і дерево думок](../../phases/11-llm-engineering/02-few-shot-cot/) | Створіть | Python |
-| 03 | [Структуровані результати](../../phases/11-llm-engineering/03-structured-outputs/) | Створіть | Python |
-| 04 | [Ембединги й векторні подання](../../phases/11-llm-engineering/04-embeddings/) | Створіть | Python |
-| 05 | [Інженерія контексту](../../phases/11-llm-engineering/05-context-engineering/) | Створіть | Python |
-| 06 | [RAG: генерація з доповненням через пошук](../../phases/11-llm-engineering/06-rag/) | Створіть | Python |
+| 03 | [Структуровані результати](../../phases/11-llm-engineering/03-structured-outputs/) | Створіть | Python, TypeScript |
+| 04 | [Ембединги й векторні подання](../../phases/11-llm-engineering/04-embeddings/) | Створіть | Python, TypeScript |
+| 05 | [Інженерія контексту](../../phases/11-llm-engineering/05-context-engineering/) | Створіть | Python, TypeScript |
+| 06 | [RAG: генерація з доповненням через пошук](../../phases/11-llm-engineering/06-rag/) | Створіть | Python, TypeScript |
 | 07 | [Поглиблений RAG: поділ на фрагменти й переранжування](../../phases/11-llm-engineering/07-advanced-rag/) | Створіть | Python |
 | 08 | [Донавчання з LoRA та QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Створіть | Python |
-| 09 | [Виклик функцій і використання інструментів](../../phases/11-llm-engineering/09-function-calling/) | Створіть | Python |
+| 09 | [Виклик функцій і використання інструментів](../../phases/11-llm-engineering/09-function-calling/) | Створіть | Python, TypeScript |
 | 10 | [Оцінювання й тестування](../../phases/11-llm-engineering/10-evaluation/) | Створіть | Python |
 | 11 | [Кешування, обмеження частоти та вартість](../../phases/11-llm-engineering/11-caching-cost/) | Створіть | Python |
-| 12 | [Захисні обмеження й безпека](../../phases/11-llm-engineering/12-guardrails/) | Створіть | Python |
+| 12 | [Захисні обмеження й безпека](../../phases/11-llm-engineering/12-guardrails/) | Створіть | Python, TypeScript |
 | 13 | [Побудова промислового LLM-застосунку](../../phases/11-llm-engineering/13-production-app/) | Створіть | Python |
 | 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Створіть | Python |
 | 15 | [Кешування промптів і контексту](../../phases/11-llm-engineering/15-prompt-caching/) | Створіть | Python |
@@ -712,7 +712,7 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [Інтерфейс інструментів](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Вивчіть | Python |
+| 01 | [Інтерфейс інструментів](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Вивчіть | Python, TypeScript |
 | 02 | [Поглиблений огляд викликів функцій](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Створіть | Python |
 | 03 | [Паралельні й потокові виклики інструментів](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Створіть | Python |
 | 04 | [Структурований результат](../../phases/13-tools-and-protocols/04-structured-output/) | Створіть | Python |
@@ -730,7 +730,7 @@ flowchart TB
 | 16 | [Авторизація MCP: CIMD, прив'язка до видавця, PKCE та посилена перевірка](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Створіть | Python |
 | 17 | [MCP-шлюзи без стану й допуск до реєстру](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Вивчіть | Python |
 | 18 | [Автентифікація MCP у промисловій експлуатації: прив'язані до видавця реєстрація й токени](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Створіть | Python |
-| 19 | [Протокол A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Створіть | Python |
+| 19 | [Протокол A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Створіть | Python, TypeScript |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Створіть | Python |
 | 21 | [Шар маршрутизації LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Вивчіть | Python |
 | 22 | [Agent Skills: переносний контракт і межа середовища виконання](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Створіть | Python |
@@ -770,24 +770,24 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [Цикл агента](../../phases/14-agent-engineering/01-the-agent-loop/) | Створіть | Python |
+| 01 | [Цикл агента](../../phases/14-agent-engineering/01-the-agent-loop/) | Створіть | Python, TypeScript |
 | 02 | [ReWOO та планування з подальшим виконанням](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Створіть | Python |
 | 03 | [Reflexion і вербальне навчання з підкріпленням](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Створіть | Python |
 | 04 | [Дерево думок і LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Створіть | Python |
 | 05 | [Self-Refine і CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Створіть | Python |
-| 06 | [Використання інструментів і виклик функцій](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Створіть | Python |
+| 06 | [Використання інструментів і виклик функцій](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Створіть | Python, TypeScript |
 | 07 | [Пам'ять агента: віртуальний контекст і сторінкова організація пам'яті](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Створіть | Python |
 | 08 | [Блоки пам'яті й обчислення під час відпочинку](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Створіть | Python |
 | 09 | [Гібридна пам'ять: вектор, граф і KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Створіть | Python |
 | 10 | [Бібліотеки навичок і навчання впродовж життя (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Створіть | Python |
 | 11 | [Планування з HTN та еволюційним пошуком](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Створіть | Python |
 | 12 | [Шаблони робочих процесів Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Створіть | Python |
-| 13 | [Оркестрація графів зі станом: стале виконання й контрольні точки](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Створіть | Python |
+| 13 | [Оркестрація графів зі станом: стале виконання й контрольні точки](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Створіть | Python, TypeScript |
 | 14 | [Акторна модель для агентів](../../phases/14-agent-engineering/14-autogen-actor-model/) | Створіть | Python |
 | 15 | [Рольові команди агентів: ролі, завдання й процеси](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Створіть | Python |
 | 16 | [OpenAI Agents SDK: передавання роботи, захисні обмеження й трасування](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Створіть | Python |
 | 17 | [Оболонка виконання як бібліотека: підагенти й сховище сеансів](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Створіть | Python |
-| 18 | [Промислові середовища виконання агентів](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Вивчіть | Python |
+| 18 | [Промислові середовища виконання агентів](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Вивчіть | Python, TypeScript |
 | 19 | [Бенчмарки: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Вивчіть | Python |
 | 20 | [Бенчмарки: WebArena й OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Вивчіть | Python |
 | 21 | [Робота з комп'ютером: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Створіть | Python |
@@ -914,14 +914,14 @@ flowchart TB
 | 10 | [Зменшення холодного старту безсерверних LLM](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Вивчіть | Python |
 | 11 | [Обслуговування LLM у кількох регіонах і локальність KV-кешу](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Вивчіть | Python |
 | 12 | [Інференс на периферії: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Вивчіть | Python |
-| 13 | [Вибір стека спостережуваності LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | Вивчіть | Python |
-| 14 | [Економіка кешування промптів і семантичного кешування](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Вивчіть | Python |
-| 15 | [Пакетні API: знижка 50% як галузевий стандарт](../../phases/17-infrastructure-and-production/15-batch-apis/) | Вивчіть | Python |
-| 16 | [Маршрутизація моделей як основа зниження вартості](../../phases/17-infrastructure-and-production/16-model-routing/) | Вивчіть | Python |
+| 13 | [Вибір стека спостережуваності LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | Вивчіть | Python, TypeScript |
+| 14 | [Економіка кешування промптів і семантичного кешування](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Вивчіть | Python, TypeScript |
+| 15 | [Пакетні API: знижка 50% як галузевий стандарт](../../phases/17-infrastructure-and-production/15-batch-apis/) | Вивчіть | Python, TypeScript |
+| 16 | [Маршрутизація моделей як основа зниження вартості](../../phases/17-infrastructure-and-production/16-model-routing/) | Вивчіть | Python, TypeScript |
 | 17 | [Розділені prefill і декодування: NVIDIA Dynamo та llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Вивчіть | Python |
 | 18 | [Промисловий стек інференсу: вивантаження KV і маршрутизація з урахуванням кешу](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Вивчіть | Python |
-| 19 | [AI-шлюзи: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Вивчіть | Python |
-| 20 | [Тіньове, канаркове й поступове розгортання](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Вивчіть | Python |
+| 19 | [AI-шлюзи: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Вивчіть | Python, TypeScript |
+| 20 | [Тіньове, канаркове й поступове розгортання](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Вивчіть | Python, TypeScript |
 | 21 | [A/B-тестування LLM-функцій: GrowthBook і Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Вивчіть | Python |
 | 22 | [Навантажувальне тестування LLM API: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Створіть | Python |
 | 23 | [SRE для AI: багатоагентне реагування на інциденти](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Вивчіть | Python |

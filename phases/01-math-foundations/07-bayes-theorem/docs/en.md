@@ -3,7 +3,7 @@
 > Probability is about what you expect. Bayes' theorem is about what you learn.
 
 **Type:** Build
-**Language:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -335,7 +335,7 @@ Same algorithm. CountVectorizer handles tokenization and vocabulary building. Mu
 
 ## Ship It
 
-The NaiveBayes class built here demonstrates the full pipeline: tokenization, probability estimation with Laplace smoothing, log-space prediction. The code in `code/bayes.py` runs end-to-end with no dependencies beyond Python's standard library.
+The NaiveBayes class built here demonstrates the full pipeline: tokenization, probability estimation with Laplace smoothing, log-space prediction. The code in `code/bayes.py` runs end-to-end with no dependencies beyond Python's standard library. The TypeScript port in `code/bayes.ts` uses only the Node standard library.
 
 ### Conjugate Priors
 

@@ -3,7 +3,7 @@
 > Solving $Ax = b$ is the oldest problem in mathematics that still runs your neural network.
 
 **Type:** Build
-**Language:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors & Matrices), 03 (Matrix Transformations)
 **Time:** ~120 minutes
 
@@ -546,6 +546,7 @@ print(f"Ridge weights (sklearn): {ridge_sk.coef_}")
 
 This lesson produces:
 - `code/linear_systems.py` containing from-scratch implementations of Gaussian elimination, LU decomposition, Cholesky decomposition, least squares, and ridge regression
+- `code/linear_systems.ts`, a TypeScript port of the same file. It compares against small from-scratch reference solvers, because TypeScript has no NumPy.
 - A working demonstration that normal equations and sklearn's LinearRegression produce the same weights
 
 ## Exercises

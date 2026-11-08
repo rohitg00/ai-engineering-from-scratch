@@ -345,10 +345,10 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 
 | # | Aralin | Uri | Wika |
 |:---:|--------|:----:|------|
-| 01 | [Kapaligiran para sa pagbuo](../../phases/00-setup-and-tooling/01-dev-environment/) | Buuin | Python |
+| 01 | [Kapaligiran para sa pagbuo](../../phases/00-setup-and-tooling/01-dev-environment/) | Buuin | Python, TypeScript, Rust |
 | 02 | [Git at pagtutulungan](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | Pag-aralan | — |
 | 03 | [Pag-setup ng GPU at cloud](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | Buuin | Python |
-| 04 | [Mga API at susi sa pag-access](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Buuin | Python |
+| 04 | [Mga API at susi sa pag-access](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Buuin | Python, TypeScript |
 | 05 | [Jupyter Notebooks](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | Buuin | Python |
 | 06 | [Mga kapaligiran ng Python](../../phases/00-setup-and-tooling/06-python-environments/) | Buuin | Shell |
 | 07 | [Docker para sa AI](../../phases/00-setup-and-tooling/07-docker-for-ai/) | Buuin | Docker |
@@ -368,24 +368,24 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 | 01 | [Pag-unawa sa linear algebra](../../phases/01-math-foundations/01-linear-algebra-intuition/) | Pag-aralan | Python, Julia |
 | 02 | [Mga vector, matrix at operasyon](../../phases/01-math-foundations/02-vectors-matrices-operations/) | Buuin | Python, Julia |
 | 03 | [Mga transformasyon ng matrix at eigenvalue](../../phases/01-math-foundations/03-matrix-transformations/) | Buuin | Python, Julia |
-| 04 | [Calculus para sa ML: derivative at gradient](../../phases/01-math-foundations/04-calculus-for-ml/) | Pag-aralan | Python |
-| 05 | [Chain rule at awtomatikong differentiation](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Buuin | Python |
-| 06 | [Probabilidad at mga distribusyon](../../phases/01-math-foundations/06-probability-and-distributions/) | Pag-aralan | Python |
-| 07 | [Teorema ni Bayes at pag-iisip na estadistikal](../../phases/01-math-foundations/07-bayes-theorem/) | Buuin | Python |
-| 08 | [Pag-optimize: pamilya ng gradient descent](../../phases/01-math-foundations/08-optimization/) | Buuin | Python |
-| 09 | [Teorya ng impormasyon: entropy at KL divergence](../../phases/01-math-foundations/09-information-theory/) | Pag-aralan | Python |
-| 10 | [Pagbawas ng dimensiyon: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Buuin | Python |
+| 04 | [Calculus para sa ML: derivative at gradient](../../phases/01-math-foundations/04-calculus-for-ml/) | Pag-aralan | Python, Julia |
+| 05 | [Chain rule at awtomatikong differentiation](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Buuin | Python, Julia |
+| 06 | [Probabilidad at mga distribusyon](../../phases/01-math-foundations/06-probability-and-distributions/) | Pag-aralan | Python, Julia |
+| 07 | [Teorema ni Bayes at pag-iisip na estadistikal](../../phases/01-math-foundations/07-bayes-theorem/) | Buuin | Python, TypeScript |
+| 08 | [Pag-optimize: pamilya ng gradient descent](../../phases/01-math-foundations/08-optimization/) | Buuin | Python, Julia |
+| 09 | [Teorya ng impormasyon: entropy at KL divergence](../../phases/01-math-foundations/09-information-theory/) | Pag-aralan | Python, TypeScript |
+| 10 | [Pagbawas ng dimensiyon: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Buuin | Python, TypeScript |
 | 11 | [Singular Value Decomposition](../../phases/01-math-foundations/11-singular-value-decomposition/) | Buuin | Python, Julia |
-| 12 | [Mga operasyon sa tensor](../../phases/01-math-foundations/12-tensor-operations/) | Buuin | Python |
-| 13 | [Katatagan ng mga numerikal na kalkulasyon](../../phases/01-math-foundations/13-numerical-stability/) | Buuin | Python |
-| 14 | [Mga norm at distansiya](../../phases/01-math-foundations/14-norms-and-distances/) | Buuin | Python |
-| 15 | [Estadistika para sa ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Buuin | Python |
-| 16 | [Mga paraan ng sampling](../../phases/01-math-foundations/16-sampling-methods/) | Buuin | Python |
-| 17 | [Mga sistemang linear](../../phases/01-math-foundations/17-linear-systems/) | Buuin | Python |
-| 18 | [Convex optimization](../../phases/01-math-foundations/18-convex-optimization/) | Buuin | Python |
+| 12 | [Mga operasyon sa tensor](../../phases/01-math-foundations/12-tensor-operations/) | Buuin | Python, TypeScript |
+| 13 | [Katatagan ng mga numerikal na kalkulasyon](../../phases/01-math-foundations/13-numerical-stability/) | Buuin | Python, TypeScript |
+| 14 | [Mga norm at distansiya](../../phases/01-math-foundations/14-norms-and-distances/) | Buuin | Python, TypeScript |
+| 15 | [Estadistika para sa ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Buuin | Python, TypeScript |
+| 16 | [Mga paraan ng sampling](../../phases/01-math-foundations/16-sampling-methods/) | Buuin | Python, TypeScript |
+| 17 | [Mga sistemang linear](../../phases/01-math-foundations/17-linear-systems/) | Buuin | Python, TypeScript |
+| 18 | [Convex optimization](../../phases/01-math-foundations/18-convex-optimization/) | Buuin | Python, TypeScript |
 | 19 | [Mga complex number para sa AI](../../phases/01-math-foundations/19-complex-numbers/) | Pag-aralan | Python |
-| 20 | [Ang Fourier transform](../../phases/01-math-foundations/20-fourier-transform/) | Buuin | Python |
-| 21 | [Teorya ng graph para sa ML](../../phases/01-math-foundations/21-graph-theory/) | Buuin | Python |
+| 20 | [Ang Fourier transform](../../phases/01-math-foundations/20-fourier-transform/) | Buuin | Python, TypeScript |
+| 21 | [Teorya ng graph para sa ML](../../phases/01-math-foundations/21-graph-theory/) | Buuin | Python, TypeScript |
 | 22 | [Mga stochastic process](../../phases/01-math-foundations/22-stochastic-processes/) | Pag-aralan | Python |
 
 </details>
@@ -397,14 +397,14 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 | # | Aralin | Uri | Wika |
 |:---:|--------|:----:|------|
 | 01 | [Ano ang machine learning](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Pag-aralan | Python |
-| 02 | [Linear regression mula sa simula](../../phases/02-ml-fundamentals/02-linear-regression/) | Buuin | Python |
-| 03 | [Logistic regression at pag-uuri](../../phases/02-ml-fundamentals/03-logistic-regression/) | Buuin | Python |
+| 02 | [Linear regression mula sa simula](../../phases/02-ml-fundamentals/02-linear-regression/) | Buuin | Python, Rust, Julia |
+| 03 | [Logistic regression at pag-uuri](../../phases/02-ml-fundamentals/03-logistic-regression/) | Buuin | Python, Rust, Julia |
 | 04 | [Mga decision tree at random forest](../../phases/02-ml-fundamentals/04-decision-trees/) | Buuin | Python |
-| 05 | [Support Vector Machines](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Buuin | Python |
+| 05 | [Support Vector Machines](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Buuin | Python, Julia |
 | 06 | [KNN at mga sukatan ng distansiya](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Buuin | Python |
 | 07 | [Unsupervised learning: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Buuin | Python |
 | 08 | [Pagdisenyo at pagpili ng feature](../../phases/02-ml-fundamentals/08-feature-engineering/) | Buuin | Python |
-| 09 | [Pagsusuri ng modelo: mga sukatan at cross-validation](../../phases/02-ml-fundamentals/09-model-evaluation/) | Buuin | Python |
+| 09 | [Pagsusuri ng modelo: mga sukatan at cross-validation](../../phases/02-ml-fundamentals/09-model-evaluation/) | Buuin | Python, Julia |
 | 10 | [Bias, variance at learning curve](../../phases/02-ml-fundamentals/10-bias-variance/) | Pag-aralan | Python |
 | 11 | [Mga pamamaraang ensemble: Boosting, Bagging, Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Buuin | Python |
 | 12 | [Pagtutono ng hyperparameter](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | Buuin | Python |
@@ -426,11 +426,11 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 
 | # | Aralin | Uri | Wika |
 |:---:|--------|:----:|------|
-| 01 | [Ang perceptron: kung saan nagsimula ang lahat](../../phases/03-deep-learning-core/01-the-perceptron/) | Buuin | Python |
+| 01 | [Ang perceptron: kung saan nagsimula ang lahat](../../phases/03-deep-learning-core/01-the-perceptron/) | Buuin | Python, Rust, Julia |
 | 02 | [Mga network na maraming layer at forward pass](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Buuin | Python |
-| 03 | [Backpropagation mula sa simula](../../phases/03-deep-learning-core/03-backpropagation/) | Buuin | Python |
-| 04 | [Mga activation function: ReLU, Sigmoid, GELU at kung bakit](../../phases/03-deep-learning-core/04-activation-functions/) | Buuin | Python |
-| 05 | [Mga loss function: MSE, cross-entropy, contrastive](../../phases/03-deep-learning-core/05-loss-functions/) | Buuin | Python |
+| 03 | [Backpropagation mula sa simula](../../phases/03-deep-learning-core/03-backpropagation/) | Buuin | Python, Rust, Julia |
+| 04 | [Mga activation function: ReLU, Sigmoid, GELU at kung bakit](../../phases/03-deep-learning-core/04-activation-functions/) | Buuin | Python, Julia |
+| 05 | [Mga loss function: MSE, cross-entropy, contrastive](../../phases/03-deep-learning-core/05-loss-functions/) | Buuin | Python, Julia |
 | 06 | [Mga optimizer: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Buuin | Python |
 | 07 | [Mga paraan ng regularization: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Buuin | Python |
 | 08 | [Pagsisimula ng timbang at katatagan ng training](../../phases/03-deep-learning-core/08-weight-initialization/) | Buuin | Python |
@@ -462,7 +462,7 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 | 12 | [Pag-unawa sa video: pagmomodelo ng oras](../../phases/04-computer-vision/12-video-understanding/) | Buuin | Python |
 | 13 | [3D vision: mga point cloud at NeRF](../../phases/04-computer-vision/13-3d-vision-nerf/) | Buuin | Python |
 | 14 | [Mga Vision Transformer (ViT)](../../phases/04-computer-vision/14-vision-transformers/) | Buuin | Python |
-| 15 | [Vision sa tunay na oras: deployment sa edge](../../phases/04-computer-vision/15-real-time-edge/) | Buuin | Python |
+| 15 | [Vision sa tunay na oras: deployment sa edge](../../phases/04-computer-vision/15-real-time-edge/) | Buuin | Python, Rust |
 | 16 | [Bumuo ng kumpletong vision pipeline](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | Buuin | Python |
 | 17 | [Self-supervised vision: SimCLR, DINO, MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | Buuin | Python |
 | 18 | [Vision na may bukas na bokabularyo: CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | Buuin | Python |
@@ -503,11 +503,11 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 | 16 | [Paglikha ng teksto](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Buuin | Python |
 | 17 | [Mga chatbot: mula sa mga tuntunin tungo sa neural](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Buuin | Python |
 | 18 | [NLP para sa maraming wika](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Buuin | Python |
-| 19 | [Subword tokenization: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Pag-aralan | Python |
+| 19 | [Subword tokenization: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Pag-aralan | Python, TypeScript |
 | 20 | [Mga output na may estruktura at constrained decoding](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Buuin | Python |
 | 21 | [NLI at lohikal na implikasyon sa teksto](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Pag-aralan | Python |
 | 22 | [Malalimang pag-aaral ng mga embedding model](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Pag-aralan | Python |
-| 23 | [Mga estratehiya ng paghahati para sa RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Buuin | Python |
+| 23 | [Mga estratehiya ng paghahati para sa RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Buuin | Python, TypeScript |
 | 24 | [Pagresolba ng coreference](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Pag-aralan | Python |
 | 25 | [Pag-uugnay ng entidad at paglilinaw ng kahulugan](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Buuin | Python |
 | 26 | [Pagkuha ng relasyon at pagbuo ng knowledge graph](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Buuin | Python |
@@ -533,7 +533,7 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 | 08 | [Pag-clone at pagbabago ng boses](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Buuin | Python |
 | 09 | [Paglikha ng musika](../../phases/06-speech-and-audio/09-music-generation) | Buuin | Python |
 | 10 | [Mga audio-language model](../../phases/06-speech-and-audio/10-audio-language-models) | Buuin | Python |
-| 11 | [Pagproseso ng audio sa tunay na oras](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Buuin | Python |
+| 11 | [Pagproseso ng audio sa tunay na oras](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Buuin | Python, Rust |
 | 12 | [Bumuo ng pipeline ng katulong na may boses](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Buuin | Python |
 | 13 | [Mga neural audio codec: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Pag-aralan | Python |
 | 14 | [Pagtukoy ng boses at pagpapalitan ng pagkakataong magsalita](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Buuin | Python |
@@ -549,11 +549,11 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 
 | # | Aralin | Uri | Wika |
 |:---:|--------|:----:|------|
-| 01 | [Bakit Transformer: mga problema ng RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | Pag-aralan | Python |
-| 02 | [Self-attention mula sa simula](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Buuin | Python |
-| 03 | [Attention na maraming head](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Buuin | Python |
-| 04 | [Positional encoding: Sinusoidal, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Buuin | Python |
-| 05 | [Ang buong Transformer: encoder at decoder](../../phases/07-transformers-deep-dive/05-full-transformer/) | Buuin | Python |
+| 01 | [Bakit Transformer: mga problema ng RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | Pag-aralan | Python, Julia |
+| 02 | [Self-attention mula sa simula](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Buuin | Python, Rust, Julia |
+| 03 | [Attention na maraming head](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Buuin | Python, Rust |
+| 04 | [Positional encoding: Sinusoidal, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Buuin | Python, Rust, Julia |
+| 05 | [Ang buong Transformer: encoder at decoder](../../phases/07-transformers-deep-dive/05-full-transformer/) | Buuin | Python, Julia |
 | 06 | [BERT: pagmomodelo ng wikang may nakatagong token](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Buuin | Python |
 | 07 | [GPT: causal language modeling](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Buuin | Python |
 | 08 | [T5, BART: mga encoder-decoder model](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Pag-aralan | Python |
@@ -622,15 +622,15 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 | 01 | [Mga tokenizer: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Buuin | Python, Rust |
 | 02 | [Pagbuo ng tokenizer mula sa simula](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Buuin | Python |
 | 03 | [Mga pipeline ng datos para sa pre-training](../../phases/10-llms-from-scratch/03-data-pipelines/) | Buuin | Python |
-| 04 | [Pre-training ng maliit na GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Buuin | Python |
+| 04 | [Pre-training ng maliit na GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Buuin | Python, Rust |
 | 05 | [Ipinamahaging training, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Buuin | Python |
 | 06 | [Instruction tuning gamit ang SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Buuin | Python |
 | 07 | [RLHF: reward model at PPO](../../phases/10-llms-from-scratch/07-rlhf/) | Buuin | Python |
 | 08 | [DPO: direktang pag-optimize ng kagustuhan](../../phases/10-llms-from-scratch/08-dpo/) | Buuin | Python |
 | 09 | [Constitutional AI at sariling pagpapahusay](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | Buuin | Python |
 | 10 | [Pagsusuri: mga benchmark at eval](../../phases/10-llms-from-scratch/10-evaluation/) | Buuin | Python |
-| 11 | [Mga paraan ng quantization: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Buuin | Python |
-| 12 | [Pag-optimize ng inference](../../phases/10-llms-from-scratch/12-inference-optimization/) | Buuin | Python |
+| 11 | [Mga paraan ng quantization: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Buuin | Python, Rust |
+| 12 | [Pag-optimize ng inference](../../phases/10-llms-from-scratch/12-inference-optimization/) | Buuin | Python, Rust |
 | 13 | [Pagbuo ng kumpletong pipeline ng LLM](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Buuin | Python |
 | 14 | [Mga bukas na modelo: pagtalakay sa arkitektura](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Pag-aralan | Python |
 | 15 | [Speculative decoding at EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Buuin | Python |
@@ -652,18 +652,18 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 
 | # | Aralin | Uri | Wika |
 |:---:|--------|:----:|------|
-| 01 | [Prompt engineering: mga paraan at pattern](../../phases/11-llm-engineering/01-prompt-engineering/) | Buuin | Python |
+| 01 | [Prompt engineering: mga paraan at pattern](../../phases/11-llm-engineering/01-prompt-engineering/) | Buuin | Python, TypeScript |
 | 02 | [Few-Shot, CoT, Tree-of-Thought](../../phases/11-llm-engineering/02-few-shot-cot/) | Buuin | Python |
-| 03 | [Mga output na may estruktura](../../phases/11-llm-engineering/03-structured-outputs/) | Buuin | Python |
-| 04 | [Mga embedding at representasyong vector](../../phases/11-llm-engineering/04-embeddings/) | Buuin | Python |
-| 05 | [Context Engineering](../../phases/11-llm-engineering/05-context-engineering/) | Buuin | Python |
-| 06 | [RAG: Retrieval-Augmented Generation](../../phases/11-llm-engineering/06-rag/) | Buuin | Python |
+| 03 | [Mga output na may estruktura](../../phases/11-llm-engineering/03-structured-outputs/) | Buuin | Python, TypeScript |
+| 04 | [Mga embedding at representasyong vector](../../phases/11-llm-engineering/04-embeddings/) | Buuin | Python, TypeScript |
+| 05 | [Context Engineering](../../phases/11-llm-engineering/05-context-engineering/) | Buuin | Python, TypeScript |
+| 06 | [RAG: Retrieval-Augmented Generation](../../phases/11-llm-engineering/06-rag/) | Buuin | Python, TypeScript |
 | 07 | [Mas malalim na RAG: paghahati at muling pagraranggo](../../phases/11-llm-engineering/07-advanced-rag/) | Buuin | Python |
 | 08 | [Fine-tuning gamit ang LoRA at QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Buuin | Python |
-| 09 | [Pagtawag ng function at paggamit ng tool](../../phases/11-llm-engineering/09-function-calling/) | Buuin | Python |
+| 09 | [Pagtawag ng function at paggamit ng tool](../../phases/11-llm-engineering/09-function-calling/) | Buuin | Python, TypeScript |
 | 10 | [Pagsusuri at pagsubok](../../phases/11-llm-engineering/10-evaluation/) | Buuin | Python |
 | 11 | [Caching, paglilimita ng rate at gastos](../../phases/11-llm-engineering/11-caching-cost/) | Buuin | Python |
-| 12 | [Mga guardrail at kaligtasan](../../phases/11-llm-engineering/12-guardrails/) | Buuin | Python |
+| 12 | [Mga guardrail at kaligtasan](../../phases/11-llm-engineering/12-guardrails/) | Buuin | Python, TypeScript |
 | 13 | [Pagbuo ng LLM app para sa aktuwal na paggamit](../../phases/11-llm-engineering/13-production-app/) | Buuin | Python |
 | 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Buuin | Python |
 | 15 | [Pag-cache ng prompt at konteksto](../../phases/11-llm-engineering/15-prompt-caching/) | Buuin | Python |
@@ -712,7 +712,7 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 
 | # | Aralin | Uri | Wika |
 |:---:|--------|:----:|------|
-| 01 | [Ang interface ng tool](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Pag-aralan | Python |
+| 01 | [Ang interface ng tool](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Pag-aralan | Python, TypeScript |
 | 02 | [Malalimang pag-aaral ng pagtawag ng function](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Buuin | Python |
 | 03 | [Sabay-sabay at streaming na pagtawag ng tool](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Buuin | Python |
 | 04 | [Output na may estruktura](../../phases/13-tools-and-protocols/04-structured-output/) | Buuin | Python |
@@ -730,7 +730,7 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 | 16 | [Awtorisasyon ng MCP: CIMD, pagtali sa issuer, PKCE at step-up](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Buuin | Python |
 | 17 | [Mga stateless MCP gateway at pagtanggap sa registry](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Pag-aralan | Python |
 | 18 | [MCP auth sa aktuwal na paggamit: enrollment at token na nakatali sa issuer](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Buuin | Python |
-| 19 | [Protocol na A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Buuin | Python |
+| 19 | [Protocol na A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Buuin | Python, TypeScript |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Buuin | Python |
 | 21 | [Layer ng routing para sa LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Pag-aralan | Python |
 | 22 | [Agent Skills: portable na kontrata at hangganan ng runtime](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Buuin | Python |
@@ -770,24 +770,24 @@ Binubuo ng mga aralin 22 at 24-27 ang nakatuong [landas sa pag-aaral ng Agent Sk
 
 | # | Aralin | Uri | Wika |
 |:---:|--------|:----:|------|
-| 01 | [Ang paulit-ulit na siklo ng agent](../../phases/14-agent-engineering/01-the-agent-loop/) | Buuin | Python |
+| 01 | [Ang paulit-ulit na siklo ng agent](../../phases/14-agent-engineering/01-the-agent-loop/) | Buuin | Python, TypeScript |
 | 02 | [ReWOO at pagpaplano bago pagpapatupad](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Buuin | Python |
 | 03 | [Reflexion at reinforcement learning sa pamamagitan ng salita](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Buuin | Python |
 | 04 | [Tree of Thoughts at LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Buuin | Python |
 | 05 | [Self-Refine at CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Buuin | Python |
-| 06 | [Paggamit ng tool at pagtawag ng function](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Buuin | Python |
+| 06 | [Paggamit ng tool at pagtawag ng function](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Buuin | Python, TypeScript |
 | 07 | [Memorya ng agent: virtual na konteksto at memory paging](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Buuin | Python |
 | 08 | [Mga memory block at pagkalkula habang nagpapahinga](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Buuin | Python |
 | 09 | [Pinagsamang memorya: vector, graph at KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Buuin | Python |
 | 10 | [Mga library ng skill at panghabambuhay na pagkatuto (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Buuin | Python |
 | 11 | [Pagpaplano gamit ang HTN at evolutionary search](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Buuin | Python |
 | 12 | [Mga workflow pattern ng Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Buuin | Python |
-| 13 | [Orkestrasyon ng graph na may state: matibay na pagpapatupad at checkpoint](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Buuin | Python |
+| 13 | [Orkestrasyon ng graph na may state: matibay na pagpapatupad at checkpoint](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Buuin | Python, TypeScript |
 | 14 | [Ang Actor model para sa mga agent](../../phases/14-agent-engineering/14-autogen-actor-model/) | Buuin | Python |
 | 15 | [Mga pangkat ng agent ayon sa papel: papel, gawain, proseso](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Buuin | Python |
 | 16 | [OpenAI Agents SDK: handoff, guardrail, tracing](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Buuin | Python |
 | 17 | [Ang harness bilang library: mga subagent at imbakan ng session](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Buuin | Python |
-| 18 | [Mga runtime ng agent para sa aktuwal na paggamit](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Pag-aralan | Python |
+| 18 | [Mga runtime ng agent para sa aktuwal na paggamit](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Pag-aralan | Python, TypeScript |
 | 19 | [Mga benchmark: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Pag-aralan | Python |
 | 20 | [Mga benchmark: WebArena at OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Pag-aralan | Python |
 | 21 | [Paggamit ng computer: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Buuin | Python |
@@ -914,14 +914,14 @@ Binubuo ng mga aralin 31-46 ang [landas ng Engineering na may Tulong ng Agent](.
 | 10 | [Pagbawas ng cold start para sa serverless LLM](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Pag-aralan | Python |
 | 11 | [Serving ng LLM sa maraming rehiyon at lokasyon ng KV cache](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Pag-aralan | Python |
 | 12 | [Inference sa edge: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Pag-aralan | Python |
-| 13 | [Pagpili ng mga tool sa pagmamasid ng LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | Pag-aralan | Python |
-| 14 | [Ekonomiya ng prompt caching at semantic caching](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Pag-aralan | Python |
-| 15 | [Mga batch API: ang 50% diskuwento bilang pamantayan ng industriya](../../phases/17-infrastructure-and-production/15-batch-apis/) | Pag-aralan | Python |
-| 16 | [Model routing bilang batayang paraan ng pagbawas ng gastos](../../phases/17-infrastructure-and-production/16-model-routing/) | Pag-aralan | Python |
+| 13 | [Pagpili ng mga tool sa pagmamasid ng LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | Pag-aralan | Python, TypeScript |
+| 14 | [Ekonomiya ng prompt caching at semantic caching](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Pag-aralan | Python, TypeScript |
+| 15 | [Mga batch API: ang 50% diskuwento bilang pamantayan ng industriya](../../phases/17-infrastructure-and-production/15-batch-apis/) | Pag-aralan | Python, TypeScript |
+| 16 | [Model routing bilang batayang paraan ng pagbawas ng gastos](../../phases/17-infrastructure-and-production/16-model-routing/) | Pag-aralan | Python, TypeScript |
 | 17 | [Hiwalay na prefill/decode: NVIDIA Dynamo at llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Pag-aralan | Python |
 | 18 | [Serving stack sa aktuwal na paggamit: KV offloading at cache-aware routing](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Pag-aralan | Python |
-| 19 | [Mga AI gateway: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Pag-aralan | Python |
-| 20 | [Shadow, canary at unti-unting deployment](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Pag-aralan | Python |
+| 19 | [Mga AI gateway: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Pag-aralan | Python, TypeScript |
+| 20 | [Shadow, canary at unti-unting deployment](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Pag-aralan | Python, TypeScript |
 | 21 | [A/B testing ng mga tampok ng LLM: GrowthBook at Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Pag-aralan | Python |
 | 22 | [Load testing ng mga LLM API: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Buuin | Python |
 | 23 | [SRE para sa AI: pagtugon ng maraming agent sa insidente](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Pag-aralan | Python |

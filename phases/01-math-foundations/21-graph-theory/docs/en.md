@@ -3,7 +3,7 @@
 > Graphs are the data structure of relationships. If your data has connections, you need graph theory.
 
 **Type:** Build
-**Language:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-03 (linear algebra, matrices)
 **Time:** ~90 minutes
 

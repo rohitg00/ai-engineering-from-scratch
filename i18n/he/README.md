@@ -345,10 +345,10 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [סביבת פיתוח](../../phases/00-setup-and-tooling/01-dev-environment/) | בנו | Python |
+| 01 | [סביבת פיתוח](../../phases/00-setup-and-tooling/01-dev-environment/) | בנו | Python, TypeScript, Rust |
 | 02 | [Git ושיתוף פעולה](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | למדו | — |
 | 03 | [הגדרת GPU ושירותי ענן](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | בנו | Python |
-| 04 | [ממשקי API ומפתחות](../../phases/00-setup-and-tooling/04-apis-and-keys/) | בנו | Python |
+| 04 | [ממשקי API ומפתחות](../../phases/00-setup-and-tooling/04-apis-and-keys/) | בנו | Python, TypeScript |
 | 05 | [מחברות Jupyter](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | בנו | Python |
 | 06 | [סביבות Python](../../phases/00-setup-and-tooling/06-python-environments/) | בנו | Shell |
 | 07 | [Docker לפיתוח AI](../../phases/00-setup-and-tooling/07-docker-for-ai/) | בנו | Docker |
@@ -368,24 +368,24 @@ flowchart TB
 | 01 | [אינטואיציה לאלגברה ליניארית](../../phases/01-math-foundations/01-linear-algebra-intuition/) | למדו | Python, Julia |
 | 02 | [וקטורים, מטריצות ופעולות](../../phases/01-math-foundations/02-vectors-matrices-operations/) | בנו | Python, Julia |
 | 03 | [טרנספורמציות מטריצה וערכים עצמיים](../../phases/01-math-foundations/03-matrix-transformations/) | בנו | Python, Julia |
-| 04 | [חדו״א ללמידת מכונה: נגזרות וגרדיאנטים](../../phases/01-math-foundations/04-calculus-for-ml/) | למדו | Python |
-| 05 | [כלל השרשרת וגזירה אוטומטית](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | בנו | Python |
-| 06 | [הסתברות והתפלגויות](../../phases/01-math-foundations/06-probability-and-distributions/) | למדו | Python |
-| 07 | [משפט בייס וחשיבה סטטיסטית](../../phases/01-math-foundations/07-bayes-theorem/) | בנו | Python |
-| 08 | [אופטימיזציה: משפחת שיטות ירידת הגרדיאנט](../../phases/01-math-foundations/08-optimization/) | בנו | Python |
-| 09 | [תורת המידע: אנטרופיה וסטיית KL](../../phases/01-math-foundations/09-information-theory/) | למדו | Python |
-| 10 | [צמצום ממדים: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | בנו | Python |
+| 04 | [חדו״א ללמידת מכונה: נגזרות וגרדיאנטים](../../phases/01-math-foundations/04-calculus-for-ml/) | למדו | Python, Julia |
+| 05 | [כלל השרשרת וגזירה אוטומטית](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | בנו | Python, Julia |
+| 06 | [הסתברות והתפלגויות](../../phases/01-math-foundations/06-probability-and-distributions/) | למדו | Python, Julia |
+| 07 | [משפט בייס וחשיבה סטטיסטית](../../phases/01-math-foundations/07-bayes-theorem/) | בנו | Python, TypeScript |
+| 08 | [אופטימיזציה: משפחת שיטות ירידת הגרדיאנט](../../phases/01-math-foundations/08-optimization/) | בנו | Python, Julia |
+| 09 | [תורת המידע: אנטרופיה וסטיית KL](../../phases/01-math-foundations/09-information-theory/) | למדו | Python, TypeScript |
+| 10 | [צמצום ממדים: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | בנו | Python, TypeScript |
 | 11 | [פירוק לערכים סינגולריים](../../phases/01-math-foundations/11-singular-value-decomposition/) | בנו | Python, Julia |
-| 12 | [פעולות על טנזורים](../../phases/01-math-foundations/12-tensor-operations/) | בנו | Python |
-| 13 | [יציבות נומרית](../../phases/01-math-foundations/13-numerical-stability/) | בנו | Python |
-| 14 | [נורמות ומרחקים](../../phases/01-math-foundations/14-norms-and-distances/) | בנו | Python |
-| 15 | [סטטיסטיקה ללמידת מכונה](../../phases/01-math-foundations/15-statistics-for-ml/) | בנו | Python |
-| 16 | [שיטות דגימה](../../phases/01-math-foundations/16-sampling-methods/) | בנו | Python |
-| 17 | [מערכות ליניאריות](../../phases/01-math-foundations/17-linear-systems/) | בנו | Python |
-| 18 | [אופטימיזציה קמורה](../../phases/01-math-foundations/18-convex-optimization/) | בנו | Python |
+| 12 | [פעולות על טנזורים](../../phases/01-math-foundations/12-tensor-operations/) | בנו | Python, TypeScript |
+| 13 | [יציבות נומרית](../../phases/01-math-foundations/13-numerical-stability/) | בנו | Python, TypeScript |
+| 14 | [נורמות ומרחקים](../../phases/01-math-foundations/14-norms-and-distances/) | בנו | Python, TypeScript |
+| 15 | [סטטיסטיקה ללמידת מכונה](../../phases/01-math-foundations/15-statistics-for-ml/) | בנו | Python, TypeScript |
+| 16 | [שיטות דגימה](../../phases/01-math-foundations/16-sampling-methods/) | בנו | Python, TypeScript |
+| 17 | [מערכות ליניאריות](../../phases/01-math-foundations/17-linear-systems/) | בנו | Python, TypeScript |
+| 18 | [אופטימיזציה קמורה](../../phases/01-math-foundations/18-convex-optimization/) | בנו | Python, TypeScript |
 | 19 | [מספרים מרוכבים ל-AI](../../phases/01-math-foundations/19-complex-numbers/) | למדו | Python |
-| 20 | [התמרת פורייה](../../phases/01-math-foundations/20-fourier-transform/) | בנו | Python |
-| 21 | [תורת הגרפים ללמידת מכונה](../../phases/01-math-foundations/21-graph-theory/) | בנו | Python |
+| 20 | [התמרת פורייה](../../phases/01-math-foundations/20-fourier-transform/) | בנו | Python, TypeScript |
+| 21 | [תורת הגרפים ללמידת מכונה](../../phases/01-math-foundations/21-graph-theory/) | בנו | Python, TypeScript |
 | 22 | [תהליכים סטוכסטיים](../../phases/01-math-foundations/22-stochastic-processes/) | למדו | Python |
 
 </details>
@@ -397,14 +397,14 @@ flowchart TB
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
 | 01 | [מהי למידת מכונה?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | למדו | Python |
-| 02 | [רגרסיה ליניארית מאפס](../../phases/02-ml-fundamentals/02-linear-regression/) | בנו | Python |
-| 03 | [רגרסיה לוגיסטית וסיווג](../../phases/02-ml-fundamentals/03-logistic-regression/) | בנו | Python |
+| 02 | [רגרסיה ליניארית מאפס](../../phases/02-ml-fundamentals/02-linear-regression/) | בנו | Python, Rust, Julia |
+| 03 | [רגרסיה לוגיסטית וסיווג](../../phases/02-ml-fundamentals/03-logistic-regression/) | בנו | Python, Rust, Julia |
 | 04 | [עצי החלטה ויערות אקראיים](../../phases/02-ml-fundamentals/04-decision-trees/) | בנו | Python |
-| 05 | [מכונות וקטורים תומכים](../../phases/02-ml-fundamentals/05-support-vector-machines/) | בנו | Python |
+| 05 | [מכונות וקטורים תומכים](../../phases/02-ml-fundamentals/05-support-vector-machines/) | בנו | Python, Julia |
 | 06 | [KNN ומדדי מרחק](../../phases/02-ml-fundamentals/06-knn-and-distances/) | בנו | Python |
 | 07 | [למידה ללא פיקוח: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | בנו | Python |
 | 08 | [הנדסת תכונות ובחירתן](../../phases/02-ml-fundamentals/08-feature-engineering/) | בנו | Python |
-| 09 | [הערכת מודלים: מדדים ואימות צולב](../../phases/02-ml-fundamentals/09-model-evaluation/) | בנו | Python |
+| 09 | [הערכת מודלים: מדדים ואימות צולב](../../phases/02-ml-fundamentals/09-model-evaluation/) | בנו | Python, Julia |
 | 10 | [הטיה, שונות ועקומת הלמידה](../../phases/02-ml-fundamentals/10-bias-variance/) | למדו | Python |
 | 11 | [שיטות אנסמבל: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | בנו | Python |
 | 12 | [כוונון היפר-פרמטרים](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | בנו | Python |
@@ -426,11 +426,11 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [הפרספטרון: כאן הכול התחיל](../../phases/03-deep-learning-core/01-the-perceptron/) | בנו | Python |
+| 01 | [הפרספטרון: כאן הכול התחיל](../../phases/03-deep-learning-core/01-the-perceptron/) | בנו | Python, Rust, Julia |
 | 02 | [רשתות רב-שכבתיות ומעבר קדימה](../../phases/03-deep-learning-core/02-multi-layer-networks/) | בנו | Python |
-| 03 | [הפצה לאחור מאפס](../../phases/03-deep-learning-core/03-backpropagation/) | בנו | Python |
-| 04 | [פונקציות אקטיבציה: ReLU, Sigmoid, GELU והסיבות לבחירתן](../../phases/03-deep-learning-core/04-activation-functions/) | בנו | Python |
-| 05 | [פונקציות הפסד: MSE, אנטרופיה צולבת והפסד ניגודי](../../phases/03-deep-learning-core/05-loss-functions/) | בנו | Python |
+| 03 | [הפצה לאחור מאפס](../../phases/03-deep-learning-core/03-backpropagation/) | בנו | Python, Rust, Julia |
+| 04 | [פונקציות אקטיבציה: ReLU, Sigmoid, GELU והסיבות לבחירתן](../../phases/03-deep-learning-core/04-activation-functions/) | בנו | Python, Julia |
+| 05 | [פונקציות הפסד: MSE, אנטרופיה צולבת והפסד ניגודי](../../phases/03-deep-learning-core/05-loss-functions/) | בנו | Python, Julia |
 | 06 | [אופטימייזרים: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | בנו | Python |
 | 07 | [רגולריזציה: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | בנו | Python |
 | 08 | [אתחול משקולות ויציבות האימון](../../phases/03-deep-learning-core/08-weight-initialization/) | בנו | Python |
@@ -462,7 +462,7 @@ flowchart TB
 | 12 | [הבנת וידאו: מידול לאורך זמן](../../phases/04-computer-vision/12-video-understanding/) | בנו | Python |
 | 13 | [ראייה תלת-ממדית: ענני נקודות ו-NeRF](../../phases/04-computer-vision/13-3d-vision-nerf/) | בנו | Python |
 | 14 | [Vision Transformers (ViT) לראייה ממוחשבת](../../phases/04-computer-vision/14-vision-transformers/) | בנו | Python |
-| 15 | [ראייה בזמן אמת: פריסה במכשירי קצה](../../phases/04-computer-vision/15-real-time-edge/) | בנו | Python |
+| 15 | [ראייה בזמן אמת: פריסה במכשירי קצה](../../phases/04-computer-vision/15-real-time-edge/) | בנו | Python, Rust |
 | 16 | [בנו תהליך מלא לראייה ממוחשבת](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | בנו | Python |
 | 17 | [ראייה בלמידה עצמית מונחית: SimCLR, DINO, MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | בנו | Python |
 | 18 | [ראייה עם אוצר מילים פתוח: CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | בנו | Python |
@@ -503,11 +503,11 @@ flowchart TB
 | 16 | [יצירת טקסט](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | בנו | Python |
 | 17 | [צ'אטבוטים: מחוקים לרשתות עצביות](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | בנו | Python |
 | 18 | [NLP רב-לשוני](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | בנו | Python |
-| 19 | [טוקניזציה של תת-מילים: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | למדו | Python |
+| 19 | [טוקניזציה של תת-מילים: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | למדו | Python, TypeScript |
 | 20 | [פלטים מובנים ופענוח מוגבל](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | בנו | Python |
 | 21 | [NLI והיסק מטקסט](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | למדו | Python |
 | 22 | [העמקה במודלי הטמעות](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | למדו | Python |
-| 23 | [אסטרטגיות חלוקה למקטעים עבור RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | בנו | Python |
+| 23 | [אסטרטגיות חלוקה למקטעים עבור RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | בנו | Python, TypeScript |
 | 24 | [פתרון אזכורים משותפים](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | למדו | Python |
 | 25 | [קישור ישויות והסרת עמימות](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | בנו | Python |
 | 26 | [חילוץ יחסים ובניית גרף ידע](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | בנו | Python |
@@ -533,7 +533,7 @@ flowchart TB
 | 08 | [שכפול קול והמרת קול](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | בנו | Python |
 | 09 | [יצירת מוזיקה](../../phases/06-speech-and-audio/09-music-generation) | בנו | Python |
 | 10 | [מודלי אודיו-שפה](../../phases/06-speech-and-audio/10-audio-language-models) | בנו | Python |
-| 11 | [עיבוד אודיו בזמן אמת](../../phases/06-speech-and-audio/11-real-time-audio-processing) | בנו | Python |
+| 11 | [עיבוד אודיו בזמן אמת](../../phases/06-speech-and-audio/11-real-time-audio-processing) | בנו | Python, Rust |
 | 12 | [בנו תהליך עבודה לעוזר קולי](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | בנו | Python |
 | 13 | [קודקי אודיו עצביים: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | למדו | Python |
 | 14 | [זיהוי פעילות קולית וחילופי תורות](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | בנו | Python |
@@ -549,11 +549,11 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [למה Transformers: הבעיות ברשתות RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | למדו | Python |
-| 02 | [קשב עצמי מאפס](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | בנו | Python |
-| 03 | [קשב מרובה ראשים](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | בנו | Python |
-| 04 | [קידוד מיקום: סינוסואידי, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | בנו | Python |
-| 05 | [ה-Transformer המלא: מקודד ומפענח](../../phases/07-transformers-deep-dive/05-full-transformer/) | בנו | Python |
+| 01 | [למה Transformers: הבעיות ברשתות RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | למדו | Python, Julia |
+| 02 | [קשב עצמי מאפס](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | בנו | Python, Rust, Julia |
+| 03 | [קשב מרובה ראשים](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | בנו | Python, Rust |
+| 04 | [קידוד מיקום: סינוסואידי, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | בנו | Python, Rust, Julia |
+| 05 | [ה-Transformer המלא: מקודד ומפענח](../../phases/07-transformers-deep-dive/05-full-transformer/) | בנו | Python, Julia |
 | 06 | [BERT: מידול שפה ממוסכת](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | בנו | Python |
 | 07 | [GPT: מידול שפה סיבתי](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | בנו | Python |
 | 08 | [T5, BART: מודלי מקודד-מפענח](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | למדו | Python |
@@ -622,15 +622,15 @@ flowchart TB
 | 01 | [טוקנייזרים: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | בנו | Python, Rust |
 | 02 | [בניית טוקנייזר מאפס](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | בנו | Python |
 | 03 | [תהליכי נתונים לקדם-אימון](../../phases/10-llms-from-scratch/03-data-pipelines/) | בנו | Python |
-| 04 | [קדם-אימון של Mini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | בנו | Python |
+| 04 | [קדם-אימון של Mini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | בנו | Python, Rust |
 | 05 | [אימון מבוזר, FSDP ו-DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | בנו | Python |
 | 06 | [כוונון להוראות: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | בנו | Python |
 | 07 | [RLHF: מודל תגמול ו-PPO](../../phases/10-llms-from-scratch/07-rlhf/) | בנו | Python |
 | 08 | [DPO: אופטימיזציה ישירה של העדפות](../../phases/10-llms-from-scratch/08-dpo/) | בנו | Python |
 | 09 | [AI חוקתי ושיפור עצמי](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | בנו | Python |
 | 10 | [הערכה: מדדי ייחוס ומבחנים](../../phases/10-llms-from-scratch/10-evaluation/) | בנו | Python |
-| 11 | [קוונטיזציה: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | בנו | Python |
-| 12 | [אופטימיזציית הסקה](../../phases/10-llms-from-scratch/12-inference-optimization/) | בנו | Python |
+| 11 | [קוונטיזציה: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | בנו | Python, Rust |
+| 12 | [אופטימיזציית הסקה](../../phases/10-llms-from-scratch/12-inference-optimization/) | בנו | Python, Rust |
 | 13 | [בניית תהליך LLM מלא](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | בנו | Python |
 | 14 | [מודלים פתוחים: סיורי ארכיטקטורה](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | למדו | Python |
 | 15 | [פענוח ספקולטיבי ו-EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | בנו | Python |
@@ -652,18 +652,18 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [הנדסת הנחיות: טכניקות ודפוסים](../../phases/11-llm-engineering/01-prompt-engineering/) | בנו | Python |
+| 01 | [הנדסת הנחיות: טכניקות ודפוסים](../../phases/11-llm-engineering/01-prompt-engineering/) | בנו | Python, TypeScript |
 | 02 | [Few-Shot, CoT ועץ מחשבות](../../phases/11-llm-engineering/02-few-shot-cot/) | בנו | Python |
-| 03 | [פלטים מובנים](../../phases/11-llm-engineering/03-structured-outputs/) | בנו | Python |
-| 04 | [הטמעות וייצוגים וקטוריים](../../phases/11-llm-engineering/04-embeddings/) | בנו | Python |
-| 05 | [הנדסת הקשר](../../phases/11-llm-engineering/05-context-engineering/) | בנו | Python |
-| 06 | [RAG: יצירה המועשרת באחזור מידע](../../phases/11-llm-engineering/06-rag/) | בנו | Python |
+| 03 | [פלטים מובנים](../../phases/11-llm-engineering/03-structured-outputs/) | בנו | Python, TypeScript |
+| 04 | [הטמעות וייצוגים וקטוריים](../../phases/11-llm-engineering/04-embeddings/) | בנו | Python, TypeScript |
+| 05 | [הנדסת הקשר](../../phases/11-llm-engineering/05-context-engineering/) | בנו | Python, TypeScript |
+| 06 | [RAG: יצירה המועשרת באחזור מידע](../../phases/11-llm-engineering/06-rag/) | בנו | Python, TypeScript |
 | 07 | [RAG מתקדם: חלוקה למקטעים ודירוג מחדש](../../phases/11-llm-engineering/07-advanced-rag/) | בנו | Python |
 | 08 | [כוונון עדין עם LoRA ו-QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | בנו | Python |
-| 09 | [קריאה לפונקציות ושימוש בכלים](../../phases/11-llm-engineering/09-function-calling/) | בנו | Python |
+| 09 | [קריאה לפונקציות ושימוש בכלים](../../phases/11-llm-engineering/09-function-calling/) | בנו | Python, TypeScript |
 | 10 | [הערכה ובדיקות](../../phases/11-llm-engineering/10-evaluation/) | בנו | Python |
 | 11 | [מטמון, הגבלת קצב ועלות](../../phases/11-llm-engineering/11-caching-cost/) | בנו | Python |
-| 12 | [מעקות בטיחות והגנה](../../phases/11-llm-engineering/12-guardrails/) | בנו | Python |
+| 12 | [מעקות בטיחות והגנה](../../phases/11-llm-engineering/12-guardrails/) | בנו | Python, TypeScript |
 | 13 | [בניית יישום LLM לייצור](../../phases/11-llm-engineering/13-production-app/) | בנו | Python |
 | 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | בנו | Python |
 | 15 | [מטמון הנחיות ומטמון הקשר](../../phases/11-llm-engineering/15-prompt-caching/) | בנו | Python |
@@ -712,7 +712,7 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [ממשק הכלים](../../phases/13-tools-and-protocols/01-the-tool-interface/) | למדו | Python |
+| 01 | [ממשק הכלים](../../phases/13-tools-and-protocols/01-the-tool-interface/) | למדו | Python, TypeScript |
 | 02 | [העמקה בקריאה לפונקציות](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | בנו | Python |
 | 03 | [קריאות כלים מקבילות ובזרימה](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | בנו | Python |
 | 04 | [פלט מובנה](../../phases/13-tools-and-protocols/04-structured-output/) | בנו | Python |
@@ -730,7 +730,7 @@ flowchart TB
 | 16 | [הרשאת MCP: CIMD, קישור למנפיק, PKCE והגברת אימות](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | בנו | Python |
 | 17 | [שערי MCP חסרי מצב וקבלה לרישום](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | למדו | Python |
 | 18 | [אימות MCP בייצור: רישום וטוקנים הקשורים למנפיק](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | בנו | Python |
-| 19 | [פרוטוקול A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | בנו | Python |
+| 19 | [פרוטוקול A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | בנו | Python, TypeScript |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | בנו | Python |
 | 21 | [שכבת ניתוב LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | למדו | Python |
 | 22 | [Agent Skills: חוזה נייד וגבול זמן ריצה](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | בנו | Python |
@@ -770,24 +770,24 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [לולאת הסוכן](../../phases/14-agent-engineering/01-the-agent-loop/) | בנו | Python |
+| 01 | [לולאת הסוכן](../../phases/14-agent-engineering/01-the-agent-loop/) | בנו | Python, TypeScript |
 | 02 | [ReWOO ותכנון-ואז-ביצוע](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | בנו | Python |
 | 03 | [Reflexion ולמידת חיזוק מילולית](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | בנו | Python |
 | 04 | [עץ מחשבות ו-LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | בנו | Python |
 | 05 | [Self-Refine ו-CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | בנו | Python |
-| 06 | [שימוש בכלים וקריאה לפונקציות](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | בנו | Python |
+| 06 | [שימוש בכלים וקריאה לפונקציות](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | בנו | Python, TypeScript |
 | 07 | [זיכרון סוכן: הקשר וירטואלי ודפדוף זיכרון](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | בנו | Python |
 | 08 | [בלוקי זיכרון וחישוב בזמן מנוחה](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | בנו | Python |
 | 09 | [זיכרון היברידי: וקטור, גרף ו-KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | בנו | Python |
 | 10 | [ספריות מיומנויות ולמידה לאורך החיים (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | בנו | Python |
 | 11 | [תכנון עם HTN וחיפוש אבולוציוני](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | בנו | Python |
 | 12 | [דפוסי תהליכי העבודה של Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | בנו | Python |
-| 13 | [תזמור גרפים עם מצב: ביצוע מתמשך ונקודות ביקורת](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | בנו | Python |
+| 13 | [תזמור גרפים עם מצב: ביצוע מתמשך ונקודות ביקורת](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | בנו | Python, TypeScript |
 | 14 | [מודל השחקנים לסוכנים](../../phases/14-agent-engineering/14-autogen-actor-model/) | בנו | Python |
 | 15 | [צוותי סוכנים מבוססי תפקיד: תפקידים, משימות ותהליכים](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | בנו | Python |
 | 16 | [OpenAI Agents SDK: העברות, מעקות בטיחות ומעקב](../../phases/14-agent-engineering/16-openai-agents-sdk/) | בנו | Python |
 | 17 | [מעטפת ההרצה כספרייה: תת-סוכנים ומאגר מפגשים](../../phases/14-agent-engineering/17-claude-agent-sdk/) | בנו | Python |
-| 18 | [סביבות זמן ריצה לסוכנים בייצור](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | למדו | Python |
+| 18 | [סביבות זמן ריצה לסוכנים בייצור](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | למדו | Python, TypeScript |
 | 19 | [מדדי ייחוס: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | למדו | Python |
 | 20 | [מדדי ייחוס: WebArena ו-OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | למדו | Python |
 | 21 | [שימוש במחשב: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | בנו | Python |
@@ -914,14 +914,14 @@ flowchart TB
 | 10 | [צמצום התנעה קרה של LLM ללא שרתים](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | למדו | Python |
 | 11 | [הגשת LLM בכמה אזורים ומקומיות מטמון KV](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | למדו | Python |
 | 12 | [הסקה במכשירי קצה: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | למדו | Python |
-| 13 | [בחירת מערך נצפות ל-LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | למדו | Python |
-| 14 | [כלכלת מטמון הנחיות ומטמון סמנטי](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | למדו | Python |
-| 15 | [ממשקי אצווה: הנחה של 50% כתקן תעשייתי](../../phases/17-infrastructure-and-production/15-batch-apis/) | למדו | Python |
-| 16 | [ניתוב מודלים כאמצעי בסיסי להפחתת עלות](../../phases/17-infrastructure-and-production/16-model-routing/) | למדו | Python |
+| 13 | [בחירת מערך נצפות ל-LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | למדו | Python, TypeScript |
+| 14 | [כלכלת מטמון הנחיות ומטמון סמנטי](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | למדו | Python, TypeScript |
+| 15 | [ממשקי אצווה: הנחה של 50% כתקן תעשייתי](../../phases/17-infrastructure-and-production/15-batch-apis/) | למדו | Python, TypeScript |
+| 16 | [ניתוב מודלים כאמצעי בסיסי להפחתת עלות](../../phases/17-infrastructure-and-production/16-model-routing/) | למדו | Python, TypeScript |
 | 17 | [קדם-מילוי ופענוח מופרדים: NVIDIA Dynamo ו-llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | למדו | Python |
 | 18 | [מערך הגשה בייצור: העברת KV וניתוב מודע למטמון](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | למדו | Python |
-| 19 | [שערי AI: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | למדו | Python |
-| 20 | [פריסת צל, קנרי ופריסה הדרגתית](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | למדו | Python |
+| 19 | [שערי AI: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | למדו | Python, TypeScript |
+| 20 | [פריסת צל, קנרי ופריסה הדרגתית](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | למדו | Python, TypeScript |
 | 21 | [בדיקות A/B ליכולות LLM: GrowthBook ו-Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | למדו | Python |
 | 22 | [בדיקות עומס ל-API של LLM: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | בנו | Python |
 | 23 | [SRE ל-AI: תגובה לתקריות בעזרת כמה סוכנים](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | למדו | Python |

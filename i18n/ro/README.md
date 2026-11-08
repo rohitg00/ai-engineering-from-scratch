@@ -345,10 +345,10 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 
 | # | Lecție | Tip | Limbaj |
 |:---:|--------|:----:|------|
-| 01 | [Mediul de dezvoltare](../../phases/00-setup-and-tooling/01-dev-environment/) | Construiește | Python |
+| 01 | [Mediul de dezvoltare](../../phases/00-setup-and-tooling/01-dev-environment/) | Construiește | Python, TypeScript, Rust |
 | 02 | [Git și colaborarea](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | Învață | — |
 | 03 | [Configurarea GPU și cloudul](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | Construiește | Python |
-| 04 | [API-uri și chei](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Construiește | Python |
+| 04 | [API-uri și chei](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Construiește | Python, TypeScript |
 | 05 | [Notebookuri Jupyter](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | Construiește | Python |
 | 06 | [Medii Python](../../phases/00-setup-and-tooling/06-python-environments/) | Construiește | Shell |
 | 07 | [Docker pentru AI](../../phases/00-setup-and-tooling/07-docker-for-ai/) | Construiește | Docker |
@@ -368,24 +368,24 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 01 | [Intuiția algebrei liniare](../../phases/01-math-foundations/01-linear-algebra-intuition/) | Învață | Python, Julia |
 | 02 | [Vectori, matrice și operații](../../phases/01-math-foundations/02-vectors-matrices-operations/) | Construiește | Python, Julia |
 | 03 | [Transformări matriciale și valori proprii](../../phases/01-math-foundations/03-matrix-transformations/) | Construiește | Python, Julia |
-| 04 | [Analiză pentru ML: derivate și gradienți](../../phases/01-math-foundations/04-calculus-for-ml/) | Învață | Python |
-| 05 | [Regula lanțului și derivarea automată](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Construiește | Python |
-| 06 | [Probabilități și distribuții](../../phases/01-math-foundations/06-probability-and-distributions/) | Învață | Python |
-| 07 | [Teorema lui Bayes și gândirea statistică](../../phases/01-math-foundations/07-bayes-theorem/) | Construiește | Python |
-| 08 | [Optimizare: familia coborârii gradientului](../../phases/01-math-foundations/08-optimization/) | Construiește | Python |
-| 09 | [Teoria informației: entropie și divergență KL](../../phases/01-math-foundations/09-information-theory/) | Învață | Python |
-| 10 | [Reducerea dimensionalității: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Construiește | Python |
+| 04 | [Analiză pentru ML: derivate și gradienți](../../phases/01-math-foundations/04-calculus-for-ml/) | Învață | Python, Julia |
+| 05 | [Regula lanțului și derivarea automată](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Construiește | Python, Julia |
+| 06 | [Probabilități și distribuții](../../phases/01-math-foundations/06-probability-and-distributions/) | Învață | Python, Julia |
+| 07 | [Teorema lui Bayes și gândirea statistică](../../phases/01-math-foundations/07-bayes-theorem/) | Construiește | Python, TypeScript |
+| 08 | [Optimizare: familia coborârii gradientului](../../phases/01-math-foundations/08-optimization/) | Construiește | Python, Julia |
+| 09 | [Teoria informației: entropie și divergență KL](../../phases/01-math-foundations/09-information-theory/) | Învață | Python, TypeScript |
+| 10 | [Reducerea dimensionalității: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Construiește | Python, TypeScript |
 | 11 | [Descompunerea în valori singulare](../../phases/01-math-foundations/11-singular-value-decomposition/) | Construiește | Python, Julia |
-| 12 | [Operații cu tensori](../../phases/01-math-foundations/12-tensor-operations/) | Construiește | Python |
-| 13 | [Stabilitate numerică](../../phases/01-math-foundations/13-numerical-stability/) | Construiește | Python |
-| 14 | [Norme și distanțe](../../phases/01-math-foundations/14-norms-and-distances/) | Construiește | Python |
-| 15 | [Statistică pentru ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Construiește | Python |
-| 16 | [Metode de eșantionare](../../phases/01-math-foundations/16-sampling-methods/) | Construiește | Python |
-| 17 | [Sisteme liniare](../../phases/01-math-foundations/17-linear-systems/) | Construiește | Python |
-| 18 | [Optimizare convexă](../../phases/01-math-foundations/18-convex-optimization/) | Construiește | Python |
+| 12 | [Operații cu tensori](../../phases/01-math-foundations/12-tensor-operations/) | Construiește | Python, TypeScript |
+| 13 | [Stabilitate numerică](../../phases/01-math-foundations/13-numerical-stability/) | Construiește | Python, TypeScript |
+| 14 | [Norme și distanțe](../../phases/01-math-foundations/14-norms-and-distances/) | Construiește | Python, TypeScript |
+| 15 | [Statistică pentru ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Construiește | Python, TypeScript |
+| 16 | [Metode de eșantionare](../../phases/01-math-foundations/16-sampling-methods/) | Construiește | Python, TypeScript |
+| 17 | [Sisteme liniare](../../phases/01-math-foundations/17-linear-systems/) | Construiește | Python, TypeScript |
+| 18 | [Optimizare convexă](../../phases/01-math-foundations/18-convex-optimization/) | Construiește | Python, TypeScript |
 | 19 | [Numere complexe pentru AI](../../phases/01-math-foundations/19-complex-numbers/) | Învață | Python |
-| 20 | [Transformata Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Construiește | Python |
-| 21 | [Teoria grafurilor pentru ML](../../phases/01-math-foundations/21-graph-theory/) | Construiește | Python |
+| 20 | [Transformata Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Construiește | Python, TypeScript |
+| 21 | [Teoria grafurilor pentru ML](../../phases/01-math-foundations/21-graph-theory/) | Construiește | Python, TypeScript |
 | 22 | [Procese stocastice](../../phases/01-math-foundations/22-stochastic-processes/) | Învață | Python |
 
 </details>
@@ -397,14 +397,14 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | # | Lecție | Tip | Limbaj |
 |:---:|--------|:----:|------|
 | 01 | [Ce este învățarea automată](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Învață | Python |
-| 02 | [Regresie liniară de la zero](../../phases/02-ml-fundamentals/02-linear-regression/) | Construiește | Python |
-| 03 | [Regresie logistică și clasificare](../../phases/02-ml-fundamentals/03-logistic-regression/) | Construiește | Python |
+| 02 | [Regresie liniară de la zero](../../phases/02-ml-fundamentals/02-linear-regression/) | Construiește | Python, Rust, Julia |
+| 03 | [Regresie logistică și clasificare](../../phases/02-ml-fundamentals/03-logistic-regression/) | Construiește | Python, Rust, Julia |
 | 04 | [Arbori de decizie și păduri aleatoare](../../phases/02-ml-fundamentals/04-decision-trees/) | Construiește | Python |
-| 05 | [Mașini cu vectori suport](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Construiește | Python |
+| 05 | [Mașini cu vectori suport](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Construiește | Python, Julia |
 | 06 | [KNN și metrici de distanță](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Construiește | Python |
 | 07 | [Învățare nesupravegheată: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Construiește | Python |
 | 08 | [Construirea și selectarea caracteristicilor](../../phases/02-ml-fundamentals/08-feature-engineering/) | Construiește | Python |
-| 09 | [Evaluarea modelelor: metrici și validare încrucișată](../../phases/02-ml-fundamentals/09-model-evaluation/) | Construiește | Python |
+| 09 | [Evaluarea modelelor: metrici și validare încrucișată](../../phases/02-ml-fundamentals/09-model-evaluation/) | Construiește | Python, Julia |
 | 10 | [Abatere, varianță și curba învățării](../../phases/02-ml-fundamentals/10-bias-variance/) | Învață | Python |
 | 11 | [Metode de ansamblu: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Construiește | Python |
 | 12 | [Reglarea hiperparametrilor](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | Construiește | Python |
@@ -426,11 +426,11 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 
 | # | Lecție | Tip | Limbaj |
 |:---:|--------|:----:|------|
-| 01 | [Perceptronul: începutul poveștii](../../phases/03-deep-learning-core/01-the-perceptron/) | Construiește | Python |
+| 01 | [Perceptronul: începutul poveștii](../../phases/03-deep-learning-core/01-the-perceptron/) | Construiește | Python, Rust, Julia |
 | 02 | [Rețele multistrat și propagare înainte](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Construiește | Python |
-| 03 | [Propagarea înapoi de la zero](../../phases/03-deep-learning-core/03-backpropagation/) | Construiește | Python |
-| 04 | [Funcții de activare: ReLU, sigmoid, GELU și rolul lor](../../phases/03-deep-learning-core/04-activation-functions/) | Construiește | Python |
-| 05 | [Funcții de pierdere: MSE, entropie încrucișată și contrast](../../phases/03-deep-learning-core/05-loss-functions/) | Construiește | Python |
+| 03 | [Propagarea înapoi de la zero](../../phases/03-deep-learning-core/03-backpropagation/) | Construiește | Python, Rust, Julia |
+| 04 | [Funcții de activare: ReLU, sigmoid, GELU și rolul lor](../../phases/03-deep-learning-core/04-activation-functions/) | Construiește | Python, Julia |
+| 05 | [Funcții de pierdere: MSE, entropie încrucișată și contrast](../../phases/03-deep-learning-core/05-loss-functions/) | Construiește | Python, Julia |
 | 06 | [Optimizatori: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Construiește | Python |
 | 07 | [Regularizare: dropout, reducerea ponderilor, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Construiește | Python |
 | 08 | [Inițializarea ponderilor și stabilitatea antrenării](../../phases/03-deep-learning-core/08-weight-initialization/) | Construiește | Python |
@@ -462,7 +462,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 12 | [Înțelegerea videourilor: modelare temporală](../../phases/04-computer-vision/12-video-understanding/) | Construiește | Python |
 | 13 | [Viziune 3D: nori de puncte și NeRF](../../phases/04-computer-vision/13-3d-vision-nerf/) | Construiește | Python |
 | 14 | [Transformatoare vizuale (ViT)](../../phases/04-computer-vision/14-vision-transformers/) | Construiește | Python |
-| 15 | [Viziune în timp real: implementare la marginea rețelei](../../phases/04-computer-vision/15-real-time-edge/) | Construiește | Python |
+| 15 | [Viziune în timp real: implementare la marginea rețelei](../../phases/04-computer-vision/15-real-time-edge/) | Construiește | Python, Rust |
 | 16 | [Construiește un flux complet de viziune](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | Construiește | Python |
 | 17 | [Viziune autosupravegheată: SimCLR, DINO, MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | Construiește | Python |
 | 18 | [Viziune cu vocabular deschis: CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | Construiește | Python |
@@ -503,11 +503,11 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 16 | [Generarea textului](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Construiește | Python |
 | 17 | [Chatboți: de la reguli la rețele neuronale](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Construiește | Python |
 | 18 | [NLP multilingv](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Construiește | Python |
-| 19 | [Tokenizarea subcuvintelor: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Învață | Python |
+| 19 | [Tokenizarea subcuvintelor: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Învață | Python, TypeScript |
 | 20 | [Rezultate structurate și decodare constrânsă](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Construiește | Python |
 | 21 | [NLI și implicație textuală](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Învață | Python |
 | 22 | [Aprofundarea modelelor de reprezentări vectoriale](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Învață | Python |
-| 23 | [Strategii de fragmentare pentru RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Construiește | Python |
+| 23 | [Strategii de fragmentare pentru RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Construiește | Python, TypeScript |
 | 24 | [Rezolvarea coreferințelor](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Învață | Python |
 | 25 | [Legarea entităților și dezambiguizarea](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Construiește | Python |
 | 26 | [Extragerea relațiilor și construirea grafurilor de cunoștințe](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Construiește | Python |
@@ -533,7 +533,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 08 | [Clonarea și conversia vocii](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Construiește | Python |
 | 09 | [Generarea muzicii](../../phases/06-speech-and-audio/09-music-generation) | Construiește | Python |
 | 10 | [Modele audio-lingvistice](../../phases/06-speech-and-audio/10-audio-language-models) | Construiește | Python |
-| 11 | [Procesare audio în timp real](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Construiește | Python |
+| 11 | [Procesare audio în timp real](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Construiește | Python, Rust |
 | 12 | [Construiește fluxul unui asistent vocal](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Construiește | Python |
 | 13 | [Codecuri audio neuronale: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Învață | Python |
 | 14 | [Detectarea activității vocale și alternarea vorbitorilor](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Construiește | Python |
@@ -549,11 +549,11 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 
 | # | Lecție | Tip | Limbaj |
 |:---:|--------|:----:|------|
-| 01 | [De ce transformatoare: problemele RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | Învață | Python |
-| 02 | [Autoatenție de la zero](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Construiește | Python |
-| 03 | [Atenție cu mai multe capete](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Construiește | Python |
-| 04 | [Codificarea poziției: sinusoidală, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Construiește | Python |
-| 05 | [Transformatorul complet: codificator și decodificator](../../phases/07-transformers-deep-dive/05-full-transformer/) | Construiește | Python |
+| 01 | [De ce transformatoare: problemele RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | Învață | Python, Julia |
+| 02 | [Autoatenție de la zero](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Construiește | Python, Rust, Julia |
+| 03 | [Atenție cu mai multe capete](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Construiește | Python, Rust |
+| 04 | [Codificarea poziției: sinusoidală, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Construiește | Python, Rust, Julia |
+| 05 | [Transformatorul complet: codificator și decodificator](../../phases/07-transformers-deep-dive/05-full-transformer/) | Construiește | Python, Julia |
 | 06 | [BERT: modelare lingvistică mascată](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Construiește | Python |
 | 07 | [GPT: modelare lingvistică cauzală](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Construiește | Python |
 | 08 | [T5 și BART: modele codificator-decodificator](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Învață | Python |
@@ -622,15 +622,15 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 01 | [Tokenizatoare: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Construiește | Python, Rust |
 | 02 | [Construirea unui tokenizator de la zero](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Construiește | Python |
 | 03 | [Fluxuri de date pentru preantrenare](../../phases/10-llms-from-scratch/03-data-pipelines/) | Construiește | Python |
-| 04 | [Preantrenarea unui mini-GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Construiește | Python |
+| 04 | [Preantrenarea unui mini-GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Construiește | Python, Rust |
 | 05 | [Antrenare distribuită, FSDP și DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Construiește | Python |
 | 06 | [Ajustare pe instrucțiuni: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Construiește | Python |
 | 07 | [RLHF: model de recompensă și PPO](../../phases/10-llms-from-scratch/07-rlhf/) | Construiește | Python |
 | 08 | [DPO: optimizarea directă a preferințelor](../../phases/10-llms-from-scratch/08-dpo/) | Construiește | Python |
 | 09 | [AI constituțională și autoîmbunătățire](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | Construiește | Python |
 | 10 | [Evaluare: benchmarkuri și teste](../../phases/10-llms-from-scratch/10-evaluation/) | Construiește | Python |
-| 11 | [Cuantizare: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Construiește | Python |
-| 12 | [Optimizarea inferenței](../../phases/10-llms-from-scratch/12-inference-optimization/) | Construiește | Python |
+| 11 | [Cuantizare: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Construiește | Python, Rust |
+| 12 | [Optimizarea inferenței](../../phases/10-llms-from-scratch/12-inference-optimization/) | Construiește | Python, Rust |
 | 13 | [Construirea unui flux LLM complet](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Construiește | Python |
 | 14 | [Modele deschise: prezentări ale arhitecturilor](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Învață | Python |
 | 15 | [Decodare speculativă și EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Construiește | Python |
@@ -652,18 +652,18 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 
 | # | Lecție | Tip | Limbaj |
 |:---:|--------|:----:|------|
-| 01 | [Ingineria prompturilor: tehnici și tipare](../../phases/11-llm-engineering/01-prompt-engineering/) | Construiește | Python |
+| 01 | [Ingineria prompturilor: tehnici și tipare](../../phases/11-llm-engineering/01-prompt-engineering/) | Construiește | Python, TypeScript |
 | 02 | [Few-Shot, CoT, Tree-of-Thought](../../phases/11-llm-engineering/02-few-shot-cot/) | Construiește | Python |
-| 03 | [Rezultate structurate](../../phases/11-llm-engineering/03-structured-outputs/) | Construiește | Python |
-| 04 | [Reprezentări încorporate și vectoriale](../../phases/11-llm-engineering/04-embeddings/) | Construiește | Python |
-| 05 | [Ingineria contextului](../../phases/11-llm-engineering/05-context-engineering/) | Construiește | Python |
-| 06 | [RAG: generare augmentată prin regăsire](../../phases/11-llm-engineering/06-rag/) | Construiește | Python |
+| 03 | [Rezultate structurate](../../phases/11-llm-engineering/03-structured-outputs/) | Construiește | Python, TypeScript |
+| 04 | [Reprezentări încorporate și vectoriale](../../phases/11-llm-engineering/04-embeddings/) | Construiește | Python, TypeScript |
+| 05 | [Ingineria contextului](../../phases/11-llm-engineering/05-context-engineering/) | Construiește | Python, TypeScript |
+| 06 | [RAG: generare augmentată prin regăsire](../../phases/11-llm-engineering/06-rag/) | Construiește | Python, TypeScript |
 | 07 | [RAG avansat: fragmentare și reclasificare](../../phases/11-llm-engineering/07-advanced-rag/) | Construiește | Python |
 | 08 | [Ajustare fină cu LoRA și QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Construiește | Python |
-| 09 | [Apelarea funcțiilor și utilizarea instrumentelor](../../phases/11-llm-engineering/09-function-calling/) | Construiește | Python |
+| 09 | [Apelarea funcțiilor și utilizarea instrumentelor](../../phases/11-llm-engineering/09-function-calling/) | Construiește | Python, TypeScript |
 | 10 | [Evaluare și testare](../../phases/11-llm-engineering/10-evaluation/) | Construiește | Python |
 | 11 | [Memorare în cache, limitarea ritmului și costuri](../../phases/11-llm-engineering/11-caching-cost/) | Construiește | Python |
-| 12 | [Limite de protecție și siguranță](../../phases/11-llm-engineering/12-guardrails/) | Construiește | Python |
+| 12 | [Limite de protecție și siguranță](../../phases/11-llm-engineering/12-guardrails/) | Construiește | Python, TypeScript |
 | 13 | [Construirea unei aplicații LLM de producție](../../phases/11-llm-engineering/13-production-app/) | Construiește | Python |
 | 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Construiește | Python |
 | 15 | [Cache pentru prompturi și context](../../phases/11-llm-engineering/15-prompt-caching/) | Construiește | Python |
@@ -712,7 +712,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 
 | # | Lecție | Tip | Limbaj |
 |:---:|--------|:----:|------|
-| 01 | [Interfața instrumentelor](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Învață | Python |
+| 01 | [Interfața instrumentelor](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Învață | Python, TypeScript |
 | 02 | [Aprofundarea apelării funcțiilor](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Construiește | Python |
 | 03 | [Apeluri paralele și în flux ale instrumentelor](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Construiește | Python |
 | 04 | [Rezultat structurat](../../phases/13-tools-and-protocols/04-structured-output/) | Construiește | Python |
@@ -730,7 +730,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 16 | [Autorizarea MCP: CIMD, legarea emitentului, PKCE și verificare suplimentară](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Construiește | Python |
 | 17 | [Gateway-uri MCP fără stare și admiterea în registru](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Învață | Python |
 | 18 | [Autorizare MCP în producție: înregistrare și tokenuri legate de emitent](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Construiește | Python |
-| 19 | [Protocolul A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Construiește | Python |
+| 19 | [Protocolul A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Construiește | Python, TypeScript |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Construiește | Python |
 | 21 | [Stratul de rutare LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Învață | Python |
 | 22 | [Agent Skills: contract portabil și limită de execuție](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Construiește | Python |
@@ -770,24 +770,24 @@ Lecțiile 22 și 24-27 formează [traseul Agent Skills](../../learning-paths/age
 
 | # | Lecție | Tip | Limbaj |
 |:---:|--------|:----:|------|
-| 01 | [Bucla agentului](../../phases/14-agent-engineering/01-the-agent-loop/) | Construiește | Python |
+| 01 | [Bucla agentului](../../phases/14-agent-engineering/01-the-agent-loop/) | Construiește | Python, TypeScript |
 | 02 | [ReWOO și planificare-execuție](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Construiește | Python |
 | 03 | [Reflexion și învățare verbală prin întărire](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Construiește | Python |
 | 04 | [Arbori de gânduri și LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Construiește | Python |
 | 05 | [Self-Refine și CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Construiește | Python |
-| 06 | [Utilizarea instrumentelor și apelarea funcțiilor](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Construiește | Python |
+| 06 | [Utilizarea instrumentelor și apelarea funcțiilor](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Construiește | Python, TypeScript |
 | 07 | [Memoria agentului: context virtual și paginarea memoriei](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Construiește | Python |
 | 08 | [Blocuri de memorie și calcul în timpul repausului](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Construiește | Python |
 | 09 | [Memorie hibridă: vectori, grafuri și KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Construiește | Python |
 | 10 | [Biblioteci de abilități și învățare continuă (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Construiește | Python |
 | 11 | [Planificare cu HTN și căutare evolutivă](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Construiește | Python |
 | 12 | [Tiparele de flux de lucru ale Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Construiește | Python |
-| 13 | [Orchestrare de grafuri cu stare: execuție durabilă și puncte de control](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Construiește | Python |
+| 13 | [Orchestrare de grafuri cu stare: execuție durabilă și puncte de control](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Construiește | Python, TypeScript |
 | 14 | [Modelul actorilor pentru agenți](../../phases/14-agent-engineering/14-autogen-actor-model/) | Construiește | Python |
 | 15 | [Echipe de agenți bazate pe roluri: roluri, sarcini și procese](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Construiește | Python |
 | 16 | [OpenAI Agents SDK: transferuri, protecții și urmărire](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Construiește | Python |
 | 17 | [Mediul de execuție ca bibliotecă: subagenți și stocarea sesiunilor](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Construiește | Python |
-| 18 | [Medii de execuție pentru agenți în producție](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Învață | Python |
+| 18 | [Medii de execuție pentru agenți în producție](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Învață | Python, TypeScript |
 | 19 | [Benchmarkuri: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Învață | Python |
 | 20 | [Benchmarkuri: WebArena și OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Învață | Python |
 | 21 | [Utilizarea computerului: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Construiește | Python |
@@ -914,14 +914,14 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 10 | [Reducerea pornirilor la rece pentru LLM fără server](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Învață | Python |
 | 11 | [Inferență LLM multiregională și localitatea cache-ului KV](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Învață | Python |
 | 12 | [Inferență la marginea rețelei: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Învață | Python |
-| 13 | [Alegerea stivei de observabilitate LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | Învață | Python |
-| 14 | [Economia cache-ului de prompturi și a cache-ului semantic](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Învață | Python |
-| 15 | [API-uri de lot: reducerea de 50% ca standard al industriei](../../phases/17-infrastructure-and-production/15-batch-apis/) | Învață | Python |
-| 16 | [Rutarea modelelor ca mecanism de reducere a costurilor](../../phases/17-infrastructure-and-production/16-model-routing/) | Învață | Python |
+| 13 | [Alegerea stivei de observabilitate LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | Învață | Python, TypeScript |
+| 14 | [Economia cache-ului de prompturi și a cache-ului semantic](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Învață | Python, TypeScript |
+| 15 | [API-uri de lot: reducerea de 50% ca standard al industriei](../../phases/17-infrastructure-and-production/15-batch-apis/) | Învață | Python, TypeScript |
+| 16 | [Rutarea modelelor ca mecanism de reducere a costurilor](../../phases/17-infrastructure-and-production/16-model-routing/) | Învață | Python, TypeScript |
 | 17 | [Prefill și decodare separate: NVIDIA Dynamo și llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Învață | Python |
 | 18 | [Stiva de inferență în producție: mutarea KV și rutarea conștientă de cache](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Învață | Python |
-| 19 | [Gateway-uri AI: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Învață | Python |
-| 20 | [Implementare în umbră, canar și progresivă](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Învață | Python |
+| 19 | [Gateway-uri AI: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Învață | Python, TypeScript |
+| 20 | [Implementare în umbră, canar și progresivă](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Învață | Python, TypeScript |
 | 21 | [Testarea A/B a funcțiilor LLM: GrowthBook și Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Învață | Python |
 | 22 | [Teste de încărcare pentru API-uri LLM: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Construiește | Python |
 | 23 | [SRE pentru AI: răspuns multiagent la incidente](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Învață | Python |
