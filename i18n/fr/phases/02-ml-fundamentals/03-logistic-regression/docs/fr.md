@@ -3,7 +3,7 @@
 > La régression logistique plie une ligne droite dans une courbe S pour répondre aux questions oui ou non avec probabilité.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
 **Time:** ~90 minutes
 
@@ -503,6 +503,7 @@ La mise en œuvre de votre système à partir de zéro produit les mêmes limite
 
 Cette leçon donne:
 - `code/logistic_regression.py`- régression logistique à partir de zéro avec des mesures
+- `code/main.rs`- le même code dans Rust, seulement STDlib.`rustc --edition 2021 code/main.rs && ./main`- Je suis désolé .
 
 ## Exercices
 
