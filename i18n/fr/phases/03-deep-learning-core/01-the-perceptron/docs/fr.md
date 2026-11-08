@@ -3,7 +3,7 @@
 > Le perceptron est l'atome des réseaux neuronaux.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra Intuition)
 **Time:** ~60 minutes
 

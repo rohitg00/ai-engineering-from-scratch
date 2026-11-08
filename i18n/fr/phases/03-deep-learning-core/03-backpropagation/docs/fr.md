@@ -3,7 +3,7 @@
 > La répartition est l'algorithme qui rend possible l'apprentissage. Sans elle, les réseaux neuraux sont juste des générateurs de nombres aléatoires coûteux.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Lesson 03.02 (Multi-Layer Networks)
 **Time:** ~120 minutes
 
