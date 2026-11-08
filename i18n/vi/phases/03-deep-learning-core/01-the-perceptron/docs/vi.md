@@ -3,7 +3,7 @@
 > perceptron là nguyên tử của mạng thần kinh. chia nó ra và bạn tìm thấy trọng lượng, thiên vị và quyết định.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra Intuition)
 **Time:** ~60 minutes
 
