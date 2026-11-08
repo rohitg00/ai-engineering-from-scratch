@@ -3,7 +3,7 @@
 > Các tensor là ngôn ngữ chung giữa dữ liệu và học tập sâu. Mỗi hình ảnh, mỗi câu, mọi gradient chảy qua chúng.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -107,7 +107,12 @@ tensor-broadcast
 
 ## Hãy xây dựng nó
 
-Mã sống trong `code/tensors.py`Mỗi bước đều đề cập đến việc thực hiện ở đó.
+Mã sống trong `code/tensors.py`. Mỗi bước tham khảo thực hiện ở đó.`code/tensors.ts`in cùng một đầu ra.
+
+```bash
+python3 code/tensors.py
+npx tsx code/tensors.ts
+```
 
 ### Bước 1: Tăng suất lưu trữ và bước
 

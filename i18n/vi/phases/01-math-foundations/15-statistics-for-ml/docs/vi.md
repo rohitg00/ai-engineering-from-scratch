@@ -3,7 +3,7 @@
 > Thống kê là cách bạn biết liệu mô hình của bạn thực sự hoạt động hay chỉ là may mắn.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06 (Probability and Distributions), 07 (Bayes' Theorem)
 **Time:** ~120 minutes
 

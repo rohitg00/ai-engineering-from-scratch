@@ -3,7 +3,7 @@
 > Giải quyết$Ax = b$là vấn đề lâu đời nhất trong toán học vẫn đang điều hành mạng lưới thần kinh của bạn.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors & Matrices), 03 (Matrix Transformations)
 **Time:** ~120 minutes
 
@@ -546,6 +546,7 @@ print(f"Ridge weights (sklearn): {ridge_sk.coef_}")
 
 Bài học này mang lại:
 - `code/linear_systems.py`chứa các thực hiện từ đầu của loại bỏ Gaussian, phân hủy LU, phân hủy Cholesky, các hình vuông tối thiểu và sự lùi sườn
+- `code/linear_systems.ts`Nó so sánh với các giải pháp tham chiếu nhỏ từ đầu, bởi vì TypeScript không có NumPy.
 - Một minh chứng làm việc cho thấy các phương trình bình thường và Klern's LinearRegression tạo ra các trọng lượng tương tự
 
 ## Các bài tập

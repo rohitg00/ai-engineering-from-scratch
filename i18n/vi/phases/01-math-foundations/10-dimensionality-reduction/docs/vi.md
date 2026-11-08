@@ -3,7 +3,7 @@
 > Dữ liệu chiều cao có cấu trúc. Bạn tìm thấy nó bằng cách nhìn từ góc độ đúng.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -197,6 +197,13 @@ pca-axes
 ```
 
 ## Hãy xây dựng nó
+
+Cổng TypeScript đang được cài đặt `code/dim_reduction.ts`Các bản demo của MNIST cần học scikit, vì vậy chúng chỉ chạy bằng Python.
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
 
 ### Bước 1: PCA từ đầu
 

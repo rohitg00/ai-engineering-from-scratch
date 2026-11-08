@@ -3,7 +3,7 @@
 > Điểm nổi là một sự trừu tượng bị rò rỉ. Nó sẽ cắn bạn trong khi tập luyện, và bạn sẽ không thấy nó đến.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04
 **Time:** ~120 minutes
 
@@ -558,7 +558,7 @@ check_tensor("bad",  [1.0, float('nan'), 3.0])
 check_tensor("ugly", [1.0, float('inf'), 3.0])
 ```
 
-Nhìn xem`code/numerical.py`cho các triển khai hoàn chỉnh với tất cả các trường hợp cạnh được chứng minh.
+Nhìn xem`code/numerical.py`cho các thực hiện hoàn chỉnh với tất cả các trường hợp cạnh được chứng minh.`code/numerical.ts`là một cổng TypeScript với các chức năng và demo tương tự.
 
 ## Chuyển nó
 

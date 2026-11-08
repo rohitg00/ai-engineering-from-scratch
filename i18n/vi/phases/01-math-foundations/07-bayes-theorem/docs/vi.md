@@ -3,7 +3,7 @@
 > Thiếu khả năng là về những gì bạn mong đợi. Lý thuyết Bayes là về những gì bạn học được.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 Thêm 1 vào mỗi con số đảm bảo không có khả năng nào là không.
 
+Một từ chưa bao giờ xuất hiện trong bất kỳ thông điệp đào tạo nào không có trong từ vựng. `predict`bỏ qua nó, bởi vì nó không cung cấp bằng chứng cho cả hai lớp.
+
 ### Tối đa a posteriori (MAP)
 
 MLE hỏi: những tham số nào tối đa hóa $P(\text{data} \mid \text{parameters})$- Không .
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ Same algorithm. CountVectorizer xử lý tokenization và xây dựng từ vựn
 
 ## Chuyển nó
 
-Các lớp NaiveBayes được xây dựng ở đây cho thấy toàn bộ đường ống: tokenization, ước tính xác suất với Laplace smoothing, dự đoán log-space.`code/bayes.py`chạy từ đầu đến cuối mà không có phụ thuộc ngoài thư viện tiêu chuẩn của Python.
+Các lớp NaiveBayes được xây dựng ở đây cho thấy toàn bộ đường ống: tokenization, ước tính xác suất với Laplace smoothing, dự đoán log-space.`code/bayes.py`chạy kết thúc đến kết thúc mà không có phụ thuộc ngoài thư viện tiêu chuẩn của Python.`code/bayes.ts`chỉ sử dụng thư viện tiêu chuẩn Node.
 
 ### Những người trước tiên kết hợp
 

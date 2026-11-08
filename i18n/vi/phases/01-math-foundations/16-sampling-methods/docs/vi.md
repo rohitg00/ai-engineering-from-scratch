@@ -3,7 +3,7 @@
 > Tiêu mẫu là cách AI khám phá không gian của khả năng.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06-07 (Probability, Bayes' Theorem)
 **Time:** ~120 minutes
 
@@ -608,6 +608,8 @@ def gumbel_softmax(logits, temperature):
 Hãy cho thấy nhiệt độ giảm làm cho đầu ra tiếp cận một vector nóng.
 
 Các thực hiện đầy đủ với tất cả các hình ảnh hóa là trong `code/sampling.py`- Tôi không biết.
+
+Cổng TypeScript đang được cài đặt `code/sampling.ts`Nó sử dụng máy phát điện ngẫu nhiên của riêng nó, vì vậy số ngẫu nhiên của nó khác với đầu ra Python.
 
 ## Sử dụng nó
 

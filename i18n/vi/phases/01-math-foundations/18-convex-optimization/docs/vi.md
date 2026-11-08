@@ -3,7 +3,7 @@
 > Những vấn đề ngọc có một thung lũng, mạng thần kinh có hàng triệu, biết sự khác biệt là quan trọng.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
 **Time:** ~90 minutes
 

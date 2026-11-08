@@ -3,7 +3,7 @@
 > Mỗi tín hiệu là tổng số sóng âm đạo.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -426,7 +426,7 @@ Các mô hình của các quang phổ có hình dạng (n_frequencies, n_time_fr
 
 ## Chuyển nó
 
-Đi chạy`code/fourier.py`để tạo ra `outputs/prompt-spectral-analyzer.md`- Tôi không biết.
+Đi chạy`code/fourier.py`để tạo ra `outputs/prompt-spectral-analyzer.md`. Phiên bản TypeScript,`code/fourier.ts`, viết cùng một tập tin.
 
 ## Các bài tập
 

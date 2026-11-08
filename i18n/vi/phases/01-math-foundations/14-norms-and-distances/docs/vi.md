@@ -3,7 +3,7 @@
 > Chọn sai và mọi thứ sẽ bị phá vỡ.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -436,7 +436,7 @@ norm-unit-balls
 
 ### Bước 1: Tất cả các chức năng chuẩn và khoảng cách
 
-Nhìn xem`code/distances.py`Mỗi hàm được xây dựng từ đầu chỉ bằng toán học Python cơ bản.
+Nhìn xem`code/distances.py`cho việc thực hiện hoàn chỉnh. Mỗi hàm được xây dựng từ đầu chỉ sử dụng toán học Python cơ bản.`code/distances.ts`là một cổng TypeScript với các chức năng và demo tương tự.
 
 ### Bước 2: cùng dữ liệu, khoảng cách khác nhau, hàng xóm khác nhau
 
