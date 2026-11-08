@@ -345,10 +345,10 @@ Tjue faser. Klikk på en fase for å utvide leksjonslisten.
 
 | # | Leksjon | Type | Språk |
 |:---:|--------|:----:|------|
-| 01 | [Utviklingsmiljø](../../phases/00-setup-and-tooling/01-dev-environment/) | Bygg | Python |
+| 01 | [Utviklingsmiljø](../../phases/00-setup-and-tooling/01-dev-environment/) | Bygg | Python, TypeScript, Rust |
 | 02 | [Git og samarbeid](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | Lær | — |
 | 03 | [GPU-oppsett og skyen](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | Bygg | Python |
-| 04 | [API-er og nøkler](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Bygg | Python |
+| 04 | [API-er og nøkler](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Bygg | Python, TypeScript |
 | 05 | [Jupyter-notatbøker](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | Bygg | Python |
 | 06 | [Python-miljøer](../../phases/00-setup-and-tooling/06-python-environments/) | Bygg | Shell |
 | 07 | [Docker brukt til AI](../../phases/00-setup-and-tooling/07-docker-for-ai/) | Bygg | Docker |
@@ -368,24 +368,24 @@ Tjue faser. Klikk på en fase for å utvide leksjonslisten.
 | 01 | [Intuisjon for lineær algebra](../../phases/01-math-foundations/01-linear-algebra-intuition/) | Lær | Python, Julia |
 | 02 | [Vektorer, matriser og operasjoner](../../phases/01-math-foundations/02-vectors-matrices-operations/) | Bygg | Python, Julia |
 | 03 | [Matrisetransformasjoner og egenverdier](../../phases/01-math-foundations/03-matrix-transformations/) | Bygg | Python, Julia |
-| 04 | [Differensialregning for ML: deriverte og gradienter](../../phases/01-math-foundations/04-calculus-for-ml/) | Lær | Python |
-| 05 | [Kjerneregelen og automatisk derivasjon](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Bygg | Python |
-| 06 | [Sannsynlighet og fordelinger](../../phases/01-math-foundations/06-probability-and-distributions/) | Lær | Python |
-| 07 | [Bayes' teorem og statistisk tenkning](../../phases/01-math-foundations/07-bayes-theorem/) | Bygg | Python |
-| 08 | [Optimering: familien av gradientnedstigningsmetoder](../../phases/01-math-foundations/08-optimization/) | Bygg | Python |
-| 09 | [Informasjonsteori: entropi og KL-divergens](../../phases/01-math-foundations/09-information-theory/) | Lær | Python |
-| 10 | [Dimensjonsreduksjon: PCA, t-SNE og UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Bygg | Python |
+| 04 | [Differensialregning for ML: deriverte og gradienter](../../phases/01-math-foundations/04-calculus-for-ml/) | Lær | Python, Julia |
+| 05 | [Kjerneregelen og automatisk derivasjon](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Bygg | Python, Julia |
+| 06 | [Sannsynlighet og fordelinger](../../phases/01-math-foundations/06-probability-and-distributions/) | Lær | Python, Julia |
+| 07 | [Bayes' teorem og statistisk tenkning](../../phases/01-math-foundations/07-bayes-theorem/) | Bygg | Python, TypeScript |
+| 08 | [Optimering: familien av gradientnedstigningsmetoder](../../phases/01-math-foundations/08-optimization/) | Bygg | Python, Julia |
+| 09 | [Informasjonsteori: entropi og KL-divergens](../../phases/01-math-foundations/09-information-theory/) | Lær | Python, TypeScript |
+| 10 | [Dimensjonsreduksjon: PCA, t-SNE og UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Bygg | Python, TypeScript |
 | 11 | [Singulærverdidekomponering](../../phases/01-math-foundations/11-singular-value-decomposition/) | Bygg | Python, Julia |
-| 12 | [Tensoroperasjoner](../../phases/01-math-foundations/12-tensor-operations/) | Bygg | Python |
-| 13 | [Numerisk stabilitet](../../phases/01-math-foundations/13-numerical-stability/) | Bygg | Python |
-| 14 | [Normer og avstander](../../phases/01-math-foundations/14-norms-and-distances/) | Bygg | Python |
-| 15 | [Statistikk for ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Bygg | Python |
-| 16 | [Utvalgsmetoder](../../phases/01-math-foundations/16-sampling-methods/) | Bygg | Python |
-| 17 | [Lineære ligningssystemer](../../phases/01-math-foundations/17-linear-systems/) | Bygg | Python |
-| 18 | [Konveks optimering](../../phases/01-math-foundations/18-convex-optimization/) | Bygg | Python |
+| 12 | [Tensoroperasjoner](../../phases/01-math-foundations/12-tensor-operations/) | Bygg | Python, TypeScript |
+| 13 | [Numerisk stabilitet](../../phases/01-math-foundations/13-numerical-stability/) | Bygg | Python, TypeScript |
+| 14 | [Normer og avstander](../../phases/01-math-foundations/14-norms-and-distances/) | Bygg | Python, TypeScript |
+| 15 | [Statistikk for ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Bygg | Python, TypeScript |
+| 16 | [Utvalgsmetoder](../../phases/01-math-foundations/16-sampling-methods/) | Bygg | Python, TypeScript |
+| 17 | [Lineære ligningssystemer](../../phases/01-math-foundations/17-linear-systems/) | Bygg | Python, TypeScript |
+| 18 | [Konveks optimering](../../phases/01-math-foundations/18-convex-optimization/) | Bygg | Python, TypeScript |
 | 19 | [Komplekse tall for AI](../../phases/01-math-foundations/19-complex-numbers/) | Lær | Python |
-| 20 | [Fouriertransformasjonen](../../phases/01-math-foundations/20-fourier-transform/) | Bygg | Python |
-| 21 | [Grafteori for ML](../../phases/01-math-foundations/21-graph-theory/) | Bygg | Python |
+| 20 | [Fouriertransformasjonen](../../phases/01-math-foundations/20-fourier-transform/) | Bygg | Python, TypeScript |
+| 21 | [Grafteori for ML](../../phases/01-math-foundations/21-graph-theory/) | Bygg | Python, TypeScript |
 | 22 | [Stokastiske prosesser](../../phases/01-math-foundations/22-stochastic-processes/) | Lær | Python |
 
 </details>
@@ -397,14 +397,14 @@ Tjue faser. Klikk på en fase for å utvide leksjonslisten.
 | # | Leksjon | Type | Språk |
 |:---:|--------|:----:|------|
 | 01 | [Hva er maskinlæring?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Lær | Python |
-| 02 | [Lineær regresjon fra bunnen av](../../phases/02-ml-fundamentals/02-linear-regression/) | Bygg | Python |
-| 03 | [Logistisk regresjon og klassifisering](../../phases/02-ml-fundamentals/03-logistic-regression/) | Bygg | Python |
+| 02 | [Lineær regresjon fra bunnen av](../../phases/02-ml-fundamentals/02-linear-regression/) | Bygg | Python, Rust, Julia |
+| 03 | [Logistisk regresjon og klassifisering](../../phases/02-ml-fundamentals/03-logistic-regression/) | Bygg | Python, Rust, Julia |
 | 04 | [Beslutningstrær og tilfeldige skoger](../../phases/02-ml-fundamentals/04-decision-trees/) | Bygg | Python |
-| 05 | [Støttevektormaskiner](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Bygg | Python |
+| 05 | [Støttevektormaskiner](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Bygg | Python, Julia |
 | 06 | [KNN og avstandsmål](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Bygg | Python |
 | 07 | [Uovervåket læring: K-Means og DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Bygg | Python |
 | 08 | [Utvikling og utvelgelse av egenskaper](../../phases/02-ml-fundamentals/08-feature-engineering/) | Bygg | Python |
-| 09 | [Modellevaluering: måltall og kryssvalidering](../../phases/02-ml-fundamentals/09-model-evaluation/) | Bygg | Python |
+| 09 | [Modellevaluering: måltall og kryssvalidering](../../phases/02-ml-fundamentals/09-model-evaluation/) | Bygg | Python, Julia |
 | 10 | [Skjevhet, varians og læringskurven](../../phases/02-ml-fundamentals/10-bias-variance/) | Lær | Python |
 | 11 | [Ensemblemetoder: boosting, bagging og stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Bygg | Python |
 | 12 | [Justering av hyperparametere](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | Bygg | Python |
@@ -426,11 +426,11 @@ Tjue faser. Klikk på en fase for å utvide leksjonslisten.
 
 | # | Leksjon | Type | Språk |
 |:---:|--------|:----:|------|
-| 01 | [Perseptronet: der alt begynte](../../phases/03-deep-learning-core/01-the-perceptron/) | Bygg | Python |
+| 01 | [Perseptronet: der alt begynte](../../phases/03-deep-learning-core/01-the-perceptron/) | Bygg | Python, Rust, Julia |
 | 02 | [Flerlagsnettverk og fremoverberegning](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Bygg | Python |
-| 03 | [Tilbakepropagering fra bunnen av](../../phases/03-deep-learning-core/03-backpropagation/) | Bygg | Python |
-| 04 | [Aktiveringsfunksjoner: ReLU, sigmoid, GELU og hvorfor](../../phases/03-deep-learning-core/04-activation-functions/) | Bygg | Python |
-| 05 | [Tapsfunksjoner: MSE, kryssentropi og kontrastive tap](../../phases/03-deep-learning-core/05-loss-functions/) | Bygg | Python |
+| 03 | [Tilbakepropagering fra bunnen av](../../phases/03-deep-learning-core/03-backpropagation/) | Bygg | Python, Rust, Julia |
+| 04 | [Aktiveringsfunksjoner: ReLU, sigmoid, GELU og hvorfor](../../phases/03-deep-learning-core/04-activation-functions/) | Bygg | Python, Julia |
+| 05 | [Tapsfunksjoner: MSE, kryssentropi og kontrastive tap](../../phases/03-deep-learning-core/05-loss-functions/) | Bygg | Python, Julia |
 | 06 | [Optimeringsalgoritmer: SGD, momentum, Adam og AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Bygg | Python |
 | 07 | [Regularisering: dropout, vektreduksjon og BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Bygg | Python |
 | 08 | [Initialisering av vekter og stabil trening](../../phases/03-deep-learning-core/08-weight-initialization/) | Bygg | Python |
@@ -462,7 +462,7 @@ Tjue faser. Klikk på en fase for å utvide leksjonslisten.
 | 12 | [Videoforståelse: tidslig modellering](../../phases/04-computer-vision/12-video-understanding/) | Bygg | Python |
 | 13 | [3D-syn: punktskyer og NeRF-er](../../phases/04-computer-vision/13-3d-vision-nerf/) | Bygg | Python |
 | 14 | [Vision Transformers (ViT) for bildeanalyse](../../phases/04-computer-vision/14-vision-transformers/) | Bygg | Python |
-| 15 | [Bildeanalyse i sanntid: utrulling på kanten](../../phases/04-computer-vision/15-real-time-edge/) | Bygg | Python |
+| 15 | [Bildeanalyse i sanntid: utrulling på kanten](../../phases/04-computer-vision/15-real-time-edge/) | Bygg | Python, Rust |
 | 16 | [Bygg en komplett pipeline for bildeanalyse](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | Bygg | Python |
 | 17 | [Selvovervåket bildeanalyse: SimCLR, DINO og MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | Bygg | Python |
 | 18 | [Bildeanalyse med åpent ordforråd: CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | Bygg | Python |
@@ -503,11 +503,11 @@ Tjue faser. Klikk på en fase for å utvide leksjonslisten.
 | 16 | [Tekstgenerering](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Bygg | Python |
 | 17 | [Chatboter: fra regler til nevrale nettverk](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Bygg | Python |
 | 18 | [Flerspråklig NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Bygg | Python |
-| 19 | [Delordtokenisering: BPE, WordPiece, Unigram og SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Lær | Python |
+| 19 | [Delordtokenisering: BPE, WordPiece, Unigram og SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Lær | Python, TypeScript |
 | 20 | [Strukturerte utdata og begrenset dekoding](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Bygg | Python |
 | 21 | [NLI og tekstlig slutning](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Lær | Python |
 | 22 | [Fordypning i innbyggingsmodeller](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Lær | Python |
-| 23 | [Strategier for tekstoppsplitting i RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Bygg | Python |
+| 23 | [Strategier for tekstoppsplitting i RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Bygg | Python, TypeScript |
 | 24 | [Koreferanseoppløsning](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Lær | Python |
 | 25 | [Entitetskobling og avklaring av flertydighet](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Bygg | Python |
 | 26 | [Uttrekking av relasjoner og bygging av kunnskapsgrafer](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Bygg | Python |
@@ -533,7 +533,7 @@ Tjue faser. Klikk på en fase for å utvide leksjonslisten.
 | 08 | [Stemmekloning og stemmekonvertering](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Bygg | Python |
 | 09 | [Musikkgenerering](../../phases/06-speech-and-audio/09-music-generation) | Bygg | Python |
 | 10 | [Lyd-språk-modeller](../../phases/06-speech-and-audio/10-audio-language-models) | Bygg | Python |
-| 11 | [Lydbehandling i sanntid](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Bygg | Python |
+| 11 | [Lydbehandling i sanntid](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Bygg | Python, Rust |
 | 12 | [Bygg en pipeline for en stemmeassistent](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Bygg | Python |
 | 13 | [Nevrale lydkodeker: EnCodec, SNAC, Mimi og DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Lær | Python |
 | 14 | [Deteksjon av taleaktivitet og turtaking](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Bygg | Python |
@@ -549,11 +549,11 @@ Tjue faser. Klikk på en fase for å utvide leksjonslisten.
 
 | # | Leksjon | Type | Språk |
 |:---:|--------|:----:|------|
-| 01 | [Hvorfor Transformers: problemene med RNN-er](../../phases/07-transformers-deep-dive/01-why-transformers/) | Lær | Python |
-| 02 | [Self-attention fra bunnen av](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Bygg | Python |
-| 03 | [Attention med flere hoder](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Bygg | Python |
-| 04 | [Posisjonskoding: sinus, RoPE og ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Bygg | Python |
-| 05 | [Den komplette Transformer: koder og dekoder](../../phases/07-transformers-deep-dive/05-full-transformer/) | Bygg | Python |
+| 01 | [Hvorfor Transformers: problemene med RNN-er](../../phases/07-transformers-deep-dive/01-why-transformers/) | Lær | Python, Julia |
+| 02 | [Self-attention fra bunnen av](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Bygg | Python, Rust, Julia |
+| 03 | [Attention med flere hoder](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Bygg | Python, Rust |
+| 04 | [Posisjonskoding: sinus, RoPE og ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Bygg | Python, Rust, Julia |
+| 05 | [Den komplette Transformer: koder og dekoder](../../phases/07-transformers-deep-dive/05-full-transformer/) | Bygg | Python, Julia |
 | 06 | [BERT: maskert språkmodellering](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Bygg | Python |
 | 07 | [GPT: kausal språkmodellering](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Bygg | Python |
 | 08 | [T5 og BART: koder-dekoder-modeller](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Lær | Python |
@@ -622,15 +622,15 @@ Tjue faser. Klikk på en fase for å utvide leksjonslisten.
 | 01 | [Tokenizere: BPE, WordPiece og SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Bygg | Python, Rust |
 | 02 | [Bygg en tokenizer fra bunnen av](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Bygg | Python |
 | 03 | [Datapipeliner for forhåndstrening](../../phases/10-llms-from-scratch/03-data-pipelines/) | Bygg | Python |
-| 04 | [Forhåndstrening av en liten GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Bygg | Python |
+| 04 | [Forhåndstrening av en liten GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Bygg | Python, Rust |
 | 05 | [Distribuert trening, FSDP og DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Bygg | Python |
 | 06 | [Instruksjonsjustering: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Bygg | Python |
 | 07 | [RLHF: belønningsmodell og PPO](../../phases/10-llms-from-scratch/07-rlhf/) | Bygg | Python |
 | 08 | [DPO: direkte preferanseoptimering](../../phases/10-llms-from-scratch/08-dpo/) | Bygg | Python |
 | 09 | [Konstitusjonell AI og selvforbedring](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | Bygg | Python |
 | 10 | [Evaluering: referansemålinger og prøver](../../phases/10-llms-from-scratch/10-evaluation/) | Bygg | Python |
-| 11 | [Kvantisering: INT8, GPTQ, AWQ og GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Bygg | Python |
-| 12 | [Inferensoptimering](../../phases/10-llms-from-scratch/12-inference-optimization/) | Bygg | Python |
+| 11 | [Kvantisering: INT8, GPTQ, AWQ og GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Bygg | Python, Rust |
+| 12 | [Inferensoptimering](../../phases/10-llms-from-scratch/12-inference-optimization/) | Bygg | Python, Rust |
 | 13 | [Bygg en komplett LLM-pipeline](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Bygg | Python |
 | 14 | [Åpne modeller: gjennomgang av arkitekturer](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Lær | Python |
 | 15 | [Spekulativ dekoding og EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Bygg | Python |
@@ -652,18 +652,18 @@ Tjue faser. Klikk på en fase for å utvide leksjonslisten.
 
 | # | Leksjon | Type | Språk |
 |:---:|--------|:----:|------|
-| 01 | [Promptutvikling: teknikker og mønstre](../../phases/11-llm-engineering/01-prompt-engineering/) | Bygg | Python |
+| 01 | [Promptutvikling: teknikker og mønstre](../../phases/11-llm-engineering/01-prompt-engineering/) | Bygg | Python, TypeScript |
 | 02 | [Få eksempler, tankekjeder og tanketrær](../../phases/11-llm-engineering/02-few-shot-cot/) | Bygg | Python |
-| 03 | [Strukturerte utdata](../../phases/11-llm-engineering/03-structured-outputs/) | Bygg | Python |
-| 04 | [Innbygginger og vektorrepresentasjoner](../../phases/11-llm-engineering/04-embeddings/) | Bygg | Python |
-| 05 | [Kontekstutvikling](../../phases/11-llm-engineering/05-context-engineering/) | Bygg | Python |
-| 06 | [RAG: generering støttet av informasjonsgjenfinning](../../phases/11-llm-engineering/06-rag/) | Bygg | Python |
+| 03 | [Strukturerte utdata](../../phases/11-llm-engineering/03-structured-outputs/) | Bygg | Python, TypeScript |
+| 04 | [Innbygginger og vektorrepresentasjoner](../../phases/11-llm-engineering/04-embeddings/) | Bygg | Python, TypeScript |
+| 05 | [Kontekstutvikling](../../phases/11-llm-engineering/05-context-engineering/) | Bygg | Python, TypeScript |
+| 06 | [RAG: generering støttet av informasjonsgjenfinning](../../phases/11-llm-engineering/06-rag/) | Bygg | Python, TypeScript |
 | 07 | [Avansert RAG: oppsplitting og omrangering](../../phases/11-llm-engineering/07-advanced-rag/) | Bygg | Python |
 | 08 | [Finjustering med LoRA og QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Bygg | Python |
-| 09 | [Funksjonskall og verktøybruk](../../phases/11-llm-engineering/09-function-calling/) | Bygg | Python |
+| 09 | [Funksjonskall og verktøybruk](../../phases/11-llm-engineering/09-function-calling/) | Bygg | Python, TypeScript |
 | 10 | [Evaluering og testing](../../phases/11-llm-engineering/10-evaluation/) | Bygg | Python |
 | 11 | [Hurtigbufring, hastighetsbegrensning og kostnader](../../phases/11-llm-engineering/11-caching-cost/) | Bygg | Python |
-| 12 | [Sikkerhetsrammer og beskyttelse](../../phases/11-llm-engineering/12-guardrails/) | Bygg | Python |
+| 12 | [Sikkerhetsrammer og beskyttelse](../../phases/11-llm-engineering/12-guardrails/) | Bygg | Python, TypeScript |
 | 13 | [Bygg en LLM-app for produksjon](../../phases/11-llm-engineering/13-production-app/) | Bygg | Python |
 | 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Bygg | Python |
 | 15 | [Hurtigbufring av prompter og kontekst](../../phases/11-llm-engineering/15-prompt-caching/) | Bygg | Python |
@@ -712,7 +712,7 @@ Tjue faser. Klikk på en fase for å utvide leksjonslisten.
 
 | # | Leksjon | Type | Språk |
 |:---:|--------|:----:|------|
-| 01 | [Grensesnittet til verktøy](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Lær | Python |
+| 01 | [Grensesnittet til verktøy](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Lær | Python, TypeScript |
 | 02 | [Fordypning i funksjonskall](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Bygg | Python |
 | 03 | [Parallelle og strømmede verktøykall](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Bygg | Python |
 | 04 | [Strukturerte utdata](../../phases/13-tools-and-protocols/04-structured-output/) | Bygg | Python |
@@ -730,7 +730,7 @@ Tjue faser. Klikk på en fase for å utvide leksjonslisten.
 | 16 | [MCP-autorisasjon: CIMD, utstederbinding, PKCE og step-up](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Bygg | Python |
 | 17 | [Tilstandsløse MCP-gatewayer og opptak i registre](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Lær | Python |
 | 18 | [MCP-autorisasjon i produksjon: utstederbundet registrering og tokener](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Bygg | Python |
-| 19 | [A2A-protokollen](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Bygg | Python |
+| 19 | [A2A-protokollen](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Bygg | Python, TypeScript |
 | 20 | [OpenTelemetry for GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Bygg | Python |
 | 21 | [Rutinglag for LLM-er](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Lær | Python |
 | 22 | [Agent Skills: portabel kontrakt og grense til kjøremiljøet](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Bygg | Python |
@@ -770,24 +770,24 @@ Leksjonene 22 og 24-27 utgjør det fokuserte [læringsløpet for Agent Skills](.
 
 | # | Leksjon | Type | Språk |
 |:---:|--------|:----:|------|
-| 01 | [Agentløkken](../../phases/14-agent-engineering/01-the-agent-loop/) | Bygg | Python |
+| 01 | [Agentløkken](../../phases/14-agent-engineering/01-the-agent-loop/) | Bygg | Python, TypeScript |
 | 02 | [ReWOO og planlegging etterfulgt av utførelse](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Bygg | Python |
 | 03 | [Reflexion og språklig forsterkningslæring](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Bygg | Python |
 | 04 | [Tanketrær og LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Bygg | Python |
 | 05 | [Self-Refine og CRITIC-metoden](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Bygg | Python |
-| 06 | [Verktøybruk og funksjonskall](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Bygg | Python |
+| 06 | [Verktøybruk og funksjonskall](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Bygg | Python, TypeScript |
 | 07 | [Agentminne: virtuell kontekst og sideinndeling av minne](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Bygg | Python |
 | 08 | [Minneblokker og beregning i hvileperioder](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Bygg | Python |
 | 09 | [Hybridminne: vektor, graf og KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Bygg | Python |
 | 10 | [Ferdighetsbiblioteker og livslang læring (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Bygg | Python |
 | 11 | [Planlegging med HTN og evolusjonært søk](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Bygg | Python |
 | 12 | [Anthropics arbeidsflytmønstre](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Bygg | Python |
-| 13 | [Tilstandsfull graforchestrering: varig utførelse og kontrollpunkter](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Bygg | Python |
+| 13 | [Tilstandsfull graforchestrering: varig utførelse og kontrollpunkter](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Bygg | Python, TypeScript |
 | 14 | [Aktørmodellen for agenter](../../phases/14-agent-engineering/14-autogen-actor-model/) | Bygg | Python |
 | 15 | [Rollebaserte agentteam: roller, oppgaver og prosesser](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Bygg | Python |
 | 16 | [OpenAI Agents SDK: overleveringer, sikkerhetsrammer og sporing](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Bygg | Python |
 | 17 | [Kjørerammen som bibliotek: underagenter og øktlager](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Bygg | Python |
-| 18 | [Agentkjøremiljøer for produksjon](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Lær | Python |
+| 18 | [Agentkjøremiljøer for produksjon](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Lær | Python, TypeScript |
 | 19 | [Ytelsesmåling: SWE-bench, GAIA og AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Lær | Python |
 | 20 | [Ytelsesmåling: WebArena og OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Lær | Python |
 | 21 | [Datamaskinbruk: Claude, OpenAI CUA og Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Bygg | Python |
@@ -914,14 +914,14 @@ Leksjonene 31-46 utgjør [læringsløpet for agentstøttet utvikling](../../lear
 | 10 | [Reduksjon av kaldstart for serverløse LLM-er](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Lær | Python |
 | 11 | [LLM-servering i flere regioner og plassering av KV-hurtigbuffer](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Lær | Python |
 | 12 | [Inferens på kanten: ANE, Hexagon, WebGPU og Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Lær | Python |
-| 13 | [Valg av verktøy for LLM-observerbarhet](../../phases/17-infrastructure-and-production/13-llm-observability/) | Lær | Python |
-| 14 | [Økonomi i prompthurtigbufring og semantisk hurtigbufring](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Lær | Python |
-| 15 | [Batch-API-er: 50% rabatt som bransjestandard](../../phases/17-infrastructure-and-production/15-batch-apis/) | Lær | Python |
-| 16 | [Modellruting som grunnlag for kostnadsreduksjon](../../phases/17-infrastructure-and-production/16-model-routing/) | Lær | Python |
+| 13 | [Valg av verktøy for LLM-observerbarhet](../../phases/17-infrastructure-and-production/13-llm-observability/) | Lær | Python, TypeScript |
+| 14 | [Økonomi i prompthurtigbufring og semantisk hurtigbufring](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Lær | Python, TypeScript |
+| 15 | [Batch-API-er: 50% rabatt som bransjestandard](../../phases/17-infrastructure-and-production/15-batch-apis/) | Lær | Python, TypeScript |
+| 16 | [Modellruting som grunnlag for kostnadsreduksjon](../../phases/17-infrastructure-and-production/16-model-routing/) | Lær | Python, TypeScript |
 | 17 | [Adskilt prefill og dekoding: NVIDIA Dynamo og llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Lær | Python |
 | 18 | [Servering i produksjon: KV-avlastning og hurtigbufferbevisst ruting](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Lær | Python |
-| 19 | [AI-gatewayer: LiteLLM, Portkey, Kong og Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Lær | Python |
-| 20 | [Skyggekjøring, kanariutrulling og gradvis utrulling](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Lær | Python |
+| 19 | [AI-gatewayer: LiteLLM, Portkey, Kong og Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Lær | Python, TypeScript |
+| 20 | [Skyggekjøring, kanariutrulling og gradvis utrulling](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Lær | Python, TypeScript |
 | 21 | [A/B-testing av LLM-funksjoner: GrowthBook og Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Lær | Python |
 | 22 | [Belastningstesting av LLM-API-er: k6, LLMPerf og GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Bygg | Python |
 | 23 | [SRE for AI: hendelseshåndtering med flere agenter](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Lær | Python |

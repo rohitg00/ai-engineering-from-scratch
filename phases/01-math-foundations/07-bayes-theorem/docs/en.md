@@ -3,7 +3,7 @@
 > Probability is about what you expect. Bayes' theorem is about what you learn.
 
 **Type:** Build
-**Language:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 Adding 1 to every count ensures no probability is ever zero.
 
+A word that never appeared in any training message is not in the vocabulary. `predict` skips it, because it gives no evidence for either class.
+
 ### Maximum a posteriori (MAP)
 
 MLE asks: what parameters maximize $P(\text{data} \mid \text{parameters})$?
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ Same algorithm. CountVectorizer handles tokenization and vocabulary building. Mu
 
 ## Ship It
 
-The NaiveBayes class built here demonstrates the full pipeline: tokenization, probability estimation with Laplace smoothing, log-space prediction. The code in `code/bayes.py` runs end-to-end with no dependencies beyond Python's standard library.
+The NaiveBayes class built here demonstrates the full pipeline: tokenization, probability estimation with Laplace smoothing, log-space prediction. The code in `code/bayes.py` runs end-to-end with no dependencies beyond Python's standard library. The TypeScript port in `code/bayes.ts` uses only the Node standard library.
 
 ### Conjugate Priors
 

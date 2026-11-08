@@ -3,7 +3,7 @@
 > Logistic regression bends a straight line into an S-curve to answer yes-or-no questions with probabilities.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
 **Time:** ~90 minutes
 
@@ -503,6 +503,7 @@ Your from-scratch implementation produces the same decision boundary and metrics
 
 This lesson produces:
 - `code/logistic_regression.py` - logistic regression from scratch with metrics
+- `code/main.rs` - the same code in Rust, stdlib only. Run it with `rustc --edition 2021 code/main.rs && ./main`.
 
 ## Exercises
 

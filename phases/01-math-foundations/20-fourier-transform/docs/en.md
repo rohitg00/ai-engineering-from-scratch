@@ -3,7 +3,7 @@
 > Every signal is a sum of sine waves. The Fourier transform tells you which ones.
 
 **Type:** Build
-**Language:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -426,7 +426,7 @@ The spectrogram matrix has shape (n_frequencies, n_time_frames). Each column is 
 
 ## Ship It
 
-Run `code/fourier.py` to generate `outputs/prompt-spectral-analyzer.md`.
+Run `code/fourier.py` to generate `outputs/prompt-spectral-analyzer.md`. The TypeScript version, `code/fourier.ts`, writes the same file.
 
 ## Exercises
 

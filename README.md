@@ -408,10 +408,10 @@ Twenty phases. Click any phase to expand its lesson list.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
-| 01 | [Dev Environment](phases/00-setup-and-tooling/01-dev-environment/) | Build | Python |
+| 01 | [Dev Environment](phases/00-setup-and-tooling/01-dev-environment/) | Build | Python, TypeScript, Rust |
 | 02 | [Git & Collaboration](phases/00-setup-and-tooling/02-git-and-collaboration/) | Learn | — |
 | 03 | [GPU Setup & Cloud](phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | Build | Python |
-| 04 | [APIs & Keys](phases/00-setup-and-tooling/04-apis-and-keys/) | Build | Python |
+| 04 | [APIs & Keys](phases/00-setup-and-tooling/04-apis-and-keys/) | Build | Python, TypeScript |
 | 05 | [Jupyter Notebooks](phases/00-setup-and-tooling/05-jupyter-notebooks/) | Build | Python |
 | 06 | [Python Environments](phases/00-setup-and-tooling/06-python-environments/) | Build | Shell |
 | 07 | [Docker for AI](phases/00-setup-and-tooling/07-docker-for-ai/) | Build | Docker |
@@ -431,24 +431,24 @@ Twenty phases. Click any phase to expand its lesson list.
 | 01 | [Linear Algebra Intuition](phases/01-math-foundations/01-linear-algebra-intuition/) | Learn | Python, Julia |
 | 02 | [Vectors, Matrices & Operations](phases/01-math-foundations/02-vectors-matrices-operations/) | Build | Python, Julia |
 | 03 | [Matrix Transformations & Eigenvalues](phases/01-math-foundations/03-matrix-transformations/) | Build | Python, Julia |
-| 04 | [Calculus for ML: Derivatives & Gradients](phases/01-math-foundations/04-calculus-for-ml/) | Learn | Python |
-| 05 | [Chain Rule & Automatic Differentiation](phases/01-math-foundations/05-chain-rule-and-autodiff/) | Build | Python |
-| 06 | [Probability & Distributions](phases/01-math-foundations/06-probability-and-distributions/) | Learn | Python |
-| 07 | [Bayes' Theorem & Statistical Thinking](phases/01-math-foundations/07-bayes-theorem/) | Build | Python |
-| 08 | [Optimization: Gradient Descent Family](phases/01-math-foundations/08-optimization/) | Build | Python |
-| 09 | [Information Theory: Entropy, KL Divergence](phases/01-math-foundations/09-information-theory/) | Learn | Python |
-| 10 | [Dimensionality Reduction: PCA, t-SNE, UMAP](phases/01-math-foundations/10-dimensionality-reduction/) | Build | Python |
+| 04 | [Calculus for ML: Derivatives & Gradients](phases/01-math-foundations/04-calculus-for-ml/) | Learn | Python, Julia |
+| 05 | [Chain Rule & Automatic Differentiation](phases/01-math-foundations/05-chain-rule-and-autodiff/) | Build | Python, Julia |
+| 06 | [Probability & Distributions](phases/01-math-foundations/06-probability-and-distributions/) | Learn | Python, Julia |
+| 07 | [Bayes' Theorem & Statistical Thinking](phases/01-math-foundations/07-bayes-theorem/) | Build | Python, TypeScript |
+| 08 | [Optimization: Gradient Descent Family](phases/01-math-foundations/08-optimization/) | Build | Python, Julia |
+| 09 | [Information Theory: Entropy, KL Divergence](phases/01-math-foundations/09-information-theory/) | Learn | Python, TypeScript |
+| 10 | [Dimensionality Reduction: PCA, t-SNE, UMAP](phases/01-math-foundations/10-dimensionality-reduction/) | Build | Python, TypeScript |
 | 11 | [Singular Value Decomposition](phases/01-math-foundations/11-singular-value-decomposition/) | Build | Python, Julia |
-| 12 | [Tensor Operations](phases/01-math-foundations/12-tensor-operations/) | Build | Python |
-| 13 | [Numerical Stability](phases/01-math-foundations/13-numerical-stability/) | Build | Python |
-| 14 | [Norms & Distances](phases/01-math-foundations/14-norms-and-distances/) | Build | Python |
-| 15 | [Statistics for ML](phases/01-math-foundations/15-statistics-for-ml/) | Build | Python |
-| 16 | [Sampling Methods](phases/01-math-foundations/16-sampling-methods/) | Build | Python |
-| 17 | [Linear Systems](phases/01-math-foundations/17-linear-systems/) | Build | Python |
-| 18 | [Convex Optimization](phases/01-math-foundations/18-convex-optimization/) | Build | Python |
+| 12 | [Tensor Operations](phases/01-math-foundations/12-tensor-operations/) | Build | Python, TypeScript |
+| 13 | [Numerical Stability](phases/01-math-foundations/13-numerical-stability/) | Build | Python, TypeScript |
+| 14 | [Norms & Distances](phases/01-math-foundations/14-norms-and-distances/) | Build | Python, TypeScript |
+| 15 | [Statistics for ML](phases/01-math-foundations/15-statistics-for-ml/) | Build | Python, TypeScript |
+| 16 | [Sampling Methods](phases/01-math-foundations/16-sampling-methods/) | Build | Python, TypeScript |
+| 17 | [Linear Systems](phases/01-math-foundations/17-linear-systems/) | Build | Python, TypeScript |
+| 18 | [Convex Optimization](phases/01-math-foundations/18-convex-optimization/) | Build | Python, TypeScript |
 | 19 | [Complex Numbers for AI](phases/01-math-foundations/19-complex-numbers/) | Learn | Python |
-| 20 | [The Fourier Transform](phases/01-math-foundations/20-fourier-transform/) | Build | Python |
-| 21 | [Graph Theory for ML](phases/01-math-foundations/21-graph-theory/) | Build | Python |
+| 20 | [The Fourier Transform](phases/01-math-foundations/20-fourier-transform/) | Build | Python, TypeScript |
+| 21 | [Graph Theory for ML](phases/01-math-foundations/21-graph-theory/) | Build | Python, TypeScript |
 | 22 | [Stochastic Processes](phases/01-math-foundations/22-stochastic-processes/) | Learn | Python |
 
 </details>
@@ -460,14 +460,14 @@ Twenty phases. Click any phase to expand its lesson list.
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
 | 01 | [What Is Machine Learning](phases/02-ml-fundamentals/01-what-is-machine-learning/) | Learn | Python |
-| 02 | [Linear Regression from Scratch](phases/02-ml-fundamentals/02-linear-regression/) | Build | Python |
-| 03 | [Logistic Regression & Classification](phases/02-ml-fundamentals/03-logistic-regression/) | Build | Python |
+| 02 | [Linear Regression from Scratch](phases/02-ml-fundamentals/02-linear-regression/) | Build | Python, Rust, Julia |
+| 03 | [Logistic Regression & Classification](phases/02-ml-fundamentals/03-logistic-regression/) | Build | Python, Rust, Julia |
 | 04 | [Decision Trees & Random Forests](phases/02-ml-fundamentals/04-decision-trees/) | Build | Python |
-| 05 | [Support Vector Machines](phases/02-ml-fundamentals/05-support-vector-machines/) | Build | Python |
+| 05 | [Support Vector Machines](phases/02-ml-fundamentals/05-support-vector-machines/) | Build | Python, Julia |
 | 06 | [KNN & Distance Metrics](phases/02-ml-fundamentals/06-knn-and-distances/) | Build | Python |
 | 07 | [Unsupervised Learning: K-Means, DBSCAN](phases/02-ml-fundamentals/07-unsupervised-learning/) | Build | Python |
 | 08 | [Feature Engineering & Selection](phases/02-ml-fundamentals/08-feature-engineering/) | Build | Python |
-| 09 | [Model Evaluation: Metrics, Cross-Validation](phases/02-ml-fundamentals/09-model-evaluation/) | Build | Python |
+| 09 | [Model Evaluation: Metrics, Cross-Validation](phases/02-ml-fundamentals/09-model-evaluation/) | Build | Python, Julia |
 | 10 | [Bias, Variance & the Learning Curve](phases/02-ml-fundamentals/10-bias-variance/) | Learn | Python |
 | 11 | [Ensemble Methods: Boosting, Bagging, Stacking](phases/02-ml-fundamentals/11-ensemble-methods/) | Build | Python |
 | 12 | [Hyperparameter Tuning](phases/02-ml-fundamentals/12-hyperparameter-tuning/) | Build | Python |
@@ -489,11 +489,11 @@ Twenty phases. Click any phase to expand its lesson list.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
-| 01 | [The Perceptron: Where It All Started](phases/03-deep-learning-core/01-the-perceptron/) | Build | Python |
+| 01 | [The Perceptron: Where It All Started](phases/03-deep-learning-core/01-the-perceptron/) | Build | Python, Rust, Julia |
 | 02 | [Multi-Layer Networks & Forward Pass](phases/03-deep-learning-core/02-multi-layer-networks/) | Build | Python |
-| 03 | [Backpropagation from Scratch](phases/03-deep-learning-core/03-backpropagation/) | Build | Python |
-| 04 | [Activation Functions: ReLU, Sigmoid, GELU & Why](phases/03-deep-learning-core/04-activation-functions/) | Build | Python |
-| 05 | [Loss Functions: MSE, Cross-Entropy, Contrastive](phases/03-deep-learning-core/05-loss-functions/) | Build | Python |
+| 03 | [Backpropagation from Scratch](phases/03-deep-learning-core/03-backpropagation/) | Build | Python, Rust, Julia |
+| 04 | [Activation Functions: ReLU, Sigmoid, GELU & Why](phases/03-deep-learning-core/04-activation-functions/) | Build | Python, Julia |
+| 05 | [Loss Functions: MSE, Cross-Entropy, Contrastive](phases/03-deep-learning-core/05-loss-functions/) | Build | Python, Julia |
 | 06 | [Optimizers: SGD, Momentum, Adam, AdamW](phases/03-deep-learning-core/06-optimizers/) | Build | Python |
 | 07 | [Regularization: Dropout, Weight Decay, BatchNorm](phases/03-deep-learning-core/07-regularization/) | Build | Python |
 | 08 | [Weight Initialization & Training Stability](phases/03-deep-learning-core/08-weight-initialization/) | Build | Python |
@@ -525,7 +525,7 @@ Twenty phases. Click any phase to expand its lesson list.
 | 12 | [Video Understanding — Temporal Modeling](phases/04-computer-vision/12-video-understanding/) | Build | Python |
 | 13 | [3D Vision: Point Clouds, NeRFs](phases/04-computer-vision/13-3d-vision-nerf/) | Build | Python |
 | 14 | [Vision Transformers (ViT)](phases/04-computer-vision/14-vision-transformers/) | Build | Python |
-| 15 | [Real-Time Vision: Edge Deployment](phases/04-computer-vision/15-real-time-edge/) | Build | Python |
+| 15 | [Real-Time Vision: Edge Deployment](phases/04-computer-vision/15-real-time-edge/) | Build | Python, Rust |
 | 16 | [Build a Complete Vision Pipeline](phases/04-computer-vision/16-vision-pipeline-capstone/) | Build | Python |
 | 17 | [Self-Supervised Vision — SimCLR, DINO, MAE](phases/04-computer-vision/17-self-supervised-vision/) | Build | Python |
 | 18 | [Open-Vocabulary Vision — CLIP](phases/04-computer-vision/18-open-vocab-clip/) | Build | Python |
@@ -566,11 +566,11 @@ Twenty phases. Click any phase to expand its lesson list.
 | 16 | [Text Generation](phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Build | Python |
 | 17 | [Chatbots: Rule-Based to Neural](phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Build | Python |
 | 18 | [Multilingual NLP](phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Build | Python |
-| 19 | [Subword Tokenization: BPE, WordPiece, Unigram, SentencePiece](phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Learn | Python |
+| 19 | [Subword Tokenization: BPE, WordPiece, Unigram, SentencePiece](phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Learn | Python, TypeScript |
 | 20 | [Structured Outputs & Constrained Decoding](phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Build | Python |
 | 21 | [NLI & Textual Entailment](phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Learn | Python |
 | 22 | [Embedding Models Deep Dive](phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Learn | Python |
-| 23 | [Chunking Strategies for RAG](phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Build | Python |
+| 23 | [Chunking Strategies for RAG](phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Build | Python, TypeScript |
 | 24 | [Coreference Resolution](phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Learn | Python |
 | 25 | [Entity Linking & Disambiguation](phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Build | Python |
 | 26 | [Relation Extraction & Knowledge Graph Construction](phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Build | Python |
@@ -596,7 +596,7 @@ Twenty phases. Click any phase to expand its lesson list.
 | 08 | [Voice Cloning & Voice Conversion](phases/06-speech-and-audio/08-voice-cloning-conversion) | Build | Python |
 | 09 | [Music Generation](phases/06-speech-and-audio/09-music-generation) | Build | Python |
 | 10 | [Audio-Language Models](phases/06-speech-and-audio/10-audio-language-models) | Build | Python |
-| 11 | [Real-Time Audio Processing](phases/06-speech-and-audio/11-real-time-audio-processing) | Build | Python |
+| 11 | [Real-Time Audio Processing](phases/06-speech-and-audio/11-real-time-audio-processing) | Build | Python, Rust |
 | 12 | [Build a Voice Assistant Pipeline](phases/06-speech-and-audio/12-voice-assistant-pipeline) | Build | Python |
 | 13 | [Neural Audio Codecs — EnCodec, SNAC, Mimi, DAC](phases/06-speech-and-audio/13-neural-audio-codecs) | Learn | Python |
 | 14 | [Voice Activity Detection & Turn-Taking](phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Build | Python |
@@ -612,11 +612,11 @@ Twenty phases. Click any phase to expand its lesson list.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
-| 01 | [Why Transformers: The Problems with RNNs](phases/07-transformers-deep-dive/01-why-transformers/) | Learn | Python |
-| 02 | [Self-Attention from Scratch](phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Build | Python |
-| 03 | [Multi-Head Attention](phases/07-transformers-deep-dive/03-multi-head-attention/) | Build | Python |
-| 04 | [Positional Encoding: Sinusoidal, RoPE, ALiBi](phases/07-transformers-deep-dive/04-positional-encoding/) | Build | Python |
-| 05 | [The Full Transformer: Encoder + Decoder](phases/07-transformers-deep-dive/05-full-transformer/) | Build | Python |
+| 01 | [Why Transformers: The Problems with RNNs](phases/07-transformers-deep-dive/01-why-transformers/) | Learn | Python, Julia |
+| 02 | [Self-Attention from Scratch](phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Build | Python, Rust, Julia |
+| 03 | [Multi-Head Attention](phases/07-transformers-deep-dive/03-multi-head-attention/) | Build | Python, Rust |
+| 04 | [Positional Encoding: Sinusoidal, RoPE, ALiBi](phases/07-transformers-deep-dive/04-positional-encoding/) | Build | Python, Rust, Julia |
+| 05 | [The Full Transformer: Encoder + Decoder](phases/07-transformers-deep-dive/05-full-transformer/) | Build | Python, Julia |
 | 06 | [BERT — Masked Language Modeling](phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Build | Python |
 | 07 | [GPT — Causal Language Modeling](phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Build | Python |
 | 08 | [T5, BART — Encoder-Decoder Models](phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Learn | Python |
@@ -685,15 +685,15 @@ Twenty phases. Click any phase to expand its lesson list.
 | 01 | [Tokenizers: BPE, WordPiece, SentencePiece](phases/10-llms-from-scratch/01-tokenizers/) | Build | Python, Rust |
 | 02 | [Building a Tokenizer from Scratch](phases/10-llms-from-scratch/02-building-a-tokenizer/) | Build | Python |
 | 03 | [Data Pipelines for Pre-Training](phases/10-llms-from-scratch/03-data-pipelines/) | Build | Python |
-| 04 | [Pre-Training a Mini GPT (124M)](phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Build | Python |
+| 04 | [Pre-Training a Mini GPT (124M)](phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Build | Python, Rust |
 | 05 | [Distributed Training, FSDP, DeepSpeed](phases/10-llms-from-scratch/05-scaling-distributed/) | Build | Python |
 | 06 | [Instruction Tuning — SFT](phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Build | Python |
 | 07 | [RLHF — Reward Model + PPO](phases/10-llms-from-scratch/07-rlhf/) | Build | Python |
 | 08 | [DPO — Direct Preference Optimization](phases/10-llms-from-scratch/08-dpo/) | Build | Python |
 | 09 | [Constitutional AI & Self-Improvement](phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | Build | Python |
 | 10 | [Evaluation — Benchmarks, Evals](phases/10-llms-from-scratch/10-evaluation/) | Build | Python |
-| 11 | [Quantization: INT8, GPTQ, AWQ, GGUF](phases/10-llms-from-scratch/11-quantization/) | Build | Python |
-| 12 | [Inference Optimization](phases/10-llms-from-scratch/12-inference-optimization/) | Build | Python |
+| 11 | [Quantization: INT8, GPTQ, AWQ, GGUF](phases/10-llms-from-scratch/11-quantization/) | Build | Python, Rust |
+| 12 | [Inference Optimization](phases/10-llms-from-scratch/12-inference-optimization/) | Build | Python, Rust |
 | 13 | [Building a Complete LLM Pipeline](phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Build | Python |
 | 14 | [Open Models: Architecture Walkthroughs](phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Learn | Python |
 | 15 | [Speculative Decoding and EAGLE-3](phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Build | Python |
@@ -715,18 +715,18 @@ Twenty phases. Click any phase to expand its lesson list.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
-| 01 | [Prompt Engineering: Techniques & Patterns](phases/11-llm-engineering/01-prompt-engineering/) | Build | Python |
+| 01 | [Prompt Engineering: Techniques & Patterns](phases/11-llm-engineering/01-prompt-engineering/) | Build | Python, TypeScript |
 | 02 | [Few-Shot, CoT, Tree-of-Thought](phases/11-llm-engineering/02-few-shot-cot/) | Build | Python |
-| 03 | [Structured Outputs](phases/11-llm-engineering/03-structured-outputs/) | Build | Python |
-| 04 | [Embeddings & Vector Representations](phases/11-llm-engineering/04-embeddings/) | Build | Python |
-| 05 | [Context Engineering](phases/11-llm-engineering/05-context-engineering/) | Build | Python |
-| 06 | [RAG: Retrieval-Augmented Generation](phases/11-llm-engineering/06-rag/) | Build | Python |
+| 03 | [Structured Outputs](phases/11-llm-engineering/03-structured-outputs/) | Build | Python, TypeScript |
+| 04 | [Embeddings & Vector Representations](phases/11-llm-engineering/04-embeddings/) | Build | Python, TypeScript |
+| 05 | [Context Engineering](phases/11-llm-engineering/05-context-engineering/) | Build | Python, TypeScript |
+| 06 | [RAG: Retrieval-Augmented Generation](phases/11-llm-engineering/06-rag/) | Build | Python, TypeScript |
 | 07 | [Advanced RAG: Chunking, Reranking](phases/11-llm-engineering/07-advanced-rag/) | Build | Python |
 | 08 | [Fine-Tuning with LoRA & QLoRA](phases/11-llm-engineering/08-fine-tuning-lora/) | Build | Python |
-| 09 | [Function Calling & Tool Use](phases/11-llm-engineering/09-function-calling/) | Build | Python |
+| 09 | [Function Calling & Tool Use](phases/11-llm-engineering/09-function-calling/) | Build | Python, TypeScript |
 | 10 | [Evaluation & Testing](phases/11-llm-engineering/10-evaluation/) | Build | Python |
 | 11 | [Caching, Rate Limiting & Cost](phases/11-llm-engineering/11-caching-cost/) | Build | Python |
-| 12 | [Guardrails & Safety](phases/11-llm-engineering/12-guardrails/) | Build | Python |
+| 12 | [Guardrails & Safety](phases/11-llm-engineering/12-guardrails/) | Build | Python, TypeScript |
 | 13 | [Building a Production LLM App](phases/11-llm-engineering/13-production-app/) | Build | Python |
 | 14 | [Model Context Protocol (MCP)](phases/11-llm-engineering/14-model-context-protocol/) | Build | Python |
 | 15 | [Prompt Caching & Context Caching](phases/11-llm-engineering/15-prompt-caching/) | Build | Python |
@@ -775,7 +775,7 @@ Twenty phases. Click any phase to expand its lesson list.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
-| 01 | [The Tool Interface](phases/13-tools-and-protocols/01-the-tool-interface/) | Learn | Python |
+| 01 | [The Tool Interface](phases/13-tools-and-protocols/01-the-tool-interface/) | Learn | Python, TypeScript |
 | 02 | [Function Calling Deep Dive](phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Build | Python |
 | 03 | [Parallel and Streaming Tool Calls](phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Build | Python |
 | 04 | [Structured Output](phases/13-tools-and-protocols/04-structured-output/) | Build | Python |
@@ -793,7 +793,7 @@ Twenty phases. Click any phase to expand its lesson list.
 | 16 | [MCP Authorization: CIMD, Issuer Binding, PKCE, and Step-Up](phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Build | Python |
 | 17 | [Stateless MCP Gateways and Registry Admission](phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Learn | Python |
 | 18 | [MCP Auth in Production: Issuer-Bound Enrollment and Tokens](phases/13-tools-and-protocols/18-mcp-auth-production/) | Build | Python |
-| 19 | [A2A Protocol](phases/13-tools-and-protocols/19-a2a-protocol/) | Build | Python |
+| 19 | [A2A Protocol](phases/13-tools-and-protocols/19-a2a-protocol/) | Build | Python, TypeScript |
 | 20 | [OpenTelemetry GenAI](phases/13-tools-and-protocols/20-opentelemetry-genai/) | Build | Python |
 | 21 | [LLM Routing Layer](phases/13-tools-and-protocols/21-llm-routing-layer/) | Learn | Python |
 | 22 | [Agent Skills: Portable Contract and Runtime Boundary](phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Build | Python |
@@ -841,24 +841,24 @@ navigation from 22 to 23.
 
 | # | Lesson | Type | Lang |
 |:---:|--------|:----:|------|
-| 01 | [The Agent Loop](phases/14-agent-engineering/01-the-agent-loop/) | Build | Python |
+| 01 | [The Agent Loop](phases/14-agent-engineering/01-the-agent-loop/) | Build | Python, TypeScript |
 | 02 | [ReWOO and Plan-and-Execute](phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Build | Python |
 | 03 | [Reflexion and Verbal Reinforcement Learning](phases/14-agent-engineering/03-reflexion-verbal-rl/) | Build | Python |
 | 04 | [Tree of Thoughts and LATS](phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Build | Python |
 | 05 | [Self-Refine and CRITIC](phases/14-agent-engineering/05-self-refine-and-critic/) | Build | Python |
-| 06 | [Tool Use and Function Calling](phases/14-agent-engineering/06-tool-use-and-function-calling/) | Build | Python |
+| 06 | [Tool Use and Function Calling](phases/14-agent-engineering/06-tool-use-and-function-calling/) | Build | Python, TypeScript |
 | 07 | [Agent Memory — Virtual Context and Memory Paging](phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Build | Python |
 | 08 | [Memory Blocks and Sleep-Time Compute](phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Build | Python |
 | 09 | [Hybrid Memory — Vector + Graph + KV](phases/14-agent-engineering/09-hybrid-memory-mem0/) | Build | Python |
 | 10 | [Skill Libraries and Lifelong Learning (Voyager)](phases/14-agent-engineering/10-skill-libraries-voyager/) | Build | Python |
 | 11 | [Planning with HTN and Evolutionary Search](phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Build | Python |
 | 12 | [Anthropic's Workflow Patterns](phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Build | Python |
-| 13 | [Stateful Graph Orchestration — Durable Execution and Checkpoints](phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Build | Python |
+| 13 | [Stateful Graph Orchestration — Durable Execution and Checkpoints](phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Build | Python, TypeScript |
 | 14 | [The Actor Model for Agents](phases/14-agent-engineering/14-autogen-actor-model/) | Build | Python |
 | 15 | [Role-Based Agent Teams — Roles, Tasks, Processes](phases/14-agent-engineering/15-crewai-role-based-crews/) | Build | Python |
 | 16 | [OpenAI Agents SDK — Handoffs, Guardrails, Tracing](phases/14-agent-engineering/16-openai-agents-sdk/) | Build | Python |
 | 17 | [The Harness as a Library — Subagents and Session Store](phases/14-agent-engineering/17-claude-agent-sdk/) | Build | Python |
-| 18 | [Production Agent Runtimes](phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Learn | Python |
+| 18 | [Production Agent Runtimes](phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Learn | Python, TypeScript |
 | 19 | [Benchmarks — SWE-bench, GAIA, AgentBench](phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Learn | Python |
 | 20 | [Benchmarks — WebArena and OSWorld](phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Learn | Python |
 | 21 | [Computer Use — Claude, OpenAI CUA, Gemini](phases/14-agent-engineering/21-computer-use-agents/) | Build | Python |
@@ -989,14 +989,14 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 | 10 | [Cold Start Mitigation for Serverless LLMs](phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Learn | Python |
 | 11 | [Multi-Region LLM Serving and KV Cache Locality](phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Learn | Python |
 | 12 | [Edge Inference — ANE, Hexagon, WebGPU, Jetson](phases/17-infrastructure-and-production/12-edge-inference/) | Learn | Python |
-| 13 | [LLM Observability Stack Selection](phases/17-infrastructure-and-production/13-llm-observability/) | Learn | Python |
-| 14 | [Prompt Caching and Semantic Caching Economics](phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Learn | Python |
-| 15 | [Batch APIs — the 50% Discount as Industry Standard](phases/17-infrastructure-and-production/15-batch-apis/) | Learn | Python |
-| 16 | [Model Routing as a Cost-Reduction Primitive](phases/17-infrastructure-and-production/16-model-routing/) | Learn | Python |
+| 13 | [LLM Observability Stack Selection](phases/17-infrastructure-and-production/13-llm-observability/) | Learn | Python, TypeScript |
+| 14 | [Prompt Caching and Semantic Caching Economics](phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Learn | Python, TypeScript |
+| 15 | [Batch APIs — the 50% Discount as Industry Standard](phases/17-infrastructure-and-production/15-batch-apis/) | Learn | Python, TypeScript |
+| 16 | [Model Routing as a Cost-Reduction Primitive](phases/17-infrastructure-and-production/16-model-routing/) | Learn | Python, TypeScript |
 | 17 | [Disaggregated Prefill/Decode — NVIDIA Dynamo and llm-d](phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Learn | Python |
 | 18 | [Production Serving Stack — KV Offloading and Cache-Aware Routing](phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Learn | Python |
-| 19 | [AI Gateways — LiteLLM, Portkey, Kong, Bifrost](phases/17-infrastructure-and-production/19-ai-gateways/) | Learn | Python |
-| 20 | [Shadow, Canary, and Progressive Deployment](phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Learn | Python |
+| 19 | [AI Gateways — LiteLLM, Portkey, Kong, Bifrost](phases/17-infrastructure-and-production/19-ai-gateways/) | Learn | Python, TypeScript |
+| 20 | [Shadow, Canary, and Progressive Deployment](phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Learn | Python, TypeScript |
 | 21 | [A/B Testing LLM Features — GrowthBook and Statsig](phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Learn | Python |
 | 22 | [Load Testing LLM APIs — k6, LLMPerf, GenAI-Perf](phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Build | Python |
 | 23 | [SRE for AI — Multi-Agent Incident Response](phases/17-infrastructure-and-production/23-sre-for-ai/) | Learn | Python |

@@ -3,7 +3,7 @@
 > Backpropagation is the algorithm that makes learning possible. Without it, neural networks are just expensive random number generators.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Lesson 03.02 (Multi-Layer Networks)
 **Time:** ~120 minutes
 

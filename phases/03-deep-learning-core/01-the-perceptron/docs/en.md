@@ -3,7 +3,7 @@
 > The perceptron is the atom of neural networks. Split it open and you find weights, a bias, and a decision.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra Intuition)
 **Time:** ~60 minutes
 

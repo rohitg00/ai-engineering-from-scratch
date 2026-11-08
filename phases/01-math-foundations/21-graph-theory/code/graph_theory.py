@@ -87,6 +87,8 @@ def dfs(graph, start):
 
 
 def connected_components(graph):
+    if graph.directed:
+        raise ValueError("connected_components requires an undirected graph")
     visited = set()
     components = []
     for node in range(graph.n):
@@ -102,6 +104,14 @@ def spectral_clustering(graph, k=2):
         raise ValueError("spectral_clustering requires at least 2 nodes")
     if not (2 <= k <= graph.n):
         raise ValueError(f"k must satisfy 2 <= k <= {graph.n}, got k={k}")
+    if graph.directed:
+        raise ValueError("spectral_clustering requires an undirected graph")
+
+    components = connected_components(graph)
+    if k == 2 and len(components) > 1:
+        labels = np.ones(graph.n, dtype=int)
+        labels[components[0]] = 0
+        return labels
 
     L = graph.laplacian()
     eigenvalues, eigenvectors = np.linalg.eigh(L)

@@ -345,10 +345,10 @@ flowchart TB
 
 | # | Урок | Тип | Языки |
 |:---:|--------|:----:|------|
-| 01 | [Среда разработки](../../phases/00-setup-and-tooling/01-dev-environment/) | Создание | Python |
+| 01 | [Среда разработки](../../phases/00-setup-and-tooling/01-dev-environment/) | Создание | Python, TypeScript, Rust |
 | 02 | [Git и совместная работа](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | Изучение | — |
 | 03 | [Настройка GPU и облачных сред](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | Создание | Python |
-| 04 | [API и ключи доступа](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Создание | Python |
+| 04 | [API и ключи доступа](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Создание | Python, TypeScript |
 | 05 | [Блокноты Jupyter](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | Создание | Python |
 | 06 | [Окружения Python](../../phases/00-setup-and-tooling/06-python-environments/) | Создание | Shell |
 | 07 | [Docker для ИИ](../../phases/00-setup-and-tooling/07-docker-for-ai/) | Создание | Docker |
@@ -368,24 +368,24 @@ flowchart TB
 | 01 | [Интуитивное понимание линейной алгебры](../../phases/01-math-foundations/01-linear-algebra-intuition/) | Изучение | Python, Julia |
 | 02 | [Векторы, матрицы и операции](../../phases/01-math-foundations/02-vectors-matrices-operations/) | Создание | Python, Julia |
 | 03 | [Преобразования матриц и собственные значения](../../phases/01-math-foundations/03-matrix-transformations/) | Создание | Python, Julia |
-| 04 | [Математический анализ для ML: производные и градиенты](../../phases/01-math-foundations/04-calculus-for-ml/) | Изучение | Python |
-| 05 | [Правило цепочки и автоматическое дифференцирование](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Создание | Python |
-| 06 | [Вероятности и распределения](../../phases/01-math-foundations/06-probability-and-distributions/) | Изучение | Python |
-| 07 | [Теорема Байеса и статистическое мышление](../../phases/01-math-foundations/07-bayes-theorem/) | Создание | Python |
-| 08 | [Оптимизация: методы градиентного спуска](../../phases/01-math-foundations/08-optimization/) | Создание | Python |
-| 09 | [Теория информации: энтропия и дивергенция KL](../../phases/01-math-foundations/09-information-theory/) | Изучение | Python |
-| 10 | [Снижение размерности: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Создание | Python |
+| 04 | [Математический анализ для ML: производные и градиенты](../../phases/01-math-foundations/04-calculus-for-ml/) | Изучение | Python, Julia |
+| 05 | [Правило цепочки и автоматическое дифференцирование](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Создание | Python, Julia |
+| 06 | [Вероятности и распределения](../../phases/01-math-foundations/06-probability-and-distributions/) | Изучение | Python, Julia |
+| 07 | [Теорема Байеса и статистическое мышление](../../phases/01-math-foundations/07-bayes-theorem/) | Создание | Python, TypeScript |
+| 08 | [Оптимизация: методы градиентного спуска](../../phases/01-math-foundations/08-optimization/) | Создание | Python, Julia |
+| 09 | [Теория информации: энтропия и дивергенция KL](../../phases/01-math-foundations/09-information-theory/) | Изучение | Python, TypeScript |
+| 10 | [Снижение размерности: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Создание | Python, TypeScript |
 | 11 | [Сингулярное разложение матрицы](../../phases/01-math-foundations/11-singular-value-decomposition/) | Создание | Python, Julia |
-| 12 | [Операции с тензорами](../../phases/01-math-foundations/12-tensor-operations/) | Создание | Python |
-| 13 | [Численная устойчивость](../../phases/01-math-foundations/13-numerical-stability/) | Создание | Python |
-| 14 | [Нормы и расстояния](../../phases/01-math-foundations/14-norms-and-distances/) | Создание | Python |
-| 15 | [Статистика для ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Создание | Python |
-| 16 | [Методы выборки](../../phases/01-math-foundations/16-sampling-methods/) | Создание | Python |
-| 17 | [Линейные системы](../../phases/01-math-foundations/17-linear-systems/) | Создание | Python |
-| 18 | [Выпуклая оптимизация](../../phases/01-math-foundations/18-convex-optimization/) | Создание | Python |
+| 12 | [Операции с тензорами](../../phases/01-math-foundations/12-tensor-operations/) | Создание | Python, TypeScript |
+| 13 | [Численная устойчивость](../../phases/01-math-foundations/13-numerical-stability/) | Создание | Python, TypeScript |
+| 14 | [Нормы и расстояния](../../phases/01-math-foundations/14-norms-and-distances/) | Создание | Python, TypeScript |
+| 15 | [Статистика для ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Создание | Python, TypeScript |
+| 16 | [Методы выборки](../../phases/01-math-foundations/16-sampling-methods/) | Создание | Python, TypeScript |
+| 17 | [Линейные системы](../../phases/01-math-foundations/17-linear-systems/) | Создание | Python, TypeScript |
+| 18 | [Выпуклая оптимизация](../../phases/01-math-foundations/18-convex-optimization/) | Создание | Python, TypeScript |
 | 19 | [Комплексные числа для ИИ](../../phases/01-math-foundations/19-complex-numbers/) | Изучение | Python |
-| 20 | [Преобразование Фурье](../../phases/01-math-foundations/20-fourier-transform/) | Создание | Python |
-| 21 | [Теория графов для ML](../../phases/01-math-foundations/21-graph-theory/) | Создание | Python |
+| 20 | [Преобразование Фурье](../../phases/01-math-foundations/20-fourier-transform/) | Создание | Python, TypeScript |
+| 21 | [Теория графов для ML](../../phases/01-math-foundations/21-graph-theory/) | Создание | Python, TypeScript |
 | 22 | [Стохастические процессы](../../phases/01-math-foundations/22-stochastic-processes/) | Изучение | Python |
 
 </details>
@@ -397,14 +397,14 @@ flowchart TB
 | # | Урок | Тип | Языки |
 |:---:|--------|:----:|------|
 | 01 | [Что такое машинное обучение?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Изучение | Python |
-| 02 | [Линейная регрессия с нуля](../../phases/02-ml-fundamentals/02-linear-regression/) | Создание | Python |
-| 03 | [Логистическая регрессия и классификация](../../phases/02-ml-fundamentals/03-logistic-regression/) | Создание | Python |
+| 02 | [Линейная регрессия с нуля](../../phases/02-ml-fundamentals/02-linear-regression/) | Создание | Python, Rust, Julia |
+| 03 | [Логистическая регрессия и классификация](../../phases/02-ml-fundamentals/03-logistic-regression/) | Создание | Python, Rust, Julia |
 | 04 | [Деревья решений и случайные леса](../../phases/02-ml-fundamentals/04-decision-trees/) | Создание | Python |
-| 05 | [Метод опорных векторов](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Создание | Python |
+| 05 | [Метод опорных векторов](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Создание | Python, Julia |
 | 06 | [KNN и метрики расстояния](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Создание | Python |
 | 07 | [Обучение без учителя: K-Means и DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Создание | Python |
 | 08 | [Проектирование и отбор признаков](../../phases/02-ml-fundamentals/08-feature-engineering/) | Создание | Python |
-| 09 | [Оценка модели: метрики и кросс-валидация](../../phases/02-ml-fundamentals/09-model-evaluation/) | Создание | Python |
+| 09 | [Оценка модели: метрики и кросс-валидация](../../phases/02-ml-fundamentals/09-model-evaluation/) | Создание | Python, Julia |
 | 10 | [Смещение, дисперсия и кривая обучения](../../phases/02-ml-fundamentals/10-bias-variance/) | Изучение | Python |
 | 11 | [Методы ансамблирования: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Создание | Python |
 | 12 | [Настройка гиперпараметров](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | Создание | Python |
@@ -426,11 +426,11 @@ flowchart TB
 
 | # | Урок | Тип | Языки |
 |:---:|--------|:----:|------|
-| 01 | [Перцептрон: с чего всё началось](../../phases/03-deep-learning-core/01-the-perceptron/) | Создание | Python |
+| 01 | [Перцептрон: с чего всё началось](../../phases/03-deep-learning-core/01-the-perceptron/) | Создание | Python, Rust, Julia |
 | 02 | [Многослойные сети и прямой проход](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Создание | Python |
-| 03 | [Обратное распространение ошибки с нуля](../../phases/03-deep-learning-core/03-backpropagation/) | Создание | Python |
-| 04 | [Функции активации: ReLU, Sigmoid, GELU — и зачем они нужны](../../phases/03-deep-learning-core/04-activation-functions/) | Создание | Python |
-| 05 | [Функции потерь: MSE, cross-entropy и contrastive loss](../../phases/03-deep-learning-core/05-loss-functions/) | Создание | Python |
+| 03 | [Обратное распространение ошибки с нуля](../../phases/03-deep-learning-core/03-backpropagation/) | Создание | Python, Rust, Julia |
+| 04 | [Функции активации: ReLU, Sigmoid, GELU — и зачем они нужны](../../phases/03-deep-learning-core/04-activation-functions/) | Создание | Python, Julia |
+| 05 | [Функции потерь: MSE, cross-entropy и contrastive loss](../../phases/03-deep-learning-core/05-loss-functions/) | Создание | Python, Julia |
 | 06 | [Оптимизаторы: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Создание | Python |
 | 07 | [Регуляризация: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Создание | Python |
 | 08 | [Инициализация весов и стабильность обучения](../../phases/03-deep-learning-core/08-weight-initialization/) | Создание | Python |
@@ -462,7 +462,7 @@ flowchart TB
 | 12 | [Понимание видео: временное моделирование](../../phases/04-computer-vision/12-video-understanding/) | Создание | Python |
 | 13 | [3D-зрение: облака точек и NeRF](../../phases/04-computer-vision/13-3d-vision-nerf/) | Создание | Python |
 | 14 | [Трансформеры для зрения (ViT)](../../phases/04-computer-vision/14-vision-transformers/) | Создание | Python |
-| 15 | [Зрение в реальном времени: запуск на периферийных устройствах](../../phases/04-computer-vision/15-real-time-edge/) | Создание | Python |
+| 15 | [Зрение в реальном времени: запуск на периферийных устройствах](../../phases/04-computer-vision/15-real-time-edge/) | Создание | Python, Rust |
 | 16 | [Полный конвейер компьютерного зрения](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | Создание | Python |
 | 17 | [Самоконтролируемое обучение для зрения: SimCLR, DINO, MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | Создание | Python |
 | 18 | [Зрение с открытым словарём: CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | Создание | Python |
@@ -503,11 +503,11 @@ flowchart TB
 | 16 | [Генерация текста](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Создание | Python |
 | 17 | [Чат-боты: от правил к нейросетям](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Создание | Python |
 | 18 | [Многоязычное NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Создание | Python |
-| 19 | [Субсловная токенизация: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Изучение | Python |
+| 19 | [Субсловная токенизация: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Изучение | Python, TypeScript |
 | 20 | [Структурированный вывод и ограниченное декодирование](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Создание | Python |
 | 21 | [NLI и текстовая импликация](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Изучение | Python |
 | 22 | [Подробный разбор моделей эмбеддингов](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Изучение | Python |
-| 23 | [Стратегии разбиения на чанки для RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Создание | Python |
+| 23 | [Стратегии разбиения на чанки для RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Создание | Python, TypeScript |
 | 24 | [Разрешение кореференции](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Изучение | Python |
 | 25 | [Связывание сущностей и снятие неоднозначности](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Создание | Python |
 | 26 | [Извлечение отношений и построение графов знаний](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Создание | Python |
@@ -533,7 +533,7 @@ flowchart TB
 | 08 | [Клонирование и преобразование голоса](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Создание | Python |
 | 09 | [Генерация музыки](../../phases/06-speech-and-audio/09-music-generation) | Создание | Python |
 | 10 | [Аудио-языковые модели](../../phases/06-speech-and-audio/10-audio-language-models) | Создание | Python |
-| 11 | [Обработка аудио в реальном времени](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Создание | Python |
+| 11 | [Обработка аудио в реальном времени](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Создание | Python, Rust |
 | 12 | [Конвейер голосового ассистента](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Создание | Python |
 | 13 | [Нейронные аудиокодеки: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Изучение | Python |
 | 14 | [Обнаружение речи и смена говорящего](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Создание | Python |
@@ -549,11 +549,11 @@ flowchart TB
 
 | # | Урок | Тип | Языки |
 |:---:|--------|:----:|------|
-| 01 | [Почему трансформеры? Проблемы RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | Изучение | Python |
-| 02 | [Механизм Self-Attention с нуля](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Создание | Python |
-| 03 | [Многоголовое внимание (Multi-Head Attention)](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Создание | Python |
-| 04 | [Позиционное кодирование: синусоидальное, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Создание | Python |
-| 05 | [Полный трансформер: энкодер и декодер](../../phases/07-transformers-deep-dive/05-full-transformer/) | Создание | Python |
+| 01 | [Почему трансформеры? Проблемы RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | Изучение | Python, Julia |
+| 02 | [Механизм Self-Attention с нуля](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Создание | Python, Rust, Julia |
+| 03 | [Многоголовое внимание (Multi-Head Attention)](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Создание | Python, Rust |
+| 04 | [Позиционное кодирование: синусоидальное, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Создание | Python, Rust, Julia |
+| 05 | [Полный трансформер: энкодер и декодер](../../phases/07-transformers-deep-dive/05-full-transformer/) | Создание | Python, Julia |
 | 06 | [BERT: моделирование языка с маскировкой](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Создание | Python |
 | 07 | [GPT: авторегрессионное языковое моделирование](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Создание | Python |
 | 08 | [T5, BART: модели «кодировщик — декодировщик»](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Изучение | Python |
@@ -622,15 +622,15 @@ flowchart TB
 | 01 | [Токенизаторы: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Создание | Python, Rust |
 | 02 | [Создание токенизатора с нуля](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Создание | Python |
 | 03 | [Конвейеры данных для предобучения](../../phases/10-llms-from-scratch/03-data-pipelines/) | Создание | Python |
-| 04 | [Предобучение мини-GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Создание | Python |
+| 04 | [Предобучение мини-GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Создание | Python, Rust |
 | 05 | [Распределённое обучение, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Создание | Python |
 | 06 | [Настройка инструкций: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Создание | Python |
 | 07 | [RLHF: модель вознаграждения и PPO](../../phases/10-llms-from-scratch/07-rlhf/) | Создание | Python |
 | 08 | [DPO: прямая оптимизация предпочтений](../../phases/10-llms-from-scratch/08-dpo/) | Создание | Python |
 | 09 | [Constitutional AI и самоулучшение](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | Создание | Python |
 | 10 | [Оценка: бенчмарки и evals](../../phases/10-llms-from-scratch/10-evaluation/) | Создание | Python |
-| 11 | [Квантизация: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Создание | Python |
-| 12 | [Оптимизация инференса](../../phases/10-llms-from-scratch/12-inference-optimization/) | Создание | Python |
+| 11 | [Квантизация: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Создание | Python, Rust |
+| 12 | [Оптимизация инференса](../../phases/10-llms-from-scratch/12-inference-optimization/) | Создание | Python, Rust |
 | 13 | [Создание полного конвейера LLM](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Создание | Python |
 | 14 | [Открытые модели: обзор архитектур](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Изучение | Python |
 | 15 | [Спекулятивное декодирование и EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Создание | Python |
@@ -652,18 +652,18 @@ flowchart TB
 
 | # | Урок | Тип | Языки |
 |:---:|--------|:----:|------|
-| 01 | [Промпт-инжиниринг: техники и шаблоны](../../phases/11-llm-engineering/01-prompt-engineering/) | Создание | Python |
+| 01 | [Промпт-инжиниринг: техники и шаблоны](../../phases/11-llm-engineering/01-prompt-engineering/) | Создание | Python, TypeScript |
 | 02 | [Few-Shot, CoT, Tree-of-Thought](../../phases/11-llm-engineering/02-few-shot-cot/) | Создание | Python |
-| 03 | [Структурированный вывод](../../phases/11-llm-engineering/03-structured-outputs/) | Создание | Python |
-| 04 | [Эмбеддинги и векторные представления](../../phases/11-llm-engineering/04-embeddings/) | Создание | Python |
-| 05 | [Инжиниринг контекста](../../phases/11-llm-engineering/05-context-engineering/) | Создание | Python |
-| 06 | [RAG: генерация с дополнением извлечённой информацией](../../phases/11-llm-engineering/06-rag/) | Создание | Python |
+| 03 | [Структурированный вывод](../../phases/11-llm-engineering/03-structured-outputs/) | Создание | Python, TypeScript |
+| 04 | [Эмбеддинги и векторные представления](../../phases/11-llm-engineering/04-embeddings/) | Создание | Python, TypeScript |
+| 05 | [Инжиниринг контекста](../../phases/11-llm-engineering/05-context-engineering/) | Создание | Python, TypeScript |
+| 06 | [RAG: генерация с дополнением извлечённой информацией](../../phases/11-llm-engineering/06-rag/) | Создание | Python, TypeScript |
 | 07 | [Продвинутый RAG: разбиение на чанки и переранжирование](../../phases/11-llm-engineering/07-advanced-rag/) | Создание | Python |
 | 08 | [Дообучение с LoRA и QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Создание | Python |
-| 09 | [Вызов функций и использование инструментов](../../phases/11-llm-engineering/09-function-calling/) | Создание | Python |
+| 09 | [Вызов функций и использование инструментов](../../phases/11-llm-engineering/09-function-calling/) | Создание | Python, TypeScript |
 | 10 | [Оценка и тестирование](../../phases/11-llm-engineering/10-evaluation/) | Создание | Python |
 | 11 | [Кэширование, ограничение частоты запросов и стоимость](../../phases/11-llm-engineering/11-caching-cost/) | Создание | Python |
-| 12 | [Ограничители и безопасность](../../phases/11-llm-engineering/12-guardrails/) | Создание | Python |
+| 12 | [Ограничители и безопасность](../../phases/11-llm-engineering/12-guardrails/) | Создание | Python, TypeScript |
 | 13 | [Создание промышленного приложения на базе LLM](../../phases/11-llm-engineering/13-production-app/) | Создание | Python |
 | 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Создание | Python |
 | 15 | [Кэширование промптов и контекста](../../phases/11-llm-engineering/15-prompt-caching/) | Создание | Python |
@@ -712,7 +712,7 @@ flowchart TB
 
 | # | Урок | Тип | Языки |
 |:---:|--------|:----:|------|
-| 01 | [Интерфейс инструмента](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Изучение | Python |
+| 01 | [Интерфейс инструмента](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Изучение | Python, TypeScript |
 | 02 | [Подробно о вызове функций](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Создание | Python |
 | 03 | [Параллельные и потоковые вызовы инструментов](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Создание | Python |
 | 04 | [Структурированный вывод](../../phases/13-tools-and-protocols/04-structured-output/) | Создание | Python |
@@ -730,7 +730,7 @@ flowchart TB
 | 16 | [Авторизация MCP: CIMD, привязка издателя, PKCE и step-up](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Создание | Python |
 | 17 | [Шлюзы MCP без сохранения состояния и допуск в реестр](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Изучение | Python |
 | 18 | [Авторизация MCP в production: регистрация с привязкой к издателю и токены](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Создание | Python |
-| 19 | [Протокол A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Создание | Python |
+| 19 | [Протокол A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Создание | Python, TypeScript |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Создание | Python |
 | 21 | [Уровень маршрутизации LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Изучение | Python |
 | 22 | [Agent Skills: переносимый контракт и границы среды выполнения](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Создание | Python |
@@ -770,24 +770,24 @@ flowchart TB
 
 | # | Урок | Тип | Языки |
 |:---:|--------|:----:|------|
-| 01 | [Цикл работы агента](../../phases/14-agent-engineering/01-the-agent-loop/) | Создание | Python |
+| 01 | [Цикл работы агента](../../phases/14-agent-engineering/01-the-agent-loop/) | Создание | Python, TypeScript |
 | 02 | [ReWOO и планирование с последующим выполнением](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Создание | Python |
 | 03 | [Рефлексия и обучение с вербальным подкреплением](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Создание | Python |
 | 04 | [Дерево мыслей и LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Создание | Python |
 | 05 | [Self-Refine и CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Создание | Python |
-| 06 | [Использование инструментов и вызов функций](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Создание | Python |
+| 06 | [Использование инструментов и вызов функций](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Создание | Python, TypeScript |
 | 07 | [Память агента: виртуальный контекст и страничная организация памяти](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Создание | Python |
 | 08 | [Блоки памяти и вычисления во время простоя](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Создание | Python |
 | 09 | [Гибридная память: векторы, графы и KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Создание | Python |
 | 10 | [Библиотеки навыков и непрерывное обучение (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Создание | Python |
 | 11 | [Планирование с HTN и эволюционный поиск](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Создание | Python |
 | 12 | [Шаблоны рабочих процессов Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Создание | Python |
-| 13 | [Оркестрация на графах с состоянием: долговременное выполнение и контрольные точки](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Создание | Python |
+| 13 | [Оркестрация на графах с состоянием: долговременное выполнение и контрольные точки](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Создание | Python, TypeScript |
 | 14 | [Модель акторов для агентов](../../phases/14-agent-engineering/14-autogen-actor-model/) | Создание | Python |
 | 15 | [Команды агентов с распределением ролей: роли, задачи, процессы](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Создание | Python |
 | 16 | [OpenAI Agents SDK: передачи управления, ограничители, трассировка](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Создание | Python |
 | 17 | [Harness как библиотека: субагенты и хранилище сессий](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Создание | Python |
-| 18 | [Среды выполнения агентов для production](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Изучение | Python |
+| 18 | [Среды выполнения агентов для production](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Изучение | Python, TypeScript |
 | 19 | [Бенчмарки: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Изучение | Python |
 | 20 | [Бенчмарки: WebArena и OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Изучение | Python |
 | 21 | [Управление компьютером: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Создание | Python |
@@ -914,14 +914,14 @@ flowchart TB
 | 10 | [Снижение времени холодного старта бессерверных LLM](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Изучение | Python |
 | 11 | [Обслуживание LLM в нескольких регионах и локальность KV-кэша](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Изучение | Python |
 | 12 | [Инференс на периферийных устройствах: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Изучение | Python |
-| 13 | [Выбор стека наблюдаемости для LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | Изучение | Python |
-| 14 | [Экономика кэширования промптов и семантического кэширования](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Изучение | Python |
-| 15 | [Batch API: скидка 50% как отраслевой стандарт](../../phases/17-infrastructure-and-production/15-batch-apis/) | Изучение | Python |
-| 16 | [Маршрутизация моделей как способ сократить затраты](../../phases/17-infrastructure-and-production/16-model-routing/) | Изучение | Python |
+| 13 | [Выбор стека наблюдаемости для LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | Изучение | Python, TypeScript |
+| 14 | [Экономика кэширования промптов и семантического кэширования](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Изучение | Python, TypeScript |
+| 15 | [Batch API: скидка 50% как отраслевой стандарт](../../phases/17-infrastructure-and-production/15-batch-apis/) | Изучение | Python, TypeScript |
+| 16 | [Маршрутизация моделей как способ сократить затраты](../../phases/17-infrastructure-and-production/16-model-routing/) | Изучение | Python, TypeScript |
 | 17 | [Раздельные Prefill и Decode: NVIDIA Dynamo и llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Изучение | Python |
 | 18 | [Стек обслуживания для production: выгрузка KV и маршрутизация с учётом кэша](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Изучение | Python |
-| 19 | [AI-шлюзы: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Изучение | Python |
-| 20 | [Shadow-, Canary- и поэтапное развёртывание](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Изучение | Python |
+| 19 | [AI-шлюзы: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Изучение | Python, TypeScript |
+| 20 | [Shadow-, Canary- и поэтапное развёртывание](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Изучение | Python, TypeScript |
 | 21 | [A/B-тестирование функций LLM: GrowthBook и Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Изучение | Python |
 | 22 | [Нагрузочное тестирование API LLM: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Создание | Python |
 | 23 | [SRE для ИИ: реагирование на инциденты с несколькими агентами](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Изучение | Python |

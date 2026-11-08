@@ -3,7 +3,7 @@
 > Sampling is how AI explores the space of possibilities.
 
 **Type:** Build
-**Language:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06-07 (Probability, Bayes' Theorem)
 **Time:** ~120 minutes
 
@@ -608,6 +608,8 @@ def gumbel_softmax(logits, temperature):
 Show how decreasing temperature makes the output approach a one-hot vector.
 
 Full implementations with all visualizations are in `code/sampling.py`.
+
+The TypeScript port is in `code/sampling.ts`. It uses its own seeded random generator, so its random numbers differ from the Python output.
 
 ## Use It
 

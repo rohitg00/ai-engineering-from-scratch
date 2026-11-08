@@ -345,10 +345,10 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [Ontwikkelomgeving](../../phases/00-setup-and-tooling/01-dev-environment/) | Bouwen | Python |
+| 01 | [Ontwikkelomgeving](../../phases/00-setup-and-tooling/01-dev-environment/) | Bouwen | Python, TypeScript, Rust |
 | 02 | [Git en samenwerken](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | Leren | — |
 | 03 | [GPU-installatie en cloud](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | Bouwen | Python |
-| 04 | [API's en sleutels](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Bouwen | Python |
+| 04 | [API's en sleutels](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Bouwen | Python, TypeScript |
 | 05 | [Jupyter Notebooks](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | Bouwen | Python |
 | 06 | [Python-omgevingen](../../phases/00-setup-and-tooling/06-python-environments/) | Bouwen | Shell |
 | 07 | [Docker voor AI](../../phases/00-setup-and-tooling/07-docker-for-ai/) | Bouwen | Docker |
@@ -368,24 +368,24 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 01 | [Intuïtie voor lineaire algebra](../../phases/01-math-foundations/01-linear-algebra-intuition/) | Leren | Python, Julia |
 | 02 | [Vectoren, matrices en bewerkingen](../../phases/01-math-foundations/02-vectors-matrices-operations/) | Bouwen | Python, Julia |
 | 03 | [Matrixtransformaties en eigenwaarden](../../phases/01-math-foundations/03-matrix-transformations/) | Bouwen | Python, Julia |
-| 04 | [Analyse voor ML: afgeleiden en gradiënten](../../phases/01-math-foundations/04-calculus-for-ml/) | Leren | Python |
-| 05 | [Kettingregel en automatische differentiatie](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Bouwen | Python |
-| 06 | [Kansrekening en verdelingen](../../phases/01-math-foundations/06-probability-and-distributions/) | Leren | Python |
-| 07 | [Stelling van Bayes en statistisch denken](../../phases/01-math-foundations/07-bayes-theorem/) | Bouwen | Python |
-| 08 | [Optimalisatie: varianten van gradiëntafdaling](../../phases/01-math-foundations/08-optimization/) | Bouwen | Python |
-| 09 | [Informatietheorie: entropie en KL-divergentie](../../phases/01-math-foundations/09-information-theory/) | Leren | Python |
-| 10 | [Dimensiereductie: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Bouwen | Python |
+| 04 | [Analyse voor ML: afgeleiden en gradiënten](../../phases/01-math-foundations/04-calculus-for-ml/) | Leren | Python, Julia |
+| 05 | [Kettingregel en automatische differentiatie](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Bouwen | Python, Julia |
+| 06 | [Kansrekening en verdelingen](../../phases/01-math-foundations/06-probability-and-distributions/) | Leren | Python, Julia |
+| 07 | [Stelling van Bayes en statistisch denken](../../phases/01-math-foundations/07-bayes-theorem/) | Bouwen | Python, TypeScript |
+| 08 | [Optimalisatie: varianten van gradiëntafdaling](../../phases/01-math-foundations/08-optimization/) | Bouwen | Python, Julia |
+| 09 | [Informatietheorie: entropie en KL-divergentie](../../phases/01-math-foundations/09-information-theory/) | Leren | Python, TypeScript |
+| 10 | [Dimensiereductie: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Bouwen | Python, TypeScript |
 | 11 | [Singulierewaardendecompositie](../../phases/01-math-foundations/11-singular-value-decomposition/) | Bouwen | Python, Julia |
-| 12 | [Tensorbewerkingen](../../phases/01-math-foundations/12-tensor-operations/) | Bouwen | Python |
-| 13 | [Numerieke stabiliteit](../../phases/01-math-foundations/13-numerical-stability/) | Bouwen | Python |
-| 14 | [Normen en afstanden](../../phases/01-math-foundations/14-norms-and-distances/) | Bouwen | Python |
-| 15 | [Statistiek voor ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Bouwen | Python |
-| 16 | [Steekproefmethoden](../../phases/01-math-foundations/16-sampling-methods/) | Bouwen | Python |
-| 17 | [Lineaire stelsels](../../phases/01-math-foundations/17-linear-systems/) | Bouwen | Python |
-| 18 | [Convexe optimalisatie](../../phases/01-math-foundations/18-convex-optimization/) | Bouwen | Python |
+| 12 | [Tensorbewerkingen](../../phases/01-math-foundations/12-tensor-operations/) | Bouwen | Python, TypeScript |
+| 13 | [Numerieke stabiliteit](../../phases/01-math-foundations/13-numerical-stability/) | Bouwen | Python, TypeScript |
+| 14 | [Normen en afstanden](../../phases/01-math-foundations/14-norms-and-distances/) | Bouwen | Python, TypeScript |
+| 15 | [Statistiek voor ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Bouwen | Python, TypeScript |
+| 16 | [Steekproefmethoden](../../phases/01-math-foundations/16-sampling-methods/) | Bouwen | Python, TypeScript |
+| 17 | [Lineaire stelsels](../../phases/01-math-foundations/17-linear-systems/) | Bouwen | Python, TypeScript |
+| 18 | [Convexe optimalisatie](../../phases/01-math-foundations/18-convex-optimization/) | Bouwen | Python, TypeScript |
 | 19 | [Complexe getallen voor AI](../../phases/01-math-foundations/19-complex-numbers/) | Leren | Python |
-| 20 | [De fouriertransformatie](../../phases/01-math-foundations/20-fourier-transform/) | Bouwen | Python |
-| 21 | [Grafentheorie voor ML](../../phases/01-math-foundations/21-graph-theory/) | Bouwen | Python |
+| 20 | [De fouriertransformatie](../../phases/01-math-foundations/20-fourier-transform/) | Bouwen | Python, TypeScript |
+| 21 | [Grafentheorie voor ML](../../phases/01-math-foundations/21-graph-theory/) | Bouwen | Python, TypeScript |
 | 22 | [Stochastische processen](../../phases/01-math-foundations/22-stochastic-processes/) | Leren | Python |
 
 </details>
@@ -397,14 +397,14 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
 | 01 | [Wat is machinaal leren?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Leren | Python |
-| 02 | [Lineaire regressie vanaf nul](../../phases/02-ml-fundamentals/02-linear-regression/) | Bouwen | Python |
-| 03 | [Logistische regressie en classificatie](../../phases/02-ml-fundamentals/03-logistic-regression/) | Bouwen | Python |
+| 02 | [Lineaire regressie vanaf nul](../../phases/02-ml-fundamentals/02-linear-regression/) | Bouwen | Python, Rust, Julia |
+| 03 | [Logistische regressie en classificatie](../../phases/02-ml-fundamentals/03-logistic-regression/) | Bouwen | Python, Rust, Julia |
 | 04 | [Beslisbomen en random forests](../../phases/02-ml-fundamentals/04-decision-trees/) | Bouwen | Python |
-| 05 | [Supportvectormachines](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Bouwen | Python |
+| 05 | [Supportvectormachines](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Bouwen | Python, Julia |
 | 06 | [KNN en afstandsmaten](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Bouwen | Python |
 | 07 | [Leren zonder toezicht: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Bouwen | Python |
 | 08 | [Kenmerken ontwerpen en selecteren](../../phases/02-ml-fundamentals/08-feature-engineering/) | Bouwen | Python |
-| 09 | [Modelevaluatie: maatstaven en kruisvalidatie](../../phases/02-ml-fundamentals/09-model-evaluation/) | Bouwen | Python |
+| 09 | [Modelevaluatie: maatstaven en kruisvalidatie](../../phases/02-ml-fundamentals/09-model-evaluation/) | Bouwen | Python, Julia |
 | 10 | [Bias, variantie en de leercurve](../../phases/02-ml-fundamentals/10-bias-variance/) | Leren | Python |
 | 11 | [Ensemblemethoden: boosting, bagging en stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Bouwen | Python |
 | 12 | [Hyperparameters afstellen](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | Bouwen | Python |
@@ -426,11 +426,11 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [Het perceptron: waar alles begon](../../phases/03-deep-learning-core/01-the-perceptron/) | Bouwen | Python |
+| 01 | [Het perceptron: waar alles begon](../../phases/03-deep-learning-core/01-the-perceptron/) | Bouwen | Python, Rust, Julia |
 | 02 | [Meerlaagse netwerken en de voorwaartse berekening](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Bouwen | Python |
-| 03 | [Backpropagatie vanaf nul](../../phases/03-deep-learning-core/03-backpropagation/) | Bouwen | Python |
-| 04 | [Activatiefuncties: ReLU, sigmoid, GELU en waarom](../../phases/03-deep-learning-core/04-activation-functions/) | Bouwen | Python |
-| 05 | [Verliesfuncties: MSE, kruisentropie en contrastief verlies](../../phases/03-deep-learning-core/05-loss-functions/) | Bouwen | Python |
+| 03 | [Backpropagatie vanaf nul](../../phases/03-deep-learning-core/03-backpropagation/) | Bouwen | Python, Rust, Julia |
+| 04 | [Activatiefuncties: ReLU, sigmoid, GELU en waarom](../../phases/03-deep-learning-core/04-activation-functions/) | Bouwen | Python, Julia |
+| 05 | [Verliesfuncties: MSE, kruisentropie en contrastief verlies](../../phases/03-deep-learning-core/05-loss-functions/) | Bouwen | Python, Julia |
 | 06 | [Optimalisatoren: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Bouwen | Python |
 | 07 | [Regularisatie: dropout, gewichtsverval, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Bouwen | Python |
 | 08 | [Gewichten initialiseren en stabiel trainen](../../phases/03-deep-learning-core/08-weight-initialization/) | Bouwen | Python |
@@ -462,7 +462,7 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 12 | [Video begrijpen: modelleren in de tijd](../../phases/04-computer-vision/12-video-understanding/) | Bouwen | Python |
 | 13 | [3D-visie: puntenwolken en NeRF's](../../phases/04-computer-vision/13-3d-vision-nerf/) | Bouwen | Python |
 | 14 | [Visietransformers (ViT)](../../phases/04-computer-vision/14-vision-transformers/) | Bouwen | Python |
-| 15 | [Realtimevisie: uitrollen op randapparaten](../../phases/04-computer-vision/15-real-time-edge/) | Bouwen | Python |
+| 15 | [Realtimevisie: uitrollen op randapparaten](../../phases/04-computer-vision/15-real-time-edge/) | Bouwen | Python, Rust |
 | 16 | [Bouw een volledige beeldverwerkingspijplijn](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | Bouwen | Python |
 | 17 | [Zelflerende visiemodellen: SimCLR, DINO, MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | Bouwen | Python |
 | 18 | [Visie met open woordenschat: CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | Bouwen | Python |
@@ -503,11 +503,11 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 16 | [Tekstgeneratie](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Bouwen | Python |
 | 17 | [Chatbots: van regels naar neurale netwerken](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Bouwen | Python |
 | 18 | [Meertalige NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Bouwen | Python |
-| 19 | [Subwoordtokenisatie: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Leren | Python |
+| 19 | [Subwoordtokenisatie: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Leren | Python, TypeScript |
 | 20 | [Gestructureerde uitvoer en begrensde decodering](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Bouwen | Python |
 | 21 | [NLI en logische gevolgtrekking uit tekst](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Leren | Python |
 | 22 | [Verdieping in embeddingmodellen](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Leren | Python |
-| 23 | [Opdeelstrategieën voor RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Bouwen | Python |
+| 23 | [Opdeelstrategieën voor RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Bouwen | Python, TypeScript |
 | 24 | [Coreferenties oplossen](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Leren | Python |
 | 25 | [Entiteiten koppelen en ondubbelzinnig maken](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Bouwen | Python |
 | 26 | [Relaties extraheren en kennisgrafen opbouwen](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Bouwen | Python |
@@ -533,7 +533,7 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 08 | [Stemmen klonen en omzetten](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Bouwen | Python |
 | 09 | [Muziekgeneratie](../../phases/06-speech-and-audio/09-music-generation) | Bouwen | Python |
 | 10 | [Audio-taalmodellen](../../phases/06-speech-and-audio/10-audio-language-models) | Bouwen | Python |
-| 11 | [Realtime-audioverwerking](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Bouwen | Python |
+| 11 | [Realtime-audioverwerking](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Bouwen | Python, Rust |
 | 12 | [Bouw een pijplijn voor een spraakassistent](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Bouwen | Python |
 | 13 | [Neurale audiocodecs: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Leren | Python |
 | 14 | [Spraakactiviteit en beurtwisseling detecteren](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Bouwen | Python |
@@ -549,11 +549,11 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [Waarom transformers? De problemen met RNN's](../../phases/07-transformers-deep-dive/01-why-transformers/) | Leren | Python |
-| 02 | [Zelfaandacht vanaf nul](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Bouwen | Python |
-| 03 | [Aandacht met meerdere koppen](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Bouwen | Python |
-| 04 | [Positiecodering: sinusvormig, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Bouwen | Python |
-| 05 | [De volledige transformer: encoder en decoder](../../phases/07-transformers-deep-dive/05-full-transformer/) | Bouwen | Python |
+| 01 | [Waarom transformers? De problemen met RNN's](../../phases/07-transformers-deep-dive/01-why-transformers/) | Leren | Python, Julia |
+| 02 | [Zelfaandacht vanaf nul](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Bouwen | Python, Rust, Julia |
+| 03 | [Aandacht met meerdere koppen](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Bouwen | Python, Rust |
+| 04 | [Positiecodering: sinusvormig, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Bouwen | Python, Rust, Julia |
+| 05 | [De volledige transformer: encoder en decoder](../../phases/07-transformers-deep-dive/05-full-transformer/) | Bouwen | Python, Julia |
 | 06 | [BERT: taalmodellering met gemaskeerde tokens](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Bouwen | Python |
 | 07 | [GPT: causale taalmodellering](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Bouwen | Python |
 | 08 | [T5 en BART: encoder-decodermodellen](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Leren | Python |
@@ -622,15 +622,15 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 01 | [Tokenisatie: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Bouwen | Python, Rust |
 | 02 | [Bouw een tokenizer vanaf nul](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Bouwen | Python |
 | 03 | [Gegevenspijplijnen voor voortraining](../../phases/10-llms-from-scratch/03-data-pipelines/) | Bouwen | Python |
-| 04 | [Een mini-GPT (124M) voortrainen](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Bouwen | Python |
+| 04 | [Een mini-GPT (124M) voortrainen](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Bouwen | Python, Rust |
 | 05 | [Gedistribueerd trainen, FSDP en DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Bouwen | Python |
 | 06 | [Afstemmen op instructies: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Bouwen | Python |
 | 07 | [RLHF: beloningsmodel en PPO](../../phases/10-llms-from-scratch/07-rlhf/) | Bouwen | Python |
 | 08 | [DPO: directe voorkeursoptimalisatie](../../phases/10-llms-from-scratch/08-dpo/) | Bouwen | Python |
 | 09 | [Constitutionele AI en zelfverbetering](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | Bouwen | Python |
 | 10 | [Evaluatie: benchmarks en beoordelingen](../../phases/10-llms-from-scratch/10-evaluation/) | Bouwen | Python |
-| 11 | [Kwantisatie: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Bouwen | Python |
-| 12 | [Inferentieoptimalisatie](../../phases/10-llms-from-scratch/12-inference-optimization/) | Bouwen | Python |
+| 11 | [Kwantisatie: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Bouwen | Python, Rust |
+| 12 | [Inferentieoptimalisatie](../../phases/10-llms-from-scratch/12-inference-optimization/) | Bouwen | Python, Rust |
 | 13 | [Bouw een volledige LLM-pijplijn](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Bouwen | Python |
 | 14 | [Open modellen: architecturen uitgelegd](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Leren | Python |
 | 15 | [Speculatieve decodering en EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Bouwen | Python |
@@ -652,18 +652,18 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [Promptengineering: technieken en patronen](../../phases/11-llm-engineering/01-prompt-engineering/) | Bouwen | Python |
+| 01 | [Promptengineering: technieken en patronen](../../phases/11-llm-engineering/01-prompt-engineering/) | Bouwen | Python, TypeScript |
 | 02 | [Few-Shot, CoT, Tree-of-Thought](../../phases/11-llm-engineering/02-few-shot-cot/) | Bouwen | Python |
-| 03 | [Gestructureerde uitvoer](../../phases/11-llm-engineering/03-structured-outputs/) | Bouwen | Python |
-| 04 | [Embeddings en vectorrepresentaties](../../phases/11-llm-engineering/04-embeddings/) | Bouwen | Python |
-| 05 | [Contextengineering](../../phases/11-llm-engineering/05-context-engineering/) | Bouwen | Python |
-| 06 | [RAG: generatie met opgehaalde informatie](../../phases/11-llm-engineering/06-rag/) | Bouwen | Python |
+| 03 | [Gestructureerde uitvoer](../../phases/11-llm-engineering/03-structured-outputs/) | Bouwen | Python, TypeScript |
+| 04 | [Embeddings en vectorrepresentaties](../../phases/11-llm-engineering/04-embeddings/) | Bouwen | Python, TypeScript |
+| 05 | [Contextengineering](../../phases/11-llm-engineering/05-context-engineering/) | Bouwen | Python, TypeScript |
+| 06 | [RAG: generatie met opgehaalde informatie](../../phases/11-llm-engineering/06-rag/) | Bouwen | Python, TypeScript |
 | 07 | [Geavanceerde RAG: opdelen en opnieuw rangschikken](../../phases/11-llm-engineering/07-advanced-rag/) | Bouwen | Python |
 | 08 | [Fijnafstemming met LoRA en QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Bouwen | Python |
-| 09 | [Functieaanroepen en gereedschap gebruiken](../../phases/11-llm-engineering/09-function-calling/) | Bouwen | Python |
+| 09 | [Functieaanroepen en gereedschap gebruiken](../../phases/11-llm-engineering/09-function-calling/) | Bouwen | Python, TypeScript |
 | 10 | [Evalueren en testen](../../phases/11-llm-engineering/10-evaluation/) | Bouwen | Python |
 | 11 | [Caching, snelheidsbegrenzing en kosten](../../phases/11-llm-engineering/11-caching-cost/) | Bouwen | Python |
-| 12 | [Beveiligingsgrenzen en veiligheid](../../phases/11-llm-engineering/12-guardrails/) | Bouwen | Python |
+| 12 | [Beveiligingsgrenzen en veiligheid](../../phases/11-llm-engineering/12-guardrails/) | Bouwen | Python, TypeScript |
 | 13 | [Bouw een LLM-toepassing voor productie](../../phases/11-llm-engineering/13-production-app/) | Bouwen | Python |
 | 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Bouwen | Python |
 | 15 | [Prompts en context cachen](../../phases/11-llm-engineering/15-prompt-caching/) | Bouwen | Python |
@@ -712,7 +712,7 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [De gereedschapsinterface](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Leren | Python |
+| 01 | [De gereedschapsinterface](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Leren | Python, TypeScript |
 | 02 | [Verdieping in functieaanroepen](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Bouwen | Python |
 | 03 | [Parallelle en gestreamde gereedschapsaanroepen](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Bouwen | Python |
 | 04 | [Gestructureerd resultaat](../../phases/13-tools-and-protocols/04-structured-output/) | Bouwen | Python |
@@ -730,7 +730,7 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 16 | [MCP-autorisatie: CIMD, binding aan uitgevers, PKCE en extra verificatie](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Bouwen | Python |
 | 17 | [Toestandsloze MCP-gateways en toelating tot registers](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Leren | Python |
 | 18 | [MCP-autorisatie in productie: uitgeversgebonden registratie en tokens](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Bouwen | Python |
-| 19 | [Het A2A-protocol](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Bouwen | Python |
+| 19 | [Het A2A-protocol](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Bouwen | Python, TypeScript |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Bouwen | Python |
 | 21 | [Een routeringslaag voor LLM's](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Leren | Python |
 | 22 | [Agent Skills: overdraagbaar contract en runtimegrens](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Bouwen | Python |
@@ -778,24 +778,24 @@ volgende-lesnavigatie van 22 naar 23.
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [De agentlus](../../phases/14-agent-engineering/01-the-agent-loop/) | Bouwen | Python |
+| 01 | [De agentlus](../../phases/14-agent-engineering/01-the-agent-loop/) | Bouwen | Python, TypeScript |
 | 02 | [ReWOO en plannen-en-uitvoeren](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Bouwen | Python |
 | 03 | [Reflexion en verbale bekrachtiging](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Bouwen | Python |
 | 04 | [Gedachtebomen en LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Bouwen | Python |
 | 05 | [Self-Refine en CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Bouwen | Python |
-| 06 | [Gereedschap gebruiken en functies aanroepen](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Bouwen | Python |
+| 06 | [Gereedschap gebruiken en functies aanroepen](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Bouwen | Python, TypeScript |
 | 07 | [Agentgeheugen: virtuele context en geheugenpaginering](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Bouwen | Python |
 | 08 | [Geheugenblokken en rekenen tijdens rustperioden](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Bouwen | Python |
 | 09 | [Hybride geheugen: vectoren, grafen en KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Bouwen | Python |
 | 10 | [Skillbibliotheken en levenslang leren (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Bouwen | Python |
 | 11 | [Plannen met HTN en evolutionair zoeken](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Bouwen | Python |
 | 12 | [De werkstroompatronen van Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Bouwen | Python |
-| 13 | [Toestandsvolle graaforkestratie: duurzame uitvoering en checkpoints](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Bouwen | Python |
+| 13 | [Toestandsvolle graaforkestratie: duurzame uitvoering en checkpoints](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Bouwen | Python, TypeScript |
 | 14 | [Het actormodel voor agents](../../phases/14-agent-engineering/14-autogen-actor-model/) | Bouwen | Python |
 | 15 | [Agentteams op basis van rollen: rollen, taken en processen](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Bouwen | Python |
 | 16 | [OpenAI Agents SDK: overdrachten, begrenzingen en tracering](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Bouwen | Python |
 | 17 | [Het uitvoeringsraamwerk als bibliotheek: subagents en sessieopslag](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Bouwen | Python |
-| 18 | [Agentuitvoeringsomgevingen voor productie](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Leren | Python |
+| 18 | [Agentuitvoeringsomgevingen voor productie](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Leren | Python, TypeScript |
 | 19 | [Benchmarks: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Leren | Python |
 | 20 | [Benchmarks: WebArena en OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Leren | Python |
 | 21 | [Computergebruik: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Bouwen | Python |
@@ -926,14 +926,14 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 | 10 | [Koude starts beperken bij serverloze LLM's](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Leren | Python |
 | 11 | [LLM-inferentie in meerdere regio's en lokale KV-caches](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Leren | Python |
 | 12 | [Inferentie op randapparaten: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Leren | Python |
-| 13 | [Een stack voor LLM-waarneembaarheid kiezen](../../phases/17-infrastructure-and-production/13-llm-observability/) | Leren | Python |
-| 14 | [Economie van promptcaching en semantische caching](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Leren | Python |
-| 15 | [Batch-API's: 50% korting als industriestandaard](../../phases/17-infrastructure-and-production/15-batch-apis/) | Leren | Python |
-| 16 | [Modelroutering als bouwsteen voor kostenverlaging](../../phases/17-infrastructure-and-production/16-model-routing/) | Leren | Python |
+| 13 | [Een stack voor LLM-waarneembaarheid kiezen](../../phases/17-infrastructure-and-production/13-llm-observability/) | Leren | Python, TypeScript |
+| 14 | [Economie van promptcaching en semantische caching](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Leren | Python, TypeScript |
+| 15 | [Batch-API's: 50% korting als industriestandaard](../../phases/17-infrastructure-and-production/15-batch-apis/) | Leren | Python, TypeScript |
+| 16 | [Modelroutering als bouwsteen voor kostenverlaging](../../phases/17-infrastructure-and-production/16-model-routing/) | Leren | Python, TypeScript |
 | 17 | [Gescheiden prefill en decodering: NVIDIA Dynamo en llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Leren | Python |
 | 18 | [Inferentiestack voor productie: KV-uitplaatsing en cachebewuste routering](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Leren | Python |
-| 19 | [AI-gateways: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Leren | Python |
-| 20 | [Schaduwtests, kanarie-uitrol en stapsgewijze uitrol](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Leren | Python |
+| 19 | [AI-gateways: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Leren | Python, TypeScript |
+| 20 | [Schaduwtests, kanarie-uitrol en stapsgewijze uitrol](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Leren | Python, TypeScript |
 | 21 | [A/B-tests voor LLM-functies: GrowthBook en Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Leren | Python |
 | 22 | [Belastingtests voor LLM-API's: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Bouwen | Python |
 | 23 | [SRE voor AI: incidentrespons met meerdere agents](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Leren | Python |

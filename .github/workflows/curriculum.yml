@@ -263,6 +263,33 @@ jobs:
         # the class of breakage where a lesson cannot import its own module.
         run: python3 scripts/run_lesson_tests.py
 
+  lesson-ports:
+    name: lesson ports compile and run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          persist-credentials: false
+      - name: single-file Rust lessons build without warnings and run
+        run: |
+          for file in $(git ls-files 'phases/*/code/*.rs'); do
+            [ -f "$(dirname "$file")/Cargo.toml" ] && continue
+            echo "::group::$file"
+            rustc --edition 2021 -D warnings -O -o "$RUNNER_TEMP/lesson" "$file"
+            timeout 120 "$RUNNER_TEMP/lesson" > /dev/null
+            echo "::endgroup::"
+          done
+      - name: Phase 1 TypeScript ports type-check and run
+        run: |
+          npm install --prefix "$RUNNER_TEMP/ts" --no-save --no-package-lock tsx@4.19.2 typescript@5.6.3 @types/node@22.10.2
+          bin="$RUNNER_TEMP/ts/node_modules/.bin"
+          for file in phases/01-math-foundations/*/code/*.ts; do
+            echo "::group::$file"
+            "$bin/tsc" --strict --noEmit --target es2022 --module nodenext --moduleResolution nodenext --types node --typeRoots "$RUNNER_TEMP/ts/node_modules/@types" "$file"
+            timeout 120 "$bin/tsx" "$file" > /dev/null
+            echo "::endgroup::"
+          done
+
   readme-counts-sync:
     name: README counts auto-fix (main only)
     runs-on: ubuntu-latest

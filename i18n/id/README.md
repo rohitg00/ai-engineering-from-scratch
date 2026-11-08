@@ -345,10 +345,10 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 
 | # | Pelajaran | Jenis | Bahasa |
 |:---:|--------|:----:|------|
-| 01 | [Lingkungan pengembangan](../../phases/00-setup-and-tooling/01-dev-environment/) | Bangun | Python |
+| 01 | [Lingkungan pengembangan](../../phases/00-setup-and-tooling/01-dev-environment/) | Bangun | Python, TypeScript, Rust |
 | 02 | [Git dan kolaborasi](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | Pelajari | — |
 | 03 | [Penyiapan GPU dan cloud](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | Bangun | Python |
-| 04 | [API dan kunci akses](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Bangun | Python |
+| 04 | [API dan kunci akses](../../phases/00-setup-and-tooling/04-apis-and-keys/) | Bangun | Python, TypeScript |
 | 05 | [Notebook Jupyter](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | Bangun | Python |
 | 06 | [Lingkungan Python](../../phases/00-setup-and-tooling/06-python-environments/) | Bangun | Shell |
 | 07 | [Docker untuk AI](../../phases/00-setup-and-tooling/07-docker-for-ai/) | Bangun | Docker |
@@ -368,24 +368,24 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 01 | [Intuisi aljabar linear](../../phases/01-math-foundations/01-linear-algebra-intuition/) | Pelajari | Python, Julia |
 | 02 | [Vektor, matriks, dan operasi](../../phases/01-math-foundations/02-vectors-matrices-operations/) | Bangun | Python, Julia |
 | 03 | [Transformasi matriks dan nilai eigen](../../phases/01-math-foundations/03-matrix-transformations/) | Bangun | Python, Julia |
-| 04 | [Kalkulus untuk ML: turunan dan gradien](../../phases/01-math-foundations/04-calculus-for-ml/) | Pelajari | Python |
-| 05 | [Aturan rantai dan diferensiasi otomatis](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Bangun | Python |
-| 06 | [Probabilitas dan distribusi](../../phases/01-math-foundations/06-probability-and-distributions/) | Pelajari | Python |
-| 07 | [Teorema Bayes dan penalaran statistik](../../phases/01-math-foundations/07-bayes-theorem/) | Bangun | Python |
-| 08 | [Optimisasi: keluarga penurunan gradien](../../phases/01-math-foundations/08-optimization/) | Bangun | Python |
-| 09 | [Teori informasi: entropi dan divergensi KL](../../phases/01-math-foundations/09-information-theory/) | Pelajari | Python |
-| 10 | [Reduksi dimensi: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Bangun | Python |
+| 04 | [Kalkulus untuk ML: turunan dan gradien](../../phases/01-math-foundations/04-calculus-for-ml/) | Pelajari | Python, Julia |
+| 05 | [Aturan rantai dan diferensiasi otomatis](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | Bangun | Python, Julia |
+| 06 | [Probabilitas dan distribusi](../../phases/01-math-foundations/06-probability-and-distributions/) | Pelajari | Python, Julia |
+| 07 | [Teorema Bayes dan penalaran statistik](../../phases/01-math-foundations/07-bayes-theorem/) | Bangun | Python, TypeScript |
+| 08 | [Optimisasi: keluarga penurunan gradien](../../phases/01-math-foundations/08-optimization/) | Bangun | Python, Julia |
+| 09 | [Teori informasi: entropi dan divergensi KL](../../phases/01-math-foundations/09-information-theory/) | Pelajari | Python, TypeScript |
+| 10 | [Reduksi dimensi: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Bangun | Python, TypeScript |
 | 11 | [Dekomposisi nilai singular](../../phases/01-math-foundations/11-singular-value-decomposition/) | Bangun | Python, Julia |
-| 12 | [Operasi tensor](../../phases/01-math-foundations/12-tensor-operations/) | Bangun | Python |
-| 13 | [Stabilitas numerik](../../phases/01-math-foundations/13-numerical-stability/) | Bangun | Python |
-| 14 | [Norma dan jarak](../../phases/01-math-foundations/14-norms-and-distances/) | Bangun | Python |
-| 15 | [Statistika untuk ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Bangun | Python |
-| 16 | [Metode pengambilan sampel](../../phases/01-math-foundations/16-sampling-methods/) | Bangun | Python |
-| 17 | [Sistem linear](../../phases/01-math-foundations/17-linear-systems/) | Bangun | Python |
-| 18 | [Optimisasi konveks](../../phases/01-math-foundations/18-convex-optimization/) | Bangun | Python |
+| 12 | [Operasi tensor](../../phases/01-math-foundations/12-tensor-operations/) | Bangun | Python, TypeScript |
+| 13 | [Stabilitas numerik](../../phases/01-math-foundations/13-numerical-stability/) | Bangun | Python, TypeScript |
+| 14 | [Norma dan jarak](../../phases/01-math-foundations/14-norms-and-distances/) | Bangun | Python, TypeScript |
+| 15 | [Statistika untuk ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Bangun | Python, TypeScript |
+| 16 | [Metode pengambilan sampel](../../phases/01-math-foundations/16-sampling-methods/) | Bangun | Python, TypeScript |
+| 17 | [Sistem linear](../../phases/01-math-foundations/17-linear-systems/) | Bangun | Python, TypeScript |
+| 18 | [Optimisasi konveks](../../phases/01-math-foundations/18-convex-optimization/) | Bangun | Python, TypeScript |
 | 19 | [Bilangan kompleks untuk AI](../../phases/01-math-foundations/19-complex-numbers/) | Pelajari | Python |
-| 20 | [Transformasi Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Bangun | Python |
-| 21 | [Teori graf untuk ML](../../phases/01-math-foundations/21-graph-theory/) | Bangun | Python |
+| 20 | [Transformasi Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Bangun | Python, TypeScript |
+| 21 | [Teori graf untuk ML](../../phases/01-math-foundations/21-graph-theory/) | Bangun | Python, TypeScript |
 | 22 | [Proses stokastik](../../phases/01-math-foundations/22-stochastic-processes/) | Pelajari | Python |
 
 </details>
@@ -397,14 +397,14 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | # | Pelajaran | Jenis | Bahasa |
 |:---:|--------|:----:|------|
 | 01 | [Apa itu pembelajaran mesin](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Pelajari | Python |
-| 02 | [Regresi linear dari nol](../../phases/02-ml-fundamentals/02-linear-regression/) | Bangun | Python |
-| 03 | [Regresi logistik dan klasifikasi](../../phases/02-ml-fundamentals/03-logistic-regression/) | Bangun | Python |
+| 02 | [Regresi linear dari nol](../../phases/02-ml-fundamentals/02-linear-regression/) | Bangun | Python, Rust, Julia |
+| 03 | [Regresi logistik dan klasifikasi](../../phases/02-ml-fundamentals/03-logistic-regression/) | Bangun | Python, Rust, Julia |
 | 04 | [Pohon keputusan dan random forest](../../phases/02-ml-fundamentals/04-decision-trees/) | Bangun | Python |
-| 05 | [Mesin vektor pendukung](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Bangun | Python |
+| 05 | [Mesin vektor pendukung](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Bangun | Python, Julia |
 | 06 | [KNN dan metrik jarak](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Bangun | Python |
 | 07 | [Pembelajaran tanpa pengawasan: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Bangun | Python |
 | 08 | [Rekayasa dan seleksi fitur](../../phases/02-ml-fundamentals/08-feature-engineering/) | Bangun | Python |
-| 09 | [Evaluasi model: metrik dan validasi silang](../../phases/02-ml-fundamentals/09-model-evaluation/) | Bangun | Python |
+| 09 | [Evaluasi model: metrik dan validasi silang](../../phases/02-ml-fundamentals/09-model-evaluation/) | Bangun | Python, Julia |
 | 10 | [Bias, varians, dan kurva pembelajaran](../../phases/02-ml-fundamentals/10-bias-variance/) | Pelajari | Python |
 | 11 | [Metode ensemble: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Bangun | Python |
 | 12 | [Penyetelan hiperparameter](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | Bangun | Python |
@@ -426,11 +426,11 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 
 | # | Pelajaran | Jenis | Bahasa |
 |:---:|--------|:----:|------|
-| 01 | [Perceptron: awal mulanya](../../phases/03-deep-learning-core/01-the-perceptron/) | Bangun | Python |
+| 01 | [Perceptron: awal mulanya](../../phases/03-deep-learning-core/01-the-perceptron/) | Bangun | Python, Rust, Julia |
 | 02 | [Jaringan multilapis dan propagasi maju](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Bangun | Python |
-| 03 | [Propagasi balik dari nol](../../phases/03-deep-learning-core/03-backpropagation/) | Bangun | Python |
-| 04 | [Fungsi aktivasi: ReLU, Sigmoid, GELU dan alasannya](../../phases/03-deep-learning-core/04-activation-functions/) | Bangun | Python |
-| 05 | [Fungsi kerugian: MSE, cross-entropy, kontrastif](../../phases/03-deep-learning-core/05-loss-functions/) | Bangun | Python |
+| 03 | [Propagasi balik dari nol](../../phases/03-deep-learning-core/03-backpropagation/) | Bangun | Python, Rust, Julia |
+| 04 | [Fungsi aktivasi: ReLU, Sigmoid, GELU dan alasannya](../../phases/03-deep-learning-core/04-activation-functions/) | Bangun | Python, Julia |
+| 05 | [Fungsi kerugian: MSE, cross-entropy, kontrastif](../../phases/03-deep-learning-core/05-loss-functions/) | Bangun | Python, Julia |
 | 06 | [Pengoptimal: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Bangun | Python |
 | 07 | [Regularisasi: dropout, peluruhan bobot, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Bangun | Python |
 | 08 | [Inisialisasi bobot dan stabilitas pelatihan](../../phases/03-deep-learning-core/08-weight-initialization/) | Bangun | Python |
@@ -462,7 +462,7 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 12 | [Pemahaman video: pemodelan temporal](../../phases/04-computer-vision/12-video-understanding/) | Bangun | Python |
 | 13 | [Visi 3D: point cloud dan NeRF](../../phases/04-computer-vision/13-3d-vision-nerf/) | Bangun | Python |
 | 14 | [Vision Transformer (ViT)](../../phases/04-computer-vision/14-vision-transformers/) | Bangun | Python |
-| 15 | [Visi waktu nyata: deployment di perangkat tepi](../../phases/04-computer-vision/15-real-time-edge/) | Bangun | Python |
+| 15 | [Visi waktu nyata: deployment di perangkat tepi](../../phases/04-computer-vision/15-real-time-edge/) | Bangun | Python, Rust |
 | 16 | [Bangun pipeline visi yang lengkap](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | Bangun | Python |
 | 17 | [Visi dengan pengawasan mandiri: SimCLR, DINO, MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | Bangun | Python |
 | 18 | [Visi dengan kosakata terbuka: CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | Bangun | Python |
@@ -503,11 +503,11 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 16 | [Pembuatan teks](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Bangun | Python |
 | 17 | [Chatbot: dari berbasis aturan hingga jaringan saraf](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Bangun | Python |
 | 18 | [NLP multibahasa](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Bangun | Python |
-| 19 | [Tokenisasi subkata: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Pelajari | Python |
+| 19 | [Tokenisasi subkata: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Pelajari | Python, TypeScript |
 | 20 | [Keluaran terstruktur dan decoding terkendala](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Bangun | Python |
 | 21 | [NLI dan implikasi tekstual](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Pelajari | Python |
 | 22 | [Mendalami model embedding](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Pelajari | Python |
-| 23 | [Strategi pemotongan teks untuk RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Bangun | Python |
+| 23 | [Strategi pemotongan teks untuk RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Bangun | Python, TypeScript |
 | 24 | [Resolusi koreferensi](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Pelajari | Python |
 | 25 | [Penautan entitas dan disambiguasi](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Bangun | Python |
 | 26 | [Ekstraksi relasi dan pembangunan graf pengetahuan](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Bangun | Python |
@@ -533,7 +533,7 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 08 | [Kloning dan konversi suara](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Bangun | Python |
 | 09 | [Pembuatan musik](../../phases/06-speech-and-audio/09-music-generation) | Bangun | Python |
 | 10 | [Model audio-bahasa](../../phases/06-speech-and-audio/10-audio-language-models) | Bangun | Python |
-| 11 | [Pemrosesan audio waktu nyata](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Bangun | Python |
+| 11 | [Pemrosesan audio waktu nyata](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Bangun | Python, Rust |
 | 12 | [Bangun pipeline asisten suara](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Bangun | Python |
 | 13 | [Codec audio neural: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Pelajari | Python |
 | 14 | [Deteksi aktivitas suara dan pergantian giliran](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Bangun | Python |
@@ -549,11 +549,11 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 
 | # | Pelajaran | Jenis | Bahasa |
 |:---:|--------|:----:|------|
-| 01 | [Mengapa Transformer: masalah pada RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | Pelajari | Python |
-| 02 | [Self-attention dari nol](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Bangun | Python |
-| 03 | [Attention multi-head](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Bangun | Python |
-| 04 | [Pengodean posisi: Sinusoidal, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Bangun | Python |
-| 05 | [Transformer lengkap: encoder + decoder](../../phases/07-transformers-deep-dive/05-full-transformer/) | Bangun | Python |
+| 01 | [Mengapa Transformer: masalah pada RNN](../../phases/07-transformers-deep-dive/01-why-transformers/) | Pelajari | Python, Julia |
+| 02 | [Self-attention dari nol](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | Bangun | Python, Rust, Julia |
+| 03 | [Attention multi-head](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Bangun | Python, Rust |
+| 04 | [Pengodean posisi: Sinusoidal, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Bangun | Python, Rust, Julia |
+| 05 | [Transformer lengkap: encoder + decoder](../../phases/07-transformers-deep-dive/05-full-transformer/) | Bangun | Python, Julia |
 | 06 | [BERT: pemodelan bahasa bertopeng](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Bangun | Python |
 | 07 | [GPT: pemodelan bahasa kausal](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Bangun | Python |
 | 08 | [T5, BART: model encoder-decoder](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Pelajari | Python |
@@ -622,15 +622,15 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 01 | [Tokenizer: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Bangun | Python, Rust |
 | 02 | [Membangun tokenizer dari nol](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Bangun | Python |
 | 03 | [Pipeline data untuk prapelatihan](../../phases/10-llms-from-scratch/03-data-pipelines/) | Bangun | Python |
-| 04 | [Prapelatihan Mini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Bangun | Python |
+| 04 | [Prapelatihan Mini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Bangun | Python, Rust |
 | 05 | [Pelatihan terdistribusi, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Bangun | Python |
 | 06 | [Penyetelan instruksi: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Bangun | Python |
 | 07 | [RLHF: model imbalan + PPO](../../phases/10-llms-from-scratch/07-rlhf/) | Bangun | Python |
 | 08 | [DPO: optimisasi preferensi langsung](../../phases/10-llms-from-scratch/08-dpo/) | Bangun | Python |
 | 09 | [Constitutional AI dan peningkatan diri](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | Bangun | Python |
 | 10 | [Evaluasi: benchmark dan pengujian model](../../phases/10-llms-from-scratch/10-evaluation/) | Bangun | Python |
-| 11 | [Kuantisasi: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Bangun | Python |
-| 12 | [Optimisasi inferensi](../../phases/10-llms-from-scratch/12-inference-optimization/) | Bangun | Python |
+| 11 | [Kuantisasi: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Bangun | Python, Rust |
+| 12 | [Optimisasi inferensi](../../phases/10-llms-from-scratch/12-inference-optimization/) | Bangun | Python, Rust |
 | 13 | [Membangun pipeline LLM yang lengkap](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Bangun | Python |
 | 14 | [Model terbuka: penelusuran arsitektur](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Pelajari | Python |
 | 15 | [Decoding spekulatif dan EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Bangun | Python |
@@ -652,18 +652,18 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 
 | # | Pelajaran | Jenis | Bahasa |
 |:---:|--------|:----:|------|
-| 01 | [Rekayasa prompt: teknik dan pola](../../phases/11-llm-engineering/01-prompt-engineering/) | Bangun | Python |
+| 01 | [Rekayasa prompt: teknik dan pola](../../phases/11-llm-engineering/01-prompt-engineering/) | Bangun | Python, TypeScript |
 | 02 | [Few-Shot, CoT, Tree-of-Thought](../../phases/11-llm-engineering/02-few-shot-cot/) | Bangun | Python |
-| 03 | [Keluaran terstruktur](../../phases/11-llm-engineering/03-structured-outputs/) | Bangun | Python |
-| 04 | [Embedding dan representasi vektor](../../phases/11-llm-engineering/04-embeddings/) | Bangun | Python |
-| 05 | [Rekayasa konteks](../../phases/11-llm-engineering/05-context-engineering/) | Bangun | Python |
-| 06 | [RAG: pembuatan dengan dukungan temu kembali](../../phases/11-llm-engineering/06-rag/) | Bangun | Python |
+| 03 | [Keluaran terstruktur](../../phases/11-llm-engineering/03-structured-outputs/) | Bangun | Python, TypeScript |
+| 04 | [Embedding dan representasi vektor](../../phases/11-llm-engineering/04-embeddings/) | Bangun | Python, TypeScript |
+| 05 | [Rekayasa konteks](../../phases/11-llm-engineering/05-context-engineering/) | Bangun | Python, TypeScript |
+| 06 | [RAG: pembuatan dengan dukungan temu kembali](../../phases/11-llm-engineering/06-rag/) | Bangun | Python, TypeScript |
 | 07 | [RAG lanjutan: chunking dan pemeringkatan ulang](../../phases/11-llm-engineering/07-advanced-rag/) | Bangun | Python |
 | 08 | [Fine-tuning dengan LoRA dan QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Bangun | Python |
-| 09 | [Pemanggilan fungsi dan penggunaan alat](../../phases/11-llm-engineering/09-function-calling/) | Bangun | Python |
+| 09 | [Pemanggilan fungsi dan penggunaan alat](../../phases/11-llm-engineering/09-function-calling/) | Bangun | Python, TypeScript |
 | 10 | [Evaluasi dan pengujian](../../phases/11-llm-engineering/10-evaluation/) | Bangun | Python |
 | 11 | [Caching, pembatasan laju, dan biaya](../../phases/11-llm-engineering/11-caching-cost/) | Bangun | Python |
-| 12 | [Guardrail dan keselamatan](../../phases/11-llm-engineering/12-guardrails/) | Bangun | Python |
+| 12 | [Guardrail dan keselamatan](../../phases/11-llm-engineering/12-guardrails/) | Bangun | Python, TypeScript |
 | 13 | [Membangun aplikasi LLM untuk produksi](../../phases/11-llm-engineering/13-production-app/) | Bangun | Python |
 | 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Bangun | Python |
 | 15 | [Caching prompt dan caching konteks](../../phases/11-llm-engineering/15-prompt-caching/) | Bangun | Python |
@@ -712,7 +712,7 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 
 | # | Pelajaran | Jenis | Bahasa |
 |:---:|--------|:----:|------|
-| 01 | [Antarmuka alat](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Pelajari | Python |
+| 01 | [Antarmuka alat](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Pelajari | Python, TypeScript |
 | 02 | [Mendalami pemanggilan fungsi](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Bangun | Python |
 | 03 | [Pemanggilan alat paralel dan streaming](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Bangun | Python |
 | 04 | [Keluaran terstruktur](../../phases/13-tools-and-protocols/04-structured-output/) | Bangun | Python |
@@ -730,7 +730,7 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 16 | [Otorisasi MCP: CIMD, pengikatan penerbit, PKCE, dan peningkatan autentikasi](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Bangun | Python |
 | 17 | [Gateway MCP stateless dan penerimaan registri](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Pelajari | Python |
 | 18 | [Autentikasi MCP dalam produksi: pendaftaran dan token terikat penerbit](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Bangun | Python |
-| 19 | [Protokol A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Bangun | Python |
+| 19 | [Protokol A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Bangun | Python, TypeScript |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Bangun | Python |
 | 21 | [Lapisan perutean LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Pelajari | Python |
 | 22 | [Agent Skills: kontrak portabel dan batas runtime](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Bangun | Python |
@@ -770,24 +770,24 @@ Pelajaran 22 dan 24-27 membentuk [jalur pembelajaran Agent Skills](../../learnin
 
 | # | Pelajaran | Jenis | Bahasa |
 |:---:|--------|:----:|------|
-| 01 | [Perulangan agen](../../phases/14-agent-engineering/01-the-agent-loop/) | Bangun | Python |
+| 01 | [Perulangan agen](../../phases/14-agent-engineering/01-the-agent-loop/) | Bangun | Python, TypeScript |
 | 02 | [ReWOO dan rencanakan-lalu-jalankan](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Bangun | Python |
 | 03 | [Reflexion dan pembelajaran penguatan verbal](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Bangun | Python |
 | 04 | [Tree of Thoughts dan LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Bangun | Python |
 | 05 | [Self-Refine dan CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Bangun | Python |
-| 06 | [Penggunaan alat dan pemanggilan fungsi](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Bangun | Python |
+| 06 | [Penggunaan alat dan pemanggilan fungsi](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Bangun | Python, TypeScript |
 | 07 | [Memori agen: konteks virtual dan paging memori](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Bangun | Python |
 | 08 | [Blok memori dan komputasi saat tidur](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Bangun | Python |
 | 09 | [Memori hibrida: vektor + graf + KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Bangun | Python |
 | 10 | [Pustaka skill dan pembelajaran sepanjang hayat (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Bangun | Python |
 | 11 | [Perencanaan dengan HTN dan pencarian evolusioner](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Bangun | Python |
 | 12 | [Pola alur kerja Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Bangun | Python |
-| 13 | [Orkestrasi graf stateful: eksekusi persisten dan checkpoint](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Bangun | Python |
+| 13 | [Orkestrasi graf stateful: eksekusi persisten dan checkpoint](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Bangun | Python, TypeScript |
 | 14 | [Model aktor untuk agen](../../phases/14-agent-engineering/14-autogen-actor-model/) | Bangun | Python |
 | 15 | [Tim agen berbasis peran: peran, tugas, proses](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Bangun | Python |
 | 16 | [OpenAI Agents SDK: serah terima, guardrail, tracing](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Bangun | Python |
 | 17 | [Harness sebagai pustaka: subagen dan penyimpanan sesi](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Bangun | Python |
-| 18 | [Runtime agen untuk produksi](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Pelajari | Python |
+| 18 | [Runtime agen untuk produksi](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Pelajari | Python, TypeScript |
 | 19 | [Benchmark: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Pelajari | Python |
 | 20 | [Benchmark: WebArena dan OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Pelajari | Python |
 | 21 | [Penggunaan komputer: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Bangun | Python |
@@ -914,14 +914,14 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 10 | [Mengurangi cold start untuk LLM serverless](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Pelajari | Python |
 | 11 | [Penyajian LLM multiregion dan lokalitas cache KV](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Pelajari | Python |
 | 12 | [Inferensi di perangkat tepi: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Pelajari | Python |
-| 13 | [Memilih perangkat observabilitas LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | Pelajari | Python |
-| 14 | [Ekonomi caching prompt dan caching semantik](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Pelajari | Python |
-| 15 | [API batch: diskon 50% sebagai standar industri](../../phases/17-infrastructure-and-production/15-batch-apis/) | Pelajari | Python |
-| 16 | [Perutean model sebagai komponen dasar pengurangan biaya](../../phases/17-infrastructure-and-production/16-model-routing/) | Pelajari | Python |
+| 13 | [Memilih perangkat observabilitas LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | Pelajari | Python, TypeScript |
+| 14 | [Ekonomi caching prompt dan caching semantik](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Pelajari | Python, TypeScript |
+| 15 | [API batch: diskon 50% sebagai standar industri](../../phases/17-infrastructure-and-production/15-batch-apis/) | Pelajari | Python, TypeScript |
+| 16 | [Perutean model sebagai komponen dasar pengurangan biaya](../../phases/17-infrastructure-and-production/16-model-routing/) | Pelajari | Python, TypeScript |
 | 17 | [Pemisahan prefill/decode: NVIDIA Dynamo dan llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Pelajari | Python |
 | 18 | [Tumpukan penyajian produksi: pemindahan KV dan perutean sadar cache](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Pelajari | Python |
-| 19 | [Gateway AI: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Pelajari | Python |
-| 20 | [Deployment shadow, canary, dan bertahap](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Pelajari | Python |
+| 19 | [Gateway AI: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Pelajari | Python, TypeScript |
+| 20 | [Deployment shadow, canary, dan bertahap](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Pelajari | Python, TypeScript |
 | 21 | [Pengujian A/B fitur LLM: GrowthBook dan Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Pelajari | Python |
 | 22 | [Pengujian beban API LLM: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Bangun | Python |
 | 23 | [SRE untuk AI: penanganan insiden multiagen](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Pelajari | Python |

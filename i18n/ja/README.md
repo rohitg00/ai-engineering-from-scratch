@@ -346,10 +346,10 @@ flowchart TB
 
 | # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [開発環境](../../phases/00-setup-and-tooling/01-dev-environment/) | 制作 | Python |
+| 01 | [開発環境](../../phases/00-setup-and-tooling/01-dev-environment/) | 制作 | Python, TypeScript, Rust |
 | 02 | [Gitとコラボレーション](../../phases/00-setup-and-tooling/02-git-and-collaboration/) | 学習 | — |
 | 03 | [GPUのセットアップとクラウド](../../phases/00-setup-and-tooling/03-gpu-setup-and-cloud/) | 制作 | Python |
-| 04 | [APIとキー](../../phases/00-setup-and-tooling/04-apis-and-keys/) | 制作 | Python |
+| 04 | [APIとキー](../../phases/00-setup-and-tooling/04-apis-and-keys/) | 制作 | Python, TypeScript |
 | 05 | [Jupyter Notebook](../../phases/00-setup-and-tooling/05-jupyter-notebooks/) | 制作 | Python |
 | 06 | [Python環境](../../phases/00-setup-and-tooling/06-python-environments/) | 制作 | Shell |
 | 07 | [AIのためのDocker](../../phases/00-setup-and-tooling/07-docker-for-ai/) | 制作 | Docker |
@@ -369,24 +369,24 @@ flowchart TB
 | 01 | [線形代数の直観](../../phases/01-math-foundations/01-linear-algebra-intuition/) | 学習 | Python, Julia |
 | 02 | [ベクトル、行列と演算](../../phases/01-math-foundations/02-vectors-matrices-operations/) | 制作 | Python, Julia |
 | 03 | [行列変換と固有値](../../phases/01-math-foundations/03-matrix-transformations/) | 制作 | Python, Julia |
-| 04 | [機械学習のための微積分：導関数と勾配](../../phases/01-math-foundations/04-calculus-for-ml/) | 学習 | Python |
-| 05 | [連鎖律と自動微分](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | 制作 | Python |
-| 06 | [確率と分布](../../phases/01-math-foundations/06-probability-and-distributions/) | 学習 | Python |
-| 07 | [ベイズの定理と統計的思考](../../phases/01-math-foundations/07-bayes-theorem/) | 制作 | Python |
-| 08 | [最適化：勾配降下法の各種手法](../../phases/01-math-foundations/08-optimization/) | 制作 | Python |
-| 09 | [情報理論：エントロピーとKLダイバージェンス](../../phases/01-math-foundations/09-information-theory/) | 学習 | Python |
-| 10 | [次元削減：PCA、t-SNE、UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | 制作 | Python |
+| 04 | [機械学習のための微積分：導関数と勾配](../../phases/01-math-foundations/04-calculus-for-ml/) | 学習 | Python, Julia |
+| 05 | [連鎖律と自動微分](../../phases/01-math-foundations/05-chain-rule-and-autodiff/) | 制作 | Python, Julia |
+| 06 | [確率と分布](../../phases/01-math-foundations/06-probability-and-distributions/) | 学習 | Python, Julia |
+| 07 | [ベイズの定理と統計的思考](../../phases/01-math-foundations/07-bayes-theorem/) | 制作 | Python, TypeScript |
+| 08 | [最適化：勾配降下法の各種手法](../../phases/01-math-foundations/08-optimization/) | 制作 | Python, Julia |
+| 09 | [情報理論：エントロピーとKLダイバージェンス](../../phases/01-math-foundations/09-information-theory/) | 学習 | Python, TypeScript |
+| 10 | [次元削減：PCA、t-SNE、UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | 制作 | Python, TypeScript |
 | 11 | [特異値分解](../../phases/01-math-foundations/11-singular-value-decomposition/) | 制作 | Python, Julia |
-| 12 | [テンソル演算](../../phases/01-math-foundations/12-tensor-operations/) | 制作 | Python |
-| 13 | [数値安定性](../../phases/01-math-foundations/13-numerical-stability/) | 制作 | Python |
-| 14 | [ノルムと距離](../../phases/01-math-foundations/14-norms-and-distances/) | 制作 | Python |
-| 15 | [機械学習のための統計](../../phases/01-math-foundations/15-statistics-for-ml/) | 制作 | Python |
-| 16 | [サンプリング手法](../../phases/01-math-foundations/16-sampling-methods/) | 制作 | Python |
-| 17 | [線形システム](../../phases/01-math-foundations/17-linear-systems/) | 制作 | Python |
-| 18 | [凸最適化](../../phases/01-math-foundations/18-convex-optimization/) | 制作 | Python |
+| 12 | [テンソル演算](../../phases/01-math-foundations/12-tensor-operations/) | 制作 | Python, TypeScript |
+| 13 | [数値安定性](../../phases/01-math-foundations/13-numerical-stability/) | 制作 | Python, TypeScript |
+| 14 | [ノルムと距離](../../phases/01-math-foundations/14-norms-and-distances/) | 制作 | Python, TypeScript |
+| 15 | [機械学習のための統計](../../phases/01-math-foundations/15-statistics-for-ml/) | 制作 | Python, TypeScript |
+| 16 | [サンプリング手法](../../phases/01-math-foundations/16-sampling-methods/) | 制作 | Python, TypeScript |
+| 17 | [線形システム](../../phases/01-math-foundations/17-linear-systems/) | 制作 | Python, TypeScript |
+| 18 | [凸最適化](../../phases/01-math-foundations/18-convex-optimization/) | 制作 | Python, TypeScript |
 | 19 | [AIのための複素数](../../phases/01-math-foundations/19-complex-numbers/) | 学習 | Python |
-| 20 | [フーリエ変換](../../phases/01-math-foundations/20-fourier-transform/) | 制作 | Python |
-| 21 | [機械学習のためのグラフ理論](../../phases/01-math-foundations/21-graph-theory/) | 制作 | Python |
+| 20 | [フーリエ変換](../../phases/01-math-foundations/20-fourier-transform/) | 制作 | Python, TypeScript |
+| 21 | [機械学習のためのグラフ理論](../../phases/01-math-foundations/21-graph-theory/) | 制作 | Python, TypeScript |
 | 22 | [確率過程](../../phases/01-math-foundations/22-stochastic-processes/) | 学習 | Python |
 
 </details>
@@ -398,14 +398,14 @@ flowchart TB
 | # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
 | 01 | [機械学習とは](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | 学習 | Python |
-| 02 | [ゼロから実装する線形回帰](../../phases/02-ml-fundamentals/02-linear-regression/) | 制作 | Python |
-| 03 | [ロジスティック回帰と分類](../../phases/02-ml-fundamentals/03-logistic-regression/) | 制作 | Python |
+| 02 | [ゼロから実装する線形回帰](../../phases/02-ml-fundamentals/02-linear-regression/) | 制作 | Python, Rust, Julia |
+| 03 | [ロジスティック回帰と分類](../../phases/02-ml-fundamentals/03-logistic-regression/) | 制作 | Python, Rust, Julia |
 | 04 | [決定木とランダムフォレスト](../../phases/02-ml-fundamentals/04-decision-trees/) | 制作 | Python |
-| 05 | [サポートベクターマシン](../../phases/02-ml-fundamentals/05-support-vector-machines/) | 制作 | Python |
+| 05 | [サポートベクターマシン](../../phases/02-ml-fundamentals/05-support-vector-machines/) | 制作 | Python, Julia |
 | 06 | [k近傍法（KNN）と距離尺度](../../phases/02-ml-fundamentals/06-knn-and-distances/) | 制作 | Python |
 | 07 | [教師なし学習：K-Means、DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | 制作 | Python |
 | 08 | [特徴量エンジニアリングと選択](../../phases/02-ml-fundamentals/08-feature-engineering/) | 制作 | Python |
-| 09 | [モデル評価：指標と交差検証](../../phases/02-ml-fundamentals/09-model-evaluation/) | 制作 | Python |
+| 09 | [モデル評価：指標と交差検証](../../phases/02-ml-fundamentals/09-model-evaluation/) | 制作 | Python, Julia |
 | 10 | [バイアス、分散と学習曲線](../../phases/02-ml-fundamentals/10-bias-variance/) | 学習 | Python |
 | 11 | [アンサンブル手法：ブースティング、バギング、スタッキング](../../phases/02-ml-fundamentals/11-ensemble-methods/) | 制作 | Python |
 | 12 | [ハイパーパラメーターの調整](../../phases/02-ml-fundamentals/12-hyperparameter-tuning/) | 制作 | Python |
@@ -427,11 +427,11 @@ flowchart TB
 
 | # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [パーセプトロン：すべての始まり](../../phases/03-deep-learning-core/01-the-perceptron/) | 制作 | Python |
+| 01 | [パーセプトロン：すべての始まり](../../phases/03-deep-learning-core/01-the-perceptron/) | 制作 | Python, Rust, Julia |
 | 02 | [多層ネットワークと順伝播](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 制作 | Python |
-| 03 | [ゼロから実装する誤差逆伝播法](../../phases/03-deep-learning-core/03-backpropagation/) | 制作 | Python |
-| 04 | [活性化関数：ReLU、Sigmoid、GELUとその役割](../../phases/03-deep-learning-core/04-activation-functions/) | 制作 | Python |
-| 05 | [損失関数：MSE、交差エントロピー、対照損失](../../phases/03-deep-learning-core/05-loss-functions/) | 制作 | Python |
+| 03 | [ゼロから実装する誤差逆伝播法](../../phases/03-deep-learning-core/03-backpropagation/) | 制作 | Python, Rust, Julia |
+| 04 | [活性化関数：ReLU、Sigmoid、GELUとその役割](../../phases/03-deep-learning-core/04-activation-functions/) | 制作 | Python, Julia |
+| 05 | [損失関数：MSE、交差エントロピー、対照損失](../../phases/03-deep-learning-core/05-loss-functions/) | 制作 | Python, Julia |
 | 06 | [最適化手法：SGD、Momentum、Adam、AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 制作 | Python |
 | 07 | [正則化：Dropout、Weight Decay、BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 制作 | Python |
 | 08 | [重みの初期化と学習の安定性](../../phases/03-deep-learning-core/08-weight-initialization/) | 制作 | Python |
@@ -463,7 +463,7 @@ flowchart TB
 | 12 | [動画理解：時間モデリング](../../phases/04-computer-vision/12-video-understanding/) | 制作 | Python |
 | 13 | [3Dビジョン：点群とNeRF](../../phases/04-computer-vision/13-3d-vision-nerf/) | 制作 | Python |
 | 14 | [Vision Transformer（ViT）](../../phases/04-computer-vision/14-vision-transformers/) | 制作 | Python |
-| 15 | [リアルタイムビジョン：エッジデプロイ](../../phases/04-computer-vision/15-real-time-edge/) | 制作 | Python |
+| 15 | [リアルタイムビジョン：エッジデプロイ](../../phases/04-computer-vision/15-real-time-edge/) | 制作 | Python, Rust |
 | 16 | [完全なビジョンパイプラインを構築する](../../phases/04-computer-vision/16-vision-pipeline-capstone/) | 制作 | Python |
 | 17 | [自己教師ありビジョン：SimCLR、DINO、MAE](../../phases/04-computer-vision/17-self-supervised-vision/) | 制作 | Python |
 | 18 | [オープンボキャブラリービジョン：CLIP](../../phases/04-computer-vision/18-open-vocab-clip/) | 制作 | Python |
@@ -504,11 +504,11 @@ flowchart TB
 | 16 | [テキスト生成](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | 制作 | Python |
 | 17 | [チャットボット：ルールベースからニューラルへ](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | 制作 | Python |
 | 18 | [多言語NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | 制作 | Python |
-| 19 | [サブワードトークン化：BPE、WordPiece、Unigram、SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | 学習 | Python |
+| 19 | [サブワードトークン化：BPE、WordPiece、Unigram、SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | 学習 | Python, TypeScript |
 | 20 | [構造化出力と制約付きデコーディング](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | 制作 | Python |
 | 21 | [自然言語推論（NLI）とテキスト含意](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | 学習 | Python |
 | 22 | [埋め込みモデルを深掘りする](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | 学習 | Python |
-| 23 | [RAGのチャンク分割戦略](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | 制作 | Python |
+| 23 | [RAGのチャンク分割戦略](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | 制作 | Python, TypeScript |
 | 24 | [照応解析](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | 学習 | Python |
 | 25 | [エンティティリンキングと曖昧性解消](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | 制作 | Python |
 | 26 | [関係抽出と知識グラフ構築](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | 制作 | Python |
@@ -534,7 +534,7 @@ flowchart TB
 | 08 | [音声クローニングと音声変換](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | 制作 | Python |
 | 09 | [音楽生成](../../phases/06-speech-and-audio/09-music-generation) | 制作 | Python |
 | 10 | [音声言語モデル](../../phases/06-speech-and-audio/10-audio-language-models) | 制作 | Python |
-| 11 | [リアルタイム音声処理](../../phases/06-speech-and-audio/11-real-time-audio-processing) | 制作 | Python |
+| 11 | [リアルタイム音声処理](../../phases/06-speech-and-audio/11-real-time-audio-processing) | 制作 | Python, Rust |
 | 12 | [音声アシスタントのパイプラインを構築する](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | 制作 | Python |
 | 13 | [ニューラル音声コーデック：EnCodec、SNAC、Mimi、DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | 学習 | Python |
 | 14 | [音声区間検出とターン交替](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | 制作 | Python |
@@ -550,11 +550,11 @@ flowchart TB
 
 | # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [Transformerが必要な理由：RNNの課題](../../phases/07-transformers-deep-dive/01-why-transformers/) | 学習 | Python |
-| 02 | [ゼロから実装する自己注意機構](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | 制作 | Python |
-| 03 | [マルチヘッドアテンション](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | 制作 | Python |
-| 04 | [位置エンコーディング：正弦波、RoPE、ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | 制作 | Python |
-| 05 | [Transformer全体：エンコーダーとデコーダー](../../phases/07-transformers-deep-dive/05-full-transformer/) | 制作 | Python |
+| 01 | [Transformerが必要な理由：RNNの課題](../../phases/07-transformers-deep-dive/01-why-transformers/) | 学習 | Python, Julia |
+| 02 | [ゼロから実装する自己注意機構](../../phases/07-transformers-deep-dive/02-self-attention-from-scratch/) | 制作 | Python, Rust, Julia |
+| 03 | [マルチヘッドアテンション](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | 制作 | Python, Rust |
+| 04 | [位置エンコーディング：正弦波、RoPE、ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | 制作 | Python, Rust, Julia |
+| 05 | [Transformer全体：エンコーダーとデコーダー](../../phases/07-transformers-deep-dive/05-full-transformer/) | 制作 | Python, Julia |
 | 06 | [BERT：マスク言語モデル](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | 制作 | Python |
 | 07 | [GPT：因果言語モデル](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | 制作 | Python |
 | 08 | [T5、BART：エンコーダー・デコーダーモデル](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | 学習 | Python |
@@ -623,15 +623,15 @@ flowchart TB
 | 01 | [トークナイザー：BPE、WordPiece、SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | 制作 | Python, Rust |
 | 02 | [トークナイザーをゼロから構築する](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | 制作 | Python |
 | 03 | [事前学習のためのデータパイプライン](../../phases/10-llms-from-scratch/03-data-pipelines/) | 制作 | Python |
-| 04 | [小型GPT（1億2,400万パラメーター）の事前学習](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | 制作 | Python |
+| 04 | [小型GPT（1億2,400万パラメーター）の事前学習](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | 制作 | Python, Rust |
 | 05 | [分散学習、FSDP、DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | 制作 | Python |
 | 06 | [指示チューニング：SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | 制作 | Python |
 | 07 | [RLHF：報酬モデルとPPO](../../phases/10-llms-from-scratch/07-rlhf/) | 制作 | Python |
 | 08 | [DPO：直接選好最適化](../../phases/10-llms-from-scratch/08-dpo/) | 制作 | Python |
 | 09 | [Constitutional AIと自己改善](../../phases/10-llms-from-scratch/09-constitutional-ai-self-improvement/) | 制作 | Python |
 | 10 | [評価：ベンチマークと評価テスト](../../phases/10-llms-from-scratch/10-evaluation/) | 制作 | Python |
-| 11 | [量子化：INT8、GPTQ、AWQ、GGUF](../../phases/10-llms-from-scratch/11-quantization/) | 制作 | Python |
-| 12 | [推論最適化](../../phases/10-llms-from-scratch/12-inference-optimization/) | 制作 | Python |
+| 11 | [量子化：INT8、GPTQ、AWQ、GGUF](../../phases/10-llms-from-scratch/11-quantization/) | 制作 | Python, Rust |
+| 12 | [推論最適化](../../phases/10-llms-from-scratch/12-inference-optimization/) | 制作 | Python, Rust |
 | 13 | [完全なLLMパイプラインを構築する](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | 制作 | Python |
 | 14 | [オープンモデル：アーキテクチャ解説](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | 学習 | Python |
 | 15 | [投機的デコーディングとEAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | 制作 | Python |
@@ -653,18 +653,18 @@ flowchart TB
 
 | # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [プロンプトエンジニアリング：手法とパターン](../../phases/11-llm-engineering/01-prompt-engineering/) | 制作 | Python |
+| 01 | [プロンプトエンジニアリング：手法とパターン](../../phases/11-llm-engineering/01-prompt-engineering/) | 制作 | Python, TypeScript |
 | 02 | [Few-shot、CoT、Tree-of-Thought](../../phases/11-llm-engineering/02-few-shot-cot/) | 制作 | Python |
-| 03 | [構造化出力](../../phases/11-llm-engineering/03-structured-outputs/) | 制作 | Python |
-| 04 | [埋め込みとベクトル表現](../../phases/11-llm-engineering/04-embeddings/) | 制作 | Python |
-| 05 | [コンテキストエンジニアリング](../../phases/11-llm-engineering/05-context-engineering/) | 制作 | Python |
-| 06 | [RAG：検索拡張生成](../../phases/11-llm-engineering/06-rag/) | 制作 | Python |
+| 03 | [構造化出力](../../phases/11-llm-engineering/03-structured-outputs/) | 制作 | Python, TypeScript |
+| 04 | [埋め込みとベクトル表現](../../phases/11-llm-engineering/04-embeddings/) | 制作 | Python, TypeScript |
+| 05 | [コンテキストエンジニアリング](../../phases/11-llm-engineering/05-context-engineering/) | 制作 | Python, TypeScript |
+| 06 | [RAG：検索拡張生成](../../phases/11-llm-engineering/06-rag/) | 制作 | Python, TypeScript |
 | 07 | [高度なRAG：チャンク分割と再ランキング](../../phases/11-llm-engineering/07-advanced-rag/) | 制作 | Python |
 | 08 | [LoRAとQLoRAによるファインチューニング](../../phases/11-llm-engineering/08-fine-tuning-lora/) | 制作 | Python |
-| 09 | [関数呼び出しとツール利用](../../phases/11-llm-engineering/09-function-calling/) | 制作 | Python |
+| 09 | [関数呼び出しとツール利用](../../phases/11-llm-engineering/09-function-calling/) | 制作 | Python, TypeScript |
 | 10 | [評価とテスト](../../phases/11-llm-engineering/10-evaluation/) | 制作 | Python |
 | 11 | [キャッシュ、レート制限とコスト](../../phases/11-llm-engineering/11-caching-cost/) | 制作 | Python |
-| 12 | [ガードレールと安全性](../../phases/11-llm-engineering/12-guardrails/) | 制作 | Python |
+| 12 | [ガードレールと安全性](../../phases/11-llm-engineering/12-guardrails/) | 制作 | Python, TypeScript |
 | 13 | [本番環境向けLLMアプリを構築する](../../phases/11-llm-engineering/13-production-app/) | 制作 | Python |
 | 14 | [Model Context Protocol（MCP）](../../phases/11-llm-engineering/14-model-context-protocol/) | 制作 | Python |
 | 15 | [プロンプトキャッシュとコンテキストキャッシュ](../../phases/11-llm-engineering/15-prompt-caching/) | 制作 | Python |
@@ -713,7 +713,7 @@ flowchart TB
 
 | # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [ツールインターフェース](../../phases/13-tools-and-protocols/01-the-tool-interface/) | 学習 | Python |
+| 01 | [ツールインターフェース](../../phases/13-tools-and-protocols/01-the-tool-interface/) | 学習 | Python, TypeScript |
 | 02 | [関数呼び出しを深掘りする](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | 制作 | Python |
 | 03 | [ツール呼び出しの並列化とストリーミング](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | 制作 | Python |
 | 04 | [構造化出力](../../phases/13-tools-and-protocols/04-structured-output/) | 制作 | Python |
@@ -731,7 +731,7 @@ flowchart TB
 | 16 | [MCPの認可：CIMD、発行者バインディング、PKCE、ステップアップ認証](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | 制作 | Python |
 | 17 | [ステートレスMCPゲートウェイとレジストリへの登録審査](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | 学習 | Python |
 | 18 | [本番環境のMCP認証：発行者に紐づく登録とトークン](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | 制作 | Python |
-| 19 | [A2Aプロトコル](../../phases/13-tools-and-protocols/19-a2a-protocol/) | 制作 | Python |
+| 19 | [A2Aプロトコル](../../phases/13-tools-and-protocols/19-a2a-protocol/) | 制作 | Python, TypeScript |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | 制作 | Python |
 | 21 | [LLMルーティングレイヤー](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | 学習 | Python |
 | 22 | [Agent Skills：移植可能な契約とランタイム境界](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | 制作 | Python |
@@ -771,24 +771,24 @@ flowchart TB
 
 | # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
-| 01 | [エージェントループ](../../phases/14-agent-engineering/01-the-agent-loop/) | 制作 | Python |
+| 01 | [エージェントループ](../../phases/14-agent-engineering/01-the-agent-loop/) | 制作 | Python, TypeScript |
 | 02 | [ReWOOと計画・実行方式](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | 制作 | Python |
 | 03 | [Reflexionと自然言語による強化学習](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | 制作 | Python |
 | 04 | [Tree of ThoughtsとLATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | 制作 | Python |
 | 05 | [Self-RefineとCRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | 制作 | Python |
-| 06 | [ツール利用と関数呼び出し](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | 制作 | Python |
+| 06 | [ツール利用と関数呼び出し](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | 制作 | Python, TypeScript |
 | 07 | [エージェントメモリ：仮想コンテキストとメモリページング](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | 制作 | Python |
 | 08 | [メモリブロックとスリープタイム計算](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | 制作 | Python |
 | 09 | [ハイブリッドメモリ：ベクトル＋グラフ＋KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | 制作 | Python |
 | 10 | [スキルライブラリと生涯学習（Voyager）](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | 制作 | Python |
 | 11 | [HTNと進化的探索による計画](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | 制作 | Python |
 | 12 | [Anthropicのワークフローパターン](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | 制作 | Python |
-| 13 | [ステートフルなグラフオーケストレーション：永続実行とチェックポイント](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | 制作 | Python |
+| 13 | [ステートフルなグラフオーケストレーション：永続実行とチェックポイント](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | 制作 | Python, TypeScript |
 | 14 | [エージェントのためのアクターモデル](../../phases/14-agent-engineering/14-autogen-actor-model/) | 制作 | Python |
 | 15 | [役割ベースのエージェントチーム：役割、タスク、プロセス](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | 制作 | Python |
 | 16 | [OpenAI Agents SDK：ハンドオフ、ガードレール、トレーシング](../../phases/14-agent-engineering/16-openai-agents-sdk/) | 制作 | Python |
 | 17 | [ライブラリとしてのハーネス：サブエージェントとセッションストア](../../phases/14-agent-engineering/17-claude-agent-sdk/) | 制作 | Python |
-| 18 | [本番環境向けエージェントランタイム](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | 学習 | Python |
+| 18 | [本番環境向けエージェントランタイム](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | 学習 | Python, TypeScript |
 | 19 | [ベンチマーク：SWE-bench、GAIA、AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | 学習 | Python |
 | 20 | [ベンチマーク：WebArenaとOSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | 学習 | Python |
 | 21 | [コンピューター操作：Claude、OpenAI CUA、Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | 制作 | Python |
@@ -915,14 +915,14 @@ flowchart TB
 | 10 | [サーバーレスLLMのコールドスタート対策](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | 学習 | Python |
 | 11 | [マルチリージョンLLMサービングとKVキャッシュ局所性](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | 学習 | Python |
 | 12 | [エッジ推論：ANE、Hexagon、WebGPU、Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | 学習 | Python |
-| 13 | [LLM可観測性スタックの選定](../../phases/17-infrastructure-and-production/13-llm-observability/) | 学習 | Python |
-| 14 | [プロンプトキャッシュとセマンティックキャッシュのコスト構造](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | 学習 | Python |
-| 15 | [バッチAPI：50%割引が業界標準に](../../phases/17-infrastructure-and-production/15-batch-apis/) | 学習 | Python |
-| 16 | [コスト削減の手段としてのモデルルーティング](../../phases/17-infrastructure-and-production/16-model-routing/) | 学習 | Python |
+| 13 | [LLM可観測性スタックの選定](../../phases/17-infrastructure-and-production/13-llm-observability/) | 学習 | Python, TypeScript |
+| 14 | [プロンプトキャッシュとセマンティックキャッシュのコスト構造](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | 学習 | Python, TypeScript |
+| 15 | [バッチAPI：50%割引が業界標準に](../../phases/17-infrastructure-and-production/15-batch-apis/) | 学習 | Python, TypeScript |
+| 16 | [コスト削減の手段としてのモデルルーティング](../../phases/17-infrastructure-and-production/16-model-routing/) | 学習 | Python, TypeScript |
 | 17 | [プリフィルとデコードの分離：NVIDIA Dynamoとllm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | 学習 | Python |
 | 18 | [本番サービングスタック：KVオフロードとキャッシュ対応ルーティング](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | 学習 | Python |
-| 19 | [AIゲートウェイ：LiteLLM、Portkey、Kong、Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | 学習 | Python |
-| 20 | [シャドー、カナリア、段階的デプロイ](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | 学習 | Python |
+| 19 | [AIゲートウェイ：LiteLLM、Portkey、Kong、Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | 学習 | Python, TypeScript |
+| 20 | [シャドー、カナリア、段階的デプロイ](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | 学習 | Python, TypeScript |
 | 21 | [LLM機能のA/Bテスト：GrowthBookとStatsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | 学習 | Python |
 | 22 | [LLM APIの負荷テスト：k6、LLMPerf、GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | 制作 | Python |
 | 23 | [AIのためのSRE：マルチエージェントによるインシデント対応](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | 学習 | Python |
