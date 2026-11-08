@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [مشین لرننگ کیا ہے](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | سیکھیں | Python |
 | 02 | [شروع سے خطی رجعت](../../phases/02-ml-fundamentals/02-linear-regression/) | بنائیں | Python, Rust, Julia |
 | 03 | [لاجسٹک رجعت اور درجہ بندی](../../phases/02-ml-fundamentals/03-logistic-regression/) | بنائیں | Python, Rust, Julia |
-| 04 | [ڈیسیژن ٹری اور رینڈم فارسٹ](../../phases/02-ml-fundamentals/04-decision-trees/) | بنائیں | Python |
+| 04 | [ڈیسیژن ٹری اور رینڈم فارسٹ](../../phases/02-ml-fundamentals/04-decision-trees/) | بنائیں | Python, TypeScript |
 | 05 | [سپورٹ ویکٹر مشینیں](../../phases/02-ml-fundamentals/05-support-vector-machines/) | بنائیں | Python, Julia |
-| 06 | [KNN اور فاصلے کے پیمانے](../../phases/02-ml-fundamentals/06-knn-and-distances/) | بنائیں | Python |
-| 07 | [بغیر نگرانی سیکھنا: K-Means، DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | بنائیں | Python |
-| 08 | [فیچر بنانا اور منتخب کرنا](../../phases/02-ml-fundamentals/08-feature-engineering/) | بنائیں | Python |
+| 06 | [KNN اور فاصلے کے پیمانے](../../phases/02-ml-fundamentals/06-knn-and-distances/) | بنائیں | Python, TypeScript |
+| 07 | [بغیر نگرانی سیکھنا: K-Means، DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | بنائیں | Python, TypeScript |
+| 08 | [فیچر بنانا اور منتخب کرنا](../../phases/02-ml-fundamentals/08-feature-engineering/) | بنائیں | Python, TypeScript |
 | 09 | [ماڈل کی جانچ: پیمانے اور کراس ویلیڈیشن](../../phases/02-ml-fundamentals/09-model-evaluation/) | بنائیں | Python, Julia |
 | 10 | [بائس، ویریئنس اور سیکھنے کا منحنی](../../phases/02-ml-fundamentals/10-bias-variance/) | سیکھیں | Python |
 | 11 | [مجموعی طریقے: Boosting، Bagging، Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | بنائیں | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | # | سبق | قسم | زبان |
 |:---:|--------|:----:|------|
 | 01 | [پرسیپٹرون: جہاں سے آغاز ہوا](../../phases/03-deep-learning-core/01-the-perceptron/) | بنائیں | Python, Rust, Julia |
-| 02 | [کئی پرتوں کے نیٹ ورک اور فارورڈ پاس](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بنائیں | Python |
+| 02 | [کئی پرتوں کے نیٹ ورک اور فارورڈ پاس](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بنائیں | Python, TypeScript |
 | 03 | [شروع سے بیک پروپیگیشن](../../phases/03-deep-learning-core/03-backpropagation/) | بنائیں | Python, Rust, Julia |
 | 04 | [ایکٹیویشن فنکشن: ReLU، Sigmoid، GELU اور وجہ](../../phases/03-deep-learning-core/04-activation-functions/) | بنائیں | Python, Julia |
 | 05 | [لاس فنکشن: MSE، کراس اینٹروپی، تقابلی](../../phases/03-deep-learning-core/05-loss-functions/) | بنائیں | Python, Julia |
-| 06 | [آپٹیمائزر: SGD، Momentum، Adam، AdamW](../../phases/03-deep-learning-core/06-optimizers/) | بنائیں | Python |
-| 07 | [ریگولرائزیشن: Dropout، Weight Decay، BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بنائیں | Python |
-| 08 | [وزنوں کی ابتدائی ترتیب اور تربیت کا استحکام](../../phases/03-deep-learning-core/08-weight-initialization/) | بنائیں | Python |
-| 09 | [لرننگ ریٹ کے شیڈول اور وارم اپ](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | بنائیں | Python |
-| 10 | [اپنا چھوٹا فریم ورک بنائیں](../../phases/03-deep-learning-core/10-mini-framework/) | بنائیں | Python |
+| 06 | [آپٹیمائزر: SGD، Momentum، Adam، AdamW](../../phases/03-deep-learning-core/06-optimizers/) | بنائیں | Python, TypeScript |
+| 07 | [ریگولرائزیشن: Dropout، Weight Decay، BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بنائیں | Python, TypeScript |
+| 08 | [وزنوں کی ابتدائی ترتیب اور تربیت کا استحکام](../../phases/03-deep-learning-core/08-weight-initialization/) | بنائیں | Python, TypeScript |
+| 09 | [لرننگ ریٹ کے شیڈول اور وارم اپ](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | بنائیں | Python, TypeScript |
+| 10 | [اپنا چھوٹا فریم ورک بنائیں](../../phases/03-deep-learning-core/10-mini-framework/) | بنائیں | Python, TypeScript |
 | 11 | [PyTorch کا تعارف](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | بنائیں | Python |
 | 12 | [JAX کا تعارف](../../phases/03-deep-learning-core/12-intro-to-jax/) | بنائیں | Python |
 | 13 | [نیورل نیٹ ورک کی ڈیبگنگ](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | بنائیں | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5، BART: انکوڈر-ڈی کوڈر ماڈل](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | سیکھیں | Python |
 | 09 | [بصری ٹرانسفارمر (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | بنائیں | Python |
 | 10 | [آڈیو ٹرانسفارمر: Whisper کی ساخت](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | سیکھیں | Python |
-| 11 | [ماہرین کا مجموعہ (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | بنائیں | Python |
-| 12 | [KV کیش، Flash Attention اور استنتاج کی بہتری](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | بنائیں | Python |
+| 11 | [ماہرین کا مجموعہ (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | بنائیں | Python, Rust |
+| 12 | [KV کیش، Flash Attention اور استنتاج کی بہتری](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | بنائیں | Python, Rust |
 | 13 | [پیمانے میں اضافے کے قوانین](../../phases/07-transformers-deep-dive/13-scaling-laws/) | سیکھیں | Python |
 | 14 | [شروع سے ٹرانسفارمر بنائیں](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | بنائیں | Python |
-| 15 | [اٹینشن کی اقسام: سلائیڈنگ ونڈو، اسپارس، ڈفرینشل](../../phases/07-transformers-deep-dive/15-attention-variants/) | بنائیں | Python |
-| 16 | [قیاسی ڈی کوڈنگ: مسودہ، تصدیق، تکرار](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | بنائیں | Python |
+| 15 | [اٹینشن کی اقسام: سلائیڈنگ ونڈو، اسپارس، ڈفرینشل](../../phases/07-transformers-deep-dive/15-attention-variants/) | بنائیں | Python, Rust |
+| 16 | [قیاسی ڈی کوڈنگ: مسودہ، تصدیق، تکرار](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | بنائیں | Python, Rust |
 
 </details>
 

@@ -399,11 +399,11 @@ Tyve faser. Klik på en fase for at folde lektionslisten ud.
 | 01 | [Hvad er maskinlæring?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Lær | Python |
 | 02 | [Lineær regression fra bunden](../../phases/02-ml-fundamentals/02-linear-regression/) | Byg | Python, Rust, Julia |
 | 03 | [Logistisk regression og klassifikation](../../phases/02-ml-fundamentals/03-logistic-regression/) | Byg | Python, Rust, Julia |
-| 04 | [Beslutningstræer og tilfældige skove](../../phases/02-ml-fundamentals/04-decision-trees/) | Byg | Python |
+| 04 | [Beslutningstræer og tilfældige skove](../../phases/02-ml-fundamentals/04-decision-trees/) | Byg | Python, TypeScript |
 | 05 | [Støttevektormaskiner](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Byg | Python, Julia |
-| 06 | [KNN og afstandsmål](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Byg | Python |
-| 07 | [Uovervåget læring: K-Means og DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Byg | Python |
-| 08 | [Udvikling og udvælgelse af egenskaber](../../phases/02-ml-fundamentals/08-feature-engineering/) | Byg | Python |
+| 06 | [KNN og afstandsmål](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Byg | Python, TypeScript |
+| 07 | [Uovervåget læring: K-Means og DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Byg | Python, TypeScript |
+| 08 | [Udvikling og udvælgelse af egenskaber](../../phases/02-ml-fundamentals/08-feature-engineering/) | Byg | Python, TypeScript |
 | 09 | [Modelevaluering: måltal og krydsvalidering](../../phases/02-ml-fundamentals/09-model-evaluation/) | Byg | Python, Julia |
 | 10 | [Bias, varians og læringskurven](../../phases/02-ml-fundamentals/10-bias-variance/) | Lær | Python |
 | 11 | [Ensemblemetoder: boosting, bagging og stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Byg | Python |
@@ -427,15 +427,15 @@ Tyve faser. Klik på en fase for at folde lektionslisten ud.
 | # | Lektion | Type | Sprog |
 |:---:|--------|:----:|------|
 | 01 | [Perceptronen: hvor det hele begyndte](../../phases/03-deep-learning-core/01-the-perceptron/) | Byg | Python, Rust, Julia |
-| 02 | [Flerlagsnetværk og fremadrettet beregning](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Byg | Python |
+| 02 | [Flerlagsnetværk og fremadrettet beregning](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Byg | Python, TypeScript |
 | 03 | [Tilbagepropagering fra bunden](../../phases/03-deep-learning-core/03-backpropagation/) | Byg | Python, Rust, Julia |
 | 04 | [Aktiveringsfunktioner: ReLU, sigmoid, GELU og hvorfor](../../phases/03-deep-learning-core/04-activation-functions/) | Byg | Python, Julia |
 | 05 | [Tabsfunktioner: MSE, krydsentropi og kontrastive tab](../../phases/03-deep-learning-core/05-loss-functions/) | Byg | Python, Julia |
-| 06 | [Optimeringsalgoritmer: SGD, momentum, Adam og AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Byg | Python |
-| 07 | [Regularisering: dropout, vægtforfald og BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Byg | Python |
-| 08 | [Initialisering af vægte og stabil træning](../../phases/03-deep-learning-core/08-weight-initialization/) | Byg | Python |
-| 09 | [Planer for læringsraten og opvarmning](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Byg | Python |
-| 10 | [Byg dit eget lille framework](../../phases/03-deep-learning-core/10-mini-framework/) | Byg | Python |
+| 06 | [Optimeringsalgoritmer: SGD, momentum, Adam og AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Byg | Python, TypeScript |
+| 07 | [Regularisering: dropout, vægtforfald og BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Byg | Python, TypeScript |
+| 08 | [Initialisering af vægte og stabil træning](../../phases/03-deep-learning-core/08-weight-initialization/) | Byg | Python, TypeScript |
+| 09 | [Planer for læringsraten og opvarmning](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Byg | Python, TypeScript |
+| 10 | [Byg dit eget lille framework](../../phases/03-deep-learning-core/10-mini-framework/) | Byg | Python, TypeScript |
 | 11 | [Introduktion til PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Byg | Python |
 | 12 | [Introduktion til JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Byg | Python |
 | 13 | [Fejlfinding i neurale netværk](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Byg | Python |
@@ -559,12 +559,12 @@ Tyve faser. Klik på en fase for at folde lektionslisten ud.
 | 08 | [T5 og BART: indkoder-afkoder-modeller](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Lær | Python |
 | 09 | [Vision Transformers (ViT) til billedanalyse](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Byg | Python |
 | 10 | [Lydtransformere: Whispers arkitektur](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Lær | Python |
-| 11 | [Blanding af eksperter (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Byg | Python |
-| 12 | [KV-cache, Flash Attention og optimering af inferens](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Byg | Python |
+| 11 | [Blanding af eksperter (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Byg | Python, Rust |
+| 12 | [KV-cache, Flash Attention og optimering af inferens](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Byg | Python, Rust |
 | 13 | [Skaleringslove](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Lær | Python |
 | 14 | [Byg en Transformer fra bunden](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Byg | Python |
-| 15 | [Attention-varianter: glidende vindue, sparsom og differentiel](../../phases/07-transformers-deep-dive/15-attention-variants/) | Byg | Python |
-| 16 | [Spekulativ afkodning: foreslå, verificér, gentag](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Byg | Python |
+| 15 | [Attention-varianter: glidende vindue, sparsom og differentiel](../../phases/07-transformers-deep-dive/15-attention-variants/) | Byg | Python, Rust |
+| 16 | [Spekulativ afkodning: foreslå, verificér, gentag](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Byg | Python, Rust |
 
 </details>
 

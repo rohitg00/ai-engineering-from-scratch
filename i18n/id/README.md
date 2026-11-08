@@ -399,11 +399,11 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 01 | [Apa itu pembelajaran mesin](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Pelajari | Python |
 | 02 | [Regresi linear dari nol](../../phases/02-ml-fundamentals/02-linear-regression/) | Bangun | Python, Rust, Julia |
 | 03 | [Regresi logistik dan klasifikasi](../../phases/02-ml-fundamentals/03-logistic-regression/) | Bangun | Python, Rust, Julia |
-| 04 | [Pohon keputusan dan random forest](../../phases/02-ml-fundamentals/04-decision-trees/) | Bangun | Python |
+| 04 | [Pohon keputusan dan random forest](../../phases/02-ml-fundamentals/04-decision-trees/) | Bangun | Python, TypeScript |
 | 05 | [Mesin vektor pendukung](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Bangun | Python, Julia |
-| 06 | [KNN dan metrik jarak](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Bangun | Python |
-| 07 | [Pembelajaran tanpa pengawasan: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Bangun | Python |
-| 08 | [Rekayasa dan seleksi fitur](../../phases/02-ml-fundamentals/08-feature-engineering/) | Bangun | Python |
+| 06 | [KNN dan metrik jarak](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Bangun | Python, TypeScript |
+| 07 | [Pembelajaran tanpa pengawasan: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Bangun | Python, TypeScript |
+| 08 | [Rekayasa dan seleksi fitur](../../phases/02-ml-fundamentals/08-feature-engineering/) | Bangun | Python, TypeScript |
 | 09 | [Evaluasi model: metrik dan validasi silang](../../phases/02-ml-fundamentals/09-model-evaluation/) | Bangun | Python, Julia |
 | 10 | [Bias, varians, dan kurva pembelajaran](../../phases/02-ml-fundamentals/10-bias-variance/) | Pelajari | Python |
 | 11 | [Metode ensemble: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Bangun | Python |
@@ -427,15 +427,15 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | # | Pelajaran | Jenis | Bahasa |
 |:---:|--------|:----:|------|
 | 01 | [Perceptron: awal mulanya](../../phases/03-deep-learning-core/01-the-perceptron/) | Bangun | Python, Rust, Julia |
-| 02 | [Jaringan multilapis dan propagasi maju](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Bangun | Python |
+| 02 | [Jaringan multilapis dan propagasi maju](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Bangun | Python, TypeScript |
 | 03 | [Propagasi balik dari nol](../../phases/03-deep-learning-core/03-backpropagation/) | Bangun | Python, Rust, Julia |
 | 04 | [Fungsi aktivasi: ReLU, Sigmoid, GELU dan alasannya](../../phases/03-deep-learning-core/04-activation-functions/) | Bangun | Python, Julia |
 | 05 | [Fungsi kerugian: MSE, cross-entropy, kontrastif](../../phases/03-deep-learning-core/05-loss-functions/) | Bangun | Python, Julia |
-| 06 | [Pengoptimal: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Bangun | Python |
-| 07 | [Regularisasi: dropout, peluruhan bobot, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Bangun | Python |
-| 08 | [Inisialisasi bobot dan stabilitas pelatihan](../../phases/03-deep-learning-core/08-weight-initialization/) | Bangun | Python |
-| 09 | [Penjadwalan laju pembelajaran dan pemanasan](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Bangun | Python |
-| 10 | [Bangun kerangka kerja mini sendiri](../../phases/03-deep-learning-core/10-mini-framework/) | Bangun | Python |
+| 06 | [Pengoptimal: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Bangun | Python, TypeScript |
+| 07 | [Regularisasi: dropout, peluruhan bobot, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Bangun | Python, TypeScript |
+| 08 | [Inisialisasi bobot dan stabilitas pelatihan](../../phases/03-deep-learning-core/08-weight-initialization/) | Bangun | Python, TypeScript |
+| 09 | [Penjadwalan laju pembelajaran dan pemanasan](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Bangun | Python, TypeScript |
+| 10 | [Bangun kerangka kerja mini sendiri](../../phases/03-deep-learning-core/10-mini-framework/) | Bangun | Python, TypeScript |
 | 11 | [Pengantar PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Bangun | Python |
 | 12 | [Pengantar JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Bangun | Python |
 | 13 | [Debugging jaringan saraf](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Bangun | Python |
@@ -559,12 +559,12 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 08 | [T5, BART: model encoder-decoder](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Pelajari | Python |
 | 09 | [Vision Transformer (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Bangun | Python |
 | 10 | [Audio Transformer: arsitektur Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Pelajari | Python |
-| 11 | [Mixture of Experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Bangun | Python |
-| 12 | [Cache KV, Flash Attention, dan optimisasi inferensi](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Bangun | Python |
+| 11 | [Mixture of Experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Bangun | Python, Rust |
+| 12 | [Cache KV, Flash Attention, dan optimisasi inferensi](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Bangun | Python, Rust |
 | 13 | [Hukum penskalaan](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Pelajari | Python |
 | 14 | [Bangun Transformer dari nol](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Bangun | Python |
-| 15 | [Varian attention: sliding window, sparse, differential](../../phases/07-transformers-deep-dive/15-attention-variants/) | Bangun | Python |
-| 16 | [Decoding spekulatif: buat draf, verifikasi, ulangi](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Bangun | Python |
+| 15 | [Varian attention: sliding window, sparse, differential](../../phases/07-transformers-deep-dive/15-attention-variants/) | Bangun | Python, Rust |
+| 16 | [Decoding spekulatif: buat draf, verifikasi, ulangi](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Bangun | Python, Rust |
 
 </details>
 

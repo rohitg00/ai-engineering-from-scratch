@@ -399,11 +399,11 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 01 | [Học máy là gì](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Tìm hiểu | Python |
 | 02 | [Hồi quy tuyến tính từ đầu](../../phases/02-ml-fundamentals/02-linear-regression/) | Xây dựng | Python, Rust, Julia |
 | 03 | [Hồi quy logistic và phân loại](../../phases/02-ml-fundamentals/03-logistic-regression/) | Xây dựng | Python, Rust, Julia |
-| 04 | [Cây quyết định và rừng ngẫu nhiên](../../phases/02-ml-fundamentals/04-decision-trees/) | Xây dựng | Python |
+| 04 | [Cây quyết định và rừng ngẫu nhiên](../../phases/02-ml-fundamentals/04-decision-trees/) | Xây dựng | Python, TypeScript |
 | 05 | [Máy vectơ hỗ trợ](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Xây dựng | Python, Julia |
-| 06 | [KNN và thước đo khoảng cách](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Xây dựng | Python |
-| 07 | [Học không giám sát: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Xây dựng | Python |
-| 08 | [Thiết kế và lựa chọn đặc trưng](../../phases/02-ml-fundamentals/08-feature-engineering/) | Xây dựng | Python |
+| 06 | [KNN và thước đo khoảng cách](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Xây dựng | Python, TypeScript |
+| 07 | [Học không giám sát: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Xây dựng | Python, TypeScript |
+| 08 | [Thiết kế và lựa chọn đặc trưng](../../phases/02-ml-fundamentals/08-feature-engineering/) | Xây dựng | Python, TypeScript |
 | 09 | [Đánh giá mô hình: chỉ số và kiểm định chéo](../../phases/02-ml-fundamentals/09-model-evaluation/) | Xây dựng | Python, Julia |
 | 10 | [Độ chệch, phương sai và đường cong học](../../phases/02-ml-fundamentals/10-bias-variance/) | Tìm hiểu | Python |
 | 11 | [Phương pháp tổ hợp: Boosting, Bagging, Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Xây dựng | Python |
@@ -427,15 +427,15 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | # | Bài học | Loại | Ngôn ngữ |
 |:---:|--------|:----:|------|
 | 01 | [Perceptron: nơi mọi thứ bắt đầu](../../phases/03-deep-learning-core/01-the-perceptron/) | Xây dựng | Python, Rust, Julia |
-| 02 | [Mạng nhiều lớp và lượt truyền xuôi](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Xây dựng | Python |
+| 02 | [Mạng nhiều lớp và lượt truyền xuôi](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Xây dựng | Python, TypeScript |
 | 03 | [Lan truyền ngược từ đầu](../../phases/03-deep-learning-core/03-backpropagation/) | Xây dựng | Python, Rust, Julia |
 | 04 | [Hàm kích hoạt: ReLU, Sigmoid, GELU và lý do sử dụng](../../phases/03-deep-learning-core/04-activation-functions/) | Xây dựng | Python, Julia |
 | 05 | [Hàm mất mát: MSE, entropy chéo, tương phản](../../phases/03-deep-learning-core/05-loss-functions/) | Xây dựng | Python, Julia |
-| 06 | [Bộ tối ưu: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Xây dựng | Python |
-| 07 | [Chính quy hóa: Dropout, suy giảm trọng số, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Xây dựng | Python |
-| 08 | [Khởi tạo trọng số và độ ổn định khi huấn luyện](../../phases/03-deep-learning-core/08-weight-initialization/) | Xây dựng | Python |
-| 09 | [Lịch tốc độ học và khởi động](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Xây dựng | Python |
-| 10 | [Tự xây dựng framework nhỏ](../../phases/03-deep-learning-core/10-mini-framework/) | Xây dựng | Python |
+| 06 | [Bộ tối ưu: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Xây dựng | Python, TypeScript |
+| 07 | [Chính quy hóa: Dropout, suy giảm trọng số, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Xây dựng | Python, TypeScript |
+| 08 | [Khởi tạo trọng số và độ ổn định khi huấn luyện](../../phases/03-deep-learning-core/08-weight-initialization/) | Xây dựng | Python, TypeScript |
+| 09 | [Lịch tốc độ học và khởi động](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Xây dựng | Python, TypeScript |
+| 10 | [Tự xây dựng framework nhỏ](../../phases/03-deep-learning-core/10-mini-framework/) | Xây dựng | Python, TypeScript |
 | 11 | [Giới thiệu PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Xây dựng | Python |
 | 12 | [Giới thiệu JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Xây dựng | Python |
 | 13 | [Gỡ lỗi mạng nơ-ron](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Xây dựng | Python |
@@ -559,12 +559,12 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 08 | [T5, BART: mô hình mã hóa-giải mã](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Tìm hiểu | Python |
 | 09 | [Vision Transformer (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Xây dựng | Python |
 | 10 | [Transformer âm thanh: kiến trúc Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Tìm hiểu | Python |
-| 11 | [Hỗn hợp chuyên gia (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Xây dựng | Python |
-| 12 | [Bộ nhớ đệm KV, Flash Attention và tối ưu suy luận](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Xây dựng | Python |
+| 11 | [Hỗn hợp chuyên gia (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Xây dựng | Python, Rust |
+| 12 | [Bộ nhớ đệm KV, Flash Attention và tối ưu suy luận](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Xây dựng | Python, Rust |
 | 13 | [Quy luật mở rộng quy mô](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Tìm hiểu | Python |
 | 14 | [Xây dựng Transformer từ đầu](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Xây dựng | Python |
-| 15 | [Biến thể attention: cửa sổ trượt, thưa, vi sai](../../phases/07-transformers-deep-dive/15-attention-variants/) | Xây dựng | Python |
-| 16 | [Giải mã suy đoán: tạo nháp, xác minh, lặp lại](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Xây dựng | Python |
+| 15 | [Biến thể attention: cửa sổ trượt, thưa, vi sai](../../phases/07-transformers-deep-dive/15-attention-variants/) | Xây dựng | Python, Rust |
+| 16 | [Giải mã suy đoán: tạo nháp, xác minh, lặp lại](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Xây dựng | Python, Rust |
 
 </details>
 

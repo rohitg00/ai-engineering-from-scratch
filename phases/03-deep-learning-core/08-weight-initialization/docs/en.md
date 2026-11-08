@@ -3,7 +3,7 @@
 > Initialize wrong and training never starts. Initialize right and 50 layers train as smoothly as 3.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.04 (Activation Functions), Lesson 03.07 (Regularization)
 **Time:** ~90 minutes
 

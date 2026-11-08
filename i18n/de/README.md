@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [Was ist maschinelles Lernen?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Lernen | Python |
 | 02 | [Lineare Regression von Grund auf](../../phases/02-ml-fundamentals/02-linear-regression/) | Umsetzen | Python, Rust, Julia |
 | 03 | [Logistische Regression und Klassifikation](../../phases/02-ml-fundamentals/03-logistic-regression/) | Umsetzen | Python, Rust, Julia |
-| 04 | [Entscheidungsbäume und Random Forests](../../phases/02-ml-fundamentals/04-decision-trees/) | Umsetzen | Python |
+| 04 | [Entscheidungsbäume und Random Forests](../../phases/02-ml-fundamentals/04-decision-trees/) | Umsetzen | Python, TypeScript |
 | 05 | [Support-Vector-Machines](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Umsetzen | Python, Julia |
-| 06 | [KNN und Distanzmetriken](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Umsetzen | Python |
-| 07 | [Unüberwachtes Lernen: K-Means und DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Umsetzen | Python |
-| 08 | [Feature Engineering und Auswahl](../../phases/02-ml-fundamentals/08-feature-engineering/) | Umsetzen | Python |
+| 06 | [KNN und Distanzmetriken](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Umsetzen | Python, TypeScript |
+| 07 | [Unüberwachtes Lernen: K-Means und DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Umsetzen | Python, TypeScript |
+| 08 | [Feature Engineering und Auswahl](../../phases/02-ml-fundamentals/08-feature-engineering/) | Umsetzen | Python, TypeScript |
 | 09 | [Modellevaluierung: Metriken und Kreuzvalidierung](../../phases/02-ml-fundamentals/09-model-evaluation/) | Umsetzen | Python, Julia |
 | 10 | [Bias, Varianz und Lernkurve](../../phases/02-ml-fundamentals/10-bias-variance/) | Lernen | Python |
 | 11 | [Ensemble-Methoden: Boosting, Bagging, Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Umsetzen | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | # | Lektion | Typ | Sprachen |
 |:---:|--------|:----:|------|
 | 01 | [Das Perzeptron: Die Anfänge](../../phases/03-deep-learning-core/01-the-perceptron/) | Umsetzen | Python, Rust, Julia |
-| 02 | [Mehrschichtige Netze und Vorwärtsdurchlauf](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Umsetzen | Python |
+| 02 | [Mehrschichtige Netze und Vorwärtsdurchlauf](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Umsetzen | Python, TypeScript |
 | 03 | [Backpropagation von Grund auf](../../phases/03-deep-learning-core/03-backpropagation/) | Umsetzen | Python, Rust, Julia |
 | 04 | [Aktivierungsfunktionen: ReLU, Sigmoid, GELU und warum](../../phases/03-deep-learning-core/04-activation-functions/) | Umsetzen | Python, Julia |
 | 05 | [Loss-Funktionen: MSE, Kreuzentropie und kontrastiver Loss](../../phases/03-deep-learning-core/05-loss-functions/) | Umsetzen | Python, Julia |
-| 06 | [Optimierer: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Umsetzen | Python |
-| 07 | [Regularisierung: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Umsetzen | Python |
-| 08 | [Gewichtsinitialisierung und Trainingsstabilität](../../phases/03-deep-learning-core/08-weight-initialization/) | Umsetzen | Python |
-| 09 | [Lernratenpläne und Warm-up](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Umsetzen | Python |
-| 10 | [Baue dein eigenes Mini-Framework](../../phases/03-deep-learning-core/10-mini-framework/) | Umsetzen | Python |
+| 06 | [Optimierer: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Umsetzen | Python, TypeScript |
+| 07 | [Regularisierung: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Umsetzen | Python, TypeScript |
+| 08 | [Gewichtsinitialisierung und Trainingsstabilität](../../phases/03-deep-learning-core/08-weight-initialization/) | Umsetzen | Python, TypeScript |
+| 09 | [Lernratenpläne und Warm-up](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Umsetzen | Python, TypeScript |
+| 10 | [Baue dein eigenes Mini-Framework](../../phases/03-deep-learning-core/10-mini-framework/) | Umsetzen | Python, TypeScript |
 | 11 | [Einführung in PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Umsetzen | Python |
 | 12 | [Einführung in JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Umsetzen | Python |
 | 13 | [Neuronale Netze debuggen](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Umsetzen | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5, BART: Encoder-Decoder-Modelle](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Lernen | Python |
 | 09 | [Vision Transformer (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Umsetzen | Python |
 | 10 | [Audio-Transformer: Whisper-Architektur](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Lernen | Python |
-| 11 | [Mixture of Experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Umsetzen | Python |
-| 12 | [KV-Cache, Flash Attention und Inferenzoptimierung](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Umsetzen | Python |
+| 11 | [Mixture of Experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Umsetzen | Python, Rust |
+| 12 | [KV-Cache, Flash Attention und Inferenzoptimierung](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Umsetzen | Python, Rust |
 | 13 | [Skalierungsgesetze](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Lernen | Python |
 | 14 | [Einen Transformer von Grund auf bauen](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Umsetzen | Python |
-| 15 | [Attention-Varianten: Sliding Window, Sparse, Differential](../../phases/07-transformers-deep-dive/15-attention-variants/) | Umsetzen | Python |
-| 16 | [Speculative Decoding: Entwurf, Prüfung, Wiederholung](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Umsetzen | Python |
+| 15 | [Attention-Varianten: Sliding Window, Sparse, Differential](../../phases/07-transformers-deep-dive/15-attention-variants/) | Umsetzen | Python, Rust |
+| 16 | [Speculative Decoding: Entwurf, Prüfung, Wiederholung](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Umsetzen | Python, Rust |
 
 </details>
 

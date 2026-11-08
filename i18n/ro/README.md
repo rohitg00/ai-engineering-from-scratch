@@ -399,11 +399,11 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 01 | [Ce este învățarea automată](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Învață | Python |
 | 02 | [Regresie liniară de la zero](../../phases/02-ml-fundamentals/02-linear-regression/) | Construiește | Python, Rust, Julia |
 | 03 | [Regresie logistică și clasificare](../../phases/02-ml-fundamentals/03-logistic-regression/) | Construiește | Python, Rust, Julia |
-| 04 | [Arbori de decizie și păduri aleatoare](../../phases/02-ml-fundamentals/04-decision-trees/) | Construiește | Python |
+| 04 | [Arbori de decizie și păduri aleatoare](../../phases/02-ml-fundamentals/04-decision-trees/) | Construiește | Python, TypeScript |
 | 05 | [Mașini cu vectori suport](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Construiește | Python, Julia |
-| 06 | [KNN și metrici de distanță](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Construiește | Python |
-| 07 | [Învățare nesupravegheată: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Construiește | Python |
-| 08 | [Construirea și selectarea caracteristicilor](../../phases/02-ml-fundamentals/08-feature-engineering/) | Construiește | Python |
+| 06 | [KNN și metrici de distanță](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Construiește | Python, TypeScript |
+| 07 | [Învățare nesupravegheată: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Construiește | Python, TypeScript |
+| 08 | [Construirea și selectarea caracteristicilor](../../phases/02-ml-fundamentals/08-feature-engineering/) | Construiește | Python, TypeScript |
 | 09 | [Evaluarea modelelor: metrici și validare încrucișată](../../phases/02-ml-fundamentals/09-model-evaluation/) | Construiește | Python, Julia |
 | 10 | [Abatere, varianță și curba învățării](../../phases/02-ml-fundamentals/10-bias-variance/) | Învață | Python |
 | 11 | [Metode de ansamblu: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Construiește | Python |
@@ -427,15 +427,15 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | # | Lecție | Tip | Limbaj |
 |:---:|--------|:----:|------|
 | 01 | [Perceptronul: începutul poveștii](../../phases/03-deep-learning-core/01-the-perceptron/) | Construiește | Python, Rust, Julia |
-| 02 | [Rețele multistrat și propagare înainte](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Construiește | Python |
+| 02 | [Rețele multistrat și propagare înainte](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Construiește | Python, TypeScript |
 | 03 | [Propagarea înapoi de la zero](../../phases/03-deep-learning-core/03-backpropagation/) | Construiește | Python, Rust, Julia |
 | 04 | [Funcții de activare: ReLU, sigmoid, GELU și rolul lor](../../phases/03-deep-learning-core/04-activation-functions/) | Construiește | Python, Julia |
 | 05 | [Funcții de pierdere: MSE, entropie încrucișată și contrast](../../phases/03-deep-learning-core/05-loss-functions/) | Construiește | Python, Julia |
-| 06 | [Optimizatori: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Construiește | Python |
-| 07 | [Regularizare: dropout, reducerea ponderilor, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Construiește | Python |
-| 08 | [Inițializarea ponderilor și stabilitatea antrenării](../../phases/03-deep-learning-core/08-weight-initialization/) | Construiește | Python |
-| 09 | [Planificarea ratei de învățare și încălzirea](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Construiește | Python |
-| 10 | [Construiește propriul mini-framework](../../phases/03-deep-learning-core/10-mini-framework/) | Construiește | Python |
+| 06 | [Optimizatori: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Construiește | Python, TypeScript |
+| 07 | [Regularizare: dropout, reducerea ponderilor, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Construiește | Python, TypeScript |
+| 08 | [Inițializarea ponderilor și stabilitatea antrenării](../../phases/03-deep-learning-core/08-weight-initialization/) | Construiește | Python, TypeScript |
+| 09 | [Planificarea ratei de învățare și încălzirea](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Construiește | Python, TypeScript |
+| 10 | [Construiește propriul mini-framework](../../phases/03-deep-learning-core/10-mini-framework/) | Construiește | Python, TypeScript |
 | 11 | [Introducere în PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Construiește | Python |
 | 12 | [Introducere în JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Construiește | Python |
 | 13 | [Depanarea rețelelor neuronale](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Construiește | Python |
@@ -559,12 +559,12 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 08 | [T5 și BART: modele codificator-decodificator](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Învață | Python |
 | 09 | [Transformatoare vizuale (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Construiește | Python |
 | 10 | [Transformatoare audio: arhitectura Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Învață | Python |
-| 11 | [Amestec de experți (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Construiește | Python |
-| 12 | [Cache KV, Flash Attention și optimizarea inferenței](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Construiește | Python |
+| 11 | [Amestec de experți (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Construiește | Python, Rust |
+| 12 | [Cache KV, Flash Attention și optimizarea inferenței](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Construiește | Python, Rust |
 | 13 | [Legi de scalare](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Învață | Python |
 | 14 | [Construiește un transformator de la zero](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Construiește | Python |
-| 15 | [Variante de atenție: fereastră glisantă, rară și diferențială](../../phases/07-transformers-deep-dive/15-attention-variants/) | Construiește | Python |
-| 16 | [Decodare speculativă: propune, verifică, repetă](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Construiește | Python |
+| 15 | [Variante de atenție: fereastră glisantă, rară și diferențială](../../phases/07-transformers-deep-dive/15-attention-variants/) | Construiește | Python, Rust |
+| 16 | [Decodare speculativă: propune, verifică, repetă](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Construiește | Python, Rust |
 
 </details>
 

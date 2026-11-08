@@ -399,11 +399,11 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 | 01 | [Co je strojové učení](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Poznat | Python |
 | 02 | [Lineární regrese od základů](../../phases/02-ml-fundamentals/02-linear-regression/) | Vytvořit | Python, Rust, Julia |
 | 03 | [Logistická regrese a klasifikace](../../phases/02-ml-fundamentals/03-logistic-regression/) | Vytvořit | Python, Rust, Julia |
-| 04 | [Rozhodovací stromy a náhodné lesy](../../phases/02-ml-fundamentals/04-decision-trees/) | Vytvořit | Python |
+| 04 | [Rozhodovací stromy a náhodné lesy](../../phases/02-ml-fundamentals/04-decision-trees/) | Vytvořit | Python, TypeScript |
 | 05 | [Metoda podpůrných vektorů](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Vytvořit | Python, Julia |
-| 06 | [KNN a metriky vzdálenosti](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Vytvořit | Python |
-| 07 | [Učení bez učitele: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Vytvořit | Python |
-| 08 | [Návrh a výběr příznaků](../../phases/02-ml-fundamentals/08-feature-engineering/) | Vytvořit | Python |
+| 06 | [KNN a metriky vzdálenosti](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Vytvořit | Python, TypeScript |
+| 07 | [Učení bez učitele: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Vytvořit | Python, TypeScript |
+| 08 | [Návrh a výběr příznaků](../../phases/02-ml-fundamentals/08-feature-engineering/) | Vytvořit | Python, TypeScript |
 | 09 | [Hodnocení modelů: metriky a křížová validace](../../phases/02-ml-fundamentals/09-model-evaluation/) | Vytvořit | Python, Julia |
 | 10 | [Vychýlení, rozptyl a křivka učení](../../phases/02-ml-fundamentals/10-bias-variance/) | Poznat | Python |
 | 11 | [Ansámblové metody: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Vytvořit | Python |
@@ -427,15 +427,15 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 | # | Lekce | Druh | Jazyk |
 |:---:|--------|:----:|------|
 | 01 | [Perceptron: kde to všechno začalo](../../phases/03-deep-learning-core/01-the-perceptron/) | Vytvořit | Python, Rust, Julia |
-| 02 | [Vícevrstvé sítě a dopředný průchod](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Vytvořit | Python |
+| 02 | [Vícevrstvé sítě a dopředný průchod](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Vytvořit | Python, TypeScript |
 | 03 | [Zpětné šíření chyby od základů](../../phases/03-deep-learning-core/03-backpropagation/) | Vytvořit | Python, Rust, Julia |
 | 04 | [Aktivační funkce: ReLU, sigmoid, GELU a jejich smysl](../../phases/03-deep-learning-core/04-activation-functions/) | Vytvořit | Python, Julia |
 | 05 | [Ztrátové funkce: MSE, křížová entropie a kontrastivní ztráta](../../phases/03-deep-learning-core/05-loss-functions/) | Vytvořit | Python, Julia |
-| 06 | [Optimalizátory: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Vytvořit | Python |
-| 07 | [Regularizace: dropout, útlum vah, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Vytvořit | Python |
-| 08 | [Inicializace vah a stabilita trénování](../../phases/03-deep-learning-core/08-weight-initialization/) | Vytvořit | Python |
-| 09 | [Plány rychlosti učení a zahřívání](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Vytvořit | Python |
-| 10 | [Vytvořte vlastní malý framework](../../phases/03-deep-learning-core/10-mini-framework/) | Vytvořit | Python |
+| 06 | [Optimalizátory: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Vytvořit | Python, TypeScript |
+| 07 | [Regularizace: dropout, útlum vah, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Vytvořit | Python, TypeScript |
+| 08 | [Inicializace vah a stabilita trénování](../../phases/03-deep-learning-core/08-weight-initialization/) | Vytvořit | Python, TypeScript |
+| 09 | [Plány rychlosti učení a zahřívání](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Vytvořit | Python, TypeScript |
+| 10 | [Vytvořte vlastní malý framework](../../phases/03-deep-learning-core/10-mini-framework/) | Vytvořit | Python, TypeScript |
 | 11 | [Úvod do PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Vytvořit | Python |
 | 12 | [Úvod do JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Vytvořit | Python |
 | 13 | [Ladění neuronových sítí](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Vytvořit | Python |
@@ -559,12 +559,12 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 | 08 | [T5 a BART: modely enkodér-dekodér](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Poznat | Python |
 | 09 | [Vizuální transformery (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Vytvořit | Python |
 | 10 | [Zvukové transformery: architektura Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Poznat | Python |
-| 11 | [Směs expertů (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Vytvořit | Python |
-| 12 | [KV cache, Flash Attention a optimalizace inference](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Vytvořit | Python |
+| 11 | [Směs expertů (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Vytvořit | Python, Rust |
+| 12 | [KV cache, Flash Attention a optimalizace inference](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Vytvořit | Python, Rust |
 | 13 | [Škálovací zákony](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Poznat | Python |
 | 14 | [Vytvořte transformer od základů](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Vytvořit | Python |
-| 15 | [Varianty pozornosti: posuvné okno, řídká a diferenciální pozornost](../../phases/07-transformers-deep-dive/15-attention-variants/) | Vytvořit | Python |
-| 16 | [Spekulativní dekódování: návrh, ověření a opakování](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Vytvořit | Python |
+| 15 | [Varianty pozornosti: posuvné okno, řídká a diferenciální pozornost](../../phases/07-transformers-deep-dive/15-attention-variants/) | Vytvořit | Python, Rust |
+| 16 | [Spekulativní dekódování: návrh, ověření a opakování](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Vytvořit | Python, Rust |
 
 </details>
 

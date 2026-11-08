@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [Τι είναι η μηχανική μάθηση](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Μάθηση | Python |
 | 02 | [Γραμμική παλινδρόμηση από το μηδέν](../../phases/02-ml-fundamentals/02-linear-regression/) | Κατασκευή | Python, Rust, Julia |
 | 03 | [Λογιστική παλινδρόμηση και ταξινόμηση](../../phases/02-ml-fundamentals/03-logistic-regression/) | Κατασκευή | Python, Rust, Julia |
-| 04 | [Δέντρα αποφάσεων και τυχαία δάση](../../phases/02-ml-fundamentals/04-decision-trees/) | Κατασκευή | Python |
+| 04 | [Δέντρα αποφάσεων και τυχαία δάση](../../phases/02-ml-fundamentals/04-decision-trees/) | Κατασκευή | Python, TypeScript |
 | 05 | [Μηχανές διανυσμάτων υποστήριξης](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Κατασκευή | Python, Julia |
-| 06 | [KNN και μετρικές απόστασης](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Κατασκευή | Python |
-| 07 | [Μη επιβλεπόμενη μάθηση: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Κατασκευή | Python |
-| 08 | [Κατασκευή και επιλογή χαρακτηριστικών](../../phases/02-ml-fundamentals/08-feature-engineering/) | Κατασκευή | Python |
+| 06 | [KNN και μετρικές απόστασης](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Κατασκευή | Python, TypeScript |
+| 07 | [Μη επιβλεπόμενη μάθηση: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Κατασκευή | Python, TypeScript |
+| 08 | [Κατασκευή και επιλογή χαρακτηριστικών](../../phases/02-ml-fundamentals/08-feature-engineering/) | Κατασκευή | Python, TypeScript |
 | 09 | [Αξιολόγηση μοντέλων: μετρικές και διασταυρούμενη επικύρωση](../../phases/02-ml-fundamentals/09-model-evaluation/) | Κατασκευή | Python, Julia |
 | 10 | [Μεροληψία, διακύμανση και καμπύλη μάθησης](../../phases/02-ml-fundamentals/10-bias-variance/) | Μάθηση | Python |
 | 11 | [Μέθοδοι συνόλων: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Κατασκευή | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | # | Μάθημα | Τύπος | Γλώσσα |
 |:---:|--------|:----:|------|
 | 01 | [Το perceptron: από πού ξεκίνησαν όλα](../../phases/03-deep-learning-core/01-the-perceptron/) | Κατασκευή | Python, Rust, Julia |
-| 02 | [Πολυεπίπεδα δίκτυα και εμπρόσθια διάδοση](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Κατασκευή | Python |
+| 02 | [Πολυεπίπεδα δίκτυα και εμπρόσθια διάδοση](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Κατασκευή | Python, TypeScript |
 | 03 | [Οπισθοδιάδοση από το μηδέν](../../phases/03-deep-learning-core/03-backpropagation/) | Κατασκευή | Python, Rust, Julia |
 | 04 | [Συναρτήσεις ενεργοποίησης: ReLU, sigmoid, GELU και ο ρόλος τους](../../phases/03-deep-learning-core/04-activation-functions/) | Κατασκευή | Python, Julia |
 | 05 | [Συναρτήσεις απώλειας: MSE, διασταυρούμενη εντροπία και αντιπαραβολή](../../phases/03-deep-learning-core/05-loss-functions/) | Κατασκευή | Python, Julia |
-| 06 | [Βελτιστοποιητές: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Κατασκευή | Python |
-| 07 | [Κανονικοποίηση: dropout, απόσβεση βαρών, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Κατασκευή | Python |
-| 08 | [Αρχικοποίηση βαρών και σταθερότητα εκπαίδευσης](../../phases/03-deep-learning-core/08-weight-initialization/) | Κατασκευή | Python |
-| 09 | [Προγράμματα ρυθμού μάθησης και προθέρμανση](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Κατασκευή | Python |
-| 10 | [Φτιάξε το δικό σου μικρό πλαίσιο](../../phases/03-deep-learning-core/10-mini-framework/) | Κατασκευή | Python |
+| 06 | [Βελτιστοποιητές: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Κατασκευή | Python, TypeScript |
+| 07 | [Κανονικοποίηση: dropout, απόσβεση βαρών, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Κατασκευή | Python, TypeScript |
+| 08 | [Αρχικοποίηση βαρών και σταθερότητα εκπαίδευσης](../../phases/03-deep-learning-core/08-weight-initialization/) | Κατασκευή | Python, TypeScript |
+| 09 | [Προγράμματα ρυθμού μάθησης και προθέρμανση](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Κατασκευή | Python, TypeScript |
+| 10 | [Φτιάξε το δικό σου μικρό πλαίσιο](../../phases/03-deep-learning-core/10-mini-framework/) | Κατασκευή | Python, TypeScript |
 | 11 | [Εισαγωγή στο PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Κατασκευή | Python |
 | 12 | [Εισαγωγή στο JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Κατασκευή | Python |
 | 13 | [Αποσφαλμάτωση νευρωνικών δικτύων](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Κατασκευή | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5 και BART: μοντέλα κωδικοποιητή-αποκωδικοποιητή](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Μάθηση | Python |
 | 09 | [Οπτικοί μετασχηματιστές (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Κατασκευή | Python |
 | 10 | [Μετασχηματιστές ήχου: η αρχιτεκτονική Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Μάθηση | Python |
-| 11 | [Μείγμα ειδικών (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Κατασκευή | Python |
-| 12 | [Κρυφή μνήμη KV, Flash Attention και βελτιστοποίηση συμπερασμού](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Κατασκευή | Python |
+| 11 | [Μείγμα ειδικών (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Κατασκευή | Python, Rust |
+| 12 | [Κρυφή μνήμη KV, Flash Attention και βελτιστοποίηση συμπερασμού](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Κατασκευή | Python, Rust |
 | 13 | [Νόμοι κλιμάκωσης](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Μάθηση | Python |
 | 14 | [Φτιάξε μετασχηματιστή από το μηδέν](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Κατασκευή | Python |
-| 15 | [Παραλλαγές προσοχής: ολισθαίνον παράθυρο, αραιή και διαφορική](../../phases/07-transformers-deep-dive/15-attention-variants/) | Κατασκευή | Python |
-| 16 | [Εικαστική αποκωδικοποίηση: πρόταση, επαλήθευση, επανάληψη](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Κατασκευή | Python |
+| 15 | [Παραλλαγές προσοχής: ολισθαίνον παράθυρο, αραιή και διαφορική](../../phases/07-transformers-deep-dive/15-attention-variants/) | Κατασκευή | Python, Rust |
+| 16 | [Εικαστική αποκωδικοποίηση: πρόταση, επαλήθευση, επανάληψη](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Κατασκευή | Python, Rust |
 
 </details>
 

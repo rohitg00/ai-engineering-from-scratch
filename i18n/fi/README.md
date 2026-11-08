@@ -399,11 +399,11 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | 01 | [Mitä koneoppiminen on?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Opi | Python |
 | 02 | [Lineaarinen regressio alusta asti](../../phases/02-ml-fundamentals/02-linear-regression/) | Rakenna | Python, Rust, Julia |
 | 03 | [Logistinen regressio ja luokittelu](../../phases/02-ml-fundamentals/03-logistic-regression/) | Rakenna | Python, Rust, Julia |
-| 04 | [Päätöspuut ja satunnaismetsät](../../phases/02-ml-fundamentals/04-decision-trees/) | Rakenna | Python |
+| 04 | [Päätöspuut ja satunnaismetsät](../../phases/02-ml-fundamentals/04-decision-trees/) | Rakenna | Python, TypeScript |
 | 05 | [Tukivektorikoneet](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Rakenna | Python, Julia |
-| 06 | [KNN ja etäisyysmitat](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Rakenna | Python |
-| 07 | [Ohjaamaton oppiminen: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Rakenna | Python |
-| 08 | [Piirteiden rakentaminen ja valinta](../../phases/02-ml-fundamentals/08-feature-engineering/) | Rakenna | Python |
+| 06 | [KNN ja etäisyysmitat](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Rakenna | Python, TypeScript |
+| 07 | [Ohjaamaton oppiminen: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Rakenna | Python, TypeScript |
+| 08 | [Piirteiden rakentaminen ja valinta](../../phases/02-ml-fundamentals/08-feature-engineering/) | Rakenna | Python, TypeScript |
 | 09 | [Mallin arviointi: mittarit ja ristiinvalidointi](../../phases/02-ml-fundamentals/09-model-evaluation/) | Rakenna | Python, Julia |
 | 10 | [Harha, varianssi ja oppimiskäyrä](../../phases/02-ml-fundamentals/10-bias-variance/) | Opi | Python |
 | 11 | [Yhdistelmämenetelmät: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Rakenna | Python |
@@ -427,15 +427,15 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | # | Oppitunti | Tyyppi | Kieli |
 |:---:|--------|:----:|------|
 | 01 | [Perseptroni: mistä kaikki alkoi](../../phases/03-deep-learning-core/01-the-perceptron/) | Rakenna | Python, Rust, Julia |
-| 02 | [Monikerroksiset verkot ja eteenpäinlaskenta](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Rakenna | Python |
+| 02 | [Monikerroksiset verkot ja eteenpäinlaskenta](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Rakenna | Python, TypeScript |
 | 03 | [Vastavirta-algoritmi alusta asti](../../phases/03-deep-learning-core/03-backpropagation/) | Rakenna | Python, Rust, Julia |
 | 04 | [Aktivaatiofunktiot: ReLU, Sigmoid, GELU ja niiden perustelut](../../phases/03-deep-learning-core/04-activation-functions/) | Rakenna | Python, Julia |
 | 05 | [Häviöfunktiot: MSE, ristientropia ja kontrastiivinen häviö](../../phases/03-deep-learning-core/05-loss-functions/) | Rakenna | Python, Julia |
-| 06 | [Optimoijat: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Rakenna | Python |
-| 07 | [Regularisointi: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Rakenna | Python |
-| 08 | [Painojen alustus ja koulutuksen vakaus](../../phases/03-deep-learning-core/08-weight-initialization/) | Rakenna | Python |
-| 09 | [Oppimisnopeuden aikataulut ja lämmittely](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Rakenna | Python |
-| 10 | [Rakenna oma pieni ohjelmistokehys](../../phases/03-deep-learning-core/10-mini-framework/) | Rakenna | Python |
+| 06 | [Optimoijat: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Rakenna | Python, TypeScript |
+| 07 | [Regularisointi: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Rakenna | Python, TypeScript |
+| 08 | [Painojen alustus ja koulutuksen vakaus](../../phases/03-deep-learning-core/08-weight-initialization/) | Rakenna | Python, TypeScript |
+| 09 | [Oppimisnopeuden aikataulut ja lämmittely](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Rakenna | Python, TypeScript |
+| 10 | [Rakenna oma pieni ohjelmistokehys](../../phases/03-deep-learning-core/10-mini-framework/) | Rakenna | Python, TypeScript |
 | 11 | [Johdanto PyTorchiin](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Rakenna | Python |
 | 12 | [Johdanto JAXiin](../../phases/03-deep-learning-core/12-intro-to-jax/) | Rakenna | Python |
 | 13 | [Neuroverkkojen virheenjäljitys](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Rakenna | Python |
@@ -559,12 +559,12 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | 08 | [T5, BART: kooderi-dekooderimallit](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Opi | Python |
 | 09 | [Vision Transformers (ViT) konenäössä](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Rakenna | Python |
 | 10 | [Äänen Transformer-mallit: Whisperin arkkitehtuuri](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Opi | Python |
-| 11 | [Asiantuntijaseokset (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Rakenna | Python |
-| 12 | [KV-välimuisti, Flash Attention ja päättelyn optimointi](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Rakenna | Python |
+| 11 | [Asiantuntijaseokset (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Rakenna | Python, Rust |
+| 12 | [KV-välimuisti, Flash Attention ja päättelyn optimointi](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Rakenna | Python, Rust |
 | 13 | [Skaalauslait](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Opi | Python |
 | 14 | [Rakenna Transformer alusta asti](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Rakenna | Python |
-| 15 | [Attention-muunnelmat: liukuva ikkuna, harva ja differentiaalinen](../../phases/07-transformers-deep-dive/15-attention-variants/) | Rakenna | Python |
-| 16 | [Spekulatiivinen dekoodaus: luonnostele, tarkista, toista](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Rakenna | Python |
+| 15 | [Attention-muunnelmat: liukuva ikkuna, harva ja differentiaalinen](../../phases/07-transformers-deep-dive/15-attention-variants/) | Rakenna | Python, Rust |
+| 16 | [Spekulatiivinen dekoodaus: luonnostele, tarkista, toista](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Rakenna | Python, Rust |
 
 </details>
 

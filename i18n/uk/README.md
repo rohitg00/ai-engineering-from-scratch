@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [Що таке машинне навчання](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Вивчіть | Python |
 | 02 | [Лінійна регресія з нуля](../../phases/02-ml-fundamentals/02-linear-regression/) | Створіть | Python, Rust, Julia |
 | 03 | [Логістична регресія та класифікація](../../phases/02-ml-fundamentals/03-logistic-regression/) | Створіть | Python, Rust, Julia |
-| 04 | [Дерева рішень і випадкові ліси](../../phases/02-ml-fundamentals/04-decision-trees/) | Створіть | Python |
+| 04 | [Дерева рішень і випадкові ліси](../../phases/02-ml-fundamentals/04-decision-trees/) | Створіть | Python, TypeScript |
 | 05 | [Метод опорних векторів](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Створіть | Python, Julia |
-| 06 | [KNN і метрики відстані](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Створіть | Python |
-| 07 | [Навчання без учителя: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Створіть | Python |
-| 08 | [Побудова й відбір ознак](../../phases/02-ml-fundamentals/08-feature-engineering/) | Створіть | Python |
+| 06 | [KNN і метрики відстані](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Створіть | Python, TypeScript |
+| 07 | [Навчання без учителя: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Створіть | Python, TypeScript |
+| 08 | [Побудова й відбір ознак](../../phases/02-ml-fundamentals/08-feature-engineering/) | Створіть | Python, TypeScript |
 | 09 | [Оцінювання моделей: метрики та перехресна перевірка](../../phases/02-ml-fundamentals/09-model-evaluation/) | Створіть | Python, Julia |
 | 10 | [Зміщення, дисперсія та крива навчання](../../phases/02-ml-fundamentals/10-bias-variance/) | Вивчіть | Python |
 | 11 | [Ансамблеві методи: бустинг, бегінг і стекінг](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Створіть | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
 | 01 | [Перцептрон: із чого все почалося](../../phases/03-deep-learning-core/01-the-perceptron/) | Створіть | Python, Rust, Julia |
-| 02 | [Багатошарові мережі та прямий прохід](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Створіть | Python |
+| 02 | [Багатошарові мережі та прямий прохід](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Створіть | Python, TypeScript |
 | 03 | [Зворотне поширення з нуля](../../phases/03-deep-learning-core/03-backpropagation/) | Створіть | Python, Rust, Julia |
 | 04 | [Функції активації: ReLU, Sigmoid, GELU і причини вибору](../../phases/03-deep-learning-core/04-activation-functions/) | Створіть | Python, Julia |
 | 05 | [Функції втрат: MSE, перехресна ентропія та контрастивні втрати](../../phases/03-deep-learning-core/05-loss-functions/) | Створіть | Python, Julia |
-| 06 | [Оптимізатори: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Створіть | Python |
-| 07 | [Регуляризація: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Створіть | Python |
-| 08 | [Ініціалізація ваг і стабільність навчання](../../phases/03-deep-learning-core/08-weight-initialization/) | Створіть | Python |
-| 09 | [Розклади швидкості навчання та розігрів](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Створіть | Python |
-| 10 | [Створіть власний мініфреймворк](../../phases/03-deep-learning-core/10-mini-framework/) | Створіть | Python |
+| 06 | [Оптимізатори: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Створіть | Python, TypeScript |
+| 07 | [Регуляризація: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Створіть | Python, TypeScript |
+| 08 | [Ініціалізація ваг і стабільність навчання](../../phases/03-deep-learning-core/08-weight-initialization/) | Створіть | Python, TypeScript |
+| 09 | [Розклади швидкості навчання та розігрів](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Створіть | Python, TypeScript |
+| 10 | [Створіть власний мініфреймворк](../../phases/03-deep-learning-core/10-mini-framework/) | Створіть | Python, TypeScript |
 | 11 | [Вступ до PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Створіть | Python |
 | 12 | [Вступ до JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Створіть | Python |
 | 13 | [Налагодження нейронних мереж](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Створіть | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5, BART: моделі кодувальника-декодувальника](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Вивчіть | Python |
 | 09 | [Vision Transformers (ViT) для комп'ютерного зору](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Створіть | Python |
 | 10 | [Аудіотрансформери: архітектура Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Вивчіть | Python |
-| 11 | [Суміш експертів (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Створіть | Python |
-| 12 | [KV-кеш, Flash Attention та оптимізація інференсу](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Створіть | Python |
+| 11 | [Суміш експертів (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Створіть | Python, Rust |
+| 12 | [KV-кеш, Flash Attention та оптимізація інференсу](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Створіть | Python, Rust |
 | 13 | [Закони масштабування](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Вивчіть | Python |
 | 14 | [Створіть Transformer з нуля](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Створіть | Python |
-| 15 | [Різновиди уваги: ковзне вікно, розріджена й диференціальна](../../phases/07-transformers-deep-dive/15-attention-variants/) | Створіть | Python |
-| 16 | [Спекулятивне декодування: чернетка, перевірка, повторення](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Створіть | Python |
+| 15 | [Різновиди уваги: ковзне вікно, розріджена й диференціальна](../../phases/07-transformers-deep-dive/15-attention-variants/) | Створіть | Python, Rust |
+| 16 | [Спекулятивне декодування: чернетка, перевірка, повторення](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Створіть | Python, Rust |
 
 </details>
 

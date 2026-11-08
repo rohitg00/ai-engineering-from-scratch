@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [Что такое машинное обучение?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Изучение | Python |
 | 02 | [Линейная регрессия с нуля](../../phases/02-ml-fundamentals/02-linear-regression/) | Создание | Python, Rust, Julia |
 | 03 | [Логистическая регрессия и классификация](../../phases/02-ml-fundamentals/03-logistic-regression/) | Создание | Python, Rust, Julia |
-| 04 | [Деревья решений и случайные леса](../../phases/02-ml-fundamentals/04-decision-trees/) | Создание | Python |
+| 04 | [Деревья решений и случайные леса](../../phases/02-ml-fundamentals/04-decision-trees/) | Создание | Python, TypeScript |
 | 05 | [Метод опорных векторов](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Создание | Python, Julia |
-| 06 | [KNN и метрики расстояния](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Создание | Python |
-| 07 | [Обучение без учителя: K-Means и DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Создание | Python |
-| 08 | [Проектирование и отбор признаков](../../phases/02-ml-fundamentals/08-feature-engineering/) | Создание | Python |
+| 06 | [KNN и метрики расстояния](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Создание | Python, TypeScript |
+| 07 | [Обучение без учителя: K-Means и DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Создание | Python, TypeScript |
+| 08 | [Проектирование и отбор признаков](../../phases/02-ml-fundamentals/08-feature-engineering/) | Создание | Python, TypeScript |
 | 09 | [Оценка модели: метрики и кросс-валидация](../../phases/02-ml-fundamentals/09-model-evaluation/) | Создание | Python, Julia |
 | 10 | [Смещение, дисперсия и кривая обучения](../../phases/02-ml-fundamentals/10-bias-variance/) | Изучение | Python |
 | 11 | [Методы ансамблирования: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Создание | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | # | Урок | Тип | Языки |
 |:---:|--------|:----:|------|
 | 01 | [Перцептрон: с чего всё началось](../../phases/03-deep-learning-core/01-the-perceptron/) | Создание | Python, Rust, Julia |
-| 02 | [Многослойные сети и прямой проход](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Создание | Python |
+| 02 | [Многослойные сети и прямой проход](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Создание | Python, TypeScript |
 | 03 | [Обратное распространение ошибки с нуля](../../phases/03-deep-learning-core/03-backpropagation/) | Создание | Python, Rust, Julia |
 | 04 | [Функции активации: ReLU, Sigmoid, GELU — и зачем они нужны](../../phases/03-deep-learning-core/04-activation-functions/) | Создание | Python, Julia |
 | 05 | [Функции потерь: MSE, cross-entropy и contrastive loss](../../phases/03-deep-learning-core/05-loss-functions/) | Создание | Python, Julia |
-| 06 | [Оптимизаторы: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Создание | Python |
-| 07 | [Регуляризация: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Создание | Python |
-| 08 | [Инициализация весов и стабильность обучения](../../phases/03-deep-learning-core/08-weight-initialization/) | Создание | Python |
-| 09 | [Планировщики скорости обучения и warm-up](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Создание | Python |
-| 10 | [Создайте свой мини-фреймворк](../../phases/03-deep-learning-core/10-mini-framework/) | Создание | Python |
+| 06 | [Оптимизаторы: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Создание | Python, TypeScript |
+| 07 | [Регуляризация: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Создание | Python, TypeScript |
+| 08 | [Инициализация весов и стабильность обучения](../../phases/03-deep-learning-core/08-weight-initialization/) | Создание | Python, TypeScript |
+| 09 | [Планировщики скорости обучения и warm-up](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Создание | Python, TypeScript |
+| 10 | [Создайте свой мини-фреймворк](../../phases/03-deep-learning-core/10-mini-framework/) | Создание | Python, TypeScript |
 | 11 | [Введение в PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Создание | Python |
 | 12 | [Введение в JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Создание | Python |
 | 13 | [Отладка нейронных сетей](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Создание | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5, BART: модели «кодировщик — декодировщик»](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Изучение | Python |
 | 09 | [Трансформеры для зрения (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Создание | Python |
 | 10 | [Аудиотрансформеры: архитектура Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Изучение | Python |
-| 11 | [Смесь экспертов (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Создание | Python |
-| 12 | [KV-кэш, Flash Attention и оптимизация инференса](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Создание | Python |
+| 11 | [Смесь экспертов (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Создание | Python, Rust |
+| 12 | [KV-кэш, Flash Attention и оптимизация инференса](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Создание | Python, Rust |
 | 13 | [Законы масштабирования](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Изучение | Python |
 | 14 | [Создание трансформера с нуля](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Создание | Python |
-| 15 | [Варианты внимания: скользящее окно, разреженное и дифференциальное](../../phases/07-transformers-deep-dive/15-attention-variants/) | Создание | Python |
-| 16 | [Спекулятивное декодирование: черновик, проверка, повтор](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Создание | Python |
+| 15 | [Варианты внимания: скользящее окно, разреженное и дифференциальное](../../phases/07-transformers-deep-dive/15-attention-variants/) | Создание | Python, Rust |
+| 16 | [Спекулятивное декодирование: черновик, проверка, повтор](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Создание | Python, Rust |
 
 </details>
 

@@ -3,7 +3,7 @@
 > A dense 70B transformer activates every parameter for every token. A 671B MoE activates only 37B per token and beats it on every benchmark. Sparsity is the most important scaling idea of the decade.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
@@ -90,6 +90,13 @@ See `code/main.py`. A compact MoE layer in pure stdlib with:
 - top-k=2 routing
 - softmax-normalized gating weights
 - auxiliary-loss-free balancing via per-expert bias
+
+`code/main.rs` is a Rust port with the same functions and demos. It uses only the standard library. The random numbers differ from Python's, but the printed conclusions are the same.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Step 1: the router
 

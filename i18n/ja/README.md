@@ -400,11 +400,11 @@ flowchart TB
 | 01 | [機械学習とは](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | 学習 | Python |
 | 02 | [ゼロから実装する線形回帰](../../phases/02-ml-fundamentals/02-linear-regression/) | 制作 | Python, Rust, Julia |
 | 03 | [ロジスティック回帰と分類](../../phases/02-ml-fundamentals/03-logistic-regression/) | 制作 | Python, Rust, Julia |
-| 04 | [決定木とランダムフォレスト](../../phases/02-ml-fundamentals/04-decision-trees/) | 制作 | Python |
+| 04 | [決定木とランダムフォレスト](../../phases/02-ml-fundamentals/04-decision-trees/) | 制作 | Python, TypeScript |
 | 05 | [サポートベクターマシン](../../phases/02-ml-fundamentals/05-support-vector-machines/) | 制作 | Python, Julia |
-| 06 | [k近傍法（KNN）と距離尺度](../../phases/02-ml-fundamentals/06-knn-and-distances/) | 制作 | Python |
-| 07 | [教師なし学習：K-Means、DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | 制作 | Python |
-| 08 | [特徴量エンジニアリングと選択](../../phases/02-ml-fundamentals/08-feature-engineering/) | 制作 | Python |
+| 06 | [k近傍法（KNN）と距離尺度](../../phases/02-ml-fundamentals/06-knn-and-distances/) | 制作 | Python, TypeScript |
+| 07 | [教師なし学習：K-Means、DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | 制作 | Python, TypeScript |
+| 08 | [特徴量エンジニアリングと選択](../../phases/02-ml-fundamentals/08-feature-engineering/) | 制作 | Python, TypeScript |
 | 09 | [モデル評価：指標と交差検証](../../phases/02-ml-fundamentals/09-model-evaluation/) | 制作 | Python, Julia |
 | 10 | [バイアス、分散と学習曲線](../../phases/02-ml-fundamentals/10-bias-variance/) | 学習 | Python |
 | 11 | [アンサンブル手法：ブースティング、バギング、スタッキング](../../phases/02-ml-fundamentals/11-ensemble-methods/) | 制作 | Python |
@@ -428,15 +428,15 @@ flowchart TB
 | # | レッスン | 種別 | 言語 |
 |:---:|--------|:----:|------|
 | 01 | [パーセプトロン：すべての始まり](../../phases/03-deep-learning-core/01-the-perceptron/) | 制作 | Python, Rust, Julia |
-| 02 | [多層ネットワークと順伝播](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 制作 | Python |
+| 02 | [多層ネットワークと順伝播](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 制作 | Python, TypeScript |
 | 03 | [ゼロから実装する誤差逆伝播法](../../phases/03-deep-learning-core/03-backpropagation/) | 制作 | Python, Rust, Julia |
 | 04 | [活性化関数：ReLU、Sigmoid、GELUとその役割](../../phases/03-deep-learning-core/04-activation-functions/) | 制作 | Python, Julia |
 | 05 | [損失関数：MSE、交差エントロピー、対照損失](../../phases/03-deep-learning-core/05-loss-functions/) | 制作 | Python, Julia |
-| 06 | [最適化手法：SGD、Momentum、Adam、AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 制作 | Python |
-| 07 | [正則化：Dropout、Weight Decay、BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 制作 | Python |
-| 08 | [重みの初期化と学習の安定性](../../phases/03-deep-learning-core/08-weight-initialization/) | 制作 | Python |
-| 09 | [学習率スケジュールとウォームアップ](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | 制作 | Python |
-| 10 | [ミニフレームワークを自作する](../../phases/03-deep-learning-core/10-mini-framework/) | 制作 | Python |
+| 06 | [最適化手法：SGD、Momentum、Adam、AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 制作 | Python, TypeScript |
+| 07 | [正則化：Dropout、Weight Decay、BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 制作 | Python, TypeScript |
+| 08 | [重みの初期化と学習の安定性](../../phases/03-deep-learning-core/08-weight-initialization/) | 制作 | Python, TypeScript |
+| 09 | [学習率スケジュールとウォームアップ](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | 制作 | Python, TypeScript |
+| 10 | [ミニフレームワークを自作する](../../phases/03-deep-learning-core/10-mini-framework/) | 制作 | Python, TypeScript |
 | 11 | [PyTorch入門](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | 制作 | Python |
 | 12 | [JAX入門](../../phases/03-deep-learning-core/12-intro-to-jax/) | 制作 | Python |
 | 13 | [ニューラルネットワークのデバッグ](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | 制作 | Python |
@@ -560,12 +560,12 @@ flowchart TB
 | 08 | [T5、BART：エンコーダー・デコーダーモデル](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | 学習 | Python |
 | 09 | [Vision Transformer（ViT）](../../phases/07-transformers-deep-dive/09-vision-transformers/) | 制作 | Python |
 | 10 | [音声Transformer：Whisperのアーキテクチャ](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | 学習 | Python |
-| 11 | [専門家混合（MoE）](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | 制作 | Python |
-| 12 | [KVキャッシュ、FlashAttentionと推論最適化](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | 制作 | Python |
+| 11 | [専門家混合（MoE）](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | 制作 | Python, Rust |
+| 12 | [KVキャッシュ、FlashAttentionと推論最適化](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | 制作 | Python, Rust |
 | 13 | [スケーリング則](../../phases/07-transformers-deep-dive/13-scaling-laws/) | 学習 | Python |
 | 14 | [Transformerをゼロから構築する](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | 制作 | Python |
-| 15 | [アテンションの各種手法：スライディングウィンドウ、スパース、微分型](../../phases/07-transformers-deep-dive/15-attention-variants/) | 制作 | Python |
-| 16 | [投機的デコーディング：草案、検証、反復](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | 制作 | Python |
+| 15 | [アテンションの各種手法：スライディングウィンドウ、スパース、微分型](../../phases/07-transformers-deep-dive/15-attention-variants/) | 制作 | Python, Rust |
+| 16 | [投機的デコーディング：草案、検証、反復](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | 制作 | Python, Rust |
 
 </details>
 

@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [Makine Öğrenimi Nedir?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Öğrenme | Python |
 | 02 | [Sıfırdan Doğrusal Regresyon](../../phases/02-ml-fundamentals/02-linear-regression/) | Uygulama | Python, Rust, Julia |
 | 03 | [Lojistik Regresyon ve Sınıflandırma](../../phases/02-ml-fundamentals/03-logistic-regression/) | Uygulama | Python, Rust, Julia |
-| 04 | [Karar Ağaçları ve Rastgele Ormanlar](../../phases/02-ml-fundamentals/04-decision-trees/) | Uygulama | Python |
+| 04 | [Karar Ağaçları ve Rastgele Ormanlar](../../phases/02-ml-fundamentals/04-decision-trees/) | Uygulama | Python, TypeScript |
 | 05 | [Destek Vektör Makineleri](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Uygulama | Python, Julia |
-| 06 | [K-En Yakın Komşu ve Uzaklık Ölçütleri](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Uygulama | Python |
-| 07 | [Denetimsiz Öğrenme: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Uygulama | Python |
-| 08 | [Özellik Mühendisliği ve Seçimi](../../phases/02-ml-fundamentals/08-feature-engineering/) | Uygulama | Python |
+| 06 | [K-En Yakın Komşu ve Uzaklık Ölçütleri](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Uygulama | Python, TypeScript |
+| 07 | [Denetimsiz Öğrenme: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Uygulama | Python, TypeScript |
+| 08 | [Özellik Mühendisliği ve Seçimi](../../phases/02-ml-fundamentals/08-feature-engineering/) | Uygulama | Python, TypeScript |
 | 09 | [Model Değerlendirme: Metrikler ve Çapraz Doğrulama](../../phases/02-ml-fundamentals/09-model-evaluation/) | Uygulama | Python, Julia |
 | 10 | [Yanlılık, Varyans ve Öğrenme Eğrisi](../../phases/02-ml-fundamentals/10-bias-variance/) | Öğrenme | Python |
 | 11 | [Topluluk Yöntemleri: Boosting, Bagging, Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Uygulama | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | No. | Ders | Tür | Dil |
 |:---:|--------|:----:|------|
 | 01 | [Perceptron: Her Şeyin Başladığı Yer](../../phases/03-deep-learning-core/01-the-perceptron/) | Uygulama | Python, Rust, Julia |
-| 02 | [Çok Katmanlı Ağlar ve İleri Geçiş](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Uygulama | Python |
+| 02 | [Çok Katmanlı Ağlar ve İleri Geçiş](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Uygulama | Python, TypeScript |
 | 03 | [Geri Yayılımı Sıfırdan Uygulama](../../phases/03-deep-learning-core/03-backpropagation/) | Uygulama | Python, Rust, Julia |
 | 04 | [Aktivasyon Fonksiyonları: ReLU, Sigmoid, GELU ve Neden Kullanılırlar?](../../phases/03-deep-learning-core/04-activation-functions/) | Uygulama | Python, Julia |
 | 05 | [Kayıp Fonksiyonları: MSE, Çapraz Entropi, Kontrastif Kayıp](../../phases/03-deep-learning-core/05-loss-functions/) | Uygulama | Python, Julia |
-| 06 | [En İyileyiciler: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Uygulama | Python |
-| 07 | [Düzenlileştirme: Dropout, Ağırlık Sönümleme, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Uygulama | Python |
-| 08 | [Ağırlık Başlatma ve Eğitim Kararlılığı](../../phases/03-deep-learning-core/08-weight-initialization/) | Uygulama | Python |
-| 09 | [Öğrenme Hızı Çizelgeleri ve Isınma](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Uygulama | Python |
-| 10 | [Kendi Mini Çerçevenizi Kurun](../../phases/03-deep-learning-core/10-mini-framework/) | Uygulama | Python |
+| 06 | [En İyileyiciler: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Uygulama | Python, TypeScript |
+| 07 | [Düzenlileştirme: Dropout, Ağırlık Sönümleme, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Uygulama | Python, TypeScript |
+| 08 | [Ağırlık Başlatma ve Eğitim Kararlılığı](../../phases/03-deep-learning-core/08-weight-initialization/) | Uygulama | Python, TypeScript |
+| 09 | [Öğrenme Hızı Çizelgeleri ve Isınma](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Uygulama | Python, TypeScript |
+| 10 | [Kendi Mini Çerçevenizi Kurun](../../phases/03-deep-learning-core/10-mini-framework/) | Uygulama | Python, TypeScript |
 | 11 | [PyTorch’a Giriş](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Uygulama | Python |
 | 12 | [JAX’e Giriş](../../phases/03-deep-learning-core/12-intro-to-jax/) | Uygulama | Python |
 | 13 | [Sinir Ağlarında Hata Ayıklama](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Uygulama | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5 ve BART: Kodlayıcı-Çözücü Modelleri](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Öğrenme | Python |
 | 09 | [Görsel Transformer’lar (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Uygulama | Python |
 | 10 | [Ses Transformer’ları: Whisper Mimarisi](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Öğrenme | Python |
-| 11 | [Uzman Karışımı (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Uygulama | Python |
-| 12 | [KV Önbelleği, Flash Attention ve Çıkarım İyileştirmesi](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Uygulama | Python |
+| 11 | [Uzman Karışımı (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Uygulama | Python, Rust |
+| 12 | [KV Önbelleği, Flash Attention ve Çıkarım İyileştirmesi](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Uygulama | Python, Rust |
 | 13 | [Ölçekleme Yasaları](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Öğrenme | Python |
 | 14 | [Sıfırdan Transformer Kurun](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Uygulama | Python |
-| 15 | [Dikkat Varyantları: Kayan Pencere, Seyrek ve Diferansiyel](../../phases/07-transformers-deep-dive/15-attention-variants/) | Uygulama | Python |
-| 16 | [Spekülatif Kod Çözümleme: Taslak Oluştur, Doğrula, Yinele](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Uygulama | Python |
+| 15 | [Dikkat Varyantları: Kayan Pencere, Seyrek ve Diferansiyel](../../phases/07-transformers-deep-dive/15-attention-variants/) | Uygulama | Python, Rust |
+| 16 | [Spekülatif Kod Çözümleme: Taslak Oluştur, Doğrula, Yinele](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Uygulama | Python, Rust |
 
 </details>
 

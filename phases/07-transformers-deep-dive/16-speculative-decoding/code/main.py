@@ -150,7 +150,7 @@ def main():
         print(row)
     print()
 
-    print("takeaway: Leviathan's theorem holds — spec-decoded distribution = verifier's.")
+    print("takeaway: Leviathan's theorem holds: spec-decoded distribution = verifier's.")
     print("          At α=0.85 and N=5: ~4.1 tokens per verifier call ≈ 4x fewer big-model")
     print("          forwards (minus draft-model overhead).")
 

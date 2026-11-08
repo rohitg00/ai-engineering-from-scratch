@@ -3,7 +3,7 @@
 > Store everything. Predict by looking at your neighbors. The simplest algorithm that actually works.
 
 **Type:** Build
-**Language:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lesson 14 Norms and Distances)
 **Time:** ~90 minutes
 
@@ -298,7 +298,7 @@ class KDTree:
         ...
 ```
 
-See `code/knn.py` for the complete implementation with all helper methods and demos.
+See `code/knn.py` for the complete implementation with all helper methods and demos. `code/knn.ts` is a TypeScript port with the same functions and demos. Run it with `npx tsx code/knn.ts`.
 
 ### Step 4: Feature scaling
 
