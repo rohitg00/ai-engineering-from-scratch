@@ -4046,7 +4046,9 @@
         var el = document.getElementById('lessonContent');
         disposeRenderedLesson(el);
         canonHeadings = (enMd && enMd !== md) ? headingsByLevel(enMd) : null;
-        var html = window.AIFSLessonMarkdown.parseMd(md, { renderCode: window.AIFSLessonMarkdown.prerenderedCode(codeBlocks), canonHeadings: canonHeadings });
+        var html = window.AIFSLessonMarkdown.withCanonHeadings(canonHeadings, function () {
+          return window.AIFSLessonMarkdown.parseMd(md, { renderCode: window.AIFSLessonMarkdown.prerenderedCode(codeBlocks) });
+        });
         html += '<div class="ai-panels" id="aiPanels"></div>';
         html = addBottomNav(html);
         el.innerHTML = certificationDisclaimerHtml() + '<article class="lesson-article">' + html + '</article>';

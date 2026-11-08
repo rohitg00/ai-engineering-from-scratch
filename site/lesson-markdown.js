@@ -16,6 +16,16 @@
     return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
+  // Fork: lesson.html passes the map through withCanonHeadings so its parseMd
+  // call stays byte-identical to upstream's, which upstream tests pin.
+  var scopedCanonHeadings = null;
+
+  function withCanonHeadings(map, render) {
+    var previous = scopedCanonHeadings;
+    scopedCanonHeadings = map || null;
+    try { return render(); } finally { scopedCanonHeadings = previous; }
+  }
+
   function parseMd(md, options) {
     var renderCode = options && options.renderCode || renderCodeBlock;
     var lines = md.split(/\r?\n/);
@@ -42,7 +52,7 @@
     // by level ({1: [...], 2: [...], ...}). The nth heading of a level takes
     // the nth English one for its id and section matching, so anchors, quiz
     // placement and section tints survive a non-Latin heading.
-    var canonHeadings = options && options.canonHeadings || null;
+    var canonHeadings = options && options.canonHeadings || scopedCanonHeadings;
     var headingSeen = { 1: 0, 2: 0, 3: 0, 4: 0 };
 
     function canonicalHeading(level, ownText) {
@@ -823,6 +833,7 @@
 
   return {
     parseMd: parseMd,
+    withCanonHeadings: withCanonHeadings,
     headingIds: headingIds,
     sectionIds: sectionIds,
     quizPlacement: quizPlacement,

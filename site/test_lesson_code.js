@@ -196,7 +196,7 @@ test('the browser falls back when the fragment request outlasts its timeout', as
 test('the lesson template fetches fragments and keeps the browser fallback', () => {
   const template = fs.readFileSync(path.join(__dirname, 'lesson.html'), 'utf8');
   assert.match(template, /fetch\('lesson-code\/' \+ path \+ '\.json'\)/);
-  assert.match(template, /parseMd\(md, \{ renderCode: window\.AIFSLessonMarkdown\.prerenderedCode\(codeBlocks\)(, canonHeadings: canonHeadings)? \}\)/);
+  assert.match(template, /parseMd\(md, \{ renderCode: window\.AIFSLessonMarkdown\.prerenderedCode\(codeBlocks\) \}\)/);
   const config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'vercel.json'), 'utf8'));
   assert.match(config.functions['api/lesson.js'].includeFiles, /site\/lesson\{[^{}]*,-code\/\*\*\}/);
   for (const [name, settings] of Object.entries(config.functions)) assert.ok(String(settings.includeFiles || '').length <= 256, name);
