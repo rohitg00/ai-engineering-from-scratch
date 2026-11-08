@@ -3,7 +3,7 @@
 > La retropropagación es el algoritmo que hace posible el aprendizaje. Sin ella, las redes neuronales son sólo costosos generadores de números aleatorios.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Lesson 03.02 (Multi-Layer Networks)
 **Time:** ~120 minutes
 
