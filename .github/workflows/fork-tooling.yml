@@ -15,6 +15,10 @@ on:
       - "scripts/test_i18n_curriculum.py"
       - "scripts/test_i18n_status.py"
       - "scripts/test_check_quiz_translations.py"
+      - "scripts/zh_drift.py"
+      - "scripts/zh_terms.py"
+      - "scripts/test_zh_drift.py"
+      - "scripts/test_zh_terms.py"
       - "site/data.js"
       - "site/i18n.zh-Hant.js"
       - ".github/workflows/fork-tooling.yml"
@@ -28,6 +32,10 @@ on:
       - "scripts/test_i18n_curriculum.py"
       - "scripts/test_i18n_status.py"
       - "scripts/test_check_quiz_translations.py"
+      - "scripts/zh_drift.py"
+      - "scripts/zh_terms.py"
+      - "scripts/test_zh_drift.py"
+      - "scripts/test_zh_terms.py"
       - "site/data.js"
       - "site/i18n.zh-Hant.js"
       - ".github/workflows/fork-tooling.yml"
@@ -58,9 +66,18 @@ jobs:
         run: python3 scripts/test_i18n_status.py
       - name: unit tests — translated-quiz validator
         run: python3 scripts/test_check_quiz_translations.py
+      - name: unit tests — translation drift reporter
+        run: python3 scripts/test_zh_drift.py
+      - name: unit tests — Taiwan terminology linter
+        run: python3 scripts/test_zh_terms.py
 
       # The unit tests pin the rules; these run them over the real curriculum.
       - name: every translated quiz matches its English schema
         run: python3 scripts/check_quiz_translations.py
       - name: every translated lesson keeps its English structure
         run: python3 scripts/i18n_status.py --verify
+      # Error tier only: terms that are wrong in Taiwan writing in every
+      # context. The warn tier needs a human and never fails the build.
+      # zh_drift.py is not run here: it is advisory, and needs full history.
+      - name: no Mainland-only terms in the zh-Hant translation
+        run: python3 scripts/zh_terms.py --strict
