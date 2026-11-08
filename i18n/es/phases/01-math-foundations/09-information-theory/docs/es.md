@@ -3,7 +3,7 @@
 > La teoría de la información mide la sorpresa y las funciones de pérdida se basan en ella.
 
 **Type:** Learn
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability)
 **Time:** ~60 minutes
 

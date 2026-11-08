@@ -3,7 +3,7 @@
 > Cada señal es una suma de ondas senoides. La transformación de Fourier le dice cuáles son.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -426,7 +426,7 @@ La matriz de espectrograma tiene forma (n_frecuencias, n_time_frames). Cada colu
 
 ## Envío
 
-- ¿ Qué ?`code/fourier.py`para generar `outputs/prompt-spectral-analyzer.md`¿ Qué ?
+- ¿ Qué ?`code/fourier.py`para generar `outputs/prompt-spectral-analyzer.md`. La versión de TypeScript, `code/fourier.ts`, escribe el mismo archivo.
 
 ## Los ejercicios
 

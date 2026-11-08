@@ -3,7 +3,7 @@
 > Su función de distancia define lo que significa "similar".
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -436,7 +436,7 @@ norm-unit-balls
 
 ### Paso 1: Todas las funciones normales y de distancia
 
-¿ Qué ?`code/distances.py`Cada función se construye desde cero utilizando sólo matemáticas básicas de Python.
+¿ Qué ?`code/distances.py`Cada función se construye desde cero utilizando sólo matemáticas básicas Python.`code/distances.ts`es un puerto TypeScript con las mismas funciones y demos.
 
 ### Paso 2: Los mismos datos, distancias diferentes, vecinos diferentes
 

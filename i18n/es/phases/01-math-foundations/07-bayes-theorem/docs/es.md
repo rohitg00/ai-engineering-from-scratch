@@ -3,7 +3,7 @@
 > La probabilidad es lo que esperas y el teorema de Bayes es lo que aprendes.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 Añadir 1 a cada cuenta asegura que ninguna probabilidad es cero.
 
+Una palabra que nunca apareció en ningún mensaje de formación no está en el vocabulario. `predict`se saltará, porque no da pruebas para ninguna clase.
+
 ### El importe máximo a posteriori (MAP)
 
 MLE pregunta: qué parámetros maximizan $P(\text{data} \mid \text{parameters})$¿ Qué ?
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ El algoritmo es el mismo. CountVectorizer maneja la tokenización y la construcc
 
 ## Envío
 
-La clase NaiveBayes construida aquí demuestra la línea completa: tokenización, estimación de probabilidad con suavizamiento de Laplace, predicción del espacio log.`code/bayes.py`se ejecuta de extremo a extremo sin dependencias más allá de la biblioteca estándar de Python.
+La clase NaiveBayes construida aquí demuestra la línea completa: tokenización, estimación de probabilidad con suavizamiento de Laplace, predicción del espacio log.`code/bayes.py`ejecuta de extremo a extremo sin dependencias más allá de la biblioteca estándar de Python.`code/bayes.ts`sólo utiliza la biblioteca estándar de Node.
 
 ### Los antecesores conjuntos
 

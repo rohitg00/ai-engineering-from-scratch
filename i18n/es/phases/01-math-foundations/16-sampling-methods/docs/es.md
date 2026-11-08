@@ -3,7 +3,7 @@
 > La muestreo es la forma en que la IA explora el espacio de posibilidades.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06-07 (Probability, Bayes' Theorem)
 **Time:** ~120 minutes
 
@@ -608,6 +608,8 @@ def gumbel_softmax(logits, temperature):
 Muestre cómo la disminución de la temperatura hace que la salida se acerque a un vector de un solo calor.
 
 Las implementaciones completas con todas las visualizaciones están en `code/sampling.py`¿ Qué ?
+
+El puerto de TypeScript está en `code/sampling.ts`Utiliza su propio generador aleatorio semillado, por lo que sus números aleatorios difieren de la salida de Python.
 
 ## Usalo
 

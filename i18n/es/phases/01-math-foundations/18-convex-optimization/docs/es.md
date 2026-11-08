@@ -3,7 +3,7 @@
 > Los problemas convexos tienen un valle, las redes neuronales tienen millones, saber la diferencia importa.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
 **Time:** ~90 minutes
 

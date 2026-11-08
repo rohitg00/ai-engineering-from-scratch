@@ -3,7 +3,7 @@
 > El punto flotante es una abstracción que se filtra, te morderá durante el entrenamiento y no lo verás venir.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04
 **Time:** ~120 minutes
 
@@ -558,7 +558,7 @@ check_tensor("bad",  [1.0, float('nan'), 3.0])
 check_tensor("ugly", [1.0, float('inf'), 3.0])
 ```
 
-¿ Qué ?`code/numerical.py`para implementaciones completas con todas las pruebas de casos de riesgo.
+¿ Qué ?`code/numerical.py`El archivo `code/numerical.ts`es un puerto TypeScript con las mismas funciones y demos.
 
 ## Envío
 

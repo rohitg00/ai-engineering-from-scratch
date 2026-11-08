@@ -3,7 +3,7 @@
 > Los gráficos son la estructura de datos de las relaciones. Si sus datos tienen conexiones, necesitas teoría de gráficos.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-03 (linear algebra, matrices)
 **Time:** ~90 minutes
 

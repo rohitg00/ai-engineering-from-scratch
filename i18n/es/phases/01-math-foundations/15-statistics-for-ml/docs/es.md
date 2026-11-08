@@ -3,7 +3,7 @@
 > Las estadísticas son la manera de saber si tu modelo realmente funciona o simplemente tuvo suerte.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06 (Probability and Distributions), 07 (Bayes' Theorem)
 **Time:** ~120 minutes
 
