@@ -3,7 +3,7 @@
 > A backpropagation é o algoritmo que torna possível a aprendizagem. Sem ela, as redes neurais são apenas caros geradores de números aleatórios.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Lesson 03.02 (Multi-Layer Networks)
 **Time:** ~120 minutes
 
