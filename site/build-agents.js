@@ -19,6 +19,15 @@ function pageMarkdown(html, filename) {
   return `# ${title}\n\nCanonical page: ${ORIGIN}/${filename === 'index.html' ? '' : filename}\n\n${text}\n\n[Curriculum index](${ORIGIN}/llms.txt) | [API and MCP docs](${ORIGIN}/docs)\n`;
 }
 
+const DISCOVERY_HEADING = '## API and MCP';
+
+function withDiscovery(llms) {
+  if (llms.split('\n').includes(DISCOVERY_HEADING)) return llms;
+  const discovery = `${DISCOVERY_HEADING}\n\n- [AI Engineering from Scratch API docs](${ORIGIN}/docs): public read-only API, authentication policy, errors, quotas, and versioning.\n- [OpenAPI 3.1](${ORIGIN}/openapi.json): typed REST operations.\n- [MCP manifest](${ORIGIN}/server.json): connect using Streamable HTTP at ${ORIGIN}/mcp.\n\n`;
+  const at = llms.search(/^## /m);
+  return at < 0 ? llms.trimEnd() + '\n\n' + discovery : llms.slice(0, at) + discovery + llms.slice(at);
+}
+
 function build() {
   const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, 'lesson-seo.json'), 'utf8'));
   const entries = Object.values(manifest.lessons).map(entry => ({
@@ -49,10 +58,10 @@ function build() {
   }
   const llmsPath = path.join(__dirname, 'llms.txt');
   const llms = fs.readFileSync(llmsPath, 'utf8');
-  const discovery = `## API and MCP\n\n- [AI Engineering from Scratch API docs](${ORIGIN}/docs): public read-only API, authentication policy, errors, quotas, and versioning.\n- [OpenAPI 3.1](${ORIGIN}/openapi.json): typed REST operations.\n- [MCP manifest](${ORIGIN}/server.json): connect using Streamable HTTP at ${ORIGIN}/mcp.\n\n`;
-  if (!llms.includes('## API, MCP, and CLI')) fs.writeFileSync(llmsPath, llms.replace(/\n\n/, '\n\n' + discovery));
+  const next = withDiscovery(llms);
+  if (next !== llms) fs.writeFileSync(llmsPath, next);
   console.log(`Built ${entries.length} agent resources and ${new Set(Object.values(PAGES)).size} Markdown pages.`);
 }
 
 if (require.main === module) build();
-module.exports = { pageMarkdown, build };
+module.exports = { pageMarkdown, withDiscovery, build };
