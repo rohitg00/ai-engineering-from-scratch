@@ -3,7 +3,7 @@
 > L'échantillonnage est la façon dont l'IA explore l'espace des possibilités.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06-07 (Probability, Bayes' Theorem)
 **Time:** ~120 minutes
 
@@ -608,6 +608,8 @@ def gumbel_softmax(logits, temperature):
 Montrez comment la baisse de la température fait approcher le vecteur de sortie d'un vecteur à chaud.
 
 Des mises en œuvre complètes avec toutes les visualisations sont en `code/sampling.py`- Je suis désolé .
+
+Le port TypeScript est activé `code/sampling.ts`Il utilise son propre générateur aléatoire semé, donc ses nombres aléatoires diffèrent de la sortie Python.
 
 ## Utilisez-le
 

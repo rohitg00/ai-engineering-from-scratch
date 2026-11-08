@@ -3,7 +3,7 @@
 > La probabilité est ce que vous attendez, le théorème de Bayes est ce que vous apprenez.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 Ajouter 1 à chaque compte assure qu'aucune probabilité n'est jamais nulle.
 
+Un mot qui n'a jamais été utilisé dans un message d'entraînement n'est pas dans le vocabulaire. `predict`Il ne le fait pas, car il ne donne aucune preuve pour les deux classes.
+
 ### Le maximum a posteriori (MAP)
 
 MLE demande: quels paramètres maximiser $P(\text{data} \mid \text{parameters})$- Je suis désolé .
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ Le même algorithme. CountVectorizer gère la symbolisation et la construction d
 
 ## La faire partir
 
-La classe NaiveBayes construite ici démontre l'ensemble du pipeline: la tokenization, l'estimation de probabilité avec le lissage de Laplace, la prédiction de l'espace log.`code/bayes.py`fonctionne de bout en bout sans dépendances au-delà de la bibliothèque standard de Python.
+La classe NaiveBayes construite ici démontre l'ensemble du pipeline: la tokenization, l'estimation de probabilité avec le lissage de Laplace, la prédiction de l'espace log.`code/bayes.py`fonctionne de bout en bout sans dépendances au-delà de la bibliothèque standard de Python.`code/bayes.ts`utilise uniquement la bibliothèque standard Node.
 
 ### Les prédécesseurs conjugaux
 

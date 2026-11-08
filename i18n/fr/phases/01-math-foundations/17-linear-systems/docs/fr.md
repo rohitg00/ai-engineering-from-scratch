@@ -3,7 +3,7 @@
 > Résout$Ax = b$C'est le plus ancien problème en mathématiques qui dirige encore votre réseau neuronal.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors & Matrices), 03 (Matrix Transformations)
 **Time:** ~120 minutes
 
@@ -546,6 +546,7 @@ print(f"Ridge weights (sklearn): {ridge_sk.coef_}")
 
 Cette leçon donne:
 - `code/linear_systems.py`contenant des implementations à partir de zéro de l'élimination gaussienne, de la décomposition de LU, de la décomposition Cholesky, des carrés les moins élevés et de la régression de la crête
+- `code/linear_systems.ts`Il compare avec de petits résolveurs de référence à partir de zéro, car TypeScript n'a pas NumPy.
 - Une démonstration de travail selon laquelle les équations normales et la régression linéaire de sklearn produisent les mêmes poids
 
 ## Exercices

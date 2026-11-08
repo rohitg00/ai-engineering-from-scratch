@@ -3,7 +3,7 @@
 > Chaque signal est une somme d'ondes sinusoïdes.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -426,7 +426,7 @@ La matrice du spectrogramme a une forme (n_frequences, n_time_frames). Chaque co
 
 ## La faire partir
 
-On court .`code/fourier.py`pour générer `outputs/prompt-spectral-analyzer.md`- Je suis désolé .
+On court .`code/fourier.py`pour générer `outputs/prompt-spectral-analyzer.md`La version TypeScript,`code/fourier.ts`, écrit le même dossier.
 
 ## Exercices
 
