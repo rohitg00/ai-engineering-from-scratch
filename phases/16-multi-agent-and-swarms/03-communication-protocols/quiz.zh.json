@@ -34,7 +34,7 @@
         "一份放在 well-known URL 上的 JSON 文件，描述代理程式的能力、技能與端點，讓其他代理程式能發現它並把任務委派給它"
       ],
       "correct": 3,
-      "explanation": "agent card（放在 /.well-known/agent.json）是代理程式自我宣告的方式。它列出技能、支援的輸入／輸出格式與任務端點。其他代理程式讀這張卡片，決定要不要委派工作、以及怎麼委派。"
+      "explanation": "agent card（放在 /.well-known/agent-card.json）是代理程式自我宣告的方式。它列出技能、支援的輸入／輸出格式與任務端點。其他代理程式讀這張卡片，決定要不要委派工作、以及怎麼委派。"
     },
     {
       "stage": "post",
