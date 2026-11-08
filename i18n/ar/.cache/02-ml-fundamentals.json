@@ -1,7 +1,7 @@
 {
   "phases/02-ml-fundamentals/01-what-is-machine-learning/docs/en.md": "a81964a035da5a6ed3e69d48a66caea2d02d7cbe28d0e3bd573069fab831eef0",
-  "phases/02-ml-fundamentals/02-linear-regression/docs/en.md": "59d2f3f919657d7770e71eb25aaef772f5d2de89bd46bc3749eb7f03d5daaa3f",
-  "phases/02-ml-fundamentals/03-logistic-regression/docs/en.md": "890e592523f62b14d6cefc31696b77c47afd43fa6a405dd3b4b4a843fd0577e9",
+  "phases/02-ml-fundamentals/02-linear-regression/docs/en.md": "1a0efda804690ae0a9d695c39f01f3f5a13e8f970e32d2ae8f767ce13019744c",
+  "phases/02-ml-fundamentals/03-logistic-regression/docs/en.md": "45a90a012447f086f062a721c4ca524e272f7c8ae1e863ca405845bc0551de38",
   "phases/02-ml-fundamentals/04-decision-trees/docs/en.md": "e020962c727412c6d0263c9c2324210a6a20c1074a325d16d011d797bd8a812e",
   "phases/02-ml-fundamentals/05-support-vector-machines/docs/en.md": "ffd0796857de5f9cfbcb5e5c5396f3d07c8379585fc271502d2b06a285b7999e",
   "phases/02-ml-fundamentals/06-knn-and-distances/docs/en.md": "bff69e9324c6c54ef76f589965a4f3df5ba5ccbbcbfad26550bc817ec1a90c74",

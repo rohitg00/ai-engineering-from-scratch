@@ -3,7 +3,7 @@
 > الرجعة الخطية ترسم أفضل خط مستقيم عبر بياناتك. إنها "عالم مرحبا" للتعلم الآلي.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra, Calculus, Optimization), Phase 2 Lesson 1
 **Time:** ~90 minutes
 

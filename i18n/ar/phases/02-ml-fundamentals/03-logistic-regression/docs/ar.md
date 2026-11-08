@@ -3,7 +3,7 @@
 > التراجع اللوجستي يلتوي خط مستقيم إلى منحنى S للإجابة على الأسئلة نعم أو لا مع احتمالات.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
 **Time:** ~90 minutes
 
@@ -503,6 +503,7 @@ print(f"\nClassification Report:\n{classification_report(y_te, y_pred)}")
 
 هذا الدرس ينتج عن:
 - `code/logistic_regression.py`- تراجع اللوجستية من الصفر مع المقاييس
+- `code/main.rs`- نفس الشفرة في Rust، فقط Sdlib.`rustc --edition 2021 code/main.rs && ./main`. . .
 
 ## التمارين
 
