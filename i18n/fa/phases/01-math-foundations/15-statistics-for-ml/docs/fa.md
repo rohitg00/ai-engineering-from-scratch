@@ -3,7 +3,7 @@
 > آمار این است که چطور می دانید که مدل شما واقعا کار می کند یا فقط شانس آورده اید.
 
 **Type:** Build
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06 (Probability and Distributions), 07 (Bayes' Theorem)
 **Time:** ~120 minutes
 

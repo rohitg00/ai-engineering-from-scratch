@@ -3,7 +3,7 @@
 > حلش$Ax = b$قدیمی ترین مشکل ریاضی است که هنوز شبکه عصبی شما را اداره می کند.
 
 **Type:** Build
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors & Matrices), 03 (Matrix Transformations)
 **Time:** ~120 minutes
 
@@ -546,6 +546,7 @@ print(f"Ridge weights (sklearn): {ridge_sk.coef_}")
 
 این درس نتیجه می دهد:
 - `code/linear_systems.py`حاوی پیاده سازی های از ابتدا از حذف گوس، تجزیه LU، تجزیه چولسکی، کمترین مربع ها و بازگشت ریج
+- `code/linear_systems.ts`این در مقایسه با حل کننده های مرجع کوچک از ابتدا، چون TypeScript هیچ NumPy ندارد.
 - یک اثبات عملی که معادلات طبیعی و بازپسین خطی sklearn وزن های مشابهی را تولید می کند
 
 ## تمرینات

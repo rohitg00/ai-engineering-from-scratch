@@ -3,7 +3,7 @@
 > گراف ها ساختار داده های روابط هستند. اگر داده های شما ارتباط دارند، شما به نظریه گراف نیاز دارید.
 
 **Type:** Build
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-03 (linear algebra, matrices)
 **Time:** ~90 minutes
 

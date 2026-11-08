@@ -3,7 +3,7 @@
 > تئوري اطلاعات اندازه ي تعجب ميکنه و تابع هاي از دست دادن بر روي آن ساخته شده
 
 **Type:** Learn
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability)
 **Time:** ~60 minutes
 

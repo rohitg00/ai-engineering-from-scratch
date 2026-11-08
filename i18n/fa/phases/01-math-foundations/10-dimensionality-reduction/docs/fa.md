@@ -3,7 +3,7 @@
 > داده های بالا ابعاد ساختار دارند. شما آن را با نگاه کردن از زاویه درست پیدا می کنید.
 
 **Type:** Build
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -197,6 +197,13 @@ pca-axes
 ```
 
 ## آن را بسازید
+
+پورت تایپ اسکریپت فعال شده است`code/dim_reduction.ts`.مونو های MNIST نیاز به سکیت-لرن دارند، پس فقط در پایتون اجرا می شوند
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
 
 ### مرحله اول: PCA از ابتدا
 

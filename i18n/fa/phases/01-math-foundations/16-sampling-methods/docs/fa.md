@@ -3,7 +3,7 @@
 > نمونه گیری این است که چگونه هوش مصنوعی فضای امکانات را کشف می کند.
 
 **Type:** Build
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06-07 (Probability, Bayes' Theorem)
 **Time:** ~120 minutes
 
@@ -608,6 +608,8 @@ def gumbel_softmax(logits, temperature):
 نشان دهید که چگونه کاهش دمای باعث می شود که خروجی به یک ویکتور یک گرم نزدیک شود.
 
 پیاده سازی کامل با تمام تصویرسازی ها در حال انجام است `code/sampling.py`. .
+
+پورت تایپ اسکریپت فعال شده است`code/sampling.ts`از ژنراتور تصادفی خود استفاده می کند، بنابراین اعداد تصادفی آن از تولید پایتون متفاوت است.
 
 ## ازش استفاده کن
 

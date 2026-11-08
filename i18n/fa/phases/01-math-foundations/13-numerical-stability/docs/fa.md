@@ -3,7 +3,7 @@
 > نقطه شناور یک تجرّئ نفوذی است. در طول تمرین شما را گاز می گیرد و نمی بینید که می آید.
 
 **Type:** Build
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04
 **Time:** ~120 minutes
 
@@ -558,7 +558,7 @@ check_tensor("bad",  [1.0, float('nan'), 3.0])
 check_tensor("ugly", [1.0, float('inf'), 3.0])
 ```
 
-ببین`code/numerical.py`برای اجرای کامل با تمام موارد کناری نشان داده شده.
+ببین`code/numerical.py`برای اجرای کامل با تمام موارد کناری نشان داده شده است.`code/numerical.ts`یک پورت تایپ اسکریپت با همان عملکرد و نمایش ها است.
 
 ## -باده
 

@@ -3,7 +3,7 @@
 > هر سیگنال مجموعه امواج سینوس است. تحول فوریه به شما می گوید کدامین هستند.
 
 **Type:** Build
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -426,7 +426,7 @@ spectrogram = np.abs(Zxx) ** 2
 
 ## -باده
 
-فرار کن`code/fourier.py`تولید کردن`outputs/prompt-spectral-analyzer.md`. .
+فرار کن`code/fourier.py`تولید کردن`outputs/prompt-spectral-analyzer.md`نسخه تایپ اسکریپت`code/fourier.ts`، همون پرونده رو مي نويسه
 
 ## تمرینات
 

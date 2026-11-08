@@ -3,7 +3,7 @@
 > مشکلات مخلوط یک دره دارند شبکه های عصبی میلیون ها هستند. دانستن تفاوت مهم است.
 
 **Type:** Build
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
 **Time:** ~90 minutes
 

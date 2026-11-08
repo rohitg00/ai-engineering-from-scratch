@@ -3,7 +3,7 @@
 > تنسورها زبان مشترک بین داده ها و یادگیری عمیق هستند. هر تصویر، هر جمله، هر گرادینت از طریق آنها جریان می یابد.
 
 **Type:** Build
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -107,7 +107,12 @@ tensor-broadcast
 
 ## آن را بسازید
 
-کد در "`code/tensors.py`هر مرحله به اجرای آن اشاره دارد.
+کد در "`code/tensors.py`. هر مرحله به اجرای آن اشاره دارد. پورت تایپ اسکریپت در `code/tensors.ts`همان محصول را چاپ می کند.
+
+```bash
+python3 code/tensors.py
+npx tsx code/tensors.ts
+```
 
 ### مرحله ی ۱: ذخیره سازی تنسور و مراحل
 
