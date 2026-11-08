@@ -156,7 +156,7 @@ def safe_tts(text, voice, clone_reference=None):
 | Podcast 真實性 | 上傳時做 C2PA 簽章，若是 AI 生成再加 AudioSeal |
 | 研究／訓練偵測器 | ASVspoof 5 的 train／dev／eval 資料集 |
 
-## 陷阱
+## 常見陷阱
 
 - **有浮水印但偵測器從沒跑過。** 毫無意義。把偵測器放進你的 CI。
 - **偵測沒做校準。** 在 ASVspoof LA 上訓練的 AASIST 會過度擬合；真實世界的準確度會掉。在你自己的領域上做校準。

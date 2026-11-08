@@ -181,7 +181,7 @@ flowchart TD
 guardrail-gates
 ```
 
-## 實作
+## 動手實作
 
 ### 步驟 1：輸入護欄
 
@@ -748,7 +748,7 @@ if __name__ == "__main__":
     run_demo()
 ```
 
-## 實務應用
+## 框架應用
 
 ### OpenAI Moderation API
 
@@ -855,7 +855,7 @@ NeMo Guardrails 以包住你的 LLM 的方式運作。用 Colang 定義流程，
 
 Guardrails AI 的 hub 上有 50 多種驗證器。驗證器可以個別安裝：`guardrails hub install hub://guardrails/detect_pii`。驗證失敗時它會自動重試，請模型重新生成一份合規的回應。
 
-## 產出
+## 產出交付
 
 這一課會產出 `outputs/prompt-safety-auditor.md` —— 一個可重用的提示詞，用來稽核任何 LLM 應用的安全漏洞。給它你的系統提示詞、工具定義與部署情境，它會回傳一份威脅評估，含具體攻擊向量與建議的防禦。
 

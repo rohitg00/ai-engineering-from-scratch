@@ -2,7 +2,7 @@
 
 > Anthropic 的憲法式分類器、Meta 的 Llama Guard 4、Google 的 ShieldGemma-2、NVIDIA 的 Nemotron 3 Content Safety，以及提供多語涵蓋的 X-Guard，界定了 2026 年的安全分類器堆疊。garak、PyRIT、NVIDIA Aegis 與 promptfoo 成了標準的對抗式評估工具。NeMo Guardrails v0.12 把它們串進一條生產管線。這個綜合專案把這一切接起來：一套圍繞目標應用的分層安全框架、一個跑 6 種以上攻擊家族的自主紅隊代理，以及一次能產出可量測無害度差值的憲法式自我批判訓練。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python (safety pipeline, red team), YAML (policy configs)
 **先修單元：** 階段 10（從零打造 LLM）、階段 11（LLM 工程）、階段 13（工具）、階段 14（代理）、階段 18（倫理、安全、對齊）
 **演練到的階段：** P10 · P11 · P13 · P14 · P18
@@ -77,7 +77,7 @@ output: CVSS-scored findings + disclosure timeline + before/after harmlessness d
 cf-safety-stack
 ```
 
-## 動手建
+## 動手實作
 
 1. **目標建置。** 在 vLLM 上架起一個 8B 指令微調模型（或重用另一個綜合專案的 RAG 聊天機器人）。這就是受測應用。
 
@@ -97,7 +97,7 @@ cf-safety-stack
 
 9. **靶場自動化。** 上述一切都跑在 cron 上；發現寫進佇列；過度拒答的退化警報發到 Slack。
 
-## 動手用
+## 框架應用
 
 ```
 $ safety probe --model=target --family=PAIR --budget=50

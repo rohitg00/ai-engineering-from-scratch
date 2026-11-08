@@ -76,7 +76,7 @@ Vapi（在最佳化過的高階堆疊上約 450–600 毫秒）與 Retell（跨 
 voice-pipeline
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 是一條 frame 式的玩具管線，含：
 

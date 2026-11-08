@@ -67,7 +67,7 @@ OTel GenAI（第 23 課）給了你 schema。你仍然需要一個平台去吃�
 wb-trace-ingest
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 用 stdlib 實作一個追蹤收集器 + LLM 裁判評估器：
 

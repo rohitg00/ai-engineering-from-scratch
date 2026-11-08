@@ -2,7 +2,7 @@
 
 > 代理會就資源、價格、任務分配與條款進行談判。2026 年的基準集講得很清楚：NegotiationArena（arXiv:2402.05863）顯示 LLM 可以靠人設操弄（「走投無路」）把收益改善約 20%；〈Measuring Bargaining Abilities〉（arXiv:2402.15813）顯示當買方比當賣方難，而且規模幫不上忙 —— 他們的 **OG-Narrator**（決定性的出價產生器 + LLM 敘述者）把成交率從 26.67% 推到 88.88%；大規模自主談判競賽（arXiv:2503.06416）跑了約 18 萬場談判，發現**隱藏思維鏈**的代理靠著對交易對手藏起推理而勝出；Bhattacharya 等人 2025 年依哈佛談判專案的指標排名，Llama-3 最有效、Claude-3 最進取、GPT-4 最公平。這一課實作合約網協定（FIPA 的祖先，第 02 課）、接上一個 LLM 式的買方／賣方、跑一次 OG-Narrator 式的拆解，並量測每一項結構選擇如何改變成交率。
 
-**類型：** 學習 + 建構
+**類型：** 學習 + 實作
 **程式語言：** Python (stdlib)
 **先修單元：** 階段 16 · 02（FIPA-ACL 傳承）、階段 16 · 09（平行 Swarm 網路）
 **時間：** 約 75 分鐘
@@ -106,7 +106,7 @@ NeurIPS 2024（https://proceedings.neurips.cc/paper_files/paper/2024/file/984dd3
 a5-og-narrator
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 實作了：
 

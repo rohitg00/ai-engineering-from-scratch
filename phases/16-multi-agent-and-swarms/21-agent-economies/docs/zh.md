@@ -95,7 +95,7 @@ LaMAS 提案（AAMAS 2025）結合了：DID 身分、Shapley 值信用歸屬，�
 swarm-auction
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 實作了：
 

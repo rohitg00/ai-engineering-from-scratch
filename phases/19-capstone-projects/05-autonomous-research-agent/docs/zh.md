@@ -2,7 +2,7 @@
 
 > Sakana 的 AI-Scientist-v2 發表了完整的論文。Agent Laboratory 跑了那些實驗。Allen AI 分享了軌跡。2026 年的形狀是：在實驗之上做規劃－執行－查證的樹狀搜尋、有預算的成本、沙箱化的程式碼執行、一個帶視覺回饋的 LaTeX 撰稿者，以及一組自動化的 NeurIPS 式審稿人集成。這個綜合專案就是要建一個出來、在每篇論文 30 美元之內從頭跑到尾，並挺過 Sakana 所記載的那套沙箱逃逸紅隊測試。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python (agent + sandbox), LaTeX (output)
 **先修單元：** 階段 2（機器學習）、階段 3（深度學習）、階段 7（transformer）、階段 10（從零打造 LLM）、階段 14（代理）、階段 15（自主）、階段 16（多代理）、階段 18（安全）
 **演練到的階段：** P0 · P2 · P3 · P7 · P10 · P14 · P15 · P16 · P18
@@ -73,7 +73,7 @@ seed idea + domain
 ce-experiment-tree
 ```
 
-## 動手建
+## 動手實作
 
 1. **種子與領域範圍界定。** 拿一個種子想法（例如「研究次十億參數 transformer 注意力圖中的稀疏樣式」）。定義搜尋空間：模型、資料集、運算預算。
 
@@ -93,7 +93,7 @@ ce-experiment-tree
 
 9. **可重現性。** 每篇論文出貨時都附上它的樹狀搜尋軌跡 JSON、種子、W&B 執行連結、沙箱設定，以及一份能從頭到尾重現它的 README。
 
-## 動手用
+## 框架應用
 
 ```
 $ ai-scientist run --seed "attention sparsity in sub-1B transformers" --budget 30

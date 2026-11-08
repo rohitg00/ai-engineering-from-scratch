@@ -79,7 +79,7 @@
 computer-use-cursor
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 模擬那個視覺代理迴圈：
 

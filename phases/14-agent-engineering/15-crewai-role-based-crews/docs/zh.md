@@ -2,7 +2,7 @@
 
 > 四個原語：Agent、Task、Crew、Process。兩種頂層形狀：Crews（自主的角色制協作）與 Flows（事件驅動、決定性）。CrewAI 是 2026 年的參考實作，而它的文件講得很直白：「任何生產就緒的應用，都從 Flow 開始。」
 
-**類型：** 學習 + 建構
+**類型：** 學習 + 實作
 **程式語言：** Python (stdlib)
 **先修單元：** 階段 14 · 12（工作流模式）、階段 14 · 14（演員模型）
 **時間：** 約 75 分鐘
@@ -137,7 +137,7 @@ CrewAI 開箱就出貨四種記憶型別。它們可以組合：一個 Crew 可�
 ae-crew-vs-flow
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 用 stdlib 實作了兩種形狀，外加一個三代理 crew。
 
@@ -177,7 +177,7 @@ Crew 的軌跡是流動的；經理原則上可以重排順序。Flow 的軌跡�
 
 `outputs/skill-crew-or-flow.md` 會替一項任務挑出 Crew 或 Flow，並搭出最小實作。對於沒有 backstory 的 Crew、沒有明寫 topic 的 Flow，以及專家少於三個的 Hierarchical，一律硬性拒絕。
 
-## 陷阱
+## 常見陷阱
 
 - **把 backstory 當成調味。** 它會形塑輸出。每個代理測三種變體；變異是真的。挑一個，凍住它。
 - **跳過 `expected_output`。** 每項任務沒有契約，下游任務就會撿到 LLM 隨便產出的任何東西。Crew 跑得起來；稽核過不了。

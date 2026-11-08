@@ -52,7 +52,7 @@ Anthropic 的 25% 寫入溢價意味著一個被快取的區塊至少要被讀�
 prompt-cache-hit
 ```
 
-## 實作
+## 動手實作
 
 ### 步驟 1：用明確標記做 Anthropic 提示詞快取
 
@@ -171,7 +171,7 @@ resp = client.models.generate_content(
 - **區塊太小。** Anthropic 強制 1,024 詞元的下限（Haiku 是 2,048）。更小的區塊會靜默地不被快取。
 - **看不見細節的成本儀表板。** 把「輸入詞元」拆成已快取與未快取。否則流量下滑看起來會像快取的功勞。
 
-## 實務應用
+## 框架應用
 
 2026 年的快取技術棧：
 
@@ -185,7 +185,7 @@ resp = client.models.generate_content(
 
 搭配語意快取（階段 11 · 11）處理使用者訊息那一層：提示詞快取處理**詞元完全相同**的重用，語意快取處理**語意相同**的重用。
 
-## 產出
+## 產出交付
 
 存成 `outputs/skill-prompt-caching-planner.md`：
 

@@ -2,7 +2,7 @@
 
 > 基於梯度的 RL 要修好一個失敗模式，得跑上千次試驗、配一整座 GPU 叢集。Reflexion（Shinn 等人，NeurIPS 2023）用自然語言做到：每次試驗失敗後，代理寫下一段反思、存進情節記憶，並讓下一次試驗以那份記憶為條件。這就是 Letta 的 sleep-time compute、Claude Code 的 CLAUDE.md 學習紀錄，以及 pro-workflow 的 learn-rule 背後的模式。
 
-**類型：** 建構
+**類型：** 實作
 **程式語言：** Python (stdlib)
 **先修單元：** 階段 14 · 01（代理迴圈）、階段 14 · 02（ReWOO）
 **時間：** 約 60 分鐘
@@ -79,7 +79,7 @@ Reflexion 幫不上忙的情況：
 react-trace
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 在一個玩具謎題上實作 Reflexion：產出一個總和等於目標值的三元素清單。Actor 吐出候選清單；Evaluator 檢查總和；Self-Reflector 寫一行說明哪裡出了錯。這段反思會進入情節記憶，供下一次試驗使用。
 

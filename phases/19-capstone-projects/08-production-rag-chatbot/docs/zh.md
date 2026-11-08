@@ -2,7 +2,7 @@
 
 > Harvey、Glean、Mendable 與 LlamaCloud 在 2026 年跑的都是同一套生產形狀。用 docling 或 Unstructured 攝取，視覺內容用 ColPali。混合搜尋。用 bge-reranker-v2-gemma 重排。用 Claude Sonnet 4.7 合成，提示詞快取命中率 60-80%。用 Llama Guard 4 與 NeMo Guardrails 把關。用 Langfuse 與 Phoenix 監看。用 RAGAS 在一份 200 題的黃金集上評分。在一個受管制的領域（法律、臨床、保險）建一套出來，而這個綜合專案的關卡就是通過黃金集、紅隊測試與漂移儀表板。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python (pipeline + API), TypeScript (chat UI)
 **先修單元：** 階段 5（NLP）、階段 7（transformer）、階段 11（LLM 工程）、階段 12（多模態）、階段 17（基礎設施）、階段 18（安全）
 **演練到的階段：** P5 · P7 · P11 · P12 · P17 · P18
@@ -72,7 +72,7 @@ eval:
 canary-rollout
 ```
 
-## 動手建
+## 動手實作
 
 1. **攝取。** 用 Unstructured 或 docling 剖析你的語料（認真的建置要 1000-10000 份文件）。掃描版／視覺繁重的頁面走 ColPali。產出帶摘要、角色標記與管轄區標籤的片段。
 
@@ -92,7 +92,7 @@ canary-rollout
 
 9. **成本報告。** Langfuse：提示詞快取命中率、每次查詢的詞元數、依階段拆解的每次查詢花費。
 
-## 動手用
+## 框架應用
 
 ```
 $ chat --role=analyst --jurisdiction=GDPR

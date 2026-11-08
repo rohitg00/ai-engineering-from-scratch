@@ -137,7 +137,7 @@ graph TD
 mx-schema-funnel
 ```
 
-## 實作
+## 動手實作
 
 ### 步驟 1：JSON Schema 驗證器
 
@@ -423,7 +423,7 @@ def run_demo():
             print(f"  Output: FAILED after retries")
 ```
 
-## 實務應用
+## 框架應用
 
 ### OpenAI 結構化輸出
 
@@ -506,7 +506,7 @@ Anthropic 透過工具使用達成結構化輸出。模型吐出一個工具呼�
 
 Instructor 包住任何 LLM 客戶端，加上帶驗證的自動重試。如果第一次嘗試沒通過驗證，它會把錯誤當成上下文送回給模型，請它修好輸出。這對任何供應商都適用，不限 OpenAI。
 
-## 產出
+## 產出交付
 
 這一課會產出 `outputs/prompt-structured-extractor.md` —— 一份可重用的提示詞模板，給它一份 schema 定義，它就能從任何文字裡抽出結構化資料。餵它一份 JSON Schema 和非結構化文字，它回傳已驗證的 JSON。
 

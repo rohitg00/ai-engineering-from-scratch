@@ -2,7 +2,7 @@
 
 > OpenTelemetry 的 GenAI SIG（2024 年 4 月成立）替代理遙測定義了標準 schema。Span 名稱、屬性與內容捕捉規則跨廠商收斂，好讓代理的追蹤在 Datadog、Grafana、Jaeger 與 Honeycomb 裡意思都一樣。
 
-**類型：** 學習 + 建構
+**類型：** 學習 + 實作
 **程式語言：** Python (stdlib)
 **先修單元：** 階段 14 · 13（LangGraph）、階段 14 · 24（可觀測性平台）
 **時間：** 約 60 分鐘
@@ -75,7 +75,7 @@ Datadog v1.37+ 會把 GenAI 屬性原生對映進它的 LLM Observability schema
 ae-genai-span-tree
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 用 stdlib 實作一個符合 GenAI 慣例的 span 發射器：
 

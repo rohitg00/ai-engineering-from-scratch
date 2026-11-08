@@ -222,7 +222,7 @@ flowchart LR
 llm-judge-rubric
 ```
 
-## 實作
+## 動手實作
 
 ### 步驟 1：定義評估的資料結構
 
@@ -730,7 +730,7 @@ if __name__ == "__main__":
     run_demo()
 ```
 
-## 實務應用
+## 框架應用
 
 ### promptfoo 整合
 
@@ -816,7 +816,7 @@ DeepEval 與 Pytest 整合。執行 `deepeval test run test_evals.py`，就能�
 
 在每一個動到提示詞或 LLM 程式碼的 PR 上觸發評估。任何標準退化超過閾值就擋下合併。把結果上傳成 artifact 供人檢視。
 
-## 產出
+## 產出交付
 
 這一課會產出 `outputs/prompt-eval-designer.md` —— 一份可重用的提示詞模板，用來設計評估的評分準則。給它一段你 LLM 應用的描述，它就產出量身訂做的評估標準與帶錨點的評分準則。
 

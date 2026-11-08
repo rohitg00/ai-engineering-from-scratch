@@ -2,7 +2,7 @@
 
 > 單一條思維鏈軌跡沒有回溯的餘地。ToT（Yao 等人，2023）把推理變成一棵樹，每個節點都做自我評估。LATS（Zhou 等人，2024）在蒙地卡羅樹搜尋之下統一了 ToT、ReAct 與 Reflexion。二十四點從 4%（CoT）拉到 74%（ToT）；LATS 在 HumanEval 上打到 92.7% pass@1。
 
-**類型：** 建構
+**類型：** 實作
 **程式語言：** Python (stdlib)
 **先修單元：** 階段 14 · 01（代理迴圈）、階段 14 · 03（Reflexion）
 **時間：** 約 75 分鐘
@@ -81,7 +81,7 @@ AlphaEvolve（第 11 課）是 2025 年的極端案例：對程式碼做演化�
 tree-of-thoughts
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 實作了：
 

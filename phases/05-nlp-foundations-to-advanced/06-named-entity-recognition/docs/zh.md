@@ -34,7 +34,7 @@ US       B-GPE
 .        O
 ```
 
-多詞元實體用鏈接表示：`New B-GPE`、`York I-GPE`、`City I-GPE`。看得懂 BIO 的模型就能抽出任意長度的區段。
+多詞元實體用連結表示：`New B-GPE`、`York I-GPE`、`City I-GPE`。看得懂 BIO 的模型就能抽出任意長度的區段。
 
 架構的演進：
 

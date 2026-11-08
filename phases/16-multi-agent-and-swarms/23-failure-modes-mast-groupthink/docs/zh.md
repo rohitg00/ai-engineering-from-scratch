@@ -141,7 +141,7 @@ STRATUS（NeurIPS 2025）回報，當你部署以下三者時，緩解成功率�
 a5-retry-cascade
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 實作了：
 

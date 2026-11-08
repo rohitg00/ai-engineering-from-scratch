@@ -2,7 +2,7 @@
 
 > 共享對話式的編排，把 N 個代理放進同一場對話；一個選擇器函數（LLM、輪替，或自訂）挑出接下來誰發言。這是浮現式多代理對話的原型 —— 代理不知道自己在某張靜態圖裡的角色，它們只是對共享池做反應。AutoGen GroupChat 與 AG2 GroupChat 是那兩份參考實作：AutoGen v0.2 的 GroupChat 語意在 AG2 這個分支中被保留下來；AutoGen v0.4 則把它改寫成事件驅動的演員模型。Microsoft 在 2026 年 2 月把 AutoGen 轉入維護模式，並與 Semantic Kernel 合併成 Microsoft Agent Framework（2026 年 2 月 RC）。GroupChat 這個原語在 AG2 與 Microsoft Agent Framework 兩邊都活了下來 —— 學一次，到處都能用。
 
-**類型：** 學習 + 建構
+**類型：** 學習 + 實作
 **程式語言：** Python (stdlib)
 **先修單元：** 階段 16 · 04（原語模型）
 **時間：** 約 60 分鐘
@@ -94,7 +94,7 @@ manager = GroupChatManager(groupchat=chat, llm_config={...})
 swarm-speaker
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 用 stdlib 從零實作一個 GroupChat。三個代理（寫程式的、審查者、經理）、輪替與 LLM 選擇兩種變體，以及一個以 `TERMINATE` 詞元終止的機制。
 

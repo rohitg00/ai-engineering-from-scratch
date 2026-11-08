@@ -174,7 +174,7 @@ graph TD
 agentic-rag-loop
 ```
 
-## 實作
+## 動手實作
 
 ### 步驟 1：BM25 實作
 
@@ -419,7 +419,7 @@ def evaluate_retrieval_recall(queries_with_relevant, retrieval_fn, k=5):
     return avg_recall, results
 ```
 
-## 實務應用
+## 框架應用
 
 用真實的交叉編碼器做重排：
 
@@ -490,7 +490,7 @@ response = collection.query.hybrid(
 
 alpha 參數控制平衡：0.0 = 純關鍵字（BM25），1.0 = 純向量，0.5 = 等權重。多數生產系統把 alpha 設在 0.3 到 0.7 之間。
 
-## 產出
+## 產出交付
 
 這一課會產出：
 - `outputs/prompt-advanced-rag-debugger.md` —— 一個提示詞，用來診斷並修好 RAG 的品質問題

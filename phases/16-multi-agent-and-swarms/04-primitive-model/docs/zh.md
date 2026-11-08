@@ -115,7 +115,7 @@ Orchestrator = ({state, last_speaker}) -> next_agent
 a5-primitive-radar
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 用約 150 行 stdlib Python 實作那四個原語。沒有真正的 LLM —— 每個代理都是一份腳本化的策略，好讓焦點留在協調結構上。
 

@@ -2,7 +2,7 @@
 
 > 一個你可以 import 進來的執行環境：內建工具、用於脈絡隔離的子代理、掛鉤、W3C 追蹤傳播、工作階段持久化。Claude Agent SDK 就是那個參考範例 —— Claude Code 執行環境的函式庫形態 —— 而 Claude Managed Agents 則是給長時間非同步工作的託管替代方案。
 
-**類型：** 學習 + 建構
+**類型：** 學習 + 實作
 **程式語言：** Python (stdlib)
 **先修單元：** 階段 14 · 01（代理迴圈）、階段 14 · 10（技能庫）
 **時間：** 約 75 分鐘
@@ -81,7 +81,7 @@ Python SDK 近期新增：`list_subagents()`、`get_subagent_messages()`，用�
 ae-subagent-isolation
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 用 stdlib 實作這個 SDK 的形狀：
 

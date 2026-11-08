@@ -2,7 +2,7 @@
 
 > Self-Refine（Madaan 等人，2023）讓同一個 LLM 在迴圈中扮演三種角色 —— 生成、回饋、精修。平均收穫：7 項任務上絕對值 +20。CRITIC（Gou 等人，2023）把回饋那一步硬化，讓查證繞道外部工具。2026 年這套模式在每個框架裡都以「evaluator-optimizer」（Anthropic）或護欄迴圈（OpenAI Agents SDK）的形式出貨。
 
-**類型：** 建構
+**類型：** 實作
 **程式語言：** Python (stdlib)
 **先修單元：** 階段 14 · 01（代理迴圈）、階段 14 · 03（Reflexion）
 **時間：** 約 60 分鐘
@@ -87,7 +87,7 @@ OpenAI Agents SDK 把這套模式以「輸出護欄」的形式出貨。護欄�
 self-refine
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 在一個玩具任務上實作 Self-Refine 與 CRITIC：給定一個主題，產出一份短短的項目符號清單。查證器檢查格式（3 個項目，每個少於 60 個字元）。CRITIC 另外加一個外部的「事實查證器」，會懲罰已知的幻覺。
 

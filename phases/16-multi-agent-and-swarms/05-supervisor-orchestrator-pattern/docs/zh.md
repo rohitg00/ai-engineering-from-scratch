@@ -2,7 +2,7 @@
 
 > 一個主導代理負責規劃與委派；特化的 worker 在各自的脈絡中平行執行並回報。這就是 Anthropic 的 Research 系統背後那個模式（Claude Opus 4 當主導、Sonnet 4 當子代理），在內部研究評測上量到比單一代理 Opus 4 高 90.2%。Anthropic 的工程貼文回報，BrowseComp 上 80% 的變異可以單靠詞元用量解釋 —— 多代理之所以勝出，主要是因為每個子代理都拿到一個全新的脈絡視窗。這一課從原語把 supervisor 模式建出來，並涵蓋 2026 年來自生產部署的工程教訓。
 
-**類型：** 學習 + 建構
+**類型：** 學習 + 實作
 **程式語言：** Python (stdlib, `threading`)
 **先修單元：** 階段 16 · 04（原語模型）
 **時間：** 約 75 分鐘
@@ -74,7 +74,7 @@ LangGraph 原本出貨了一個 `langgraph-supervisor` 函式庫，帶一個高�
 supervisor-hierarchy
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 用 `threading` 實作一個帶三個平行 worker 的 supervisor。主導代理把查詢分解成子問題、worker 併發地各跑一個子問題，然後主導代理綜合。沒有真正的 LLM —— worker 是腳本化的，用來模擬抓取並摘要。
 

@@ -223,7 +223,7 @@ Input ──▶ Split ├──▶ Agent B ──├──▶ Merge ──▶ Ou
 swarm-messages
 ```
 
-## 建構它
+## 動手實作
 
 ### 步驟 1：那個超載的單一代理
 

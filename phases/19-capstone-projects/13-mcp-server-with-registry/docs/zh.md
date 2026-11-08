@@ -2,7 +2,7 @@
 
 > 生產級的 MCP 不是一支伺服器行程。它是一連串契約：可發布的中繼資料、即時發現、一份無狀態的請求信封、授權、政策、稽核，以及部署證據。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python 與 TypeScript 參考模型；生產環境用任何語言
 **先修單元：** 階段 11、階段 13、階段 14、階段 17、階段 18
 **必讀的 MCP 深入單元：** [第 28 課：工具契約](../../../13-tools-and-protocols/28-mcp-tool-contracts-and-content/docs/en.md)、[第 29 課：可靠性](../../../13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/docs/en.md)、[第 30 課：登錄庫供應鏈](../../../13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/docs/en.md)，以及[第 31 課：一致性維運](../../../13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/docs/en.md)

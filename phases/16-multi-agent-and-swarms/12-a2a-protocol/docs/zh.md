@@ -2,7 +2,7 @@
 
 > Google 在 2025 年 4 月宣布 A2A；到 2026 年 4 月，規格在 https://a2a-protocol.org/latest/specification/，並有 150 個以上的組織支持它。A2A 是 MCP（第 13 課）的水平互補品：MCP 是垂直的（代理 ↔ 工具），A2A 則是點對點的（代理 ↔ 代理）。它定義了 Agent Card（發現）、帶產物的 task（文字、結構化資料、影片）、不透明的任務生命週期，以及認證。生產系統愈來愈常把 MCP 與 A2A 配在一起。Google Cloud 在 2025-2026 年間把 A2A 支援導入了 Vertex AI Agent Builder。
 
-**類型：** 學習 + 建構
+**類型：** 學習 + 實作
 **程式語言：** Python (stdlib, `http.server`, `json`)
 **先修單元：** 階段 16 · 04（原語模型）
 **時間：** 約 75 分鐘
@@ -134,7 +134,7 @@ A2A 支援三種常見模式：
 sw-agent-card-discovery
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 用 `http.server` 與 JSON 實作一個最小的 A2A 伺服器與客戶端，採用 1.0 的 HTTP+JSON 綁定。伺服器：
 

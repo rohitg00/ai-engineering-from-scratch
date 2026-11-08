@@ -2,7 +2,7 @@
 
 > 2026 年的每一個代理，都是 2022 年那個 ReAct 迴圈的變體 —— Claude Code、Cursor、Devin、Operator 全都算在內。推理詞元與工具呼叫、觀察交錯出現，直到某個停止條件觸發為止。在碰任何框架之前，先把這個迴圈弄得滾瓜爛熟。
 
-**類型：** 建構
+**類型：** 實作
 **程式語言：** Python (stdlib)
 **先修單元：** 階段 11（LLM 工程）、階段 13（工具與協定）
 **時間：** 約 60 分鐘
@@ -72,7 +72,7 @@ Claude Agent SDK、OpenAI Agents SDK、LangGraph、AutoGen v0.4 AgentChat、Crew
 agent-loop
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 只用 stdlib 就把這個迴圈從頭到尾實作出來。組件：
 

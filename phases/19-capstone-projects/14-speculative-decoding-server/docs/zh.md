@@ -2,7 +2,7 @@
 
 > 推測解碼 —— 一個便宜的草稿模型提出詞元，目標模型一趟就把它們驗證完 —— 現在已經是可用於生產的最佳化，不是研究上的花招。vLLM 0.7 裡的 EAGLE-3 在真實流量上出貨了 2.5-3 倍的吞吐量。P-EAGLE（AWS 2026）把平行推測又往前推了一步。SGLang 的 SpecForge 大規模訓練草稿頭。Red Hat 的 Speculators hub 替常見的開源模型發布了對齊過的草稿模型。TensorRT-LLM 讓推測解碼在 NVIDIA 上成了一等公民。2026 年的生產服務堆疊是 vLLM 或 SGLang，配 EAGLE 家族的草稿、FP8 或 INT4 量化，以及以佇列等待時間做的 HPA。這個綜合專案就是要以 2.5 倍以上的基線吞吐量服務兩個開源模型，並附上一份完整的尾端延遲報告。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python (serving), C++ / CUDA (kernel inspection), YAML (configs)
 **先修單元：** 階段 3（深度學習）、階段 7（transformer）、階段 10（從零打造 LLM）、階段 17（基礎設施）
 **演練到的階段：** P3 · P7 · P10 · P17
@@ -63,7 +63,7 @@ HPA on queue-wait metric
 cf-spec-decode
 ```
 
-## 動手建
+## 動手實作
 
 1. **目標模型準備。** 挑 Llama 3.3 70B。透過 Marlin 量化到 FP8。在 1 張 H100 上（或 2 張做張量平行）以 vLLM 0.7 部署。
 
@@ -83,7 +83,7 @@ cf-spec-decode
 
 9. **成本比較。** 在同一份評估上，算出相對 Anthropic Claude Sonnet 4.7 與 OpenAI GPT-5.4 的每百萬詞元成本。發布出來。
 
-## 動手用
+## 框架應用
 
 ```
 $ curl https://infer.example.com/v1/chat/completions -d '{"messages":[...]}'

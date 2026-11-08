@@ -90,7 +90,7 @@ AAAI 2026 Bridge Program —— 多代理協調工作坊（https://multiagents.o
 a5-bench-gap
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 是一段非互動式的走訪：
 

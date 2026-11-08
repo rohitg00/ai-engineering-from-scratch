@@ -55,7 +55,7 @@ flowchart LR
 cd-constitution-loop
 ```
 
-## 動手建
+## 動手實作
 
 `code/rules.yml` 裝著那份憲章。`code/main.py` 裡的載入器接受一個 YAML 檔（當 PyYAML 可用時）或一個 JSON 檔（內建）。這一課附上一份 `rules.yml`，而課程測試用兩條程式碼路徑都剖析得了它。`code/main.py` 定義 `Engine` 與 `Fixer` 類別，以及一個 `diff` 函式。組合子以遞迴求值，並在 `any_of` 上短路。
 
@@ -68,7 +68,7 @@ cd-constitution-loop
 - `no-internal-library-leak`（high）—— 輸出裡不得出現 `internal-only` 與 `policybot-internal` 這兩個詞
 - `bounded-length`（low）—— 回應不得超過 800 字
 
-## 動手用
+## 框架應用
 
 `python3 main.py`。示範把三段草稿回應跑過引擎、印出違規、跑那個修補器、印出差異，並寫出 `outputs/rules_report.json`。有一份固定樣本帶著一條不適用的規則（草稿裡沒有程式碼區塊），而報告替那條規則顯示 `not_applicable`，好讓團隊看到引擎確實明確地求值過它。
 

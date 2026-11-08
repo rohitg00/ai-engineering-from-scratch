@@ -42,13 +42,13 @@ flowchart LR
 ci-refusal-quadrant
 ```
 
-## 動手建
+## 動手實作
 
 `code/mock_llm.py` 定義三項政策。每項政策是一個把提示詞映到回應字串的可呼叫物。那個回應把模型的信心值以 `[conf=0.X]` 的形式嵌進去。`code/prompts.py` 是一份已標註的語料：25 段不安全提示詞（依 id 從第 82 課的分類法取出）加上 30 段安全提示詞（日常的良性請求，與第 83 課那組良性樣本不重疊，好讓那兩次評估維持獨立）。
 
 `code/main.py` 跑那個評估器。那個拒答分類器是一條由拒答片語組成的正規表達式。彙總器回傳一個字典，帶 `under_refusal`、`over_refusal`、`accuracy`、`ece` 與 `per_category_under_refusal`。那個執行器把三項模擬政策全掃一遍，並寫出一份比較報告。
 
-## 動手用
+## 框架應用
 
 `python3 main.py`。示範印出一張比較全部三項政策的表、寫出 `outputs/refusal_eval_report.json`，並確認 `MockPolicyOverCautious` 過度拒答最高、`MockPolicyLeaky` 拒答不足最高。那項嚴格政策坐在兩者之間；那就是回歸基線。
 

@@ -2,7 +2,7 @@
 
 > 2026 年文件問答的前沿，已經從「先 OCR 再處理文字」轉向視覺優先的後期互動。ColPali、ColQwen2.5 與 ColQwen3-omni 把每一頁 PDF 當成一張影像、用多向量後期互動去嵌入它，並讓查詢直接對那些圖塊做注意力。在財報 10-K、科學論文與手寫筆記上，這套模式大幅勝過「先 OCR」。把整條管線在 1 萬頁上從頭到尾建起來，並發表與「先 OCR 再處理文字」的並排比較。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python (pipeline), TypeScript (viewer UI)
 **先修單元：** 階段 4（電腦視覺）、階段 5（NLP）、階段 7（transformer）、階段 11（LLM 工程）、階段 12（多模態）、階段 17（基礎設施）
 **演練到的階段：** P4 · P5 · P7 · P11 · P12 · P17
@@ -63,7 +63,7 @@ query ----+----> retrieve top-k pages (MaxSim)
 ce-late-interaction
 ```
 
-## 動手建
+## 動手實作
 
 1. **攝取。** 走訪一批橫跨 10-K、科學論文與掃描文件的 1 萬頁 PDF 語料。把每一頁渲染成 1536x2048 的 PNG。持久化 `{doc_id, page_num, image_path}`。
 
@@ -81,7 +81,7 @@ ce-late-interaction
 
 8. **UI。** 先做 Streamlit 原型；再做帶逐頁證據區域疊層的 Next.js 15 生產檢視器。
 
-## 動手用
+## 框架應用
 
 ```
 $ doc-qa ask "what was the 2024 operating margin change for segment EMEA?"

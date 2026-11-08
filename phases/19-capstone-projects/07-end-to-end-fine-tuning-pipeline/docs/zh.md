@@ -2,7 +2,7 @@
 
 > 一個以你自己的資料訓練、用你自己的偏好做 DPO 對齊、量化過、配上推測解碼，並以可量測的「每百萬詞元多少錢」上線的 8B 級模型。2026 年的開源堆疊是 Axolotl v0.8、TRL 0.15、迭代用 Unsloth、量化用 GPTQ/AWQ/GGUF、上線用 vLLM 0.7 配 EAGLE-3。這個綜合專案就是要可重現地把整條管線跑完（輸入是 YAML，輸出是一個上線端點），並依 2026 年的模型開放性框架發表一份模型卡。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python (pipeline), YAML (configs), Bash (scripts)
 **先修單元：** 階段 2（機器學習）、階段 3（深度學習）、階段 7（transformer）、階段 10（從零打造 LLM）、階段 11（LLM 工程）、階段 17（基礎設施）、階段 18（安全）
 **演練到的階段：** P2 · P3 · P7 · P10 · P11 · P17 · P18
@@ -70,7 +70,7 @@ model card (2026 MOF) + safety eval (Llama Guard 4)
 ce-finetune-stages
 ```
 
-## 動手建
+## 動手實作
 
 1. **資料管線。** 對原始語料跑 Datatrove 去重。套用 Nemotron-CC 式的品質分類器。用 Presidio 清洗 PII。以明確的種子寫出訓練／驗證切分。
 
@@ -90,7 +90,7 @@ ce-finetune-stages
 
 9. **模型卡。** MOF 2026 樣板：資料、訓練、評估、安全、授權，以及帶 YAML 與提交 SHA 的可重現性章節。
 
-## 動手用
+## 框架應用
 
 ```
 $ ./pipeline.sh config/llama3.3-8b-domainX.yaml

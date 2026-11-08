@@ -2,7 +2,7 @@
 
 > 到了 2026 年，寫程式代理的形狀已經定下來了。一套 TUI 框架、一份有狀態的計畫、一個沙箱化的工具介面，以及一條會規劃、行動、觀察、復原的迴路。Claude Code、Cursor 3 與 OpenCode 從五十英尺外看都長一個樣。這個綜合專案要你把它從頭到尾建出來 —— 輸入是 CLI，輸出是一份拉取請求 —— 並在 SWE-bench Pro 上拿它與 mini-swe-agent 和 Live-SWE-agent 比較。你會學到為什麼難的不是模型呼叫，而是那條工具迴路、那個沙箱，以及一次 50 輪運行的成本上限。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** TypeScript / Bun (harness), Python (eval scripts)
 **先修單元：** 階段 11（LLM 工程）、階段 13（工具與協定）、階段 14（代理）、階段 15（自主系統）、階段 17（基礎設施）
 **演練到的階段：** P0 · P5 · P7 · P10 · P11 · P13 · P14 · P15 · P17 · P18
@@ -66,7 +66,7 @@
 ce-agent-loop
 ```
 
-## 動手建
+## 動手實作
 
 1. **TUI 與指令迴路。** 用 Ink 搭一個 Bun 專案的骨架。接受 `agent run <repo> "<task>"`。印出一個分割畫面：計畫窗格（上）、工具呼叫串流（中）、詞元預算（下）。加上 Ctrl-C 取消，並在退出前先觸發 `SessionEnd` 掛鉤。
 
@@ -84,7 +84,7 @@ ce-agent-loop
 
 8. **PR 張貼。** 成功時，最後一步是 `git push` 加上一次 GitHub API 呼叫，開一份 PR，內文帶上計畫與差異摘要。
 
-## 動手用
+## 框架應用
 
 ```
 $ agent run ./my-repo "Fix the race condition in worker.rs"

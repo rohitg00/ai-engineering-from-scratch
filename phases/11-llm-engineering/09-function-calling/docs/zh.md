@@ -175,7 +175,7 @@ MCP 對函數呼叫的意義，就像 HTTP 對網路的意義。它把傳輸層�
 mx-tool-call-loop
 ```
 
-## 實作
+## 動手實作
 
 ### 步驟 1：定義工具註冊表
 
@@ -570,7 +570,7 @@ def run_demo():
         print(f"  {tool_name}({list(args.values())[0][:40]}): {'BLOCKED' if blocked else 'ALLOWED'}")
 ```
 
-## 實務應用
+## 框架應用
 
 ### OpenAI 函數呼叫
 
@@ -686,7 +686,7 @@ Anthropic 把工具呼叫當成 `type: "tool_use"` 的內容區塊回傳。工�
 
 MCP 把工具的實作和工具的消費解耦。Postgres 伺服器懂 SQL，GitHub 伺服器懂那套 API。你的代理只要去發現並呼叫工具 —— 不需要為每一種整合寫供應商專屬的程式碼。
 
-## 產出
+## 產出交付
 
 這一課會產出 `outputs/prompt-tool-designer.md` —— 一份可重用的提示詞模板，用來設計工具定義。給它一段「我想讓這個工具做什麼」的描述，它就產出完整的 JSON Schema 定義，含描述、型別與約束。
 

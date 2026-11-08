@@ -205,7 +205,7 @@ OpenAI 的 Batch API 以非同步方式處理請求，享 50% 折扣。你送出
 semantic-cache
 ```
 
-## 實作
+## 動手實作
 
 ### 步驟 1：成本計算器
 
@@ -752,7 +752,7 @@ if __name__ == "__main__":
     run_demo()
 ```
 
-## 實務應用
+## 框架應用
 
 ### Anthropic 提示詞快取
 
@@ -865,7 +865,7 @@ Batch API 對所有詞元一律給 50% 折扣，結果在 24 小時內回來。�
 
 生產環境請把線性掃描換成向量索引（Redis Vector Search、Pinecone 或 pgvector）。線性掃描在 1,000 筆以下還行，超過就要用 ANN（近似最近鄰）來達到 O(log n) 查詢。
 
-## 產出
+## 產出交付
 
 這一課會產出 `outputs/prompt-cost-optimizer.md` —— 一個可重用的提示詞，用來分析你的 LLM 應用，並提出具體的成本最佳化建議與預估節省。
 

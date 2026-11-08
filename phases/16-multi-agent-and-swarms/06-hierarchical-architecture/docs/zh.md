@@ -2,7 +2,7 @@
 
 > 階層式就是 supervisor 的巢狀化。經理代理管子經理，子經理管 worker。CrewAI 的 `Process.hierarchical` 是教科書版本：一個 `manager_llm` 動態委派任務並驗證輸出。LangGraph 的等價物是 `create_supervisor(create_supervisor(...))`。當任務真的就是一張組織圖時，這是自然的模式。它也是最容易塌陷成「管理階層繞圈」的模式 —— 經理代理指派工作指派得很差、誤讀子輸出，或達不成共識。循序式往往勝過它。
 
-**類型：** 學習 + 建構
+**類型：** 學習 + 實作
 **程式語言：** Python (stdlib)
 **先修單元：** 階段 16 · 05（Supervisor 模式）
 **時間：** 約 60 分鐘
@@ -71,7 +71,7 @@ LangGraph 用巢狀的 `create_supervisor` 呼叫。內層的 supervisor 有它�
 swarm-hierarchy-token
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 跑一個 3 層的階層：
 

@@ -219,7 +219,7 @@ OpenAI 的 text-embedding-3-small 和 text-embedding-3-large 透過 `dimensions`
 cosine-similarity
 ```
 
-## 實作
+## 動手實作
 
 我們從零打造一個語意搜尋引擎。不用向量資料庫，不用外部嵌入 API。純 Python，數學部分用 numpy。
 
@@ -414,7 +414,7 @@ def compare_metrics(engine, query, top_k=3):
     return results
 ```
 
-## 實務應用
+## 框架應用
 
 換成生產級的嵌入 API，架構完全不變。只有嵌入器換掉：
 
@@ -466,7 +466,7 @@ embeddings = model.encode(["semantic search query", "another document"])
 
 我們實作的 VectorIndex 類別可以搭配上面任何一種。換掉嵌入函數，搜尋邏輯照舊。
 
-## 產出
+## 產出交付
 
 這一課會產出：
 - `outputs/prompt-embedding-advisor.md` —— 一個提示詞，用來為特定場景挑選嵌入模型與策略

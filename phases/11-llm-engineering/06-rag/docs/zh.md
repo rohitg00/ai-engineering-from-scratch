@@ -183,7 +183,7 @@ graph TD
 rag-chunking
 ```
 
-## 實作
+## 動手實作
 
 ### 步驟 1：文件切塊
 
@@ -328,7 +328,7 @@ def simple_generate(prompt, retrieved_chunks):
     return best_sentence if best_sentence else "I don't have enough information."
 ```
 
-## 實務應用
+## 框架應用
 
 換上真實的嵌入模型和 LLM，程式碼幾乎不變：
 
@@ -392,7 +392,7 @@ results = collection.query(
 
 Chroma 內部就處理了嵌入（預設用 all-MiniLM-L6-v2），並把向量存在本機資料庫。同樣的模式，只是水管不同。
 
-## 產出
+## 產出交付
 
 這一課會產出：
 - `outputs/prompt-rag-architect.md` —— 一個提示詞，用來為特定場景設計 RAG 系統

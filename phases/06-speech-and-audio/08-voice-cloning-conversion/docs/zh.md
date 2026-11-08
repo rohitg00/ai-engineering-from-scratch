@@ -135,7 +135,7 @@ def cloned_inference(text, ref_audio, consent_record):
 | 跨語言複製 | XTTS v2 或 VALL-E X |
 | 深偽偵測 | Wav2Vec2-AASIST |
 
-## 陷阱
+## 常見陷阱
 
 - **參考轉錄稿沒對齊。** F5-TTS 這類模型要求參考文字和參考音訊完全一致，標點也算。
 - **參考音訊有殘響。** 回音會毀掉複製效果。要錄乾聲、近距離收音。

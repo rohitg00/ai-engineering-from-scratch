@@ -2,7 +2,7 @@
 
 > Khanmigo（可汗學院）、Duolingo Max、Google LearnLM / Gemini for Education、Quizlet Q-Chat 與 Synthesis Tutor，在 2026 年都大規模出貨了自適應的多模態家教。共通的形狀是：一套蘇格拉底式政策（絕不直接把答案倒出來）、一個每次互動後就更新的學習者模型（貝氏知識追蹤風格）、語音 + 文字 + 拍照數學的輸入、課綱圖檢索、間隔重複排程，以及針對年齡適切內容的硬性安全過濾。這個綜合專案要出貨一位主題專屬的家教（K-12 代數或 Python 入門）、以 10 位學習者跑一次為期兩週的成效研究，並通過一次內容安全稽核。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python (backend, learner model), TypeScript (web app), SQL (curriculum graph via Postgres + Neo4j)
 **先修單元：** 階段 5（NLP）、階段 6（語音）、階段 11（LLM 工程）、階段 12（多模態）、階段 14（代理）、階段 17（基礎設施）、階段 18（安全）
 **演練到的階段：** P5 · P6 · P11 · P12 · P14 · P17 · P18
@@ -76,7 +76,7 @@ learner device
 cf-tutor-loop
 ```
 
-## 動手建
+## 動手實作
 
 1. **課綱圖。** 建一張含 50-150 個概念節點（例如 K-12 代數，從「數線」到「二次公式」）與先備邊的 Neo4j。替每個節點附上 OER 內容（Open Textbook、OpenStax）。
 
@@ -96,7 +96,7 @@ cf-tutor-loop
 
 9. **每週進度報告。** 逐學習者自動產出一份 PDF 摘要，含探索過的主題、精熟度軌跡，以及建議的下一步。
 
-## 動手用
+## 框架應用
 
 ```
 learner: "I don't understand why 3x + 6 = 12 means x = 2"

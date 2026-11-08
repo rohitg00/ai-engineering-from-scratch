@@ -80,7 +80,7 @@ OpenAI，2024 年 8 月。人工策展的 500 項任務子集。移除了語意�
 ae-swebench-gate
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 實作一個玩具版、類 SWE-bench 的執行框架：
 

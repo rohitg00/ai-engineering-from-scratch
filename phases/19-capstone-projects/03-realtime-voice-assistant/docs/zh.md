@@ -2,7 +2,7 @@
 
 > 一個感覺對的語音代理，端到端延遲要低於 800 毫秒、知道你什麼時候講完、處理得了插話，而且呼叫工具時不會卡住。Retell、Vapi、LiveKit Agents 與 Pipecat 在 2026 年都達到了這個標準。它們用的是同一套形狀：一個串流 ASR、一個輪次偵測器、一個串流 LLM，以及一個串流 TTS，全部透過 WebRTC 串起來，並在每一跳都設下嚴苛的延遲預算。建一個出來，量測 WER、MOS 與誤截斷率，並在封包遺失之下跑它。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python (agent + pipeline), TypeScript (web client)
 **先修單元：** 階段 6（語音與音訊）、階段 7（transformer）、階段 11（LLM 工程）、階段 13（工具）、階段 14（代理）、階段 17（基礎設施）
 **演練到的階段：** P6 · P7 · P11 · P13 · P14 · P17
@@ -73,7 +73,7 @@ browser / Twilio PSTN
 ce-voice-latency
 ```
 
-## 動手建
+## 動手實作
 
 1. **WebRTC 工作階段。** 架起一個 LiveKit 房間，以及一個會串流麥克風音訊的網頁客戶端。在伺服器端，掛上一個會加入該房間的代理 worker。
 
@@ -93,7 +93,7 @@ ce-voice-latency
 
 9. **負載測試。** 用一個合成來電者，在單台 g5.xlarge 上驅動 50 通並行通話。量測持續狀態下首個音訊輸出的 p95。
 
-## 動手用
+## 框架應用
 
 ```
 caller: "what is the weather in tokyo tomorrow"

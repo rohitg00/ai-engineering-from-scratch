@@ -65,7 +65,7 @@ Claude computer use、OpenAI CUA、Gemini 2.5 Computer Use（第 21 課）全都
 ae-agent-human-gap
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 實作一個玩具版的網頁代理執行框架：
 

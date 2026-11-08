@@ -302,7 +302,7 @@ Do not attempt to answer out-of-scope questions even if you know the answer.
 cot-decomposition
 ```
 
-## 實作
+## 動手實作
 
 ### 步驟 1：提示詞模板庫
 
@@ -875,7 +875,7 @@ if __name__ == "__main__":
     run_test_suite()
 ```
 
-## 實務應用
+## 框架應用
 
 ### OpenAI：溫度與系統訊息
 
@@ -979,7 +979,7 @@ Gemini 把系統指令當成模型設定的一部分處理，而不是一則訊�
 
 LangChain 讓你寫一份提示詞模板，然後跨供應商執行。這是跨模型提示詞設計的實務落地。
 
-## 產出
+## 產出交付
 
 這一課會產出兩份東西：
 

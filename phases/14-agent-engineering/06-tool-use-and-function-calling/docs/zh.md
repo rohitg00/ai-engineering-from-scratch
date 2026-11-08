@@ -2,7 +2,7 @@
 
 > Toolformer（Schick 等人，2023）開啟了自監督的工具標註。Berkeley Function Calling Leaderboard V4（Patil 等人，2025）訂下 2026 年的門檻：40% 代理式、30% 多輪、10% live、10% non-live、10% 幻覺。單輪已經解決了。記憶、動態決策與長時程的工具鏈則還沒有。
 
-**類型：** 建構
+**類型：** 實作
 **程式語言：** Python (stdlib)
 **先修單元：** 階段 14 · 01（代理迴圈）、階段 13 · 01（函數呼叫深潛）
 **時間：** 約 60 分鐘
@@ -85,7 +85,7 @@ Anthropic 直接用 `input_schema`。OpenAI 用 `function.parameters`。兩者�
 tool-routing
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 實作一份生產形狀的工具註冊表：
 

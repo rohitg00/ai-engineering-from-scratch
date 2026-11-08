@@ -47,7 +47,7 @@ flowchart LR
 injection-gate
 ```
 
-## 動手建
+## 動手實作
 
 那個語料載入器讀第 82 課的 `outputs/taxonomy.json`。那些規則以資料而非程式碼的形式住在 `code/rules.py`。每條規則是一個字典，帶 `name`、`category`、`score`，以及 `substring` 或 `regex` 其中之一。偵測器類別把它們一次編譯好。
 
@@ -55,7 +55,7 @@ injection-gate
 
 那個指標執行器產出一份 JSON 報告，帶逐類別的精確率、召回率、F1 與原始計數。偵測器在某些固定樣本上是刻意會答錯的（尤其是那些看起來良性的角色扮演提示詞）；那份報告把它攤出來而不是藏起來。
 
-## 動手用
+## 框架應用
 
 跑 `python3 main.py`。示範載入那套分類法、把偵測器跑過每一份固定樣本、再跑過烘進 `benign.py` 的一份良性提示詞語料，並印出逐類別的指標。`outputs/detector_report.json` 這個檔案，就是第 87 課那個安全閘門所消費的產出物。
 

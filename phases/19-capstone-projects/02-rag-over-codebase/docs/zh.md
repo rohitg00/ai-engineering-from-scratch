@@ -2,7 +2,7 @@
 
 > 2026 年每一家認真的工程組織，都跑著一套「懂意思、而不只是懂字串」的內部程式碼搜尋。Sourcegraph Amp、Cursor 的程式碼庫問答、Augment 的企業圖譜、Aider 的 repomap、Pinterest 的內部 MCP —— 形狀都一樣。攝取多個儲存庫、用 tree-sitter 剖析、對函式與類別層級的片段做嵌入、混合搜尋、重新排序，最後帶引用作答。這個綜合專案要你建一套能撐住 10 個儲存庫、共 200 萬行程式碼，而且每次 git push 都挺得過增量重新索引的系統。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python (ingestion), TypeScript (API + UI)
 **先修單元：** 階段 5（NLP 基礎）、階段 7（transformer）、階段 11（LLM 工程）、階段 13（工具）、階段 17（基礎設施）
 **演練到的階段：** P5 · P7 · P11 · P13 · P17
@@ -66,7 +66,7 @@ git push --> webhook --> ingest worker (LlamaIndex Workflow)
 ce-hybrid-retrieval
 ```
 
-## 動手建
+## 動手實作
 
 1. **攝取走訪器。** 在每個推送掛鉤上走訪 git 歷史。蒐集變更的檔案。對每個檔案用 tree-sitter 剖析，抽出函式與類別節點及其完整原始碼範圍。發出片段紀錄 `{repo, path, start_line, end_line, symbol, body}`。
 
@@ -86,7 +86,7 @@ ce-hybrid-retrieval
 
 9. **評估。** 替 100 個跨儲存庫問題標上黃金 file:line 答案。量測 MRR@10、nDCG@10、引用忠實度（有可驗證錨點的主張比例），以及 p50/p99 延遲。
 
-## 動手用
+## 框架應用
 
 ```
 $ code-rag ask "how is S3 multipart abort wired into our retry budget?"

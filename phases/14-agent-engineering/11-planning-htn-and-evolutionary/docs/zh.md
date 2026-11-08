@@ -2,7 +2,7 @@
 
 > 符號式規劃處理那些計畫必須可證明正確的情況。演化式程式碼搜尋處理那些適應度函數是機器可檢核的情況。ChatHTN（2025）與 AlphaEvolve（2025）展示了各自跟 LLM 配對後能解鎖什麼。
 
-**類型：** 建構
+**類型：** 實作
 **程式語言：** Python (stdlib)
 **先修單元：** 階段 14 · 02（ReWOO 與 Plan-and-Execute）
 **時間：** 約 75 分鐘
@@ -91,7 +91,7 @@ AlphaEvolve（arXiv:2506.13131，DeepMind，2025 年 6 月）是另一種東西�
 htn-tree-expand
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 實作了兩個玩具：
 

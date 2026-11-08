@@ -84,7 +84,7 @@
 wb-runtime-shapes
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 是一個 stdlib 的多形狀示範：
 

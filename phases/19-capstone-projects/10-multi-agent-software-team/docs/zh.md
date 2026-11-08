@@ -2,7 +2,7 @@
 
 > 2026 年多代理工程團隊的形狀已經收斂：一位架構師負責規劃、N 位程式設計師在平行 worktree 中工作、一位審查者把關、一位測試者驗證。SWE-AF 的工廠架構、MetaGPT 的角色式提示、AutoGen 0.4 的型別化行動者圖、Cognition 的 Devin，以及 Factory 的 Droids，都各自獨立地落到了這個形狀上。平行 worktree 把實際時間換成吞吐量。共享狀態與交接協定則成了那個失敗面。這個綜合專案就是要建出這支團隊、在 SWE-bench Pro 上評估，並回報哪些交接會壞、多常壞。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python / TypeScript (agents), Shell (worktree scripts)
 **先修單元：** 階段 11（LLM 工程）、階段 13（工具）、階段 14（代理）、階段 15（自主）、階段 16（多代理）、階段 17（基礎設施）
 **演練到的階段：** P11 · P13 · P14 · P15 · P16 · P17
@@ -68,7 +68,7 @@ Coder A          Coder B          Coder C          Coder D          (4 parallel)
 ce-team-handoff
 ```
 
-## 動手建
+## 動手實作
 
 1. **任務看板。** 以檔案為後盾的 JSONL，帶型別化訊息：`plan_request`、`subtask`、`diff_ready`、`review_needed`、`test_needed`、`approved`、`rejected`、`replan_needed`。代理依標籤訂閱。
 
@@ -88,7 +88,7 @@ ce-team-handoff
 
 9. **事後檢討。** 對每一個失敗的議題，指出是哪一次交接壞了（計畫太籠統、合併衝突、審查者誤核可、測試不穩定）。產出一張交接失敗的直方圖。
 
-## 動手用
+## 框架應用
 
 ```
 $ team run --issue https://github.com/acme/widget/issues/842

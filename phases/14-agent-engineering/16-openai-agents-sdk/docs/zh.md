@@ -2,7 +2,7 @@
 
 > OpenAI Agents SDK 是建構在 Responses API 之上的輕量多代理框架。五個原語：Agent、Handoff、Guardrail、Session、Tracing。Handoff 是名為 `transfer_to_<agent>` 的工具。Guardrail 會在輸入或輸出上被絆到。Tracing 預設開啟。
 
-**類型：** 學習 + 建構
+**類型：** 學習 + 實作
 **程式語言：** Python (stdlib)
 **先修單元：** 階段 14 · 01（代理迴圈）、階段 14 · 06（工具使用）
 **時間：** 約 75 分鐘
@@ -71,7 +71,7 @@
 ae-agent-handoff
 ```
 
-## 建構它
+## 動手實作
 
 `code/main.py` 用 stdlib 實作這個 SDK 的形狀：
 

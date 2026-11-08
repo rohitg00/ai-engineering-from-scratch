@@ -2,7 +2,7 @@
 
 > Twelve Labs 把 Marengo + Pegasus 產品化。VideoDB 出貨了「影片版 CRUD」API。AI2 的 Molmo 2 發表了開源 VLM 檢查點。Gemini 的長脈絡原生處理得了數小時的影片。TimeLens-100K 大規模地定義了時序定位。2026 年的管線已經定了：場景切分、逐場景字幕 + 嵌入、逐字稿對齊、多向量索引，以及一個以（起、迄）時間戳加上影格預覽作答的查詢。這個綜合專案就是攝取 100 小時、打上公開基準，並量測在計數與動作類問題上的幻覺。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python (pipeline), TypeScript (UI)
 **先修單元：** 階段 4（電腦視覺）、階段 6（語音）、階段 7（transformer）、階段 11（LLM 工程）、階段 12（多模態）、階段 17（基礎設施）
 **演練到的階段：** P4 · P6 · P7 · P11 · P12 · P17
@@ -66,7 +66,7 @@ answer + (start, end) timestamps + frame thumbs + citations
 cf-scene-index
 ```
 
-## 動手建
+## 動手實作
 
 1. **攝取走訪器。** 接受 YouTube 網址或本地 MP4。必要時降到 720p。持久化 `{video_id, file_path}`。
 
@@ -86,7 +86,7 @@ cf-scene-index
 
 9. **評估。** 跑 ActivityNet-QA 與 NeXT-GQA。建一份 100 題的自訂集。回報整體準確率 + 逐類別拆解（計數、動作、描述）。
 
-## 動手用
+## 框架應用
 
 ```
 $ video-qa ask --url=https://youtube.com/watch?v=X "how many cars pass the intersection in the first minute?"

@@ -2,7 +2,7 @@
 
 > Langfuse 走上了開源核心。Arize Phoenix 發表了 2026 年 GenAI 語意慣例的對映。Helicone 與 Braintrust 都加碼投入逐使用者的成本歸屬。Traceloop 的 OpenLLMetry 成了 SDK 檢測的事實標準。生產上的形狀是：軌跡放 ClickHouse、中繼資料放 Postgres、UI 用 Next.js，再加上一小群跑在抽樣軌跡上的評估工作（DeepEval、RAGAS、LLM 裁判）。自架一套出來、從至少四個 SDK 家族攝取，並示範在五分鐘內抓到一次注入的退化。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** TypeScript (UI), Python / TypeScript (ingest + evals), SQL (ClickHouse)
 **先修單元：** 階段 11（LLM 工程）、階段 13（工具）、階段 17（基礎設施）、階段 18（安全）
 **演練到的階段：** P11 · P13 · P17 · P18
@@ -67,7 +67,7 @@ production apps:
 ce-otel-drift
 ```
 
-## 動手建
+## 動手實作
 
 1. **收集器設定。** OpenTelemetry Collector，配上 OTLP HTTP 接收器、一個保留 100% 出錯軌跡與 10% 成功軌跡的尾端抽樣器，以及送往 ClickHouse 與 S3 的匯出器。
 
@@ -87,7 +87,7 @@ ce-otel-drift
 
 9. **退化探測。** 注入一個臭蟲：被評估的聊天機器人開始有 1% 的機率洩漏假的社會安全號碼。量測 MTTR：從臭蟲部署到 Slack 警報。
 
-## 動手用
+## 框架應用
 
 ```
 $ curl -X POST https://my-otel-collector/v1/traces -d @trace.json

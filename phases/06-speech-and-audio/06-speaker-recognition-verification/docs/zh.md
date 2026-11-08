@@ -136,7 +136,7 @@ for turn, _, speaker in diarization.itertracks(yield_label=True):
 | 反偽冒（重播／深偽偵測） | AASIST 或 RawNet2 |
 | 超小型嵌入式（KWS + 註冊） | Titanet-Small（NeMo） |
 
-## 陷阱
+## 常見陷阱
 
 - **通道不匹配。** 在 VoxCeleb（網路影片）上訓練的模型 ≠ 電話通話的音訊。一定要在目標通道上評估。
 - **語句太短。** 測試音訊短於 3 秒時，EER 會急遽惡化。

@@ -148,7 +148,7 @@ soundfile.write("out.wav", wav, 24000)
 
 2026 年的開源領先者：**品質看 F5-TTS，效率看 Kokoro**。除非你是歷史學家，別去碰 Tacotron。
 
-## 陷阱
+## 常見陷阱
 
 - **沒有文字正規化器。** 「Dr. Smith」要唸成「Doctor」還是「Drive」？「2026」要唸成「twenty twenty six」還是「two zero two six」？在進音素轉換器*之前*就要正規化。
 - **詞彙表外的專有名詞。** 「Ghumare」→「ghyu-mair」？替未知詞元準備一個後備的字母轉音素模型。

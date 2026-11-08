@@ -2,7 +2,7 @@
 
 > AWS 的 DevOps Agent 正式上線、Resolve AI 發表了它的 K8s 操作手冊、NeuBird 展示了語意監控，而 Metoro 把 AI SRE 綁到逐服務的 SLO 上。生產上的形狀已經定了：一個警報 webhook 觸發、一個代理讀取遙測、走過一張 K8s 物件圖、替根因假說排序，然後在 Slack 上貼出一份帶核可按鈕的簡報。預設唯讀。每一項修復都由人類把關。這個綜合專案就是那個代理，在 20 起合成事故上受評，並在三個共同案例上與 AWS 的 Agent 比較。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python (agent), TypeScript (Slack integration)
 **先修單元：** 階段 11（LLM 工程）、階段 13（工具與 MCP）、階段 14（代理）、階段 15（自主）、階段 17（基礎設施）、階段 18（安全）
 **演練到的階段：** P11 · P13 · P14 · P15 · P17 · P18
@@ -68,7 +68,7 @@ PagerDuty / Alertmanager webhook
 ce-rootcause-walk
 ```
 
-## 動手建
+## 動手實作
 
 1. **圖的攝取。** 每 30 秒把 kube-state-metrics 同步進 Neo4j/kuzu。節點：Pod、Deployment、Node、Service、PVC、HPA。邊：OWNED_BY、SCHEDULED_ON、EXPOSES、MOUNTS、SCALES。遙測疊層邊：OBSERVED_BY（某個 Pod 被某條 Prometheus 時間序列觀測）。
 
@@ -88,7 +88,7 @@ ce-rootcause-walk
 
 9. **合成事故套件。** 建 20 個情境：OOMKill 連鎖、DNS 抖動、HPA 震盪、PVC 滿載、吵鬧的鄰居、故障的 sidecar、錯誤的 ConfigMap 上線、憑證輪替、映像檔拉取退避等等。就根因準確率與到假說的時間替代理評分。
 
-## 動手用
+## 框架應用
 
 ```
 webhook: alert.pagerduty.com -> checkout-api SLO breach, error rate 14%

@@ -51,13 +51,13 @@ flowchart TB
 safety-checkpoints
 ```
 
-## 動手建
+## 動手實作
 
 `code/safety_gate.py` 定義 `SafetyGate` 類別。它透過相對檔案路徑，從先前那幾課匯入偵測器、分類器路由器與規則引擎。`code/mock_llm_stream.py` 定義一個帶三種腳本化人設（clean、attacker-honest、attacker-lazy）的串流模擬 LLM。`code/main.py` 把第 82 課那份語料端到端跑過閘門，並寫出 `outputs/gate_trace.json`。
 
 示範跑全部 50 份分類法固定樣本加上 10 段良性提示詞。那份軌跡摘要回報：封鎖數、遮蔽數、警告數、放行數、提早終止數、逐類別的結果拆解，以及平均延遲。那些數字不是重點；逐請求的軌跡才是重點。
 
-## 動手用
+## 框架應用
 
 `python3 main.py`。示範把一切載入、端到端跑一遍、印出摘要表，並寫出那件軌跡產出物。結束碼是零。這個示範在字面意義上會自我終止：每一次請求要嘛跑到完成、要嘛提早終止，然後閘門走向下一個。
 

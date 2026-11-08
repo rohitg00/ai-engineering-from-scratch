@@ -2,7 +2,7 @@
 
 > 替議題貼個標籤，就拿到一份 PR —— 這是 2026 年自主寫程式代理的產品形狀：在雲端沙箱裡跑一個代理、驗證測試通過，然後貼出一份帶理據、可供審查的 PR。AWS Remote SWE Agents、Cursor Background Agents、OpenAI Codex cloud，以及 Google Jules，全都出貨了它。難的部分在於自動重現該儲存庫的建置環境、防止憑證外洩、強制執行逐儲存庫的預算，以及確保代理不能強制推送。這個綜合專案要建出自架版本，並在成本與通過率上與那些託管替代方案做比較。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python (agent), TypeScript (GitHub App), YAML (Actions)
 **先修單元：** 階段 11（LLM 工程）、階段 13（工具）、階段 14（代理）、階段 15（自主）、階段 17（基礎設施）
 **演練到的階段：** P11 · P13 · P14 · P15 · P17
@@ -69,7 +69,7 @@ GitHub issue labeled `@agent fix` or PR comment
 cf-issue-to-pr
 ```
 
-## 動手建
+## 動手實作
 
 1. **GitHub App。** 細緻權限的安裝權杖：issues 讀+寫、pull_requests 寫、contents 讀+寫、workflows 讀。分支保護（唯一做得到這件事的面向）強制執行「不得直接推送到 `main`」與「不得強制推送」；那個 app 不在豁免清單裡。由於 GitHub App 權限不支援路徑範圍，工作者要以「對提案差異做允許清單檢查」的方式，強制執行「不得寫入 `.github/workflows` 底下」。
 
@@ -89,7 +89,7 @@ cf-issue-to-pr
 
 9. **評估。** 30 個難度不一、預先種好的內部議題。量測通過率、PR 品質（差異大小、風格、覆蓋率）、成本、延遲。在同一批議題上與 Cursor Background Agents 及 AWS Remote SWE Agents 比較。
 
-## 動手用
+## 框架應用
 
 ```
 # on github.com

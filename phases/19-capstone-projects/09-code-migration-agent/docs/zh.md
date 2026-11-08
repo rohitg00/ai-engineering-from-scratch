@@ -2,7 +2,7 @@
 
 > Amazon 的 MigrationBench（Java 8 到 17）與 Google 的 App Engine Py2 轉 Py3 遷移器立下了 2026 年的標準。Moderne 的 OpenRewrite 大規模執行確定性的 AST 改寫。Grit 則用 codemod 風格的 DSL 瞄準同一個問題。生產上的模式把兩者結合：一層確定性的基底做安全改寫，加上一層代理處理那些模稜兩可的案例、一個做逐分支建置的沙箱，以及一套在 PR 開出去之前就轉綠的測試框架。這個綜合專案就是要遷移 50 個真實儲存庫，並發表一份通過率與一套失敗分類法。
 
-**類型：** 綜合專案
+**類型：** 總結專案
 **程式語言：** Python (agent), Java / Python (targets), TypeScript (dashboard)
 **先修單元：** 階段 5（NLP）、階段 7（transformer）、階段 11（LLM 工程）、階段 13（工具）、階段 14（代理）、階段 15（自主）、階段 17（基礎設施）
 **演練到的階段：** P5 · P7 · P11 · P13 · P14 · P15 · P17
@@ -67,7 +67,7 @@ file under failure class + attach repro
 ce-migration-funnel
 ```
 
-## 動手建
+## 動手實作
 
 1. **配方階段。** 先跑 OpenRewrite（Java）或 libcst（Python）配方。抓下那 70-80% 屬於機械式的遷移。以一次「recipe」提交存下來。
 
@@ -85,7 +85,7 @@ ce-migration-funnel
 
 8. **50 個儲存庫的跑測。** 在 MigrationBench 子集上執行。回報逐類別通過率、每個儲存庫的成本、覆蓋率保存度，以及與「只用確定性工具」基線的比較。
 
-## 動手用
+## 框架應用
 
 ```
 $ migrate legacy-java-service --target java17
