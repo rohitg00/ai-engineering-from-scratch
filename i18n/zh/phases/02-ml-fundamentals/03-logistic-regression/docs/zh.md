@@ -3,7 +3,7 @@
 > 逻辑回归将直线曲线成S曲线,以回答与概率的"是"或"没有"问题.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
 **Time:** ~90 minutes
 
@@ -503,6 +503,7 @@ print(f"\nClassification Report:\n{classification_report(y_te, y_pred)}")
 
 这一课产生了:
 - `code/logistic_regression.py`- 从零开始的物流回归,使用指标
+- `code/main.rs`- 只有Rust,只有Sdlib.`rustc --edition 2021 code/main.rs && ./main`现在,我们要去.
 
 ## 运动
 

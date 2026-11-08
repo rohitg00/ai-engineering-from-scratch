@@ -3,7 +3,7 @@
 > 线性回归通过数据绘制出最好的直线.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra, Calculus, Optimization), Phase 2 Lesson 1
 **Time:** ~90 minutes
 
