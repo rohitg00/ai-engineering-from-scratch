@@ -3,7 +3,7 @@
 > रैखिक प्रतिगमन आपके डेटा के माध्यम से सबसे अच्छी सीधी रेखा खींचता है। यह मशीन लर्निंग की "हैलो दुनिया" है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra, Calculus, Optimization), Phase 2 Lesson 1
 **Time:** ~90 minutes
 

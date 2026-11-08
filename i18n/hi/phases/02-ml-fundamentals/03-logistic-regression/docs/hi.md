@@ -3,7 +3,7 @@
 > लॉजिस्टिक रेग्रिशन एक सीधी रेखा को S-क्रव में झुकाता है ताकि संभावनाओं के साथ हाँ या नहीं प्रश्नों का उत्तर दिया जा सके।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
 **Time:** ~90 minutes
 
@@ -503,6 +503,7 @@ print(f"\nClassification Report:\n{classification_report(y_te, y_pred)}")
 
 इस पाठ से उत्पन्न होता हैः
 - `code/logistic_regression.py`- मेट्रिक्स के साथ शून्य से लॉजिस्टिक प्रतिगमन
+- `code/main.rs`- एक ही कोड में Rust, केवल stdlib.`rustc --edition 2021 code/main.rs && ./main`. .
 
 ## व्यायाम
 
