@@ -3,7 +3,7 @@
 > 感知器是神经网络的原子. 打开它,你会发现重量,偏见和决定.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra Intuition)
 **Time:** ~60 minutes
 
