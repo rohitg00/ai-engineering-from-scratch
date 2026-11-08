@@ -163,9 +163,11 @@ graph TD
 
 在固定算力預算 C（以 FLOPs 計）之下，最佳模型大小 N 與資料集大小 D 遵循：
 
-```
-N_opt ~ C^0.5
-D_opt ~ C^0.5
+```math
+\begin{aligned}
+N_{\text{opt}} &\sim C^{0.5} \\
+D_{\text{opt}} &\sim C^{0.5}
+\end{aligned}
 ```
 
 實務上這代表模型大小與資料集大小應該大致等比例放大。參數多 10 倍的模型，大約需要多 10 倍的訓練詞元才能達到同樣的損失。

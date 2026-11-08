@@ -70,7 +70,7 @@ The evaluator runs three independent computations and joins them in the verdict 
 
 Perplexity is exponential in loss. A 0.1 drop in loss is a much larger drop in perplexity. Comparing perplexity directly across two configurations is fine, but blending it with linear metrics in a single report requires normalisation.
 
-The lesson normalises any metric whose `scale` field is `"log"` by taking the natural log before computing the improvement. The threshold is then applied in log space. A perplexity drop from 32 to 28 is `log(28) - log(32) = -0.133` on a lower is better metric, which is well above the two percent threshold.
+The lesson normalises any metric whose `scale` field is `"log"` by taking the natural log before computing the improvement. The threshold is then applied in log space. A perplexity drop from 32 to 28 becomes `log(32) = 3.466` against `log(28) = 3.332`. The relative improvement on a lower is better metric is `(3.466 - 3.332) / 3.466 = 0.039`, which clears the two percent threshold.
 
 ```text
 if scale == "log":

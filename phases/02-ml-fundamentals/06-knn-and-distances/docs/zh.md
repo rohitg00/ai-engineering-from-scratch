@@ -83,32 +83,33 @@ graph LR
 
 **L2（歐氏距離）** 是預設選擇。直線距離。
 
-```
-d(a, b) = sqrt(sum((a_i - b_i)^2))
+```math
+d(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
 ```
 
 它對特徵尺度很敏感。在 KNN 裡用 L2 之前，一定要先把特徵標準化。
 
 **L1（曼哈頓距離）** 把絕對差值加起來。因為不做平方，所以比 L2 更耐離群值。
 
-```
-d(a, b) = sum(|a_i - b_i|)
+```math
+d(a, b) = \sum_i \lvert a_i - b_i \rvert
 ```
 
 **餘弦距離** 衡量向量之間的夾角，忽略大小。處理文字與嵌入資料時不可或缺。
 
-```
-d(a, b) = 1 - (a . b) / (||a|| * ||b||)
+```math
+d(a, b) = 1 - \frac{a \cdot b}{\lVert a \rVert \, \lVert b \rVert}
 ```
 
 **Minkowski** 用參數 p 把 L1 與 L2 一般化。
 
-```
-d(a, b) = (sum(|a_i - b_i|^p))^(1/p)
-
-p=1: Manhattan
-p=2: Euclidean
-p->inf: Chebyshev (max absolute difference)
+```math
+\begin{aligned}
+& d(a, b) = \left( \sum_i \lvert a_i - b_i \rvert^p \right)^{1/p} \\[6pt]
+& p=1\text{: Manhattan} \\
+& p=2\text{: Euclidean} \\
+& p \to \infty\text{: Chebyshev (max absolute difference)}
+\end{aligned}
 ```
 
 該用哪個度量，取決於資料：
@@ -127,11 +128,12 @@ p->inf: Chebyshev (max absolute difference)
 
 **距離加權 KNN** 讓每個鄰居的權重與距離成反比：
 
-```
-weight_i = 1 / (distance_i + epsilon)
-
-For classification: weighted vote
-For regression:     weighted average = sum(w_i * y_i) / sum(w_i)
+```math
+\begin{aligned}
+& \text{weight}_i = \frac{1}{\text{distance}_i + \epsilon} \\[6pt]
+& \text{For classification: weighted vote} \\
+& \text{For regression: weighted average} = \frac{\sum_i w_i y_i}{\sum_i w_i}
+\end{aligned}
 ```
 
 epsilon 是為了避免查詢點剛好與某個訓練點重合時發生除以零。
@@ -213,12 +215,12 @@ KNN 是懶惰學習器：訓練時什麼都不做，全部的工作都留到預�
 
 迴歸版的 KNN 不做多數投票，而是把 K 個鄰居的目標值平均起來。
 
-```
-prediction = (1/K) * sum(y_i for i in K nearest neighbors)
-
-Or with distance weighting:
-prediction = sum(w_i * y_i) / sum(w_i)
-where w_i = 1 / distance_i
+```math
+\begin{aligned}
+& \text{prediction} = \frac{1}{K} \sum_{i \in K \text{ nearest neighbors}} y_i \\[6pt]
+& \text{Or with distance weighting:} \\
+& \text{prediction} = \frac{\sum_i w_i y_i}{\sum_i w_i} \quad \text{where } w_i = \frac{1}{\text{distance}_i + \epsilon}
+\end{aligned}
 ```
 
 KNN 迴歸給出的是分段常數的預測（加了權重就變成分段平滑）。它無法外推到訓練資料的範圍之外。如果訓練目標值全都落在 0 到 100 之間，KNN 永遠不會預測出 200。

@@ -36,9 +36,9 @@ Large-v3 has 1.55B params. Turbo uses a 4-layer decoder (from 32), cutting laten
 <|startoftranscript|><|en|><|transcribe|><|notimestamps|> Hello world.<|endoftext|>
 ```
 
-- `<|en|>` — language tag; forces translation-vs-transcription behavior.
-- `<|transcribe|>` or `<|translate|>` — translate English output from any-language input, or verbatim.
-- `<|notimestamps|>` — skip word-level timestamps (faster).
+- `<|en|>`: language tag; names the language spoken in the audio. Leave it out and Whisper detects the language first.
+- `<|transcribe|>` or `<|translate|>`: task tag; transcribe the speech in its source language, or translate it to English text.
+- `<|notimestamps|>`: skip word-level timestamps (faster).
 
 The prompt is what lets one model do many tasks. Change `<|en|>` to `<|fr|>` and it transcribes French.
 

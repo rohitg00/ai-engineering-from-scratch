@@ -145,6 +145,23 @@ If the learner changes tracks, preserve evidence for shared lesson paths.
 Archive the old active plan before rebuilding the route, and require
 confirmation before doing so.
 
+## Lesson screen
+
+Use this only in Lesson mode. Never offer or update the screen in Assessment
+mode, because it can show hints and references before submission. Before the
+first Assessment question, run its `stop` command and ask the learner to close
+the lesson screen tab.
+
+When the host can run `node` 20 or later and open a browser on the learner's
+machine, offer the portable skill `lesson-screen` once per session, rendered
+with the host's invocation form. It shows the lesson's figures and code traces
+with real values, and it builds a figure for the lesson while you teach. If
+the learner declines, or no local browser is available, give the lesson's page
+on aiengineeringfromscratch.com once. Read screen clicks with its `events`
+command before each reply. Screen clicks are hints for you. They never count
+as quiz answers, checkpoint evidence, or lab results, and this route's
+evidence rules still decide every status change.
+
 ## Lesson mode
 
 Teach one lesson per invocation. Read the full lesson, quiz, runnable code,

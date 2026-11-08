@@ -1,0 +1,51 @@
+
+extra-x86_64-O1.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <fifths>:
+       0: 48 63 c7                     	movslq	%edi, %rax
+       3: 48 69 c0 67 66 66 66         	imulq	$0x66666667, %rax, %rax # imm = 0x66666667
+       a: 48 89 c1                     	movq	%rax, %rcx
+       d: 48 c1 f9 21                  	sarq	$0x21, %rcx
+      11: 48 c1 e8 3f                  	shrq	$0x3f, %rax
+      15: 01 c8                        	addl	%ecx, %eax
+      17: 83 c0 fe                     	addl	$-0x2, %eax
+      1a: c3                           	retq
+      1b: 0f 1f 44 00 00               	nopl	(%rax,%rax)
+
+0000000000000020 <quarter_band>:
+      20: 31 c0                        	xorl	%eax, %eax
+      22: 83 ff 04                     	cmpl	$0x4, %edi
+      25: 77 0c                        	ja	0x33 <quarter_band+0x13>
+      27: 89 f8                        	movl	%edi, %eax
+      29: 48 8d 0d 00 00 00 00         	leaq	(%rip), %rcx            # 0x30 <quarter_band+0x10>
+		000000000000002c:  R_X86_64_PC32	.rodata-0x4
+      30: 8b 04 81                     	movl	(%rcx,%rax,4), %eax
+      33: c3                           	retq
+      34: 66 66 66 2e 0f 1f 84 00 00 00 00 00  	nopw	%cs:(%rax,%rax)
+
+0000000000000040 <weighted>:
+      40: 85 f6                        	testl	%esi, %esi
+      42: 7e 1d                        	jle	0x61 <weighted+0x21>
+      44: 89 f1                        	movl	%esi, %ecx
+      46: 31 d2                        	xorl	%edx, %edx
+      48: 31 c0                        	xorl	%eax, %eax
+      4a: 66 0f 1f 44 00 00            	nopw	(%rax,%rax)
+      50: 8b 34 97                     	movl	(%rdi,%rdx,4), %esi
+      53: 8d 34 76                     	leal	(%rsi,%rsi,2), %esi
+      56: 01 f0                        	addl	%esi, %eax
+      58: 48 ff c2                     	incq	%rdx
+      5b: 48 39 d1                     	cmpq	%rdx, %rcx
+      5e: 75 f0                        	jne	0x50 <weighted+0x10>
+      60: c3                           	retq
+      61: 31 c0                        	xorl	%eax, %eax
+      63: c3                           	retq
+      64: 66 66 66 2e 0f 1f 84 00 00 00 00 00  	nopw	%cs:(%rax,%rax)
+
+0000000000000070 <span_end>:
+      70: 89 f0                        	movl	%esi, %eax
+      72: 03 47 04                     	addl	0x4(%rdi), %eax
+      75: 89 47 04                     	movl	%eax, 0x4(%rdi)
+      78: 03 07                        	addl	(%rdi), %eax
+      7a: c3                           	retq

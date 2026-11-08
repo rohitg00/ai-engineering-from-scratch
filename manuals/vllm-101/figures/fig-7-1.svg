@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 654" role="img" aria-labelledby="fig-7-1-title fig-7-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-1-title">Each troubleshooting entry: the symptom, the first check, and where the fix is</title>
+  <desc id="fig-7-1-desc">Twenty-four symptoms in five groups: the server does not start, requests fail, the server is slow, the output is wrong, and the benchmark is wrong. Each row gives the first log line or metric to check and the section or action that fixes it.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT YOU SEE</text>
+  <text x="300" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CHECK FIRST</text>
+  <text x="500" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THEN</text>
+  <rect x="20" y="33" width="600" height="16" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="28" y="45" font-size="11" font-weight="700">the server does not start</text>
+  <text x="28" y="66" font-size="11">download hangs</text>
+  <text x="300" y="66" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">cache folder size</text>
+  <text x="500" y="66" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">hf download</text>
+  <line x1="20" y1="73" x2="620" y2="73" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="87" font-size="11">model not supported</text>
+  <text x="300" y="87" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">architecture in error</text>
+  <text x="500" y="87" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">supported list</text>
+  <line x1="20" y1="94" x2="620" y2="94" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="108" font-size="11">driver or PTX error</text>
+  <text x="300" y="108" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">error text</text>
+  <text x="500" y="108" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">update driver</text>
+  <line x1="20" y1="115" x2="620" y2="115" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="129" font-size="11">KV cache and max length</text>
+  <text x="300" y="129" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">length in error</text>
+  <text x="500" y="129" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">2.2</text>
+  <line x1="20" y1="136" x2="620" y2="136" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="150" font-size="11">free memory below share</text>
+  <text x="300" y="150" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">nvidia-smi</text>
+  <text x="500" y="150" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">2.2</text>
+  <line x1="20" y1="157" x2="620" y2="157" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="171" font-size="11">crash with FP8 KV cache</text>
+  <text x="300" y="171" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">backend line</text>
+  <text x="500" y="171" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">2.4</text>
+  <line x1="20" y1="178" x2="620" y2="178" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="192" font-size="11">DGX Spark out of memory</text>
+  <text x="300" y="192" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">free -g</text>
+  <text x="500" y="192" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">2.3</text>
+  <line x1="20" y1="199" x2="620" y2="199" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="213" font-size="11">slow first start, GB10</text>
+  <text x="300" y="213" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Model loading took</text>
+  <text x="500" y="213" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">2.3</text>
+  <line x1="20" y1="220" x2="620" y2="220" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="234" font-size="11">compile step fails</text>
+  <text x="300" y="234" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">torch.compile error</text>
+  <text x="500" y="234" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">clear cache</text>
+  <line x1="20" y1="241" x2="620" y2="241" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="255" font-size="11">multi-GPU start hangs</text>
+  <text x="300" y="255" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">NCCL_DEBUG=TRACE</text>
+  <text x="500" y="255" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">6.1</text>
+  <line x1="20" y1="262" x2="620" y2="262" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="276" font-size="11">shorter max length</text>
+  <text x="300" y="276" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">derived length</text>
+  <text x="500" y="276" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">2.6</text>
+  <line x1="20" y1="283" x2="620" y2="283" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <rect x="20" y="286" width="600" height="16" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="28" y="298" font-size="11" font-weight="700">requests fail</text>
+  <text x="28" y="319" font-size="11">HTTP 400, context length</text>
+  <text x="300" y="319" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">counts in error</text>
+  <text x="500" y="319" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">shorter request</text>
+  <line x1="20" y1="326" x2="620" y2="326" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="340" font-size="11">every request fails</text>
+  <text x="300" y="340" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">EngineCore error</text>
+  <text x="500" y="340" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">restart</text>
+  <line x1="20" y1="347" x2="620" y2="347" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <rect x="20" y="350" width="600" height="16" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="28" y="362" font-size="11" font-weight="700">the server is slow</text>
+  <text x="28" y="383" font-size="11">first token takes seconds</text>
+  <text x="300" y="383" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">waiting, KV usage</text>
+  <text x="500" y="383" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">3.1</text>
+  <line x1="20" y1="390" x2="620" y2="390" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="404" font-size="11">long gaps, many users</text>
+  <text x="300" y="404" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">P99 against median</text>
+  <text x="500" y="404" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">3.3</text>
+  <line x1="20" y1="411" x2="620" y2="411" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="425" font-size="11">preemptions rise</text>
+  <text x="300" y="425" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">num_preemptions</text>
+  <text x="500" y="425" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">3.1</text>
+  <line x1="20" y1="432" x2="620" y2="432" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="446" font-size="11">n-gram gives less</text>
+  <text x="300" y="446" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">async warning</text>
+  <text x="500" y="446" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">4.2</text>
+  <line x1="20" y1="453" x2="620" y2="453" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="467" font-size="11">eager start slow</text>
+  <text x="300" y="467" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">first requests</text>
+  <text x="500" y="467" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">4.3</text>
+  <line x1="20" y1="474" x2="620" y2="474" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="488" font-size="11">NVFP4 slow on GB10</text>
+  <text x="300" y="488" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">TPOT against 0.28</text>
+  <text x="500" y="488" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">pin release</text>
+  <line x1="20" y1="495" x2="620" y2="495" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <rect x="20" y="498" width="600" height="16" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="28" y="510" font-size="11" font-weight="700">the output is wrong</text>
+  <text x="28" y="531" font-size="11">answer starts with think</text>
+  <text x="300" y="531" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">content field</text>
+  <text x="500" y="531" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">3.10</text>
+  <line x1="20" y1="538" x2="620" y2="538" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="552" font-size="11">one token repeated</text>
+  <text x="300" y="552" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">cache hit, spec</text>
+  <text x="500" y="552" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">turn one off</text>
+  <line x1="20" y1="559" x2="620" y2="559" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="573" font-size="11">invalid JSON with spec</text>
+  <text x="300" y="573" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">run without spec</text>
+  <text x="500" y="573" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">3.5</text>
+  <line x1="20" y1="580" x2="620" y2="580" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <text x="28" y="594" font-size="11">output changes per run</text>
+  <text x="300" y="594" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">same request alone</text>
+  <text x="500" y="594" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">3.8</text>
+  <line x1="20" y1="601" x2="620" y2="601" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+  <rect x="20" y="604" width="600" height="16" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="28" y="616" font-size="11" font-weight="700">the benchmark is wrong</text>
+  <text x="28" y="637" font-size="11">second run faster</text>
+  <text x="300" y="637" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">prefix cache hits</text>
+  <text x="500" y="637" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">5.1</text>
+  <line x1="20" y1="644" x2="620" y2="644" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1"/>
+</svg>

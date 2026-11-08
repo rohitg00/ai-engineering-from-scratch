@@ -116,6 +116,18 @@ this five-lesson route. Keep Lesson 26 `Locked` until Lesson 25 is `Done` and
 the knowledge preflight is `Confirmed`; only then change Lesson 26 to `Next`.
 Never drop or mark a prerequisite complete by assumption.
 
+## Lesson screen
+
+When the host can run `node` 20 or later and open a browser on the learner's
+machine, offer the portable skill `lesson-screen` once per session, rendered
+with the host's invocation form. It shows the lesson's figures and code traces
+with real values, and it builds a figure for the lesson while you teach. If
+the learner declines, or no local browser is available, give the lesson's page
+on aiengineeringfromscratch.com once. Read screen clicks with its `events`
+command before each reply. Screen clicks are hints for you. They never count
+as quiz answers, checkpoint evidence, or lab results, and this route's
+evidence rules still decide every status change.
+
 ## Teach one lesson
 
 1. Set the selected row to `In progress`.

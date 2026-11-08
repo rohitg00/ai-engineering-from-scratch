@@ -1,0 +1,93 @@
+(module
+  (type (;0;) (func (param i32)))
+  (type (;1;) (func (param i32 i32) (result i32)))
+  (type (;2;) (func (param i32) (result i32)))
+  (import "env" "log" (func $log (type 0)))
+  (func $percent_change (type 1) (param $before i32) (param $after i32) (result i32)
+    local.get $before
+    i32.eqz
+    if (result i32)  ;; label = @1
+      i32.const 0
+    else
+      local.get $after
+      local.get $before
+      i32.sub
+      i32.const 100
+      i32.mul
+      local.get $before
+      i32.div_s
+    end)
+  (func $grade (type 2) (param $score i32) (result i32)
+    (local $bucket i32)
+    local.get $score
+    i32.const 10
+    i32.div_s
+    local.set $bucket
+    block (result i32)  ;; label = @1
+      block  ;; label = @2
+        block  ;; label = @3
+          block  ;; label = @4
+            block  ;; label = @5
+              block  ;; label = @6
+                local.get $bucket
+                br_table 4 (;@2;) 4 (;@2;) 4 (;@2;) 4 (;@2;) 4 (;@2;) 4 (;@2;) 3 (;@3;) 2 (;@4;) 1 (;@5;) 0 (;@6;) 0 (;@6;) 4 (;@2;)
+              end
+              i32.const 4
+              br 4 (;@1;)
+            end
+            i32.const 3
+            br 3 (;@1;)
+          end
+          i32.const 2
+          br 2 (;@1;)
+        end
+        i32.const 1
+        br 1 (;@1;)
+      end
+      i32.const 0
+    end)
+  (func $total (type 1) (param $values i32) (param $count i32) (result i32)
+    (local $sum i32) (local $i i32)
+    block  ;; label = @1
+      loop  ;; label = @2
+        local.get $i
+        local.get $count
+        i32.ge_s
+        br_if 1 (;@1;)
+        local.get $sum
+        local.get $values
+        local.get $i
+        i32.const 4
+        i32.mul
+        i32.add
+        i32.load
+        i32.add
+        local.set $sum
+        local.get $i
+        i32.const 1
+        i32.add
+        local.set $i
+        br 0 (;@2;)
+      end
+    end
+    local.get $sum)
+  (func $grade_label (type 2) (param $score i32) (result i32)
+    (local $g i32)
+    local.get $score
+    call $grade
+    local.set $g
+    local.get $g
+    call $log
+    i32.const 1024
+    local.get $g
+    i32.const 2
+    i32.mul
+    i32.add)
+  (memory (;0;) 1)
+  (export "memory" (memory 0))
+  (export "percent_change" (func $percent_change))
+  (export "grade" (func $grade))
+  (export "total" (func $total))
+  (export "grade_label" (func $grade_label))
+  (data (;0;) (i32.const 1024) "F\00D\00C\00B\00A\00")
+  (@custom "name" "\011\05\00\03log\01\0epercent_change\02\05grade\03\05total\04\0bgrade_label\02J\05\00\00\01\02\00\06before\01\05after\02\02\00\05score\01\06bucket\03\04\00\06values\01\05count\02\03sum\03\01i\04\02\00\05score\01\01g"))

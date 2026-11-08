@@ -77,15 +77,15 @@ The metrics registry is two dicts. Counters are `{(name, frozen_labels): int}`. 
 6. `wrap_tool_call(name)` decorator that emits a span and updates metrics.
 7. Demo: synthesises a complete agent invocation (gen_ai.chat span around tool spans), writes traces.jsonl, prints the Prometheus exposition, exits zero.
 
-The span id and trace id are 16-byte hex strings, generated from `os.urandom`. That matches OTel's W3C trace context. The exporter never throws; IO errors are surfaced but the harness keeps running.
+The trace id is a 16-byte value (32 hex characters) and the span id is an 8-byte value (16 hex characters), both cut from random `uuid4` hex. That matches the W3C Trace Context sizes OTel uses. The exporter never throws; IO errors are surfaced but the harness keeps running.
 
-The histogram has a fixed bucket set (the OTel default for latency in milliseconds: 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, +Inf). Samples are stored as a list; exposition computes per-bucket counts on demand.
+The histogram has a fixed bucket set for latency in milliseconds: 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, +Inf. It is a trimmed version of the OTel SDK default boundaries, which also include 0, 75, 750, and 7500. Samples are stored as a list; exposition computes per-bucket counts on demand.
 
 ## Why hand-rolled instead of opentelemetry-sdk
 
-The OTel Python SDK is a real dependency. It is also several thousand lines of code, multiple processes for the OTLP exporter, and a runtime cost that swamps a lesson budget. The hand-rolled version teaches the wire format. In production you wire the same attributes into the real SDK and get the OTLP exporter, batching, and resource detection for free.
+The OTel Python SDK is a real dependency. It is also several thousand lines of code, a background export thread for the OTLP exporter, and a runtime cost that swamps a lesson budget. The hand-rolled version teaches the wire format. In production you wire the same attributes into the real SDK and get the OTLP exporter, batching, and resource detection for free.
 
-The conventions are stable. The wire format the lesson emits will keep parsing in 2030 because OTel never breaks GenAI attribute names; they only add new ones.
+The GenAI conventions are still marked Development in the spec, and they have renamed attributes before: `gen_ai.usage.prompt_tokens` became `gen_ai.usage.input_tokens`. Pin the semantic-conventions version you emit and check it when you upgrade the SDK.
 
 ## How this composes with the rest of Track A
 

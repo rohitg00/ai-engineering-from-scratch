@@ -11,6 +11,14 @@ on:
       - "README.md"
       - "ROADMAP.md"
       - "glossary/**"
+      - "certifications/**"
+      - "cheatsheets/**"
+      - "interviews/**"
+      - "learning-paths/**"
+      - "manuals/**"
+      - "practice/**"
+      - "projects/**"
+      - "package.json"
       - "site/**"
       - "vercel.json"
       - "scripts/pages_aliases.mjs"
@@ -19,6 +27,7 @@ on:
   pull_request:
     branches: [main]
     paths:
+      - "package.json"
       - "vercel.json"
       - "scripts/pages_aliases.mjs"
       - "scripts/test_pages_aliases.mjs"
@@ -32,10 +41,11 @@ permissions:
   id-token: write
 
 # One deploy at a time. Never cancel a running deploy — a half-published
-# site is worse than a stale one.
+# site is worse than a stale one. Pull requests build in their own group, so
+# a PR check never queues behind a deploy.
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: ${{ github.event_name == 'pull_request' && format('pages-pr-{0}', github.ref) || 'pages' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   # Pages has no rewrite engine, so vercel.json's clean URLs exist only as the
@@ -53,18 +63,18 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
       - name: every alias stub points at a file that ships
         run: node --test scripts/test_pages_aliases.mjs
 
-  deploy:
-    name: build + deploy
+  # Runs on pull requests too, so a change that breaks the site build fails
+  # its PR instead of the first deploy after merge.
+  build:
+    name: build site
     runs-on: ubuntu-latest
     needs: validate
-    if: github.event_name != 'pull_request'
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -72,30 +82,62 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
+
+      # shiki (build-time code highlighting) and pagefind (search index).
+      - name: install build tools
+        run: npm install --no-audit --no-fund
 
       # Writes data.js, sitemap.xml, llms.txt and build-meta.js into site/.
       # build.js reads the deploy's git ref to decide which branch lesson.html
       # fetches docs/en.md from; VERCEL_GIT_COMMIT_REF is its documented input.
       - name: build site
         env:
-          VERCEL_GIT_COMMIT_REF: ${{ github.ref_name }}
+          VERCEL_GIT_COMMIT_REF: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
         run: node site/build.js
 
-      # Pages has no rewrite engine, so vercel.json's rewrites become
-      # redirect stubs.
+      # The rest of vercel.json's buildCommand, minus its two Vercel-only steps:
+      # fetch-translation-coverage reads upstream's `translations` branch, which
+      # this fork does not use, and clean-urls targets Vercel's rewrite engine,
+      # which pages_aliases.mjs stands in for below.
+      - name: build projects, agents, manuals and search
+        run: |
+          node site/build-projects.js --strict
+          node site/build-agents.js
+          node site/build-manuals.js
+          node site/build-search.js
+          node site/version-assets.js
+
+      # Pages has no rewrite engine, so vercel.json's rewrites become redirect
+      # stubs. Runs after the build: parameterized rewrites expand against the
+      # pages it produced.
       - name: generate clean-URL aliases
         run: node scripts/pages_aliases.mjs
 
+      - name: no alias replaced a real page
+        run: |
+          test -s site/interviews/index.html
+          ! grep -q '<title>Redirecting…</title>' site/interviews/index.html
+
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with:
+          path: site
+
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name != 'pull_request'
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
       # One-time manual setup, deliberately not automated: GITHUB_TOKEN cannot
       # create a Pages site (configure-pages' `enablement` input 404s), so set
       # Settings -> Pages -> Source to "GitHub Actions" once per repo. This
       # step fails with "Get Pages site failed / Not Found" until you do.
       - uses: actions/configure-pages@v5
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
 
       - id: deploy
         uses: actions/deploy-pages@v4

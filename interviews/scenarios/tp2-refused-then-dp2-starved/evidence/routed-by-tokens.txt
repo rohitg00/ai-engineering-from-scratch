@@ -1,0 +1,7 @@
+title: the same pair with requests routed by token count
+source: manuals/sglang-101/sections/6-1-tp-size-dp-size-and-attn-dp-size.md
+lines: 169-169
+lang: text
+note: Compare the three throughput numbers at 64 users, and read the clock caution.
+---
+At 64 users the pair gave 114.7 tok/s routed by tokens, against 41.7 with round robin and 250.9 on one L4. At 8 users it gave 92.1 against 64.2 and 112.6. The median TTFT at 64 users fell from 4,763 to 3,977 ms. The median clock at 64 users was 1,020 MHz, against 675 MHz in the round-robin run. So part of the gain can be the card.

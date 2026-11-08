@@ -1,0 +1,26 @@
+Illegal memory access under heavy eviction in a small pool
+Date: 2026-10-23
+Machine: NVIDIA L4, the second GPU of the node (GPU1), shared with its owner, no clock lock. Driver 615.71.09.
+Engine: SGLang 0.5.22, torch 2.14.1+cu130 (CUDA 13.0), sgl_kernel 0.4.9.
+Server: sglang serve --model-path Qwen/Qwen3-0.6B --mem-fraction-static 0.55 --context-length 4096 --enable-cache-report --max-total-tokens 8192 --radix-eviction-policy lru
+Trace: 24 sessions x 6 turns, round robin at concurrency 8, greedy, 64-token answers. The context grows each turn, so the 8,192-token pool evicts heavily from turn 4 on.
+Hang rule: no new log line for 5 minutes, or 15 minutes in total. The scheduler stack was saved with py-spy before the server was stopped.
+
+variant                                          runs   aborts   hangs   clean
+lru, CUDA graph and overlap on (default)         6      1        3       2
+lru, CUDA_LAUNCH_BLOCKING=1                      3      0        0       3
+lru, --disable-cuda-graph                        4      0        0       4
+lru, --enable-hierarchical-cache                 3      1        0       2
+lru, HiCache, CUDA_LAUNCH_BLOCKING=1             2      0        0       2
+
+Earlier passes with the same config: lru failed in 1 of 3 runs, HiCache with ratio 4 and page size 64 in 1 of 1, tlru in 1 of 1. lfu and slru did not fail in 1 run each.
+
+The abort:
+torch.AcceleratorError: CUDA error: an illegal memory access was encountered
+Last Python frames: scheduler.py process_batch_result, then batch_result_processor.py process_batch_result_decode, then torch/cuda/streams.py synchronize (copy_done.synchronize() on the decode result).
+
+The hang: the py-spy stack sits in the same synchronize call, under process_batch_result_decode, under event_loop_overlap. The GPU stays at 100 percent and the log stops.
+
+The fault did not appear with kernel launches serialized (0 of 5) or with CUDA graphs off (0 of 4).
+With launch blocking on, the fault did not occur, so no traceback names the faulting kernel.
+Nothing was filed upstream.

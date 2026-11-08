@@ -173,8 +173,8 @@ RGB 是拍攝時的格式，但對模型來說它不一定是最有用的表示�
 
 從 RGB 轉灰階是加權和，不是平均，因為人眼對綠色比對紅色或藍色更敏感：
 
-```
-Y = 0.299 R + 0.587 G + 0.114 B       (ITU-R BT.601, the classic weights)
+```math
+Y = 0.299 R + 0.587 G + 0.114 B \qquad \text{(ITU-R BT.601, the classic weights)}
 ```
 
 ### 長寬比、縮放與內插

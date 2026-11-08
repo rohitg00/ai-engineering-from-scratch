@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 292" role="img" aria-labelledby="fig-2-2-title fig-2-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-2-title">From a stopped sandbox to a template, a tar, and a new sandbox</title>
+  <desc id="fig-2-2-desc">Top row, left to right: the stopped sandbox m101-demo with its marker file, sbx template save writes the image library/m101-tpl:v1 into the runtime image store, and --output exports it as the tar file m101-tpl.tar in OCI layout. Bottom row: sbx create --pull never -t m101-tpl:v1 makes m101-from-tpl from the store, with the marker file present, and a copy of the tar reaches another host where sbx template load imports it.</desc>
+  <defs><marker id="fig-2-2-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-2-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-2-2-head-olive" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-olive-ink, #515f26)"/></marker></defs>
+  <text x="20" y="40" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ON THE RECORDING MAC</text>
+  <rect x="20" y="60" width="150" height="65" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="95" y="80.25" font-size="12.5" text-anchor="middle" font-weight="700">m101-demo</text>
+  <text x="95" y="97.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sbx stop m101-demo</text>
+  <text x="95" y="112.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/opt/marker-from-demo</text>
+  <rect x="260" y="60" width="170" height="65" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="345" y="80.25" font-size="12.5" text-anchor="middle" font-weight="700">runtime image store</text>
+  <text x="345" y="97.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">library/m101-tpl:v1</text>
+  <text x="345" y="112.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">flavor shell</text>
+  <rect x="490" y="60" width="130" height="65" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="555" y="80.25" font-size="12.5" text-anchor="middle" font-weight="700">m101-tpl.tar</text>
+  <text x="555" y="97.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">OCI layout</text>
+  <text x="555" y="112.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">blobs/sha256/</text>
+  <rect x="260" y="200" width="170" height="65" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="345" y="220.25" font-size="12.5" text-anchor="middle" font-weight="700">m101-from-tpl</text>
+  <text x="345" y="237.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no workspace mount</text>
+  <text x="345" y="252.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/opt/marker-from-demo</text>
+  <rect x="490" y="200" width="130" height="65" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="555" y="220.25" font-size="12.5" text-anchor="middle" font-weight="700">another host</text>
+  <text x="555" y="237.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sbx template load</text>
+  <text x="555" y="252.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">m101-tpl.tar</text>
+  <line x1="170" y1="92.5" x2="259" y2="92.5" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-teal)"/>
+  <rect class="m-knock" x="168.6" y="75.92" width="91.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="214.5" y="86.5" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">template save</text>
+  <rect class="m-knock" x="181.8" y="96.92" width="65.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="214.5" y="107.5" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">stop first</text>
+  <line x1="430" y1="92.5" x2="489" y2="92.5" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-teal)"/>
+  <rect class="m-knock" x="430.1" y="75.92" width="58.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="459.5" y="86.5" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">--output</text>
+  <rect class="m-knock" x="432.74" y="96.92" width="53.52" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="459.5" y="107.5" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">tar file</text>
+  <line x1="345" y1="125" x2="345" y2="199" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <rect class="m-knock" x="350" y="151.03" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="353" y="162" font-size="11.5">sbx create shell</text>
+  <rect class="m-knock" x="350" y="166.42" width="166.38" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="353" y="177" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">--pull never -t m101-tpl:v1</text>
+  <line x1="555" y1="125" x2="555" y2="199" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-2-head-olive)"/>
+  <rect class="m-knock" x="560" y="151.03" width="33.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="563" y="162" font-size="11.5" fill="var(--m-olive-ink, #515f26)">copy</text>
+  <rect class="m-knock" x="560" y="166.42" width="47.58" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="563" y="177" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">by hand</text>
+  <text x="20" y="284" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the load on another host follows the help text and is not recorded</text>
+</svg>

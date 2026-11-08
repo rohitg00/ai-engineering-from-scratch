@@ -249,6 +249,15 @@
     return match ? match[1] : '';
   }
 
+  function completedLessonPaths() {
+    var state = read();
+    var paths = [];
+    for (var path in state.lessons) {
+      if (state.lessons[path].completedAt) paths.push(path);
+    }
+    return paths;
+  }
+
   function totalCompleted() {
     var state = read();
     var n = 0;
@@ -295,6 +304,7 @@
     countCompletedFromUrls: countCompletedFromUrls,
     extractPath: extractPath,
     totalCompleted: totalCompleted,
+    completedLessonPaths: completedLessonPaths,
     reset: reset,
     onChange: onChange
   };

@@ -6,6 +6,15 @@ from torch.utils.data import DataLoader, TensorDataset
 from torch.nn.utils import spectral_norm
 
 
+def get_device():
+    """Pick the best available accelerator: CUDA, then Apple Silicon (MPS), then CPU."""
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
+    return torch.device("cpu")
+
+
 class Generator(nn.Module):
     def __init__(self, z_dim=64, img_channels=3, feat=32):
         super().__init__()
@@ -96,7 +105,7 @@ def sample(G, n=8, z_dim=64, device="cpu"):
 
 def main():
     torch.manual_seed(0)
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = get_device()
     z_dim = 64
 
     data = synthetic_circles(num=400)

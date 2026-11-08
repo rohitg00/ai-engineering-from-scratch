@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "id": "reverse-engineering",
+  "title": "Reverse Engineering",
+  "summary": "Read a compiled program you built yourself: parse the file, decode the instructions, lift them to pseudocode, record evidence, and prove a rebuild equal, then learn the field around that pipeline with its main tools.",
+  "estimatedMinutes": 1945,
+  "stateFile": "REVERSE-ENGINEERING-LEARNING.md",
+  "prerequisites": [
+    {
+      "type": "knowledge",
+      "required": true,
+      "title": "Python, hexadecimal, and the command line",
+      "description": "You can read Python, run a command, and convert between hexadecimal and decimal. No prior assembly or binary analysis experience is required."
+    },
+    {
+      "type": "software",
+      "required": true,
+      "title": "Python 3.10 or later",
+      "description": "Every reader, decoder, lifter, and ledger in the path uses the Python standard library only. The compiled fixtures are in the repository."
+    },
+    {
+      "type": "software",
+      "required": false,
+      "title": "clang for rebuilding fixtures and Lesson 36",
+      "description": "clang rebuilds the fixtures from source and compiles the Lesson 36 differential driver. Without it, Lesson 36 reads the committed objects and reports its behaviour claims as unknown."
+    },
+    {
+      "id": "own-binaries-only",
+      "type": "knowledge",
+      "required": true,
+      "title": "Analyze only programs you built or are authorized to analyze",
+      "description": "Before Lesson 32's lab, confirm that every target is a program you wrote and compiled, or one with written authorization. Lesson 32 opens with the law and the authorization rules."
+    }
+  ],
+  "invocation": {
+    "codex": "learn-reverse-engineering, or choose it from /skills",
+    "claudeCode": "/learn-reverse-engineering",
+    "portableFallback": "Use learn-reverse-engineering to start or resume the Reverse Engineering path."
+  },
+  "conceptualFallback": "Read the website or each lesson's docs/en.md and trace the named fixture by hand. Record the checkpoint as conceptual and leave decoder, lifter, ledger, and proof evidence pending until the repository and Python 3 are available.",
+  "quickStart": {
+    "estimatedMinutes": 10,
+    "lessonPath": "phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch",
+    "goal": "Parse one compiled object you did not hand-write the bytes of, and name its sections, symbols, and relocations.",
+    "workingDirectory": "phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch",
+    "command": "python3 code/main.py code/fixtures/ledger-x86_64-O0.o",
+    "expectedEvidence": [
+      "The reader names the file format from its first four bytes.",
+      "The section table, the four function symbols, and the relocation records print with their offsets."
+    ]
+  },
+  "lessons": [
+    {
+      "order": 1,
+      "phase": 13,
+      "lesson": 32,
+      "title": "Program Anatomy: An ELF Reader From Scratch",
+      "path": "phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch",
+      "minutes": 120,
+      "required": true,
+      "prerequisiteChecks": [
+        "own-binaries-only"
+      ],
+      "checkpoint": "Parse an ELF64 and a Mach-O fixture, and match the section, symbol, and relocation output against the recorded reference."
+    },
+    {
+      "order": 2,
+      "phase": 13,
+      "lesson": 33,
+      "title": "Disassembly and Control Flow: From Bytes to a Graph You Can Check",
+      "path": "phases/13-tools-and-protocols/33-disassembly-and-control-flow",
+      "minutes": 150,
+      "required": true,
+      "checkpoint": "Decode the fixture functions with a result that matches llvm-objdump, then build the control-flow graph and its dominators for grade."
+    },
+    {
+      "order": 3,
+      "phase": 13,
+      "lesson": 34,
+      "title": "Lifting to Pseudocode: IR, SSA, and Structuring From Scratch",
+      "path": "phases/13-tools-and-protocols/34-lifting-to-pseudocode",
+      "minutes": 150,
+      "required": true,
+      "checkpoint": "Lift percent_change to SSA and structured pseudocode, and explain each difference from the Ghidra output."
+    },
+    {
+      "order": 4,
+      "phase": 13,
+      "lesson": 35,
+      "title": "Evidence, Confidence, and Unknowns in Binary Analysis",
+      "path": "phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns",
+      "minutes": 105,
+      "required": true,
+      "checkpoint": "Record one finding as an evidence entry with its confidence, limitations, and residual unknowns, and recompute its evidence id."
+    },
+    {
+      "order": 5,
+      "phase": 13,
+      "lesson": 36,
+      "title": "Rebuild and Prove Equal: Differential Tests, Byte Comparison, and the Evidence Loop",
+      "path": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal",
+      "minutes": 110,
+      "required": true,
+      "checkpoint": "Run the differential grid and the relocation-masked byte comparison on a rebuilt function, and record the result as evidence."
+    },
+    {
+      "order": 6,
+      "phase": 13,
+      "lesson": 37,
+      "title": "The Reverse Engineering Landscape: History, Tool Families, and How a Decompiler Is Built",
+      "path": "phases/13-tools-and-protocols/37-the-reverse-engineering-landscape",
+      "minutes": 150,
+      "required": true,
+      "checkpoint": "Run the comparison harness on the four fixture functions and explain each place where a tool invents or misses code, then name the same pipeline stage in three tools."
+    },
+    {
+      "order": 7,
+      "phase": 13,
+      "lesson": 38,
+      "title": "Calling Conventions and Stack Frames: System V, Windows x64, and AArch64",
+      "path": "phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames",
+      "minutes": 140,
+      "required": true,
+      "checkpoint": "Infer parameter count, frame size, and saved registers for one function under three ABIs, and cite the spec rule behind each inference."
+    },
+    {
+      "order": 8,
+      "phase": 13,
+      "lesson": 39,
+      "title": "Compiler Idioms: What Optimization Does to Your Code and How to Read It Back",
+      "path": "phases/13-tools-and-protocols/39-compiler-idioms-and-optimization",
+      "minutes": 150,
+      "required": true,
+      "checkpoint": "Recover a divisor from its magic multiplier and shift, and classify the switch lowering of one function at -O0 and -O2 with the evidence instructions."
+    },
+    {
+      "order": 9,
+      "phase": 13,
+      "lesson": 40,
+      "title": "Linking, Loading, and Stripped Binaries: PLT, GOT, Imports, Fixups, and Function Identification",
+      "path": "phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries",
+      "minutes": 160,
+      "required": true,
+      "checkpoint": "Trace one imported call through its stub and fixup in a Mach-O build, and name the functions of a stripped build with signatures made from the unstripped one."
+    },
+    {
+      "order": 10,
+      "phase": 13,
+      "lesson": 41,
+      "title": "Recovering Data and Types: Structs, Arrays, C++ Objects, and DWARF",
+      "path": "phases/13-tools-and-protocols/41-recovering-data-and-types",
+      "minutes": 140,
+      "required": true,
+      "checkpoint": "Infer a struct layout from memory accesses and match every field against the DWARF reader, then resolve one virtual call to its vtable slot."
+    },
+    {
+      "order": 11,
+      "phase": 13,
+      "lesson": 42,
+      "title": "Dynamic Analysis of Your Own Program: Debuggers, Traces, and Confirming Static Claims",
+      "path": "phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program",
+      "minutes": 130,
+      "required": true,
+      "checkpoint": "Grade the static claims for one build as confirmed, refuted, or not observed from a debugger transcript, and explain the -O2 build where breakpoints never hit."
+    },
+    {
+      "order": 12,
+      "phase": 13,
+      "lesson": 43,
+      "title": "Beyond Native Code: Python, JVM, .NET, and WebAssembly Bytecode",
+      "path": "phases/13-tools-and-protocols/43-bytecode-and-managed-formats",
+      "minutes": 150,
+      "required": true,
+      "checkpoint": "Parse the same function from a .pyc, a class file, and a Wasm module, match each listing against the reference tool, and list what each container keeps."
+    },
+    {
+      "order": 13,
+      "phase": 13,
+      "lesson": 44,
+      "title": "Binary Diffing and Symbolic Execution: Matching Functions and Solving for Inputs",
+      "path": "phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution",
+      "minutes": 150,
+      "required": true,
+      "checkpoint": "Match functions between two optimization levels with the staged matcher, show the relocation case that masking fixes, and solve one input for each path of grade."
+    },
+    {
+      "order": 14,
+      "phase": 13,
+      "lesson": 45,
+      "title": "AI-Assisted Reverse Engineering: LLM Decompilers, Analysis Agents, and Ground Truth",
+      "path": "phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering",
+      "minutes": 140,
+      "required": true,
+      "checkpoint": "Score the candidate reconstructions on all six scorecard fields and explain the failing evidence for each candidate that does not pass."
+    }
+  ],
+  "optionalLessons": []
+}

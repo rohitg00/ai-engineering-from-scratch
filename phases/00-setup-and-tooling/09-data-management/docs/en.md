@@ -245,6 +245,16 @@ This lesson produces:
 3. Convert a dataset to Parquet and compare the file size to CSV
 4. Create a 70/15/15 train/val/test split with a fixed seed and verify the sizes
 
+### Hints
+
+**Exercise 1.** Call `load_and_inspect("glue", "mrpc")` from `code/data_utils.py`, or `load_dataset("glue", "mrpc")` directly, and print `ds["train"][:5]`. Each example must have `sentence1`, `sentence2`, and `label` fields.
+
+**Exercise 2.** Load the dataset with `streaming=True`, as `stream_dataset` does, and read examples in a loop that stops when `time.time()` passes the start time plus 10 seconds. Print the count; run it twice, because the first run includes the connection start-up.
+
+**Exercise 3.** Save the same dataset with `to_csv` and `to_parquet`, as `convert_format` does, then compare the sizes with `ls -lh` or `os.path.getsize`. Load the Parquet file back with `load_from_parquet` and check that the row count did not change.
+
+**Exercise 4.** Use `train_test_split` twice with a fixed `seed`: first split off 30 percent, then split that 30 percent in half. The three lengths must add up to the original length, and a second run with the same seed must give the same first row in each split.
+
 ## Key Terms
 
 | Term | What people say | What it actually means |

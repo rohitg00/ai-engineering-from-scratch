@@ -34,8 +34,8 @@ Adam 一次解決這三件事。它為每個參數維護兩個移動平均 —�
 
 最簡單的最佳化器。在一個小批次上算出梯度，然後往反方向踏一步。
 
-```
-w = w - lr * gradient
+```math
+w = w - \text{lr} \cdot \text{gradient}
 ```
 
 「隨機」指的是你用資料的一個隨機子集（小批次）來估計梯度，而不是整份資料集。這種雜訊其實有用 —— 它幫助你逃離尖銳的區域最小值。但雜訊同時也會造成震盪。
@@ -46,9 +46,11 @@ w = w - lr * gradient
 
 滾下山坡的球這個比喻被用到爛了，但它是準確的。你不再只按梯度踏步，而是維護一個累積過去梯度的速度。
 
-```
-m_t = beta * m_{t-1} + gradient
-w = w - lr * m_t
+```math
+\begin{aligned}
+m_t &= \beta \, m_{t-1} + \text{gradient} \\
+w &= w - \text{lr} \cdot m_t
+\end{aligned}
 ```
 
 Beta（通常是 0.9）控制要保留多少歷史。beta = 0.9 時，動量大致等於最近 10 個梯度的平均（1 / (1 - 0.9) = 10）。
@@ -61,9 +63,11 @@ Beta（通常是 0.9）控制要保留多少歷史。beta = 0.9 時，動量大�
 
 第一個真正管用的「每個參數各自調整學習率」的方法。由 Hinton 在一堂 Coursera 課程裡提出（從未正式發表）。
 
-```
-s_t = beta * s_{t-1} + (1 - beta) * gradient^2
-w = w - lr * gradient / (sqrt(s_t) + epsilon)
+```math
+\begin{aligned}
+s_t &= \beta \, s_{t-1} + (1 - \beta) \cdot \text{gradient}^2 \\
+w &= w - \text{lr} \cdot \frac{\text{gradient}}{\sqrt{s_t} + \epsilon}
+\end{aligned}
 ```
 
 s_t 追蹤梯度平方的移動平均。梯度一直很大的參數會被一個大的數字除（有效學習率變小）。梯度很小的參數會被一個小的數字除（有效學習率變大）。
@@ -76,24 +80,28 @@ Epsilon（通常是 1e-8）用來避免某個參數還沒被更新過時發生�
 
 Adam 把兩個想法結合起來。它為每個參數維護兩個指數移動平均：
 
-```
-m_t = beta1 * m_{t-1} + (1 - beta1) * gradient        (first moment: mean)
-v_t = beta2 * v_{t-1} + (1 - beta2) * gradient^2       (second moment: variance)
+```math
+\begin{aligned}
+m_t &= \beta_1 m_{t-1} + (1 - \beta_1) \cdot \text{gradient} && \text{(first moment: mean)} \\
+v_t &= \beta_2 v_{t-1} + (1 - \beta_2) \cdot \text{gradient}^2 && \text{(second moment: variance)}
+\end{aligned}
 ```
 
 **偏差校正 (bias correction)** 是多數說明都跳過的關鍵細節。在第 1 步，m_1 = (1 - beta1) * gradient。beta1 = 0.9 時那是 0.1 * gradient —— 小了十倍。移動平均還沒暖機。偏差校正補償這件事：
 
-```
-m_hat = m_t / (1 - beta1^t)
-v_hat = v_t / (1 - beta2^t)
+```math
+\begin{aligned}
+\hat{m} &= \frac{m_t}{1 - \beta_1^t} \\
+\hat{v} &= \frac{v_t}{1 - \beta_2^t}
+\end{aligned}
 ```
 
 在第 1 步、beta1 = 0.9 時：m_hat = m_1 / (1 - 0.9) = m_1 / 0.1 = 實際的梯度。到了第 100 步：(1 - 0.9^100) 大約等於 1.0，校正就消失了。偏差校正在前 10 步左右才有意義，大約 50 步之後就無關緊要。
 
 更新式：
 
-```
-w = w - lr * m_hat / (sqrt(v_hat) + epsilon)
+```math
+w = w - \text{lr} \cdot \frac{\hat{m}}{\sqrt{\hat{v}} + \epsilon}
 ```
 
 Adam 的預設值：lr = 0.001, beta1 = 0.9, beta2 = 0.999, epsilon = 1e-8。這些預設值在 80% 的問題上都行得通。行不通的時候，先改 lr，然後改 beta2。beta1 和 epsilon 幾乎不需要動。
@@ -106,8 +114,8 @@ Loshchilov 與 Hutter 的洞見：當你把 L2 加進損失、再讓 Adam 去處
 
 AdamW 的修法是把權重衰減直接作用在權重上，在 Adam 的更新之後：
 
-```
-w = w - lr * m_hat / (sqrt(v_hat) + epsilon) - lr * lambda * w
+```math
+w = w - \text{lr} \cdot \frac{\hat{m}}{\sqrt{\hat{v}} + \epsilon} - \text{lr} \cdot \lambda w
 ```
 
 權重衰減項（lr * lambda * w）不會被 Adam 的自適應因子縮放。每個參數都得到相同比例的縮減。

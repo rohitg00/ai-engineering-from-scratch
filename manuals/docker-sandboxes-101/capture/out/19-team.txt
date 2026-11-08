@@ -1,0 +1,5 @@
+$ docker-agent run --exec --fake work/cassettes/19-team fixtures/agents/team.yaml 'Ask the writer for one sentence about microVMs.' 'Now hand the conversation to the reviewer.'
+[... 175 lines of model reasoning cut by run.py ...]
+
+APPROVED: MicroVMs are lightweight virtual machines that provide strong isolation and security for applications with minimal resource overhead.
+[exit 0]

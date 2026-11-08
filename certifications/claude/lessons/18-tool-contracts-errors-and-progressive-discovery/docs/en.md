@@ -342,6 +342,6 @@ provision values outside version control.
 
 - [Claude tool use documentation](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview)
 - [MCP specification](https://modelcontextprotocol.io/specification/latest)
-- [Claude Code MCP documentation](https://docs.anthropic.com/en/docs/claude-code/mcp)
+- [Claude Code MCP documentation](https://code.claude.com/docs/en/mcp)
 - Phase 13, Lesson 05 for tool schema design
 - Phase 13, Lesson 15 for tool-poisoning threats

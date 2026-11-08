@@ -1,0 +1,248 @@
+ledger-x86_64-O1-g.o:	file format elf64-x86-64
+
+.debug_info contents:
+0x00000000: Compile Unit: length = 0x0000014a, format = DWARF32, version = 0x0005, unit_type = DW_UT_compile, abbr_offset = 0x0000, addr_size = 0x08 (next unit at 0x0000014e)
+
+0x0000000c: DW_TAG_compile_unit
+              DW_AT_producer	("Apple clang version 17.0.0 (clang-1700.6.3.2)")
+              DW_AT_language	(DW_LANG_C11)
+              DW_AT_name	("ledger.c")
+              DW_AT_str_offsets_base	(0x00000008)
+              DW_AT_stmt_list	(0x00000000)
+              DW_AT_comp_dir	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures")
+              DW_AT_low_pc	(0x0000000000000000)
+              DW_AT_high_pc	(0x000000000000009f)
+              DW_AT_addr_base	(0x00000008)
+              DW_AT_loclists_base	(0x0000000c)
+
+0x00000027:   DW_TAG_variable
+                DW_AT_type	(0x00000031 "char[2]")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                DW_AT_decl_line	(23)
+                DW_AT_location	(DW_OP_addrx 0x0)
+
+0x00000031:   DW_TAG_array_type
+                DW_AT_type	(0x0000003d "char")
+
+0x00000036:     DW_TAG_subrange_type
+                  DW_AT_type	(0x00000041 "__ARRAY_SIZE_TYPE__")
+                  DW_AT_count	(0x02)
+
+0x0000003c:     NULL
+
+0x0000003d:   DW_TAG_base_type
+                DW_AT_name	("char")
+                DW_AT_encoding	(DW_ATE_signed_char)
+                DW_AT_byte_size	(0x01)
+
+0x00000041:   DW_TAG_base_type
+                DW_AT_name	("__ARRAY_SIZE_TYPE__")
+                DW_AT_byte_size	(0x08)
+                DW_AT_encoding	(DW_ATE_unsigned)
+
+0x00000045:   DW_TAG_variable
+                DW_AT_type	(0x00000031 "char[2]")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                DW_AT_decl_line	(23)
+                DW_AT_location	(DW_OP_addrx 0x1)
+
+0x0000004f:   DW_TAG_variable
+                DW_AT_type	(0x00000031 "char[2]")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                DW_AT_decl_line	(23)
+                DW_AT_location	(DW_OP_addrx 0x2)
+
+0x00000059:   DW_TAG_variable
+                DW_AT_type	(0x00000031 "char[2]")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                DW_AT_decl_line	(23)
+                DW_AT_location	(DW_OP_addrx 0x3)
+
+0x00000063:   DW_TAG_variable
+                DW_AT_type	(0x00000031 "char[2]")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                DW_AT_decl_line	(23)
+                DW_AT_location	(DW_OP_addrx 0x4)
+
+0x0000006d:   DW_TAG_variable
+                DW_AT_name	("labels")
+                DW_AT_type	(0x00000075 "const char *[5]")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                DW_AT_decl_line	(23)
+
+0x00000075:   DW_TAG_array_type
+                DW_AT_type	(0x00000081 "const char *")
+
+0x0000007a:     DW_TAG_subrange_type
+                  DW_AT_type	(0x00000041 "__ARRAY_SIZE_TYPE__")
+                  DW_AT_count	(0x05)
+
+0x00000080:     NULL
+
+0x00000081:   DW_TAG_pointer_type
+                DW_AT_type	(0x00000086 "const char")
+
+0x00000086:   DW_TAG_const_type
+                DW_AT_type	(0x0000003d "char")
+
+0x0000008b:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000000)
+                DW_AT_high_pc	(0x0000000000000010)
+                DW_AT_frame_base	(DW_OP_reg7 RSP)
+                DW_AT_call_all_calls	(true)
+                DW_AT_name	("percent_change")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                DW_AT_decl_line	(1)
+                DW_AT_prototyped	(true)
+                DW_AT_type	(0x00000110 "int")
+                DW_AT_external	(true)
+
+0x0000009a:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_reg5 RDI)
+                  DW_AT_name	("before")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                  DW_AT_decl_line	(1)
+                  DW_AT_type	(0x00000110 "int")
+
+0x000000a4:     DW_TAG_formal_parameter
+                  DW_AT_location	(indexed (0x0) loclist = 0x00000018: 
+                     [0x0000000000000000, 0x0000000000000006): DW_OP_reg4 RSI
+                     [0x0000000000000006, 0x000000000000000d): DW_OP_entry_value(DW_OP_reg4 RSI), DW_OP_stack_value
+                     [0x000000000000000d, 0x0000000000000010): DW_OP_reg4 RSI)
+                  DW_AT_name	("after")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                  DW_AT_decl_line	(1)
+                  DW_AT_type	(0x00000110 "int")
+
+0x000000ad:     NULL
+
+0x000000ae:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000010)
+                DW_AT_high_pc	(0x000000000000003e)
+                DW_AT_frame_base	(DW_OP_reg7 RSP)
+                DW_AT_call_all_calls	(true)
+                DW_AT_abstract_origin	(0x000000ff "grade")
+
+0x000000ba:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_reg5 RDI)
+                  DW_AT_abstract_origin	(0x00000107 "score")
+
+0x000000c1:     NULL
+
+0x000000c2:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000040)
+                DW_AT_high_pc	(0x000000000000005f)
+                DW_AT_frame_base	(DW_OP_reg7 RSP)
+                DW_AT_call_all_calls	(true)
+                DW_AT_name	("total")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                DW_AT_decl_line	(17)
+                DW_AT_prototyped	(true)
+                DW_AT_type	(0x00000110 "int")
+                DW_AT_external	(true)
+
+0x000000d1:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_reg5 RDI)
+                  DW_AT_name	("values")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                  DW_AT_decl_line	(17)
+                  DW_AT_type	(0x00000143 "const int *")
+
+0x000000db:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_reg4 RSI)
+                  DW_AT_name	("count")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                  DW_AT_decl_line	(17)
+                  DW_AT_type	(0x00000110 "int")
+
+0x000000e5:     DW_TAG_variable
+                  DW_AT_location	(indexed (0x1) loclist = 0x0000002b: 
+                     [0x0000000000000040, 0x000000000000004a): DW_OP_consts +0, DW_OP_stack_value
+                     [0x000000000000004a, 0x000000000000005c): DW_OP_reg0 RAX
+                     [0x000000000000005c, 0x000000000000005f): DW_OP_consts +0, DW_OP_stack_value)
+                  DW_AT_name	("sum")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                  DW_AT_decl_line	(18)
+                  DW_AT_type	(0x00000110 "int")
+
+0x000000ee:     DW_TAG_lexical_block
+                  DW_AT_low_pc	(0x0000000000000040)
+                  DW_AT_high_pc	(0x000000000000005b)
+
+0x000000f4:       DW_TAG_variable
+                    DW_AT_location	(indexed (0x2) loclist = 0x0000003f: 
+                       [0x0000000000000040, 0x000000000000004a): DW_OP_consts +0, DW_OP_stack_value
+                       [0x000000000000004a, 0x000000000000005b): DW_OP_reg1 RDX)
+                    DW_AT_name	("i")
+                    DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                    DW_AT_decl_line	(19)
+                    DW_AT_type	(0x00000110 "int")
+
+0x000000fd:       NULL
+
+0x000000fe:     NULL
+
+0x000000ff:   DW_TAG_subprogram
+                DW_AT_name	("grade")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                DW_AT_decl_line	(6)
+                DW_AT_prototyped	(true)
+                DW_AT_type	(0x00000110 "int")
+                DW_AT_external	(true)
+                DW_AT_inline	(DW_INL_inlined)
+
+0x00000107:     DW_TAG_formal_parameter
+                  DW_AT_name	("score")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                  DW_AT_decl_line	(6)
+                  DW_AT_type	(0x00000110 "int")
+
+0x0000010f:     NULL
+
+0x00000110:   DW_TAG_base_type
+                DW_AT_name	("int")
+                DW_AT_encoding	(DW_ATE_signed)
+                DW_AT_byte_size	(0x04)
+
+0x00000114:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000060)
+                DW_AT_high_pc	(0x000000000000009f)
+                DW_AT_frame_base	(DW_OP_reg7 RSP)
+                DW_AT_call_all_calls	(true)
+                DW_AT_name	("grade_label")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                DW_AT_decl_line	(25)
+                DW_AT_prototyped	(true)
+                DW_AT_type	(0x00000081 "const char *")
+                DW_AT_external	(true)
+
+0x00000123:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_reg5 RDI)
+                  DW_AT_name	("score")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                  DW_AT_decl_line	(25)
+                  DW_AT_type	(0x00000110 "int")
+
+0x0000012d:     DW_TAG_inlined_subroutine
+                  DW_AT_abstract_origin	(0x000000ff "grade")
+                  DW_AT_low_pc	(0x0000000000000060)
+                  DW_AT_high_pc	(0x000000000000008e)
+                  DW_AT_call_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/code/fixtures/ledger.c")
+                  DW_AT_call_line	(26)
+                  DW_AT_call_column	(19)
+
+0x0000013a:       DW_TAG_formal_parameter
+                    DW_AT_location	(DW_OP_reg5 RDI)
+                    DW_AT_abstract_origin	(0x00000107 "score")
+
+0x00000141:       NULL
+
+0x00000142:     NULL
+
+0x00000143:   DW_TAG_pointer_type
+                DW_AT_type	(0x00000148 "const int")
+
+0x00000148:   DW_TAG_const_type
+                DW_AT_type	(0x00000110 "int")
+
+0x0000014d:   NULL

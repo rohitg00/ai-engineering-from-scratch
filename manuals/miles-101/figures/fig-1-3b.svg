@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-1-3b-title fig-1-3b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-3b-title">Answers get shorter as the model learns</title>
+  <desc id="fig-1-3b-desc">Mean answer length in tokens per step for three seeds. The cap is 1,024 tokens. Answers start near 720 tokens and end near 460, so fewer answers hit the cap.</desc>
+  <line x1="60" y1="245" x2="620" y2="245" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="249" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">400</text>
+  <line x1="60" y1="203" x2="620" y2="203" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="207" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <line x1="60" y1="161" x2="620" y2="161" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="165" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">600</text>
+  <line x1="60" y1="119" x2="620" y2="119" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="123" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">700</text>
+  <line x1="60" y1="77" x2="620" y2="77" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="81" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">800</text>
+  <line x1="60" y1="266" x2="620" y2="266" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="56" x2="60" y2="266" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="266" x2="60" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="202.98" y1="266" x2="202.98" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="202.98" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">12</text>
+  <line x1="345.96" y1="266" x2="345.96" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="345.96" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">24</text>
+  <line x1="488.94" y1="266" x2="488.94" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="488.94" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">36</text>
+  <line x1="620" y1="266" x2="620" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="620" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">47</text>
+  <text x="340" y="300" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">step</text>
+  <text x="60" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mean answer length, tokens</text>
+  <path d="M60.0 94.2 L71.9 89.2 L83.8 107.3 L95.7 114.9 L107.7 111.3 L119.6 89.3 L131.5 130.3 L143.4 134.5 L155.3 150.0 L167.2 97.9 L179.1 101.0 L191.1 125.2 L203.0 135.3 L214.9 135.4 L226.8 108.0 L238.7 117.5 L250.6 104.3 L262.6 170.7 L274.5 145.1 L286.4 138.8 L298.3 147.3 L310.2 150.4 L322.1 152.9 L334.0 153.3 L346.0 176.3 L357.9 183.7 L369.8 174.0 L381.7 202.6 L393.6 171.7 L405.5 215.0 L417.4 192.1 L429.4 149.1 L441.3 168.9 L453.2 194.7 L465.1 202.9 L477.0 192.2 L488.9 246.5 L500.9 186.5 L512.8 211.9 L524.7 203.3 L536.6 229.6 L548.5 223.7 L560.4 214.5 L572.3 209.8 L584.3 234.5 L596.2 237.9 L608.1 215.6 L620.0 235.9" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M60.0 96.9 L71.9 101.0 L83.8 118.1 L95.7 120.2 L107.7 133.3 L119.6 108.8 L131.5 118.9 L143.4 113.8 L155.3 124.8 L167.2 82.3 L179.1 117.1 L191.1 135.3 L203.0 140.2 L214.9 137.9 L226.8 165.8 L238.7 164.4 L250.6 137.0 L262.6 129.8 L274.5 155.9 L286.4 141.4 L298.3 172.2 L310.2 174.9 L322.1 195.3 L334.0 174.1 L346.0 191.5 L357.9 181.6 L369.8 196.7 L381.7 184.4 L393.6 197.9 L405.5 204.6 L417.4 205.2 L429.4 205.1 L441.3 227.1 L453.2 218.3 L465.1 201.3 L477.0 195.3 L488.9 226.7 L500.9 189.2 L512.8 227.5 L524.7 210.0 L536.6 207.5 L548.5 229.0 L560.4 211.2 L572.3 232.7 L584.3 193.9 L596.2 213.0 L608.1 205.4 L620.0 197.1" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.6" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <path d="M60.0 115.7 L71.9 105.1 L83.8 94.2 L95.7 97.6 L107.7 85.2 L119.6 90.6 L131.5 123.8 L143.4 126.8 L155.3 146.8 L167.2 120.2 L179.1 154.2 L191.1 137.1 L203.0 124.4 L214.9 155.2 L226.8 153.6 L238.7 185.3 L250.6 178.7 L262.6 163.7 L274.5 158.3 L286.4 172.4 L298.3 167.9 L310.2 156.3 L322.1 177.0 L334.0 179.8 L346.0 189.2 L357.9 193.2 L369.8 202.6 L381.7 203.5 L393.6 197.7 L405.5 172.0 L417.4 207.8 L429.4 173.0 L441.3 229.2 L453.2 193.6 L465.1 218.4 L477.0 190.4 L488.9 211.4 L500.9 175.8 L512.8 211.8 L524.7 208.6 L536.6 199.2 L548.5 239.5 L560.4 241.6 L572.3 220.0 L584.3 236.6 L596.2 225.1 L608.1 213.6 L620.0 197.3" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.6" stroke-dasharray="1.5 3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M60 18 H78" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="84" y="22" font-size="11" fill="var(--m-green-ink, #336b40)">seed 1234</text>
+  <path d="M161.4 18 H179.4" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="185.4" y="22" font-size="11" fill="var(--m-teal-ink, #18696a)">seed 2</text>
+  <path d="M243 18 H261" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="2" stroke-dasharray="1.5 3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="267" y="22" font-size="11" fill="var(--m-olive-ink, #515f26)">seed 3</text>
+  <text x="60" y="326" font-size="12" class="m-serif">Percent of answers cut at the cap: 33 to 8; 30 to 12; 34 to 9.</text>
+</svg>

@@ -1,0 +1,72 @@
+{
+  "title": "Mini Decompiler | Decompile and verify",
+  "recordedAt": "2026-10-14T12:44:15Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "minidec",
+        "decompile",
+        "../fixtures/samples-x86_64-O1.o",
+        "--function",
+        "tenths_and_fifths"
+      ],
+      "cwd": "/private/tmp/aiefs-re/projects/mini-decompiler/solution",
+      "exitCode": 0,
+      "output": "int tenths_and_fifths(int param_1)\n{\n  return param_1 / 10 + param_1 / 5;\n}\n",
+      "durationMs": 192
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "minidec",
+        "decompile",
+        "../fixtures/samples-x86_64-O1.o",
+        "--function",
+        "band"
+      ],
+      "cwd": "/private/tmp/aiefs-re/projects/mini-decompiler/solution",
+      "exitCode": 0,
+      "output": "static const int lookup_0[6] = {5, 8, 12, 20, 20, 35};\n\nint band(int param_1)\n{\n  int eax_1;\n\n  eax_1 = -1;\n  if ((unsigned int)param_1 <= 5) {\n    eax_1 = lookup_0[(unsigned long)(unsigned int)param_1];\n  }\n  return eax_1;\n}\n",
+      "durationMs": 186
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "minidec",
+        "decompile",
+        "../fixtures/samples-x86_64-O1.o",
+        "--function",
+        "fold"
+      ],
+      "cwd": "/private/tmp/aiefs-re/projects/mini-decompiler/solution",
+      "exitCode": 0,
+      "output": "int fold(int *param_1, int param_2)\n{\n  int eax_1;\n  int esi_1;\n  long rdx_1;\n\n  if (param_2 <= 0) {\n    return 0;\n  }\n  rdx_1 = 0;\n  esi_1 = 0;\n  do {\n    eax_1 = (esi_1 << 5) - esi_1 + param_1[rdx_1];\n    rdx_1 = rdx_1 + 1;\n    esi_1 = eax_1;\n  } while ((unsigned long)(unsigned int)param_2 != rdx_1);\n  return eax_1;\n}\n",
+      "durationMs": 189
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "minidec",
+        "verify",
+        "../fixtures/samples-x86_64-O1.o",
+        "--source",
+        "../fixtures/samples.c",
+        "--opt",
+        "O1",
+        "--function",
+        "fold",
+        "--out",
+        "/tmp/claude-501/md-demo-verify"
+      ],
+      "cwd": "/private/tmp/aiefs-re/projects/mini-decompiler/solution",
+      "exitCode": 0,
+      "output": "{\n  \"object\": \"samples-x86_64-O1.o\",\n  \"optimization\": \"O1\",\n  \"host\": \"arm64 Darwin\",\n  \"compiler\": \"/usr/bin/clang\",\n  \"status\": \"behaviour-only\",\n  \"functions\": {\n    \"fold\": {\n      \"signature\": \"int fold(int *param_1, int param_2)\",\n      \"behaviour\": {\n        \"status\": \"pass\",\n        \"cells\": 30,\n        \"mismatchCount\": 0,\n        \"trapCells\": 0,\n        \"reason\": null\n      },\n      \"bytes\": {\n        \"status\": \"differs\",\n        \"reasons\": [\n          \"size 38 vs 40 bytes\"\n        ]\n      },\n      \"unknowns\": [\n        \"param_1: const and the element count behind the pointer are not visible in the instructions\"\n      ]\n    }\n  },\n  \"outputs\": {\n    \"decompiled\": \"/tmp/claude-501/md-demo-verify/decompiled.c\",\n    \"recompiled\": \"/tmp/claude-501/md-demo-verify/recompiled.o\",\n    \"report\": \"/tmp/claude-501/md-demo-verify/report.json\"\n  }\n}\n",
+      "durationMs": 835
+    }
+  ]
+}

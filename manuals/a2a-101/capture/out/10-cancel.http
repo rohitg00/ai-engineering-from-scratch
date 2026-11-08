@@ -1,0 +1,222 @@
+### 1 · SendMessage: the full suite
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "7b89296c-6dcb-4c50-8857-7eb1924770d3",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "Run the full suite for payments-api at commit 9f3c2e1"
+        }
+      ]
+    },
+    "configuration": {
+      "returnImmediately": true
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "task": {
+      "id": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+      "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+      "status": {
+        "state": "TASK_STATE_SUBMITTED",
+        "timestamp": "2026-10-06T09:00:03.250Z"
+      },
+      "history": [
+        {
+          "messageId": "7b89296c-6dcb-4c50-8857-7eb1924770d3",
+          "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+          "taskId": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+          "role": "ROLE_USER",
+          "parts": [
+            {
+              "text": "Run the full suite for payments-api at commit 9f3c2e1"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+### 2 · CancelTask
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "CancelTask",
+  "params": {
+    "id": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf"
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "id": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+    "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+    "status": {
+      "state": "TASK_STATE_CANCELED",
+      "message": {
+        "messageId": "9f730657-74a7-43df-b405-5a8270fe73a9",
+        "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+        "taskId": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+        "role": "ROLE_AGENT",
+        "parts": [
+          {
+            "text": "Canceled at the client's request."
+          }
+        ]
+      },
+      "timestamp": "2026-10-06T09:00:03.750Z"
+    },
+    "history": [
+      {
+        "messageId": "7b89296c-6dcb-4c50-8857-7eb1924770d3",
+        "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+        "taskId": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+        "role": "ROLE_USER",
+        "parts": [
+          {
+            "text": "Run the full suite for payments-api at commit 9f3c2e1"
+          }
+        ]
+      },
+      {
+        "messageId": "4e4233ac-1dca-4ecc-8b5f-0a7afff7c0bf",
+        "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+        "taskId": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+        "role": "ROLE_AGENT",
+        "parts": [
+          {
+            "text": "Checking out 9f3c2e1 and starting the suite"
+          }
+        ]
+      }
+    ],
+    "artifacts": [
+      {
+        "artifactId": "test-log",
+        "name": "test-log.txt",
+        "parts": [
+          {
+            "text": "tests/test_suite_01.py ........\n"
+          },
+          {
+            "text": "tests/test_suite_02.py ........\n"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+### 3 · CancelTask: again
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "CancelTask",
+  "params": {
+    "id": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf"
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "error": {
+    "code": -32002,
+    "message": "Task cannot be canceled",
+    "data": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "TASK_NOT_CANCELABLE",
+        "domain": "a2a-protocol.org",
+        "metadata": {
+          "taskId": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+          "state": "TASK_STATE_CANCELED"
+        }
+      }
+    ]
+  }
+}
+
+### 4 · SendMessage: to the canceled task
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "766bad07-34c2-4a80-83cc-0f2793fdcab8",
+      "contextId": "9b584e1f-b948-453f-9250-18314071afc7",
+      "taskId": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "Try again"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "error": {
+    "code": -32004,
+    "message": "This operation is not supported",
+    "data": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "UNSUPPORTED_OPERATION",
+        "domain": "a2a-protocol.org",
+        "metadata": {
+          "taskId": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf",
+          "state": "TASK_STATE_CANCELED"
+        }
+      }
+    ]
+  }
+}

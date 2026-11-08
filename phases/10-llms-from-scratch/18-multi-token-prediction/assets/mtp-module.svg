@@ -36,8 +36,8 @@
   <text x="410" y="100" text-anchor="middle" class="small">combine: M_1 * [RMSNorm(h^0); RMSNorm(E(t_{i+1}))]</text>
   <text x="410" y="118" text-anchor="middle" class="small">transformer block T_1 (attn + MLP)</text>
   <text x="410" y="138" text-anchor="middle" class="step">h_i^(1)</text>
-  <text x="410" y="160" text-anchor="middle" class="small">shared LM head -&gt; predict t_{i+1}</text>
-  <text x="410" y="180" text-anchor="middle" class="step">L_1 = CE(logits, t_{i+1})</text>
+  <text x="410" y="160" text-anchor="middle" class="small">shared LM head -&gt; predict t_{i+2}</text>
+  <text x="410" y="180" text-anchor="middle" class="step">L_1 = CE(logits, t_{i+2})</text>
 
   <!-- Depth 2 module -->
   <rect x="580" y="60" width="260" height="140" class="cool"/>
@@ -45,8 +45,8 @@
   <text x="710" y="100" text-anchor="middle" class="small">combine: M_2 * [RMSNorm(h^1); RMSNorm(E(t_{i+2}))]</text>
   <text x="710" y="118" text-anchor="middle" class="small">transformer block T_2 (attn + MLP)</text>
   <text x="710" y="138" text-anchor="middle" class="step">h_i^(2)</text>
-  <text x="710" y="160" text-anchor="middle" class="small">shared LM head -&gt; predict t_{i+2}</text>
-  <text x="710" y="180" text-anchor="middle" class="step">L_2 = CE(logits, t_{i+2})</text>
+  <text x="710" y="160" text-anchor="middle" class="small">shared LM head -&gt; predict t_{i+3}</text>
+  <text x="710" y="180" text-anchor="middle" class="step">L_2 = CE(logits, t_{i+3})</text>
 
   <!-- Arrows between modules -->
   <line x1="230" y1="90" x2="280" y2="90" stroke="#1a1a1a" stroke-width="1.5" marker-end="url(#arrow)"/>
@@ -73,9 +73,9 @@
   <rect x="30" y="400" width="900" height="120" class="hot"/>
   <text x="480" y="423" text-anchor="middle" class="label">at inference: MTP modules become a speculative-decoding draft</text>
   <text x="50" y="450" class="step">module k=1</text>
-  <text x="220" y="450" class="small">draft t_{i+1} given main h^(0)   ·  DeepSeek-V3 reports 80%+ acceptance</text>
+  <text x="220" y="450" class="small">draft t_{i+2} given h^(0) + E(t_{i+1})   ·  DeepSeek-V3 reports 80%+ acceptance</text>
   <text x="50" y="470" class="step">module k=2</text>
-  <text x="220" y="470" class="small">draft t_{i+2} given h^(1) + E(t_{i+1}) ·  chains across depths</text>
+  <text x="220" y="470" class="small">draft t_{i+3} given h^(1) + E(t_{i+2}) ·  chains across depths</text>
   <text x="50" y="490" class="step">verifier</text>
   <text x="220" y="490" class="small">main model accepts/rejects via Leviathan rule (Phase 10 · 15)</text>
   <text x="50" y="510" class="step">speedup</text>

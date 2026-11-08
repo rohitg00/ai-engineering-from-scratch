@@ -25,9 +25,8 @@ GPT-1（2018）、GPT-2（2019）、GPT-3（2020）、GPT-4（2023）、GPT-5（
 
 給定一個長度為 `N` 的序列，建一個 `N × N` 矩陣：
 
-```
-M[i, j] = 0       if j <= i
-M[i, j] = -inf    if j > i
+```math
+M_{ij} = \begin{cases} 0 & \text{if } j \le i \\ -\infty & \text{if } j > i \end{cases}
 ```
 
 在 softmax 之前把 `M` 加到原始注意力分數上。`exp(-inf) = 0`，所以被遮的位置貢獻的權重為零。注意力矩陣的每一列都是一個只覆蓋先前位置的機率分布。

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="fig-5-3-title fig-5-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-3-title">Six questions to ask a published SGLang benchmark</title>
+  <desc id="fig-5-3-desc">Six questions in a column: version stated, workload matches yours, memory budgets matched, concurrency under the graph limit, flags mapped across engines, and who paid. A no on any question leads right to what the result can still tell you. Six yes answers lead to testing the mechanism on your own server.</desc>
+  <defs><marker id="fig-5-3-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker><marker id="fig-5-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <rect x="20" y="20" width="300" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="170" y="40.6" font-size="12" text-anchor="middle" font-weight="700">1 · SGLang version stated?</text>
+  <line x1="320" y1="37" x2="372" y2="37" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-rose)"/>
+  <rect class="m-knock" x="336.1" y="20.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="346" y="31" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <text x="380" y="41" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">an unknown build: anecdote only</text>
+  <line x1="170" y1="54" x2="170" y2="77" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect x="20" y="78" width="300" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="170" y="98.6" font-size="12" text-anchor="middle" font-weight="700">2 · workload matches yours?</text>
+  <line x1="320" y1="95" x2="372" y2="95" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-rose)"/>
+  <rect class="m-knock" x="336.1" y="78.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="346" y="89" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <text x="380" y="99" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">describes another workload</text>
+  <line x1="170" y1="112" x2="170" y2="135" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect x="20" y="136" width="300" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="170" y="156.6" font-size="12" text-anchor="middle" font-weight="700">3 · memory budgets matched?</text>
+  <line x1="320" y1="153" x2="372" y2="153" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-rose)"/>
+  <rect class="m-knock" x="336.1" y="136.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="346" y="147" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <text x="380" y="157" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">compares two KV pool sizes</text>
+  <line x1="170" y1="170" x2="170" y2="193" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect x="20" y="194" width="300" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="170" y="214.6" font-size="12" text-anchor="middle" font-weight="700">4 · concurrency under graph limit?</text>
+  <line x1="320" y1="211" x2="372" y2="211" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-rose)"/>
+  <rect class="m-knock" x="336.1" y="194.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="346" y="205" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <text x="380" y="215" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">measured eager decode</text>
+  <line x1="170" y1="228" x2="170" y2="251" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect x="20" y="252" width="300" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="170" y="272.6" font-size="12" text-anchor="middle" font-weight="700">5 · flags mapped across engines?</text>
+  <line x1="320" y1="269" x2="372" y2="269" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-rose)"/>
+  <rect class="m-knock" x="336.1" y="252.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="346" y="263" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <text x="380" y="273" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">a flag error can decide it</text>
+  <line x1="170" y1="286" x2="170" y2="309" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect x="20" y="310" width="300" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="170" y="330.6" font-size="12" text-anchor="middle" font-weight="700">6 · who paid is stated?</text>
+  <line x1="320" y1="327" x2="372" y2="327" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-rose)"/>
+  <rect class="m-knock" x="336.1" y="310.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="346" y="321" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <text x="380" y="331" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">read it as that party&#39;s claim</text>
+  <line x1="170" y1="344" x2="170" y2="369" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect class="m-knock" x="175" y="345.53" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="178" y="356.5" font-size="11.5">yes</text>
+  <rect x="20" y="370" width="300" height="40" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="170" y="393.6" font-size="12" text-anchor="middle" font-weight="700">test the mechanism on your server</text>
+</svg>

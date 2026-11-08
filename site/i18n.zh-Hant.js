@@ -533,6 +533,7 @@ window.I18N_ZH_HANT = {
   "Terminal & Shell": "終端機與 Shell",
   "Linux for AI": "AI 開發用的 Linux",
   "Debugging & Profiling": "除錯與效能剖析",
+  "Python for AI Engineering": "AI 工程用的 Python",
   "Linear Algebra Intuition": "線性代數的直覺",
   "Vectors, Matrices & Operations": "向量、矩陣與運算",
   "Matrix Transformations & Eigenvalues": "矩陣轉換與特徵值",
@@ -573,6 +574,9 @@ window.I18N_ZH_HANT = {
   "Anomaly Detection": "異常偵測",
   "Handling Imbalanced Data": "處理不平衡資料",
   "Feature Selection": "特徵選擇",
+  "ML System Design — From Problem to Deployed Model": "機器學習系統設計 —— 從問題到部署上線的模型",
+  "Monitoring Models in Production — Data Drift and Concept Drift": "生產環境中的模型監控 —— 資料漂移與概念漂移",
+  "Feature Stores and Training-Serving Skew": "特徵儲存庫與訓練／服務偏差",
   "The Perceptron: Where It All Started": "感知器：一切的起點",
   "Multi-Layer Networks & Forward Pass": "多層網路與前向傳播",
   "Backpropagation from Scratch": "從零實作反向傳播",
@@ -801,6 +805,30 @@ window.I18N_ZH_HANT = {
   "MCP Reliability, Cancellation, and Flow Control": "MCP 可靠性、取消與流量控制",
   "MCP Registry Supply Chain: Admission, Drift, and Rollback": "MCP 註冊中心供應鏈 —— 准入、偏移與回溯",
   "MCP Conformance Engineering: Versioning, Evidence, and Operations": "MCP 一致性工程 —— 版本、佐證與維運",
+  "Program Anatomy: An ELF Reader From Scratch": "程式剖析：從零打造 ELF 讀取器",
+  "Disassembly and Control Flow: From Bytes to a Graph You Can Check": "反組譯與控制流程：從位元組到可驗證的圖",
+  "Lifting to Pseudocode: IR, SSA, and Structuring From Scratch": "提升為虛擬碼：從零實作 IR、SSA 與結構化",
+  "Evidence, Confidence, and Unknowns in Binary Analysis": "二進位分析中的證據、信心與未知",
+  "Rebuild and Prove Equal: Differential Tests, Byte Comparison, and the Evidence Loop":
+    "重建並證明相等：差分測試、位元組比對與證據迴圈",
+  "The Reverse Engineering Landscape: History, Tool Families, and How a Decompiler Is Built":
+    "逆向工程全景：歷史、工具家族，以及反編譯器如何打造",
+  "Calling Conventions and Stack Frames: System V, Windows x64, and AArch64":
+    "呼叫慣例與堆疊框架：System V、Windows x64 與 AArch64",
+  "Compiler Idioms: What Optimization Does to Your Code and How to Read It Back":
+    "編譯器慣用法：最佳化對你的程式做了什麼，以及如何讀回來",
+  "Linking, Loading, and Stripped Binaries: PLT, GOT, Imports, Fixups, and Function Identification":
+    "連結、載入與去除符號的二進位檔：PLT、GOT、匯入、修正項與函式識別",
+  "Recovering Data and Types: Structs, Arrays, C++ Objects, and DWARF":
+    "還原資料與型別：結構、陣列、C++ 物件與 DWARF",
+  "Dynamic Analysis of Your Own Program: Debuggers, Traces, and Confirming Static Claims":
+    "對自己程式的動態分析：除錯器、追蹤，以及驗證靜態推論",
+  "Beyond Native Code: Python, JVM, .NET, and WebAssembly Bytecode":
+    "超越原生程式碼：Python、JVM、.NET 與 WebAssembly 位元組碼",
+  "Binary Diffing and Symbolic Execution: Matching Functions and Solving for Inputs":
+    "二進位差異比對與符號執行：比對函式並求解輸入",
+  "AI-Assisted Reverse Engineering: LLM Decompilers, Analysis Agents, and Ground Truth":
+    "AI 輔助逆向工程：LLM 反編譯器、分析代理程式與基準真相",
   "The Agent Loop": "代理程式迴圈",
   "ReWOO and Plan-and-Execute": "ReWOO 與先規劃後執行",
   "Reflexion and Verbal Reinforcement Learning": "Reflexion 與語言式強化學習",
@@ -938,6 +966,7 @@ window.I18N_ZH_HANT = {
   "FinOps for LLMs — Unit Economics and Multi-Tenant Attribution": "LLM 的 FinOps —— 單位經濟與多租戶歸因",
   "Self-Hosted Serving Selection — Matching Engine to Hardware and Scale":
     "自架服務選型 —— 讓引擎、硬體與規模互相匹配",
+  "Model Demo Interfaces — From a Function to a Shareable App": "模型展示介面 —— 從一個函式到可分享的應用程式",
   "Instruction-Following as Alignment Signal": "把遵循指示當成對齊訊號",
   "Reward Hacking & Goodhart's Law": "獎勵駭入與古德哈特定律",
   "Direct Preference Optimization Family": "直接偏好最佳化家族",

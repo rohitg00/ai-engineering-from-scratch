@@ -1,0 +1,14 @@
+$ sbx rm --force m101-mcp m101-mcp-dyn
+Deleting sandbox m101-mcp...
+Sandbox 'm101-mcp' removed
+Deleting sandbox m101-mcp-dyn...
+Sandbox 'm101-mcp-dyn' removed
+[exit 0]
+
+$ sbx mcp rm m101-deepwiki --force
+MCP server "m101-deepwiki" removed
+[exit 0]
+
+$ sbx mcp ls
+No MCP servers registered
+[exit 0]

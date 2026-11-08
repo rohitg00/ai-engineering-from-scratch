@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-3-2b-title fig-3-2b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-2b-title">The reward before the filter read higher</title>
+  <desc id="fig-3-2b-desc">Mean reward per step over every answer the engine finished, for 12 steps with seed 1. Without the filter: 0.657 on average. With the filter, counted before it dropped any group: 0.686.</desc>
+  <line x1="60" y1="256" x2="620" y2="256" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="260" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.5</text>
+  <line x1="60" y1="189.33" x2="620" y2="189.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="193.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.6</text>
+  <line x1="60" y1="122.67" x2="620" y2="122.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="126.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.7</text>
+  <line x1="60" y1="56" x2="620" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="60" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.8</text>
+  <line x1="60" y1="256" x2="620" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="56" x2="60" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="256" x2="60" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="212.73" y1="256" x2="212.73" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="212.73" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="365.45" y1="256" x2="365.45" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="365.45" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="518.18" y1="256" x2="518.18" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="518.18" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">9</text>
+  <line x1="620" y1="256" x2="620" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="620" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">11</text>
+  <text x="340" y="290" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">step</text>
+  <text x="60" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mean reward of all finished answers</text>
+  <path d="M60.0 237.8 L110.9 125.8 L161.8 170.1 L212.7 157.0 L263.6 99.8 L314.5 172.7 L365.5 188.3 L416.4 164.9 L467.3 133.6 L518.2 107.6 L569.1 136.2 L620.0 120.6" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="60" cy="237.77" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="110.91" cy="125.79" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="161.82" cy="170.06" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="212.73" cy="157.04" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="263.64" cy="99.75" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="314.55" cy="172.67" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="365.45" cy="188.29" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="416.36" cy="164.85" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="467.27" cy="133.6" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="518.18" cy="107.56" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="569.09" cy="136.21" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="620" cy="120.58" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <path d="M60.0 149.5 L110.9 176.1 L161.8 106.5 L212.7 132.6 L263.6 105.5 L314.5 148.5 L365.5 122.0 L416.4 141.4 L467.3 164.0 L518.2 87.0 L569.1 106.9 L620.0 147.5" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="60" cy="149.52" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="110.91" cy="176.14" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="161.82" cy="106.49" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="212.73" cy="132.62" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="263.64" cy="105.5" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="314.55" cy="148.47" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="365.45" cy="121.99" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="416.36" cy="141.42" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="467.27" cy="163.99" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="518.18" cy="86.95" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="569.09" cy="106.88" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="620" cy="147.49" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <path d="M60 18 H78" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="84" y="22" font-size="11" fill="var(--m-grey-ink, #5e5e59)">no filter</text>
+  <path d="M161.4 18 H179.4" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="185.4" y="22" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">DAPO filter, before the filter</text>
+  <text x="60" y="326" font-size="12" class="m-serif">Mean over 12 steps: 0.657 without the filter, 0.686 with it. One seed.</text>
+</svg>

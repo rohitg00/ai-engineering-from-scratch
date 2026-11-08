@@ -38,6 +38,7 @@
       "A feedback record that drives the next decision"
     ]
   },
+  "projects": ["csv-repair-workbench", "inbox-triage-desk", "meeting-notes-to-actions", "document-extraction-desk", "support-agent-with-google-adk", "signed-webhook-inbox"],
   "readinessCriteria": [
     "Can separate the requested output from the underlying operational outcome.",
     "Can rank assumptions by uncertainty and consequence.",

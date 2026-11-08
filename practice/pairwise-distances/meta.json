@@ -1,0 +1,21 @@
+{
+  "id": "pairwise-distances",
+  "title": "Vectorized pairwise distances",
+  "kind": "implement",
+  "summary": "Euclidean distance and cosine similarity matrices from one matrix product, with a clip at 0 and a zero-vector rule.",
+  "difficulty": "medium",
+  "tags": ["distances", "vectorization", "cosine-similarity", "numerical-stability"],
+  "lesson": "phases/01-math-foundations/14-norms-and-distances",
+  "cheatsheet": "math-for-ml",
+  "minutes": 20,
+  "entry": ["pairwise_sq_distances", "pairwise_distances", "cosine_similarity_matrix"],
+  "collections": ["math-foundations"],
+  "time_limit_s": 10,
+  "mutants": {
+    "cosine_norm_axis0": "Takes the norms of B over axis 0, so it divides by column norms and not row norms.",
+    "cosine_zero_nan": "Divides by the norm product with no zero rule, so a zero vector gives NaN.",
+    "no_clip": "Does not clip the squared distances at 0, so rounding gives a negative value and the square root gives NaN.",
+    "plus_cross_term": "Adds 2ab to the squared norms and does not subtract it.",
+    "square_of_sum": "Squares the sum of each row and not the sum of the squares."
+  }
+}

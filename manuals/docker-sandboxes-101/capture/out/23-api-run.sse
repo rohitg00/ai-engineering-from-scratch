@@ -1,0 +1,19 @@
+data: {"agent_name": "root", "available_agents": [{"description": "Answers every message with the word pong.", "model": "ai/qwen3:4b", "name": "root", "provider": "dmr"}], "current_agent": "root", "timestamp": "<ts>", "type": "team_info"}
+
+data: {"agent_name": "root", "available_tools": 0, "loading": false, "timestamp": "<ts>", "type": "toolset_info"}
+
+data: {"message": "ping", "session_id": "<uuid>", "session_position": 0, "timestamp": "<ts>", "type": "user_message"}
+
+data: {"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "stream_started"}
+
+data: {"agent_name": "root", "available_tools": 0, "loading": false, "timestamp": "<ts>", "type": "toolset_info"}
+
+data: {"agent_name": "root", "description": "Answers every message with the word pong.", "model": "dmr/ai/qwen3:4b", "timestamp": "<ts>", "type": "agent_info"}
+
+data: {"agent_name": "root", "content": "pong", "message_id": "<uuid>", "session_id": "<uuid>", "timestamp": "<ts>", "type": "agent_choice"}
+
+data: {"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "message_added"}
+
+data: {"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "token_usage", "usage": {"context_length": "<n>", "context_limit": "<n>", "cost": "<n>", "input_tokens": "<n>", "last_message": {"Cost": 0, "Model": "dmr/ai/qwen3:4b", "cached_input_tokens": "<n>", "cached_write_tokens": "<n>", "finish_reason": "stop", "input_tokens": "<n>", "output_tokens": "<n>"}, "output_tokens": "<n>"}}
+
+data: {"agent_name": "root", "finish_reason": "stop", "reason": "normal", "session_id": "<uuid>", "timestamp": "<ts>", "type": "stream_stopped"}

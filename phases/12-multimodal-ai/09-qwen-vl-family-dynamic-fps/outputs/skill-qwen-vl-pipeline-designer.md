@@ -12,14 +12,14 @@ Given a task description (image QA, video action recognition, UI-agent workflow,
 Produce:
 
 1. Resolution bounds. `min_pixels` and `max_pixels` picked for the task. Documents and UI: max high (>=1,806,336 = 1344x1344 equivalent). Photos: default. Video frames: lower to preserve frame count.
-2. FPS policy. Fixed 1 FPS for low-motion; dynamic 2-4 for medium; 4-8 for high. Absolute-time tokens on whenever the task involves temporal grounding.
+2. FPS policy. Fixed 1 FPS for low-motion; dynamic 2-4 for medium; 4-8 for high. Absolute-time M-RoPE matters whenever the task involves temporal grounding.
 3. Frame budget. Total tokens per video = duration * fps * tokens_per_frame. Fit into available context (leave 20% slack for prompt + output).
 4. Window attention. Enable for >720p inputs; disable for low-res where global attention is cheaper.
 5. Output mode. Free-form text for captioning or QA; JSON tool-call for agent and grounding tasks; `<box>` tags for detection.
 6. Inference kwargs. Concrete dict the user passes to `process_vision_info` + model forward.
 
 Hard rejects:
-- Proposing Qwen2-VL (original, pre-2.5) as the default for new projects. It lacks dynamic FPS and absolute time tokens.
+- Proposing Qwen2-VL (original, pre-2.5) as the default for new projects. It lacks dynamic FPS and absolute-time M-RoPE.
 - Claiming M-RoPE requires a position table. It does not — that is its entire selling point.
 - Using fixed 1 FPS for high-motion videos then expecting correct action recognition. The sampler must adapt.
 

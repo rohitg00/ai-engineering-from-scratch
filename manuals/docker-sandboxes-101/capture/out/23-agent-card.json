@@ -1,0 +1,28 @@
+{
+  "supportedInterfaces": [
+    {
+      "url": "http://127.0.0.1:8082/invoke",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "capabilities": {
+    "streaming": true
+  },
+  "defaultInputModes": [],
+  "defaultOutputModes": [],
+  "description": "Answers every message with the word pong.",
+  "name": "pong",
+  "skills": [
+    {
+      "description": "Answers every message with the word pong.",
+      "id": "pong_",
+      "name": "",
+      "tags": [
+        "llm",
+        "docker agent"
+      ]
+    }
+  ],
+  "version": "v1.149.0"
+}

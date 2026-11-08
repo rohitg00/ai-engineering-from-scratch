@@ -61,8 +61,8 @@ Google Research（〈Mechanism design for large language models〉）為彙整 L
 
 一個綁在 DID 上的聲譽分數，從已確認的貢獻累積起來。一條簡單的更新規則：
 
-```
-rep(i, t+1) = alpha * rep(i, t) + (1 - alpha) * contribution_quality(i, t)
+```math
+\text{rep}(i, t+1) = \alpha \cdot \text{rep}(i, t) + (1 - \alpha) \cdot \text{contribution\_quality}(i, t)
 ```
 
 衰減因子 `alpha` 接近 1。聲譽：

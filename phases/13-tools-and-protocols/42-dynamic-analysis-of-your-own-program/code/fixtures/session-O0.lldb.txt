@@ -1,0 +1,438 @@
+# lesson 42 capture
+# command: lldb -b -o settings set interpreter.stop-command-source-on-error false -s session-O0.lldb ./account-O0
+# cwd: fixtures
+# lldb: lldb-1703.0.236.21
+# date: 2026-10-14
+(lldb) target create "./account-O0"
+Current executable set to '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account-O0' (arm64).
+(lldb) settings set interpreter.stop-command-source-on-error false
+(lldb) command source -s 0 'session-O0.lldb'
+Executing commands in '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/session-O0.lldb'.
+(lldb) breakpoint set -n bump
+Breakpoint 1: where = account-O0`bump + 12 at account.c:13:19, address = 0x00000001000004bc
+(lldb) breakpoint set -n classify
+Breakpoint 2: where = account-O0`classify + 8 at account.c:18:9, address = 0x00000001000004e8
+(lldb) breakpoint set -n sum_balances
+Breakpoint 3: where = account-O0`sum_balances + 12 at account.c:24:9, address = 0x0000000100000544
+(lldb) breakpoint set -a 0x100000504 -s account-O0
+Breakpoint 4: where = account-O0`classify + 36 at account.c:19:9, address = 0x0000000100000504
+(lldb) breakpoint set -a 0x1000004f4 -s account-O0
+Breakpoint 5: where = account-O0`classify + 20 at account.c:18:9, address = 0x00000001000004f4
+(lldb) breakpoint set -a 0x100000524 -s account-O0
+Breakpoint 6: where = account-O0`classify + 68 at account.c:20:5, address = 0x0000000100000524
+(lldb) breakpoint set -a 0x100000514 -s account-O0
+Breakpoint 7: where = account-O0`classify + 52 at account.c:19:9, address = 0x0000000100000514
+(lldb) target stop-hook add -o "register read x0 x1 pc" -o "memory read -s4 -fx -c24 $x0" -o "frame variable -P 1"
+Stop hook #1 added.
+(lldb) run
+      x0 = 0x0000000000000000
+      x1 = 0x0000000000000000
+      pc = 0x00000001000109c0  dyld`_dyld_start
+sizeof 32 align 8
+offsets 0 4 8 16 24
+      x0 = 0x000000016fdfe008
+      x1 = 0x0000000000000005
+      pc = 0x00000001000004bc  account-O0`bump + 12 at account.c:13:19
+0x16fdfe008: 0x00000073 0x000000fa 0x00000009 0x00000000
+0x16fdfe018: 0x00000000 0x3ff40000 0x00000719 0x00000001
+0x16fdfe028: 0x0000006c 0xffffffd8 0x00000003 0x00000000
+0x16fdfe038: 0x00000000 0x40000000 0x00000721 0x00000001
+0x16fdfe048: 0xdd180039 0x6c94556a 0x6fdfe6b0 0x00000001
+0x16fdfe058: 0x9a949d54 0x00000001 0x00000000 0x00000000
+(account *) a = 0x000000016fdfe008 {
+  kind = 's'
+  balance = 250
+  code = 9
+  rate = 1.25
+  label = 0x0000000100000719 "savings"
+}
+(int) by = 5
+Process 26041 launched: '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account-O0' (arm64)
+Process 26041 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 1.1
+    frame #0: 0x00000001000004bc account-O0`bump(a=0x000000016fdfe008, by=5) at account.c:13:19
+   10  	};
+   11  	
+   12  	int bump(struct account *a, int by) {
+-> 13  	    a->balance += by;
+    	                  ^
+   14  	    return a->balance;
+   15  	}
+   16  	
+Target 0: (account-O0) stopped.
+(lldb) watchpoint set variable a->balance
+Watchpoint created: Watchpoint 1: addr = 0x16fdfe00c size = 4 state = enabled type = m
+    declare @ '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c:12'
+    watchpoint spec = 'a->balance'
+    watchpoint resources:
+       #0: addr = 0x16fdfe00c size = 4
+Watchpoint 1 hit:
+    
+new value: 250
+(lldb) watchpoint list
+Number of supported hardware watchpoints: 4
+Current watchpoints:
+Watchpoint 1: addr = 0x16fdfe00c size = 4 state = enabled type = m
+    declare @ '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c:12'
+    watchpoint spec = 'a->balance'
+    watchpoint resources:
+       #0: addr = 0x16fdfe00c size = 4
+Watchpoint 1 hit:
+    
+new value: 250
+(lldb) continue
+
+Watchpoint 1 hit:
+old value: 250
+new value: 255
+      x0 = 0x000000016fdfe008
+      x1 = 0x0000000000000005
+      pc = 0x00000001000004d0  account-O0`bump + 32 at account.c:14:12
+0x16fdfe008: 0x00000073 0x000000ff 0x00000009 0x00000000
+0x16fdfe018: 0x00000000 0x3ff40000 0x00000719 0x00000001
+0x16fdfe028: 0x0000006c 0xffffffd8 0x00000003 0x00000000
+0x16fdfe038: 0x00000000 0x40000000 0x00000721 0x00000001
+0x16fdfe048: 0xdd180039 0x6c94556a 0x6fdfe6b0 0x00000001
+0x16fdfe058: 0x9a949d54 0x00000001 0x00000000 0x00000000
+(account *) a = 0x000000016fdfe008 {
+  kind = 's'
+  balance = 255
+  code = 9
+  rate = 1.25
+  label = 0x0000000100000719 "savings"
+}
+(int) by = 5
+Process 26041 resuming
+Process 26041 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = watchpoint 1
+    frame #0: 0x00000001000004d0 account-O0`bump(a=0x000000016fdfe008, by=5) at account.c:14:12
+   11  	
+   12  	int bump(struct account *a, int by) {
+   13  	    a->balance += by;
+-> 14  	    return a->balance;
+    	           ^
+   15  	}
+   16  	
+   17  	int classify(const struct account *a) {
+Target 0: (account-O0) stopped.
+(lldb) continue
+      x0 = 0x000000016fdfdfe8
+      x1 = 0x0000000000000005
+      pc = 0x00000001000004e8  account-O0`classify + 8 at account.c:18:9
+0x16fdfdfe8: 0x00000063 0x00000064 0x00000007 0x00000000
+0x16fdfdff8: 0x00000000 0x3fe00000 0x00000714 0x00000001
+0x16fdfe008: 0x00000073 0x000000ff 0x00000009 0x00000000
+0x16fdfe018: 0x00000000 0x3ff40000 0x00000719 0x00000001
+0x16fdfe028: 0x0000006c 0xffffffd8 0x00000003 0x00000000
+0x16fdfe038: 0x00000000 0x40000000 0x00000721 0x00000001
+(const account *) a = 0x000000016fdfdfe8 {
+  kind = 'c'
+  balance = 100
+  code = 7
+  rate = 0.5
+  label = 0x0000000100000714 "cash"
+}
+Process 26041 resuming
+Process 26041 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 2.1
+    frame #0: 0x00000001000004e8 account-O0`classify(a=0x000000016fdfdfe8) at account.c:18:9
+   15  	}
+   16  	
+   17  	int classify(const struct account *a) {
+-> 18  	    if (a->balance < 0) return -1;
+    	        ^
+   19  	    if (a->balance > 200) return 1;
+   20  	    return 0;
+   21  	}
+Target 0: (account-O0) stopped.
+(lldb) continue
+      x0 = 0x000000016fdfdfe8
+      x1 = 0x0000000000000005
+      pc = 0x0000000100000504  account-O0`classify + 36 at account.c:19:9
+0x16fdfdfe8: 0x00000063 0x00000064 0x00000007 0x00000000
+0x16fdfdff8: 0x00000000 0x3fe00000 0x00000714 0x00000001
+0x16fdfe008: 0x00000073 0x000000ff 0x00000009 0x00000000
+0x16fdfe018: 0x00000000 0x3ff40000 0x00000719 0x00000001
+0x16fdfe028: 0x0000006c 0xffffffd8 0x00000003 0x00000000
+0x16fdfe038: 0x00000000 0x40000000 0x00000721 0x00000001
+(const account *) a = 0x000000016fdfdfe8 {
+  kind = 'c'
+  balance = 100
+  code = 7
+  rate = 0.5
+  label = 0x0000000100000714 "cash"
+}
+Process 26041 resuming
+Process 26041 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 4.1
+    frame #0: 0x0000000100000504 account-O0`classify(a=0x000000016fdfdfe8) at account.c:19:9
+   16  	
+   17  	int classify(const struct account *a) {
+   18  	    if (a->balance < 0) return -1;
+-> 19  	    if (a->balance > 200) return 1;
+    	        ^
+   20  	    return 0;
+   21  	}
+   22  	
+Target 0: (account-O0) stopped.
+(lldb) continue
+      x0 = 0x000000016fdfdfe8
+      x1 = 0x0000000000000005
+      pc = 0x0000000100000524  account-O0`classify + 68 at account.c:20:5
+0x16fdfdfe8: 0x00000063 0x00000064 0x00000007 0x00000000
+0x16fdfdff8: 0x00000000 0x3fe00000 0x00000714 0x00000001
+0x16fdfe008: 0x00000073 0x000000ff 0x00000009 0x00000000
+0x16fdfe018: 0x00000000 0x3ff40000 0x00000719 0x00000001
+0x16fdfe028: 0x0000006c 0xffffffd8 0x00000003 0x00000000
+0x16fdfe038: 0x00000000 0x40000000 0x00000721 0x00000001
+(const account *) a = 0x000000016fdfdfe8 {
+  kind = 'c'
+  balance = 100
+  code = 7
+  rate = 0.5
+  label = 0x0000000100000714 "cash"
+}
+Process 26041 resuming
+Process 26041 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 6.1
+    frame #0: 0x0000000100000524 account-O0`classify(a=0x000000016fdfdfe8) at account.c:20:5
+   17  	int classify(const struct account *a) {
+   18  	    if (a->balance < 0) return -1;
+   19  	    if (a->balance > 200) return 1;
+-> 20  	    return 0;
+    	    ^
+   21  	}
+   22  	
+   23  	int sum_balances(const struct account *list, int count) {
+Target 0: (account-O0) stopped.
+(lldb) continue
+      x0 = 0x000000016fdfe008
+      x1 = 0x0000000000000005
+      pc = 0x00000001000004e8  account-O0`classify + 8 at account.c:18:9
+0x16fdfe008: 0x00000073 0x000000ff 0x00000009 0x00000000
+0x16fdfe018: 0x00000000 0x3ff40000 0x00000719 0x00000001
+0x16fdfe028: 0x0000006c 0xffffffd8 0x00000003 0x00000000
+0x16fdfe038: 0x00000000 0x40000000 0x00000721 0x00000001
+0x16fdfe048: 0xdd180039 0x6c94556a 0x6fdfe6b0 0x00000001
+0x16fdfe058: 0x9a949d54 0x00000001 0x00000000 0x00000000
+(const account *) a = 0x000000016fdfe008 {
+  kind = 's'
+  balance = 255
+  code = 9
+  rate = 1.25
+  label = 0x0000000100000719 "savings"
+}
+Process 26041 resuming
+Process 26041 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 2.1
+    frame #0: 0x00000001000004e8 account-O0`classify(a=0x000000016fdfe008) at account.c:18:9
+   15  	}
+   16  	
+   17  	int classify(const struct account *a) {
+-> 18  	    if (a->balance < 0) return -1;
+    	        ^
+   19  	    if (a->balance > 200) return 1;
+   20  	    return 0;
+   21  	}
+Target 0: (account-O0) stopped.
+(lldb) continue
+      x0 = 0x000000016fdfe008
+      x1 = 0x0000000000000005
+      pc = 0x0000000100000504  account-O0`classify + 36 at account.c:19:9
+0x16fdfe008: 0x00000073 0x000000ff 0x00000009 0x00000000
+0x16fdfe018: 0x00000000 0x3ff40000 0x00000719 0x00000001
+0x16fdfe028: 0x0000006c 0xffffffd8 0x00000003 0x00000000
+0x16fdfe038: 0x00000000 0x40000000 0x00000721 0x00000001
+0x16fdfe048: 0xdd180039 0x6c94556a 0x6fdfe6b0 0x00000001
+0x16fdfe058: 0x9a949d54 0x00000001 0x00000000 0x00000000
+(const account *) a = 0x000000016fdfe008 {
+  kind = 's'
+  balance = 255
+  code = 9
+  rate = 1.25
+  label = 0x0000000100000719 "savings"
+}
+Process 26041 resuming
+Process 26041 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 4.1
+    frame #0: 0x0000000100000504 account-O0`classify(a=0x000000016fdfe008) at account.c:19:9
+   16  	
+   17  	int classify(const struct account *a) {
+   18  	    if (a->balance < 0) return -1;
+-> 19  	    if (a->balance > 200) return 1;
+    	        ^
+   20  	    return 0;
+   21  	}
+   22  	
+Target 0: (account-O0) stopped.
+(lldb) continue
+      x0 = 0x000000016fdfe008
+      x1 = 0x0000000000000005
+      pc = 0x0000000100000514  account-O0`classify + 52 at account.c:19:9
+0x16fdfe008: 0x00000073 0x000000ff 0x00000009 0x00000000
+0x16fdfe018: 0x00000000 0x3ff40000 0x00000719 0x00000001
+0x16fdfe028: 0x0000006c 0xffffffd8 0x00000003 0x00000000
+0x16fdfe038: 0x00000000 0x40000000 0x00000721 0x00000001
+0x16fdfe048: 0xdd180039 0x6c94556a 0x6fdfe6b0 0x00000001
+0x16fdfe058: 0x9a949d54 0x00000001 0x00000000 0x00000000
+(const account *) a = 0x000000016fdfe008 {
+  kind = 's'
+  balance = 255
+  code = 9
+  rate = 1.25
+  label = 0x0000000100000719 "savings"
+}
+Process 26041 resuming
+Process 26041 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 7.1
+    frame #0: 0x0000000100000514 account-O0`classify(a=0x000000016fdfe008) at account.c:19:9
+   16  	
+   17  	int classify(const struct account *a) {
+   18  	    if (a->balance < 0) return -1;
+-> 19  	    if (a->balance > 200) return 1;
+    	        ^
+   20  	    return 0;
+   21  	}
+   22  	
+Target 0: (account-O0) stopped.
+(lldb) continue
+      x0 = 0x000000016fdfe028
+      x1 = 0x0000000000000005
+      pc = 0x00000001000004e8  account-O0`classify + 8 at account.c:18:9
+0x16fdfe028: 0x0000006c 0xffffffd8 0x00000003 0x00000000
+0x16fdfe038: 0x00000000 0x40000000 0x00000721 0x00000001
+0x16fdfe048: 0xdd180039 0x6c94556a 0x6fdfe6b0 0x00000001
+0x16fdfe058: 0x9a949d54 0x00000001 0x00000000 0x00000000
+0x16fdfe068: 0x00000001 0x00000000 0x00000000 0x00000000
+0x16fdfe078: 0x9a941000 0x00000001 0x6fdfe6c0 0x00000001
+(const account *) a = 0x000000016fdfe028 {
+  kind = 'l'
+  balance = -40
+  code = 3
+  rate = 2
+  label = 0x0000000100000721 "loan"
+}
+Process 26041 resuming
+Process 26041 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 2.1
+    frame #0: 0x00000001000004e8 account-O0`classify(a=0x000000016fdfe028) at account.c:18:9
+   15  	}
+   16  	
+   17  	int classify(const struct account *a) {
+-> 18  	    if (a->balance < 0) return -1;
+    	        ^
+   19  	    if (a->balance > 200) return 1;
+   20  	    return 0;
+   21  	}
+Target 0: (account-O0) stopped.
+(lldb) continue
+      x0 = 0x000000016fdfe028
+      x1 = 0x0000000000000005
+      pc = 0x00000001000004f4  account-O0`classify + 20 at account.c:18:9
+0x16fdfe028: 0x0000006c 0xffffffd8 0x00000003 0x00000000
+0x16fdfe038: 0x00000000 0x40000000 0x00000721 0x00000001
+0x16fdfe048: 0xdd180039 0x6c94556a 0x6fdfe6b0 0x00000001
+0x16fdfe058: 0x9a949d54 0x00000001 0x00000000 0x00000000
+0x16fdfe068: 0x00000001 0x00000000 0x00000000 0x00000000
+0x16fdfe078: 0x9a941000 0x00000001 0x6fdfe6c0 0x00000001
+(const account *) a = 0x000000016fdfe028 {
+  kind = 'l'
+  balance = -40
+  code = 3
+  rate = 2
+  label = 0x0000000100000721 "loan"
+}
+Process 26041 resuming
+Process 26041 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 5.1
+    frame #0: 0x00000001000004f4 account-O0`classify(a=0x000000016fdfe028) at account.c:18:9
+   15  	}
+   16  	
+   17  	int classify(const struct account *a) {
+-> 18  	    if (a->balance < 0) return -1;
+    	        ^
+   19  	    if (a->balance > 200) return 1;
+   20  	    return 0;
+   21  	}
+Target 0: (account-O0) stopped.
+(lldb) continue
+class 0 1 -1
+      x0 = 0x000000016fdfdfe8
+      x1 = 0x0000000000000003
+      pc = 0x0000000100000544  account-O0`sum_balances + 12 at account.c:24:9
+0x16fdfdfe8: 0x00000063 0x00000064 0x00000007 0x00000000
+0x16fdfdff8: 0x00000000 0x3fe00000 0x00000714 0x00000001
+0x16fdfe008: 0x00000073 0x000000ff 0x00000009 0x00000000
+0x16fdfe018: 0x00000000 0x3ff40000 0x00000719 0x00000001
+0x16fdfe028: 0x0000006c 0xffffffd8 0x00000003 0x00000000
+0x16fdfe038: 0x00000000 0x40000000 0x00000721 0x00000001
+(const account *) list = 0x000000016fdfdfe8 {
+  kind = 'c'
+  balance = 100
+  code = 7
+  rate = 0.5
+  label = 0x0000000100000714 "cash"
+}
+(int) count = 3
+(int) sum = 1876942928
+Process 26041 resuming
+Process 26041 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 3.1
+    frame #0: 0x0000000100000544 account-O0`sum_balances(list=0x000000016fdfdfe8, count=3) at account.c:24:9
+   21  	}
+   22  	
+   23  	int sum_balances(const struct account *list, int count) {
+-> 24  	    int sum = 0;
+    	        ^
+   25  	    for (int i = 0; i < count; i++) sum += list[i].balance;
+   26  	    return sum;
+   27  	}
+Target 0: (account-O0) stopped.
+(lldb) continue
+sum 315
+Process 26041 resuming
+Process 26041 exited with status = 0 (0x00000000)
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) breakpoint list
+Current breakpoints:
+1: name = 'bump', locations = 1, resolved = 1, hit count = 1
+  1.1: where = account-O0`bump + 12 at account.c:13:19, address = 0x00000001000004bc, resolved, hit count = 1 
+
+2: name = 'classify', locations = 1, resolved = 1, hit count = 3
+  2.1: where = account-O0`classify + 8 at account.c:18:9, address = 0x00000001000004e8, resolved, hit count = 3 
+
+3: name = 'sum_balances', locations = 1, resolved = 1, hit count = 1
+  3.1: where = account-O0`sum_balances + 12 at account.c:24:9, address = 0x0000000100000544, resolved, hit count = 1 
+
+4: address = account-O0[0x0000000100000504], locations = 1, resolved = 1, hit count = 2
+  4.1: where = account-O0`classify + 36 at account.c:19:9, address = 0x0000000100000504, resolved, hit count = 2 
+
+5: address = account-O0[0x00000001000004f4], locations = 1, resolved = 1, hit count = 1
+  5.1: where = account-O0`classify + 20 at account.c:18:9, address = 0x00000001000004f4, resolved, hit count = 1 
+
+6: address = account-O0[0x0000000100000524], locations = 1, resolved = 1, hit count = 1
+  6.1: where = account-O0`classify + 68 at account.c:20:5, address = 0x0000000100000524, resolved, hit count = 1 
+
+7: address = account-O0[0x0000000100000514], locations = 1, resolved = 1, hit count = 1
+  7.1: where = account-O0`classify + 52 at account.c:19:9, address = 0x0000000100000514, resolved, hit count = 1 
+
+(lldb) watchpoint list -v
+Current watchpoints:
+Watchpoint 1: addr = 0x16fdfe00c size = 4 state = enabled type = m
+    declare @ '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c:12'
+    watchpoint spec = 'a->balance'
+    watchpoint resources:
+       #0: addr = 0x16fdfe00c size = 4
+Watchpoint 1 hit:
+    old value: 250
+new value: 255
+    hit_count = 1     ignore_count = 0   

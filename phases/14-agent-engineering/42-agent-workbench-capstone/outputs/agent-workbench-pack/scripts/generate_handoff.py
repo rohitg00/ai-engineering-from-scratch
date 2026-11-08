@@ -15,13 +15,13 @@ ROOT = Path(__file__).resolve().parent.parent
 def _load_json(path: Path, default):
     if not path.exists():
         return default
-    return json.loads(path.read_text())
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _load_jsonl(path: Path) -> list[dict]:
     if not path.exists():
         return []
-    return [json.loads(ln) for ln in path.read_text().splitlines() if ln.strip()]
+    return [json.loads(ln) for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
 
 
 def derive_risks(verdict: dict, state: dict, review: dict) -> list[dict[str, str]]:
@@ -67,8 +67,8 @@ def generate_handoff(task_id: str, session_id: str | None = None) -> dict[str, o
     }
     out = ROOT / "outputs" / "handoff" / payload["session_id"]
     out.mkdir(parents=True, exist_ok=True)
-    (out / "handoff.json").write_text(json.dumps(payload, indent=2) + "\n")
-    (out / "handoff.md").write_text(_render_markdown(payload))
+    (out / "handoff.json").write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    (out / "handoff.md").write_text(_render_markdown(payload), encoding="utf-8")
     return payload
 
 

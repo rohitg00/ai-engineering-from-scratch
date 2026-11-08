@@ -8,7 +8,6 @@ Thank you to the sponsors and infrastructure partners supporting AI Engineering 
 |---|---|
 | [SerpApi](https://serpapi.com/ai-engineering-from-scratch) | Web Search API for your AI apps. Available in Markdown and JSON for any integration. |
 | [CodeRabbit](https://coderabbit.link/rohit-ghumare) | Curriculum maintenance and open-source development. |
-| [iii](https://iii.dev?utm_source=ai-engineering-from-scratch&utm_medium=readme&utm_campaign=sponsor) | Curriculum maintenance and open-source development. |
 
 ## Infrastructure support
 

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 350" role="img" aria-labelledby="fig-5-3d-title fig-5-3d-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-3d-title">Two prefix caches, one result</title>
+  <desc id="fig-5-3d-desc">Median time to first token against shared prompt length from 0 to 4,096 tokens for SGLang 0.5.22 with its radix cache, vLLM 0.31.0 with prefix caching, and SGLang with the cache off, serving Qwen3-8B on one NVIDIA L4 at 8 users, three seeds per point, on a log scale. The two cached lines stay between 354 and 488 ms at every length. Without the cache the median rises to 14,706 ms at 4,096 shared tokens.</desc>
+  <line x1="70" y1="286" x2="606" y2="286" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="290" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="70" y1="243.02" x2="606" y2="243.02" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="247.02" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <line x1="70" y1="210.51" x2="606" y2="210.51" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="214.51" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <line x1="70" y1="178" x2="606" y2="178" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="182" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2k</text>
+  <line x1="70" y1="135.02" x2="606" y2="135.02" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="139.02" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">5k</text>
+  <line x1="70" y1="102.51" x2="606" y2="102.51" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="106.51" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10k</text>
+  <line x1="70" y1="70" x2="606" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="74" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">20k</text>
+  <line x1="70" y1="286" x2="606" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="70" x2="70" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="286" x2="70" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="103.5" y1="286" x2="103.5" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="103.5" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">256</text>
+  <line x1="204" y1="286" x2="204" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="204" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <line x1="338" y1="286" x2="338" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="338" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2k</text>
+  <line x1="606" y1="286" x2="606" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="606" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4.1k</text>
+  <text x="338" y="320" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">shared prompt tokens</text>
+  <text x="70" y="58" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median TTFT, ms (log scale)</text>
+  <path d="M70.0 258.3 L103.5 245.5 L204.0 243.7 L338.0 244.5 L606.0 245.1 L606.0 248.3 L338.0 249.0 L204.0 246.5 L103.5 263.4 L70.0 259.6 Z" fill="var(--m-blue-ink, #2f5d9a)" fill-opacity="0.1" stroke="none"/>
+  <path d="M70.0 259.2 L103.5 245.9 L204.0 246.3 L338.0 248.9 L606.0 245.6" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="259.25" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="103.5" cy="245.92" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="204" cy="246.32" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="338" cy="248.94" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="606" cy="245.57" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <path d="M70.0 248.5 L103.5 243.9 L204.0 245.5 L338.0 243.4 L606.0 242.0 L606.0 258.1 L338.0 256.8 L204.0 254.1 L103.5 244.4 L70.0 257.1 Z" fill="var(--m-amber-ink, #85590c)" fill-opacity="0.1" stroke="none"/>
+  <path d="M70.0 252.6 L103.5 244.2 L204.0 254.0 L338.0 252.4 L606.0 256.5" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="252.57" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="103.5" cy="244.16" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="204" cy="253.97" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="338" cy="252.39" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="606" cy="256.55" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <path d="M70.0 255.8 L103.5 211.0 L204.0 173.5 L338.0 140.5 L606.0 83.1 L606.0 84.7 L338.0 142.0 L204.0 179.4 L103.5 211.4 L70.0 261.0 Z" fill="var(--m-rose-ink, #b0344d)" fill-opacity="0.1" stroke="none"/>
+  <path d="M70.0 256.0 L103.5 211.2 L204.0 173.5 L338.0 141.6 L606.0 84.4" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="70" cy="256.04" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="103.5" cy="211.21" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="173.49" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="338" cy="141.6" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="606" cy="84.42" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <path d="M70 20 H88" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="94" y="24" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">SGLang, radix cache</text>
+  <path d="M237.39999999999998 20 H255.39999999999998" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="261.4" y="24" font-size="11" fill="var(--m-amber-ink, #85590c)">vLLM, prefix caching</text>
+  <path d="M411.4 20 H429.4" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="435.4" y="24" font-size="11" fill="var(--m-rose-ink, #b0344d)">SGLang, no cache</text>
+</svg>

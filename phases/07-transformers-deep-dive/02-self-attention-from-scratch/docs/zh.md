@@ -11,7 +11,7 @@
 
 - 只用 NumPy 從零實作縮放點積自注意力，包含 query／key／value 投影與 softmax 加權和
 - 打造一層多頭注意力：切分注意力頭、平行計算注意力，再把結果串接起來
-- 追蹤注意力矩陣如何捕捉詞元之間的關係，並解釋為什麼除以 sqrt(d_k) 能避免 softmax 飽和
+- 追蹤注意力矩陣如何捕捉詞元之間的關係，並解釋為什麼除以 $\sqrt{d_k}$ 能避免 softmax 飽和
 - 施加因果遮罩，把雙向注意力轉成自迴歸（解碼器風格）的注意力
 
 ## 問題所在
@@ -109,10 +109,10 @@ attention-matrix
 
 ### 為什麼要縮放？
 
-點積會隨維度 dk 變大。如果 dk = 64，點積可能落在幾十的量級，把 softmax 推進梯度消失的區域。解法：除以 sqrt(dk)。
+點積會隨維度 $d_k$ 變大。如果 $d_k = 64$，點積可能落在幾十的量級，把 softmax 推進梯度消失的區域。解法：除以 $\sqrt{d_k}$。
 
-```
-Scaled scores = (Q @ K^T) / sqrt(dk)
+```math
+\text{Scaled scores} = \frac{Q K^T}{\sqrt{d_k}}
 ```
 
 這讓數值待在 softmax 能產出有用梯度的範圍內。
@@ -159,8 +159,8 @@ flowchart LR
 
 公式寫成一行：
 
-```
-Attention(Q, K, V) = softmax( Q @ K^T / sqrt(dk) ) @ V
+```math
+\text{Attention}(Q, K, V) = \mathop{\mathrm{softmax}}\left( \frac{Q K^T}{\sqrt{d_k}} \right) V
 ```
 
 ```figure
@@ -168,6 +168,10 @@ softmax-attention-scaling
 ```
 
 ## 動手實作
+
+```figure
+iso-machine {"machine":"self-attention"}
+```
 
 ### 步驟 1：從零寫 softmax
 
@@ -302,7 +306,7 @@ print(f"\nAttn weights (averaged over heads):")
 print(attn_weights[0].detach().numpy().round(3))
 ```
 
-關鍵差別在於：多頭注意力平行跑多個注意力函式，每個都有自己大小為 dk = d_model / n_heads 的 Q、K、V 投影，然後把結果串接起來。這讓模型能同時注意不同類型的關係。
+關鍵差別在於：多頭注意力平行跑多個注意力函式，每個都有自己大小為 $d_k = d_{\text{model}} / n_{\text{heads}}$ 的 Q、K、V 投影，然後把結果串接起來。這讓模型能同時注意不同類型的關係。
 
 ## 產出交付
 
@@ -322,7 +326,7 @@ print(attn_weights[0].detach().numpy().round(3))
 | Query（Q） | 「問題向量」 | 輸入的一個可學習投影，代表這個詞元正在尋找什麼資訊 |
 | Key（K） | 「標籤向量」 | 一個可學習投影，代表這個詞元含有什麼資訊，用來與 query 比對 |
 | Value（V） | 「內容向量」 | 一個可學習投影，攜帶真正被依注意力分數聚合起來的資訊 |
-| 縮放點積注意力 | 「那條注意力公式」 | softmax(QK^T / sqrt(dk)) @ V —— 縮放能避免高維度下的 softmax 飽和 |
+| 縮放點積注意力 | 「那條注意力公式」 | $\mathop{\mathrm{softmax}}(QK^T / \sqrt{d_k}) V$ —— 縮放能避免高維度下的 softmax 飽和 |
 | 自注意力 | 「詞元看自己也看別人」 | Q、K、V 全都來自同一個序列的注意力，讓每個位置都能注意所有其他位置 |
 | 注意力權重 | 「注意的程度」 | 位置上的機率分布，由縮放點積經 softmax 產生 |
 | 多頭注意力 | 「平行的注意力」 | 用不同投影跑多個注意力函式，再把結果串接起來，得到更豐富的表示 |

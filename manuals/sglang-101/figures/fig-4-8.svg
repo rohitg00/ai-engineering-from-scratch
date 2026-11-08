@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-4-8-title fig-4-8-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-8-title">One constrained request from arrival to sampling</title>
+  <desc id="fig-4-8-desc">A request with a json_schema arrives at the grammar manager, which looks up the key json plus schema in the grammar cache. On a hit the request goes straight to the waiting queue. On a miss, compilation runs in a thread pool and the request waits in the grammar queue until the grammar is ready on every rank. During each decode step the grammar fills a vocabulary bitmask that masks the logits before the sampler picks a token, and the grammar then accepts the token.</desc>
+  <defs><marker id="fig-4-8-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-4-8-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-4-8-head-plum" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-plum-ink, #8a3d72)"/></marker></defs>
+  <rect x="20" y="30" width="190" height="48" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="115" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">request</text>
+  <text x="115" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sampling_params.json_schema</text>
+  <rect x="240" y="30" width="170" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="325" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">grammar cache</text>
+  <text x="325" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">key (&quot;json&quot;, schema)</text>
+  <rect x="460" y="30" width="160" height="48" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="540" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">waiting queue</text>
+  <text x="540" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">can be scheduled</text>
+  <line x1="210" y1="54" x2="239" y2="54" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-8-head-ink)"/>
+  <line x1="410" y1="54" x2="459" y2="54" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-8-head-amber)"/>
+  <rect class="m-knock" x="421.15" y="37.03" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="434.5" y="48" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">hit</text>
+  <rect x="240" y="130" width="170" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="325" y="149.25" font-size="12.5" text-anchor="middle" font-weight="700">thread pool</text>
+  <text x="325" y="166.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">compiles, gives a future</text>
+  <rect x="460" y="130" width="160" height="48" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="540" y="149.25" font-size="12.5" text-anchor="middle" font-weight="700">grammar queue</text>
+  <text x="540" y="166.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ready on every rank?</text>
+  <line x1="325" y1="78" x2="325" y2="130" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-8-head-ink)"/>
+  <rect class="m-knock" x="330" y="93.03" width="33.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="333" y="104" font-size="11.5">miss</text>
+  <line x1="410" y1="154" x2="459" y2="154" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-8-head-amber)"/>
+  <line x1="540" y1="130" x2="540" y2="78" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-8-head-amber)"/>
+  <rect class="m-knock" x="545" y="93.03" width="40.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="548" y="104" font-size="11.5" fill="var(--m-amber-ink, #85590c)">ready</text>
+  <rect x="20" y="240" width="170" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="105" y="259.25" font-size="12.5" text-anchor="middle" font-weight="700">logits</text>
+  <text x="105" y="276.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one row per request</text>
+  <rect x="240" y="240" width="170" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="325" y="259.25" font-size="12.5" text-anchor="middle" font-weight="700">vocab bitmask</text>
+  <text x="325" y="276.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">invalid tokens removed</text>
+  <rect x="460" y="240" width="160" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="540" y="259.25" font-size="12.5" text-anchor="middle" font-weight="700">sampler</text>
+  <text x="540" y="276.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">picks a valid token</text>
+  <line x1="190" y1="264" x2="239" y2="264" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-4-8-head-plum)"/>
+  <line x1="410" y1="264" x2="459" y2="264" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-4-8-head-plum)"/>
+  <text x="20" y="226" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">EVERY DECODE STEP</text>
+  <text x="20" y="316" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">after sampling, the grammar accepts the token and moves its state</text>
+</svg>

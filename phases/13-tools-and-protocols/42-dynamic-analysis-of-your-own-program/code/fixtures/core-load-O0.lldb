@@ -1,0 +1,4 @@
+bt
+frame variable *a
+frame variable a->label
+memory read -s4 -fx -c8 $x0

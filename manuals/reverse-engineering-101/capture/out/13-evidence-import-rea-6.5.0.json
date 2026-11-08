@@ -1,0 +1,13 @@
+{
+  "error": "Analysis failed",
+  "code": "evidence_integrity_mismatch",
+  "category": "integrity_mismatch",
+  "message": "Evidence bundle does not match the bundle schema at records.3.evidence_id: Evidence semantic identifier does not match its record. Supply an unmodified bundle written by export_evidence_bundle or rea evidence-export.",
+  "retryable": false,
+  "remediation": {
+    "action": "Evidence bundle does not match the bundle schema at records.3.evidence_id: Evidence semantic identifier does not match its record. Supply an unmodified bundle written by export_evidence_bundle or rea evidence-export."
+  },
+  "details": {
+    "reason": "Evidence bundle validation failed"
+  }
+}

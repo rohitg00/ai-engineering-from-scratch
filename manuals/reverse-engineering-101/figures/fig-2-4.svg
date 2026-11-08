@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-2-4-title fig-2-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-4-title">Declared effects by provider in the capture</title>
+  <desc id="fig-2-4-desc">A table with five columns, ghidra with 30 operations available, hopper with 37 operations unavailable, ida with 13 operations unavailable, kuna with 13 operations unavailable, and 19 target-free operations with no provider binding, and seven rows, one per effect flag. launches_process is true for 30 of 30 ghidra operations, 37 of 37 hopper operations, no ida operation, 13 of 13 kuna operations, and 12 of 19 target-free operations. may_write_filesystem is true for 30 of 30, 6 of 37, 0, 13 of 13, and 6 of 19. may_show_ui is true for 0, 37 of 37, 4 of 13, 0, and 2 of 19. may_access_network is true for 0, 0, 13 of 13, 0, and 2 of 19. mutates_artifact is true for 3 of 30, 6 of 37, 0, 0, and 0. changes_permissions and requires_root are false everywhere.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">EFFECT FLAG</text>
+  <rect x="166" y="26" width="88" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="210" y="41.6" font-size="12" text-anchor="middle" font-weight="700">ghidra</text>
+  <text x="210" y="58.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">30 operations</text>
+  <text x="210" y="73.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">available</text>
+  <rect x="257" y="26" width="88" height="56" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="301" y="41.6" font-size="12" text-anchor="middle" font-weight="700">hopper</text>
+  <text x="301" y="58.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">37 operations</text>
+  <text x="301" y="73.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">unavailable</text>
+  <rect x="348" y="26" width="88" height="56" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="392" y="41.6" font-size="12" text-anchor="middle" font-weight="700">ida</text>
+  <text x="392" y="58.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">13 operations</text>
+  <text x="392" y="73.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">unavailable</text>
+  <rect x="439" y="26" width="88" height="56" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="483" y="41.6" font-size="12" text-anchor="middle" font-weight="700">kuna</text>
+  <text x="483" y="58.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">13 operations</text>
+  <text x="483" y="73.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">unavailable</text>
+  <rect x="530" y="26" width="88" height="56" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="574" y="41.6" font-size="12" text-anchor="middle" font-weight="700">target-free</text>
+  <text x="574" y="58.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">19 operations</text>
+  <text x="574" y="73.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no binding</text>
+  <rect x="20" y="92" width="142" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="112" font-size="11">launches_process</text>
+  <rect x="166" y="92" width="88" height="32" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="210" y="112" font-size="12" text-anchor="middle">30 of 30</text>
+  <rect x="257" y="92" width="88" height="32" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="301" y="112" font-size="12" text-anchor="middle">37 of 37</text>
+  <rect x="348" y="92" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="392" y="112" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="439" y="92" width="88" height="32" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="483" y="112" font-size="12" text-anchor="middle">13 of 13</text>
+  <rect x="530" y="92" width="88" height="32" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="574" y="112" font-size="12" text-anchor="middle">12 of 19</text>
+  <rect x="20" y="124" width="142" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="144" font-size="11">may_write_filesystem</text>
+  <rect x="166" y="124" width="88" height="32" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="210" y="144" font-size="12" text-anchor="middle">30 of 30</text>
+  <rect x="257" y="124" width="88" height="32" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="301" y="144" font-size="12" text-anchor="middle">6 of 37</text>
+  <rect x="348" y="124" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="392" y="144" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="439" y="124" width="88" height="32" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="483" y="144" font-size="12" text-anchor="middle">13 of 13</text>
+  <rect x="530" y="124" width="88" height="32" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="574" y="144" font-size="12" text-anchor="middle">6 of 19</text>
+  <rect x="20" y="156" width="142" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="176" font-size="11">may_show_ui</text>
+  <rect x="166" y="156" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="210" y="176" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="257" y="156" width="88" height="32" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="301" y="176" font-size="12" text-anchor="middle">37 of 37</text>
+  <rect x="348" y="156" width="88" height="32" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="392" y="176" font-size="12" text-anchor="middle">4 of 13</text>
+  <rect x="439" y="156" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="483" y="176" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="530" y="156" width="88" height="32" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="574" y="176" font-size="12" text-anchor="middle">2 of 19</text>
+  <rect x="20" y="188" width="142" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="208" font-size="11">may_access_network</text>
+  <rect x="166" y="188" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="210" y="208" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="257" y="188" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="301" y="208" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="348" y="188" width="88" height="32" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="392" y="208" font-size="12" text-anchor="middle">13 of 13</text>
+  <rect x="439" y="188" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="483" y="208" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="530" y="188" width="88" height="32" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="574" y="208" font-size="12" text-anchor="middle">2 of 19</text>
+  <rect x="20" y="220" width="142" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="240" font-size="11">mutates_artifact</text>
+  <rect x="166" y="220" width="88" height="32" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="210" y="240" font-size="12" text-anchor="middle">3 of 30</text>
+  <rect x="257" y="220" width="88" height="32" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="301" y="240" font-size="12" text-anchor="middle">6 of 37</text>
+  <rect x="348" y="220" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="392" y="240" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="439" y="220" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="483" y="240" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="530" y="220" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="574" y="240" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="20" y="252" width="142" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="272" font-size="11">changes_permissions</text>
+  <rect x="166" y="252" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="210" y="272" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="257" y="252" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="301" y="272" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="348" y="252" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="392" y="272" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="439" y="252" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="483" y="272" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="530" y="252" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="574" y="272" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="20" y="284" width="142" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="26" y="304" font-size="11">requires_root</text>
+  <rect x="166" y="284" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="210" y="304" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="257" y="284" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="301" y="304" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="348" y="284" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="392" y="304" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="439" y="284" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="483" y="304" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <rect x="530" y="284" width="88" height="32" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="574" y="304" font-size="12" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+</svg>

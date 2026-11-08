@@ -1,0 +1,474 @@
+groups:
+  - id: foundations
+    title: Foundations
+    summary: The math, the networks and the transformer that every later answer builds on.
+  - id: models
+    title: Models
+    summary: How a model is tuned after training, served to users, and fit into GPU memory.
+  - id: applications
+    title: Applications
+    summary: Retrieval, prompts, structured output, evaluation and models that see and hear.
+  - id: agents
+    title: Agents
+    summary: Agent loops, protocols, teams of agents, sandboxes and evidence from binaries.
+  - id: production
+    title: Production
+    summary: "Operating a model service: releases, observability, cost, capacity and safety."
+  - id: rounds
+    title: Rounds
+    summary: "Whole interview rounds: system design, incidents, coding and behavioral questions."
+cards:
+  - id: math-classical-ml
+    title: Math and classical ML
+    group: foundations
+    planned: 15
+    summary: Linear algebra, probability, optimization, and the classical models that still win on tabular data.
+    lessons:
+      - phases/01-math-foundations/02-vectors-matrices-operations
+      - phases/01-math-foundations/05-chain-rule-and-autodiff
+      - phases/01-math-foundations/06-probability-and-distributions
+      - phases/01-math-foundations/08-optimization
+      - phases/01-math-foundations/09-information-theory
+      - phases/01-math-foundations/13-numerical-stability
+      - phases/02-ml-fundamentals/02-linear-regression
+      - phases/02-ml-fundamentals/03-logistic-regression
+      - phases/02-ml-fundamentals/04-decision-trees
+      - phases/02-ml-fundamentals/09-model-evaluation
+      - phases/02-ml-fundamentals/10-bias-variance
+      - phases/02-ml-fundamentals/11-ensemble-methods
+    manuals: []
+  - id: deep-learning
+    title: Deep learning
+    group: foundations
+    planned: 15
+    summary: Backpropagation, losses, optimizers, initialization and how to debug a network that does not learn.
+    lessons:
+      - phases/03-deep-learning-core/01-the-perceptron
+      - phases/03-deep-learning-core/02-multi-layer-networks
+      - phases/03-deep-learning-core/03-backpropagation
+      - phases/03-deep-learning-core/04-activation-functions
+      - phases/03-deep-learning-core/05-loss-functions
+      - phases/03-deep-learning-core/06-optimizers
+      - phases/03-deep-learning-core/07-regularization
+      - phases/03-deep-learning-core/08-weight-initialization
+      - phases/03-deep-learning-core/09-learning-rate-schedules
+      - phases/03-deep-learning-core/10-mini-framework
+      - phases/03-deep-learning-core/13-debugging-neural-networks
+      - phases/19-capstone-projects/44-cosine-lr-warmup
+    manuals: []
+  - id: transformers
+    title: Transformers
+    group: foundations
+    planned: 15
+    summary: Attention, positions, the transformer block, the KV cache and the cost of long context.
+    lessons:
+      - phases/05-nlp-foundations-to-advanced/10-attention-mechanism
+      - phases/07-transformers-deep-dive/02-self-attention-from-scratch
+      - phases/07-transformers-deep-dive/03-multi-head-attention
+      - phases/07-transformers-deep-dive/04-positional-encoding
+      - phases/07-transformers-deep-dive/05-full-transformer
+      - phases/07-transformers-deep-dive/07-gpt-causal-language-modeling
+      - phases/07-transformers-deep-dive/12-kv-cache-flash-attention
+      - phases/07-transformers-deep-dive/13-scaling-laws
+      - phases/07-transformers-deep-dive/14-build-a-transformer-capstone
+      - phases/19-capstone-projects/32-token-positional-embeddings
+      - phases/19-capstone-projects/33-multihead-self-attention
+      - phases/19-capstone-projects/34-transformer-block
+    manuals: []
+  - id: tokenization-decoding
+    title: Tokenization, sampling and decoding
+    group: foundations
+    planned: 15
+    summary: How text becomes tokens, how a model picks the next token, and how speculation makes decoding faster.
+    lessons:
+      - phases/05-nlp-foundations-to-advanced/19-subword-tokenization
+      - phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding
+      - phases/07-transformers-deep-dive/07-gpt-causal-language-modeling
+      - phases/07-transformers-deep-dive/16-speculative-decoding
+      - phases/10-llms-from-scratch/01-tokenizers
+      - phases/10-llms-from-scratch/02-building-a-tokenizer
+      - phases/10-llms-from-scratch/15-speculative-decoding-eagle3
+      - phases/10-llms-from-scratch/18-multi-token-prediction
+      - phases/10-llms-from-scratch/25-speculative-decoding
+      - phases/17-infrastructure-and-production/05-eagle3-speculative-decoding
+      - phases/19-capstone-projects/14-speculative-decoding-server
+      - phases/19-capstone-projects/30-bpe-tokenizer-from-scratch
+      - phases/19-capstone-projects/31-tokenized-dataset-sliding-window
+    manuals: []
+  - id: post-training
+    title: Post-training
+    group: models
+    planned: 15
+    summary: Supervised tuning, preference tuning, LoRA and reinforcement learning on a trained model.
+    lessons:
+      - phases/09-reinforcement-learning/09-reward-modeling-rlhf
+      - phases/10-llms-from-scratch/06-instruction-tuning-sft
+      - phases/10-llms-from-scratch/07-rlhf
+      - phases/10-llms-from-scratch/08-dpo
+      - phases/11-llm-engineering/08-fine-tuning-lora
+      - phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal
+      - phases/18-ethics-safety-alignment/03-direct-preference-optimization-family
+      - phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif
+      - phases/19-capstone-projects/38-classifier-finetuning
+      - phases/19-capstone-projects/39-instruction-tuning-sft
+      - phases/19-capstone-projects/40-dpo-from-scratch
+    manuals:
+      - miles-101
+  - id: inference-serving
+    title: Inference and serving systems
+    group: models
+    planned: 30
+    summary: Batching, the KV cache, prefix caching, schedulers and how to measure a serving engine.
+    lessons:
+      - phases/07-transformers-deep-dive/12-kv-cache-flash-attention
+      - phases/10-llms-from-scratch/11-quantization
+      - phases/10-llms-from-scratch/12-inference-optimization
+      - phases/11-llm-engineering/15-prompt-caching
+      - phases/17-infrastructure-and-production/04-vllm-serving-internals
+      - phases/17-infrastructure-and-production/05-eagle3-speculative-decoding
+      - phases/17-infrastructure-and-production/06-sglang-radixattention
+      - phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell
+      - phases/17-infrastructure-and-production/08-inference-metrics-goodput
+      - phases/17-infrastructure-and-production/09-production-quantization
+      - phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache
+      - phases/17-infrastructure-and-production/22-load-testing-llm-apis
+    manuals:
+      - vllm-101
+      - sglang-101
+  - id: gpu-memory-quantization
+    title: GPU memory, quantization and hardware
+    group: models
+    planned: 15
+    summary: Where GPU memory goes, how quantization frees it, and how work splits across GPUs.
+    lessons:
+      - phases/10-llms-from-scratch/05-scaling-distributed
+      - phases/10-llms-from-scratch/11-quantization
+      - phases/10-llms-from-scratch/19-dualpipe-parallelism
+      - phases/10-llms-from-scratch/34-gradient-checkpointing
+      - phases/11-llm-engineering/08-fine-tuning-lora
+      - phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell
+      - phases/17-infrastructure-and-production/09-production-quantization
+      - phases/19-capstone-projects/45-gradient-clipping-amp
+      - phases/19-capstone-projects/46-gradient-accumulation
+      - phases/19-capstone-projects/47-checkpoint-save-resume
+      - phases/19-capstone-projects/80-checkpoint-sharded-resume
+      - phases/19-capstone-projects/81-end-to-end-distributed-train
+    manuals:
+      - vllm-101
+      - sglang-101
+  - id: rag
+    title: RAG
+    group: applications
+    planned: 15
+    summary: Chunking, hybrid retrieval, reranking and how to measure a retrieval pipeline.
+    lessons:
+      - phases/05-nlp-foundations-to-advanced/13-question-answering
+      - phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag
+      - phases/11-llm-engineering/06-rag
+      - phases/11-llm-engineering/07-advanced-rag
+      - phases/19-capstone-projects/02-rag-over-codebase
+      - phases/19-capstone-projects/08-production-rag-chatbot
+      - phases/19-capstone-projects/64-chunking-strategies-advanced
+      - phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense
+      - phases/19-capstone-projects/66-reranker-cross-encoder
+      - phases/19-capstone-projects/67-query-rewriting-hyde
+      - phases/19-capstone-projects/68-rag-eval-precision-recall
+      - phases/19-capstone-projects/69-end-to-end-rag-system
+    manuals: []
+  - id: prompting-structured-output
+    title: Prompting and structured output
+    group: applications
+    planned: 15
+    summary: Prompt design, context engineering, schemas, constrained decoding and function calls.
+    lessons:
+      - phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding
+      - phases/11-llm-engineering/01-prompt-engineering
+      - phases/11-llm-engineering/02-few-shot-cot
+      - phases/11-llm-engineering/03-structured-outputs
+      - phases/11-llm-engineering/05-context-engineering
+      - phases/11-llm-engineering/09-function-calling
+      - phases/11-llm-engineering/15-prompt-caching
+      - phases/13-tools-and-protocols/04-structured-output
+      - phases/14-agent-engineering/07-memory-virtual-context-memgpt
+      - phases/14-agent-engineering/08-memory-blocks-sleep-time-compute
+      - phases/14-agent-engineering/09-hybrid-memory-mem0
+      - phases/14-agent-engineering/34-repo-memory-and-state
+    manuals: []
+  - id: evaluation
+    title: Evaluation
+    group: applications
+    planned: 15
+    summary: Metrics, eval harnesses, judges, calibration and how to trust a score.
+    lessons:
+      - phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks
+      - phases/05-nlp-foundations-to-advanced/28-long-context-evaluation
+      - phases/10-llms-from-scratch/10-evaluation
+      - phases/11-llm-engineering/10-evaluation
+      - phases/19-capstone-projects/27-eval-harness-fixture-tasks
+      - phases/19-capstone-projects/41-eval-pipeline
+      - phases/19-capstone-projects/49-lm-eval-harness
+      - phases/19-capstone-projects/70-task-spec-format
+      - phases/19-capstone-projects/71-classical-metrics
+      - phases/19-capstone-projects/72-code-exec-metric
+      - phases/19-capstone-projects/73-perplexity-calibration
+      - phases/19-capstone-projects/74-leaderboard-aggregation
+    manuals:
+      - vllm-101
+      - sglang-101
+  - id: multimodal
+    title: Multimodal
+    group: applications
+    planned: 15
+    summary: How vision and language models join images and text, and how they are trained.
+    lessons:
+      - phases/04-computer-vision/25-vision-language-models
+      - phases/08-generative-ai/19-visual-autoregressive-var
+      - phases/12-multimodal-ai/03-blip2-qformer-bridge
+      - phases/12-multimodal-ai/04-flamingo-gated-cross-attention
+      - phases/12-multimodal-ai/05-llava-visual-instruction-tuning
+      - phases/12-multimodal-ai/07-open-weight-vlm-recipes
+      - phases/12-multimodal-ai/11-chameleon-early-fusion-tokens
+      - phases/12-multimodal-ai/12-emu3-next-token-for-generation
+      - phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion
+      - phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified
+      - phases/19-capstone-projects/60-projection-layer-modality-align
+      - phases/19-capstone-projects/61-cross-attention-fusion
+    manuals: []
+  - id: agents
+    title: Agents
+    group: agents
+    planned: 15
+    summary: The agent loop, tools, scope contracts, verification gates and why agents fail.
+    lessons:
+      - phases/14-agent-engineering/01-the-agent-loop
+      - phases/14-agent-engineering/31-agent-workbench-why-models-fail
+      - phases/14-agent-engineering/32-minimal-agent-workbench
+      - phases/14-agent-engineering/33-instructions-as-executable-constraints
+      - phases/14-agent-engineering/36-scope-contracts
+      - phases/14-agent-engineering/37-runtime-feedback-loops
+      - phases/14-agent-engineering/38-verification-gates
+      - phases/14-agent-engineering/40-multi-session-handoff
+      - phases/14-agent-engineering/42-agent-workbench-capstone
+      - phases/15-autonomous-systems/10-claude-code-permission-modes
+      - phases/19-capstone-projects/20-agent-harness-loop-contract
+      - phases/19-capstone-projects/21-tool-registry-schema-validation
+    manuals: []
+  - id: protocols
+    title: "Protocols: MCP, A2A and skills"
+    group: agents
+    planned: 15
+    summary: How agents call tools and other agents, and how those calls stay safe.
+    lessons:
+      - phases/13-tools-and-protocols/06-mcp-fundamentals
+      - phases/13-tools-and-protocols/07-building-an-mcp-server
+      - phases/13-tools-and-protocols/08-building-an-mcp-client
+      - phases/13-tools-and-protocols/09-mcp-transports
+      - phases/13-tools-and-protocols/10-mcp-resources-and-prompts
+      - phases/13-tools-and-protocols/12-mcp-roots-and-elicitation
+      - phases/13-tools-and-protocols/15-mcp-security-tool-poisoning
+      - phases/13-tools-and-protocols/16-mcp-security-oauth-2-1
+      - phases/13-tools-and-protocols/18-mcp-auth-production
+      - phases/13-tools-and-protocols/22-skills-and-agent-sdks
+      - phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure
+      - phases/13-tools-and-protocols/25-skill-invocation-and-routing
+      - phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust
+      - phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability
+      - phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content
+      - phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control
+      - phases/19-capstone-projects/13-mcp-server-with-registry
+    manuals:
+      - a2a-101
+  - id: multi-agent
+    title: Multi-agent systems
+    group: agents
+    planned: 15
+    summary: Supervisors, handoffs, shared memory, consensus and the failure modes of agent teams.
+    lessons:
+      - phases/16-multi-agent-and-swarms/01-why-multi-agent
+      - phases/16-multi-agent-and-swarms/04-primitive-model
+      - phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern
+      - phases/16-multi-agent-and-swarms/06-hierarchical-architecture
+      - phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection
+      - phases/16-multi-agent-and-swarms/11-handoffs-and-routines
+      - phases/16-multi-agent-and-swarms/13-shared-memory-blackboard
+      - phases/16-multi-agent-and-swarms/14-consensus-and-bft
+      - phases/16-multi-agent-and-swarms/15-voting-debate-topology
+      - phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints
+      - phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink
+      - phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks
+    manuals: []
+  - id: sandboxes
+    title: Sandboxes
+    group: agents
+    planned: 15
+    summary: Isolation for agents that run code or drive a computer, and the policy around it.
+    lessons:
+      - phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot
+      - phases/12-multimodal-ai/25-multimodal-agents-computer-use
+      - phases/14-agent-engineering/21-computer-use-agents
+      - phases/15-autonomous-systems/11-browser-agents
+      - phases/19-capstone-projects/26-sandbox-runner-denylist
+    manuals:
+      - docker-sandboxes-101
+  - id: evidence-reverse-engineering
+    title: Evidence and reverse engineering
+    group: agents
+    planned: 15
+    summary: Reading binaries, recovering intent, and stating confidence with the evidence for it.
+    lessons:
+      - phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
+      - phases/13-tools-and-protocols/33-disassembly-and-control-flow
+      - phases/13-tools-and-protocols/34-lifting-to-pseudocode
+      - phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
+      - phases/13-tools-and-protocols/36-rebuild-and-prove-equal
+      - phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
+      - phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
+      - phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
+      - phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
+      - phases/13-tools-and-protocols/41-recovering-data-and-types
+      - phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
+      - phases/13-tools-and-protocols/43-bytecode-and-managed-formats
+    manuals:
+      - reverse-engineering-101
+  - id: production-mlops
+    title: Production and MLOps
+    group: production
+    planned: 15
+    summary: Observability, progressive delivery, A/B tests, chaos tests and on-call for model services.
+    lessons:
+      - phases/11-llm-engineering/13-production-app
+      - phases/13-tools-and-protocols/20-opentelemetry-genai
+      - phases/14-agent-engineering/23-otel-genai-conventions
+      - phases/14-agent-engineering/24-agent-observability-platforms
+      - phases/17-infrastructure-and-production/13-llm-observability
+      - phases/17-infrastructure-and-production/20-shadow-canary-progressive
+      - phases/17-infrastructure-and-production/21-ab-testing-llm-features
+      - phases/17-infrastructure-and-production/23-sre-for-ai
+      - phases/17-infrastructure-and-production/24-chaos-engineering-llm
+      - phases/17-infrastructure-and-production/29-model-demo-interfaces
+      - phases/19-capstone-projects/11-llm-observability-dashboard
+      - phases/19-capstone-projects/28-observability-otel-traces
+    manuals: []
+  - id: cost-capacity
+    title: Cost and capacity
+    group: production
+    planned: 15
+    summary: Caching, routing, batch APIs, cold starts and the cost of each request.
+    lessons:
+      - phases/11-llm-engineering/11-caching-cost
+      - phases/11-llm-engineering/15-prompt-caching
+      - phases/13-tools-and-protocols/21-llm-routing-layer
+      - phases/17-infrastructure-and-production/01-managed-llm-platforms
+      - phases/17-infrastructure-and-production/02-inference-platform-economics
+      - phases/17-infrastructure-and-production/10-cold-start-mitigation
+      - phases/17-infrastructure-and-production/14-prompt-semantic-caching
+      - phases/17-infrastructure-and-production/15-batch-apis
+      - phases/17-infrastructure-and-production/16-model-routing
+      - phases/17-infrastructure-and-production/19-ai-gateways
+      - phases/17-infrastructure-and-production/27-finops-llms
+      - phases/17-infrastructure-and-production/28-self-hosted-serving-selection
+    manuals:
+      - vllm-101
+      - sglang-101
+  - id: safety
+    title: Safety
+    group: production
+    planned: 15
+    summary: Reward hacking, prompt injection, jailbreaks, refusals and safety gates.
+    lessons:
+      - phases/18-ethics-safety-alignment/02-reward-hacking-goodhart
+      - phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification
+      - phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif
+      - phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception
+      - phases/18-ethics-safety-alignment/09-alignment-faking
+      - phases/19-capstone-projects/15-constitutional-safety-harness
+      - phases/19-capstone-projects/82-jailbreak-taxonomy
+      - phases/19-capstone-projects/83-prompt-injection-detector
+      - phases/19-capstone-projects/84-refusal-evaluation
+      - phases/19-capstone-projects/85-content-classifier-integration
+      - phases/19-capstone-projects/86-constitutional-rules-engine
+      - phases/19-capstone-projects/87-end-to-end-safety-gate
+    manuals: []
+  - id: system-design
+    title: System design
+    group: rounds
+    planned: 15
+    summary: "Design a model service end to end: requirements, data, model, serving, evaluation and cost."
+    lessons:
+      - phases/02-ml-fundamentals/01-what-is-machine-learning
+      - phases/02-ml-fundamentals/19-ml-system-design
+      - phases/02-ml-fundamentals/20-model-monitoring-and-drift
+      - phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew
+      - phases/10-llms-from-scratch/13-building-complete-llm-pipeline
+      - phases/11-llm-engineering/13-production-app
+      - phases/14-agent-engineering/29-production-runtimes
+      - phases/17-infrastructure-and-production/29-model-demo-interfaces
+      - phases/19-capstone-projects/02-rag-over-codebase
+      - phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline
+      - phases/19-capstone-projects/38-classifier-finetuning
+      - phases/19-capstone-projects/39-instruction-tuning-sft
+      - phases/19-capstone-projects/40-dpo-from-scratch
+    manuals: []
+  - id: scenarios
+    title: Incidents and scenarios
+    group: rounds
+    planned: 30
+    summary: Measured incidents from our manuals. Read the evidence one listing at a time and find the cause.
+    lessons:
+      - phases/14-agent-engineering/25-multi-agent-debate
+      - phases/14-agent-engineering/26-failure-modes-agentic
+      - phases/14-agent-engineering/27-prompt-injection-defense
+      - phases/17-infrastructure-and-production/06-sglang-radixattention
+      - phases/17-infrastructure-and-production/08-inference-metrics-goodput
+      - phases/17-infrastructure-and-production/22-load-testing-llm-apis
+      - phases/17-infrastructure-and-production/23-sre-for-ai
+      - phases/17-infrastructure-and-production/24-chaos-engineering-llm
+      - phases/18-ethics-safety-alignment/15-indirect-prompt-injection
+      - phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai
+      - phases/19-capstone-projects/06-devops-troubleshooting-agent
+      - phases/19-capstone-projects/83-prompt-injection-detector
+    manuals:
+      - vllm-101
+      - sglang-101
+      - miles-101
+      - docker-sandboxes-101
+      - a2a-101
+      - reverse-engineering-101
+  - id: coding
+    title: Coding
+    group: rounds
+    planned: 15
+    summary: Write the code that the lessons build. Each item links to a practice task with checks.
+    lessons:
+      - phases/05-nlp-foundations-to-advanced/19-subword-tokenization
+      - phases/07-transformers-deep-dive/02-self-attention-from-scratch
+      - phases/07-transformers-deep-dive/03-multi-head-attention
+      - phases/10-llms-from-scratch/01-tokenizers
+      - phases/10-llms-from-scratch/02-building-a-tokenizer
+      - phases/10-llms-from-scratch/13-building-complete-llm-pipeline
+      - phases/19-capstone-projects/30-bpe-tokenizer-from-scratch
+      - phases/19-capstone-projects/31-tokenized-dataset-sliding-window
+      - phases/19-capstone-projects/35-gpt-model-assembly
+      - phases/19-capstone-projects/36-training-loop-eval
+      - phases/19-capstone-projects/37-loading-pretrained-weights
+      - phases/19-capstone-projects/44-cosine-lr-warmup
+    manuals: []
+  - id: behavioral
+    title: Behavioral
+    group: rounds
+    planned: 15
+    summary: Framing work, planning from evidence, delegation and turning feedback into a system.
+    lessons:
+      - phases/14-agent-engineering/44-plan-from-evidence
+      - phases/14-agent-engineering/45-delegate-with-isolation
+      - phases/14-agent-engineering/46-turn-feedback-into-system
+      - phases/14-agent-engineering/47-outcomes-before-output
+      - phases/14-agent-engineering/48-discover-the-real-workflow
+      - phases/14-agent-engineering/49-map-assumptions-and-risk
+      - phases/14-agent-engineering/50-choose-the-smallest-testable-slice
+      - phases/14-agent-engineering/51-write-specifications-that-preserve-judgment
+      - phases/14-agent-engineering/52-design-success-metrics
+      - phases/14-agent-engineering/53-prototype-pilot-or-production
+      - phases/14-agent-engineering/54-build-the-feedback-ratchet
+    manuals: []
+

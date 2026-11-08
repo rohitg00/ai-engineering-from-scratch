@@ -69,7 +69,7 @@ We wrap the candidate by prepending `import sys` and a guard that monkey-patches
 
 Every subprocess gets a default budget of three wall-clock seconds. The runner uses `subprocess.run(..., timeout=t)`. If the timeout fires, the runner catches `TimeoutExpired`, kills the process, and records a `timeout` exit reason for the task. The score for that task is zero. The runner moves on.
 
-The timeout is configurable per task through `task.metadata.timeout_s`. Long-running unit tests can ask for more; the validator from lesson 70 caps the value at thirty seconds to keep the suite bounded.
+The timeout is the `timeout_s` argument to `run_candidate`; the lesson 75 runner sets it once per run through `code_exec_timeout_s`. Long-running unit tests can ask for more, but `run_candidate` clamps the value to between 0.1 and thirty seconds to keep the suite bounded.
 
 ## Output cap
 
@@ -83,7 +83,7 @@ Pass-at-k is the unbiased estimator used by HumanEval and friends. Given `n` ind
 pass_at_k(n, c, k) = 1 - C(n - c, k) / C(n, k)
 ```
 
-When `n - c < k` the numerator is undefined and the value is `1`. The implementation handles the edge case directly. We expose `pass_at_k(n, c, k)` for use by the leaderboard layer in lesson 74.
+When `n - c < k`, the numerator `C(n - c, k)` is zero by the usual convention (you cannot pick `k` failures from fewer than `k`), so the value is `1`. The implementation handles the edge case directly. We expose `pass_at_k(n, c, k)` for use by the leaderboard layer in lesson 74.
 
 ```mermaid
 flowchart LR

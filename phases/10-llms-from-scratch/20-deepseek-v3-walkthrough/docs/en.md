@@ -106,18 +106,18 @@ Parse it:
 The full calculation lives in `code/main.py`. The headline:
 
 - Embedding: `vocab * hidden = 129280 * 7168 = ~0.93B`.
-- First 3 dense blocks: attention with MLA (~144M per block) + dense MLP (~260M per block) + norms. About 1.2B total.
-- 58 MoE blocks: attention with MLA (~144M) + 256 experts each (30M apiece) + 1 shared expert (30M) + norm. Total ~7.95B per block, including all experts. 461B total for the 58 MoE blocks.
-- MTP module: 14B.
+- First 3 dense blocks: attention with MLA (~84M per block in the calculator's simplified count) + dense SwiGLU MLP (`3 * 7168 * 18432 = ~396M` per block) + norms. About 1.4B total.
+- 58 MoE blocks: attention with MLA (~84M) + 256 routed experts (`3 * 7168 * 2048 = ~44M` apiece) + 1 shared expert (~44M) + router + norms. About 11.4B per block, including all experts. About 661B for the 58 MoE blocks.
+- MTP module: the published module is 14B. The calculator uses a dense stand-in of ~0.8B.
 
-Grand total: ~476B for core architecture + 14B MTP + distinctly the published 671B number accounts for additional structural parameters (bias tensors, expert-specific components, shared expert scaling, etc.). The number we reproduce in the calculator is within 3-5% of published — the delta comes from fine-grained accounting DeepSeek's report documents in its Section 2 appendix.
+Grand total: the calculator lands at ~664B against the published 671B for the main model. The Hugging Face checkpoint is 685B because it adds the 14B MTP module on top of the 671B. The remaining ~1% gap comes from simplifications: the calculator skips the decoupled RoPE dimensions in MLA, the untied output head, and a few small tensors.
 
 Active parameters per forward:
 
-- Attention: 144M per layer * 61 = 8.8B (all layers fire).
-- MLP active: first 3 layers dense (3 * 260M = 780M), 58 MoE layers each active with 8 routed + 1 shared + routing overhead. Per layer active MLP: ~260M. Total: 3 * 260M + 58 * 260M = ~15.9B.
-- Embedding + norms: 1.2B.
-- Total active: roughly 26B core + 14B MTP (trained but not always run at inference) ≈ 37B.
+- Attention: 84M per layer * 61 = ~5.1B (all layers fire).
+- MLP active: first 3 layers dense (`3 * 396M = ~1.2B`), 58 MoE layers each active with 8 routed + 1 shared expert (`9 * 44M = ~396M` per layer, ~23B total). About 24B in all.
+- Embedding + norms: ~0.9B.
+- Total active: ~30B from the calculator against the published 37B. Most of the gap is attention: full MLA, with its RoPE dimensions and wider query and key heads, is larger than the simplified count. The MTP module does not count toward the 37B.
 
 ### The 671B / 37B ratio
 
@@ -180,7 +180,7 @@ This lesson produces `outputs/skill-deepseek-v3-reader.md`. Given a DeepSeek-fam
 | num_experts_per_tok | "Top-k routing" | How many routed experts fire per token; DeepSeek-V3 uses 8 |
 | Shared experts | "Always-on experts" | Experts that process every token regardless of routing; DeepSeek-V3 uses 1 |
 | Auxiliary-loss-free routing | "Bias-adjusted load balance" | Per-expert bias terms adjusted during training to keep expert load balanced without adding a loss term |
-| MTP module | "Extra prediction head" | Transformer block predicting t+2 from h^(1) and E(t+1); denser training, free speculative-decoding draft |
+| MTP module | "Extra prediction head" | Transformer block predicting $t+2$ from $h^{(1)}$ and $E(t+1)$; denser training, free speculative-decoding draft |
 | DualPipe | "Bidirectional pipeline" | Training schedule that overlaps forward/backward compute with cross-node all-to-all |
 | Active parameter ratio | "Sparsity" | active_params / total_params; DeepSeek-V3 hits 5.5% |
 | FP8 training | "8-bit training" | Training storage and many compute ops in FP8; roughly halves memory vs BF16 at a small quality cost |

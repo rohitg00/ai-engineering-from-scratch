@@ -9,7 +9,7 @@
 
 ## The Problem
 
-Dynamic programming is elegant, but it assumes you can query `P(s' | s, a)` for every state and action. Almost nothing in the real world works that way. A robot cannot analytically compute the distribution over camera pixels after a joint torque. A pricing algorithm cannot integrate over every possible customer reaction. An LLM cannot enumerate all possible continuations after a token.
+Dynamic programming is elegant, but it assumes you can query $P(s' \mid s, a)$ for every state and action. Almost nothing in the real world works that way. A robot cannot analytically compute the distribution over camera pixels after a joint torque. A pricing algorithm cannot integrate over every possible customer reaction. An LLM cannot enumerate all possible continuations after a token.
 
 You need a method that only needs the ability to *sample* from the environment. Run the policy. Get a trajectory `s_0, a_0, r_1, s_1, a_1, r_2, …, s_T`. Use it to estimate values. That is Monte Carlo.
 
@@ -19,30 +19,32 @@ The shift from DP to MC is philosophically important: we move from *known model 
 
 ![Monte Carlo: rollout, compute returns, average; first-visit vs every-visit](../assets/monte-carlo.svg)
 
-**The core idea, in one line:** `V^π(s) = E_π[G_t | s_t = s] ≈ (1/N) Σ_i G^{(i)}(s)` where `G^{(i)}(s)` are observed returns following visits to `s` under policy `π`.
+**The core idea, in one line:** $V^\pi(s) = \mathbb E_\pi[G_t \mid s_t = s] \approx (1/N) \sum_i G^{(i)}(s)$ where $G^{(i)}(s)$ are observed returns following visits to $s$ under policy $\pi$.
 
-**First-visit vs every-visit MC.** Given an episode that visits state `s` multiple times, first-visit MC only counts the return from the first visit; every-visit MC counts all visits. Both are unbiased in the limit. First-visit is simpler to analyze (iid samples). Every-visit uses more data per episode and typically converges faster in practice.
+**First-visit vs every-visit MC.** Given an episode that visits state $s$ multiple times, first-visit MC only counts the return from the first visit; every-visit MC counts all visits. First-visit MC is unbiased. Every-visit MC can be slightly biased after a finite number of episodes, because it averages a random number of returns per episode and that number can correlate with the returns, but both converge to $V^\pi(s)$ as the visit count goes to infinity. First-visit is simpler to analyze (iid samples). Every-visit uses more data per episode and typically converges faster in practice.
 
 **Incremental mean.** Instead of storing all returns, update the running average:
 
-`V_n(s) = V_{n-1}(s) + (1/n) [G_n - V_{n-1}(s)]`
+```math
+V_n(s) = V_{n-1}(s) + (1/n) [G_n - V_{n-1}(s)]
+```
 
-Reorganize: `V_new = V_old + α · (target - V_old)` with `α = 1/n`. Swap `1/n` for a constant step-size `α ∈ (0, 1)` and you get a non-stationary MC estimator that tracks changes in `π`. That move is the entire jump from MC to TD to every modern RL algorithm.
+Reorganize: $V_{\text{new}} = V_{\text{old}} + \alpha \cdot (\text{target} - V_{\text{old}})$ with $\alpha = 1/n$. Swap $1/n$ for a constant step-size $\alpha \in (0, 1)$ and you get a non-stationary MC estimator that tracks changes in $\pi$. That move is the entire jump from MC to TD to every modern RL algorithm.
 
-**Exploration is now a problem.** DP touched every state by enumeration. MC only sees states the policy visits. If `π` is deterministic, whole regions of the state space never get sampled, and their value estimates stay at zero forever. Three fixes, in historical order:
+**Exploration is now a problem.** DP touched every state by enumeration. MC only sees states the policy visits. If $\pi$ is deterministic, whole regions of the state space never get sampled, and their value estimates stay at zero forever. Three fixes, in historical order:
 
 1. **Exploring starts.** Start each episode from a random (s, a) pair. Guarantees coverage; unrealistic in practice (you cannot "reset" a robot into an arbitrary state).
-2. **ε-greedy.** Act greedy w.r.t. current Q, but with probability `ε` pick a random action. All state-action pairs get sampled asymptotically.
-3. **Off-policy MC.** Collect data under a behavior policy `μ`, learn about target policy `π` via importance sampling. High variance, but it's the bridge to replay-buffer methods like DQN.
+2. **ε-greedy.** Act greedy w.r.t. current Q, but with probability $\epsilon$ pick a random action. All state-action pairs get sampled asymptotically.
+3. **Off-policy MC.** Collect data under a behavior policy $\mu$, learn about target policy $\pi$ via importance sampling. High variance, but it's the bridge to replay-buffer methods like DQN.
 
 **Monte Carlo Control.** Evaluate → improve → evaluate, just like policy iteration, but evaluation is sampling-based:
 
-1. Run `π`, get an episode.
-2. Update `Q(s, a)` from observed returns.
-3. Make `π` ε-greedy w.r.t. `Q`.
+1. Run $\pi$, get an episode.
+2. Update $Q(s, a)$ from observed returns.
+3. Make $\pi$ ε-greedy w.r.t. $Q$.
 4. Repeat.
 
-Converges to `Q*` and `π*` with probability 1 under mild conditions (every pair visited infinitely often, `α` satisfies Robbins-Monro).
+Converges to $Q^{\ast}$ and $\pi^{\ast}$ with probability 1 under mild conditions (every pair visited infinitely often, $\alpha$ satisfies Robbins-Monro).
 
 ```figure
 epsilon-greedy
@@ -80,7 +82,7 @@ def returns_from(trajectory, gamma):
     return list(reversed(returns))
 ```
 
-One pass, `O(T)`. The backward recurrence `G_t = r_{t+1} + γ G_{t+1}` avoids re-summing.
+One pass, $O(T)$. The backward recurrence $G_t = r_{t+1} + \gamma G_{t+1}$ avoids re-summing.
 
 ### Step 3: first-visit MC evaluation
 
@@ -130,15 +132,15 @@ def mc_control(env, episodes, gamma=0.99, epsilon=0.1):
 
 ### Step 5: compare to DP gold standard
 
-Your MC estimate of `V^π` should agree with the DP result from Lesson 02 as episodes → ∞. In practice: 50,000 episodes on 4×4 GridWorld gets you within `~0.1` of the DP answer.
+Your MC estimate of $V^\pi$ should agree with the DP result from Lesson 02 as episodes → ∞. In practice: 50,000 episodes on 4×4 GridWorld gets you within `~0.1` of the DP answer.
 
 ## Pitfalls
 
 - **Infinite episodes.** MC requires episodes to *terminate*. If your policy can loop forever, cap `max_steps` and treat the cap as implicit failure. GridWorld with a random policy routinely times out — that is normal, just make sure you count it correctly.
-- **Variance.** MC uses full returns. On long episodes, variance is huge — one unlucky reward at the end shifts `V(s_0)` by the same amount. TD methods (Lesson 04) cut this by bootstrapping.
+- **Variance.** MC uses full returns. On long episodes, variance is huge — one unlucky reward at the end shifts $V(s_0)$ by the same amount. TD methods (Lesson 04) cut this by bootstrapping.
 - **State coverage.** Greedy MC on a fresh Q with ties will only ever try one action. You *must* explore (ε-greedy, exploring starts, UCB).
-- **Non-stationary policies.** If `π` changes (as in MC control), old returns are from a different policy. Constant-α MC handles this; sample-average MC does not.
-- **Off-policy importance sampling.** The weights `π(a|s)/μ(a|s)` multiply across a trajectory. Variance explodes with horizon. Cap with per-decision weighted IS or switch to TD.
+- **Non-stationary policies.** If $\pi$ changes (as in MC control), old returns are from a different policy. Constant-α MC handles this; sample-average MC does not.
+- **Off-policy importance sampling.** The weights $\pi(a \mid s)/\mu(a \mid s)$ multiply across a trajectory. Variance explodes with horizon. Cap with per-decision weighted IS or switch to TD.
 
 ## Use It
 
@@ -150,10 +152,10 @@ The 2026 role of Monte Carlo methods:
 | Offline evaluation of a logged policy | Average discounted returns over stored trajectories. |
 | Monte Carlo Tree Search (AlphaZero) | MC rollouts from tree leaves guide selection. |
 | LLM RL evaluation | Compute average reward over sampled completions for a given policy. |
-| Baseline estimation in PPO | The advantage target `A_t = G_t - V(s_t)` uses an MC `G_t`. |
+| Baseline estimation in PPO | The advantage target $A_t = G_t - V(s_t)$ uses an MC $G_t$. |
 | Teaching RL | Simplest algorithm that actually works — strip bootstrapping to see the core. |
 
-Modern deep-RL algorithms (PPO, SAC) interpolate between pure MC (full returns) and pure TD (one-step bootstrap) via `n`-step returns or GAE. Both endpoints are instances of the same estimator.
+Modern deep-RL algorithms (PPO, SAC) interpolate between pure MC (full returns) and pure TD (one-step bootstrap) via $n$-step returns or GAE. Both endpoints are instances of the same estimator.
 
 ## Ship It
 
@@ -182,20 +184,20 @@ Refuse to run MC on non-episodic tasks without a finite horizon cap. Refuse to r
 
 ## Exercises
 
-1. **Easy.** Implement first-visit MC evaluation of the uniform-random policy on 4×4 GridWorld. Run 10,000 episodes. Plot `V(0,0)` as a function of episode count against the DP answer.
-2. **Medium.** Implement ε-greedy MC control with `ε ∈ {0.01, 0.1, 0.3}`. Compare mean return after 20,000 episodes. What does the curve look like? Where does the bias-variance tradeoff live?
-3. **Hard.** Implement *off-policy* MC with importance sampling: collect data under uniform-random policy `μ`, estimate `V^π` for the deterministic optimal policy `π`. Compare plain IS vs per-decision IS vs weighted IS. Which has lowest variance?
+1. **Easy.** Implement first-visit MC evaluation of the uniform-random policy on 4×4 GridWorld. Run 10,000 episodes. Plot $V(0,0)$ as a function of episode count against the DP answer.
+2. **Medium.** Implement ε-greedy MC control with $\epsilon \in \lbrace 0.01, 0.1, 0.3 \rbrace$. Compare mean return after 20,000 episodes. What does the curve look like? Where does the bias-variance tradeoff live?
+3. **Hard.** Implement *off-policy* MC with importance sampling: collect data under uniform-random policy $\mu$, estimate $V^\pi$ for the deterministic optimal policy $\pi$. Compare plain IS vs per-decision IS vs weighted IS. Which has lowest variance?
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
 | Monte Carlo | "Random sampling" | Estimate expectations by averaging over iid samples from the distribution. |
-| Return `G_t` | "Future reward" | Sum of discounted rewards from step `t` to episode end: `Σ_{k≥0} γ^k r_{t+k+1}`. |
+| Return $G_t$ | "Future reward" | Sum of discounted rewards from step $t$ to episode end: $\sum_{k\ge 0} \gamma^k r_{t+k+1}$. |
 | First-visit MC | "Count each state once" | Only the first visit in an episode contributes to the value estimate. |
-| Every-visit MC | "Use all visits" | Every visit contributes; slightly biased but more sample-efficient. |
-| ε-greedy | "Exploration noise" | Pick greedy action with prob `1-ε`; random action with prob `ε`. |
-| Importance sampling | "Correcting for sampling from the wrong distribution" | Reweight returns by `π(a\|s)/μ(a\|s)` products to estimate `V^π` from `μ` data. |
+| Every-visit MC | "Use all visits" | Every visit contributes; slightly biased for finite samples, consistent in the limit, and more sample-efficient. |
+| ε-greedy | "Exploration noise" | Pick greedy action with prob $1-\epsilon$; random action with prob $\epsilon$. |
+| Importance sampling | "Correcting for sampling from the wrong distribution" | Reweight returns by $\pi(a \mid s)/\mu(a \mid s)$ products to estimate $V^\pi$ from $\mu$ data. |
 | On-policy | "Learn from my own data" | Target policy = behavior policy. Vanilla MC, PPO, SARSA. |
 | Off-policy | "Learn from someone else's data" | Target policy ≠ behavior policy. Importance-sampled MC, Q-learning, DQN. |
 

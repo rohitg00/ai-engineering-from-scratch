@@ -1,0 +1,52 @@
+{
+  "title": "Log Volume Reduction Lab | initialize and grade",
+  "recordedAt": "2026-10-09T14:11:36Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "log-volume-reduction-lab",
+        "--init",
+        "./.project-validation/log-volume-reduction-lab/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/log-volume-reduction-lab/recording-starter\n  created  demo.py\n  created  fixtures/burst.log\n  created  main.py\n  created  main.rs\n  created  STAGE-2.md\n  created  STAGE-3.md\n  created  STAGE-4.md\nnext: python3 scripts/project_test.py log-volume-reduction-lab --stage 1 --path ./.project-validation/log-volume-reduction-lab/recording-starter\n",
+      "durationMs": 41
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "log-volume-reduction-lab",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/log-volume-reduction-lab/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Log Volume Reduction Lab: grading learner\n  FAIL stage 1: Parse and bound log records (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 642
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "log-volume-reduction-lab",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/log-volume-reduction-lab/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Log Volume Reduction Lab: grading solution\n  PASS stage 1: Parse and bound log records (6 tests)\n  PASS stage 2: Group repeated templates with source locators (5 tests)\n  PASS stage 3: Compare sampling policies on rare events (6 tests)\n  PASS stage 4: Export compact context and coverage (12 tests)\nreport: ./.project-validation/log-volume-reduction-lab/solution-final.json\n",
+      "durationMs": 1692
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

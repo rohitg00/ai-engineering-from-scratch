@@ -1,0 +1,53 @@
+
+ledger-arm64-O1.o:	file format mach-o arm64
+
+Sections:
+Idx Name             Size     VMA              Type
+  0 __text           000000d0 0000000000000000 TEXT
+  1 __const          00000028 00000000000000d0 DATA
+  2 __cstring        0000000a 00000000000000f8 DATA
+  3 __const          00000040 0000000000000108 DATA
+  4 __compact_unwind 00000080 0000000000000148 DATA
+
+SYMBOL TABLE:
+0000000000000000 l     F __TEXT,__text ltmp0
+0000000000000108 l     O __TEXT,__const l_switch.table.grade
+0000000000000120 l     O __TEXT,__const l_switch.table.grade_label
+00000000000000d0 l     O __DATA,__const _labels
+00000000000000d0 l     O __DATA,__const ltmp1
+00000000000000f8 l     O __TEXT,__cstring l_.str
+00000000000000fa l     O __TEXT,__cstring l_.str.1
+00000000000000fc l     O __TEXT,__cstring l_.str.2
+00000000000000fe l     O __TEXT,__cstring l_.str.3
+0000000000000100 l     O __TEXT,__cstring l_.str.4
+00000000000000f8 l     O __TEXT,__cstring ltmp2
+0000000000000108 l     O __TEXT,__const ltmp3
+0000000000000148 l     O __LD,__compact_unwind ltmp4
+0000000000000018 g     F __TEXT,__text _grade
+0000000000000088 g     F __TEXT,__text _grade_label
+0000000000000000 g     F __TEXT,__text _percent_change
+0000000000000054 g     F __TEXT,__text _total
+
+RELOCATION RECORDS FOR [__text]:
+OFFSET           TYPE                     VALUE
+00000000000000c4 ARM64_RELOC_PAGEOFF12    _labels
+00000000000000c0 ARM64_RELOC_PAGE21       _labels
+00000000000000b0 ARM64_RELOC_PAGEOFF12    l_switch.table.grade_label
+00000000000000ac ARM64_RELOC_PAGE21       l_switch.table.grade_label
+0000000000000040 ARM64_RELOC_PAGEOFF12    l_switch.table.grade
+000000000000003c ARM64_RELOC_PAGE21       l_switch.table.grade
+
+RELOCATION RECORDS FOR [__const]:
+OFFSET           TYPE                     VALUE
+0000000000000020 ARM64_RELOC_UNSIGNED     l_.str.4
+0000000000000018 ARM64_RELOC_UNSIGNED     l_.str.3
+0000000000000010 ARM64_RELOC_UNSIGNED     l_.str.2
+0000000000000008 ARM64_RELOC_UNSIGNED     l_.str.1
+0000000000000000 ARM64_RELOC_UNSIGNED     l_.str
+
+RELOCATION RECORDS FOR [__compact_unwind]:
+OFFSET           TYPE                     VALUE
+0000000000000060 ARM64_RELOC_UNSIGNED     __text
+0000000000000040 ARM64_RELOC_UNSIGNED     __text
+0000000000000020 ARM64_RELOC_UNSIGNED     __text
+0000000000000000 ARM64_RELOC_UNSIGNED     __text

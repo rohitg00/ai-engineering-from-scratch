@@ -22,7 +22,7 @@ Separately, user prompts include "My SSN is 123-45-6789." Prompt goes to OpenAI.
 
 Separately, your EKS cluster's LLM pod can reach any internet host. Someone exfils data via DNS lookup to an attacker-controlled domain. Nothing blocked it.
 
-Security for LLM services has to address all three vectors. Vault-backed credentials. PII scrubbing. Network egress filtering. Audit logs.
+Security for LLM services has to address all three vectors and prove it afterwards. Vault-backed credentials. PII scrubbing. Network egress filtering. Audit logs as the evidence trail.
 
 ## The Concept
 

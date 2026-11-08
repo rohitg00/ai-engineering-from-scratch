@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-3-2-title fig-3-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-2-title">The same Mac, two memory splits</title>
+  <desc id="fig-3-2-desc">Two bars on one scale of 0 to 50 GB. Exploratory run 2 saw 38.29 GB free and gave 33.39 GB to the KV pool with mem_fraction_static 0.872, leaving 4.90 GB, and it crashed with Insufficient Memory at concurrency 32. The kit run saw 48.49 GB free and gave 19.39 GB to the pool with 0.4, leaving 29.10 GB, and it finished 128 requests at concurrency 32.</desc>
+  <text x="20" y="28" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">EXPLORATORY RUN 2 · FRACTION 0.872 (AUTOMATIC)</text>
+  <rect x="20" y="40" width="400.68" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="30" y="67" font-size="12" font-weight="700" fill="var(--m-green-ink, #336b40)">KV pool 33.39 GB</text>
+  <rect x="420.68" y="40" width="58.8" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="20" y="104" font-size="11.5" class="m-serif" fill="var(--m-rose-ink, #b0344d)">left for activations and other programs: 4.90 GB</text>
+  <text x="20" y="124" font-size="11.5" class="m-serif" fill="var(--m-rose-ink, #b0344d)">Insufficient Memory at concurrency 32, server killed</text>
+  <text x="20" y="158" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CAPTURE KIT · --MEM-FRACTION-STATIC 0.4</text>
+  <rect x="20" y="170" width="232.68" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="30" y="197" font-size="12" font-weight="700" fill="var(--m-green-ink, #336b40)">KV pool 19.39 GB</text>
+  <rect x="252.68" y="170" width="349.2" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="262.68" y="197" font-size="11.5" class="m-serif">left for activations 29.10 GB</text>
+  <text x="20" y="234" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">128 of 128 requests finished at concurrency 32</text>
+  <line x1="20" y1="276" x2="620" y2="276" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="20" y1="272" x2="20" y2="280" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="20" y="294" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">0 GB</text>
+  <line x1="140" y1="272" x2="140" y2="280" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="140" y="294" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">10 GB</text>
+  <line x1="260" y1="272" x2="260" y2="280" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="260" y="294" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">20 GB</text>
+  <line x1="380" y1="272" x2="380" y2="280" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="380" y="294" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">30 GB</text>
+  <line x1="500" y1="272" x2="500" y2="280" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="500" y="294" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">40 GB</text>
+  <line x1="620" y1="272" x2="620" y2="280" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="620" y="294" font-size="11" text-anchor="end" fill="var(--m-ink-mute, #6f6f6a)">50 GB</text>
+</svg>

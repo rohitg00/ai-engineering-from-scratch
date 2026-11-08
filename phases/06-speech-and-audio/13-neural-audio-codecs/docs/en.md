@@ -24,7 +24,7 @@ The 2024-2026 insight: **a pure reconstruction codec gives you blurry speech whe
 
 ### The core trick: Residual Vector Quantization (RVQ)
 
-Rather than one big codebook (which would need millions of codes for good quality), all modern audio codecs use **RVQ**: a cascade of small codebooks. The first codebook quantizes the encoder output; the second quantizes the residual; etc. Each codebook is 1024 codes. 8 codebooks = effective vocabulary of 1024^8 = 10^24.
+Rather than one big codebook (which would need millions of codes for good quality), all modern audio codecs use **RVQ**: a cascade of small codebooks. The first codebook quantizes the encoder output; the second quantizes the residual; etc. Each codebook is 1024 codes. 8 codebooks = effective vocabulary of $1024^8 = 10^{24}$.
 
 At inference time, the decoder sums all chosen codes per frame to reconstruct.
 
@@ -129,8 +129,8 @@ Semantic codebook 0 is WavLM-aligned. You can train a text-to-semantic transform
 
 For a 10 s speech clip at Mimi's 12.5 Hz × 8 codebooks:
 
-```
-N_tokens = 10 * 12.5 * 8 = 1000 tokens
+```math
+N_{\text{tokens}} = 10 \times 12.5 \times 8 = 1000 \text{ tokens}
 ```
 
 1000 tokens is a trivial context for a transformer. A 256M-parameter transformer can generate 10 seconds of speech in milliseconds on a modern GPU.

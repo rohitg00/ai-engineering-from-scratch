@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 352" role="img" aria-labelledby="fig-8-2-title fig-8-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-2-title">Two deadlines and three measured first calls</title>
+  <desc id="fig-8-2-desc">One axis in seconds from 0 to 340. A grey bar from 0 to 60 s is the client default of 60,000 ms in SDK 2.3.1. A dashed grey bar from 0 to 240 s is the client setting the docs used as an example. A blue bar from 0 to 330 s is the rea startup deadline of 330,000 ms. Three numbered marks are measured first calls: 6.3 s for list_procedures on this Mac on the 33,872-byte ledger-arm64-O1, about 64 s for a binary_overview on Linux x64 under WSL2 from the docs, and about 163 s for a binary_overview on Windows x64 from the docs, where the 60 s default timed out.</desc>
+  <text x="60" y="44" font-size="11" fill="var(--m-grey-ink, #5e5e59)">client default 60,000 ms (SDK 2.3.1)</text>
+  <rect x="60" y="50" width="99" height="16" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="60" y="94" font-size="11" fill="var(--m-grey-ink, #5e5e59)">client setting the docs used as an example, 240,000 ms</text>
+  <rect x="60" y="100" width="395" height="16" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="60" y="144" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">rea startup deadline 330,000 ms, REA_GHIDRA_STARTUP_TIMEOUT_MS</text>
+  <rect x="60" y="150" width="544" height="16" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="60" y="194" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">measured first Ghidra-backed calls</text>
+  <line x1="70" y1="219" x2="70" y2="236" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <circle cx="70" cy="210" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="70" y="214" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">1</text>
+  <line x1="165" y1="219" x2="165" y2="236" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <circle cx="165" cy="210" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="165" y="214" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">2</text>
+  <line x1="328" y1="219" x2="328" y2="236" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <circle cx="328" cy="210" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="328" y="214" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">3</text>
+  <line x1="60" y1="236" x2="620" y2="236" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="232" x2="60" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0 s</text>
+  <line x1="159" y1="232" x2="159" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="159" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">60 s</text>
+  <line x1="258" y1="232" x2="258" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="258" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">120 s</text>
+  <line x1="356" y1="232" x2="356" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="356" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">180 s</text>
+  <line x1="455" y1="232" x2="455" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="455" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">240 s</text>
+  <line x1="554" y1="232" x2="554" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="554" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">300 s</text>
+  <text x="20" y="282" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">MEASURED FIRST CALLS</text>
+  <circle cx="30" cy="298" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="30" y="302" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">1</text>
+  <text x="48" y="302" font-size="11" class="m-serif">6.3 s: list_procedures on this Mac, ledger-arm64-O1, 33,872 bytes</text>
+  <circle cx="30" cy="316" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="30" y="320" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">2</text>
+  <text x="48" y="320" font-size="11" class="m-serif">about 64 s: binary_overview on Linux x64 under WSL2, from the docs</text>
+  <circle cx="30" cy="334" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="30" y="338" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">3</text>
+  <text x="48" y="338" font-size="11" class="m-serif">about 163 s: binary_overview on Windows x64, from the docs, the 60 s default timed out</text>
+</svg>

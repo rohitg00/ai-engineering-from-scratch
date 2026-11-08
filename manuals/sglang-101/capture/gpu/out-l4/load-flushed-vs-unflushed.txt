@@ -1,0 +1,26 @@
+The load sweep with and without a prefix cache flush (clean rerun)
+Date: unflushed runs 2026-10-22, flushed runs 2026-10-23
+Machine: NVIDIA L4, GPU0 of the node, clock lock 900 MHz. Model: Qwen/Qwen3-8B.
+Load: random dataset, 512 tokens in and 128 out, 4 x users requests (at least 16), 2 seeds per point.
+The old sweep kept one server per config and reused each seed's prompts at every concurrency, so later points found earlier prompts in the cache.
+Rows compare only runs at a median clock of 900 MHz.
+
+median TTFT, flushed against unflushed
+users   vLLM                                   SGLang
+4       650 / 145 ms (4.5x)                    532 to 645 / 141 ms (3.8 to 4.6x)
+8       951 to 978 / 264 to 274 ms (3.6x)      1,174 to 1,273 / 173 to 178 ms (6.6 to 7.3x)
+16      1,550 to 1,587 / 294 to 295 ms (5.3x)  1,804 to 1,944 / 218 ms (8.3 to 8.9x)
+32      1,982 to 2,084 / 2,012 to 3,091 ms     3,216 to 3,228 / 2,710 to 2,917 ms
+
+share of requests with TTFT <= 1 s and a mean ITL <= 100 ms, flushed against unflushed
+users   vLLM                  SGLang
+4       100% / 100%           100% / 100%
+8       50% / 75 to 81%       31% / 69 to 75%
+16      25% / 64 to 66%       16 to 17% / 61 to 64%
+32      0% / 6 to 9%          0% / 0%
+
+P99 ITL, flushed: vLLM 69 to 72 ms at 8 users, 522 to 523 ms at 16, 668 to 964 ms at 32.
+SGLang 72 to 73 ms at 8 users, 82 ms at 16, 105 to 106 ms at 32.
+P99 ITL, unflushed at 900 MHz in the same session: vLLM 69 ms at 8 users, 82 to 84 ms at 16, 741 to 1,422 ms at 32.
+SGLang 71 to 72 ms at 8 users, 81 to 82 ms at 16, 102 to 106 ms at 32.
+The time per token and the throughput changed by about 5 to 10 percent between the two sweeps. The cache moved the first token, not the decode.

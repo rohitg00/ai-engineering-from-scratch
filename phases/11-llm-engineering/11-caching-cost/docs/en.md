@@ -21,7 +21,7 @@ You build a RAG chatbot. It works beautifully. Users love it.
 
 Then the invoice arrives.
 
-GPT-5 costs $5 per million input tokens and $15 per million output. Claude Opus 4.7 costs $15 input / $75 output. Gemini 3 Pro costs $1.25 input / $5 output. GPT-5-mini is $0.25/$2. Prices below are illustrative; always check the provider's current pricing page.
+GPT-5 costs $1.25 per million input tokens and $10 per million output. Claude Opus 4.7 costs $5 input / $25 output. Gemini 3.1 Pro costs $2 input / $12 output (prompts up to 200K tokens). GPT-5-mini is $0.25/$2. GPT-4o, the model in the math below, is $2.50/$10. Prices are illustrative; always check the provider's current pricing page.
 
 Here is the math that kills startups:
 
@@ -863,7 +863,7 @@ Batch API gives a flat 50% discount on all tokens. Results arrive within 24 hour
 #     return None
 ```
 
-In production, replace the linear scan with a vector index (Redis Vector Search, Pinecone, or pgvector). Linear scan works for <1,000 entries. Beyond that, use ANN (approximate nearest neighbor) for O(log n) lookup.
+In production, replace the linear scan with a vector index (Redis Vector Search, Pinecone, or pgvector). Linear scan works for <1,000 entries. Beyond that, use ANN (approximate nearest neighbor) for $O(\log n)$ lookup.
 
 ## Ship It
 

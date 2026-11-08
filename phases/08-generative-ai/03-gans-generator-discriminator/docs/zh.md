@@ -15,8 +15,8 @@ Goodfellow 的想法：訓練一個分類器 `D(x)` 去分辨真實影像與假�
 
 這就是對抗訓練。數學上是一場極小極大賽局：
 
-```
-min_G max_D  E_real[log D(x)] + E_fake[log(1 - D(G(z)))]
+```math
+\min_G \max_D \; \mathbb{E}_{\text{real}}[\log D(x)] + \mathbb{E}_{\text{fake}}[\log(1 - D(G(z)))]
 ```
 
 到了 2026 年，GAN 已經不是最先進的生成器了（那頂王冠被擴散與流匹配吃掉了）。但 StyleGAN 2/3 仍是史上出貨過最銳利的人臉模型，GAN 判別器被拿來當擴散訓練裡的*感知損失*，而對抗訓練也撐起了那些快速的單步蒸餾（SDXL-Turbo、SD3-Turbo、LCM），讓你能出貨即時的擴散模型。

@@ -80,8 +80,8 @@ def predict_mft(tokens, word_best, default_tag):
 
 對序列的聯合機率建模：
 
-```
-P(tags, words) = prod P(tag_i | tag_{i-1}) * P(word_i | tag_i)
+```math
+P(\text{tags}, \text{words}) = \prod_i P(\text{tag}_i \mid \text{tag}_{i-1}) \cdot P(\text{word}_i \mid \text{tag}_i)
 ```
 
 兩張表：轉移機率（給定前一個標記時的標記）與發射機率（給定標記時的詞）。兩者都用 Laplace 平滑從計數估出來。解碼用維特比演算法（在標記格點上做動態規劃）。

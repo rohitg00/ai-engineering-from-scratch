@@ -4,7 +4,7 @@
 // by OpenAI, Anthropic, and Google: define, detect, execute, return.
 // Sources:
 //   https://platform.openai.com/docs/guides/function-calling
-//   https://docs.anthropic.com/en/docs/build-with-claude/tool-use
+//   https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
 //   https://ai.google.dev/gemini-api/docs/function-calling
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [k: string]: JsonValue };
@@ -94,7 +94,7 @@ function getWeather(args: Readonly<Record<string, JsonValue>>): JsonValue {
 const SEARCH_DB: Readonly<Record<string, ReadonlyArray<{ title: string; url: string; snippet: string }>>> = {
   "python function calling": [
     { title: "OpenAI Function Calling Guide", url: "https://platform.openai.com/docs/guides/function-calling", snippet: "Connect LLMs to external tools." },
-    { title: "Anthropic Tool Use", url: "https://docs.anthropic.com/en/docs/build-with-claude/tool-use", snippet: "Claude can interact with tools and APIs." },
+    { title: "Anthropic Tool Use", url: "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview", snippet: "Claude can interact with tools and APIs." },
   ],
   "mcp protocol": [
     { title: "Model Context Protocol", url: "https://modelcontextprotocol.io", snippet: "Open standard connecting models to data sources." },

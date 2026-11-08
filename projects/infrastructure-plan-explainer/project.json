@@ -1,0 +1,110 @@
+{
+  "id": "infrastructure-plan-explainer",
+  "title": "Infrastructure Plan Explainer",
+  "level": 2,
+  "languages": [
+    "Python"
+  ],
+  "source": "core",
+  "tagline": "Explain replacements, unknown values and dependencies before an infrastructure change.",
+  "summary": "Read a saved Terraform plan JSON for a developer reviewing a proposed change. Preserve unknown and sensitive-value markers, separate replacement from in-place updates, and trace declared dependencies. Produce a review brief whose explanations link to exact plan addresses; never apply the plan.",
+  "prerequisiteProjects": [
+    "json-schema-output-guard"
+  ],
+  "status": "ready",
+  "hours": 8,
+  "prerequisites": [
+    "Python 3.10+; lists, dictionaries and functions"
+  ],
+  "skills": [
+    "Load a versioned plan without exposing sensitive values",
+    "Classify create, update, replace and delete actions",
+    "Trace declared dependencies and unknown outcomes",
+    "Export address-linked review explanations"
+  ],
+  "youWillBuild": "Markdown change brief and JSON resource-impact graph",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "overviewFigure": "pj-infrastructure-plan-explainer-1",
+  "figures": true,
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.json",
+      "--output",
+      "demo-output"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-load",
+      "title": "Load a versioned plan without exposing sensitive values",
+      "summary": "Retain unknown and sensitive markers while dropping raw plan fields.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "starter",
+      "concepts": [
+        "Terraform JSON",
+        "recursive redaction"
+      ],
+      "figure": "pj-infrastructure-plan-explainer-1"
+    },
+    {
+      "id": "02-actions",
+      "title": "Classify create, update, replace and delete actions",
+      "summary": "Separate replacements from ordinary updates.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "action sequences",
+        "replacement order"
+      ],
+      "figure": "pj-infrastructure-plan-explainer-2"
+    },
+    {
+      "id": "03-dependencies",
+      "title": "Trace declared dependencies and unknown outcomes",
+      "summary": "Trace references to concrete plan addresses.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "graph edges",
+        "unknown outcomes"
+      ],
+      "figure": "pj-infrastructure-plan-explainer-3"
+    },
+    {
+      "id": "04-brief",
+      "title": "Export address-linked review explanations",
+      "summary": "Publish exact resource identities beside sanitized change evidence.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "Markdown receipts",
+        "stable anchors"
+      ],
+      "figure": "pj-infrastructure-plan-explainer-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

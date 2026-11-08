@@ -1,0 +1,329 @@
+WARNING: Unhandled conversion of ELF reloc 275 (R_AARCH64_ADR_PREL_PG_HI21)
+[2KWARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+WARNING: Skip adding map 'fmap..strtab' to boundaries, because it is not readable.
+WARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+WARNING: Skip adding map 'fmap..comment' to boundaries, because it is not readable.
+WARNING: Skip adding map 'fmap..symtab' to boundaries, because it is not readable.
+WARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+WARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+[afcl]
+arm64
+reg
+swift
+[afc leaf_add]
+arm64
+[afi leaf_add]
+offset: 0x08000040
+name: sym.leaf_add
+size: 8
+is-pure: true
+realsz: 8
+stackframe: 0
+call-convention: arm64
+cyclomatic-cost: 1
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 0
+args: 2
+arg int64_t arg1 @ x0
+arg int64_t arg2 @ x1
+[afvl leaf_add]
+arg int64_t arg1 @ x0
+arg int64_t arg2 @ x1
+[afc eight_args]
+arm64
+[afi eight_args]
+offset: 0x08000048
+name: sym.eight_args
+size: 32
+is-pure: true
+realsz: 32
+stackframe: 0
+call-convention: arm64
+cyclomatic-cost: 7
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 0
+args: 8
+arg int64_t arg1 @ x0
+arg int64_t arg2 @ x1
+arg int64_t arg3 @ x2
+arg int64_t arg4 @ x3
+arg int64_t arg5 @ x4
+arg int64_t arg6 @ x5
+arg int64_t arg7 @ x6
+arg int64_t arg8 @ x7
+[afvl eight_args]
+arg int64_t arg1 @ x0
+arg int64_t arg2 @ x1
+arg int64_t arg3 @ x2
+arg int64_t arg4 @ x3
+arg int64_t arg5 @ x4
+arg int64_t arg6 @ x5
+arg int64_t arg7 @ x6
+arg int64_t arg8 @ x7
+[afc mixed]
+arm64
+[afi mixed]
+offset: 0x08000068
+name: sym.mixed
+size: 28
+is-pure: true
+realsz: 28
+stackframe: 0
+call-convention: arm64
+cyclomatic-cost: 0
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 0
+args: 0
+[afvl mixed]
+[afc by_value]
+arm64
+[afi by_value]
+offset: 0x08000084
+name: sym.by_value
+size: 12
+is-pure: true
+realsz: 12
+stackframe: 0
+call-convention: arm64
+cyclomatic-cost: 2
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 0
+args: 2
+arg int64_t arg1 @ x0
+arg int64_t arg2 @ x1
+[afvl by_value]
+arg int64_t arg1 @ x0
+arg int64_t arg2 @ x1
+[afc big_ret]
+arm64
+[afi big_ret]
+offset: 0x08000090
+name: sym.big_ret
+size: 36
+is-pure: true
+realsz: 36
+stackframe: 0
+call-convention: arm64
+cyclomatic-cost: 2
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 0
+args: 1
+arg int64_t arg1 @ x0
+[afvl big_ret]
+arg int64_t arg1 @ x0
+[afc sum_varargs]
+arm64
+[afi sum_varargs]
+offset: 0x080000b4
+name: sym.sum_varargs
+size: 188
+is-pure: true
+realsz: 188
+stackframe: 224
+call-convention: arm64
+cyclomatic-cost: 11
+cyclomatic-complexity: 5
+loops: 2
+bits: 64
+type: sym
+num-bbs: 10
+edges: 13
+end-bbs: 1
+call-refs: 0x08000138 J 0x08000154 J 0x08000120 J
+data-refs:
+code-xrefs: 0x08000110 J 0x08000140 J 0x0800015c J
+noreturn: false
+in-degree: 3
+out-degree: 0
+data-xrefs:
+locals: 2
+args: 9
+arg unsigned long arg1 @ x0
+arg int64_t arg2 @ x1
+arg int64_t arg3 @ x2
+arg int64_t arg4 @ x3
+arg int64_t arg5 @ x4
+arg int64_t arg6 @ x5
+arg int64_t arg7 @ x6
+arg int64_t arg8 @ x7
+var int64_t var_58h @ stack - 0x58
+var int64_t var_8h @ stack - 0x8
+arg int64_t arg_c0h @ stack + 0xc0
+[afvl sum_varargs]
+var int64_t var_58h @ stack - 0x58
+var int64_t var_8h @ stack - 0x8
+arg int64_t arg_c0h @ stack + 0xc0
+arg unsigned long arg1 @ x0
+arg int64_t arg2 @ x1
+arg int64_t arg3 @ x2
+arg int64_t arg4 @ x3
+arg int64_t arg5 @ x4
+arg int64_t arg6 @ x5
+arg int64_t arg7 @ x6
+arg int64_t arg8 @ x7
+[afc keeps]
+arm64
+[afi keeps]
+offset: 0x08000170
+name: sym.keeps
+size: 88
+is-pure: true
+realsz: 88
+stackframe: 48
+call-convention: arm64
+cyclomatic-cost: 3
+cyclomatic-complexity: 3
+loops: 0
+bits: 64
+type: sym
+num-bbs: 6
+edges: 7
+end-bbs: 1
+call-refs: 0x08000698 C 0x080001b4 J
+data-refs:
+code-xrefs: 0x080001ac J
+noreturn: false
+in-degree: 1
+out-degree: 1
+data-xrefs:
+locals: 2
+args: 1
+arg unsigned long arg1 @ x0
+var int64_t var_20h @ stack - 0x20
+var int64_t var_10h @ stack - 0x10
+[afvl keeps]
+var int64_t var_20h @ stack - 0x20
+var int64_t var_10h @ stack - 0x10
+arg unsigned long arg1 @ x0
+[afc call8]
+arm64
+[afi call8]
+offset: 0x080001c8
+name: sym.call8
+size: 36
+is-pure: true
+realsz: 36
+stackframe: 0
+call-convention: arm64
+cyclomatic-cost: 0
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs: 0x080006a0 J
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 0
+args: 0
+[afvl call8]
+[afc call_varargs]
+arm64
+[afi call_varargs]
+offset: 0x08000200
+name: sym.call_varargs
+size: 20
+is-pure: true
+realsz: 20
+stackframe: 0
+call-convention: arm64
+cyclomatic-cost: 0
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs: 0x080006b0 J
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 0
+args: 0
+[afvl call_varargs]
+[afcr eight_args]
+name: arm64
+ret: x0
+arg0: x0
+arg1: x1
+arg2: x2
+arg3: x3
+arg4: x4
+arg5: x5
+arg6: x6
+arg7: x7

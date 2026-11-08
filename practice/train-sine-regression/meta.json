@@ -1,0 +1,40 @@
+{
+  "id": "train-sine-regression",
+  "title": "Fit a sine curve with a tanh network",
+  "kind": "train",
+  "summary": "Train a 1-16-1 tanh network on noisy samples of sin(x) until its held-out mean squared error against the true curve is below 0.01.",
+  "difficulty": "medium",
+  "tags": [
+    "regression",
+    "mlp",
+    "tanh",
+    "mse"
+  ],
+  "lesson": "phases/03-deep-learning-core/04-activation-functions",
+  "cheatsheet": "neural-net-basics",
+  "minutes": 35,
+  "entry": [
+    "train",
+    "predict"
+  ],
+  "collections": [
+    "train-tiny-models",
+    "deep-learning-core"
+  ],
+  "time_limit_s": 20,
+  "budget": {
+    "steps": 1500
+  },
+  "target": {
+    "metric": "held-out mean squared error",
+    "value": 0.01
+  },
+  "mutants": {
+    "missing_tanh_derivative": "Forgets the factor 1 - h ** 2 when it sends the gradient back through the tanh layer.",
+    "gradient_sign": "Uses t - out as the output gradient, so Adam climbs the loss instead of descending it.",
+    "zero_init": "Starts both weight matrices at zero, so no gradient reaches the first layer and the output stays flat.",
+    "global_rng": "Draws the first-layer weights from np.random and not from the rng argument, so two runs with one seed differ.",
+    "reshapes_caller_x": "Sets x.shape = (-1, 1) on the caller's array, so the input changes shape.",
+    "over_budget": "Trains for 2500 steps, more than the budget of 1500."
+  }
+}

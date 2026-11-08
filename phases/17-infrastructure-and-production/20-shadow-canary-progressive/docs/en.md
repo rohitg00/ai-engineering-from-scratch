@@ -77,11 +77,11 @@ If your stack requires redeploy to rollback, fix that before rolling.
 
 ### Metrics cadence
 
-Canary gates check every 5-15 minutes depending on traffic volume. 1% traffic with 10 req/min gives 50-150 data points per window — enough for latency but noisy for user feedback. 10% gives ~10x more. Progressions should pause long enough to accumulate enough samples at each step.
+Canary gates check every 5-15 minutes depending on traffic volume. 1% of 1,000 req/min (10 req/min to the canary) gives 50-150 data points per 5-15 minute window — enough for latency but noisy for user feedback. 10% gives ~10x more. Progressions should pause long enough to accumulate enough samples at each step.
 
 ### The A/B step is optional
 
-If the new model is distinctly different (different behavior, different cost curve, different tone), A/B test it at 50% after canary passes. If it's just an improved version, skip to 100% when canary gates pass.
+If the new model is distinctly different (different behavior, different cost curve, different tone), A/B test it at 50% after canary passes. If it's just an improved version of the same behavior, skip to 100% when canary gates pass. Improved means the offline eval showed the gain. The canary gates do not measure task completion, so the skip trusts the eval for it.
 
 ### Numbers you should remember
 

@@ -1,0 +1,39 @@
+$ docker compose -f fixtures/compose/compose.yaml config
+name: m101
+services:
+  mcp-gateway:
+    command:
+      - --transport=streaming
+      - --port=8811
+    image: docker/mcp-gateway
+    networks:
+      default: null
+    use_api_socket: true
+  printer:
+    command:
+      - sh
+      - -c
+      - |
+        env | grep -E '^LLM_' | sort
+        wget -qO- -T 5 "$${LLM_URL}models"
+        echo
+        wget -qO- -T 5 http://mcp-gateway:8811/ 2>&1 | head -c 200
+        echo
+    depends_on:
+      mcp-gateway:
+        condition: service_started
+        required: true
+    image: alpine:3.22
+    models:
+      llm:
+        endpoint_var: LLM_URL
+        model_var: LLM_MODEL
+    networks:
+      default: null
+networks:
+  default:
+    name: m101_default
+models:
+  llm:
+    model: ai/qwen3:4b
+[exit 0]

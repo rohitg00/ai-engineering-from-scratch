@@ -1,0 +1,78 @@
+
+main-x86_64.obj:	file format coff-x86-64
+
+Sections:
+Idx Name          Size     VMA              Type
+  0 .text         000000b9 0000000000000000 TEXT
+  1 .data         00000000 0000000000000000 DATA
+  2 .bss          00000000 0000000000000000 BSS
+  3 .rdata        00000030 0000000000000000 DATA
+  4 .rdata        00000004 0000000000000000 DATA
+  5 .rdata        0000000d 0000000000000000 DATA
+  6 .rdata        00000005 0000000000000000 DATA
+  7 .rdata        00000005 0000000000000000 DATA
+  8 .rdata        00000004 0000000000000000 DATA
+  9 .llvm_addrsig 00000001 0000000000000000 
+
+SYMBOL TABLE:
+[ 0](sec  1)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .text
+AUX scnlen 0xb9 nreloc 14 nlnno 0 checksum 0x94c94322 assoc 1 comdat 0
+[ 2](sec  2)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .data
+AUX scnlen 0x0 nreloc 0 nlnno 0 checksum 0x0 assoc 2 comdat 0
+[ 4](sec  3)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .bss
+AUX scnlen 0x0 nreloc 0 nlnno 0 checksum 0x0 assoc 3 comdat 0
+[ 6](sec  4)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x30 nreloc 4 nlnno 0 checksum 0xe442bde1 assoc 4 comdat 0
+[ 8](sec  5)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x4 nreloc 0 nlnno 0 checksum 0x22ddd47a assoc 5 comdat 2
+[10](sec  5)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 ??_C@_03PMGGPEJJ@?$CFd?6?$AA@
+[11](sec  6)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0xd nreloc 0 nlnno 0 checksum 0xa6814fd0 assoc 6 comdat 2
+[13](sec  6)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 ??_C@_0N@FGAKPGKN@?$CFd?5?$CFd?5?$CFd?5?$CFs?6?$AA@
+[14](sec  7)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x5 nreloc 0 nlnno 0 checksum 0x2ceec17a assoc 7 comdat 2
+[16](sec  7)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 ??_C@_04BFDDMJJI@args?$AA@
+[17](sec  8)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x5 nreloc 0 nlnno 0 checksum 0xaae4489f assoc 8 comdat 2
+[19](sec  8)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 ??_C@_04JDDJEAHN@even?$AA@
+[20](sec  9)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x4 nreloc 0 nlnno 0 checksum 0x2d0a2a0a assoc 9 comdat 2
+[22](sec  9)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 ??_C@_03PDLBAKOJ@odd?$AA@
+[23](sec 10)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .llvm_addrsig
+AUX scnlen 0x1 nreloc 0 nlnno 0 checksum 0x4c69105e assoc 10 comdat 0
+[25](sec -1)(fl 0x00)(ty   0)(scl   3) (nx 0) 0x00000000 @feat.00
+[26](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000000 main
+[27](sec  4)(fl 0x00)(ty   0)(scl   3) (nx 0) 0x00000020 names
+[28](sec  0)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 puts
+[29](sec  4)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 fns
+[30](sec  0)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 printf
+[31](sec  0)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 grade_label
+[32](sec  0)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 total
+[33](sec  0)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 grade
+[34](sec  0)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 percent_change
+[35](sec -2)(fl 0x00)(ty   0)(scl  67) (nx 1) 0x00000000 .file
+AUX main.c
+
+RELOCATION RECORDS FOR [.text]:
+OFFSET           TYPE                     VALUE
+000000000000000d IMAGE_REL_AMD64_REL32    .rdata
+0000000000000021 IMAGE_REL_AMD64_REL32    names
+000000000000002a IMAGE_REL_AMD64_REL32    puts
+0000000000000031 IMAGE_REL_AMD64_REL32    fns
+0000000000000040 IMAGE_REL_AMD64_REL32    ??_C@_03PMGGPEJJ@?$CFd?6?$AA@
+0000000000000047 IMAGE_REL_AMD64_REL32    printf
+0000000000000051 IMAGE_REL_AMD64_REL32    grade_label
+0000000000000063 IMAGE_REL_AMD64_REL32    total
+000000000000006f IMAGE_REL_AMD64_REL32    grade
+0000000000000080 IMAGE_REL_AMD64_REL32    percent_change
+000000000000008c IMAGE_REL_AMD64_REL32    ??_C@_0N@FGAKPGKN@?$CFd?5?$CFd?5?$CFd?5?$CFs?6?$AA@
+0000000000000099 IMAGE_REL_AMD64_REL32    printf
+00000000000000a5 IMAGE_REL_AMD64_REL32    ??_C@_04BFDDMJJI@args?$AA@
+00000000000000aa IMAGE_REL_AMD64_REL32    puts
+
+RELOCATION RECORDS FOR [.rdata]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   grade
+0000000000000008 IMAGE_REL_AMD64_ADDR64   grade
+0000000000000020 IMAGE_REL_AMD64_ADDR64   ??_C@_04JDDJEAHN@even?$AA@
+0000000000000028 IMAGE_REL_AMD64_ADDR64   ??_C@_03PDLBAKOJ@odd?$AA@

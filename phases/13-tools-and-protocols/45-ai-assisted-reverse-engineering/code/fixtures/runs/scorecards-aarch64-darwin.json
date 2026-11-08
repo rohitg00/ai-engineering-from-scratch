@@ -1,0 +1,960 @@
+{
+ "host": "aarch64 Darwin",
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.3.2)",
+ "target": {
+  "object": "ledger-x86_64-O1-renamed.o",
+  "sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c"
+ },
+ "truth": {
+  "object": "ledger-x86_64-O1-g.o",
+  "sha256": "7bbe0c151e24f58ff70f2057239b12c4538852805d35e1390b9b51e286be853e"
+ },
+ "scorecards": [
+  {
+   "candidate": "f1_base_64",
+   "kind": "wrong constant",
+   "function": "f1",
+   "claimed_name": "percent_change",
+   "source": "f1_base_64.c",
+   "fields": {
+    "bytes": {
+     "status": "fail",
+     "evidence": "size 16 vs 18 bytes",
+     "detail": {
+      "original_size": 16,
+      "rebuilt_size": 18,
+      "masked_ranges": [],
+      "differing_offsets": [
+       3,
+       6,
+       7,
+       8,
+       9,
+       10,
+       11,
+       12
+      ],
+      "relocations_match": true,
+      "original_table": null,
+      "rebuilt_table": null,
+      "rebuilt_function": "percent_change"
+     }
+    },
+    "grid": {
+     "status": "fail",
+     "evidence": "49 of 70 cells differ, first (1, 0) original -100 rebuilt -64",
+     "detail": {
+      "cells": 70,
+      "mismatches": 49,
+      "first": [
+       "(1, 0) original -100 rebuilt -64",
+       "(1, 5) original 400 rebuilt 256",
+       "(1, -5) original -600 rebuilt -384"
+      ],
+      "original": "fixture-source",
+      "host": "aarch64 Darwin"
+     }
+    },
+    "fuzz": {
+     "status": "fail",
+     "evidence": "198 of 256 seeded inputs diverge (72 wide, 126 narrow), first (-979787644, -51418461) original 1 rebuilt 0",
+     "detail": {
+      "inputs": 256,
+      "seed": 45,
+      "divergent": 198,
+      "wide": 72,
+      "narrow": 126,
+      "first": "(-979787644, -51418461) original 1 rebuilt 0"
+     }
+    },
+    "names": {
+     "status": "pass",
+     "evidence": "name, 2 parameter names, and every type match int percent_change(int before, int after)",
+     "detail": {
+      "truth": "int percent_change(int before, int after)",
+      "claimed": "int percent_change(int before, int after)",
+      "function_name_exact": true,
+      "function_name_cer": 0.0,
+      "parameters": [
+       {
+        "claimed": "before",
+        "actual": "before",
+        "exact": true,
+        "cer": 0.0,
+        "type_exact": true,
+        "actual_type": "int"
+       },
+       {
+        "claimed": "after",
+        "actual": "after",
+        "exact": true,
+        "cer": 0.0,
+        "type_exact": true,
+        "actual_type": "int"
+       }
+      ],
+      "arity_match": true,
+      "return_type_match": true,
+      "confidence": "inferred"
+     }
+    },
+    "citations": {
+     "status": "fail",
+     "evidence": "1 of 4 citations do not resolve: immediate 64 (0x40) is not an operand in f1, present: [100]",
+     "detail": {
+      "checked": 4,
+      "unresolved": [
+       "immediate 64 (0x40) is not an operand in f1, present: [100]"
+      ],
+      "callees_in_binary": [],
+      "immediates_in_binary": [
+       100
+      ]
+     }
+    },
+    "provenance": {
+     "status": "pass",
+     "evidence": "rep_86e8cfcf0d0f by hand-written about sha256 3561e8175748, tokens not reported, harness seconds in detail",
+     "detail": {
+      "report_id": "rep_86e8cfcf0d0f1d5caa56e2c797ab470bec276cae5f362361a27c29e8809999e8",
+      "tool": "hand-written",
+      "label": "hand-written test candidate for lesson 45, not the output of any model",
+      "declared_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "object_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "tokens_reported": null,
+      "seconds_reported": null,
+      "harness_seconds": 0.43,
+      "confidence": "inferred"
+     }
+    }
+   },
+   "verdict": "fail"
+  },
+  {
+   "candidate": "f1_mul_first",
+   "kind": "correct",
+   "function": "f1",
+   "claimed_name": "percent_change",
+   "source": "f1_mul_first.c",
+   "fields": {
+    "bytes": {
+     "status": "pass",
+     "evidence": "16 bytes equal after masking 0 relocation bytes",
+     "detail": {
+      "original_size": 16,
+      "rebuilt_size": 16,
+      "masked_ranges": [],
+      "differing_offsets": [],
+      "relocations_match": true,
+      "original_table": null,
+      "rebuilt_table": null,
+      "rebuilt_function": "percent_change"
+     }
+    },
+    "grid": {
+     "status": "pass",
+     "evidence": "all 70 cells agree on aarch64 Darwin",
+     "detail": {
+      "cells": 70,
+      "mismatches": 0,
+      "first": [],
+      "original": "fixture-source",
+      "host": "aarch64 Darwin"
+     }
+    },
+    "fuzz": {
+     "status": "pass",
+     "evidence": "0 of 256 seeded inputs diverge (seed 45)",
+     "detail": {
+      "inputs": 256,
+      "seed": 45,
+      "divergent": 0,
+      "wide": 0,
+      "narrow": 0,
+      "first": null
+     }
+    },
+    "names": {
+     "status": "pass",
+     "evidence": "name, 2 parameter names, and every type match int percent_change(int before, int after)",
+     "detail": {
+      "truth": "int percent_change(int before, int after)",
+      "claimed": "int percent_change(int before, int after)",
+      "function_name_exact": true,
+      "function_name_cer": 0.0,
+      "parameters": [
+       {
+        "claimed": "before",
+        "actual": "before",
+        "exact": true,
+        "cer": 0.0,
+        "type_exact": true,
+        "actual_type": "int"
+       },
+       {
+        "claimed": "after",
+        "actual": "after",
+        "exact": true,
+        "cer": 0.0,
+        "type_exact": true,
+        "actual_type": "int"
+       }
+      ],
+      "arity_match": true,
+      "return_type_match": true,
+      "confidence": "inferred"
+     }
+    },
+    "citations": {
+     "status": "pass",
+     "evidence": "all 6 cited addresses, callees, strings, and immediates exist in f1",
+     "detail": {
+      "checked": 6,
+      "unresolved": [],
+      "callees_in_binary": [],
+      "immediates_in_binary": [
+       100
+      ]
+     }
+    },
+    "provenance": {
+     "status": "pass",
+     "evidence": "rep_e9465b6d9ae2 by hand-written about sha256 3561e8175748, tokens not reported, harness seconds in detail",
+     "detail": {
+      "report_id": "rep_e9465b6d9ae2f066a2947af760b21d3a1870e1f66c2799352619f6ff07b99ff8",
+      "tool": "hand-written",
+      "label": "hand-written test candidate for lesson 45, not the output of any model",
+      "declared_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "object_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "tokens_reported": null,
+      "seconds_reported": null,
+      "harness_seconds": 0.33,
+      "confidence": "inferred"
+     }
+    }
+   },
+   "verdict": "pass"
+  },
+  {
+   "candidate": "f1_safe_div",
+   "kind": "invented helper",
+   "function": "f1",
+   "claimed_name": "percent_change",
+   "source": "f1_safe_div.c",
+   "fields": {
+    "bytes": {
+     "status": "pass",
+     "evidence": "16 bytes equal after masking 0 relocation bytes",
+     "detail": {
+      "original_size": 16,
+      "rebuilt_size": 16,
+      "masked_ranges": [],
+      "differing_offsets": [],
+      "relocations_match": true,
+      "original_table": null,
+      "rebuilt_table": null,
+      "rebuilt_function": "percent_change"
+     }
+    },
+    "grid": {
+     "status": "pass",
+     "evidence": "all 70 cells agree on aarch64 Darwin",
+     "detail": {
+      "cells": 70,
+      "mismatches": 0,
+      "first": [],
+      "original": "fixture-source",
+      "host": "aarch64 Darwin"
+     }
+    },
+    "fuzz": {
+     "status": "pass",
+     "evidence": "0 of 256 seeded inputs diverge (seed 45)",
+     "detail": {
+      "inputs": 256,
+      "seed": 45,
+      "divergent": 0,
+      "wide": 0,
+      "narrow": 0,
+      "first": null
+     }
+    },
+    "names": {
+     "status": "pass",
+     "evidence": "name, 2 parameter names, and every type match int percent_change(int before, int after)",
+     "detail": {
+      "truth": "int percent_change(int before, int after)",
+      "claimed": "int percent_change(int before, int after)",
+      "function_name_exact": true,
+      "function_name_cer": 0.0,
+      "parameters": [
+       {
+        "claimed": "before",
+        "actual": "before",
+        "exact": true,
+        "cer": 0.0,
+        "type_exact": true,
+        "actual_type": "int"
+       },
+       {
+        "claimed": "after",
+        "actual": "after",
+        "exact": true,
+        "cer": 0.0,
+        "type_exact": true,
+        "actual_type": "int"
+       }
+      ],
+      "arity_match": true,
+      "return_type_match": true,
+      "confidence": "inferred"
+     }
+    },
+    "citations": {
+     "status": "fail",
+     "evidence": "3 of 6 citations do not resolve: address 0x40 is outside f1 (0x0-0x10), inside f3; callee safe_div is not a symbol in the object; string 'division by zero' is not in any read-only data section",
+     "detail": {
+      "checked": 6,
+      "unresolved": [
+       "address 0x40 is outside f1 (0x0-0x10), inside f3",
+       "callee safe_div is not a symbol in the object",
+       "string 'division by zero' is not in any read-only data section"
+      ],
+      "callees_in_binary": [],
+      "immediates_in_binary": [
+       100
+      ]
+     }
+    },
+    "provenance": {
+     "status": "pass",
+     "evidence": "rep_043eae10784b by hand-written about sha256 3561e8175748, tokens not reported, harness seconds in detail",
+     "detail": {
+      "report_id": "rep_043eae10784bf2ae2531809b2c1a0e5df8c956720a10ec0e7ccb52246d37764e",
+      "tool": "hand-written",
+      "label": "hand-written test candidate for lesson 45, not the output of any model",
+      "declared_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "object_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "tokens_reported": null,
+      "seconds_reported": null,
+      "harness_seconds": 0.36,
+      "confidence": "inferred"
+     }
+    }
+   },
+   "verdict": "fail"
+  },
+  {
+   "candidate": "f1_wide_long",
+   "kind": "plausible but wrong",
+   "function": "f1",
+   "claimed_name": "percent_change",
+   "source": "f1_wide_long.c",
+   "fields": {
+    "bytes": {
+     "status": "fail",
+     "evidence": "size 16 vs 26 bytes",
+     "detail": {
+      "original_size": 16,
+      "rebuilt_size": 26,
+      "masked_ranges": [],
+      "differing_offsets": [
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9,
+       10
+      ],
+      "relocations_match": true,
+      "original_table": null,
+      "rebuilt_table": null,
+      "rebuilt_function": "percent_change"
+     }
+    },
+    "grid": {
+     "status": "fail",
+     "evidence": "26 of 70 cells differ, first (3, 2147483647) original -133 rebuilt -1431655899",
+     "detail": {
+      "cells": 70,
+      "mismatches": 26,
+      "first": [
+       "(3, 2147483647) original -133 rebuilt -1431655899",
+       "(3, -2147483648) original -100 rebuilt 1431655666",
+       "(-3, 536870911) original 715827816 rebuilt -715827949"
+      ],
+      "original": "fixture-source",
+      "host": "aarch64 Darwin"
+     }
+    },
+    "fuzz": {
+     "status": "fail",
+     "evidence": "125 of 256 seeded inputs diverge (125 wide, 0 narrow), first (-979787644, -51418461) original 1 rebuilt -94",
+     "detail": {
+      "inputs": 256,
+      "seed": 45,
+      "divergent": 125,
+      "wide": 125,
+      "narrow": 0,
+      "first": "(-979787644, -51418461) original 1 rebuilt -94"
+     }
+    },
+    "names": {
+     "status": "partial",
+     "evidence": "types agree, names differ: old_value for before (CER 1.333), new_value for after (CER 1.6)",
+     "detail": {
+      "truth": "int percent_change(int before, int after)",
+      "claimed": "int percent_change(int old_value, int new_value)",
+      "function_name_exact": true,
+      "function_name_cer": 0.0,
+      "parameters": [
+       {
+        "claimed": "old_value",
+        "actual": "before",
+        "exact": false,
+        "cer": 1.333,
+        "type_exact": true,
+        "actual_type": "int"
+       },
+       {
+        "claimed": "new_value",
+        "actual": "after",
+        "exact": false,
+        "cer": 1.6,
+        "type_exact": true,
+        "actual_type": "int"
+       }
+      ],
+      "arity_match": true,
+      "return_type_match": true,
+      "confidence": "inferred"
+     }
+    },
+    "citations": {
+     "status": "pass",
+     "evidence": "all 4 cited addresses, callees, strings, and immediates exist in f1",
+     "detail": {
+      "checked": 4,
+      "unresolved": [],
+      "callees_in_binary": [],
+      "immediates_in_binary": [
+       100
+      ]
+     }
+    },
+    "provenance": {
+     "status": "pass",
+     "evidence": "rep_101368ad24ca by hand-written about sha256 3561e8175748, tokens not reported, harness seconds in detail",
+     "detail": {
+      "report_id": "rep_101368ad24caf860c0bf501501e487992e32003a6959358975a02b9097b4687d",
+      "tool": "hand-written",
+      "label": "hand-written test candidate for lesson 45, not the output of any model",
+      "declared_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "object_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "tokens_reported": null,
+      "seconds_reported": null,
+      "harness_seconds": 0.43,
+      "confidence": "inferred"
+     }
+    }
+   },
+   "verdict": "fail"
+  },
+  {
+   "candidate": "f2_case10_wrong",
+   "kind": "wrong constant",
+   "function": "f2",
+   "claimed_name": "grade",
+   "source": "f2_case10_wrong.c",
+   "fields": {
+    "bytes": {
+     "status": "fail",
+     "evidence": "referenced constants differ: [1, 2, 3, 4, 4] vs [1, 2, 3, 4, 3]",
+     "detail": {
+      "original_size": 46,
+      "rebuilt_size": 46,
+      "masked_ranges": [
+       [
+        38,
+        4
+       ]
+      ],
+      "differing_offsets": [],
+      "relocations_match": true,
+      "original_table": [
+       1,
+       2,
+       3,
+       4,
+       4
+      ],
+      "rebuilt_table": [
+       1,
+       2,
+       3,
+       4,
+       3
+      ],
+      "rebuilt_function": "grade"
+     }
+    },
+    "grid": {
+     "status": "fail",
+     "evidence": "3 of 22 cells differ, first (100,) original 4 rebuilt 3",
+     "detail": {
+      "cells": 22,
+      "mismatches": 3,
+      "first": [
+       "(100,) original 4 rebuilt 3",
+       "(101,) original 4 rebuilt 3",
+       "(109,) original 4 rebuilt 3"
+      ],
+      "original": "fixture-source",
+      "host": "aarch64 Darwin"
+     }
+    },
+    "fuzz": {
+     "status": "fail",
+     "evidence": "2 of 256 seeded inputs diverge (0 wide, 2 narrow), first (105,) original 4 rebuilt 3",
+     "detail": {
+      "inputs": 256,
+      "seed": 45,
+      "divergent": 2,
+      "wide": 0,
+      "narrow": 2,
+      "first": "(105,) original 4 rebuilt 3"
+     }
+    },
+    "names": {
+     "status": "pass",
+     "evidence": "name, 1 parameter names, and every type match int grade(int score)",
+     "detail": {
+      "truth": "int grade(int score)",
+      "claimed": "int grade(int score)",
+      "function_name_exact": true,
+      "function_name_cer": 0.0,
+      "parameters": [
+       {
+        "claimed": "score",
+        "actual": "score",
+        "exact": true,
+        "cer": 0.0,
+        "type_exact": true,
+        "actual_type": "int"
+       }
+      ],
+      "arity_match": true,
+      "return_type_match": true,
+      "confidence": "inferred"
+     }
+    },
+    "citations": {
+     "status": "pass",
+     "evidence": "all 8 cited addresses, callees, strings, and immediates exist in f2",
+     "detail": {
+      "checked": 8,
+      "unresolved": [],
+      "callees_in_binary": [],
+      "immediates_in_binary": [
+       -6,
+       4,
+       34,
+       63,
+       1717986919
+      ]
+     }
+    },
+    "provenance": {
+     "status": "pass",
+     "evidence": "rep_805dbdaedf3d by hand-written about sha256 3561e8175748, tokens not reported, harness seconds in detail",
+     "detail": {
+      "report_id": "rep_805dbdaedf3d83988d173652bc3c3279a0b09a544384ff5de45c610429c6149c",
+      "tool": "hand-written",
+      "label": "hand-written test candidate for lesson 45, not the output of any model",
+      "declared_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "object_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "tokens_reported": null,
+      "seconds_reported": null,
+      "harness_seconds": 0.35,
+      "confidence": "inferred"
+     }
+    }
+   },
+   "verdict": "fail"
+  },
+  {
+   "candidate": "f2_clamp",
+   "kind": "invented helper",
+   "function": "f2",
+   "claimed_name": "grade",
+   "source": "f2_clamp.c",
+   "fields": {
+    "bytes": {
+     "status": "fail",
+     "evidence": "size 46 vs 50 bytes; relocation records differ in count, offset, type, or target section",
+     "detail": {
+      "original_size": 46,
+      "rebuilt_size": 50,
+      "masked_ranges": [
+       [
+        38,
+        4
+       ]
+      ],
+      "differing_offsets": [
+       0,
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7
+      ],
+      "relocations_match": false,
+      "original_table": [
+       1,
+       2,
+       3,
+       4,
+       4
+      ],
+      "rebuilt_table": [
+       1,
+       2,
+       3,
+       4,
+       4
+      ],
+      "rebuilt_function": "grade"
+     }
+    },
+    "grid": {
+     "status": "fail",
+     "evidence": "2 of 22 cells differ, first (110,) original 0 rebuilt 4",
+     "detail": {
+      "cells": 22,
+      "mismatches": 2,
+      "first": [
+       "(110,) original 0 rebuilt 4",
+       "(2147483647,) original 0 rebuilt 4"
+      ],
+      "original": "fixture-source",
+      "host": "aarch64 Darwin"
+     }
+    },
+    "fuzz": {
+     "status": "fail",
+     "evidence": "102 of 256 seeded inputs diverge (69 wide, 33 narrow), first (536602723,) original 0 rebuilt 4",
+     "detail": {
+      "inputs": 256,
+      "seed": 45,
+      "divergent": 102,
+      "wide": 69,
+      "narrow": 33,
+      "first": "(536602723,) original 0 rebuilt 4"
+     }
+    },
+    "names": {
+     "status": "pass",
+     "evidence": "name, 1 parameter names, and every type match int grade(int score)",
+     "detail": {
+      "truth": "int grade(int score)",
+      "claimed": "int grade(int score)",
+      "function_name_exact": true,
+      "function_name_cer": 0.0,
+      "parameters": [
+       {
+        "claimed": "score",
+        "actual": "score",
+        "exact": true,
+        "cer": 0.0,
+        "type_exact": true,
+        "actual_type": "int"
+       }
+      ],
+      "arity_match": true,
+      "return_type_match": true,
+      "confidence": "inferred"
+     }
+    },
+    "citations": {
+     "status": "fail",
+     "evidence": "5 of 8 citations do not resolve: address 0x40 is outside f2 (0x10-0x3e), inside f3; address 0x3e is outside f2 (0x10-0x3e), in no function; callee clamp_score is not a symbol in the object; string 'score out of range' is not in any read-only data section; immediate 100 (0x64) is not an operand in f2, present: [-6, 4, 34, 63, 1717986919]",
+     "detail": {
+      "checked": 8,
+      "unresolved": [
+       "address 0x40 is outside f2 (0x10-0x3e), inside f3",
+       "address 0x3e is outside f2 (0x10-0x3e), in no function",
+       "callee clamp_score is not a symbol in the object",
+       "string 'score out of range' is not in any read-only data section",
+       "immediate 100 (0x64) is not an operand in f2, present: [-6, 4, 34, 63, 1717986919]"
+      ],
+      "callees_in_binary": [],
+      "immediates_in_binary": [
+       -6,
+       4,
+       34,
+       63,
+       1717986919
+      ]
+     }
+    },
+    "provenance": {
+     "status": "pass",
+     "evidence": "rep_8ac62f2c3425 by hand-written about sha256 3561e8175748, tokens not reported, harness seconds in detail",
+     "detail": {
+      "report_id": "rep_8ac62f2c3425b5f0e924d9e13c7dfcfd642b8f001228a38fb6b281c78361b6a7",
+      "tool": "hand-written",
+      "label": "hand-written test candidate for lesson 45, not the output of any model",
+      "declared_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "object_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "tokens_reported": null,
+      "seconds_reported": null,
+      "harness_seconds": 0.33,
+      "confidence": "inferred"
+     }
+    }
+   },
+   "verdict": "fail"
+  },
+  {
+   "candidate": "f2_switch",
+   "kind": "correct",
+   "function": "f2",
+   "claimed_name": "grade",
+   "source": "f2_switch.c",
+   "fields": {
+    "bytes": {
+     "status": "pass",
+     "evidence": "46 bytes equal after masking 4 relocation bytes, constants [1, 2, 3, 4, 4] equal",
+     "detail": {
+      "original_size": 46,
+      "rebuilt_size": 46,
+      "masked_ranges": [
+       [
+        38,
+        4
+       ]
+      ],
+      "differing_offsets": [],
+      "relocations_match": true,
+      "original_table": [
+       1,
+       2,
+       3,
+       4,
+       4
+      ],
+      "rebuilt_table": [
+       1,
+       2,
+       3,
+       4,
+       4
+      ],
+      "rebuilt_function": "grade"
+     }
+    },
+    "grid": {
+     "status": "pass",
+     "evidence": "all 22 cells agree on aarch64 Darwin",
+     "detail": {
+      "cells": 22,
+      "mismatches": 0,
+      "first": [],
+      "original": "fixture-source",
+      "host": "aarch64 Darwin"
+     }
+    },
+    "fuzz": {
+     "status": "pass",
+     "evidence": "0 of 256 seeded inputs diverge (seed 45)",
+     "detail": {
+      "inputs": 256,
+      "seed": 45,
+      "divergent": 0,
+      "wide": 0,
+      "narrow": 0,
+      "first": null
+     }
+    },
+    "names": {
+     "status": "pass",
+     "evidence": "name, 1 parameter names, and every type match int grade(int score)",
+     "detail": {
+      "truth": "int grade(int score)",
+      "claimed": "int grade(int score)",
+      "function_name_exact": true,
+      "function_name_cer": 0.0,
+      "parameters": [
+       {
+        "claimed": "score",
+        "actual": "score",
+        "exact": true,
+        "cer": 0.0,
+        "type_exact": true,
+        "actual_type": "int"
+       }
+      ],
+      "arity_match": true,
+      "return_type_match": true,
+      "confidence": "inferred"
+     }
+    },
+    "citations": {
+     "status": "pass",
+     "evidence": "all 12 cited addresses, callees, strings, and immediates exist in f2",
+     "detail": {
+      "checked": 12,
+      "unresolved": [],
+      "callees_in_binary": [],
+      "immediates_in_binary": [
+       -6,
+       4,
+       34,
+       63,
+       1717986919
+      ]
+     }
+    },
+    "provenance": {
+     "status": "pass",
+     "evidence": "rep_f6c3100bed16 by hand-written about sha256 3561e8175748, tokens not reported, harness seconds in detail",
+     "detail": {
+      "report_id": "rep_f6c3100bed163f3759226f622f746b4556b965db3313c810ae02e0c3a5c886a4",
+      "tool": "hand-written",
+      "label": "hand-written test candidate for lesson 45, not the output of any model",
+      "declared_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "object_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "tokens_reported": null,
+      "seconds_reported": null,
+      "harness_seconds": 0.42,
+      "confidence": "inferred"
+     }
+    }
+   },
+   "verdict": "pass"
+  },
+  {
+   "candidate": "f2_thresholds",
+   "kind": "plausible but wrong",
+   "function": "f2",
+   "claimed_name": "grade_points",
+   "source": "f2_thresholds.c",
+   "fields": {
+    "bytes": {
+     "status": "fail",
+     "evidence": "size 46 vs 39 bytes; relocation records differ in count, offset, type, or target section",
+     "detail": {
+      "original_size": 46,
+      "rebuilt_size": 39,
+      "masked_ranges": [
+       [
+        38,
+        4
+       ]
+      ],
+      "differing_offsets": [
+       0,
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7
+      ],
+      "relocations_match": false,
+      "original_table": null,
+      "rebuilt_table": null,
+      "rebuilt_function": "grade_points"
+     }
+    },
+    "grid": {
+     "status": "fail",
+     "evidence": "2 of 22 cells differ, first (110,) original 0 rebuilt 4",
+     "detail": {
+      "cells": 22,
+      "mismatches": 2,
+      "first": [
+       "(110,) original 0 rebuilt 4",
+       "(2147483647,) original 0 rebuilt 4"
+      ],
+      "original": "fixture-source",
+      "host": "aarch64 Darwin"
+     }
+    },
+    "fuzz": {
+     "status": "fail",
+     "evidence": "102 of 256 seeded inputs diverge (69 wide, 33 narrow), first (536602723,) original 0 rebuilt 4",
+     "detail": {
+      "inputs": 256,
+      "seed": 45,
+      "divergent": 102,
+      "wide": 69,
+      "narrow": 33,
+      "first": "(536602723,) original 0 rebuilt 4"
+     }
+    },
+    "names": {
+     "status": "partial",
+     "evidence": "types agree, names differ: grade_points for grade (CER 1.4)",
+     "detail": {
+      "truth": "int grade(int score)",
+      "claimed": "int grade_points(int score)",
+      "function_name_exact": false,
+      "function_name_cer": 1.4,
+      "parameters": [
+       {
+        "claimed": "score",
+        "actual": "score",
+        "exact": true,
+        "cer": 0.0,
+        "type_exact": true,
+        "actual_type": "int"
+       }
+      ],
+      "arity_match": true,
+      "return_type_match": true,
+      "confidence": "inferred"
+     }
+    },
+    "citations": {
+     "status": "pass",
+     "evidence": "all 5 cited addresses, callees, strings, and immediates exist in f2",
+     "detail": {
+      "checked": 5,
+      "unresolved": [],
+      "callees_in_binary": [],
+      "immediates_in_binary": [
+       -6,
+       4,
+       34,
+       63,
+       1717986919
+      ]
+     }
+    },
+    "provenance": {
+     "status": "pass",
+     "evidence": "rep_32cfaa985695 by hand-written about sha256 3561e8175748, tokens not reported, harness seconds in detail",
+     "detail": {
+      "report_id": "rep_32cfaa985695caed80e81090e23a291ce6ccc4f9e870b291f23ca1af641f9088",
+      "tool": "hand-written",
+      "label": "hand-written test candidate for lesson 45, not the output of any model",
+      "declared_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "object_sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+      "tokens_reported": null,
+      "seconds_reported": null,
+      "harness_seconds": 0.34,
+      "confidence": "inferred"
+     }
+    }
+   },
+   "verdict": "fail"
+  }
+ ]
+}

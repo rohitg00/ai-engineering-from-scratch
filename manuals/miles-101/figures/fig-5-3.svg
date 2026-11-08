@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-5-3-title fig-5-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-3-title">A heat pause adds time that is not the work</title>
+  <desc id="fig-5-3-desc">Rollout seconds per step for one 12-step run. 6 steps overlapped a heat-guard pause of about 45 s and took about 100 s. The 6 clean steps had a median of 59.1 s, and all 12 steps had a median of 83.9 s.</desc>
+  <line x1="60" y1="256" x2="620" y2="256" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="260" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="60" y1="189.33" x2="620" y2="189.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="193.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">40</text>
+  <line x1="60" y1="122.67" x2="620" y2="122.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="126.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">80</text>
+  <line x1="60" y1="56" x2="620" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="60" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">120</text>
+  <line x1="60" y1="256" x2="620" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="56" x2="60" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rollout seconds</text>
+  <rect x="68.33" y="141.66" width="30" height="114.34" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="83.33" y="135.66" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">69</text>
+  <text x="83.33" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <rect x="115" y="161.49" width="30" height="94.51" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="130" y="155.49" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">57</text>
+  <text x="130" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <rect x="161.67" y="74.86" width="30" height="181.14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="176.67" y="68.86" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">109</text>
+  <text x="176.67" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <rect x="208.33" y="145.28" width="30" height="110.72" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="223.33" y="139.28" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">66</text>
+  <text x="223.33" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <rect x="255" y="163.01" width="30" height="92.99" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="270" y="157.01" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">56</text>
+  <text x="270" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <rect x="301.67" y="82.27" width="30" height="173.73" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="316.67" y="76.27" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">104</text>
+  <text x="316.67" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">5</text>
+  <rect x="348.33" y="80.89" width="30" height="175.11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="363.33" y="74.89" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">105</text>
+  <text x="363.33" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <rect x="395" y="153.35" width="30" height="102.65" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="410" y="147.35" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">62</text>
+  <text x="410" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">7</text>
+  <rect x="441.67" y="83.04" width="30" height="172.96" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="456.67" y="77.04" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">104</text>
+  <text x="456.67" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <rect x="488.33" y="89.58" width="30" height="166.42" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="503.33" y="83.58" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">100</text>
+  <text x="503.33" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">9</text>
+  <rect x="535" y="162.14" width="30" height="93.86" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="550" y="156.14" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">56</text>
+  <text x="550" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <rect x="581.67" y="90.7" width="30" height="165.3" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="596.67" y="84.7" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">99</text>
+  <text x="596.67" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">11</text>
+  <text x="340" y="290" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">step</text>
+  <path d="M60 18 H78" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="84" y="22" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">clean step</text>
+  <path d="M168 18 H186" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="192" y="22" font-size="11" fill="var(--m-rose-ink, #b0344d)">overlapped a pause</text>
+  <text x="60" y="322" font-size="12" class="m-serif">Median of all steps 83.9 s. Median of clean steps 59.1 s.</text>
+</svg>

@@ -1,0 +1,3 @@
+$ sbx policy init balanced
+Global network policy initialized to "balanced".
+[exit 0]

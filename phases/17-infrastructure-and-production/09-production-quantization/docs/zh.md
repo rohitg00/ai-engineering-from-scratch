@@ -104,6 +104,8 @@ gpu-memory-breakdown
 
 `code/main.py` 針對一系列模型大小，算出六種格式各自的記憶體佔用（權重 + KV + 活化值）與相對吞吐量。它會顯示 KV 快取在哪裡主導、權重壓縮在哪裡划算，以及 FP8 在哪裡是安全的選擇。
 
+[Inside an LLM Serving GPU](https://aiengineeringfromscratch.com/inside-an-llm-serving-gpu?dtype=fp8&users=64) 這台機器展示了 NVIDIA L4 上的 FP8。權重從 15.28 GB 降到 8.81 GB，KV 池從 24,094 個詞元擴大到 142,369 個詞元，而 64 位使用者時實測的輸出從每秒 250.85 個詞元提升到 735.91 個詞元。
+
 ## 產出交付
 
 這一課產出 `outputs/skill-quantization-picker.md`。給定硬體、模型大小、工作負載型別與品質容忍度，挑出一種格式並產出一份校準／驗證計畫。

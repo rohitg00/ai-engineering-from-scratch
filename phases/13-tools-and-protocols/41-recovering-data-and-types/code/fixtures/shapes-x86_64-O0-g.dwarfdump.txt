@@ -1,0 +1,522 @@
+shapes-x86_64-O0-g.o:	file format elf64-x86-64
+
+.debug_info contents:
+0x00000000: Compile Unit: length = 0x000002e4, format = DWARF32, version = 0x0005, unit_type = DW_UT_compile, abbr_offset = 0x0000, addr_size = 0x08 (next unit at 0x000002e8)
+
+0x0000000c: DW_TAG_compile_unit
+              DW_AT_producer	("Apple clang version 17.0.0 (clang-1700.6.3.2)")
+              DW_AT_language	(DW_LANG_C_plus_plus_14)
+              DW_AT_name	("shapes.cpp")
+              DW_AT_str_offsets_base	(0x00000008)
+              DW_AT_stmt_list	(0x00000000)
+              DW_AT_comp_dir	(".")
+              DW_AT_low_pc	(0x0000000000000000)
+              DW_AT_ranges	(indexed (0x0) rangelist = 0x00000010
+                 [0x0000000000000000, 0x00000000000000c6)
+                 [0x0000000000000000, 0x0000000000000043)
+                 [0x0000000000000000, 0x0000000000000011)
+                 [0x0000000000000000, 0x000000000000001b)
+                 [0x0000000000000000, 0x000000000000001c)
+                 [0x0000000000000000, 0x0000000000000028)
+                 [0x0000000000000000, 0x0000000000000015)
+                 [0x0000000000000000, 0x000000000000000a)
+                 [0x0000000000000000, 0x000000000000000a)
+                 [0x0000000000000000, 0x0000000000000011))
+              DW_AT_addr_base	(0x00000008)
+              DW_AT_rnglists_base	(0x0000000c)
+
+0x0000002b:   DW_TAG_variable
+                DW_AT_type	(0x00000035 "const char[7]")
+                DW_AT_decl_file	("./shapes.cpp")
+                DW_AT_decl_line	(22)
+                DW_AT_location	(DW_OP_addrx 0x0)
+
+0x00000035:   DW_TAG_array_type
+                DW_AT_type	(0x00000041 "const char")
+
+0x0000003a:     DW_TAG_subrange_type
+                  DW_AT_type	(0x0000004a "__ARRAY_SIZE_TYPE__")
+                  DW_AT_count	(0x07)
+
+0x00000040:     NULL
+
+0x00000041:   DW_TAG_const_type
+                DW_AT_type	(0x00000046 "char")
+
+0x00000046:   DW_TAG_base_type
+                DW_AT_name	("char")
+                DW_AT_encoding	(DW_ATE_signed_char)
+                DW_AT_byte_size	(0x01)
+
+0x0000004a:   DW_TAG_base_type
+                DW_AT_name	("__ARRAY_SIZE_TYPE__")
+                DW_AT_byte_size	(0x08)
+                DW_AT_encoding	(DW_ATE_unsigned)
+
+0x0000004e:   DW_TAG_variable
+                DW_AT_type	(0x00000058 "const char[6]")
+                DW_AT_decl_file	("./shapes.cpp")
+                DW_AT_decl_line	(6)
+                DW_AT_location	(DW_OP_addrx 0x1)
+
+0x00000058:   DW_TAG_array_type
+                DW_AT_type	(0x00000041 "const char")
+
+0x0000005d:     DW_TAG_subrange_type
+                  DW_AT_type	(0x0000004a "__ARRAY_SIZE_TYPE__")
+                  DW_AT_count	(0x06)
+
+0x00000063:     NULL
+
+0x00000064:   DW_TAG_variable
+                DW_AT_type	(0x0000006e "const char[5]")
+                DW_AT_decl_file	("./shapes.cpp")
+                DW_AT_decl_line	(13)
+                DW_AT_location	(DW_OP_addrx 0x2)
+
+0x0000006e:   DW_TAG_array_type
+                DW_AT_type	(0x00000041 "const char")
+
+0x00000073:     DW_TAG_subrange_type
+                  DW_AT_type	(0x0000004a "__ARRAY_SIZE_TYPE__")
+                  DW_AT_count	(0x05)
+
+0x00000079:     NULL
+
+0x0000007a:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000000)
+                DW_AT_high_pc	(0x0000000000000023)
+                DW_AT_frame_base	(DW_OP_reg6 RBP)
+                DW_AT_linkage_name	("_Z8describeRK5Shapei")
+                DW_AT_name	("describe")
+                DW_AT_decl_file	("./shapes.cpp")
+                DW_AT_decl_line	(16)
+                DW_AT_type	(0x0000019b "int")
+                DW_AT_external	(true)
+
+0x0000008a:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_fbreg -8)
+                  DW_AT_name	("s")
+                  DW_AT_decl_file	("./shapes.cpp")
+                  DW_AT_decl_line	(16)
+                  DW_AT_type	(0x000002ce "const Shape &")
+
+0x00000095:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_fbreg -12)
+                  DW_AT_name	("scale")
+                  DW_AT_decl_file	("./shapes.cpp")
+                  DW_AT_decl_line	(16)
+                  DW_AT_type	(0x0000019b "int")
+
+0x000000a0:     NULL
+
+0x000000a1:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000030)
+                DW_AT_high_pc	(0x00000000000000c6)
+                DW_AT_frame_base	(DW_OP_reg6 RBP)
+                DW_AT_name	("main")
+                DW_AT_decl_file	("./shapes.cpp")
+                DW_AT_decl_line	(20)
+                DW_AT_type	(0x0000019b "int")
+                DW_AT_external	(true)
+
+0x000000b0:     DW_TAG_variable
+                  DW_AT_location	(DW_OP_fbreg -24)
+                  DW_AT_name	("r")
+                  DW_AT_decl_file	("./shapes.cpp")
+                  DW_AT_decl_line	(21)
+                  DW_AT_type	(0x000000bc "Rect")
+
+0x000000bb:     NULL
+
+0x000000bc:   DW_TAG_structure_type
+                DW_AT_containing_type	(0x00000131 "Shape")
+                DW_AT_calling_convention	(DW_CC_pass_by_reference)
+                DW_AT_name	("Rect")
+                DW_AT_byte_size	(0x10)
+                DW_AT_decl_file	("./shapes.cpp")
+                DW_AT_decl_line	(9)
+
+0x000000c6:     DW_TAG_inheritance
+                  DW_AT_type	(0x00000131 "Shape")
+                  DW_AT_data_member_location	(0x00)
+
+0x000000cc:     DW_TAG_member
+                  DW_AT_name	("w")
+                  DW_AT_type	(0x0000019b "int")
+                  DW_AT_decl_file	("./shapes.cpp")
+                  DW_AT_decl_line	(10)
+                  DW_AT_data_member_location	(0x08)
+
+0x000000d5:     DW_TAG_member
+                  DW_AT_name	("h")
+                  DW_AT_type	(0x0000019b "int")
+                  DW_AT_decl_file	("./shapes.cpp")
+                  DW_AT_decl_line	(10)
+                  DW_AT_data_member_location	(0x0c)
+
+0x000000de:     DW_TAG_subprogram
+                  DW_AT_name	("Rect")
+                  DW_AT_decl_file	("./shapes.cpp")
+                  DW_AT_decl_line	(11)
+                  DW_AT_declaration	(true)
+                  DW_AT_external	(true)
+
+0x000000e2:       DW_TAG_formal_parameter
+                    DW_AT_type	(0x000001b3 "Rect *")
+                    DW_AT_artificial	(true)
+
+0x000000e7:       DW_TAG_formal_parameter
+                    DW_AT_type	(0x0000019b "int")
+
+0x000000ec:       DW_TAG_formal_parameter
+                    DW_AT_type	(0x0000019b "int")
+
+0x000000f1:       NULL
+
+0x000000f2:     DW_TAG_subprogram
+                  DW_AT_linkage_name	("_ZNK4Rect4areaEv")
+                  DW_AT_name	("area")
+                  DW_AT_decl_file	("./shapes.cpp")
+                  DW_AT_decl_line	(12)
+                  DW_AT_type	(0x0000019b "int")
+                  DW_AT_virtuality	(DW_VIRTUALITY_virtual)
+                  DW_AT_vtable_elem_location	(DW_OP_constu 0x2)
+                  DW_AT_declaration	(true)
+                  DW_AT_external	(true)
+                  DW_AT_containing_type	(0x000000bc "Rect")
+
+0x00000103:       DW_TAG_formal_parameter
+                    DW_AT_type	(0x000001b8 "const Rect *")
+                    DW_AT_artificial	(true)
+
+0x00000108:       NULL
+
+0x00000109:     DW_TAG_subprogram
+                  DW_AT_linkage_name	("_ZNK4Rect4nameEv")
+                  DW_AT_name	("name")
+                  DW_AT_decl_file	("./shapes.cpp")
+                  DW_AT_decl_line	(13)
+                  DW_AT_type	(0x000001ae "const char *")
+                  DW_AT_virtuality	(DW_VIRTUALITY_virtual)
+                  DW_AT_vtable_elem_location	(DW_OP_constu 0x3)
+                  DW_AT_declaration	(true)
+                  DW_AT_external	(true)
+                  DW_AT_containing_type	(0x000000bc "Rect")
+
+0x0000011a:       DW_TAG_formal_parameter
+                    DW_AT_type	(0x000001b8 "const Rect *")
+                    DW_AT_artificial	(true)
+
+0x0000011f:       NULL
+
+0x00000120:     DW_TAG_subprogram
+                  DW_AT_name	("~Rect")
+                  DW_AT_virtuality	(DW_VIRTUALITY_virtual)
+                  DW_AT_vtable_elem_location	(DW_OP_constu 0x0)
+                  DW_AT_declaration	(true)
+                  DW_AT_artificial	(true)
+                  DW_AT_external	(true)
+                  DW_AT_containing_type	(0x000000bc "Rect")
+
+0x0000012a:       DW_TAG_formal_parameter
+                    DW_AT_type	(0x000001b3 "Rect *")
+                    DW_AT_artificial	(true)
+
+0x0000012f:       NULL
+
+0x00000130:     NULL
+
+0x00000131:   DW_TAG_structure_type
+                DW_AT_containing_type	(0x00000131 "Shape")
+                DW_AT_calling_convention	(DW_CC_pass_by_reference)
+                DW_AT_name	("Shape")
+                DW_AT_byte_size	(0x08)
+                DW_AT_decl_file	("./shapes.cpp")
+                DW_AT_decl_line	(3)
+
+0x0000013b:     DW_TAG_member
+                  DW_AT_name	("_vptr$Shape")
+                  DW_AT_type	(0x0000018b "int (**)()")
+                  DW_AT_data_member_location	(0x00)
+                  DW_AT_artificial	(true)
+
+0x00000142:     DW_TAG_subprogram
+                  DW_AT_name	("~Shape")
+                  DW_AT_decl_file	("./shapes.cpp")
+                  DW_AT_decl_line	(4)
+                  DW_AT_virtuality	(DW_VIRTUALITY_virtual)
+                  DW_AT_vtable_elem_location	(DW_OP_constu 0x0)
+                  DW_AT_declaration	(true)
+                  DW_AT_external	(true)
+                  DW_AT_containing_type	(0x00000131 "Shape")
+
+0x0000014e:       DW_TAG_formal_parameter
+                    DW_AT_type	(0x0000019f "Shape *")
+                    DW_AT_artificial	(true)
+
+0x00000153:       NULL
+
+0x00000154:     DW_TAG_subprogram
+                  DW_AT_linkage_name	("_ZNK5Shape4areaEv")
+                  DW_AT_name	("area")
+                  DW_AT_decl_file	("./shapes.cpp")
+                  DW_AT_decl_line	(5)
+                  DW_AT_type	(0x0000019b "int")
+                  DW_AT_virtuality	(DW_VIRTUALITY_pure_virtual)
+                  DW_AT_vtable_elem_location	(DW_OP_constu 0x2)
+                  DW_AT_declaration	(true)
+                  DW_AT_external	(true)
+                  DW_AT_containing_type	(0x00000131 "Shape")
+
+0x00000165:       DW_TAG_formal_parameter
+                    DW_AT_type	(0x000001a4 "const Shape *")
+                    DW_AT_artificial	(true)
+
+0x0000016a:       NULL
+
+0x0000016b:     DW_TAG_subprogram
+                  DW_AT_linkage_name	("_ZNK5Shape4nameEv")
+                  DW_AT_name	("name")
+                  DW_AT_decl_file	("./shapes.cpp")
+                  DW_AT_decl_line	(6)
+                  DW_AT_type	(0x000001ae "const char *")
+                  DW_AT_virtuality	(DW_VIRTUALITY_virtual)
+                  DW_AT_vtable_elem_location	(DW_OP_constu 0x3)
+                  DW_AT_declaration	(true)
+                  DW_AT_external	(true)
+                  DW_AT_containing_type	(0x00000131 "Shape")
+
+0x0000017c:       DW_TAG_formal_parameter
+                    DW_AT_type	(0x000001a4 "const Shape *")
+                    DW_AT_artificial	(true)
+
+0x00000181:       NULL
+
+0x00000182:     DW_TAG_subprogram
+                  DW_AT_name	("Shape")
+                  DW_AT_declaration	(true)
+                  DW_AT_artificial	(true)
+                  DW_AT_external	(true)
+
+0x00000184:       DW_TAG_formal_parameter
+                    DW_AT_type	(0x0000019f "Shape *")
+                    DW_AT_artificial	(true)
+
+0x00000189:       NULL
+
+0x0000018a:     NULL
+
+0x0000018b:   DW_TAG_pointer_type
+                DW_AT_type	(0x00000190 "int (*)()")
+
+0x00000190:   DW_TAG_pointer_type
+                DW_AT_type	(0x00000196 "int ()")
+                DW_AT_name	("__vtbl_ptr_type")
+
+0x00000196:   DW_TAG_subroutine_type
+                DW_AT_type	(0x0000019b "int")
+
+0x0000019b:   DW_TAG_base_type
+                DW_AT_name	("int")
+                DW_AT_encoding	(DW_ATE_signed)
+                DW_AT_byte_size	(0x04)
+
+0x0000019f:   DW_TAG_pointer_type
+                DW_AT_type	(0x00000131 "Shape")
+
+0x000001a4:   DW_TAG_pointer_type
+                DW_AT_type	(0x000001a9 "const Shape")
+
+0x000001a9:   DW_TAG_const_type
+                DW_AT_type	(0x00000131 "Shape")
+
+0x000001ae:   DW_TAG_pointer_type
+                DW_AT_type	(0x00000041 "const char")
+
+0x000001b3:   DW_TAG_pointer_type
+                DW_AT_type	(0x000000bc "Rect")
+
+0x000001b8:   DW_TAG_pointer_type
+                DW_AT_type	(0x000001bd "const Rect")
+
+0x000001bd:   DW_TAG_const_type
+                DW_AT_type	(0x000000bc "Rect")
+
+0x000001c2:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000000)
+                DW_AT_high_pc	(0x0000000000000043)
+                DW_AT_frame_base	(DW_OP_reg6 RBP)
+                DW_AT_object_pointer	(0x000001d3)
+                DW_AT_linkage_name	("_ZN4RectC2Eii")
+                DW_AT_specification	(0x000000de "Rect")
+
+0x000001d3:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_fbreg -8)
+                  DW_AT_name	("this")
+                  DW_AT_type	(0x000002d3 "Rect *")
+                  DW_AT_artificial	(true)
+
+0x000001dc:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_fbreg -12)
+                  DW_AT_name	("w_")
+                  DW_AT_decl_file	("./shapes.cpp")
+                  DW_AT_decl_line	(11)
+                  DW_AT_type	(0x0000019b "int")
+
+0x000001e7:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_fbreg -16)
+                  DW_AT_name	("h_")
+                  DW_AT_decl_file	("./shapes.cpp")
+                  DW_AT_decl_line	(11)
+                  DW_AT_type	(0x0000019b "int")
+
+0x000001f2:     NULL
+
+0x000001f3:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000000)
+                DW_AT_high_pc	(0x0000000000000011)
+                DW_AT_frame_base	(DW_OP_reg6 RBP)
+                DW_AT_object_pointer	(0x00000203)
+                DW_AT_specification	(0x00000109 "_ZNK4Rect4nameEv")
+
+0x00000203:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_fbreg -8)
+                  DW_AT_name	("this")
+                  DW_AT_type	(0x000002d8 "const Rect *")
+                  DW_AT_artificial	(true)
+
+0x0000020c:     NULL
+
+0x0000020d:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000000)
+                DW_AT_high_pc	(0x000000000000001b)
+                DW_AT_frame_base	(DW_OP_reg6 RBP)
+                DW_AT_object_pointer	(0x00000220)
+                DW_AT_decl_file	("./shapes.cpp")
+                DW_AT_decl_line	(9)
+                DW_AT_linkage_name	("_ZN4RectD2Ev")
+                DW_AT_specification	(0x00000120 "~Rect")
+
+0x00000220:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_fbreg -8)
+                  DW_AT_name	("this")
+                  DW_AT_type	(0x000002d3 "Rect *")
+                  DW_AT_artificial	(true)
+
+0x00000229:     NULL
+
+0x0000022a:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000000)
+                DW_AT_high_pc	(0x000000000000001c)
+                DW_AT_frame_base	(DW_OP_reg6 RBP)
+                DW_AT_object_pointer	(0x0000023d)
+                DW_AT_decl_file	("./shapes.cpp")
+                DW_AT_decl_line	(3)
+                DW_AT_linkage_name	("_ZN5ShapeC2Ev")
+                DW_AT_specification	(0x00000182 "Shape")
+
+0x0000023d:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_fbreg -8)
+                  DW_AT_name	("this")
+                  DW_AT_type	(0x000002dd "Shape *")
+                  DW_AT_artificial	(true)
+
+0x00000246:     NULL
+
+0x00000247:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000000)
+                DW_AT_high_pc	(0x0000000000000028)
+                DW_AT_frame_base	(DW_OP_reg6 RBP)
+                DW_AT_object_pointer	(0x0000025a)
+                DW_AT_decl_file	("./shapes.cpp")
+                DW_AT_decl_line	(9)
+                DW_AT_linkage_name	("_ZN4RectD0Ev")
+                DW_AT_specification	(0x00000120 "~Rect")
+
+0x0000025a:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_fbreg -8)
+                  DW_AT_name	("this")
+                  DW_AT_type	(0x000002d3 "Rect *")
+                  DW_AT_artificial	(true)
+
+0x00000263:     NULL
+
+0x00000264:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000000)
+                DW_AT_high_pc	(0x0000000000000015)
+                DW_AT_frame_base	(DW_OP_reg6 RBP)
+                DW_AT_object_pointer	(0x00000274)
+                DW_AT_specification	(0x000000f2 "_ZNK4Rect4areaEv")
+
+0x00000274:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_fbreg -8)
+                  DW_AT_name	("this")
+                  DW_AT_type	(0x000002d8 "const Rect *")
+                  DW_AT_artificial	(true)
+
+0x0000027d:     NULL
+
+0x0000027e:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000000)
+                DW_AT_high_pc	(0x000000000000000a)
+                DW_AT_frame_base	(DW_OP_reg6 RBP)
+                DW_AT_object_pointer	(0x0000028f)
+                DW_AT_linkage_name	("_ZN5ShapeD2Ev")
+                DW_AT_specification	(0x00000142 "~Shape")
+
+0x0000028f:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_fbreg -8)
+                  DW_AT_name	("this")
+                  DW_AT_type	(0x000002dd "Shape *")
+                  DW_AT_artificial	(true)
+
+0x00000298:     NULL
+
+0x00000299:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000000)
+                DW_AT_high_pc	(0x000000000000000a)
+                DW_AT_frame_base	(DW_OP_reg6 RBP)
+                DW_AT_object_pointer	(0x000002aa)
+                DW_AT_linkage_name	("_ZN5ShapeD0Ev")
+                DW_AT_specification	(0x00000142 "~Shape")
+
+0x000002aa:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_fbreg -8)
+                  DW_AT_name	("this")
+                  DW_AT_type	(0x000002dd "Shape *")
+                  DW_AT_artificial	(true)
+
+0x000002b3:     NULL
+
+0x000002b4:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000000000000)
+                DW_AT_high_pc	(0x0000000000000011)
+                DW_AT_frame_base	(DW_OP_reg6 RBP)
+                DW_AT_object_pointer	(0x000002c4)
+                DW_AT_specification	(0x0000016b "_ZNK5Shape4nameEv")
+
+0x000002c4:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_fbreg -8)
+                  DW_AT_name	("this")
+                  DW_AT_type	(0x000002e2 "const Shape *")
+                  DW_AT_artificial	(true)
+
+0x000002cd:     NULL
+
+0x000002ce:   DW_TAG_reference_type
+                DW_AT_type	(0x000001a9 "const Shape")
+
+0x000002d3:   DW_TAG_pointer_type
+                DW_AT_type	(0x000000bc "Rect")
+
+0x000002d8:   DW_TAG_pointer_type
+                DW_AT_type	(0x000001bd "const Rect")
+
+0x000002dd:   DW_TAG_pointer_type
+                DW_AT_type	(0x00000131 "Shape")
+
+0x000002e2:   DW_TAG_pointer_type
+                DW_AT_type	(0x000001a9 "const Shape")
+
+0x000002e7:   NULL

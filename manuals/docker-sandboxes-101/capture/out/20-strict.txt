@@ -1,0 +1,17 @@
+user: Run the shell command: echo m101-ok
+root -> tool_call shell {"cmd": "echo m101-ok"}
+root <- tool_call_response Shell: m101-ok
+root: echo m101-ok
+m101-ok
+stream_stopped (stop, normal)
+user: Run the shell command: pwd
+tool_call_confirmation: {"agent_name": "root", "tool_call": {"id": "<call-id>", "type": "function", "function": {"name": "shell", "arguments": "{\"cmd\": \"pwd\"}"}}, "metadata": {"blast_radius": "safe", "category": "fs-read", "reason": "Command matches safe read-only pattern: pwd", "safety_label": "safe"}}
+root <- tool_call_response Shell: The user rejected the tool call.
+root: pwd
+The user rejected the tool call.
+stream_stopped (stop, normal)
+user: Run the shell command: rm -rf work/m101-nothing
+root <- tool_call_response Shell: Tool 'shell' is denied by permissions configuration.
+root: rm -rf work/m101-nothing
+Tool 'shell' is denied by permissions configuration.
+stream_stopped (stop, normal)

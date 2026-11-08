@@ -1,0 +1,75 @@
+### 1 · SendMessage: a commit that does not exist
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "4462ebfc-5f91-4ef0-9cfb-ac6e7687a66e",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "Run the unit tests for payments-api at commit deadbee"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "task": {
+      "id": "8ae21dcb-7449-4d90-82a6-ac01b20fd782",
+      "contextId": "b94d852b-2a8c-4a94-98ca-59286e63871e",
+      "status": {
+        "state": "TASK_STATE_FAILED",
+        "message": {
+          "messageId": "dfc0f22a-ebc5-4883-b3ce-4926752f0a2e",
+          "contextId": "b94d852b-2a8c-4a94-98ca-59286e63871e",
+          "taskId": "8ae21dcb-7449-4d90-82a6-ac01b20fd782",
+          "role": "ROLE_AGENT",
+          "parts": [
+            {
+              "text": "Commit deadbee does not exist in payments-api."
+            }
+          ]
+        },
+        "timestamp": "2026-10-06T09:00:03.000Z"
+      },
+      "history": [
+        {
+          "messageId": "4462ebfc-5f91-4ef0-9cfb-ac6e7687a66e",
+          "contextId": "b94d852b-2a8c-4a94-98ca-59286e63871e",
+          "taskId": "8ae21dcb-7449-4d90-82a6-ac01b20fd782",
+          "role": "ROLE_USER",
+          "parts": [
+            {
+              "text": "Run the unit tests for payments-api at commit deadbee"
+            }
+          ]
+        },
+        {
+          "messageId": "9fa1a30d-bbc4-4e13-b779-cc5ca9176a3a",
+          "contextId": "b94d852b-2a8c-4a94-98ca-59286e63871e",
+          "taskId": "8ae21dcb-7449-4d90-82a6-ac01b20fd782",
+          "role": "ROLE_AGENT",
+          "parts": [
+            {
+              "text": "Checking out deadbee"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

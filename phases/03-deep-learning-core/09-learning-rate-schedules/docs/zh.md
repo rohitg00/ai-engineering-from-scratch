@@ -30,8 +30,8 @@
 
 最簡單的做法。挑一個數字，每一步都用它。
 
-```
-lr(t) = lr_0
+```math
+\text{lr}(t) = \text{lr}_0
 ```
 
 很少是最佳解。它要嘛對訓練尾段太大（在最小值附近震盪），要嘛對訓練初期太小（把算力浪費在極小的步伐上）。小模型和除錯時還算堪用。任何訓練時間超過一小時的東西，用它都是很糟的選擇。
@@ -40,8 +40,8 @@ lr(t) = lr_0
 
 ResNet 時代的老派做法。在固定的 epoch 把學習率砍掉一個倍數（通常是 10 倍）。
 
-```
-lr(t) = lr_0 * gamma^(floor(epoch / step_size))
+```math
+\text{lr}(t) = \text{lr}_0 \cdot \gamma^{\lfloor \text{epoch} / \text{step\_size} \rfloor}
 ```
 
 gamma = 0.1、step_size = 30 的意思是：學習率每 30 個 epoch 掉 10 倍。ResNet-50 就是這樣做的 —— lr=0.1，在第 30、60、90 個 epoch 各掉 10 倍。
@@ -52,8 +52,8 @@ gamma = 0.1、step_size = 30 的意思是：學習率每 30 個 epoch 掉 10 倍
 
 從最大學習率平滑衰減到最小值，沿著一條餘弦曲線走：
 
-```
-lr(t) = lr_min + 0.5 * (lr_max - lr_min) * (1 + cos(pi * t / T))
+```math
+\text{lr}(t) = \text{lr}_{\min} + 0.5 \cdot (\text{lr}_{\max} - \text{lr}_{\min}) \cdot \left(1 + \cos\left(\frac{\pi t}{T}\right)\right)
 ```
 
 其中 t 是當前步數，T 是總步數。
@@ -68,8 +68,8 @@ Adam 和其他自適應最佳化器會維護梯度平均與變異數的移動估
 
 暖身修掉這件事。用一個極小的學習率開始（常見的是 lr_max / warmup_steps，甚至直接從零開始），在前 N 步裡線性上升到 lr_max。等你到達完整的學習率時，Adam 的統計量已經穩定了。
 
-```
-lr(t) = lr_max * (t / warmup_steps)     for t < warmup_steps
+```math
+\text{lr}(t) = \text{lr}_{\max} \cdot \frac{t}{\text{warmup\_steps}} \quad \text{for } t < \text{warmup\_steps}
 ```
 
 典型的暖身長度：總訓練步數的 1-5%。Llama 3 訓練了約 1.8 兆個詞元，暖身 2000 步。GPT-3 的暖身涵蓋 3.75 億個詞元。

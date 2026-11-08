@@ -1,0 +1,7 @@
+$ sbx policy rm network --sandbox m101-policy --id <uuid> --force
+Rule removed from policy local: id=<uuid>
+[exit 0]
+
+$ sbx policy ls m101-policy --wide --created-via added
+No active policies apply to sandbox: m101-policy.
+[exit 0]

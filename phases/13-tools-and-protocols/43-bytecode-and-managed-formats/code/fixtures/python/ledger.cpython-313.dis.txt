@@ -1,0 +1,109 @@
+  0           RESUME                   0
+
+  1           LOAD_CONST               0 (('F', 'D', 'C', 'B', 'A'))
+              STORE_NAME               0 (LABELS)
+
+  4           LOAD_CONST               1 (<code object percent_change at 0x1096c6e20, file "ledger.py", line 4>)
+              MAKE_FUNCTION
+              STORE_NAME               1 (percent_change)
+
+ 10           LOAD_CONST               2 (<code object grade at 0x1097c4580, file "ledger.py", line 10>)
+              MAKE_FUNCTION
+              STORE_NAME               2 (grade)
+
+ 23           LOAD_CONST               3 (<code object total at 0x1096c72d0, file "ledger.py", line 23>)
+              MAKE_FUNCTION
+              STORE_NAME               3 (total)
+
+ 30           LOAD_CONST               4 (<code object grade_label at 0x1096c7690, file "ledger.py", line 30>)
+              MAKE_FUNCTION
+              STORE_NAME               4 (grade_label)
+              RETURN_CONST             5 (None)
+
+Disassembly of <code object percent_change at 0x1096c6e20, file "ledger.py", line 4>:
+  4           RESUME                   0
+
+  5           LOAD_FAST                0 (before)
+              LOAD_CONST               1 (0)
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        1 (to L1)
+
+  6           RETURN_CONST             1 (0)
+
+  7   L1:     LOAD_FAST_LOAD_FAST     16 (after, before)
+              BINARY_OP               10 (-)
+              LOAD_CONST               2 (100)
+              BINARY_OP                5 (*)
+              LOAD_FAST                0 (before)
+              BINARY_OP                2 (//)
+              RETURN_VALUE
+
+Disassembly of <code object grade at 0x1097c4580, file "ledger.py", line 10>:
+ 10           RESUME                   0
+
+ 11           LOAD_FAST                0 (score)
+              LOAD_CONST               1 (10)
+              BINARY_OP                2 (//)
+              STORE_FAST               1 (bucket)
+
+ 12           LOAD_FAST                1 (bucket)
+              LOAD_CONST               2 (9)
+              COMPARE_OP             188 (bool(>=))
+              POP_JUMP_IF_FALSE        1 (to L1)
+
+ 13           RETURN_CONST             3 (4)
+
+ 14   L1:     LOAD_FAST                1 (bucket)
+              LOAD_CONST               4 (8)
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        1 (to L2)
+
+ 15           RETURN_CONST             5 (3)
+
+ 16   L2:     LOAD_FAST                1 (bucket)
+              LOAD_CONST               6 (7)
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        1 (to L3)
+
+ 17           RETURN_CONST             7 (2)
+
+ 18   L3:     LOAD_FAST                1 (bucket)
+              LOAD_CONST               8 (6)
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        1 (to L4)
+
+ 19           RETURN_CONST             9 (1)
+
+ 20   L4:     RETURN_CONST            10 (0)
+
+Disassembly of <code object total at 0x1096c72d0, file "ledger.py", line 23>:
+ 23           RESUME                   0
+
+ 24           LOAD_CONST               1 (0)
+              STORE_FAST               1 (s)
+
+ 25           LOAD_FAST                0 (values)
+              GET_ITER
+      L1:     FOR_ITER                 7 (to L2)
+              STORE_FAST               2 (v)
+
+ 26           LOAD_FAST_LOAD_FAST     18 (s, v)
+              BINARY_OP               13 (+=)
+              STORE_FAST               1 (s)
+              JUMP_BACKWARD            9 (to L1)
+
+ 25   L2:     END_FOR
+              POP_TOP
+
+ 27           LOAD_FAST                1 (s)
+              RETURN_VALUE
+
+Disassembly of <code object grade_label at 0x1096c7690, file "ledger.py", line 30>:
+ 30           RESUME                   0
+
+ 31           LOAD_GLOBAL              0 (LABELS)
+              LOAD_GLOBAL              3 (grade + NULL)
+              LOAD_FAST                0 (score)
+              CALL                     1
+              BINARY_SUBSCR
+              RETURN_VALUE

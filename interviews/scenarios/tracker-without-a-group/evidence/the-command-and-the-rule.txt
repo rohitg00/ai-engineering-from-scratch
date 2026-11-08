@@ -1,0 +1,10 @@
+title: the tracker flags the manual uses, and the rule about the group
+source: manuals/miles-101/sections/5-1-read-the-run.md
+lines: 41-44
+lang: text
+note: The last line names the error you see without the group.
+---
+-e MILES_EXTRA_ARGS="--use-wandb --wandb-mode offline --wandb-project miles-lab --wandb-group plain --wandb-dir /root/lab/runs/plain/wandb"
+```
+
+Keep `--wandb-group`. Without it, the run stops at start with `TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'`. The log should show `W&B offline mode enabled. Data will be saved locally.`, and an `offline-run-` folder appears under `~/miles-lab/runs/plain/wandb/wandb/`.

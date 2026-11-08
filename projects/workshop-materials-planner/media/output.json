@@ -1,0 +1,11 @@
+{
+  "title": "workshop-materials-planner",
+  "url": "http://127.0.0.1:8879/projects/workshop-materials-planner/solution/demo-output/planner.html",
+  "actions": [
+    [
+      "js",
+      "document.querySelector('#participants').value='16';document.querySelector('#participants').dispatchEvent(new Event('input'))"
+    ]
+  ],
+  "kind": "browser capture"
+}

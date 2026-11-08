@@ -375,6 +375,16 @@ docker logs -f <container_id>
 3. 把 `flask` 加進 Dockerfile，重建，然後在 5000 埠跑一個簡單的 API 伺服器。用 `-p 5000:5000` 對應埠號
 4. 用 `docker images` 量測映像檔大小。試著把基礎映像檔從 `devel` 換成 `runtime`，再比較大小
 
+### 提示
+
+**練習 1。** 用本單元中的 `docker build -t ai-dev -f phases/00-setup-and-tooling/07-docker-for-ai/code/Dockerfile .` 指令建置，然後在 `docker run --rm ai-dev` 裡執行 import。在 Mac 上要拿掉 `--gpus all`，原因本單元已經說明過。容器必須印出以 `2.6.0` 開頭的版本號。
+
+**練習 2。** 在 `code/` 資料夾執行 `docker compose up -d`，再用 `docker compose exec ai-dev bash` 在 `ai-dev` 服務裡開一個 shell。在裡面執行 `curl http://qdrant:6333/collections`；收到 JSON 回應，就代表服務名稱能在 compose 網路上解析。
+
+**練習 3。** 在 Dockerfile 加一行 `RUN pip install flask`，重建後用 `host="0.0.0.0"` 啟動伺服器，因為容器內綁定在 localhost 的伺服器從外面連不到。在你的機器上打開 `http://localhost:5000`，確認埠號對應有效。
+
+**練習 4。** 執行 `docker images ai-dev`，記下 SIZE 欄位。把 `FROM` 那行的 `devel` 改成 `runtime`，用新的標籤建置，再比較兩個大小；runtime 映像檔不含編譯器與標頭檔。
+
 ## 關鍵術語
 
 | 術語 | 大家怎麼說 | 實際上是什麼 |

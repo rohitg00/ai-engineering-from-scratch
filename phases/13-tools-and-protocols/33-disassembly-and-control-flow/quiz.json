@@ -1,0 +1,78 @@
+{
+  "lesson": "33-disassembly-and-control-flow",
+  "title": "Disassembly and Control Flow: From Bytes to a Graph You Can Check",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A disassembly listing from llvm-objdump shows every byte of a function decoded into real mnemonics. What does that prove?",
+      "options": [
+        "That the function has no indirect jumps",
+        "That every instruction in the listing executes",
+        "That the control-flow graph is complete",
+        "Only that a linear sweep found an instruction boundary for every byte, which can still be wrong where data sits inside the code"
+      ],
+      "correct": 3,
+      "explanation": "A sweep decodes data as code and re-synchronises within a few bytes, so a plausible listing is not proof of the instruction boundaries or of reachability."
+    },
+    {
+      "stage": "check",
+      "question": "The bytes 48 8d 0d 00 00 00 00 decode to leaq (%rip), %rcx and .rela.text holds R_X86_64_PC32 .rodata-0x4 at the displacement field. Where does the operand point after linking?",
+      "options": [
+        ".rodata+0x0, because the processor adds the field to the next instruction address, which is 4 bytes past the field",
+        ".rodata-0x4",
+        "The address of the lea itself",
+        ".rodata+0x4"
+      ],
+      "correct": 0,
+      "explanation": "R_X86_64_PC32 stores S + A - P. The field is the last 4 bytes of the instruction, so the final target is S + A + 4 = .rodata + 0."
+    },
+    {
+      "stage": "check",
+      "question": "In the trap fixture the table bytes are 31 c0 90 48 and the next real instruction is 83 c0 01 (addl $1, %eax). What does a linear sweep print at the jump target 0x14?",
+      "options": [
+        "A nop at 0x14",
+        "An invalid opcode error at 0x13",
+        "addl $0x1, %eax at 0x14",
+        "Nothing starts at 0x14. The 48 at 0x13 becomes a REX prefix and the sweep prints addq $0x1, %rax spanning 0x13 to 0x17"
+      ],
+      "correct": 3,
+      "explanation": "The REX byte joins the three bytes of the real add, so the listing shows a 64-bit add one byte early and no instruction at the branch target."
+    },
+    {
+      "stage": "check",
+      "question": "Recursive descent over grade at -O0 stops at jmpq *%rax and reports three blocks. What evidence lets it continue to the four case blocks?",
+      "options": [
+        "The bytes of the table in .rodata, which are all zero in the object file",
+        "The function size in the symbol table",
+        "The lea relocation that names the table, the cmp or sub plus ja that bounds the index, and the five R_X86_64_PC32 entries in .rela.rodata that give target = addend - 4k",
+        "The order of the blocks in the listing"
+      ],
+      "correct": 2,
+      "explanation": "In a relocatable object the table holds placeholders. The relocations on the table entries are the only source of the targets, and the bounds check gives the entry count."
+    },
+    {
+      "stage": "post",
+      "question": "Why does the iterative dominator algorithm of Cooper, Harvey, and Kennedy process blocks in reverse postorder?",
+      "options": [
+        "Because the entry block must be processed last",
+        "So that most predecessors of a block already have an immediate dominator when the block is visited, which lets the fixpoint converge in few passes",
+        "Because it removes the need for the intersect step",
+        "Because reverse postorder is the order of addresses in memory"
+      ],
+      "correct": 1,
+      "explanation": "Reverse postorder visits a block after its forward predecessors, so each pass propagates dominators along forward edges and only back edges need another pass."
+    },
+    {
+      "stage": "post",
+      "question": "At -O1 clang compiles grade to cmpl $4, %ecx; ja; leaq (%rip), %rcx with a relocation to .rodata; movl (%rcx,%rax,4), %eax; retq. What should the analysis report?",
+      "options": [
+        "A call through the table",
+        "A value table at .rodata+0x14 holding 1, 2, 3, 4, 4, three basic blocks, and no indirect transfer",
+        "An unresolved indirect jump",
+        "A jump table with five code targets"
+      ],
+      "correct": 1,
+      "explanation": "The load is a plain movl and the function returns right after it. The optimizer replaced the case blocks with a table of return values, which changes a load and not the control flow."
+    }
+  ]
+}

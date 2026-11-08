@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="fig-6-1-title fig-6-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-1-title">Three questions pick the parallel layout</title>
+  <desc id="fig-6-1-desc">First ask whether the model and the KV cache you need fit on one GPU. If yes, add copies with data parallelism. If no, ask whether the split model fits inside one machine. If no, add pipeline parallelism across machines with tensor parallelism inside each. If yes, ask whether the GPUs have NVLink and the GPU count divides the model evenly. If yes, use tensor parallelism. If no, use pipeline parallelism inside the machine.</desc>
+  <defs><marker id="fig-6-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <rect x="170" y="20" width="300" height="48" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="320" y="47.75" font-size="12.5" text-anchor="middle" font-weight="700">Fits one GPU with its cache?</text>
+  <rect x="20" y="120" width="200" height="54" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="120" y="142.25" font-size="12.5" text-anchor="middle" font-weight="700">data parallelism</text>
+  <text x="120" y="159.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">--data-parallel-size N</text>
+  <rect x="330" y="120" width="290" height="48" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="475" y="147.75" font-size="12.5" text-anchor="middle" font-weight="700">Split model fits one machine?</text>
+  <rect x="200" y="226" width="250" height="48" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="325" y="253.75" font-size="12.5" text-anchor="middle" font-weight="700">NVLink and an even split?</text>
+  <rect x="466" y="226" width="154" height="54" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="543" y="248.25" font-size="12.5" text-anchor="middle" font-weight="700">pipeline + tensor</text>
+  <text x="543" y="265.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">across machines</text>
+  <rect x="150" y="330" width="190" height="54" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="245" y="352.25" font-size="12.5" text-anchor="middle" font-weight="700">tensor parallel</text>
+  <text x="245" y="369.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">--tensor-parallel-size</text>
+  <rect x="360" y="330" width="200" height="54" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="460" y="352.25" font-size="12.5" text-anchor="middle" font-weight="700">pipeline parallel</text>
+  <text x="460" y="369.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">--pipeline-parallel-size</text>
+  <path d="M240 68 V96 H120 V119" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="147" y="79.03" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="150" y="90" font-size="11.5" font-weight="700" fill="var(--m-green-ink, #336b40)">yes</text>
+  <path d="M400 68 V96 H475 V119" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="435" y="79.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="438" y="90" font-size="11.5" font-weight="700" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <path d="M400 168 V198 H325 V225" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="363" y="181.03" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="366" y="192" font-size="11.5" font-weight="700" fill="var(--m-green-ink, #336b40)">yes</text>
+  <path d="M560 168 V198 H543 V225" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="571" y="181.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="574" y="192" font-size="11.5" font-weight="700" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <path d="M290 274 V302 H245 V329" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="263" y="285.03" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="266" y="296" font-size="11.5" font-weight="700" fill="var(--m-green-ink, #336b40)">yes</text>
+  <path d="M380 274 V302 H460 V329" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="417" y="285.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="420" y="296" font-size="11.5" font-weight="700" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <text x="20" y="214" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">More output from a</text>
+  <text x="20" y="230" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">model that fits.</text>
+</svg>

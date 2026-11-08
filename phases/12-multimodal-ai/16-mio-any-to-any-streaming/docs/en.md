@@ -21,7 +21,7 @@ A unified multimodal model is easy to claim and hard to build at scale. Most "an
 The engineering challenges:
 
 - Tokenizers must exist for every modality, compress losslessly-enough for reconstruction, and produce tokens at rates the transformer can consume.
-- A single vocabulary must allocate space for text (32k+), image (16k+), speech (4k+), music (8k+). Forty-thousand-plus entries minimum.
+- A single vocabulary must allocate space for text (32k+), image (8k+), speech (4k+), music (8k+). Fifty-thousand-plus entries minimum.
 - Training data must cover every input-output pair (text→image, image→speech, speech→image, etc.) or the model must compose.
 - Inference must stream output tokens fast enough for conversational latency (<500ms time-to-first-audio-byte).
 
@@ -32,21 +32,21 @@ The engineering challenges:
 MIO's tokenizer stack:
 
 - Text: standard BPE, vocab ~32000.
-- Image: SEED-Tokenizer (2023) — quantized VAE with discrete codebook, 4096 entries, 32x32 tokens per image.
-- Speech: SpeechTokenizer residual-VQ (2023) — encodes 16kHz waveform into 8 hierarchical codebooks; first level is coarse content, later levels add prosody and speaker identity.
-- Music: similar residual-VQ (Meta's MusicGen / Encodec family), 4-8 codebooks.
+- Image: SEED-Tokenizer (2023), a discrete image tokenizer with an 8192-entry codebook that emits 32 tokens per image.
+- Speech: SpeechTokenizer residual-VQ (2023), which encodes a 16kHz waveform into 8 hierarchical codebooks; the first level is coarse content, later levels add prosody and speaker identity. MIO keeps the content level plus the first three timbre levels, 1024 codes each, so 4096 speech IDs.
+- Music: similar residual-VQ (Meta's MusicGen / Encodec family), 4-8 codebooks. MIO itself does not ship a music tokenizer (its fourth modality is video, as frames through the image tokenizer); this lesson's toy adds music to show how a new modality claims an ID range.
 
 Each modality produces integer tokens. The tokens get disjoint ID ranges in the shared vocabulary:
 
 ```
 text:   0..31999
-image:  32000..36095  (4096 image tokens)
-speech: 36096..40191  (4096 speech base tokens, plus residual layers)
-music:  40192..48383  (8192 music tokens)
-sep:    48384..48390  (<image>, <speech>, <music>, </...>, etc.)
+image:  32000..40191  (8192 image tokens)
+speech: 40192..44287  (4 codebooks x 1024 speech tokens)
+music:  44288..52479  (8192 music tokens, the toy's extension)
+sep:    52480..52485  (<image>, <speech>, <music>, </...>)
 ```
 
-Total: ~48k vocabulary. The input embedding and output projection span all of it.
+Total: ~52k vocabulary. The input embedding and output projection span all of it.
 
 ### Streaming decode
 
@@ -57,7 +57,7 @@ The streaming pattern:
 1. User speaks into mic; real-time audio tokenizer emits speech tokens every 50ms.
 2. MIO consumes tokens as they arrive (prompt prefill + incremental forward).
 3. Output tokens stream out as generated; a parallel speech decoder converts them to audio samples with ~50-150ms latency.
-4. Time-to-first-audio-byte: ~300-500ms in MIO paper, approaching GPT-4o's ~250ms.
+4. Time-to-first-audio-byte: the MIO paper reports no latency number. The budget below puts this design at roughly 300ms at best, against GPT-4o's ~250ms.
 
 Mini-Omni (arXiv:2408.16725), GLM-4-Voice (arXiv:2412.02612), and Moshi (arXiv:2410.00037) are complementary streaming speech-LLM designs. Moshi in particular achieves 160ms round-trip on a single GPU.
 
@@ -100,7 +100,7 @@ For a conversational product, every component's latency matters:
 - First output token: ~50ms.
 - Parallel residual-VQ + speech decoder: ~100-150ms.
 
-Total time-to-first-audio-byte: ~300ms minimum. GPT-4o claims ~250ms. Moshi claims 160ms. MIO/AnyGPT are in the 400-600ms range per public benchmarks.
+Total time-to-first-audio-byte: ~300ms minimum. GPT-4o claims ~250ms. Moshi claims 160ms. Neither MIO nor AnyGPT publishes a measured figure, so treat this budget as an estimate, not a benchmark.
 
 ### Why any-to-any stays hard
 
@@ -134,7 +134,7 @@ This lesson produces `outputs/skill-any-to-any-pipeline-auditor.md`. Given a con
 
 2. SpeechTokenizer residual-VQ uses 8 codebooks. Propose why parallel-decoding the residual levels is necessary (vs sequential) and what latency savings it brings.
 
-3. Your vocabulary has 32k text + 4k image + 4k speech. Add 8k music and ~10 separators. What is the embedding-matrix parameter cost at hidden dim 4096?
+3. Your vocabulary has 32k text + 8k image + 4k speech. Add 8k music and ~10 separators. What is the embedding-matrix parameter cost at hidden dim 4096?
 
 4. Chain-of-visual-thought emits an intermediate image. What kinds of questions benefit? What kinds are hurt by the extra tokens?
 
@@ -146,7 +146,7 @@ This lesson produces `outputs/skill-any-to-any-pipeline-auditor.md`. Given a con
 |------|-----------------|------------------------|
 | Any-to-any | "Multimodal in/out" | A single model that accepts and emits text, image, speech, and music in any direction |
 | Residual-VQ | "Speech tokenizer stack" | Multi-codebook tokenization where each layer adds information; base layer is content, later layers are prosody |
-| SEED-Tokenizer | "Image codes" | Discrete image tokenizer with 4096-entry codebook used by MIO |
+| SEED-Tokenizer | "Image codes" | Discrete image tokenizer with an 8192-entry codebook and 32 tokens per image, used by MIO |
 | Chain-of-visual-thought | "Visual scratchpad" | The model generates an intermediate image as a reasoning step before its final answer |
 | Time-to-first-audio-byte | "TTFAB" | Latency from user voice to first audio output; <500ms for conversational feel |
 | Four-stage curriculum | "Training recipe" | Alignment -> interleaved -> speech-enhanced -> SFT, in that order |

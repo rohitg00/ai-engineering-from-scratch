@@ -1,0 +1,11 @@
+{
+  "title": "decision-tradeoff-explorer",
+  "url": "http://127.0.0.1:8879/.project-validation/decision-tradeoff-explorer/output/index.html",
+  "actions": [
+    [
+      "js",
+      "document.querySelector('input[type=range]').value='0.9';document.querySelector('input[type=range]').dispatchEvent(new Event('input'))"
+    ]
+  ],
+  "kind": "browser capture"
+}

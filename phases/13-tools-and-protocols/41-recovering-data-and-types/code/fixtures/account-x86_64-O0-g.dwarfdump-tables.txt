@@ -1,0 +1,167 @@
+account-x86_64-O0-g.o:	file format elf64-x86-64
+
+.debug_abbrev contents:
+Abbrev table for offset: 0x00000000
+[1] DW_TAG_compile_unit	DW_CHILDREN_yes
+	DW_AT_producer	DW_FORM_strx1
+	DW_AT_language	DW_FORM_data2
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_str_offsets_base	DW_FORM_sec_offset
+	DW_AT_stmt_list	DW_FORM_sec_offset
+	DW_AT_comp_dir	DW_FORM_strx1
+	DW_AT_low_pc	DW_FORM_addrx
+	DW_AT_high_pc	DW_FORM_data4
+	DW_AT_addr_base	DW_FORM_sec_offset
+
+[2] DW_TAG_variable	DW_CHILDREN_no
+	DW_AT_type	DW_FORM_ref4
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+	DW_AT_location	DW_FORM_exprloc
+
+[3] DW_TAG_array_type	DW_CHILDREN_yes
+	DW_AT_type	DW_FORM_ref4
+
+[4] DW_TAG_subrange_type	DW_CHILDREN_no
+	DW_AT_type	DW_FORM_ref4
+	DW_AT_count	DW_FORM_data1
+
+[5] DW_TAG_base_type	DW_CHILDREN_no
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_encoding	DW_FORM_data1
+	DW_AT_byte_size	DW_FORM_data1
+
+[6] DW_TAG_base_type	DW_CHILDREN_no
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_byte_size	DW_FORM_data1
+	DW_AT_encoding	DW_FORM_data1
+
+[7] DW_TAG_subprogram	DW_CHILDREN_yes
+	DW_AT_low_pc	DW_FORM_addrx
+	DW_AT_high_pc	DW_FORM_data4
+	DW_AT_frame_base	DW_FORM_exprloc
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+	DW_AT_prototyped	DW_FORM_flag_present
+	DW_AT_type	DW_FORM_ref4
+	DW_AT_external	DW_FORM_flag_present
+
+[8] DW_TAG_formal_parameter	DW_CHILDREN_no
+	DW_AT_location	DW_FORM_exprloc
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+	DW_AT_type	DW_FORM_ref4
+
+[9] DW_TAG_variable	DW_CHILDREN_no
+	DW_AT_location	DW_FORM_exprloc
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+	DW_AT_type	DW_FORM_ref4
+
+[10] DW_TAG_lexical_block	DW_CHILDREN_yes
+	DW_AT_low_pc	DW_FORM_addrx
+	DW_AT_high_pc	DW_FORM_data4
+
+[11] DW_TAG_pointer_type	DW_CHILDREN_no
+	DW_AT_type	DW_FORM_ref4
+
+[12] DW_TAG_structure_type	DW_CHILDREN_yes
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_byte_size	DW_FORM_data1
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+
+[13] DW_TAG_member	DW_CHILDREN_no
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_type	DW_FORM_ref4
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+	DW_AT_data_member_location	DW_FORM_data1
+
+[14] DW_TAG_const_type	DW_CHILDREN_no
+	DW_AT_type	DW_FORM_ref4
+
+
+.debug_str contents:
+0x00000000: "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+0x0000002e: "account.c"
+0x00000038: "."
+0x0000003a: "char"
+0x0000003f: "__ARRAY_SIZE_TYPE__"
+0x00000053: "unsigned long"
+0x00000061: "bump"
+0x00000066: "int"
+0x0000006a: "sum_balances"
+0x00000077: "tag"
+0x0000007b: "projected"
+0x00000085: "double"
+0x0000008c: "label_length"
+0x00000099: "main"
+0x0000009e: "a"
+0x000000a0: "kind"
+0x000000a5: "balance"
+0x000000ad: "code"
+0x000000b2: "short"
+0x000000b8: "rate"
+0x000000bd: "label"
+0x000000c3: "account"
+0x000000cb: "by"
+0x000000ce: "list"
+0x000000d3: "count"
+0x000000d9: "sum"
+0x000000dd: "i"
+0x000000df: "n"
+0x000000e1: "rows"
+
+.debug_addr contents:
+Address table header: length = 0x0000006c, format = DWARF32, version = 0x0005, addr_size = 0x08, seg_size = 0x00
+Addrs: [
+0x0000000000000000
+0x0000000000000005
+0x000000000000000d
+0x0000000000000012
+0x0000000000000028
+0x000000000000005a
+0x0000000000000000
+0x0000000000000030
+0x0000000000000042
+0x0000000000000080
+0x00000000000000c0
+0x00000000000000e0
+0x0000000000000120
+]
+
+.debug_str_offsets contents:
+0x00000000: Contribution size = 120, Format = DWARF32, Version = 5
+0x00000008: 00000000 "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+0x0000000c: 0000002e "account.c"
+0x00000010: 00000038 "."
+0x00000014: 0000003a "char"
+0x00000018: 0000003f "__ARRAY_SIZE_TYPE__"
+0x0000001c: 00000053 "unsigned long"
+0x00000020: 00000061 "bump"
+0x00000024: 00000066 "int"
+0x00000028: 0000006a "sum_balances"
+0x0000002c: 00000077 "tag"
+0x00000030: 0000007b "projected"
+0x00000034: 00000085 "double"
+0x00000038: 0000008c "label_length"
+0x0000003c: 00000099 "main"
+0x00000040: 0000009e "a"
+0x00000044: 000000a0 "kind"
+0x00000048: 000000a5 "balance"
+0x0000004c: 000000ad "code"
+0x00000050: 000000b2 "short"
+0x00000054: 000000b8 "rate"
+0x00000058: 000000bd "label"
+0x0000005c: 000000c3 "account"
+0x00000060: 000000cb "by"
+0x00000064: 000000ce "list"
+0x00000068: 000000d3 "count"
+0x0000006c: 000000d9 "sum"
+0x00000070: 000000dd "i"
+0x00000074: 000000df "n"
+0x00000078: 000000e1 "rows"

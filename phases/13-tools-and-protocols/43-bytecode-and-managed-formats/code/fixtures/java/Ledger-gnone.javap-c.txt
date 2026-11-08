@@ -1,0 +1,139 @@
+public class Ledger {
+  static final java.lang.String[] LABELS;
+
+  public Ledger();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  static int percentChange(int, int);
+    Code:
+       0: iload_0
+       1: ifne          6
+       4: iconst_0
+       5: ireturn
+       6: iload_1
+       7: iload_0
+       8: isub
+       9: bipush        100
+      11: imul
+      12: iload_0
+      13: idiv
+      14: ireturn
+
+  static int grade(int);
+    Code:
+       0: iload_0
+       1: bipush        10
+       3: idiv
+       4: tableswitch   { // 6 to 10
+                     6: 46
+                     7: 44
+                     8: 42
+                     9: 40
+                    10: 40
+               default: 48
+          }
+      40: iconst_4
+      41: ireturn
+      42: iconst_3
+      43: ireturn
+      44: iconst_2
+      45: ireturn
+      46: iconst_1
+      47: ireturn
+      48: iconst_0
+      49: ireturn
+
+  static int total(int[]);
+    Code:
+       0: iconst_0
+       1: istore_1
+       2: aload_0
+       3: astore_2
+       4: aload_2
+       5: arraylength
+       6: istore_3
+       7: iconst_0
+       8: istore        4
+      10: iload         4
+      12: iload_3
+      13: if_icmpge     33
+      16: aload_2
+      17: iload         4
+      19: iaload
+      20: istore        5
+      22: iload_1
+      23: iload         5
+      25: iadd
+      26: istore_1
+      27: iinc          4, 1
+      30: goto          10
+      33: iload_1
+      34: ireturn
+
+  static java.lang.String gradeLabel(int);
+    Code:
+       0: getstatic     #7                  // Field LABELS:[Ljava/lang/String;
+       3: iload_0
+       4: invokestatic  #13                 // Method grade:(I)I
+       7: aaload
+       8: areturn
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: iconst_3
+       1: newarray       int
+       3: dup
+       4: iconst_0
+       5: bipush        95
+       7: iastore
+       8: dup
+       9: iconst_1
+      10: bipush        82
+      12: iastore
+      13: dup
+      14: iconst_2
+      15: bipush        61
+      17: iastore
+      18: astore_1
+      19: getstatic     #17                 // Field java/lang/System.out:Ljava/io/PrintStream;
+      22: bipush        100
+      24: bipush        125
+      26: invokestatic  #23                 // Method percentChange:(II)I
+      29: aload_1
+      30: invokestatic  #27                 // Method total:([I)I
+      33: bipush        95
+      35: invokestatic  #31                 // Method gradeLabel:(I)Ljava/lang/String;
+      38: invokedynamic #35,  0             // InvokeDynamic #0:makeConcatWithConstants:(IILjava/lang/String;)Ljava/lang/String;
+      43: invokevirtual #39                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      46: return
+
+  static {};
+    Code:
+       0: iconst_5
+       1: anewarray     #45                 // class java/lang/String
+       4: dup
+       5: iconst_0
+       6: ldc           #47                 // String F
+       8: aastore
+       9: dup
+      10: iconst_1
+      11: ldc           #49                 // String D
+      13: aastore
+      14: dup
+      15: iconst_2
+      16: ldc           #51                 // String C
+      18: aastore
+      19: dup
+      20: iconst_3
+      21: ldc           #53                 // String B
+      23: aastore
+      24: dup
+      25: iconst_4
+      26: ldc           #55                 // String A
+      28: aastore
+      29: putstatic     #7                  // Field LABELS:[Ljava/lang/String;
+      32: return
+}

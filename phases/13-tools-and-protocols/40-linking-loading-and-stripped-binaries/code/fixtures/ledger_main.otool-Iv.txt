@@ -1,0 +1,20 @@
+ledger_main:
+Indirect symbols for (__TEXT,__stubs) 7 entries
+address            index name
+0x0000000100000658     4 ___stack_chk_fail
+0x0000000100000664     6 _grade
+0x0000000100000670     7 _grade_label
+0x000000010000067c     8 _percent_change
+0x0000000100000688     9 _printf
+0x0000000100000694    10 _puts
+0x00000001000006a0    11 _total
+Indirect symbols for (__DATA_CONST,__got) 8 entries
+address            index name
+0x0000000100004000     6 _grade
+0x0000000100004008     7 _grade_label
+0x0000000100004010     8 _percent_change
+0x0000000100004018    11 _total
+0x0000000100004020     4 ___stack_chk_fail
+0x0000000100004028     5 ___stack_chk_guard
+0x0000000100004030     9 _printf
+0x0000000100004038    10 _puts

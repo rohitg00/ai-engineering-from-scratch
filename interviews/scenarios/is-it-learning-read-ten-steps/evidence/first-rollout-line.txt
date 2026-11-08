@@ -1,0 +1,7 @@
+title: the rollout 0 line of the trainer
+source: manuals/miles-101/capture/gpu/out-gb10/plain-first-step.log
+lines: 5-5
+lang: text
+note: Read the truncated share, the centered rewards and the advantages.
+---
+(FSDPTrainRayActor pid=2551) [2026-10-17 15:56:48.271 actor_cell00000_rank00000] log_utils.py:125 - rollout 0: {'rollout/response_lengths': 739.92578125, 'rollout/rewards': -1.6298145055770874e-09, 'rollout/truncated': 0.3203125, 'rollout/rollout_log_probs': -0.42945602536201477, 'rollout/raw_reward': 0.62890625, 'rollout/total_lengths': 824.33203125, 'rollout/log_probs': -0.43026646971702576, 'rollout/entropy': 0.43224966526031494, 'rollout/advantages': 4.656612873077393e-10, 'rollout/returns': 4.656612873077393e-10}

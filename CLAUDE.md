@@ -41,9 +41,24 @@ delete them to tidy an upstream diff):
 | `scripts/pages_aliases.mjs` | `/catalog`, `/glossary`, `/path`, `/roadmap`, `/about` clean URLs |
 | `.gitignore` alias-stub block | leaves generated redirect stubs untracked-but-dirty |
 | `CLAUDE.md` | this file |
+| `docs/fork-sync.md` | the upstream-sync runbook and the per-sync log — read it before syncing, append to it after |
+
+Upstream files that carry a fork edit. Expect them in sync conflicts and keep the fork's side:
+
+| File | Fork edit |
+|---|---|
+| `.github/workflows/interviews.yml` | Skips "PR leaves the generated READMEs to main" on `sync/upstream-*` branches: a sync brings in upstream's already-generated `interviews/**/README.md`. Name sync branches `sync/upstream-YYYY-MM`. |
+| `.github/workflows/translate.yml` | Push trigger guarded to upstream only; this fork does not use the `translations` branch. |
+| `.github/workflows/build-book.yml` | Also builds the zh-Hant edition. |
+| `.github/workflows/cheatsheets-generate.yml`, `practice-generate.yml` | **Deleted on purpose**: they spend an Anthropic API key to author upstream content, which this fork receives by syncing. A modify/delete conflict on either resolves with `git rm`. `interviews-generate.yml` and `translate.yml` stay because upstream tests read them; both are inert here. |
+
+`.github/workflows/pages.yml` (fork-only) mirrors `vercel.json`'s `buildCommand` minus its two
+Vercel-only steps. When a sync changes that `buildCommand`, update `pages.yml` to match.
 
 Before merging any branch into `main`, check that it deletes nothing:
-`git diff --diff-filter=D --name-only main..<branch>` must come back empty.
+`git diff --diff-filter=D --name-only main..<branch>` must come back empty (once `main` no
+longer has the two deleted generator workflows above, a sync that re-adds them is the thing to
+catch, not a deletion).
 
 ## What this repo is
 

@@ -1,0 +1,21 @@
+{
+  "sglang": "0.5.22",
+  "sglang_kernel": "0.4.9",
+  "flashinfer": "0.7.1",
+  "torch": "2.14.1+cu130",
+  "cuda": "13.0",
+  "driver": "580.159.03",
+  "gpu": "NVIDIA GB10",
+  "compute_capability": "12.1",
+  "gpu_memory_total_gib": 121.7,
+  "gpu_memory_free_gib_at_start": 112.1,
+  "python": "3.12.3",
+  "machine": "aarch64",
+  "profile": "gb10",
+  "models": [
+    "Qwen/Qwen3-30B-A3B-Instruct-2507",
+    "Qwen/Qwen3-30B-A3B-Instruct-2507-FP8",
+    "lmsys/SGLang-EAGLE3-Qwen3-30B-A3B-Instruct-2507-SpecForge-Nex"
+  ],
+  "hf_hub_offline": true
+}

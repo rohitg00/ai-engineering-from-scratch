@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-2-5-title fig-2-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-5-title">FP8 weights at 32 users with the clock locked at 900 MHz</title>
+  <desc id="fig-2-5-desc">Qwen3-8B in BF16 against Qwen3-8B-FP8 on an NVIDIA L4 at 32 users, SM clock locked at 900 MHz, KV pool fixed at 24,096 tokens, two seeds. Output was 208.8 tokens per second for BF16 and 284.7 for FP8. The median time per token was 119.9 ms for BF16 and 83.8 ms for FP8.</desc>
+  <text x="66" y="30" font-size="12" fill="var(--m-ink, #1a1a1a)">output tok/s, higher is better</text>
+  <line x1="66" y1="260" x2="286" y2="260" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="264" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="66" y1="155" x2="286" y2="155" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="159" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="66" y1="50" x2="286" y2="50" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="54" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">400</text>
+  <line x1="66" y1="260" x2="286" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="50" x2="66" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <rect x="91" y="150.4" width="60" height="109.6" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="121" y="144.4" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">208.8</text>
+  <text x="121" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">BF16</text>
+  <rect x="201" y="110.54" width="60" height="149.46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="231" y="104.54" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">284.7</text>
+  <text x="231" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">FP8</text>
+  <text x="366" y="30" font-size="12" fill="var(--m-ink, #1a1a1a)">median ms per token, lower is better</text>
+  <line x1="366" y1="260" x2="586" y2="260" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="360" y="264" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="366" y1="190" x2="586" y2="190" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="360" y="194" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="366" y1="120" x2="586" y2="120" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="360" y="124" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="366" y1="50" x2="586" y2="50" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="360" y="54" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">150</text>
+  <line x1="366" y1="260" x2="586" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="366" y1="50" x2="366" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <rect x="391" y="92.18" width="60" height="167.82" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="421" y="86.18" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">119.9</text>
+  <text x="421" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">BF16</text>
+  <rect x="501" y="142.65" width="60" height="117.35" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="531" y="136.65" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">83.8</text>
+  <text x="531" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">FP8</text>
+  <text x="66" y="312" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Both runs at 32 users with the same KV pool. Median of two seeds.</text>
+</svg>

@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 596" role="img" aria-labelledby="fig-planner-run-title fig-planner-run-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-planner-run-title">The planner run, decision by decision</title>
+  <desc id="fig-planner-run-desc">The planner reads three cards and maps skills to agents. Lane one: SendMessage for run-tests on commit a41d7c3 returns task 954267b7 completed, and summary.json shows 13 passed and 0 failed. Lane two: SendMessage for review-diff returns TASK_STATE_INPUT_REQUIRED asking for the base branch, the planner answers main on the same task, the task completes, and review.json holds one low-severity finding. Lane three: SendMessage with a bearer token for deploy returns TASK_STATE_AUTH_REQUIRED, the planner subscribes, an operator approves outside A2A on the first frame, and the stream ends at TASK_STATE_COMPLETED. The planner decides after each lane and would stop on a failed test or a high-severity finding.</desc>
+  <defs><marker id="fig-planner-run-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-planner-run-head-ink-mute" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink-mute, #6f6f6a)"/></marker><marker id="fig-planner-run-head-olive" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-olive-ink, #515f26)"/></marker><marker id="fig-planner-run-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">DISCOVER: ONE CARD PER PORT, SKILLS MAPPED TO AGENTS</text>
+  <text x="20" y="466" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">DECISIONS</text>
+  <rect x="20" y="540" width="600" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="320" y="557.1" font-size="12" text-anchor="middle" font-weight="700">stop</text>
+  <text x="320" y="574.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">if the test task does not complete, a test fails, or a finding is high severity</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="26" width="192" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="116" y="44.1" font-size="12" text-anchor="middle" font-weight="700">test-runner</text>
+  <text x="116" y="61.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">run-tests</text>
+  <rect x="224" y="26" width="192" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="320" y="44.1" font-size="12" text-anchor="middle" font-weight="700">code-reviewer</text>
+  <text x="320" y="61.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">review-diff, answer-question</text>
+  <rect x="428" y="26" width="192" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="524" y="44.1" font-size="12" text-anchor="middle" font-weight="700">deployer</text>
+  <text x="524" y="61.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">deploy, needs a bearer token</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <line x1="116" y1="72" x2="116" y2="115" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M116 72 L116 115" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="121" y="82.53" width="130.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="124" y="93.5" font-size="11.5">delegate run-tests</text>
+  <rect x="20" y="116" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="116" y="133.1" font-size="12" text-anchor="middle" font-weight="700">SendMessage</text>
+  <text x="116" y="150.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">commit a41d7c3</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <line x1="116" y1="160" x2="116" y2="185" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M116 160 L116 185" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="20" y="186" width="192" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="23" y="189" width="186" height="38" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="116" y="202.95" font-size="11.5" text-anchor="middle" font-weight="700">TASK_STATE_COMPLETED</text>
+  <text x="116" y="220.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">task 954267b7</text>
+  <line x1="116" y1="230" x2="116" y2="255" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M116 230 L116 255" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="20" y="256" width="192" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="116" y="273.1" font-size="12" text-anchor="middle" font-weight="700">summary.json</text>
+  <text x="116" y="290.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">passed 13, failed 0</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <line x1="116" y1="300" x2="116" y2="475" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink-mute)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink-mute, #6f6f6a)" opacity="0"><animateMotion path="M116 300 L116 475" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="20" y="476" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="116" y="493.1" font-size="12" text-anchor="middle" font-weight="700">tests</text>
+  <text x="116" y="510.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">13 passed, go on</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <line x1="320" y1="72" x2="320" y2="115" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M320 72 L320 115" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="325" y="82.53" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="328" y="93.5" font-size="11.5">delegate review-diff</text>
+  <rect x="224" y="116" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="133.1" font-size="12" text-anchor="middle" font-weight="700">SendMessage</text>
+  <text x="320" y="150.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refunds.diff as a raw part</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <line x1="320" y1="160" x2="320" y2="185" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M320 160 L320 185" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="224" y="186" width="192" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <text x="320" y="202.95" font-size="11.5" text-anchor="middle" font-weight="700">TASK_STATE_INPUT_REQUIRED</text>
+  <text x="320" y="220.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">which base branch?</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <line x1="320" y1="230" x2="320" y2="255" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M320 230 L320 255" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="325" y="231.53" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="328" y="242.5" font-size="11.5">answer</text>
+  <rect x="224" y="256" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="272.95" font-size="11.5" text-anchor="middle" font-weight="700">SendMessage, same task</text>
+  <text x="320" y="290.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">answer from context: main</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <line x1="320" y1="300" x2="320" y2="325" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M320 300 L320 325" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="224" y="326" width="192" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="227" y="329" width="186" height="38" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="320" y="342.95" font-size="11.5" text-anchor="middle" font-weight="700">TASK_STATE_COMPLETED</text>
+  <text x="320" y="360.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">task 80bc7784</text>
+  <line x1="320" y1="370" x2="320" y2="395" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M320 370 L320 395" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="224" y="396" width="192" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="320" y="413.1" font-size="12" text-anchor="middle" font-weight="700">review.json</text>
+  <text x="320" y="430.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 finding, severity low</text>
+  </g>
+  <g data-beat="9"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/>
+  <line x1="320" y1="440" x2="320" y2="475" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink-mute)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink-mute, #6f6f6a)" opacity="0"><animateMotion path="M320 440 L320 475" keyPoints="0;0;1;1" keyTimes="0;0.857;0.955;1" calcMode="linear" dur="5.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.857;0.871;0.955;1" dur="5.6s" begin="indefinite" fill="freeze"/></circle>
+  <line x1="212" y1="498" x2="223" y2="498" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M212 498 L223 498" keyPoints="0;0;1;1" keyTimes="0;0.857;0.955;1" calcMode="linear" dur="5.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.857;0.871;0.955;1" dur="5.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="224" y="476" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="493.1" font-size="12" text-anchor="middle" font-weight="700">review</text>
+  <text x="320" y="510.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 finding, 0 blocking</text>
+  </g>
+  <g data-beat="10"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/>
+  <line x1="524" y1="72" x2="524" y2="115" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M524 72 L524 115" keyPoints="0;0;1;1" keyTimes="0;0.871;0.96;1" calcMode="linear" dur="6.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.871;0.884;0.96;1" dur="6.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="529" y="82.53" width="109.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="532" y="93.5" font-size="11.5">delegate deploy</text>
+  <rect x="428" y="116" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="524" y="133.1" font-size="12" text-anchor="middle" font-weight="700">SendMessage</text>
+  <text x="524" y="150.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">build 2026.10.06-1, token</text>
+  </g>
+  <g data-beat="11"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.93;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="6.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.93;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="6.45s" begin="indefinite" fill="freeze"/>
+  <line x1="524" y1="160" x2="524" y2="185" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M524 160 L524 185" keyPoints="0;0;1;1" keyTimes="0;0.882;0.963;1" calcMode="linear" dur="6.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.882;0.894;0.963;1" dur="6.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="428" y="186" width="192" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <text x="524" y="202.95" font-size="11.5" text-anchor="middle" font-weight="700">TASK_STATE_AUTH_REQUIRED</text>
+  <text x="524" y="220.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">an operator must approve</text>
+  </g>
+  <g data-beat="12"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.936;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.936;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.05s" begin="indefinite" fill="freeze"/>
+  <line x1="524" y1="230" x2="524" y2="255" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M524 230 L524 255" keyPoints="0;0;1;1" keyTimes="0;0.892;0.966;1" calcMode="linear" dur="7.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.892;0.903;0.966;1" dur="7.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="529" y="231.53" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="532" y="242.5" font-size="11.5">follow</text>
+  <rect x="428" y="256" width="192" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="524" y="273.1" font-size="12" text-anchor="middle" font-weight="700">SubscribeToTask</text>
+  <text x="524" y="290.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">frame 1: the Task snapshot</text>
+  </g>
+  <g data-beat="13"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.941;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.941;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.65s" begin="indefinite" fill="freeze"/>
+  <line x1="524" y1="300" x2="524" y2="325" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-planner-run-head-olive)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-olive-ink, #515f26)" opacity="0"><animateMotion path="M524 300 L524 325" keyPoints="0;0;1;1" keyTimes="0;0.9;0.969;1" calcMode="linear" dur="8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.9;0.91;0.969;1" dur="8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="529" y="301.53" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="532" y="312.5" font-size="11.5" fill="var(--m-olive-ink, #515f26)">on frame 1</text>
+  <rect x="428" y="326" width="192" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="524" y="343.1" font-size="12" text-anchor="middle" font-weight="700">operator approves</text>
+  <text x="524" y="360.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">POST /approve, not A2A</text>
+  </g>
+  <g data-beat="14"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.945;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="8.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.945;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="8.25s" begin="indefinite" fill="freeze"/>
+  <line x1="524" y1="370" x2="524" y2="395" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-planner-run-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M524 370 L524 395" keyPoints="0;0;1;1" keyTimes="0;0.907;0.971;1" calcMode="linear" dur="8.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.907;0.916;0.971;1" dur="8.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="529" y="371.53" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="532" y="382.5" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">3 more frames</text>
+  <rect x="428" y="396" width="192" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="431" y="399" width="186" height="38" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="524" y="412.95" font-size="11.5" text-anchor="middle" font-weight="700">TASK_STATE_COMPLETED</text>
+  <text x="524" y="430.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">task a31361b3, stream ends</text>
+  </g>
+  <g data-beat="15"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.949;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="8.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.949;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="8.85s" begin="indefinite" fill="freeze"/>
+  <line x1="524" y1="440" x2="524" y2="475" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink-mute)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink-mute, #6f6f6a)" opacity="0"><animateMotion path="M524 440 L524 475" keyPoints="0;0;1;1" keyTimes="0;0.913;0.973;1" calcMode="linear" dur="9.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.913;0.922;0.973;1" dur="9.2s" begin="indefinite" fill="freeze"/></circle>
+  <line x1="416" y1="498" x2="427" y2="498" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-planner-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M416 498 L427 498" keyPoints="0;0;1;1" keyTimes="0;0.913;0.973;1" calcMode="linear" dur="9.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.913;0.922;0.973;1" dur="9.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="428" y="476" width="192" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="524" y="493.1" font-size="12" text-anchor="middle" font-weight="700">deploy</text>
+  <text x="524" y="510.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">TASK_STATE_COMPLETED</text>
+  </g>
+</svg>

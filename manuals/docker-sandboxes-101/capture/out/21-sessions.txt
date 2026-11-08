@@ -1,0 +1,22 @@
+$ docker-agent sessions
+Inspect recorded sessions
+
+Usage:
+  docker-agent sessions [command]
+
+Available Commands:
+  diff        Compare the behaviour of two recorded sessions
+
+Flags:
+  -h, --help   help for sessions
+
+Global Flags:
+      --cache-dir string    Override the cache directory (default: ~/Library/Caches/cagent on macOS)
+      --config-dir string   Override the config directory (default: ~/.config/cagent)
+      --data-dir string     Override the data directory (default: ~/.cagent; env: DOCKER_AGENT_DATA_DIR)
+  -d, --debug               Enable debug logging
+      --log-file string     Path to debug log file (default: ~/.cagent/cagent.debug.log; only used with --debug)
+  -o, --otel                Enable OpenTelemetry tracing
+
+Use "docker-agent sessions [command] --help" for more information about a command.
+[exit 0]

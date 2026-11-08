@@ -268,10 +268,16 @@
     s.appendChild(svgEl('rect', { x: bx, y: by, width: 40, height: bh, rx: '3', fill: 'none', stroke: SOFT, 'stroke-width': '1.2' }));
     s.appendChild(svgEl('line', { x1: bx - 4, y1: by + 36, x2: bx + 44, y2: by + 36, stroke: WARN, 'stroke-width': '1', 'stroke-dasharray': '3 3' }));
     s.appendChild(txt(bx + 58, by + 39, '2x', '8', WARN, 'start'));
-    var burn = svgEl('rect', { x: bx + 3, y: by + bh - 3, width: 34, height: 0, fill: BP, opacity: '0.45' });
-    burn.appendChild(anim('height', '0;20;44;80;80;0', '5.4s', { keyTimes: '0;0.2;0.45;0.68;0.94;1', calcMode: 'spline', keySplines: EASE + ';' + EASE + ';' + EASE + ';0 0 1 1;0.4 0 1 1' }));
-    burn.appendChild(anim('y', (by + bh - 3) + ';' + (by + bh - 23) + ';' + (by + bh - 47) + ';' + (by + bh - 83) + ';' + (by + bh - 83) + ';' + (by + bh - 3), '5.4s', { keyTimes: '0;0.2;0.45;0.68;0.94;1', calcMode: 'spline', keySplines: EASE + ';' + EASE + ';' + EASE + ';0 0 1 1;0.4 0 1 1' }));
-    burn.appendChild(anim('fill', BP + ';' + BP + ';' + BP + ';' + WARN + ';' + WARN + ';' + BP, '5.4s', { keyTimes: '0;0.2;0.45;0.68;0.94;1' }));
+    var burn = svgEl('g', { opacity: '0.45' });
+    var calm = svgEl('rect', { x: bx + 3, y: by + bh - 3, width: 34, height: 0, fill: BP });
+    var hot = svgEl('rect', { x: bx + 3, y: by + bh - 3, width: 34, height: 0, fill: WARN, opacity: '0' });
+    var burnSpline = { keyTimes: '0;0.2;0.45;0.68;0.94;1', calcMode: 'spline', keySplines: EASE + ';' + EASE + ';' + EASE + ';0 0 1 1;0.4 0 1 1' };
+    [calm, hot].forEach(function (bar) {
+      bar.appendChild(anim('height', '0;20;44;80;80;0', '5.4s', burnSpline));
+      bar.appendChild(anim('y', (by + bh - 3) + ';' + (by + bh - 23) + ';' + (by + bh - 47) + ';' + (by + bh - 83) + ';' + (by + bh - 83) + ';' + (by + bh - 3), '5.4s', burnSpline));
+      burn.appendChild(bar);
+    });
+    hot.appendChild(anim('opacity', '0;0;0;1;1;0', '5.4s', { keyTimes: '0;0.2;0.45;0.68;0.94;1' }));
     s.appendChild(burn);
     var abort = entry(260, 190, '5.4s', '0s', 0.66, 0.72);
     abort.appendChild(svgEl('rect', { x: -92, y: -13, width: 184, height: 26, rx: '4', fill: SURF, stroke: WARN, 'stroke-width': '1.4' }));
@@ -309,9 +315,11 @@
     pull.appendChild(anim('stroke-dashoffset', '16;0', '0.8s'));
     s.appendChild(pull);
     // key material travels vault -> gateway only; color flips after rotation
-    var kd = svgEl('rect', { x: -7, y: -5, width: 14, height: 10, rx: '2', fill: WARN });
+    var kd = svgEl('g', {}, [svgEl('rect', { x: -7, y: -5, width: 14, height: 10, rx: '2', fill: WARN })]);
+    var kdNew = svgEl('rect', { x: -7, y: -5, width: 14, height: 10, rx: '2', fill: BP, opacity: '0' });
+    kdNew.appendChild(anim('opacity', '0;0;1;1', '5.6s', { keyTimes: '0;0.35;0.44;1' }));
+    kd.appendChild(kdNew);
     kd.appendChild(motion('M115 115 L215 115', '2.8s', '0s'));
-    kd.appendChild(anim('fill', WARN + ';' + WARN + ';' + BP + ';' + BP, '5.6s', { keyTimes: '0;0.35;0.44;1' }));
     s.appendChild(kd);
     // apps call through the gateway and never hold a credential
     var apps = [[55, 'app A'], [115, 'app B'], [175, 'app C']];

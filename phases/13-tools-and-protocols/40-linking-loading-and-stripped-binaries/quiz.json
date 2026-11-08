@@ -1,0 +1,90 @@
+{
+  "lesson": "40-linking-loading-and-stripped-binaries",
+  "title": "Linking, Loading, and Stripped Binaries: PLT, GOT, Imports, Fixups, and Function Identification",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A relocatable object carries R_X86_64_PLT32 on every call, including calls to functions defined in another object of the same link. What does that record say about the final executable?",
+      "options": [
+        "Every call will go through a PLT entry",
+        "The object was built with -fno-plt",
+        "The function is in a shared library",
+        "Only that the field is a call displacement; the link editor reduces PLT32 to a direct distance when the symbol is defined in the inputs and makes a PLT entry only for undefined symbols"
+      ],
+      "correct": 3,
+      "explanation": "Compilers emit PLT32 on all calls since binutils 2.31 and LLVM 7. The decision belongs to the link editor, which is why the lesson's plan finds four direct calls and two PLT symbols in the same object."
+    },
+    {
+      "stage": "check",
+      "question": "In tiny-dyn-x86_64 the .got.plt slot for puts holds 0x206 in the file, and puts@plt starts at 0x200 with jmpq *slot(%rip). What happens on the first call?",
+      "options": [
+        "The program jumps to 0x206, the pushq $0 inside its own PLT entry, then to PLT0, which enters the dynamic linker through GOT+16; the resolver processes R_X86_64_JUMP_SLOT puts and writes the real address into the slot",
+        "The program crashes because 0x206 is not in libc",
+        "The call is resolved by the link editor and the slot is unused",
+        "The slot already holds the address of puts because the link editor read libc.so.6"
+      ],
+      "correct": 0,
+      "explanation": "psABI 5.2 says the slot initially holds the address of the following pushq. The first call takes the long path through PLT0 and the resolver, and every later call takes one indirect jump."
+    },
+    {
+      "stage": "check",
+      "question": "The word at 0x100004038 in ledger_main reads 0x8010000000000007 in the file. What is it?",
+      "options": [
+        "A code signature hash",
+        "A pointer into kernel memory",
+        "A chained fixup: bit 63 means bind, the next field is 2 units of four bytes, and ordinal 7 names _puts from the second library; dyld replaces the word with the address of _puts at load",
+        "The address of the stub for _puts"
+      ],
+      "correct": 2,
+      "explanation": "dyld_chained_ptr_64_bind packs ordinal:24, addend:8, next:12, and bind:1. The imports table entry 7 is _puts with library ordinal 2, which is /usr/lib/libSystem.B.dylib."
+    },
+    {
+      "stage": "check",
+      "question": "In tiny-x86_64.exe the IAT at RVA 0x2040 holds 0x2058 and 0x2060, which are RVAs inside .rdata. Why are these not the addresses of puts and exit?",
+      "options": [
+        "The functions are exported, so no import is needed",
+        "puts and exit are called by ordinal",
+        "The IAT is identical to the import lookup table until the image is bound; the values are hint/name entries, and the Windows loader overwrites the IAT with 64-bit addresses at load time",
+        "The image is corrupt"
+      ],
+      "correct": 2,
+      "explanation": "The PE Format page says the IAT matches the lookup table until binding and is overwritten with 32-bit or 64-bit addresses. Bit 63 clear in each entry means import by name through a hint/name entry."
+    },
+    {
+      "stage": "check",
+      "question": "After strip with no options, nm prints no symbols for libledger.stripped.dylib. A fresh main.c still links against it and the program runs. Why?",
+      "options": [
+        "The dylib was signed",
+        "strip only hides symbols from nm",
+        "The functions were inlined into main",
+        "The link editor and dyld read the exports trie in LC_DYLD_EXPORTS_TRIE, which strip leaves in place, and LC_SYMTAB is not used for binding"
+      ],
+      "correct": 3,
+      "explanation": "The lesson shows LC_SYMTAB with 0 records while dyld_info -exports still lists the four functions at their offsets. Only global symbols serve dynamic linking, and the trie carries them."
+    },
+    {
+      "stage": "post",
+      "question": "On static-arm64-O2.stripped a scan for stp x29, x30, [sp, #-0x10]! finds 0 of 5 functions and a scan for sub sp, sp, #imm finds 1 of 5. LC_FUNCTION_STARTS finds 5 of 5. What explains the difference?",
+      "options": [
+        "The four missed functions are not real functions",
+        "LC_FUNCTION_STARTS is rebuilt by nm",
+        "Prologue scans report only what the compiler emitted: clang writes sub sp then stp with a positive offset, and four leaf functions have no frame at all, while the link editor wrote the starts table for every function and strip keeps it",
+        "The scans were run on the wrong section"
+      ],
+      "correct": 2,
+      "explanation": "At -O0 the sub sp scan finds all five because every function has a frame. At -O2 percent_change, grade, total, and grade_label are leaf functions, so only the starts table and the bl targets find them."
+    },
+    {
+      "stage": "post",
+      "question": "The FLIRT-shaped signatures for grade and grade_label at -O2 have the same 32-byte pattern and the same CRC16 over four bytes. How does the matcher name the two functions correctly?",
+      "options": [
+        "It picks the first signature in the file",
+        "It cannot, and both are left unnamed",
+        "It compares a tail byte where the two functions differ, byte 44 is 0x20 in grade and 0x28 in grade_label, and their lengths are 60 and 72",
+        "It uses the symbol table of the stripped binary"
+      ],
+      "correct": 2,
+      "explanation": "Hex-Rays documents the same order: pattern, CRC16, then tail bytes and referenced names. grade_label inlined grade, so the first 36 bytes are shared and only the tail separates them."
+    }
+  ]
+}

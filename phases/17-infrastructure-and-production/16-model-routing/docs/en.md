@@ -1,6 +1,6 @@
 # Model Routing as a Cost-Reduction Primitive
 
-> A dynamic broker evaluates every request (task type, token length, embedding similarity, confidence) and sends simple queries to a cheap model, escalating complex ones to a frontier model. Also called model cascading. Production case studies show 20-60% cost reduction at iso-quality across US/UK/EU deployments; a 30% routing efficiency improvement on high-volume SaaS turns into six-figure annual savings. The 2026 context is that LLM inference prices dropped ~10x per year — a GPT-4-class token went from $20/M to ~$0.40/M from late 2022 to 2026. Most of the drop is better serving stacks (Phase 17 · 04-09), not hardware. Routing is how you convert that price drop into margin without product regression. The failure mode is cheap-model drift: the route pushes 40% to a weaker model, quality drops 3-5% on reasoning tasks, no one notices for a quarter. Gate routes by online quality metrics, not just offline eval sets.
+> A dynamic broker evaluates every request (task type, token length, embedding similarity, confidence) and sends simple queries to a cheap model, escalating complex ones to a frontier model. Also called model cascading. Production case studies show 20-60% cost reduction at iso-quality across US/UK/EU deployments; a 30% routing efficiency improvement on high-volume SaaS turns into six-figure annual savings. The 2026 context is that LLM inference prices for a fixed capability level have dropped about 10x per year (a16z LLMflation estimate); at the GPT-4 tier the drop is slower, from $20/M to ~$0.40/M (about 50x) from late 2022 to 2026. Most of the drop is better serving stacks (Phase 17 · 04-09), not hardware. Routing is how you convert that price drop into margin without product regression. The failure mode is cheap-model drift: the route pushes 40% to a weaker model, quality drops 3-5% on reasoning tasks, no one notices for a quarter. Gate routes by online quality metrics, not just offline eval sets.
 
 **Type:** Learn
 **Languages:** Python (stdlib, toy cascading router simulator)
@@ -44,7 +44,7 @@ If you route the 70% to cheap and 30% to expensive, your bill drops ~65% at the 
 
 AI gateways (Phase 17 · 19) expose routing. LiteLLM has `router` config with fallback and cost-routing. Portkey has guards + routing. Kong AI Gateway has plugin-based routing. OpenRouter's model marketplace exposes a recommendation API.
 
-Open-source: RouteLLM (LMSYS), Not Diamond (commercial), Prompt Mule.
+Open-source: RouteLLM (LMSYS), Prompt Mule. Commercial: Not Diamond.
 
 ### The 2026 price curve
 
@@ -69,7 +69,7 @@ Gate routes by online quality metrics:
 ### Numbers you should remember
 
 - 2026 routing savings at iso-quality: 20-60% case studies.
-- LLM price drop 2022-2026: ~10x per year aggregate.
+- LLM price drop at a fixed capability level: ~10x per year (a16z LLMflation estimate); about 50x total at the GPT-4 tier from 2022 to 2026.
 - GPT-4-level 2022 vs 2026: ~$20/M → ~$0.40/M.
 - Cascade latency impact: ~1.2x median, ~2x escalated (~10% of traffic).
 

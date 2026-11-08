@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 310" role="img" aria-labelledby="fig-4-6-title fig-4-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-6-title">Every reference to the four ledger functions</title>
+  <desc id="fig-4-6-desc">Four rows, one per function. In the middle, the function with its entry and body size. On the left, the call site inside entry that reaches it: 0x1000006a0 for _percent_change, 0x1000006bc for _total, 0x1000006ec for _grade_label, and none for _grade because its body was inlined into _grade_label. On the right, the LC_FUNCTION_STARTS entry that refers to it as data: 0x100008118, 0x10000811a, 0x10000811b and 0x10000811c, with ULEB128 deltas 0x500, 0x18, 0x3c and 0x34.</desc>
+  <defs><marker id="fig-4-6-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CALL SITES IN ENTRY</text>
+  <text x="230" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FUNCTION</text>
+  <text x="420" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">LC_FUNCTION_STARTS ENTRIES</text>
+  <rect x="230" y="36" width="180" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="56.25" font-size="12.5" text-anchor="middle" font-weight="700">_percent_change</text>
+  <text x="320" y="73.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0x100000500 · 24 B</text>
+  <rect x="20" y="36" width="180" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="110" y="56.25" font-size="12.5" text-anchor="middle" font-weight="700">entry 0x1000006a0</text>
+  <text x="110" y="73.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">UNCONDITIONAL_CALL</text>
+  <line x1="200" y1="61" x2="229" y2="61" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="440" y="36" width="180" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="530" y="56.25" font-size="12.5" text-anchor="middle" font-weight="700">0x100008118</text>
+  <text x="530" y="73.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">delta 0x500 · DATA</text>
+  <line x1="440" y1="61" x2="411" y2="61" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="230" y="102" width="180" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="122.25" font-size="12.5" text-anchor="middle" font-weight="700">_grade</text>
+  <text x="320" y="139.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0x100000518 · 60 B</text>
+  <rect x="20" y="102" width="180" height="50" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="110" y="122.25" font-size="12.5" text-anchor="middle" font-weight="700">no call site</text>
+  <text x="110" y="139.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">inlined into _grade_label</text>
+  <rect x="440" y="102" width="180" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="530" y="122.25" font-size="12.5" text-anchor="middle" font-weight="700">0x10000811a</text>
+  <text x="530" y="139.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">delta 0x18 · DATA</text>
+  <line x1="440" y1="127" x2="411" y2="127" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="230" y="168" width="180" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="188.25" font-size="12.5" text-anchor="middle" font-weight="700">_total</text>
+  <text x="320" y="205.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0x100000554 · 52 B</text>
+  <rect x="20" y="168" width="180" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="110" y="188.25" font-size="12.5" text-anchor="middle" font-weight="700">entry 0x1000006bc</text>
+  <text x="110" y="205.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">UNCONDITIONAL_CALL</text>
+  <line x1="200" y1="193" x2="229" y2="193" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="440" y="168" width="180" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="530" y="188.25" font-size="12.5" text-anchor="middle" font-weight="700">0x10000811b</text>
+  <text x="530" y="205.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">delta 0x3c · DATA</text>
+  <line x1="440" y1="193" x2="411" y2="193" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="230" y="234" width="180" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="254.25" font-size="12.5" text-anchor="middle" font-weight="700">_grade_label</text>
+  <text x="320" y="271.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0x100000588 · 72 B</text>
+  <rect x="20" y="234" width="180" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="110" y="254.25" font-size="12.5" text-anchor="middle" font-weight="700">entry 0x1000006ec</text>
+  <text x="110" y="271.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">UNCONDITIONAL_CALL</text>
+  <line x1="200" y1="259" x2="229" y2="259" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="440" y="234" width="180" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="530" y="254.25" font-size="12.5" text-anchor="middle" font-weight="700">0x10000811c</text>
+  <text x="530" y="271.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">delta 0x34 · DATA</text>
+  <line x1="440" y1="259" x2="411" y2="259" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-6-head-ink)"/>
+</svg>

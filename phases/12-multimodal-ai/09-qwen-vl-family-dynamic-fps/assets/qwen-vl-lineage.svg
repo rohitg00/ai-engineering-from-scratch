@@ -42,7 +42,7 @@
   <rect x="540" y="60" width="200" height="100" class="cold"/>
   <text x="640" y="82" text-anchor="middle" class="step">Qwen2.5-VL</text>
   <text x="640" y="100" text-anchor="middle" class="small">dynamic FPS sampler</text>
-  <text x="640" y="116" text-anchor="middle" class="small">absolute time tokens</text>
+  <text x="640" y="116" text-anchor="middle" class="small">absolute-time M-RoPE</text>
   <text x="640" y="132" text-anchor="middle" class="small">window attention ViT</text>
   <text x="640" y="148" text-anchor="middle" class="small">JSON agent mode</text>
 

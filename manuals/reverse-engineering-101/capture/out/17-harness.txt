@@ -1,0 +1,6 @@
+harness: phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/main.py loaded from phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code
+original object: fixtures/ledger-x86_64-O1.o (9a4a8082ba5e285a732552981a6935e0c5255725664f380e37c44ebfb04d803f)
+host: aarch64 Darwin, compiler /usr/bin/clang
+leg one: fixtures/ledger.c and each candidate compiled natively at -O1 into one program with phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/driver.c, then run over 92 cells
+leg two: each candidate compiled with `clang -target x86_64-unknown-linux-gnu -O1 -fno-asynchronous-unwind-tables -c`, then compared with the original after relocation masking
+files: 17-harness-grid.json, 17-harness-execute-plausible.json, 17-harness-execute-equal.json, 17-harness-bytes.json

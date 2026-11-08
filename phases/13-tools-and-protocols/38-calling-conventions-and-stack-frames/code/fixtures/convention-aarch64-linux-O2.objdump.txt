@@ -1,0 +1,171 @@
+
+convention-aarch64-linux-O2.o:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000000000 <leaf_add>:
+       0: 0b000020     	add	w0, w1, w0
+       4: d65f03c0     	ret
+
+0000000000000008 <eight_args>:
+       8: 8b030048     	add	x8, x2, x3
+       c: 8b000029     	add	x9, x1, x0
+      10: 8b05008a     	add	x10, x4, x5
+      14: 8b080128     	add	x8, x9, x8
+      18: 8b060149     	add	x9, x10, x6
+      1c: 8b090108     	add	x8, x8, x9
+      20: 8b070100     	add	x0, x8, x7
+      24: d65f03c0     	ret
+
+0000000000000028 <mixed>:
+      28: 1e620003     	scvtf	d3, w0
+      2c: 9e620022     	scvtf	d2, x1
+      30: 1e22c021     	fcvt	d1, s1
+      34: 1e602860     	fadd	d0, d3, d0
+      38: 1e622800     	fadd	d0, d0, d2
+      3c: 1e612800     	fadd	d0, d0, d1
+      40: d65f03c0     	ret
+
+0000000000000044 <by_value>:
+      44: d1000421     	sub	x1, x1, #0x1
+      48: 91000400     	add	x0, x0, #0x1
+      4c: d65f03c0     	ret
+
+0000000000000050 <big_ret>:
+      50: 90000009     	adrp	x9, 0x0 <leaf_add>
+		0000000000000050:  R_AARCH64_ADR_PREL_PG_HI21	.rodata.cst16
+      54: 4e080c00     	dup	v0.2d, x0
+      58: f9000100     	str	x0, [x8]
+      5c: 3dc00121     	ldr	q1, [x9]
+		000000000000005c:  R_AARCH64_LDST128_ABS_LO12_NC	.rodata.cst16
+      60: 91000c09     	add	x9, x0, #0x3
+      64: f9000d09     	str	x9, [x8, #0x18]
+      68: 4ee18400     	add	v0.2d, v0.2d, v1.2d
+      6c: 3c808100     	stur	q0, [x8, #0x8]
+      70: d65f03c0     	ret
+
+0000000000000074 <sum_varargs>:
+      74: d10383ff     	sub	sp, sp, #0xe0
+      78: 928006e8     	mov	x8, #-0x38              // =-56
+      7c: 910003e9     	mov	x9, sp
+      80: 910223ea     	add	x10, sp, #0x88
+      84: f2dff008     	movk	x8, #0xff80, lsl #32
+      88: 91020129     	add	x9, x9, #0x80
+      8c: 7100041f     	cmp	w0, #0x1
+      90: a90d23e9     	stp	x9, x8, [sp, #0xd0]
+      94: 9100e148     	add	x8, x10, #0x38
+      98: 910383e9     	add	x9, sp, #0xe0
+      9c: a9088be1     	stp	x1, x2, [sp, #0x88]
+      a0: a90993e3     	stp	x3, x4, [sp, #0x98]
+      a4: a90a9be5     	stp	x5, x6, [sp, #0xa8]
+      a8: ad0007e0     	stp	q0, q1, [sp]
+      ac: ad010fe2     	stp	q2, q3, [sp, #0x20]
+      b0: ad0217e4     	stp	q4, q5, [sp, #0x40]
+      b4: ad031fe6     	stp	q6, q7, [sp, #0x60]
+      b8: f90067e8     	str	x8, [sp, #0xc8]
+      bc: a90ba7e7     	stp	x7, x9, [sp, #0xb8]
+      c0: 5400030b     	b.lt	0x120 <sum_varargs+0xac>
+      c4: a94c27ea     	ldp	x10, x9, [sp, #0xc0]
+      c8: 2a1f03e8     	mov	w8, wzr
+      cc: b940dbec     	ldr	w12, [sp, #0xd8]
+      d0: 1400000a     	b	0xf8 <sum_varargs+0x84>
+      d4: 8b2cc12c     	add	x12, x9, w12, sxtw
+      d8: aa0a03ed     	mov	x13, x10
+      dc: aa0c03ea     	mov	x10, x12
+      e0: b940014a     	ldr	w10, [x10]
+      e4: 71000400     	subs	w0, w0, #0x1
+      e8: 2a0b03ec     	mov	w12, w11
+      ec: 0b080148     	add	w8, w10, w8
+      f0: aa0d03ea     	mov	x10, x13
+      f4: 54000180     	b.eq	0x124 <sum_varargs+0xb0>
+      f8: 37f8006c     	tbnz	w12, #0x1f, 0x104 <sum_varargs+0x90>
+      fc: 2a0c03eb     	mov	w11, w12
+     100: 14000005     	b	0x114 <sum_varargs+0xa0>
+     104: 1100218b     	add	w11, w12, #0x8
+     108: 3100219f     	cmn	w12, #0x8
+     10c: b900dbeb     	str	w11, [sp, #0xd8]
+     110: 54fffe29     	b.ls	0xd4 <sum_varargs+0x60>
+     114: 9100214d     	add	x13, x10, #0x8
+     118: f90063ed     	str	x13, [sp, #0xc0]
+     11c: 17fffff1     	b	0xe0 <sum_varargs+0x6c>
+     120: 2a1f03e8     	mov	w8, wzr
+     124: 2a0803e0     	mov	w0, w8
+     128: 910383ff     	add	sp, sp, #0xe0
+     12c: d65f03c0     	ret
+
+0000000000000130 <keeps>:
+     130: a9bd7bfd     	stp	x29, x30, [sp, #-0x30]!
+     134: 7100041f     	cmp	w0, #0x1
+     138: f9000bf5     	str	x21, [sp, #0x10]
+     13c: 910003fd     	mov	x29, sp
+     140: a9024ff4     	stp	x20, x19, [sp, #0x20]
+     144: 5400016b     	b.lt	0x170 <keeps+0x40>
+     148: 2a0003f3     	mov	w19, w0
+     14c: 2a1f03f5     	mov	w21, wzr
+     150: 2a1f03f4     	mov	w20, wzr
+     154: 2a1503e0     	mov	w0, w21
+     158: 94000000     	bl	0x158 <keeps+0x28>
+		0000000000000158:  R_AARCH64_CALL26	ext
+     15c: 110006b5     	add	w21, w21, #0x1
+     160: 0b140014     	add	w20, w0, w20
+     164: 6b15027f     	cmp	w19, w21
+     168: 54ffff61     	b.ne	0x154 <keeps+0x24>
+     16c: 14000002     	b	0x174 <keeps+0x44>
+     170: 2a1f03f4     	mov	w20, wzr
+     174: 2a1403e0     	mov	w0, w20
+     178: a9424ff4     	ldp	x20, x19, [sp, #0x20]
+     17c: f9400bf5     	ldr	x21, [sp, #0x10]
+     180: a8c37bfd     	ldp	x29, x30, [sp], #0x30
+     184: d65f03c0     	ret
+
+0000000000000188 <call8>:
+     188: 52800020     	mov	w0, #0x1                // =1
+     18c: 52800041     	mov	w1, #0x2                // =2
+     190: 52800062     	mov	w2, #0x3                // =3
+     194: 52800083     	mov	w3, #0x4                // =4
+     198: 528000a4     	mov	w4, #0x5                // =5
+     19c: 528000c5     	mov	w5, #0x6                // =6
+     1a0: 528000e6     	mov	w6, #0x7                // =7
+     1a4: 52800107     	mov	w7, #0x8                // =8
+     1a8: 14000000     	b	0x1a8 <call8+0x20>
+		00000000000001a8:  R_AARCH64_JUMP26	ext8
+
+00000000000001ac <call_mixed>:
+     1ac: 1e601000     	fmov	d0, #2.00000000
+     1b0: 1e221001     	fmov	s1, #4.00000000
+     1b4: 52800020     	mov	w0, #0x1                // =1
+     1b8: 52800061     	mov	w1, #0x3                // =3
+     1bc: 14000000     	b	0x1bc <call_mixed+0x10>
+		00000000000001bc:  R_AARCH64_JUMP26	extmixed
+
+00000000000001c0 <call_varargs>:
+     1c0: 52800060     	mov	w0, #0x3                // =3
+     1c4: 52800141     	mov	w1, #0xa                // =10
+     1c8: 52800282     	mov	w2, #0x14               // =20
+     1cc: 528003c3     	mov	w3, #0x1e               // =30
+     1d0: 14000000     	b	0x1d0 <call_varargs+0x10>
+		00000000000001d0:  R_AARCH64_JUMP26	extva
+
+00000000000001d4 <call_pair>:
+     1d4: a9bf7bfd     	stp	x29, x30, [sp, #-0x10]!
+     1d8: 528000a0     	mov	w0, #0x5                // =5
+     1dc: 528000c1     	mov	w1, #0x6                // =6
+     1e0: 910003fd     	mov	x29, sp
+     1e4: 94000000     	bl	0x1e4 <call_pair+0x10>
+		00000000000001e4:  R_AARCH64_CALL26	extpair
+     1e8: aa0103e0     	mov	x0, x1
+     1ec: a8c17bfd     	ldp	x29, x30, [sp], #0x10
+     1f0: d65f03c0     	ret
+
+00000000000001f4 <call_big>:
+     1f4: d100c3ff     	sub	sp, sp, #0x30
+     1f8: 910003e8     	mov	x8, sp
+     1fc: 52800120     	mov	w0, #0x9                // =9
+     200: a9027bfd     	stp	x29, x30, [sp, #0x20]
+     204: 910083fd     	add	x29, sp, #0x20
+     208: 94000000     	bl	0x208 <call_big+0x14>
+		0000000000000208:  R_AARCH64_CALL26	extbig
+     20c: a9427bfd     	ldp	x29, x30, [sp, #0x20]
+     210: f9400be0     	ldr	x0, [sp, #0x10]
+     214: 9100c3ff     	add	sp, sp, #0x30
+     218: d65f03c0     	ret

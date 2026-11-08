@@ -1,0 +1,11 @@
+title: the machine, the model, the two drafts and the four datasets
+source: manuals/sglang-101/capture/gpu/out-l4/spec-real-prompts.txt
+lines: 1-5
+lang: text
+note: The clock lock, the cache flush and the two seeds are in lines 3 and 4.
+---
+Speculative decoding on real prompts, SGLang 0.5.22 (backlog B-01a)
+Date: 2026-10-23
+Machine: NVIDIA L4, GPU0 of the node, clock lock 900 MHz. Model: Qwen/Qwen3-8B, EAGLE3 draft with 3 draft tokens, NGRAM with the defaults.
+Load: 128 output tokens with ignore-eos, 2 seeds, prefix cache flushed before each run. Rows use only runs at a median clock of 900 MHz.
+Datasets: random (the benchmark tool's random set), ShareGPT, GSM8K questions, and code prompts.

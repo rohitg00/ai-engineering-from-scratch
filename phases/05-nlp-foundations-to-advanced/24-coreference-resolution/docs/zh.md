@@ -36,7 +36,7 @@
 **架構。**
 
 1. **規則式（Hobbs, 1978）。** 以句法樹為基礎、用文法規則做代詞消解。基線相當不錯。在代詞上要贏過它，難度出乎意料地高。
-2. **提及配對分類器。** 對每一對提及 (m_i, m_j) 預測它們是否互為指代。再用遞移閉包分群。2016 年之前的標準做法。
+2. **提及配對分類器。** 對每一對提及 $(m_i, m_j)$ 預測它們是否互為指代。再用遞移閉包分群。2016 年之前的標準做法。
 3. **提及排序。** 對每個提及，把候選的前行語（包含「沒有前行語」這個選項）排序，取第一名。
 4. **以區段為單位的端到端模型（Lee et al., 2017）。** transformer 編碼器。列舉長度上限內的所有候選區段，預測提及分數，再為每個區段預測前行語機率，最後貪婪分群。現代的預設做法。
 5. **生成式（2024 年起）。** 直接對 LLM 下提示詞：「List every pronoun in this text and its antecedent.」在容易的案例上表現不錯，碰到長文件和罕見指稱物就吃力。
@@ -61,14 +61,14 @@ coref-links
 ```python
 import spacy
 nlp = spacy.load("en_coreference_web_trf")   # experimental model
-doc = nlp("Apple announced new products. The company said they would ship soon.")
+doc = nlp("Apple announced new products. The company said it would ship them soon.")
 for cluster in doc._.coref_clusters:
     print(cluster, "->", [m.text for m in cluster])
 ```
 
 換成長一點的文件，你會拿到類似這樣的結果：
-- 叢集 1：[Apple, The company, they]
-- 叢集 2：[new products]
+- 叢集 1：[Apple, The company, it]
+- 叢集 2：[new products, them]
 
 ### 步驟 2：規則式代詞消解器（教學用）
 

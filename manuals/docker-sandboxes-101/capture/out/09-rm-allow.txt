@@ -1,0 +1,3 @@
+$ sbx policy rm network --sandbox m101-policy --id <uuid> --force
+Rule removed from policy local: id=<uuid>
+[exit 0]

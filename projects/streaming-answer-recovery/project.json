@@ -1,0 +1,114 @@
+{
+  "id": "streaming-answer-recovery",
+  "title": "Streaming Answer Recovery",
+  "tagline": "Reconnect a streamed answer without duplicating text or hiding an incomplete result.",
+  "summary": "Build a browser answer view and local event stream for developers integrating assistant output. Handle split UTF-8 bytes, event IDs, reconnection, cancellation and partial citations. Preserve the difference between an interrupted draft and a completed answer, with a downloadable event trace to reproduce rendering failures.",
+  "level": 3,
+  "source": "core",
+  "status": "ready",
+  "hours": 8,
+  "languages": [
+    "TypeScript",
+    "Go"
+  ],
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "Reusable browser component, SSE fixture server and replayable event trace",
+  "prerequisiteProjects": [
+    "agent-trace-debugger",
+    "json-schema-output-guard"
+  ],
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-decode-sse",
+      "title": "Decode chunked bytes into complete events",
+      "summary": "Let UTF-8 and SSE framing survive arbitrary transport boundaries.",
+      "hours": 2,
+      "language": "typescript",
+      "difficulty": "starter",
+      "concepts": [
+        "TextDecoder",
+        "SSE framing",
+        "persistent ID"
+      ],
+      "timeout": 120,
+      "figure": "pj-streaming-answer-recovery-1"
+    },
+    {
+      "id": "02-stable-answer-state",
+      "title": "Render text and citations by stable identity",
+      "summary": "Make duplicate delivery harmless while preserving incomplete state.",
+      "hours": 2,
+      "language": "typescript",
+      "difficulty": "core",
+      "concepts": [
+        "event identity",
+        "deduplication",
+        "partial citations"
+      ],
+      "timeout": 120,
+      "figure": "pj-streaming-answer-recovery-2"
+    },
+    {
+      "id": "03-reconnect-and-cancel",
+      "title": "Handle reconnect and cancellation",
+      "summary": "Resume after the last accepted event, not the last partial byte.",
+      "hours": 2,
+      "language": "typescript+go",
+      "difficulty": "core",
+      "concepts": [
+        "Last-Event-ID",
+        "HTTP fixture",
+        "AbortSignal"
+      ],
+      "timeout": 120,
+      "figure": "pj-streaming-answer-recovery-3",
+      "runners": [
+        {
+          "language": "typescript"
+        },
+        {
+          "language": "go"
+        }
+      ]
+    },
+    {
+      "id": "04-trace-and-component",
+      "title": "Export and replay an interrupted-answer trace",
+      "summary": "Ship the browser component with a replayable accepted-event artifact.",
+      "hours": 2,
+      "language": "typescript",
+      "difficulty": "core",
+      "concepts": [
+        "trace schema",
+        "browser component",
+        "download"
+      ],
+      "timeout": 120,
+      "figure": "pj-streaming-answer-recovery-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

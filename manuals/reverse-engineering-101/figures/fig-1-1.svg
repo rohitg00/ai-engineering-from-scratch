@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 492" role="img" aria-labelledby="fig-1-1-title fig-1-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-1-title">What rea standardizes and what it leaves to Ghidra</title>
+  <desc id="fig-1-1-desc">Two stacks under one host band for macOS 26.2 arm64 with Node 22.22.0 and JDK 21.0.12.1. The left stack is rea 6.7.0: the CLI and MCP adapters with 153 commands, 207 tools, and 6 prompts over one BinarySession, the session with one target and one bound provider that the registry selects and never replaces, the Evidence record with 16 fields and an ev_ content hash kept in the EvidenceLedger, the Zod contracts and the error projection with code, category, message, and retryable, and the GhidraProvider and GhidraClient that send JSON lines over bridge.sock. The right stack is Ghidra 12.1.4: ReaGhidraBridge.java as the last post-script, the analyzeHeadless import with the loader chosen from the header, the FunctionManager, ReferenceManager, and BasicBlockModel that found 13 procedures and 39 strings, the DecompInterface with the native decompile binary for mac_arm_64, and the Program database deleted on close. The bottom band is the artifact ledger-arm64-O1 and its private copy target-01b5d08b08fb.bin.</desc>
+  <rect x="20" y="28" width="600" height="30" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <text x="30" y="47" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">host · macOS 26.2 arm64 · Node 22.22.0 · JDK 21.0.12.1 · GHIDRA_INSTALL_DIR set</text>
+  <line x1="320" y1="66" x2="320" y2="414" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="80" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">REA 6.7.0 · WHAT IT STANDARDIZES</text>
+  <text x="336" y="80" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">GHIDRA 12.1.4 · WHAT REA LEAVES TO IT</text>
+  <rect x="20" y="90" width="284" height="56" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="162" y="105.6" font-size="12" text-anchor="middle" font-weight="700">CLI and MCP</text>
+  <text x="162" y="122.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">153 commands, 207 tools, 6 prompts</text>
+  <text x="162" y="137.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one BinarySession behind both</text>
+  <rect x="20" y="156" width="284" height="56" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="162" y="171.6" font-size="12" text-anchor="middle" font-weight="700">BinarySession</text>
+  <text x="162" y="188.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one target, one bound provider</text>
+  <text x="162" y="203.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the registry selects, never replaces</text>
+  <rect x="20" y="222" width="284" height="56" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="162" y="237.6" font-size="12" text-anchor="middle" font-weight="700">Evidence</text>
+  <text x="162" y="254.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">16 fields, ev_ content hash</text>
+  <text x="162" y="269.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">EvidenceLedger, snapshots, bundles</text>
+  <rect x="20" y="288" width="284" height="56" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="162" y="303.6" font-size="12" text-anchor="middle" font-weight="700">contracts and errors</text>
+  <text x="162" y="320.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Zod schemas for every tool</text>
+  <text x="162" y="335.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">code, category, message, retryable</text>
+  <rect x="20" y="354" width="284" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="162" y="369.6" font-size="12" text-anchor="middle" font-weight="700">GhidraProvider, GhidraClient</text>
+  <text x="162" y="386.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">profile digest, private copy</text>
+  <text x="162" y="401.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">JSON lines over bridge.sock</text>
+  <rect x="336" y="90" width="284" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="478" y="105.6" font-size="12" text-anchor="middle" font-weight="700">ReaGhidraBridge.java</text>
+  <text x="478" y="122.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a GhidraScript, the last -postScript</text>
+  <text x="478" y="137.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one Program, one socket client</text>
+  <rect x="336" y="156" width="284" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="478" y="171.6" font-size="12" text-anchor="middle" font-weight="700">analyzeHeadless import</text>
+  <text x="478" y="188.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">loader chosen from the header</text>
+  <text x="478" y="203.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">-readOnly, default auto-analysis</text>
+  <rect x="336" y="222" width="284" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="478" y="237.6" font-size="12" text-anchor="middle" font-weight="700">FunctionManager, ReferenceManager</text>
+  <text x="478" y="254.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">BasicBlockModel, Listing text</text>
+  <text x="478" y="269.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">13 procedures, 39 strings here</text>
+  <rect x="336" y="288" width="284" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="478" y="303.6" font-size="12" text-anchor="middle" font-weight="700">DecompInterface, decompile</text>
+  <text x="478" y="320.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">native binary for mac_arm_64</text>
+  <text x="478" y="335.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">pseudocode and high p-code</text>
+  <rect x="336" y="354" width="284" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="478" y="369.6" font-size="12" text-anchor="middle" font-weight="700">the Program database</text>
+  <text x="478" y="386.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">addresses, symbols, references</text>
+  <text x="478" y="401.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">deleted on close: -deleteProject</text>
+  <rect x="20" y="424" width="284" height="56" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="162" y="439.6" font-size="12" text-anchor="middle" font-weight="700">ledger-arm64-O1</text>
+  <text x="162" y="456.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mach-o arm64, 33872 bytes</text>
+  <text x="162" y="471.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sha256 starts 01b5d08b</text>
+  <rect x="336" y="424" width="284" height="56" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="478" y="439.6" font-size="12" text-anchor="middle" font-weight="700">target-01b5d08b08fb.bin</text>
+  <text x="478" y="456.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the private copy Ghidra imports</text>
+  <text x="478" y="471.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">same bytes, deleted on close</text>
+</svg>

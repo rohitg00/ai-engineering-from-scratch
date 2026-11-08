@@ -6,7 +6,7 @@
 // the rest of the pipeline stays.
 // Refs: https://platform.openai.com/docs/guides/embeddings
 //       https://en.wikipedia.org/wiki/Tf%E2%80%93idf
-//       https://docs.anthropic.com/en/docs/build-with-claude/embeddings
+//       https://platform.claude.com/docs/en/build-with-claude/embeddings
 
 import process from "node:process";
 

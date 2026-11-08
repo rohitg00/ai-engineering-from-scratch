@@ -82,7 +82,7 @@ flowchart TD
 
 ### Z-score 方法
 
-最簡單的做法。算出每個特徵的平均值與標準差。任何離平均超過 k 個標準差的點就標記出來。
+最簡單的做法。算出每個特徵的平均值與標準差。任何離平均超過 $k$ 個標準差的點就標記出來。
 
 ```text
 z_score = (x - mean) / std
@@ -148,11 +148,11 @@ flowchart TD
 
 異常分數是以所有樹的平均路徑長度為基礎，再用隨機二元搜尋樹的期望路徑長度做正規化：
 
-```
-score(x) = 2^(-average_path_length(x) / c(n))
+```math
+\text{score}(x) = 2^{-\text{average\_path\_length}(x) / c(n)}
 ```
 
-其中 `c(n)` 是 n 個樣本的期望路徑長度。分數接近 1 表示異常。分數接近 0.5 表示正常。分數接近 0 表示非常正常（深藏在稠密的群裡）。
+其中 `c(n)` 是 $n$ 個樣本的期望路徑長度。分數接近 1 表示異常。分數接近 0.5 表示正常。分數接近 0 表示非常正常（深藏在稠密的群裡）。
 
 **強項：** 不做任何分布假設。在高維度也能用。擴展性好（相對於樣本數是次線性的，因為每棵樹只用一份子樣本）。能處理混合的特徵型別。
 
@@ -168,7 +168,7 @@ score(x) = 2^(-average_path_length(x) / c(n))
 LOF 比較的是某個點周圍的局部密度，與它鄰居周圍的密度。一個位於稀疏區域、四周卻被稠密區域包圍的點，就是異常。
 
 **它怎麼運作：**
-1. 對每個點，找出它的 k 個最近鄰居
+1. 對每個點，找出它的 $k$ 個最近鄰居
 2. 計算局部可達密度（這個鄰域有多稠密）
 3. 把每個點的密度跟它鄰居的密度做比較
 4. 如果某個點的密度遠低於它的鄰居，它就是離群值
@@ -182,7 +182,7 @@ LOF 比較的是某個點周圍的局部密度，與它鄰居周圍的密度。�
 
 **強項：** 能偵測局部異常（在自己的鄰域裡不尋常，即使在全域看來並不特別的點）。在密度不一致的群上也能用。
 
-**弱項：** 在大型資料集上很慢（樸素實作是 O(n^2)）。對 k 的選擇很敏感。在維度非常高時效果不好（維度詛咒會影響距離計算）。
+**弱項：** 在大型資料集上很慢（樸素實作是 $O(n^2)$）。對 $k$ 的選擇很敏感。在維度非常高時效果不好（維度詛咒會影響距離計算）。
 
 ### 比較
 
@@ -199,7 +199,7 @@ LOF 比較的是某個點周圍的局部密度，與它鄰居周圍的密度。�
 
 - **極端的類別不平衡。** 異常只佔 0.1% 時，全部預測「正常」就有 99.9% 的準確率。準確率毫無用處。
 - **AUROC 會騙人。** 在嚴重不平衡下，即使模型在實際可用的閾值上漏掉大多數異常，AUROC 看起來還是可以很漂亮。
-- **更好的指標：** Precision@k（被標記出來的前 k 筆裡，有幾筆是真異常）、AUPRC（precision-recall 曲線下面積），以及固定偽陽性率下的召回率。
+- **更好的指標：** Precision@k（被標記出來的前 $k$ 筆裡，有幾筆是真異常）、AUPRC（precision-recall 曲線下面積），以及固定偽陽性率下的召回率。
 
 ```mermaid
 flowchart LR
@@ -267,6 +267,14 @@ def iqr_detect(X, factor=1.5):
 從零寫的版本會建出一批 isolation tree，隨機把特徵空間切開：
 
 ```python
+def _c_factor(n):
+    if n <= 1:
+        return 0.0
+    if n == 2:
+        return 1.0
+    return 2.0 * (np.log(n - 1) + 0.5772156649) - 2.0 * (n - 1.0) / n
+
+
 class IsolationTree:
     def __init__(self, max_depth):
         self.max_depth = max_depth
@@ -290,6 +298,13 @@ class IsolationTree:
         self.left = IsolationTree(self.max_depth).fit(X[left_mask], depth + 1)
         self.right = IsolationTree(self.max_depth).fit(X[~left_mask], depth + 1)
         return self
+
+    def path_length(self, x, depth=0):
+        if self.is_leaf:
+            return depth + _c_factor(self.size)
+        if x[self.feature] < self.threshold:
+            return self.left.path_length(x, depth + 1)
+        return self.right.path_length(x, depth + 1)
 ```
 
 孤立一個點所需的路徑長度，決定了它的異常分數。路徑越短，越異常。
@@ -301,8 +316,14 @@ class IsolationForest:
     def __init__(self, n_estimators=100, max_samples=256, seed=42):
         self.n_estimators = n_estimators
         self.max_samples = max_samples
+        self.seed = seed
+        self.trees = []
+        self.n_train = 0
 
     def fit(self, X):
+        self.n_train = X.shape[0]
+        rng = np.random.RandomState(self.seed)
+        self.trees = []
         sample_size = min(self.max_samples, X.shape[0])
         max_depth = int(np.ceil(np.log2(sample_size)))
         for _ in range(self.n_estimators):
@@ -310,14 +331,19 @@ class IsolationForest:
             tree = IsolationTree(max_depth=max_depth)
             tree.fit(X[idx])
             self.trees.append(tree)
+        return self
 
     def anomaly_score(self, X):
-        avg_path = average path length across all trees
-        scores = 2.0 ** (-avg_path / c(max_samples))
-        return scores
+        avg_path = np.zeros(X.shape[0])
+        for tree in self.trees:
+            for i in range(X.shape[0]):
+                avg_path[i] += tree.path_length(X[i])
+        avg_path /= self.n_estimators
+        c = _c_factor(min(self.max_samples, self.n_train))
+        return 2.0 ** (-avg_path / c) if c > 0 else np.zeros(X.shape[0])
 ```
 
-正規化因子 `c(n)` 是在含 n 個元素的二元搜尋樹裡，一次失敗搜尋的期望路徑長度。它等於 `2 * H(n-1) - 2*(n-1)/n`，其中 `H` 是調和數。有了這個正規化，不同大小的資料集之間分數才能互相比較。
+正規化因子 `c(n)`（程式碼裡的 `_c_factor`）是在含 $n$ 個元素的二元搜尋樹裡，一次失敗搜尋的期望路徑長度。它等於 `2 * H(n-1) - 2*(n-1)/n`，其中 `H` 是調和數。程式碼採用標準的近似 `H(i) ≈ ln(i) + 0.5772`（歐拉常數），跟原始的 Isolation Forest 論文一樣。有了這個正規化，不同大小的資料集之間分數才能互相比較。
 
 ### 示範情境
 
@@ -433,7 +459,7 @@ autoencoder 是學習壓縮並重建資料的神經網路。用正常資料訓�
 
 2. **多變量異常。** 造一份 2D 資料，讓每個特徵單獨看都很正常，但組合起來是異常的（例如遠離主群對角線的點）。證明逐特徵的 Z-score 會漏掉它們，而 Isolation Forest 抓得到。
 
-3. **從零實作 LOF。** 用 k 近鄰實作 Local Outlier Factor。在同一份資料上和 sklearn 的 LocalOutlierFactor 做比較。試 k=10 和 k=50——k 的選擇對結果有什麼影響？
+3. **從零實作 LOF。** 用 k 近鄰實作 Local Outlier Factor。在同一份資料上和 sklearn 的 LocalOutlierFactor 做比較。試 $k=10$ 和 $k=50$——$k$ 的選擇對結果有什麼影響？
 
 4. **串流式異常偵測。** 改寫 Z-score 偵測器，讓它能在串流情境下運作：新的點一進來就更新累進的平均值與變異數（Welford 的線上演算法）。在同一份資料上和批次版的 Z-score 做比較。
 
@@ -448,10 +474,10 @@ autoencoder 是學習壓縮並重建資料的神經網路。用正常資料訓�
 | 情境異常 | 「值很正常，情境不對」 | 放在它的情境（時間、地點等）下顯得不尋常，但換到另一個情境可能很正常的觀測 |
 | Isolation Forest | 「用隨機切分找離群值」 | 一群隨機樹組成的集成，把異常孤立出來所需的切分次數比正常點更少 |
 | Local Outlier Factor | 「把密度和鄰居比一比」 | 一種方法，把局部密度遠低於鄰居密度的點標記出來 |
-| Z-score | 「離平均幾個標準差」 | (x - mean) / std，以標準差為單位量測一個點離中心有多遠 |
-| IQR | 「四分位距」 | Q3 - Q1，量測資料中間 50% 的離散程度，用於穩健的離群值偵測 |
+| Z-score | 「離平均幾個標準差」 | $(x - \text{mean}) / \text{std}$，以標準差為單位量測一個點離中心有多遠 |
+| IQR | 「四分位距」 | $Q3 - Q1$，量測資料中間 50% 的離散程度，用於穩健的離群值偵測 |
 | 汙染比例 | 「預期的異常比例」 | 一個超參數，告訴偵測器它該把資料的多少比例標記為異常 |
-| Precision@k | 「被標記的前 k 筆裡有幾筆是真的」 | 只在最可疑的 k 個點上計算的精確率，在不平衡的異常偵測裡很有用 |
+| Precision@k | 「被標記的前 k 筆裡有幾筆是真的」 | 只在最可疑的 $k$ 個點上計算的精確率，在不平衡的異常偵測裡很有用 |
 | AUPRC | 「precision-recall 曲線下面積」 | 一個把所有閾值下的 precision-recall 表現總結起來的指標，在資料不平衡時比 AUROC 更好 |
 
 ## 延伸閱讀

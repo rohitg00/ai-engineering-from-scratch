@@ -61,7 +61,7 @@ Every classical tracker uses a Kalman filter in the motion-prediction step.
 
 ### The Hungarian algorithm
 
-Given a `M x N` cost matrix (tracks x detections), find the one-to-one assignment that minimises total cost. Cost is usually `1 - IoU(track_bbox, detection_bbox)` or negative cosine similarity of appearance features. Runtime is O((M+N)^3); for M, N up to ~1000 it is fast enough in Python via `scipy.optimize.linear_sum_assignment`.
+Given a `M x N` cost matrix (tracks x detections), find the one-to-one assignment that minimises total cost. Cost is usually `1 - IoU(track_bbox, detection_bbox)` or negative cosine similarity of appearance features. Runtime is $O((M+N)^3)$; for $M, N$ up to ~1000 it is fast enough in Python via `scipy.optimize.linear_sum_assignment`.
 
 ### ByteTrack's key idea
 
@@ -69,7 +69,7 @@ Standard trackers drop low-confidence detections (< 0.5). ByteTrack keeps them a
 
 ### SAM 2 memory-based tracking
 
-SAM 2 handles video by keeping a **memory bank** of per-instance spatio-temporal features. Given a prompt (click, box, text) on one frame, it encodes the instance into memory. On subsequent frames, the memory is cross-attended against the new frame's features, and the decoder produces a mask for the same instance in the new frame.
+SAM 2 handles video by keeping a **memory bank** of per-instance spatio-temporal features. Given a prompt (click, box, or mask) on one frame, it encodes the instance into memory. On subsequent frames, the memory is cross-attended against the new frame's features, and the decoder produces a mask for the same instance in the new frame.
 
 No Kalman filter, no Hungarian assignment. The association is implicit in the memory-attention operation.
 

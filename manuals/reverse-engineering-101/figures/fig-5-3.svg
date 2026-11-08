@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 262" role="img" aria-labelledby="fig-5-3-title fig-5-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-3-title">Three empty lists and what each one proves</title>
+  <desc id="fig-5-3-desc">Three columns. A: the _percent_change dossier reports callees as an empty array with relationship coverage complete, which means every resolved call reference was returned, so no resolved callee was seen and calls at run time are not proven absent. B: export_evidence_bundle reports zero unknowns, because no record_unknown call was made, so no question was written and questions can still exist. C: rea compare lists a record with an empty right_evidence_ids array and classifies it unknown as an unresolved branch, because the bundle has no completeness marker, so the record is in one bundle only and removal is not concluded.</desc>
+  <defs><marker id="fig-5-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-5-3-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A · ANALYZE_FUNCTION</text>
+  <rect x="20" y="28" width="190" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="115" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">&quot;callees&quot;: []</text>
+  <text x="115" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ev_b492c85e</text>
+  <line x1="115" y1="80" x2="115" y2="105" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect x="20" y="106" width="190" height="60" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="115" y="123.45" font-size="11.5" text-anchor="middle" font-weight="700">coverage: complete</text>
+  <text x="115" y="140.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">every resolved call</text>
+  <text x="115" y="155.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reference returned</text>
+  <line x1="115" y1="166" x2="115" y2="191" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-amber)"/>
+  <rect x="20" y="192" width="190" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="115" y="212.95" font-size="11.5" text-anchor="middle" font-weight="700">no resolved callee seen</text>
+  <text x="115" y="230.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">runtime calls not proven</text>
+  <text x="225" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">B · THE BUNDLE EXPORT</text>
+  <rect x="225" y="28" width="190" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="320" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">&quot;unknowns&quot;: 0</text>
+  <text x="320" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">10-mcp-14, bundle O1</text>
+  <line x1="320" y1="80" x2="320" y2="105" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect x="225" y="106" width="190" height="60" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="320" y="123.45" font-size="11.5" text-anchor="middle" font-weight="700">no record_unknown call</text>
+  <text x="320" y="140.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the session held no</text>
+  <text x="320" y="155.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ResidualUnknown yet</text>
+  <line x1="320" y1="166" x2="320" y2="191" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-amber)"/>
+  <rect x="225" y="192" width="190" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="320" y="212.95" font-size="11.5" text-anchor="middle" font-weight="700">no question was written</text>
+  <text x="320" y="230.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">questions can still exist</text>
+  <text x="430" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">C · REA COMPARE</text>
+  <rect x="430" y="28" width="190" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="525" y="48.8" font-size="11" text-anchor="middle" font-weight="700">&quot;right_evidence_ids&quot;: []</text>
+  <text x="525" y="65.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one record of bundle O1</text>
+  <line x1="525" y1="80" x2="525" y2="105" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect x="430" y="106" width="190" height="60" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="525" y="123.45" font-size="11.5" text-anchor="middle" font-weight="700">classification: unknown</text>
+  <text x="525" y="140.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">unresolved_branch, no</text>
+  <text x="525" y="155.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">completeness marker</text>
+  <line x1="525" y1="166" x2="525" y2="191" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-amber)"/>
+  <rect x="430" y="192" width="190" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="525" y="212.95" font-size="11.5" text-anchor="middle" font-weight="700">in one bundle only</text>
+  <text x="525" y="230.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">removal is not concluded</text>
+</svg>

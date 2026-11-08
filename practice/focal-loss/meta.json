@@ -1,0 +1,24 @@
+{
+  "id": "focal-loss",
+  "title": "Focal loss",
+  "kind": "research",
+  "summary": "Binary and multi-class focal loss with gamma and alpha, from logits and without overflow, plus the binary gradient.",
+  "difficulty": "easy",
+  "tags": ["loss-functions", "focal-loss", "class-imbalance", "gradients"],
+  "lesson": "phases/03-deep-learning-core/05-loss-functions",
+  "cheatsheet": "neural-net-basics",
+  "minutes": 20,
+  "entry": ["binary_focal_loss", "binary_focal_grad", "focal_loss"],
+  "collections": ["papers-to-code", "deep-learning-core"],
+  "time_limit_s": 10,
+  "method": "focal-loss",
+  "paper": {"title": "Focal Loss for Dense Object Detection", "authors": "Lin et al.", "year": 2017, "url": "https://arxiv.org/abs/1708.02002"},
+  "mutants": {
+    "alpha_not_flipped": "Uses alpha for every example, not 1 - alpha for the negative examples.",
+    "grad_missing_focal_term": "Treats (1 - p_t)^gamma as a constant in the gradient and drops the gamma p_t log p_t term.",
+    "multiclass_ignores_alpha": "Ignores the per-class alpha in the multi-class loss.",
+    "naive_log": "Computes log p_t as log of sigmoid, so a logit of minus 1000 gives an infinite loss.",
+    "sum_not_mean": "Sums the example losses and gradients and does not divide by N.",
+    "weight_pt_not_one_minus": "Weights each term by p_t^gamma, not (1 - p_t)^gamma."
+  }
+}

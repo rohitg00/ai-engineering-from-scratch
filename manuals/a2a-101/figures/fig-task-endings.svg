@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 492" role="img" aria-labelledby="fig-task-endings-title fig-task-endings-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-task-endings-title">Four ways a task ends</title>
+  <desc id="fig-task-endings-desc">Four cards, one per terminal state from the kit. Completed: test-runner task 3d8f7801, chosen by the agent because the suite ran, status message 1 failed, 11 passed, with test-log.txt and summary.json. Failed: task 8ae21dcb, chosen by the agent because commit deadbee does not exist, no artifacts. Canceled: task f22ed7af, chosen by the client with CancelTask, two log chunks kept. Rejected: deployer task 23cf3710, refused by policy, no artifacts. Below, a message to the canceled task gets UnsupportedOperationError and a second cancel gets TaskNotCancelableError.</desc>
+  <defs><marker id="fig-task-endings-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="16" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FOUR TERMINAL STATES FROM THE KIT</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="28" width="290" height="42" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="23" y="31" width="284" height="36" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="165" y="44.25" font-size="12.5" text-anchor="middle" font-weight="700">TASK_STATE_COMPLETED</text>
+  <text x="165" y="61.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">test-runner, task 3d8f7801</text>
+  <text x="24" y="88" font-size="11.5" fill="var(--m-blue-ink, #2f5d9a)">chosen by the agent: the suite ran</text>
+  <rect x="20" y="98" width="290" height="62" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="123.8" font-size="11" font-weight="700">status message</text>
+  <text x="32" y="140.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 failed, 11 passed</text>
+  <text x="24" y="180" font-size="11.5" fill="var(--m-green-ink, #336b40)">artifacts: test-log.txt, summary.json</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="330" y="28" width="290" height="42" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="333" y="31" width="284" height="36" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="475" y="44.25" font-size="12.5" text-anchor="middle" font-weight="700">TASK_STATE_FAILED</text>
+  <text x="475" y="61.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">test-runner, task 8ae21dcb</text>
+  <text x="334" y="88" font-size="11.5" fill="var(--m-blue-ink, #2f5d9a)">chosen by the agent: no such commit</text>
+  <rect x="330" y="98" width="290" height="62" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="342" y="116.3" font-size="11" font-weight="700">status message</text>
+  <text x="342" y="133.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Commit deadbee does not exist in</text>
+  <text x="342" y="148.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">payments-api.</text>
+  <text x="334" y="180" font-size="11.5" fill="var(--m-green-ink, #336b40)">artifacts: none</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="206" width="290" height="42" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="23" y="209" width="284" height="36" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="165" y="222.25" font-size="12.5" text-anchor="middle" font-weight="700">TASK_STATE_CANCELED</text>
+  <text x="165" y="239.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">test-runner, task f22ed7af</text>
+  <text x="24" y="266" font-size="11.5" fill="var(--m-violet-ink, #5b4fa3)">chosen by the client: CancelTask</text>
+  <rect x="20" y="276" width="290" height="62" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="301.8" font-size="11" font-weight="700">status message</text>
+  <text x="32" y="318.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Canceled at the client&#39;s request.</text>
+  <text x="24" y="358" font-size="11.5" fill="var(--m-green-ink, #336b40)">artifacts: test-log.txt, two chunks</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="330" y="206" width="290" height="42" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="333" y="209" width="284" height="36" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="475" y="222.25" font-size="12.5" text-anchor="middle" font-weight="700">TASK_STATE_REJECTED</text>
+  <text x="475" y="239.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">deployer, task 23cf3710</text>
+  <text x="334" y="266" font-size="11.5" fill="var(--m-blue-ink, #2f5d9a)">chosen by the agent: its policy</text>
+  <rect x="330" y="276" width="290" height="62" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="342" y="294.3" font-size="11" font-weight="700">status message</text>
+  <text x="342" y="311.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Production deploys are outside this agent&#39;s</text>
+  <text x="342" y="326.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">policy. Use the release train.</text>
+  <text x="334" y="358" font-size="11.5" fill="var(--m-green-ink, #336b40)">artifacts: none</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <line x1="20" y1="384" x2="620" y2="384" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="400" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AFTER THE END</text>
+  <text x="140" y="400" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">calls to the canceled task f22ed7af, from 10-cancel.http</text>
+  <rect x="20" y="410" width="250" height="30" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="145" y="428.45" font-size="11.5" text-anchor="middle" font-weight="700">SendMessage, taskId f22ed7af</text>
+  <line x1="270" y1="425" x2="329" y2="425" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-task-endings-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M270 425 L329 425" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="330" y="410" width="290" height="30" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="475" y="428.45" font-size="11.5" text-anchor="middle" font-weight="700">UnsupportedOperationError, -32004</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="452" width="250" height="30" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="145" y="470.45" font-size="11.5" text-anchor="middle" font-weight="700">CancelTask, a second time</text>
+  <line x1="270" y1="467" x2="329" y2="467" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-task-endings-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M270 467 L329 467" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="330" y="452" width="290" height="30" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="475" y="470.45" font-size="11.5" text-anchor="middle" font-weight="700">TaskNotCancelableError, -32002</text>
+  </g>
+</svg>

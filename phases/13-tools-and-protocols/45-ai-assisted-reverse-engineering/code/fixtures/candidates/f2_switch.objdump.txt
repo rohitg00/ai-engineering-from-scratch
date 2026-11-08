@@ -1,0 +1,21 @@
+
+candidates/f2_switch.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <grade>:
+       0: 48 63 c7                     	movslq	%edi, %rax
+       3: 48 69 c0 67 66 66 66         	imulq	$0x66666667, %rax, %rax # imm = 0x66666667
+       a: 48 89 c1                     	movq	%rax, %rcx
+       d: 48 c1 f9 22                  	sarq	$0x22, %rcx
+      11: 48 c1 e8 3f                  	shrq	$0x3f, %rax
+      15: 01 c1                        	addl	%eax, %ecx
+      17: 83 c1 fa                     	addl	$-0x6, %ecx
+      1a: 31 c0                        	xorl	%eax, %eax
+      1c: 83 f9 04                     	cmpl	$0x4, %ecx
+      1f: 77 0c                        	ja	0x2d <grade+0x2d>
+      21: 89 c8                        	movl	%ecx, %eax
+      23: 48 8d 0d 00 00 00 00         	leaq	(%rip), %rcx            # 0x2a <grade+0x2a>
+		0000000000000026:  R_X86_64_PC32	.rodata-0x4
+      2a: 8b 04 81                     	movl	(%rcx,%rax,4), %eax
+      2d: c3                           	retq

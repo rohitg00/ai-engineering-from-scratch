@@ -1,0 +1,9 @@
+                 U ___stack_chk_fail
+                 U ___stack_chk_guard
+0000000100000000 T __mh_execute_header
+00000001000004b0 T _bump
+00000001000004e0 T _classify
+00000001000005a0 T _main
+                 U _memcpy
+                 U _printf
+0000000100000538 T _sum_balances

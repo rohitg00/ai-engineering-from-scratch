@@ -1,0 +1,44 @@
+{
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 640 260\"><title>Seed exchange process</title><path d=\"M 170 80 L 270 80 M 390 80 L 480 40 M 390 80 L 480 180\" fill=\"none\" stroke=\"#789087\" stroke-width=\"3\"/><g id=\"collect\"><rect x=\"20\" y=\"40\" width=\"150\" height=\"80\" rx=\"8\" fill=\"#b4d2bb\"/><text x=\"35\" y=\"85\" fill=\"#122b23\">Collect seeds</text></g><g id=\"check\"><rect x=\"270\" y=\"40\" width=\"120\" height=\"80\" rx=\"8\" fill=\"#b4d2bb\"/><text x=\"285\" y=\"85\" fill=\"#122b23\">Check label</text></g><g id=\"share\"><rect x=\"480\" y=\"5\" width=\"145\" height=\"75\" rx=\"8\" fill=\"#cadce0\"/><text x=\"495\" y=\"47\" fill=\"#122b23\">Share packet</text></g><g id=\"clarify\"><rect x=\"480\" y=\"145\" width=\"145\" height=\"75\" rx=\"8\" fill=\"#ead4a8\"/><text x=\"490\" y=\"187\" fill=\"#122b23\">Ask for details</text></g></svg>",
+  "graph": {
+    "nodes": [
+      {
+        "id": "collect",
+        "label": "Collect seeds",
+        "explanation": "Receive a packet while keeping its original label."
+      },
+      {
+        "id": "check",
+        "label": "Check label",
+        "explanation": "Check the plant name and collection year."
+      },
+      {
+        "id": "share",
+        "label": "Share packet",
+        "explanation": "A complete label lets another gardener make an informed choice."
+      },
+      {
+        "id": "clarify",
+        "label": "Ask for details",
+        "explanation": "Keep uncertain seeds separate while the donor supplies context."
+      }
+    ],
+    "edges": [
+      {
+        "from": "collect",
+        "to": "check",
+        "label": "packet received"
+      },
+      {
+        "from": "check",
+        "to": "share",
+        "label": "label complete"
+      },
+      {
+        "from": "check",
+        "to": "clarify",
+        "label": "details missing"
+      }
+    ]
+  }
+}

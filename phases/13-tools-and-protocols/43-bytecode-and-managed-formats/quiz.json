@@ -1,0 +1,90 @@
+{
+  "lesson": "43-bytecode-and-managed-formats",
+  "title": "Beyond Native Code: Python, JVM, .NET, and WebAssembly Bytecode",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A decompiler prints \"Unsupported opcode\" on a .pyc file whose first four bytes are 2b 0e 0d 0a. What does the header say?",
+      "options": [
+        "The file was compiled with optimisation level 2",
+        "The file is hash-based and the hash failed",
+        "The file is corrupt, because a pyc must start with the bytes of the word cpython",
+        "The magic word is 3627, which is the number CPython 3.14 writes, and the tool has no opcode table for that version"
+      ],
+      "correct": 3,
+      "explanation": "The first two bytes are the little-endian magic word 0x0e2b = 3627, the value in the CPython 3.14 header file. CR LF follow so a text-mode read breaks the magic. Nothing here is about corruption or the hash."
+    },
+    {
+      "stage": "check",
+      "question": "Why can main.py read the names, constants, and line table of a 3.11 pyc while running under 3.14, but cannot list its instructions?",
+      "options": [
+        "Because 3.14 removed the dis module",
+        "Because marshal has a stable type-code format that the lesson re-implements, while opcode numbers and cache layouts change between versions and dis knows only the running interpreter's table",
+        "Because 3.11 files are encrypted",
+        "Because the names live in a separate .pyi file"
+      ],
+      "correct": 1,
+      "explanation": "The unmarshaller reads type codes and the code object field order from marshal.c. The instruction bytes are opaque without the opcode table of the version that wrote them, which is why python3.11 -m dis was captured into the fixtures."
+    },
+    {
+      "stage": "check",
+      "question": "In Ledger-g.class the bytes at pc 4 are aa 00 00 00 00 00 00 2c 00 00 00 06 00 00 00 0a then five 4-byte values. What are the three zero bytes after aa?",
+      "options": [
+        "Three nop instructions",
+        "The high bytes of the default offset",
+        "Padding so that the default, low, and high words start at a pc that is a multiple of 4, as JVMS 6.5 tableswitch requires",
+        "The constant pool index of the switch"
+      ],
+      "correct": 2,
+      "explanation": "The opcode sits at pc 4, so the next 4-aligned pc is 8. The default offset 0x2c = 44 is relative to the opcode address, giving target 48. Then low 6 and high 10 announce five entries."
+    },
+    {
+      "stage": "check",
+      "question": "javac -g:none shrinks Ledger.class from 1832 bytes (javac -g) to 1404 bytes. Which bytes went away?",
+      "options": [
+        "The method bodies, which were recompiled in a compact form",
+        "The LineNumberTable, LocalVariableTable, and SourceFile attributes and their constant pool strings, while every Code array stays byte for byte identical",
+        "The StackMapTable, which only debuggers use",
+        "The constant pool, which the JVM rebuilds at load time"
+      ],
+      "correct": 1,
+      "explanation": "The lesson test compares the grade Code array across the three builds and finds the same 50 bytes. Only the debug attributes and the Utf8 entries they reference disappear. StackMapTable stays because the verifier needs it."
+    },
+    {
+      "stage": "check",
+      "question": "ledger.wasm has no name section, yet wasm-objdump prints <grade> on the function. Where did the name come from, and what name is still missing?",
+      "options": [
+        "From the Code section header, which starts every body with its name",
+        "From the Type section, which stores a name per function type",
+        "From the Export section, which maps the string grade to function index 2; the local names score and bucket are missing until wat2wasm --debug-names adds a name custom section",
+        "From the Data segment at offset 1024"
+      ],
+      "correct": 2,
+      "explanation": "Exports carry strings for exported functions only. Locals have no names anywhere in the plain module. The names build grows the file from 290 to 425 bytes and adds function and local names as a custom section."
+    },
+    {
+      "stage": "post",
+      "question": "The MethodDef row for Grade has signature blob 00 01 08 08 and the body header names local signature token 0x11000001 with blob 07 01 08. Which fact about Grade is still missing from the assembly?",
+      "options": [
+        "The name of the local variable, because ECMA-335 metadata stores local types in a StandAloneSig and leaves local names to the separate PDB file",
+        "The parameter name",
+        "The return type",
+        "The parameter type"
+      ],
+      "correct": 0,
+      "explanation": "The blob says static int32(int32), the Param table row says score, and the StandAloneSig says one int32 local. No table holds a local name. The fixture was built with DebugType none, so there is no PDB."
+    },
+    {
+      "stage": "post",
+      "question": "In which of the five containers does a decompiler have to rebuild the switch from jumps, rather than read it as one instruction or one block?",
+      "options": [
+        "The .NET assembly, because switch is a prefix",
+        "The CPython pyc, where grade is four COMPARE_OP and POP_JUMP_IF_FALSE pairs, and the native object, where it is a jmpq through a relocation table",
+        "The JVM class, because tableswitch is a jump table",
+        "The WebAssembly module, because br_table has no structure"
+      ],
+      "correct": 1,
+      "explanation": "tableswitch, br_table, and CIL switch each carry their case targets in one instruction, and Wasm nests the cases in blocks. CPython and x86-64 store only jumps, which is why their decompilers depend on control-flow analysis and break when the jump shapes change."
+    }
+  ]
+}

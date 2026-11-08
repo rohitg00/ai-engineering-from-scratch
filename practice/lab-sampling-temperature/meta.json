@@ -1,0 +1,22 @@
+{
+  "id": "lab-sampling-temperature",
+  "title": "Sweep the sampling temperature",
+  "kind": "lab",
+  "summary": "Sweep the temperature on fixed logits, measure entropy and top 1 probability, find where entropy crosses 2 bits, and count the tokens top p keeps.",
+  "difficulty": "easy",
+  "tags": ["sampling", "temperature", "entropy", "top-p"],
+  "lesson": "phases/07-transformers-deep-dive/07-gpt-causal-language-modeling",
+  "cheatsheet": "bert-gpt-t5",
+  "minutes": 20,
+  "entry": ["softmax_t", "entropy_bits", "sweep_temperature", "temperature_for_entropy", "kept_count", "answers"],
+  "collections": ["experiment-labs", "llm-inference"],
+  "time_limit_s": 10,
+  "mutants": {
+    "bisection_swapped": "Moves hi up when the entropy is too low, so the bisection runs to the wrong end.",
+    "log_of_zero": "Takes log2 of every probability, so a zero probability gives NaN.",
+    "multiply_temperature": "Multiplies the logits by the temperature, not divides, so a higher temperature makes the distribution sharper.",
+    "natural_log": "Uses the natural log, so the entropy is in nats, not in bits.",
+    "no_max_shift": "Calls np.exp on the scaled logits without the maximum shift, so large logits overflow.",
+    "strict_top_p": "Uses a strict greater than, so a cumulative sum equal to p does not stop the prefix."
+  }
+}

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-3-1b-title fig-3-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-1b-title">Request rows point into one slot pool</title>
+  <desc id="fig-3-1b-desc">Two ReqToTokenPool rows, request A and request B, each list KV slot indices. Both rows start with the same slots 1 to 4 for the shared system prompt, then point to their own slots for their questions. The KV pool strip below shows slots 1 to 4 stored once and used by both rows, and the free list hands out new slots.</desc>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">REQTOTOKENPOOL ROWS</text>
+  <text x="20" y="56" font-size="12">request A</text>
+  <rect x="120" y="34" width="46" height="34" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="143" y="54.6" font-size="12" text-anchor="middle" font-weight="700">1</text>
+  <rect x="172" y="34" width="46" height="34" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="195" y="54.6" font-size="12" text-anchor="middle" font-weight="700">2</text>
+  <rect x="224" y="34" width="46" height="34" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="247" y="54.6" font-size="12" text-anchor="middle" font-weight="700">3</text>
+  <rect x="276" y="34" width="46" height="34" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="299" y="54.6" font-size="12" text-anchor="middle" font-weight="700">4</text>
+  <rect x="328" y="34" width="46" height="34" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="351" y="54.6" font-size="12" text-anchor="middle" font-weight="700">5</text>
+  <rect x="380" y="34" width="46" height="34" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="403" y="54.6" font-size="12" text-anchor="middle" font-weight="700">6</text>
+  <text x="20" y="102" font-size="12">request B</text>
+  <rect x="120" y="80" width="46" height="34" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="143" y="100.6" font-size="12" text-anchor="middle" font-weight="700">1</text>
+  <rect x="172" y="80" width="46" height="34" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="195" y="100.6" font-size="12" text-anchor="middle" font-weight="700">2</text>
+  <rect x="224" y="80" width="46" height="34" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="247" y="100.6" font-size="12" text-anchor="middle" font-weight="700">3</text>
+  <rect x="276" y="80" width="46" height="34" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="299" y="100.6" font-size="12" text-anchor="middle" font-weight="700">4</text>
+  <rect x="328" y="80" width="46" height="34" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="351" y="100.6" font-size="12" text-anchor="middle" font-weight="700">7</text>
+  <rect x="380" y="80" width="46" height="34" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="403" y="100.6" font-size="12" text-anchor="middle" font-weight="700">8</text>
+  <text x="440" y="56" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">cells hold slot indices</text>
+  <text x="440" y="102" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">positions 0 to 5</text>
+  <text x="20" y="150" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">KV POOL SLOTS</text>
+  <rect x="20" y="160" width="54" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="47" y="183.6" font-size="12" text-anchor="middle" font-weight="700">0</text>
+  <rect x="80" y="160" width="54" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="107" y="183.6" font-size="12" text-anchor="middle" font-weight="700">1</text>
+  <rect x="140" y="160" width="54" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="167" y="183.6" font-size="12" text-anchor="middle" font-weight="700">2</text>
+  <rect x="200" y="160" width="54" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="227" y="183.6" font-size="12" text-anchor="middle" font-weight="700">3</text>
+  <rect x="260" y="160" width="54" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="287" y="183.6" font-size="12" text-anchor="middle" font-weight="700">4</text>
+  <rect x="320" y="160" width="54" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="347" y="183.6" font-size="12" text-anchor="middle" font-weight="700">5</text>
+  <rect x="380" y="160" width="54" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="407" y="183.6" font-size="12" text-anchor="middle" font-weight="700">6</text>
+  <rect x="440" y="160" width="54" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="467" y="183.6" font-size="12" text-anchor="middle" font-weight="700">7</text>
+  <rect x="500" y="160" width="54" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="527" y="183.6" font-size="12" text-anchor="middle" font-weight="700">8</text>
+  <rect x="560" y="160" width="54" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="587" y="183.6" font-size="12" text-anchor="middle" font-weight="700">9</text>
+  <text x="20" y="222" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">slot 0: padding, never given out</text>
+  <text x="20" y="242" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">slots 1 to 4: the shared system prompt, stored once and read by both rows</text>
+  <text x="20" y="262" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">slots 5 to 8: each request’s own question tokens</text>
+  <text x="20" y="282" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">slot 9: on the TokenToKVPoolAllocator free list</text>
+</svg>

@@ -1,0 +1,192 @@
+{
+  "evidence_id": "ev_91bddcdbd53ddd56996c6009458495bbd91fdc8c885238b33432e67691cf1f06",
+  "subject": {
+    "name": "ledger-arm64-O1",
+    "digest": {
+      "sha256": "01b5d08b08fb94678be5919d0e753d44b505a53107c95b94634f0e5d41c9e375"
+    },
+    "local_path": "$CAPTURE/fixtures/ledger-arm64-O1",
+    "format": "mach-o",
+    "architecture": "arm64"
+  },
+  "provider": {
+    "id": "rea-workflow",
+    "name": "REA composed investigation workflow",
+    "version": "1"
+  },
+  "analysis_profile": {
+    "provider": {
+      "id": "rea-workflow",
+      "name": "REA composed investigation workflow",
+      "version": "1"
+    },
+    "parameters": {
+      "upstream_analysis_profile": {
+        "provider": {
+          "id": "ghidra",
+          "name": "Ghidra",
+          "version": "12.1.4"
+        },
+        "parameters": {
+          "target_kind": "executable",
+          "target_format": "mach-o",
+          "architecture": "arm64",
+          "available_architectures": [
+            "arm64"
+          ],
+          "import_mode": "ephemeral-source-immutable",
+          "annotation_policy": "atomic-function-entry-metadata-v1",
+          "load_image_observations": "source-mappings-entry-context-v2",
+          "function_body_evidence": "complete-inclusive-ranges-v1",
+          "function_references": "complete-body-and-entry-reference-manager-v2",
+          "call_relationship_coverage": "function-body-call-coverage-v5",
+          "function_dossier_coverage": "observed-facets-and-call-relationships-v1",
+          "string_inventory_evidence": "defined-data-coverage-v1",
+          "location_resolution": "explicit-address-exact-entry-symbol-first-v3",
+          "procedure_file_offset_resolution": "address-first-unique-target-source-mapping-v2",
+          "instruction_flow_evidence": "decoded-return-pcode-v1",
+          "instruction_references": "exact-address-incoming-without-synthetic-entry-v2",
+          "function_boundary_observations": "ghidra-function-boundary-limitations-v4",
+          "no_return_repair": "returning-imports-decoded-return-v2",
+          "process_launch": "inspected-jvm-launch-support-v1",
+          "jump_table_evidence": "typed-case-default-blocks-v1",
+          "decompiler_jump_loads": true,
+          "loader": "auto-from-header",
+          "language_id": "auto-from-header",
+          "compiler_spec_id": "auto-default",
+          "analyzer_preset": "ghidra-default"
+        },
+        "digest": "3fc72c9b4b78498fb992b938f8f3389dc670244a293c1d40abf5e1d10162ed3b"
+      },
+      "source_limitations": "provider-operation-caveats-v1",
+      "workflow_revision": 4
+    },
+    "digest": "2716b5c5fe7f147eb3160e61f6b491a21aa527277b9914c8cd73f1d15513182c"
+  },
+  "predicate_type": "rea.analysis",
+  "operation": "binary_overview",
+  "parameters": {},
+  "raw_result": null,
+  "normalized_result": {
+    "document": "target-01b5d08b08fb.bin",
+    "image_base": "0x100000000",
+    "segments": [
+      {
+        "name": "__TEXT",
+        "start": "0x100000000",
+        "end": "0x100000500",
+        "length": 1280,
+        "image_base": "0x100000000",
+        "address_space": "ram"
+      },
+      {
+        "name": "__text",
+        "start": "0x100000500",
+        "end": "0x100000740",
+        "length": 576,
+        "image_base": "0x100000000",
+        "address_space": "ram"
+      },
+      {
+        "name": "__stubs",
+        "start": "0x100000740",
+        "end": "0x100000770",
+        "length": 48,
+        "image_base": "0x100000000",
+        "address_space": "ram"
+      },
+      {
+        "name": "__cstring",
+        "start": "0x100000770",
+        "end": "0x1000007d0",
+        "length": 96,
+        "image_base": "0x100000000",
+        "address_space": "ram"
+      },
+      {
+        "name": "__const",
+        "start": "0x1000007d0",
+        "end": "0x100000810",
+        "length": 64,
+        "image_base": "0x100000000",
+        "address_space": "ram"
+      },
+      {
+        "name": "__unwind_info",
+        "start": "0x100000810",
+        "end": "0x100004000",
+        "length": 14320,
+        "image_base": "0x100000000",
+        "address_space": "ram"
+      },
+      {
+        "name": "__got",
+        "start": "0x100004000",
+        "end": "0x100004030",
+        "length": 48,
+        "image_base": "0x100000000",
+        "address_space": "ram"
+      },
+      {
+        "name": "__const",
+        "start": "0x100004030",
+        "end": "0x100004058",
+        "length": 40,
+        "image_base": "0x100000000",
+        "address_space": "ram"
+      },
+      {
+        "name": "__DATA_CONST",
+        "start": "0x100004058",
+        "end": "0x100008000",
+        "length": 16296,
+        "image_base": "0x100000000",
+        "address_space": "ram"
+      },
+      {
+        "name": "__LINKEDIT",
+        "start": "0x100008000",
+        "end": "0x100008450",
+        "length": 1104,
+        "image_base": "0x100000000",
+        "address_space": "ram"
+      },
+      {
+        "name": "__LINKEDIT",
+        "start": "0x100008450",
+        "end": "0x10000c000",
+        "length": 15280,
+        "image_base": "0x100000000",
+        "address_space": "ram"
+      },
+      {
+        "name": "EXTERNAL",
+        "start": "0x10000c000",
+        "end": "0x10000c200",
+        "length": 512,
+        "image_base": "0x100000000",
+        "address_space": "ram"
+      }
+    ],
+    "segment_count": 12,
+    "procedure_count": 13,
+    "string_count": 39
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Derived by an REA composed workflow.",
+    "Ghidra (ghidra 12.1.4) read_binary_inventory_summary: Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+    "Ghidra (ghidra 12.1.4) read_binary_inventory_summary: Counts use the complete defined-string inventory and the same local/external function inventory as list_strings and list_procedures. They do not establish discovery of undefined strings or unidentified functions.",
+    "Ghidra (ghidra 12.1.4) read_binary_inventory_summary: Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+    "Ghidra (ghidra 12.1.4) read_binary_inventory_summary: Memory-block end addresses are exclusive; segment lengths use those observed address coordinates.",
+    "Ghidra (ghidra 12.1.4) read_binary_inventory_summary: Only Ghidra-defined string Data is observed; packed or undefined string bytes may be absent. Completeness applies to that inventory, and an empty search does not establish that text is absent from the artifact. If an address is known, use read_bytes and xrefs to inspect bytes and references.",
+    "Ghidra (ghidra 12.1.4) read_binary_inventory_summary: The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+    "Ghidra (ghidra 12.1.4) read_binary_inventory_summary: The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+    "Ghidra (ghidra 12.1.4) read_binary_inventory_summary: macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": []
+}

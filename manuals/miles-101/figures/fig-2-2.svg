@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-2-2-title fig-2-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-2-title">Keeping the engine loaded saves one or two seconds</title>
+  <desc id="fig-2-2-desc">Rollout seconds on the steps that had no heat pause in both runs of a same-day pair, seed 1, engine memory fraction 0.25. Default offload against --no-offload-rollout: step 0, 69.4 against 68.0 s; step 1, 58.5 against 56.7 s; step 8, 55.8 against 55.2 s.</desc>
+  <line x1="60" y1="256" x2="620" y2="256" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="260" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="60" y1="56" x2="620" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="60" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">80</text>
+  <line x1="60" y1="256" x2="620" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="56" x2="60" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rollout seconds, clean steps only</text>
+  <rect x="80.67" y="82.49" width="52" height="173.51" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="106.67" y="76.49" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">69.4 s</text>
+  <text x="106.67" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">step 0</text>
+  <rect x="174" y="85.89" width="52" height="170.11" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="200" y="79.89" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">68.0 s</text>
+  <text x="200" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">step 0</text>
+  <rect x="267.33" y="109.75" width="52" height="146.25" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="293.33" y="103.75" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">58.5 s</text>
+  <text x="293.33" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">step 1</text>
+  <rect x="360.67" y="114.25" width="52" height="141.75" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="386.67" y="108.25" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">56.7 s</text>
+  <text x="386.67" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">step 1</text>
+  <rect x="454" y="116.4" width="52" height="139.6" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="480" y="110.4" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">55.8 s</text>
+  <text x="480" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">step 8</text>
+  <rect x="547.33" y="118.11" width="52" height="137.89" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="573.33" y="112.11" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">55.2 s</text>
+  <text x="573.33" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">step 8</text>
+  <path d="M60 18 H78" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="84" y="22" font-size="11" fill="var(--m-grey-ink, #5e5e59)">default offload</text>
+  <path d="M201 18 H219" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="225" y="22" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">engine kept loaded</text>
+  <text x="60" y="314" font-size="12" class="m-serif">Same step, same answer length: the difference is 0.6 to 1.8 s.</text>
+</svg>

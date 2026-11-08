@@ -1,0 +1,17 @@
+user: Run the shell command: echo m101-ok
+root -> tool_call shell {"cmd": "echo m101-ok"}
+root <- tool_call_response Shell: m101-ok
+root: echo m101-ok
+m101-ok
+stream_stopped (stop, normal)
+user: Run the shell command: pwd
+root -> tool_call shell {"cmd": "pwd"}
+root <- tool_call_response Shell: $CAPTURE
+root: pwd
+$CAPTURE
+stream_stopped (stop, normal)
+user: Run the shell command: rm -rf work/m101-nothing
+root <- tool_call_response Shell: Tool 'shell' is denied by permissions configuration.
+root: rm -rf work/m101-nothing
+The command was refused due to permissions configuration.
+stream_stopped (stop, normal)

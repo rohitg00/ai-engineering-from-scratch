@@ -35,25 +35,27 @@ Consider a dataset with 1000 samples: 990 negative, 10 positive. A model that al
 | Actually Positive | 0 (TP) | 10 (FN) |
 | Actually Negative | 0 (FP) | 990 (TN) |
 
-Accuracy = (0 + 990) / 1000 = 99.0%
+```math
+\text{Accuracy} = (0 + 990) / 1000 = 99.0\%
+```
 
 The model catches zero fraud. Zero disease. Zero defects. But accuracy says 99%. This is why accuracy is dangerous for imbalanced problems.
 
 ### Better Metrics
 
-**Precision** = TP / (TP + FP). Of everything flagged as positive, how many actually are? High precision means few false alarms.
+**Precision** = $\text{TP} / (\text{TP} + \text{FP})$. Of everything flagged as positive, how many actually are? High precision means few false alarms.
 
-**Recall** = TP / (TP + FN). Of everything actually positive, how many did we catch? High recall means few missed positives.
+**Recall** = $\text{TP} / (\text{TP} + \text{FN})$. Of everything actually positive, how many did we catch? High recall means few missed positives.
 
-**F1 Score** = 2 * precision * recall / (precision + recall). The harmonic mean. Penalizes extreme imbalance between precision and recall more than the arithmetic mean would.
+**F1 Score** = $2 \cdot \text{precision} \cdot \text{recall} / (\text{precision} + \text{recall})$. The harmonic mean. Penalizes extreme imbalance between precision and recall more than the arithmetic mean would.
 
-**F-beta Score** = (1 + beta^2) * precision * recall / (beta^2 * precision + recall). When beta > 1, recall matters more. When beta < 1, precision matters more. F2 is common in fraud detection (missing fraud is worse than a false alarm).
+**F-beta Score** = $(1 + \beta^2) \cdot \text{precision} \cdot \text{recall} / (\beta^2 \cdot \text{precision} + \text{recall})$. When $\beta > 1$, recall matters more. When $\beta < 1$, precision matters more. F2 is common in fraud detection (missing fraud is worse than a false alarm).
 
 **AUPRC** (Area Under Precision-Recall Curve). Like AUC-ROC but more informative for imbalanced data. A random classifier has AUPRC equal to the positive class rate (not 0.5 like ROC). This makes improvements easier to see.
 
-**Matthews Correlation Coefficient** = (TP * TN - FP * FN) / sqrt((TP+FP)(TP+FN)(TN+FP)(TN+FN)). Ranges from -1 to +1. Only gives a high score when the model does well on both classes. Balanced even when classes are very different sizes.
+**Matthews Correlation Coefficient** = $(\text{TP} \cdot \text{TN} - \text{FP} \cdot \text{FN}) / \sqrt{(\text{TP}+\text{FP})(\text{TP}+\text{FN})(\text{TN}+\text{FP})(\text{TN}+\text{FN})}$. Ranges from -1 to +1. Only gives a high score when the model does well on both classes. Balanced even when classes are very different sizes.
 
-For the "always predict negative" model above: precision = 0/0 (undefined, often set to 0), recall = 0/10 = 0, F1 = 0, MCC = 0. These metrics correctly identify the model as worthless.
+For the "always predict negative" model above: $\text{precision} = 0/0$ (undefined, often set to 0), $\text{recall} = 0/10 = 0$, $\text{F1} = 0$, $\text{MCC} = 0$. These metrics correctly identify the model as worthless.
 
 ### The Imbalanced Data Pipeline
 
@@ -79,9 +81,9 @@ Random oversampling duplicates existing minority samples. This works but risks o
 
 SMOTE creates new synthetic minority samples that are plausible but not copies. The algorithm:
 
-1. For each minority sample x, find its k nearest neighbors among other minority samples
+1. For each minority sample $x$, find its $k$ nearest neighbors among other minority samples
 2. Pick one neighbor at random
-3. Create a new sample on the line segment between x and that neighbor
+3. Create a new sample on the line segment between $x$ and that neighbor
 
 The formula: `new_sample = x + random(0, 1) * (neighbor - x)`
 
@@ -137,24 +139,24 @@ flowchart LR
 Instead of changing the data, change how the model treats errors. Assign higher weight to misclassifying the minority class.
 
 For a binary problem with 950 negative and 50 positive samples:
-- Weight for negative class = n_samples / (2 * n_negative) = 1000 / (2 * 950) = 0.526
-- Weight for positive class = n_samples / (2 * n_positive) = 1000 / (2 * 50) = 10.0
+- Weight for negative class = $n_{\text{samples}} / (2 \cdot n_{\text{negative}}) = 1000 / (2 \cdot 950) = 0.526$
+- Weight for positive class = $n_{\text{samples}} / (2 \cdot n_{\text{positive}}) = 1000 / (2 \cdot 50) = 10.0$
 
 The positive class gets 19x the weight. Misclassifying one positive sample costs as much as misclassifying 19 negative samples. The model is forced to pay attention to the minority class.
 
 In logistic regression, this modifies the loss function:
 
-```
-weighted_loss = -sum(w_i * [y_i * log(p_i) + (1-y_i) * log(1-p_i)])
+```math
+\text{weighted\_loss} = -\sum \bigl( w_i \cdot [y_i \log(p_i) + (1-y_i) \log(1-p_i)] \bigr)
 ```
 
-where w_i depends on the class of sample i.
+where $w_i$ depends on the class of sample $i$.
 
 Class weights are mathematically equivalent to oversampling in expectation, but without creating new data points. This makes them faster and avoids the overfitting risk of duplicated samples.
 
 ### Threshold Tuning
 
-Most classifiers output a probability. The default threshold is 0.5: if P(positive) >= 0.5, predict positive. But 0.5 is arbitrary. When classes are imbalanced, the optimal threshold is usually much lower.
+Most classifiers output a probability. The default threshold is 0.5: if $P(\text{positive}) \ge 0.5$, predict positive. But 0.5 is arbitrary. When classes are imbalanced, the optimal threshold is usually much lower.
 
 The process:
 1. Train a model
@@ -172,7 +174,7 @@ flowchart LR
     E --> F[Use in Production]
 ```
 
-A model might output P(fraud) = 0.15 for a fraudulent transaction. At threshold 0.5, this is classified as not fraud. At threshold 0.10, it is correctly caught. The probability calibration matters less than the ranking -- as long as fraud gets higher probabilities than non-fraud, there exists a threshold that separates them.
+A model might output $P(\text{fraud}) = 0.15$ for a fraudulent transaction. At threshold 0.5, this is classified as not fraud. At threshold 0.10, it is correctly caught. The probability calibration matters less than the ranking -- as long as fraud gets higher probabilities than non-fraud, there exists a threshold that separates them.
 
 ### Cost-Sensitive Learning
 
@@ -180,8 +182,8 @@ Generalization of class weights. Instead of uniform costs, assign specific miscl
 
 | | Predict Positive | Predict Negative |
 |--|---|---|
-| Actually Positive | 0 (correct) | C_FN = 100 |
-| Actually Negative | C_FP = 1 | 0 (correct) |
+| Actually Positive | 0 (correct) | $C_{\text{FN}} = 100$ |
+| Actually Negative | $C_{\text{FP}} = 1$ | 0 (correct) |
 
 Missing a fraudulent transaction (FN) costs 100x more than a false alarm (FP). The model optimizes for total cost, not total error count.
 
@@ -453,8 +455,14 @@ w_cw, b_cw = logistic_regression_weighted(
 probs_cw = sigmoid(X_test @ w_cw + b_cw)
 preds_cw = (probs_cw >= 0.5).astype(int)
 
-# Threshold tuning (tune on held-out validation set, not test set)
-probs_val = sigmoid(X_val @ w_cw + b_cw)
+# Threshold tuning (tune on a validation slice of the training set, not the test set)
+val_split = int(0.75 * len(y_train))
+X_tr, X_val = X_train[:val_split], X_train[val_split:]
+y_tr, y_val = y_train[:val_split], y_train[val_split:]
+w_val, b_val = logistic_regression_weighted(
+    X_tr, y_tr, compute_class_weights(y_tr), lr=0.1, epochs=300
+)
+probs_val = sigmoid(X_val @ w_val + b_val)
 best_thresh, best_f1 = find_optimal_threshold(y_val, probs_val, metric="f1")
 preds_thresh = (probs_cw >= best_thresh).astype(int)
 ```

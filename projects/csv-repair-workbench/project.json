@@ -1,0 +1,108 @@
+{
+  "id": "csv-repair-workbench",
+  "title": "CSV Repair Workbench",
+  "level": 1,
+  "languages": [
+    "Python"
+  ],
+  "source": "core",
+  "tagline": "Fix messy tables without losing the original cells.",
+  "summary": "Help a spreadsheet owner repair inconsistent labels, dates and missing values through an explicit sequence of transformations. Preview every changed cell, keep ambiguous cases for review, and export a cleaned CSV with a reusable transformation recipe and HTML comparison.",
+  "prerequisiteProjects": [],
+  "status": "ready",
+  "hours": 8,
+  "prerequisites": [
+    "Python 3.10+; lists, dictionaries and functions"
+  ],
+  "skills": [
+    "Profile columns and retain original cells",
+    "Propose explicit normalization rules",
+    "Preview changes and review ambiguous values",
+    "Export a reusable repair recipe and cleaned table"
+  ],
+  "youWillBuild": "cleaned.csv, recipe.json and a cell-level HTML before/after report",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "overviewFigure": "pj-csv-repair-workbench-1",
+  "figures": true,
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.json",
+      "--output",
+      "demo-output"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-profile",
+      "title": "Profile columns and retain original cells",
+      "summary": "Retain exact source cells while counting missing and distinct values.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "starter",
+      "concepts": [
+        "CSV parsing",
+        "provenance"
+      ],
+      "figure": "pj-csv-repair-workbench-1"
+    },
+    {
+      "id": "02-rules",
+      "title": "Propose explicit normalization rules",
+      "summary": "Build an explicit ordered recipe from supplied policy.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "normalization",
+        "ordered rules"
+      ],
+      "figure": "pj-csv-repair-workbench-2"
+    },
+    {
+      "id": "03-preview",
+      "title": "Preview changes and review ambiguous values",
+      "summary": "Show every changed cell and quarantine uncertain dates.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "ambiguity",
+        "cell diff"
+      ],
+      "figure": "pj-csv-repair-workbench-3"
+    },
+    {
+      "id": "04-export",
+      "title": "Export a reusable repair recipe and cleaned table",
+      "summary": "Replay the recipe and validate human cell decisions.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "review receipts",
+        "CSV export"
+      ],
+      "figure": "pj-csv-repair-workbench-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

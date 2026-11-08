@@ -312,12 +312,11 @@
       'The ranking that survives across the MM1, Idefics2, Cambrian-1, and Prismatic ablation tables. Data mixture moves benchmarks most, the image encoder is next, and the connector, the knob most papers obsess over, matters least. When a VLM underperforms, reach for the tallest fader first.');
   }
 
-  // ── l5-onevision-budget: one fixed budget, three packings ──
   function onevisionBudget(host) {
     var svg = svgEl('svg', { viewBox: '0 0 520 230' });
     var g = svgEl('g');
     g.appendChild(txt(60, 66, '0', 8.5, MUTE, 'middle'));
-    g.appendChild(txt(460, 66, '~3-4K visual tokens', 8.5, MUTE, 'end'));
+    g.appendChild(txt(460, 66, '~6-9K visual tokens max', 8.5, MUTE, 'end'));
     g.appendChild(svgEl('rect', { x: 60, y: 78, width: 400, height: 58, fill: 'none', stroke: INK, 'stroke-width': 1.4 }));
     function pack(rects, label, vals, times) {
       var p = svgEl('g', { opacity: 0 });
@@ -328,17 +327,17 @@
       g.appendChild(p);
     }
     pack([svgEl('rect', { x: 66, y: 84, width: 310, height: 46, fill: BP, opacity: 0.75 })],
-      'single image: AnyRes tiles, ~2900 tok', '0;1;1;0;0', '0;0.05;0.3;0.34;1');
+      'single image: AnyRes-Max-9, up to 7290 tok', '0;1;1;0;0', '0;0.05;0.3;0.34;1');
     var multi = [], i;
     for (i = 0; i < 6; i++) { multi.push(svgEl('rect', { x: 66 + i * 64, y: 84, width: 56, height: 46, fill: BP, opacity: 0.55 })); }
-    pack(multi, 'multi-image: 6 images x 729 tok each', '0;0;1;1;0;0', '0;0.333;0.373;0.63;0.67;1');
+    pack(multi, 'multi-image: 6 images x 729 tok (cap 12)', '0;0;1;1;0;0', '0;0.333;0.373;0.63;0.67;1');
     var vid = [];
     for (i = 0; i < 12; i++) { vid.push(svgEl('rect', { x: 66 + i * 32, y: 84, width: 26, height: 46, fill: BP, opacity: 0.4 })); }
-    pack(vid, 'video: 32 frames x 81 tok, pooled', '0;0;1;1;0', '0;0.667;0.707;0.96;1');
+    pack(vid, 'video: 32 frames x 196 tok, pooled', '0;0;1;1;0', '0;0.667;0.707;0.96;1');
     entry(g, 260, 115);
     svg.appendChild(g);
     card(host, 'ONEVISION TOKEN BUDGET', 'same jar, three packings', svg,
-      'LLaVA-OneVision holds the visual-token budget roughly constant at a few thousand tokens per sample and just repacks it: one image at high AnyRes resolution, several images at moderate resolution, or 32 video frames pooled down to 81 tokens each. Because every scenario costs about the same, one model trains on all three without any of them dominating.');
+      'LLaVA-OneVision keeps the maximum visual-token count per sample in the same band, roughly 6K to 9K, and just repacks it: one image at high AnyRes resolution, up to 12 images at moderate resolution, or 32 video frames pooled down to 196 tokens each. Because every scenario costs about the same, one model trains on all three without any of them dominating.');
   }
 
   // ── l5-native-pretrain: bolted-on wall vs interleaved wall ──

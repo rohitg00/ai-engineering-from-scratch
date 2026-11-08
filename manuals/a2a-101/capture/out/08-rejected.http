@@ -1,0 +1,65 @@
+### 1 · SendMessage: deploy to production
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41243
+Content-Type: application/json
+A2A-Version: 1.0
+Authorization: Bearer dpl_test_7c1e4b
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "6018366c-f658-47a7-9ed3-4fe53a096533",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "Deploy build 2026.10.06-1 to production"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "task": {
+      "id": "23cf3710-c193-457d-93d1-e93e1c860a53",
+      "contextId": "cf08459c-e7bd-4736-92d7-2fe3f6e7a1f6",
+      "status": {
+        "state": "TASK_STATE_REJECTED",
+        "message": {
+          "messageId": "12b263fc-78eb-4b49-997f-e495cca7813c",
+          "contextId": "cf08459c-e7bd-4736-92d7-2fe3f6e7a1f6",
+          "taskId": "23cf3710-c193-457d-93d1-e93e1c860a53",
+          "role": "ROLE_AGENT",
+          "parts": [
+            {
+              "text": "Production deploys are outside this agent's policy. Use the release train."
+            }
+          ]
+        },
+        "timestamp": "2026-10-06T09:00:01.750Z"
+      },
+      "history": [
+        {
+          "messageId": "6018366c-f658-47a7-9ed3-4fe53a096533",
+          "contextId": "cf08459c-e7bd-4736-92d7-2fe3f6e7a1f6",
+          "taskId": "23cf3710-c193-457d-93d1-e93e1c860a53",
+          "role": "ROLE_USER",
+          "parts": [
+            {
+              "text": "Deploy build 2026.10.06-1 to production"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

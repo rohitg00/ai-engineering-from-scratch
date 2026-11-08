@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-3-3b-title fig-3-3b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-3b-title">Two groups of the shared-prefix benchmark in one tree</title>
+  <desc id="fig-3-3b-desc">A radix tree with a root that has lock count 1 forever. Under it, the group 1 system prompt node holds 2,048 tokens and has lock count 2, because two running requests use it. It splits into two leaves of 128 question tokens, each with lock count 1. A second branch holds the group 2 system prompt with lock count 0, so it is cached and evictable. Eviction removes leaves with lock count 0 first, from the tip toward the root.</desc>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="250" y="20" width="140" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="320" y="37.25" font-size="12.5" text-anchor="middle" font-weight="700">root</text>
+  <text x="320" y="54.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">lock 1, forever</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="60" y="110" width="240" height="52" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="180" y="131.25" font-size="12.5" text-anchor="middle" font-weight="700">group 1 system prompt</text>
+  <text x="180" y="148.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">2,048 tokens · lock 2</text>
+  <line x1="290" y1="64" x2="180" y2="110" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2"/>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="216" width="150" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="95" y="237.25" font-size="12.5" text-anchor="middle" font-weight="700">question A</text>
+  <text x="95" y="254.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">128 tokens · lock 1</text>
+  <rect x="190" y="216" width="150" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="265" y="237.25" font-size="12.5" text-anchor="middle" font-weight="700">question B</text>
+  <text x="265" y="254.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">128 tokens · lock 1</text>
+  <line x1="140" y1="162" x2="95" y2="216" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2"/>
+  <line x1="220" y1="162" x2="265" y2="216" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2"/>
+  <text x="372" y="236" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">match_prefix splits a node where</text>
+  <text x="372" y="252" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">two token runs stop agreeing.</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="360" y="110" width="240" height="52" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-dasharray="5 4"/>
+  <text x="480" y="131.25" font-size="12.5" text-anchor="middle" font-weight="700">group 2 system prompt</text>
+  <text x="480" y="148.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">2,048 tokens · lock 0 · evictable</text>
+  <line x1="350" y1="64" x2="480" y2="110" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2"/>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="300" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A lock count above 0 protects the whole path to the root. evict frees leaves with lock 0</text>
+  <text x="20" y="318" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">first, oldest access time first, and moves up the branch.</text>
+  </g>
+</svg>

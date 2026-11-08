@@ -34,9 +34,9 @@ You need four things:
 
 ### Graphs: Nodes and Edges
 
-A graph G = (V, E) consists of vertices (nodes) V and edges E. Each edge connects two nodes.
+A graph $G = (V, E)$ consists of vertices (nodes) $V$ and edges $E$. Each edge connects two nodes.
 
-**Directed vs undirected.** In an undirected graph, edge (u, v) means u connects to v AND v connects to u. In a directed graph (digraph), edge (u, v) means u points to v, but not necessarily the reverse.
+**Directed vs undirected.** In an undirected graph, edge $(u, v)$ means $u$ connects to $v$ AND $v$ connects to $u$. In a directed graph (digraph), edge $(u, v)$ means $u$ points to $v$, but not necessarily the reverse.
 
 **Weighted vs unweighted.** In an unweighted graph, edges either exist or they don't. In a weighted graph, each edge has a numerical weight -- a distance, a cost, a strength.
 
@@ -49,14 +49,13 @@ A graph G = (V, E) consists of vertices (nodes) V and edges E. Each edge connect
 
 ### The Adjacency Matrix
 
-The adjacency matrix A is the core representation. For a graph with n nodes:
+The adjacency matrix $A$ is the core representation. For a graph with $n$ nodes:
 
-```
-A[i][j] = 1    if there is an edge from node i to node j
-A[i][j] = 0    otherwise
+```math
+A[i][j] = \begin{cases} 1 & \text{if there is an edge from node } i \text{ to node } j \\ 0 & \text{otherwise} \end{cases}
 ```
 
-For undirected graphs, A is symmetric: A[i][j] = A[j][i]. For weighted graphs, A[i][j] = weight of edge (i, j).
+For undirected graphs, $A$ is symmetric: $A[i][j] = A[j][i]$. For weighted graphs, $A[i][j]$ = weight of edge $(i, j)$.
 
 **Example -- a triangle:**
 
@@ -69,20 +68,22 @@ A = [[0, 1, 1],
      [1, 1, 0]]
 ```
 
-The adjacency matrix is the input to every GNN. Matrix operations on A correspond to operations on the graph.
+The adjacency matrix is the input to every GNN. Matrix operations on $A$ correspond to operations on the graph.
 
 ### Degree
 
 The degree of a node is the number of edges connected to it. For directed graphs, you have in-degree (edges coming in) and out-degree (edges going out).
 
-The degree matrix D is diagonal:
+The degree matrix $D$ is diagonal:
 
-```
-D[i][i] = degree of node i
-D[i][j] = 0    for i != j
+```math
+\begin{aligned}
+D[i][i] &= \text{degree of node } i \\
+D[i][j] &= 0 \quad \text{for } i \ne j
+\end{aligned}
 ```
 
-For the triangle example: D = diag(2, 2, 2) because every node connects to two others.
+For the triangle example: $D = \mathop{\mathrm{diag}}(2, 2, 2)$ because every node connects to two others.
 
 Degree tells you about node importance. High degree = hub node. The degree distribution of a network reveals its structure. Social networks follow power laws (few hubs, many leaf nodes). Random graphs have Poisson-distributed degrees.
 
@@ -132,19 +133,17 @@ DFS is useful for:
 
 ### The Graph Laplacian
 
-L = D - A. The most important matrix in spectral graph theory.
+$L = D - A$. The most important matrix in spectral graph theory.
 
 For the triangle:
 
-```
-D = [[2, 0, 0],    A = [[0, 1, 1],    L = [[2, -1, -1],
-     [0, 2, 0],         [1, 0, 1],         [-1, 2, -1],
-     [0, 0, 2]]         [1, 1, 0]]         [-1, -1,  2]]
+```math
+D = \begin{bmatrix} 2 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 2 \end{bmatrix} \qquad A = \begin{bmatrix} 0 & 1 & 1 \\ 1 & 0 & 1 \\ 1 & 1 & 0 \end{bmatrix} \qquad L = \begin{bmatrix} 2 & -1 & -1 \\ -1 & 2 & -1 \\ -1 & -1 & 2 \end{bmatrix}
 ```
 
 The Laplacian has remarkable properties:
 
-1. **L is positive semi-definite.** All eigenvalues are >= 0.
+1. **$L$ is positive semi-definite.** All eigenvalues are $\ge 0$.
 
 2. **The number of zero eigenvalues equals the number of connected components.** A connected graph has exactly one zero eigenvalue. A graph with 3 disconnected components has three zero eigenvalues.
 
@@ -174,12 +173,12 @@ graph TD
 The eigenvalues of the adjacency matrix and Laplacian reveal structural properties without any traversal.
 
 **Spectral clustering** works like this:
-1. Compute the Laplacian L
-2. Find the k smallest eigenvectors of L (skip the first, which is all-ones for connected graphs)
+1. Compute the Laplacian $L$
+2. Find the $k$ smallest eigenvectors of $L$ (skip the first, which is all-ones for connected graphs)
 3. Use those eigenvectors as new coordinates for each node
-4. Run k-means on those coordinates
+4. Run $k$-means on those coordinates
 
-Why does this work? The eigenvectors of L encode the "smoothest" functions on the graph. Nodes that are well-connected get similar eigenvector values. Nodes separated by a bottleneck get different values. The eigenvectors naturally separate clusters.
+Why does this work? The eigenvectors of $L$ encode the "smoothest" functions on the graph. Nodes that are well-connected get similar eigenvector values. Nodes separated by a bottleneck get different values. The eigenvectors naturally separate clusters.
 
 **Random walk connection.** The normalized Laplacian relates to random walks on the graph. The stationary distribution of a random walk is proportional to node degree. The mixing time (how fast the walk converges) depends on the spectral gap.
 
@@ -187,25 +186,25 @@ Why does this work? The eigenvectors of L encode the "smoothest" functions on th
 
 The core operation of Graph Neural Networks. Each node collects messages from its neighbors, aggregates them, and updates its own state.
 
-```
-h_v^(k+1) = UPDATE(h_v^(k), AGGREGATE({h_u^(k) : u in neighbors(v)}))
+```math
+h_v^{(k+1)} = \text{UPDATE}\left(h_v^{(k)}, \text{AGGREGATE}\left(\{h_u^{(k)} : u \in \text{neighbors}(v)\}\right)\right)
 ```
 
 In the simplest form, AGGREGATE = mean, and UPDATE = linear transform + activation:
 
-```
-h_v^(k+1) = sigma(W * mean({h_u^(k) : u in neighbors(v)}))
-```
-
-This is matrix multiplication in disguise. If H is the matrix of all node features and A is the adjacency matrix:
-
-```
-H^(k+1) = sigma(A_norm * H^(k) * W)
+```math
+h_v^{(k+1)} = \sigma\left(W \cdot \text{mean}\left(\{h_u^{(k)} : u \in \text{neighbors}(v)\}\right)\right)
 ```
 
-where A_norm is the normalized adjacency matrix (each row sums to 1).
+This is matrix multiplication in disguise. If $H$ is the matrix of all node features and $A$ is the adjacency matrix:
 
-One round of message passing lets each node "see" its immediate neighbors. Two rounds let it see neighbors of neighbors. K rounds give each node information from its K-hop neighborhood.
+```math
+H^{(k+1)} = \sigma\left(A_{\text{norm}} H^{(k)} W\right)
+```
+
+where $A_{\text{norm}}$ is the normalized adjacency matrix (each row sums to 1).
+
+One round of message passing lets each node "see" its immediate neighbors. Two rounds let it see neighbors of neighbors. $K$ rounds give each node information from its $K$-hop neighborhood.
 
 ```mermaid
 graph LR
@@ -267,6 +266,9 @@ class Graph:
     def degree(self, node):
         return len(self.adj[node])
 
+    def weighted_degree(self, node):
+        return sum(self.adj[node].values())
+
     def adjacency_matrix(self):
         import numpy as np
         A = np.zeros((self.n, self.n))
@@ -279,7 +281,7 @@ class Graph:
         import numpy as np
         D = np.zeros((self.n, self.n))
         for i in range(self.n):
-            D[i][i] = self.degree(i)
+            D[i][i] = self.weighted_degree(i)
         return D
 
     def laplacian(self):
@@ -326,7 +328,7 @@ def dfs(graph, start):
     return order
 ```
 
-BFS uses a deque (double-ended queue) for O(1) popleft. DFS uses a list as a stack. Both visit every node exactly once -- O(V + E) time.
+BFS uses a deque (double-ended queue) for $O(1)$ popleft. DFS uses a list as a stack. Both visit every node exactly once -- $O(V + E)$ time.
 
 ### Step 3: Connected components and Laplacian eigenvalues
 
@@ -369,7 +371,7 @@ def spectral_clustering(graph, k=2):
     return labels
 ```
 
-For k=2, the sign of the Fiedler vector splits the graph into two clusters. For k>2, you would run k-means on the first k eigenvectors (excluding the trivial all-ones eigenvector).
+For $k=2$, the sign of the Fiedler vector splits the graph into two clusters. For $k>2$, you would run $k$-means on the first $k$ eigenvectors (excluding the trivial all-ones eigenvector).
 
 ### Step 5: Message passing
 
@@ -462,13 +464,13 @@ This lesson produces:
 | Connected components | Preprocessing, handling disconnected graphs |
 | PageRank | Node importance ranking, attention initialization |
 
-GNNs deserve special mention. The graph convolution operation in GCN (Kipf & Welling, 2017) uses the adjacency matrix with added self-loops, A_hat = A + I:
+GNNs deserve special mention. The graph convolution operation in GCN (Kipf & Welling, 2017) uses the adjacency matrix with added self-loops, $\hat{A} = A + I$:
 
-```text
-H^(l+1) = sigma(D_hat^(-1/2) * A_hat * D_hat^(-1/2) * H^(l) * W^(l))
+```math
+H^{(l+1)} = \sigma\left(\hat{D}^{-1/2} \hat{A} \hat{D}^{-1/2} H^{(l)} W^{(l)}\right)
 ```
 
-where A_hat = A + I (adjacency plus self-loops) and D_hat is the degree matrix of A_hat. The self-loops ensure each node includes its own features during aggregation. This is exactly message passing with symmetric normalization. D_hat^(-1/2) * A_hat * D_hat^(-1/2) is the normalized adjacency matrix. The Laplacian shows up because this normalization is related to L_sym = I - D^(-1/2) * A * D^(-1/2). Understanding the Laplacian means understanding why GCNs work.
+where $\hat{A} = A + I$ (adjacency plus self-loops) and $\hat{D}$ is the degree matrix of $\hat{A}$. The self-loops ensure each node includes its own features during aggregation. This is exactly message passing with symmetric normalization. $\hat{D}^{-1/2} \hat{A} \hat{D}^{-1/2}$ is the normalized adjacency matrix. The Laplacian shows up because this normalization is related to $L_{\text{sym}} = I - D^{-1/2} A D^{-1/2}$. Understanding the Laplacian means understanding why GCNs work.
 
 ## Exercises
 
@@ -482,15 +484,27 @@ where A_hat = A + I (adjacency plus self-loops) and D_hat is the degree matrix o
 
 5. **Analyze a real-world graph.** Use the Karate Club graph (34 nodes, 78 edges). Compute degree distribution, Laplacian eigenvalues, and spectral clustering. Compare the spectral clustering result to the known ground truth split.
 
+### Hints
+
+**Exercise 1.** Use the formula from the exercise. A node without outgoing edges must share its score equally with all nodes, or the total falls below 1. Check that the scores add up to 1 after each step and compare your result with `pagerank(graph)`.
+
+**Exercise 2.** Build two cliques with `add_edge`, connect them with one edge, and call `spectral_clustering(graph, k=2)`. Check that each clique gets one label. As you add cross edges, print the second smallest eigenvalue of `laplacian()`, which grows as the two groups join.
+
+**Exercise 3.** Keep a priority queue with `heapq` and always expand the node with the smallest known distance. Make every weight 1 and check that each Dijkstra distance equals the BFS layer of that node from `bfs(graph, start)`.
+
+**Exercise 4.** Use the identity matrix as `features`, so that each column marks one node, and apply `message_passing` twice. Then the nonzero entries in the row for node $v$ show which nodes reached $v$. Compare that set with the nodes within distance 2 from a breadth first search.
+
+**Exercise 5.** `networkx.karate_club_graph()` gives the edge list and the ground truth in the node attribute `club`. Copy the edges into a `Graph` and check that it has 34 nodes and 78 edges. Compare the labels from `spectral_clustering` with the `club` values, and allow the two label names to be swapped.
+
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Graph | "Nodes and edges" | A mathematical structure G=(V,E) encoding pairwise relationships |
-| Adjacency matrix | "The connection table" | An n x n matrix where A[i][j] = 1 if nodes i and j are connected |
+| Graph | "Nodes and edges" | A mathematical structure $G=(V,E)$ encoding pairwise relationships |
+| Adjacency matrix | "The connection table" | An $n \times n$ matrix where $A[i][j] = 1$ if nodes $i$ and $j$ are connected |
 | Degree | "How connected a node is" | The number of edges touching a node |
-| Laplacian | "D minus A" | L = D - A, the matrix whose eigenvalues reveal graph structure |
-| Fiedler value | "The algebraic connectivity" | The smallest non-zero eigenvalue of L, measuring how well-connected the graph is |
+| Laplacian | "D minus A" | $L = D - A$, the matrix whose eigenvalues reveal graph structure |
+| Fiedler value | "The algebraic connectivity" | The smallest non-zero eigenvalue of $L$, measuring how well-connected the graph is |
 | BFS | "Level-by-level search" | Traversal that visits all neighbors before going deeper, finds shortest paths |
 | DFS | "Go deep first" | Traversal that follows one path to its end before backtracking |
 | Message passing | "Nodes talk to neighbors" | Each node aggregates information from its neighbors, the core of GNNs |

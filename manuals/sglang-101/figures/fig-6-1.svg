@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 318" role="img" aria-labelledby="fig-6-1-title fig-6-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-1-title">One TP group of eight GPUs, split three ways</title>
+  <desc id="fig-6-1-desc">Eight GPUs g0 to g7 drawn in three rows. With tp-size 8 every layer is split across all eight. With attn-dp-size 4 the attention layers run in four groups of two GPUs, g0 and g1, g2 and g3, g4 and g5, g6 and g7, each with its own scheduler and KV cache. With ep-size 8 the expert layers use the same eight GPUs as one group.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FLAG AND LAYER</text>
+  <text x="196" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE SAME EIGHT GPUS</text>
+  <text x="20" y="52" font-size="12" font-weight="700">--tp-size 8</text>
+  <text x="20" y="70" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dense and FFN layers</text>
+  <rect x="194" y="30" width="438" height="80" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="200" y="40" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="222" y="56.6" font-size="12" text-anchor="middle" font-weight="700">g0</text>
+  <rect x="254" y="40" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="276" y="56.6" font-size="12" text-anchor="middle" font-weight="700">g1</text>
+  <rect x="308" y="40" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="330" y="56.6" font-size="12" text-anchor="middle" font-weight="700">g2</text>
+  <rect x="362" y="40" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="384" y="56.6" font-size="12" text-anchor="middle" font-weight="700">g3</text>
+  <rect x="416" y="40" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="438" y="56.6" font-size="12" text-anchor="middle" font-weight="700">g4</text>
+  <rect x="470" y="40" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="492" y="56.6" font-size="12" text-anchor="middle" font-weight="700">g5</text>
+  <rect x="524" y="40" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="546" y="56.6" font-size="12" text-anchor="middle" font-weight="700">g6</text>
+  <rect x="578" y="40" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="600" y="56.6" font-size="12" text-anchor="middle" font-weight="700">g7</text>
+  <text x="200" y="96" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one TP group: each weight matrix is cut in 8</text>
+  <text x="20" y="142" font-size="12" font-weight="700">--attn-dp-size 4</text>
+  <text x="20" y="160" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">attention layers</text>
+  <rect x="196" y="120" width="106" height="80" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="202" y="186" font-size="11" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">group 0</text>
+  <rect x="304" y="120" width="106" height="80" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="310" y="186" font-size="11" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">group 1</text>
+  <rect x="412" y="120" width="106" height="80" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="418" y="186" font-size="11" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">group 2</text>
+  <rect x="520" y="120" width="106" height="80" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="526" y="186" font-size="11" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">group 3</text>
+  <rect x="200" y="130" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="222" y="146.6" font-size="12" text-anchor="middle" font-weight="700">g0</text>
+  <rect x="254" y="130" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="276" y="146.6" font-size="12" text-anchor="middle" font-weight="700">g1</text>
+  <rect x="308" y="130" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="330" y="146.6" font-size="12" text-anchor="middle" font-weight="700">g2</text>
+  <rect x="362" y="130" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="384" y="146.6" font-size="12" text-anchor="middle" font-weight="700">g3</text>
+  <rect x="416" y="130" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="438" y="146.6" font-size="12" text-anchor="middle" font-weight="700">g4</text>
+  <rect x="470" y="130" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="492" y="146.6" font-size="12" text-anchor="middle" font-weight="700">g5</text>
+  <rect x="524" y="130" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="546" y="146.6" font-size="12" text-anchor="middle" font-weight="700">g6</text>
+  <rect x="578" y="130" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="600" y="146.6" font-size="12" text-anchor="middle" font-weight="700">g7</text>
+  <text x="20" y="220" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">each group has its own scheduler, requests, and KV cache</text>
+  <text x="20" y="252" font-size="12" font-weight="700">--ep-size 8</text>
+  <text x="20" y="270" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">expert layers</text>
+  <rect x="194" y="236" width="438" height="72" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="200" y="244" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="222" y="260.6" font-size="12" text-anchor="middle" font-weight="700">g0</text>
+  <rect x="254" y="244" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="276" y="260.6" font-size="12" text-anchor="middle" font-weight="700">g1</text>
+  <rect x="308" y="244" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="330" y="260.6" font-size="12" text-anchor="middle" font-weight="700">g2</text>
+  <rect x="362" y="244" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="384" y="260.6" font-size="12" text-anchor="middle" font-weight="700">g3</text>
+  <rect x="416" y="244" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="438" y="260.6" font-size="12" text-anchor="middle" font-weight="700">g4</text>
+  <rect x="470" y="244" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="492" y="260.6" font-size="12" text-anchor="middle" font-weight="700">g5</text>
+  <rect x="524" y="244" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="546" y="260.6" font-size="12" text-anchor="middle" font-weight="700">g6</text>
+  <rect x="578" y="244" width="44" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="600" y="260.6" font-size="12" text-anchor="middle" font-weight="700">g7</text>
+  <text x="200" y="296" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one expert group, equal to the TP group</text>
+</svg>

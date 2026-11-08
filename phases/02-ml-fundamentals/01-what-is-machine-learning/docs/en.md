@@ -176,7 +176,7 @@ flowchart LR
 
 The test set is sacred. You look at it exactly once. If you keep adjusting your model based on test performance, you are effectively training on the test set and your reported numbers are meaningless.
 
-For small datasets, use k-fold cross-validation: split data into k parts, train on k-1 parts, validate on the remaining part, rotate, and average results.
+For small datasets, use k-fold cross-validation: split data into $k$ parts, train on $k-1$ parts, validate on the remaining part, rotate, and average results.
 
 ### Overfitting vs Underfitting
 
@@ -242,9 +242,9 @@ This is the mathematical framework behind overfitting and underfitting.
 | Just right | Medium | Medium | Good generalization |
 | Too high (degree-20 polynomial for 10 points) | Low | High | Overfitting |
 
-Total error = Bias^2 + Variance + Irreducible noise
+$\text{Total error} = \text{Bias}^2 + \text{Variance} + \text{Irreducible noise}$
 
-You cannot reduce irreducible noise (it is randomness in the data itself). You want to find the sweet spot where bias^2 + variance is minimized.
+You cannot reduce irreducible noise (it is randomness in the data itself). You want to find the sweet spot where $\text{bias}^2 + \text{variance}$ is minimized.
 
 ### No Free Lunch Theorem
 

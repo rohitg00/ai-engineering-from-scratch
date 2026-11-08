@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 426" role="img" aria-labelledby="fig-4-2-title fig-4-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-2-title">The private runtime root of one Ghidra session</title>
+  <desc id="fig-4-2-desc">One directory named rea-ghidra- plus a random suffix, created by GhidraClient start() and deleted after close_binary. It holds six Ghidra directories, the hashed copy of the target named target-01b5d08b08fb.bin, the session.json descriptor with seven keys, the bridge.sock Unix socket, ownership.json, and the ghidra.log and script.log files.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SESSION ROOT · ONE DIRECTORY PER START()</text>
+  <rect x="20" y="26" width="600" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="46.25" font-size="12.5" text-anchor="middle" font-weight="700">rea-ghidra-&lt;random&gt;</text>
+  <text x="320" y="63.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">created by GhidraClient start(), deleted after close_binary</text>
+  <line x1="40" y1="76" x2="40" y2="392" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <line x1="40" y1="122" x2="58" y2="122" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <rect x="60" y="100" width="560" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="72" y="117.1" font-size="12" font-weight="700">project/ home/ tmp/ cache/ config/ data/</text>
+  <text x="72" y="134.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rea-project imported with -readOnly -deleteProject · private HOME, tmpdir, caches</text>
+  <line x1="40" y1="176" x2="58" y2="176" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <rect x="60" y="154" width="560" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="72" y="171.1" font-size="12" font-weight="700">target-01b5d08b08fb.bin</text>
+  <text x="72" y="188.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">copy of ledger-arm64-O1, hashed while copied · the Ghidra document</text>
+  <line x1="40" y1="230" x2="58" y2="230" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <rect x="60" y="208" width="560" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="72" y="225.1" font-size="12" font-weight="700">session.json</text>
+  <text x="72" y="242.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">transport, endpoint_path, token, run_id, target_sha256, provider_version, profile_digest</text>
+  <line x1="40" y1="284" x2="58" y2="284" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <rect x="60" y="262" width="560" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="72" y="279.1" font-size="12" font-weight="700">bridge.sock</text>
+  <text x="72" y="296.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Unix socket bound by the bridge, mode rw-------, one client accepted</text>
+  <line x1="40" y1="338" x2="58" y2="338" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <rect x="60" y="316" width="560" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="72" y="333.1" font-size="12" font-weight="700">ownership.json</text>
+  <text x="72" y="350.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">process ownership record for verified cancellation</text>
+  <line x1="40" y1="392" x2="58" y2="392" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <rect x="60" y="370" width="560" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="72" y="387.1" font-size="12" font-weight="700">ghidra.log · script.log</text>
+  <text x="72" y="404.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the -log and -scriptlog files of analyzeHeadless</text>
+</svg>

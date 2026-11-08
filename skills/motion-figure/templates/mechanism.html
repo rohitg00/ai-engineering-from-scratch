@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LRU cache figure</title>
+<script>if (window.matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.setAttribute('data-theme', 'dark');</script>
+<style>
+:root{--bg:#fafaf5;--bg-surface:#f3f1e8;--ink:#1a1a1a;--ink-soft:#4a4a4a;--ink-mute:#6f6f6a;--rule-soft:rgba(26,26,26,.16);--blueprint:#3553ff;--good:#1f8a65;--bad:#cf2d56;--font-mono:'JetBrains Mono',ui-monospace,monospace;--font-body:Georgia,serif;--ease:cubic-bezier(0.23,1,0.32,1);}
+[data-theme="dark"]{--bg:#0a0d1a;--bg-surface:#131830;--ink:#e8e6dc;--ink-soft:#a8a6a0;--ink-mute:#8a8882;--rule-soft:rgba(232,230,220,.18);--blueprint:#6b8eff;--good:#3fb950;--bad:#f0708a;}
+body{margin:0;padding:24px 16px;background:var(--bg);color:var(--ink);font-family:var(--font-body);}
+.fig{max-width:720px;margin:0 auto;border:1px solid var(--rule-soft);background:var(--bg);}
+.fighd{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 14px;border-bottom:1px solid var(--rule-soft);background:var(--bg-surface);font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);}
+.figbody{padding:16px 14px;display:grid;gap:14px;}
+.fignote{margin:0;font-size:15px;line-height:1.5;color:var(--ink-soft);}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:var(--font-mono);font-size:12px;}
+button{min-height:40px;padding:0 14px;border:1px solid var(--ink);background:var(--bg);color:var(--ink);font:inherit;font-family:var(--font-mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:transform 140ms var(--ease),background-color 160ms ease,color 160ms ease;}
+button:active{transform:scale(0.96);}
+button[aria-pressed="true"]{background:var(--ink);color:var(--bg);}
+@media (hover:hover) and (pointer:fine){button:hover{border-color:var(--blueprint);}}
+.panes{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.pane{border:1px solid var(--rule-soft);padding:10px;min-width:0;}
+.pane h3{margin:0 0 8px;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);}
+.row{display:flex;justify-content:space-between;gap:10px;padding:6px 8px;margin-bottom:4px;border:1px solid var(--rule-soft);font-family:var(--font-mono);font-size:12.5px;transition:transform 240ms var(--ease),opacity 240ms var(--ease),border-color 160ms ease;}
+.row.enter{opacity:0;transform:translateY(6px);}
+.row.now{border-color:var(--blueprint);}
+.row .tag{color:var(--ink-mute);}
+.row .hit{color:var(--good);}
+.row .miss{color:var(--bad);}
+.verdict{margin:0;padding:10px 12px;border:1px solid var(--rule-soft);background:var(--bg-surface);font-family:var(--font-mono);font-size:12.5px;line-height:1.5;}
+@media (max-width:600px){.panes{grid-template-columns:1fr;}}
+@media (prefers-reduced-motion:reduce){.row,button{transition:none;}}
+</style>
+</head>
+<body>
+<figure class="fig" id="lru">
+  <div class="fighd"><span>LRU cache · 10 requests</span><button type="button" data-replay>Replay</button></div>
+  <div class="figbody">
+    <p class="fignote">Pick a cache size. The same ten requests run in order. Each request either finds its key in the cache or evicts the key used longest ago.</p>
+    <div class="controls" role="group" aria-label="Cache size"><span>cache size</span></div>
+    <div class="panes">
+      <div class="pane"><h3>Requests</h3><div data-log></div></div>
+      <div class="pane"><h3>Cache, newest first</h3><div data-cache></div></div>
+    </div>
+    <p class="verdict" data-verdict aria-live="polite"></p>
+  </div>
+</figure>
+<script>
+(function () {
+  var REQUESTS = ['GET /user/7', 'GET /user/9', 'GET /user/7', 'GET /cart/7', 'GET /user/2', 'GET /user/9', 'GET /user/7', 'GET /cart/7', 'GET /user/2', 'GET /user/7'];
+  var SIZES = [2, 3, 4];
+  var STEP_MS = 260;
+  var fig = document.getElementById('lru');
+  var log = fig.querySelector('[data-log]');
+  var cacheBox = fig.querySelector('[data-cache]');
+  var verdict = fig.querySelector('[data-verdict]');
+  var controls = fig.querySelector('.controls');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var size = 3;
+  var timer = 0;
+
+  function simulate(capacity) {
+    var cache = [];
+    var steps = [];
+    for (var i = 0; i < REQUESTS.length; i++) {
+      var key = REQUESTS[i];
+      var at = cache.indexOf(key);
+      var hit = at !== -1;
+      var evicted = '';
+      if (hit) cache.splice(at, 1);
+      else if (cache.length === capacity) evicted = cache.pop();
+      cache.unshift(key);
+      steps.push({ key: key, hit: hit, evicted: evicted, cache: cache.slice() });
+    }
+    return steps;
+  }
+
+  function row(left, right, rightClass, isNew) {
+    var el = document.createElement('div');
+    el.className = 'row' + (isNew ? ' enter' : '');
+    var a = document.createElement('span');
+    a.textContent = left;
+    var b = document.createElement('span');
+    b.className = rightClass;
+    b.textContent = right;
+    el.appendChild(a);
+    el.appendChild(b);
+    return el;
+  }
+
+  function show(steps, upto, animate) {
+    log.textContent = '';
+    cacheBox.textContent = '';
+    var hits = 0;
+    for (var i = 0; i <= upto; i++) {
+      if (steps[i].hit) hits += 1;
+      var r = row(steps[i].key, steps[i].hit ? 'hit' : (steps[i].evicted ? 'miss, evict ' + steps[i].evicted.replace('GET ', '') : 'miss'), steps[i].hit ? 'hit' : 'miss', animate && i === upto);
+      if (i === upto) r.className += ' now';
+      log.appendChild(r);
+    }
+    var current = upto >= 0 ? steps[upto].cache : [];
+    for (var j = 0; j < current.length; j++) cacheBox.appendChild(row(current[j], j === 0 ? 'newest' : '', 'tag', false));
+    var done = upto + 1;
+    verdict.textContent = done + ' of ' + steps.length + ' requests run. ' + hits + (hits === 1 ? ' hit, ' : ' hits, ') + (done - hits) + ((done - hits) === 1 ? ' miss.' : ' misses.') + ' Hit rate ' + (done ? Math.round(hits / done * 100) : 0) + '% at cache size ' + size + '.';
+    if (animate) {
+      var fresh = log.lastChild;
+      requestAnimationFrame(function () { requestAnimationFrame(function () { fresh.className = fresh.className.replace(' enter', ''); }); });
+    }
+  }
+
+  function run() {
+    clearTimeout(timer);
+    var steps = simulate(size);
+    if (reduced) { show(steps, steps.length - 1, false); return; }
+    var i = 0;
+    (function next() {
+      show(steps, i, true);
+      i += 1;
+      if (i < steps.length) timer = setTimeout(next, STEP_MS);
+    })();
+  }
+
+  SIZES.forEach(function (n) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = n + ' keys';
+    b.setAttribute('aria-pressed', String(n === size));
+    b.addEventListener('click', function () {
+      size = n;
+      var all = controls.querySelectorAll('button');
+      for (var k = 0; k < all.length; k++) all[k].setAttribute('aria-pressed', String(all[k] === b));
+      run();
+    });
+    controls.appendChild(b);
+  });
+  fig.querySelector('[data-replay]').addEventListener('click', run);
+
+  show(simulate(size), -1, false);
+  var observer = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting) { observer.disconnect(); run(); }
+  }, { threshold: 0.35 });
+  observer.observe(fig);
+})();
+</script>
+</body>
+</html>

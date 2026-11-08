@@ -1,0 +1,28 @@
+
+shapes-x86_64-O1-g.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <_Z8describeRK5Shapei>:
+       0: 53                           	pushq	%rbx
+       1: 89 f3                        	movl	%esi, %ebx
+       3: 48 8b 07                     	movq	(%rdi), %rax
+       6: ff 50 10                     	callq	*0x10(%rax)
+       9: 0f af c3                     	imull	%ebx, %eax
+       c: 5b                           	popq	%rbx
+       d: c3                           	retq
+       e: 66 90                        	nop
+
+0000000000000010 <main>:
+      10: 50                           	pushq	%rax
+      11: 48 8d 3d 00 00 00 00         	leaq	(%rip), %rdi            # 0x18 <main+0x8>
+		0000000000000014:  R_X86_64_PC32	.L.str-0x4
+      18: 48 8d 35 00 00 00 00         	leaq	(%rip), %rsi            # 0x1f <main+0xf>
+		000000000000001b:  R_X86_64_PC32	.L.str.2-0x4
+      1f: ba 18 00 00 00               	movl	$0x18, %edx
+      24: 31 c0                        	xorl	%eax, %eax
+      26: e8 00 00 00 00               	callq	0x2b <main+0x1b>
+		0000000000000027:  R_X86_64_PLT32	printf-0x4
+      2b: 31 c0                        	xorl	%eax, %eax
+      2d: 59                           	popq	%rcx
+      2e: c3                           	retq

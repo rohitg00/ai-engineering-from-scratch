@@ -1,0 +1,52 @@
+{
+  "title": "UI String Localization Workbench | initialize and grade",
+  "recordedAt": "2026-10-09T14:18:36Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "ui-string-localization-workbench",
+        "--init",
+        "./.project-validation/ui-string-localization-workbench/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/ui-string-localization-workbench/recording-starter\n  created  cli.ts\n  created  main.ts\n  created  sample.json\n  created  STAGE-2.md\n  created  STAGE-3.md\n  created  STAGE-4.md\nnext: python3 scripts/project_test.py ui-string-localization-workbench --stage 1 --path ./.project-validation/ui-string-localization-workbench/recording-starter\n",
+      "durationMs": 39
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "ui-string-localization-workbench",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/ui-string-localization-workbench/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "UI String Localization Workbench: grading learner\n  FAIL stage 1: Read message keys, placeholders and context (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 272
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "ui-string-localization-workbench",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/ui-string-localization-workbench/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "UI String Localization Workbench: grading solution\n  PASS stage 1: Read message keys, placeholders and context (6 tests)\n  PASS stage 2: Generate bounded translation proposals (6 tests)\n  PASS stage 3: Preview strings with supplied interpolation values (6 tests)\n  PASS stage 4: Export approved locale and unresolved questions (6 tests)\nreport: ./.project-validation/ui-string-localization-workbench/solution-final.json\n",
+      "durationMs": 957
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

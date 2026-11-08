@@ -251,7 +251,8 @@ def main() -> int:
             {"timestamp": time.time(), "probes": [{"name": n, "status": s, "detail": d} for n, s, d in probes]},
             indent=2,
         )
-        + "\\n"
+        + "\\n",
+        encoding="utf-8",
     )
     width = max(len(n) for n, _, _ in probes)
     for name, status, detail in probes:
@@ -297,7 +298,7 @@ def run_with_feedback(command: list[str], agent_note: str = "", timeout_s: float
     started = time.time()
     record: dict[str, object] = {"command": command, "agent_note": agent_note, "started_at": started}
     try:
-        completed = subprocess.run(command, capture_output=True, text=True, timeout=timeout_s)
+        completed = subprocess.run(command, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout_s)
         out, cut_out = deterministic_tail(completed.stdout)
         err, cut_err = deterministic_tail(completed.stderr)
         record.update(
@@ -319,7 +320,7 @@ def run_with_feedback(command: list[str], agent_note: str = "", timeout_s: float
     except FileNotFoundError as exc:
         record.update(stdout_tail="", stderr_tail="", exit_code=None,
                       duration_ms=int((time.time() - started) * 1000), error=str(exc))
-    with RECORD.open("a") as fh:
+    with RECORD.open("a", encoding="utf-8") as fh:
         fh.write(json.dumps(record) + "\\n")
     return record
 
@@ -356,13 +357,13 @@ ROOT = Path(__file__).resolve().parent.parent
 def _load_json(path: Path, default):
     if not path.exists():
         return default
-    return json.loads(path.read_text())
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _load_jsonl(path: Path) -> list[dict]:
     if not path.exists():
         return []
-    return [json.loads(ln) for ln in path.read_text().splitlines() if ln.strip()]
+    return [json.loads(ln) for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
 
 
 def _normalize_command(cmd) -> str:
@@ -420,7 +421,7 @@ def main() -> int:
     report = run_checks(args.task_id)
     out = ROOT / "outputs" / "verification" / f"{args.task_id}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(report, indent=2) + "\\n")
+    out.write_text(json.dumps(report, indent=2) + "\\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
     if not report["passed"]:
         print("verification failed", file=sys.stderr)
@@ -450,13 +451,13 @@ ROOT = Path(__file__).resolve().parent.parent
 def _load_json(path: Path, default):
     if not path.exists():
         return default
-    return json.loads(path.read_text())
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _load_jsonl(path: Path) -> list[dict]:
     if not path.exists():
         return []
-    return [json.loads(ln) for ln in path.read_text().splitlines() if ln.strip()]
+    return [json.loads(ln) for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
 
 
 def derive_risks(verdict: dict, state: dict, review: dict) -> list[dict[str, str]]:
@@ -502,8 +503,8 @@ def generate_handoff(task_id: str, session_id: str | None = None) -> dict[str, o
     }
     out = ROOT / "outputs" / "handoff" / payload["session_id"]
     out.mkdir(parents=True, exist_ok=True)
-    (out / "handoff.json").write_text(json.dumps(payload, indent=2) + "\\n")
-    (out / "handoff.md").write_text(_render_markdown(payload))
+    (out / "handoff.json").write_text(json.dumps(payload, indent=2) + "\\n", encoding="utf-8")
+    (out / "handoff.md").write_text(_render_markdown(payload), encoding="utf-8")
     return payload
 
 
@@ -592,29 +593,29 @@ The `VERSION` file is the contract. Major bumps require a state migration.
 
 def write(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content)
+    path.write_text(content, encoding="utf-8")
 
 
-def main() -> None:
-    write(PACK / "AGENTS.md", AGENTS_MD.format(version=PACK_VERSION))
-    write(PACK / "docs" / "agent-rules.md", AGENT_RULES_MD)
-    write(PACK / "docs" / "reliability-policy.md", RELIABILITY_POLICY_MD)
-    write(PACK / "docs" / "handoff-protocol.md", HANDOFF_PROTOCOL_MD)
-    write(PACK / "docs" / "reviewer-rubric.md", REVIEWER_RUBRIC_MD)
-    write(PACK / "schemas" / "agent_state.schema.json", json.dumps(STATE_SCHEMA, indent=2) + "\n")
-    write(PACK / "schemas" / "task_board.schema.json", json.dumps(BOARD_SCHEMA, indent=2) + "\n")
-    write(PACK / "schemas" / "scope_contract.schema.json", json.dumps(SCOPE_SCHEMA, indent=2) + "\n")
+def main(pack: Path = PACK) -> None:
+    write(pack / "AGENTS.md", AGENTS_MD.format(version=PACK_VERSION))
+    write(pack / "docs" / "agent-rules.md", AGENT_RULES_MD)
+    write(pack / "docs" / "reliability-policy.md", RELIABILITY_POLICY_MD)
+    write(pack / "docs" / "handoff-protocol.md", HANDOFF_PROTOCOL_MD)
+    write(pack / "docs" / "reviewer-rubric.md", REVIEWER_RUBRIC_MD)
+    write(pack / "schemas" / "agent_state.schema.json", json.dumps(STATE_SCHEMA, indent=2) + "\n")
+    write(pack / "schemas" / "task_board.schema.json", json.dumps(BOARD_SCHEMA, indent=2) + "\n")
+    write(pack / "schemas" / "scope_contract.schema.json", json.dumps(SCOPE_SCHEMA, indent=2) + "\n")
     for name, body in SCRIPT_FILES.items():
-        write(PACK / "scripts" / name, body)
-        (PACK / "scripts" / name).chmod(0o755)
-    write(PACK / "bin" / "install.sh", INSTALL_SH)
-    (PACK / "bin" / "install.sh").chmod(0o755)
-    write(PACK / "VERSION", PACK_VERSION + "\n")
-    write(PACK / "README.md", PACK_README)
+        write(pack / "scripts" / name, body)
+        (pack / "scripts" / name).chmod(0o755)
+    write(pack / "bin" / "install.sh", INSTALL_SH)
+    (pack / "bin" / "install.sh").chmod(0o755)
+    write(pack / "VERSION", PACK_VERSION + "\n")
+    write(pack / "README.md", PACK_README)
 
-    for path in sorted(PACK.rglob("*")):
+    for path in sorted(pack.rglob("*")):
         if path.is_file():
-            print(path.relative_to(PACK.parent.parent))
+            print(path.relative_to(pack.parent.parent))
 
 
 if __name__ == "__main__":

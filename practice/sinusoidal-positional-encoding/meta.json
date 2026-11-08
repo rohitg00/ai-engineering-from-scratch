@@ -1,0 +1,22 @@
+{
+  "id": "sinusoidal-positional-encoding",
+  "title": "Sinusoidal positional encoding",
+  "kind": "implement",
+  "summary": "Build the sin and cos position table with interleaved columns and base 10000, and add it to a batch of token embeddings.",
+  "difficulty": "easy",
+  "tags": ["positional-encoding", "transformers", "embeddings"],
+  "lesson": "phases/07-transformers-deep-dive/04-positional-encoding",
+  "cheatsheet": "positional-encoding",
+  "minutes": 15,
+  "entry": ["sinusoidal_pe", "add_positional_encoding"],
+  "collections": ["transformers-from-scratch"],
+  "time_limit_s": 10,
+  "mutants": {
+    "add_in_place": "Adds the table into x with +=, so the caller's embeddings change.",
+    "blocked_layout": "Puts all the sines in the first half of the columns and all the cosines in the second half.",
+    "exponent_i_over_d": "Uses the exponent i / d_model in place of 2i / d_model.",
+    "odd_uses_even_width": "Divides the exponent by 2 * (d_model // 2), so an odd d_model gets the frequencies of d_model - 1.",
+    "positions_from_one": "Starts the positions at 1, so row 0 is the code of position 1.",
+    "sin_cos_swapped": "Puts the cosine in column 2i and the sine in column 2i+1."
+  }
+}

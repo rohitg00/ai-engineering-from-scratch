@@ -1,0 +1,4 @@
+$ docker model ls
+MODEL NAME  PARAMETERS  QUANTIZATION  ARCHITECTURE  MODEL ID      CREATED       CONTEXT  SIZE  
+qwen3:4b                                            <id>  56 years ago                 
+[exit 0]

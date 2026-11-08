@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 452" role="img" aria-labelledby="fig-history-and-pages-title fig-history-and-pages-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-history-and-pages-title">History regimes and list pages</title>
+  <desc id="fig-history-and-pages-desc">Top: the stored history of review task e5c95b09, four messages from history[0] to history[3], plus the status message 2 findings, which is never part of history. With historyLength unset GetTask returns all four messages, with historyLength 1 only history[3], and with historyLength 0 no history field. Bottom: the five tasks on test-runner sorted by status timestamp, newest first. ListTasks with pageSize 2 returns f22ed7af and 8ae21dcb, then 728ba084 and d0c28826, and each page ends with an opaque cursor token for the next one. The fifth task, 3d8f7801, was not requested. Neither page carries artifacts or history. A third call filters on TASK_STATE_CANCELED with no historyLength and gets f22ed7af with its full history.</desc>
+  <text x="20" y="16" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A · HISTORY</text>
+  <text x="126" y="16" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">GetTask on the review task e5c95b09, held by code-reviewer</text>
+  <text x="560" y="16" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">historyLength</text>
+  <text x="530" y="36" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">unset</text>
+  <text x="590" y="36" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="20" y1="230" x2="620" y2="230" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="250" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">B · PAGES</text>
+  <text x="112" y="250" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ListTasks on test-runner with pageSize 2 and historyLength 0</text>
+  <text x="32" y="272" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">id</text>
+  <text x="118" y="272" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">state</text>
+  <text x="300" y="272" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">status.timestamp</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="44" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="60" font-size="11" fill="var(--m-teal-ink, #18696a)">history[0]</text>
+  <text x="104" y="60" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">ROLE_USER</text>
+  <text x="184" y="60" font-size="11" class="m-serif">Review this diff of payments-api. + refunds.diff</text>
+  <rect x="20" y="68" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="84" font-size="11" fill="var(--m-teal-ink, #18696a)">history[1]</text>
+  <text x="104" y="84" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">ROLE_AGENT</text>
+  <text x="184" y="84" font-size="11" class="m-serif">Which base branch should I compare this diff against?</text>
+  <rect x="20" y="92" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="108" font-size="11" fill="var(--m-teal-ink, #18696a)">history[2]</text>
+  <text x="104" y="108" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">ROLE_USER</text>
+  <text x="184" y="108" font-size="11" class="m-serif">main</text>
+  <rect x="20" y="116" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="132" font-size="11" fill="var(--m-teal-ink, #18696a)">history[3]</text>
+  <text x="104" y="132" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">ROLE_AGENT</text>
+  <text x="184" y="132" font-size="11" class="m-serif">Comparing the diff against main</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="148" width="600" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="30" y="164" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">status.message</text>
+  <text x="184" y="164" font-size="11" class="m-serif">2 findings, returned every time, never in history</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <text x="30" y="192" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">history messages returned</text>
+  <circle cx="530" cy="56" r="3.5" fill="var(--m-ink, #1a1a1a)"/>
+  <circle cx="530" cy="80" r="3.5" fill="var(--m-ink, #1a1a1a)"/>
+  <circle cx="530" cy="104" r="3.5" fill="var(--m-ink, #1a1a1a)"/>
+  <circle cx="530" cy="128" r="3.5" fill="var(--m-ink, #1a1a1a)"/>
+  <circle cx="530" cy="160" r="3.5" fill="var(--m-ink, #1a1a1a)"/>
+  <text x="530" y="192" font-size="12" text-anchor="middle" font-weight="700">4</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="590" cy="128" r="3.5" fill="var(--m-ink, #1a1a1a)"/>
+  <circle cx="590" cy="160" r="3.5" fill="var(--m-ink, #1a1a1a)"/>
+  <text x="590" y="192" font-size="12" text-anchor="middle" font-weight="700">1</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <text x="30" y="214" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">historyLength 0, on task d0c28826 in 04-polling.http: the reply has no history field at all</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="280" width="440" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="296" font-size="11.5">f22ed7af</text>
+  <text x="118" y="296" font-size="11.5" fill="var(--m-amber-ink, #85590c)">TASK_STATE_CANCELED</text>
+  <text x="300" y="296" font-size="11.5" fill="var(--m-teal-ink, #18696a)">09:00:03.750</text>
+  <rect x="20" y="304" width="440" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="320" font-size="11.5">8ae21dcb</text>
+  <text x="118" y="320" font-size="11.5" fill="var(--m-amber-ink, #85590c)">TASK_STATE_FAILED</text>
+  <text x="300" y="320" font-size="11.5" fill="var(--m-teal-ink, #18696a)">09:00:03.000</text>
+  <rect x="20" y="328" width="440" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="344" font-size="11.5">728ba084</text>
+  <text x="118" y="344" font-size="11.5" fill="var(--m-amber-ink, #85590c)">TASK_STATE_COMPLETED</text>
+  <text x="300" y="344" font-size="11.5" fill="var(--m-teal-ink, #18696a)">09:00:02.250</text>
+  <rect x="20" y="352" width="440" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="368" font-size="11.5">d0c28826</text>
+  <text x="118" y="368" font-size="11.5" fill="var(--m-amber-ink, #85590c)">TASK_STATE_COMPLETED</text>
+  <text x="300" y="368" font-size="11.5" fill="var(--m-teal-ink, #18696a)">09:00:01.500</text>
+  <rect x="20" y="376" width="440" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)" stroke-dasharray="5 4"/>
+  <text x="32" y="392" font-size="11.5" fill="var(--m-ink-mute, #6f6f6a)">3d8f7801</text>
+  <text x="118" y="392" font-size="11.5" fill="var(--m-ink-mute, #6f6f6a)">TASK_STATE_COMPLETED</text>
+  <text x="300" y="392" font-size="11.5" fill="var(--m-ink-mute, #6f6f6a)">09:00:00.750</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <rect x="470" y="280" width="150" height="48" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="545" y="298.95" font-size="11.5" text-anchor="middle" font-weight="700">page 1</text>
+  <text x="545" y="316.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">returns cursor 1</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <rect x="470" y="328" width="150" height="48" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="545" y="346.95" font-size="11.5" text-anchor="middle" font-weight="700">page 2</text>
+  <text x="545" y="364.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">returns cursor 2</text>
+  </g>
+  <g data-beat="9"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/>
+  <rect x="470" y="376" width="150" height="24" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="545" y="391.45" font-size="11.5" text-anchor="middle" font-weight="700">not requested</text>
+  <text x="30" y="418" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">totalSize 5 on both pages, and no task carries artifacts or history</text>
+  <text x="30" y="438" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">filter on TASK_STATE_CANCELED, no historyLength: f22ed7af with its full history, token &quot;&quot;</text>
+  </g>
+</svg>

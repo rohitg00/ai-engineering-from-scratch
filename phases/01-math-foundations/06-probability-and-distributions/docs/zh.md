@@ -24,7 +24,7 @@
 
 ### 事件、樣本空間與機率
 
-樣本空間 S 是所有可能結果的集合。事件是樣本空間的一個子集合。機率把事件映射到 0 與 1 之間的數字。
+樣本空間 $S$ 是所有可能結果的集合。事件是樣本空間的一個子集合。機率把事件映射到 0 與 1 之間的數字。
 
 ```
 Coin flip:
@@ -37,15 +37,15 @@ Single die roll:
 ```
 
 三條公理就定義了整個機率論：
-1. 對任何事件 A，P(A) >= 0
-2. P(S) = 1（總會發生某件事）
-3. 當 A 與 B 不可能同時發生時，P(A or B) = P(A) + P(B)
+1. 對任何事件 $A$，$P(A) \ge 0$
+2. $P(S) = 1$（總會發生某件事）
+3. 當 $A$ 與 $B$ 不可能同時發生時，$P(A \text{ or } B) = P(A) + P(B)$
 
 其餘的一切（貝氏定理、期望值、各種分布）都是從這三條規則推出來的。
 
 ### 條件機率與獨立
 
-P(A|B) 是「已知 B 發生」的情況下 A 的機率。
+$P(A \mid B)$ 是「已知 $B$ 發生」的情況下 $A$ 的機率。
 
 ```
 P(A|B) = P(A and B) / P(B)
@@ -58,9 +58,11 @@ Example: deck of cards
 
 當知道其中一個事件對另一個事件毫無幫助時，這兩個事件就是獨立的：
 
-```
-Independent:   P(A|B) = P(A)
-Equivalent to: P(A and B) = P(A) * P(B)
+```math
+\begin{aligned}
+\text{Independent:} \quad & P(A \mid B) = P(A) \\
+\text{Equivalent to:} \quad & P(A \text{ and } B) = P(A) \cdot P(B)
+\end{aligned}
 ```
 
 丟硬幣是獨立的。不放回地抽牌不是。
@@ -98,27 +100,33 @@ integral from -inf to +inf of f(x) dx = 1
 
 **伯努利：** 一次試驗，兩種結果。用來描述二元分類。
 
-```
-P(X = 1) = p
-P(X = 0) = 1 - p
-Mean = p,  Variance = p(1-p)
+```math
+\begin{aligned}
+P(X = 1) &= p \\
+P(X = 0) &= 1 - p \\
+\text{Mean} = p, &\quad \text{Variance} = p(1-p)
+\end{aligned}
 ```
 
-**類別（categorical）：** 一次試驗，k 種結果。用來描述多類別分類（softmax 的輸出）。
+**類別（categorical）：** 一次試驗，$k$ 種結果。用來描述多類別分類（softmax 的輸出）。
 
-```
-P(X = i) = p_i,  where sum of p_i = 1
-Example: P(cat) = 0.7,  P(dog) = 0.2,  P(bird) = 0.1
+```math
+\begin{aligned}
+& P(X = i) = p_i, \quad \text{where } \textstyle\sum_i p_i = 1 \\
+& \text{Example: } P(\text{cat}) = 0.7, \quad P(\text{dog}) = 0.2, \quad P(\text{bird}) = 0.1
+\end{aligned}
 ```
 
 **均勻：** 所有結果的可能性都相同。用於隨機初始化。
 
-```
-Discrete: P(X = k) = 1/n for k in {1, ..., n}
-Continuous: f(x) = 1/(b-a) for x in [a, b]
+```math
+\begin{aligned}
+\text{Discrete:} \quad & P(X = k) = 1/n \text{ for } k \in \lbrace 1, \ldots, n \rbrace \\
+\text{Continuous:} \quad & f(x) = 1/(b-a) \text{ for } x \in [a, b]
+\end{aligned}
 ```
 
-**常態（高斯）：** 鐘形曲線。由平均值 (mu) 與變異數 (sigma^2) 決定。
+**常態（高斯）：** 鐘形曲線。由平均值（$\mu$）與變異數（$\sigma^2$）決定。
 
 ```
 f(x) = (1 / sqrt(2*pi*sigma^2)) * exp(-(x - mu)^2 / (2*sigma^2))
@@ -131,59 +139,65 @@ Standard normal: mu = 0, sigma = 1
 
 **卜瓦松：** 固定區間內罕見事件的次數。用來描述事件發生率。
 
-```
-P(X = k) = (lambda^k * e^(-lambda)) / k!
-Mean = lambda,  Variance = lambda
+```math
+\begin{aligned}
+P(X = k) &= \frac{\lambda^k e^{-\lambda}}{k!} \\
+\text{Mean} = \lambda, &\quad \text{Variance} = \lambda
+\end{aligned}
 ```
 
 ### 期望值與變異數
 
 期望值就是結果的加權平均。
 
-```
-Discrete:   E[X] = sum of x_i * P(X = x_i)
-Continuous: E[X] = integral of x * f(x) dx
+```math
+\begin{aligned}
+\text{Discrete:} \quad & \mathbb{E}[X] = \sum_i x_i \, P(X = x_i) \\
+\text{Continuous:} \quad & \mathbb{E}[X] = \int x \, f(x) \, dx
+\end{aligned}
 ```
 
 變異數衡量資料在平均值周圍的散布程度。
 
-```
-Var(X) = E[(X - E[X])^2] = E[X^2] - (E[X])^2
-Standard deviation = sqrt(Var(X))
+```math
+\begin{aligned}
+\mathrm{Var}(X) &= \mathbb{E}[(X - \mathbb{E}[X])^2] = \mathbb{E}[X^2] - (\mathbb{E}[X])^2 \\
+\text{Standard deviation} &= \sqrt{\mathrm{Var}(X)}
+\end{aligned}
 ```
 
 在 ML 裡，期望值以損失函式的形式出現（在資料分布上的平均損失）。變異數則告訴你模型有多穩定。梯度的變異數很大，意味著訓練過程充滿雜訊。
 
 ### 聯合分布與邊際分布
 
-聯合分布 P(X, Y) 同時描述兩個隨機變數。
+聯合分布 $P(X, Y)$ 同時描述兩個隨機變數。
 
-聯合 PMF 的例子（X = 天氣，Y = 雨傘）：
+聯合 PMF 的例子（$X$ = 天氣，$Y$ = 雨傘）：
 
-| | Y=0（沒帶傘） | Y=1（帶傘） | 邊際 P(X) |
+| | $Y=0$（沒帶傘） | $Y=1$（帶傘） | 邊際 $P(X)$ |
 |---|---|---|---|
-| X=0（晴天） | 0.40 | 0.10 | P(X=0) = 0.50 |
-| X=1（下雨） | 0.05 | 0.45 | P(X=1) = 0.50 |
-| **邊際 P(Y)** | P(Y=0) = 0.45 | P(Y=1) = 0.55 | 1.00 |
+| $X=0$（晴天） | 0.40 | 0.10 | $P(X=0) = 0.50$ |
+| $X=1$（下雨） | 0.05 | 0.45 | $P(X=1) = 0.50$ |
+| **邊際 $P(Y)$** | $P(Y=0) = 0.45$ | $P(Y=1) = 0.55$ | 1.00 |
 
 邊際分布把另一個變數加總掉：
 
-```
-P(X = x) = sum over all y of P(X = x, Y = y)
+```math
+P(X = x) = \sum_{y} P(X = x, Y = y)
 ```
 
 上表的列總和與欄總和就是邊際分布。
 
 ### 為什麼常態分布無處不在
 
-中央極限定理：許多獨立隨機變數的總和（或平均）會收斂到常態分布，跟原本的分布是什麼無關。
+中央極限定理：許多來自同一分布的獨立隨機變數，其平均值在中心化並乘上 $\sqrt{n}$ 縮放之後，會趨近常態分布，不論原本分布的形狀為何，只要它的變異數有限。中心化並縮放後的總和也同樣成立。
 
 ```
 Roll 1 die:  uniform distribution (flat)
 Average of 2 dice:  triangular (peaked)
 Average of 30 dice: nearly perfect bell curve
 
-This works for ANY starting distribution.
+This works for ANY starting distribution with finite variance.
 ```
 
 這也解釋了為什麼：
@@ -196,23 +210,27 @@ This works for ANY starting distribution.
 
 原始機率會造成數值問題。把很多個很小的機率乘在一起，很快就會下溢到零。
 
-```
-P(sentence) = P(word1) * P(word2) * ... * P(word_n)
-            = 0.01 * 0.003 * 0.02 * ...
-            -> 0.0 (underflow after ~30 terms)
+```math
+\begin{aligned}
+P(\text{sentence}) &= P(\text{word}_1) \cdot P(\text{word}_2) \cdot \ldots \cdot P(\text{word}_n) \\
+&= 0.01 \cdot 0.003 \cdot 0.02 \cdot \ldots \\
+&\to 0.0 \quad \text{(underflow after } \sim 30 \text{ terms)}
+\end{aligned}
 ```
 
 對數機率解決了這個問題。乘法變成加法。
 
-```
-log P(sentence) = log P(word1) + log P(word2) + ... + log P(word_n)
-                = -4.6 + -5.8 + -3.9 + ...
-                -> finite number (no underflow)
+```math
+\begin{aligned}
+\log P(\text{sentence}) &= \log P(\text{word}_1) + \log P(\text{word}_2) + \ldots + \log P(\text{word}_n) \\
+&= -4.6 + -5.8 + -3.9 + \ldots \\
+&\to \text{finite number (no underflow)}
+\end{aligned}
 ```
 
 規則：
-- log(a * b) = log(a) + log(b)
-- 對數機率永遠 <= 0（因為 0 < P <= 1）
+- $\log(a \cdot b) = \log(a) + \log(b)$
+- 對數機率永遠 $\le 0$（因為 $0 < P \le 1$）
 - 越負，代表越不可能
 - 交叉熵損失就是正確類別的負對數機率
 
@@ -430,24 +448,34 @@ print(f"Log-softmax: {log_probs}")
 
 4. 寫一個函式，接收一串對數機率，回傳最可能的序列、總對數機率，以及對應的原始機率。用一個 50 個詞的句子測試，其中每個詞的機率都是 0.01。
 
+### 提示
+
+**練習 1。** 從均勻分布抽出 `u`，回傳 $-\ln(1 - u) / \lambda$。確認樣本平均值接近 $1/\lambda$，且直方圖的各個區間符合 $\lambda e^{-\lambda x}$。
+
+**練習 2。** 填一張 6x6 的表，每一格都是機率，所有格子的總和為 1，然後呼叫 `joint_to_marginals`。用 `check_independence` 檢查：只有當每一格都等於它兩個邊際機率的乘積時，兩顆骰子才是獨立的。
+
+**練習 3。** 對 logits 套用 `softmax`，取索引 3 那個機率的 $-\ln$。結果必須接近 0.421，也就是 `nn.CrossEntropyLoss` 對同一組 logits 與目標給出的值。
+
+**練習 4。** 把對數機率相加；不要把原始機率相乘。50 個機率為 0.01 的詞，總和必須是 $50 \ln(0.01) \approx -230.26$，而原始機率是 $10^{-100}$。
+
 ## 關鍵術語
 
 | 術語 | 大家怎麼說 | 實際上是什麼 |
 |------|----------------|----------------------|
-| 樣本空間 | 「所有的可能性」 | 集合 S，包含一次實驗所有可能的結果 |
+| 樣本空間 | 「所有的可能性」 | 集合 $S$，包含一次實驗所有可能的結果 |
 | PMF | 「那個機率函式」 | 一個給出每個離散結果確切機率的函式，總和為 1 |
 | PDF | 「那條機率曲線」 | 連續變數的密度函式。在一段區間上積分才得到機率 |
-| 條件機率 | 「已知某件事的機率」 | P(A\|B) = P(A and B) / P(B)。貝氏思考與貝氏定理的基礎 |
-| 獨立 | 「它們互不影響」 | P(A and B) = P(A) * P(B)。知道其中一個事件對另一個毫無幫助 |
+| 條件機率 | 「已知某件事的機率」 | $P(A \mid B) = P(A \text{ and } B) / P(B)$。貝氏思考與貝氏定理的基礎 |
+| 獨立 | 「它們互不影響」 | $P(A \text{ and } B) = P(A) \cdot P(B)$。知道其中一個事件對另一個毫無幫助 |
 | 期望值 | 「平均值」 | 所有結果以機率加權後的總和。損失函式就是一個期望值 |
 | 變異數 | 「散得有多開」 | 偏離平均值的期望平方距離。變異數大 = 估計充滿雜訊、不穩定 |
-| 常態分布 | 「鐘形曲線」 | f(x) = (1/sqrt(2*pi*sigma^2)) * exp(-(x-mu)^2/(2*sigma^2))。因為 CLT 而無處不在 |
-| 中央極限定理 | 「平均之後就變常態」 | 大量獨立樣本的平均值會收斂到常態分布，跟來源分布無關 |
-| 聯合分布 | 「兩個變數一起看」 | P(X, Y) 描述 X 與 Y 每一種結果組合的機率 |
-| 邊際分布 | 「把另一個變數加總掉」 | P(X) = sum_y P(X, Y)。從聯合分布還原出單一變數的分布 |
-| 對數機率 | 「機率取對數」 | log P(x)。把乘法變成加法，避免長序列的數值下溢 |
-| Softmax | 「把分數變成機率」 | softmax(z_i) = exp(z_i) / sum(exp(z_j))。把實數 logits 映射成一個合法的機率分布 |
-| 交叉熵 | 「那個損失函式」 | -sum(p_true * log(p_predicted))。衡量兩個分布差多少。越低越好 |
+| 常態分布 | 「鐘形曲線」 | $f(x) = (1/\sqrt{2\pi\sigma^2}) \cdot \exp(-(x-\mu)^2/(2\sigma^2))$。因為 CLT 而無處不在 |
+| 中央極限定理 | 「平均之後就變常態」 | 大量獨立樣本的平均值經過中心化與縮放後，會收斂到常態分布，對任何變異數有限的來源都成立 |
+| 聯合分布 | 「兩個變數一起看」 | $P(X, Y)$ 描述 $X$ 與 $Y$ 每一種結果組合的機率 |
+| 邊際分布 | 「把另一個變數加總掉」 | $P(X) = \sum_y P(X, Y)$。從聯合分布還原出單一變數的分布 |
+| 對數機率 | 「機率取對數」 | $\log P(x)$。把乘法變成加法，避免長序列的數值下溢 |
+| Softmax | 「把分數變成機率」 | $\text{softmax}(z_i) = \exp(z_i) / \sum_j \exp(z_j)$。把實數 logits 映射成一個合法的機率分布 |
+| 交叉熵 | 「那個損失函式」 | $-\sum p_{\text{true}} \cdot \log(p_{\text{predicted}})$。衡量兩個分布差多少。越低越好 |
 | Logits | 「模型的原始輸出」 | 進 softmax 之前未正規化的分數。名字來自 logistic 函式 |
 | 取樣 | 「抽隨機值」 | 依照某個機率分布產生數值。模型就是這樣生成輸出的 |
 

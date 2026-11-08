@@ -1,0 +1,22 @@
+{
+  "id": "lab-quantization-bits",
+  "title": "Sweep the quantization bit width",
+  "kind": "lab",
+  "summary": "Sweep symmetric absmax quantization from 2 to 8 bits on weights with outliers, compare one scale per tensor with one scale per row.",
+  "difficulty": "medium",
+  "tags": ["quantization", "inference", "outliers"],
+  "lesson": "phases/10-llms-from-scratch/11-quantization",
+  "cheatsheet": "quantization",
+  "minutes": 30,
+  "entry": ["quantize_symmetric", "quantize_per_row", "dequantize", "relative_error", "bit_sweep", "smallest_bits", "answers"],
+  "collections": ["experiment-labs", "llm-inference"],
+  "time_limit_s": 10,
+  "mutants": {
+    "columns_not_rows": "Takes the maximum over axis 0, so it gives one scale for each column, not for each row.",
+    "divide_by_half_range": "Divides the maximum by 2^(b-1), not by 2^(b-1) - 1, so the largest value cannot reach q_max.",
+    "max_not_absmax": "Uses the maximum of the values, not of their magnitudes, for the per tensor scale.",
+    "round_half_up": "Rounds with floor(x + 0.5), so halfway values round up and not to the even integer.",
+    "strict_threshold": "Uses a strict less than, so an error equal to the threshold fails.",
+    "zero_row_nan": "Has no rule for a row of zeros, so 0 / 0 gives NaN."
+  }
+}

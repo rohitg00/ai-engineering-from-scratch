@@ -22,6 +22,7 @@
   <text x="130" y="82" text-anchor="middle" class="head">Client Agent</text>
   <text x="130" y="104" text-anchor="middle" class="small">LangGraph? CrewAI? custom?</text>
   <text x="130" y="124" text-anchor="middle" class="small">doesn't matter to A2A</text>
+  <text x="130" y="144" text-anchor="middle" class="small">sends A2A-Version: 1.0</text>
 
   <rect x="680" y="60" width="180" height="380" class="hot"/>
   <text x="770" y="82" text-anchor="middle" class="head">Remote Agent</text>
@@ -29,25 +30,26 @@
   <text x="770" y="124" text-anchor="middle" class="small">opaque implementation</text>
 
   <line x1="220" y1="160" x2="680" y2="160" class="edge" marker-end="url(#arrow)"/>
-  <text x="450" y="152" text-anchor="middle" class="small">GET /.well-known/agent.json</text>
+  <text x="450" y="152" text-anchor="middle" class="small">GET /.well-known/agent-card.json</text>
 
   <line x1="680" y1="200" x2="220" y2="200" class="edge" marker-end="url(#arrow)"/>
-  <text x="450" y="192" text-anchor="middle" class="small">Agent Card: skills, endpoints, auth, modalities</text>
+  <text x="450" y="192" text-anchor="middle" class="small">Agent Card: skills, supportedInterfaces, securityRequirements</text>
 
   <line x1="220" y1="240" x2="680" y2="240" class="edge" marker-end="url(#arrow)"/>
-  <text x="450" y="232" text-anchor="middle" class="small">POST /tasks {skill: review-python, payload: {...}}</text>
+  <text x="450" y="232" text-anchor="middle" class="small">POST /message:send {message: {role: ROLE_USER, parts: [...]}}</text>
 
   <line x1="680" y1="280" x2="220" y2="280" class="edge" marker-end="url(#arrow)"/>
-  <text x="450" y="272" text-anchor="middle" class="small">201 task_id=baf1fc13, state=submitted</text>
+  <text x="450" y="272" text-anchor="middle" class="small">200 {task: {id: baf1fc13, status: {state: TASK_STATE_SUBMITTED}}}</text>
 
   <line x1="220" y1="320" x2="680" y2="320" class="edge" marker-end="url(#arrow)"/>
   <text x="450" y="312" text-anchor="middle" class="small">GET /tasks/baf1fc13 (poll)</text>
 
   <line x1="680" y1="360" x2="220" y2="360" class="edge" marker-end="url(#arrow)"/>
-  <text x="450" y="352" text-anchor="middle" class="small">state=completed, artifact={type: structured, data: {...}}</text>
+  <text x="450" y="352" text-anchor="middle" class="small">TASK_STATE_COMPLETED, artifacts=[{parts: [{data: {...}}]}]</text>
 
-  <rect x="250" y="395" width="400" height="40" class="cold"/>
-  <text x="450" y="420" text-anchor="middle" class="small">lifecycle: submitted → working → completed / failed / canceled</text>
+  <rect x="230" y="395" width="440" height="40" class="cold"/>
+  <text x="450" y="411" text-anchor="middle" class="small">TASK_STATE_SUBMITTED → TASK_STATE_WORKING → TASK_STATE_COMPLETED</text>
+  <text x="450" y="426" text-anchor="middle" class="small">(or TASK_STATE_FAILED / TASK_STATE_CANCELED)</text>
 
   <rect x="40" y="460" width="820" height="50" class="box"/>
   <text x="450" y="482" text-anchor="middle" class="head">A2A (horizontal, agent↔agent) vs MCP (vertical, agent↔tool) — production uses both</text>

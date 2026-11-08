@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-3-5c-title fig-3-5c-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-5c-title">HiCache held the prompts that the GPU pool evicted</title>
+  <desc id="fig-3-5c-desc">Median time to first token against the number of distinct 2,048-token system prompts on one NVIDIA L4 with Qwen3-8B, three seeds per point, on a log scale. The GPU pool holds 24,094 tokens. At 4 prompts both servers take about 360 ms. At 16 and 32 prompts the default takes 3,259 and 5,449 ms and HiCache 553 and 817 ms. At 64 prompts, more than the GPU and host pools hold together, the default takes 6,821 ms and HiCache 3,610 ms.</desc>
+  <line x1="70" y1="286" x2="606" y2="286" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="290" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="70" y1="233.04" x2="606" y2="233.04" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="237.04" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <line x1="70" y1="175" x2="606" y2="175" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="179" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <line x1="70" y1="122.04" x2="606" y2="122.04" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="126.04" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3k</text>
+  <line x1="70" y1="64" x2="606" y2="64" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="68" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10k</text>
+  <line x1="70" y1="286" x2="606" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="64" x2="70" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="286" x2="70" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="204" y1="286" x2="204" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="204" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="338" y1="286" x2="338" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="338" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16</text>
+  <line x1="472" y1="286" x2="472" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="472" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">32</text>
+  <line x1="606" y1="286" x2="606" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="606" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">64</text>
+  <text x="338" y="320" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">distinct 2,048-token system prompts</text>
+  <text x="70" y="52" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median TTFT, ms (log scale)</text>
+  <path d="M70.0 224.0 L338.0 107.7 L472.0 93.1 L606.0 81.5 L606.0 82.5 L472.0 93.8 L338.0 127.9 L70.0 225.9 Z" fill="var(--m-rose-ink, #b0344d)" fill-opacity="0.14" stroke="none"/>
+  <path d="M70.0 224.3 L338.0 118.0 L472.0 93.3 L606.0 82.4" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="224.32" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="338" cy="118.04" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="472" cy="93.27" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="606" cy="82.44" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <path d="M70.0 223.9 L338.0 202.1 L472.0 179.9 L606.0 105.4 L606.0 114.1 L472.0 187.8 L338.0 203.9 L70.0 224.8 Z" fill="var(--m-green-ink, #336b40)" fill-opacity="0.14" stroke="none"/>
+  <path d="M70.0 224.1 L338.0 203.6 L472.0 184.7 L606.0 113.1" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="224.07" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="338" cy="203.6" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="472" cy="184.74" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="606" cy="113.12" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <path d="M70 18 H88" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="94" y="22" font-size="11" fill="var(--m-rose-ink, #b0344d)">GPU pool only</text>
+  <path d="M197.8 18 H215.8" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="221.8" y="22" font-size="11" fill="var(--m-green-ink, #336b40)">HiCache, host pool of 96,377 tokens</text>
+</svg>

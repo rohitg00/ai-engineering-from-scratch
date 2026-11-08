@@ -1,0 +1,75 @@
+{
+  "z3": "5.1.0",
+  "python": "3.12.12",
+  "grade": {
+    "returns": {
+      "0": {
+        "verdict": "sat",
+        "seconds": 0.027,
+        "sample": 1000555058,
+        "min": -2147483648,
+        "max": 2147483647
+      },
+      "1": {
+        "verdict": "sat",
+        "seconds": 0.021,
+        "sample": 64,
+        "min": 60,
+        "max": 69
+      },
+      "2": {
+        "verdict": "sat",
+        "seconds": 0.029,
+        "sample": 71,
+        "min": 70,
+        "max": 79
+      },
+      "3": {
+        "verdict": "sat",
+        "seconds": 0.023,
+        "sample": 87,
+        "min": 80,
+        "max": 89
+      },
+      "4": {
+        "verdict": "sat",
+        "seconds": 0.028,
+        "sample": 91,
+        "min": 90,
+        "max": 109
+      }
+    },
+    "crossChecks": {
+      "scoreIn60to109ReturnsZero": "unsat",
+      "scoreAtLeast110ReturnsNonZero": "unsat"
+    },
+    "listingDiffersFromSourceSwitch": {
+      "verdict": "unsat",
+      "seconds": 0.068
+    },
+    "listingDiffersFromThresholds": {
+      "verdict": "sat",
+      "score": 706346536
+    },
+    "listingDiffersFromThresholdsOn0to109": "unsat"
+  },
+  "percent_change": {
+    "returns50": {
+      "verdict": "sat",
+      "seconds": 0.059,
+      "before": -25092599,
+      "after": 305712160
+    },
+    "before3ReturnsMinus133": {
+      "verdict": "sat",
+      "after": 1073741823
+    },
+    "pair3And2147483647ReturnsMinus133": "sat",
+    "longRebuildDiffers": {
+      "verdict": "sat",
+      "before": 13,
+      "after": -1552899100,
+      "withoutMinusOneAndTrap": "sat"
+    }
+  }
+}

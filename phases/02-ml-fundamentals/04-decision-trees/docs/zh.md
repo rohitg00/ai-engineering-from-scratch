@@ -48,10 +48,8 @@ graph TD
 
 **吉尼不純度**衡量的是：如果依照某節點的類別分布來給一個隨機抽出的樣本貼標籤，它被分錯的機率有多大。
 
-```
-Gini(S) = 1 - sum(p_k^2)
-
-where p_k is the proportion of class k in set S.
+```math
+\text{Gini}(S) = 1 - \sum_k p_k^2 \quad \text{where } p_k \text{ is the proportion of class } k \text{ in set } S.
 ```
 
 對一個純節點（全是同一類）來說，Gini = 0。對一個 50/50 的二元分裂，Gini = 0.5。越低越好。
@@ -64,8 +62,8 @@ Gini = 1 - (0.6^2 + 0.4^2) = 1 - (0.36 + 0.16) = 0.48
 
 **熵**衡量的是一個節點裡的資訊量（混亂程度）。階段 1 單元 09 已經談過。
 
-```
-Entropy(S) = -sum(p_k * log2(p_k))
+```math
+\text{Entropy}(S) = -\sum_k p_k \log_2(p_k)
 ```
 
 對一個純節點來說，entropy = 0。對 50/50 的二元分裂，entropy = 1.0。越低越好。
@@ -81,10 +79,11 @@ Entropy = -(0.6 * log2(0.6) + 0.4 * log2(0.4))
 
 **資訊增益**是分裂之後不純度（熵或 Gini）減少的量。
 
-```
-IG(S, feature, threshold) = Impurity(S) - weighted_avg(Impurity(S_left), Impurity(S_right))
-
-where the weights are the proportions of samples in each child.
+```math
+\begin{aligned}
+& IG(S, \text{feature}, \text{threshold}) = \text{Impurity}(S) - \text{weighted\_avg}(\text{Impurity}(S_{\text{left}}), \text{Impurity}(S_{\text{right}})) \\[4pt]
+& \text{where the weights are the proportions of samples in each child.}
+\end{aligned}
 ```
 
 每個節點上的貪婪演算法是這樣：試過每一個特徵、每一個可能的閾值，然後挑出讓資訊增益最大的那組（特徵, 閾值）。
@@ -125,8 +124,8 @@ where the weights are the proportions of samples in each child.
 
 **變異縮減**取代了資訊增益：
 
-```
-VR(S, feature, threshold) = Var(S) - weighted_avg(Var(S_left), Var(S_right))
+```math
+VR(S, \text{feature}, \text{threshold}) = \text{Var}(S) - \text{weighted\_avg}(\text{Var}(S_{\text{left}}), \text{Var}(S_{\text{right}}))
 ```
 
 挑出讓變異降低最多的那個分裂。樹會把輸入空間切成一塊塊區域，並在每塊區域裡預測一個常數（也就是平均值）。
@@ -165,9 +164,8 @@ graph TD
 
 **平均不純度下降（MDI）：** 對每個特徵，把所有樹、所有用到該特徵的節點上的不純度下降量加總起來。在越早的分裂上帶來越大不純度下降的特徵就越重要。
 
-```
-importance(feature_j) = sum over all nodes where feature_j is used:
-    (n_samples_at_node / n_total_samples) * impurity_decrease
+```math
+\text{importance}(\text{feature}_j) = \sum_{\text{nodes where feature}_j \text{ is used}} \frac{n_{\text{samples at node}}}{n_{\text{total samples}}} \cdot \text{impurity\_decrease}
 ```
 
 這個做法很快（訓練時就順便算完），但它會偏向基數高的特徵，以及可能分裂點很多的特徵。

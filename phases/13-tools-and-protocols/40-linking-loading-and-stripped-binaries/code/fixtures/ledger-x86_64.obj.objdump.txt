@@ -1,0 +1,64 @@
+
+ledger-x86_64.obj:	file format coff-x86-64
+
+Sections:
+Idx Name          Size     VMA              Type
+  0 .text         0000009c 0000000000000000 TEXT
+  1 .data         00000000 0000000000000000 DATA
+  2 .bss          00000000 0000000000000000 BSS
+  3 .rdata        00000068 0000000000000000 DATA
+  4 .rdata        00000002 0000000000000000 DATA
+  5 .rdata        00000002 0000000000000000 DATA
+  6 .rdata        00000002 0000000000000000 DATA
+  7 .rdata        00000002 0000000000000000 DATA
+  8 .rdata        00000002 0000000000000000 DATA
+  9 .llvm_addrsig 00000000 0000000000000000 
+
+SYMBOL TABLE:
+[ 0](sec  1)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .text
+AUX scnlen 0x9c nreloc 3 nlnno 0 checksum 0xf055c11f assoc 1 comdat 0
+[ 2](sec  2)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .data
+AUX scnlen 0x0 nreloc 0 nlnno 0 checksum 0x0 assoc 2 comdat 0
+[ 4](sec  3)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .bss
+AUX scnlen 0x0 nreloc 0 nlnno 0 checksum 0x0 assoc 3 comdat 0
+[ 6](sec  4)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x68 nreloc 5 nlnno 0 checksum 0xf23d33b1 assoc 4 comdat 0
+[ 8](sec  5)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x2 nreloc 0 nlnno 0 checksum 0xa623e883 assoc 5 comdat 2
+[10](sec  5)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 ??_C@_01BIAFAFID@F?$AA@
+[11](sec  6)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x2 nreloc 0 nlnno 0 checksum 0x94158a01 assoc 6 comdat 2
+[13](sec  6)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 ??_C@_01CKDDGHAB@D?$AA@
+[14](sec  7)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x2 nreloc 0 nlnno 0 checksum 0xdb541cc6 assoc 7 comdat 2
+[16](sec  7)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 ??_C@_01GFHCPBMG@C?$AA@
+[17](sec  8)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x2 nreloc 0 nlnno 0 checksum 0xc24f2d87 assoc 8 comdat 2
+[19](sec  8)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 ??_C@_01HMGJMAIH@B?$AA@
+[20](sec  9)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x2 nreloc 0 nlnno 0 checksum 0xe9627e44 assoc 9 comdat 2
+[22](sec  9)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 ??_C@_01FHEEJDEE@A?$AA@
+[23](sec 10)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .llvm_addrsig
+AUX scnlen 0x0 nreloc 0 nlnno 0 checksum 0x0 assoc 10 comdat 0
+[25](sec -1)(fl 0x00)(ty   0)(scl   3) (nx 0) 0x00000000 @feat.00
+[26](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000000 percent_change
+[27](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000010 grade
+[28](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000040 total
+[29](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000060 grade_label
+[30](sec  4)(fl 0x00)(ty   0)(scl   3) (nx 0) 0x00000000 labels
+[31](sec -2)(fl 0x00)(ty   0)(scl  67) (nx 1) 0x00000000 .file
+AUX ledger.c
+
+RELOCATION RECORDS FOR [.text]:
+OFFSET           TYPE                     VALUE
+0000000000000036 IMAGE_REL_AMD64_REL32    .rdata
+0000000000000084 IMAGE_REL_AMD64_REL32    .rdata
+0000000000000093 IMAGE_REL_AMD64_REL32    labels
+
+RELOCATION RECORDS FOR [.rdata]:
+OFFSET           TYPE                     VALUE
+0000000000000000 IMAGE_REL_AMD64_ADDR64   ??_C@_01BIAFAFID@F?$AA@
+0000000000000008 IMAGE_REL_AMD64_ADDR64   ??_C@_01CKDDGHAB@D?$AA@
+0000000000000010 IMAGE_REL_AMD64_ADDR64   ??_C@_01GFHCPBMG@C?$AA@
+0000000000000018 IMAGE_REL_AMD64_ADDR64   ??_C@_01HMGJMAIH@B?$AA@
+0000000000000020 IMAGE_REL_AMD64_ADDR64   ??_C@_01FHEEJDEE@A?$AA@

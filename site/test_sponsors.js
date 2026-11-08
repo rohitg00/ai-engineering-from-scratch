@@ -4,7 +4,7 @@ const path = require('node:path');
 const test = require('node:test');
 
 const root = path.resolve(__dirname, '..');
-const read = name => fs.readFileSync(path.join(root, name), 'utf8');
+const read = name => fs.readFileSync(path.join(root, name), 'utf8').replace(/\r\n/g, '\n');
 const sponsorUrl = 'https://serpapi.com/ai-engineering-from-scratch';
 const description = 'Web Search API for your AI apps. Available in Markdown and JSON for any integration.';
 const tierLabel = /\b(?:Backer|Bronze|Silver|Gold|Platinum|Diamond|Title Partner)\b/i;
@@ -17,9 +17,17 @@ function between(text, start, end, file) {
   return placement;
 }
 
-test('sponsor placement uses approved artwork and destination without a tier label', () => {
+function checkSponsorLink(text, file) {
+  const sponsorLink = text.match(/href="([^"]*SPONSORS\.md)">([^<]+)<\/a>/);
+  assert.ok(sponsorLink, file);
+  assert.equal(path.resolve(root, path.dirname(file), sponsorLink[1]), path.join(root, 'SPONSORS.md'), file);
+  assert.ok(sponsorLink[2].trim(), file);
+  if (file === 'README.md') assert.equal(sponsorLink[2], 'Become a sponsor');
+}
+
+test('sponsor placements preserve copy, destinations, and local artwork without tier labels', () => {
   const placements = [
-    ['README.md', '### Sponsors\n', '### Use every lesson the same way'],
+    ['README.md', '### Sponsors\n', '## Learning paths'],
     ['SPONSORS.md', '## Sponsor\n', '## How to sponsor'],
     ['BACKERS.md', '## Sponsors\n', '## Infrastructure support'],
   ];
@@ -35,18 +43,36 @@ test('sponsor placement uses approved artwork and destination without a tier lab
   assert.match(sponsors, /media="\(prefers-color-scheme: dark\)" srcset="https:\/\/serpapi\.com\/assets\/media_kit\/logo-with-wordmark-white\.svg"/);
   assert.match(sponsors, /<img src="https:\/\/serpapi\.com\/assets\/media_kit\/logo-with-wordmark\.svg" alt="SerpApi" width="180">/);
   const readme = read('README.md');
-  const placement = between(readme, '### Sponsors\n', '### Use every lesson the same way', 'README.md');
-  const banner = `<a href="${sponsorUrl}">\n  <img align="left" src="assets/sponsors/serpapi-banner.png" alt="SerpApi. ${description}" width="600">\n</a>`;
-  assert.ok(placement.includes(banner));
-  assert.ok(placement.includes('Thank you to our sponsors.'));
+  const placement = between(readme, '### Sponsors\n', '## Learning paths', 'README.md');
+  const banners = [...placement.matchAll(/<a href="([^"]+)">\s*<picture><source\b([^>]+)><img\b([^>]+)><\/picture>\s*<\/a>/g)];
+  const expectedBanners = [
+    {
+      url: sponsorUrl,
+      src: 'assets/sponsors/serpapi-banner-compact.png',
+      alt: `SerpApi. ${description}`,
+    },
+  ];
+  assert.equal(banners.length, expectedBanners.length);
+  for (const expected of expectedBanners) {
+    const banner = banners.find(match => match[1] === expected.url);
+    assert.ok(banner, expected.url);
+    const source = Object.fromEntries([...banner[2].matchAll(/([\w-]+)="([^"]*)"/g)].map(match => [match[1], match[2]]));
+    assert.equal(source.media, '(min-width: 768px)');
+    assert.equal(source.srcset, expected.src);
+    assert.equal(source.width, '48%');
+    const attrs = Object.fromEntries([...banner[3].matchAll(/([\w-]+)="([^"]*)"/g)].map(match => [match[1], match[2]]));
+    assert.equal(attrs.src, expected.src);
+    assert.equal(attrs.alt, expected.alt);
+    assert.ok(Number(attrs.width) > 0 && Number(attrs.width) <= 440);
+    const image = fs.readFileSync(path.join(root, attrs.src));
+    assert.equal(image.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+    assert.ok(image.readUInt32BE(20) > 0);
+    assert.ok(image.readUInt32BE(16) / image.readUInt32BE(20) >= 3);
+  }
+  assert.ok(placement.includes('Your support keeps every lesson free and open source.'));
   assert.ok(placement.includes('href="#supporters"'));
   assert.ok(placement.includes('href="SPONSORS.md"'));
-  assert.ok(placement.includes('<br clear="all">'));
   assert.ok(readme.includes('\n## Sponsor the work\n'));
-  const image = fs.readFileSync(path.join(root, 'assets/sponsors/serpapi-banner.png'));
-  assert.equal(image.subarray(1, 4).toString(), 'PNG');
-  assert.equal(image.readUInt32BE(16), 2172);
-  assert.equal(image.readUInt32BE(20), 724);
   assert.doesNotMatch(readme, /### Current sponsors|\| Tier \|/);
   assert.match(readme, /<p align="center"><sub><b>[\d,]+<\/b> readers/);
 });
@@ -59,7 +85,7 @@ test('backer listings are reachable and preserve existing supporters', () => {
   assert.match(backers, /^# Backers\n/);
   assert.ok(backers.includes(`[SerpApi](${sponsorUrl})`));
   assert.ok(backers.includes('[SPONSORS.md](SPONSORS.md)'));
-  for (const name of ['CodeRabbit', 'iii', 'Vercel Open Source Program']) {
+  for (const name of ['CodeRabbit', 'Vercel Open Source Program']) {
     assert.ok(backers.includes(`[${name}](https://`), name);
   }
   for (const [, destination] of backers.matchAll(/\]\(([^)]+)\)/g)) {
@@ -80,17 +106,28 @@ test('supporter navigation survives translated README headings', () => {
     const text = read(file);
     assert.ok(text.includes('href="#supporters"'), file);
     assert.ok(text.includes('<a id="supporters"></a>'), file);
-    const sponsorLink = text.match(/href="([^"]*SPONSORS\.md)">Become a sponsor/);
-    assert.ok(sponsorLink, file);
-    assert.equal(path.resolve(root, path.dirname(file), sponsorLink[1]), path.join(root, 'SPONSORS.md'), file);
-    assert.equal((text.match(/>Become a sponsor<\/a>/g) || []).length, 1, file);
+    checkSponsorLink(text, file);
+    const sources = [...text.matchAll(/<source media="\(min-width: 768px\)" srcset="([^"]+)" width="48%">/g)];
+    assert.equal(sources.length, 1, file);
+    for (const [, src] of sources) {
+      assert.ok(fs.statSync(path.resolve(root, path.dirname(file), src)).isFile(), file);
+      assert.ok(text.includes(`<img src="${src}"`), file);
+    }
     if (file !== 'README.md') {
       assert.doesNotMatch(
         text,
-        /### Sponsors|Thank you to our sponsors\.|Your support keeps every lesson free and open source\.|See all supporters|SerpApi\. Web Search API|## Sponsor the work|Free, MIT-licensed, 523 lessons\.|See all sponsors and backers|Want to support the work\?/
+        /Thank you to our sponsors\.|Your support keeps every lesson free and open source\.|See all supporters|SerpApi\. Web Search API|## Sponsor the work|Free, MIT-licensed, 523 lessons\.|See all sponsors and backers|Want to support the work\?/
       );
     }
   }
+});
+
+test('sponsor navigation accepts translated labels without accepting broken targets', () => {
+  const file = 'i18n/he/README.md';
+  checkSponsorLink('<a href="../../SPONSORS.md">Become a sponsor</a>', file);
+  checkSponsorLink('<a href="../../SPONSORS.md">תמכו בפרויקט</a>', file);
+  assert.throws(() => checkSponsorLink('<a href="SPONSORS.md">תמכו בפרויקט</a>', file));
+  assert.throws(() => checkSponsorLink('<a href="../../SPONSORS.md"> </a>', file));
 });
 
 test('sponsors page is rendered from SPONSORS.md at build time', () => {
@@ -105,8 +142,19 @@ test('sponsors page is rendered from SPONSORS.md at build time', () => {
   }
   assert.ok(generated.includes(`<a href="${sponsorUrl}" target="_blank" rel="noopener"><picture><source media="(prefers-color-scheme: dark)" srcset="https://serpapi.com/assets/media_kit/logo-with-wordmark-white.svg">`));
   assert.ok(generated.includes('href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/BACKERS.md" target="_blank" rel="noopener"'));
-  assert.ok(generated.includes('<td class="align-right">114,584 (+4%)</td>'));
+  assert.ok(generated.includes('<td class="align-right">521,690</td>'));
+  assert.ok(generated.includes('<td class="align-right">280,632</td>'));
+  assert.ok(generated.includes('<td class="align-right">65,223</td>'));
+  assert.ok(generated.includes('<td class="align-right">11,000+</td>'));
   assert.ok(generated.includes('<li><strong>Open-source baseline</strong>'));
+  const mailto = '<a href="mailto:ghumare64@gmail.com">ghumare64@gmail.com</a>';
+  const howTo = between(generated, '<h2 id="how-to-sponsor">', '<h2 ', 'site/sponsors.html');
+  assert.ok(howTo.includes('github.com/sponsors/rohitg00'));
+  assert.ok(howTo.includes('GitHub Sponsors handles billing, receipts, and tax forms.'));
+  assert.ok(howTo.includes(`billing question, email ${mailto}`));
+  const steps = between(generated, '<h2 id="becoming-a-sponsor">', '</ol>', 'site/sponsors.html');
+  assert.ok(steps.includes(`For Silver and above, email ${mailto} with:`));
+  assert.ok(steps.includes(`invoice in your company&#39;s name, email ${mailto}.`));
   assert.doesNotMatch(generated, /\n\s*\[Babel\]/);
 });
 
@@ -116,6 +164,7 @@ test('sponsor markdown keeps only allowlisted HTML and safe links', () => {
     '<img src="https://example.com/logo.svg" onerror="alert(1)" alt="Logo" width="120">',
     '<script>alert(1)</script> <a href="javascript:alert(1)">bad</a>',
     '[plain](javascript:alert) [parent](../secret.md) [anchor](#tiers)',
+    '[mail](mailto:billing@example.com) [bad mail](mailto:a@b.com?bcc=c@d.com)',
   ].join('\n'));
   assert.ok(html.includes('<img src="https://example.com/logo.svg" alt="Logo" width="120">'));
   assert.doesNotMatch(html, /<script|<a href="javascript|onerror|href="[^"]*\.\./);
@@ -123,6 +172,7 @@ test('sponsor markdown keeps only allowlisted HTML and safe links', () => {
   assert.ok(html.includes('&lt;script&gt;'));
   assert.ok(html.includes('bad&lt;/a&gt;'));
   assert.ok(html.includes('plain parent <a href="#tiers">anchor</a>'));
+  assert.ok(html.includes('<a href="mailto:billing@example.com">mail</a> bad mail'));
 });
 
 test('the hamburger menu and every page footer link to the sponsors page', () => {
@@ -139,7 +189,9 @@ test('the hamburger menu and every page footer link to the sponsors page', () =>
   assert.ok(read('site/header.js').includes("ensureNavigationLink(nav, 'sponsors.html', 'Sponsor us', 'header-mobile-only');"));
   assert.ok(JSON.parse(read('site/ui-strings.json')).keys.includes('Sponsor us'));
   const vercel = JSON.parse(read('vercel.json'));
-  assert.ok(vercel.rewrites.some(rule => rule.source === '/sponsors' && rule.destination === '/sponsors.html'));
+  assert.ok(vercel.rewrites.some(rule => rule.source === '/sponsors' && rule.has && rule.destination === '/agent-pages/sponsors.md'));
+  assert.ok(vercel.rewrites.some(rule => rule.source === '/sponsors' && !rule.has && rule.destination === '/sponsors.html'));
+  assert.equal(require('../lib/agent-content').PAGES['/sponsors'], 'sponsors.html');
 });
 
 test('sponsor changes are reserved for maintainers', () => {

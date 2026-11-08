@@ -1,0 +1,4 @@
+$ docker-agent share pull localhost:15000/m101/agent:v1 --force  (in work/)
+Pulling agent localhost:15000/m101/agent:v1
+Agent saved to localhost:15000_m101_agent:v1.yaml
+[exit 0]

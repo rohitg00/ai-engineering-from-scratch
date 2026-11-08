@@ -30,8 +30,8 @@ Hoffmann 等人（2022）訓練了一個叫 Chinchilla 的小模型家族，得�
 
 出自 Chinchilla 論文，損失遵循：
 
-```
-L(N, D) = A / N^α + B / D^β + E
+```math
+L(N, D) = \frac{A}{N^\alpha} + \frac{B}{D^\beta} + E
 ```
 
 - `N` = 參數量（不含嵌入層）。
@@ -42,10 +42,12 @@ L(N, D) = A / N^α + B / D^β + E
 
 隨著規模放大，這兩項會彼此拉扯。在固定運算量（C = 6ND）下對 `N` 微分並求解：
 
-```
-N_opt ≈ 0.6 × (C/6)^0.5
-D_opt ≈ 0.6 × (C/6)^0.5
-D_opt / N_opt ≈ 20
+```math
+\begin{aligned}
+N_{\text{opt}} &\approx 0.22 \times (C/6)^{0.5} \\
+D_{\text{opt}} &\approx 4.5 \times (C/6)^{0.5} \\
+D_{\text{opt}} / N_{\text{opt}} &\approx 20
+\end{aligned}
 ```
 
 計算最佳：每個參數 20 個詞元。

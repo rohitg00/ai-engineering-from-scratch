@@ -1,0 +1,1 @@
+rizin 0.9.1 @ darwin-arm-64

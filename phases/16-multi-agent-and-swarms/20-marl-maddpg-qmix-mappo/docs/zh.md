@@ -44,8 +44,8 @@ critic update:   TD on Q_i(x, a_1..n) given next-state joint estimate
 
 只適用合作。全域獎勵是逐代理 Q 值某個單調函數的總和：
 
-```
-Q_tot(tau, a) = f(Q_1(tau_1, a_1), ..., Q_n(tau_n, a_n)),   df/dQ_i >= 0
+```math
+Q_{\text{tot}}(\tau, a) = f\big(Q_1(\tau_1, a_1), \ldots, Q_n(\tau_n, a_n)\big), \quad \frac{\partial f}{\partial Q_i} \ge 0
 ```
 
 那份單調性保證 `argmax_a Q_tot` 可以由每個代理各自選 `argmax_{a_i} Q_i` 算出來。那**正是你要的去中心化執行性質**。訓練時，一個混合網路從逐代理的 Q 產出 `Q_tot`。

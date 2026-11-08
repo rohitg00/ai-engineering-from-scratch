@@ -1,0 +1,13 @@
+$ sbx ls
+SANDBOX     AGENT   STATUS    PORTS   WORKSPACE
+m101-demo   shell   running           $CAPTURE/fixtures/repo
+[exit 0]
+
+$ sbx ls
+SANDBOX     AGENT   STATUS    PORTS   WORKSPACE
+m101-demo   shell   stopped           $CAPTURE/fixtures/repo
+[exit 0]
+
+$ grep auto-stop daemon.log | grep m101-demo | tail -2
+{"time":"<ts>","level":"INFO","msg":"auto-stop grace period expired, stopping runtime","version":"v0.47.0 0411f50ee4700fe7bd37e6e7e3aced563e850ca9","runtime":"m101-demo"}
+{"time":"<ts>","level":"INFO","msg":"auto-stopped runtime after last session disconnected","version":"v0.47.0 0411f50ee4700fe7bd37e6e7e3aced563e850ca9","runtime":"m101-demo"}

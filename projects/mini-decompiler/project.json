@@ -1,0 +1,150 @@
+{
+  "id": "mini-decompiler",
+  "title": "Mini Decompiler",
+  "level": 5,
+  "levelName": "Frontier",
+  "tagline": "A decompiler for a defined x86-64 subset that turns functions in an object you compiled into structured C, then proves the output.",
+  "summary": "A decompiler for a defined x86-64 subset that turns functions in an ELF relocatable object you compiled into structured C. It recompiles its own output, runs a differential test over an input grid, compares relocation-masked bytes and writes an evidence report that lists every unknown.",
+  "hours": 18,
+  "languages": ["Python"],
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Read ELF64 sections, symbols and RELA records",
+    "Decode an x86-64 subset and check it against a disassembler listing",
+    "Recover blocks, jump tables, dominators and loops",
+    "Lift to an IR with explicit flags and build minimal SSA",
+    "Fold copies, dead code and division by a constant",
+    "Recover System V parameters, pointer and struct types and signedness",
+    "Structure a graph into C without goto",
+    "Prove the output with recompilation, a differential grid and masked bytes"
+  ],
+  "prerequisites": [
+    "Python 3.10+ with the standard library only. clang is optional and enables the recompile and differential legs of stage 8.",
+    "Lessons on ELF anatomy, disassembly and control flow, lifting to pseudocode, calling conventions, compiler idioms and rebuild-and-prove."
+  ],
+  "youWillBuild": "A decompiler that turns the functions of an x86-64 relocatable object you compiled into one C file, and an evidence report that says what was proved and what stays unknown.",
+  "usefulFor": [
+    "Run python3 -m minidec verify on your own object and its source. The command writes decompiled.c, recompiled.o and report.json; a CI job can fail on status fail or unknown."
+  ],
+  "demo": {
+    "cwd": "solution",
+    "command": ["python3", "-m", "minidec", "decompile", "../fixtures/samples-x86_64-O1.o"]
+  },
+  "stages": [
+    {
+      "id": "01-elf-loader",
+      "title": "Read an ELF relocatable object",
+      "summary": "Validate the ELF64 header, read section headers, the symbol table and every RELA record, and cut each function out of .text with its relocations and its alignment padding. A PC-relative record points at S + A + (end of instruction - P), so a target is resolved only with the end of the instruction that holds the field.",
+      "hours": 2,
+      "language": "python",
+      "languageWhy": "struct.unpack_from reads fixed-layout tables with explicit little-endian formats and no third-party parser.",
+      "concepts": ["ElfObject", "ElfObject.function", "relocation_target"],
+      "difficulty": "starter",
+      "timeout": 60,
+      "figure": "pj-mini-decompiler-1"
+    },
+    {
+      "id": "02-decoder",
+      "title": "Decode the x86-64 subset",
+      "summary": "Decode legacy prefixes, REX, one and two byte opcodes, ModRM, SIB, displacements and immediates for the instructions the fixtures use. Record where the displacement and immediate fields sit so relocations can be matched to operands. Every instruction must agree with the captured disassembler listing by address, bytes and AT&T text.",
+      "hours": 3,
+      "language": "python",
+      "languageWhy": "Integer bit operations and dataclasses express each encoding field directly.",
+      "concepts": ["decode", "linear_sweep", "compare_with_objdump"],
+      "difficulty": "core",
+      "timeout": 60,
+      "figure": "pj-mini-decompiler-2"
+    },
+    {
+      "id": "03-control-flow",
+      "title": "Recover control flow",
+      "summary": "Follow control flow by recursive descent, resolve the position-independent jump table from its relocations and bounds check, split basic blocks, then compute dominators, dominance frontiers, post-dominators, back edges and natural loops. An indirect jump with no matching idiom stays unresolved and is reported.",
+      "hours": 2,
+      "language": "python",
+      "languageWhy": "Dictionaries and sets carry the graph, and the iterative dominator algorithm needs no graph library.",
+      "concepts": ["recursive_descent", "jump_table_resolver", "ControlFlowGraph", "dominance_frontiers"],
+      "difficulty": "core",
+      "timeout": 60,
+      "figure": "pj-mini-decompiler-3"
+    },
+    {
+      "id": "04-lift-and-ssa",
+      "title": "Lift to IR and build SSA",
+      "summary": "Lift each instruction to a small IR in which flags are an ordinary variable, frame bookkeeping disappears and frame-pointer slots become locals. Place phi statements on iterated dominance frontiers and rename over the dominator tree so every value has one definition, with explicit casts where a narrow definition meets a wide use.",
+      "hours": 3,
+      "language": "python",
+      "languageWhy": "Frozen dataclasses give hashable IR expressions that can be compared and rewritten.",
+      "concepts": ["lift_instruction", "lift_function", "insert_phis", "rename"],
+      "difficulty": "core",
+      "timeout": 60,
+      "figure": "pj-mini-decompiler-4"
+    },
+    {
+      "id": "05-optimize",
+      "title": "Simplify and fold idioms",
+      "summary": "Turn flag conditions into comparisons, propagate copies and constants, delete dead definitions, merge congruent phis and substitute single-use values without moving a load across a store. Recognize the multiply-and-shift form of signed division by a constant and fold it only when the multiplier, shift and error bound prove the divisor.",
+      "hours": 2,
+      "language": "python",
+      "languageWhy": "Python integers have no width, so 32 and 64-bit wraparound is explicit and testable.",
+      "concepts": ["magic_divisor", "optimize", "propagate_copies", "remove_dead_code"],
+      "difficulty": "core",
+      "timeout": 60,
+      "figure": "pj-mini-decompiler-5"
+    },
+    {
+      "id": "06-signature",
+      "title": "Recover the signature and types",
+      "summary": "A System V argument register read before any write is a parameter, and the highest one fixes the count. Coalesce phi webs into C variables, make a scaled element access a pointer to its element and constant offsets a struct, and choose signedness from the instructions that touch each value. Every choice carries its instruction evidence.",
+      "hours": 2,
+      "language": "python",
+      "languageWhy": "Union-find over SSA keys and plain dictionaries keep each piece of type evidence inspectable.",
+      "concepts": ["collect_params", "coalesce_webs", "infer_types", "recover_signature"],
+      "difficulty": "core",
+      "timeout": 60,
+      "figure": "pj-mini-decompiler-6"
+    },
+    {
+      "id": "07-structure-and-emit",
+      "title": "Structure the graph and emit C",
+      "summary": "Match loops, two-way and n-way conditionals with the immediate post-dominator as the join, emit if, if-else, while, do-while and switch, and print C with recovered struct and table definitions. A region that matches no shape produces a counted goto, and every heuristic goes into the unknowns list.",
+      "hours": 2,
+      "language": "python",
+      "languageWhy": "String assembly with an explicit precedence table keeps the emitted C readable and compilable.",
+      "concepts": ["Structurer", "decompile", "decompile_all", "translation_unit"],
+      "difficulty": "stretch",
+      "timeout": 90,
+      "figure": "pj-mini-decompiler-7"
+    },
+    {
+      "id": "08-verify",
+      "title": "Prove the output",
+      "summary": "Recompile the emitted C with the fixture flags, compare each function with relocation fields masked, compare the constants each relocation points at, and run original and candidate side by side over an input grid that crosses limits, zero, negatives and compare constants. The report is fail-closed and lists every unknown. Without clang the recompile and differential legs skip and say why.",
+      "hours": 2,
+      "language": "python",
+      "languageWhy": "subprocess drives clang and the generated C driver, and json writes the evidence report.",
+      "concepts": ["mask_relocations", "compare_function_bytes", "input_grid", "verify"],
+      "difficulty": "stretch",
+      "timeout": 180,
+      "figure": "pj-mini-decompiler-8"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Decompile and verify",
+      "caption": "Actual output of the decompile and verify commands on the committed O1 object. The verify leg needs clang on PATH."
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+[
+  {
+    "type": "a2a",
+    "summary": "Connect to remote agents via the Agent-to-Agent (A2A) protocol",
+    "docs": "https://docker.github.io/docker-agent/tools/a2a"
+  },
+  {
+    "type": "api",
+    "summary": "Create custom tools that call HTTP APIs",
+    "docs": "https://docker.github.io/docker-agent/tools/api"
+  },
+  {
+    "type": "background_agents",
+    "summary": "Dispatch work to sub-agents concurrently and collect results",
+    "docs": "https://docker.github.io/docker-agent/tools/background-agents"
+  },
+  {
+    "type": "background_jobs",
+    "summary": "Run and manage long-running shell commands",
+    "docs": "https://docker.github.io/docker-agent/tools/background-jobs"
+  },
+  {
+    "type": "environment",
+    "summary": "Report the OS and resolved shell (read-only, no arguments)",
+    "docs": "https://docker.github.io/docker-agent/tools/environment"
+  },
+  {
+    "type": "fetch",
+    "summary": "Read content from HTTP/HTTPS URLs",
+    "docs": "https://docker.github.io/docker-agent/tools/fetch"
+  },
+  {
+    "type": "file",
+    "summary": "Read, write, and edit individual files",
+    "docs": "https://docker.github.io/docker-agent/tools/file"
+  },
+  {
+    "type": "filesystem",
+    "summary": "Read, write, list, search, and navigate files and directories",
+    "docs": "https://docker.github.io/docker-agent/tools/filesystem"
+  },
+  {
+    "type": "git",
+    "summary": "Read-only git repository inspection: status, log, branches, show, blame",
+    "docs": "https://docker.github.io/docker-agent/tools/git"
+  },
+  {
+    "type": "lsp",
+    "summary": "Connect to Language Server Protocol servers for code intelligence",
+    "docs": "https://docker.github.io/docker-agent/tools/lsp"
+  },
+  {
+    "type": "mcp",
+    "summary": "Extend agents with external tools via the Model Context Protocol",
+    "docs": "https://docker.github.io/docker-agent/tools/mcp"
+  },
+  {
+    "type": "mcp_catalog",
+    "summary": "Discover and activate remote MCP servers from the Docker MCP Catalog",
+    "docs": "https://docker.github.io/docker-agent/tools/mcp-catalog"
+  },
+  {
+    "type": "memory",
+    "summary": "Persistent key-value storage for cross-session recall",
+    "docs": "https://docker.github.io/docker-agent/tools/memory"
+  },
+  {
+    "type": "model_picker",
+    "summary": "Let the agent pick between several models per turn",
+    "docs": "https://docker.github.io/docker-agent/tools/model-picker"
+  },
+  {
+    "type": "open_url",
+    "summary": "Open a fixed URL in the user's default browser",
+    "docs": "https://docker.github.io/docker-agent/tools/open-url"
+  },
+  {
+    "type": "openapi",
+    "summary": "Generate tools automatically from an OpenAPI specification",
+    "docs": "https://docker.github.io/docker-agent/tools/openapi"
+  },
+  {
+    "type": "plan",
+    "summary": "Shared persistent scratchpad for multi-agent collaboration",
+    "docs": "https://docker.github.io/docker-agent/tools/plan"
+  },
+  {
+    "type": "rag",
+    "summary": "Search document knowledge bases with hybrid retrieval (RAG)",
+    "docs": "https://docker.github.io/docker-agent/tools/rag"
+  },
+  {
+    "type": "scheduler",
+    "summary": "Schedule instructions to run at a time or on a recurring interval",
+    "docs": "https://docker.github.io/docker-agent/tools/scheduler"
+  },
+  {
+    "type": "script",
+    "summary": "Define custom shell scripts as named tools with typed parameters",
+    "docs": "https://docker.github.io/docker-agent/tools/script"
+  },
+  {
+    "type": "session_context",
+    "summary": "Reference a previous session as context in the current one",
+    "docs": "https://docker.github.io/docker-agent/tools/session_context"
+  },
+  {
+    "type": "shell",
+    "summary": "Execute shell commands in the user's environment",
+    "docs": "https://docker.github.io/docker-agent/tools/shell"
+  },
+  {
+    "type": "tasks",
+    "summary": "Persistent task database with priorities and dependencies",
+    "docs": "https://docker.github.io/docker-agent/tools/tasks"
+  },
+  {
+    "type": "think",
+    "summary": "Step-by-step reasoning scratchpad for planning",
+    "docs": "https://docker.github.io/docker-agent/tools/think"
+  },
+  {
+    "type": "todo",
+    "summary": "Manage a task list for complex multi-step workflows",
+    "docs": "https://docker.github.io/docker-agent/tools/todo"
+  },
+  {
+    "type": "user_prompt",
+    "summary": "Ask the user questions and collect interactive input",
+    "docs": "https://docker.github.io/docker-agent/tools/user-prompt"
+  },
+  {
+    "type": "webhook",
+    "summary": "Send outbound notifications (Slack, Discord, Telegram, IFTTT, Teams, and more)",
+    "docs": "https://docker.github.io/docker-agent/tools/webhook"
+  }
+]

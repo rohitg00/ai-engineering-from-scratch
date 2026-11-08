@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 456" role="img" aria-labelledby="fig-6-1-title fig-6-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-1-title">The application graph of ledger-desk</title>
+  <desc id="fig-6-1-desc">The graph that analyze_javascript_application returns for the js-app fixture, drawn as boxes with the relation names on the arrows. Row one: the package ledger-desk loads the electron-main main.js, which contains the BrowserWindow at lines 8 to 16. Row two: main.js loads the electron-renderer index.html, the BrowserWindow loads the electron-preload preload.js, and preload.js exposes the context-bridge-api ledger with three members. Row three: preload.js invokes the ipc-channels ledger:percent-change and ledger:grade-label and sends on ledger:log. Row four: three ipc-handlers in main.js handle those channels. Row five: index.html loads the javascript-asset renderer.js, which calls the network endpoint /api/ledger/latest with fetch and persists_to the storage ledger:latest with localStorage.setItem.</desc>
+  <defs><marker id="fig-6-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-6-1-head-olive" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-olive-ink, #515f26)"/></marker><marker id="fig-6-1-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
+  <rect x="20" y="28" width="180" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="110" y="49.1" font-size="12" text-anchor="middle" font-weight="700">ledger-desk</text>
+  <text x="110" y="66.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">package, package.json</text>
+  <rect x="230" y="28" width="180" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="320" y="49.1" font-size="12" text-anchor="middle" font-weight="700">main.js</text>
+  <text x="320" y="66.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">electron-main</text>
+  <rect x="440" y="28" width="180" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="530" y="48.8" font-size="11" text-anchor="middle" font-weight="700">BrowserWindow@8:17-16:4</text>
+  <text x="530" y="65.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">browser-window</text>
+  <line x1="200" y1="54" x2="229" y2="54" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1-head-ink)"/>
+  <line x1="410" y1="54" x2="439" y2="54" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1-head-ink)"/>
+  <text x="215" y="22" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">loads</text>
+  <text x="425" y="22" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">contains</text>
+  <rect x="20" y="112" width="180" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="110" y="133.1" font-size="12" text-anchor="middle" font-weight="700">index.html</text>
+  <text x="110" y="150.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">electron-renderer</text>
+  <rect x="230" y="112" width="180" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="320" y="133.1" font-size="12" text-anchor="middle" font-weight="700">ledger</text>
+  <text x="320" y="150.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">context bridge, 3 members</text>
+  <rect x="440" y="112" width="180" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="530" y="133.1" font-size="12" text-anchor="middle" font-weight="700">preload.js</text>
+  <text x="530" y="150.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">electron-preload</text>
+  <path d="M250 80 V96 H110 V111" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="160.5" y="81.42" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="180" y="92" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">loads</text>
+  <line x1="530" y1="80" x2="530" y2="111" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="535" y="84.53" width="40.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="538" y="95.5" font-size="11.5">loads</text>
+  <line x1="440" y1="138" x2="411" y2="138" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1-head-ink)"/>
+  <text x="425" y="106" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">exposes</text>
+  <rect x="20" y="196" width="180" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="110" y="217.1" font-size="12" text-anchor="middle" font-weight="700">ledger:percent-change</text>
+  <text x="110" y="234.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ipc-channel</text>
+  <rect x="230" y="196" width="180" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="320" y="217.1" font-size="12" text-anchor="middle" font-weight="700">ledger:grade-label</text>
+  <text x="320" y="234.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ipc-channel</text>
+  <rect x="440" y="196" width="180" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="530" y="217.1" font-size="12" text-anchor="middle" font-weight="700">ledger:log</text>
+  <text x="530" y="234.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ipc-channel</text>
+  <line x1="560" y1="164" x2="560" y2="195" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="565" y="168.53" width="40.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="568" y="179.5" font-size="11.5">sends</text>
+  <path d="M520 164 V182 H320 V195" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="403.9" y="167.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="430" y="178" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">invokes</text>
+  <path d="M480 164 V188 H110 V195" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect x="20" y="280" width="180" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="110" y="301.1" font-size="12" text-anchor="middle" font-weight="700">ledger:percent-change</text>
+  <text x="110" y="318.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">handler, ipcMain.handle</text>
+  <rect x="230" y="280" width="180" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="320" y="301.1" font-size="12" text-anchor="middle" font-weight="700">ledger:grade-label</text>
+  <text x="320" y="318.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">handler, ipcMain.handle</text>
+  <rect x="440" y="280" width="180" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="530" y="301.1" font-size="12" text-anchor="middle" font-weight="700">ledger:log</text>
+  <text x="530" y="318.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">handler, ipcMain.on</text>
+  <line x1="110" y1="279" x2="110" y2="249" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="115" y="253.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="118" y="264" font-size="11.5">handles</text>
+  <line x1="320" y1="279" x2="320" y2="249" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="325" y="253.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="328" y="264" font-size="11.5">handles</text>
+  <line x1="530" y1="279" x2="530" y2="249" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="535" y="253.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="538" y="264" font-size="11.5">handles</text>
+  <rect x="20" y="364" width="180" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="110" y="385.1" font-size="12" text-anchor="middle" font-weight="700">renderer.js</text>
+  <text x="110" y="402.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">javascript-asset</text>
+  <rect x="230" y="364" width="180" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="320" y="385.1" font-size="12" text-anchor="middle" font-weight="700">/api/ledger/latest</text>
+  <text x="320" y="402.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">endpoint, fetch</text>
+  <rect x="440" y="364" width="180" height="52" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="530" y="385.1" font-size="12" text-anchor="middle" font-weight="700">ledger:latest</text>
+  <text x="530" y="402.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">storage, localStorage</text>
+  <path d="M20 150 H12 V390 H19" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-1-head-ink)"/>
+  <rect class="m-knock" x="11" y="255.42" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="14" y="266" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">loads</text>
+  <line x1="200" y1="390" x2="229" y2="390" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-1-head-olive)"/>
+  <text x="215" y="358" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">calls</text>
+  <path d="M110 416 V430 H530 V417" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-1-head-teal)"/>
+  <text x="320" y="444" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">persists_to</text>
+</svg>

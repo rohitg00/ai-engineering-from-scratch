@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 450" role="img" aria-labelledby="fig-card-signature-title fig-card-signature-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-card-signature-title">Signing and verifying the deployer card</title>
+  <desc id="fig-card-signature-desc">Top half, signing, in three steps: the deployer card minus its signatures field is canonicalized with RFC 8785 into a 959-byte payload. The protected header {&quot;alg&quot;:&quot;HS256&quot;,&quot;typ&quot;:&quot;JOSE&quot;,&quot;kid&quot;:&quot;deployer-key-1&quot;} and the payload are each base64url-encoded and joined with a period into a 1,348-character signing input, which HMAC-SHA256 signs to give signatures[0] with protected eyJhbGci and signature yPk834ji. Bottom half, verifying, in four steps: the published card rebuilds the same payload and its signature matches, so verification returns True. An edited copy whose description reads &quot;Deploys a tagged build to production.&quot; rebuilds a different payload, and verification returns False.</desc>
+  <defs><marker id="fig-card-signature-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-card-signature-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SIGN</text>
+  <text x="20" y="300" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">VERIFY</text>
+  <rect x="20" y="30" width="170" height="58" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="105" y="46.6" font-size="12" text-anchor="middle" font-weight="700">deployer card</text>
+  <text x="105" y="63.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">11 members,</text>
+  <text x="105" y="78.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">plus signatures</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="280" y="30" width="340" height="58" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="450" y="46.6" font-size="12" text-anchor="middle" font-weight="700">canonical payload, RFC 8785</text>
+  <text x="450" y="63.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sorted keys, no spaces, no signatures</text>
+  <text x="450" y="78.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">959 bytes, from capabilities to version</text>
+  <line x1="190" y1="59" x2="279" y2="59" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-card-signature-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M190 59 L279 59" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="191.9" y="42.42" width="85.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="234.5" y="53" font-size="11" text-anchor="middle">canonicalize</text>
+  <rect class="m-knock" x="195.86" y="63.42" width="77.28" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="234.5" y="74" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rules 1 to 3</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="118" width="230" height="58" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="138" font-size="12" font-weight="700">protected header</text>
+  <text x="32" y="154" font-size="11">{&quot;alg&quot;:&quot;HS256&quot;,&quot;typ&quot;:&quot;JOSE&quot;,</text>
+  <text x="32" y="169" font-size="11">&quot;kid&quot;:&quot;deployer-key-1&quot;}</text>
+  <rect x="330" y="118" width="290" height="58" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="475" y="134.6" font-size="12" text-anchor="middle" font-weight="700">JWS signing input</text>
+  <text x="475" y="151.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">BASE64URL(header) &#39;.&#39; BASE64URL(payload)</text>
+  <text x="475" y="166.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1,348 characters on one line</text>
+  <line x1="250" y1="147" x2="329" y2="147" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-card-signature-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M250 147 L329 147" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="256.8" y="130.42" width="65.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="289.5" y="141" font-size="11" text-anchor="middle">base64url</text>
+  <line x1="475" y1="88" x2="475" y2="117" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-card-signature-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M475 88 L475 117" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="480" y="91.92" width="65.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="483" y="102.5" font-size="11">base64url</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="330" y="206" width="290" height="58" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="342" y="226" font-size="12" font-weight="700">signatures[0]</text>
+  <text x="342" y="242" font-size="11">protected &quot;eyJhbGci&quot;</text>
+  <text x="342" y="257" font-size="11">signature &quot;yPk834ji&quot;</text>
+  <line x1="475" y1="176" x2="475" y2="205" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-card-signature-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M475 176 L475 205" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="480" y="179.92" width="78.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="483" y="190.5" font-size="11">HMAC-SHA256</text>
+  <text x="467" y="194" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HS256, key deployer-key-1</text>
+  <rect x="20" y="206" width="280" height="58" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="160" y="221.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the kit: HS256, one shared key</text>
+  <text x="160" y="236.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">real cards: ES256 or RS256, with</text>
+  <text x="160" y="251.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a public key in a JWKS at jku</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="312" width="210" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="125" y="330.1" font-size="12" text-anchor="middle" font-weight="700">published card</text>
+  <text x="125" y="347.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">description as signed</text>
+  <rect x="290" y="312" width="160" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="302" y="332" font-size="12" font-weight="700">recompute</text>
+  <text x="302" y="348" font-size="11">&quot;yPk834ji&quot;</text>
+  <line x1="230" y1="335" x2="289" y2="335" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-card-signature-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M230 335 L289 335" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="233.4" y="318.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="259.5" y="329" font-size="11" text-anchor="middle">rebuild</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <rect x="510" y="312" width="110" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="565" y="330.1" font-size="12" text-anchor="middle" font-weight="700">True</text>
+  <text x="565" y="347.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">step 5</text>
+  <line x1="450" y1="335" x2="509" y2="335" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-card-signature-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M450 335 L509 335" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="460" y="318.42" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="479.5" y="329" font-size="11" text-anchor="middle">match</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="380" width="210" height="58" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-dasharray="5 4"/>
+  <text x="125" y="396.6" font-size="12" text-anchor="middle" font-weight="700">edited copy</text>
+  <text x="125" y="413.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">&quot;Deploys a tagged build</text>
+  <text x="125" y="428.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">to production.&quot;</text>
+  <rect x="290" y="380" width="160" height="58" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="302" y="400" font-size="12" font-weight="700">recompute</text>
+  <text x="302" y="416" font-size="11">new payload,</text>
+  <text x="302" y="431" font-size="11">another value</text>
+  <line x1="230" y1="409" x2="289" y2="409" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-card-signature-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M230 409 L289 409" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="233.4" y="392.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="259.5" y="403" font-size="11" text-anchor="middle">rebuild</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <rect x="510" y="380" width="110" height="58" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="565" y="404.1" font-size="12" text-anchor="middle" font-weight="700">False</text>
+  <text x="565" y="421.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">step 6</text>
+  <line x1="450" y1="409" x2="509" y2="409" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-card-signature-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M450 409 L509 409" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="453.4" y="392.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="479.5" y="403" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">differs</text>
+  </g>
+</svg>

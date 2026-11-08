@@ -1,0 +1,25 @@
+version: "16"
+
+providers:
+  host-runner:
+    provider: dmr
+    base_url: http://host.docker.internal:12434/engines/llama.cpp/v1
+
+models:
+  local:
+    provider: host-runner
+    model: ai/qwen3:4b
+    temperature: 0
+
+agents:
+  root:
+    model: local
+    description: Lists the files of a small repository and counts lines, from inside a sandbox.
+    instruction: |
+      You answer questions about the files in the working directory.
+      Use the tools to look; never guess. Answer in one sentence that
+      names the files and gives the line count.
+    max_iterations: 8
+    toolsets:
+      - type: filesystem
+      - type: shell

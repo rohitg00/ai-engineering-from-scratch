@@ -39,7 +39,7 @@ Your home directory is `~` or `/home/your-username`. Almost everything you do ha
 
 ## Essential Commands
 
-These are the 15 commands that cover 95% of what you'll do on a remote GPU box.
+These are the 13 commands that cover most of what you'll do on a remote GPU box.
 
 ### Moving Around
 
@@ -305,3 +305,15 @@ s0-process-fork
 3. Start a tmux session, run `sleep 300` inside it, detach, list sessions, and reattach.
 4. Use `df -h` to check available disk space, then use `du -sh ~/.cache/*` to find what's taking up space in your cache.
 5. Transfer a file from your local machine to a remote one using `scp`, then do the same transfer with `rsync` and compare the experience.
+
+### Hints
+
+**Exercise 1.** Use `cd ~`, `mkdir`, and `cd` into the new folder, then run `touch` with three file names. In the `ls -la` output, check that the three files show a size of 0 and your user name as owner.
+
+**Exercise 2.** Install with `sudo apt install -y htop`, start it, and press `F6` (or click the column name) to sort by `MEM%`. The process at the top of the list uses the most memory.
+
+**Exercise 3.** Use `tmux new -s train` from the lesson, run `sleep 300`, and detach with `Ctrl+B` then `d`. Run `tmux ls` to see the session, then `tmux attach -t train`; the `sleep` must still run.
+
+**Exercise 4.** Run `df -h` and read the `Avail` column for the file system that holds your home folder. Then run `du -sh ~/.cache/* | sort -h` so that the largest folder is on the last line.
+
+**Exercise 5.** Copy a file with `scp file.txt user@host:~/`, then run `rsync -avP file.txt user@host:~/` for the same file. Run the `rsync` command a second time: it sends almost nothing, because the file on the remote side did not change.

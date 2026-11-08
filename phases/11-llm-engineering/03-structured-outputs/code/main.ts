@@ -3,7 +3,7 @@
 // We inline the schema layer instead of pulling in zod so the lesson stays
 // dep-free; the API (`.parse`, `.safeParse`) mirrors what real zod ships.
 // Refs: https://zod.dev/?id=basic-usage
-//       https://docs.anthropic.com/en/docs/build-with-claude/tool-use
+//       https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
 //       https://platform.openai.com/docs/guides/structured-outputs
 
 import process from "node:process";

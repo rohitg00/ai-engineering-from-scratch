@@ -36,7 +36,7 @@ Every audio encoder starts with the same feature: a log-Mel spectrogram.
 2. Short-time Fourier transform with 25ms windows, 10ms hop.
 3. Take magnitude of the FFT result.
 4. Apply Mel filter banks (typically 80 filters log-spaced 0-8000 Hz) to warp to perceptual frequency.
-5. Log compress (log(1 + x)) for dynamic range.
+5. Log compress $(\log(1 + x))$ for dynamic range.
 
 Result: a 2D array of shape (T, 80) where T is the number of time frames. For a 30-second clip at 100 Hz frame rate: (3000, 80).
 
@@ -54,7 +54,7 @@ Whisper was trained on speech-dominant data. It is weaker for music and environm
 
 BEATs (Chen et al., 2022) is a self-supervised transformer trained on AudioSet. Captures music and environmental sounds better than Whisper at the same parameter count.
 
-AF-Whisper (Audio Flamingo 3's hybrid): concat Whisper + BEATs features as the audio input. Whisper carries linguistic signal, BEATs carries acoustic signal.
+AF-Whisper (Audio Flamingo 3's encoder): start from the Whisper-large-v3 encoder and keep training it on speech, sound, and music together, so one encoder carries both the linguistic and the acoustic signal. Earlier systems like SALMONN got the same coverage by concatenating Whisper and BEATs features.
 
 ### Audio Q-former
 
@@ -70,7 +70,7 @@ Qwen-Audio (Chu et al., 2023): similar architecture, trained on a richer dataset
 
 LTU — Listen, Think, Understand (Gong et al., 2023): explicit reasoning data, focus on chain-of-thought over audio clips. Smaller but more focused.
 
-Audio Flamingo 3 (Goel et al., July 2025): the current open SOTA. 8B LLM backbone (Qwen2 7B), Whisper-large encoder concat BEATs, 64-query Q-former, training on 1M+ audio-text instruction pairs. MMAU 0.72, matches proprietary frontier on some sub-tasks.
+Audio Flamingo 3 (Goel et al., July 2025): the current open SOTA. 7B LLM backbone (Qwen2.5-7B), an AF-Whisper audio encoder built from Whisper-large-v3, small adaptor layers into the LLM, training on 1M+ audio-text instruction pairs. MMAU 0.72, matches proprietary frontier on some sub-tasks.
 
 AF3 also introduces on-demand chain-of-thought for audio: the model can optionally emit thinking tokens ("let me identify the instruments first: ...") before the final answer. Accuracy on complex reasoning tasks lifts 3-5 points when thinking is enabled.
 

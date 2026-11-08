@@ -1,0 +1,6 @@
+$ docker image inspect --format "{{index .RepoDigests 0}} {{.Architecture}}" radixark/miles:latest
+radixark/miles@sha256:c64fa344e3a86715f03c0a1b6a422c474e0035355591a2f6da87bf52a74c52da arm64
+$ docker run --rm --entrypoint git radixark/miles:latest -C /root/miles log -1 --format="%h %cs %s"
+08752a1283 2026-10-15 fix(ci): keep host networks out of the builder disk cleanup (#4130)
+$ docker run --rm --entrypoint /opt/sglang/bin/python3 radixark/miles:latest -c "import sglang;print(sglang.__version__)"
+0.5.22.dev46+g7b6993a

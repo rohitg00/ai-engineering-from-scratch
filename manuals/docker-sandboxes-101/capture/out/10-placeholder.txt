@@ -1,0 +1,34 @@
+$ sbx secret set-custom --host api.example.test --env M101_NAMED --placeholder 'sk-{rand}' --value m101-dummy-1111
+Applied secret updates for <n> running sandbox(es)
+Saved custom secret placeholder "sk-<rand>" for target "api.example.test" env "M101_NAMED" in scope "(global)"
+You may need to update environment variable M101_NAMED inside existing sandboxes to "sk-<rand>" (the placeholder value).
+[exit 0]
+
+$ sbx secret ls --json
+{
+  "secrets": [],
+  "custom_secrets": [
+    {
+      "scope": "global",
+      "targets": [
+        "api.example.test"
+      ],
+      "env": "M101_NAMED",
+      "placeholder": "sk-<rand>",
+      "secret": "m101-d*********"
+    },
+    {
+      "scope": "global",
+      "targets": [
+        "host.docker.internal",
+        "localhost"
+      ],
+      "env": "M101_RECV_KEY",
+      "placeholder": "sbx-cs-<rand>",
+      "secret": "m101-d**************0000"
+    }
+  ],
+  "shadowed_services": [],
+  "env_only_count": 0
+}
+[exit 0]

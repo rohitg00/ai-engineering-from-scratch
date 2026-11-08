@@ -1,0 +1,27 @@
+{
+  "candidate": "f2_clamp",
+  "label": "hand-written test candidate for lesson 45, not the output of any model",
+  "kind": "invented helper",
+  "tool": "hand-written",
+  "target": {
+    "object": "ledger-x86_64-O1-renamed.o",
+    "sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+    "function": "f2"
+  },
+  "source": "f2_clamp.c",
+  "claims": {
+    "name": "grade",
+    "return_type": "int",
+    "parameters": [
+      {"name": "score", "type": "int"}
+    ],
+    "summary": "Calls the helper clamp_score at 0x40 to clamp the score into 0 to 100, then divides by 10 and switches on the tens digit. Out-of-range scores produce the message score out of range."
+  },
+  "citations": {
+    "addresses": ["0x10", "0x40", "0x3e"],
+    "callees": ["clamp_score"],
+    "strings": ["score out of range"],
+    "immediates": [1717986919, 100, 4]
+  },
+  "cost": {"tokens": null, "seconds": null}
+}

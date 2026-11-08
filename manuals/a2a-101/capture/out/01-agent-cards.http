@@ -1,0 +1,201 @@
+### 1 · discover test-runner
+GET /.well-known/agent-card.json HTTP/1.1
+Host: localhost:41241
+Accept: application/json
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "name": "test-runner",
+  "description": "Checks out a commit, runs its test suite in a clean container, and streams the log.",
+  "supportedInterfaces": [
+    {
+      "url": "http://localhost:41241/a2a/jsonrpc",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    },
+    {
+      "url": "http://localhost:41241/a2a/rest",
+      "protocolBinding": "HTTP+JSON",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "provider": {
+    "url": "https://ci.example.com",
+    "organization": "Platform Team"
+  },
+  "version": "2.3.0",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": true
+  },
+  "defaultInputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "defaultOutputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "skills": [
+    {
+      "id": "run-tests",
+      "name": "Run tests",
+      "description": "Run the test suite of a repository at one commit and report each failure with its log.",
+      "tags": [
+        "ci",
+        "tests"
+      ],
+      "examples": [
+        "Run the unit tests for payments-api at commit 9f3c2e1"
+      ]
+    }
+  ]
+}
+
+### 2 · discover code-reviewer
+GET /.well-known/agent-card.json HTTP/1.1
+Host: localhost:41242
+Accept: application/json
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "name": "code-reviewer",
+  "description": "Reviews a unified diff against a base branch and returns findings with file and line.",
+  "supportedInterfaces": [
+    {
+      "url": "http://localhost:41242/a2a/jsonrpc",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    },
+    {
+      "url": "http://localhost:41242/a2a/rest",
+      "protocolBinding": "HTTP+JSON",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "provider": {
+    "url": "https://review.example.com",
+    "organization": "Developer Tools"
+  },
+  "version": "0.9.4",
+  "capabilities": {
+    "streaming": true
+  },
+  "defaultInputModes": [
+    "text/plain",
+    "text/x-diff"
+  ],
+  "defaultOutputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "skills": [
+    {
+      "id": "review-diff",
+      "name": "Review a diff",
+      "description": "Compare a diff with its base branch and report risky changes.",
+      "tags": [
+        "review",
+        "diff"
+      ],
+      "examples": [
+        "Review this diff of payments-api"
+      ],
+      "inputModes": [
+        "text/x-diff",
+        "text/plain"
+      ]
+    },
+    {
+      "id": "answer-question",
+      "name": "Answer a review question",
+      "description": "Answer a short question about what this reviewer checks.",
+      "tags": [
+        "review",
+        "faq"
+      ]
+    }
+  ]
+}
+
+### 3 · discover deployer
+GET /.well-known/agent-card.json HTTP/1.1
+Host: localhost:41243
+Accept: application/json
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "name": "deployer",
+  "description": "Deploys a tagged build to staging after an operator approves it.",
+  "supportedInterfaces": [
+    {
+      "url": "http://localhost:41243/a2a/jsonrpc",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    },
+    {
+      "url": "http://localhost:41243/a2a/rest",
+      "protocolBinding": "HTTP+JSON",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "provider": {
+    "url": "https://deploy.example.com",
+    "organization": "Platform Team"
+  },
+  "version": "1.4.1",
+  "capabilities": {
+    "streaming": true,
+    "extendedAgentCard": true
+  },
+  "securitySchemes": {
+    "bearer": {
+      "httpAuthSecurityScheme": {
+        "description": "A token issued by the platform team.",
+        "scheme": "Bearer"
+      }
+    }
+  },
+  "securityRequirements": [
+    {
+      "schemes": {
+        "bearer": {
+          "list": []
+        }
+      }
+    }
+  ],
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "skills": [
+    {
+      "id": "deploy",
+      "name": "Deploy a build",
+      "description": "Deploy one tagged build to staging, with operator approval.",
+      "tags": [
+        "deploy",
+        "staging"
+      ],
+      "examples": [
+        "Deploy build 2026.10.06-1 to staging"
+      ]
+    }
+  ],
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJkZXBsb3llci1rZXktMSJ9",
+      "signature": "yPk834ji_dOVmxElhzV3yTYBT9NVp8Bx1j5K0LQmOww"
+    }
+  ]
+}

@@ -395,3 +395,15 @@ python phases/00-setup-and-tooling/12-debugging-and-profiling/code/debug_tools.p
 3. 用 `tracemalloc` 找出你的資料載入流程裡，哪一行配置了最多記憶體。
 4. 為一次簡單的訓練設定 TensorBoard，判斷模型有沒有過度擬合。
 5. 在訓練迴圈裡用 `breakpoint()`。練習從除錯器的提示符檢查張量的形狀、裝置與梯度值。
+
+### 提示
+
+**練習 1。** 執行 `python3 phases/00-setup-and-tooling/12-debugging-and-profiling/code/debug_tools.py`，把每個示範函式的輸出讀過一遍。接著改動 `demo_nan_detection` 裡的模型，讓它的輸出除以零，再跑一次；`detect_nan` 必須印出一條帶步數的 NaN 警告。
+
+**練習 2。** 用 `python -m cProfile -s cumtime your_script.py` 執行迴圈，或把它包在 `cProfile.Profile()` 裡。看 `cumtime` 欄最上面幾列；屬於你自己程式碼、時間最大的那個函式就是最慢的。
+
+**練習 3。** 跟 `demo_memory_tracking` 一樣，在資料載入的程式碼之前呼叫 `tracemalloc.start()`，之後呼叫 `tracemalloc.take_snapshot()`。印出 `snapshot.statistics("lineno")[:5]`；第一行會顯示配置量最大的檔案與行號。
+
+**練習 4。** 每個 epoch 把訓練損失與驗證損失記錄到一個 `SummaryWriter`，然後執行 `tensorboard --logdir=runs`。如果訓練損失持續下降、驗證損失卻往上走，模型就過度擬合了。
+
+**練習 5。** 在迴圈裡 `loss.backward()` 之後放一個 `breakpoint()`，然後執行腳本。在 `(Pdb)` 提示符下印出 `x.shape`、`x.device` 與 `next(model.parameters()).grad`，再輸入 `c` 繼續到下一步。

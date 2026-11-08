@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 500" role="img" aria-labelledby="fig-5-2-title fig-5-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-2-title">A ResidualUnknown and its revision chain</title>
+  <desc id="fig-5-2-desc">Left, revision 1 of the unknown that compare_functions records when the _total comparison is changed: an unk_ id hashed from domain, question, scope digest and comparison scope, revision 1 with a null predecessor, status contradicted, severity medium, domain function-comparison, a comparison scope that names the comparison and its five changed dimensions, the left dossier and the comparison record as supporting evidence and the right dossier as contradicting evidence, the artifact bytes as required authority, required confidence observed, one recommended analyze_function probe, and one mutation evidence id. Right, what update_unknown changes: expected_revision 1, revision 2, the previous revision digest, a new revision digest, status resolved with a verified resolution, and two mutation evidence ids. Below, the mutation Evidence record that every change writes, from provider rea-unknown-registry.</desc>
+  <defs><marker id="fig-5-2-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-5-2-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">RECORD_UNKNOWN, AS COMPARE_FUNCTIONS CALLS IT</text>
+  <text x="400" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">UPDATE_UNKNOWN</text>
+  <rect x="20" y="30" width="330" height="362" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="30" y="48" font-size="12" font-weight="700" fill="var(--m-amber-ink, #85590c)">ResidualUnknown, revision 1</text>
+  <text x="30" y="66" font-size="11">unknown_id: unk_ + SHA-256 of domain,</text>
+  <text x="30" y="81" font-size="11">  question, scope_digest, comparison scope</text>
+  <text x="30" y="96" font-size="11">revision: 1</text>
+  <text x="30" y="111" font-size="11">previous_revision_digest: null</text>
+  <text x="30" y="126" font-size="11">revision_digest: SHA-256 of these rows</text>
+  <text x="30" y="141" font-size="11">scope_digest: the open target digest</text>
+  <text x="30" y="156" font-size="11">question: Function comparison is changed</text>
+  <text x="30" y="171" font-size="11">  (comparison ev_40ba96d8)</text>
+  <text x="30" y="186" font-size="11">status: contradicted</text>
+  <text x="30" y="201" font-size="11">severity: medium</text>
+  <text x="30" y="216" font-size="11">domain: function-comparison</text>
+  <text x="30" y="231" font-size="11">comparison_conclusion_scope: ev_40ba96d8,</text>
+  <text x="30" y="246" font-size="11">  assembly, cfg, pseudocode, references,</text>
+  <text x="30" y="261" font-size="11">  strings_names</text>
+  <text x="30" y="276" font-size="11">supporting_evidence_ids: ev_a1fe53ff,</text>
+  <text x="30" y="291" font-size="11">  ev_40ba96d8</text>
+  <text x="30" y="306" font-size="11">contradicting_evidence_ids: ev_bfe3275b</text>
+  <text x="30" y="321" font-size="11">required_authority: the artifact bytes</text>
+  <text x="30" y="336" font-size="11">required_confidence: observed</text>
+  <text x="30" y="351" font-size="11">recommended_probes: analyze_function</text>
+  <text x="30" y="366" font-size="11">relationships: [], resolution: null</text>
+  <text x="30" y="381" font-size="11">mutation_evidence_ids: 1 registry record</text>
+  <rect x="400" y="30" width="220" height="212" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="410" y="48" font-size="12" font-weight="700" fill="var(--m-amber-ink, #85590c)">after update_unknown</text>
+  <text x="410" y="66" font-size="11">expected_revision: 1</text>
+  <text x="410" y="81" font-size="11">revision: 2</text>
+  <text x="410" y="96" font-size="11">previous_revision_digest:</text>
+  <text x="410" y="111" font-size="11">  the revision 1 digest</text>
+  <text x="410" y="126" font-size="11">revision_digest: new</text>
+  <text x="410" y="141" font-size="11">status: resolved</text>
+  <text x="410" y="156" font-size="11">resolution: verified,</text>
+  <text x="410" y="171" font-size="11">  rationale, evidence_ids</text>
+  <text x="410" y="186" font-size="11">mutation_evidence_ids: 2</text>
+  <text x="410" y="201" font-size="11">unchanged: unknown_id,</text>
+  <text x="410" y="216" font-size="11">  question, domain,</text>
+  <text x="410" y="231" font-size="11">  scope_digest, comparison scope</text>
+  <line x1="350" y1="120" x2="399" y2="120" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-2-head-amber)"/>
+  <rect class="m-knock" x="350.8" y="103.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="374.5" y="114" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">update</text>
+  <rect x="20" y="432" width="600" height="56" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="320" y="447.75" font-size="12.5" text-anchor="middle" font-weight="700">mutation Evidence: provider rea-unknown-registry, version 1</text>
+  <text x="320" y="465.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">predicate rea.residual-unknown-mutation, confidence derived, authority analyst-inference</text>
+  <text x="320" y="480.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">limitation: Registry mutation evidence records analyst intent, not proof of the answer.</text>
+  <line x1="110" y1="392" x2="110" y2="431" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-2-head-teal)"/>
+  <line x1="510" y1="242" x2="510" y2="431" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-2-head-teal)"/>
+  <rect class="m-knock" x="515" y="325.53" width="109.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="518" y="336.5" font-size="11.5" fill="var(--m-teal-ink, #18696a)">one more record</text>
+</svg>

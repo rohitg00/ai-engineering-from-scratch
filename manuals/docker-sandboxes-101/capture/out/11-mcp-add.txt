@@ -1,0 +1,6 @@
+$ sbx mcp add m101-deepwiki --url https://mcp.deepwiki.com/mcp
+Resolving MCP server "m101-deepwiki"...
+WARN: oauth
+WARN: oauth
+MCP server "m101-deepwiki" registered (type: remote)
+[exit 0]

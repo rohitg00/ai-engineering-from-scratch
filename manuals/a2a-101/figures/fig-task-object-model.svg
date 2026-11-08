@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="fig-task-object-model-title fig-task-object-model-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-task-object-model-title">The object model of one task</title>
+  <desc id="fig-task-object-model-desc">A dashed frame marks context ac3830af. Inside it, task 3d8f7801 from the blocking run is drawn as a table that fills in the order the run filled it: id and contextId, then the two history messages, the user message 21636369 and the agent message 10cc3c92 with their roles, then the artifacts test-log and summary with their names and part counts, and last status.state TASK_STATE_COMPLETED, status.message 1 failed, 11 passed, and status.timestamp 2026-10-06T09:00:00.750Z. Below, four chips show that a part holds exactly one of text, raw, url or data, with an example of each.</desc>
+  <rect x="26" y="40" width="310" height="28" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="38" y="57.6" font-size="12" font-weight="700">Task</text>
+  <text x="20" y="324" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">EVERY MESSAGE AND ARTIFACT HOLDS PARTS</text>
+  <rect x="20" y="332" width="144" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="92" y="350.1" font-size="12" text-anchor="middle" font-weight="700">text</text>
+  <text x="92" y="367.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">collected 12 items</text>
+  <rect x="172" y="332" width="144" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="244" y="350.1" font-size="12" text-anchor="middle" font-weight="700">raw</text>
+  <text x="244" y="367.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refunds.diff, base64</text>
+  <rect x="324" y="332" width="144" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="396" y="350.1" font-size="12" text-anchor="middle" font-weight="700">url</text>
+  <text x="396" y="367.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">screenshot.png</text>
+  <rect x="476" y="332" width="144" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="548" y="350.1" font-size="12" text-anchor="middle" font-weight="700">data</text>
+  <text x="548" y="367.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">&quot;passed&quot;: 11</text>
+  <text x="20" y="400" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each part holds exactly one of these four, plus optional mediaType, filename and metadata.</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="14" y="8" width="612" height="290" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="5 4"/>
+  <text x="26" y="28" font-size="12" font-weight="700">context ac3830af</text>
+  <text x="158" y="28" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">groups related tasks and messages, and this run made one task</text>
+  <rect x="26" y="68" width="310" height="28" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="38" y="86" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">id</text>
+  <text x="160" y="86" font-size="11.5">3d8f7801</text>
+  <rect x="26" y="96" width="310" height="28" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="38" y="114" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">contextId</text>
+  <text x="160" y="114" font-size="11.5">ac3830af</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="26" y="236" width="310" height="28" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="38" y="254" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">history</text>
+  <text x="160" y="254" font-size="11.5">2 messages</text>
+  <rect x="360" y="166" width="256" height="52" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="372" y="179.6" font-size="12" font-weight="700">messageId: 21636369</text>
+  <text x="372" y="196.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">role: ROLE_USER</text>
+  <text x="372" y="211.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">parts: 1 text part</text>
+  <path d="M336 250 H352 V192 H360" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="360" y="224" width="256" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="372" y="237.6" font-size="12" font-weight="700">messageId: 10cc3c92</text>
+  <text x="372" y="254.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">role: ROLE_AGENT</text>
+  <text x="372" y="269.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">parts: 1 text part</text>
+  <path d="M352 250 H360" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="26" y="208" width="310" height="28" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="38" y="226" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">artifacts</text>
+  <text x="160" y="226" font-size="11.5">2 artifacts</text>
+  <rect x="360" y="40" width="256" height="52" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="372" y="53.6" font-size="12" font-weight="700">artifactId: test-log</text>
+  <text x="372" y="70.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">name: test-log.txt</text>
+  <text x="372" y="85.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">parts: 5 text parts</text>
+  <rect x="360" y="98" width="256" height="52" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="372" y="111.6" font-size="12" font-weight="700">artifactId: summary</text>
+  <text x="372" y="128.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">name: summary.json</text>
+  <text x="372" y="143.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">parts: 1 data part</text>
+  <path d="M336 222 H346 V66 H360" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M346 124 H360" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <rect x="26" y="124" width="310" height="28" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="38" y="142" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">status.state</text>
+  <text x="160" y="142" font-size="11.5">TASK_STATE_COMPLETED</text>
+  <rect x="26" y="152" width="310" height="28" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="38" y="170" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">status.message</text>
+  <text x="160" y="170" font-size="11.5">1 failed, 11 passed</text>
+  <rect x="26" y="180" width="310" height="28" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="38" y="198" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">status.timestamp</text>
+  <text x="160" y="198" font-size="11.5">2026-10-06T09:00:00.750Z</text>
+  </g>
+</svg>

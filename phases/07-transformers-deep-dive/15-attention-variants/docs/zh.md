@@ -61,10 +61,12 @@ positions 0-7          positions 0-7, W=4
 
 差分注意力的修法是算**兩張**注意力圖再相減：
 
-```
-A1 = softmax(Q1 K1^T / √d)
-A2 = softmax(Q2 K2^T / √d)
-DiffAttn = (A1 - λ · A2) V
+```math
+\begin{aligned}
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d}) \\
+\text{DiffAttn} &= (A_1 - \lambda \cdot A_2) V
+\end{aligned}
 ```
 
 其中 `λ` 是一個學習出來的純量（通常在 0.5 到 0.8 之間）。A1 抓的是真正內容的權重，A2 抓的是匯聚點。相減就把匯聚點消掉，把權重重新分配給相關的詞元。

@@ -1,0 +1,9 @@
+c8: Successful requests: 32 
+c8: Total generated tokens: 4096 
+c8: Total generated tokens (retokenized): 4096 
+c16: Successful requests: 64 
+c16: Total generated tokens: 8192 
+c16: Total generated tokens (retokenized): 2048 
+c32: Successful requests: 128 
+c32: Total generated tokens: 16384 
+c32: Total generated tokens (retokenized): 0 

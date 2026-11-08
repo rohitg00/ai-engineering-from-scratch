@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 604" role="img" aria-labelledby="fig-one-streamed-task-title fig-one-streamed-task-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-one-streamed-task-title">One streamed task from the card read to the close</title>
+  <desc id="fig-one-streamed-task-desc">Two lifelines, planner and test-runner at localhost:41241. The planner reads the agent card, sends SendStreamingMessage with a new messageId and no taskId, and gets HTTP 200 with text/event-stream. Nine numbered stream frames follow: the task 728ba084 in TASK_STATE_SUBMITTED, a statusUpdate to TASK_STATE_WORKING, five artifactUpdate frames that build test-log.txt, the last with lastChunk, one artifactUpdate for summary.json, and a statusUpdate to TASK_STATE_COMPLETED. Only frames 1, 2 and 9 carry a timestamp, at 09:00:01.750Z, 09:00:02.000Z and 09:00:02.250Z. Then the server closes the stream, with no final flag.</desc>
+  <defs><marker id="fig-one-streamed-task-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-one-streamed-task-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
+  <rect x="44" y="8" width="132" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="110" y="23.1" font-size="12" text-anchor="middle" font-weight="700">planner</text>
+  <text x="110" y="40.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">client agent</text>
+  <rect x="330" y="8" width="140" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="400" y="23.1" font-size="12" text-anchor="middle" font-weight="700">test-runner</text>
+  <text x="400" y="40.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">localhost:41241</text>
+  <text x="488" y="32" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">KIT CLOCK</text>
+  <line x1="110" y1="48" x2="110" y2="570" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="400" y1="48" x2="400" y2="570" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <line x1="110" y1="84" x2="399" y2="84" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-one-streamed-task-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 84 L399 84" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="141.6" y="67.03" width="226.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="78" font-size="11.5" text-anchor="middle">GET /.well-known/agent-card.json</text>
+  <line x1="400" y1="118" x2="111" y2="118" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-one-streamed-task-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M400 118 L111 118" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="117.45" y="101.03" width="275.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="112" font-size="11.5" text-anchor="middle">AgentCard, capabilities.streaming: true</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <line x1="110" y1="152" x2="399" y2="152" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-one-streamed-task-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 152 L399 152" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="183" y="135.03" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="146" font-size="11.5" text-anchor="middle">SendStreamingMessage</text>
+  <rect class="m-knock" x="165.87" y="156.42" width="178.26" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="167" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">messageId 5bc8fbbc, no taskId</text>
+  <line x1="400" y1="198" x2="111" y2="198" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-one-streamed-task-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M400 198 L111 198" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="158.85" y="181.03" width="192.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="192" font-size="11.5" text-anchor="middle">HTTP 200, text/event-stream</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="232" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1"/>
+  <text x="24" y="236" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">1</text>
+  <line x1="400" y1="232" x2="111" y2="232" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-one-streamed-task-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M400 232 L111 232" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="158.85" y="215.03" width="192.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="226" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">task · TASK_STATE_SUBMITTED</text>
+  <rect class="m-knock" x="133.2" y="236.42" width="243.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="247" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">task 728ba084, history holds the request</text>
+  <text x="488" y="236" font-size="11" fill="var(--m-amber-ink, #85590c)">09:00:01.750Z</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="278" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1"/>
+  <text x="24" y="282" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">2</text>
+  <line x1="400" y1="278" x2="111" y2="278" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-one-streamed-task-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M400 278 L111 278" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="138.15" y="261.03" width="233.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="272" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">statusUpdate · TASK_STATE_WORKING</text>
+  <rect class="m-knock" x="124.29" y="282.42" width="261.42" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="293" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Checking out 9f3c2e1 and starting the suite</text>
+  <text x="488" y="282" font-size="11" fill="var(--m-amber-ink, #85590c)">09:00:02.000Z</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="324" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1"/>
+  <text x="24" y="328" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">3</text>
+  <line x1="400" y1="324" x2="111" y2="324" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-one-streamed-task-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M400 324 L111 324" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="151.95" y="307.03" width="206.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="318" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">artifactUpdate · test-log.txt</text>
+  <rect class="m-knock" x="159.93" y="328.42" width="190.14" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="339" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">first chunk: collected 12 items</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="370" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1"/>
+  <text x="24" y="374" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">4</text>
+  <line x1="400" y1="370" x2="111" y2="370" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-one-streamed-task-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M400 370 L111 370" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="172.65" y="353.03" width="164.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="364" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">artifactUpdate · append</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="404" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1"/>
+  <text x="24" y="408" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">5</text>
+  <line x1="400" y1="404" x2="111" y2="404" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-one-streamed-task-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M400 404 L111 404" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="172.65" y="387.03" width="164.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="398" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">artifactUpdate · append</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="438" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1"/>
+  <text x="24" y="442" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">6</text>
+  <line x1="400" y1="438" x2="111" y2="438" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-one-streamed-task-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M400 438 L111 438" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="172.65" y="421.03" width="164.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="432" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">artifactUpdate · append</text>
+  </g>
+  <g data-beat="9"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="472" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1"/>
+  <text x="24" y="476" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">7</text>
+  <line x1="400" y1="472" x2="111" y2="472" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-one-streamed-task-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M400 472 L111 472" keyPoints="0;0;1;1" keyTimes="0;0.857;0.955;1" calcMode="linear" dur="5.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.857;0.871;0.955;1" dur="5.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="134.7" y="455.03" width="240.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="466" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">artifactUpdate · append, lastChunk</text>
+  </g>
+  <g data-beat="10"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="506" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1"/>
+  <text x="24" y="510" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">8</text>
+  <line x1="400" y1="506" x2="111" y2="506" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-one-streamed-task-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M400 506 L111 506" keyPoints="0;0;1;1" keyTimes="0;0.871;0.96;1" calcMode="linear" dur="6.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.871;0.884;0.96;1" dur="6.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="114" y="489.03" width="282" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="500" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">artifactUpdate · summary.json, lastChunk</text>
+  </g>
+  <g data-beat="11"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.93;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="6.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.93;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="6.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="540" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1"/>
+  <text x="24" y="544" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">9</text>
+  <line x1="400" y1="540" x2="111" y2="540" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-one-streamed-task-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M400 540 L111 540" keyPoints="0;0;1;1" keyTimes="0;0.882;0.963;1" calcMode="linear" dur="6.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.882;0.894;0.963;1" dur="6.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="131.25" y="523.03" width="247.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="534" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">statusUpdate · TASK_STATE_COMPLETED</text>
+  <rect class="m-knock" x="195.57" y="544.42" width="118.86" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="255" y="555" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 failed, 11 passed</text>
+  <text x="488" y="544" font-size="11" fill="var(--m-amber-ink, #85590c)">09:00:02.250Z</text>
+  </g>
+  <g data-beat="10"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/>
+  <line x1="484" y1="316" x2="484" y2="514" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="492" y="405" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">frames 3 to 8</text>
+  <text x="492" y="419" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">carry no</text>
+  <text x="492" y="433" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">timestamp</text>
+  </g>
+  <g data-beat="12"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.936;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.936;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.05s" begin="indefinite" fill="freeze"/>
+  <line x1="98" y1="570" x2="122" y2="570" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.6"/>
+  <line x1="388" y1="570" x2="412" y2="570" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.6"/>
+  <text x="255" y="592" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the server closes the stream after frame 9, with no final flag</text>
+  </g>
+</svg>

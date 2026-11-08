@@ -1,0 +1,26 @@
+$ sbx create --pull never -t m101-tpl:v1 shell --name m101-from-tpl
+
+sandbox    m101-from-tpl
+agent      shell
+workspace  none · no workspace bind mount
+image      m101-tpl:v1
+cpu        10
+memory     32 GiB
+
+Checking image
+✓ Image ready
+✓ Created sandbox m101-from-tpl
+
+To connect to this sandbox, run:
+  sbx run --name m101-from-tpl
+[exit 0]
+
+$ sbx ls
+SANDBOX         AGENT   STATUS    PORTS   WORKSPACE
+m101-demo       shell   stopped           $CAPTURE/fixtures/repo
+m101-from-tpl   shell   running           -
+[exit 0]
+
+$ sbx exec m101-from-tpl sh -c 'ls -l /opt/marker-from-demo'
+-rw-r--r-- 1 root root 0 <date> /opt/marker-from-demo
+[exit 0]

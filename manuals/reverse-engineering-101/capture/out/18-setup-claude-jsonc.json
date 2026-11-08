@@ -1,0 +1,18 @@
+{
+  "status": "needs_human",
+  "plannedActions": [],
+  "remediation": "Claude Code: Configuration $WORK/home-claude-jsonc/.claude/.claude.json is malformed: Expected property name or '}' in JSON at position 4 (line 2 column 3)",
+  "doctor": {
+    "identity": {
+      "registrations": [
+        {
+          "client": "claude_code",
+          "config_path": "$WORK/home-claude-jsonc/.claude/.claude.json",
+          "command": [],
+          "state": "invalid",
+          "remediation": "Configuration $WORK/home-claude-jsonc/.claude/.claude.json is malformed: Expected property name or '}' in JSON at position 4 (line 2 column 3)"
+        }
+      ]
+    }
+  }
+}

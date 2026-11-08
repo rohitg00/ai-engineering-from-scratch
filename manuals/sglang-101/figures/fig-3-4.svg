@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-3-4-title fig-3-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-4-title">The same tokens in three orders</title>
+  <desc id="fig-3-4-desc">Three token ribbons for prompts of about 3,000 tokens. The stable prompt reuses 2,998 tokens and computes 1, with a median first-token time of 45 ms. With a random ID at the start, only 5 tokens are reused and about 3,029 are computed, at 1,255 ms. With the same ID at the end, 2,985 tokens are reused and about 45 are computed, at 88 ms.</desc>
+  <rect x="20" y="14" width="14" height="12" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="40" y="24" font-size="11.5">reused from the radix cache</text>
+  <rect x="260" y="14" width="14" height="12" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="280" y="24" font-size="11.5">computed in prefill</text>
+  <text x="20" y="56" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">STABLE SYSTEM PROMPT</text>
+  <rect x="20" y="66" width="439.85" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="459.85" y="66" width="3" height="30" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="474" y="78" font-size="11.5">2,998 cached</text>
+  <text x="474" y="94" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median TTFT 45 ms</text>
+  <text x="20" y="132" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">RANDOM ID AT THE START</text>
+  <rect x="20" y="142" width="3" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="23" y="142" width="437" height="30" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="474" y="154" font-size="11.5">5 cached</text>
+  <text x="474" y="170" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median TTFT 1,255 ms</text>
+  <text x="20" y="208" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">RANDOM ID AT THE END</text>
+  <rect x="20" y="218" width="433.75" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="453.75" y="218" width="6.25" height="30" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="474" y="230" font-size="11.5">2,985 cached</text>
+  <text x="474" y="246" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median TTFT 88 ms</text>
+  <text x="20" y="282" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Every token after the first difference is a new branch of the tree.</text>
+</svg>

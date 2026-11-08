@@ -1,0 +1,149 @@
+$ rea doctor --provider ghidra --format json --filter-output healthy,environment_healthy,scope,scope_checks
+[exit 0] (2.7 s) -> 01-doctor-ghidra.json
+
+$ rea capabilities --format json
+[exit 0] (2.1 s) -> 02-capabilities.json
+
+$ rea inspect-artifact fixtures/ledger-arm64-O1 --format json
+[exit 0] (0.8 s) -> 03-inspect-artifact.json
+
+$ rea inspect-binary-layout fixtures/ledger-x86_64-O1.o --format json
+[exit 1] (0.6 s) -> 04-inspect-binary-layout.json
+
+$ rea inspect-macho fixtures/ledger-arm64-O1 --format json
+[exit 0] (1.8 s) -> 04-inspect-macho.json
+
+$ rea analyze fixtures/ledger-arm64-O1 --provider ghidra --format json
+[exit 0] (7.9 s) -> 05-analyze-arm64-O1.json
+
+$ rea analyze fixtures/ledger-x86_64-O1.o --provider ghidra --format json
+[exit 0] (8.2 s) -> 05-analyze-x86_64-O1.json
+
+$ rea function fixtures/ledger-arm64-O1 _percent_change --provider ghidra --format json
+[exit 0] (7.9 s) -> 06-function-percent-change.json
+
+$ rea function fixtures/ledger-arm64-O1 _grade --provider ghidra --format json
+[exit 0] (8.3 s) -> 06-function-grade.json
+
+$ rea function fixtures/ledger-arm64-O1 _total --provider ghidra --format json
+[exit 0] (8.7 s) -> 06-function-total.json
+
+$ rea function fixtures/ledger-arm64-O1 _grade_label --provider ghidra --format json
+[exit 0] (9.0 s) -> 06-function-grade-label.json
+
+$ rea function fixtures/ledger-x86_64-O1.o grade --provider ghidra --format json
+[exit 0] (8.2 s) -> 06-function-grade-x86_64-O1.json
+
+$ rea decompile fixtures/ledger-arm64-O1 _total --provider ghidra --format json
+[exit 0] (8.2 s) -> 07-decompile-total.json
+
+$ rea decompile fixtures/ledger-x86_64-O1.o grade --provider ghidra --format json
+[exit 0] (8.2 s) -> 07-decompile-grade-x86_64-O1.json
+
+$ rea address-to-file-offset fixtures/ledger-arm64-O1 0x100000518 --provider ghidra --format json
+[exit 0] (8.6 s) -> 08-address-to-file-offset.json
+
+$ rea inspect-evidence-bundle '{"path": "out/11-bundle-O1.json", "detail": "summary"}' --format json
+[exit 0] (0.6 s) -> 11-inspect-evidence-bundle-O1.json
+
+$ rea inspect-evidence-bundle '{"path": "out/11-bundle-O2.json", "detail": "summary"}' --format json
+[exit 0] (0.6 s) -> 11-inspect-evidence-bundle-O2.json
+
+$ rea evidence-export out/11-bundle-O1.json $WORK/canonical-O1.json --format json
+[exit 0] (0.6 s) -> 12-evidence-export.json
+
+$ rea evidence-import out/11-bundle-O1.json --format json
+[exit 0] (0.6 s) -> 13-evidence-import.json
+
+$ rea evidence-import fixtures/bundle-rea-6.5.0-O1.json --format json
+[exit 1] (0.6 s) -> 13-evidence-import-rea-6.5.0.json
+
+$ rea compare out/11-bundle-O1.json out/11-bundle-O2.json --format json
+[exit 0] (0.6 s) -> 14-compare-bundles.json
+
+$ rea analyze-javascript-application fixtures/js-app --format json --filter-output evidence_id,subject,provider,analysis_profile,predicate_type,operation,parameters,raw_result,normalized_result.input_path,normalized_result.format,normalized_result.root_artifact_sha256,normalized_result.inventory_manifest_id,normalized_result.inventory_graph_sha256,normalized_result.integrity_contradictions,normalized_result.summary,normalized_result.statistics,normalized_result.limitations,confidence,authority,environment,limitations,locations,evidence_links
+[exit 0] (2.2 s) -> 15-js-app.json
+[stderr] {"rea_progress":{"phase":"analyze_javascript_application","completed":0,"total":1,"message":"Inventorying and parsing application artifacts","sequence":1}}
+[stderr] {"rea_progress":{"phase":"read_javascript_artifacts","completed":0,"total":1,"message":"Reading inventoried JavaScript application sources","sequence":2}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_sources","completed":0,"total":1,"message":"Processing 6 selected application files","sequence":3}}
+[stderr] {"rea_progress":{"phase":"process_javascript_artifact_metadata","completed":0,"total":1,"message":"Processing metadata for index.html (1/6)","sequence":4}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_source","completed":0,"total":1,"message":"Parsing and projecting ledger.js (2/6)","sequence":5}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_source","completed":0,"total":1,"message":"Parsing and projecting main.js (3/6)","sequence":6}}
+[stderr] {"rea_progress":{"phase":"process_javascript_artifact_metadata","completed":0,"total":1,"message":"Processing metadata for package.json (4/6)","sequence":7}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_source","completed":0,"total":1,"message":"Parsing and projecting preload.js (5/6)","sequence":8}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_source","completed":0,"total":1,"message":"Parsing and projecting renderer.js (6/6)","sequence":9}}
+[stderr] {"rea_progress":{"phase":"build_javascript_application_graph","completed":0,"total":1,"message":"Constructing application and Electron boundary relationships","sequence":10}}
+[stderr] {"rea_progress":{"phase":"seal_javascript_application_graph","completed":0,"total":1,"message":"Sealing the validated application graph","sequence":11}}
+[stderr] {"rea_progress":{"phase":"build_javascript_semantic_graph","completed":0,"total":1,"message":"Binding and validating static semantic relationships","sequence":12}}
+[stderr] {"rea_progress":{"phase":"seal_javascript_semantic_graph","completed":0,"total":1,"message":"Validating and sealing the semantic graph","sequence":13}}
+[stderr] {"rea_progress":{"phase":"validate_javascript_application_result","completed":0,"total":1,"message":"Validating result metadata and cross-graph bindings","sequence":14}}
+[stderr] {"rea_progress":{"phase":"create_javascript_application_evidence","completed":0,"total":1,"message":"Creating and hashing application analysis Evidence","sequence":15}}
+[stderr] {"rea_progress":{"phase":"seal_javascript_application_result","completed":0,"total":1,"message":"Sealing the complete application analysis result","sequence":16}}
+[stderr] {"rea_progress":{"phase":"validate_javascript_application_evidence","completed":0,"total":1,"message":"Validating the immutable application Evidence JSON","sequence":17}}
+[stderr] {"rea_progress":{"phase":"hash_javascript_application_evidence","completed":0,"total":1,"message":"Hashing the complete application analysis Evidence","sequence":18}}
+[stderr] {"rea_progress":{"phase":"analyze_javascript_application","completed":1,"total":1,"message":"Application graph and Electron boundaries reconstructed","terminal":true,"sequence":19}}
+
+$ rea analyze-javascript-application fixtures/js-app --format json --filter-output normalized_result.graph
+[exit 0] (2.1 s) -> 15-js-app-graph.json
+[stderr] {"rea_progress":{"phase":"analyze_javascript_application","completed":0,"total":1,"message":"Inventorying and parsing application artifacts","sequence":1}}
+[stderr] {"rea_progress":{"phase":"read_javascript_artifacts","completed":0,"total":1,"message":"Reading inventoried JavaScript application sources","sequence":2}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_sources","completed":0,"total":1,"message":"Processing 6 selected application files","sequence":3}}
+[stderr] {"rea_progress":{"phase":"process_javascript_artifact_metadata","completed":0,"total":1,"message":"Processing metadata for index.html (1/6)","sequence":4}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_source","completed":0,"total":1,"message":"Parsing and projecting ledger.js (2/6)","sequence":5}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_source","completed":0,"total":1,"message":"Parsing and projecting main.js (3/6)","sequence":6}}
+[stderr] {"rea_progress":{"phase":"process_javascript_artifact_metadata","completed":0,"total":1,"message":"Processing metadata for package.json (4/6)","sequence":7}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_source","completed":0,"total":1,"message":"Parsing and projecting preload.js (5/6)","sequence":8}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_source","completed":0,"total":1,"message":"Parsing and projecting renderer.js (6/6)","sequence":9}}
+[stderr] {"rea_progress":{"phase":"build_javascript_application_graph","completed":0,"total":1,"message":"Constructing application and Electron boundary relationships","sequence":10}}
+[stderr] {"rea_progress":{"phase":"seal_javascript_application_graph","completed":0,"total":1,"message":"Sealing the validated application graph","sequence":11}}
+[stderr] {"rea_progress":{"phase":"build_javascript_semantic_graph","completed":0,"total":1,"message":"Binding and validating static semantic relationships","sequence":12}}
+[stderr] {"rea_progress":{"phase":"seal_javascript_semantic_graph","completed":0,"total":1,"message":"Validating and sealing the semantic graph","sequence":13}}
+[stderr] {"rea_progress":{"phase":"validate_javascript_application_result","completed":0,"total":1,"message":"Validating result metadata and cross-graph bindings","sequence":14}}
+[stderr] {"rea_progress":{"phase":"create_javascript_application_evidence","completed":0,"total":1,"message":"Creating and hashing application analysis Evidence","sequence":15}}
+[stderr] {"rea_progress":{"phase":"seal_javascript_application_result","completed":0,"total":1,"message":"Sealing the complete application analysis result","sequence":16}}
+[stderr] {"rea_progress":{"phase":"validate_javascript_application_evidence","completed":0,"total":1,"message":"Validating the immutable application Evidence JSON","sequence":17}}
+[stderr] {"rea_progress":{"phase":"hash_javascript_application_evidence","completed":0,"total":1,"message":"Hashing the complete application analysis Evidence","sequence":18}}
+[stderr] {"rea_progress":{"phase":"analyze_javascript_application","completed":1,"total":1,"message":"Application graph and Electron boundaries reconstructed","terminal":true,"sequence":19}}
+
+$ rea analyze-javascript-application fixtures/js-app --format json
+[exit 0] (2.1 s) -> $WORK/js-app-full.json
+[stderr] {"rea_progress":{"phase":"analyze_javascript_application","completed":0,"total":1,"message":"Inventorying and parsing application artifacts","sequence":1}}
+[stderr] {"rea_progress":{"phase":"read_javascript_artifacts","completed":0,"total":1,"message":"Reading inventoried JavaScript application sources","sequence":2}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_sources","completed":0,"total":1,"message":"Processing 6 selected application files","sequence":3}}
+[stderr] {"rea_progress":{"phase":"process_javascript_artifact_metadata","completed":0,"total":1,"message":"Processing metadata for index.html (1/6)","sequence":4}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_source","completed":0,"total":1,"message":"Parsing and projecting ledger.js (2/6)","sequence":5}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_source","completed":0,"total":1,"message":"Parsing and projecting main.js (3/6)","sequence":6}}
+[stderr] {"rea_progress":{"phase":"process_javascript_artifact_metadata","completed":0,"total":1,"message":"Processing metadata for package.json (4/6)","sequence":7}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_source","completed":0,"total":1,"message":"Parsing and projecting preload.js (5/6)","sequence":8}}
+[stderr] {"rea_progress":{"phase":"parse_javascript_source","completed":0,"total":1,"message":"Parsing and projecting renderer.js (6/6)","sequence":9}}
+[stderr] {"rea_progress":{"phase":"build_javascript_application_graph","completed":0,"total":1,"message":"Constructing application and Electron boundary relationships","sequence":10}}
+[stderr] {"rea_progress":{"phase":"seal_javascript_application_graph","completed":0,"total":1,"message":"Sealing the validated application graph","sequence":11}}
+[stderr] {"rea_progress":{"phase":"build_javascript_semantic_graph","completed":0,"total":1,"message":"Binding and validating static semantic relationships","sequence":12}}
+[stderr] {"rea_progress":{"phase":"seal_javascript_semantic_graph","completed":0,"total":1,"message":"Validating and sealing the semantic graph","sequence":13}}
+[stderr] {"rea_progress":{"phase":"validate_javascript_application_result","completed":0,"total":1,"message":"Validating result metadata and cross-graph bindings","sequence":14}}
+[stderr] {"rea_progress":{"phase":"create_javascript_application_evidence","completed":0,"total":1,"message":"Creating and hashing application analysis Evidence","sequence":15}}
+[stderr] {"rea_progress":{"phase":"seal_javascript_application_result","completed":0,"total":1,"message":"Sealing the complete application analysis result","sequence":16}}
+[stderr] {"rea_progress":{"phase":"validate_javascript_application_evidence","completed":0,"total":1,"message":"Validating the immutable application Evidence JSON","sequence":17}}
+[stderr] {"rea_progress":{"phase":"hash_javascript_application_evidence","completed":0,"total":1,"message":"Hashing the complete application analysis Evidence","sequence":18}}
+[stderr] {"rea_progress":{"phase":"analyze_javascript_application","completed":1,"total":1,"message":"Application graph and Electron boundaries reconstructed","terminal":true,"sequence":19}}
+
+$ rea inspect-analysis-view $WORK/js-app-view-summary.json --format json
+[exit 0] (0.7 s) -> 15-js-app-view-summary.json
+
+# $WORK/js-app-view-summary.json holds {"source": {"kind": "inline", "evidence": <the complete record from $WORK/js-app-full.json>}, "view": {"kind": "summary"}}
+
+$ rea inspect-analysis-view $WORK/js-app-view-modules.json --format json
+[exit 0] (0.7 s) -> 15-js-app-view-modules.json
+
+# $WORK/js-app-view-modules.json holds {"source": {"kind": "inline", "evidence": <the complete record from $WORK/js-app-full.json>}, "view": {"kind": "page", "collection": "modules", "offset": 0, "limit": 32}}
+
+$ rea inspect-wasm-artifact fixtures/wasm/ledger.wasm --format json
+[exit 0] (1.6 s) -> 16-inspect-wasm-artifact.json
+
+$ rea setup --client claude_code --skill=false --dry-run --format json --filter-output status,plannedActions,remediation,doctor.identity.registrations
+[exit 1] (3.0 s) -> 18-setup-claude-jsonc.json
+
+$ rea setup --client claude_code --skill=false --yes --format json --filter-output status,appliedActions,remediation
+[exit 0] (2.6 s) -> 18-setup-claude-duplicate.json
+
+# 17-harness-*.json: the lesson 36 harness (phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/main.py) run in-process over fixtures/ledger-x86_64-O1.o, see 17-harness.txt

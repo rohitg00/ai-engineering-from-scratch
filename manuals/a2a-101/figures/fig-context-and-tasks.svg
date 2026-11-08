@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 452" role="img" aria-labelledby="fig-context-and-tasks-title fig-context-and-tasks-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-context-and-tasks-title">One context, two tasks</title>
+  <desc id="fig-context-and-tasks-desc">A tree. The root is context 49c5a238. Its first child is the review task e5c95b09, completed, whose history holds four messages from two SendMessage calls: the planner request with the diff and the agent question, then the planner answer main carrying taskId and contextId and the agent reply, followed by the artifact review.json. Its second child, drawn dashed because the captures stop before it, is a follow-up task in the same context whose first message carries contextId 49c5a238 and referenceTaskIds naming e5c95b09 and no taskId.</desc>
+  <defs><marker id="fig-context-and-tasks-head-violet" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-violet-ink, #5b4fa3)"/></marker></defs>
+  <rect x="190" y="12" width="260" height="46" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <text x="320" y="31" font-size="12.5" text-anchor="middle" font-weight="700">context 49c5a238</text>
+  <text x="320" y="48" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">created by code-reviewer, opaque to you</text>
+  <path d="M320 58 V78 H170 V96" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <rect x="20" y="96" width="300" height="50" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="23" y="99" width="294" height="44" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="170" y="116.25" font-size="12.5" text-anchor="middle" font-weight="700">task e5c95b09 · review</text>
+  <text x="170" y="133.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">TASK_STATE_COMPLETED, status: 2 findings</text>
+  <path d="M36 146 V399" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <text x="20" y="444" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Violet: sent by the planner. Blue: sent by code-reviewer. Ids shortened to 8 characters.</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="56" y="160" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CALL 1 · REVIEW A DIFF</text>
+  <rect x="56" y="168" width="264" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="188" y="182.1" font-size="12" text-anchor="middle" font-weight="700">ROLE_USER · 14a03569</text>
+  <text x="188" y="199.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">text and raw refunds.diff, no ids sent</text>
+  <path d="M36 187 H55" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="56" y="212" width="264" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="188" y="226.1" font-size="12" text-anchor="middle" font-weight="700">ROLE_AGENT · 46494a30</text>
+  <text x="188" y="243.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">asks which base branch to use</text>
+  <path d="M36 231 H55" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <text x="56" y="266" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CALL 2 · ANSWER THE QUESTION</text>
+  <rect x="56" y="274" width="264" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="188" y="288.1" font-size="12" text-anchor="middle" font-weight="700">ROLE_USER · 096d3737 · main</text>
+  <text x="188" y="305.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">taskId e5c95b09, contextId 49c5a238</text>
+  <path d="M36 293 H55" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="56" y="318" width="264" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="188" y="332.1" font-size="12" text-anchor="middle" font-weight="700">ROLE_AGENT · 8f9ee658</text>
+  <text x="188" y="349.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Comparing the diff against main</text>
+  <path d="M36 337 H55" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <text x="56" y="374" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">RESULT</text>
+  <rect x="56" y="380" width="264" height="38" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="188" y="394.1" font-size="12" text-anchor="middle" font-weight="700">artifact review.json</text>
+  <text x="188" y="411.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a text part and a data part</text>
+  <path d="M36 399 H55" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <path d="M320 78 H596 V96" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <rect x="360" y="96" width="260" height="50" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="490" y="116.25" font-size="12.5" text-anchor="middle" font-weight="700">a follow-up task</text>
+  <text x="490" y="133.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">id created by the server</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <text x="376" y="168" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ITS FIRST MESSAGE</text>
+  <path d="M596 146 V175" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <rect x="376" y="176" width="244" height="66" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-dasharray="5 4"/>
+  <text x="498" y="189.1" font-size="12" text-anchor="middle" font-weight="700">ROLE_USER · a new messageId</text>
+  <text x="498" y="206.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">contextId 49c5a238</text>
+  <text x="498" y="221.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">referenceTaskIds [e5c95b09]</text>
+  <text x="498" y="236.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no taskId</text>
+  <path d="M376 196 H340 V121 H321" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-context-and-tasks-head-violet)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-violet-ink, #5b4fa3)" opacity="0"><animateMotion path="M376 196 H340 V121 H321" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <text x="376" y="268" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A message with taskId e5c95b09 now</text>
+  <text x="376" y="284" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">fails: the task is terminal.</text>
+  </g>
+</svg>

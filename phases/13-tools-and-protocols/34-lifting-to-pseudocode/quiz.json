@@ -1,0 +1,78 @@
+{
+  "lesson": "34-lifting-to-pseudocode",
+  "title": "Lifting to Pseudocode: IR, SSA, and Structuring From Scratch",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Ghidra decompiled percent_change from a correct object file as a function that returns 16 bytes and takes three parameters. The source has two int parameters and returns int. What does this show?",
+      "options": [
+        "Pseudocode is a derived claim whose type and calling-convention guesses can be wrong while every instruction is right",
+        "Ghidra cannot read ELF relocatable objects",
+        "The object file is corrupt",
+        "clang miscompiled the function"
+      ],
+      "correct": 0,
+      "explanation": "The instructions are correct and the decompiler read them correctly. Its guesses about the return value and the third parameter came from idiv writing both rax and rdx with no caller to say otherwise."
+    },
+    {
+      "stage": "check",
+      "question": "In the System V AMD64 calling convention, which register carries the second integer argument of a function?",
+      "options": [
+        "%rcx",
+        "%rdx",
+        "%rsi",
+        "%rax"
+      ],
+      "correct": 2,
+      "explanation": "The sequence is %rdi, %rsi, %rdx, %rcx, %r8, %r9 (psABI section 3.2.3). The result returns in %rax."
+    },
+    {
+      "stage": "check",
+      "question": "The lifter sees cmpl $0x4, %ecx followed by ja. Which C condition is the branch taken on?",
+      "options": [
+        "ecx >= 4 as a signed comparison",
+        "ecx > 4 as a signed comparison",
+        "(unsigned int)ecx > 4",
+        "ecx != 4"
+      ],
+      "correct": 2,
+      "explanation": "ja tests CF = 0 and ZF = 0, the unsigned above condition. A negative ecx is a very large unsigned value, so the jump also covers scores below 60 in grade."
+    },
+    {
+      "stage": "check",
+      "question": "Why does SSA construction place a phi function for the sum at the header of the loop in total?",
+      "options": [
+        "Every loop header gets a phi for every register",
+        "The header reads memory",
+        "The flags register changes inside the loop",
+        "Two definitions of the sum reach the header: the initial zero and the update inside the body"
+      ],
+      "correct": 3,
+      "explanation": "A phi is placed on the dominance frontier of each definition. The header is the join where the setup block and the loop back edge meet, so the two reaching definitions need one merged name."
+    },
+    {
+      "stage": "post",
+      "question": "grade multiplies the sign-extended score by 0x66666667, shifts the product right by 34, and adds the product's sign bit. What does this compute?",
+      "options": [
+        "score * 10",
+        "score % 10",
+        "a hash of the score",
+        "score / 10 with C truncation toward zero"
+      ],
+      "correct": 3,
+      "explanation": "0x66666667 is the ceiling of 2^34 / 10. The multiply and shift give floor(score / 10) for non-negative scores. The added sign bit moves negative quotients toward zero, which is what C division does."
+    },
+    {
+      "stage": "post",
+      "question": "Our lifter printed int total(int *param_1, int param_2) while Ghidra printed int total(long param_1, uint param_2). Which statement about the two signatures is correct?",
+      "options": [
+        "The lifter is wrong because the source says const int *",
+        "Both are consistent with the instructions. The lifter inferred a pointer from the 4-byte scaled load and Ghidra kept the register width",
+        "Ghidra is wrong because param_1 is used as a pointer",
+        "The two signatures prove the object was compiled twice"
+      ],
+      "correct": 1,
+      "explanation": "Machine code has no types. The lifter turned the load from rdi + rdx * 4 into an int element access, and Ghidra kept a 64-bit integer. Neither can recover the const qualifier."
+    }
+  ]
+}

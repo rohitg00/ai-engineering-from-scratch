@@ -1,0 +1,22 @@
+title: the first fifteen minutes of errors in a run that finished every step
+source: manuals/miles-101/capture/gpu/out-gb10/503-bursts.txt
+lines: 41-56
+lang: console
+note: Look for the gaps between the minutes, and for the largest count in one minute.
+---
+$ grep "503 Service Unavailable" e2-n16.log | grep -o "20[0-9][0-9]-[0-9-]* [0-9][0-9]:[0-9][0-9]" | sort | uniq -c
+    286 2026-10-22 07:16
+    271 2026-10-22 07:17
+    686 2026-10-22 07:28
+    882 2026-10-22 07:29
+     18 2026-10-22 07:30
+     61 2026-10-22 07:38
+    192 2026-10-22 07:39
+     67 2026-10-22 07:40
+   1124 2026-10-22 07:51
+     84 2026-10-22 07:52
+     90 2026-10-22 07:53
+   1044 2026-10-22 08:04
+    134 2026-10-22 08:14
+    572 2026-10-22 08:15
+    842 2026-10-22 08:25

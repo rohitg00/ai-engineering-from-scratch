@@ -1,0 +1,22 @@
+{
+  "id": "scaled-dot-product-attention",
+  "title": "Scaled dot-product attention with a mask",
+  "kind": "implement",
+  "summary": "Batched softmax(QK^T / sqrt(d_k)) V with an optional boolean mask, plus the causal mask that a decoder uses.",
+  "difficulty": "medium",
+  "tags": ["attention", "transformers", "masking", "softmax"],
+  "lesson": "phases/07-transformers-deep-dive/02-self-attention-from-scratch",
+  "cheatsheet": "transformers-attention",
+  "minutes": 25,
+  "entry": ["causal_mask", "scaled_dot_product_attention"],
+  "collections": ["transformers-from-scratch"],
+  "time_limit_s": 10,
+  "mutants": {
+    "batched_transpose": "Uses K.T, which reverses every axis of a batched K, not only the last two.",
+    "causal_includes_diagonal": "Builds the causal mask with k=0, so each token also blocks itself and the first row has no allowed key.",
+    "mask_after_softmax": "Sets the blocked weights to 0 after the softmax, so the rows do not sum to 1.",
+    "no_max_shift": "Calls np.exp on the raw scores, so large scores overflow to infinity.",
+    "no_scale": "Forgets to divide the scores by sqrt(d_k).",
+    "scale_by_dk": "Divides the scores by d_k, not by sqrt(d_k)."
+  }
+}

@@ -27,42 +27,46 @@ DPO 用單一個監督式損失取代這兩個階段。那個獎勵模型從不�
 
 從 Bradley-Terry 模型出發。給定一段提示詞 `x` 與兩個補完 `y_w`（選中）與 `y_l`（被拒），人類偏好 `y_w` 的機率是
 
-```text
-P(y_w > y_l | x) = sigmoid( r(x, y_w) - r(x, y_l) )
+```math
+P(y_w > y_l \mid x) = \sigma\big( r(x, y_w) - r(x, y_l) \big)
 ```
 
 其中 `r` 是某個潛在的獎勵函數。RLHF 先從偏好擬合出 `r`，再訓練一個策略 `pi` 在 KL 錨點之下最大化 `r`：
 
-```text
-max_pi   E_{x, y~pi} [ r(x, y) ] - beta * KL(pi || pi_ref)
+```math
+\max_{\pi} \; \mathbb{E}_{x, y \sim \pi} \big[ r(x, y) \big] - \beta \, \mathrm{KL}(\pi \,\|\, \pi_{\text{ref}})
 ```
 
 DPO 的推導觀察到：這個目標之下的最佳策略 `pi*`，可以用 `r` 寫成封閉形式：
 
-```text
-pi*(y | x) = (1/Z(x)) * pi_ref(y | x) * exp( r(x, y) / beta )
+```math
+\pi^*(y \mid x) = \frac{1}{Z(x)} \, \pi_{\text{ref}}(y \mid x) \exp\!\left( \frac{r(x, y)}{\beta} \right)
 ```
 
 對 `r` 重新整理：
 
-```text
-r(x, y) = beta * ( log pi*(y | x) - log pi_ref(y | x) ) + beta * log Z(x)
+```math
+r(x, y) = \beta \big( \log \pi^*(y \mid x) - \log \pi_{\text{ref}}(y \mid x) \big) + \beta \log Z(x)
 ```
 
 那個 `log Z(x)` 項對 `y_w` 與 `y_l` 是一樣的（它依賴 `x`，不依賴 `y`），所以你在計算偏好差值時它會消掉：
 
-```text
-r(x, y_w) - r(x, y_l) = beta * ( log pi_theta(y_w|x) - log pi_ref(y_w|x)
-                                - log pi_theta(y_l|x) + log pi_ref(y_l|x) )
+```math
+\begin{aligned}
+r(x, y_w) - r(x, y_l) = \beta \big( &\log \pi_\theta(y_w \mid x) - \log \pi_{\text{ref}}(y_w \mid x) \\
+&- \log \pi_\theta(y_l \mid x) + \log \pi_{\text{ref}}(y_l \mid x) \big)
+\end{aligned}
 ```
 
 把它代進 Bradley-Terry 的 sigmoid，並對偏好配對取負對數概似：
 
-```text
-L_DPO(theta) = - E_{(x, y_w, y_l)} [
-  log sigmoid( beta * ( log pi_theta(y_w|x) - log pi_ref(y_w|x)
-                       - log pi_theta(y_l|x) + log pi_ref(y_l|x) ) )
-]
+```math
+\begin{aligned}
+L_{\text{DPO}}(\theta) = -\mathbb{E}_{(x, y_w, y_l)} \Big[
+  \log \sigma\big( \beta \big( &\log \pi_\theta(y_w \mid x) - \log \pi_{\text{ref}}(y_w \mid x) \\
+  &- \log \pi_\theta(y_l \mid x) + \log \pi_{\text{ref}}(y_l \mid x) \big) \big)
+\Big]
+\end{aligned}
 ```
 
 這就是那個損失。它是對每個樣本一個純量取 sigmoid，而那個純量由四個對數機率算出來。沒有獨立的獎勵模型。沒有 PPO。損失裡沒有 KL 項；那個 KL 約束已經烤進封閉形式的推導裡了。
@@ -87,8 +91,8 @@ flowchart LR
 
 在任何訓練之前都很有用的一項健全性檢查。對 `log pi_theta(y_w | x)` 取梯度：
 
-```text
-d L_DPO / d log pi_theta(y_w | x) = - beta * (1 - sigmoid(z))
+```math
+\frac{\partial L_{\text{DPO}}}{\partial \log \pi_\theta(y_w \mid x)} = -\beta \big(1 - \sigma(z)\big)
 ```
 
 其中 `z` 是 sigmoid 的引數。這對所有 `z` 都是負的，意思是：提高策略對選中補完的對數機率，會降低損失。對稱地，對 `log pi_theta(y_l | x)` 的梯度是正的：提高被拒補完的對數機率，會提高損失。訓練把選中的往上推、把被拒的往下壓。參考是凍結的；它不動。

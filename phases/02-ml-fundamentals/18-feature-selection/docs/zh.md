@@ -62,8 +62,8 @@ flowchart TD
 
 想像一個特徵在 1000 筆樣本裡有 999 筆都是 0.0。它的變異數趨近於零。沒有任何模型能靠它區分類別。移掉它。
 
-```
-variance(x) = mean((x - mean(x))^2)
+```math
+\text{variance}(x) = \text{mean}\bigl((x - \text{mean}(x))^2\bigr)
 ```
 
 設一個閾值（例如 0.01）。把變異數低於閾值的特徵全部丟掉。這能移除常數或近似常數的特徵，而且完全不需要看目標變數。
@@ -76,8 +76,8 @@ variance(x) = mean((x - mean(x))^2)
 
 互資訊衡量的是：知道特徵 X 的值之後，對目標 Y 的不確定性減少了多少。
 
-```
-I(X; Y) = sum_x sum_y p(x, y) * log(p(x, y) / (p(x) * p(y)))
+```math
+I(X; Y) = \sum_x \sum_y p(x, y) \cdot \log \frac{p(x, y)}{p(x) \cdot p(y)}
 ```
 
 如果 X 與 Y 獨立，則 p(x, y) = p(x) * p(y)，log 項為零，於是 I(X; Y) = 0。X 對 Y 說得越多，互資訊就越高。
@@ -122,8 +122,8 @@ RFE 會考慮到特徵之間的交互作用，因為模型每次看到的是所�
 
 L1 正則化把權重的絕對值加進損失函式：
 
-```
-loss = prediction_error + alpha * sum(|w_i|)
+```math
+\text{loss} = \text{prediction\_error} + \alpha \cdot \sum \lvert w_i \rvert
 ```
 
 alpha 參數控制修剪特徵的積極程度。alpha 越大，就有越多權重變成恰好為零。
@@ -142,10 +142,8 @@ alpha 參數控制修剪特徵的積極程度。alpha 越大，就有越多權�
 
 對一個有 T 棵樹的隨機森林：
 
-```
-importance(feature_j) = (1/T) * sum over all trees of
-    sum over all nodes splitting on feature_j of
-        (n_samples * impurity_decrease)
+```math
+\text{importance}(\text{feature}_j) = \frac{1}{T} \sum_{\text{all trees}} \; \sum_{\text{all nodes splitting on } \text{feature}_j} (\text{n\_samples} \cdot \text{impurity\_decrease})
 ```
 
 這會給每個特徵一個正規化後的重要性分數。它會自動處理非線性關係與特徵交互作用。

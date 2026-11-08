@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="fig-extended-card-title fig-extended-card-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-extended-card-title">Earning the extended card</title>
+  <desc id="fig-extended-card-desc">Three lifelines: the platform team outside A2A, the planner, and the deployer. Seven steps appear in order. The planner reads the public card, which declares extendedAgentCard true and a bearer scheme. It calls GetExtendedAgentCard without an Authorization header and gets HTTP 401 with WWW-Authenticate: Bearer realm=&quot;deployer&quot;. The platform team issues a bearer token outside A2A. The planner calls again with the token and receives the extended card, whose skills are deploy and rollback and which carries no signature.</desc>
+  <defs><marker id="fig-extended-card-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-extended-card-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker><marker id="fig-extended-card-head-olive" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-olive-ink, #515f26)"/></marker></defs>
+  <rect x="18" y="10" width="132" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="84" y="25.1" font-size="12" text-anchor="middle" font-weight="700">platform team</text>
+  <text x="84" y="42.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">outside A2A</text>
+  <line x1="84" y1="50" x2="84" y2="408" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="196" y="10" width="132" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="262" y="25.1" font-size="12" text-anchor="middle" font-weight="700">planner</text>
+  <text x="262" y="42.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">client</text>
+  <line x1="262" y1="50" x2="262" y2="408" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="482" y="10" width="132" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="548" y="25.1" font-size="12" text-anchor="middle" font-weight="700">deployer</text>
+  <text x="548" y="42.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">port 41243</text>
+  <line x1="548" y1="50" x2="548" y2="408" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="84" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="20" y="88" font-size="11" text-anchor="middle">1</text>
+  <line x1="262" y1="84" x2="547" y2="84" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-extended-card-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M262 84 L547 84" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="291.6" y="67.03" width="226.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="405" y="78" font-size="11.5" text-anchor="middle">GET /.well-known/agent-card.json</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="132" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="20" y="136" font-size="11" text-anchor="middle">2</text>
+  <line x1="548" y1="132" x2="263" y2="132" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-extended-card-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M548 132 L263 132" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="364.05" y="115.03" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="405" y="126" font-size="11.5" text-anchor="middle">public card</text>
+  <rect class="m-knock" x="289.14" y="136.42" width="231.72" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="405" y="147" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">extendedAgentCard: true, scheme bearer</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="180" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="20" y="184" font-size="11" text-anchor="middle">3</text>
+  <line x1="262" y1="180" x2="547" y2="180" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-extended-card-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M262 180 L547 180" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="333" y="163.03" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="405" y="174" font-size="11.5" text-anchor="middle">GetExtendedAgentCard</text>
+  <rect class="m-knock" x="333.69" y="184.42" width="142.62" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="405" y="195" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no Authorization header</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="228" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="20" y="232" font-size="11" text-anchor="middle">4</text>
+  <line x1="548" y1="228" x2="263" y2="228" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-extended-card-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M548 228 L263 228" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="329.55" y="211.03" width="150.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="405" y="222" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">HTTP 401 Unauthorized</text>
+  <rect class="m-knock" x="280.23" y="232.42" width="249.54" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="405" y="243" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">WWW-Authenticate: Bearer realm=&quot;deployer&quot;</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="276" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="20" y="280" font-size="11" text-anchor="middle">5</text>
+  <line x1="84" y1="276" x2="261" y2="276" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-extended-card-head-olive)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-olive-ink, #515f26)" opacity="0"><animateMotion path="M84 276 L261 276" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="128.6" y="259.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="173" y="270" font-size="11.5" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">bearer token</text>
+  <rect class="m-knock" x="116.54" y="280.42" width="112.92" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="173" y="291" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">issued outside A2A</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="324" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="20" y="328" font-size="11" text-anchor="middle">6</text>
+  <line x1="262" y1="324" x2="547" y2="324" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-extended-card-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M262 324 L547 324" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="333" y="307.03" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="405" y="318" font-size="11.5" text-anchor="middle">GetExtendedAgentCard</text>
+  <rect class="m-knock" x="292.11" y="328.42" width="225.78" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="405" y="339" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Authorization: Bearer dpl_test_7c1e4b</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="372" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="20" y="376" font-size="11" text-anchor="middle">7</text>
+  <line x1="548" y1="372" x2="263" y2="372" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-extended-card-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M548 372 L263 372" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="357.15" y="355.03" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="405" y="366" font-size="11.5" text-anchor="middle">extended card</text>
+  <rect class="m-knock" x="295.08" y="376.42" width="219.84" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="405" y="387" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">skills deploy and rollback, unsigned</text>
+  </g>
+</svg>

@@ -1,0 +1,49 @@
+[
+  {
+    "agent_name": "root",
+    "timestamp": "<ts>",
+    "type": "tool_call",
+    "tool_call": {
+      "id": "<call-id>",
+      "type": "function",
+      "function": {
+        "name": "transfer_task",
+        "arguments": "{\"agent\": \"writer\", \"task\": \"Generate one sentence about microVMs\", \"expected_output\": \"A single sentence describing microVMs\"}"
+      }
+    },
+    "tool_definition": {
+      "name": "transfer_task",
+      "category": "transfer",
+      "description": "Use this function to transfer a task to the selected team member.\n            You must provide a clear and concise description of the task the member should achieve AND the expected output.",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "agent": {
+            "description": "The name of the agent to transfer the task to.",
+            "type": "string"
+          },
+          "task": {
+            "description": "A clear and concise description of the task the member should achieve.",
+            "type": "string"
+          },
+          "expected_output": {
+            "description": "The expected output from the member (optional).",
+            "type": "string"
+          }
+        },
+        "required": [
+          "agent",
+          "task",
+          "expected_output"
+        ],
+        "type": "object"
+      },
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true,
+        "title": "Transfer Task"
+      },
+      "outputSchema": null
+    }
+  }
+]

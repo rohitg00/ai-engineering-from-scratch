@@ -1,0 +1,2 @@
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+kernel 6.8.0-139-generic

@@ -1,0 +1,338 @@
+[2KWARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+WARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+[afcl]
+amd64
+amd64syscall
+ms
+reg
+swift
+[afc leaf_add]
+amd64
+[afi leaf_add]
+offset: 0x08000040
+name: sym.leaf_add
+size: 4
+is-pure: true
+realsz: 4
+stackframe: 0
+call-convention: amd64
+cyclomatic-cost: 4
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 0
+args: 1
+arg int64_t arg1 @ rdi
+[afvl leaf_add]
+arg int64_t arg1 @ rdi
+[afc eight_args]
+amd64
+[afi eight_args]
+offset: 0x08000050
+name: sym.eight_args
+size: 27
+is-pure: true
+realsz: 27
+stackframe: 0
+call-convention: amd64
+cyclomatic-cost: 10
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 0
+args: 7
+arg int64_t arg5 @ r8
+arg int64_t arg6 @ r9
+arg int64_t arg1 @ rdi
+arg int64_t arg3 @ rdx
+arg int64_t arg2 @ rsi
+arg int64_t arg_8h @ stack + 0x8
+arg int64_t arg_10h @ stack + 0x10
+[afvl eight_args]
+arg int64_t arg_8h @ stack + 0x8
+arg int64_t arg_10h @ stack + 0x10
+arg int64_t arg5 @ r8
+arg int64_t arg6 @ r9
+arg int64_t arg1 @ rdi
+arg int64_t arg3 @ rdx
+arg int64_t arg2 @ rsi
+[afc mixed]
+amd64
+[afi mixed]
+offset: 0x08000070
+name: sym.mixed
+size: 29
+is-pure: true
+realsz: 29
+stackframe: 0
+call-convention: amd64
+cyclomatic-cost: 10
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 0
+args: 3
+arg int64_t arg7 @ xmm0
+arg int64_t arg8 @ xmm1
+arg int64_t arg9 @ xmm2
+[afvl mixed]
+arg int64_t arg7 @ xmm0
+arg int64_t arg8 @ xmm1
+arg int64_t arg9 @ xmm2
+[afc by_value]
+amd64
+[afi by_value]
+offset: 0x08000090
+name: sym.by_value
+size: 9
+is-pure: true
+realsz: 9
+stackframe: 0
+call-convention: amd64
+cyclomatic-cost: 5
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 0
+args: 2
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+[afvl by_value]
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+[afc big_ret]
+amd64
+[afi big_ret]
+offset: 0x080000a0
+name: sym.big_ret
+size: 31
+is-pure: true
+realsz: 31
+stackframe: 0
+call-convention: amd64
+cyclomatic-cost: 11
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 0
+args: 2
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+[afvl big_ret]
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+[afc sum_varargs]
+amd64
+[afi sum_varargs]
+offset: 0x080000c0
+name: sym.sum_varargs
+size: 283
+is-pure: true
+realsz: 275
+stackframe: 88
+call-convention: amd64
+cyclomatic-cost: 92
+cyclomatic-complexity: 10
+loops: 3
+bits: 64
+type: sym
+num-bbs: 20
+edges: 26
+end-bbs: 2
+call-refs: 0x080001d4 J 0x08000199 J 0x080001b9 J 0x08000190 J
+data-refs:
+code-xrefs: 0x08000162 J 0x08000177 J 0x080001ad J 0x080001c9 J
+noreturn: false
+in-degree: 4
+out-degree: 0
+data-xrefs:
+locals: 4
+args: 12
+arg int64_t arg5 @ r8
+arg int64_t arg6 @ r9
+arg int64_t arg4 @ rcx
+arg unsigned long arg1 @ rdi
+arg int64_t arg3 @ rdx
+arg int64_t arg2 @ rsi
+arg int64_t arg7 @ xmm0
+arg int64_t arg8 @ xmm1
+arg int64_t arg9 @ xmm2
+arg int64_t arg10 @ xmm3
+arg int64_t arg11 @ xmm4
+var int64_t var_48h @ stack - 0x48
+var int64_t var_38h @ stack - 0x38
+var int64_t var_28h @ stack - 0x28
+var int64_t var_18h @ stack - 0x18
+arg int64_t arg_8h @ stack + 0x8
+[afvl sum_varargs]
+var int64_t var_48h @ stack - 0x48
+var int64_t var_38h @ stack - 0x38
+var int64_t var_28h @ stack - 0x28
+var int64_t var_18h @ stack - 0x18
+arg int64_t arg_8h @ stack + 0x8
+arg int64_t arg5 @ r8
+arg int64_t arg6 @ r9
+arg int64_t arg4 @ rcx
+arg unsigned long arg1 @ rdi
+arg int64_t arg3 @ rdx
+arg int64_t arg2 @ rsi
+arg int64_t arg7 @ xmm0
+arg int64_t arg8 @ xmm1
+arg int64_t arg9 @ xmm2
+arg int64_t arg10 @ xmm3
+arg int64_t arg11 @ xmm4
+[afc keeps]
+amd64
+[afi keeps]
+offset: 0x080001e0
+name: sym.keeps
+size: 45
+is-pure: true
+realsz: 45
+stackframe: 24
+call-convention: amd64
+cyclomatic-cost: 29
+cyclomatic-complexity: 3
+loops: 0
+bits: 64
+type: sym
+num-bbs: 6
+edges: 7
+end-bbs: 1
+call-refs: 0x080006e0 C 0x08000206 J
+data-refs:
+code-xrefs: 0x08000202 J
+noreturn: false
+in-degree: 1
+out-degree: 1
+data-xrefs:
+locals: 0
+args: 1
+arg int64_t arg1 @ rdi
+[afvl keeps]
+arg int64_t arg1 @ rdi
+[afc call8]
+amd64
+[afi call8]
+offset: 0x08000210
+name: sym.call8
+size: 48
+is-pure: true
+realsz: 48
+stackframe: 24
+call-convention: amd64
+cyclomatic-cost: 17
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs: 0x080006e8 C
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 1
+data-xrefs:
+locals: 0
+args: 0
+[afvl call8]
+[afc call_varargs]
+amd64
+[afi call_varargs]
+offset: 0x08000260
+name: sym.call_varargs
+size: 27
+is-pure: true
+realsz: 27
+stackframe: 0
+call-convention: amd64
+cyclomatic-cost: 7
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs: 0x080006f8 J
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 0
+args: 0
+[afvl call_varargs]
+[afcr eight_args]
+name: amd64
+ret: rax
+arg0: rdi
+arg1: rsi
+arg2: rdx
+arg3: rcx
+arg4: r8
+arg5: r9
+arg6: xmm0
+arg7: xmm1
+arg8: xmm2
+arg9: xmm3
+arg10: xmm4

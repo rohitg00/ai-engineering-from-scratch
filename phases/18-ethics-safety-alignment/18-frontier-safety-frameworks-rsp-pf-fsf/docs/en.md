@@ -75,7 +75,7 @@ v2.0 (February 2025) added a Deceptive Alignment section and higher security lev
 - DeepMind "Critical Capability Levels."
 - OpenAI "High Capability thresholds."
 
-No industry-standard terminology. Structurally aligned: three tiers of frontier capability with published evaluation criteria. All three include competitor-adjustment clauses (2025 onward).
+No industry-standard terminology. Structurally aligned: each of the three frameworks defines tiered capability thresholds with published evaluation criteria. All three include competitor-adjustment clauses (2025 onward).
 
 ### Safety cases
 
@@ -85,7 +85,7 @@ A safety case is a written argument that a deployment is acceptably safe under w
 - **Illegibility.** Does the model lack the ability to execute a coherent plan to cause harm?
 - **Incapability.** Does the model lack the capability to cause the harm in question?
 
-Different safety cases target different pillars. For a ASL-3 CBRN case, incapability (via unlearning) is the primary target. For deceptive alignment, monitoring and illegibility are targets. For cyber uplift, all three are relevant.
+Different safety cases target different pillars. For an ASL-3 CBRN case, incapability (via unlearning) is the primary target. For deceptive alignment, monitoring and illegibility are targets. For cyber uplift, all three are relevant.
 
 ### The race-dynamic problem
 

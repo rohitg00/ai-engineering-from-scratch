@@ -98,7 +98,7 @@
 
   function addPagePlacement() {
     let page = location.pathname.split('/').pop().replace(/\.html$/, '');
-    const aliases = { path: 'prereqs', roadmap: 'prereqs', docs: 'developer' };
+    const aliases = { path: 'roadmap', prereqs: 'roadmap', docs: 'developer' };
     page = aliases[page] || page;
     if (page === 'about') {
       document.querySelector('.about')?.append(signupSection('about'));
@@ -110,7 +110,7 @@
       certifications: ['.cert-hero', 'after', 'Keep learning as AI tools and practices evolve.', 'cert-container'],
       certification: ['#trackProgramNotice', 'before', 'Keep building beyond your study plan.', 'cert-container'],
       glossary: ['.glossary-explorer', 'after', 'Turn AI concepts into practical skills.'],
-      prereqs: ['.roadmap-workspace', 'after', 'Keep your learning connected to what’s next.', 'roadmap-container'],
+      roadmap: ['.roadmap-workspace', 'after', 'Keep your learning connected to what’s next.', 'roadmap-container'],
       developer: ['.trust-page', 'append', 'Follow the tools and ideas shaping AI engineering.']
     };
     const placement = placements[page];

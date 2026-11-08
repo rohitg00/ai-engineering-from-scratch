@@ -94,6 +94,8 @@ roofline
 
 `code/main.py` implements a toy radix-tree KV cache plus a scheduler with two policies: FCFS and cache-aware. Runs the same workload through both, reports prefix-cache hit rate and throughput delta. Then runs a "scrambled ordering" workload to show the 6.4x collapse.
 
+The [Inside an LLM Serving GPU](https://aiengineeringfromscratch.com/inside-an-llm-serving-gpu?workload=shared&shared=4096) machine shows the radix cache on a real L4 run. Four groups each have their own 4,096-token system prompt. The first request of a group computes its prompt. While that prompt stays in the cache, later requests of the group compute only the 128-token question. Switch the radix cache off to see the median first token go from 479 ms to 14,706 ms.
+
 ## Ship It
 
 This lesson produces `outputs/skill-radix-scheduler-advisor.md`. Given a workload description (prompt-template shape, retrieval pattern, number of concurrent tenants), it produces a prompt-ordering prescription and a go/no-go for SGLang adoption.

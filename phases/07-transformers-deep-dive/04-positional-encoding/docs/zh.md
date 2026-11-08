@@ -29,9 +29,11 @@
 
 預先算出一個形狀為 `(max_len, d_model)` 的固定矩陣 `PE`：
 
-```
-PE[pos, 2i]   = sin(pos / 10000^(2i / d_model))
-PE[pos, 2i+1] = cos(pos / 10000^(2i / d_model))
+```math
+\begin{aligned}
+PE_{(pos, 2i)} &= \sin\left(pos / 10000^{2i / d_{\text{model}}}\right) \\
+PE_{(pos, 2i+1)} &= \cos\left(pos / 10000^{2i / d_{\text{model}}}\right)
+\end{aligned}
 ```
 
 然後在進注意力之前做 `X' = X + PE[:N]`。每個維度是一條頻率不同的正弦波。模型學會從相位模式裡讀出位置。超出 `max_len` 就失效：模型只見過位置 0 到 2047，沒有人告訴它位置 2048 會發生什麼事。
@@ -40,11 +42,9 @@ PE[pos, 2i+1] = cos(pos / 10000^(2i / d_model))
 
 旋轉 Q 與 K 向量（不是嵌入）。對一對維度 `(2i, 2i+1)`：
 
-```
-[q'_2i    ]   [ cos(pos·θ_i)  -sin(pos·θ_i) ] [q_2i   ]
-[q'_2i+1  ] = [ sin(pos·θ_i)   cos(pos·θ_i) ] [q_2i+1 ]
-
-θ_i = base^(-2i / d_head),  base = 10000 by default
+```math
+\begin{bmatrix} q'_{2i} \\ q'_{2i+1} \end{bmatrix} = \begin{bmatrix} \cos(pos \cdot \theta_i) & -\sin(pos \cdot \theta_i) \\ \sin(pos \cdot \theta_i) & \cos(pos \cdot \theta_i) \end{bmatrix} \begin{bmatrix} q_{2i} \\ q_{2i+1} \end{bmatrix}
+\qquad \theta_i = \text{base}^{-2i / d_{\text{head}}}, \quad \text{base} = 10000 \text{ by default}
 ```
 
 對位置為 `pos_k` 的 key 施加同樣的旋轉。點積 `q'_m · k'_n` 於是變成只與 `(m - n)` 有關的函式。也就是說：**注意力分數只取決於相對距離**，即使旋轉是依絕對位置算出來的。漂亮的把戲。
@@ -55,8 +55,8 @@ PE[pos, 2i+1] = cos(pos / 10000^(2i / d_model))
 
 跳過嵌入那一招，直接對注意力分數加偏差：
 
-```
-attn_score[i, j] = (q_i · k_j) / √d  -  m_h · |i - j|
+```math
+\text{attn\_score}[i, j] = \frac{q_i \cdot k_j}{\sqrt{d}} - m_h \cdot |i - j|
 ```
 
 其中 `m_h` 是每個頭專屬的斜率（例如 `1 / 2^(8·h/H)`）。越近的詞元被加分；越遠的詞元被扣分。訓練期不花額外成本。論文顯示它的長度外推勝過正弦位置編碼，而在其原始訓練長度上與 RoPE 打平。

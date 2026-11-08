@@ -174,7 +174,7 @@ Refuse BERTopic on documents longer than the embedding model's context window wi
 | Mixed membership | Doc is multiple topics | LDA assigns each document a distribution over all topics. |
 | UMAP | Dimensionality reduction | Manifold learning that preserves local structure; used in BERTopic. |
 | HDBSCAN | Density clustering | Finds variable-size clusters; produces "noise" label (-1) for outliers. |
-| c_v coherence | Topic quality metric | Average pointwise mutual information of top topic words within sliding windows. |
+| c_v coherence | Topic quality metric | NPMI of top topic words over sliding windows, turned into context vectors and compared with cosine similarity. |
 
 ## Further Reading
 

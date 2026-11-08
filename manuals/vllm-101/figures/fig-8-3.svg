@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" role="img" aria-labelledby="fig-8-3-title fig-8-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-3-title">One pool of 16-token blocks serves every request</title>
+  <desc id="fig-8-3-desc">The KV cache is a pool of 16-token blocks. Each request has a block table that maps its token positions to block numbers anywhere in the pool. Full blocks are listed in a hash map for prefix hits. Free blocks wait in a queue, and the least recently used cached block is evicted first.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BLOCK POOL ON THE GPU</text>
+  <rect x="20" y="30" width="68" height="38" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="54" y="52.45" font-size="11.5" text-anchor="middle" font-weight="700">#0</text>
+  <rect x="96" y="30" width="68" height="38" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="130" y="52.45" font-size="11.5" text-anchor="middle" font-weight="700">#1</text>
+  <rect x="172" y="30" width="68" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="206" y="52.45" font-size="11.5" text-anchor="middle" font-weight="700">#2</text>
+  <rect x="248" y="30" width="68" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="282" y="52.45" font-size="11.5" text-anchor="middle" font-weight="700">#3</text>
+  <rect x="324" y="30" width="68" height="38" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="358" y="52.45" font-size="11.5" text-anchor="middle" font-weight="700">#4</text>
+  <rect x="400" y="30" width="68" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="434" y="52.45" font-size="11.5" text-anchor="middle" font-weight="700">#5</text>
+  <rect x="476" y="30" width="68" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="510" y="52.45" font-size="11.5" text-anchor="middle" font-weight="700">#6</text>
+  <rect x="552" y="30" width="68" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="586" y="52.45" font-size="11.5" text-anchor="middle" font-weight="700">#7</text>
+  <rect x="20" y="76" width="68" height="38" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="54" y="98.45" font-size="11.5" text-anchor="middle" font-weight="700">#8</text>
+  <rect x="96" y="76" width="68" height="38" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="130" y="98.45" font-size="11.5" text-anchor="middle" font-weight="700">#9</text>
+  <rect x="172" y="76" width="68" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="206" y="98.45" font-size="11.5" text-anchor="middle" font-weight="700">#10</text>
+  <rect x="248" y="76" width="68" height="38" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="282" y="98.45" font-size="11.5" text-anchor="middle" font-weight="700">#11</text>
+  <rect x="324" y="76" width="68" height="38" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="358" y="98.45" font-size="11.5" text-anchor="middle" font-weight="700">#12</text>
+  <rect x="400" y="76" width="68" height="38" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="434" y="98.45" font-size="11.5" text-anchor="middle" font-weight="700">#13</text>
+  <rect x="476" y="76" width="68" height="38" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="510" y="98.45" font-size="11.5" text-anchor="middle" font-weight="700">#14</text>
+  <rect x="552" y="76" width="68" height="38" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="586" y="98.45" font-size="11.5" text-anchor="middle" font-weight="700">#15</text>
+  <text x="20" y="150" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BLOCK TABLES</text>
+  <rect x="20" y="160" width="190" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="115" y="177.25" font-size="12.5" text-anchor="middle" font-weight="700">request A</text>
+  <text x="115" y="194.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">#2, #3, #7</text>
+  <rect x="226" y="160" width="190" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="321" y="177.25" font-size="12.5" text-anchor="middle" font-weight="700">request B</text>
+  <text x="321" y="194.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">#5, #6, #10</text>
+  <rect x="432" y="160" width="188" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="526" y="177.25" font-size="12.5" text-anchor="middle" font-weight="700">cached prefix</text>
+  <text x="526" y="194.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">#11, #12 by hash</text>
+  <text x="20" y="236" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Dashed blocks are free and wait in a queue. A request takes one block each time it fills 16 tokens.</text>
+  <text x="20" y="258" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">When the queue is empty, the least recently used cached block is evicted first.</text>
+</svg>

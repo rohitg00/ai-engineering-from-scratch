@@ -1,0 +1,15 @@
+title: the policy log of m101-policy
+source: manuals/docker-sandboxes-101/capture/out/09-policy-log.txt
+lang: console
+note: One blocked row with its rule text, and two allowed rows with their proxy path.
+---
+$ sbx policy log m101-policy
+Blocked requests:
+SANDBOX              TYPE      HOST              PROXY     RULE                                                                                         REASON                                  LAST SEEN        COUNT
+m101-policy   network   example.com:443   forward   no applicable policies for op(action=net:connect:tcp, resource=net:domain:example.com:443)   No matching allow rule (default deny)   <ts>   <n>
+
+Allowed requests:
+SANDBOX              TYPE      HOST                      PROXY            RULE   REASON   LAST SEEN        COUNT
+m101-policy   network   download.docker.com:443   forward-bypass                   <ts>   <n>
+m101-policy   network   ports.ubuntu.com:80       forward                          <ts>   <n>
+[exit 0]

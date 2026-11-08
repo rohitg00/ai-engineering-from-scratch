@@ -1,0 +1,45 @@
+{
+  "captured": "2026-10-14",
+  "compiler": "Apple clang version 17.0.0 (clang-1700.6.3.2)",
+  "flags": [
+    "-target",
+    "x86_64-unknown-linux-gnu",
+    "-O1",
+    "-fno-asynchronous-unwind-tables",
+    "-c"
+  ],
+  "candidates": {
+    "f1_base_64": {
+      "source_sha256": "f2ab6528a9919c3730f270d545b62413ba4ee27450231e39370b5b634ae936d9",
+      "object_sha256": "020cf15dfab00b24dd346b12d9600456a86e9f970b7ed29aa80e8586fcbd4bb8"
+    },
+    "f1_mul_first": {
+      "source_sha256": "f3d4ee04374590437aec0c8fd1a9740ee62f5d5cddc628bd83c2aa2070caefca",
+      "object_sha256": "fd63a41c4afcd2a2f612a509d746ad97a90226a3bc098c9193e42b8ef0539964"
+    },
+    "f1_safe_div": {
+      "source_sha256": "66c8e445d2ca8944c4ac219ee3e4401fce1836adcbbd987fe34f23797bc699ab",
+      "object_sha256": "7b928c58ccf4faf57cc134fdc58ccaec11df12c58977ce77d6d4e3afa6f13cfc"
+    },
+    "f1_wide_long": {
+      "source_sha256": "44343e439705818b604103dda197e3cfb955291e4c98bebc54f0eb2748507f40",
+      "object_sha256": "5f040a8c8d18c8e4dd13854f6c8ad20aa2733d5f1401dcc0d9d69981c87e86e1"
+    },
+    "f2_case10_wrong": {
+      "source_sha256": "a0d5ffe581584611fb28bf39e4846cb61fd0c79b61707c4c72aa7abae3ad0a95",
+      "object_sha256": "767993d7d2c72aa5d7720184dde3d0f8cb77ce80435dd863a6374a17a91ccbb5"
+    },
+    "f2_clamp": {
+      "source_sha256": "c961afee16108732f8255663970088aa39ee517fa694e1e92bb5df8f0aab6430",
+      "object_sha256": "3b278dd0844cc2ee0638755762b7c9ba26e7c2e561446e59137e5cfce34b8bd8"
+    },
+    "f2_switch": {
+      "source_sha256": "a2aa6c8e8cd5bd8ce80aeb9d48e8e538039bcae39aee6b89f08aa8867d914200",
+      "object_sha256": "a37ac40799f37afd14117243a8818dce2c715e43bdfc6a3967dd6cb5f2928e20"
+    },
+    "f2_thresholds": {
+      "source_sha256": "0b468ba7deedcc52108eca6f2131b94332913b4bfef850568c19644cd42dde68",
+      "object_sha256": "ed51cda04f32ecec60b47492187a857b9691c3ea4008418c0bdc9dda30840d70"
+    }
+  }
+}

@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<script>
+(function () {
+  function apply() {
+    var t = localStorage.getItem('theme');
+    if (t !== 'light' && t !== 'dark') {
+      t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', t);
+  }
+  apply();
+  window.addEventListener('storage', function (e) {
+    if (e.key === 'theme' || e.key === null) apply();
+  });
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fafaf5;
+  --bg-surface: #f3f1e8;
+  --ink: #1a1a1a;
+  --ink-soft: #4a4a4a;
+  --ink-mute: #7a7a78;
+  --rule-soft: rgba(26, 26, 26, 0.16);
+  --blueprint: #3553ff;
+  --blueprint-tint: rgba(53, 83, 255, 0.08);
+  --blueprint-tint-strong: rgba(53, 83, 255, 0.18);
+  --warn: #b8870f;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Consolas', monospace;
+  --font-body: 'Source Serif 4', 'Source Serif Pro', 'Iowan Old Style', Georgia, serif;
+}
+[data-theme="dark"] {
+  --bg: #0a0d1a;
+  --bg-surface: #131830;
+  --ink: #e8e6dc;
+  --ink-soft: #a8a6a0;
+  --ink-mute: #7a7878;
+  --rule-soft: rgba(232, 230, 220, 0.18);
+  --blueprint: #6b8eff;
+  --blueprint-tint: rgba(107, 142, 255, 0.12);
+  --blueprint-tint-strong: rgba(107, 142, 255, 0.22);
+  --warn: #d4a83d;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+.ls-page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 28px 24px 48px;
+}
+h1, h2, h3 { font-weight: 600; line-height: 1.25; margin: 0.4em 0 0.5em; }
+h1 { font-size: 1.7rem; }
+h2 { font-size: 1.35rem; }
+h3 { font-size: 1.1rem; }
+p { margin: 0.5em 0; }
+a { color: var(--blueprint); }
+code, pre, table.ls-vars, .ls-eyebrow, .ls-card-label, .ls-rail, .ls-chip, .ls-note, .ls-sent, .ls-choice, .ls-out, .ls-code {
+  font-family: var(--font-mono);
+}
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+:focus-visible { outline: 2px solid var(--blueprint); outline-offset: 2px; }
+.ls-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 14px;
+}
+.ls-lead {
+  font-family: var(--font-body);
+  font-size: 1.55rem;
+  line-height: 1.3;
+  margin: 0 0 18px;
+  max-width: 34ch;
+}
+.ls-rail {
+  list-style: none;
+  counter-reset: step;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 18px 0;
+}
+.ls-rail li {
+  counter-increment: step;
+  font-size: 0.72rem;
+  color: var(--ink-mute);
+  border: 1px solid var(--rule-soft);
+  padding: 8px 12px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-surface);
+}
+.ls-rail li::before {
+  content: counter(step, decimal-leading-zero);
+  color: var(--ink-mute);
+  font-size: 0.66rem;
+}
+.ls-rail li.is-now {
+  color: var(--blueprint);
+  border-color: var(--blueprint);
+  background: var(--blueprint-tint);
+}
+.ls-rail li.is-now::before { color: var(--blueprint); }
+.ls-rail li.is-done { opacity: 0.55; }
+.ls-building {
+  list-style: none;
+  counter-reset: stage;
+  padding: 0;
+  margin: 18px 0;
+  max-width: 640px;
+  font-family: var(--font-mono);
+  border-left: 1px solid var(--rule-soft);
+}
+.ls-building li {
+  counter-increment: stage;
+  position: relative;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ink-mute);
+  padding: 10px 0 10px 40px;
+  min-height: 44px;
+}
+.ls-building li::before {
+  content: counter(stage, decimal-leading-zero);
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  font-size: 0.68rem;
+  color: var(--ink-mute);
+}
+.ls-building li.is-done { color: var(--ink-soft); }
+.ls-building li.is-done::before { content: "\2713"; color: var(--blueprint); }
+.ls-building li.is-now { color: var(--blueprint); background: var(--blueprint-tint); }
+.ls-building li.is-now::before { color: var(--blueprint); }
+.ls-building li.is-now::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--blueprint);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ls-building li.is-now { animation: ls-pulse 1.6s cubic-bezier(0.77, 0, 0.175, 1) infinite alternate; }
+}
+@keyframes ls-pulse { from { background: var(--blueprint-tint); } to { background: transparent; } }
+.ls-card {
+  border: 1px solid var(--rule-soft);
+  background: var(--bg-surface);
+  padding: 16px;
+  margin: 14px 0;
+}
+.ls-card-label {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blueprint);
+  margin: 0 0 10px;
+}
+.ls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 14px 0;
+}
+.ls-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 14px 0;
+}
+.ls-compare .ls-card { margin: 0; }
+.ls-big {
+  font-size: 1.15rem;
+  line-height: 1.5;
+  border-left: 3px solid var(--blueprint);
+  padding-left: 14px;
+  margin: 20px 0;
+}
+.ls-big b { color: var(--blueprint); }
+.ls-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+.ls-chip {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  border: 1px solid var(--rule-soft);
+  background: var(--bg-surface);
+  padding: 8px 12px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.ls-chip b { color: var(--blueprint); font-weight: 700; }
+.ls-trace {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 16px;
+  margin: 14px 0;
+}
+.ls-code {
+  background: var(--bg-surface);
+  border: 1px solid var(--rule-soft);
+  padding: 12px 14px;
+  overflow-x: auto;
+}
+.ls-line { display: block; padding: 0 6px; margin: 0 -6px; color: var(--ink); }
+.ls-line.is-now {
+  background: var(--blueprint-tint);
+  border-left: 3px solid var(--blueprint);
+  padding-left: 3px;
+  margin-left: -9px;
+}
+.ls-line.is-done { color: var(--ink-mute); }
+table.ls-vars {
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  align-self: start;
+  width: 100%;
+}
+.ls-vars th, .ls-vars td {
+  text-align: left;
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.ls-vars th { color: var(--ink-mute); font-weight: 500; }
+.ls-vars td { color: var(--blueprint); text-align: right; }
+.ls-trace .ls-out { grid-column: 1 / -1; }
+.ls-out {
+  border-top: 1px dashed var(--rule-soft);
+  padding: 10px 14px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.ls-question { margin: 18px 0; }
+.ls-prompt { font-size: 1.15rem; margin: 0 0 14px; }
+.ls-choices { display: flex; flex-wrap: wrap; gap: 10px; }
+.ls-choice {
+  font-size: 0.78rem;
+  color: var(--ink);
+  background: var(--bg-surface);
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+  min-height: 44px;
+  padding: 10px 16px;
+  cursor: pointer;
+  text-align: left;
+}
+.ls-choice:hover { border-color: var(--blueprint); }
+.ls-choice.is-picked {
+  border-color: var(--blueprint);
+  background: var(--blueprint-tint-strong);
+  color: var(--blueprint);
+}
+.ls-sent {
+  font-size: 0.72rem;
+  color: var(--blueprint);
+  margin-top: 10px;
+}
+.ls-note {
+  font-size: 0.72rem;
+  color: var(--ink-mute);
+  margin: 14px 0;
+}
+.ls-wait {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  text-align: center;
+  background:
+    radial-gradient(var(--rule-soft) 1px, transparent 1px) 0 0 / 22px 22px;
+}
+.lesson-figure { margin: 16px 0; }
+pre.mermaid {
+  background: var(--bg-surface);
+  border: 1px solid var(--rule-soft);
+  padding: 14px;
+  overflow-x: auto;
+}
+pre.mermaid svg { max-width: 100%; height: auto; }
+[data-part] { cursor: pointer; }
+[data-part]:hover { outline: 2px solid var(--blueprint-tint-strong); }
+@media (max-width: 720px) {
+  .ls-grid, .ls-compare, .ls-trace { grid-template-columns: 1fr; }
+  .ls-page { padding: 18px 14px 40px; }
+  .ls-choice { flex: 1 1 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+<main class="ls-page">
+{{CONTENT}}
+</main>
+<script>
+(function () {
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = function () { resolve(); };
+      s.onerror = function () { reject(new Error('load failed: ' + src)); };
+      document.head.appendChild(s);
+    });
+  }
+
+  function offlineNote(host) {
+    var card = document.createElement('div');
+    card.className = 'ls-card';
+    var p = document.createElement('p');
+    p.className = 'ls-card-label';
+    p.textContent = 'Figure unavailable';
+    var line = document.createElement('p');
+    line.textContent = 'This figure loads from aiengineeringfromscratch.com. Open the lesson page to see it.';
+    card.appendChild(p);
+    card.appendChild(line);
+    if (host.dataset.lesson) {
+      var a = document.createElement('a');
+      a.href = 'https://aiengineeringfromscratch.com/lesson?path=' + host.dataset.lesson;
+      a.textContent = 'Open the lesson page';
+      card.appendChild(a);
+    }
+    host.replaceWith(card);
+  }
+
+  var hosts = Array.prototype.slice.call(document.querySelectorAll('.lesson-figure[data-figure]'));
+  if (hosts.length) {
+    (async function () {
+      try {
+        await loadScript('/s/lesson-figures.js');
+        await loadScript('/s/figure-manifest.js');
+        if (window.AIFS_loadFigureProviders && window.mountLessonFigures) {
+          await window.AIFS_loadFigureProviders(document);
+          window.mountLessonFigures(document);
+        }
+      } catch (e) {}
+      hosts.forEach(function (host) {
+        if (host.hasAttribute('data-figure-missing') || !host.firstChild) offlineNote(host);
+      });
+    })();
+  }
+
+  document.querySelectorAll('.ls-code code').forEach(function (code) {
+    Array.prototype.slice.call(code.childNodes).forEach(function (n) {
+      if (n.nodeType === 3 && !n.textContent.trim()) code.removeChild(n);
+    });
+  });
+
+  var mermaidBlocks = document.querySelectorAll('pre.mermaid');
+  if (mermaidBlocks.length) {
+    var mermaidMod = null;
+    function mermaidVars() {
+      var cs = getComputedStyle(document.documentElement);
+      return {
+        primaryColor: cs.getPropertyValue('--bg-surface').trim(),
+        primaryBorderColor: cs.getPropertyValue('--blueprint').trim(),
+        primaryTextColor: cs.getPropertyValue('--ink').trim(),
+        lineColor: cs.getPropertyValue('--ink-soft').trim(),
+        fontFamily: "'JetBrains Mono', ui-monospace, monospace",
+        fontSize: '14px',
+      };
+    }
+    function renderMermaid() {
+      mermaidMod.initialize({ startOnLoad: false, securityLevel: 'strict', theme: 'base', themeVariables: mermaidVars() });
+      mermaidBlocks.forEach(function (pre) {
+        if (!pre.dataset.msrc) pre.dataset.msrc = pre.textContent;
+        pre.textContent = pre.dataset.msrc;
+        pre.removeAttribute('data-processed');
+      });
+      mermaidMod.run({ nodes: Array.prototype.slice.call(mermaidBlocks) }).catch(function () {});
+    }
+    import('https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.esm.min.mjs').then(function (m) {
+      mermaidMod = m.default;
+      renderMermaid();
+      window.addEventListener('storage', function (e) {
+        if (e.key === 'theme' || e.key === null) setTimeout(renderMermaid, 0);
+      });
+    }).catch(function () {});
+  }
+})();
+</script>
+<script src="/helper.js"></script>
+</body>
+</html>

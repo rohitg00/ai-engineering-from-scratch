@@ -1,0 +1,16 @@
+
+candidates/f1_base_64.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <percent_change>:
+       0: 85 ff                        	testl	%edi, %edi
+       2: 74 0b                        	je	0xf <percent_change+0xf>
+       4: 29 fe                        	subl	%edi, %esi
+       6: c1 e6 06                     	shll	$0x6, %esi
+       9: 89 f0                        	movl	%esi, %eax
+       b: 99                           	cltd
+       c: f7 ff                        	idivl	%edi
+       e: c3                           	retq
+       f: 31 c0                        	xorl	%eax, %eax
+      11: c3                           	retq

@@ -1,0 +1,122 @@
+{
+  "sglang-lock-default": {
+    "model": "Qwen/Qwen3-8B",
+    "num": 500,
+    "shots": 8,
+    "correct": 458,
+    "accuracy": 0.916,
+    "wilson95": [
+      0.8884001169044927,
+      0.9372562004777957
+    ],
+    "errors": 0,
+    "seconds": 282.3972096443176,
+    "clock": 375.0,
+    "flush": "/flush_cache 200"
+  },
+  "sglang-lock-fp8": {
+    "model": "Qwen/Qwen3-8B-FP8",
+    "num": 500,
+    "shots": 8,
+    "correct": 460,
+    "accuracy": 0.92,
+    "wilson95": [
+      0.8928931229079627,
+      0.9407021975260784
+    ],
+    "errors": 0,
+    "seconds": 167.47645163536072,
+    "clock": 480.0,
+    "flush": "/flush_cache 200"
+  },
+  "sglang-lock-fp8w": {
+    "model": "Qwen/Qwen3-8B-FP8",
+    "num": 500,
+    "shots": 8,
+    "correct": 456,
+    "accuracy": 0.912,
+    "wilson95": [
+      0.8839229514479334,
+      0.9337943628826022
+    ],
+    "errors": 0,
+    "seconds": 173.28693866729736,
+    "clock": 480.0,
+    "flush": "/flush_cache 200"
+  },
+  "sglang-lock-kvfp8": {
+    "model": "Qwen/Qwen3-8B",
+    "num": 500,
+    "shots": 8,
+    "correct": 458,
+    "accuracy": 0.916,
+    "wilson95": [
+      0.8884001169044927,
+      0.9372562004777957
+    ],
+    "errors": 0,
+    "seconds": 272.5205225944519,
+    "clock": 420.0,
+    "flush": "/flush_cache 200"
+  },
+  "vllm-lock-b": {
+    "model": "Qwen/Qwen3-8B",
+    "num": 500,
+    "shots": 8,
+    "correct": 459,
+    "accuracy": 0.918,
+    "wilson95": [
+      0.8906445762331059,
+      0.938981242675059
+    ],
+    "errors": 0,
+    "seconds": 267.49207615852356,
+    "clock": 450.0,
+    "flush": "/reset_prefix_cache 200"
+  },
+  "vllm-lock-fp8": {
+    "model": "Qwen/Qwen3-8B-FP8",
+    "num": 500,
+    "shots": 8,
+    "correct": 453,
+    "accuracy": 0.906,
+    "wilson95": [
+      0.8772348563464386,
+      0.928573953406468
+    ],
+    "errors": 0,
+    "seconds": 202.04220461845398,
+    "clock": 435.0,
+    "flush": "/reset_prefix_cache 200"
+  },
+  "vllm-lock-fp8-kv-fp8-triton": {
+    "model": "Qwen/Qwen3-8B-FP8",
+    "num": 500,
+    "shots": 8,
+    "correct": 453,
+    "accuracy": 0.906,
+    "wilson95": [
+      0.8772348563464386,
+      0.928573953406468
+    ],
+    "errors": 0,
+    "seconds": 147.09219455718994,
+    "clock": 465.0,
+    "flush": "/reset_prefix_cache 200"
+  },
+  "vllm-lock-kv-fp8-triton": {
+    "model": "Qwen/Qwen3-8B",
+    "num": 500,
+    "shots": 8,
+    "correct": 454,
+    "accuracy": 0.908,
+    "wilson95": [
+      0.8794606777802376,
+      0.9303176334985452
+    ],
+    "errors": 0,
+    "seconds": 285.06490755081177,
+    "clock": 330.0,
+    "flush": "/reset_prefix_cache 200"
+  }
+}

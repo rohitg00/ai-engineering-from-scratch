@@ -1,0 +1,23 @@
+nvidia-smi on the L4 host during the first load sweep, 2026-10-16 18:10 UTC
+index, temperature.gpu, power.draw [W], power.limit [W], clocks.current.sm [MHz], clocks.max.sm [MHz], clocks_event_reasons.active, clocks_event_reasons.sw_thermal_slowdown, clocks_event_reasons.hw_thermal_slowdown, clocks_event_reasons.sw_power_cap, utilization.gpu [%]
+0, 87, 58.36 W, 72.00 W, 360 MHz, 2040 MHz, 0x0000000000000020, Active, Not Active, Not Active, 100 %
+1, 81, 52.77 W, 72.00 W, 2025 MHz, 2040 MHz, 0x0000000000000004, Not Active, Not Active, Active, 0 %
+
+GPU 0 ran the sweep. GPU 1 ran two other tenants' test pods and an FP8 sweep at the same time.
+Qwen/Qwen3-8B, BF16, 512 tokens in, 128 out, median over three seeds; the sweep had no GPU telemetry yet.
+
+config          concurrency  median TPOT ms  output tok/s (min-max over seeds)
+default                   1           103.4  10.1 (10.0-14.9)
+default                   2            81.2  25.1 (24.6-26.8)
+default                   4            67.2  57.4 (55.8-59.3)
+default                   8            72.1  93.6 (92.4-94.5)
+default                  16            79.0  159.1 (157.4-162.8)
+default                  32           113.2  194.2 (193.3-195.7)
+default                  64           123.9  199.5 (198.9-200.4)
+no-cuda-graph             1           103.4  10.2 (10.2-12.3)
+no-cuda-graph             2            73.9  26.6 (25.6-27.3)
+no-cuda-graph             4            68.0  55.5 (55.4-58.7)
+no-cuda-graph             8            75.4  92.0 (91.2-92.8)
+no-cuda-graph            16            75.7  160.8 (157.7-160.8)
+no-cuda-graph            32           117.9  193.2 (189.2-194.5)
+no-cuda-graph            64           120.8  201.0 (193.3-201.8)

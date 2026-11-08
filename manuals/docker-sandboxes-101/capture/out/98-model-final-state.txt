@@ -1,0 +1,15 @@
+$ docker ps -a --filter name=m101- --format '{{.Names}} {{.Status}}'
+[exit 0]
+
+$ docker images 'localhost:15000/m101/*' --format '{{.Repository}}:{{.Tag}}'
+[exit 0]
+
+$ docker buildx ls --format '{{.Name}}'
+default
+default
+desktop-linux
+desktop-linux
+[exit 0]
+
+$ docker network ls --filter name=m101 --format '{{.Name}}'
+[exit 0]

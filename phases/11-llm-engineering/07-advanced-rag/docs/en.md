@@ -89,7 +89,7 @@ Common reranking models (2026 lineup):
 - Jina-Reranker-v2 Multilingual: open-weight, 100+ languages
 - bge-reranker-v2-m3: open-weight, strong baseline
 - cross-encoder/ms-marco-MiniLM-L-6-v2: open-weight, runs on CPU for prototyping
-- ColBERTv2 / Jina-ColBERT-v2: late-interaction multi-vector rerankers — O(tokens) not O(docs) at scoring time
+- ColBERTv2 / Jina-ColBERT-v2: late-interaction multi-vector rerankers — $O(\text{tokens})$ not $O(\text{docs})$ at scoring time
 
 ### Query Transformation
 

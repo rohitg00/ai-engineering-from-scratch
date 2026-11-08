@@ -1,0 +1,21 @@
+{
+  "id": "gradient-descent-linear-regression",
+  "title": "Linear regression by gradient descent",
+  "kind": "implement",
+  "summary": "Mean squared error, its gradients for weights and bias, and a batch gradient descent loop that records the cost after each update.",
+  "difficulty": "easy",
+  "tags": ["linear-regression", "gradient-descent", "loss-functions", "gradients"],
+  "lesson": "phases/02-ml-fundamentals/02-linear-regression",
+  "cheatsheet": "classical-ml",
+  "minutes": 20,
+  "entry": ["predict", "compute_cost", "compute_gradients", "fit"],
+  "collections": ["math-foundations", "optimizers", "classical-ml"],
+  "time_limit_s": 10,
+  "mutants": {
+    "bias_not_updated": "Computes db but never updates the bias, so b stays at 0.",
+    "error_sign": "Uses target minus prediction as the error, so the gradients point uphill.",
+    "history_before_update": "Appends the cost before the update, so the history is one step behind.",
+    "missing_factor_two": "Drops the factor of 2 from both gradients, so they are half the true gradient.",
+    "sequential_update": "Updates w first and then computes db at the new w, so the bias step uses the wrong point."
+  }
+}

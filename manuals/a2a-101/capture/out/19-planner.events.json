@@ -1,0 +1,133 @@
+[
+  {
+    "exchange": 8,
+    "title": "SubscribeToTask on deployer",
+    "events": [
+      {
+        "jsonrpc": "2.0",
+        "id": 5,
+        "result": {
+          "task": {
+            "id": "a31361b3-6811-49e8-afe9-fbfcafced6f8",
+            "contextId": "c4ea2d65-1586-4b07-8e9c-7d3555385cb7",
+            "status": {
+              "state": "TASK_STATE_AUTH_REQUIRED",
+              "message": {
+                "messageId": "1db4a812-747d-4b65-b9ec-d12994a90ffa",
+                "contextId": "c4ea2d65-1586-4b07-8e9c-7d3555385cb7",
+                "taskId": "a31361b3-6811-49e8-afe9-fbfcafced6f8",
+                "role": "ROLE_AGENT",
+                "parts": [
+                  {
+                    "text": "An operator must approve this deploy at http://localhost:41243/approve/a31361b3-6811-49e8-afe9-fbfcafced6f8"
+                  }
+                ]
+              },
+              "timestamp": "2026-10-06T09:00:02.500Z"
+            },
+            "history": [
+              {
+                "messageId": "9851e4d5-25f4-4a82-95af-4c654a13d22e",
+                "contextId": "c4ea2d65-1586-4b07-8e9c-7d3555385cb7",
+                "taskId": "a31361b3-6811-49e8-afe9-fbfcafced6f8",
+                "role": "ROLE_USER",
+                "parts": [
+                  {
+                    "text": "Deploy build 2026.10.06-1 to staging"
+                  }
+                ]
+              },
+              {
+                "messageId": "16218b58-1d46-4ce2-bb8e-1680c75b1004",
+                "contextId": "c4ea2d65-1586-4b07-8e9c-7d3555385cb7",
+                "taskId": "a31361b3-6811-49e8-afe9-fbfcafced6f8",
+                "role": "ROLE_AGENT",
+                "parts": [
+                  {
+                    "text": "Preparing build 2026.10.06-1 for staging"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 5,
+        "result": {
+          "statusUpdate": {
+            "taskId": "a31361b3-6811-49e8-afe9-fbfcafced6f8",
+            "contextId": "c4ea2d65-1586-4b07-8e9c-7d3555385cb7",
+            "status": {
+              "state": "TASK_STATE_WORKING",
+              "message": {
+                "messageId": "025a7c9b-3cc3-4c60-a437-b1512298d884",
+                "contextId": "c4ea2d65-1586-4b07-8e9c-7d3555385cb7",
+                "taskId": "a31361b3-6811-49e8-afe9-fbfcafced6f8",
+                "role": "ROLE_AGENT",
+                "parts": [
+                  {
+                    "text": "Approved by an operator. Rolling out to staging"
+                  }
+                ]
+              },
+              "timestamp": "2026-10-06T09:00:02.750Z"
+            }
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 5,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "a31361b3-6811-49e8-afe9-fbfcafced6f8",
+            "contextId": "c4ea2d65-1586-4b07-8e9c-7d3555385cb7",
+            "artifact": {
+              "artifactId": "deploy-report",
+              "name": "deploy-report.json",
+              "parts": [
+                {
+                  "data": {
+                    "environment": "staging",
+                    "build": "2026.10.06-1",
+                    "url": "https://staging.example.com",
+                    "healthChecks": "3 of 3 passing"
+                  },
+                  "mediaType": "application/json"
+                }
+              ]
+            },
+            "lastChunk": true
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 5,
+        "result": {
+          "statusUpdate": {
+            "taskId": "a31361b3-6811-49e8-afe9-fbfcafced6f8",
+            "contextId": "c4ea2d65-1586-4b07-8e9c-7d3555385cb7",
+            "status": {
+              "state": "TASK_STATE_COMPLETED",
+              "message": {
+                "messageId": "6e49ae88-5874-423f-824b-f01ef2ea2170",
+                "contextId": "c4ea2d65-1586-4b07-8e9c-7d3555385cb7",
+                "taskId": "a31361b3-6811-49e8-afe9-fbfcafced6f8",
+                "role": "ROLE_AGENT",
+                "parts": [
+                  {
+                    "text": "Build 2026.10.06-1 is live on staging"
+                  }
+                ]
+              },
+              "timestamp": "2026-10-06T09:00:03.000Z"
+            }
+          }
+        }
+      }
+    ]
+  }
+]

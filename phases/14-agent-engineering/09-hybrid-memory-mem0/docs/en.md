@@ -16,7 +16,7 @@
 
 ## The Problem
 
-One store is wrong for one of three query classes:
+Each store is right for only one of three query classes:
 
 - **Semantic similarity** — "what did we discuss about agent drift last week?" Vector wins; KV and graph miss.
 - **Fact lookup** — "what is the user's phone number?" KV wins; vector is wasteful, graph is overkill.
@@ -32,7 +32,7 @@ Mem0 (arXiv:2504.19413, April 2025) on `add(text, user_id, metadata)`:
 
 1. Extract candidate facts from the text (an LLM-driven step).
 2. Write each fact to the vector store (embedding) for semantic search.
-3. Write each fact to the KV store keyed on (user_id, fact_type, entity) for O(1) lookup.
+3. Write each fact to the KV store keyed on (user_id, fact_type, entity) for $O(1)$ lookup.
 4. Write each fact to the graph store (Mem0g) as typed edges for relationship queries.
 
 On `search(query, user_id)`:

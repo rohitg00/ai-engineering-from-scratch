@@ -18,20 +18,20 @@
 
 RLHF 的目標函式（第 1 課）：
 
-```
-max_pi E_{x,y~pi} [ r(x, y) ] - beta * KL(pi || pi_ref)
+```math
+\max_{\pi} \; \mathbb{E}_{x, y \sim \pi} \big[ r(x, y) \big] - \beta \, \mathrm{KL}(\pi \,\|\, \pi_{\text{ref}})
 ```
 
 有一個已知的最佳解：
 
-```
-pi*(y|x) = (1/Z(x)) * pi_ref(y|x) * exp(r(x, y) / beta)
+```math
+\pi^*(y \mid x) = \frac{1}{Z(x)} \, \pi_{\text{ref}}(y \mid x) \exp\!\left(\frac{r(x, y)}{\beta}\right)
 ```
 
 所以獎勵被隱含地定義成「最佳策略對參考策略的比值」：
 
-```
-r(x, y) = beta * log(pi*(y|x) / pi_ref(y|x)) + beta * log Z(x)
+```math
+r(x, y) = \beta \log \frac{\pi^*(y \mid x)}{\pi_{\text{ref}}(y \mid x)} + \beta \log Z(x)
 ```
 
 把它代進 Bradley-Terry 偏好概似裡，那個配分函數 `Z(x)` 會消掉，因為它只依賴 `x`。剩下來的，是一個只含策略參數的損失 —— 不需要獎勵模型。那就是 DPO。
@@ -42,11 +42,11 @@ r(x, y) = beta * log(pi*(y|x) / pi_ref(y|x)) + beta * log Z(x)
 
 ### DPO（Rafailov 等人，2023）
 
-```
-L_DPO = -log sigmoid(
-  beta * log(pi(y_w | x) / pi_ref(y_w | x))
-  - beta * log(pi(y_l | x) / pi_ref(y_l | x))
-)
+```math
+L_{\text{DPO}} = -\log \sigma\!\left(
+  \beta \log \frac{\pi(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)}
+  - \beta \log \frac{\pi(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)}
+\right)
 ```
 
 會出什麼錯：
@@ -59,8 +59,8 @@ L_DPO = -log sigmoid(
 
 恆等偏好最佳化（Identity Preference Optimization）把 log-sigmoid 換成對偏好機率的恆等映射。損失變成對一個有界目標的平方誤差：
 
-```
-L_IPO = (log(pi(y_w | x) / pi_ref(y_w | x)) - log(pi(y_l | x) / pi_ref(y_l | x)) - 1/(2 beta))^2
+```math
+L_{\text{IPO}} = \left( \log \frac{\pi(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)} - \log \frac{\pi(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)} - \frac{1}{2\beta} \right)^2
 ```
 
 那個間距被 `1/(2 beta)` 界住。偏好強度與隱含獎勵落差成正比。不會爆掉。
@@ -69,8 +69,8 @@ L_IPO = (log(pi(y_w | x) / pi_ref(y_w | x)) - log(pi(y_l | x) / pi_ref(y_l | x))
 
 Kahneman-Tversky 最佳化整個丟掉成對結構。給定單一個已標註輸出，以及一個二元的「想要」或「不想要」訊號，把它對映到一個展望理論效用上：
 
-```
-v(x, y) = sigma(beta * log(pi(y|x) / pi_ref(y|x)) - z_ref)
+```math
+v(x, y) = \sigma\!\left(\beta \log \frac{\pi(y \mid x)}{\pi_{\text{ref}}(y \mid x)} - z_{\text{ref}}\right)
 ```
 
 其中收益與損失有不同權重（損失趨避）。好處：你可以用未配對的資料，而那種資料多得多。
@@ -79,12 +79,12 @@ v(x, y) = sigma(beta * log(pi(y|x) / pi_ref(y|x)) - z_ref)
 
 簡單偏好最佳化（Simple Preference Optimization）讓訓練訊號與生成對齊。整個拿掉參考策略，並把對數概似依長度正規化：
 
-```
-L_SimPO = -log sigmoid(
-  (beta / |y_w|) * log pi(y_w | x)
-  - (beta / |y_l|) * log pi(y_l | x)
-  - gamma
-)
+```math
+L_{\text{SimPO}} = -\log \sigma\!\left(
+  \frac{\beta}{|y_w|} \log \pi(y_w \mid x)
+  - \frac{\beta}{|y_l|} \log \pi(y_l \mid x)
+  - \gamma
+\right)
 ```
 
 再加上一個間距 `gamma` 來穩定。那個長度正規化，拿掉了去利用 DPO 長度偏差失敗模式的誘因（就構造而言，`y_w` 愈長，對數機率落差就愈大）。
@@ -93,9 +93,11 @@ L_SimPO = -log sigmoid(
 
 勝算比偏好最佳化（Odds-Ratio Preference Optimization）在標準的 SFT 負對數概似上加一個偏好項：
 
-```
-L_ORPO = L_NLL(y_w) + lambda * L_OR
-L_OR = -log sigmoid(log(odds(y_w) / odds(y_l)))
+```math
+\begin{aligned}
+L_{\text{ORPO}} &= L_{\text{NLL}}(y_w) + \lambda L_{\text{OR}} \\
+L_{\text{OR}} &= -\log \sigma\!\left(\log \frac{\text{odds}(y_w)}{\text{odds}(y_l)}\right)
+\end{aligned}
 ```
 
 沒有參考策略 —— 那個 SFT 項就是正則化項。在單一階段裡從基礎模型訓練到對齊模型。不需要獨立的 SFT 檢查點。

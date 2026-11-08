@@ -1,6 +1,6 @@
 # Sponsorship
 
-`ai-engineering-from-scratch` is a free, MIT-licensed curriculum. 523 lessons across 20
+`ai-engineering-from-scratch` is a free, MIT-licensed curriculum. 542 lessons across 20
 phases. The work is built and maintained by [Rohit Ghumare](https://github.com/rohitg00).
 
 Cash sponsorships fund the time it takes to ship lessons, keep the site running, and reply
@@ -25,6 +25,8 @@ Sponsorship changes are not accepted through contributor pull requests.
 
 GitHub Sponsors handles billing, receipts, and tax forms. 0% platform fee on personal
 sponsorships, up to 6% on organization sponsorships, per [GitHub's policy](https://docs.github.com/en/sponsors/receiving-sponsorships-through-github-sponsors/about-github-sponsors-for-open-source-contributors).
+If you need an invoice in your company's name, or have any other billing question, email
+[ghumare64@gmail.com](mailto:ghumare64@gmail.com).
 
 For clarity: the curriculum has no token, no coin, no NFT, no wallet, and no chain
 partnership. The maintainer does not endorse, promote, partner with, or accept
@@ -34,24 +36,34 @@ anything else using this project's name is unaffiliated.
 ## Reach
 
 These are real numbers, not pitch decks. Website figures come from the production
-[Vercel Web Analytics](https://vercel.com/docs/analytics) dashboard. Website and GitHub
-figures were verified 2026-08-29.
+[Vercel Web Analytics](https://vercel.com/docs/analytics) dashboard. GitHub figures come
+from the repository traffic API, which reports the last 14 days. Newsletter figures come
+from the Substack dashboard. All figures were verified 2026-10-07.
 
-| Window | Visitors | Page views | Bounce rate |
-|---|---:|---:|---:|
-| Last 30 days | 114,584 (+4%) | 181,995 (+3%) | 71% (-1%) |
-| 2026-03-31 to 2026-08-29 | 477,679 | 765,584 | 72% |
+| Channel | Window | Figure |
+|---|---|---:|
+| Website page views | last 30 days | 521,690 |
+| [AI Engineering Newsletter](https://thatdevopsguy.substack.com) subscribers | all time | 11,000+ |
+| GitHub repository views | 2026-09-22 to 2026-10-05 | 280,632 |
+| GitHub repository views, 30-day rate | estimate from the 14-day figure | about 601,000 |
+| GitHub unique visitors | 2026-09-22 to 2026-10-05 | 72,761 |
+| GitHub clones | 2026-09-22 to 2026-10-05 | 20,228 (5,625 unique) |
+| GitHub stars | all time | 65,223 |
+| GitHub forks | all time | 11,242 |
 
-- **GitHub stars:** 50,728
-- **Top referrers, last 30 days:** Google (17K), X / t.co (9.7K), GitHub (4.2K)
-- **Top pages, last 30 days:** `/` (84K), `/index.html` (34K), `/prereqs.html` (10K),
-  `/catalog.html` (5.5K), `/glossary.html` (2.6K)
+- **Top GitHub referrers, last 14 days:** GitHub (28.0K), LinkedIn (15.6K across web and
+  app), Google (9.2K), the course website (5.8K), X / t.co (5.4K), Threads (4.0K)
+- **Top GitHub pages, last 14 days:** the README (108K views), the Chinese README (8.1K),
+  Phase 0 setup (4.8K)
 
-Gold, Platinum, and Diamond sponsors also receive the cross-platform co-features defined
-in the tier ladder below.
+GitHub reports traffic for 14 days only. At the same daily rate, the repository draws
+about 601,000 views in 30 days, more than the website. Across both, the project draws
+more than 1.1 million views a month. The AI Engineering Newsletter sends a weekly issue
+on AI to more than 11,000 subscribers. Gold, Platinum, and Diamond sponsors also receive
+the cross-platform co-features defined in the tier ladder below.
 
-A sponsor placement at this scale is in the same range as a paid slot in a 100-250K monthly
-dev newsletter or a mid-tier independent dev blog.
+A sponsor placement at this scale is in the same range as a paid slot in a dev publication
+with one million monthly page views.
 
 ## Tier ladder
 
@@ -119,8 +131,9 @@ will end with a link back to this page.
 ## Pricing anchors
 
 The tier amounts above are anchored against (a) public sponsor pages of comparable
-open-source projects, and (b) standard sponsor-slot rates for 100-250K monthly visitor dev
-publications. Audience figures and GitHub stars verified 2026-08-29.
+open-source projects, and (b) standard sponsor-slot rates for dev publications at one
+million monthly page views across channels. Audience figures and GitHub stars verified
+2026-10-07.
 
 Comparable open-source rate cards:
 
@@ -133,11 +146,12 @@ Comparable open-source rate cards:
   Platinum ($2,000). Defensible at the curriculum's monthly traffic.
 - **$2,000 Gold** matches Babel Base Support (billed yearly at $24K = $2K/mo) and Vue
   Platinum.
-- **$5,000 Platinum** matches Vue Diamond. At 50.7K stars + 114.6K monthly visitors, the
+- **$5,000 Platinum** matches Vue Diamond. At 65.2K stars + 521.7K monthly page views, the
   dedicated lesson + hero placement is what justifies the price.
 - **$10,000 Diamond / Title Partner** is one exclusive annual slot. The rate reflects
-  50.7K stars, 477.7K visitors and 765.6K page views from 2026-03-31 to 2026-08-29,
-  title placement, quarterly reporting, and the maintainer-written integration work.
+  65.2K stars, 11.2K forks, 521.7K website page views in 30 days, 280.6K repository views
+  in 14 days (about 601K a month), title placement, quarterly reporting, and the
+  maintainer-written integration work.
 
 ## What sponsorship pays for
 
@@ -154,10 +168,11 @@ Listed in order of how the next dollar gets spent:
 
 1. Pick a tier above.
 2. Subscribe via [GitHub Sponsors](https://github.com/sponsors/rohitg00).
-3. For Silver and above, email the maintainer with: your logo (SVG preferred), the URL
+3. For Silver and above, email [ghumare64@gmail.com](mailto:ghumare64@gmail.com) with: your logo (SVG preferred), the URL
    you want it linked to, and the term length you've committed to.
 4. The logo lands in the next site deploy, usually within 48 hours.
-5. Receipts and invoices are issued by GitHub Sponsors automatically.
+5. Receipts and invoices are issued by GitHub Sponsors automatically. If you need an invoice
+   in your company's name, email [ghumare64@gmail.com](mailto:ghumare64@gmail.com).
 
 Hardware partners follow the separate [Hardware Lab Partner](#hardware-lab-partner)
 process and must agree to written terms before shipping equipment.

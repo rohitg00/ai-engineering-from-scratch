@@ -1,0 +1,23 @@
+Eviction policies on a multi-turn trace (backlog B-24 and B-25)
+Date: 2026-10-23
+Machine: NVIDIA L4, the second GPU of the node (GPU1), shared with its owner, no clock lock. Hit rates do not depend on the clock. TTFT does, so compare TTFT only inside this table.
+Engine: SGLang 0.5.22. Model: Qwen/Qwen3-0.6B.
+Trace: 24 sessions, each with its own system prompt, 6 turns of ShareGPT questions, 64-token answers, thinking off. Sessions run round robin at concurrency 8. Each turn resends the whole history.
+Hit rate = cached prompt tokens / prompt tokens, from the cache report.
+The 8,192-token lru row holds two clean runs of the same config: run 1 and run 2 gave 0.19 each over the whole trace. The summary keeps one set of per-turn rates and one clock for the pair.
+
+pool, policy                 whole trace   hit rate per turn 1 to 6                        median SM clock
+8,192 tokens, lru            0.19, 0.19    0.11, 0.31, 0.58, 0.39, 0.016, 0.013            615 MHz
+8,192 tokens, lru, no graph  0.19          the same shape                                  1,905 MHz
+8,192 tokens, lfu            0.375         0.11, 0.31, 0.58, 0.53, 0.34, 0.25              1,140 MHz
+8,192 tokens, slru           0.367         0.11, 0.31, 0.58, 0.53, 0.31, 0.26              960 MHz
+16,384 tokens, lru           0.685         rises to 0.83 at turn 6                         810 MHz
+16,384 tokens, lfu           0.687         rises to 0.84 at turn 6                         945 MHz
+default pool, lru            0.687         rises to 0.835 at turn 6                        960 MHz
+
+Median TTFT at turns 5 and 6:
+8,192 lru: run 1 gave 699 and 449 ms, run 2 gave 716 and 355 ms
+8,192 lfu or slru: 143 to 214 ms
+16,384 or default pool: 56 to 160 ms
+
+tlru: --radix-eviction-policy tlru does not start without --radix-eviction-policy-config. The config needs threshold > next_prompt_estimate. We ran {"threshold": 512, "next_prompt_estimate": 256}.

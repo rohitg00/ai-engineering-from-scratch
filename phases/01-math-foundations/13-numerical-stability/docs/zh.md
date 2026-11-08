@@ -96,7 +96,7 @@ Relative error: 19.2%
 
 單單一次減法就帶來 19% 的相對誤差。在 ML 裡，只要你做以下這些事，這件事就會發生：
 
-- 對平均值很大的資料算變異數：E[x] 很大時的 `E[x^2] - E[x]^2`
+- 對平均值很大的資料算變異數：$\mathbb{E}[x]$ 很大時的 $\mathbb{E}[x^2] - \mathbb{E}[x]^2$
 - 相減兩個幾乎相等的對數機率
 - 用太小的 epsilon 計算有限差分梯度
 
@@ -141,20 +141,22 @@ log(1e-46) = -inf        (input underflowed to 0, then log(0) = -inf)
 
 技巧是：在取指數之前先減掉最大值。
 
-```
-log(sum(exp(x_i))) = max(x) + log(sum(exp(x_i - max(x))))
+```math
+\log\left(\sum_i \exp(x_i)\right) = \max(x) + \log\left(\sum_i \exp(x_i - \max(x))\right)
 ```
 
 為什麼行得通：減掉 `max(x)` 之後，最大的指數項是 `exp(0) = 1`。不可能溢位。總和裡至少有一項是 1，所以總和至少是 1，而 `log(1) = 0`。也不可能下溢成 `-inf`。
 
 證明：
 
-```
-log(sum(exp(x_i)))
-= log(sum(exp(x_i - c + c)))                    (add and subtract c)
-= log(sum(exp(x_i - c) * exp(c)))               (exp(a+b) = exp(a)*exp(b))
-= log(exp(c) * sum(exp(x_i - c)))               (factor out exp(c))
-= c + log(sum(exp(x_i - c)))                    (log(a*b) = log(a) + log(b))
+```math
+\begin{aligned}
+& \log\left(\sum_i \exp(x_i)\right) \\
+&= \log\left(\sum_i \exp(x_i - c + c)\right) && \text{(add and subtract } c\text{)} \\
+&= \log\left(\sum_i \exp(x_i - c) \cdot \exp(c)\right) && (\exp(a+b) = \exp(a) \cdot \exp(b)) \\
+&= \log\left(\exp(c) \cdot \sum_i \exp(x_i - c)\right) && \text{(factor out } \exp(c)\text{)} \\
+&= c + \log\left(\sum_i \exp(x_i - c)\right) && (\log(a \cdot b) = \log(a) + \log(b))
+\end{aligned}
 ```
 
 令 `c = max(x)`，溢位就消失了。
@@ -170,8 +172,8 @@ log(sum(exp(x_i)))
 
 softmax 把 logits 轉成機率：
 
-```
-softmax(x_i) = exp(x_i) / sum(exp(x_j))
+```math
+\mathop{\mathrm{softmax}}(x_i) = \frac{\exp(x_i)}{\sum_j \exp(x_j)}
 ```
 
 沒有這個技巧，[100, 101, 102] 這樣的 logits 會造成溢位：
@@ -182,7 +184,7 @@ exp(101) = 7.31e43
 exp(102) = 1.99e44
 sum      = 2.99e44
 
-These overflow float32 (max ~3.4e38)? No, 2.69e43 < 3.4e38? Actually:
+2.69e43 > 3.4e38, the float32 maximum, so every term overflows.
 exp(88.7) is already at the float32 limit.
 exp(100) = inf in float32.
 ```
@@ -242,18 +244,18 @@ math.isfinite(x)    # True if x is neither nan nor inf
 
 中心差分公式：
 
-```
-df/dx ~= (f(x + h) - f(x - h)) / (2h)
+```math
+\frac{df}{dx} \approx \frac{f(x + h) - f(x - h)}{2h}
 ```
 
-它的精度是 O(h^2)，遠好過只有 O(h) 的前向差分 `(f(x+h) - f(x)) / h`。
+它的精度是 $O(h^2)$，遠好過只有 $O(h)$ 的前向差分 $(f(x+h) - f(x)) / h$。
 
-h 怎麼選：太大，近似就不準。太小，災難性抵銷會毀掉答案。`h = 1e-5` 到 `1e-7` 是常見範圍。
+$h$ 怎麼選：太大，近似就不準。太小，災難性抵銷會毀掉答案。`h = 1e-5` 到 `1e-7` 是常見範圍。
 
 檢查方式：算出解析梯度和數值梯度之間的相對差異。
 
-```
-relative_error = |grad_analytical - grad_numerical| / max(|grad_analytical|, |grad_numerical|, 1e-8)
+```math
+\text{relative\_error} = \frac{\lvert \text{grad}_{\text{analytical}} - \text{grad}_{\text{numerical}} \rvert}{\max(\lvert \text{grad}_{\text{analytical}} \rvert, \lvert \text{grad}_{\text{numerical}} \rvert, 10^{-8})}
 ```
 
 經驗法則：
@@ -289,7 +291,7 @@ relative_error = |grad_analytical - grad_numerical| / max(|grad_analytical|, |gr
 5. Net effect: same update, but no underflow
 ```
 
-動態 loss scaling 會自動調整縮放係數。從一個大值（65536）開始。如果梯度溢位成 `inf`，就把它砍半。如果連續 N 步都沒有溢位，就把它加倍。
+動態 loss scaling 會自動調整縮放係數。從一個大值（65536）開始。如果梯度溢位成 `inf`，就把它砍半。如果連續 $N$ 步都沒有溢位，就把它加倍。
 
 ### bfloat16 vs float16：為什麼訓練時 bfloat16 勝出
 
@@ -350,8 +352,8 @@ Layer 50: values in [0, inf]
 
 正規化在每一層都把激活值重新置中、重新縮放：
 
-```
-LayerNorm(x) = (x - mean(x)) / (std(x) + epsilon) * gamma + beta
+```math
+\mathop{\mathrm{LayerNorm}}(x) = \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x) + \epsilon} \cdot \gamma + \beta
 ```
 
 其中的 `epsilon`（通常是 1e-5）避免在所有激活值都相同時除以零。可學習的參數 `gamma` 和 `beta` 讓網路能還原它需要的任何尺度。
@@ -568,7 +570,7 @@ check_tensor("ugly", [1.0, float('inf'), 3.0])
 
 ## 練習
 
-1. **災難性抵銷。** 在 float32 下用天真公式 `E[x^2] - E[x]^2` 算出 [1000000.0, 1000001.0, 1000002.0] 的變異數。然後改用 Welford 的線上演算法算一次。把兩者的誤差和真正的變異數（0.6667）比較。
+1. **災難性抵銷。** 在 float32 下用天真公式 $\mathbb{E}[x^2] - \mathbb{E}[x]^2$ 算出 [1000000.0, 1000001.0, 1000002.0] 的變異數。然後改用 Welford 的線上演算法算一次。把兩者的誤差和真正的變異數（0.6667）比較。
 
 2. **精度搜捕。** 在 Python 裡找出使 `1.0 + x == 1.0` 成立的最小正 float32 值 `x`。這就是機器 epsilon。驗證它和 `numpy.finfo(numpy.float32).eps` 相符。
 
@@ -578,17 +580,29 @@ check_tensor("ugly", [1.0, float('inf'), 3.0])
 
 5. **loss scaling 實驗。** 模擬 float16 訓練：產生範圍在 [1e-9, 1e-3] 的隨機梯度，轉成 float16，量測有多少比例變成零。然後套用 loss scaling（乘以 1024）、轉成 float16、再縮放回來，重新量測歸零的比例。
 
+### 提示
+
+**練習 1。** 先用 `np.float32` 轉換這三個值再平方，然後呼叫 `variance_naive` 和 `welford_variance`。float32 在 $10^{12}$ 附近的值，間距遠大於 1，所以天真公式的結果應該離 0.6667 很遠，而 Welford 的結果會很接近。
+
+**練習 2。** 從 `x = np.float32(1.0)` 開始，只要 `np.float32(1.0) + x != np.float32(1.0)` 就把它減半。每個值都保持在 float32，然後把最後一個仍會改變總和的值與 `numpy.finfo(numpy.float32).eps` 比較，它等於 $2^{-23}$。
+
+**練習 3。** 先預測每個答案。對 $n$ 個都等於 $c$ 的值，結果是 $c + \ln n$。只有一個大值時，結果接近那個值。值都在 -1000 附近時，結果接近 $-1000 + \ln n$，而 `logsumexp_naive` 會回傳 `-inf`，因為每個指數都下溢成 0。
+
+**練習 4。** 對於帶損失 $L$ 的 $y = Wx + b$，$W$ 的梯度是上游梯度與 $x$ 的外積。把損失包成攤平後 $W$ 的函式，呼叫 `numerical_gradient`，再把兩個結果都傳給 `check_gradient`。
+
+**練習 5。** 用 `10 ** np.random.uniform(-9, -3, n)` 在對數尺度上取樣量級，再用 `np.float16` 轉換。float16 無法保存小於約 $6 \times 10^{-8}$ 的值，所以預期縮放前大約四分之一的值會變成零，乘以 1024 之後則幾乎沒有。
+
 ## 關鍵術語
 
 | 術語 | 大家怎麼說 | 實際上是什麼 |
 |------|----------------|----------------------|
 | IEEE 754 | 「浮點數標準」 | 定義二進位浮點格式、捨入規則與特殊值（inf、nan）的國際標準。每一顆現代 CPU 和 GPU 都實作了它。 |
-| 機器 epsilon | 「精度極限」 | 在某個 float 格式下，使 1.0 + e != 1.0 成立的最小值 e。對 float32 來說大約是 1.19e-7。 |
+| 機器 epsilon | 「精度極限」 | 在某個 float 格式下，使 $1.0 + e \ne 1.0$ 成立的最小值 $e$。對 float32 來說大約是 1.19e-7。 |
 | 災難性抵銷 | 「減法造成的精度流失」 | 相減兩個幾乎相等的浮點數時，有效數字互相抵銷，結果被捨入雜訊主導。 |
 | 溢位 | 「數字太大」 | 結果超過可表示的最大值，變成 inf。exp(89) 會讓 float32 溢位。 |
 | 下溢 | 「數字太小」 | 結果比最小的可表示正數更靠近零，變成 0.0。exp(-104) 會讓 float32 下溢。 |
-| log-sum-exp 技巧 | 「先減掉最大值」 | 把 exp(max(x)) 提出來計算 log(sum(exp(x)))，以避免溢位與下溢。用在 softmax、交叉熵和對數機率運算裡。 |
-| 穩定版 softmax | 「不會爆掉的 softmax」 | 在取指數之前先減掉 max(logits)。結果在數值上完全相同，而且不可能溢位。 |
+| log-sum-exp 技巧 | 「先減掉最大值」 | 把 $\exp(\max(x))$ 提出來計算 $\log(\sum \exp(x))$，以避免溢位與下溢。用在 softmax、交叉熵和對數機率運算裡。 |
+| 穩定版 softmax | 「不會爆掉的 softmax」 | 在取指數之前先減掉 $\max(\text{logits})$。結果在數值上完全相同，而且不可能溢位。 |
 | 梯度檢查 | 「驗證你的反向傳播」 | 把反向傳播得到的解析梯度和有限差分得到的數值梯度做對照，抓出實作上的 bug。 |
 | 混合精度 | 「float16 前向、float32 反向」 | 對速度關鍵的運算使用較低精度的浮點數，對數值敏感的運算使用較高精度。典型加速是 2-3 倍。 |
 | loss scaling | 「避免梯度下溢」 | 在反向傳播之前把損失乘上一個大常數，讓梯度留在 float16 可表示的範圍內，再在更新權重之前除回同一個常數。 |
@@ -596,7 +610,7 @@ check_tensor("ugly", [1.0, float('inf'), 3.0])
 | 梯度裁剪 | 「限制梯度範數」 | 縮放梯度向量，使它的範數不超過某個門檻。避免梯度爆炸毀掉權重。 |
 | NaN | 「Not a Number」 | 來自未定義運算（0/0、inf-inf、sqrt(-1)）的特殊浮點值。會擴散到後續所有運算。 |
 | Inf | 「無限」 | 來自溢位或除以零的特殊浮點值。可以組合出 NaN（inf - inf、inf * 0）。 |
-| 數值梯度 | 「暴力求導數」 | 求出 f(x+h) 與 f(x-h) 再除以 2h，藉此近似導數。慢，但用來驗證很可靠。 |
+| 數值梯度 | 「暴力求導數」 | 求出 $f(x+h)$ 與 $f(x-h)$ 再除以 $2h$，藉此近似導數。慢，但用來驗證很可靠。 |
 
 ## 延伸閱讀
 

@@ -259,6 +259,16 @@ bash phases/00-setup-and-tooling/06-python-environments/code/env_setup.sh
 3. 為一個同時需要 PyTorch 與 Anthropic SDK 的專案寫一份 `pyproject.toml`
 4. 故意不啟用虛擬環境、把套件裝到全域，觀察它跑到哪裡去，然後把它移除
 
+### 提示
+
+**練習 1。** 在儲存庫根目錄執行 `bash phases/00-setup-and-tooling/06-python-environments/code/env_setup.sh`。逐行閱讀輸出；某項檢查失敗時，就修好那一項，再重新執行腳本，直到沒有任何檢查失敗為止。
+
+**練習 2。** 在一個新資料夾裡用 `uv venv` 建立第二個環境並啟用，再用版本釘選（例如 `numpy==1.26.4`）安裝較舊的 numpy。在兩個環境中各執行 `python -c "import numpy; print(numpy.__version__)"`；兩邊的版本必須不同。
+
+**練習 3。** 從「pyproject.toml 基礎」裡的範例開始，把 `torch` 與 `anthropic` 列在 `dependencies` 底下。在一個新環境中執行 `uv pip install -e .` 或 `uv sync`；兩個套件都能無錯誤地匯入，檔案就是正確的。
+
+**練習 4。** 停用所有環境，執行 `pip install --user <small package>`，接著執行 `pip show <package>` 並閱讀 `Location` 那一行。用 `pip uninstall <package>` 解除安裝，再執行一次 `pip show` 確認它已經消失。
+
 ## 關鍵術語
 
 | 術語 | 大家怎麼說 | 實際上是什麼 |

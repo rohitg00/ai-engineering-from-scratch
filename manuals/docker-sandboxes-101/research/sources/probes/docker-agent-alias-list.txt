@@ -1,0 +1,5 @@
+$ docker-agent alias list   # 2026-10-08T06:58Z
+No aliases registered.
+
+Create an alias with: docker agent alias add <name> <agent-path>
+[exit 0]

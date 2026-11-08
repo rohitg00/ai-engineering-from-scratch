@@ -1,0 +1,20 @@
+# Exploratory runs before the capture kit, 2026-10-16, same Mac, SGLang 0.5.22, MLX, mlx-community/Qwen3-0.6B-4bit.
+# Both runs started with SGLANG_USE_MLX=1 sglang serve --model-path mlx-community/Qwen3-0.6B-4bit --disable-cuda-graph and no --mem-fraction-static. Run 2 also passed --enable-cache-report --enable-metrics.
+# run 1 startup
+[2026-10-16 13:30:31] Auto-sized attention KV pool: sys_available=27.81 GB, mlx_limit=51.8 GB, mlx_used=0.31 GB, kv_budget=24.25 GB, bytes_per_slot=114688, pool_size=227022
+# run 2 startup
+'mem_fraction_static': 0.872
+[2026-10-16 13:38:58] Auto-sized attention KV pool: sys_available=38.29 GB, mlx_limit=51.8 GB, mlx_used=0.31 GB, kv_budget=33.39 GB, bytes_per_slot=114688, pool_size=312581
+[2026-10-16 13:38:58] MLX stub: initialized minimal pools (max_total_num_tokens=312581, max_running_requests=4096, zero GPU KV cache allocation)
+[2026-10-16 13:39:00] max_total_num_tokens=312581, chunked_prefill_size=4096, max_prefill_tokens=16384, max_running_requests=4096, context_len=40960, available_gpu_mem=37.92 GB
+[2026-10-16 13:39:02] MlxAttentionKVPool: 312582 slots x 28 layers x 8 heads x 128 dim, dtype=mlx.core.bfloat16, ~34188.7 MB
+# run 2, benchmark at --max-concurrency 32
+[2026-10-16 13:42:51] Decode batch, #running-req: 32, #token: 16095, token usage: 0.05, cuda graph: False, gen throughput (token/s): 579.49, #queue-req: 0
+[2026-10-16 13:42:53] Decode batch, #running-req: 32, #token: 16095, token usage: 0.05, cuda graph: False, gen throughput (token/s): 564.55, #queue-req: 0
+[2026-10-16 13:42:55] Prefill batch, #new-seq: 1, #new-token: 511, #cached-token: 0, token usage: 0.00, #running-req: 0, #queue-req: 9, #pending-token: 0, cuda graph: False, input throughput (token/s): 66.85
+RuntimeError: [METAL] Command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory).
+
+[2026-10-16 13:42:57] SIGQUIT received. signum=None, frame=None. It usually means one child failed.
+[2026-10-16 13:42:57] Sleeping 5 seconds before crash diagnostics to let GPU activity settle.
+[2026-10-16 13:43:02] No live scheduler processes found; skipping py-spy and CUDA coredump.
+[2026-10-16 13:43:02] kill_process_tree called: parent_pid=81559, include_parent=True, pid=81559

@@ -4,21 +4,18 @@ Use this template when creating a new lesson. Copy the folder structure and fill
 
 ## Folder Structure
 
-```
-NN-lesson-name/
-├── code/
-│   ├── main.py            (primary implementation)
-│   ├── main.ts            (TypeScript version, if applicable)
-│   ├── main.rs            (Rust version, if applicable)
-│   └── main.jl            (Julia version, if applicable)
-├── notebook/
-│   └── lesson.ipynb       (Jupyter notebook for experimentation)
-├── docs/
-│   └── en.md              (lesson documentation)
-└── outputs/
-    ├── prompt-*.md         (prompts produced by this lesson)
-    └── skill-*.md          (skills produced by this lesson)
-```
+| Path | What it holds |
+|---|---|
+| `code/main.py` | primary implementation |
+| `code/main.ts` | TypeScript version, if applicable |
+| `code/main.rs` | Rust version, if applicable |
+| `code/main.jl` | Julia version, if applicable |
+| `code/tests/` | 5 or more tests |
+| `notebook/lesson.ipynb` | Jupyter notebook for experimentation |
+| `docs/en.md` | lesson documentation |
+| `quiz.json` | 6 questions: 1 pre, 3 check, 2 post |
+| `outputs/prompt-*.md` | prompts produced by this lesson |
+| `outputs/skill-*.md` | skills produced by this lesson |
 
 ## Documentation Format (docs/en.md)
 
@@ -40,7 +37,7 @@ Make it concrete — show a scenario where not knowing this hurts.]
 ## The Concept
 
 [Explain with diagrams and intuition. No code yet.
-Use ASCII diagrams, tables, or link to visuals in the web app.
+Use Mermaid or SVG diagrams, tables, or a registered `figure` fence. No ASCII diagrams.
 Build mental models before implementation.]
 
 ## Build It

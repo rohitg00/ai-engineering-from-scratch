@@ -1,0 +1,52 @@
+{
+  "title": "Signed Webhook Inbox | initialize and grade",
+  "recordedAt": "2026-10-09T14:35:15Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "signed-webhook-inbox",
+        "--init",
+        "./.project-validation/signed-webhook-inbox/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/signed-webhook-inbox/recording-starter\n  kept     fixtures/event.json\n  kept     go.mod\n  kept     main.go\n  kept     STAGE-2.md\n  kept     STAGE-3.md\n  kept     STAGE-4.md\nnext: python3 scripts/project_test.py signed-webhook-inbox --stage 1 --path ./.project-validation/signed-webhook-inbox/recording-starter\n",
+      "durationMs": 39
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "signed-webhook-inbox",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/signed-webhook-inbox/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Signed Webhook Inbox: grading learner\n  FAIL stage 1: Preserve raw bytes and delivery identity (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 772
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "signed-webhook-inbox",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/signed-webhook-inbox/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Signed Webhook Inbox: grading solution\n  PASS stage 1: Preserve raw bytes and delivery identity (6 tests)\n  PASS stage 2: Verify signatures and timestamp bounds (6 tests)\n  PASS stage 3: Deduplicate retries with a durable inbox (6 tests)\n  PASS stage 4: Replay accepted deliveries with processing receipts (8 tests)\nreport: ./.project-validation/signed-webhook-inbox/solution-final.json\n",
+      "durationMs": 4371
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

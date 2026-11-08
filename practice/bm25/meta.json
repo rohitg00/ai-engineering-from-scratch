@@ -1,0 +1,22 @@
+{
+  "id": "bm25",
+  "title": "BM25 ranking",
+  "kind": "implement",
+  "summary": "Score tokenized documents against a query with BM25: the lesson idf, term frequency saturation with k1, length normalization with b, and a ranked list.",
+  "difficulty": "medium",
+  "tags": ["bm25", "information-retrieval", "sparse-retrieval", "ranking"],
+  "lesson": "phases/05-nlp-foundations-to-advanced/14-information-retrieval-search",
+  "cheatsheet": "rag",
+  "minutes": 25,
+  "entry": ["idf", "bm25_scores", "rank"],
+  "collections": ["rag-building-blocks"],
+  "time_limit_s": 10,
+  "mutants": {
+    "dedup_query": "Loops over the set of query terms, so a repeated query term counts only once.",
+    "df_counts_occurrences": "Counts every occurrence of the term for n, not the number of documents that contain it.",
+    "idf_without_one": "Uses ln((N - n + 0.5) / (n + 0.5)) without the 1 +, so idf is negative for common terms.",
+    "no_k1_plus_one": "Leaves out the (k1 + 1) factor in the numerator, so every score is too small by that factor.",
+    "no_length_norm": "Uses f + k1 as the denominator and ignores the document length.",
+    "ties_high_index": "Breaks ties by the higher document index first, not the lower one."
+  }
+}

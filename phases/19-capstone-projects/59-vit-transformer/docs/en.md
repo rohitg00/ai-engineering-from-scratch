@@ -65,11 +65,11 @@ The FFN goes `hidden -> 4 * hidden -> hidden` with GELU in the middle. The facto
 | 12 blocks | about 85M |
 | Plus front end | about 86M total |
 
-ViT-Base is a 86M-parameter encoder. That is small by 2026 standards (SigLIP-So400M is 400M, the Qwen-VL ViT is 675M), but the architecture is identical up to width and depth.
+ViT-Base is an 86M-parameter encoder. That is small by 2026 standards (SigLIP-So400M is 400M, the Qwen-VL ViT is 675M), but the architecture is identical up to width and depth.
 
 ### Causal mask or not?
 
-Vision Transformers are encoder-only and bidirectional: token `i` may attend to token `j` for any pair. No mask. The decoder-side cross-attention in lesson 61 will use a causal mask, but inside the vision encoder, attention is fully connected.
+Vision Transformers are encoder-only and bidirectional: token `i` may attend to token `j` for any pair. No mask. The text self-attention in the lesson 61 decoder will use a causal mask (its cross-attention onto image patches does not), but inside the vision encoder, attention is fully connected.
 
 ### What the CLS token learns
 

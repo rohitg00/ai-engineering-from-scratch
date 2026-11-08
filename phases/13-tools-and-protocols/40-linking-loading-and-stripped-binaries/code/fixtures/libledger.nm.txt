@@ -1,0 +1,5 @@
+0000000000000428 (__TEXT,__text) external _grade
+0000000000000498 (__TEXT,__text) external _grade_label
+0000000000004000 (__DATA_CONST,__const) non-external _labels
+0000000000000410 (__TEXT,__text) external _percent_change
+0000000000000464 (__TEXT,__text) external _total

@@ -108,7 +108,7 @@ Production patterns:
 
 1. Add an inverse-square-root variant of the schedule and compare it on a 200-step toy training run. Which curve produces the lower final loss?
 2. Add a `--restart` flag that adds a second warmup at `total_steps / 2`. Defend whether warm restarts improve or hurt on the toy run.
-3. Add a unit test that the schedule is continuous: for every step in `[0, total_steps]` the difference `|lr(step+1) - lr(step)|` is bounded by `lr_max / warmup_steps`.
+3. Add a unit test that the schedule is continuous: with `warmup_steps > 0`, for every step in `[0, total_steps]` the difference `|lr(step+1) - lr(step)|` is bounded by the larger of the warmup slope `lr_max / warmup_steps` and the steepest cosine slope `pi * (lr_max - lr_min) / (2 * (total_steps - warmup_steps))`. A short cosine segment can be steeper than the warmup ramp, so the warmup slope alone is not a safe bound.
 4. Wire the schedule into a `torch.optim.lr_scheduler.LambdaLR` so it composes with framework code. The lesson uses a plain step function; what does the wrapper change?
 5. Add a `--plot-png` flag that writes a real plot via `matplotlib`. Defend whether the lesson's text plot or the PNG is the better default for CI runs.
 

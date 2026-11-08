@@ -1,0 +1,64 @@
+benchmark_args=Namespace(backend='sglang', base_url=None, host='0.0.0.0', port=30000, ready_check_timeout_sec=60, dataset_name='random', dataset_path='', dataset_offset=0, agentic_max_turns=None, speed_bench_category=None, speed_bench_output_len=512, model=None, served_model_name=None, tokenizer=None, num_prompts=128, sharegpt_output_len=None, sharegpt_context_len=None, random_input_len=512, random_output_len=128, random_range_ratio=1.0, image_count=1, image_resolution='1080p', random_image_count=False, image_format='jpeg', image_content='random', request_rate=inf, use_trace_timestamps=False, max_concurrency=32, output_file='/private/tmp/sglang-research/capture/out/bench-random-c32.jsonl', output_details=False, print_requests=False, disable_tqdm=False, disable_stream=False, return_logprob=False, top_logprobs_num=0, token_ids_logprob=None, logprob_start_len=-1, return_routed_experts=False, cache_report=False, seed=7, disable_ignore_eos=False, temperature=0.0, top_p=1.0, extra_request_body=None, apply_chat_template=False, profile=False, plot_throughput=False, profile_activities=['CPU', 'GPU'], profile_start_step=None, profile_steps=None, profile_num_steps=None, profile_by_stage=False, profile_stages=None, profile_output_dir=None, profile_prefix=None, lora_name=None, lora_request_distribution='uniform', lora_zipf_alpha=1.5, prompt_suffix='', pd_separated=False, profile_prefill_url=None, profile_decode_url=None, flush_cache=False, flush_cache_timeout=60.0, warmup_requests=1, tokenize_prompt=False, gsp_num_groups=64, gsp_prompts_per_group=16, gsp_system_prompt_len=2048, gsp_question_len=128, gsp_output_len=256, gsp_range_ratio=1.0, gsp_fast_prepare=False, gsp_send_routing_key=False, gsp_num_turns=1, gsp_ordered=False, gsp_group_distribution='uniform', gsp_zipf_alpha=None, mooncake_slowdown_factor=1.0, mooncake_num_rounds=1, mooncake_workload='conversation', fake_prefill=False, tag=None, header=None, rust_client=False, rust_worker_threads=None)
+Waiting up to 60s for http://0.0.0.0:30000/v1/models to become ready...
+Server ready in 0.0s.
+Namespace(backend='sglang', base_url=None, host='0.0.0.0', port=30000, ready_check_timeout_sec=60, dataset_name='random', dataset_path='', dataset_offset=0, agentic_max_turns=None, speed_bench_category=None, speed_bench_output_len=512, model='mlx-community/Qwen3-0.6B-4bit', served_model_name=None, tokenizer=None, num_prompts=128, sharegpt_output_len=None, sharegpt_context_len=None, random_input_len=512, random_output_len=128, random_range_ratio=1.0, image_count=1, image_resolution='1080p', random_image_count=False, image_format='jpeg', image_content='random', request_rate=inf, use_trace_timestamps=False, max_concurrency=32, output_file='/private/tmp/sglang-research/capture/out/bench-random-c32.jsonl', output_details=False, print_requests=False, disable_tqdm=False, disable_stream=False, return_logprob=False, top_logprobs_num=0, token_ids_logprob=None, logprob_start_len=-1, return_routed_experts=False, cache_report=False, seed=7, disable_ignore_eos=False, temperature=0.0, top_p=1.0, extra_request_body=None, apply_chat_template=False, profile=False, plot_throughput=False, profile_activities=['CPU', 'GPU'], profile_start_step=None, profile_steps=None, profile_num_steps=None, profile_by_stage=False, profile_stages=None, profile_output_dir=None, profile_prefix=None, lora_name=None, lora_request_distribution='uniform', lora_zipf_alpha=1.5, prompt_suffix='', pd_separated=False, profile_prefill_url=None, profile_decode_url=None, flush_cache=False, flush_cache_timeout=60.0, warmup_requests=1, tokenize_prompt=False, gsp_num_groups=64, gsp_prompts_per_group=16, gsp_system_prompt_len=2048, gsp_question_len=128, gsp_output_len=256, gsp_range_ratio=1.0, gsp_fast_prepare=False, gsp_send_routing_key=False, gsp_num_turns=1, gsp_ordered=False, gsp_group_distribution='uniform', gsp_zipf_alpha=None, mooncake_slowdown_factor=1.0, mooncake_num_rounds=1, mooncake_workload='conversation', fake_prefill=False, tag=None, header=None, rust_client=False, rust_worker_threads=None)
+
+#Input tokens: 65536
+#Output tokens: 16384
+Starting warmup with 1 sequences...
+Warmup completed with 1 sequences. Starting main benchmark run...
+
+============ Serving Benchmark Result ============
+Backend:                                 sglang    
+Traffic request rate:                    inf       
+Max request concurrency:                 32        
+Successful requests:                     128       
+Benchmark duration (s):                  64.83     
+Total input tokens:                      65536     
+Total input text tokens:                 65536     
+Total generated tokens:                  16384     
+Total generated tokens (retokenized):    16378     
+Request throughput (req/s):              1.97      
+Input token throughput (tok/s):          1010.95   
+Output token throughput (tok/s):         252.74    
+Peak output token throughput (tok/s):    544.00    
+Peak concurrent requests:                64        
+Total token throughput (tok/s):          1263.69   
+Concurrency:                             31.94     
+----------------End-to-End Latency----------------
+Mean E2E Latency (ms):                   16174.83  
+Median E2E Latency (ms):                 16441.70  
+P90 E2E Latency (ms):                    20415.89  
+P95 E2E Latency (ms):                    20417.00  
+P99 E2E Latency (ms):                    20417.45  
+---------------Time to First Token----------------
+Mean TTFT (ms):                          3850.36   
+Median TTFT (ms):                        3917.54   
+P90 TTFT (ms):                           7505.13   
+P95 TTFT (ms):                           7998.33   
+P99 TTFT (ms):                           8262.86   
+-----Time per Output Token (excl. 1st token)------
+Mean TPOT (ms):                          97.04     
+Median TPOT (ms):                        93.61     
+P90 TPOT (ms):                           129.91    
+P95 TPOT (ms):                           144.77    
+P99 TPOT (ms):                           144.78    
+---------------Inter-Token Latency----------------
+Mean ITL (ms):                           97.04     
+Median ITL (ms):                         72.75     
+P90 ITL (ms):                            105.58    
+P95 ITL (ms):                            116.65    
+P99 ITL (ms):                            220.18    
+Max ITL (ms):                            7786.84   
+==================================================
+/private/tmp/sglang-research/sglang-v0.5.22/python/sglang/srt/layers/quantization/awq/awq.py:53: UserWarning: Only CUDA, HIP and XPU support AWQ currently.
+  warnings.warn(f"Only CUDA, HIP and XPU support AWQ currently.")
+/private/tmp/sglang-research/sglang-v0.5.22/python/sglang/srt/layers/quantization/gguf.py:69: UserWarning: Only CUDA, MUSA and NPU support GGUF quantization currently.
+  warnings.warn(f"Only CUDA, MUSA and NPU support GGUF quantization currently.")
+
+  0%|          | 0/128 [00:00<?, ?it/s]
+  1%|          | 1/128 [00:11<24:08, 11.41s/it]
+ 26%|██▌       | 33/128 [00:31<01:22,  1.15it/s]
+ 51%|█████     | 65/128 [00:48<00:41,  1.52it/s]
+ 76%|███████▌  | 97/128 [01:04<00:18,  1.68it/s]
+100%|██████████| 128/128 [01:04<00:00,  1.98it/s]

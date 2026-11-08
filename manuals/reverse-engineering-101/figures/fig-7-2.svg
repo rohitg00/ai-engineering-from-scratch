@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 324" role="img" aria-labelledby="fig-7-2-title fig-7-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-2-title">Two legs of one proof</title>
+  <desc id="fig-7-2-desc">Two columns of boxes read top down. Leg one, execute and compare: ledger.c is the original compiled natively at -O1, percent_change_wide.c is the candidate renamed cand_percent_change, driver.c links both into one program named differential, the input grid has 92 cells in 9 hazard classes, and the results are 28 mismatches for the plausible pair and 0 for the equal pair. Leg two, recompile and compare: grade in ledger-x86_64-O1.o is 46 bytes with one R_X86_64_PC32 relocation, grade_switch.c is compiled with clang for x86_64-unknown-linux-gnu at -O1, mask_relocations zeroes 4 bytes at offset 38 on both sides, the relocation records .rodata+0x10 and .rodata-0x4 have the same shape, read_table gives 1, 2, 3, 4, 4 on both sides, and grade_case10_wrong gives 1, 2, 3, 4, 3.</desc>
+  <defs><marker id="fig-7-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-7-2-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">LEG ONE: EXECUTE AND COMPARE</text>
+  <text x="340" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">LEG TWO: RECOMPILE AND COMPARE</text>
+  <rect x="20" y="30" width="280" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="160" y="45.1" font-size="12" text-anchor="middle" font-weight="700">ledger.c</text>
+  <text x="160" y="62.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the original, compiled natively at -O1</text>
+  <line x1="160" y1="70" x2="160" y2="89" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <rect x="20" y="90" width="280" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="160" y="105.1" font-size="12" text-anchor="middle" font-weight="700">percent_change_wide.c</text>
+  <text x="160" y="122.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the candidate, renamed cand_percent_change</text>
+  <line x1="160" y1="130" x2="160" y2="149" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <rect x="20" y="150" width="280" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="160" y="165.1" font-size="12" text-anchor="middle" font-weight="700">differential</text>
+  <text x="160" y="182.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">driver.c links both into one program</text>
+  <line x1="160" y1="190" x2="160" y2="209" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <rect x="20" y="210" width="280" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="160" y="225.1" font-size="12" text-anchor="middle" font-weight="700">input grid</text>
+  <text x="160" y="242.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">92 cells in 9 hazard classes</text>
+  <rect x="340" y="30" width="280" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="480" y="45.1" font-size="12" text-anchor="middle" font-weight="700">ledger-x86_64-O1.o</text>
+  <text x="480" y="62.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">grade: 46 bytes, one R_X86_64_PC32</text>
+  <line x1="480" y1="70" x2="480" y2="89" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <rect x="340" y="90" width="280" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="480" y="105.1" font-size="12" text-anchor="middle" font-weight="700">grade_switch.c</text>
+  <text x="480" y="122.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">clang -target x86_64-unknown-linux-gnu -O1</text>
+  <line x1="480" y1="130" x2="480" y2="149" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <rect x="340" y="150" width="280" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="480" y="165.1" font-size="12" text-anchor="middle" font-weight="700">mask_relocations</text>
+  <text x="480" y="182.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">zero 4 bytes at offset 38 on both sides</text>
+  <line x1="480" y1="190" x2="480" y2="209" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <rect x="340" y="210" width="280" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="480" y="225.1" font-size="12" text-anchor="middle" font-weight="700">relocation records</text>
+  <text x="480" y="242.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">.rodata+0x10 and .rodata-0x4, same shape</text>
+  <line x1="160" y1="250" x2="87" y2="269" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-2-head-rose)"/>
+  <line x1="160" y1="250" x2="232" y2="269" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <rect x="20" y="270" width="135" height="40" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="87.5" y="285.1" font-size="12" text-anchor="middle" font-weight="700">plausible pair</text>
+  <text x="87.5" y="302.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">28 mismatches</text>
+  <rect x="165" y="270" width="135" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="232.5" y="285.1" font-size="12" text-anchor="middle" font-weight="700">equal pair</text>
+  <text x="232.5" y="302.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0 mismatches</text>
+  <line x1="480" y1="250" x2="403" y2="269" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <line x1="480" y1="250" x2="545" y2="269" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-2-head-rose)"/>
+  <rect x="340" y="270" width="126" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="403" y="285.1" font-size="12" text-anchor="middle" font-weight="700">read_table</text>
+  <text x="403" y="302.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1, 2, 3, 4, 4</text>
+  <rect x="470" y="270" width="150" height="40" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="545" y="284.8" font-size="11" text-anchor="middle" font-weight="700">grade_case10_wrong</text>
+  <text x="545" y="301.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1, 2, 3, 4, 3</text>
+</svg>

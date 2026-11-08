@@ -1,0 +1,117 @@
+
+samples-x86_64-O0.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <tenths_and_fifths>:
+       0: 55                           	pushq	%rbp
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 89 7d fc                     	movl	%edi, -0x4(%rbp)
+       7: 8b 45 fc                     	movl	-0x4(%rbp), %eax
+       a: b9 0a 00 00 00               	movl	$0xa, %ecx
+       f: 99                           	cltd
+      10: f7 f9                        	idivl	%ecx
+      12: 89 45 f8                     	movl	%eax, -0x8(%rbp)
+      15: 8b 45 fc                     	movl	-0x4(%rbp), %eax
+      18: b9 05 00 00 00               	movl	$0x5, %ecx
+      1d: 99                           	cltd
+      1e: f7 f9                        	idivl	%ecx
+      20: 89 c1                        	movl	%eax, %ecx
+      22: 8b 45 f8                     	movl	-0x8(%rbp), %eax
+      25: 01 c8                        	addl	%ecx, %eax
+      27: 5d                           	popq	%rbp
+      28: c3                           	retq
+      29: 0f 1f 80 00 00 00 00         	nopl	(%rax)
+
+0000000000000030 <thirds>:
+      30: 55                           	pushq	%rbp
+      31: 48 89 e5                     	movq	%rsp, %rbp
+      34: 89 7d fc                     	movl	%edi, -0x4(%rbp)
+      37: 89 75 f8                     	movl	%esi, -0x8(%rbp)
+      3a: 8b 45 fc                     	movl	-0x4(%rbp), %eax
+      3d: 03 45 f8                     	addl	-0x8(%rbp), %eax
+      40: b9 03 00 00 00               	movl	$0x3, %ecx
+      45: 99                           	cltd
+      46: f7 f9                        	idivl	%ecx
+      48: 5d                           	popq	%rbp
+      49: c3                           	retq
+      4a: 66 0f 1f 44 00 00            	nopw	(%rax,%rax)
+
+0000000000000050 <band>:
+      50: 55                           	pushq	%rbp
+      51: 48 89 e5                     	movq	%rsp, %rbp
+      54: 89 7d f8                     	movl	%edi, -0x8(%rbp)
+      57: 8b 45 f8                     	movl	-0x8(%rbp), %eax
+      5a: 48 89 45 f0                  	movq	%rax, -0x10(%rbp)
+      5e: 48 83 e8 05                  	subq	$0x5, %rax
+      62: 77 4a                        	ja	0xae <band+0x5e>
+      64: 48 8b 45 f0                  	movq	-0x10(%rbp), %rax
+      68: 48 8d 0d 00 00 00 00         	leaq	(%rip), %rcx            # 0x6f <band+0x1f>
+		000000000000006b:  R_X86_64_PC32	.rodata-0x4
+      6f: 48 63 04 81                  	movslq	(%rcx,%rax,4), %rax
+      73: 48 01 c8                     	addq	%rcx, %rax
+      76: ff e0                        	jmpq	*%rax
+      78: c7 45 fc 05 00 00 00         	movl	$0x5, -0x4(%rbp)
+      7f: eb 34                        	jmp	0xb5 <band+0x65>
+      81: c7 45 fc 08 00 00 00         	movl	$0x8, -0x4(%rbp)
+      88: eb 2b                        	jmp	0xb5 <band+0x65>
+      8a: c7 45 fc 0c 00 00 00         	movl	$0xc, -0x4(%rbp)
+      91: eb 22                        	jmp	0xb5 <band+0x65>
+      93: c7 45 fc 14 00 00 00         	movl	$0x14, -0x4(%rbp)
+      9a: eb 19                        	jmp	0xb5 <band+0x65>
+      9c: c7 45 fc 14 00 00 00         	movl	$0x14, -0x4(%rbp)
+      a3: eb 10                        	jmp	0xb5 <band+0x65>
+      a5: c7 45 fc 23 00 00 00         	movl	$0x23, -0x4(%rbp)
+      ac: eb 07                        	jmp	0xb5 <band+0x65>
+      ae: c7 45 fc ff ff ff ff         	movl	$0xffffffff, -0x4(%rbp) # imm = 0xFFFFFFFF
+      b5: 8b 45 fc                     	movl	-0x4(%rbp), %eax
+      b8: 5d                           	popq	%rbp
+      b9: c3                           	retq
+      ba: 66 0f 1f 44 00 00            	nopw	(%rax,%rax)
+
+00000000000000c0 <fold>:
+      c0: 55                           	pushq	%rbp
+      c1: 48 89 e5                     	movq	%rsp, %rbp
+      c4: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+      c8: 89 75 f4                     	movl	%esi, -0xc(%rbp)
+      cb: c7 45 f0 00 00 00 00         	movl	$0x0, -0x10(%rbp)
+      d2: c7 45 ec 00 00 00 00         	movl	$0x0, -0x14(%rbp)
+      d9: 8b 45 ec                     	movl	-0x14(%rbp), %eax
+      dc: 3b 45 f4                     	cmpl	-0xc(%rbp), %eax
+      df: 7d 1d                        	jge	0xfe <fold+0x3e>
+      e1: 6b 45 f0 1f                  	imull	$0x1f, -0x10(%rbp), %eax
+      e5: 48 8b 4d f8                  	movq	-0x8(%rbp), %rcx
+      e9: 48 63 55 ec                  	movslq	-0x14(%rbp), %rdx
+      ed: 03 04 91                     	addl	(%rcx,%rdx,4), %eax
+      f0: 89 45 f0                     	movl	%eax, -0x10(%rbp)
+      f3: 8b 45 ec                     	movl	-0x14(%rbp), %eax
+      f6: 83 c0 01                     	addl	$0x1, %eax
+      f9: 89 45 ec                     	movl	%eax, -0x14(%rbp)
+      fc: eb db                        	jmp	0xd9 <fold+0x19>
+      fe: 8b 45 f0                     	movl	-0x10(%rbp), %eax
+     101: 5d                           	popq	%rbp
+     102: c3                           	retq
+     103: 66 66 66 66 2e 0f 1f 84 00 00 00 00 00       	nopw	%cs:(%rax,%rax)
+
+0000000000000110 <record>:
+     110: 55                           	pushq	%rbp
+     111: 48 89 e5                     	movq	%rsp, %rbp
+     114: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+     118: 89 75 f4                     	movl	%esi, -0xc(%rbp)
+     11b: 48 8b 45 f8                  	movq	-0x8(%rbp), %rax
+     11f: 8b 08                        	movl	(%rax), %ecx
+     121: 83 c1 01                     	addl	$0x1, %ecx
+     124: 48 8b 45 f8                  	movq	-0x8(%rbp), %rax
+     128: 89 08                        	movl	%ecx, (%rax)
+     12a: 48 8b 45 f8                  	movq	-0x8(%rbp), %rax
+     12e: 8b 48 04                     	movl	0x4(%rax), %ecx
+     131: 03 4d f4                     	addl	-0xc(%rbp), %ecx
+     134: 48 8b 45 f8                  	movq	-0x8(%rbp), %rax
+     138: 89 48 04                     	movl	%ecx, 0x4(%rax)
+     13b: 48 8b 45 f8                  	movq	-0x8(%rbp), %rax
+     13f: 8b 40 04                     	movl	0x4(%rax), %eax
+     142: 48 8b 4d f8                  	movq	-0x8(%rbp), %rcx
+     146: 99                           	cltd
+     147: f7 39                        	idivl	(%rcx)
+     149: 5d                           	popq	%rbp
+     14a: c3                           	retq

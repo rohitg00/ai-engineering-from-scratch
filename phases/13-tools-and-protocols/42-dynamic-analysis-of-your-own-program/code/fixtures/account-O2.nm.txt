@@ -1,0 +1,6 @@
+0000000100000000 T __mh_execute_header
+0000000100000460 T _bump
+0000000100000474 T _classify
+000000010000062c T _main
+                 U _printf
+000000010000048c T _sum_balances

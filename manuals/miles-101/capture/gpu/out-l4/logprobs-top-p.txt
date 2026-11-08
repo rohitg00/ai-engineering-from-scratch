@@ -1,0 +1,19 @@
+Returned logprobs under top-p (backlog B-10)
+Date: 2026-10-23
+Machine: NVIDIA L4, the second GPU of the node (GPU1), shared with its owner, no clock lock. Speed does not change these values.
+Engines: SGLang 0.5.22 and vLLM 0.31.0. Model: Qwen/Qwen3-0.6B in BF16.
+Requests: 16 prompts, 48 sampled tokens each, temperature 1, top-p 0.9.
+Reference: a Transformers float32 forward pass over the same tokens, full-vocabulary log_softmax.
+
+engine and mode                                  returned minus reference, median   median absolute
+vLLM --logprobs-mode raw_logprobs                0.0000                             0.005
+vLLM --logprobs-mode processed_logprobs          +0.0527
+SGLang return_logprob, ORIGINAL_LOGPROB=0        0.0000                             0.0066
+SGLang return_logprob, ORIGINAL_LOGPROB=1        0.0000                             0.0066
+
+vLLM processed_logprobs minus (reference - log of the top-p kept mass): median residual 8e-9.
+So processed_logprobs is the logprob after the nucleus is renormalized, and raw_logprobs is the full-vocabulary logprob.
+SGLang returns the logprob from before top-p. At temperature 1, SGLANG_RETURN_ORIGINAL_LOGPROB set to 0 or 1 gives the same value.
+
+The kept mass was below 0.99 for 74 to 79 percent of sampled tokens.
+The median of minus log of the kept mass was 0.055 to 0.067.

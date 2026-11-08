@@ -1,0 +1,1313 @@
+{
+  "candidates": {
+    "percent_change": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/percent_change_wide.c",
+    "grade": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/grade_thresholds.c"
+  },
+  "original": "fixtures/ledger.c compiled with the host clang at -O1",
+  "original_kind": "fixture-source",
+  "host": "aarch64 Darwin",
+  "arch": "aarch64",
+  "naive_passed": true,
+  "cells": 92,
+  "mismatches": [
+    {
+      "function": "percent_change",
+      "args": [
+        3,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": -133,
+      "candidate": -1431655899,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        3,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": -100,
+      "candidate": 1431655666,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -3,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": 715827816,
+      "candidate": -715827949,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -3,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": -66,
+      "candidate": 1431655699,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -3,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": -100,
+      "candidate": -1431655866,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        7,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": 306783264,
+      "candidate": -920350250,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        7,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": -114,
+      "candidate": 613566642,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        7,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": -100,
+      "candidate": -613566856,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        100,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": 21474735,
+      "candidate": 536870811,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        100,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": -101,
+      "candidate": 2147483547,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        100,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": -100,
+      "candidate": 2147483548,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -100,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": 21474737,
+      "candidate": -536871011,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -100,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": -99,
+      "candidate": 2147483549,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -100,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": -100,
+      "candidate": 2147483548,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        2147483647,
+        0
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -100,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        2147483647,
+        5
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -99,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        2147483647,
+        -5
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -100,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        2147483647,
+        105
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -99,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        2147483647,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": -1,
+      "candidate": -75,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        2147483647,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -200,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -100,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -2147483648,
+        5
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -100,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -2147483648,
+        -5
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -99,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -2147483648,
+        105
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -100,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -2147483648,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -124,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -2147483648,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -199,
+      "match": false
+    },
+    {
+      "function": "grade",
+      "args": [
+        110
+      ],
+      "kind": "beyond the switch",
+      "original": 0,
+      "candidate": 4,
+      "match": false
+    },
+    {
+      "function": "grade",
+      "args": [
+        2147483647
+      ],
+      "kind": "beyond the switch",
+      "original": 0,
+      "candidate": 4,
+      "match": false
+    }
+  ],
+  "oracle_disagreements": [],
+  "rows": [
+    {
+      "function": "percent_change",
+      "args": [
+        0,
+        0
+      ],
+      "kind": "zero guard",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        0,
+        5
+      ],
+      "kind": "zero guard",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        0,
+        -5
+      ],
+      "kind": "zero guard",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        0,
+        105
+      ],
+      "kind": "zero guard",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        0,
+        536870911
+      ],
+      "kind": "zero guard",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        0,
+        2147483647
+      ],
+      "kind": "zero guard",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        0,
+        -2147483648
+      ],
+      "kind": "zero guard",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        1,
+        0
+      ],
+      "kind": "plain",
+      "original": -100,
+      "candidate": -100,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        1,
+        5
+      ],
+      "kind": "plain",
+      "original": 400,
+      "candidate": 400,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        1,
+        -5
+      ],
+      "kind": "negative",
+      "original": -600,
+      "candidate": -600,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        1,
+        105
+      ],
+      "kind": "plain",
+      "original": 10400,
+      "candidate": 10400,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        1,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": 2147483448,
+      "candidate": 2147483448,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        1,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": -200,
+      "candidate": -200,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        1,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": -100,
+      "candidate": -100,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -1,
+        0
+      ],
+      "kind": "negative",
+      "original": -100,
+      "candidate": -100,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -1,
+        5
+      ],
+      "kind": "negative",
+      "original": -600,
+      "candidate": -600,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -1,
+        -5
+      ],
+      "kind": "negative",
+      "original": 400,
+      "candidate": 400,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -1,
+        105
+      ],
+      "kind": "negative",
+      "original": -10600,
+      "candidate": -10600,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -1,
+        536870911
+      ],
+      "kind": "trap",
+      "original": -2147483648,
+      "candidate": -2147483648,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -1,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -1,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": -100,
+      "candidate": -100,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        3,
+        0
+      ],
+      "kind": "plain",
+      "original": -100,
+      "candidate": -100,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        3,
+        5
+      ],
+      "kind": "rounding",
+      "original": 66,
+      "candidate": 66,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        3,
+        -5
+      ],
+      "kind": "negative",
+      "original": -266,
+      "candidate": -266,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        3,
+        105
+      ],
+      "kind": "plain",
+      "original": 3400,
+      "candidate": 3400,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        3,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": 715827749,
+      "candidate": 715827749,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        3,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": -133,
+      "candidate": -1431655899,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        3,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": -100,
+      "candidate": 1431655666,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -3,
+        0
+      ],
+      "kind": "negative",
+      "original": -100,
+      "candidate": -100,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -3,
+        5
+      ],
+      "kind": "negative",
+      "original": -266,
+      "candidate": -266,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -3,
+        -5
+      ],
+      "kind": "negative",
+      "original": 66,
+      "candidate": 66,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -3,
+        105
+      ],
+      "kind": "negative",
+      "original": -3600,
+      "candidate": -3600,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -3,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": 715827816,
+      "candidate": -715827949,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -3,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": -66,
+      "candidate": 1431655699,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -3,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": -100,
+      "candidate": -1431655866,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        7,
+        0
+      ],
+      "kind": "plain",
+      "original": -100,
+      "candidate": -100,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        7,
+        5
+      ],
+      "kind": "rounding",
+      "original": -28,
+      "candidate": -28,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        7,
+        -5
+      ],
+      "kind": "negative",
+      "original": -171,
+      "candidate": -171,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        7,
+        105
+      ],
+      "kind": "plain",
+      "original": 1400,
+      "candidate": 1400,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        7,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": 306783264,
+      "candidate": -920350250,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        7,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": -114,
+      "candidate": 613566642,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        7,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": -100,
+      "candidate": -613566856,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        100,
+        0
+      ],
+      "kind": "plain",
+      "original": -100,
+      "candidate": -100,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        100,
+        5
+      ],
+      "kind": "plain",
+      "original": -95,
+      "candidate": -95,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        100,
+        -5
+      ],
+      "kind": "negative",
+      "original": -105,
+      "candidate": -105,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        100,
+        105
+      ],
+      "kind": "plain",
+      "original": 5,
+      "candidate": 5,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        100,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": 21474735,
+      "candidate": 536870811,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        100,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": -101,
+      "candidate": 2147483547,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        100,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": -100,
+      "candidate": 2147483548,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -100,
+        0
+      ],
+      "kind": "negative",
+      "original": -100,
+      "candidate": -100,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -100,
+        5
+      ],
+      "kind": "negative",
+      "original": -105,
+      "candidate": -105,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -100,
+        -5
+      ],
+      "kind": "negative",
+      "original": -95,
+      "candidate": -95,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -100,
+        105
+      ],
+      "kind": "negative",
+      "original": -205,
+      "candidate": -205,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -100,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": 21474737,
+      "candidate": -536871011,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -100,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": -99,
+      "candidate": 2147483549,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -100,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": -100,
+      "candidate": 2147483548,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        2147483647,
+        0
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -100,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        2147483647,
+        5
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -99,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        2147483647,
+        -5
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -100,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        2147483647,
+        105
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -99,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        2147483647,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": -1,
+      "candidate": -75,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        2147483647,
+        2147483647
+      ],
+      "kind": "plain",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        2147483647,
+        -2147483648
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -200,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -100,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -2147483648,
+        5
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -100,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -2147483648,
+        -5
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -99,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -2147483648,
+        105
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -100,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -2147483648,
+        536870911
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -124,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -2147483648,
+        2147483647
+      ],
+      "kind": "overflow",
+      "original": 0,
+      "candidate": -199,
+      "match": false
+    },
+    {
+      "function": "percent_change",
+      "args": [
+        -2147483648,
+        -2147483648
+      ],
+      "kind": "negative",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        -2147483648
+      ],
+      "kind": "negative truncation",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        -11
+      ],
+      "kind": "negative truncation",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        -10
+      ],
+      "kind": "negative truncation",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        -9
+      ],
+      "kind": "negative truncation",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        -1
+      ],
+      "kind": "negative truncation",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        0
+      ],
+      "kind": "boundary",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        9
+      ],
+      "kind": "boundary",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        10
+      ],
+      "kind": "boundary",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        59
+      ],
+      "kind": "boundary",
+      "original": 0,
+      "candidate": 0,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        60
+      ],
+      "kind": "boundary",
+      "original": 1,
+      "candidate": 1,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        69
+      ],
+      "kind": "boundary",
+      "original": 1,
+      "candidate": 1,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        70
+      ],
+      "kind": "boundary",
+      "original": 2,
+      "candidate": 2,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        79
+      ],
+      "kind": "boundary",
+      "original": 2,
+      "candidate": 2,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        80
+      ],
+      "kind": "boundary",
+      "original": 3,
+      "candidate": 3,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        89
+      ],
+      "kind": "boundary",
+      "original": 3,
+      "candidate": 3,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        90
+      ],
+      "kind": "boundary",
+      "original": 4,
+      "candidate": 4,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        99
+      ],
+      "kind": "boundary",
+      "original": 4,
+      "candidate": 4,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        100
+      ],
+      "kind": "boundary",
+      "original": 4,
+      "candidate": 4,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        101
+      ],
+      "kind": "plain",
+      "original": 4,
+      "candidate": 4,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        109
+      ],
+      "kind": "boundary",
+      "original": 4,
+      "candidate": 4,
+      "match": true
+    },
+    {
+      "function": "grade",
+      "args": [
+        110
+      ],
+      "kind": "beyond the switch",
+      "original": 0,
+      "candidate": 4,
+      "match": false
+    },
+    {
+      "function": "grade",
+      "args": [
+        2147483647
+      ],
+      "kind": "beyond the switch",
+      "original": 0,
+      "candidate": 4,
+      "match": false
+    }
+  ]
+}

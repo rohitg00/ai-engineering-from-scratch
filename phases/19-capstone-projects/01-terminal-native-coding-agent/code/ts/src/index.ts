@@ -2,7 +2,7 @@
 //
 // Sources:
 //   This lesson's docs/en.md (the Bun + Ink TUI harness with eight 2026 hooks)
-//   Claude Code docs            https://docs.anthropic.com/en/docs/claude-code
+//   Claude Code docs            https://code.claude.com/docs/en/overview
 //   Model Context Protocol      https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap/
 //   OpenTelemetry GenAI semconv https://opentelemetry.io/docs/specs/semconv/gen-ai/
 //

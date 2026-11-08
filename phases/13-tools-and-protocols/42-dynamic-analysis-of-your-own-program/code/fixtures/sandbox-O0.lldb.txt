@@ -1,0 +1,89 @@
+# lesson 42 capture
+# command: lldb -b -o settings set interpreter.stop-command-source-on-error false -s sandbox-O0.lldb ./account-O0
+# cwd: fixtures
+# lldb: lldb-1703.0.236.21
+# date: 2026-10-14
+(lldb) target create "./account-O0"
+Current executable set to '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account-O0' (arm64).
+(lldb) settings set interpreter.stop-command-source-on-error false
+(lldb) command source -s 0 'sandbox-O0.lldb'
+Executing commands in '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/sandbox-O0.lldb'.
+(lldb) breakpoint set -n bump
+Breakpoint 1: where = account-O0`bump + 12 at account.c:13:19, address = 0x00000001000004bc
+(lldb) breakpoint set -n classify
+Breakpoint 2: where = account-O0`classify + 8 at account.c:18:9, address = 0x00000001000004e8
+(lldb) breakpoint set -n sum_balances
+Breakpoint 3: where = account-O0`sum_balances + 12 at account.c:24:9, address = 0x0000000100000544
+(lldb) breakpoint set -a 0x100000504 -s account-O0
+Breakpoint 4: where = account-O0`classify + 36 at account.c:19:9, address = 0x0000000100000504
+(lldb) breakpoint set -a 0x1000004f4 -s account-O0
+Breakpoint 5: where = account-O0`classify + 20 at account.c:18:9, address = 0x00000001000004f4
+(lldb) breakpoint set -a 0x100000524 -s account-O0
+Breakpoint 6: where = account-O0`classify + 68 at account.c:20:5, address = 0x0000000100000524
+(lldb) breakpoint set -a 0x100000514 -s account-O0
+Breakpoint 7: where = account-O0`classify + 52 at account.c:19:9, address = 0x0000000100000514
+(lldb) target stop-hook add -o "register read x0 x1 pc" -o "memory read -s4 -fx -c24 $x0" -o "frame variable -P 1"
+Stop hook #1 added.
+(lldb) run
+error: process exited with status -1 (attach failed ((os/kern) invalid address))
+(lldb) watchpoint set variable a->balance
+error: Command requires a process which is currently stopped.
+(lldb) watchpoint list
+No watchpoints currently set.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) breakpoint list
+Current breakpoints:
+1: name = 'bump', locations = 1
+  1.1: where = account-O0`bump + 12 at account.c:13:19, address = account-O0[0x00000001000004bc], unresolved, hit count = 0 
+
+2: name = 'classify', locations = 1
+  2.1: where = account-O0`classify + 8 at account.c:18:9, address = account-O0[0x00000001000004e8], unresolved, hit count = 0 
+
+3: name = 'sum_balances', locations = 1
+  3.1: where = account-O0`sum_balances + 12 at account.c:24:9, address = account-O0[0x0000000100000544], unresolved, hit count = 0 
+
+4: address = account-O0[0x0000000100000504], locations = 1
+  4.1: where = account-O0`classify + 36 at account.c:19:9, address = account-O0[0x0000000100000504], unresolved, hit count = 0 
+
+5: address = account-O0[0x00000001000004f4], locations = 1
+  5.1: where = account-O0`classify + 20 at account.c:18:9, address = account-O0[0x00000001000004f4], unresolved, hit count = 0 
+
+6: address = account-O0[0x0000000100000524], locations = 1
+  6.1: where = account-O0`classify + 68 at account.c:20:5, address = account-O0[0x0000000100000524], unresolved, hit count = 0 
+
+7: address = account-O0[0x0000000100000514], locations = 1
+  7.1: where = account-O0`classify + 52 at account.c:19:9, address = account-O0[0x0000000100000514], unresolved, hit count = 0 
+
+(lldb) watchpoint list -v
+No watchpoints currently set.

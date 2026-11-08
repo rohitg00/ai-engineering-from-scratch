@@ -1,0 +1,21 @@
+$ docker --version
+Docker version 29.2.1, build a5c7197d72
+[exit 0]
+
+$ docker info --format '{{range .ClientInfo.Plugins}}{{.Name}} {{.Version}}{{"\n"}}{{end}}'
+agent v1.144.0
+ai v1.31.0
+buildx v0.37.2
+compose v5.5.1
+debug 0.0.47
+desktop v0.4.4
+dhi v0.0.7
+extension v0.2.31
+init v1.4.0
+mcp v0.44.1
+model v1.2.6
+offload v0.6.53
+pass v0.2.4
+sandbox v0.13.0
+scout v1.25.0
+[exit 0]

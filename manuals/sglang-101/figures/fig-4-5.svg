@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-4-5-title fig-4-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-5-title">BF16 against FP8 KV cache on Kimi K2.6</title>
+  <desc id="fig-4-5-desc">Paired bars of output tokens per second at concurrency 1, 8, 16, 32, and 64, as Cloudflare reported. BF16 against FP8: 137 and 125, 731 and 689, 1106 and 1028, 1558 and 1489. At concurrency 64 the BF16 cache ran out of memory and the FP8 cache produced 2192 tokens per second.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">OUTPUT TOK/S BY CONCURRENCY</text>
+  <line x1="40" y1="270" x2="620" y2="270" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="60" y="257.5" width="34" height="12.5" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-dasharray="5 4"/>
+  <text x="77" y="251.5" font-size="11" text-anchor="middle">137</text>
+  <rect x="100" y="258.59" width="34" height="11.41" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="117" y="252.59" font-size="11" text-anchor="middle">125</text>
+  <text x="97" y="288" font-size="11" text-anchor="middle">c=1</text>
+  <rect x="172" y="203.3" width="34" height="66.7" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-dasharray="5 4"/>
+  <text x="189" y="197.3" font-size="11" text-anchor="middle">731</text>
+  <rect x="212" y="207.14" width="34" height="62.86" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="229" y="201.14" font-size="11" text-anchor="middle">689</text>
+  <text x="209" y="288" font-size="11" text-anchor="middle">c=8</text>
+  <rect x="284" y="169.09" width="34" height="100.91" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-dasharray="5 4"/>
+  <text x="301" y="163.09" font-size="11" text-anchor="middle">1106</text>
+  <rect x="324" y="176.2" width="34" height="93.8" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="341" y="170.2" font-size="11" text-anchor="middle">1028</text>
+  <text x="321" y="288" font-size="11" text-anchor="middle">c=16</text>
+  <rect x="396" y="127.85" width="34" height="142.15" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-dasharray="5 4"/>
+  <text x="413" y="121.85" font-size="11" text-anchor="middle">1558</text>
+  <rect x="436" y="134.14" width="34" height="135.86" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="453" y="128.14" font-size="11" text-anchor="middle">1489</text>
+  <text x="433" y="288" font-size="11" text-anchor="middle">c=32</text>
+  <rect x="508" y="230" width="34" height="40" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="525" y="224" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">OOM</text>
+  <rect x="548" y="70" width="34" height="200" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="565" y="64" font-size="11" text-anchor="middle">2192</text>
+  <text x="545" y="288" font-size="11" text-anchor="middle">c=64</text>
+  <rect x="40" y="300" width="12" height="12" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-dasharray="5 4"/>
+  <text x="58" y="311" font-size="11">BF16 KV cache</text>
+  <rect x="200" y="300" width="12" height="12" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="218" y="311" font-size="11">FP8 KV cache</text>
+  <text x="360" y="311" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Cloudflare, 2026-08-03</text>
+</svg>

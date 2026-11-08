@@ -1,0 +1,14 @@
+title: the health probe around the ready line of our L4 server
+source: manuals/sglang-101/capture/gpu/out-l4/server-default.log
+lines: 36-43
+lang: text
+note: Read the line before the last one, and ask what sent that batch.
+---
+[2026-10-17 14:43:37] INFO:     127.0.0.1:58250 - "GET /health HTTP/1.1" 503 Service Unavailable
+[2026-10-17 14:43:38] INFO:     127.0.0.1:58266 - "GET /model_info HTTP/1.1" 200 OK
+[2026-10-17 14:43:38] Prefill batch, #new-seq: 1, #new-token: 6, #cached-token: 0, token usage: 0.00, #running-req: 0, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 3.37
+[2026-10-17 14:43:38] INFO:     127.0.0.1:58272 - "POST /generate HTTP/1.1" 200 OK
+[2026-10-17 14:43:38] INFO:     127.0.0.1:58288 - "POST /freeze_gc HTTP/1.1" 200 OK
+[2026-10-17 14:43:38] The server is fired up and ready to roll!
+[2026-10-17 14:43:40] Prefill batch, #new-seq: 1, #new-token: 1, #cached-token: 0, token usage: 0.00, #running-req: 0, #queue-req: 0, #pending-token: 0, cuda graph: False, input throughput (token/s): 0.58
+[2026-10-17 14:43:40] INFO:     127.0.0.1:58298 - "GET /health HTTP/1.1" 200 OK

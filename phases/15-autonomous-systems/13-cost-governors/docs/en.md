@@ -58,7 +58,7 @@ Microsoft's Agent Governance Toolkit covers the OWASP Agentic Top 10 and the EU 
 
 ### The observed $1,200 → $4,800 case
 
-The real case in the Microsoft docs: an e-commerce agent whose monthly cost tripled after a new tool was added. The tool allowed the agent to poll order status during every session. No loop detection. No per-tool cap. No alert on week-over-week growth. The fix was a per-tool cap plus a daily-growth alert. This is a template: every new tool surface is a new potential loop; every new tool needs its own cap and its own alert.
+The real case in the Microsoft docs: an e-commerce agent whose monthly cost quadrupled after a new tool was added. The tool allowed the agent to poll order status during every session. No loop detection. No per-tool cap. No alert on week-over-week growth. The fix was a per-tool cap plus a daily-growth alert. This is a template: every new tool surface is a new potential loop; every new tool needs its own cap and its own alert.
 
 ```figure
 cost-governor-stack

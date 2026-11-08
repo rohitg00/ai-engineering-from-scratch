@@ -1,0 +1,3 @@
+$ docker run --rm --gpus all radixark/miles:latest nvidia-smi --query-gpu=name,memory.total --format=csv
+name, memory.total [MiB]
+NVIDIA GB10, [N/A]

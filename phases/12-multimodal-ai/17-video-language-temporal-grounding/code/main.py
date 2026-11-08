@@ -113,7 +113,7 @@ def arch_compare() -> None:
         ("Video-LLaMA",  "Q-former / 16 frames", "fixed clip, audio branch"),
         ("Video-LLaVA",  "MLP / 8 frames",       "shared image+video encoder"),
         ("VILA-1.5",     "MLP / 8-16 frames",    "pretraining-heavy"),
-        ("Qwen2.5-VL",   "TMRoPE / dynamic FPS", "absolute time, best open 2025"),
+        ("Qwen2.5-VL",   "time M-RoPE / dyn FPS", "absolute time, best open 2025"),
         ("LLaVA-OV-1.5", "pool / 32 frames",     "unified image+multi+video"),
     ]
     print(f"  {'model':<14}{'compressor':<24}{'note'}")
@@ -133,7 +133,7 @@ def main() -> None:
     print("\nTAKEAWAY")
     print("-" * 60)
     print("  temporal tokens matter as much as the visual encoder")
-    print("  dynamic FPS + TMRoPE is the 2026 open-source default")
+    print("  dynamic FPS + time-aligned M-RoPE is the 2026 open-source default")
     print("  JSON grounded output beats free-text for downstream use")
 
 

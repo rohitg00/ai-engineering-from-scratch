@@ -1,0 +1,41 @@
+{
+  "glossary": [
+    {
+      "id": "map-scale",
+      "term": "map scale",
+      "aliases": [
+        "scale ratio"
+      ],
+      "definition": "The ratio between a length on a map and the same length on the ground."
+    },
+    {
+      "id": "legend",
+      "term": "legend",
+      "aliases": [
+        "map key"
+      ],
+      "definition": "A list that explains the symbols used on a map."
+    },
+    {
+      "id": "latitude",
+      "term": "latitude",
+      "aliases": [],
+      "definition": "An angle north or south of the equator, expressed in degrees."
+    },
+    {
+      "id": "longitude",
+      "term": "longitude",
+      "aliases": [],
+      "definition": "An angle east or west of the prime meridian, expressed in degrees."
+    },
+    {
+      "id": "coordinates",
+      "term": "coordinates",
+      "aliases": [
+        "coordinate pair"
+      ],
+      "definition": "Values that locate a position in a stated reference system."
+    }
+  ],
+  "lesson": "<h2>Make a neighborhood map</h2><p>Choose a map scale before drawing paths. A legend explains each bench symbol. Coordinates give a location through latitude and longitude.</p><p>A coordinate pair needs a stated order. Keep the map key beside the picture.</p><pre><code>const coordinates = [12, 77];</code></pre><p><a href=\"https://example.invalid/legend\">A linked legend reference</a></p>"
+}

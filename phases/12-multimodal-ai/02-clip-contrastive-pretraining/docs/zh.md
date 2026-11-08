@@ -37,8 +37,8 @@ CLIP 有兩座塔：
 
 對一批 N 組 (影像, 字幕) 配對，建出形狀為 `(N, N)` 的相似度矩陣 `S`：
 
-```
-S[i, j] = cos(f(x_i), g(y_j)) / tau
+```math
+S[i, j] = \cos(f(x_i), g(y_j)) / \tau
 ```
 
 其中 `tau` 是一個學習得到的溫度（CLIP 初始化為 0.07；在對數空間中學習）。
@@ -65,8 +65,8 @@ softmax 需要整個相似度矩陣同步。在分散式訓練中，你必須把
 
 SigLIP 把 softmax 換成逐元素的 sigmoid：對每一組配對 `(i, j)`，損失是一個「這兩個是不是配對的一組？」的二元分類，正類的標籤在對角線上，其餘全是負的。損失是：
 
-```
-L = -1/N sum over (i, j) [ y_ij log sigmoid(S[i,j]) + (1-y_ij) log sigmoid(-S[i,j]) ]
+```math
+L = -\frac{1}{N} \sum_{(i, j)} \Big[ y_{ij} \log \mathop{\mathrm{sigmoid}}(S[i,j]) + (1-y_{ij}) \log \mathop{\mathrm{sigmoid}}(-S[i,j]) \Big]
 ```
 
 `i == j` 時 `y_ij = 1`，否則為 0。每組配對的損失彼此獨立。不需要 all-gather。每張 GPU 算自己那個區塊再加總。SigLIP 2 能便宜地擴展到 32k 到 512k 的批次，而 CLIP 在同樣規模下需要成比例增加的通訊量。

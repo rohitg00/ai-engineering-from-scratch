@@ -1,0 +1,106 @@
+{
+  "id": "decision-tradeoff-explorer",
+  "title": "Decision Tradeoff Explorer",
+  "tagline": "Show when a different priority changes the preferred option.",
+  "summary": "Help a community team compare practical project options using a user-supplied criteria table and supporting notes. Apply explicit constraints, weighted scores and sensitivity analysis, keep missing values visible, and export an interactive HTML decision board and a reusable decision record.",
+  "level": 3,
+  "source": "core",
+  "status": "ready",
+  "hours": 8,
+  "languages": [
+    "TypeScript"
+  ],
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "An interactive tradeoff board, criteria.csv and decision-record.json",
+  "prerequisiteProjects": [
+    "csv-sql-question-workbench",
+    "chart-storyboard-builder"
+  ],
+  "demo": {
+    "command": [
+      "node",
+      "--experimental-strip-types",
+      "cli.ts"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-declare-evidence",
+      "title": "Declare options and evidence",
+      "summary": "Make ranges, constraints and uncertainty explicit.",
+      "hours": 2,
+      "language": "typescript",
+      "difficulty": "starter",
+      "concepts": [
+        "typed JSON",
+        "source notes",
+        "unknowns"
+      ],
+      "timeout": 120,
+      "figure": "pj-decision-tradeoff-explorer-1"
+    },
+    {
+      "id": "02-normalize-and-score",
+      "title": "Compute comparable scores",
+      "summary": "Normalize units without hiding missing values or hard constraints.",
+      "hours": 2,
+      "language": "typescript",
+      "difficulty": "core",
+      "concepts": [
+        "fixed ranges",
+        "weighted sum",
+        "constraints"
+      ],
+      "timeout": 120,
+      "figure": "pj-decision-tradeoff-explorer-2"
+    },
+    {
+      "id": "03-sweep-preferences",
+      "title": "Explore sensitivity and dominance",
+      "summary": "Find when a preference change reverses the ranking.",
+      "hours": 2,
+      "language": "typescript",
+      "difficulty": "core",
+      "concepts": [
+        "Pareto dominance",
+        "sensitivity",
+        "tie order"
+      ],
+      "timeout": 120,
+      "figure": "pj-decision-tradeoff-explorer-3"
+    },
+    {
+      "id": "04-export-board",
+      "title": "Export the chosen scenario",
+      "summary": "Make the board produce a reusable decision record.",
+      "hours": 2,
+      "language": "typescript",
+      "difficulty": "core",
+      "concepts": [
+        "HTML output",
+        "CSV",
+        "downloaded evidence"
+      ],
+      "timeout": 120,
+      "figure": "pj-decision-tradeoff-explorer-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

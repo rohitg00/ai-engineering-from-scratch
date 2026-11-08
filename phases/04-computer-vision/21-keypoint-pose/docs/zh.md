@@ -50,8 +50,8 @@ flowchart LR
 
 不要直接迴歸 `(x, y)`，而是為每個關鍵點預測一張 `H x W` 的熱圖，上面有一團以真實位置為中心的高斯斑點。
 
-```
-target[k, y, x] = exp(-((x - cx_k)^2 + (y - cy_k)^2) / (2 sigma^2))
+```math
+\text{target}[k, y, x] = \exp\left(-\frac{(x - \mathit{cx}_k)^2 + (y - \mathit{cy}_k)^2}{2 \sigma^2}\right)
 ```
 
 推論時，每張熱圖的 argmax 就是預測出的關鍵點位置。

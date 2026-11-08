@@ -120,9 +120,11 @@ VGG 在 19 層還能運作，是因為批次正規化（同時期發表）讓激
 
 He、Zhang、Ren、Sun 提出了一個改動，把所有問題都修好了：
 
-```
-standard block:   y = F(x)
-residual block:   y = F(x) + x
+```math
+\begin{aligned}
+\text{standard block:} \quad & y = F(x) \\
+\text{residual block:} \quad & y = F(x) + x
+\end{aligned}
 ```
 
 那個 `+ x` 意味著這一層永遠可以選擇什麼都不做——只要把 `F(x)` 壓成零。一個 1,000 層的 ResNet 現在最差也就跟一個 1 層網路一樣差，因為每個多出來的區塊都有一個輕鬆的逃生口。有了這個保證，最佳化器就願意讓每個區塊都*稍微*有用一點——而稍微有用的東西疊上 100 次，就是最先進的水準。

@@ -38,15 +38,15 @@ minimize L(w) where:
 
 最簡單的最佳化器。算出損失對每一個權重的梯度，把每個權重往它自己梯度的反方向移動，步伐大小乘上學習率。
 
-```
-w = w - lr * gradient
+```math
+w = w - \text{lr} \cdot \text{gradient}
 ```
 
 整個演算法就這樣。一行。
 
 ```mermaid
 graph TD
-    A["* Starting point (high loss)"] --> B["Moving downhill along gradient"]
+    A["* Starting point (high loss)"] --> B["Moving downhill, against the gradient"]
     B --> C["Approaching minimum"]
     C --> D["o Minimum (low loss)"]
 ```
@@ -94,9 +94,11 @@ SGD 與小批次帶來的雜訊不是缺陷。它幫助你逃出淺的區域最�
 
 原始版梯度下降只看當下的梯度。如果梯度來回鋸齒（在狹長的山谷裡很常見），進展就會很慢。動量的做法是把過去的梯度累積成一個速度項，藉此解決這個問題。
 
-```
-v = beta * v + gradient
-w = w - lr * v
+```math
+\begin{aligned}
+v &= \beta \cdot v + \text{gradient} \\
+w &= w - \text{lr} \cdot v
+\end{aligned}
 ```
 
 這個比喻是：一顆滾下山坡的球。它不會在每個坑窪處停下來重新起步。它會在方向一致的路上累積速度，並抑制來回震盪。
@@ -124,17 +126,17 @@ graph TD
 
 Adam（Adaptive Moment Estimation）為每個權重追蹤兩件事：
 
-1. 一階動量（m）：梯度的移動平均（就像動量）
-2. 二階動量（v）：梯度平方的移動平均（梯度的大小）
+1. 一階動量（$m$）：梯度的移動平均（就像動量）
+2. 二階動量（$v$）：梯度平方的移動平均（梯度的大小）
 
-```
-m = beta1 * m + (1 - beta1) * gradient
-v = beta2 * v + (1 - beta2) * gradient^2
-
-m_hat = m / (1 - beta1^t)    bias correction
-v_hat = v / (1 - beta2^t)    bias correction
-
-w = w - lr * m_hat / (sqrt(v_hat) + epsilon)
+```math
+\begin{aligned}
+m &= \beta_1 \cdot m + (1 - \beta_1) \cdot \text{gradient} \\
+v &= \beta_2 \cdot v + (1 - \beta_2) \cdot \text{gradient}^2 \\[4pt]
+\hat{m} &= m / (1 - \beta_1^t) \quad \text{bias correction} \\
+\hat{v} &= v / (1 - \beta_2^t) \quad \text{bias correction} \\[4pt]
+w &= w - \text{lr} \cdot \hat{m} / (\sqrt{\hat{v}} + \epsilon)
+\end{aligned}
 ```
 
 除以 `sqrt(v_hat)` 是這裡的關鍵洞見。梯度大的權重會被一個大的數字除（有效步伐變小）。梯度小的權重會被一個小的數字除（有效步伐變大）。每個權重都拿到自己的自適應學習率。
@@ -149,14 +151,14 @@ w = w - lr * m_hat / (sqrt(v_hat) + epsilon)
 
 | 排程 | 公式 | 適用場景 |
 |----------|---------|----------|
-| 階梯式衰減 | lr = lr * factor every N epochs | 簡單、可手動控制 |
-| 指數衰減 | lr = lr_0 * decay^t | 平滑地遞減 |
-| Cosine annealing | lr = lr_min + 0.5 * (lr_max - lr_min) * (1 + cos(pi * t / T)) | Transformer、現代訓練流程 |
+| 階梯式衰減 | $\text{lr} = \text{lr} \cdot \text{factor}$ every $N$ epochs | 簡單、可手動控制 |
+| 指數衰減 | $\text{lr} = \text{lr}_0 \cdot \text{decay}^t$ | 平滑地遞減 |
+| Cosine annealing | $\text{lr} = \text{lr} _{\min} + 0.5 \cdot (\text{lr} _{\max} - \text{lr} _{\min}) \cdot (1 + \cos(\pi t / T))$ | Transformer、現代訓練流程 |
 | Warmup + 衰減 | 線性上升，然後衰減 | 大模型，避免早期不穩定 |
 
 ### 凸 vs 非凸
 
-凸函式只有一個最小值，梯度下降一定找得到。像 `f(x) = x^2` 這樣的二次函式就是凸的。
+凸函式沒有壞的區域最小值：每個區域最小值都是全域最小值。對一個存在最小值的平滑凸函式來說，只要學習率夠小，梯度下降就會收斂到它。像 $f(x) = x^2$ 這樣的二次函式就是凸的，而且它的最小值是唯一的。
 
 神經網路的損失函式是非凸的。它們有很多區域最小值、鞍點與平坦區域。
 
@@ -205,8 +207,8 @@ gradient-descent
 
 Rosenbrock 函式是經典的最佳化基準。它的最小值在 (1, 1)，位在一條狹長彎曲的山谷裡 —— 谷很好找，但很難沿著它走。
 
-```
-f(x, y) = (1 - x)^2 + 100 * (y - x^2)^2
+```math
+f(x, y) = (1 - x)^2 + 100 \cdot (y - x^2)^2
 ```
 
 ```python
@@ -351,9 +353,19 @@ scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(adam, T_max=100)
 
 2. **動量比較。** 在 Rosenbrock 函式上用動量值 [0.0, 0.5, 0.9, 0.99] 跑 SGD。追蹤每一步的損失。哪個動量值收斂最快？哪個會衝過頭？
 
-3. **逃離鞍點。** 定義函式 `f(x, y) = x^2 - y^2`（原點是一個鞍點）。從 (0.01, 0.01) 出發。比較原始版 GD、帶動量的 SGD 與 Adam 的行為。哪一個逃出了鞍點？
+3. **逃離鞍點。** 定義函式 $f(x, y) = x^2 - y^2$（原點是一個鞍點）。從 (0.01, 0.01) 出發。比較原始版 GD、帶動量的 SGD 與 Adam 的行為。哪一個逃出了鞍點？
 
 4. **實作學習率衰減。** 為 GradientDescent 類別加上指數衰減排程：`lr = lr_0 * 0.999^step`。在 Rosenbrock 函式上比較有衰減與沒衰減的收斂情形。
+
+### 提示
+
+**練習 1。** 對學習率跑迴圈，為每一個建立 `GradientDescent(lr=...)`，再連同 `rosenbrock` 與 `rosenbrock_gradient` 一起傳給 `optimize`。發散的執行會看到損失不斷變大或變成 `nan`；最小值在 $(1, 1)$，損失為 0。
+
+**練習 2。** 為每個值建立 `SGDMomentum(momentum=m)`，並記錄每一步之後的損失。用 `find_convergence_step` 比較速度，再找出損失忽上忽下的情形來判斷是否衝過頭。
+
+**練習 3。** 寫出梯度 $(2x, -2y)$，從 (0.01, 0.01) 跑三種最佳化器。每 100 步印出一次 $y$：逃出鞍點的那一個，就是 $\lvert y \rvert$ 變得很大的那一個。
+
+**練習 4。** 在 `GradientDescent` 裡存下 `lr_0` 與一個步數計數器，並在 `step` 裡計算 `lr = lr_0 * 0.999 ** step`。印出第 0 步與第 1000 步的學習率；它必須從 `lr_0` 降到大約 $0.37 \times \text{lr}_0$。
 
 ## 關鍵術語
 
@@ -365,7 +377,7 @@ scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(adam, T_max=100)
 | SGD | 「隨機取樣」 | 隨機梯度下降。在一個隨機子集上算梯度，而不是整份資料集。實務上幾乎都是指小批次 SGD。 |
 | 小批次 (mini-batch) | 「一小塊資料」 | 用來估計梯度的一小份訓練資料（32-256 個樣本）。在速度與梯度精確度之間取得平衡。 |
 | Adam | 「預設的最佳化器」 | Adaptive Moment Estimation。為每個權重追蹤梯度與梯度平方的移動平均，讓每個權重都有自己的學習率。 |
-| 偏差校正 | 「修掉冷啟動」 | Adam 的一階與二階動量都初始化為零。偏差校正會除以 (1 - beta^t)，在早期的步伐裡補償這件事。 |
+| 偏差校正 | 「修掉冷啟動」 | Adam 的一階與二階動量都初始化為零。偏差校正會除以 $(1 - \beta^t)$，在早期的步伐裡補償這件事。 |
 | 學習率排程 | 「讓 lr 隨時間變化」 | 一個在訓練過程中調整學習率的函式。早期踏大步，後期踏小步。 |
 | 凸函式 | 「只有一個山谷」 | 任何區域最小值都同時是全域最小值的函式。梯度下降一定找得到。神經網路的損失不是凸的。 |
 | 鞍點 | 「平的，但不是最小值」 | 梯度為零的點，但它在某些方向上是最小值、在其他方向上是最大值。在高維空間裡很常見。 |

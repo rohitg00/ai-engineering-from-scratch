@@ -25,9 +25,8 @@ def build_vocab() -> list[VocabSlot]:
     cursor = 0
     plan = [
         ("text BPE",      32000),
-        ("image SEED",     4096),
-        ("speech L0",      4096),
-        ("speech L1..L7", 4096),
+        ("image SEED",     8192),
+        ("speech 4x1024",  4096),
         ("music",          8192),
         ("<image>",           1),
         ("</image>",          1),

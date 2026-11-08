@@ -1,0 +1,48 @@
+{
+  "id": "m101-list-files",
+  "title": "List the files in the working directory",
+  "messages": [
+    {
+      "message": {
+        "message": {
+          "role": "user",
+          "content": "List the files in the working directory."
+        }
+      }
+    },
+    {
+      "message": {
+        "agent_name": "root",
+        "message": {
+          "role": "assistant",
+          "tool_calls": [
+            {
+              "id": "call_m101_ls",
+              "type": "function",
+              "function": {
+                "name": "list_directory",
+                "arguments": "{\"path\":\".\"}"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "message": {
+        "agent_name": "root",
+        "message": {
+          "role": "assistant",
+          "content": "The working directory contains README.md."
+        }
+      }
+    }
+  ],
+  "evals": {
+    "relevance": [
+      "The response names README.md"
+    ],
+    "size": "S",
+    "working_dir": "repo"
+  }
+}

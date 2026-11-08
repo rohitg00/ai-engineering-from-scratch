@@ -1,0 +1,24 @@
+{
+  "id": "grpo-advantages",
+  "title": "GRPO group advantages and clipped objective",
+  "kind": "research",
+  "summary": "Normalize rewards within each group, estimate the KL with k3, and compute the clipped GRPO objective averaged per answer over valid tokens.",
+  "difficulty": "medium",
+  "tags": ["grpo", "reinforcement-learning", "policy-gradient", "kl-divergence"],
+  "lesson": "phases/09-reinforcement-learning/12-rl-for-games",
+  "cheatsheet": "reinforcement-learning",
+  "minutes": 30,
+  "entry": ["group_advantages", "kl_k3", "grpo_objective"],
+  "collections": ["papers-to-code", "rl-basics"],
+  "time_limit_s": 10,
+  "method": "grpo",
+  "paper": {"title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models", "authors": "Shao et al.", "year": 2024, "url": "https://arxiv.org/abs/2402.03300"},
+  "mutants": {
+    "k3_ratio_reversed": "Uses pi_theta / pi_ref inside k3, so the estimate is no longer unbiased for KL(pi_theta || pi_ref).",
+    "kl_added": "Adds beta times k3 to the objective instead of subtracting it.",
+    "max_not_min": "Takes the maximum of the unclipped and the clipped surrogate, so the clip never limits the gain.",
+    "no_eps": "Divides by the standard deviation without eps, so a group with equal rewards gives NaN.",
+    "sample_std": "Uses the sample standard deviation with ddof=1, not the population standard deviation.",
+    "token_level_mean": "Averages over all valid tokens of the batch, not over each answer first."
+  }
+}

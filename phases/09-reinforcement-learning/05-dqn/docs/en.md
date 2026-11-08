@@ -11,7 +11,7 @@
 
 Tabular Q-learning needs a separate Q-value for every (state, action) pair. A chess board has ~10⁴³ states. An Atari frame is 210×160×3 = 100,800 features. Tabular RL dies at thousands of states, let alone billions.
 
-The fix is obvious in hindsight: replace the Q-table with a neural network, `Q(s, a; θ)`. But obvious-in-hindsight took decades. Naive function approximation with Q-learning diverges under the "deadly triad" — function approximation + bootstrapping + off-policy learning. Mnih et al. (2013, 2015) identified three engineering tricks that stabilize learning:
+The fix is obvious in hindsight: replace the Q-table with a neural network, $Q(s, a; \theta)$. But obvious-in-hindsight took decades. Naive function approximation with Q-learning diverges under the "deadly triad" — function approximation + bootstrapping + off-policy learning. Mnih et al. (2013, 2015) identified three engineering tricks that stabilize learning:
 
 1. **Experience replay** decorrelates transitions.
 2. **Target network** freezes the bootstrap target.
@@ -25,25 +25,29 @@ DQN on Atari was the first time a single architecture with a single hyperparamet
 
 **The objective.** DQN minimizes the one-step TD loss on a neural Q-function:
 
-`L(θ) = E_{(s,a,r,s')~D} [ (r + γ max_{a'} Q(s', a'; θ^-) - Q(s, a; θ))² ]`
+```math
+L(\theta) = \mathbb{E}_{(s,a,r,s') \sim D}[ (r + \gamma \max_{a'} Q(s', a'; \theta^-) - Q(s, a; \theta))^2 ]
+```
 
-`θ` = online network, updated every step by gradient descent. `θ^-` = target network, periodically copied from `θ` (every ~10,000 steps). `D` = replay buffer of past transitions.
+$\theta$ = online network, updated every step by gradient descent. $\theta^-$ = target network, periodically copied from $\theta$ (every ~10,000 steps). $D$ = replay buffer of past transitions.
 
 **The three tricks, in order of importance:**
 
 **Experience replay.** A ring buffer of `~10⁶` transitions. Each training step samples a minibatch uniformly at random. This breaks temporal correlation (successive frames are nearly identical), lets the network learn from rare rewarding transitions many times, and decorrelates consecutive gradient updates. Without it, on-policy TD with a neural net diverges on Atari.
 
-**Target network.** Using the same network `Q(·; θ)` on both sides of the Bellman equation makes the target move every update — "chasing your own tail." The fix: keep a second network `Q(·; θ^-)` with frozen weights. Every `C` steps, copy `θ → θ^-`. This stabilizes the regression target for thousands of gradient steps at a time. Soft updates `θ^- ← τ θ + (1-τ) θ^-` (used in DDPG, SAC) are a smoother variant.
+**Target network.** Using the same network $Q(\cdot; \theta)$ on both sides of the Bellman equation makes the target move every update — "chasing your own tail." The fix: keep a second network $Q(\cdot; \theta^-)$ with frozen weights. Every $C$ steps, copy $\theta \to \theta^-$. This stabilizes the regression target for thousands of gradient steps at a time. Soft updates $\theta^- \leftarrow \tau \theta + (1-\tau) \theta^-$ (used in DDPG, SAC) are a smoother variant.
 
-**Reward clipping.** Atari reward magnitudes vary from 1 to 1000+. Clipping to `{-1, 0, +1}` stops any single game from dominating the gradient. Wrong when reward magnitude matters; fine for Atari where only sign matters.
+**Reward clipping.** Atari reward magnitudes vary from 1 to 1000+. Clipping to $\lbrace-1, 0, +1 \rbrace$ stops any single game from dominating the gradient. Wrong when reward magnitude matters; fine for Atari where only sign matters.
 
 **Double DQN.** Hasselt (2016) fixes maximization bias: use the online net to *select* the action, the target net to *evaluate* it.
 
-`target = r + γ Q(s', argmax_{a'} Q(s', a'; θ); θ^-)`
+```math
+\text{target} = r + \gamma Q(s', \arg\max_{a'} Q(s', a'; \theta); \theta^-)
+```
 
 Drop-in replacement, consistently better. Use it by default.
 
-**Other improvements (Rainbow, 2017):** prioritized replay (sample high-TD-error transitions more), dueling architecture (separate `V(s)` and advantage heads), noisy networks (learned exploration), n-step returns, distributional Q (C51/QR-DQN), multi-step bootstrapping. Each adds a few percent; the gains are roughly additive.
+**Other improvements (Rainbow, 2017):** prioritized replay (sample high-TD-error transitions more), dueling architecture (separate $V(s)$ and advantage heads), noisy networks (learned exploration), n-step returns, distributional Q (C51/QR-DQN), multi-step bootstrapping. Each adds a few percent; the gains are roughly additive.
 
 ```figure
 f3-dqn-stability
@@ -68,7 +72,7 @@ class ReplayBuffer:
         return rng.sample(self.buf, batch)
 ```
 
-~50,000 capacity for Atari; 5,000 suffices for our toy env.
+~10⁶ capacity for Atari, as in the original DQN (it collects 50,000 transitions before learning starts); 5,000 suffices for our toy env.
 
 ### Step 2: a tiny Q-network (manual MLP)
 
@@ -104,11 +108,11 @@ def train_step(online, target, batch, gamma, lr):
     apply_sgd(online, grads, lr / len(batch))
 ```
 
-The shape is Q-learning from Lesson 04 with two differences: (a) we backprop through a differentiable `Q(·; θ)` instead of indexing a table, (b) the target uses `Q(·; θ^-)`.
+The shape is Q-learning from Lesson 04 with two differences: (a) we backprop through a differentiable $Q(\cdot; \theta)$ instead of indexing a table, (b) the target uses $Q(\cdot; \theta^-)$.
 
 ### Step 4: the outer loop
 
-For each episode, act ε-greedy on `Q(·; θ)`, push transitions into the buffer, sample a minibatch, take a gradient step, periodically sync `θ^- ← θ`. The pattern:
+For each episode, act ε-greedy on $Q(\cdot; \theta)$, push transitions into the buffer, sample a minibatch, take a gradient step, periodically sync $\theta^- \leftarrow \theta$. The pattern:
 
 ```python
 for episode in range(N):
@@ -181,7 +185,7 @@ Refuse to ship a DQN with no target network, no replay buffer, or ε held at 1. 
 
 1. **Easy.** Run `code/main.py`. Plot the per-episode return curve. How many episodes until the running mean exceeds -10?
 2. **Medium.** Disable the target network (use the online net for both sides of the Bellman target). Measure training instability — does return oscillate or diverge?
-3. **Hard.** Add Double DQN: use the online net to pick `argmax a'`, target net to evaluate. Compare bias of `Q(s_0, best_a)` vs true `V*(s_0)` after 1,000 episodes with vs without Double DQN on a noisy-reward GridWorld.
+3. **Hard.** Add Double DQN: use the online net to pick `argmax a'`, target net to evaluate. Compare bias of `Q(s_0, best_a)` vs true $V^{\ast}(s_0)$ after 1,000 episodes with vs without Double DQN on a noisy-reward GridWorld.
 
 ## Key Terms
 

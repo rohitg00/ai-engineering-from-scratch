@@ -1,0 +1,21 @@
+{
+  "id": "softmax-cross-entropy",
+  "title": "Stable softmax and cross-entropy",
+  "kind": "implement",
+  "summary": "Batched softmax, mean cross-entropy and its gradient, without overflow for large logits.",
+  "difficulty": "easy",
+  "tags": ["softmax", "loss-functions", "gradients", "numerical-stability"],
+  "lesson": "phases/03-deep-learning-core/05-loss-functions",
+  "cheatsheet": "deep-learning-training",
+  "minutes": 20,
+  "entry": ["softmax", "cross_entropy", "cross_entropy_grad"],
+  "collections": ["deep-learning-core"],
+  "time_limit_s": 10,
+  "mutants": {
+    "global_max": "Takes the maximum and the sum over the whole batch, not over each row.",
+    "grad_missing_onehot": "Returns softmax divided by N and forgets to subtract the one-hot target.",
+    "in_place_shift": "Subtracts the maximum in place, so the caller's logits change.",
+    "no_max_shift": "Calls np.exp on the raw logits, so large logits overflow to infinity.",
+    "sum_not_mean": "Sums the example losses and gradients and does not divide by N."
+  }
+}

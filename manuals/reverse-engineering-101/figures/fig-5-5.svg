@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 296" role="img" aria-labelledby="fig-5-5-title fig-5-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-5-title">One bundle from the MCP session to four readers</title>
+  <desc id="fig-5-5-desc">Left: the MCP session on ledger-arm64-O1 holds eight records and no unknowns, and export_evidence_bundle writes them. Middle: bundle-O1.json, 178,853 bytes as written, 178,398 bytes in the masked kit copy, seven arrays of canonical JSON. Right: four readers. rea inspect-evidence-bundle prints eight rows and zero unknown revisions. rea evidence-export writes canonical-O1.json with 178,397 bytes and the same JSON. rea evidence-import validates it and reports imported 8 and total 8. import_evidence_bundle in the O2 MCP session reports imported 6 and total 15, because two of the eight records were already in that ledger.</desc>
+  <defs><marker id="fig-5-5-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-5-5-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE LEDGER</text>
+  <text x="260" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE FILE</text>
+  <text x="440" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE READERS</text>
+  <rect x="20" y="62" width="180" height="72" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="110" y="85.75" font-size="12.5" text-anchor="middle" font-weight="700">MCP session, O1</text>
+  <text x="110" y="103.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">8 records, 0 unknowns</text>
+  <text x="110" y="118.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ledger of one connection</text>
+  <rect x="260" y="62" width="160" height="72" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="340" y="78.25" font-size="12.5" text-anchor="middle" font-weight="700">bundle-O1.json</text>
+  <text x="340" y="95.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">178,853 bytes written</text>
+  <text x="340" y="110.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kit copy 178,398 bytes</text>
+  <text x="340" y="125.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">7 arrays, canonical</text>
+  <line x1="200" y1="98" x2="259" y2="98" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-5-head-teal)"/>
+  <rect class="m-knock" x="205.8" y="81.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="229.5" y="92" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">export</text>
+  <rect x="440" y="28" width="180" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="530" y="44.8" font-size="11" text-anchor="middle" font-weight="700">inspect-evidence-bundle</text>
+  <text x="530" y="61.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">8 rows, 0 unknowns</text>
+  <rect x="440" y="88" width="180" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="530" y="101.3" font-size="11" text-anchor="middle" font-weight="700">evidence-export</text>
+  <text x="530" y="118.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">178,397 bytes, same JSON</text>
+  <text x="530" y="133.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sha256 47160c2d</text>
+  <rect x="440" y="148" width="180" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="530" y="164.8" font-size="11" text-anchor="middle" font-weight="700">evidence-import</text>
+  <text x="530" y="181.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">imported 8, total 8</text>
+  <rect x="440" y="208" width="180" height="52" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="530" y="221.3" font-size="11" text-anchor="middle" font-weight="700">import_evidence_bundle</text>
+  <text x="530" y="238.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">into the O2 session</text>
+  <text x="530" y="253.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">imported 6, total 15</text>
+  <path d="M420 98 H430 V50 H439" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-5-head-ink)"/>
+  <path d="M420 98 H430 V114 H439" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-5-head-ink)"/>
+  <path d="M420 98 H430 V170 H439" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-5-head-ink)"/>
+  <path d="M420 98 H430 V234 H439" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-5-head-ink)"/>
+  <text x="20" y="170" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The server wrote 178,853 bytes. The kit masked the path and</text>
+  <text x="20" y="185" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">added a newline, so its copy has 178,398 bytes. Without</text>
+  <text x="20" y="200" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the newline it has the digest of canonical-O1.json.</text>
+  <text x="440" y="284" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">2 of 8 already in the ledger</text>
+</svg>

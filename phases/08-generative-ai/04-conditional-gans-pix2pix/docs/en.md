@@ -9,34 +9,36 @@
 
 ## The Problem
 
-An unconditional GAN samples arbitrary faces. Useful for a demo, useless in production. You want: *map a sketch to a photo*, *map a map to an aerial photo*, *map a daytime scene to nighttime*, *colorize a grayscale image*. In all of these, you are given an input image `x` and must output `y` with some semantic correspondence. There are many plausible `y`s per `x`. Mean-squared error flattens them into mush. An adversarial loss doesn't, because "looks real" is sharp.
+An unconditional GAN samples arbitrary faces. Useful for a demo, useless in production. You want: *map a sketch to a photo*, *map a map to an aerial photo*, *map a daytime scene to nighttime*, *colorize a grayscale image*. In all of these, you are given an input image $x$ and must output $y$ with some semantic correspondence. There are many plausible $y$'s per $x$. Mean-squared error flattens them into mush. An adversarial loss doesn't, because "looks real" is sharp.
 
-Conditional GAN (Mirza & Osindero, 2014) adds a condition `c` as an input to both `G` and `D`. Pix2Pix (Isola et al., 2017) specialized this: condition is a full input image, generator is a U-Net, discriminator is a *patch-based* classifier (PatchGAN), and loss is adversarial + L1. That recipe outperforms from-scratch text-to-image models on narrow image-to-image domains even in 2026 because it is trained on *paired data* — you have exactly the signal you need.
+Conditional GAN (Mirza & Osindero, 2014) adds a condition $c$ as an input to both $G$ and $D$. Pix2Pix (Isola et al., 2017) specialized this: condition is a full input image, generator is a U-Net, discriminator is a *patch-based* classifier (PatchGAN), and loss is adversarial + L1. That recipe outperforms from-scratch text-to-image models on narrow image-to-image domains even in 2026 because it is trained on *paired data* — you have exactly the signal you need.
 
 ## The Concept
 
 ![Pix2Pix: U-Net generator, PatchGAN discriminator](../assets/pix2pix.svg)
 
-**Conditional G.** `G(x, z) → y`. In Pix2Pix, `z` is dropout inside G (no input noise — Isola found explicit noise got ignored).
+**Conditional G.** $G(x, z) \to y$. In Pix2Pix, $z$ is dropout inside G (no input noise — Isola found explicit noise got ignored).
 
-**Conditional D.** `D(x, y) → [0, 1]`. Input is the *pair* (condition, output). This is the key difference: D must judge whether `y` is consistent with `x`, not just whether `y` looks real.
+**Conditional D.** $D(x, y) \to [0, 1]$. Input is the *pair* (condition, output). This is the key difference: D must judge whether $y$ is consistent with $x$, not just whether $y$ looks real.
 
 **U-Net generator.** Encoder-decoder with skip connections across the bottleneck. Critical for tasks where input and output share low-level structure (edges, silhouette). Without the skips, high-frequency detail vanishes.
 
-**PatchGAN discriminator.** Instead of outputting a single real/fake score, D outputs an `N×N` grid where each cell judges a receptive field of ~70×70 pixels. Averaged. This is a Markov random field assumption: realism is local. Much faster to train, fewer parameters, sharper output.
+**PatchGAN discriminator.** Instead of outputting a single real/fake score, D outputs an $N \times N$ grid where each cell judges a receptive field of ~70×70 pixels. Averaged. This is a Markov random field assumption: realism is local. Much faster to train, fewer parameters, sharper output.
 
 **Loss.**
 
-```
-loss_G = -log D(x, G(x)) + λ · ||y - G(x)||_1
-loss_D = -log D(x, y) - log (1 - D(x, G(x)))
+```math
+\begin{aligned}
+\text{loss}_G &= -\log D(x, G(x)) + \lambda \cdot \lVert y - G(x) \rVert_1 \\
+\text{loss}_D &= -\log D(x, y) - \log(1 - D(x, G(x)))
+\end{aligned}
 ```
 
-The L1 term stabilizes training and pushes G toward the known target. L1 gives sharper edges than L2 (medians, not means). `λ = 100` was the Pix2Pix default.
+The L1 term stabilizes training and pushes G toward the known target. L1 gives sharper edges than L2 (medians, not means). $\lambda = 100$ was the Pix2Pix default.
 
 ## CycleGAN — when you don't have pairs
 
-Pix2Pix needs paired `(x, y)` data. CycleGAN (Zhu et al., 2017) drops this requirement at the cost of an extra loss: the *cycle consistency* loss. Two generators `G: X → Y` and `F: Y → X`. Train them so `F(G(x)) ≈ x` and `G(F(y)) ≈ y`. This lets you translate horses to zebras, summer to winter, without paired examples.
+Pix2Pix needs paired $(x, y)$ data. CycleGAN (Zhu et al., 2017) drops this requirement at the cost of an extra loss: the *cycle consistency* loss. Two generators $G: X \to Y$ and $F: Y \to X$. Train them so $F(G(x)) \approx x$ and $G(F(y)) \approx y$. This lets you translate horses to zebras, summer to winter, without paired examples.
 
 In 2026, unpaired image-to-image is mostly done via diffusion (ControlNet, IP-Adapter) rather than CycleGAN, but the cycle-consistency idea survives in almost every unpaired domain adaptation paper.
 
@@ -46,7 +48,7 @@ gx-patchgan
 
 ## Build It
 
-`code/main.py` implements a tiny conditional GAN on 1-D data. The condition `c` is a class label (0 or 1). The task: produce a sample from the conditional distribution for the given class.
+`code/main.py` implements a tiny conditional GAN on 1-D data. The condition $c$ is a class label (0 or 1). The task: produce a sample from the conditional distribution for the given class.
 
 ### Step 1: append condition to both G and D inputs
 
@@ -84,9 +86,9 @@ for c in [0, 1]:
 ## Pitfalls
 
 - **Condition ignored.** G learns to marginalize, D never penalizes because condition signal is weak. Fix: condition D more aggressively (early layer, not just late), use projection discriminator (Miyato & Koyama 2018).
-- **L1 weight too low.** G drifts to arbitrary real-looking outputs, not faithful ones. Start λ≈100 for Pix2Pix-style tasks.
-- **L1 weight too high.** G produces blurry outputs because L1 is still an L_p norm. Anneal down once training stabilizes.
-- **Ground-truth leakage in D.** Concatenate `(x, y)` as D input, not just `y`. Without this D cannot check consistency.
+- **L1 weight too low.** G drifts to arbitrary real-looking outputs, not faithful ones. Start $\lambda \approx 100$ for Pix2Pix-style tasks.
+- **L1 weight too high.** G produces blurry outputs because L1 is still an $L_p$ norm. Anneal down once training stabilizes.
+- **Ground-truth leakage in D.** Concatenate $(x, y)$ as D input, not just $y$. Without this D cannot check consistency.
 - **Mode collapse per class.** Each class can collapse independently. Run class-conditional diversity checks.
 
 ## Use It

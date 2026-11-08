@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="fig-5-1h-title fig-5-1h-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-1h-title">Fixed lengths trade a slow first token for smooth decoding</title>
+  <desc id="fig-5-1h-desc">Median time to first token and P99 inter-token latency against --random-range-ratio on one NVIDIA L4 with Qwen3-8B, a cap of 16 and 64 prompts, three seeds per point, on a log scale. At a ratio of 1.0 every request has 512 input and 128 output tokens, and the median TTFT is 1,996 ms for BF16 and 1,526 ms for FP8, while P99 ITL is 82 and 55 ms. At a ratio of 0.0 the lengths vary, the median TTFT is 291 and 129 ms, and P99 ITL is 300 and 95 ms.</desc>
+  <line x1="70" y1="294" x2="606" y2="294" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="298" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">30</text>
+  <line x1="70" y1="239.1" x2="606" y2="239.1" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="243.1" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="70" y1="189" x2="606" y2="189" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="193" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <line x1="70" y1="134.1" x2="606" y2="134.1" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="138.1" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <line x1="70" y1="84" x2="606" y2="84" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="88" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3k</text>
+  <line x1="70" y1="294" x2="606" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="84" x2="70" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="294" x2="70" y2="298" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="311" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="338" y1="294" x2="338" y2="298" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="338" y="311" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0.5</text>
+  <line x1="606" y1="294" x2="606" y2="298" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="606" y="311" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <text x="338" y="328" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">--random-range-ratio (1.0 means every request has the same length)</text>
+  <text x="70" y="72" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ms (log scale)</text>
+  <path d="M70.0 188.8 L338.0 177.8 L606.0 99.6 L606.0 107.2 L338.0 181.4 L70.0 193.7 Z" fill="var(--m-plum-ink, #8a3d72)" fill-opacity="0.1" stroke="none"/>
+  <path d="M70.0 190.4 L338.0 180.2 L606.0 102.6" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="190.38" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="338" cy="180.23" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="606" cy="102.59" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <path d="M70.0 227.3 L338.0 227.0 L606.0 113.1 L606.0 114.9 L338.0 227.4 L70.0 230.1 Z" fill="var(--m-green-ink, #336b40)" fill-opacity="0.1" stroke="none"/>
+  <path d="M70.0 227.4 L338.0 227.0 L606.0 114.8" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="227.44" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="338" cy="227.03" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="606" cy="114.84" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <path d="M70.0 186.9 L338.0 173.0 L606.0 242.9 L606.0 249.0 L338.0 176.7 L70.0 190.5 Z" fill="var(--m-plum-ink, #8a3d72)" fill-opacity="0.1" stroke="none"/>
+  <path d="M70.0 189.0 L338.0 176.4 L606.0 248.4" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="70" cy="189.02" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="338" cy="176.38" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="606" cy="248.41" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <path d="M70.0 231.8 L338.0 241.1 L606.0 265.2 L606.0 268.2 L338.0 241.4 L70.0 241.8 Z" fill="var(--m-green-ink, #336b40)" fill-opacity="0.1" stroke="none"/>
+  <path d="M70.0 241.5 L338.0 241.3 L606.0 266.7" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="70" cy="241.49" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="338" cy="241.27" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="606" cy="266.69" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <path d="M70 18 H88" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="94" y="22" font-size="11" fill="var(--m-plum-ink, #8a3d72)">BF16 median TTFT</text>
+  <path d="M217.6 18 H235.6" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="241.6" y="22" font-size="11" fill="var(--m-green-ink, #336b40)">FP8 median TTFT</text>
+  <path d="M70 40 H88" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="94" y="44" font-size="11" fill="var(--m-plum-ink, #8a3d72)">BF16 P99 ITL</text>
+  <path d="M191.2 40 H209.2" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="215.2" y="44" font-size="11" fill="var(--m-green-ink, #336b40)">FP8 P99 ITL</text>
+</svg>

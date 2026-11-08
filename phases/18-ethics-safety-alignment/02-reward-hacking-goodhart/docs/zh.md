@@ -28,9 +28,11 @@ Gao、Schulman、Hilton（2023）直接量了這件事。從 10 萬個標籤訓�
 
 Gao 等人給出了一個函數形式。令 `d = sqrt(KL(pi || pi_init))`。令 `R_proxy(d)` 為平均代理獎勵、`R_gold(d)` 為平均黃金獎勵。經驗上：
 
-```
-R_proxy(d) = alpha * d - beta_proxy * d^2
-R_gold(d)  = alpha * d - beta_gold  * d^2
+```math
+\begin{aligned}
+R_{\text{gold}}^{\text{BoN}}(d) &= d\,(\alpha_{\text{BoN}} - \beta_{\text{BoN}}\, d) \\
+R_{\text{gold}}^{\text{RL}}(d) &= d\,(\alpha_{\text{RL}} - \beta_{\text{RL}} \log d)
+\end{aligned}
 ```
 
 其中 `beta_gold > beta_proxy`。兩者都從 KL 為零開始上升、都會達峰，而黃金那個峰比較靠近原點。在 `d` 很大時，黃金掉到基線之下，而代理指標卻還在往上爬。這個代理－黃金落差在 BoN 取樣、PPO，以及 SFT-to-best 上都有同樣的特徵。

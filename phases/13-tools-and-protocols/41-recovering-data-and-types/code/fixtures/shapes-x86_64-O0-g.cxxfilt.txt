@@ -1,0 +1,19 @@
+describe(Shape const&, int)
+operator delete(void*)
+Rect::Rect(int, int)
+Rect::~Rect()
+Rect::~Rect()
+Shape::Shape()
+Shape::~Shape()
+Shape::~Shape()
+Rect::area() const
+Rect::name() const
+Shape::name() const
+typeinfo for Rect
+typeinfo for Shape
+typeinfo name for Rect
+typeinfo name for Shape
+vtable for Rect
+vtable for Shape
+vtable for __cxxabiv1::__class_type_info
+vtable for __cxxabiv1::__si_class_type_info

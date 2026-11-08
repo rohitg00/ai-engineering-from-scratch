@@ -1,0 +1,17 @@
+
+candidates/f1_wide_long.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <percent_change>:
+       0: 85 ff                        	testl	%edi, %edi
+       2: 74 13                        	je	0x17 <percent_change+0x17>
+       4: 48 63 c6                     	movslq	%esi, %rax
+       7: 48 63 cf                     	movslq	%edi, %rcx
+       a: 48 29 c8                     	subq	%rcx, %rax
+       d: 48 6b c0 64                  	imulq	$0x64, %rax, %rax
+      11: 48 99                        	cqto
+      13: 48 f7 f9                     	idivq	%rcx
+      16: c3                           	retq
+      17: 31 c0                        	xorl	%eax, %eax
+      19: c3                           	retq

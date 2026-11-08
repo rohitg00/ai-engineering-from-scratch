@@ -1,0 +1,20 @@
+{
+  "id": "reciprocal-rank-fusion",
+  "title": "Reciprocal rank fusion",
+  "kind": "implement",
+  "summary": "Merge several ranked lists of document ids into one ranking with reciprocal rank fusion, optional list weights and a fixed tie rule.",
+  "difficulty": "easy",
+  "tags": ["rank-fusion", "hybrid-retrieval", "ranking", "retrieval"],
+  "lesson": "phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense",
+  "cheatsheet": "rag",
+  "minutes": 12,
+  "entry": ["rrf_scores", "fuse"],
+  "collections": ["rag-building-blocks"],
+  "time_limit_s": 10,
+  "mutants": {
+    "first_appearance_ties": "Sorts by score only, so equal scores keep the order of first appearance and not the lower doc id first.",
+    "ignore_weights": "Adds 1 / (k + rank) for every list and ignores the list weights.",
+    "no_length_check": "Does not raise ValueError when the number of weights differs from the number of lists.",
+    "rank_from_zero": "Counts ranks from 0, so the first document of a list adds 1 / k and not 1 / (k + 1)."
+  }
+}

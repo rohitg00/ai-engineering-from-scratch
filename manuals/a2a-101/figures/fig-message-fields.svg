@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 384" role="img" aria-labelledby="fig-message-fields-title fig-message-fields-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-message-fields-title">Who sets each field of a message</title>
+  <desc id="fig-message-fields-desc">A table of the eight Message fields across three messages of the review in 06-input-required.http, which appear one column at a time in the order they were sent. The planner first message 14a03569 has no contextId and no taskId. The code-reviewer question 46494a30 carries contextId 49c5a238 and taskId e5c95b09. The planner answer 096d3737 echoes both ids. Roles are ROLE_USER, ROLE_AGENT and ROLE_USER. metadata, extensions and referenceTaskIds are not set in any of them. A right column says who sets each field, and a last note says the server writes both ids into its stored copy of the first message.</desc>
+  <text x="28" y="34" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FIELD</text>
+  <text x="452" y="34" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHO SETS IT</text>
+  <rect x="20" y="48" width="600" height="34" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="30" cy="65" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="40" y="69" font-size="12" font-weight="700">messageId</text>
+  <text x="452" y="62" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">minted by the sender</text>
+  <text x="452" y="76" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">for every message</text>
+  <rect x="20" y="82" width="600" height="34" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="40" y="103" font-size="12">contextId</text>
+  <text x="452" y="96" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">minted by the server,</text>
+  <text x="452" y="110" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">echoed by the client</text>
+  <rect x="20" y="116" width="600" height="34" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="40" y="137" font-size="12">taskId</text>
+  <text x="452" y="130" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">minted by the server,</text>
+  <text x="452" y="144" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">echoed to continue a task</text>
+  <rect x="20" y="150" width="600" height="34" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="30" cy="167" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="40" y="171" font-size="12" font-weight="700">role</text>
+  <text x="452" y="164" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the direction:</text>
+  <text x="452" y="178" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">client to server is USER</text>
+  <rect x="20" y="184" width="600" height="34" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="30" cy="201" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="40" y="205" font-size="12" font-weight="700">parts</text>
+  <text x="452" y="198" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the sender, at least</text>
+  <text x="452" y="212" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one part</text>
+  <rect x="20" y="218" width="600" height="28" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="5 4"/>
+  <text x="40" y="236" font-size="12" fill="var(--m-ink-mute, #6f6f6a)">metadata</text>
+  <text x="304" y="236" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">not set in any kit capture</text>
+  <text x="452" y="236" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the sender: a JSON object</text>
+  <rect x="20" y="246" width="600" height="28" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="5 4"/>
+  <text x="40" y="264" font-size="12" fill="var(--m-ink-mute, #6f6f6a)">extensions</text>
+  <text x="304" y="264" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">not set in any kit capture</text>
+  <text x="452" y="264" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the sender: extension URIs</text>
+  <rect x="20" y="274" width="600" height="28" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="5 4"/>
+  <text x="40" y="292" font-size="12" fill="var(--m-ink-mute, #6f6f6a)">referenceTaskIds</text>
+  <text x="304" y="292" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">not set in any kit capture</text>
+  <text x="452" y="292" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the sender: related tasks</text>
+  <line x1="160" y1="48" x2="160" y2="218" stroke="var(--m-panel-edge, #e4e1d4)" stroke-width="1"/>
+  <line x1="256" y1="48" x2="256" y2="218" stroke="var(--m-panel-edge, #e4e1d4)" stroke-width="1"/>
+  <line x1="352" y1="48" x2="352" y2="218" stroke="var(--m-panel-edge, #e4e1d4)" stroke-width="1"/>
+  <line x1="448" y1="48" x2="448" y2="218" stroke="var(--m-panel-edge, #e4e1d4)" stroke-width="1"/>
+  <circle cx="30" cy="364" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="40" y="368" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">REQUIRED in proto Message</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="160" y="10" width="96" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="208" y="27" font-size="11.5" text-anchor="middle" font-weight="700">planner</text>
+  <text x="208" y="42" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">first message</text>
+  <text x="208" y="69" font-size="11" text-anchor="middle">14a03569</text>
+  <text x="208" y="103" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">omitted</text>
+  <text x="208" y="137" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">omitted</text>
+  <text x="208" y="171" font-size="11" text-anchor="middle">ROLE_USER</text>
+  <text x="208" y="205" font-size="11" text-anchor="middle">text, raw</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="256" y="10" width="96" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="304" y="27" font-size="11.5" text-anchor="middle" font-weight="700">code-reviewer</text>
+  <text x="304" y="42" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">its question</text>
+  <text x="304" y="69" font-size="11" text-anchor="middle">46494a30</text>
+  <text x="304" y="103" font-size="11" text-anchor="middle">49c5a238</text>
+  <text x="304" y="137" font-size="11" text-anchor="middle">e5c95b09</text>
+  <text x="304" y="171" font-size="11" text-anchor="middle">ROLE_AGENT</text>
+  <text x="304" y="205" font-size="11" text-anchor="middle">text</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="352" y="10" width="96" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="400" y="27" font-size="11.5" text-anchor="middle" font-weight="700">planner</text>
+  <text x="400" y="42" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the answer</text>
+  <text x="400" y="69" font-size="11" text-anchor="middle">096d3737</text>
+  <text x="400" y="103" font-size="11" text-anchor="middle">49c5a238</text>
+  <text x="400" y="137" font-size="11" text-anchor="middle">e5c95b09</text>
+  <text x="400" y="171" font-size="11" text-anchor="middle">ROLE_USER</text>
+  <text x="400" y="205" font-size="11" text-anchor="middle">text &quot;main&quot;</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="328" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The server writes contextId 49c5a238 and taskId e5c95b09 into its stored copy</text>
+  <text x="20" y="343" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">of the first message, which the planner sent without them.</text>
+  </g>
+</svg>

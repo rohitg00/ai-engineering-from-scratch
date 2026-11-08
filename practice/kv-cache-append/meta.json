@@ -1,0 +1,22 @@
+{
+  "id": "kv-cache-append",
+  "title": "Fixed-capacity KV cache",
+  "kind": "implement",
+  "summary": "Append keys and values to a preallocated cache, attend one query over the valid prefix, and reject an append past the capacity.",
+  "difficulty": "medium",
+  "tags": ["kv-cache", "attention", "inference", "transformers"],
+  "lesson": "phases/07-transformers-deep-dive/12-kv-cache-flash-attention",
+  "cheatsheet": "inference-optimization",
+  "minutes": 25,
+  "entry": ["KVCache", "decode_step"],
+  "collections": ["transformers-from-scratch", "llm-inference"],
+  "time_limit_s": 10,
+  "mutants": {
+    "capacity_off_by_one": "Raises when the append ends exactly at max_len, so the last slot of the cache is never used.",
+    "count_before_check": "Adds n to the length before the capacity check, so a failed append leaves a wrong length.",
+    "full_buffer_view": "Returns the whole buffer from keys() and values(), so attention also sees the empty zero rows.",
+    "length_plus_one": "Adds 1 to the length after each append, also when the append has several steps.",
+    "no_scale": "Forgets to divide the scores by sqrt(d_k) in decode_step.",
+    "overwrite_from_zero": "Writes each append at row 0, so new steps overwrite the old steps."
+  }
+}

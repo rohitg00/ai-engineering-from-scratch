@@ -1,0 +1,12 @@
+title: the head of the bundle summary
+source: manuals/reverse-engineering-101/capture/out/11-inspect-evidence-bundle-O1.json
+lines: 1-6
+lang: json
+note: Eight records and zero unknown revisions, because no unknown was recorded before the export.
+---
+{
+  "kind": "evidence-bundle-summary",
+  "filters": {},
+  "total_retained_records": 8,
+  "matching_records": 8,
+  "unknown_revisions": 0,

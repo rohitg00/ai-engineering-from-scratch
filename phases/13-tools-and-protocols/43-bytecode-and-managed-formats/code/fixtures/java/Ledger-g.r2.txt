@@ -1,0 +1,46 @@
+ERROR: Unable to parse code attribute: 2
+arch     java
+binsz    1832
+bintype  class
+bits     32
+canary   false
+injprot  false
+retguard false
+class    0x4100 0x0000
+crypto   false
+endian   little
+havecode true
+laddr    0x0
+lang     java 21
+linenum  true
+lsyms    true
+machine  jvm
+nx       false
+os       any
+pic      false
+relocs   false
+sanitize false
+static   false
+stripped false
+uncaps   false
+subsys   any
+va       false
+ERROR: Unable to parse code attribute: 2
+            ;-- method.static.Ledger.grade:
+            ;-- entry2:
+            ;-- sym.Ledger.grade:
+            ;-- grade:
+            0x000004f8      1a             iload_0
+            0x000004f9      100a           bipush 10
+            0x000004fb      6c             idiv
+    ┌┌┌┌┌─< 0x000004fc      aa00000000..   tableswitch default: 0x0528
+    │││└└─> 0x00000520      07             iconst_4
+    │││     0x00000521      ac             ireturn
+    ││└───> 0x00000522      06             iconst_3
+    ││      0x00000523      ac             ireturn
+    │└────> 0x00000524      05             iconst_2
+    │       0x00000525      ac             ireturn
+    └─────> 0x00000526      04             iconst_1
+            0x00000527      ac             ireturn
+            0x00000528      03             iconst_0
+            0x00000529      ac             ireturn

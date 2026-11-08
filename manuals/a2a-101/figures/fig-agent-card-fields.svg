@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 556" role="img" aria-labelledby="fig-agent-card-fields-title fig-agent-card-fields-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-agent-card-fields-title">The test-runner agent card, field by field</title>
+  <desc id="fig-agent-card-fields-desc">The agent card that test-runner serves at /.well-known/agent-card.json, drawn as rows under four headings that appear one after another. Who it is: name, description, provider and version, with documentationUrl, iconUrl and signatures not set. Where to reach it: two supportedInterfaces, JSON-RPC first and HTTP+JSON second. What it demands: capabilities with streaming and pushNotifications true, and no security fields. What it offers: text/plain and application/json modes and the run-tests skill. A dot marks each REQUIRED field.</desc>
+  <rect x="20" y="10" width="600" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="25.25" font-size="12.5" font-weight="700">test-runner agent card</text>
+  <text x="32" y="42.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">GET http://localhost:41241/.well-known/agent-card.json</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="58" width="600" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="74" font-size="11" letter-spacing="1.2" fill="var(--m-blue-ink, #2f5d9a)">WHO IT IS</text>
+  <text x="204" y="74" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">identity, plus proof of who published it</text>
+  <rect x="20" y="82" width="600" height="22" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="30" cy="93" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="40" y="97" font-size="12" font-weight="700">name</text>
+  <text x="204" y="97" font-size="11">&quot;test-runner&quot;</text>
+  <rect x="20" y="104" width="600" height="36" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="30" cy="115" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="40" y="119" font-size="12" font-weight="700">description</text>
+  <text x="204" y="119" font-size="11">&quot;Checks out a commit, runs its test suite in a</text>
+  <text x="204" y="134" font-size="11">clean container, and streams the log.&quot;</text>
+  <rect x="20" y="140" width="600" height="22" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="40" y="155" font-size="12">provider</text>
+  <text x="204" y="155" font-size="11">organization &quot;Platform Team&quot;, url &quot;https://ci.example.com&quot;</text>
+  <rect x="20" y="162" width="600" height="22" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="30" cy="173" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="40" y="177" font-size="12" font-weight="700">version</text>
+  <text x="204" y="177" font-size="11">&quot;2.3.0&quot;</text>
+  <text x="610" y="177" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the agent release, not the protocol version</text>
+  <rect x="20" y="184" width="600" height="22" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="5 4"/>
+  <text x="40" y="199" font-size="12" fill="var(--m-ink-mute, #6f6f6a)">documentationUrl</text>
+  <text x="204" y="199" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">not set</text>
+  <rect x="20" y="206" width="600" height="22" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="5 4"/>
+  <text x="40" y="221" font-size="12" fill="var(--m-ink-mute, #6f6f6a)">iconUrl</text>
+  <text x="204" y="221" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">not set</text>
+  <rect x="20" y="228" width="600" height="22" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="5 4"/>
+  <text x="40" y="243" font-size="12" fill="var(--m-ink-mute, #6f6f6a)">signatures</text>
+  <text x="204" y="243" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">not set</text>
+  <text x="610" y="243" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">deployer signs its card (section 2.3)</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="256" width="600" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="272" font-size="11" letter-spacing="1.2" fill="var(--m-blue-ink, #2f5d9a)">WHERE TO REACH IT</text>
+  <text x="204" y="272" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ordered, and the first entry is preferred</text>
+  <rect x="20" y="280" width="600" height="36" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="30" cy="291" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="40" y="295" font-size="12" font-weight="700">supportedInterfaces</text>
+  <text x="204" y="295" font-size="11">[0] JSONRPC, &quot;1.0&quot;, http://localhost:41241/a2a/jsonrpc</text>
+  <text x="204" y="310" font-size="11">[1] HTTP+JSON, &quot;1.0&quot;, http://localhost:41241/a2a/rest</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="322" width="600" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="338" font-size="11" letter-spacing="1.2" fill="var(--m-blue-ink, #2f5d9a)">WHAT IT DEMANDS</text>
+  <text x="204" y="338" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">an absent flag counts the same as false</text>
+  <rect x="20" y="346" width="600" height="22" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="30" cy="357" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="40" y="361" font-size="12" font-weight="700">capabilities</text>
+  <text x="204" y="361" font-size="11">streaming true, pushNotifications true</text>
+  <rect x="20" y="368" width="600" height="22" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="5 4"/>
+  <text x="40" y="383" font-size="12" fill="var(--m-ink-mute, #6f6f6a)">securitySchemes</text>
+  <text x="204" y="383" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">not set</text>
+  <rect x="20" y="390" width="600" height="22" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="5 4"/>
+  <text x="40" y="405" font-size="12" fill="var(--m-ink-mute, #6f6f6a)">securityRequirements</text>
+  <text x="204" y="405" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">not set</text>
+  <text x="610" y="405" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">so calls need no credentials</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="418" width="600" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="434" font-size="11" letter-spacing="1.2" fill="var(--m-blue-ink, #2f5d9a)">WHAT IT OFFERS</text>
+  <text x="204" y="434" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">media types, and skills that describe work</text>
+  <rect x="20" y="442" width="600" height="22" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="30" cy="453" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="40" y="457" font-size="12" font-weight="700">defaultInputModes</text>
+  <text x="204" y="457" font-size="11">&quot;text/plain&quot;, &quot;application/json&quot;</text>
+  <rect x="20" y="464" width="600" height="22" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="30" cy="475" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="40" y="479" font-size="12" font-weight="700">defaultOutputModes</text>
+  <text x="204" y="479" font-size="11">&quot;text/plain&quot;, &quot;application/json&quot;</text>
+  <rect x="20" y="486" width="600" height="36" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <circle cx="30" cy="497" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="40" y="501" font-size="12" font-weight="700">skills</text>
+  <text x="204" y="501" font-size="11">[0] id &quot;run-tests&quot;, name &quot;Run tests&quot;,</text>
+  <text x="204" y="516" font-size="11">tags &quot;ci&quot;, &quot;tests&quot;</text>
+  <text x="610" y="516" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">plus a description and one example</text>
+  </g>
+  <circle cx="30" cy="540" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="40" y="544" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">REQUIRED in proto AgentCard</text>
+  <rect x="250" y="533" width="26" height="14" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="5 4"/>
+  <text x="284" y="544" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">optional, and not set on this card</text>
+</svg>

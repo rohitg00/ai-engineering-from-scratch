@@ -74,8 +74,8 @@ The kernel slides across every valid 3 x 3 window. Output Y is 3 x 3:
 
 給定輸入空間尺寸 `H`、卷積核大小 `K`、填充 `P`、步幅 `S`：
 
-```
-H_out = floor( (H - K + 2P) / S ) + 1
+```math
+H_{\text{out}} = \left\lfloor \frac{H - K + 2P}{S} \right\rfloor + 1
 ```
 
 把它背下來。設計一個架構，你會算上幾十次。

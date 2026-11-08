@@ -1,0 +1,763 @@
+{
+  "evidence_id": "ev_497834aa2a39ddd570f7bb4f3caa52f67eb2425c39528b8cb179d11d146465d6",
+  "subject": {
+    "name": "ledger-arm64-O1",
+    "digest": {
+      "sha256": "01b5d08b08fb94678be5919d0e753d44b505a53107c95b94634f0e5d41c9e375"
+    },
+    "local_path": "$CAPTURE/fixtures/ledger-arm64-O1",
+    "format": "mach-o",
+    "architecture": "arm64"
+  },
+  "provider": {
+    "id": "native-macos",
+    "name": "macOS native inspection utilities",
+    "version": null
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis",
+  "operation": "inspect_macho",
+  "parameters": {},
+  "raw_result": null,
+  "normalized_result": {
+    "format": "mach-o",
+    "selected_architecture": {
+      "name": "arm64",
+      "container_file_offset": 0
+    },
+    "endian": "little",
+    "word_size": 64,
+    "file_type": "2",
+    "flags": [
+      "0x00200085"
+    ],
+    "uuid": "59A1CCA5-97D1-3661-99DA-666BC2BB38D7",
+    "entrypoints": {
+      "items": [
+        {
+          "file_offset": 1488
+        }
+      ],
+      "total": 1,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "architectures": {
+      "items": [
+        {
+          "name": "arm64",
+          "cpu_type": null,
+          "cpu_subtype": null,
+          "file_offset": null,
+          "size": null,
+          "alignment": null
+        }
+      ],
+      "total": 1,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "build_metadata": {
+      "items": [
+        {
+          "platform": "MACOS",
+          "minimum_os": "26.0",
+          "sdk": "26.2",
+          "tools": [
+            {
+              "name": "LD",
+              "version": "1230.1"
+            }
+          ]
+        }
+      ],
+      "total": 1,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "load_commands": {
+      "items": [
+        {
+          "index": 0,
+          "kind": "LC_SEGMENT_64",
+          "fields": {
+            "cmd": "LC_SEGMENT_64",
+            "cmdsize": 72,
+            "segname": "__PAGEZERO",
+            "vmaddr": 0,
+            "vmsize": 4294967296,
+            "fileoff": 0,
+            "filesize": 0,
+            "maxprot": 0,
+            "initprot": 0,
+            "nsects": 0,
+            "flags": 0
+          }
+        },
+        {
+          "index": 1,
+          "kind": "LC_SEGMENT_64",
+          "fields": {
+            "cmd": "LC_SEGMENT_64",
+            "cmdsize": 472,
+            "segname": "__TEXT",
+            "vmaddr": 4294967296,
+            "vmsize": 16384,
+            "fileoff": 0,
+            "filesize": 16384,
+            "maxprot": 5,
+            "initprot": 5,
+            "nsects": 5,
+            "flags": 0
+          }
+        },
+        {
+          "index": 2,
+          "kind": "LC_SEGMENT_64",
+          "fields": {
+            "cmd": "LC_SEGMENT_64",
+            "cmdsize": 232,
+            "segname": "__DATA_CONST",
+            "vmaddr": 4294983680,
+            "vmsize": 16384,
+            "fileoff": 16384,
+            "filesize": 16384,
+            "maxprot": 3,
+            "initprot": 3,
+            "nsects": 2,
+            "flags": 16
+          }
+        },
+        {
+          "index": 3,
+          "kind": "LC_SEGMENT_64",
+          "fields": {
+            "cmd": "LC_SEGMENT_64",
+            "cmdsize": 72,
+            "segname": "__LINKEDIT",
+            "vmaddr": 4295000064,
+            "vmsize": 16384,
+            "fileoff": 32768,
+            "filesize": 1104,
+            "maxprot": 1,
+            "initprot": 1,
+            "nsects": 0,
+            "flags": 0
+          }
+        },
+        {
+          "index": 4,
+          "kind": "LC_DYLD_CHAINED_FIXUPS",
+          "fields": {
+            "cmd": "LC_DYLD_CHAINED_FIXUPS",
+            "cmdsize": 16,
+            "dataoff": 32768,
+            "datasize": 176
+          }
+        },
+        {
+          "index": 5,
+          "kind": "LC_DYLD_EXPORTS_TRIE",
+          "fields": {
+            "cmd": "LC_DYLD_EXPORTS_TRIE",
+            "cmdsize": 16,
+            "dataoff": 32944,
+            "datasize": 104
+          }
+        },
+        {
+          "index": 6,
+          "kind": "LC_SYMTAB",
+          "fields": {
+            "cmd": "LC_SYMTAB",
+            "cmdsize": 24,
+            "symoff": 33056,
+            "nsyms": 13,
+            "stroff": 33304,
+            "strsize": 152
+          }
+        },
+        {
+          "index": 7,
+          "kind": "LC_DYSYMTAB",
+          "fields": {
+            "cmd": "LC_DYSYMTAB",
+            "cmdsize": 80,
+            "ilocalsym": 0,
+            "nlocalsym": 1,
+            "iextdefsym": 1,
+            "nextdefsym": 6,
+            "iundefsym": 7,
+            "nundefsym": 6,
+            "tocoff": 0,
+            "ntoc": 0,
+            "modtaboff": 0,
+            "nmodtab": 0,
+            "extrefsymoff": 0,
+            "nextrefsyms": 0,
+            "indirectsymoff": 33264,
+            "nindirectsyms": 10,
+            "extreloff": 0,
+            "nextrel": 0,
+            "locreloff": 0,
+            "nlocrel": 0
+          }
+        },
+        {
+          "index": 8,
+          "kind": "LC_LOAD_DYLINKER",
+          "fields": {
+            "cmd": "LC_LOAD_DYLINKER",
+            "cmdsize": 32,
+            "name": "/usr/lib/dyld (offset 12)"
+          }
+        },
+        {
+          "index": 9,
+          "kind": "LC_UUID",
+          "fields": {
+            "cmd": "LC_UUID",
+            "cmdsize": 24,
+            "uuid": "59A1CCA5-97D1-3661-99DA-666BC2BB38D7"
+          }
+        },
+        {
+          "index": 10,
+          "kind": "LC_BUILD_VERSION",
+          "fields": {
+            "cmd": "LC_BUILD_VERSION",
+            "cmdsize": 32,
+            "platform": 1,
+            "minos": "26.0",
+            "sdk": "26.2",
+            "ntools": 1,
+            "tool": 3,
+            "version": "1230.1"
+          }
+        },
+        {
+          "index": 11,
+          "kind": "LC_SOURCE_VERSION",
+          "fields": {
+            "cmd": "LC_SOURCE_VERSION",
+            "cmdsize": 16,
+            "version": "0.0"
+          }
+        },
+        {
+          "index": 12,
+          "kind": "LC_MAIN",
+          "fields": {
+            "cmd": "LC_MAIN",
+            "cmdsize": 24,
+            "entryoff": 1488,
+            "stacksize": 0
+          }
+        },
+        {
+          "index": 13,
+          "kind": "LC_LOAD_DYLIB",
+          "fields": {
+            "cmd": "LC_LOAD_DYLIB",
+            "cmdsize": 56,
+            "name": "/usr/lib/libSystem.B.dylib (offset 24)",
+            "time stamp": "2 Thu Jan  1 05:30:02 1970",
+            "current version": "1356.0.0",
+            "compatibility version": "1.0.0"
+          }
+        },
+        {
+          "index": 14,
+          "kind": "LC_FUNCTION_STARTS",
+          "fields": {
+            "cmd": "LC_FUNCTION_STARTS",
+            "cmdsize": 16,
+            "dataoff": 33048,
+            "datasize": 8
+          }
+        },
+        {
+          "index": 15,
+          "kind": "LC_DATA_IN_CODE",
+          "fields": {
+            "cmd": "LC_DATA_IN_CODE",
+            "cmdsize": 16,
+            "dataoff": 33056,
+            "datasize": 0
+          }
+        },
+        {
+          "index": 16,
+          "kind": "LC_CODE_SIGNATURE",
+          "fields": {
+            "cmd": "LC_CODE_SIGNATURE",
+            "cmdsize": 16,
+            "dataoff": 33456,
+            "datasize": 416
+          }
+        }
+      ],
+      "total": 17,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "dependencies": {
+      "items": [
+        {
+          "path": "/usr/lib/libSystem.B.dylib",
+          "kind": "LC_LOAD_DYLIB",
+          "current_version": "1356.0.0",
+          "compatibility_version": "1.0.0"
+        }
+      ],
+      "total": 1,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "imports": {
+      "items": [
+        {
+          "name": "___stack_chk_fail",
+          "address": null,
+          "weak": null,
+          "reexport": null,
+          "source": "libSystem"
+        },
+        {
+          "name": "___stack_chk_guard",
+          "address": null,
+          "weak": null,
+          "reexport": null,
+          "source": "libSystem"
+        },
+        {
+          "name": "___stderrp",
+          "address": null,
+          "weak": null,
+          "reexport": null,
+          "source": "libSystem"
+        },
+        {
+          "name": "_atoi",
+          "address": null,
+          "weak": null,
+          "reexport": null,
+          "source": "libSystem"
+        },
+        {
+          "name": "_fwrite",
+          "address": null,
+          "weak": null,
+          "reexport": null,
+          "source": "libSystem"
+        },
+        {
+          "name": "_printf",
+          "address": null,
+          "weak": null,
+          "reexport": null,
+          "source": "libSystem"
+        }
+      ],
+      "total": null,
+      "exhaustive": false,
+      "limitations": [
+        "dyld_info textual imports may omit chained or toolchain-unsupported metadata."
+      ]
+    },
+    "exports": {
+      "items": [
+        {
+          "name": "__mh_execute_header",
+          "address": "0x100000000",
+          "weak": null,
+          "reexport": false,
+          "source": null
+        },
+        {
+          "name": "_grade",
+          "address": "0x100000518",
+          "weak": null,
+          "reexport": false,
+          "source": null
+        },
+        {
+          "name": "_grade_label",
+          "address": "0x100000588",
+          "weak": null,
+          "reexport": false,
+          "source": null
+        },
+        {
+          "name": "_main",
+          "address": "0x1000005d0",
+          "weak": null,
+          "reexport": false,
+          "source": null
+        },
+        {
+          "name": "_percent_change",
+          "address": "0x100000500",
+          "weak": null,
+          "reexport": false,
+          "source": null
+        },
+        {
+          "name": "_total",
+          "address": "0x100000554",
+          "weak": null,
+          "reexport": false,
+          "source": null
+        }
+      ],
+      "total": null,
+      "exhaustive": false,
+      "limitations": [
+        "Merged nm/dyld_info results may be incomplete for stripped binaries."
+      ]
+    },
+    "segments": {
+      "items": [
+        {
+          "name": "__PAGEZERO",
+          "vm_address": "0x0",
+          "vm_size": 4294967296,
+          "file_offset": 0,
+          "file_size": 0,
+          "maximum_permissions": {
+            "read": false,
+            "write": false,
+            "execute": false,
+            "raw": "0"
+          },
+          "initial_permissions": {
+            "read": false,
+            "write": false,
+            "execute": false,
+            "raw": "0"
+          },
+          "sections": {
+            "items": [],
+            "total": 0,
+            "exhaustive": true,
+            "limitations": []
+          }
+        },
+        {
+          "name": "__TEXT",
+          "vm_address": "0x100000000",
+          "vm_size": 16384,
+          "file_offset": 0,
+          "file_size": 16384,
+          "maximum_permissions": {
+            "read": true,
+            "write": false,
+            "execute": true,
+            "raw": "5"
+          },
+          "initial_permissions": {
+            "read": true,
+            "write": false,
+            "execute": true,
+            "raw": "5"
+          },
+          "sections": {
+            "items": [
+              {
+                "segment": "__TEXT",
+                "name": "__text",
+                "address": "0x100000500",
+                "size": 576,
+                "file_offset": 1280,
+                "alignment": 4,
+                "flags": [
+                  "2147484672"
+                ]
+              },
+              {
+                "segment": "__TEXT",
+                "name": "__stubs",
+                "address": "0x100000740",
+                "size": 48,
+                "file_offset": 1856,
+                "alignment": 4,
+                "flags": [
+                  "2147484680"
+                ]
+              },
+              {
+                "segment": "__TEXT",
+                "name": "__cstring",
+                "address": "0x100000770",
+                "size": 95,
+                "file_offset": 1904,
+                "alignment": 1,
+                "flags": [
+                  "2"
+                ]
+              },
+              {
+                "segment": "__TEXT",
+                "name": "__const",
+                "address": "0x1000007d0",
+                "size": 64,
+                "file_offset": 2000,
+                "alignment": 8,
+                "flags": [
+                  "0"
+                ]
+              },
+              {
+                "segment": "__TEXT",
+                "name": "__unwind_info",
+                "address": "0x100000810",
+                "size": 96,
+                "file_offset": 2064,
+                "alignment": 4,
+                "flags": [
+                  "0"
+                ]
+              }
+            ],
+            "total": 5,
+            "exhaustive": true,
+            "limitations": []
+          }
+        },
+        {
+          "name": "__DATA_CONST",
+          "vm_address": "0x100004000",
+          "vm_size": 16384,
+          "file_offset": 16384,
+          "file_size": 16384,
+          "maximum_permissions": {
+            "read": true,
+            "write": true,
+            "execute": false,
+            "raw": "3"
+          },
+          "initial_permissions": {
+            "read": true,
+            "write": true,
+            "execute": false,
+            "raw": "3"
+          },
+          "sections": {
+            "items": [
+              {
+                "segment": "__DATA_CONST",
+                "name": "__got",
+                "address": "0x100004000",
+                "size": 48,
+                "file_offset": 16384,
+                "alignment": 8,
+                "flags": [
+                  "6"
+                ]
+              },
+              {
+                "segment": "__DATA_CONST",
+                "name": "__const",
+                "address": "0x100004030",
+                "size": 40,
+                "file_offset": 16432,
+                "alignment": 8,
+                "flags": [
+                  "0"
+                ]
+              }
+            ],
+            "total": 2,
+            "exhaustive": true,
+            "limitations": []
+          }
+        },
+        {
+          "name": "__LINKEDIT",
+          "vm_address": "0x100008000",
+          "vm_size": 16384,
+          "file_offset": 32768,
+          "file_size": 1104,
+          "maximum_permissions": {
+            "read": true,
+            "write": false,
+            "execute": false,
+            "raw": "1"
+          },
+          "initial_permissions": {
+            "read": true,
+            "write": false,
+            "execute": false,
+            "raw": "1"
+          },
+          "sections": {
+            "items": [],
+            "total": 0,
+            "exhaustive": true,
+            "limitations": []
+          }
+        }
+      ],
+      "total": 4,
+      "exhaustive": true,
+      "limitations": []
+    },
+    "provenance": [
+      {
+        "tool": "lipo",
+        "command": [
+          "/Library/Developer/CommandLineTools/usr/bin/lipo",
+          "-detailed_info",
+          "$ARTIFACT"
+        ],
+        "tool_version": null,
+        "version_reason": "Tool exposes no uniform stable version flag; executable SHA-256 is a prelaunch file sample and does not prove atomic OS image binding.",
+        "executable_sha256": "599a2ac4c45438877fec1d3be05e24e18bff7ce5c6af486f7ec9e10ad8d60c25",
+        "exit": {
+          "code": 0,
+          "signal": null
+        },
+        "stdout_bytes": 248,
+        "stderr_bytes": 0
+      },
+      {
+        "tool": "otool",
+        "command": [
+          "/Library/Developer/CommandLineTools/usr/bin/llvm-otool",
+          "-h",
+          "-l",
+          "$ARTIFACT"
+        ],
+        "tool_version": null,
+        "version_reason": "Tool exposes no uniform stable version flag; executable SHA-256 is a prelaunch file sample and does not prove atomic OS image binding.",
+        "executable_sha256": "e56ca64a4431f4acbb5f33b3d394cc7dc7461708263a4de62995f095281e1a7a",
+        "exit": {
+          "code": 0,
+          "signal": null
+        },
+        "stdout_bytes": 4399,
+        "stderr_bytes": 0
+      },
+      {
+        "tool": "nm",
+        "command": [
+          "/Library/Developer/CommandLineTools/usr/bin/llvm-nm",
+          "-gjU",
+          "--no-dyldinfo",
+          "$ARTIFACT"
+        ],
+        "tool_version": null,
+        "version_reason": "Tool exposes no uniform stable version flag; executable SHA-256 is a prelaunch file sample and does not prove atomic OS image binding.",
+        "executable_sha256": "51f8e9c766ccaf16986eca9f842cf5a5096af0c608c64bdf8bc16e4bb1d056ff",
+        "exit": {
+          "code": 0,
+          "signal": null
+        },
+        "stdout_bytes": 69,
+        "stderr_bytes": 0
+      },
+      {
+        "tool": "dyld_info",
+        "command": [
+          "/Library/Developer/CommandLineTools/usr/bin/dyld_info",
+          "-imports",
+          "$ARTIFACT"
+        ],
+        "tool_version": null,
+        "version_reason": "Tool exposes no uniform stable version flag; executable SHA-256 is a prelaunch file sample and does not prove atomic OS image binding.",
+        "executable_sha256": "02330ae1ead7ae1887a6aed78a0ca0dce339fbdda900ce1ad1bf960fa7844d09",
+        "exit": {
+          "code": 0,
+          "signal": null
+        },
+        "stdout_bytes": 376,
+        "stderr_bytes": 0
+      },
+      {
+        "tool": "dyld_info",
+        "command": [
+          "/Library/Developer/CommandLineTools/usr/bin/dyld_info",
+          "-exports",
+          "$ARTIFACT"
+        ],
+        "tool_version": null,
+        "version_reason": "Tool exposes no uniform stable version flag; executable SHA-256 is a prelaunch file sample and does not prove atomic OS image binding.",
+        "executable_sha256": "02330ae1ead7ae1887a6aed78a0ca0dce339fbdda900ce1ad1bf960fa7844d09",
+        "exit": {
+          "code": 0,
+          "signal": null
+        },
+        "stdout_bytes": 330,
+        "stderr_bytes": 0
+      },
+      {
+        "tool": "dwarfdump",
+        "command": [
+          "/Library/Developer/CommandLineTools/usr/bin/llvm-dwarfdump",
+          "--uuid",
+          "$ARTIFACT"
+        ],
+        "tool_version": null,
+        "version_reason": "Tool exposes no uniform stable version flag; executable SHA-256 is a prelaunch file sample and does not prove atomic OS image binding.",
+        "executable_sha256": "5ada58c9788de50d0bdb1ee527bf2379a51ce5dec2b3eb1d4a302618ebb7c374",
+        "exit": {
+          "code": 0,
+          "signal": null
+        },
+        "stdout_bytes": 142,
+        "stderr_bytes": 0
+      },
+      {
+        "tool": "vtool",
+        "command": [
+          "/Library/Developer/CommandLineTools/usr/bin/vtool",
+          "-show-build",
+          "$ARTIFACT"
+        ],
+        "tool_version": null,
+        "version_reason": "Tool exposes no uniform stable version flag; executable SHA-256 is a prelaunch file sample and does not prove atomic OS image binding.",
+        "executable_sha256": "e789448e7c3261c4621f643301e87d72791fc67e03a19192997d449a117074d3",
+        "exit": {
+          "code": 0,
+          "signal": null
+        },
+        "stdout_bytes": 236,
+        "stderr_bytes": 0
+      }
+    ],
+    "limitations": [
+      "Imports and exports combine dyld_info and nm; stripped or toolchain-hidden symbols may be absent.",
+      "vtool output is retained as provenance but only otool build metadata is normalized."
+    ]
+  },
+  "confidence": "observed",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Imports and exports combine dyld_info and nm; stripped or toolchain-hidden symbols may be absent.",
+    "vtool output is retained as provenance but only otool build metadata is normalized."
+  ],
+  "relationship_coverage": null,
+  "locations": [
+    {
+      "kind": "file-offset",
+      "offset": 1488
+    },
+    {
+      "kind": "file-offset-range",
+      "start": 0,
+      "end": 16384
+    },
+    {
+      "kind": "file-offset-range",
+      "start": 16384,
+      "end": 32768
+    },
+    {
+      "kind": "file-offset-range",
+      "start": 32768,
+      "end": 33872
+    }
+  ],
+  "evidence_links": []
+}

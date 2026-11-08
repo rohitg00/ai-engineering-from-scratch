@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 350" role="img" aria-labelledby="fig-5-1g-title fig-5-1g-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-1g-title">The same open loop on a 24 GB L4</title>
+  <desc id="fig-5-1g-desc">Poisson arrivals at 0.5 to 16 requests per second on one L4 with Qwen3-8B. Dashed lines show requests completed per second, solid lines show the requests that met a first token under 1 second and a mean time per token under 100 milliseconds. FP8 serves 3.18 requests per second within the target at 4 offered. BF16 peaks at 0.96 within the target at 1 offered, and completes fewer requests as the offered rate rises past 4.</desc>
+  <line x1="66" y1="286" x2="606" y2="286" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="290" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="66" y1="209.33" x2="606" y2="209.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="213.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="66" y1="132.67" x2="606" y2="132.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="136.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="66" y1="56" x2="606" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="60" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="66" y1="286" x2="606" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="56" x2="66" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="286" x2="66" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="66" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0.5</text>
+  <line x1="174" y1="286" x2="174" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="174" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="282" y1="286" x2="282" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="282" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="390" y1="286" x2="390" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="390" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="498" y1="286" x2="498" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="498" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="606" y1="286" x2="606" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="606" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16</text>
+  <text x="336" y="320" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">offered request rate, requests per second (Poisson)</text>
+  <text x="66" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">requests per second</text>
+  <path d="M66.0 263.8 L174.0 245.0 L282.0 208.2 L390.0 146.5 L498.0 67.9 L606.0 70.9" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="66" cy="263.77" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="174" cy="244.98" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="282" cy="208.18" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="390" cy="146.47" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="498" cy="67.88" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="606" cy="70.95" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <path d="M66.0 256.1 L174.0 233.1 L282.0 207.8 L390.0 159.9 L498.0 243.8 L606.0 286.0 L606.0 286.0 L498.0 262.2 L390.0 173.7 L282.0 212.4 L174.0 247.3 L66.0 264.9 Z" fill="var(--m-green-ink, #336b40)" fill-opacity="0.14" stroke="none"/>
+  <path d="M66.0 263.8 L174.0 245.0 L282.0 208.2 L390.0 164.1 L498.0 253.8 L606.0 286.0" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="66" cy="263.77" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="174" cy="244.98" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="282" cy="208.18" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="390" cy="164.1" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="498" cy="253.8" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="606" cy="286" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <path d="M66.0 264.9 L174.0 249.2 L282.0 218.2 L390.0 208.9 L498.0 212.8 L606.0 223.9" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="66" cy="264.92" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="174" cy="249.2" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="282" cy="218.15" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="390" cy="208.95" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="498" cy="212.78" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="606" cy="223.9" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <path d="M66.0 258.4 L174.0 240.0 L282.0 241.9 L390.0 286.0 L498.0 286.0 L606.0 286.0 L606.0 286.0 L498.0 286.0 L390.0 286.0 L282.0 266.4 L174.0 250.7 L66.0 265.7 Z" fill="var(--m-plum-ink, #8a3d72)" fill-opacity="0.14" stroke="none"/>
+  <path d="M66.0 264.9 L174.0 249.2 L282.0 252.3 L390.0 286.0 L498.0 286.0 L606.0 286.0" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="66" cy="264.92" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="174" cy="249.2" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="282" cy="252.27" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="390" cy="286" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="498" cy="286" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="606" cy="286" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <text x="598" y="88.95" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-green-ink, #336b40)">5.61 served</text>
+  <text x="598" y="241.9" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-plum-ink, #8a3d72)">1.62 served</text>
+  <text x="76" y="109.67" font-size="11" class="m-serif" fill="var(--m-green-ink, #336b40)">FP8 at 4 offered: 3.18 within target</text>
+  <path d="M66 18 H84" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="90" y="22" font-size="11" fill="var(--m-green-ink, #336b40)">FP8</text>
+  <path d="M127.8 18 H145.8" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="151.8" y="22" font-size="11" fill="var(--m-plum-ink, #8a3d72)">BF16</text>
+  <path d="M196.20000000000002 18 H214.20000000000002" fill="none" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="220.2" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">served (dashed)</text>
+  <path d="M337.20000000000005 18 H355.20000000000005" fill="none" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="361.2" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">within target (solid)</text>
+  <text x="66" y="340" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">target: first token under 1000 ms and mean time per token under 100 ms, per request</text>
+</svg>

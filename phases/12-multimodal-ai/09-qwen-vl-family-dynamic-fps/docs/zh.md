@@ -71,10 +71,12 @@ Qwen3-VL 是一次鞏固而非重新發明的漸進升級：更大的 LLM 骨幹
 
 古典的 RoPE 用成對的座標，把一個維度為 `d` 的 query `q` 依位置 `m` 旋轉：
 
-```
-q_rot[2i]   = q[2i]   * cos(m * theta_i) - q[2i+1] * sin(m * theta_i)
-q_rot[2i+1] = q[2i]   * sin(m * theta_i) + q[2i+1] * cos(m * theta_i)
-theta_i     = 10000^(-2i/d)
+```math
+\begin{aligned}
+q_{\text{rot}}[2i] &= q[2i] \cos(m \theta_i) - q[2i+1] \sin(m \theta_i) \\
+q_{\text{rot}}[2i+1] &= q[2i] \sin(m \theta_i) + q[2i+1] \cos(m \theta_i) \\
+\theta_i &= 10000^{-2i/d}
+\end{aligned}
 ```
 
 M-RoPE 把隱藏維度切成三個頻帶。假設 `d = 96`。指派 32 維給時間、32 維給高、32 維給寬。每個頻帶依它自己那根軸的位置去旋轉。一個位在 (t=5, h=10, w=20) 的 patch，其三個頻帶會分別套用 `R_t(5)`、`R_h(10)`、`R_w(20)`。

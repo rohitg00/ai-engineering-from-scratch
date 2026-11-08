@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-1-1-title fig-1-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-1-title">Prefill against decode on the capture Mac</title>
+  <desc id="fig-1-1-desc">Two columns from one benchmark run with one request at a time. On the left, prefill runs one forward pass over 512 prompt tokens, writes 512 KV entries, and returns the first token after a median of 162.98 ms, about 0.32 ms per prompt token. On the right, decode runs one forward pass for each of the next 127 tokens, reads every weight and every cached KV entry each time, and takes a mean of 4.38 ms per token.</desc>
+  <defs><marker id="fig-1-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-1-1-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">PREFILL · THE WHOLE PROMPT AT ONCE</text>
+  <text x="336" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">DECODE · ONE TOKEN PER PASS</text>
+  <line x1="320" y1="8" x2="320" y2="298" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="32" width="284" height="44" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="162" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">512 prompt token ids</text>
+  <text x="162" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">random dataset, seed 7</text>
+  <rect x="20" y="110" width="284" height="54" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="162" y="132.25" font-size="12.5" text-anchor="middle" font-weight="700">one forward pass</text>
+  <text x="162" y="149.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">512 tokens in one batch of matmuls</text>
+  <rect x="20" y="198" width="284" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="162" y="215.25" font-size="12.5" text-anchor="middle" font-weight="700">512 KV entries written</text>
+  <text x="162" y="232.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kept for every later step</text>
+  <line x1="162" y1="76" x2="162" y2="109" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-1-1-head-ink)"/>
+  <line x1="162" y1="164" x2="162" y2="197" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-1-1-head-teal)"/>
+  <text x="20" y="270" font-size="12.5" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">median TTFT 162.98 ms</text>
+  <text x="20" y="290" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">about 0.32 ms for each prompt token</text>
+  <rect x="336" y="32" width="284" height="44" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="478" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">1 new token per request</text>
+  <text x="478" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the token decode made last</text>
+  <rect x="336" y="110" width="284" height="54" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="478" y="132.25" font-size="12.5" text-anchor="middle" font-weight="700">one forward pass</text>
+  <text x="478" y="149.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reads every weight for one token</text>
+  <rect x="336" y="198" width="284" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="478" y="215.25" font-size="12.5" text-anchor="middle" font-weight="700">reads 512 + n KV entries</text>
+  <text x="478" y="232.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">and writes one more</text>
+  <line x1="478" y1="76" x2="478" y2="109" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-1-1-head-ink)"/>
+  <line x1="478" y1="198" x2="478" y2="165" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-1-head-ink)"/>
+  <text x="336" y="270" font-size="12.5" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">mean TPOT 4.38 ms</text>
+  <text x="336" y="290" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">repeated for each of the next 127 tokens</text>
+  <text x="20" y="316" font-size="11" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">Qwen3-0.6B-4bit · SGLang 0.5.22 on MLX</text>
+</svg>

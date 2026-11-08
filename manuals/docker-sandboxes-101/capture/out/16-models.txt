@@ -1,0 +1,4 @@
+$ docker-agent models list
+PROVIDER   MODEL             DEFAULT
+dmr        ai/qwen3:latest   *
+[exit 0]

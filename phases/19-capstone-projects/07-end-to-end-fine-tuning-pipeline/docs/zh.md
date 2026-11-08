@@ -1,6 +1,6 @@
 # 綜合專案 07 —— 端到端微調管線（資料到 SFT 到 DPO 到上線）
 
-> 一個以你自己的資料訓練、用你自己的偏好做 DPO 對齊、量化過、配上推測解碼，並以可量測的「每百萬詞元多少錢」上線的 8B 模型。2026 年的開源堆疊是 Axolotl v0.8、TRL 0.15、迭代用 Unsloth、量化用 GPTQ/AWQ/GGUF、上線用 vLLM 0.7 配 EAGLE-3。這個綜合專案就是要可重現地把整條管線跑完 —— 輸入是 YAML，輸出是一個上線端點 —— 並依 2026 年的模型開放性框架發表一份模型卡。
+> 一個以你自己的資料訓練、用你自己的偏好做 DPO 對齊、量化過、配上推測解碼，並以可量測的「每百萬詞元多少錢」上線的 8B 級模型。2026 年的開源堆疊是 Axolotl v0.8、TRL 0.15、迭代用 Unsloth、量化用 GPTQ/AWQ/GGUF、上線用 vLLM 0.7 配 EAGLE-3。這個綜合專案就是要可重現地把整條管線跑完（輸入是 YAML，輸出是一個上線端點），並依 2026 年的模型開放性框架發表一份模型卡。
 
 **類型：** 綜合專案
 **程式語言：** Python (pipeline), YAML (configs), Bash (scripts)
@@ -12,7 +12,7 @@
 
 2026 年每一支認真的 AI 團隊，手邊都備著一條微調管線。不是因為他們要出貨前沿基礎模型，而是因為下游調適 —— 領域 SFT、對著已標註偏好做 DPO、替推測解碼蒸餾草稿模型、用 EAGLE-3 上線 —— 才是可量測的勝利所在。Axolotl v0.8 處理多 GPU 的 SFT 設定。TRL 0.15 處理 DPO 與 GRPO。Unsloth 讓你在單 GPU 上快速迭代。vLLM 0.7 配 EAGLE-3 把解碼吞吐量推高 2-3 倍而不損品質。工具是好用的；手藝在那些 YAML、資料衛生，以及評估紀律上。
 
-你會拿一個 8B 基礎模型（Llama 3.3、Qwen3，或 Gemma 3），在任務專屬資料上跑 SFT 再跑 DPO、為上線做量化，並對照 lm-evaluation-harness、RewardBench-2、MT-Bench-v2 與 MMLU-Pro 量測增益。你會依 2026 年的模型開放性框架產出一份模型卡。重點在可重現性 —— 一行指令就把整條管線從頭到尾重跑一遍。
+你會拿一個 8B 到 14B 的基礎模型（Llama 3.1 8B、Qwen3 14B，或 Gemma 3 12B），在任務專屬資料上跑 SFT 再跑 DPO、為上線做量化，並對照 lm-evaluation-harness、RewardBench-2、MT-Bench-v2 與 MMLU-Pro 量測增益。你會依 2026 年的模型開放性框架產出一份模型卡。重點在可重現性：一行指令就把整條管線從頭到尾重跑一遍。
 
 ## 概念
 
@@ -56,7 +56,7 @@ model card (2026 MOF) + safety eval (Llama Guard 4)
 ## 技術堆疊
 
 - 資料：去重用 Datatrove、品質用 Nemotron-CC 分類器、PII 用 Presidio
-- 基礎模型：Llama 3.3 8B、Qwen3 14B，或 Gemma 3 12B
+- 基礎模型：Llama 3.1 8B、Qwen3 14B，或 Gemma 3 12B
 - SFT：Axolotl v0.8，配 ZeRO-3、Flash Attention 3、序列打包
 - 偏好調校：DPO 或 GRPO 用 TRL 0.15；單 GPU 迭代用 Unsloth
 - 量化：GPTQ（Marlin）、AWQ、經由 llama.cpp 的 GGUF
@@ -120,7 +120,7 @@ $ ./pipeline.sh config/llama3.3-8b-domainX.yaml
 
 1. 在同一份任務專屬基準上跑「只有 SFT」、「SFT+DPO」與「SFT+GRPO」。回報哪一種偏好方法勝出、勝多少。
 
-2. 把 Llama 3.3 8B 換成 Qwen3 14B。在品質相當的前提下量測每百萬詞元花費。
+2. 把 Llama 3.1 8B 換成 Qwen3 14B。在品質相當的前提下量測每百萬詞元花費。
 
 3. 量測 EAGLE-3 在領域資料上與在通用 ShareGPT 上的接受率。回報差值，以及它對延遲預算意味著什麼。
 
@@ -148,5 +148,5 @@ $ ./pipeline.sh config/llama3.3-8b-domainX.yaml
 - [DeepSeek R1 paper (arXiv:2501.12948)](https://arxiv.org/abs/2501.12948) —— GRPO 方法論
 - [vLLM + EAGLE-3 documentation](https://docs.vllm.ai) —— 參考用的服務堆疊
 - [SGLang SpecForge](https://github.com/sgl-project/SpecForge) —— 另一套推測解碼訓練器
-- [Model Openness Framework 2026](https://isocpp.org/) —— 開放發布的評級標準
+- [Model Openness Framework (arXiv:2403.13784)](https://arxiv.org/abs/2403.13784)：開放發布的評級標準
 - [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) —— 經典的評估執行器

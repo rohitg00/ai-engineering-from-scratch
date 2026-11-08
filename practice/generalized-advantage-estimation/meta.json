@@ -1,0 +1,22 @@
+{
+  "id": "generalized-advantage-estimation",
+  "title": "Generalized advantage estimation",
+  "kind": "implement",
+  "summary": "TD errors and GAE advantages with gamma, lambda, done flags and a bootstrap value, plus the critic targets.",
+  "difficulty": "medium",
+  "tags": ["reinforcement-learning", "advantages", "actor-critic", "ppo"],
+  "lesson": "phases/09-reinforcement-learning/07-actor-critic-a2c-a3c",
+  "cheatsheet": "reinforcement-learning",
+  "minutes": 25,
+  "entry": ["td_errors", "gae"],
+  "collections": ["rl-basics"],
+  "time_limit_s": 10,
+  "mutants": {
+    "bootstrap_through_done": "Uses values[t + 1] as the next value also at a done step, so the next episode leaks into the TD error.",
+    "ignores_bootstrap_value": "Uses 0 as the next value at the last step of the batch, so values[T] never enters.",
+    "no_cut_in_recursion": "Does not reset the running advantage at a done step, so the advantage sum crosses episodes.",
+    "no_lambda": "Drops lam from the recursion, so every call computes lam = 1.",
+    "returns_use_next_values": "Adds values[t + 1] to the advantage for the return, not values[t].",
+    "td_no_done_mask": "td_errors ignores the done flags and always adds gamma * values[t + 1]."
+  }
+}

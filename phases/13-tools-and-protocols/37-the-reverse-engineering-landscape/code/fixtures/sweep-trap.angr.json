@@ -1,0 +1,205 @@
+{
+ "tool": "angr",
+ "versions": {
+  "angr": "10.0.3",
+  "pyvex": "10.0.3",
+  "cle": "10.0.3",
+  "archinfo": "10.0.3"
+ },
+ "fixture": "sweep-trap.o",
+ "command": "venv/bin/python capture_angr.py sweep-trap.o OUT.json",
+ "analysis": "angr.Project(path, auto_load_libs=False); project.analyses.CFGFast(normalize=True, data_references=True); project.analyses.Decompiler(function, cfg=cfg.model)",
+ "loader": "ELF",
+ "arch": "AMD64",
+ "base": 4194304,
+ "sections": {
+  ".text": {
+   "vaddr": 4194304,
+   "size": 36
+  }
+ },
+ "relocations": 0,
+ "functions": [
+  {
+   "name": "lookup",
+   "addr": 4194304,
+   "size": 20,
+   "fromSymbol": true,
+   "blocks": [
+    {
+     "addr": 4194304,
+     "size": 16,
+     "instructions": [
+      {
+       "addr": 4194304,
+       "size": 3,
+       "bytes": "4863c7",
+       "text": "movsxd rax, edi"
+      },
+      {
+       "addr": 4194307,
+       "size": 7,
+       "bytes": "488d0d06000000",
+       "text": "lea rcx, [rip + 6]"
+      },
+      {
+       "addr": 4194314,
+       "size": 4,
+       "bytes": "0fb60401",
+       "text": "movzx eax, byte ptr [rcx + rax]"
+      },
+      {
+       "addr": 4194318,
+       "size": 2,
+       "bytes": "eb04",
+       "text": "jmp 0x400014"
+      }
+     ],
+     "vexStatements": 14,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194324,
+     "size": 4,
+     "instructions": [
+      {
+       "addr": 4194324,
+       "size": 3,
+       "bytes": "83c001",
+       "text": "add eax, 1"
+      },
+      {
+       "addr": 4194327,
+       "size": 1,
+       "bytes": "c3",
+       "text": "ret"
+      }
+     ],
+     "vexStatements": 19,
+     "jumpkind": "Ijk_Ret"
+    }
+   ],
+   "edges": [
+    {
+     "from": 4194304,
+     "to": 4194324,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    }
+   ],
+   "decompiled": "int lookup(int a0)\n{\n    return *(char *)(a0 + 4194320) + 1;\n}\n",
+   "decompileError": null
+  },
+  {
+   "name": "sub_400010",
+   "addr": 4194320,
+   "size": 4,
+   "fromSymbol": false,
+   "blocks": [
+    {
+     "addr": 4194320,
+     "size": 4,
+     "instructions": [
+      {
+       "addr": 4194320,
+       "size": 2,
+       "bytes": "31c0",
+       "text": "xor eax, eax"
+      },
+      {
+       "addr": 4194322,
+       "size": 1,
+       "bytes": "90",
+       "text": "nop"
+      }
+     ],
+     "vexStatements": 7,
+     "jumpkind": "Ijk_Boring"
+    }
+   ],
+   "edges": [
+    {
+     "from": 4194320,
+     "to": 4194324,
+     "type": "transition",
+     "outside": true,
+     "target": "BlockNode"
+    }
+   ],
+   "decompiled": null,
+   "decompileError": null
+  },
+  {
+   "name": "sub_400018",
+   "addr": 4194328,
+   "size": 8,
+   "fromSymbol": false,
+   "blocks": [
+    {
+     "addr": 4194328,
+     "size": 8,
+     "instructions": [
+      {
+       "addr": 4194328,
+       "size": 8,
+       "bytes": "0f1f840000000000",
+       "text": "nop dword ptr [rax + rax]"
+      }
+     ],
+     "vexStatements": 1,
+     "jumpkind": "Ijk_Boring"
+    }
+   ],
+   "edges": [
+    {
+     "from": 4194328,
+     "to": 4194336,
+     "type": "transition",
+     "outside": true,
+     "target": "BlockNode"
+    }
+   ],
+   "decompiled": null,
+   "decompileError": null
+  },
+  {
+   "name": "plus_one",
+   "addr": 4194336,
+   "size": 4,
+   "fromSymbol": true,
+   "blocks": [
+    {
+     "addr": 4194336,
+     "size": 4,
+     "instructions": [
+      {
+       "addr": 4194336,
+       "size": 3,
+       "bytes": "8d4701",
+       "text": "lea eax, [rdi + 1]"
+      },
+      {
+       "addr": 4194339,
+       "size": 1,
+       "bytes": "c3",
+       "text": "ret"
+      }
+     ],
+     "vexStatements": 14,
+     "jumpkind": "Ijk_Ret"
+    }
+   ],
+   "edges": [],
+   "decompiled": "int plus_one(unsigned int a0)\n{\n    return a0 + 1;\n}\n",
+   "decompileError": null
+  }
+ ],
+ "memoryData": [
+  {
+   "addr": 4194320,
+   "size": 0,
+   "sort": "code reference"
+  }
+ ]
+}

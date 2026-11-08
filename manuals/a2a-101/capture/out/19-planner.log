@@ -1,0 +1,16 @@
+card test-runner: skills run-tests; JSONRPC at http://localhost:41241/a2a/jsonrpc
+card code-reviewer: skills review-diff, answer-question; JSONRPC at http://localhost:41242/a2a/jsonrpc
+card deployer: skills deploy; JSONRPC at http://localhost:41243/a2a/jsonrpc
+delegate run-tests to test-runner
+  task 954267b7 is TASK_STATE_COMPLETED
+tests: 13 passed
+delegate review-diff to code-reviewer
+  task 80bc7784 is TASK_STATE_INPUT_REQUIRED
+  it asks: Which base branch should I compare this diff against? The planner answers from its own context: main
+  task 80bc7784 is TASK_STATE_COMPLETED
+review: 1 finding, 0 blocking
+delegate deploy to deployer
+  task a31361b3 is TASK_STATE_AUTH_REQUIRED
+  it needs approval: An operator must approve this deploy at http://localhost:41243/approve/a31361b3-6811-49e8-afe9-fbfcafced6f8 The planner cannot approve, so it asks the operator and subscribes.
+  the stream ends at TASK_STATE_COMPLETED
+deploy: TASK_STATE_COMPLETED

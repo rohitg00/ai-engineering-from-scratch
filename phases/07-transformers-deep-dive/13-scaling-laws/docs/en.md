@@ -30,22 +30,24 @@ Hoffmann et al. (2022), training a small family of models called Chinchilla, fou
 
 From the Chinchilla paper, loss follows:
 
-```
-L(N, D) = A / N^α + B / D^β + E
+```math
+L(N, D) = \frac{A}{N^\alpha} + \frac{B}{D^\beta} + E
 ```
 
-- `N` = parameters (non-embedding).
-- `D` = training tokens.
-- `α ≈ 0.34`, `β ≈ 0.28` (roughly symmetric).
-- `E ≈ 1.69`, the irreducible loss ceiling.
-- `A ≈ 406`, `B ≈ 411`.
+- $N$ = parameters (non-embedding).
+- $D$ = training tokens.
+- $\alpha \approx 0.34$, $\beta \approx 0.28$ (roughly symmetric).
+- $E \approx 1.69$, the irreducible loss ceiling.
+- $A \approx 406$, $B \approx 411$.
 
-Two terms trade against each other as you scale. Take the derivative w.r.t. `N` at fixed compute (C = 6ND) and solve:
+Two terms trade against each other as you scale. Take the derivative w.r.t. $N$ at fixed compute ($C = 6ND$) and solve. With the $\alpha$ and $\beta$ above, the exponents come out at about 0.45 for $N$ and 0.55 for $D$, so the exact optimal ratio drifts slowly with budget; `code/main.py` finds it by grid search. The paper's first two fitting approaches, which measure the optimum directly, put both exponents at about 0.5. That gives the empirical rule of a fixed ratio. Set $D = 20N$ in $C = 6ND$ and the rule of thumb reads:
 
-```
-N_opt ≈ 0.6 × (C/6)^0.5
-D_opt ≈ 0.6 × (C/6)^0.5
-D_opt / N_opt ≈ 20
+```math
+\begin{aligned}
+N_{\text{opt}} &\approx 0.22 \times (C/6)^{0.5} \\
+D_{\text{opt}} &\approx 4.5 \times (C/6)^{0.5} \\
+D_{\text{opt}} / N_{\text{opt}} &\approx 20
+\end{aligned}
 ```
 
 Compute-optimal: 20 tokens per parameter.
@@ -90,7 +92,7 @@ scaling-laws
 
 ## Build It
 
-See `code/main.py`. We implement the Chinchilla loss equation and solve for compute-optimal `(N, D)` at each of several compute budgets.
+See `code/main.py`. We implement the Chinchilla loss equation and solve for compute-optimal $(N, D)$ at each of several compute budgets.
 
 ### Step 1: Chinchilla loss
 
@@ -99,11 +101,11 @@ def chinchilla_loss(N, D, A=406.4, B=410.7, alpha=0.34, beta=0.28, E=1.69):
     return A / N ** alpha + B / D ** beta + E
 ```
 
-Plot `L` as a contour over `(N, D)` at fixed `C = 6ND`. Find the minimum.
+Plot $L$ as a contour over $(N, D)$ at fixed $C = 6ND$. Find the minimum.
 
 ### Step 2: compute-optimal frontier
 
-For compute budgets from `1e17` to `1e25` FLOPs, find `(N, D)` that minimize loss subject to `6ND = C`. Verify the ratio `D/N ≈ 20`.
+For compute budgets from `1e17` to `1e25` FLOPs, find $(N, D)$ that minimize loss subject to $6ND = C$. Verify the ratio $D/N \approx 20$.
 
 ### Step 3: over-training cost
 
@@ -133,9 +135,9 @@ See `outputs/skill-training-budget-estimator.md`. The skill picks `(N, D, hours,
 
 ## Exercises
 
-1. **Easy.** Run `code/main.py`. Print Chinchilla-optimal `(N, D)` for compute budgets `1e20`, `1e22`, `1e24`. Compare to the real model table.
-2. **Medium.** Implement the Hoffmann loss-as-function-of-compute curve. Plot loss vs `log10(C)` for the compute-optimal frontier. Identify when the law predicts we'd need `>10^28` FLOPs for the next 0.1 reduction in cross-entropy.
-3. **Hard.** Fit your own scaling law on 5 tiny models (100K to 10M params) trained on the same dataset. Estimate `α` and `E`. How well do your exponents match published ones?
+1. **Easy.** Run `code/main.py`. Print Chinchilla-optimal $(N, D)$ for compute budgets `1e20`, `1e22`, `1e24`. Compare to the real model table.
+2. **Medium.** Implement the Hoffmann loss-as-function-of-compute curve. Plot loss vs `log10(C)` for the compute-optimal frontier. Identify when the law predicts we'd need $>10^{28}$ FLOPs for the next 0.1 reduction in cross-entropy.
+3. **Hard.** Fit your own scaling law on 5 tiny models (100K to 10M params) trained on the same dataset. Estimate $\alpha$ and $E$. How well do your exponents match published ones?
 
 ## Key Terms
 
@@ -146,7 +148,7 @@ See `outputs/skill-training-budget-estimator.md`. The skill picks `(N, D, hours,
 | Compute (C) | "FLOPs spent" | Approximately `6 × N × D` for a standard transformer. |
 | Chinchilla-optimal | "D/N ≈ 20" | Ratio that minimizes loss per FLOP of pretraining. |
 | Over-training | "Past Chinchilla" | Spend extra training FLOPs to save inference FLOPs; D/N >> 20. |
-| Irreducible loss | "The floor" | The `E` term in the scaling law; the entropy of the data itself. |
+| Irreducible loss | "The floor" | The $E$ term in the scaling law; the entropy of the data itself. |
 | Emergent capability | "Sudden jumps at scale" | Often a scorer artifact; continuous loss is smooth. |
 | Effective compute | "Training-efficiency multiplier" | Better data / optimizer / architecture multiplies how far a FLOP goes. |
 

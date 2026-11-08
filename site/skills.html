@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skills - AI Engineering from Scratch</title>
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="Skills for your coding agent from AI Engineering from Scratch. They start the course, teach lessons, prepare you for certifications, and make figures and manuals.">
+  <link rel="canonical" href="https://aiengineeringfromscratch.com/skills.html">
+  <link rel="alternate" type="text/markdown" href="https://aiengineeringfromscratch.com/skills.md">
+  <meta property="og:title" content="Skills · AI Engineering from Scratch">
+  <meta property="og:description" content="18 skills for your coding agent: course lessons, level tests, certification prep, and figure and manual tools.">
+  <meta property="og:image" content="https://aiengineeringfromscratch.com/og/page/skills.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Skills for your coding agent - AI Engineering from Scratch">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og/page/skills.png">
+  <meta name="twitter:image:alt" content="Skills for your coding agent - AI Engineering from Scratch">
+  <meta property="og:url" content="https://aiengineeringfromscratch.com/skills.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:title" content="Skills · AI Engineering from Scratch">
+  <meta name="twitter:description" content="18 skills for your coding agent: course lessons, level tests, certification prep, and figure and manual tools.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261015a">
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var stored = '';
+      try { stored = localStorage.getItem('theme') || ''; } catch (_) {}
+      root.setAttribute('data-theme', stored || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    })();
+  </script>
+  <style>:root {
+  --m-paper: #fafaf5;
+  --m-panel: #f3f1e8;
+  --m-panel-edge: #e4e1d4;
+  --m-ink: #1a1a1a;
+  --m-ink-soft: #4a4a4a;
+  --m-ink-mute: #6f6f6a;
+  --m-rule: rgba(26, 26, 26, 0.16);
+  --m-rule-strong: rgba(26, 26, 26, 0.42);
+  --m-accent: #3553ff;
+  --m-code-bg: #efece0;
+  --m-shine: #ffffff;
+  --m-shade: #1a1a1a;
+
+  --m-grey-ink: #5e5e59;
+  --m-grey-fill: #ecebe3;
+  --m-blue-ink: #2f5d9a;
+  --m-blue-fill: #e6edf6;
+  --m-teal-ink: #18696a;
+  --m-teal-fill: #e1efee;
+  --m-violet-ink: #5b4fa3;
+  --m-violet-fill: #ebe8f5;
+  --m-green-ink: #336b40;
+  --m-green-fill: #e5f0e4;
+  --m-amber-ink: #85590c;
+  --m-amber-fill: #f5ecd9;
+  --m-plum-ink: #8a3d72;
+  --m-plum-fill: #f4e6ef;
+  --m-olive-ink: #515f26;
+  --m-olive-fill: #eef0dc;
+  --m-indigo-ink: #4b4f9e;
+  --m-indigo-fill: #e9e9f6;
+  --m-rose-ink: #b0344d;
+  --m-rose-fill: #f7e4e7;
+
+  --m-font-display: 'VT323', ui-monospace, 'JetBrains Mono', monospace;
+  --m-font-body: 'Source Serif 4', 'Source Serif Pro', 'Iowan Old Style', Georgia, serif;
+  --m-font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+}
+
+[data-theme="dark"] {
+  --m-paper: #0a0d1a;
+  --m-panel: #121729;
+  --m-panel-edge: #232a45;
+  --m-ink: #e8e6dc;
+  --m-ink-soft: #b4b2aa;
+  --m-ink-mute: #8a8882;
+  --m-rule: rgba(232, 230, 220, 0.18);
+  --m-rule-strong: rgba(232, 230, 220, 0.45);
+  --m-accent: #6b8eff;
+  --m-code-bg: #131830;
+  --m-shine: #3a4266;
+  --m-shade: #000000;
+
+  --m-grey-ink: #b9b7ae;
+  --m-grey-fill: rgba(232, 230, 220, 0.08);
+  --m-blue-ink: #8fb3e8;
+  --m-blue-fill: rgba(110, 150, 220, 0.16);
+  --m-teal-ink: #6cc4c2;
+  --m-teal-fill: rgba(80, 180, 175, 0.15);
+  --m-violet-ink: #b3a8ec;
+  --m-violet-fill: rgba(150, 135, 230, 0.16);
+  --m-green-ink: #8fcf98;
+  --m-green-fill: rgba(110, 190, 120, 0.15);
+  --m-amber-ink: #e0b45c;
+  --m-amber-fill: rgba(220, 170, 70, 0.15);
+  --m-plum-ink: #e29ccb;
+  --m-plum-fill: rgba(220, 130, 190, 0.15);
+  --m-olive-ink: #c3cf7e;
+  --m-olive-fill: rgba(180, 190, 100, 0.15);
+  --m-indigo-ink: #a9adf0;
+  --m-indigo-fill: rgba(140, 145, 235, 0.16);
+  --m-rose-ink: #f08aa0;
+  --m-rose-fill: rgba(235, 110, 135, 0.16);
+}
+.sk { padding: 104px 0 56px; overflow-x: clip; }
+.sk-hero { padding-bottom: 28px; border-bottom: 1px solid var(--rule-soft); }
+.sk-eyebrow { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--blueprint); margin: 0 0 12px; }
+.sk h1 { font-family: var(--font-display); font-size: clamp(3rem, 9vw, 6rem); line-height: 0.9; letter-spacing: 0.02em; text-transform: uppercase; margin: 0 0 18px; color: var(--ink); }
+.sk-lede { max-width: 58ch; font-size: 1.15rem; line-height: 1.55; margin: 0 0 24px; color: var(--ink); }
+.sk-install { max-width: 720px; border: 1px solid var(--rule-soft); background: var(--bg-surface); font-family: var(--font-mono); font-size: 0.84rem; }
+.sk-install-bar { display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; border-bottom: 1px solid var(--rule-soft); color: var(--ink-mute); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.sk-install pre { margin: 0; padding: 14px 12px; overflow-x: auto; background: none; border: 0; }
+.sk-install pre code { font-size: 0.95rem; color: var(--ink); }
+.sk-install p { margin: 0; padding: 10px 12px 12px; border-top: 1px solid var(--paper-rule); font-family: var(--font-body); font-size: 0.9rem; color: var(--ink-soft); }
+.sk-index { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 22px; }
+.sk-index a { display: inline-flex; gap: 8px; align-items: baseline; padding: 6px 12px; border: 1px solid var(--rule-soft); background: var(--bg); color: var(--ink); text-decoration: none; font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.06em; text-transform: uppercase; transition: border-color var(--motion-feedback) ease; }
+.sk-index a span { color: var(--ink-mute); }
+.sk-index a:hover, .sk-index a:focus-visible { border-color: var(--blueprint); color: var(--blueprint); }
+
+.sk-group { padding: 44px 0 8px; border-bottom: 1px solid var(--rule-soft); scroll-margin-top: 80px; }
+.sk-group-head { display: grid; grid-template-columns: 72px 1fr; gap: 12px; align-items: baseline; margin-bottom: 20px; }
+.sk-num { font-family: var(--font-display); font-size: 2.6rem; line-height: 1; color: var(--blueprint); }
+.sk h2 { font-family: var(--font-mono); font-size: 1rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); margin: 0 0 4px; }
+.sk-group-head p { margin: 0; color: var(--ink-soft); }
+.sk-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 14px; margin-bottom: 36px; }
+.sk-card { display: flex; flex-direction: column; gap: 10px; min-width: 0; padding: 16px 18px; border: 1px solid var(--rule-soft); background: var(--bg); transition: border-color var(--motion-feedback) ease; scroll-margin-top: 90px; }
+.sk-card:hover, .sk-card:target { border-color: var(--blueprint); }
+.sk-card header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.sk-card h3 { margin: 0; font-size: 1rem; }
+.sk-card h3 code { font-family: var(--font-mono); font-weight: 600; color: var(--blueprint); background: none; padding: 0; }
+.sk-version { font-family: var(--font-mono); font-size: 0.68rem; color: var(--ink-mute); }
+.sk-line { margin: 0; font-size: 0.98rem; line-height: 1.55; color: var(--ink); }
+.sk-card dl { display: grid; grid-template-columns: 60px 1fr; gap: 4px 10px; margin: 0; font-size: 0.86rem; }
+.sk-card dt { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); padding-top: 3px; }
+.sk-card dd { margin: 0; color: var(--ink-soft); }
+.sk-card q { quotes: none; display: inline-block; margin: 0 4px 4px 0; padding: 1px 7px; border: 1px solid var(--rule-soft); background: var(--bg-surface); font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink); }
+.sk-card footer { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin-top: auto; padding-top: 8px; border-top: 1px solid var(--paper-rule); font-family: var(--font-mono); font-size: 0.74rem; }
+.sk-card footer a { color: var(--blueprint); text-decoration: none; }
+.sk-card footer a:hover { text-decoration: underline; }
+.sk-copy { min-height: 30px; padding: 4px 10px; border: 1px solid var(--ink); background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; transition: background-color var(--motion-feedback) ease, color var(--motion-feedback) ease; }
+.sk-copy:hover, .sk-copy:focus-visible { background: var(--ink); color: var(--bg); }
+.sk-copy:active { transform: scale(0.97); }
+
+.sk-card--example { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); grid-template-rows: auto auto auto 1fr; gap: 10px 28px; }
+.sk-card--example > * { grid-column: 1; }
+.sk-card--example > .sk-example { grid-column: 2; grid-row: 1 / span 4; align-self: start; }
+.sk-card--example > footer { align-self: end; }
+.sk-example { display: grid; gap: 8px; color: var(--ink); text-decoration: none; border: 1px solid var(--paper-rule); background: var(--bg-surface); padding: 10px; }
+.sk-example > span { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--blueprint); }
+.sk-example img, .sk-example svg { display: block; width: 100%; height: auto; }
+.sk-example--svg svg { max-height: 300px; }
+.sk-example--text strong { font-family: var(--font-display); font-size: 1.8rem; text-transform: uppercase; font-weight: 400; }
+.sk-example--text > span { font-family: var(--font-body); font-size: 0.92rem; color: var(--ink-soft); }
+.sk-example--live .lesson-figure { margin: 0; }
+.sk-swatches { grid-template-columns: repeat(5, 1fr); }
+.sk-swatches i { display: block; height: 44px; border: 1px solid var(--rule-soft); }
+.sk-swatches > span { grid-column: 1 / -1; }
+.sk-dark { display: none !important; }
+[data-theme="dark"] .sk-dark { display: block !important; }
+[data-theme="dark"] .sk-light { display: none !important; }
+
+.sk-band { margin: 0 0 26px; }
+
+.sl { --sl-ease: cubic-bezier(0.23, 1, 0.32, 1); margin: 0; display: grid; gap: 12px; border: 1px solid var(--rule-soft); background: var(--bg); padding: 0 0 12px; }
+.sl-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 6px 12px; border-bottom: 1px solid var(--rule-soft); background: var(--bg-surface); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+.sl-head button, .sl-ask { min-height: 40px; padding: 0 12px; border: 1px solid var(--ink); background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.02em; cursor: pointer; transition: transform 140ms var(--sl-ease), background-color 160ms ease, color 160ms ease, border-color 160ms ease; }
+.sl-head button { min-height: 32px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+.sl-head button:active, .sl-ask:active { transform: scale(0.96); }
+.sl-ask[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+@media (hover: hover) and (pointer: fine) { .sl-ask:hover, .sl-head button:hover { border-color: var(--blueprint); } }
+.sl-note { margin: 0 12px; font-size: 0.95rem; line-height: 1.5; color: var(--ink-soft); }
+.sl-asks { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 12px; }
+.sl-pane { margin: 0 12px; border: 1px solid var(--rule-soft); padding: 8px 10px 10px; min-width: 0; }
+.sl-pane h4 { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; margin: 0 0 8px; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+.sl-pane h4 span:last-child { color: var(--ink); letter-spacing: 0.02em; }
+.sl ol { list-style: none; margin: 0; padding: 0; }
+.sl-always { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px 10px; }
+.sl-always li { display: flex; justify-content: space-between; gap: 8px; padding: 3px 6px; border: 1px solid transparent; font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft); transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease; }
+.sl-always li b { font-weight: 400; color: var(--ink-soft); }
+.sl-always li.sl-match { border-color: var(--blueprint); color: var(--blueprint); background: var(--bg-surface); }
+.sl-always li.sl-match b { color: var(--blueprint); }
+.sl-loaded { display: grid; gap: 8px; min-height: 40px; }
+.sl-loaded li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; font-family: var(--font-mono); font-size: 12.5px; transition: transform 260ms var(--sl-ease), opacity 260ms var(--sl-ease); }
+.sl-loaded li.sl-enter { opacity: 0; transform: translateY(6px); }
+.sl-loaded .sl-path { overflow-wrap: anywhere; color: var(--ink); }
+.sl-loaded .sl-ref .sl-path { padding-left: 14px; color: var(--ink-soft); }
+.sl-loaded b { font-weight: 500; color: var(--blueprint); }
+.sl-bar { grid-column: 1 / -1; display: block; position: relative; height: 8px; background: var(--bg-surface); }
+.sl-bar i { position: relative; display: block; height: 100%; background: var(--blueprint); }
+.sl-bar i::before, .sl-bar i::after { content: ''; position: absolute; top: 0; bottom: 0; width: 8px; background: var(--bg-surface); -webkit-mask: var(--sl-dots-lo) repeat; mask: var(--sl-dots-lo) repeat; }
+.sl-bar i::before { right: 8px; }
+.sl-bar i::after { right: 0; -webkit-mask: var(--sl-dots-hi) repeat; mask: var(--sl-dots-hi) repeat; }
+.sl-bar em { position: absolute; inset: 0; background: var(--bg-surface); -webkit-mask: var(--sl-dots-mid) repeat; mask: var(--sl-dots-mid) repeat; animation: sl-veil 480ms steps(4, end) both; }
+@keyframes sl-veil { from { opacity: 1; } to { opacity: 0; } }
+.sl-meter { margin: 0 12px; }
+.sl-meter p { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; margin: 0 0 6px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+.sl-meter p span:last-child { color: var(--ink); letter-spacing: 0.02em; text-transform: none; font-size: 12.5px; }
+.sl-track { position: relative; height: 14px; background: var(--bg-surface); overflow: hidden; }
+.sl-track::before { content: ''; position: absolute; inset: 0; background: var(--ink); -webkit-mask: var(--sl-dots-ghost) repeat; mask: var(--sl-dots-ghost) repeat; opacity: 0.35; }
+.sl-track i { position: absolute; inset: 0; background: var(--blueprint); transform-origin: left center; transform: scaleX(0.004); transition: transform 300ms var(--sl-ease); }
+.sl-verdict { margin: 0 12px; padding: 10px 12px; border: 1px solid var(--blueprint); background: var(--bg-surface); font-family: var(--font-mono); font-size: 12.5px; line-height: 1.55; color: var(--ink); }
+
+.sk-artifacts { max-width: 760px; margin-bottom: 36px; }
+.sk-artifacts pre { padding: 12px 14px; border: 1px solid var(--rule-soft); background: var(--code-bg); overflow-x: auto; font-size: 0.82rem; }
+.sk-artifacts a, .sk-how a { color: var(--blueprint); }
+
+.sk-how { padding: 44px 0 12px; }
+.sk-how > h2 { margin-bottom: 18px; color: var(--blueprint); }
+
+.sk-cta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 40px; padding: 22px; border: 1px solid var(--ink); background: var(--bg-surface); }
+.sk-cta p { flex: 1 1 260px; margin: 0; font-family: var(--font-display); font-size: 2rem; line-height: 1; text-transform: uppercase; }
+.sk-btn { display: inline-flex; align-items: center; min-height: 44px; padding: 9px 16px; border: 1px solid var(--ink); background: var(--bg); color: var(--ink); font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.04em; text-transform: uppercase; text-decoration: none; }
+.sk-btn--primary { background: var(--blueprint); border-color: var(--blueprint); color: #fff; }
+.sk-btn:hover, .sk-btn:focus-visible { background: var(--ink); color: var(--bg); }
+.sk-btn--primary:hover, .sk-btn--primary:focus-visible { background: var(--accent-hover); color: #fff; }
+
+@media (max-width: 760px) {
+  .sk { padding-top: 88px; }
+  .sk-card--example { display: flex; }
+  .sk-group-head { grid-template-columns: 48px 1fr; }
+  .sk-num { font-size: 2rem; }
+  .sk-cta p { font-size: 1.6rem; }
+  .sl-always { grid-template-columns: 1fr; }
+}
+@media (max-width: 400px) {
+  .sl-always li { font-size: 11px; padding: 3px 4px; }
+  .sl-pane, .sl-note, .sl-asks, .sl-meter, .sl-verdict { margin-left: 8px; margin-right: 8px; }
+  .sk-example { padding: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sk-copy, .sk-card, .sk-index a, .sl-ask, .sl-head button, .sl-always li, .sl-loaded li, .sl-track i { transition: none; }
+  .sl-bar em { animation: none; opacity: 0; }
+}
+#motion-figure.sk-card--example { display: flex; }
+#motion-figure.sk-card--example > footer { align-self: stretch; }
+.sk-example svg .m-serif { font-family: var(--m-font-body); }
+.sk-how > p { max-width: 68ch; margin: 0 0 12px; color: var(--ink-soft); line-height: 1.6; }
+.sk-how q { quotes: none; font-family: var(--font-mono); font-size: 0.86rem; color: var(--ink); }
+.sk-example svg { fill: var(--m-ink); }
+</style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo"><span class="logo-icon" aria-hidden="true"></span> AI / FROM SCRATCH</a>
+      <nav class="header-nav">
+        <a href="index.html#contents">Contents</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="skills.html">Skills</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="about.html">About</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">GitHub <span class="star-count" data-loading="true" aria-label="GitHub stars">…</span></a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button"><span class="theme-icon" id="themeIcon">N</span></button>
+    </div>
+  </header>
+
+  <main id="main" class="sk">
+    <section class="sk-hero container">
+      <div class="dither sk-band" data-seed="skills" data-label="18 skills · for your agent" aria-hidden="true"></div>
+      <p class="sk-eyebrow">FIG_SKL · Skills for your coding agent</p>
+      <h1>Skills</h1>
+      <p class="sk-lede">A skill is a short instruction file. Your agent reads it when your request matches the skill, then follows its steps. These 18 skills teach the course, test your level, and make figures and manuals.</p>
+      <div class="sk-install">
+        <div class="sk-install-bar"><span>Install all 18</span><button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch">Copy</button></div>
+        <pre><code>npx skills add rohitg00/ai-engineering-from-scratch</code></pre>
+        <p>One skill: add <code>--skill &lt;name&gt;</code>. List them first: add <code>--list</code>. Works with Claude, Cursor, Codex, OpenClaw, Hermes, or any agent that reads SKILL.md.</p>
+      </div>
+      <nav class="sk-index" aria-label="Skill groups"><a href="#start"><span>01</span>Start</a><a href="#learn"><span>02</span>Learn and practise</a><a href="#paths"><span>03</span>Focused paths</a><a href="#certify"><span>04</span>Certification prep</a><a href="#interview"><span>05</span>Interview practice</a><a href="#make"><span>06</span>Make figures and manuals</a><a href="#artifacts"><span>07</span>Lesson artifacts</a></nav>
+    </section>
+
+    <div class="container">
+      <section class="sk-group" id="start" aria-labelledby="start-title">
+        <div class="sk-group-head">
+          <span class="sk-num">01</span>
+          <div><h2 id="start-title">Start</h2><p>Use these once, on your first day with the course.</p></div>
+        </div>
+        <div class="sk-cards">
+        <article class="sk-card" id="start-learning">
+          <header><h3><code>/start-learning</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">Asks about your goals and time, runs the placement quiz, and writes a study plan the other skills follow.</p>
+          <dl>
+            <dt>Say</dt><dd><q>start learning</q> <q>set up the course</q></dd>
+            <dt>Writes</dt><dd>LEARNING.md</dd>
+          </dl>
+          
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill start-learning" aria-label="Copy the install command for start-learning">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/start-learning/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        <article class="sk-card" id="find-your-level">
+          <header><h3><code>/find-your-level</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">A short adaptive quiz that tells you which phase to start in and which lessons you can skip.</p>
+          <dl>
+            <dt>Say</dt><dd><q>find my level</q> <q>where should I start</q></dd>
+            <dt>Writes</dt><dd>Nothing. It prints a starting point.</dd>
+          </dl>
+          
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill find-your-level" aria-label="Copy the install command for find-your-level">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/find-your-level/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        <article class="sk-card" id="course-guide">
+          <header><h3><code>/course-guide</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">Give it a topic, a question, or an error. It names the lessons that teach it and the next command to run.</p>
+          <dl>
+            <dt>Say</dt><dd><q>which lesson covers RAG</q> <q>I am stuck on attention</q></dd>
+            <dt>Writes</dt><dd>Nothing. It points you to lessons.</dd>
+          </dl>
+          
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill course-guide" aria-label="Copy the install command for course-guide">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/course-guide/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        </div>
+      </section>
+      <section class="sk-group" id="learn" aria-labelledby="learn-title">
+        <div class="sk-group-head">
+          <span class="sk-num">02</span>
+          <div><h2 id="learn-title">Learn and practise</h2><p>Use these every session. They read and update your plan.</p></div>
+        </div>
+        <div class="sk-cards">
+        <article class="sk-card" id="learn">
+          <header><h3><code>/learn</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">Teaches your next lesson section by section in the terminal, asks questions, and records what you finished.</p>
+          <dl>
+            <dt>Say</dt><dd><q>/learn</q> <q>teach me the next lesson</q></dd>
+            <dt>Writes</dt><dd>LEARNING.md</dd>
+          </dl>
+          
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill learn" aria-label="Copy the install command for learn">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/learn/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        <article class="sk-card" id="lesson-screen">
+          <header><h3><code>/lesson-screen</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">Opens a screen in your browser next to the terminal. It shows the lesson figure for each step and traces the code with real values. It also builds a figure for your lesson while you learn, from a blueprint to a 3D model. After the quiz, it writes a practice page with a timed drill and spaced review. Without a local browser, it gives you the lesson page instead.</p>
+          <dl>
+            <dt>Say</dt><dd><q>open the lesson screen</q> <q>build a figure for this lesson</q></dd>
+            <dt>Writes</dt><dd>A .lesson-screen folder with each screen it showed</dd>
+          </dl>
+          
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill lesson-screen" aria-label="Copy the install command for lesson-screen">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/lesson-screen/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        <article class="sk-card" id="check-understanding">
+          <header><h3><code>/check-understanding</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">Quizzes you on a phase and tells you which lessons to read again before you move on.</p>
+          <dl>
+            <dt>Say</dt><dd><q>quiz me on phase 3</q> <q>check my understanding</q></dd>
+            <dt>Writes</dt><dd>Nothing. It prints your score and what to review.</dd>
+          </dl>
+          
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill check-understanding" aria-label="Copy the install command for check-understanding">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/check-understanding/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        <article class="sk-card" id="build-project">
+          <header><h3><code>/build-project</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">Guides one stage of a course project per session. It gives hints only. You write the code and run the stage grader.</p>
+          <dl>
+            <dt>Say</dt><dd><q>build a project</q> <q>continue my project</q></dd>
+            <dt>Writes</dt><dd>PROJECTS-LEARNING.md</dd>
+          </dl>
+          
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill build-project" aria-label="Copy the install command for build-project">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/build-project/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        </div>
+      </section>
+      <section class="sk-group" id="paths" aria-labelledby="paths-title">
+        <div class="sk-group-head">
+          <span class="sk-num">03</span>
+          <div><h2 id="paths-title">Focused paths</h2><p>Use these to study one topic lesson by lesson.</p></div>
+        </div>
+        <div class="sk-cards">
+        <article class="sk-card" id="learn-mcp">
+          <header><h3><code>/learn-mcp</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">One lesson at a time through the Model Context Protocol path: clients, servers, transports, security, gateways, and conformance.</p>
+          <dl>
+            <dt>Say</dt><dd><q>teach me MCP</q> <q>continue the MCP path</q></dd>
+            <dt>Writes</dt><dd>MCP-LEARNING.md</dd>
+          </dl>
+          
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill learn-mcp" aria-label="Copy the install command for learn-mcp">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/learn-mcp/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        <article class="sk-card" id="learn-agent-skills">
+          <header><h3><code>/learn-agent-skills</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">One lesson at a time through the Agent Skills path: write, find, run, secure, test, package, and port skills.</p>
+          <dl>
+            <dt>Say</dt><dd><q>teach me agent skills</q> <q>continue the skills path</q></dd>
+            <dt>Writes</dt><dd>AGENT-SKILLS-LEARNING.md</dd>
+          </dl>
+          
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill learn-agent-skills" aria-label="Copy the install command for learn-agent-skills">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/learn-agent-skills/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        <article class="sk-card" id="learn-reverse-engineering">
+          <header><h3><code>/learn-reverse-engineering</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">One lesson at a time through the Reverse Engineering path: read a compiled program you built, decode it, lift it, record evidence, and prove a rebuild equal.</p>
+          <dl>
+            <dt>Say</dt><dd><q>teach me reverse engineering</q> <q>continue the reverse engineering path</q></dd>
+            <dt>Writes</dt><dd>REVERSE-ENGINEERING-LEARNING.md</dd>
+          </dl>
+          
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill learn-reverse-engineering" aria-label="Copy the install command for learn-reverse-engineering">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/learn-reverse-engineering/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        </div>
+      </section>
+      <section class="sk-group" id="certify" aria-labelledby="certify-title">
+        <div class="sk-group-head">
+          <span class="sk-num">04</span>
+          <div><h2 id="certify-title">Certification prep</h2><p>Use these to prepare for an exam with lessons, labs, and timed practice.</p></div>
+        </div>
+        <div class="sk-cards">
+        <article class="sk-card" id="claude-certification">
+          <header><h3><code>/claude-certification</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">Tutor for the four independent Claude certification tracks: choose a track, learn lesson by lesson, run labs, and take practice exams.</p>
+          <dl>
+            <dt>Say</dt><dd><q>prepare for the Claude certification</q> <q>resume my certification</q></dd>
+            <dt>Writes</dt><dd>CLAUDE-CERTIFICATION.md</dd>
+          </dl>
+          
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill claude-certification" aria-label="Copy the install command for claude-certification">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/claude-certification/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        <article class="sk-card" id="mcpa-certification">
+          <header><h3><code>/mcpa-certification</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">Tutor for the Model Context Protocol Associate exam: lessons, practical labs, and practice questions with feedback.</p>
+          <dl>
+            <dt>Say</dt><dd><q>prepare for MCPA</q> <q>MCPA practice exam</q></dd>
+            <dt>Writes</dt><dd>MCPA-CERTIFICATION.md</dd>
+          </dl>
+          
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill mcpa-certification" aria-label="Copy the install command for mcpa-certification">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/mcpa-certification/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        </div>
+      </section>
+      <section class="sk-group" id="interview" aria-labelledby="interview-title">
+        <div class="sk-group-head">
+          <span class="sk-num">05</span>
+          <div><h2 id="interview-title">Interview practice</h2><p>Use this to practise for an AI engineering interview, one question or one incident at a time.</p></div>
+        </div>
+        <div class="sk-cards">
+        <article class="sk-card" id="interview-prep">
+          <header><h3><code>/interview-prep</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">Asks one interview question or one incident scenario and waits for your answer. Then it grades the answer against the interview bank, asks follow-ups one at a time, and sends each gap to the lesson or manual section that teaches it.</p>
+          <dl>
+            <dt>Say</dt><dd><q>mock interview</q> <q>run an incident scenario</q></dd>
+            <dt>Writes</dt><dd>INTERVIEW-LEARNING.md</dd>
+          </dl>
+          
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill interview-prep" aria-label="Copy the install command for interview-prep">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/interview-prep/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        </div>
+      </section>
+      <section class="sk-group" id="make" aria-labelledby="make-title">
+        <div class="sk-group-head">
+          <span class="sk-num">06</span>
+          <div><h2 id="make-title">Make figures and manuals</h2><p>Use these to make figures and manuals that match this site.</p></div>
+        </div>
+        <div class="sk-cards">
+        <article class="sk-card sk-card--example" id="course-style">
+          <header><h3><code>/course-style</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">Colours for light and dark, fonts, figure labels, and the plain technical English rules. The other skills in this group read it.</p>
+          <dl>
+            <dt>Say</dt><dd><q>use the course style</q> <q>check this text for plain English</q></dd>
+            <dt>Writes</dt><dd>Nothing. Other skills read it.</dd>
+          </dl>
+          <div class="sk-example sk-swatches" aria-label="Course colours"><i style="background:var(--bg)"></i><i style="background:var(--bg-surface)"></i><i style="background:var(--ink)"></i><i style="background:var(--blueprint)"></i><i style="background:var(--warn)"></i><span>Paper, surface, ink, blueprint, warning. Both themes.</span></div>
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill course-style" aria-label="Copy the install command for course-style">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/course-style/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        <article class="sk-card sk-card--example" id="blueprint-figure">
+          <header><h3><code>/blueprint-figure</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">Static SVG figures for lessons, READMEs, and manuals. It has nine figure kinds, colour rules, and checks for label size and overlap.</p>
+          <dl>
+            <dt>Say</dt><dd><q>draw a figure of the request path</q> <q>make FIG_012 for this lesson</q></dd>
+            <dt>Writes</dt><dd>An SVG file</dd>
+          </dl>
+          <a class="sk-example sk-example--svg" href="manuals.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 384" role="img" aria-labelledby="fig-four-parts-title fig-four-parts-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-four-parts-title">Four kinds of part</title>
+  <desc id="fig-four-parts-desc">Top: a part holds exactly one of four content members, text, raw, url or data, and every kind can also carry mediaType, filename and metadata. Below, four parts from the captures in the order they were sent: the refunds.diff file the planner sent as raw base64 with media type text/x-diff, the code-reviewer question as text, the review findings as a data part with media type application/json, and a url part labelled image/png that code-reviewer rejects with error -32005 CONTENT_TYPE_NOT_SUPPORTED.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONE PART HOLDS EXACTLY ONE OF</text>
+  <text x="344" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">OPTIONAL ON EVERY KIND</text>
+  <rect x="20" y="26" width="68" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="54" y="44.75" font-size="12.5" text-anchor="middle" font-weight="700">text</text>
+  <rect x="96" y="26" width="68" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="130" y="44.75" font-size="12.5" text-anchor="middle" font-weight="700">raw</text>
+  <rect x="172" y="26" width="68" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="206" y="44.75" font-size="12.5" text-anchor="middle" font-weight="700">url</text>
+  <rect x="248" y="26" width="68" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="282" y="44.75" font-size="12.5" text-anchor="middle" font-weight="700">data</text>
+  <rect x="344" y="26" width="92" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="390" y="44.75" font-size="12.5" text-anchor="middle" font-weight="400">mediaType</text>
+  <rect x="444" y="26" width="84" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="486" y="44.75" font-size="12.5" text-anchor="middle" font-weight="400">filename</text>
+  <rect x="536" y="26" width="84" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="578" y="44.75" font-size="12.5" text-anchor="middle" font-weight="400">metadata</text>
+  <text x="20" y="76" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FOUR PARTS FROM THE CAPTURES, IN THE ORDER THEY WERE SENT</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="84" width="68" height="66" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="54" y="120.9" font-size="13" text-anchor="middle" font-weight="700">raw</text>
+  <rect x="88" y="84" width="532" height="66" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="100" y="105" font-size="11.5">LS0tIGEvcGF5bWVudHMvcmVmdW5kcy5weQor</text>
+  <text x="358.4" y="105" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">first 36 of 236 base64 characters</text>
+  <text x="100" y="123" font-size="11" fill="var(--m-green-ink, #336b40)">filename &quot;refunds.diff&quot;   mediaType &quot;text/x-diff&quot;</text>
+  <text x="100" y="141" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">sent by the planner, a five-line diff · 06-input-required.http</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="158" width="68" height="66" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="54" y="194.9" font-size="13" text-anchor="middle" font-weight="700">text</text>
+  <rect x="88" y="158" width="532" height="66" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="100" y="179" font-size="11.5">&quot;Which base branch should I compare this diff against?&quot;</text>
+  <text x="100" y="197" font-size="11" fill="var(--m-green-ink, #336b40)">mediaType absent: the kit reads it as text/plain</text>
+  <text x="100" y="215" font-size="11" class="m-serif" fill="var(--m-blue-ink, #2f5d9a)">sent by code-reviewer in status.message · 06-input-required.http</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="232" width="68" height="66" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="54" y="268.9" font-size="13" text-anchor="middle" font-weight="700">data</text>
+  <rect x="88" y="232" width="532" height="66" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="100" y="253" font-size="11.5">&quot;base&quot;: &quot;main&quot;</text>
+  <text x="206.6" y="253" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">plus &quot;findings&quot;, two objects with file, line, severity, finding</text>
+  <text x="100" y="271" font-size="11" fill="var(--m-green-ink, #336b40)">mediaType &quot;application/json&quot;</text>
+  <text x="100" y="289" font-size="11" class="m-serif" fill="var(--m-blue-ink, #2f5d9a)">part 2 of the review.json artifact, sent by code-reviewer · 06-input-required.http</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="306" width="68" height="66" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="54" y="342.9" font-size="13" text-anchor="middle" font-weight="700">url</text>
+  <rect x="88" y="306" width="532" height="66" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="100" y="327" font-size="11.5">&quot;https://example.com/screenshot.png&quot;</text>
+  <text x="100" y="345" font-size="11" fill="var(--m-green-ink, #336b40)">mediaType &quot;image/png&quot;</text>
+  <text x="100" y="363" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">sent by the planner · 11-errors.http</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <rect x="396" y="315" width="214" height="48" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="503" y="334.1" font-size="12" text-anchor="middle" font-weight="700">CONTENT_TYPE_NOT_SUPPORTED</text>
+  <text x="503" y="351.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rejected with error -32005</text>
+  </g>
+</svg>
+<span>Made with it: a figure from the A2A 101 manual →</span></a>
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill blueprint-figure" aria-label="Copy the install command for blueprint-figure">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/blueprint-figure/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        <article class="sk-card sk-card--example" id="motion-figure">
+          <header><h3><code>/motion-figure</code></h3><span class="sk-version">v1.1.0</span></header>
+          <p class="sk-line">Animated and interactive figures: SVG animations, slider widgets, figures with controls and a computed result, and dither bands like the one at the top of this page.</p>
+          <dl>
+            <dt>Say</dt><dd><q>animate this concept</q> <q>show how this system works</q></dd>
+            <dt>Writes</dt><dd>A lesson figure, a standalone figure, or a dither band</dd>
+          </dl>
+          <div class="sk-example sk-example--live"><figure class="sl" data-skill-loader>
+            <div class="sl-head"><span>Skill loader · one agent session</span><button type="button" class="sl-replay">Replay</button></div>
+            <p class="sl-note">Pick a request. The agent always holds every skill's name and description. It reads a full SKILL.md, then the references it names, only when a request matches.</p>
+            <div class="sl-asks" role="group" aria-label="Requests"><button type="button" class="sl-ask" data-ask="0" aria-pressed="true">find my level</button><button type="button" class="sl-ask" data-ask="1" aria-pressed="false">teach me MCP</button><button type="button" class="sl-ask" data-ask="2" aria-pressed="false">draw a figure of the request path</button><button type="button" class="sl-ask" data-ask="3" aria-pressed="false">write a manual for this tool</button></div>
+            <div class="sl-pane"><h4><span>Always loaded</span><span>18 descriptions · 2,009 tokens</span></h4><ol class="sl-always"><li data-skill="start-learning"><span>start-learning</span><b>92</b></li><li data-skill="find-your-level"><span>find-your-level</span><b>79</b></li><li data-skill="course-guide"><span>course-guide</span><b>108</b></li><li data-skill="learn"><span>learn</span><b>102</b></li><li data-skill="lesson-screen"><span>lesson-screen</span><b>158</b></li><li data-skill="check-understanding"><span>check-understanding</span><b>51</b></li><li data-skill="build-project"><span>build-project</span><b>113</b></li><li data-skill="learn-mcp"><span>learn-mcp</span><b>95</b></li><li data-skill="learn-agent-skills"><span>learn-agent-skills</span><b>86</b></li><li data-skill="learn-reverse-engineering"><span>learn-reverse-engineering</span><b>125</b></li><li data-skill="claude-certification"><span>claude-certification</span><b>132</b></li><li data-skill="mcpa-certification"><span>mcpa-certification</span><b>115</b></li><li data-skill="interview-prep"><span>interview-prep</span><b>180</b></li><li data-skill="course-style"><span>course-style</span><b>121</b></li><li data-skill="blueprint-figure"><span>blueprint-figure</span><b>104</b></li><li data-skill="motion-figure"><span>motion-figure</span><b>120</b></li><li data-skill="isometric-explainer"><span>isometric-explainer</span><b>112</b></li><li data-skill="write-manual"><span>write-manual</span><b>116</b></li></ol></div>
+            <div class="sl-pane"><h4><span>Loaded for this request</span><span data-loaded-total></span></h4><ol class="sl-loaded" data-loaded></ol></div>
+            <div class="sl-meter"><p><span>Context used</span><span data-meter-label></span></p><div class="sl-track"><i data-meter></i></div></div>
+            <p class="sl-verdict" data-verdict aria-live="polite"></p>
+            <script type="application/json" class="sl-data">{"skills":[{"name":"start-learning","tokens":92},{"name":"find-your-level","tokens":79},{"name":"course-guide","tokens":108},{"name":"learn","tokens":102},{"name":"lesson-screen","tokens":158},{"name":"check-understanding","tokens":51},{"name":"build-project","tokens":113},{"name":"learn-mcp","tokens":95},{"name":"learn-agent-skills","tokens":86},{"name":"learn-reverse-engineering","tokens":125},{"name":"claude-certification","tokens":132},{"name":"mcpa-certification","tokens":115},{"name":"interview-prep","tokens":180},{"name":"course-style","tokens":121},{"name":"blueprint-figure","tokens":104},{"name":"motion-figure","tokens":120},{"name":"isometric-explainer","tokens":112},{"name":"write-manual","tokens":116}],"requests":[{"say":"find my level","skill":"find-your-level","files":[{"path":"find-your-level/SKILL.md","tokens":1873},{"path":"references/answer-key.md","tokens":373}]},{"say":"teach me MCP","skill":"learn-mcp","files":[{"path":"learn-mcp/SKILL.md","tokens":2441}]},{"say":"draw a figure of the request path","skill":"blueprint-figure","files":[{"path":"blueprint-figure/SKILL.md","tokens":2412},{"path":"references/kinds.md","tokens":1272},{"path":"references/grammar.md","tokens":1824},{"path":"references/checks.md","tokens":1218}]},{"say":"write a manual for this tool","skill":"write-manual","files":[{"path":"write-manual/SKILL.md","tokens":3313},{"path":"references/manual-json.md","tokens":1554},{"path":"references/section-template.md","tokens":940},{"path":"references/research-and-sources.md","tokens":1232},{"path":"references/prose-rules.md","tokens":899}]}],"full":91488}</script>
+          </figure><span>Live: pick a request. Token counts are file bytes divided by 4, read from the real skill files.</span></div>
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill motion-figure" aria-label="Copy the install command for motion-figure">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/motion-figure/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        <article class="sk-card sk-card--example" id="isometric-explainer">
+          <header><h3><code>/isometric-explainer</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">An interactive isometric machine that shows a process step by step. A tested state model drives it. Controls let you break a part and see what fails.</p>
+          <dl>
+            <dt>Say</dt><dd><q>explain how a cache evicts entries as a machine</q> <q>make an isometric explainer for this lesson</q></dd>
+            <dt>Writes</dt><dd>A standalone HTML page and its source</dd>
+          </dl>
+          <a class="sk-example" href="inside-an-ai-agent.html"><img class="sk-light" src="anatomy/inside-an-ai-agent-machine.png" width="2400" height="1260" loading="lazy" decoding="async" alt="An isometric card-processing machine that shows how an AI agent handles one request."><img class="sk-dark" src="anatomy/inside-an-ai-agent-machine-dark.png" width="2400" height="1260" loading="lazy" decoding="async" alt=""><span>Made with it: Inside an AI Agent →</span></a>
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill isometric-explainer" aria-label="Copy the install command for isometric-explainer">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/isometric-explainer/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        <article class="sk-card sk-card--example" id="write-manual">
+          <header><h3><code>/write-manual</code></h3><span class="sk-version">v1.0.0</span></header>
+          <p class="sk-line">A long manual about one tool at one pinned version, with sources, a table of contents, offline captures of every listing, figures, and an audit.</p>
+          <dl>
+            <dt>Say</dt><dd><q>write a manual for this tool</q> <q>start a 101 manual</q></dd>
+            <dt>Writes</dt><dd>A manual folder: manual.json, sections, figures, captures</dd>
+          </dl>
+          <a class="sk-example sk-example--text" href="manuals.html"><strong>Manuals</strong><span>Two manuals are published. Each one covers one pinned version. Read them →</span></a>
+          <footer>
+            <button type="button" class="sk-copy" data-copy="npx skills add rohitg00/ai-engineering-from-scratch --skill write-manual" aria-label="Copy the install command for write-manual">Copy install</button>
+            <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/write-manual/SKILL.md" target="_blank" rel="noopener">Read SKILL.md ↗</a>
+          </footer>
+        </article>
+        </div>
+      </section>
+
+      <section class="sk-group" id="artifacts" aria-labelledby="artifacts-title">
+        <div class="sk-group-head">
+          <span class="sk-num">07</span>
+          <div><h2 id="artifacts-title">Lesson artifacts</h2><p>Many lessons end with a skill or prompt file. You can install them by phase or by tag.</p></div>
+        </div>
+        <div class="sk-artifacts">
+          <p><strong>409 skills and 100 prompts</strong> live next to the lessons that teach them, under <code>phases/**/outputs/</code>. Clone the repo, then copy the ones you want into your agent's skills folder.</p>
+          <pre><code>python3 scripts/install_skills.py ~/.claude/skills --phase 14
+python3 scripts/install_skills.py ~/.cursor/skills --tag rag
+python3 scripts/install_skills.py .skills --type all --dry-run</code></pre>
+          <p><a href="catalog.html">Browse the lessons in the catalog →</a></p>
+        </div>
+      </section>
+
+      <section class="sk-how" aria-labelledby="how-title">
+        <h2 id="how-title">Ask for a figure</h2>
+        <p>Tell the skill what the reader must understand and where the figure goes: a lesson, a README, a manual, or a standalone page. Give real numbers when you have them. The figure then computes its result from those numbers.</p>
+        <p>Example: <q>Make a figure for the skills lesson that shows how an agent loads a skill. Use the real file sizes.</q></p>
+      </section>
+
+      <section class="sk-cta">
+        <p>How agents find and load skills</p>
+        <a class="sk-btn sk-btn--primary" href="lesson?path=phases%2F13-tools-and-protocols%2F22-skills-and-agent-sdks">Read the lesson</a>
+        <a class="sk-btn" href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/skills" target="_blank" rel="noopener">All skills on GitHub ↗</a>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2026 · open source · free forever</p>
+      <div class="footer-links">
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener">GitHub</a>
+        <a href="about.html">About</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="skills.html">Skills</a>
+        <a href="glossary.html">Glossary</a>
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch/issues/new/choose" target="_blank" rel="noopener">Report</a>
+        <a href="sponsors.html">Sponsor us</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var icon = document.getElementById('themeIcon');
+      var sync = function () { if (icon) icon.textContent = root.getAttribute('data-theme') === 'light' ? 'N' : 'D'; };
+      sync();
+      document.getElementById('themeToggle').addEventListener('click', function () {
+        var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (_) {}
+        sync();
+      });
+      document.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-copy]');
+        if (!button) return;
+        var done = function () { var label = button.textContent; button.textContent = 'Copied'; setTimeout(function () { button.textContent = label; }, 1400); };
+        if (navigator.clipboard) navigator.clipboard.writeText(button.getAttribute('data-copy')).then(done, function () {});
+      });
+    })();
+  </script>
+  <script src="header.js?v=20261103a" defer></script>
+  <script src="dither.js?v=20261013a" defer></script>
+  <script src="skills-demo.js?v=20261013a" defer></script>
+</body>
+</html>

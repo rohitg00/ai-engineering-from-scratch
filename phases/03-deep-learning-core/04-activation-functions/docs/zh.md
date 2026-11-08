@@ -30,24 +30,30 @@
 
 證明如下。一個線性層計算 f(x) = Wx + b。疊兩層：
 
-```
-Layer 1: h = W1 * x + b1
-Layer 2: y = W2 * h + b2
+```math
+\begin{aligned}
+\text{Layer 1:} \quad h &= W_1 x + b_1 \\
+\text{Layer 2:} \quad y &= W_2 h + b_2
+\end{aligned}
 ```
 
 代入：
 
-```
-y = W2 * (W1 * x + b1) + b2
-y = (W2 * W1) * x + (W2 * b1 + b2)
-y = A * x + c
+```math
+\begin{aligned}
+y &= W_2 (W_1 x + b_1) + b_2 \\
+y &= (W_2 W_1) x + (W_2 b_1 + b_2) \\
+y &= A x + c
+\end{aligned}
 ```
 
 一層而已。在層與層之間插入一個非線性激活函式 g()：
 
-```
-h = g(W1 * x + b1)
-y = W2 * h + b2
+```math
+\begin{aligned}
+h &= g(W_1 x + b_1) \\
+y &= W_2 h + b_2
+\end{aligned}
 ```
 
 現在代入就進行不下去了。W2 * g(W1 * x + b1) + b2 無法化簡成單一個線性轉換。網路能表示非線性函式了。每多一層帶激活函式的層，就多一分表達能力。
@@ -56,22 +62,22 @@ y = W2 * h + b2
 
 神經網路最早的激活函式。
 
-```
-sigmoid(x) = 1 / (1 + e^(-x))
+```math
+\text{sigmoid}(x) = \frac{1}{1 + e^{-x}}
 ```
 
 輸出範圍：(0, 1)。平滑、可微，把任何實數映射成一個像機率的值。
 
 它的導數：
 
-```
-sigmoid'(x) = sigmoid(x) * (1 - sigmoid(x))
+```math
+\text{sigmoid}'(x) = \text{sigmoid}(x) \cdot (1 - \text{sigmoid}(x))
 ```
 
 這個導數的最大值是 0.25，出現在 x = 0。在反向傳播裡，梯度會逐層相乘。十層 sigmoid 意味著梯度最多被乘上 0.25 十次：
 
-```
-0.25^10 = 0.000000953674
+```math
+0.25^{10} = 0.000000953674
 ```
 
 不到原本訊號的百萬分之一。這就是梯度消失問題。前面幾層的梯度變得太小，權重幾乎不會更新。網路看起來在學 —— 損失在較後面的層有下降 —— 但最前面幾層是凍住的。深層 sigmoid 網路根本訓練不起來。
@@ -82,16 +88,16 @@ sigmoid'(x) = sigmoid(x) * (1 - sigmoid(x))
 
 sigmoid 的零中心版本。
 
-```
-tanh(x) = (e^x - e^(-x)) / (e^x + e^(-x))
+```math
+\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
 ```
 
 輸出範圍：(-1, 1)。零中心，消掉了鋸齒問題。
 
 它的導數：
 
-```
-tanh'(x) = 1 - tanh(x)^2
+```math
+\tanh'(x) = 1 - \tanh(x)^2
 ```
 
 導數最大值是 x = 0 時的 1.0 —— 比 sigmoid 好四倍。但梯度消失問題還在。輸入的正負值一大，導數就趨近於零。十層還是會把梯度壓爛，只是沒那麼兇。
@@ -100,15 +106,14 @@ tanh'(x) = 1 - tanh(x)^2
 
 Rectified Linear Unit。2010 年由 Nair 與 Hinton 推廣到深度學習（這個函式本身可追到 Fukushima 1969 年的工作），它改變了一切。
 
-```
-relu(x) = max(0, x)
+```math
+\text{relu}(x) = \max(0, x)
 ```
 
 輸出範圍：[0, infinity)。導數簡單到不行：
 
-```
-relu'(x) = 1  if x > 0
-            0  if x <= 0
+```math
+\text{relu}'(x) = \begin{cases} 1 & \text{if } x > 0 \\ 0 & \text{if } x \le 0 \end{cases}
 ```
 
 正輸入不會有梯度消失。梯度恰好是 1，直接原封不動傳過去。這就是深層網路變得訓練得動的原因 —— ReLU 讓梯度大小跨層保持住。
@@ -119,9 +124,8 @@ relu'(x) = 1  if x > 0
 
 對付死亡神經元最簡單的修法。
 
-```
-leaky_relu(x) = x        if x > 0
-                alpha * x if x <= 0
+```math
+\text{leaky\_relu}(x) = \begin{cases} x & \text{if } x > 0 \\ \alpha x & \text{if } x \le 0 \end{cases}
 ```
 
 其中 alpha 是一個小常數，通常是 0.01。負的那一側有一個小斜率而不是零，所以死亡神經元還是收得到梯度訊號，有機會活回來。
@@ -130,14 +134,14 @@ leaky_relu(x) = x        if x > 0
 
 Gaussian Error Linear Unit。2016 年由 Hendrycks 與 Gimpel 提出。BERT、GPT 以及多數現代 transformer 的預設激活函式。
 
-```
-gelu(x) = x * Phi(x)
+```math
+\text{gelu}(x) = x \cdot \Phi(x)
 ```
 
 其中 Phi(x) 是標準常態分布的累積分布函式。實務上使用的近似式：
 
-```
-gelu(x) ~= 0.5 * x * (1 + tanh(sqrt(2/pi) * (x + 0.044715 * x^3)))
+```math
+\text{gelu}(x) \approx 0.5 \cdot x \cdot \left(1 + \tanh\left(\sqrt{2/\pi} \cdot (x + 0.044715 \cdot x^3)\right)\right)
 ```
 
 GELU 處處平滑、容許小的負值（不像 ReLU 直接硬切到零），而且有機率上的解讀：它按照每個輸入在高斯分布下為正的可能性來給它加權。這種平滑的閘控在 transformer 架構裡表現優於 ReLU，因為它提供更好的梯度流動，也完全避開了死亡神經元問題。
@@ -146,8 +150,8 @@ GELU 處處平滑、容許小的負值（不像 ReLU 直接硬切到零），而
 
 Ramachandran 等人在 2017 年透過自動化搜尋找到的自我閘控激活函式。
 
-```
-swish(x) = x * sigmoid(x)
+```math
+\text{swish}(x) = x \cdot \text{sigmoid}(x)
 ```
 
 Swish 的正式定義是 x * sigmoid(x)。Google 是在激活函式的空間上做自動化搜尋才發現它的 —— 一個神經網路在設計神經網路的零件。
@@ -158,8 +162,8 @@ Swish 的正式定義是 x * sigmoid(x)。Google 是在激活函式的空間上�
 
 不用在隱藏層。Softmax 把一串原始分數（logits）轉成一個機率分布。
 
-```
-softmax(x_i) = e^(x_i) / sum(e^(x_j) for all j)
+```math
+\text{softmax}(x_i) = \frac{e^{x_i}}{\sum_j e^{x_j}}
 ```
 
 每個輸出都在 0 與 1 之間。所有輸出加起來是 1。這讓它成為多類別分類的標準最後一層激活函式。最大的 logit 拿到最高的機率，但不同於 argmax，softmax 可微，而且保留了相對信心程度的資訊。

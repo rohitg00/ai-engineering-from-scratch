@@ -61,12 +61,13 @@ flowchart LR
 
 位在世界座標 `mu`、3D 共變異數為 `Sigma` 的 3D 高斯，會投影成螢幕位置 `mu'`、2D 共變異數為 `Sigma'` 的 2D 高斯：
 
-```
-mu' = project(mu)
-Sigma' = J W Sigma W^T J^T          (2 x 2)
-
-W = viewing transform (rotation + translation of camera)
-J = Jacobian of the perspective projection at mu'
+```math
+\begin{aligned}
+\mu' &= \mathop{\mathrm{project}}(\mu) \\
+\Sigma' &= J W \Sigma W^T J^T \qquad (2 \times 2) \\[6pt]
+W &= \text{viewing transform (rotation + translation of camera)} \\
+J &= \text{Jacobian of the perspective projection at } \mu'
+\end{aligned}
 ```
 
 這個 2D 高斯的覆蓋範圍是一個橢圓，長短軸就是 `Sigma'` 的特徵向量。橢圓內的每個像素都會收到這個高斯的貢獻，權重是 `exp(-0.5 * (p - mu')^T Sigma'^-1 (p - mu'))`。
@@ -75,12 +76,13 @@ J = Jacobian of the perspective projection at mu'
 
 對單一個像素來說，覆蓋到它的那些高斯會由後往前排序（或等價地由前往後，用反過來的公式）。顏色的合成方式，跟 1980 年代以來每一個半透明光柵化器用的是同一條式子：
 
-```
-C_pixel = sum_i alpha_i * T_i * c_i
-
-T_i = prod_{j < i} (1 - alpha_j)       transmittance up to i
-alpha_i = opacity_i * exp(-0.5 * d^T Sigma'^-1 d)   local contribution
-c_i = eval_SH(SH_i, view_direction)    view-dependent colour
+```math
+\begin{aligned}
+C_{\text{pixel}} &= \sum_i \alpha_i T_i c_i \\[6pt]
+T_i &= \prod_{j < i} (1 - \alpha_j) && \text{transmittance up to } i \\
+\alpha_i &= \text{opacity}_i \cdot \exp\left(-0.5 \, d^T \Sigma'^{-1} d\right) && \text{local contribution} \\
+c_i &= \mathop{\mathrm{eval\_SH}}(\text{SH}_i, \text{view\_direction}) && \text{view-dependent colour}
+\end{aligned}
 ```
 
 這**跟 NeRF 的體積渲染是同一條式子**，只是作用在一組顯式、稀疏的高斯上，而不是沿著光線的稠密取樣點。正是這個等同性，讓它的渲染品質能跟 NeRF 打平 —— 兩者積分的都是同一條輻射場方程式。

@@ -45,7 +45,7 @@ Every audio task has multiple metrics, each measuring a different axis. Using th
 
 **SECS (Speaker Encoder Cosine Similarity).** For voice cloning. ECAPA embedding cosine between reference and cloned output. &gt; 0.75 = recognizable clone.
 
-**WER-on-ASR-round-trip.** Run Whisper over TTS output, compute WER against the input text. Catches intelligibility regressions. 2026 SOTA: &lt; 2% CER.
+**WER-on-ASR-round-trip.** Run Whisper over TTS output, compute WER against the input text. Catches intelligibility regressions. 2026 SOTA: &lt; 2% WER on English test sets (Mandarin sets report CER instead).
 
 **TTFA (time-to-first-audio).** Wall-clock latency. Kokoro-82M: ~100 ms; F5-TTS: ~1 s.
 
@@ -79,7 +79,7 @@ Imbalanced: **macro F1** + **per-class recall**. Report per-class — aggregate 
 
 **CLAP Score.** Text-audio alignment score using CLAP embeddings. &gt; 0.3 = reasonable alignment.
 
-**Listening panel MOS.** Still the final word for consumer-grade music. Suno v5 ELO 1293 on TTS Arena (from paired human preferences).
+**Listening panel MOS.** Still the final word for consumer-grade music. Suno v5 scored ELO 1293 on Suno's own paired-preference benchmark. That is a vendor number; TTS Arena ranks speech, not music.
 
 ### Audio-language benchmarks
 

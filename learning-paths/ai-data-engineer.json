@@ -38,6 +38,7 @@
       "A provenance and rollback note"
     ]
   },
+  "projects": ["csv-repair-workbench", "dataset-split-auditor", "dataset-contract-gate", "document-extraction-desk", "sensitive-text-redaction-gate", "rag-freshness-pipeline"],
   "readinessCriteria": [
     "Can explain lineage from raw data to model or retrieval input.",
     "Can prevent leakage and verify feature transformations.",

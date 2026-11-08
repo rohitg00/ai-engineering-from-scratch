@@ -1,0 +1,13 @@
+version: "16"
+
+agents:
+  root:
+    model: local
+    description: Answers every message with the word pong.
+    instruction: Reply with exactly the word pong and nothing else.
+
+models:
+  local:
+    provider: dmr
+    model: ai/qwen3:4b
+    temperature: 0

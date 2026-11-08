@@ -1,0 +1,90 @@
+{
+  "lesson": "39-compiler-idioms-and-optimization",
+  "title": "Compiler Idioms: What Optimization Does to Your Code and How to Read It Back",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A function compiled at -O2 contains imulq $0x24924925, %rax, %rax; shrq $0x20, %rax; subl %eax, %edi; shrl %edi; addl %edi, %eax; shrl $0x2, %eax. What does it compute?",
+      "options": [
+        "x % 7",
+        "x * 613566757 followed by a checksum",
+        "x / 613566757",
+        "x / 7 for unsigned x: the multiplier is the low 32 bits of ceil(2^35 / 7), which is 33 bits wide, so the compiler adds the fix-up sequence"
+      ],
+      "correct": 3,
+      "explanation": "ceil(2^35 / 7) = 0x124924925 does not fit 32 bits. The compiler multiplies by the low 32 bits, then adds back the dividend through the subtract, shift, add, shift sequence, which is the add form of the Granlund-Montgomery method."
+    },
+    {
+      "stage": "check",
+      "question": "The recognizer reads magic 0x66666667 and total shift 34 in a signed division. How does it prove the divisor is 10 and not 5?",
+      "options": [
+        "It computes 2^34 / 0x66666667, tries 10 and 11, and accepts 10 because magic_numbers(10, signed) returns exactly 0x66666667 with shift 34; the same multiplier with shift 33 would mean 5",
+        "It cannot: 0x66666667 is ambiguous",
+        "It runs the function on a sample input",
+        "It looks the constant up in a table of known magic numbers"
+      ],
+      "correct": 0,
+      "explanation": "The divisor is a function of the multiplier and the total shift together. divisor_from_magic recomputes the smallest valid shift for each candidate and accepts the one whose constants match."
+    },
+    {
+      "stage": "check",
+      "question": "table_switch at -O2 is cmpl $6, %edi; ja; leaq (%rip), %rcx with R_X86_64_PC32 .rodata+0x24; movl (%rcx,%rax,4), %eax; retq. Where are the case values and how many are there?",
+      "options": [
+        "Seven 32-bit words at .rodata+0x28: the addend plus 4 for the RIP-relative field, read directly from the object",
+        "In the immediate operands of the compare chain",
+        "In the relocation entries of .rela.rodata",
+        "Five code blocks after the jump"
+      ],
+      "correct": 0,
+      "explanation": "This is LLVM's lookup table lowering. The table holds values. Its bytes are final in the object, so the table needs no relocation. The bounds check gives 6 + 1 entries."
+    },
+    {
+      "stage": "check",
+      "question": "At -O0 the fixture div10u compiles to divl %ecx while digest, in the same object, divides by 10 with imulq $0x66666667. Which observation explains the difference?",
+      "options": [
+        "divl is faster at -O0",
+        "With -mllvm -fast-isel=false every -O0 division becomes the magic multiply, so the hardware divide is FastISel's choice and the multiply is SelectionDAG's; digest's block holds a switch that FastISel hands to SelectionDAG",
+        "The two functions were compiled by different compilers",
+        "digest uses unsigned arithmetic"
+      ],
+      "correct": 1,
+      "explanation": "The fixture idioms-x86_64-nofastisel-O0 shows the multiply in every division once the fast selector is disabled. The idiom comes from the instruction selector. No optimization pass is needed for it."
+    },
+    {
+      "stage": "post",
+      "question": "The digest switch is a lookup table at -O1 and a jump table at -O2 on x86-64. What does the recognizer report for the -O1 table that the source does not contain literally?",
+      "options": [
+        "Five code addresses",
+        "Entries 1, 2, 4, 8, 8 exactly as written",
+        "A default value of -1",
+        "Entries 16, 32, 64, 128, 128: the later multiplication by 16 was folded into the table, and the recognizer records the factor"
+      ],
+      "correct": 3,
+      "explanation": "The compiler moved band * 16 into the table values. The recognizer compares the table with the source case values up to a constant factor and reports foldedFactor 16."
+    },
+    {
+      "stage": "post",
+      "question": "sum_n at -O2 contains andl $0x7ffffff8, cmpl $7 with ja, two paddd accumulators, addq $0x20, and a second loop with addl (%rdi,%rdx,4). What is the correct reading?",
+      "options": [
+        "Two unrelated loops in the source",
+        "A memset",
+        "One source loop: a vectorized body that handles 8 ints per iteration with two 4-lane accumulators, a trip count rounded down to a multiple of 8, and a scalar remainder loop for the rest",
+        "An unrolled loop with 32 copies"
+      ],
+      "correct": 2,
+      "explanation": "The mask rounds the trip count down to a multiple of 8, the guard skips the vector body below 8 elements, the two accumulators are the interleave factor, and the remainder loop finishes the last 0 to 7 elements."
+    },
+    {
+      "stage": "post",
+      "question": "angr 10.0.3 prints div10u as a0 / 10 and div10s as v1 = a0 * 1717986919; return ((long long)(v1) >> 0x22) + (v1 >> 63);. Ghidra 12.1.4 prints grade as param_1 / 10 - 6. What does this tell you about decompiler output?",
+      "options": [
+        "angr is wrong about div10s",
+        "Idiom folding is a per-rule choice in each decompiler, so the same source construct can appear folded in one tool and as raw arithmetic in another, and the recognizer's derivation is what settles it",
+        "Signed division cannot be folded",
+        "Ghidra guessed"
+      ],
+      "correct": 1,
+      "explanation": "Ghidra's RuleDivOpt converts the multiply and shift form into INT_SDIV. angr folded the unsigned form and left the signed form as arithmetic. Both outputs are correct; only one is readable, and the magic-number derivation proves which source expression they mean."
+    }
+  ]
+}

@@ -27,9 +27,11 @@
 
 **損失。**
 
-```
-loss_G = -log D(x, G(x)) + λ · ||y - G(x)||_1
-loss_D = -log D(x, y) - log (1 - D(x, G(x)))
+```math
+\begin{aligned}
+\text{loss}_G &= -\log D(x, G(x)) + \lambda \cdot \lVert y - G(x) \rVert_1 \\
+\text{loss}_D &= -\log D(x, y) - \log(1 - D(x, G(x)))
+\end{aligned}
 ```
 
 L1 那一項穩定訓練，並把 G 推向那個已知的目標。L1 給出的邊緣比 L2 更銳利（取的是中位數，不是平均數）。`λ = 100` 是 Pix2Pix 的預設值。

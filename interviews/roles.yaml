@@ -1,0 +1,22 @@
+- id: applied-ai-engineer
+  path: learning-paths/applied-ai-engineer.json
+  cards: [prompting-structured-output, rag, evaluation, tokenization-decoding, cost-capacity, safety, post-training, multimodal, math-classical-ml, deep-learning, transformers, inference-serving, gpu-memory-quantization, multi-agent, sandboxes, evidence-reverse-engineering, production-mlops, system-design, scenarios, coding, behavioral]
+- id: agentic-ai-engineer
+  path: learning-paths/agentic-ai-engineer.json
+  cards: [agents, protocols, multi-agent, sandboxes, prompting-structured-output, evaluation, safety, multimodal, tokenization-decoding, inference-serving, evidence-reverse-engineering, system-design, scenarios, coding, behavioral]
+- id: ai-evaluation-reliability-engineer
+  path: learning-paths/ai-evaluation-reliability-engineer.json
+  cards: [evaluation, math-classical-ml, rag, agents, production-mlops, safety, post-training, multimodal, deep-learning, transformers, tokenization-decoding, inference-serving, gpu-memory-quantization, prompting-structured-output, protocols, multi-agent, sandboxes, evidence-reverse-engineering, system-design, scenarios, coding, behavioral]
+- id: ai-data-engineer
+  path: learning-paths/ai-data-engineer.json
+  cards: [math-classical-ml, tokenization-decoding, rag, evaluation, production-mlops, cost-capacity, post-training, multimodal, deep-learning, transformers, evidence-reverse-engineering, system-design, coding, behavioral]
+- id: forward-deployed-ai-engineer
+  path: learning-paths/forward-deployed-ai-engineer.json
+  cards: [rag, prompting-structured-output, agents, protocols, evaluation, cost-capacity, safety, post-training, multimodal, transformers, tokenization-decoding, inference-serving, gpu-memory-quantization, multi-agent, sandboxes, system-design, scenarios, behavioral]
+- id: ai-developer-relations-engineer
+  path: learning-paths/ai-developer-relations-engineer.json
+  cards: [prompting-structured-output, agents, protocols, rag, evaluation, transformers, multi-agent, system-design, scenarios, coding, behavioral]
+- id: inference-engineer
+  title: Inference Engineering
+  summary: Serve open models fast and cheap. Size GPU memory, tune the scheduler and the caches, and prove each change with a clean benchmark.
+  cards: [inference-serving, gpu-memory-quantization, transformers, tokenization-decoding, cost-capacity, production-mlops, post-training, multimodal, math-classical-ml, deep-learning, prompting-structured-output, system-design, scenarios, coding, behavioral]

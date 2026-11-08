@@ -1,0 +1,78 @@
+{
+  "lesson": "35-evidence-confidence-and-unknowns",
+  "title": "Evidence, Confidence, and Unknowns in Binary Analysis",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "rea gives every Evidence record a confidence value. Which set of values does the schema allow?",
+      "options": [
+        "A number from 0.0 to 1.0",
+        "observed, derived, or inferred",
+        "pass, fail, or unknown",
+        "low, medium, high, or critical"
+      ],
+      "correct": 1,
+      "explanation": "Confidence is a three-value enum in src/domain/evidence.ts. Severity and completion statuses are different fields with their own values."
+    },
+    {
+      "stage": "check",
+      "question": "Two people run the same rea query on the same object file in different folders on different machines. What happens to evidence_id?",
+      "options": [
+        "It differs because the local path differs",
+        "It is the same because the hash excludes name and local_path",
+        "It is the same only when the folder names match",
+        "It differs because the machine clock differs"
+      ],
+      "correct": 1,
+      "explanation": "The semantic projection keeps the subject digest, format, and architecture and drops name and local_path. The same observation of the same bytes gets the same id anywhere."
+    },
+    {
+      "stage": "check",
+      "question": "A claim says grade(55) == 0. The ledger holds the Ghidra pseudocode record and the derived table model. What is the claim's status?",
+      "options": [
+        "pass, because the pseudocode record is observed",
+        "pass, because two records agree with the claim",
+        "fail, because the pseudocode shows a different expression",
+        "unsupported, because no observed run states the result"
+      ],
+      "correct": 3,
+      "explanation": "The pseudocode is an observation of what Ghidra printed, not of what the function returns. Only an observed run of the function can promote a behaviour claim."
+    },
+    {
+      "stage": "check",
+      "question": "A snapshot was saved under profile digest a04af771. A later rea release changes jump_table_evidence to a v2 contract. What does the cache do with the snapshot?",
+      "options": [
+        "Starts Ghidra and overwrites the old entries",
+        "Replays the entries and marks each one stale",
+        "Refuses the import with profile_mismatch",
+        "Replays only the entries that have no jump table"
+      ],
+      "correct": 2,
+      "explanation": "The profile digest covers every contract version string. A changed version gives a new digest, and the snapshot no longer matches the active binding."
+    },
+    {
+      "stage": "post",
+      "question": "What closes a residual unknown with the disposition verified?",
+      "options": [
+        "At least one evidence id with the required confidence and authority",
+        "Removing the unknown from the ledger",
+        "A rationale sentence written by the analyst",
+        "A new revision with status resolved and an empty evidence list"
+      ],
+      "correct": 0,
+      "explanation": "A verified resolution names evidence ids, and the ledger checks that each one is observed and carries the authority the unknown asked for."
+    },
+    {
+      "stage": "post",
+      "question": "Runs of the host build showed grade(95) == 4 and grade(100) == 4. The claim covers every score from 90 to 100. Which status is correct?",
+      "options": [
+        "unknown, because 2 of 11 inputs have observed runs",
+        "pass, because every observed run agreed with the claim",
+        "unsupported, because the x86-64 object itself never ran",
+        "fail, because nine inputs were never run"
+      ],
+      "correct": 0,
+      "explanation": "Partial coverage is unknown, not pass and not fail. The unknown record stays open until the other nine inputs have observed runs."
+    }
+  ]
+}

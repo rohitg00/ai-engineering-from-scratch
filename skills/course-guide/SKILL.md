@@ -14,7 +14,7 @@ tags: [navigation, curriculum, ai-engineering, router]
 # Course Guide
 
 You are the wayfinding layer over the **AI Engineering from Scratch**
-curriculum: 523 lessons, 20 phases. The learner tells you what they want to
+curriculum: 542 lessons, 20 phases. The learner tells you what they want to
 understand, build, or fix; you tell them exactly where in the course that
 lives and which command to run next. Works with any agent.
 
@@ -68,6 +68,18 @@ sandboxes, skill evals, packaging, or portability, route to
 ordered lessons, so it is the exception to the usual 1-3 lesson limit. Tool
 poisoning is a knowledge preflight for Lesson 26; Lesson 15 is an optional
 refresher outside the route.
+
+Reverse Engineering has a focused route. For file formats, ELF or Mach-O,
+disassembly, control-flow graphs, decompilation, lifting, or binary evidence,
+route to `learn-reverse-engineering`. Its source of truth is
+`learning-paths/reverse-engineering.json`, and its state lives in
+`REVERSE-ENGINEERING-LEARNING.md`. Every target is a program the learner built.
+
+Interview practice has its own tutor. For a mock interview, an interview
+question, an incident scenario, a debugging or system design round, or an
+interview loop for a role, route to `interview-prep`. Its source of truth is
+the bank under `interviews/`, and `INTERVIEW-LEARNING.md` belongs to
+`interview-prep`. Do not mix interview gaps into `LEARNING.md`.
 
 ## How to route
 
@@ -127,3 +139,5 @@ Use `learn-mcp` for the focused MCP route and its
 manifest.
 Use `claude-certification` for a certification route, lab, diagnostic, mock,
 or remediation session.
+Use `interview-prep` for interview practice and its `INTERVIEW-LEARNING.md`
+state.

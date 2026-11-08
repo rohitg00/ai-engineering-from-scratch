@@ -1,0 +1,10 @@
+sglang 0.5.22, Qwen/Qwen3-8B, one NVIDIA L4 (22 GB), --chunked-prefill-size 8192, default --mem-fraction-static for the card
+
+[2026-10-18 07:27:15] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 24094, K size: 1.65 GB, V size: 1.65 GB
+[2026-10-18 07:27:15] Memory pool end. avail mem=2.90 GB
+Capturing prefill shape (num_tokens=8192 avail_mem=2.33 GB)
+torch.AcceleratorError: CUDA error: out of memory
+[2026-10-18 07:28:44] RuntimeError: num_active_captures_ > 0 INTERNAL ASSERT FAILED at "/__w/pytorch/pytorch/c10/cuda/CUDACachingAllocator.cpp":3209, please report a bug to PyTorch. markCaptureEnd called with no captures in progress
+[2026-10-18 07:28:45] Received sigquit from a child process. It usually means the child failed.
+
+With the default chunk of 4096, the same server on the same card started and served every run.

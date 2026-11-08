@@ -1,0 +1,17 @@
+{
+  "corpus": [
+    {
+      "id": "spring",
+      "text": "Garden club grows native flowers. Garden club shares native seeds. Native seeds welcome bees."
+    },
+    {
+      "id": "summer",
+      "text": "Garden club shares native seeds. Garden club grows leafy herbs. Leafy herbs need shade."
+    },
+    {
+      "id": "autumn",
+      "text": "Garden club shares tools. Garden club shares seeds. Native flowers welcome bees."
+    }
+  ],
+  "text": "Garden club sh"
+}

@@ -45,40 +45,42 @@ That is it. You extend the number line into a plane. The real numbers sit on one
 
 **Addition.** Add the real parts together, add the imaginary parts together.
 
+```math
+\begin{aligned}
+(a + bi) + (c + di) &= (a + c) + (b + d)i \\[4pt]
+\text{Example: } (3 + 2i) + (1 + 4i) &= 4 + 6i
+\end{aligned}
 ```
-(a + bi) + (c + di) = (a + c) + (b + d)i
 
-Example: (3 + 2i) + (1 + 4i) = 4 + 6i
-```
+**Multiplication.** Use the distributive law and remember that $i^2 = -1$.
 
-**Multiplication.** Use the distributive law and remember that i^2 = -1.
-
-```
-(a + bi)(c + di) = ac + adi + bci + bdi^2
-                 = ac + adi + bci - bd
-                 = (ac - bd) + (ad + bc)i
-
-Example: (3 + 2i)(1 + 4i) = 3 + 12i + 2i + 8i^2
-                            = 3 + 14i - 8
-                            = -5 + 14i
+```math
+\begin{aligned}
+(a + bi)(c + di) &= ac + adi + bci + bdi^2 \\
+&= ac + adi + bci - bd \\
+&= (ac - bd) + (ad + bc)i \\[8pt]
+\text{Example: } (3 + 2i)(1 + 4i) &= 3 + 12i + 2i + 8i^2 \\
+&= 3 + 14i - 8 \\
+&= -5 + 14i
+\end{aligned}
 ```
 
 **Conjugate.** Flip the sign of the imaginary part.
 
-```
-conjugate of (a + bi) = a - bi
+```math
+\text{conjugate of } (a + bi) = a - bi
 ```
 
 The product of a complex number and its conjugate is always real:
 
-```
+```math
 (a + bi)(a - bi) = a^2 + b^2
 ```
 
 **Division.** Multiply numerator and denominator by the conjugate of the denominator.
 
-```
-(a + bi) / (c + di) = (a + bi)(c - di) / (c^2 + d^2)
+```math
+\frac{a + bi}{c + di} = \frac{(a + bi)(c - di)}{c^2 + d^2}
 ```
 
 This eliminates the imaginary part from the denominator, giving you a clean complex number.
@@ -99,23 +101,24 @@ A complex number is simultaneously a point and a vector from the origin. This du
 
 Any point in the plane can be described by its distance from the origin and its angle from the positive real axis.
 
+```math
+\begin{aligned}
+z &= r (\cos\theta + i \sin\theta) \\[4pt]
+\text{where: } r &= |z| = \sqrt{a^2 + b^2} \quad \text{(magnitude, or modulus)} \\
+\theta &= \mathop{\mathrm{atan2}}(b, a) \quad \text{(phase, or argument)}
+\end{aligned}
 ```
-z = r * (cos(theta) + i*sin(theta))
 
-where:
-  r = |z| = sqrt(a^2 + b^2)     (magnitude, or modulus)
-  theta = atan2(b, a)             (phase, or argument)
-```
-
-Rectangular form (a + bi) is good for addition. Polar form (r, theta) is good for multiplication.
+Rectangular form $(a + bi)$ is good for addition. Polar form $(r, \theta)$ is good for multiplication.
 
 **Multiplication in polar form.** Multiply the magnitudes, add the angles.
 
-```
-z1 = r1 * e^(i*theta1)
-z2 = r2 * e^(i*theta2)
-
-z1 * z2 = (r1 * r2) * e^(i*(theta1 + theta2))
+```math
+\begin{aligned}
+z_1 &= r_1 e^{i\theta_1} \\
+z_2 &= r_2 e^{i\theta_2} \\[4pt]
+z_1 z_2 &= (r_1 r_2) \, e^{i(\theta_1 + \theta_2)}
+\end{aligned}
 ```
 
 This is why complex numbers are perfect for rotations. Multiplying by a complex number with magnitude 1 is a pure rotation.
@@ -124,38 +127,38 @@ This is why complex numbers are perfect for rotations. Multiplying by a complex 
 
 The bridge between complex exponentials and trigonometry:
 
-```
-e^(i*theta) = cos(theta) + i*sin(theta)
-```
-
-This is the most important formula in this lesson. When theta = pi:
-
-```
-e^(i*pi) = cos(pi) + i*sin(pi) = -1 + 0i = -1
-
-Therefore: e^(i*pi) + 1 = 0
+```math
+e^{i\theta} = \cos\theta + i \sin\theta
 ```
 
-Five fundamental constants (e, i, pi, 1, 0) linked in one equation.
+This is the most important formula in this lesson. When $\theta = \pi$:
+
+```math
+\begin{aligned}
+e^{i\pi} &= \cos\pi + i \sin\pi = -1 + 0i = -1 \\[4pt]
+\text{Therefore: } e^{i\pi} + 1 &= 0
+\end{aligned}
+```
+
+Five fundamental constants ($e$, $i$, $\pi$, 1, 0) linked in one equation.
 
 ### Why Euler's formula matters for ML
 
-Euler's formula says that `e^(i*theta)` traces the unit circle as theta varies. At theta = 0, you are at (1, 0). At theta = pi/2, you are at (0, 1). At theta = pi, you are at (-1, 0). At theta = 3*pi/2, you are at (0, -1). A full rotation is theta = 2*pi.
+Euler's formula says that $e^{i\theta}$ traces the unit circle as $\theta$ varies. At $\theta = 0$, you are at $(1, 0)$. At $\theta = \pi/2$, you are at $(0, 1)$. At $\theta = \pi$, you are at $(-1, 0)$. At $\theta = 3\pi/2$, you are at $(0, -1)$. A full rotation is $\theta = 2\pi$.
 
 This means complex exponentials ARE rotations. And rotations are everywhere in signal processing and ML.
 
 ### Connection to 2D rotations
 
-Multiplying the complex number (x + yi) by e^(i*theta) rotates the point (x, y) by angle theta around the origin.
+Multiplying the complex number $(x + yi)$ by $e^{i\theta}$ rotates the point $(x, y)$ by angle $\theta$ around the origin.
 
-```
-Rotation via complex multiplication:
-  (x + yi) * (cos(theta) + i*sin(theta))
-  = (x*cos(theta) - y*sin(theta)) + (x*sin(theta) + y*cos(theta))i
-
-Rotation via matrix multiplication:
-  [cos(theta)  -sin(theta)] [x]   [x*cos(theta) - y*sin(theta)]
-  [sin(theta)   cos(theta)] [y] = [x*sin(theta) + y*cos(theta)]
+```math
+\begin{aligned}
+&\text{Rotation via complex multiplication:} \\
+&\quad (x + yi)(\cos\theta + i \sin\theta) = (x \cos\theta - y \sin\theta) + (x \sin\theta + y \cos\theta)i \\[8pt]
+&\text{Rotation via matrix multiplication:} \\
+&\quad \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} x \cos\theta - y \sin\theta \\ x \sin\theta + y \cos\theta \end{bmatrix}
+\end{aligned}
 ```
 
 They produce identical results. Complex multiplication IS 2D rotation. The rotation matrix is just complex multiplication written in matrix notation.
@@ -173,55 +176,56 @@ graph TD
 
 ### Phasors and rotating signals
 
-A complex exponential e^(i*omega*t) is a point rotating around the unit circle at angular frequency omega. As t increases, the point traces the circle.
+A complex exponential $e^{i\omega t}$ is a point rotating around the unit circle at angular frequency $\omega$. As $t$ increases, the point traces the circle.
 
-The real part of this rotating point is cos(omega*t). The imaginary part is sin(omega*t). A sinusoidal signal is the shadow of a rotating complex number.
+The real part of this rotating point is $\cos(\omega t)$. The imaginary part is $\sin(\omega t)$. A sinusoidal signal is the shadow of a rotating complex number.
 
-```
-e^(i*omega*t) = cos(omega*t) + i*sin(omega*t)
-
-Real part:      cos(omega*t)    -- a cosine wave
-Imaginary part: sin(omega*t)    -- a sine wave
+```math
+\begin{aligned}
+e^{i\omega t} &= \cos(\omega t) + i \sin(\omega t) \\[4pt]
+\text{Real part: } & \cos(\omega t) \quad \text{-- a cosine wave} \\
+\text{Imaginary part: } & \sin(\omega t) \quad \text{-- a sine wave}
+\end{aligned}
 ```
 
 This is the phasor representation. Instead of tracking a wiggly sine wave, you track a smoothly rotating arrow. Phase shifts become angle offsets. Amplitude changes become magnitude changes. Addition of signals becomes vector addition.
 
 ### Roots of unity
 
-The N-th roots of unity are N points equally spaced on the unit circle:
+The $N$-th roots of unity are $N$ points equally spaced on the unit circle:
 
+```math
+w_k = e^{2\pi i k/N} \quad \text{for } k = 0, 1, 2, \ldots, N-1
 ```
-w_k = e^(2*pi*i*k/N)    for k = 0, 1, 2, ..., N-1
-```
 
-For N = 4, the roots are: 1, i, -1, -i (the four compass points).
-For N = 8, you get the four compass points plus the four diagonals.
+For $N = 4$, the roots are: $1, i, -1, -i$ (the four compass points).
+For $N = 8$, you get the four compass points plus the four diagonals.
 
-Roots of unity are the foundation of the Discrete Fourier Transform. The DFT decomposes a signal into components at these N equally-spaced frequencies.
+Roots of unity are the foundation of the Discrete Fourier Transform. The DFT decomposes a signal into components at these $N$ equally-spaced frequencies.
 
 ### Connection to the DFT
 
-The Discrete Fourier Transform of a signal x[0], x[1], ..., x[N-1] is:
+The Discrete Fourier Transform of a signal $x[0], x[1], \ldots, x[N-1]$ is:
 
-```
-X[k] = sum_{n=0}^{N-1} x[n] * e^(-2*pi*i*k*n/N)
+```math
+X[k] = \sum_{n=0}^{N-1} x[n] \, e^{-2\pi i k n/N}
 ```
 
-Each X[k] measures how much the signal correlates with the k-th root of unity -- a complex sinusoid at frequency k. The DFT breaks a signal into N rotating phasors and tells you the amplitude and phase of each one.
+Each $X[k]$ measures how much the signal correlates with the $k$-th root of unity -- a complex sinusoid at frequency $k$. The DFT breaks a signal into $N$ rotating phasors and tells you the amplitude and phase of each one.
 
 ### Why i is not imaginary
 
-The word "imaginary" is a historical accident. Descartes used it dismissively. But i is no more imaginary than negative numbers were when people first rejected them. Negative numbers answer "what do you subtract 5 from 3 to get?" The imaginary unit answers "what do you square to get -1?"
+The word "imaginary" is a historical accident. Descartes used it dismissively. But $i$ is no more imaginary than negative numbers were when people first rejected them. Negative numbers answer "what do you subtract 5 from 3 to get?" The imaginary unit answers "what do you square to get -1?"
 
-More usefully: i is a 90-degree rotation operator. Multiply a real number by i once, you rotate 90 degrees to the imaginary axis. Multiply by i again (i^2), you rotate another 90 degrees -- now you are pointing in the negative real direction. That is why i^2 = -1. It is not mysterious. It is a half-turn built from two quarter-turns.
+More usefully: $i$ is a 90-degree rotation operator. Multiply a real number by $i$ once, you rotate 90 degrees to the imaginary axis. Multiply by $i$ again ($i^2$), you rotate another 90 degrees -- now you are pointing in the negative real direction. That is why $i^2 = -1$. It is not mysterious. It is a half-turn built from two quarter-turns.
 
 This is why complex numbers are everywhere in engineering. Anything that rotates -- electromagnetic waves, quantum states, signal oscillations, positional encodings -- is naturally described by complex numbers.
 
 ### Complex exponentials vs trigonometric functions
 
-Before Euler's formula, engineers wrote signals as A*cos(omega*t + phi) -- amplitude A, frequency omega, phase phi. This works but makes arithmetic painful. Adding two cosines with different phases requires trigonometric identities.
+Before Euler's formula, engineers wrote signals as $A \cos(\omega t + \phi)$ -- amplitude $A$, frequency $\omega$, phase $\phi$. This works but makes arithmetic painful. Adding two cosines with different phases requires trigonometric identities.
 
-With complex exponentials, the same signal is A*e^(i*(omega*t + phi)). Adding two signals is just adding two complex numbers. Multiplying (modulating) is just multiplying magnitudes and adding angles. Phase shifts become angle additions. Frequency shifts become multiplications by phasors.
+With complex exponentials, the same signal is $A e^{i(\omega t + \phi)}$. Adding two signals is just adding two complex numbers. Multiplying (modulating) is just multiplying magnitudes and adding angles. Phase shifts become angle additions. Frequency shifts become multiplications by phasors.
 
 The entire field of signal processing switched to complex exponential notation because the math is cleaner. The "real signal" is always just the real part of the complex representation. The imaginary part is carried along as bookkeeping, making all the algebra work out naturally.
 
@@ -229,9 +233,11 @@ The entire field of signal processing switched to complex exponential notation b
 
 **Sinusoidal positional encodings** (original Transformer paper):
 
-```
-PE(pos, 2i) = sin(pos / 10000^(2i/d))
-PE(pos, 2i+1) = cos(pos / 10000^(2i/d))
+```math
+\begin{aligned}
+PE(pos, 2i) &= \sin\left(pos / 10000^{2i/d}\right) \\
+PE(pos, 2i+1) &= \cos\left(pos / 10000^{2i/d}\right)
+\end{aligned}
 ```
 
 The sin and cos pairs are the real and imaginary parts of complex exponentials at different frequencies. Each frequency provides a different "resolution" for encoding position. Low frequencies change slowly (coarse position). High frequencies change quickly (fine position). Together they give each position a unique frequency fingerprint.
@@ -240,13 +246,13 @@ The sin and cos pairs are the real and imaginary parts of complex exponentials a
 
 | Operation | Algebraic Form | Geometric Meaning |
 |-----------|---------------|-------------------|
-| Addition | (a+c) + (b+d)i | Vector addition in the plane |
-| Multiplication | (ac-bd) + (ad+bc)i | Rotate and scale |
-| Conjugate | a - bi | Reflect over real axis |
-| Magnitude | sqrt(a^2 + b^2) | Distance from origin |
-| Phase | atan2(b, a) | Angle from positive real axis |
+| Addition | $(a+c) + (b+d)i$ | Vector addition in the plane |
+| Multiplication | $(ac-bd) + (ad+bc)i$ | Rotate and scale |
+| Conjugate | $a - bi$ | Reflect over real axis |
+| Magnitude | $\sqrt{a^2 + b^2}$ | Distance from origin |
+| Phase | $\mathop{\mathrm{atan2}}(b, a)$ | Angle from positive real axis |
 | Division | multiply by conjugate | Reverse rotation and rescale |
-| Power | r^n * e^(i*n*theta) | Rotate n times, scale by r^n |
+| Power | $r^n e^{in\theta}$ | Rotate $n$ times, scale by $r^n$ |
 
 ```mermaid
 graph LR
@@ -326,7 +332,7 @@ Verify: `euler(theta).magnitude()` should always be 1.0. `euler(0)` should give 
 
 ### Step 3: Rotation
 
-Rotating a point (x, y) by angle theta is one complex multiplication:
+Rotating a point $(x, y)$ by angle $\theta$ is one complex multiplication:
 
 ```python
 point = Complex(3, 4)
@@ -350,11 +356,11 @@ def dft(signal):
     return result
 ```
 
-This is the O(N^2) DFT. Each output X[k] is the sum of the signal samples multiplied by roots of unity.
+This is the $O(N^2)$ DFT. Each output $X[k]$ is the sum of the signal samples multiplied by roots of unity.
 
 ### Step 5: Inverse DFT
 
-The inverse DFT reconstructs the original signal from its spectrum. The only changes from the forward DFT: flip the sign in the exponent and divide by N.
+The inverse DFT reconstructs the original signal from its spectrum. The only changes from the forward DFT: flip the sign in the exponent and divide by $N$.
 
 ```python
 def idft(spectrum):
@@ -380,7 +386,7 @@ def roots_of_unity(N):
 
 Verify two properties:
 - Every root has magnitude exactly 1.
-- The sum of all N roots is zero (they cancel out by symmetry).
+- The sum of all $N$ roots is zero (they cancel out by symmetry).
 
 These properties are what make the DFT invertible. The roots of unity form an orthogonal basis for the frequency domain.
 
@@ -424,30 +430,42 @@ Run `code/complex_numbers.py` to generate `outputs/skill-complex-arithmetic.md`.
 
 ## Exercises
 
-1. **Complex arithmetic by hand.** Compute (2 + 3i) * (4 - i) and verify with the code. Then compute (5 + 2i) / (1 - 3i). Draw both results on the complex plane and check that multiplication rotated and scaled the first number.
+1. **Complex arithmetic by hand.** Compute $(2 + 3i)(4 - i)$ and verify with the code. Then compute $(5 + 2i) / (1 - 3i)$. Draw both results on the complex plane and check that multiplication rotated and scaled the first number.
 
-2. **Rotation sequence.** Start with the point (1, 0). Multiply by e^(i*pi/6) twelve times. Verify that you return to (1, 0) after 12 multiplications. Print the coordinates at each step and confirm they trace a regular 12-gon.
+2. **Rotation sequence.** Start with the point $(1, 0)$. Multiply by $e^{i\pi/6}$ twelve times. Verify that you return to $(1, 0)$ after 12 multiplications. Print the coordinates at each step and confirm they trace a regular 12-gon.
 
-3. **DFT of a known signal.** Create a signal that is the sum of sin(2*pi*3*t) and 0.5*sin(2*pi*7*t) sampled at 32 points. Run your DFT. Verify that the magnitude spectrum has peaks at frequencies 3 and 7, with the peak at 7 being half the height of the peak at 3.
+3. **DFT of a known signal.** Create a signal that is the sum of $\sin(2\pi \cdot 3t)$ and $0.5 \sin(2\pi \cdot 7t)$ sampled at 32 points. Run your DFT. Verify that the magnitude spectrum has peaks at frequencies 3 and 7, with the peak at 7 being half the height of the peak at 3.
 
-4. **Roots of unity visualization.** Compute the 8th roots of unity. Verify that they sum to zero. Verify that multiplying any root by the primitive root e^(2*pi*i/8) gives the next root.
+4. **Roots of unity visualization.** Compute the 8th roots of unity. Verify that they sum to zero. Verify that multiplying any root by the primitive root $e^{2\pi i/8}$ gives the next root.
 
 5. **Rotation matrix equivalence.** For 10 random angles and 10 random points, verify that complex multiplication gives the same result as matrix-vector multiplication with the 2x2 rotation matrix. Print the maximum numerical difference.
+
+### Hints
+
+**Exercise 1.** Expand the product with $i^2 = -1$, then divide by multiplying the top and the bottom by the conjugate $1 + 3i$. Check the product with `Complex(2, 3) * Complex(4, -1)`: its `magnitude()` must equal the product of the two magnitudes, and its `phase()` must equal the sum of the two phases.
+
+**Exercise 2.** Make the step with `euler(math.pi / 6)` and multiply 12 times. At each step, check that the magnitude stays 1 and that the angle grows by 30 degrees. The final point must be within about 1e-12 of (1, 0).
+
+**Exercise 3.** Make the time points with $t = n/32$ and call `dft`. Look only at bins 0 to 15, because the upper half is a mirror image. The magnitude at bin $k$ for a sine of amplitude $A$ is $AN/2$, so expect about 16 at bin 3 and about 8 at bin 7.
+
+**Exercise 4.** Call `roots_of_unity(8)` and add the roots: the magnitude of the sum must be near 0. Divide each root by the previous root and check that every result equals `euler(2 * math.pi / 8)`.
+
+**Exercise 5.** The rotation matrix is [[cos t, -sin t], [sin t, cos t]]. For each angle and point, compute `euler(t) * Complex(x, y)` and the matrix product, then record the largest absolute difference. Expect a value near $10^{-15}$.
 
 ## Key Terms
 
 | Term | What it means |
 |------|---------------|
-| Complex number | A number a + bi where a is the real part, b is the imaginary part, and i^2 = -1 |
-| Imaginary unit | The number i, defined by i^2 = -1. Not imaginary in the philosophical sense -- it is a rotation operator |
+| Complex number | A number $a + bi$ where $a$ is the real part, $b$ is the imaginary part, and $i^2 = -1$ |
+| Imaginary unit | The number $i$, defined by $i^2 = -1$. Not imaginary in the philosophical sense -- it is a rotation operator |
 | Complex plane | The 2D plane where the x-axis is real and the y-axis is imaginary. Also called the Argand plane |
-| Magnitude (modulus) | The distance from the origin: sqrt(a^2 + b^2). Written as \|z\| |
-| Phase (argument) | The angle from the positive real axis: atan2(b, a). Written as arg(z) |
-| Conjugate | The mirror image across the real axis: conjugate of a + bi is a - bi |
-| Polar form | Expressing z as r * e^(i*theta) instead of a + bi. Makes multiplication easy |
-| Euler's formula | e^(i*theta) = cos(theta) + i*sin(theta). Connects exponentials to trigonometry |
-| Phasor | A rotating complex number e^(i*omega*t) representing a sinusoidal signal |
-| Roots of unity | The N complex numbers e^(2*pi*i*k/N) for k = 0 to N-1. N equally spaced points on the unit circle |
+| Magnitude (modulus) | The distance from the origin: $\sqrt{a^2 + b^2}$. Written as $\lvert z \rvert$ |
+| Phase (argument) | The angle from the positive real axis: $\mathop{\mathrm{atan2}}(b, a)$. Written as $\arg(z)$ |
+| Conjugate | The mirror image across the real axis: conjugate of $a + bi$ is $a - bi$ |
+| Polar form | Expressing $z$ as $r e^{i\theta}$ instead of $a + bi$. Makes multiplication easy |
+| Euler's formula | $e^{i\theta} = \cos\theta + i \sin\theta$. Connects exponentials to trigonometry |
+| Phasor | A rotating complex number $e^{i\omega t}$ representing a sinusoidal signal |
+| Roots of unity | The $N$ complex numbers $e^{2\pi i k/N}$ for $k = 0$ to $N-1$. $N$ equally spaced points on the unit circle |
 | DFT | Discrete Fourier Transform. Decomposes a signal into complex sinusoidal components using roots of unity |
 | RoPE | Rotary Position Embedding. Uses complex multiplication to encode relative position in transformer attention |
 
@@ -456,6 +474,6 @@ Run `code/complex_numbers.py` to generate `outputs/skill-complex-arithmetic.md`.
 - [Visual Introduction to Euler's Formula](https://betterexplained.com/articles/intuitive-understanding-of-eulers-formula/) - builds geometric intuition without heavy notation
 - [Su et al.: RoFormer (2021)](https://arxiv.org/abs/2104.09864) - the paper introducing Rotary Position Embedding using complex rotations
 - [Vaswani et al.: Attention Is All You Need (2017)](https://arxiv.org/abs/1706.03762) - the original Transformer paper with sinusoidal positional encodings
-- [3Blue1Brown: Euler's formula with introductory group theory](https://www.youtube.com/watch?v=mvmuCPvRoWQ) - visual explanation of why e^(i*pi) = -1
+- [3Blue1Brown: Euler's formula with introductory group theory](https://www.youtube.com/watch?v=mvmuCPvRoWQ) - visual explanation of why $e^{i\pi} = -1$
 - [Needham: Visual Complex Analysis](https://global.oup.com/academic/product/visual-complex-analysis-9780198534464) - the best visual treatment of complex numbers, full of geometric insight
 - [Strang: Introduction to Linear Algebra, Ch. 10](https://math.mit.edu/~gs/linearalgebra/) - complex numbers in the context of linear algebra and eigenvalues

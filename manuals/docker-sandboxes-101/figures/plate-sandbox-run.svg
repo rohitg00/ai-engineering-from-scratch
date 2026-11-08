@@ -1,0 +1,284 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 700" role="img" aria-labelledby="plate-sandbox-run-title plate-sandbox-run-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="plate-sandbox-run-title">One agent, one microVM, one proxy</title>
+  <desc id="plate-sandbox-run-desc">The recorded docker-agent run --sandbox on the capture Mac, drawn as machines on a host bench above a glass microVM. On the host, docker-agent v1.149.0 stages the kit sandbox-kits/&lt;hash&gt;, writes the allowlist with models.dev and localhost:12434 into the proxy rules, and asks sbx and sandboxd v0.47.0 to create the sandbox, which becomes running. Below the Hypervisor.framework line, the microVM docker-agent-&lt;hash&gt; from docker/docker-agent-sbx-templates:latest holds docker-agent version main, its filesystem and shell tools, four workspace mounts, and an environment whose proxy is gateway.docker.internal:3128 and whose provider keys read proxy-managed. The model call goes up to host.docker.internal:12434, through the proxy on :3128, and on to Docker Model Runner on port 12434 with ai/qwen3:4b. The answer is: The working directory contains README.md with 1 line.</desc>
+  <defs><marker id="plate-sandbox-run-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="plate-sandbox-run-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="plate-sandbox-run-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="plate-sandbox-run-head-plum" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-plum-ink, #8a3d72)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">HOST · MACOS 26.2 ARM64</text>
+  <text x="620" y="18" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">docker-agent run --sandbox --exec files-sandbox.yaml</text>
+  <polygon points="14,241 626,241 626,235 626,171 14,171 14,235" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="14,241 626,241 626,235 14,235" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="14,235 626,235 626,171 14,171" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="14,235 626,235 626,171 14,171" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polyline points="14,235 626,235" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="14,241 626,241 626,235 626,171 14,171 14,235" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-linejoin="round"/>
+  <rect x="6" y="32" width="148" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="80" y="47.6" font-size="12" text-anchor="middle" font-weight="700">docker-agent</text>
+  <text x="80" y="64.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">v1.149.0</text>
+  <text x="80" y="79.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Homebrew</text>
+  <polygon points="40.16,205 80,182 101.04,187.85 140.88,210.85 101.04,233.85 80,228" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="80,152 119.84,175 119.84,205 80,228 40.16,205 40.16,175" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="80,152 119.84,175 80,198 40.16,175" fill="var(--m-violet-fill, #ebe8f5)"/>
+  <polygon points="80,152 119.84,175 80,198 40.16,175" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="40.16,205 80,228 80,198 40.16,175" fill="var(--m-violet-fill, #ebe8f5)"/>
+  <polygon points="119.84,205 80,228 80,198 119.84,175" fill="var(--m-violet-fill, #ebe8f5)"/>
+  <polygon points="119.84,205 80,228 80,198 119.84,175" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="80,198 119.84,175" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="80,198 40.16,175" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="80,198 80,228" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="80,152 119.84,175 119.84,205 80,228 40.16,205 40.16,175" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.5" stroke-linejoin="round"/>
+  <rect x="166" y="32" width="148" height="56" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="240" y="47.6" font-size="12" text-anchor="middle" font-weight="700">sbx, sandboxd</text>
+  <text x="240" y="64.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">v0.47.0</text>
+  <text x="240" y="79.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">creates the VM</text>
+  <polygon points="200.16,205 240,182 261.04,187.85 300.88,210.85 261.04,233.85 240,228" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="240,152 279.84,175 279.84,205 240,228 200.16,205 200.16,175" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="240,152 279.84,175 240,198 200.16,175" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="240,152 279.84,175 240,198 200.16,175" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="200.16,205 240,228 240,198 200.16,175" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="279.84,205 240,228 240,198 279.84,175" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="279.84,205 240,228 240,198 279.84,175" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="240,198 279.84,175" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="240,198 200.16,175" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="240,198 240,228" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="240,152 279.84,175 279.84,205 240,228 200.16,205 200.16,175" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1.5" stroke-linejoin="round"/>
+  <rect x="326" y="32" width="148" height="56" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="400" y="47.6" font-size="12" text-anchor="middle" font-weight="700">proxy :3128</text>
+  <text x="400" y="64.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on the host</text>
+  <text x="400" y="79.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">applies the rules</text>
+  <polygon points="360.16,205 400,182 421.04,187.85 460.88,210.85 421.04,233.85 400,228" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="400,152 439.84,175 439.84,205 400,228 360.16,205 360.16,175" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="400,152 439.84,175 400,198 360.16,175" fill="var(--m-indigo-fill, #e9e9f6)"/>
+  <polygon points="400,152 439.84,175 400,198 360.16,175" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="360.16,205 400,228 400,198 360.16,175" fill="var(--m-indigo-fill, #e9e9f6)"/>
+  <polygon points="439.84,205 400,228 400,198 439.84,175" fill="var(--m-indigo-fill, #e9e9f6)"/>
+  <polygon points="439.84,205 400,228 400,198 439.84,175" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="400,198 439.84,175" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="400,198 360.16,175" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="400,198 400,228" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="400,152 439.84,175 439.84,205 400,228 360.16,205 360.16,175" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.5" stroke-linejoin="round"/>
+  <rect x="486" y="32" width="148" height="56" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="560" y="47.6" font-size="12" text-anchor="middle" font-weight="700">Model Runner</text>
+  <text x="560" y="64.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ai/qwen3:4b</text>
+  <text x="560" y="79.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">port 12434</text>
+  <polygon points="520.16,205 560,182 581.04,187.85 620.88,210.85 581.04,233.85 560,228" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="560,152 599.84,175 599.84,205 560,228 520.16,205 520.16,175" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="560,152 599.84,175 560,198 520.16,175" fill="var(--m-plum-fill, #f4e6ef)"/>
+  <polygon points="560,152 599.84,175 560,198 520.16,175" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="520.16,205 560,228 560,198 520.16,175" fill="var(--m-plum-fill, #f4e6ef)"/>
+  <polygon points="599.84,205 560,228 560,198 599.84,175" fill="var(--m-plum-fill, #f4e6ef)"/>
+  <polygon points="599.84,205 560,228 560,198 599.84,175" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="560,198 599.84,175" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="560,198 520.16,175" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="560,198 560,228" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="560,152 599.84,175 599.84,205 560,228 520.16,205 520.16,175" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="46.23,199.5 73.94,215.5 73.94,198.5 46.23,182.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.85"/>
+  <polygon points="49.69,191.1 66.14,200.6 66.14,199 49.69,189.5" fill="var(--m-violet-fill, #ebe8f5)" fill-opacity="0.9"/>
+  <polygon points="49.69,196.1 66.14,205.6 66.14,204 49.69,194.5" fill="var(--m-violet-fill, #ebe8f5)" fill-opacity="0.9"/>
+  <polygon points="240,151 257.32,161 257.32,175 240,185 222.68,175 222.68,161" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="240,151 257.32,161 240,171 222.68,161" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="240,151 257.32,161 240,171 222.68,161" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="222.68,175 240,185 240,171 222.68,161" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="257.32,175 240,185 240,171 257.32,161" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="257.32,175 240,185 240,171 257.32,161" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="240,171 257.32,161" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="240,171 222.68,161" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="240,171 240,185" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="240,151 257.32,161 257.32,175 240,185 222.68,175 222.68,161" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1" stroke-linejoin="round" stroke-dasharray="5 4"/>
+  <polygon points="367.09,204 368.82,205 368.82,184 367.09,183" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.7"/>
+  <polygon points="372.29,207 374.02,208 374.02,187 372.29,186" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.7"/>
+  <polygon points="377.48,210 379.22,211 379.22,190 377.48,189" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.7"/>
+  <polygon points="382.68,213 384.41,214 384.41,193 382.68,192" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.7"/>
+  <polygon points="387.88,216 389.61,217 389.61,196 387.88,195" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.7"/>
+  <polygon points="393.07,219 394.8,220 394.8,199 393.07,198" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.7"/>
+  <polygon points="544.08,163 544.08,175 544.38,176.79 545.29,178.52 546.76,180.11 548.74,181.5 551.15,182.64 553.91,183.49 556.89,184.02 560,184.19 563.11,184.02 566.09,183.49 568.85,182.64 571.26,181.5 573.24,180.11 574.71,178.52 575.62,176.79 575.92,175 575.92,163" fill="var(--m-plum-fill, #f4e6ef)"/>
+  <polygon points="544.08,163 544.08,175 544.38,176.79 545.29,178.52 546.76,180.11 548.74,181.5 551.15,182.64 553.91,183.49 556.89,184.02 560,184.19 563.11,184.02 566.09,183.49 568.85,182.64 571.26,181.5 573.24,180.11 574.71,178.52 575.62,176.79 575.92,175 575.92,163" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.08"/>
+  <polygon points="544.08,163 544.08,175 544.38,176.79 545.29,178.52 546.76,180.11 548.74,181.5 551.15,182.64 553.91,183.49 556.89,184.02 560,184.19 563.11,184.02 566.09,183.49 568.85,182.64 571.26,181.5 573.24,180.11 574.71,178.52 575.62,176.79 575.92,175 575.92,163" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.4" stroke-linejoin="round"/>
+  <ellipse cx="560" cy="163" rx="15.92" ry="9.19" fill="var(--m-plum-fill, #f4e6ef)"/>
+  <ellipse cx="560" cy="163" rx="15.92" ry="9.19" fill="var(--m-shine, #ffffff)" fill-opacity="0.45" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.4"/>
+  <polyline points="80,89 80,175" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="80" cy="175" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <polyline points="240,89 240,175" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="240" cy="175" r="2" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <polyline points="400,89 400,175" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="400" cy="175" r="2" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <polyline points="560,89 560,153.81" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="560" cy="153.81" r="2" fill="var(--m-plum-ink, #8a3d72)"/>
+  <polygon points="140.08,223.5 157.4,213.5 160.91,214.48 183.43,227.48 166.11,237.48 162.6,236.5" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="157.4,208.5 179.92,221.5 179.92,226.5 162.6,236.5 140.08,223.5 140.08,218.5" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="157.4,208.5 179.92,221.5 162.6,231.5 140.08,218.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="157.4,208.5 179.92,221.5 162.6,231.5 140.08,218.5" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="140.08,223.5 162.6,236.5 162.6,231.5 140.08,218.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="179.92,226.5 162.6,236.5 162.6,231.5 179.92,221.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="179.92,226.5 162.6,236.5 162.6,231.5 179.92,221.5" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="162.6,231.5 179.92,221.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="162.6,231.5 140.08,218.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="162.6,231.5 162.6,236.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="157.4,208.5 179.92,221.5 179.92,226.5 162.6,236.5 140.08,223.5 140.08,218.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="320,212 339.05,223 339.05,225 320,236 300.95,225 300.95,223" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="320,212 339.05,223 320,234 300.95,223" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="320,212 339.05,223 320,234 300.95,223" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="300.95,225 320,236 320,234 300.95,223" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="339.05,225 320,236 320,234 339.05,223" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="339.05,225 320,236 320,234 339.05,223" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="320,234 339.05,223" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="320,234 300.95,223" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="320,234 320,236" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="320,212 339.05,223 339.05,225 320,236 300.95,225 300.95,223" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-linejoin="round"/>
+  <polygon points="318.27,217 330.39,224 328.23,225.25 316.1,218.25" fill="var(--m-teal-ink, #18696a)" fill-opacity="0.8"/>
+  <polygon points="312.21,220.5 324.33,227.5 322.17,228.75 310.04,221.75" fill="var(--m-teal-ink, #18696a)" fill-opacity="0.8"/>
+  <rect x="20" y="258" width="196" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="118" y="274.8" font-size="11" text-anchor="middle" font-weight="700">sandbox-kits/&lt;hash&gt;</text>
+  <text x="118" y="291.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the kit docker-agent staged</text>
+  <rect x="256" y="258" width="132" height="56" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="322" y="273.3" font-size="11" text-anchor="middle" font-weight="700">allowlist</text>
+  <text x="322" y="290.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">models.dev</text>
+  <text x="322" y="305.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">localhost:12434</text>
+  <polyline points="160,257 160,220" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="160" cy="220" r="2" fill="var(--m-green-ink, #336b40)"/>
+  <polyline points="320,257 320,223" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="320" cy="223" r="2" fill="var(--m-teal-ink, #18696a)"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <path d="M121.8371684 190 L198.16283160000003 190" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-sandbox-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M121.8371684 190 L198.16283160000003 190" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="136.3" y="172.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="160" y="183" font-size="11.5" text-anchor="middle">create</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <path d="M86 216 L145.7416698 212.5" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-sandbox-run-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M86 216 L145.7416698 212.5" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <path d="M331.5262794 228.5 L362.358984 194" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-sandbox-run-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M331.5262794 228.5 L362.358984 194" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <line x1="240" y1="230" x2="240" y2="338" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#plate-sandbox-run-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M240 230 L240 338" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="118.6" y="323.03" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="232" y="334" font-size="11.5" text-anchor="end" fill="var(--m-amber-ink, #85590c)">created, running</text>
+  </g>
+  <line x1="20" y1="346" x2="620" y2="346" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="362" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">Hypervisor.framework · kern.hv_support: 1</text>
+  <polygon points="18,619 622,619 622,549 18,549" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="18,619 622,619 622,549 18,549" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="18,549 622,549 622,505 18,505" fill="var(--m-accent, #3553ff)" fill-opacity="0.05"/>
+  <line x1="18" y1="549" x2="622" y2="549" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.55"/>
+  <polygon points="60.16,584 100,561 121.04,566.85 160.88,589.85 121.04,612.85 100,607" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="100,531 139.84,554 139.84,584 100,607 60.16,584 60.16,554" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="100,531 139.84,554 100,577 60.16,554" fill="var(--m-indigo-fill, #e9e9f6)"/>
+  <polygon points="100,531 139.84,554 100,577 60.16,554" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="60.16,584 100,607 100,577 60.16,554" fill="var(--m-indigo-fill, #e9e9f6)"/>
+  <polygon points="139.84,584 100,607 100,577 139.84,554" fill="var(--m-indigo-fill, #e9e9f6)"/>
+  <polygon points="139.84,584 100,607 100,577 139.84,554" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="100,577 139.84,554" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="100,577 60.16,554" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="100,577 100,607" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="100,531 139.84,554 139.84,584 100,607 60.16,584 60.16,554" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="210.16,584 250,561 271.04,566.85 310.88,589.85 271.04,612.85 250,607" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="250,531 289.84,554 289.84,584 250,607 210.16,584 210.16,554" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="250,531 289.84,554 250,577 210.16,554" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="250,531 289.84,554 250,577 210.16,554" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="210.16,584 250,607 250,577 210.16,554" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="289.84,584 250,607 250,577 289.84,554" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="289.84,584 250,607 250,577 289.84,554" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="250,577 289.84,554" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="250,577 210.16,554" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="250,577 250,607" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="250,531 289.84,554 289.84,584 250,607 210.16,584 210.16,554" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="360.16,584 400,561 421.04,566.85 460.88,589.85 421.04,612.85 400,607" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="400,531 439.84,554 439.84,584 400,607 360.16,584 360.16,554" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="400,531 439.84,554 400,577 360.16,554" fill="var(--m-violet-fill, #ebe8f5)"/>
+  <polygon points="400,531 439.84,554 400,577 360.16,554" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="360.16,584 400,607 400,577 360.16,554" fill="var(--m-violet-fill, #ebe8f5)"/>
+  <polygon points="439.84,584 400,607 400,577 439.84,554" fill="var(--m-violet-fill, #ebe8f5)"/>
+  <polygon points="439.84,584 400,607 400,577 439.84,554" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="400,577 439.84,554" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="400,577 360.16,554" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="400,577 400,607" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="400,531 439.84,554 439.84,584 400,607 360.16,584 360.16,554" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="505.16,584 545,561 566.04,566.85 605.88,589.85 566.04,612.85 545,607" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="545,531 584.84,554 584.84,584 545,607 505.16,584 505.16,554" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="545,531 584.84,554 545,577 505.16,554" fill="var(--m-olive-fill, #eef0dc)"/>
+  <polygon points="545,531 584.84,554 545,577 505.16,554" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="505.16,584 545,607 545,577 505.16,554" fill="var(--m-olive-fill, #eef0dc)"/>
+  <polygon points="584.84,584 545,607 545,577 584.84,554" fill="var(--m-olive-fill, #eef0dc)"/>
+  <polygon points="584.84,584 545,607 545,577 584.84,554" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="545,577 584.84,554" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="545,577 505.16,554" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="545,577 545,607" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="545,531 584.84,554 584.84,584 545,607 505.16,584 505.16,554" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="65.36,568 94.8,585 94.8,581 65.36,564" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.7"/>
+  <polygon points="65.36,577 86.14,589 86.14,585 65.36,573" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.45"/>
+  <polygon points="215.36,578 220.56,581 220.56,571 215.36,568" fill="var(--m-green-ink, #336b40)" fill-opacity="0.75"/>
+  <polygon points="223.59,582.75 228.78,585.75 228.78,575.75 223.59,572.75" fill="var(--m-green-ink, #336b40)" fill-opacity="0.75"/>
+  <polygon points="231.81,587.5 237.01,590.5 237.01,580.5 231.81,577.5" fill="var(--m-green-ink, #336b40)" fill-opacity="0.75"/>
+  <polygon points="240.04,592.25 245.24,595.25 245.24,585.25 240.04,582.25" fill="var(--m-green-ink, #336b40)" fill-opacity="0.75"/>
+  <polygon points="366.23,578.5 393.94,594.5 393.94,577.5 366.23,561.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.85"/>
+  <polygon points="369.69,570.1 386.14,579.6 386.14,578 369.69,568.5" fill="var(--m-violet-fill, #ebe8f5)" fill-opacity="0.9"/>
+  <polygon points="369.69,575.1 386.14,584.6 386.14,583 369.69,573.5" fill="var(--m-violet-fill, #ebe8f5)" fill-opacity="0.9"/>
+  <polygon points="545,537 567.52,550 567.52,553 550.2,563 527.68,550 527.68,547" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="545,537 567.52,550 550.2,560 527.68,547" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="545,537 567.52,550 550.2,560 527.68,547" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="527.68,550 550.2,563 550.2,560 527.68,547" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="567.52,553 550.2,563 550.2,560 567.52,550" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="567.52,553 550.2,563 550.2,560 567.52,550" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="550.2,560 567.52,550" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="550.2,560 527.68,547" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="550.2,560 550.2,563" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="545,537 567.52,550 567.52,553 550.2,563 527.68,550 527.68,547" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="1" stroke-linejoin="round"/>
+  <polygon points="543.27,539 565.78,552 565.78,555 548.46,565 525.95,552 525.95,549" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="543.27,539 565.78,552 548.46,562 525.95,549" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="543.27,539 565.78,552 548.46,562 525.95,549" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="525.95,552 548.46,565 548.46,562 525.95,549" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="565.78,555 548.46,565 548.46,562 565.78,552" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="565.78,555 548.46,565 548.46,562 565.78,552" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="548.46,562 565.78,552" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="548.46,562 525.95,549" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="548.46,562 548.46,565" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="543.27,539 565.78,552 565.78,555 548.46,565 525.95,552 525.95,549" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="1" stroke-linejoin="round"/>
+  <polygon points="18,619 622,619 622,575 18,575" fill="var(--m-accent, #3553ff)" fill-opacity="0.07"/>
+  <line x1="18" y1="575" x2="622" y2="575" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.55"/>
+  <polygon points="18,505 622,505 622,619 18,619" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.5" stroke-linejoin="round"/>
+  <line x1="160" y1="581" x2="175" y2="611" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.4" stroke-opacity="0.45"/>
+  <line x1="176" y1="581" x2="184" y2="597" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.4" stroke-opacity="0.45"/>
+  <rect x="20" y="376" width="280" height="56" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="160" y="391.6" font-size="12" text-anchor="middle" font-weight="700">environment</text>
+  <text x="160" y="408.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HTTP_PROXY gateway.docker.internal:3128</text>
+  <text x="160" y="423.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ANTHROPIC_API_KEY=proxy-managed</text>
+  <rect x="440" y="376" width="180" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="530" y="391.6" font-size="12" text-anchor="middle" font-weight="700">docker-agent main</text>
+  <text x="530" y="408.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">commit 154b78f2</text>
+  <text x="530" y="423.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">runs files-sandbox.yaml</text>
+  <rect x="150" y="440" width="220" height="56" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="260" y="455.6" font-size="12" text-anchor="middle" font-weight="700">4 workspace mounts</text>
+  <text x="260" y="472.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">repo-sandbox rw, agents ro</text>
+  <text x="260" y="487.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sandbox-kits ro, cfg ro</text>
+  <rect x="452" y="440" width="168" height="56" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="536" y="455.6" font-size="12" text-anchor="middle" font-weight="700">filesystem, shell</text>
+  <text x="536" y="472.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">tools that act on</text>
+  <text x="536" y="487.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the mounts</text>
+  <polyline points="100,433 80.08,574.5" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="80.08" cy="574.5" r="2" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <polyline points="470,433 413.86,581" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="413.86" cy="581" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <polyline points="260,497 230.08,576.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="230.08" cy="576.5" r="2" fill="var(--m-green-ink, #336b40)"/>
+  <polyline points="545,497 545,554" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="545" cy="554" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <text x="20" y="636" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">microVM docker-agent-&lt;hash&gt; · docker/docker-agent-sbx-templates:latest</text>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <line x1="400" y1="552" x2="400" y2="229" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#plate-sandbox-run-head-plum)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-plum-ink, #8a3d72)" opacity="0"><animateMotion path="M400 552 L400 229" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="405" y="319.03" width="185.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="408" y="330" font-size="11.5" fill="var(--m-plum-ink, #8a3d72)">host.docker.internal:12434</text>
+  <rect class="m-knock" x="405" y="351.42" width="112.92" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="408" y="362" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">through HTTP_PROXY</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <path d="M441.8371684 190 L518.1628316 190" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-sandbox-run-head-plum)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-plum-ink, #8a3d72)" opacity="0"><animateMotion path="M441.8371684 190 L518.1628316 190" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="456.3" y="172.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="480" y="183" font-size="11.5" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">:12434</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="650" width="600" height="38" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="320" y="672.6" font-size="12" text-anchor="middle" font-weight="400">The working directory contains README.md with 1 line.</text>
+  </g>
+</svg>

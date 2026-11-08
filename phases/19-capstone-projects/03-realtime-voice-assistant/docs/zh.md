@@ -100,8 +100,9 @@ caller: "what is the weather in tokyo tomorrow"
 [asr  ] partial @280ms: "what is the"
 [asr  ] partial @540ms: "what is the weather"
 [turn ] completion score 0.82 at @820ms; commit
-[llm  ] first token @960ms
-[tool ] weather.tokyo tomorrow -> 68/52 partly cloudy @1140ms
+[llm  ] tool call emitted @880ms
+[tool ] weather.tokyo tomorrow -> 68/52 partly cloudy @940ms
+[llm  ] first token @990ms
 [tts  ] first audio-out @1040ms: "Tokyo tomorrow will be partly cloudy..."
 turn latency: 1040ms user-stop -> audio-out
 ```

@@ -18,6 +18,7 @@ The aesthetic is documented in the `blueprint-diagram` Claude Code skill, which 
 | 005 | transformer-attention-heads | 7 | 1 | 2026-05-09 | exploded view of multi-head attention block |
 | 006 | ai-engineering-learning-paths | all | core learning paths | 2026-08-23 | four connected domain paths for navigating the curriculum |
 | 006.M | ai-engineering-learning-paths-mobile | all | core learning paths | 2026-08-23 | vertical narrow-screen view of the four connected domain paths |
+| 101 | gradient-descent | 1 | README optimization preview | 2026-10-09 | computed particle trajectories and mean loss; light/dark and mobile variants in `assets/readme/101-gradient-*` |
 
 ## Numbering
 

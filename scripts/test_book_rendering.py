@@ -11,6 +11,7 @@ import build_book
 
 ROOT = Path(__file__).resolve().parents[1]
 FILTER = ROOT / "book" / "literal-tokens.lua"
+MATH_FILTER = ROOT / "book" / "math-blocks.lua"
 PDF_SOURCE_FORMAT = "markdown+fenced_divs+autolink_bare_uris"
 LONG_LINES = """# Wrapping regression
 
@@ -56,6 +57,15 @@ def render(source, output="html", lua_filter=FILTER):
 
 
 class BookRenderingTest(unittest.TestCase):
+    def test_math_fences_and_dollar_math_render_as_math_and_money_stays_text(self):
+        source = ("Costs \\$5 or $21-$50 per hour. The slope is $f'(x) = 2x$.\n\n"
+                  "```math\n\\frac{a}{b} \\\\ c\n```\n\n```text\nx = $1$\n```\n")
+        result = render(source, "latex", MATH_FILTER)
+        self.assertIn(r"\(f'(x) = 2x\)", result)
+        self.assertIn(r"\[\frac{a}{b} \\ c\]", result)
+        self.assertIn(r"\$5 or \$21-\$50 per hour", result)
+        self.assertIn(r"\NormalTok{x = $1$}", result)
+
     def test_literal_tokens_remain_text_in_valid_xhtml(self):
         source = 'Prompt: "<image A> caption <image B>". Replace a name with "<PERSON>".\n\n'
         source += '| Token | Meaning |\n| --- | --- |\n| <image> | Image |\n| <doc A> | Context |\n'

@@ -1,0 +1,62 @@
+arch     wasm
+baddr    0x0
+binsz    290
+bintype  wasm
+bits     32
+canary   false
+injprot  false
+retguard false
+class    module
+crypto   false
+endian   little
+havecode true
+laddr    0x0
+linenum  false
+lsyms    false
+machine  wasm
+nx       false
+os       WebAssembly
+pic      false
+relocs   false
+sanitize false
+static   true
+stripped false
+uncaps   false
+subsys   wasm
+va       false
+nth paddr      vaddr      bind   type size lib name           demangled
+―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+0   ---------- ---------- NONE   FUNC 0    env imp.log
+1   0x00000074 0x00000074 GLOBAL FUNC 22       percent_change
+2   0x0000008e 0x0000008e GLOBAL FUNC 60       grade
+3   0x000000ce 0x000000ce GLOBAL FUNC 41       total
+4   0x000000fb 0x000000fb GLOBAL FUNC 20       grade_label
+            ;-- grade:
+            0x0000008e      2000           get_local 0
+            0x00000090      410a           i32.const 10
+            0x00000092      6d             i32.div_s
+            0x00000093      2101           set_local 1
+            0x00000095      027f           block (result i32)
+            0x00000097      0240           block
+            0x00000099      0240           block
+            0x0000009b      0240           block
+            0x0000009d      0240           block
+            0x0000009f      0240           block
+            0x000000a1      2001           get_local 1
+            0x000000a3      0e0b040404..   brtable 11 4 4 4 4 4 4 3 2 1 0 0 4
+            0x000000b1      0b             end
+            0x000000b2      4104           i32.const 4
+        ┌─< 0x000000b4      0c04           br 4
+        │   0x000000b6      0b             end
+        │   0x000000b7      4103           i32.const 3
+       ┌──< 0x000000b9      0c03           br 3
+       ││   0x000000bb      0b             end
+       ││   0x000000bc      4102           i32.const 2
+      ┌───< 0x000000be      0c02           br 2
+      │││   0x000000c0      0b             end
+      │││   0x000000c1      4101           i32.const 1
+     ┌────< 0x000000c3      0c01           br 1
+     ││││   0x000000c5      0b             end
+     ││││   0x000000c6      4100           i32.const 0
+     └└└└─> 0x000000c8      0b             end
+            0x000000c9      0b             end

@@ -81,11 +81,11 @@ code --install-extension charliermarsh.ruff
 | Black Formatter | 存檔時自動格式化，風格一致 |
 | Ruff | 快速 linting，抓出常見錯誤 |
 
-本單元的 `code/.vscode/extensions.json` 收錄了完整的建議清單。當你開啟這個專案資料夾時，VS Code 會提示你安裝它們。
+本單元的 `code/vscode/extensions.json` 收錄了完整的建議清單。把它複製到你專案資料夾裡的 `.vscode/extensions.json`，之後開啟那個資料夾時，VS Code 就會提示你安裝它們。
 
 ### 步驟 3：設定 settings
 
-把本單元 `code/.vscode/settings.json` 裡的設定複製過去，或是透過 `Settings > Open Settings (JSON)` 手動套用。
+把本單元 `code/vscode/settings.json` 裡的設定複製過去，或是透過 `Settings > Open Settings (JSON)` 手動套用。
 
 對 AI 工作最關鍵的幾項設定：
 
@@ -200,6 +200,16 @@ Host gpu-box
 2. 把本單元的 `settings.json` 複製到你的 VS Code 設定裡
 3. 開一個 Python 檔案，確認 Pylance 會顯示型別提示、Black 會在存檔時格式化
 4. 如果你有遠端機器可用，設定 Remote SSH 並開啟上面的某個資料夾
+
+### 提示
+
+**練習 1。** 安裝步驟 2 表格裡的擴充套件，或用 `code --install-extension <id>` 逐一安裝 `code/vscode/extensions.json` 裡的每個 ID。執行 `code --list-extensions`，逐一對照檔案裡的 ID。
+
+**練習 2。** 打開 Settings > Open Settings (JSON)，把 `code/vscode/settings.json` 的內容複製進去。如果檔案裡已經有設定，就合併鍵值並保持 JSON 合法；檔案壞掉時 VS Code 會用紅線標出來。
+
+**練習 3。** 寫一個帶型別註記的函式，然後把滑鼠停在對它的呼叫上；Pylance 會顯示推斷出的型別。在某一行加幾個多餘的空格再存檔；Black 必須在存檔時把那一行重新格式化。
+
+**練習 4。** 先把伺服器加進 `~/.ssh/config`，並確認在終端機裡 `ssh <host>` 能連上。接著用 Remote SSH 指令連線；VS Code 在遠端機器上執行時，狀態列會顯示主機名稱。
 
 ## 關鍵術語
 

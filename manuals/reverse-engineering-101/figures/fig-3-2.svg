@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 232" role="img" aria-labelledby="fig-3-2-title fig-3-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-2-title">Two layout commands on the capture Mac</title>
+  <desc id="fig-3-2-desc">Left: rea inspect-binary-layout on ledger-x86_64-O1.o reaches the pwntools-elf provider, which answers capability_unavailable with category unsupported_provider because its profile supports Linux x64 only, and the command exits 1. Right: rea inspect-macho on ledger-arm64-O1 reaches the native-macos provider, which runs lipo, otool, nm, dyld_info, dwarfdump, and vtool, found through xcrun, and returns an Evidence record with 17 load commands and 4 segments, exit 0.</desc>
+  <defs><marker id="fig-3-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-3-2-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A · INSPECT-BINARY-LAYOUT</text>
+  <text x="336" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">B · INSPECT-MACHO</text>
+  <line x1="320" y1="8" x2="320" y2="224" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="30" width="284" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="162" y="48.25" font-size="12.5" text-anchor="middle" font-weight="700">rea inspect-binary-layout</text>
+  <text x="162" y="65.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">fixtures/ledger-x86_64-O1.o</text>
+  <line x1="162" y1="76" x2="162" y2="99" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-2-head-ink)"/>
+  <rect x="20" y="100" width="284" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="162" y="118.25" font-size="12.5" text-anchor="middle" font-weight="700">provider pwntools-elf</text>
+  <text x="162" y="135.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">needs Linux x64 and REA_PWNTOOLS_PYTHON</text>
+  <line x1="162" y1="146" x2="162" y2="169" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-2-head-rose)"/>
+  <rect x="20" y="170" width="284" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="162" y="188.25" font-size="12.5" text-anchor="middle" font-weight="700">capability_unavailable</text>
+  <text x="162" y="205.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">unsupported_provider · exit 1</text>
+  <rect x="336" y="30" width="284" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="478" y="48.25" font-size="12.5" text-anchor="middle" font-weight="700">rea inspect-macho</text>
+  <text x="478" y="65.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">fixtures/ledger-arm64-O1</text>
+  <line x1="478" y1="76" x2="478" y2="99" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-2-head-ink)"/>
+  <rect x="336" y="100" width="284" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="478" y="118.25" font-size="12.5" text-anchor="middle" font-weight="700">otool nm dyld_info dwarfdump</text>
+  <text x="478" y="135.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">and lipo, vtool, found through xcrun</text>
+  <line x1="478" y1="146" x2="478" y2="169" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-2-head-ink)"/>
+  <rect x="336" y="170" width="284" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="478" y="188.25" font-size="12.5" text-anchor="middle" font-weight="700">Evidence ev_497834aa</text>
+  <text x="478" y="205.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">17 load commands · 4 segments · exit 0</text>
+</svg>

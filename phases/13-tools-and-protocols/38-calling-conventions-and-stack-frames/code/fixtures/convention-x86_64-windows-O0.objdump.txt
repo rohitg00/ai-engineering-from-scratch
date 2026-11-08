@@ -1,0 +1,215 @@
+
+convention-x86_64-windows-O0.o:	file format coff-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <leaf_add>:
+       0: 50                           	pushq	%rax
+       1: 89 54 24 04                  	movl	%edx, 0x4(%rsp)
+       5: 89 0c 24                     	movl	%ecx, (%rsp)
+       8: 8b 04 24                     	movl	(%rsp), %eax
+       b: 03 44 24 04                  	addl	0x4(%rsp), %eax
+       f: 59                           	popq	%rcx
+      10: c3                           	retq
+      11: 66 66 66 66 66 66 2e 0f 1f 84 00 00 00 00 00 	nopw	%cs:(%rax,%rax)
+
+0000000000000020 <eight_args>:
+      20: 48 83 ec 20                  	subq	$0x20, %rsp
+      24: 48 8b 44 24 60               	movq	0x60(%rsp), %rax
+      29: 48 8b 44 24 58               	movq	0x58(%rsp), %rax
+      2e: 48 8b 44 24 50               	movq	0x50(%rsp), %rax
+      33: 48 8b 44 24 48               	movq	0x48(%rsp), %rax
+      38: 4c 89 4c 24 18               	movq	%r9, 0x18(%rsp)
+      3d: 4c 89 44 24 10               	movq	%r8, 0x10(%rsp)
+      42: 48 89 54 24 08               	movq	%rdx, 0x8(%rsp)
+      47: 48 89 0c 24                  	movq	%rcx, (%rsp)
+      4b: 48 8b 04 24                  	movq	(%rsp), %rax
+      4f: 48 03 44 24 08               	addq	0x8(%rsp), %rax
+      54: 48 03 44 24 10               	addq	0x10(%rsp), %rax
+      59: 48 03 44 24 18               	addq	0x18(%rsp), %rax
+      5e: 48 03 44 24 48               	addq	0x48(%rsp), %rax
+      63: 48 03 44 24 50               	addq	0x50(%rsp), %rax
+      68: 48 03 44 24 58               	addq	0x58(%rsp), %rax
+      6d: 48 03 44 24 60               	addq	0x60(%rsp), %rax
+      72: 48 83 c4 20                  	addq	$0x20, %rsp
+      76: c3                           	retq
+      77: 66 0f 1f 84 00 00 00 00 00   	nopw	(%rax,%rax)
+
+0000000000000080 <mixed>:
+      80: 48 83 ec 20                  	subq	$0x20, %rsp
+      84: f3 0f 11 5c 24 1c            	movss	%xmm3, 0x1c(%rsp)
+      8a: 4c 89 44 24 10               	movq	%r8, 0x10(%rsp)
+      8f: f2 0f 11 4c 24 08            	movsd	%xmm1, 0x8(%rsp)
+      95: 89 4c 24 04                  	movl	%ecx, 0x4(%rsp)
+      99: f2 0f 2a 44 24 04            	cvtsi2sdl	0x4(%rsp), %xmm0
+      9f: f2 0f 58 44 24 08            	addsd	0x8(%rsp), %xmm0
+      a5: f2 48 0f 2a 4c 24 10         	cvtsi2sdq	0x10(%rsp), %xmm1
+      ac: f2 0f 58 c1                  	addsd	%xmm1, %xmm0
+      b0: f3 0f 10 4c 24 1c            	movss	0x1c(%rsp), %xmm1
+      b6: f3 0f 5a c9                  	cvtss2sd	%xmm1, %xmm1
+      ba: f2 0f 58 c1                  	addsd	%xmm1, %xmm0
+      be: 48 83 c4 20                  	addq	$0x20, %rsp
+      c2: c3                           	retq
+      c3: 66 66 66 66 2e 0f 1f 84 00 00 00 00 00       	nopw	%cs:(%rax,%rax)
+
+00000000000000d0 <by_value>:
+      d0: 48 83 ec 10                  	subq	$0x10, %rsp
+      d4: 48 89 c8                     	movq	%rcx, %rax
+      d7: 48 89 4c 24 08               	movq	%rcx, 0x8(%rsp)
+      dc: 48 89 14 24                  	movq	%rdx, (%rsp)
+      e0: 4c 8b 02                     	movq	(%rdx), %r8
+      e3: 49 83 c0 01                  	addq	$0x1, %r8
+      e7: 4c 89 02                     	movq	%r8, (%rdx)
+      ea: 4c 8b 42 08                  	movq	0x8(%rdx), %r8
+      ee: 49 83 e8 01                  	subq	$0x1, %r8
+      f2: 4c 89 42 08                  	movq	%r8, 0x8(%rdx)
+      f6: 4c 8b 02                     	movq	(%rdx), %r8
+      f9: 4c 89 01                     	movq	%r8, (%rcx)
+      fc: 48 8b 52 08                  	movq	0x8(%rdx), %rdx
+     100: 48 89 51 08                  	movq	%rdx, 0x8(%rcx)
+     104: 48 83 c4 10                  	addq	$0x10, %rsp
+     108: c3                           	retq
+     109: 0f 1f 80 00 00 00 00         	nopl	(%rax)
+
+0000000000000110 <big_ret>:
+     110: 48 83 ec 10                  	subq	$0x10, %rsp
+     114: 48 89 c8                     	movq	%rcx, %rax
+     117: 48 89 4c 24 08               	movq	%rcx, 0x8(%rsp)
+     11c: 48 89 14 24                  	movq	%rdx, (%rsp)
+     120: 48 8b 14 24                  	movq	(%rsp), %rdx
+     124: 48 89 11                     	movq	%rdx, (%rcx)
+     127: 48 8b 14 24                  	movq	(%rsp), %rdx
+     12b: 48 83 c2 01                  	addq	$0x1, %rdx
+     12f: 48 89 51 08                  	movq	%rdx, 0x8(%rcx)
+     133: 48 8b 14 24                  	movq	(%rsp), %rdx
+     137: 48 83 c2 02                  	addq	$0x2, %rdx
+     13b: 48 89 51 10                  	movq	%rdx, 0x10(%rcx)
+     13f: 48 8b 14 24                  	movq	(%rsp), %rdx
+     143: 48 83 c2 03                  	addq	$0x3, %rdx
+     147: 48 89 51 18                  	movq	%rdx, 0x18(%rcx)
+     14b: 48 83 c4 10                  	addq	$0x10, %rsp
+     14f: c3                           	retq
+
+0000000000000150 <sum_varargs>:
+     150: 48 83 ec 18                  	subq	$0x18, %rsp
+     154: 4c 89 4c 24 38               	movq	%r9, 0x38(%rsp)
+     159: 4c 89 44 24 30               	movq	%r8, 0x30(%rsp)
+     15e: 48 89 54 24 28               	movq	%rdx, 0x28(%rsp)
+     163: 89 4c 24 14                  	movl	%ecx, 0x14(%rsp)
+     167: c7 44 24 04 00 00 00 00      	movl	$0x0, 0x4(%rsp)
+     16f: 48 8d 44 24 28               	leaq	0x28(%rsp), %rax
+     174: 48 89 44 24 08               	movq	%rax, 0x8(%rsp)
+     179: c7 04 24 00 00 00 00         	movl	$0x0, (%rsp)
+     180: 8b 04 24                     	movl	(%rsp), %eax
+     183: 3b 44 24 14                  	cmpl	0x14(%rsp), %eax
+     187: 7d 26                        	jge	0x1af <sum_varargs+0x5f>
+     189: 48 8b 44 24 08               	movq	0x8(%rsp), %rax
+     18e: 48 89 c1                     	movq	%rax, %rcx
+     191: 48 83 c1 08                  	addq	$0x8, %rcx
+     195: 48 89 4c 24 08               	movq	%rcx, 0x8(%rsp)
+     19a: 8b 00                        	movl	(%rax), %eax
+     19c: 03 44 24 04                  	addl	0x4(%rsp), %eax
+     1a0: 89 44 24 04                  	movl	%eax, 0x4(%rsp)
+     1a4: 8b 04 24                     	movl	(%rsp), %eax
+     1a7: 83 c0 01                     	addl	$0x1, %eax
+     1aa: 89 04 24                     	movl	%eax, (%rsp)
+     1ad: eb d1                        	jmp	0x180 <sum_varargs+0x30>
+     1af: 8b 44 24 04                  	movl	0x4(%rsp), %eax
+     1b3: 48 83 c4 18                  	addq	$0x18, %rsp
+     1b7: c3                           	retq
+     1b8: 0f 1f 84 00 00 00 00 00      	nopl	(%rax,%rax)
+
+00000000000001c0 <keeps>:
+     1c0: 48 83 ec 38                  	subq	$0x38, %rsp
+     1c4: 89 4c 24 34                  	movl	%ecx, 0x34(%rsp)
+     1c8: c7 44 24 30 00 00 00 00      	movl	$0x0, 0x30(%rsp)
+     1d0: c7 44 24 2c 00 00 00 00      	movl	$0x0, 0x2c(%rsp)
+     1d8: 8b 44 24 2c                  	movl	0x2c(%rsp), %eax
+     1dc: 3b 44 24 34                  	cmpl	0x34(%rsp), %eax
+     1e0: 7d 1e                        	jge	0x200 <keeps+0x40>
+     1e2: 8b 4c 24 2c                  	movl	0x2c(%rsp), %ecx
+     1e6: e8 00 00 00 00               	callq	0x1eb <keeps+0x2b>
+		00000000000001e7:  IMAGE_REL_AMD64_REL32	ext
+     1eb: 03 44 24 30                  	addl	0x30(%rsp), %eax
+     1ef: 89 44 24 30                  	movl	%eax, 0x30(%rsp)
+     1f3: 8b 44 24 2c                  	movl	0x2c(%rsp), %eax
+     1f7: 83 c0 01                     	addl	$0x1, %eax
+     1fa: 89 44 24 2c                  	movl	%eax, 0x2c(%rsp)
+     1fe: eb d8                        	jmp	0x1d8 <keeps+0x18>
+     200: 8b 44 24 30                  	movl	0x30(%rsp), %eax
+     204: 48 83 c4 38                  	addq	$0x38, %rsp
+     208: c3                           	retq
+     209: 0f 1f 80 00 00 00 00         	nopl	(%rax)
+
+0000000000000210 <call8>:
+     210: 48 83 ec 48                  	subq	$0x48, %rsp
+     214: b9 01 00 00 00               	movl	$0x1, %ecx
+     219: ba 02 00 00 00               	movl	$0x2, %edx
+     21e: 41 b8 03 00 00 00            	movl	$0x3, %r8d
+     224: 41 b9 04 00 00 00            	movl	$0x4, %r9d
+     22a: 48 c7 44 24 20 05 00 00 00   	movq	$0x5, 0x20(%rsp)
+     233: 48 c7 44 24 28 06 00 00 00   	movq	$0x6, 0x28(%rsp)
+     23c: 48 c7 44 24 30 07 00 00 00   	movq	$0x7, 0x30(%rsp)
+     245: 48 c7 44 24 38 08 00 00 00   	movq	$0x8, 0x38(%rsp)
+     24e: e8 00 00 00 00               	callq	0x253 <call8+0x43>
+		000000000000024f:  IMAGE_REL_AMD64_REL32	ext8
+     253: 48 83 c4 48                  	addq	$0x48, %rsp
+     257: c3                           	retq
+     258: 0f 1f 84 00 00 00 00 00      	nopl	(%rax,%rax)
+
+0000000000000260 <call_mixed>:
+     260: 48 83 ec 28                  	subq	$0x28, %rsp
+     264: b9 01 00 00 00               	movl	$0x1, %ecx
+     269: f2 0f 10 0d 00 00 00 00      	movsd	(%rip), %xmm1           # 0x271 <call_mixed+0x11>
+		000000000000026d:  IMAGE_REL_AMD64_REL32	__real@4000000000000000
+     271: 41 b8 03 00 00 00            	movl	$0x3, %r8d
+     277: f3 0f 10 1d 00 00 00 00      	movss	(%rip), %xmm3           # 0x27f <call_mixed+0x1f>
+		000000000000027b:  IMAGE_REL_AMD64_REL32	__real@40800000
+     27f: e8 00 00 00 00               	callq	0x284 <call_mixed+0x24>
+		0000000000000280:  IMAGE_REL_AMD64_REL32	extmixed
+     284: 48 83 c4 28                  	addq	$0x28, %rsp
+     288: c3                           	retq
+     289: 0f 1f 80 00 00 00 00         	nopl	(%rax)
+
+0000000000000290 <call_varargs>:
+     290: 48 83 ec 28                  	subq	$0x28, %rsp
+     294: b9 03 00 00 00               	movl	$0x3, %ecx
+     299: ba 0a 00 00 00               	movl	$0xa, %edx
+     29e: 41 b8 14 00 00 00            	movl	$0x14, %r8d
+     2a4: 41 b9 1e 00 00 00            	movl	$0x1e, %r9d
+     2aa: e8 00 00 00 00               	callq	0x2af <call_varargs+0x1f>
+		00000000000002ab:  IMAGE_REL_AMD64_REL32	extva
+     2af: 48 83 c4 28                  	addq	$0x28, %rsp
+     2b3: c3                           	retq
+     2b4: 66 66 66 2e 0f 1f 84 00 00 00 00 00  	nopw	%cs:(%rax,%rax)
+
+00000000000002c0 <call_pair>:
+     2c0: 48 83 ec 58                  	subq	$0x58, %rsp
+     2c4: 48 8b 05 00 00 00 00         	movq	(%rip), %rax            # 0x2cb <call_pair+0xb>
+		00000000000002c7:  IMAGE_REL_AMD64_REL32	.rdata
+     2cb: 48 89 44 24 48               	movq	%rax, 0x48(%rsp)
+     2d0: 48 8b 05 08 00 00 00         	movq	0x8(%rip), %rax         # 0x2df <call_pair+0x1f>
+		00000000000002d3:  IMAGE_REL_AMD64_REL32	.rdata
+     2d7: 48 89 44 24 50               	movq	%rax, 0x50(%rsp)
+     2dc: 48 8b 44 24 48               	movq	0x48(%rsp), %rax
+     2e1: 48 89 44 24 28               	movq	%rax, 0x28(%rsp)
+     2e6: 48 8b 44 24 50               	movq	0x50(%rsp), %rax
+     2eb: 48 89 44 24 30               	movq	%rax, 0x30(%rsp)
+     2f0: 48 8d 4c 24 38               	leaq	0x38(%rsp), %rcx
+     2f5: 48 8d 54 24 28               	leaq	0x28(%rsp), %rdx
+     2fa: e8 00 00 00 00               	callq	0x2ff <call_pair+0x3f>
+		00000000000002fb:  IMAGE_REL_AMD64_REL32	extpair
+     2ff: 48 8b 44 24 40               	movq	0x40(%rsp), %rax
+     304: 48 83 c4 58                  	addq	$0x58, %rsp
+     308: c3                           	retq
+     309: 0f 1f 80 00 00 00 00         	nopl	(%rax)
+
+0000000000000310 <call_big>:
+     310: 48 83 ec 48                  	subq	$0x48, %rsp
+     314: 48 8d 4c 24 28               	leaq	0x28(%rsp), %rcx
+     319: ba 09 00 00 00               	movl	$0x9, %edx
+     31e: e8 00 00 00 00               	callq	0x323 <call_big+0x13>
+		000000000000031f:  IMAGE_REL_AMD64_REL32	extbig
+     323: 48 8b 44 24 38               	movq	0x38(%rsp), %rax
+     328: 48 83 c4 48                  	addq	$0x48, %rsp
+     32c: c3                           	retq

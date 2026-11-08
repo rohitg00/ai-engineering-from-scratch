@@ -38,6 +38,7 @@
       "A documented improvement based on developer feedback"
     ]
   },
+  "projects": ["glossary-hovercard-publisher", "api-tutorial-runner", "changelog-writer-from-git", "plain-language-rewrite-desk", "diagram-reading-companion", "community-learning-path-finder"],
   "readinessCriteria": [
     "Can explain the difference between an instruction package and an executable tool.",
     "Can design a small, unambiguous interface with useful failure messages.",

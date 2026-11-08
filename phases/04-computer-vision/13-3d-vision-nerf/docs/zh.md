@@ -44,8 +44,8 @@ cloud = [
 
 PointNet（Qi et al., 2017）用一個想法同時解決了兩者：對每一個點套用共享的 MLP，然後用一個對稱函式（max pool）聚合。結果是一個固定長度、與順序無關的向量。
 
-```
-f(P) = max_{p in P} MLP(p)
+```math
+f(P) = \max_{p \in P} \mathop{\mathrm{MLP}}(p)
 ```
 
 這就是 PointNet 的全部核心。更深的變體（PointNet++、Point Transformer）加上了階層式取樣與局部聚合，但對稱函式這個技巧沒有變。
@@ -89,19 +89,20 @@ To render a pixel (u, v) of a new view:
 
 直接吃 `(x, y, z)` 的原味 MLP 沒辦法表示高頻細節，因為 MLP 在頻譜上偏向低頻。NeRF 的解法是在進 MLP 之前，先把每個座標編碼成一組傅立葉特徵向量：
 
-```
-gamma(p) = (sin(2^0 pi p), cos(2^0 pi p), sin(2^1 pi p), cos(2^1 pi p), ...)
+```math
+\gamma(p) = \left(\sin(2^0 \pi p), \cos(2^0 \pi p), \sin(2^1 \pi p), \cos(2^1 \pi p), \ldots\right)
 ```
 
 最多到 L=10 個頻率層級。這跟 transformer 處理位置用的是同一個技巧，在擴散模型的時間條件裡也會再出現一次（單元 10）。少了它，NeRF 就會糊掉。
 
 ### 體積渲染
 
-```
-C(r) = sum_i T_i * (1 - exp(-sigma_i * delta_i)) * c_i
-
-T_i  = exp(- sum_{j<i} sigma_j * delta_j)
-delta_i = t_{i+1} - t_i
+```math
+\begin{aligned}
+C(r) &= \sum_i T_i \left(1 - \exp(-\sigma_i \delta_i)\right) c_i \\[4pt]
+T_i &= \exp\left(-\sum_{j<i} \sigma_j \delta_j\right) \\
+\delta_i &= t_{i+1} - t_i
+\end{aligned}
 ```
 
 `T_i` 是穿透率 —— 有多少光能存活到第 i 個點。`(1 - exp(-sigma_i * delta_i))` 是第 i 個點的不透明度。`c_i` 是顏色。最終的像素就是沿著光線的一個加權和。

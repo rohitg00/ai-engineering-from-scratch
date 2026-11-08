@@ -268,7 +268,7 @@ python3 code/main.py
 python3 -m unittest discover code/tests -v
 ```
 
-Inspect four things in the output:
+Inspect five things in the output:
 
 1. Every call is independent.
 2. Every request has `_meta` capabilities.
@@ -292,7 +292,7 @@ This lesson ships `outputs/skill-mcp-apps-spec.md`. Use it to review an App cont
 2. Send `Mcp-Name: ui://notes/other.html` with a body that reads the timeline. Confirm error `-32020`.
 3. Change the resource to `cacheScope: private`. Describe the user-specific condition that justifies it.
 4. Move the script to `https://static.example.com/app.js`. Add that origin to `resourceDomains` and explain the new supply-chain risk.
-5. Add an `notes_open` tool and route the button click through the host. Keep user approval in the host.
+5. Add a `notes_open` tool and route the button click through the host. Keep user approval in the host.
 
 ## Key Terms
 

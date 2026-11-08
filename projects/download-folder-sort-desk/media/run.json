@@ -1,0 +1,52 @@
+{
+  "title": "Download Folder Sort Desk | initialize and grade",
+  "recordedAt": "2026-10-09T14:26:57Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "download-folder-sort-desk",
+        "--init",
+        "./.project-validation/download-folder-sort-desk/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/download-folder-sort-desk/recording-starter\n  kept     cli.py\n  kept     main.py\n  kept     presentation.py\n  kept     samples/files/attendance.csv\n  kept     samples/files/duplicate.txt\n  kept     samples/files/handout.txt\n  kept     samples/files/sketch.svg\n  kept     samples/input.json\n  kept     STAGE-2.md\n  kept     STAGE-3.md\n  kept     STAGE-4.md\nnext: python3 scripts/project_test.py download-folder-sort-desk --stage 1 --path ./.project-validation/download-folder-sort-desk/recording-starter\n",
+      "durationMs": 36
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "download-folder-sort-desk",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/download-folder-sort-desk/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Download Folder Sort Desk: grading learner\n  FAIL stage 1: Inventory files and compute content identities (5 tests)\n       not implemented yet: Implement inventory using API.md and the stage lesson\n",
+      "durationMs": 97
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "download-folder-sort-desk",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/download-folder-sort-desk/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Download Folder Sort Desk: grading solution\n  PASS stage 1: Inventory files and compute content identities (5 tests)\n  PASS stage 2: Score categories from visible file features (5 tests)\n  PASS stage 3: Plan destinations and surface naming conflicts (5 tests)\n  PASS stage 4: Export a reviewed filing plan for a file manager (6 tests)\nreport: ./.project-validation/download-folder-sort-desk/solution-final.json\n",
+      "durationMs": 341
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

@@ -61,8 +61,8 @@ Why this matters for LLM systems: you can outsource completion tasks to multiple
 
 A DID-bound reputation score accumulates from confirmed contributions. A simple update rule:
 
-```
-rep(i, t+1) = alpha * rep(i, t) + (1 - alpha) * contribution_quality(i, t)
+```math
+\text{rep}(i, t+1) = \alpha \cdot \text{rep}(i, t) + (1 - \alpha) \cdot \text{contribution\_quality}(i, t)
 ```
 
 With decay factor `alpha` close to 1. Reputation:

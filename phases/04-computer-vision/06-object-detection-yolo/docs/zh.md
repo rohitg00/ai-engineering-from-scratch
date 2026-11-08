@@ -74,11 +74,13 @@ At each grid cell, every anchor emits (tx, ty, tw, th, obj, c_1, ..., c_C).
 
 原始的 `tx, ty, tw, th` 並不是框的座標；它們是回歸目標，畫出來之前要先轉換：
 
-```
-centre x  = (sigmoid(tx) + cell_x) * stride
-centre y  = (sigmoid(ty) + cell_y) * stride
-width     = anchor_w * exp(tw)
-height    = anchor_h * exp(th)
+```math
+\begin{aligned}
+\text{centre } x &= (\sigma(t_x) + \text{cell}_x) \cdot \text{stride} \\
+\text{centre } y &= (\sigma(t_y) + \text{cell}_y) \cdot \text{stride} \\
+\text{width} &= \text{anchor}_w \cdot \exp(t_w) \\
+\text{height} &= \text{anchor}_h \cdot \exp(t_h)
+\end{aligned}
 ```
 
 `sigmoid` 把中心偏移量鎖在網格單元內。`exp` 讓寬度能自由地相對錨框縮放，又不會翻成負值。`stride` 把網格座標放大回像素。從 v2 之後，每個 YOLO 版本的這個解碼步驟都一樣。
@@ -87,11 +89,11 @@ height    = anchor_h * exp(th)
 
 偵測領域裡衡量兩個框有多像的通用指標：
 
-```
-IoU(A, B) = area(A intersect B) / area(A union B)
+```math
+\mathrm{IoU}(A, B) = \frac{\mathop{\mathrm{area}}(A \cap B)}{\mathop{\mathrm{area}}(A \cup B)}
 ```
 
-IoU = 1 表示完全相同；IoU = 0 表示毫無重疊。預測框與真實框之間的 IoU，決定一個預測算不算真正例（一般取 IoU >= 0.5）。兩個預測框之間的 IoU，則是 NMS 用來去重的依據。
+$\mathrm{IoU} = 1$ 表示完全相同；$\mathrm{IoU} = 0$ 表示毫無重疊。預測框與真實框之間的 IoU，決定一個預測算不算真正例（一般取 $\mathrm{IoU} \ge 0.5$）。兩個預測框之間的 IoU，則是 NMS 用來去重的依據。
 
 ### 非極大值抑制
 
@@ -113,11 +115,13 @@ NMS(boxes, scores, iou_threshold):
 
 YOLO 的損失是三個損失加權相加：
 
-```
-L = lambda_coord * L_box(pred, target, where obj=1)
-  + lambda_obj   * L_obj(pred, 1,     where obj=1)
-  + lambda_noobj * L_obj(pred, 0,     where obj=0)
-  + lambda_cls   * L_cls(pred, target, where obj=1)
+```math
+\begin{aligned}
+L = {} & \lambda_{\text{coord}} \cdot L_{\text{box}}(\text{pred}, \text{target}, \text{where obj}=1) \\
++ {} & \lambda_{\text{obj}} \cdot L_{\text{obj}}(\text{pred}, 1, \text{where obj}=1) \\
++ {} & \lambda_{\text{noobj}} \cdot L_{\text{obj}}(\text{pred}, 0, \text{where obj}=0) \\
++ {} & \lambda_{\text{cls}} \cdot L_{\text{cls}}(\text{pred}, \text{target}, \text{where obj}=1)
+\end{aligned}
 ```
 
 只有含物件的網格單元才對邊界框回歸損失與分類損失有貢獻。不含物件的網格單元只貢獻 objectness 損失（教模型保持安靜）。`lambda_noobj` 通常設得很小（約 0.5），因為絕大多數網格單元都是空的，否則負樣本會主宰整個損失。
@@ -199,8 +203,10 @@ def encode(box_xyxy, cell_x, cell_y, stride, anchor_wh):
     cy = 0.5 * (y1 + y2)
     w = x2 - x1
     h = y2 - y1
-    tx = cx / stride - cell_x
-    ty = cy / stride - cell_y
+    off_x = np.clip(cx / stride - cell_x, 1e-6, 1 - 1e-6)
+    off_y = np.clip(cy / stride - cell_y, 1e-6, 1 - 1e-6)
+    tx = np.log(off_x / (1 - off_x))
+    ty = np.log(off_y / (1 - off_y))
     tw = np.log(w / anchor_wh[0] + 1e-8)
     th = np.log(h / anchor_wh[1] + 1e-8)
     return np.array([tx, ty, tw, th])
@@ -219,7 +225,7 @@ def sigmoid(x):
     return 1.0 / (1.0 + np.exp(-x))
 ```
 
-測試：把一個框編碼再解碼——你應該拿回非常接近原本的東西（誤差來自 `tx` 不在 sigmoid 值域內時，sigmoid 的反函式並非完美可逆）。
+測試：把一個中心嚴格落在格子內的框編碼再解碼，你應該拿回原本的框，差距只在浮點誤差以內。`encode` 把中心偏移量存成 logit，也就是 `decode` 裡那個 `sigmoid` 的反函式。clip 讓 logit 保持有限；中心剛好落在格子邊緣時，最多只會移動 `1e-6` 個格子。下面的 `assign_targets` 存的也是同樣的 logit，所以偵測頭是在 `decode` 預期的那個空間裡訓練。
 
 ### 步驟 4：一個極簡的 YOLO 頭部
 
@@ -269,8 +275,10 @@ def assign_targets(boxes_xyxy, classes, anchors, stride, grid_size, num_classes)
         best = int(np.argmax(ious))
         aw, ah = anchors[best]
 
-        target[gy, gx, best, 0] = cx / stride - gx
-        target[gy, gx, best, 1] = cy / stride - gy
+        off_x = np.clip(cx / stride - gx, 1e-6, 1 - 1e-6)
+        off_y = np.clip(cy / stride - gy, 1e-6, 1 - 1e-6)
+        target[gy, gx, best, 0] = np.log(off_x / (1 - off_x))
+        target[gy, gx, best, 1] = np.log(off_y / (1 - off_y))
         target[gy, gx, best, 2] = np.log(bw / aw + 1e-8)
         target[gy, gx, best, 3] = np.log(bh / ah + 1e-8)
         target[gy, gx, best, 4] = 1.0
@@ -315,7 +323,7 @@ def yolo_loss(pred, target, has_obj, lambda_coord=5.0, lambda_obj=1.0, lambda_no
                    "obj_neg": loss_obj_neg.item(), "cls": loss_cls.item()}
 ```
 
-五個超參數，每份 YOLO 教學要嘛把它們寫死、要嘛拿去掃參數。比例才是重點：`lambda_coord=5, lambda_noobj=0.5` 沿用原始 YOLOv1 論文的設定，至今仍是合理的預設值。
+四個損失權重，每份 YOLO 教學要嘛把它們寫死、要嘛拿去掃參數。比例才是重點：`lambda_coord=5, lambda_noobj=0.5` 沿用原始 YOLOv1 論文的設定，至今仍是合理的預設值。
 
 ### 步驟 7：推論流程
 

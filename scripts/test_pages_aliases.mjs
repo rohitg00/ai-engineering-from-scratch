@@ -56,8 +56,18 @@ test('every generated stub points at a file that actually ships in site/', () =>
   runGenerator(out);
 
   const { rewrites } = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
-  const expected = rewrites.filter(r => !r.has && r.source.replace(/^\/+|\/+$/g, ''));
+  // Parameterized sources expand against a built site (covered by a fixture
+  // below); extension sources and directory indexes are deliberately skipped.
+  const plain = (r) => {
+    const slug = r.source.replace(/^\/+|\/+$/g, '');
+    return slug && !slug.includes(':') && !/\.[A-Za-z0-9]+$/.test(slug)
+      && r.destination.replace(/^\/+/, '') !== `${slug}/index.html`
+      && (!r.destination.startsWith('/api/') || ['/api/lesson', '/api/certification'].includes(r.destination.split('?')[0]));
+  };
+  const expected = rewrites.filter(r => !r.has && plain(r));
   assert.ok(expected.length > 0, 'vercel.json has no unconditional rewrites to materialize');
+  assert.ok(!execFileSync('find', [out, '-name', '*:*'], { encoding: 'utf8' }).trim(),
+    'a parameterized source was written as a literal directory');
 
   for (const { source } of expected) {
     const slug = source.replace(/^\/+|\/+$/g, '');
@@ -170,4 +180,44 @@ test('the stub carries the query string and hash through the redirect', () => {
   // render — the query is the entire payload of those links.
   assert.match(html, /location\.replace\("\.\.\/lesson\.html" \+ location\.search \+ location\.hash\)/);
   assert.match(html, /<meta name="robots" content="noindex">/);
+});
+
+test('a parameterized rewrite gets one stub per destination file the site ships', () => {
+  const root = fixtureRoot({
+    rewrites: [{ source: '/glossary/:page([a-z0-9-]+)', destination: '/hubs/glossary/:page.html' }],
+  });
+  const out = freshDir('aifs-alias-param-');
+  mkdirSync(join(out, 'hubs', 'glossary'), { recursive: true });
+  for (const name of ['adamw', 'kv-cache', 'Not_Valid']) writeFileSync(join(out, 'hubs', 'glossary', `${name}.html`), '<p>term</p>');
+  runGenerator(out, root);
+
+  assert.equal(stubTarget(readFileSync(join(out, 'glossary', 'adamw', 'index.html'), 'utf8')), '../../hubs/glossary/adamw.html');
+  assert.ok(existsSync(join(out, 'glossary', 'kv-cache', 'index.html')));
+  assert.ok(!existsSync(join(out, 'glossary', 'Not_Valid')), 'a file outside the parameter pattern got a stub');
+  assert.ok(!existsSync(join(out, 'glossary', ':page([a-z0-9-]+)')));
+});
+
+test('a stub never replaces a real page, including its own directory index', () => {
+  const root = fixtureRoot({
+    rewrites: [
+      { source: '/interviews', destination: '/interviews/index.html' },
+      { source: '/catalog', destination: '/catalog.html' },
+    ],
+  });
+  const out = freshDir('aifs-alias-real-page-');
+  mkdirSync(join(out, 'interviews'), { recursive: true });
+  mkdirSync(join(out, 'catalog'), { recursive: true });
+  writeFileSync(join(out, 'interviews', 'index.html'), '<h1>Interviews</h1>');
+  writeFileSync(join(out, 'catalog', 'index.html'), '<h1>Real catalog page</h1>');
+  runGenerator(out, root);
+
+  assert.equal(readFileSync(join(out, 'interviews', 'index.html'), 'utf8'), '<h1>Interviews</h1>');
+  assert.equal(readFileSync(join(out, 'catalog', 'index.html'), 'utf8'), '<h1>Real catalog page</h1>');
+});
+
+test('a source with a file extension is left to Vercel', () => {
+  const root = fixtureRoot({ rewrites: [{ source: '/api/interviews.json', destination: '/interviews.json' }] });
+  const out = freshDir('aifs-alias-ext-');
+  runGenerator(out, root);
+  assert.ok(!existsSync(join(out, 'api', 'interviews.json')));
 });

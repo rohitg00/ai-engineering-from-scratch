@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-3-3c-title fig-3-3c-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-3c-title">The longer the shared prompt, the more the tree saves</title>
+  <desc id="fig-3-3c-desc">Median time to first token against the length of a shared system prompt on one NVIDIA L4 with Qwen3-8B, three seeds per point, on a log scale. With the radix cache the median stays between 349 and 479 ms. Without it the median grows from 379 ms with no shared prompt to 14,706 ms with 4,096 shared tokens.</desc>
+  <line x1="70" y1="286" x2="606" y2="286" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="290" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="70" y1="243.24" x2="606" y2="243.24" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="247.24" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <line x1="70" y1="196.38" x2="606" y2="196.38" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="200.38" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <line x1="70" y1="153.62" x2="606" y2="153.62" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="157.62" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3k</text>
+  <line x1="70" y1="106.76" x2="606" y2="106.76" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="110.76" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10k</text>
+  <line x1="70" y1="64" x2="606" y2="64" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="68" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">30k</text>
+  <line x1="70" y1="286" x2="606" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="64" x2="70" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="286" x2="70" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="204" y1="286" x2="204" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="204" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <line x1="338" y1="286" x2="338" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="338" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2k</text>
+  <line x1="472" y1="286" x2="472" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="472" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3.1k</text>
+  <line x1="606" y1="286" x2="606" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="606" y="303" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4.1k</text>
+  <text x="338" y="320" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">shared system prompt, tokens</text>
+  <text x="70" y="52" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median TTFT, ms (log scale)</text>
+  <path d="M70.0 237.0 L103.5 225.4 L204.0 224.9 L338.0 224.6 L606.0 221.0 L606.0 225.3 L338.0 228.3 L204.0 226.8 L103.5 239.5 L70.0 240.6 Z" fill="var(--m-green-ink, #336b40)" fill-opacity="0.14" stroke="none"/>
+  <path d="M70.0 237.3 L103.5 225.4 L204.0 226.4 L338.0 228.3 L606.0 225.0" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="237.31" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="103.5" cy="225.43" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="204" cy="226.45" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="338" cy="228.29" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="606" cy="225.05" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <text x="598" y="215.05" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-green-ink, #336b40)">479 ms</text>
+  <path d="M70.0 234.0 L103.5 196.8 L204.0 165.7 L338.0 138.3 L606.0 90.6 L606.0 92.0 L338.0 139.5 L204.0 170.5 L103.5 197.1 L70.0 238.2 Z" fill="var(--m-rose-ink, #b0344d)" fill-opacity="0.14" stroke="none"/>
+  <path d="M70.0 234.2 L103.5 197.0 L204.0 165.7 L338.0 139.2 L606.0 91.7" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="234.16" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="103.5" cy="196.96" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="165.66" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="338" cy="139.19" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="606" cy="91.75" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="598" y="81.75" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-rose-ink, #b0344d)">14,706 ms</text>
+  <path d="M70 18 H88" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="94" y="22" font-size="11" fill="var(--m-green-ink, #336b40)">radix cache on</text>
+  <path d="M204.39999999999998 18 H222.39999999999998" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="228.4" y="22" font-size="11" fill="var(--m-rose-ink, #b0344d)">--disable-radix-cache</text>
+</svg>

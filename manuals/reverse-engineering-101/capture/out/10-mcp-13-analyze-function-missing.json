@@ -1,0 +1,118 @@
+{
+  "request": {
+    "jsonrpc": "2.0",
+    "id": 13,
+    "method": "tools/call",
+    "params": {
+      "name": "analyze_function",
+      "arguments": {
+        "procedure": "_nothing"
+      }
+    }
+  },
+  "response": {
+    "result": {
+      "_meta": {
+        "provenance": {
+          "untrusted_content": true,
+          "source": "analysis_target"
+        }
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"error\":{\"code\":\"invalid_request\",\"category\":\"invalid_input\",\"message\":\"Analysis input is invalid. Check the arguments and try again.\",\"retryable\":true,\"remediation\":{\"action\":\"Correct the listed arguments and retry.\"},\"details\":{\"operation\":\"analyze_function\",\"issues\":[{\"path\":[],\"reason\":\"invalid_value\",\"message\":\"Unknown Ghidra procedure name or address: _nothing\"}],\"diagnostics\":{\"target_path\":\"$CAPTURE/fixtures/ledger-arm64-O1\",\"target_sha256\":\"01b5d08b08fb94678be5919d0e753d44b505a53107c95b94634f0e5d41c9e375\",\"transport\":\"unix-socket\",\"provider_version\":\"12.1.4\",\"profile_digest\":\"3fc72c9b4b78498fb992b938f8f3389dc670244a293c1d40abf5e1d10162ed3b\",\"run_id\":\"90566ccb-cb14-4b64-bda2-d31374bd2054\",\"runtime_root\":\"/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi\",\"endpoint_path\":\"/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/bridge.sock\",\"project_root\":\"/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/project\",\"ghidra_log_path\":\"/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/ghidra.log\",\"script_log_path\":\"/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/script.log\",\"process_id\":98788,\"launch_support\":[{\"mode\":\"-envvars\",\"stderr\":\"NOTE: Picked up JDK_JAVA_OPTIONS: \\nPicked up JAVA_TOOL_OPTIONS: \\nPicked up _JAVA_OPTIONS: \\n\",\"stderr_bytes\":91,\"stderr_truncated\":false},{\"mode\":\"-vmargs\",\"stderr\":\"NOTE: Picked up JDK_JAVA_OPTIONS: \\nPicked up JAVA_TOOL_OPTIONS: \\nPicked up _JAVA_OPTIONS: \\n\",\"stderr_bytes\":91,\"stderr_truncated\":false}],\"configured_jvm_max_heap\":\"2G\",\"exit_code\":null,\"exit_signal\":null,\"diagnostic_truncated\":false,\"output_incomplete\":false,\"stdout\":{\"text\":\"INFO  Using log config file: jar:file:/opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  \\nINFO  Using log file: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/ghidra.log (LoggingInitialization)  \\nINFO  Loading user preferences: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/config/rohitghumare-ghidra/ghidra_12.1.4_PUBLIC/preferences (Preferences)  \\nINFO  Searching for classes... (ClassSearcher)  \\nINFO  Class search complete (853 ms) (ClassSearcher)  \\nINFO  Initializing SSL Context (DefaultSSLContextInitializer)  \\nINFO  Initializing Random Number Generator... (SecureRandomFactory)  \\nINFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  \\nINFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  \\nINFO  Starting cache cleanup: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/cache/rohitghumare-ghidra/fscache2 (FileCacheMaintenanceDaemon)  \\nINFO  Finished cache cleanup, estimated storage used: 0 (FileCacheMaintenanceDaemon)  \\nINFO  Headless startup complete (1640 ms) (AnalyzeHeadless)  \\nINFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  \\nINFO  HEADLESS Script Paths:\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/GnuDemangler/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Processors/JVM/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Processors/PIC/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/PyGhidra/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Debug/Debugger/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/WildcardAssembler/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/PDB/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/VersionTracking/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/FunctionID/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/BytePatterns/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/DecompilerDependent/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/BSim/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/SwiftDemangler/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/Decompiler/ghidra_scripts\\n    $HOME/.npm/_npx/<hash>/node_modules/rea-agents/bridge/ghidra\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/SystemEmulation/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Processors/DATA/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/Base/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/FileFormats/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Processors/8051/ghidra_scripts\\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Processors/Atmel/ghidra_scripts (HeadlessAnalyzer)  \\nINFO  HEADLESS: execution starts (HeadlessAnalyzer)  \\nINFO  Creating temporary project: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/project/rea-project (HeadlessAnalyzer)  \\nINFO  Creating project: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/project/rea-project (DefaultProject)  \\nINFO  REPORT: Processing input files:  (HeadlessAnalyzer)  \\nINFO       project: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/project/rea-project (HeadlessAnalyzer)  \\nINFO  IMPORTING: file:///private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/target-01b5d08b08fb.bin (HeadlessAnalyzer)  \\nINFO  Using Loader: Mac OS X Mach-O (ProgramLoader)  \\nINFO  Using Language/Compiler: AARCH64:LE:64:AppleSilicon:default (ProgramLoader)  \\nINFO  Using Library Search Path: [., /System/Library/dyld/dyld_shared_cache_arm64e, /System/Library/dyld/dyld_shared_cache_x86_64, /System/Library/dyld/dyld_shared_cache_x86_64h, /System/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_arm64e, /System/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_x86_64, /System/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_x86_64h, /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/home/Library/Java/Extensions, /Library/Java/Extensions, /Network/Library/Java/Extensions, /System/Library/Java/Extensions, /usr/lib/java] (ProgramLoader)  \\nINFO  Additional info:\\nLoading file:///private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/target-01b5d08b08fb.bin?MD5=0651730b05a43aaa2365b2583eb1f621...\\nDiscovered 11 DYLD_CHAINED_PTR_64_OFFSET chained pointers.\\nFixed up 11 chained pointers.\\n------------------------------------------------\\n\\nLinking the External Programs of 'target-01b5d08b08fb.bin' to imported libraries...\\n  [/usr/lib/libSystem.B.dylib] -> not found in project\\n------------------------------------------------\\n\\n (ProgramLoader)  \\nINFO  IMPORTING: Loaded 0 additional files (HeadlessAnalyzer)  \\nINFO  ANALYZING all memory and code: file:///private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/target-01b5d08b08fb.bin (HeadlessAnalyzer)  \\nINFO  hit non-returning function, restarting decompiler switch analyzer later (DecompilerSwitchAnalyzer)  \\nINFO  Packed database cache: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/cache/rohitghumare-ghidra/packed-db-cache (PackedDatabaseCache)  \\nINFO  Applied data type archive: mac_osx (ApplyDataArchiveAnalyzer)  \\nINFO  REPORT: Analysis succeeded for file: file:///private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/target-01b5d08b08fb.bin (HeadlessAnalyzer)  \\nINFO  REPORT: Execute script: $HOME/.npm/_npx/<hash>/node_modules/rea-agents/bridge/ghidra/ReaGhidraNoReturnFix.java  (HeadlessAnalyzer)  \\nINFO  SCRIPT: $HOME/.npm/_npx/<hash>/node_modules/rea-agents/bridge/ghidra/ReaGhidraNoReturnFix.java (HeadlessAnalyzer)  \\nINFO  ReaGhidraNoReturnFix.java> REA no-return fix: cleared=0 sites=0 refit=0 (GhidraScript)  \\nINFO  REPORT: Execute script: $HOME/.npm/_npx/<hash>/node_modules/rea-agents/bridge/ghidra/ReaGhidraBridge.java '/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/session.json'  (HeadlessAnalyzer)  \\nINFO  SCRIPT: $HOME/.npm/_npx/<hash>/node_modules/rea-agents/bridge/ghidra/ReaGhidraBridge.java (HeadlessAnalyzer)  \\n\",\"bytes\":6840,\"retained_bytes\":6840},\"stderr\":{\"text\":\"NOTE: Picked up JDK_JAVA_OPTIONS: \\nPicked up JAVA_TOOL_OPTIONS: \\nPicked up _JAVA_OPTIONS: \\nopenjdk version \\\"21.0.12.1\\\" 2026-08-18\\nOpenJDK Runtime Environment Homebrew (build 21.0.12.1)\\nOpenJDK 64-Bit Server VM Homebrew (build 21.0.12.1, mixed mode)\\n\",\"bytes\":249,\"retained_bytes\":249},\"failure_output\":{\"stdout\":{\"text\":\"\",\"bytes\":0,\"retained_bytes\":0},\"stderr\":{\"text\":\"\",\"bytes\":0,\"retained_bytes\":0},\"complete\":true},\"failure_cause\":{\"name\":\"GhidraRemoteError\",\"message\":\"Unknown Ghidra procedure name or address: _nothing\",\"code\":\"not_found\"},\"failure_kind\":\"remote\",\"failure_message\":\"Unknown Ghidra procedure name or address: _nothing\",\"remote_code\":\"not_found\",\"remote_message\":\"Unknown Ghidra procedure name or address: _nothing\"}}}}"
+        }
+      ],
+      "isError": true
+    },
+    "jsonrpc": "2.0",
+    "id": 13
+  },
+  "decoded_text": {
+    "error": {
+      "code": "invalid_request",
+      "category": "invalid_input",
+      "message": "Analysis input is invalid. Check the arguments and try again.",
+      "retryable": true,
+      "remediation": {
+        "action": "Correct the listed arguments and retry."
+      },
+      "details": {
+        "operation": "analyze_function",
+        "issues": [
+          {
+            "path": [],
+            "reason": "invalid_value",
+            "message": "Unknown Ghidra procedure name or address: _nothing"
+          }
+        ],
+        "diagnostics": {
+          "target_path": "$CAPTURE/fixtures/ledger-arm64-O1",
+          "target_sha256": "01b5d08b08fb94678be5919d0e753d44b505a53107c95b94634f0e5d41c9e375",
+          "transport": "unix-socket",
+          "provider_version": "12.1.4",
+          "profile_digest": "3fc72c9b4b78498fb992b938f8f3389dc670244a293c1d40abf5e1d10162ed3b",
+          "run_id": "90566ccb-cb14-4b64-bda2-d31374bd2054",
+          "runtime_root": "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi",
+          "endpoint_path": "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/bridge.sock",
+          "project_root": "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/project",
+          "ghidra_log_path": "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/ghidra.log",
+          "script_log_path": "/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/script.log",
+          "process_id": 98788,
+          "launch_support": [
+            {
+              "mode": "-envvars",
+              "stderr": "NOTE: Picked up JDK_JAVA_OPTIONS: \nPicked up JAVA_TOOL_OPTIONS: \nPicked up _JAVA_OPTIONS: \n",
+              "stderr_bytes": 91,
+              "stderr_truncated": false
+            },
+            {
+              "mode": "-vmargs",
+              "stderr": "NOTE: Picked up JDK_JAVA_OPTIONS: \nPicked up JAVA_TOOL_OPTIONS: \nPicked up _JAVA_OPTIONS: \n",
+              "stderr_bytes": 91,
+              "stderr_truncated": false
+            }
+          ],
+          "configured_jvm_max_heap": "2G",
+          "exit_code": null,
+          "exit_signal": null,
+          "diagnostic_truncated": false,
+          "output_incomplete": false,
+          "stdout": {
+            "text": "INFO  Using log config file: jar:file:/opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  \nINFO  Using log file: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/ghidra.log (LoggingInitialization)  \nINFO  Loading user preferences: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/config/rohitghumare-ghidra/ghidra_12.1.4_PUBLIC/preferences (Preferences)  \nINFO  Searching for classes... (ClassSearcher)  \nINFO  Class search complete (853 ms) (ClassSearcher)  \nINFO  Initializing SSL Context (DefaultSSLContextInitializer)  \nINFO  Initializing Random Number Generator... (SecureRandomFactory)  \nINFO  Random Number Generator initialization complete: NativePRNGNonBlocking (SecureRandomFactory)  \nINFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  \nINFO  Starting cache cleanup: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/cache/rohitghumare-ghidra/fscache2 (FileCacheMaintenanceDaemon)  \nINFO  Finished cache cleanup, estimated storage used: 0 (FileCacheMaintenanceDaemon)  \nINFO  Headless startup complete (1640 ms) (AnalyzeHeadless)  \nINFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  \nINFO  HEADLESS Script Paths:\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/GnuDemangler/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Processors/JVM/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Processors/PIC/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/PyGhidra/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Debug/Debugger/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/WildcardAssembler/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/PDB/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/MicrosoftCodeAnalyzer/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Debug/Debugger-rmi-trace/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/VersionTracking/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/FunctionID/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/BytePatterns/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/DecompilerDependent/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/BSim/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/SwiftDemangler/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/Decompiler/ghidra_scripts\n    $HOME/.npm/_npx/<hash>/node_modules/rea-agents/bridge/ghidra\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/SystemEmulation/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Processors/DATA/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/Base/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/FileFormats/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Processors/8051/ghidra_scripts\n    /opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Processors/Atmel/ghidra_scripts (HeadlessAnalyzer)  \nINFO  HEADLESS: execution starts (HeadlessAnalyzer)  \nINFO  Creating temporary project: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/project/rea-project (HeadlessAnalyzer)  \nINFO  Creating project: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/project/rea-project (DefaultProject)  \nINFO  REPORT: Processing input files:  (HeadlessAnalyzer)  \nINFO       project: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/project/rea-project (HeadlessAnalyzer)  \nINFO  IMPORTING: file:///private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/target-01b5d08b08fb.bin (HeadlessAnalyzer)  \nINFO  Using Loader: Mac OS X Mach-O (ProgramLoader)  \nINFO  Using Language/Compiler: AARCH64:LE:64:AppleSilicon:default (ProgramLoader)  \nINFO  Using Library Search Path: [., /System/Library/dyld/dyld_shared_cache_arm64e, /System/Library/dyld/dyld_shared_cache_x86_64, /System/Library/dyld/dyld_shared_cache_x86_64h, /System/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_arm64e, /System/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_x86_64, /System/Cryptexes/OS/System/Library/dyld/dyld_shared_cache_x86_64h, /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/home/Library/Java/Extensions, /Library/Java/Extensions, /Network/Library/Java/Extensions, /System/Library/Java/Extensions, /usr/lib/java] (ProgramLoader)  \nINFO  Additional info:\nLoading file:///private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/target-01b5d08b08fb.bin?MD5=0651730b05a43aaa2365b2583eb1f621...\nDiscovered 11 DYLD_CHAINED_PTR_64_OFFSET chained pointers.\nFixed up 11 chained pointers.\n------------------------------------------------\n\nLinking the External Programs of 'target-01b5d08b08fb.bin' to imported libraries...\n  [/usr/lib/libSystem.B.dylib] -> not found in project\n------------------------------------------------\n\n (ProgramLoader)  \nINFO  IMPORTING: Loaded 0 additional files (HeadlessAnalyzer)  \nINFO  ANALYZING all memory and code: file:///private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/target-01b5d08b08fb.bin (HeadlessAnalyzer)  \nINFO  hit non-returning function, restarting decompiler switch analyzer later (DecompilerSwitchAnalyzer)  \nINFO  Packed database cache: /var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/cache/rohitghumare-ghidra/packed-db-cache (PackedDatabaseCache)  \nINFO  Applied data type archive: mac_osx (ApplyDataArchiveAnalyzer)  \nINFO  REPORT: Analysis succeeded for file: file:///private/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/target-01b5d08b08fb.bin (HeadlessAnalyzer)  \nINFO  REPORT: Execute script: $HOME/.npm/_npx/<hash>/node_modules/rea-agents/bridge/ghidra/ReaGhidraNoReturnFix.java  (HeadlessAnalyzer)  \nINFO  SCRIPT: $HOME/.npm/_npx/<hash>/node_modules/rea-agents/bridge/ghidra/ReaGhidraNoReturnFix.java (HeadlessAnalyzer)  \nINFO  ReaGhidraNoReturnFix.java> REA no-return fix: cleared=0 sites=0 refit=0 (GhidraScript)  \nINFO  REPORT: Execute script: $HOME/.npm/_npx/<hash>/node_modules/rea-agents/bridge/ghidra/ReaGhidraBridge.java '/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/rea-ghidra-lxxrwi/session.json'  (HeadlessAnalyzer)  \nINFO  SCRIPT: $HOME/.npm/_npx/<hash>/node_modules/rea-agents/bridge/ghidra/ReaGhidraBridge.java (HeadlessAnalyzer)  \n",
+            "bytes": 6840,
+            "retained_bytes": 6840
+          },
+          "stderr": {
+            "text": "NOTE: Picked up JDK_JAVA_OPTIONS: \nPicked up JAVA_TOOL_OPTIONS: \nPicked up _JAVA_OPTIONS: \nopenjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment Homebrew (build 21.0.12.1)\nOpenJDK 64-Bit Server VM Homebrew (build 21.0.12.1, mixed mode)\n",
+            "bytes": 249,
+            "retained_bytes": 249
+          },
+          "failure_output": {
+            "stdout": {
+              "text": "",
+              "bytes": 0,
+              "retained_bytes": 0
+            },
+            "stderr": {
+              "text": "",
+              "bytes": 0,
+              "retained_bytes": 0
+            },
+            "complete": true
+          },
+          "failure_cause": {
+            "name": "GhidraRemoteError",
+            "message": "Unknown Ghidra procedure name or address: _nothing",
+            "code": "not_found"
+          },
+          "failure_kind": "remote",
+          "failure_message": "Unknown Ghidra procedure name or address: _nothing",
+          "remote_code": "not_found",
+          "remote_message": "Unknown Ghidra procedure name or address: _nothing"
+        }
+      }
+    }
+  }
+}

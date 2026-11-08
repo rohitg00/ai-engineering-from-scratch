@@ -75,8 +75,8 @@ graph LR
 
 目前我們用的激活函式是 sigmoid：
 
-```
-sigmoid(z) = 1 / (1 + e^(-z))
+```math
+\text{sigmoid}(z) = \frac{1}{1 + e^{-z}}
 ```
 
 Sigmoid 把任何數字壓進 (0, 1) 這個範圍。很大的正數會被推向 1。很大的負數會被推向 0。零則對應到 0.5。這條平滑的曲線正是學習之所以可能的原因 —— 不像感知器那種硬邦邦的階梯函式，sigmoid 處處都有梯度。
@@ -99,9 +99,11 @@ graph TD
 
 在每一層，都有三個運算依序發生：
 
-```
-z = W * input + b       (linear transformation)
-a = sigmoid(z)           (activation)
+```math
+\begin{aligned}
+z &= W \cdot \text{input} + b \quad \text{(linear transformation)} \\
+a &= \text{sigmoid}(z) \quad \text{(activation)}
+\end{aligned}
 ```
 
 一層的輸出成為下一層的輸入。這就是整個前向傳播。

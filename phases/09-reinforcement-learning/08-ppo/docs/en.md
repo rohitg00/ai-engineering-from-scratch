@@ -9,11 +9,11 @@
 
 ## The Problem
 
-A2C (Lesson 07) is on-policy: the gradient `E_{π_θ}[A · ∇ log π_θ]` requires data sampled from the *current* `π_θ`. Take one update, and `π_θ` changes; the data you used is now off-policy. Re-use it and your gradient is biased.
+A2C (Lesson 07) is on-policy: the gradient $\mathbb E_{\pi_\theta}[A \cdot \nabla \log \pi_\theta]$ requires data sampled from the *current* $\pi_\theta$. Take one update, and $\pi_\theta$ changes; the data you used is now off-policy. Re-use it and your gradient is biased.
 
 Rollouts are expensive. On Atari, one rollout across 8 envs × 128 steps = 1024 transitions and a dozen seconds of environment time. Throwing that away after one gradient step is wasteful.
 
-Trust Region Policy Optimization (TRPO, Schulman 2015) was the first fix: constrain each update so the KL divergence between old and new policy stays below `δ`. Theoretically clean, but requires a conjugate-gradient solve per update. Nobody runs TRPO in 2026.
+Trust Region Policy Optimization (TRPO, Schulman 2015) was the first fix: constrain each update so the KL divergence between old and new policy stays below $\delta$. Theoretically clean, but requires a conjugate-gradient solve per update. Nobody runs TRPO in 2026.
 
 PPO (Schulman et al. 2017) replaces the hard trust-region constraint with a simple clipped objective. One extra line of code. Ten epochs per rollout. No conjugate gradients. Good-enough theoretical guarantees. Nine years later it is still the default policy-gradient algorithm for everything from MuJoCo to RLHF.
 
@@ -23,43 +23,49 @@ PPO (Schulman et al. 2017) replaces the hard trust-region constraint with a simp
 
 **The importance ratio.**
 
-`r_t(θ) = π_θ(a_t | s_t) / π_{θ_old}(a_t | s_t)`
+```math
+r_t(\theta) = \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)}
+```
 
-This is the likelihood ratio of the new policy vs the policy that collected the data. `r_t = 1` means no change. `r_t = 2` means the new policy is twice as likely to take `a_t` as the old.
+This is the likelihood ratio of the new policy vs the policy that collected the data. $r_t = 1$ means no change. $r_t = 2$ means the new policy is twice as likely to take $a_t$ as the old.
 
 **The clipped surrogate.**
 
-`L^{CLIP}(θ) = E_t [ min( r_t(θ) A_t, clip(r_t(θ), 1-ε, 1+ε) A_t ) ]`
+```math
+L^{\text{CLIP}}(\theta) = \mathbb{E}_t \left[ \min\left( r_t(\theta) A_t, \mathop{\mathrm{clip}}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t \right) \right]
+```
 
 Two terms:
 
-- If the advantage `A_t > 0` and the ratio tries to grow past `1 + ε`, the clip flattens the gradient — don't push a good action further than `+ε` above old probability.
-- If the advantage `A_t < 0` and the ratio tries to grow past `1 - ε` (meaning we would make a bad action more likely compared to its clipped reduction), the clip caps the gradient — don't push a bad action below `-ε`.
+- If the advantage $A_t > 0$ and the ratio tries to grow past $1 + \epsilon$, the clip flattens the gradient — don't push a good action further than $+\epsilon$ above old probability.
+- If the advantage $A_t < 0$ and the ratio tries to fall below $1 - \epsilon$ (meaning we would make a bad action much less likely than the old policy did), the clip flattens the gradient: don't push a bad action further than $-\epsilon$ below old probability.
 
 The `min` handles the other direction: if the ratio has moved in the *beneficial* direction, you still get the gradient (no clipping on the side that would hurt you).
 
-Typical `ε = 0.2`. Plot the objective as a function of `r_t`: a piecewise-linear function with a flat roof on the "good side" and a flat floor on the "bad side."
+Typical $\epsilon = 0.2$. Plot the objective as a function of $r_t$: a piecewise-linear function with a flat roof on the "good side" and a flat floor on the "bad side."
 
 **The full PPO loss.**
 
-`L(θ, φ) = L^{CLIP}(θ) - c_v · (V_φ(s_t) - V_t^{target})² + c_e · H(π_θ(·|s_t))`
+```math
+L(\theta, \phi) = L^{\text{CLIP}}(\theta) - c_v \cdot (V_\phi(s_t) - V_t^{\text{target}})^2 + c_e \cdot H(\pi_\theta(\cdot \mid s_t))
+```
 
-Same actor-critic structure as A2C. Three coefficients, usually `c_v = 0.5`, `c_e = 0.01`, `ε = 0.2`.
+Same actor-critic structure as A2C. Three coefficients, usually $c_v = 0.5$, $c_e = 0.01$, $\epsilon = 0.2$.
 
 **The training loop.**
 
-1. Collect `N × T` transitions across `N` parallel envs for `T` steps each.
+1. Collect $N \times T$ transitions across $N$ parallel envs for $T$ steps each.
 2. Compute advantages (GAE), freeze them as constants.
-3. Freeze `π_{θ_old}` as a snapshot of current `π_θ`.
-4. For `K` epochs, for each minibatch of `(s, a, A, V_target, log π_old(a|s))`:
-   - Compute `r_t(θ) = exp(log π_θ(a|s) - log π_old(a|s))`.
-   - Apply `L^{CLIP}` + value loss + entropy.
+3. Freeze $\pi_{\theta_{\text{old}}}$ as a snapshot of current $\pi_\theta$.
+4. For $K$ epochs, for each minibatch of `(s, a, A, V_target, log π_old(a|s))`:
+   - Compute $r_t(\theta) = \exp(\log \pi_\theta(a \mid s) - \log \pi_{\text{old}}(a \mid s))$.
+   - Apply $L^{\text{CLIP}}$ + value loss + entropy.
    - Gradient step.
 5. Discard the rollout. Return to step 1.
 
-`K = 10` and minibatches of 64 is a standard hyperparameter set. PPO is robust: the exact numbers rarely matter within ±50%.
+$K = 10$ and minibatches of 64 is a standard hyperparameter set. PPO is robust: the exact numbers rarely matter within ±50%.
 
-**KL-penalty variant.** The original paper proposed an alternative using an adaptive KL penalty: `L = L^{PG} - β · KL(π_θ || π_old)` with `β` adjusted based on observed KL. The clipping version became dominant; the KL variant survives in RLHF (where KL to the reference policy is a separate constraint you always want anyway).
+**KL-penalty variant.** The original paper proposed an alternative using an adaptive KL penalty: $L = L^{\text{PG}} - \beta \cdot \mathrm{KL}(\pi_\theta \Vert \pi_{\text{old}})$ with $\beta$ adjusted based on observed KL. The clipping version became dominant; the KL variant survives in RLHF (where KL to the reference policy is a separate constraint you always want anyway).
 
 ```figure
 ppo-clip
@@ -124,19 +130,19 @@ Add standard MSE to the critic target and an entropy bonus on the actor, same as
 
 Three things to watch every update:
 
-- **Mean KL** `E[log π_old - log π_θ]`. Should stay in `[0, 0.02]`. If it blows past `0.1`, reduce `K_EPOCHS` or `LR`.
-- **Clip fraction** — the fraction of samples whose ratio lies outside `[1-ε, 1+ε]`. Should be `~0.1-0.3`. If `~0`, the clip never triggers → raise `LR` or `K_EPOCHS`. If `~0.5+`, you are over-fitting the rollout → lower them.
-- **Explained variance** `1 - Var(V_target - V_pred) / Var(V_target)`. Critic quality metric. Should climb toward 1 as the critic learns.
+- **Mean KL** $\mathbb{E}[\log \pi_{\text{old}} - \log \pi_\theta]$. Should stay in `[0, 0.02]`. If it blows past `0.1`, reduce `K_EPOCHS` or `LR`.
+- **Clip fraction** — the fraction of samples whose ratio lies outside $[1-\epsilon, 1+\epsilon]$. Should be `~0.1-0.3`. If `~0`, the clip never triggers → raise `LR` or `K_EPOCHS`. If `~0.5+`, you are over-fitting the rollout → lower them.
+- **Explained variance** $1 - \text{Var}(V_{\text{target}} - V_{\text{pred}}) / \text{Var}(V_{\text{target}})$. Critic quality metric. Should climb toward 1 as the critic learns.
 
 ## Pitfalls
 
-- **Clip coefficient mistuned.** `ε = 0.2` is the de-facto standard. Going to `0.1` makes updates too timid; `0.3+` invites instability.
-- **Too many epochs.** `K > 20` routinely destabilizes because the policy drifts far from `π_old`. Cap epochs, especially for large networks.
+- **Clip coefficient mistuned.** $\epsilon = 0.2$ is the de-facto standard. Going to `0.1` makes updates too timid; `0.3+` invites instability.
+- **Too many epochs.** $K > 20$ routinely destabilizes because the policy drifts far from $\pi_{\text{old}}$. Cap epochs, especially for large networks.
 - **No reward normalization.** Large reward scales eat into the clip range. Normalize rewards (running std) before computing advantages.
 - **Forgetting advantage normalization.** Per-batch zero-mean/unit-std normalization is standard. Skipping it wrecks PPO on most benchmarks.
 - **Learning rate not decayed.** PPO benefits from linear LR decay to zero. Constant LR is often worse.
 - **Importance ratio math errors.** Always `exp(log_new - log_old)` for numerical stability, not `new / old`.
-- **Wrong gradient sign.** Maximize the surrogate = *minimize* `-L^{CLIP}`. A flipped sign is the most common PPO bug.
+- **Wrong gradient sign.** Maximize the surrogate = *minimize* $-L^{\text{CLIP}}$. A flipped sign is the most common PPO bug.
 
 ## Use It
 
@@ -180,18 +186,18 @@ Refuse `K > 30` or `ε > 0.3` (unsafe trust region). Refuse any PPO run without 
 
 ## Exercises
 
-1. **Easy.** Run PPO on 4×4 GridWorld with `ε=0.2, K=4`. Compare sample efficiency to A2C (one epoch per rollout) at matched env steps.
-2. **Medium.** Sweep `K ∈ {1, 4, 10, 30}`. Plot return vs env steps and track mean KL per update. At what `K` does KL explode on this task?
-3. **Hard.** Replace the clipped surrogate with an adaptive KL penalty (`β` doubled if `KL > 2·target`, halved if `KL < target/2`). Compare final return, stability, and clip-free-ness.
+1. **Easy.** Run PPO on 4×4 GridWorld with $\epsilon=0.2, K=4$. Compare sample efficiency to A2C (one epoch per rollout) at matched env steps.
+2. **Medium.** Sweep $K \in \lbrace 1, 4, 10, 30 \rbrace$. Plot return vs env steps and track mean KL per update. At what $K$ does KL explode on this task?
+3. **Hard.** Replace the clipped surrogate with an adaptive KL penalty ($\beta$ doubled if $\mathrm{KL} > 2 \cdot \text{target}$, halved if $\mathrm{KL} < \text{target}/2$). Compare final return, stability, and clip-free-ness.
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| Importance ratio | "r_t(θ)" | `π_θ(a\|s) / π_old(a\|s)`; deviation from the policy that collected the data. |
-| Clipped surrogate | "PPO's main trick" | `min(r·A, clip(r, 1-ε, 1+ε)·A)`; flat gradient past the clip on beneficial side. |
+| Importance ratio | "r_t(θ)" | $\pi_\theta(a \mid s) / \pi_{\text{old}}(a \mid s)$; deviation from the policy that collected the data. |
+| Clipped surrogate | "PPO's main trick" | $\min(r \cdot A, \mathop{\mathrm{clip}}(r, 1-\epsilon, 1+\epsilon) \cdot A)$; flat gradient past the clip on beneficial side. |
 | Trust region | "TRPO / PPO intent" | Limit each update's KL to guarantee monotone improvement. |
-| KL penalty | "Soft trust region" | Alternative PPO: `L - β · KL(π_θ \|\| π_old)`. Adaptive `β`. |
+| KL penalty | "Soft trust region" | Alternative PPO: $L - \beta \cdot \mathrm{KL}(\pi_\theta \Vert \pi_{\text{old}})$. Adaptive $\beta$. |
 | Clip fraction | "How often clipping triggers" | Diagnostic — should be 0.1-0.3; outside means mistuned. |
 | Multi-epoch training | "Data reuse" | K epochs on each rollout; variance cost traded for sample efficiency. |
 | On-policy-ish | "Mostly on-policy" | PPO is nominally on-policy but K>1 epochs uses slightly-off-policy data safely. |

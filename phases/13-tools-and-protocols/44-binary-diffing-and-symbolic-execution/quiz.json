@@ -1,0 +1,90 @@
+{
+  "lesson": "44-binary-diffing-and-symbolic-execution",
+  "title": "Binary Diffing and Symbolic Execution: Matching Functions and Solving for Inputs",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Two builds of the same source are compared function by function. In BinDiff's strategy, when is a signature allowed to create a match?",
+      "options": [
+        "When the two functions share at least half of their instructions",
+        "When the two functions have the same address",
+        "When the signature value appears exactly once in each binary",
+        "When the two functions have the same size"
+      ],
+      "correct": 2,
+      "explanation": "The BinDiff concepts page describes one attribute at a time: a value that is unique on both sides is a match, an ambiguous value is drilled down with the next attribute, and a value with no counterpart stays unmatched."
+    },
+    {
+      "stage": "check",
+      "question": "grade is byte for byte identical in ledger-x86_64-O1.o and ledger-x86_64-O2.o, yet Ghidra's Exact Function Bytes Match correlator did not match it. Why?",
+      "options": [
+        "Ghidra compares mnemonics, not bytes",
+        "The function has a different size in the two programs",
+        "The two objects were compiled with different compilers",
+        "Ghidra applies relocations at import, and .rodata sits 0x70 bytes further on in the O2 program, so the RIP-relative displacement in the leaq differs between the two loaded images"
+      ],
+      "correct": 3,
+      "explanation": "The loaded images differ in four bytes of the leaq displacement (122 versus 234). The instruction correlator masks operands and matches, and the lesson's masked-bytes stage does the same."
+    },
+    {
+      "stage": "check",
+      "question": "radiff2 -AC reports grade at -O0 versus -O1 as UNMATCH with ratio 0.426829, and the lesson reproduces that number only by comparing 82 bytes instead of the function's 118. What explains the 82?",
+      "options": [
+        "radare2 strips the prologue and epilogue before fingerprinting",
+        "The listing of grade at -O0 has 82 instructions",
+        "radare2 measures instruction counts, not bytes",
+        "Without applying relocations, radare2 does not resolve the jump table, so its fingerprint holds only the blocks reachable before the indirect jump plus the default case"
+      ],
+      "correct": 3,
+      "explanation": "The fingerprint is the concatenation of the basic blocks the analysis found. With -e bin.relocs.apply=true radare2 finds all 118 bytes and the ratio becomes 0.288136, which the lesson also reproduces."
+    },
+    {
+      "stage": "check",
+      "question": "The matcher runs the flow-graph shape stage before the name stage and pairs percent_change at -O0 with grade_label at -O1. What went wrong?",
+      "options": [
+        "The symbol table was corrupted",
+        "A four-block diamond with degree sequence 0/2, 1/1, 1/1, 2/0 is the shape of every if-else that joins before the return, so the shape was unique on both sides but not specific",
+        "The two functions compute the same value",
+        "The matcher compared the wrong objects"
+      ],
+      "correct": 1,
+      "explanation": "The stage has medium quality for this reason. BinDiff runs name matching early when names exist, and in that order all four functions match by name."
+    },
+    {
+      "stage": "post",
+      "question": "A symbolic executor runs total with count constrained to 0 <= count <= N and reports 3, 5, and 9 paths for N = 2, 4, 8. What does an unconstrained count do?",
+      "options": [
+        "It merges all paths into one",
+        "It produces exactly one more path",
+        "It makes the solver return unsat",
+        "It produces one path per possible iteration count, so the executor never finishes without a bound or a cap"
+      ],
+      "correct": 3,
+      "explanation": "Each iteration forks an exit path and a continue path. The survey of Baldoni et al. names loops over symbolic input as the main source of path explosion, and the lesson's cap of 24 blocks per path shows the cut."
+    },
+    {
+      "stage": "post",
+      "question": "For percent_change the bounded search returns before = -10, after = -15, angr returns before = 21055744, after = 332315210, and z3 returns before = -25092599, after = 305712160 for the query result == 50. Which statement is right?",
+      "options": [
+        "Only one of the three answers can be correct",
+        "angr and z3 disagree, so the constraint is unsatisfiable",
+        "The bounded search is wrong because its numbers are small",
+        "The three answers are all models of the same constraint, and a solver returns some witness, not a specific one"
+      ],
+      "correct": 3,
+      "explanation": "The lesson evaluates every model with the IR evaluator and all give 50. A model proves satisfiability; a specific input needs an extra constraint."
+    },
+    {
+      "stage": "post",
+      "question": "Ghidra Version Tracking matched grade at -O1 and -O2 only by Exact Symbol Name. The matched grade_case10_wrong.o has the same 46 code bytes as grade. What check tells the two cases apart?",
+      "options": [
+        "Reading the bytes the lea relocation points at: the table is 1, 2, 3, 4, 4 in the original and 1, 2, 3, 4, 3 in the candidate",
+        "A mnemonic hash",
+        "Comparing the function sizes",
+        "A flow-graph shape signature"
+      ],
+      "correct": 0,
+      "explanation": "Byte, mnemonic, and shape signatures all pass. Only the referenced-data check, which reads the table through the relocation and the bounds check, reports the changed constant."
+    }
+  ]
+}

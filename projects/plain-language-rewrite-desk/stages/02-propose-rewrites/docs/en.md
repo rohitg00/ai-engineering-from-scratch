@@ -1,0 +1,61 @@
+# Produce simpler candidate paragraphs
+
+**Type:** Build
+**Language:** TypeScript
+**Stage:** 2 of 4
+**Time:** ~2 hours
+**Prerequisites:** Basic TypeScript, JSON objects, arrays and running Node 22.18 or newer. Complete the preceding stages first.
+
+## What you build
+
+Make the proposal source visible instead of presenting deterministic editing as model reasoning.
+
+## Public contract
+
+```typescript
+proposeParagraphs(paragraphs:Paragraph[],recorded?:Record<string,string>):{id,candidate,method}[]
+```
+
+Use a provided recorded proposal by paragraph ID, otherwise apply visible phrase substitutions: in order to -> to, utilize -> use, approximately -> about, prior to -> before, subsequent to -> after, due to the fact that -> because, at this point in time -> now. Preserve paragraph identity. Reject unknown proposal IDs and empty candidates.
+
+The initial workspace contains public types, function stubs, the CLI, and original input fixtures. Change `main.ts`; the CLI is already supplied. Stages accumulate without replacing your earlier implementation. Tests import the learner workspace selected by `PROJECT_WORKSPACE`.
+
+## Worked example
+
+`In order to utilize the map scale prior to measuring` becomes `to use the map scale before measuring`. The method field says visible phrase substitutions; it does not claim an LLM generated the candidate.
+
+```figure
+pj-plain-language-rewrite-desk-2
+```
+
+Change the figure controls, predict the intermediate values, and compare the calculation with your implementation. The figure explains the mechanism; the grader runs the real functions.
+
+## Implement and verify
+
+```bash
+python3 scripts/project_test.py plain-language-rewrite-desk --init my-plain-language-rewrite-desk
+python3 scripts/project_test.py plain-language-rewrite-desk --stage 2 --path my-plain-language-rewrite-desk --strict
+```
+
+Initialize once. The fresh first stage intentionally fails with a named not-implemented error. Preserve the signatures and reject malformed inputs with useful errors. Keep inputs unchanged. Each stage includes separate held-out inputs; passing the demonstration alone is insufficient.
+
+## Failure cases and hints
+
+Protected terms might be touched by a substitution; the comparison stage must catch that. Do not silently accept any proposal.
+
+## Use your result
+
+After stage four, pass a JSON file of your own through the same entry point:
+
+```bash
+cd my-plain-language-rewrite-desk
+node cli.ts sample.json output
+```
+
+Accepted Markdown, a paragraph-level HTML comparison and revision-decisions.json. Open `output/report.html` and inspect the machine-readable companion files.
+
+## Extend it
+
+Add a real provider adapter behind explicit credentials and report its model/version separately.
+
+Scope: The baseline uses deterministic phrase substitutions and recorded author proposals. No live model adapter is shipped. Numeric, protected-term and definition checks are lexical safeguards, not a proof that every fact or nuance is preserved. The author reviews meaning.

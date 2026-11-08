@@ -1,0 +1,21 @@
+{
+  "id": "mlp-backprop",
+  "title": "Backpropagation through a two-layer MLP",
+  "kind": "implement",
+  "summary": "Forward pass with a cache and a backward pass that returns the gradient of every weight and bias of a two-layer sigmoid network.",
+  "difficulty": "hard",
+  "tags": ["backpropagation", "gradients", "mlp", "chain-rule"],
+  "lesson": "phases/03-deep-learning-core/03-backpropagation",
+  "cheatsheet": "neural-net-basics",
+  "minutes": 40,
+  "entry": ["mlp_forward", "mse_loss", "mlp_backward"],
+  "collections": ["deep-learning-core"],
+  "time_limit_s": 10,
+  "mutants": {
+    "divide_by_batch_only": "Divides the loss gradient by N, not by N times n_out, so the gradient is too large when n_out is more than 1.",
+    "extra_activation_factor": "Multiplies the gradient that flows back through W2 by a1 one extra time.",
+    "mean_bias_grad": "Takes the mean of the hidden bias gradient over the batch, not the sum.",
+    "missing_factor_two": "Drops the factor 2 from the derivative of the squared error.",
+    "no_hidden_sigmoid_grad": "Forgets the sigmoid derivative of the hidden layer."
+  }
+}

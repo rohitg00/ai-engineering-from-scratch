@@ -245,6 +245,16 @@ python code/data_utils.py
 3. 把一個資料集轉成 Parquet，跟 CSV 比較檔案大小
 4. 固定種子，做出 70/15/15 的訓練／驗證／測試切分，並驗證各自的筆數
 
+### 提示
+
+**練習 1。** 呼叫 `code/data_utils.py` 裡的 `load_and_inspect("glue", "mrpc")`，或直接用 `load_dataset("glue", "mrpc")`，然後印出 `ds["train"][:5]`。每筆範例都必須有 `sentence1`、`sentence2` 和 `label` 欄位。
+
+**練習 2。** 像 `stream_dataset` 那樣用 `streaming=True` 載入資料集，在迴圈裡讀取範例，當 `time.time()` 超過起始時間加 10 秒就停下。印出筆數；跑兩次，因為第一次包含了建立連線的啟動時間。
+
+**練習 3。** 像 `convert_format` 那樣，用 `to_csv` 和 `to_parquet` 儲存同一份資料集，再用 `ls -lh` 或 `os.path.getsize` 比較大小。用 `load_from_parquet` 把 Parquet 檔載回來，確認列數沒有改變。
+
+**練習 4。** 用固定的 `seed` 呼叫 `train_test_split` 兩次：先切出 30%，再把這 30% 對半切。三份的長度相加必須等於原始長度，而且用同一個種子再跑一次，每份切分的第一列都必須相同。
+
 ## 關鍵術語
 
 | 術語 | 大家怎麼說 | 實際上是什麼 |

@@ -1,4 +1,4 @@
-"""Streaming tokenization into resizable, sharded HDF5 datasets with mmap reads.
+"""Streaming tokenization into resizable, sharded HDF5 datasets with chunked reads.
 
 Implements:
 - A byte-level deterministic Tokenizer.
@@ -10,7 +10,7 @@ Implements:
 - A SlidingWindowDataloader that yields fixed-length (input, target) pairs.
 
 The demo at the bottom builds an in-memory corpus, tokenizes into shards, opens
-them via memory map, runs the dataloader for a few batches, and prints the
+them for chunked reads, runs the dataloader for a few batches, and prints the
 per-batch shape and a checksum. Run: python3 code/main.py
 """
 
@@ -252,7 +252,7 @@ class ShardedTokenizationPipeline:
 
 
 class MmapTokenStore:
-    """Memory-mapped read access to a sharded HDF5 token corpus.
+    """Chunked read access to a sharded HDF5 token corpus.
 
     The store opens each shard file once in SWMR mode. A request for
     `get_slice(start, stop)` is routed across shards and the result is returned
@@ -484,7 +484,7 @@ def validate_corpus(index_entries: list[ShardIndexEntry]) -> list[str]:
 
 
 def build_demo_corpus() -> dict[str, list[str]]:
-    """Two shards of synthetic documents long enough to exercise mmap reads."""
+    """Two shards of synthetic documents long enough to exercise chunked reads."""
 
     base = [
         "the alignment problem is a story about reward functions and the things they fail to write down",

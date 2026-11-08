@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 250" role="img" aria-labelledby="fig-8-2-title fig-8-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-2-title">One 2,048-token budget per step: decode first, prompt chunks fill the rest</title>
+  <desc id="fig-8-2-desc">Three scheduler steps with the default budget of 2,048 tokens. Eight running requests take one decode token each, and a new 4,096-token prompt fills the rest in chunks of 2,040 tokens. In step 3 the last 16 prompt tokens run, and the new request decodes from step 4.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BUDGET OF EACH STEP, --MAX-NUM-BATCHED-TOKENS 2048</text>
+  <text x="20" y="58" font-size="12" font-weight="700">step 1</text>
+  <rect x="90" y="34" width="14" height="36" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="106" y="34" width="517.97" height="36" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="116" y="57" font-size="11.5" fill="var(--m-plum-ink, #8a3d72)">2,040 prompt tokens of the new request</text>
+  <text x="20" y="116" font-size="12" font-weight="700">step 2</text>
+  <rect x="90" y="92" width="14" height="36" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="106" y="92" width="517.97" height="36" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="116" y="115" font-size="11.5" fill="var(--m-plum-ink, #8a3d72)">2,040 prompt tokens of the new request</text>
+  <text x="20" y="174" font-size="12" font-weight="700">step 3</text>
+  <rect x="90" y="150" width="14" height="36" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="106" y="150" width="4.06" height="36" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="160" y="173" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">the last 16 prompt tokens, decode starts in step 4</text>
+  <rect x="112.06" y="150" width="497.94" height="36" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <rect x="20" y="214" width="12" height="12" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="40" y="224" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">decode, one token for each running request</text>
+  <rect x="340" y="214" width="12" height="12" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="360" y="224" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a chunk of a new prompt</text>
+</svg>

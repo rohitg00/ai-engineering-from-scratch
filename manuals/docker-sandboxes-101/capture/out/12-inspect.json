@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "2",
+  "kind": "mixin",
+  "name": "hello-mixin",
+  "description": "Installs tree and adds a greeting file to the workspace.",
+  "permissions": {
+    "network": {
+      "allow": [
+        "example.com"
+      ]
+    }
+  },
+  "setup": {
+    "install": [
+      {
+        "command": "apt-get update && apt-get install -y tree",
+        "user": "0",
+        "description": "Install tree"
+      }
+    ]
+  },
+  "files": [
+    {
+      "relativePath": "HELLO.md",
+      "target": "workspace",
+      "mode": 420,
+      "content": "SGVsbG8gZnJvbSB0aGUgbWl4aW4uCg==",
+      "size": "<n>"
+    }
+  ]
+}

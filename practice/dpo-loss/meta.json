@@ -1,0 +1,24 @@
+{
+  "id": "dpo-loss",
+  "title": "DPO loss and implicit rewards",
+  "kind": "research",
+  "summary": "The direct preference optimization loss, its implicit rewards and its gradient, from policy and reference log probabilities.",
+  "difficulty": "medium",
+  "tags": ["dpo", "alignment", "loss-functions", "gradients"],
+  "lesson": "phases/10-llms-from-scratch/08-dpo",
+  "cheatsheet": "rlhf-dpo",
+  "minutes": 25,
+  "entry": ["implicit_reward", "dpo_loss", "dpo_grad"],
+  "collections": ["papers-to-code", "rl-basics"],
+  "time_limit_s": 10,
+  "method": "direct-preference-optimization-dpo",
+  "paper": {"title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model", "authors": "Rafailov et al.", "year": 2023, "url": "https://arxiv.org/abs/2305.18290"},
+  "mutants": {
+    "beta_twice": "Multiplies the margin by beta a second time, so the loss uses beta squared.",
+    "eps_log": "Computes the loss as minus log of sigmoid plus 1e-8, so very large margins give wrong losses.",
+    "grad_wrong_sigmoid": "Weights the gradient by sigmoid of the margin, not sigmoid of minus the margin.",
+    "in_place_ratio": "Subtracts the reference log probabilities in place, so the caller's policy array changes.",
+    "sum_not_mean": "Sums the pair losses and gradients and does not divide by N.",
+    "swapped_ratio": "Computes the reward as the reference log probability minus the policy log probability."
+  }
+}

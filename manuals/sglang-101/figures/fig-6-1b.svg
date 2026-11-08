@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-6-1b-title fig-6-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-1b-title">Two data parallel copies of one model</title>
+  <desc id="fig-6-1b-desc">A data parallel controller receives requests and gives them to two model worlds in turn, because load-balance-method auto resolves to round_robin outside prefill-decode disaggregation. World 0 uses GPUs g0 to g3 and world 1 uses g4 to g7, and each world has its own scheduler and its own KV cache.</desc>
+  <defs><marker id="fig-6-1b-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <rect x="170" y="20" width="300" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="320" y="39.25" font-size="12.5" text-anchor="middle" font-weight="700">data parallel controller</text>
+  <text x="320" y="56.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">--load-balance-method auto: round_robin</text>
+  <rect x="20" y="150" width="280" height="136" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="170" font-size="12" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">world 0 · --tp-size 4</text>
+  <rect x="32" y="182" width="58" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="61" y="198.6" font-size="12" text-anchor="middle" font-weight="700">g0</text>
+  <rect x="98" y="182" width="58" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="127" y="198.6" font-size="12" text-anchor="middle" font-weight="700">g1</text>
+  <rect x="164" y="182" width="58" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="193" y="198.6" font-size="12" text-anchor="middle" font-weight="700">g2</text>
+  <rect x="230" y="182" width="58" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="259" y="198.6" font-size="12" text-anchor="middle" font-weight="700">g3</text>
+  <rect x="32" y="220" width="256" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="160" y="240.25" font-size="12.5" text-anchor="middle" font-weight="700">its own KV cache</text>
+  <text x="160" y="257.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the other world never sees it</text>
+  <rect x="340" y="150" width="280" height="136" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="352" y="170" font-size="12" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">world 1 · --tp-size 4</text>
+  <rect x="352" y="182" width="58" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="381" y="198.6" font-size="12" text-anchor="middle" font-weight="700">g4</text>
+  <rect x="418" y="182" width="58" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="447" y="198.6" font-size="12" text-anchor="middle" font-weight="700">g5</text>
+  <rect x="484" y="182" width="58" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="513" y="198.6" font-size="12" text-anchor="middle" font-weight="700">g6</text>
+  <rect x="550" y="182" width="58" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="579" y="198.6" font-size="12" text-anchor="middle" font-weight="700">g7</text>
+  <rect x="352" y="220" width="256" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="480" y="240.25" font-size="12.5" text-anchor="middle" font-weight="700">its own KV cache</text>
+  <text x="480" y="257.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the other world never sees it</text>
+  <line x1="230" y1="68" x2="160" y2="149" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1b-head-ink)"/>
+  <rect class="m-knock" x="235" y="97.53" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="238" y="108.5" font-size="11.5">requests 1, 3, 5</text>
+  <line x1="410" y1="68" x2="480" y2="149" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1b-head-ink)"/>
+  <rect class="m-knock" x="415" y="97.53" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="418" y="108.5" font-size="11.5">requests 2, 4, 6</text>
+</svg>

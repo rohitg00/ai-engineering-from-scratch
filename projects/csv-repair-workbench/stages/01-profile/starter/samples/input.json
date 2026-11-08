@@ -1,0 +1,12 @@
+{
+  "csv": "place,date,volunteers\nNorth Garden,14/03/2026,8\nnorth garden,03/04/2026,10\nN. Garden,04/03/2026,\n",
+  "aliases": {
+    "place": {
+      "north garden": "North Garden",
+      "N. Garden": "North Garden"
+    }
+  },
+  "date_columns": [
+    "date"
+  ]
+}

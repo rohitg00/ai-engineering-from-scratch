@@ -30,24 +30,24 @@
 
 你在單元 06 已經知道條件機率是：
 
-```
-P(A|B) = P(A and B) / P(B)
+```math
+P(A \mid B) = \frac{P(A \text{ and } B)}{P(B)}
 ```
 
 對稱地也有：
 
+```math
+P(B \mid A) = \frac{P(A \text{ and } B)}{P(A)}
 ```
-P(B|A) = P(A and B) / P(A)
-```
 
-兩個式子共用同一個分子：P(A and B)。把它們畫上等號再整理一下：
+兩個式子共用同一個分子：$P(A \text{ and } B)$。把它們畫上等號再整理一下：
 
-```
-P(A and B) = P(A|B) * P(B) = P(B|A) * P(A)
-
-Therefore:
-
-P(A|B) = P(B|A) * P(A) / P(B)
+```math
+\begin{aligned}
+P(A \text{ and } B) &= P(A \mid B) \cdot P(B) = P(B \mid A) \cdot P(A) \\[4pt]
+&\text{Therefore:} \\[4pt]
+P(A \mid B) &= \frac{P(B \mid A) \cdot P(A)}{P(B)}
+\end{aligned}
 ```
 
 這就是貝氏定理。四個量，一條式子。
@@ -56,35 +56,35 @@ P(A|B) = P(B|A) * P(A) / P(B)
 
 | 組成 | 名稱 | 意思是什麼 |
 |------|------|---------------|
-| P(A\|B) | 後驗 | 看到證據 B 之後，你對 A 更新後的信念 |
-| P(B\|A) | 概似 | 如果 A 為真，證據 B 出現的機率有多高 |
-| P(A) | 先驗 | 在看到任何證據之前，你對 A 的信念 |
-| P(B) | 證據 | 在所有可能性之下，看到 B 的總機率 |
+| $P(A \mid B)$ | 後驗 | 看到證據 $B$ 之後，你對 $A$ 更新後的信念 |
+| $P(B \mid A)$ | 概似 | 如果 $A$ 為真，證據 $B$ 出現的機率有多高 |
+| $P(A)$ | 先驗 | 在看到任何證據之前，你對 $A$ 的信念 |
+| $P(B)$ | 證據 | 在所有可能性之下，看到 $B$ 的總機率 |
 
-證據項 P(B) 的作用是正規化因子。你可以用全機率定律把它展開：
+證據項 $P(B)$ 的作用是正規化因子。你可以用全機率定律把它展開：
 
-```
-P(B) = P(B|A) * P(A) + P(B|not A) * P(not A)
+```math
+P(B) = P(B \mid A) \cdot P(A) + P(B \mid \text{not } A) \cdot P(\text{not } A)
 ```
 
 ### 醫學檢驗的例子
 
 某疾病每 10,000 人影響 1 人。檢驗準確率為 99%（能揪出 99% 的病人，並有 1% 的機率給出偽陽性）。
 
-```
-P(sick)          = 0.0001     (prior: disease is rare)
-P(positive|sick) = 0.99       (likelihood: test catches it)
-P(positive|healthy) = 0.01    (false positive rate)
-
-P(positive) = P(positive|sick) * P(sick) + P(positive|healthy) * P(healthy)
-            = 0.99 * 0.0001 + 0.01 * 0.9999
-            = 0.000099 + 0.009999
-            = 0.010098
-
-P(sick|positive) = P(positive|sick) * P(sick) / P(positive)
-                 = 0.99 * 0.0001 / 0.010098
-                 = 0.0098
-                 = 0.98%
+```math
+\begin{aligned}
+P(\text{sick}) &= 0.0001 \quad \text{(prior: disease is rare)} \\
+P(\text{positive} \mid \text{sick}) &= 0.99 \quad \text{(likelihood: test catches it)} \\
+P(\text{positive} \mid \text{healthy}) &= 0.01 \quad \text{(false positive rate)} \\[6pt]
+P(\text{positive}) &= P(\text{positive} \mid \text{sick}) \cdot P(\text{sick}) + P(\text{positive} \mid \text{healthy}) \cdot P(\text{healthy}) \\
+&= 0.99 \cdot 0.0001 + 0.01 \cdot 0.9999 \\
+&= 0.000099 + 0.009999 \\
+&= 0.010098 \\[6pt]
+P(\text{sick} \mid \text{positive}) &= P(\text{positive} \mid \text{sick}) \cdot P(\text{sick}) / P(\text{positive}) \\
+&= 0.99 \cdot 0.0001 / 0.010098 \\
+&= 0.0098 \\
+&= 0.98\%
+\end{aligned}
 ```
 
 不到 1%。先驗完全主導了結果。當一個狀況很罕見時，就算檢驗很準，產出的陽性結果也大多是偽陽性。這就是醫生為什麼要再開一次確認檢驗。
@@ -93,18 +93,18 @@ P(sick|positive) = P(positive|sick) * P(sick) / P(positive)
 
 你收到一封含有「lottery」這個字的郵件。它是垃圾郵件嗎？
 
-```
-P(spam)                = 0.3      (30% of email is spam)
-P("lottery"|spam)      = 0.05     (5% of spam emails contain "lottery")
-P("lottery"|not spam)  = 0.001    (0.1% of legitimate emails contain "lottery")
-
-P("lottery") = 0.05 * 0.3 + 0.001 * 0.7
-             = 0.015 + 0.0007
-             = 0.0157
-
-P(spam|"lottery") = 0.05 * 0.3 / 0.0157
-                  = 0.955
-                  = 95.5%
+```math
+\begin{aligned}
+P(\text{spam}) &= 0.3 \quad \text{(30\% of email is spam)} \\
+P(\text{"lottery"} \mid \text{spam}) &= 0.05 \quad \text{(5\% of spam emails contain "lottery")} \\
+P(\text{"lottery"} \mid \text{not spam}) &= 0.001 \quad \text{(0.1\% of legitimate emails contain "lottery")} \\[6pt]
+P(\text{"lottery"}) &= 0.05 \cdot 0.3 + 0.001 \cdot 0.7 \\
+&= 0.015 + 0.0007 \\
+&= 0.0157 \\[6pt]
+P(\text{spam} \mid \text{"lottery"}) &= 0.05 \cdot 0.3 / 0.0157 \\
+&= 0.955 \\
+&= 95.5\%
+\end{aligned}
 ```
 
 一個字就把機率從 30% 推到 95.5%。真正的垃圾郵件過濾器會同時對數百個字套用貝氏定理。
@@ -113,58 +113,56 @@ P(spam|"lottery") = 0.05 * 0.3 / 0.0157
 
 單純貝氏把這套做法推廣到多個特徵上，方法是假設在給定類別的條件下，所有特徵都彼此條件獨立：
 
-```
-P(class | feature_1, feature_2, ..., feature_n)
-  = P(class) * P(feature_1|class) * P(feature_2|class) * ... * P(feature_n|class)
-    / P(feature_1, feature_2, ..., feature_n)
+```math
+P(\text{class} \mid \text{feature}_1, \text{feature}_2, \ldots, \text{feature}_n) = \frac{P(\text{class}) \cdot P(\text{feature}_1 \mid \text{class}) \cdot P(\text{feature}_2 \mid \text{class}) \cdots P(\text{feature}_n \mid \text{class})}{P(\text{feature}_1, \text{feature}_2, \ldots, \text{feature}_n)}
 ```
 
 「樸素」指的就是這個獨立假設。在文本裡，詞的出現並不獨立（「New」跟「York」是相關的）。但這個假設在實務上出乎意料地好用，因為分類器只需要把各類別排出高低，不需要產出校準過的機率。
 
 既然分母對所有類別都一樣，你可以直接略過它，只比較分子：
 
-```
-score(class) = P(class) * product of P(feature_i | class)
+```math
+\text{score}(\text{class}) = P(\text{class}) \cdot \prod_i P(\text{feature}_i \mid \text{class})
 ```
 
 挑分數最高的那個類別。
 
 ### 最大概似估計（MLE）
 
-你要怎麼從訓練資料得到 P(feature|class)？數次數。
+你要怎麼從訓練資料得到 $P(\text{feature} \mid \text{class})$？數次數。
 
-```
-P("free"|spam) = (number of spam emails containing "free") / (total spam emails)
+```math
+P(\text{"free"} \mid \text{spam}) = \frac{\text{number of spam emails containing "free"}}{\text{total spam emails}}
 ```
 
 這就是 MLE：選出讓觀測資料最有可能出現的參數值。你在最大化概似函式，而對離散計數來說，它就化簡成相對頻率。
 
 問題來了：如果某個字在訓練時從未出現在垃圾郵件裡，MLE 會給它機率零。一個沒見過的字就會把整個乘積歸零。用 拉普拉斯平滑來修：
 
-```
-P(word|class) = (count(word, class) + 1) / (total_words_in_class + vocabulary_size)
+```math
+P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class}) + 1}{\text{total\_words\_in\_class} + \text{vocabulary\_size}}
 ```
 
 給每個計數都加 1，就能保證機率永遠不會是零。
 
 ### 最大後驗（MAP）
 
-MLE 問的是：哪些參數能最大化 P(data|parameters)？
+MLE 問的是：哪些參數能最大化 $P(\text{data} \mid \text{parameters})$？
 
-MAP 問的是：哪些參數能最大化 P(parameters|data)？
+MAP 問的是：哪些參數能最大化 $P(\text{parameters} \mid \text{data})$？
 
 根據貝氏定理：
 
-```
-P(parameters|data) proportional to P(data|parameters) * P(parameters)
+```math
+P(\text{parameters} \mid \text{data}) \propto P(\text{data} \mid \text{parameters}) \cdot P(\text{parameters})
 ```
 
 MAP 對參數本身加上了一個先驗。如果你認為參數應該要小，就把這個想法編碼成一個懲罰大數值的先驗。這跟 ML 裡的 L2 正則化是同一件事。ridge 回歸裡的「ridge」懲罰項，字面上就是權重上的高斯先驗。
 
 | 估計方法 | 最佳化的對象 | ML 中的對應 |
 |------------|-----------|---------------|
-| MLE | P(data\|params) | 沒有正則化的訓練 |
-| MAP | P(data\|params) * P(params) | L2／L1 正則化 |
+| MLE | $P(\text{data} \mid \text{params})$ | 沒有正則化的訓練 |
+| MAP | $P(\text{data} \mid \text{params}) \cdot P(\text{params})$ | L2／L1 正則化 |
 
 ### 貝氏派 vs 頻率派：實務上的差別
 
@@ -189,7 +187,7 @@ MAP 對參數本身加上了一個先驗。如果你認為參數應該要小，�
 
 **先驗就是正則化。** 權重上的高斯先驗就是 L2 正則化，Laplace 先驗就是 L1。每次你加上一個正則化項，你就是在對「你預期參數會是什麼數值」做一個貝氏陳述。
 
-**後驗就是不確定性。** 單一個預測機率完全說不出模型對這個估計有多少信心。貝氏方法給你的是一個分布：「我認為 P(spam) 落在 0.8 到 0.95 之間。」
+**後驗就是不確定性。** 單一個預測機率完全說不出模型對這個估計有多少信心。貝氏方法給你的是一個分布：「我認為 $P(\text{spam})$ 落在 0.8 到 0.95 之間。」
 
 **貝氏更新就是線上學習。** 今天的後驗會變成明天的先驗。當模型看到新資料時，它會逐步更新自己的信念，而不是從頭重新訓練。
 
@@ -345,26 +343,28 @@ for msg, pred in zip(test_messages, predictions):
 
 | 概似 | 共軛先驗 | 後驗 | 例子 |
 |-----------|----------------|-----------|---------|
-| 伯努利 | Beta(a, b) | Beta(a + successes, b + failures) | 估計硬幣的偏差 |
-| 常態（已知變異數） | Normal(mu_0, sigma_0) | Normal(weighted mean, smaller variance) | 感測器校準 |
-| 卜瓦松 | Gamma(a, b) | Gamma(a + sum of counts, b + n) | 建模事件到達率 |
-| 多項式 | Dirichlet(alpha) | Dirichlet(alpha + counts) | 主題模型、語言模型 |
+| 伯努利 | $\text{Beta}(a, b)$ | $\text{Beta}(a + \text{successes}, b + \text{failures})$ | 估計硬幣的偏差 |
+| 常態（已知變異數） | $\text{Normal}(\mu_0, \sigma_0)$ | Normal(weighted mean, smaller variance) | 感測器校準 |
+| 卜瓦松 | $\text{Gamma}(a, b)$ | $\text{Gamma}(a + \text{sum of counts}, b + n)$ | 建模事件到達率 |
+| 多項式 | $\text{Dirichlet}(\alpha)$ | $\text{Dirichlet}(\alpha + \text{counts})$ | 主題模型、語言模型 |
 
 這為什麼重要：沒有共軛先驗的話，你得靠蒙地卡羅取樣或變分推論來近似後驗。有了共軛先驗，你只要更新兩個數字。
 
-Beta 分布是實務上最常見的共軛先驗。Beta(a, b) 代表你對一個機率參數的信念。它的平均值是 a/(a+b)。a+b 越大，這個分布就越集中（越有信心）。
+Beta 分布是實務上最常見的共軛先驗。$\text{Beta}(a, b)$ 代表你對一個機率參數的信念。它的平均值是 $a/(a+b)$。$a+b$ 越大，這個分布就越集中（越有信心）。
 
 Beta 先驗的幾個特例：
-- Beta(1, 1) = 均勻分布。你對這個參數沒有任何意見。
-- Beta(10, 10) = 在 0.5 處有尖峰。你強烈相信這個參數靠近 0.5。
-- Beta(1, 10) = 偏向 0。你相信這個參數很小。
+- $\text{Beta}(1, 1)$ = 均勻分布。你對這個參數沒有任何意見。
+- $\text{Beta}(10, 10)$ = 在 0.5 處有尖峰。你強烈相信這個參數靠近 0.5。
+- $\text{Beta}(1, 10)$ = 偏向 0。你相信這個參數很小。
 
 更新規則簡單到不行：
 
-```
-Prior:     Beta(a, b)
-Data:      s successes, f failures
-Posterior: Beta(a + s, b + f)
+```math
+\begin{aligned}
+\text{Prior:} \quad & \text{Beta}(a, b) \\
+\text{Data:} \quad & s \text{ successes}, f \text{ failures} \\
+\text{Posterior:} \quad & \text{Beta}(a + s, b + f)
+\end{aligned}
 ```
 
 不用積分。不用取樣。只要加法。
@@ -376,19 +376,19 @@ Posterior: Beta(a + s, b + f)
 具體例子：估計一枚硬幣公不公正。
 
 **第 1 天：還沒有資料。**
-從 Beta(1, 1) 開始——一個均勻先驗。你沒有任何意見。
+從 $\text{Beta}(1, 1)$ 開始——一個均勻先驗。你沒有任何意見。
 - 先驗平均值：0.5
 - 先驗在 [0, 1] 上是平的
 
 **第 2 天：觀測到 7 次正面、3 次反面。**
-後驗 = Beta(1 + 7, 1 + 3) = Beta(8, 4)
-- 後驗平均值：8/12 = 0.667
+$\text{Posterior} = \text{Beta}(1 + 7, 1 + 3) = \text{Beta}(8, 4)$
+- 後驗平均值：$8/12 = 0.667$
 - 證據顯示這枚硬幣偏向正面
 
 **第 3 天：又觀測到 5 次正面、5 次反面。**
 把昨天的後驗當成今天的先驗。
-後驗 = Beta(8 + 5, 4 + 5) = Beta(13, 9)
-- 後驗平均值：13/22 = 0.591
+$\text{Posterior} = \text{Beta}(8 + 5, 4 + 5) = \text{Beta}(13, 9)$
+- 後驗平均值：$13/22 = 0.591$
 - 這批平衡的新資料把估計值拉回靠近 0.5
 
 ```mermaid
@@ -398,7 +398,7 @@ graph LR
     C -->|"5H, 5T"| D["Posterior 2<br/>Beta(13,9)<br/>mean = 0.59"]
 ```
 
-觀測的順序並不重要。把 Beta(1,1) 一次用全部 12 次正面與 8 次反面更新，得到的還是 Beta(13, 9)——同一個結果。序列式更新與批次更新在數學上是等價的。但序列式更新讓你能在每一步就做決策，而不必保存原始資料。
+觀測的順序並不重要。把 $\text{Beta}(1,1)$ 一次用全部 12 次正面與 8 次反面更新，得到的還是 $\text{Beta}(13, 9)$——同一個結果。序列式更新與批次更新在數學上是等價的。但序列式更新讓你能在每一步就做決策，而不必保存原始資料。
 
 這正是生產環境 ML 系統中線上學習的基礎。用於 bandit 的 Thompson sampling、增量式推薦系統，以及串流異常偵測器，用的全是這個模式。
 
@@ -410,14 +410,14 @@ A/B 測試其實就是換了個外貌的貝氏推論。
 
 貝氏 A/B 測試：
 
-1. **先驗。** 兩個版本都從 Beta(1, 1) 開始。事前不偏好任何一邊。
+1. **先驗。** 兩個版本都從 $\text{Beta}(1, 1)$ 開始。事前不偏好任何一邊。
 2. **資料。** 版本 A：1000 次曝光得到 50 次點擊。版本 B：1000 次曝光得到 65 次點擊。
 3. **後驗。**
-   - A：Beta(1 + 50, 1 + 950) = Beta(51, 951)。平均值 = 0.051
-   - B：Beta(1 + 65, 1 + 935) = Beta(66, 936)。平均值 = 0.066
-4. **決策。** 計算 P(B > A)——也就是 B 的真實轉換率高於 A 的機率。
+   - A：$\text{Beta}(1 + 50, 1 + 950) = \text{Beta}(51, 951)$。平均值 = 0.051
+   - B：$\text{Beta}(1 + 65, 1 + 935) = \text{Beta}(66, 936)$。平均值 = 0.066
+4. **決策。** 計算 $P(B > A)$——也就是 B 的真實轉換率高於 A 的機率。
 
-要解析地算出 P(B > A) 很難。但用蒙地卡羅就變得輕而易舉：
+要解析地算出 $P(B > A)$ 很難。但用蒙地卡羅就變得輕而易舉：
 
 ```
 1. Draw 100,000 samples from Beta(51, 951)  -> samples_A
@@ -425,7 +425,7 @@ A/B 測試其實就是換了個外貌的貝氏推論。
 3. P(B > A) = fraction of samples where B > A
 ```
 
-如果 P(B > A) > 0.95，就出版本 B。如果落在 0.05 與 0.95 之間，就繼續收資料。如果 P(B > A) < 0.05，就出版本 A。
+如果 $P(B > A) > 0.95$，就出版本 B。如果落在 0.05 與 0.95 之間，就繼續收資料。如果 $P(B > A) < 0.05$，就出版本 A。
 
 相對於頻率派 A/B 測試的優點：
 - 你得到一個直接的機率陳述：「B 比較好的機率有 97%」
@@ -435,35 +435,45 @@ A/B 測試其實就是換了個外貌的貝氏推論。
 
 | 面向 | 頻率派 A/B | 貝氏 A/B |
 |--------|----------------|--------------|
-| 輸出 | p 值 | P(B > A) |
+| 輸出 | p 值 | $P(B > A)$ |
 | 解讀方式 | 「如果 A=B，這筆資料有多令人意外？」 | 「B 比 A 好的可能性有多高？」 |
 | 提早停止 | 會拉高偽陽性 | 任何時間點都安全（前提是先驗選得好、模型設定正確） |
 | 先驗知識 | 用不上 | 編碼成 Beta 先驗 |
-| 決策規則 | p < 0.05 | P(B > A) > 閾值 |
+| 決策規則 | $p < 0.05$ | $P(B > A) > \text{threshold}$ |
 
 ## 練習
 
-1. **多次檢驗。** 一位病人在兩次獨立檢驗中都呈陽性（兩次的準確率都是 99%，疾病盛行率為 10,000 分之 1）。兩次檢驗之後 P(sick) 是多少？把第一次檢驗的後驗當成第二次的先驗。
+1. **多次檢驗。** 一位病人在兩次獨立檢驗中都呈陽性（兩次的準確率都是 99%，疾病盛行率為 10,000 分之 1）。兩次檢驗之後 $P(\text{sick})$ 是多少？把第一次檢驗的後驗當成第二次的先驗。
 
 2. **平滑的影響。** 把垃圾郵件分類器分別用 0.01、0.1、1.0 與 10.0 的平滑值跑一遍。最高機率的那些字的機率怎麼變？如果 smoothing=0，而某個字只出現在 ham 裡，會發生什麼事？
 
-3. **加入特徵。** 擴充 NaiveBayes 類別，讓它除了詞的計數之外，也把訊息長度（短／長）當成一個特徵。從訓練資料估計 P(short|spam) 與 P(short|ham)，並把它納入預測分數。
+3. **加入特徵。** 擴充 NaiveBayes 類別，讓它除了詞的計數之外，也把訊息長度（短／長）當成一個特徵。從訓練資料估計 $P(\text{short} \mid \text{spam})$ 與 $P(\text{short} \mid \text{ham})$，並把它納入預測分數。
 
-4. **手算 MAP。** 已知觀測資料（10 次投擲硬幣中有 7 次正面），用 Beta(2,2) 先驗算出偏差的 MAP 估計。把它跟 MLE 估計（7/10）做比較。
+4. **手算 MAP。** 已知觀測資料（10 次投擲硬幣中有 7 次正面），用 $\text{Beta}(2,2)$ 先驗算出偏差的 MAP 估計。把它跟 MLE 估計（$7/10$）做比較。
+
+### 提示
+
+**練習 1。** 先呼叫一次 `bayes` 得到第一次檢驗後的後驗，再把這個後驗當成先驗呼叫一次。`sequential_bayes(prior, likelihood, false_positive_rate, 2)` 必須給出相同的值，接近 0.5。
+
+**練習 2。** 對每個值各建一個 `NaiveBayes(smoothing=s)`，用同一份資料訓練，並印出各自的 `top_words`。平滑值為 0 時，從未在垃圾郵件中出現的詞會得到機率 0，所以它的對數沒有定義。
+
+**練習 3。** 數一數垃圾郵件與正常郵件中各有幾則是短訊息，除以各類別的訊息數，再把這個比例的對數加到 `predict` 的分數裡。確認每個類別的兩個機率加起來為 1。
+
+**練習 4。** 使用 $\text{Beta}(\alpha, \beta)$ 先驗時，MAP 估計是 $\frac{h + \alpha - 1}{n + \alpha + \beta - 2}$。代入 $h = 7$、$n = 10$；結果必須落在 MLE（0.7）與先驗眾數（0.5）之間。
 
 ## 關鍵術語
 
 | 術語 | 大家怎麼說 | 實際上是什麼 |
 |------|----------------|----------------------|
-| 先驗 | 「我一開始的猜測」 | 觀測證據之前的 P(hypothesis)。在 ML 裡：就是正則化項。 |
-| 概似 | 「資料吻合得有多好」 | P(evidence\|hypothesis)。在某個特定假設之下，觀測到的資料有多可能出現。 |
-| 後驗 | 「我更新後的信念」 | P(hypothesis\|evidence)。先驗乘上概似，再做正規化。 |
-| 證據 | 「那個正規化常數」 | 跨所有假設的 P(data)。確保後驗的總和為 1。 |
+| 先驗 | 「我一開始的猜測」 | 觀測證據之前的 $P(\text{hypothesis})$。在 ML 裡：就是正則化項。 |
+| 概似 | 「資料吻合得有多好」 | $P(\text{evidence} \mid \text{hypothesis})$。在某個特定假設之下，觀測到的資料有多可能出現。 |
+| 後驗 | 「我更新後的信念」 | $P(\text{hypothesis} \mid \text{evidence})$。先驗乘上概似，再做正規化。 |
+| 證據 | 「那個正規化常數」 | 跨所有假設的 $P(\text{data})$。確保後驗的總和為 1。 |
 | 單純貝氏 | 「那個簡單的文本分類器」 | 假設在給定類別下各特徵彼此獨立的分類器。儘管假設是錯的，效果卻很好。 |
 | 拉普拉斯平滑 | 「加一平滑」 | 給每個特徵都加上一個小小的計數，避免沒見過的資料造成機率為零。 |
-| MLE | 「直接用頻率就好」 | 選出最大化 P(data\|parameters) 的參數。沒有先驗。資料少時可能過度擬合。 |
-| MAP | 「加了先驗的 MLE」 | 選出最大化 P(data\|parameters) * P(parameters) 的參數。等同於加了正則化的 MLE。 |
-| 對數機率 | 「在對數空間裡算」 | 用 log(P) 取代 P，避免乘上很多小數字時發生浮點下溢。 |
+| MLE | 「直接用頻率就好」 | 選出最大化 $P(\text{data} \mid \text{parameters})$ 的參數。沒有先驗。資料少時可能過度擬合。 |
+| MAP | 「加了先驗的 MLE」 | 選出最大化 $P(\text{data} \mid \text{parameters}) \cdot P(\text{parameters})$ 的參數。等同於加了正則化的 MLE。 |
+| 對數機率 | 「在對數空間裡算」 | 用 $\log(P)$ 取代 $P$，避免乘上很多小數字時發生浮點下溢。 |
 | 偽陽性 | 「一次錯誤的警報」 | 檢驗說是陽性，但真實狀態是陰性。這是基本比率謬誤的成因。 |
 
 ## 延伸閱讀

@@ -1,0 +1,21 @@
+{
+  "id": "rope",
+  "title": "Rotary position embedding",
+  "kind": "implement",
+  "summary": "Rotate adjacent coordinate pairs of queries and keys by position times base^(-2i/d), so attention scores depend only on the position gap.",
+  "difficulty": "medium",
+  "tags": ["positional-encoding", "rope", "transformers", "attention"],
+  "lesson": "phases/07-transformers-deep-dive/04-positional-encoding",
+  "cheatsheet": "positional-encoding",
+  "minutes": 25,
+  "entry": ["rope_frequencies", "apply_rope"],
+  "collections": ["transformers-from-scratch"],
+  "time_limit_s": 10,
+  "mutants": {
+    "exponent_i_over_d": "Uses the exponent i / d in place of 2i / d, so the frequencies fall too slowly.",
+    "half_split_pairs": "Pairs coordinate i with coordinate i + d/2, not the adjacent pair (2i, 2i+1).",
+    "odd_dim_unhandled": "Slices every second coordinate to the end, so an odd d gives arrays of different sizes and the code fails.",
+    "rotates_backwards": "Swaps the signs of the sin terms, so each pair turns by minus the angle.",
+    "writes_input": "Writes the rotated values into x itself and reads a changed value for the second element of each pair."
+  }
+}

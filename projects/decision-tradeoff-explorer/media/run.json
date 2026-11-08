@@ -1,0 +1,52 @@
+{
+  "title": "Decision Tradeoff Explorer | initialize and grade",
+  "recordedAt": "2026-10-09T14:31:57Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "decision-tradeoff-explorer",
+        "--init",
+        "./.project-validation/decision-tradeoff-explorer/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/decision-tradeoff-explorer/recording-starter\n  kept     cli.ts\n  kept     fixtures/exhibition.json\n  kept     main.ts\n  kept     STAGE-2.md\n  kept     STAGE-3.md\n  kept     STAGE-4.md\nnext: python3 scripts/project_test.py decision-tradeoff-explorer --stage 1 --path ./.project-validation/decision-tradeoff-explorer/recording-starter\n",
+      "durationMs": 33
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "decision-tradeoff-explorer",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/decision-tradeoff-explorer/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Decision Tradeoff Explorer: grading learner\n  FAIL stage 1: Declare options and evidence (8 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 262
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "decision-tradeoff-explorer",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/decision-tradeoff-explorer/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Decision Tradeoff Explorer: grading solution\n  PASS stage 1: Declare options and evidence (8 tests)\n  PASS stage 2: Compute comparable scores (8 tests)\n  PASS stage 3: Explore sensitivity and dominance (6 tests)\n  PASS stage 4: Export the chosen scenario (6 tests)\nreport: ./.project-validation/decision-tradeoff-explorer/solution-final.json\n",
+      "durationMs": 995
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

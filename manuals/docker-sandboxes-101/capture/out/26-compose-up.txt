@@ -1,0 +1,56 @@
+$ docker compose -f fixtures/compose/compose.yaml up --abort-on-container-exit
+ llm Pulling
+ llm Pulled
+ llm Configuring
+ llm Configured
+ Network m101_default Creating
+ Network m101_default Created
+ Container m101-mcp-gateway-1 Creating
+ Container m101-mcp-gateway-1 Created
+ Container m101-printer-1 Creating
+ Container m101-printer-1 Created
+Attaching to mcp-gateway-1, printer-1
+ Container m101-mcp-gateway-1 Starting
+ Container m101-mcp-gateway-1 Started
+ Container m101-printer-1 Starting
+ Container m101-printer-1 Started
+printer-1  |
+printer-1      |
+
+printer-1 exited with code 0
+ Compose Stopping Aborting on container exit...
+ Container m101-printer-1 Stopping
+ Container m101-printer-1 Stopped
+ Container m101-mcp-gateway-1 Stopping
+ Container m101-mcp-gateway-1 Stopped
+
+mcp-gateway-1 exited with code 1
+
+mcp-gateway-1 | - Reading profile configuration...
+mcp-gateway-1 |   - Default profile not found, using empty configuration
+mcp-gateway-1 |   - No catalogs found, dynamic tools will be limited to profile servers. Run `docker mcp catalog pull mcp/docker-mcp-catalog:latest` and restart the gateway to add Docker MCP catalog servers to dynamic tools.
+mcp-gateway-1 | - No server is enabled
+mcp-gateway-1 | - Listing MCP tools...
+mcp-gateway-1 | > 0 tools listed in <dur>
+mcp-gateway-1 | - Adding internal tools (dynamic-tools feature enabled)
+mcp-gateway-1 |   > mcp-find: tool for finding MCP servers in the catalog
+mcp-gateway-1 |   > mcp-add: tool for adding MCP servers to the registry
+mcp-gateway-1 |   > mcp-remove: tool for removing MCP servers from the registry
+mcp-gateway-1 |   > code-mode: write code that calls other MCPs directly
+mcp-gateway-1 |   > mcp-exec: execute tools that exist in the current session
+mcp-gateway-1 |   > mcp-config-set: tool for setting configuration values for MCP servers
+mcp-gateway-1 |   > mcp-create-profile: tool for creating or updating profiles with current gateway state
+mcp-gateway-1 |   > mcp-activate-profile: tool for activating saved profiles
+mcp-gateway-1 |   > mcp-discover: prompt for learning about dynamic server management
+mcp-gateway-1 | - Watching for configuration updates...
+mcp-gateway-1 | > Initialized in <dur>
+mcp-gateway-1 | > Start streaming server on port 8811
+mcp-gateway-1 | > Gateway URL: http://localhost:8811/mcp
+mcp-gateway-1 | > Use Bearer token: Authorization: Bearer <token>
+mcp-gateway-1 | > Stop watching for updates
+mcp-gateway-1 | accept tcp [::]:8811: use of closed network connection
+printer-1 | LLM_MODEL=ai/qwen3:4b
+printer-1 | LLM_URL=http://model-runner.docker.internal/v1/
+printer-1 | {"object":"list","data":[{"id":"docker.io/ai/qwen3:4b","object":"model","created":0,"owned_by":"docker","dmr":{}}]}
+printer-1 | wget: server returned error: HTTP/1.1 401 Unauthorized
+[exit 0]

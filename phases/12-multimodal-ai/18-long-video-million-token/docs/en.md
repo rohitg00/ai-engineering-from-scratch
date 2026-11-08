@@ -10,7 +10,7 @@
 ## Learning Objectives
 
 - Compute total visual-token counts for long-form video at varying FPS and pooling.
-- Explain the three scaling paths: brute context (Gemini 1.5), ring attention (LWM), token compression (LongVILA / Video-XL).
+- Explain the four scaling paths: brute context (Gemini 1.5), ring attention (LWM), token compression (LongVILA / Video-XL), agentic retrieval (VideoAgent).
 - Compare raw-context video VLMs vs agentic-retrieval video VLMs (VideoAgent) on accuracy and latency.
 - Design a needle-in-a-haystack test for a 30-minute video and measure recall at a specific minute.
 
@@ -20,7 +20,7 @@ A single frame of Qwen2.5-VL-sized patches at 384 native resolution is ~729 toke
 
 A 2-hour movie at 1 FPS is 583k tokens. Beyond most 2026 open models; requires Gemini 2.5 Pro or pooling more aggressively.
 
-Three scaling paths emerged.
+Four scaling paths emerged.
 
 ## The Concept
 
@@ -36,7 +36,7 @@ Engineering: a custom attention implementation with memory hierarchy (local + gl
 
 Ring attention distributes long sequences across devices in a "ring" where each device holds a chunk. Attention across the full sequence happens by each device sending its chunk to the next in a ring pattern, computing partial attention, and aggregating.
 
-LWM (Liu et al., 2024) trained a 1M-token context model this way. Training compute scales linearly with context, not quadratically — the quadratic hit on attention is amortized across the ring's devices.
+LWM (Liu et al., 2024) trained a 1M-token context model this way. Per-device memory scales with the chunk each device holds, so adding devices extends the context roughly linearly. Total attention compute is still quadratic in context; the ring splits that work across devices and overlaps the key/value passing with compute.
 
 LongVILA (arXiv:2408.10188) adapted the pattern to VLMs. 1400-frame videos at 192 tokens per frame = 268k context, trained with ring attention across 8-way parallelism.
 
@@ -118,7 +118,7 @@ This lesson produces `outputs/skill-long-video-strategy-planner.md`. Given a vid
 
 3. Compare brute-context Qwen2.5-VL-72B (80k context) to VideoAgent (Claude 3.5 + retrieval) on a 1-hour video. Which wins on recall? Which wins on latency?
 
-4. Ring attention's memory cost scales linearly in sequence length and linearly in device count. Explain why and what fails if you drop the ring-rotation phase.
+4. Ring attention's per-device memory scales with sequence length divided by device count, while total attention compute stays quadratic. Explain why and what fails if you drop the ring-rotation phase.
 
 5. Read Gemini 1.5 Section 5 on needle-in-a-haystack. What did the paper find about recall at the 1M vs 10M token boundary?
 

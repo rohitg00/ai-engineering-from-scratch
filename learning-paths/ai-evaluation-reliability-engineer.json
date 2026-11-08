@@ -38,6 +38,7 @@
       "A chaos test or incident analysis with corrective actions"
     ]
   },
+  "projects": ["prompt-regression-tester", "json-schema-output-guard", "retrieval-evaluation-lab", "local-model-eval-harness", "report-judge", "retry-storm-lab", "distributed-eval-farm"],
   "readinessCriteria": [
     "Can select metrics that match the behavior and failure risk being tested.",
     "Can build reproducible model, LLM, and agent regression checks.",

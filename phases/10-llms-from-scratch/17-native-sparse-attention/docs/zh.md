@@ -36,8 +36,8 @@
 
 三條分支的輸出透過一個學習出來的逐位置閘門合併：
 
-```
-out = g_cmp * out_cmp + g_sel * out_sel + g_win * out_win
+```math
+\text{out} = g_{\text{cmp}} \cdot \text{out}_{\text{cmp}} + g_{\text{sel}} \cdot \text{out}_{\text{sel}} + g_{\text{win}} \cdot \text{out}_{\text{win}}
 ```
 
 `g_cmp, g_sel, g_win` 是由一個作用在 query 上的小型 MLP 產生的閘門權重。它們不必加總為 1 —— 可以各自獨立地為分支加權。

@@ -1025,4 +1025,4 @@ Python 程式碼（`code/prompt_engineering.py`）是一套獨立可跑的測試
 - [Shin et al., 2023 —— "Prompt Engineering a Prompt Engineer"](https://arxiv.org/abs/2311.05661) —— 用 LLM 自動最佳化提示詞，元提示的基礎
 - [Arena（前身為 LMSYS Chatbot Arena）](https://arena.ai/) —— LLM 的即時盲測比較，你可以把同一個提示詞跨模型測試，並投票哪個回應更好
 - [DAIR.AI Prompt Engineering Guide](https://www.promptingguide.ai/) —— 提示詞技巧的完整目錄與範例（零樣本、少樣本、CoT、ReAct、自我一致性）；業界在「提示詞工程」這個大面向上最常翻的參考資料。
-- [Anthropic prompt library](https://docs.anthropic.com/en/prompt-library) —— 依使用場景整理、已知可用的提示詞；展示了實際上線的結構性模式。
+- [Claude prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) —— Anthropic 關於提示詞結構的指引，附有完整範例。它取代了先前的 prompt library。

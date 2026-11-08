@@ -1,0 +1,827 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Docker Sandbox Kit descriptor (schemaVersion 3)",
+  "description": "The declaration half of a kit: capabilities offered and needed, args, hooks, guidance. Published as compact JSON in the vnd.docker.sandbox.kit.descriptor manifest annotation. Mirrors spec/types.go; spec/schema_test.go pins the constants so the two cannot drift silently.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "kind"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "3",
+      "description": "The descriptor grammar version this schema describes."
+    },
+    "displayName": {
+      "type": "string",
+      "description": "What humans read; identity lives in the consumption reference."
+    },
+    "author": {
+      "type": "string",
+      "description": "Who published the kit, in the org.opencontainers.image.authors convention ('Name <email>', commas for multiples). Display metadata only: a self-asserted claim, never identity and never a trust input - publisher identity lives in the reference's registry namespace and the signature."
+    },
+    "description": {
+      "type": "string",
+      "description": "Short human-readable summary."
+    },
+    "sourceUrl": {
+      "type": "string",
+      "description": "The kit's source repository or documentation."
+    },
+    "iconUrl": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://",
+      "description": "Absolute https URL to an image representing the kit in catalogs and pickers. Display metadata, self-asserted like displayName. https only: a consumer fetches and renders this, so javascript:, data:, and file: are refused."
+    },
+    "version": {
+      "type": "string",
+      "description": "Fallback version for unversioned provides entries when the consumption reference carries no version (local directory, git branch). A version-shaped tag always overrides it. May reference a build-phase arg."
+    },
+    "licenses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "SPDX license identifiers."
+    },
+    "kind": {
+      "enum": [
+        "workload",
+        "mixin",
+        "set"
+      ],
+      "description": "A workload's layers are a root filesystem that may stand at the bottom of the stack; a mixin's are an overlay that must land on one. A set's content is the kits it lists, and the frontend publishes the merged result under the kind they imply - workload when one of them is a workload, mixin when they all are - so 'set' never appears in a published descriptor."
+    },
+    "provides": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Capabilities this kit offers, optionally versioned as name@version. Nothing an author offers is provided implicitly. Bare names normalize into the default namespace (gh IS com.docker.kit/gh, like debian is docker.io/library/debian); third parties qualify under their own namespace, which never matches the bare form. The deb/ and apk/ namespaces are reserved: publishing fills them from the package databases in a workload's content, one entry per installed package, so do not author them."
+    },
+    "requires": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Capabilities the resolved set must satisfy, as \"name\" or \"name <op> version\" with optional comma-AND'd constraints (ops: >=, >, <=, <, =). Unsatisfiable sets are rejected at parse. Bare names normalize into the default namespace; matching is on normalized names against the closed set only, never a registry search."
+    },
+    "integrates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Capabilities the kit works with when present but functions without, in the requires grammar. An absent provider is fine; a present one that violates the stated constraints still fails resolution. A met entry orders like requires: the provider composes first."
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Capability names that must be absent from the resolved set. Bare names normalize into the default namespace."
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/capabilityItem"
+      },
+      "description": "Typed, versioned capability requests, each answered \u2014 granted, refused, or prompted \u2014 by the host. A host refuses a required type it does not provide by name; an optional one is skipped and recorded. Engine-executed behaviors (lifecycle hooks, agent context with an optional discovery profile directory) live here beside resource grants."
+    },
+    "args": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/arg"
+      },
+      "description": "Installer-supplied values, keyed by arg name. Private by default: an arg reaches the container only via env:, and the build only via buildArg:."
+    },
+    "build": {
+      "type": "string",
+      "description": "The content recipe inline: literal Dockerfile text, the single-file alternative to the companion <stem>.dockerfile (declaring both is an error). Handed to the Dockerfile frontend verbatim."
+    },
+    "dockerfile": {
+      "type": "string",
+      "description": "Names the companion recipe explicitly, relative to the descriptor's directory. Optional sugar over the filename-stem convention; a named recipe that does not exist is an error, unlike the conventional companion whose absence means a declaration-only kit. Mutually exclusive with build."
+    },
+    "kits": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/kit"
+      },
+      "description": "This kit's content as a list of published kits rather than Dockerfile text: the fourth authoring form. Mutually exclusive with build and dockerfile. The frontend resolves every one of them, judges them as a set, merges their layers and declarations, and publishes one ordinary kit; the published descriptor retains this list with every entry pinned by digest."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "set"
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "then": {
+        "required": [
+          "kits"
+        ]
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "kits"
+        ]
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "build"
+              ]
+            },
+            {
+              "required": [
+                "dockerfile"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "mixin"
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "capabilities": {
+            "items": {
+              "properties": {
+                "type": {
+                  "not": {
+                    "const": "com.docker.sandbox/sbx@1"
+                  }
+                },
+                "group": {
+                  "properties": {
+                    "capabilities": {
+                      "items": {
+                        "properties": {
+                          "type": {
+                            "not": {
+                              "const": "com.docker.sandbox/sbx@1"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "description": "com.docker.sandbox/sbx@1 is workload-only: a mixin's image config never becomes the composed image's, so the identity it would promise is not the one a host reads."
+    }
+  ],
+  "definitions": {
+    "kit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref"
+      ],
+      "properties": {
+        "ref": {
+          "type": "string",
+          "pattern": "^(\\$\\{\\{\\s*kit\\.args\\.[A-Za-z_][A-Za-z0-9_]*\\s*\\}\\}|[^\\s./])(\\$\\{\\{\\s*kit\\.args\\.[A-Za-z_][A-Za-z0-9_]*\\s*\\}\\}|[^\\s])*$",
+          "not": {
+            "anyOf": [
+              {
+                "pattern": "^git\\+"
+              },
+              {
+                "pattern": "://"
+              }
+            ]
+          },
+          "description": "The registry reference this kit is consumed by, and the identity it is named by in every merge diagnostic. A local path or a git URL names a kit that may not be published, and a set's kits have to be resolvable from the manifest alone."
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "description": "Pins this kit's manifest. Optional when authored - a tag is how an author names a version - and required in the published form, which the frontend fills in from the reference it resolved."
+        },
+        "args": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          },
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "This kit's create-phase args, keyed by its own arg names. A literal value is expanded into the merged descriptor at publish, which is what pins the set. A value that is itself a ${{ kit.args.* }} reference re-exports the input under the set's name, where the set's own declaration bounds it."
+        }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "pattern": "^[a-z0-9]([a-z0-9.-]*[a-z0-9])?/[a-z0-9]([a-z0-9-]*[a-z0-9])?@[1-9][0-9]*$",
+          "description": "<namespace>/<name>@<config-schema-version>. The namespace admits host-specific capability types; the version moves when the type's config schema does."
+        },
+        "name": {
+          "type": "string",
+          "description": "Optional human-readable display label. Spaces and duplicate names are allowed; the label does not change identity, merging, or permissions."
+        },
+        "optional": {
+          "type": "boolean",
+          "description": "An unknown or unprovided optional need is skipped and recorded; a required one fails resolution closed. For credentials this subsumes the older per-credential required flag."
+        },
+        "config": {
+          "type": "object",
+          "description": "Type-specific request payload. Well-known types decode strictly; unknown types carry it opaquely. Part of the permission surface: config changes gate like any widening. String values may reference ${{ kit.env.NAME }} from the final container environment, expanded before selection and validation. Keys are not environment-expanded."
+        },
+        "description": {
+          "type": "string",
+          "description": "Shown wherever the request is listed or prompted."
+        },
+        "source": {
+          "$ref": "#/definitions/capabilitySource"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/network-policy@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/network-policy@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/network-policy@2"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/network-policy@2.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/credential@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/credential@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/ssh-agent@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/ssh-agent@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/agent-skills@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/agent-skills@1.schema.json"
+              }
+            },
+            "required": [
+              "config"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/volume@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/volume@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/host-mount@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/host-mount@1.schema.json"
+              }
+            },
+            "required": [
+              "config"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/port@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/port@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/usb-device@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/usb-device@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/resources@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/resources@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/privileged@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/privileged@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/sbx@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/sbx@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/kit-registry@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/kit-registry@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/agent-sessions@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/agent-sessions@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/agent-interactive-sessions@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/agent-interactive-sessions@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/lifecycle@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/lifecycle@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/agent-context@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/agent-context@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/long-running@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/long-running@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/git-identity@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/git-identity@1.schema.json"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "com.docker.sandbox/agent-skill@1"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "required": [
+              "config"
+            ],
+            "properties": {
+              "config": {
+                "$ref": "capabilities/com.docker.sandbox/agent-skill@1.schema.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "arg": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "default": {
+          "type": "string",
+          "description": "Substituted when the caller supplies nothing."
+        },
+        "required": {
+          "type": "boolean",
+          "description": "The caller must supply a value. Mutually exclusive with default."
+        },
+        "description": {
+          "type": "string"
+        },
+        "enum": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Exact allowed values. Exclusive with pattern."
+        },
+        "pattern": {
+          "type": "string",
+          "description": "RE2 regexp matched against the whole value. Exclusive with enum."
+        },
+        "env": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "description": "Opts the resolved value into the container environment under this name."
+        },
+        "buildArg": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "description": "Resolves the arg at build instead: validated by the frontend, handed to the dockerfile under this build-arg name, expanded into the published descriptor."
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "env",
+              "buildArg"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "enum",
+              "pattern"
+            ]
+          }
+        },
+        {
+          "not": {
+            "allOf": [
+              {
+                "required": [
+                  "default"
+                ]
+              },
+              {
+                "properties": {
+                  "required": {
+                    "const": true
+                  }
+                },
+                "required": [
+                  "required"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "capabilitySource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path"
+      ],
+      "properties": {
+        "kit": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "capabilityMember": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/capability"
+        },
+        {
+          "not": {
+            "required": [
+              "optional"
+            ]
+          }
+        }
+      ]
+    },
+    "capabilityGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capabilities"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "optional": {
+          "type": "boolean",
+          "default": false
+        },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/capabilityMember"
+          }
+        }
+      }
+    },
+    "capabilityItem": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/capability"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "group"
+          ],
+          "properties": {
+            "group": {
+              "$ref": "#/definitions/capabilityGroup"
+            },
+            "source": {
+              "$ref": "#/definitions/capabilitySource"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

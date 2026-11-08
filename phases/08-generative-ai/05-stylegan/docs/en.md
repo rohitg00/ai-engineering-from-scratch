@@ -1,6 +1,6 @@
 # StyleGAN
 
-> Most generators stir `z` into every layer at the same time. StyleGAN split it apart: first map `z` to an intermediate `w`, then *inject* `w` at every resolution level through AdaIN. That single change untangled the latent space and made photorealistic faces a solved problem for seven years running.
+> Most generators stir $z$ into every layer at the same time. StyleGAN split it apart: first map $z$ to an intermediate $w$, then *inject* $w$ at every resolution level through AdaIN. That single change untangled the latent space and made photorealistic faces a solved problem for seven years running.
 
 **Type:** Build
 **Languages:** Python
@@ -9,31 +9,31 @@
 
 ## The Problem
 
-A DCGAN maps `z` to an image through a stack of transposed convolutions. The problem: `z` controls everything — pose, lighting, identity, background — entangled together. Move along one axis of `z`, all four change. You cannot ask the model "same person, different pose" because the representation does not factor that way.
+A DCGAN maps $z$ to an image through a stack of transposed convolutions. The problem: $z$ controls everything — pose, lighting, identity, background — entangled together. Move along one axis of $z$, all four change. You cannot ask the model "same person, different pose" because the representation does not factor that way.
 
-Karras et al. (2019, NVIDIA) proposed: stop feeding `z` directly into conv layers. Feed a constant `4×4×512` tensor as the network input. Learn an 8-layer MLP that maps `z ∈ Z → w ∈ W`. Inject `w` at every resolution via *adaptive instance normalization* (AdaIN): normalize each conv feature map, then scale and shift by affine projections of `w`. Add per-layer noise for stochastic detail (skin pores, hair strands).
+Karras et al. (2019, NVIDIA) proposed: stop feeding $z$ directly into conv layers. Feed a constant `4×4×512` tensor as the network input. Learn an 8-layer MLP that maps $z \in Z \to w \in W$. Inject $w$ at every resolution via *adaptive instance normalization* (AdaIN): normalize each conv feature map, then scale and shift by affine projections of $w$. Add per-layer noise for stochastic detail (skin pores, hair strands).
 
-The result: `W` has roughly orthogonal axes for "high-level style" (pose, identity) vs "fine style" (lighting, color). You can swap styles between two images by using image A's `w` for the low-resolution levels and image B's `w` for the high. This unlocked editing, cross-domain stylization, and the entire "StyleGAN-inversion" line of research.
+The result: $W$ has roughly orthogonal axes for "high-level style" (pose, identity) vs "fine style" (lighting, color). You can swap styles between two images by using image A's $w$ for the low-resolution levels and image B's $w$ for the high. This unlocked editing, cross-domain stylization, and the entire "StyleGAN-inversion" line of research.
 
 ## The Concept
 
 ![StyleGAN: mapping network + AdaIN + per-layer noise](../assets/stylegan.svg)
 
-**Mapping network.** `f: Z → W`, an 8-layer MLP. `Z = N(0, I)^512`. `W` is not forced to be Gaussian — it learns a data-adapted shape.
+**Mapping network.** $f: Z \to W$, an 8-layer MLP. $Z = \mathcal{N}(0, I)^{512}$. $W$ is not forced to be Gaussian — it learns a data-adapted shape.
 
 **Synthesis network.** Starts from a learned constant `4×4×512`. Each resolution block: `upsample → conv → AdaIN(w_i) → noise → conv → AdaIN(w_i) → noise`. Resolutions double: 4, 8, 16, 32, 64, 128, 256, 512, 1024.
 
 **AdaIN.**
 
-```
-AdaIN(x, y) = y_scale · (x - mean(x)) / std(x) + y_bias
+```math
+\mathop{\mathrm{AdaIN}}(x, y) = y_{\text{scale}} \cdot \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x)} + y_{\text{bias}}
 ```
 
-where `y_scale` and `y_bias` come from affine projections of `w`. Normalize per feature map, then restyle. "Style" here is the first- and second-order statistics of the feature map.
+where $y_{\text{scale}}$ and $y_{\text{bias}}$ come from affine projections of $w$. Normalize per feature map, then restyle. "Style" here is the first- and second-order statistics of the feature map.
 
 **Per-layer noise.** Single-channel Gaussian noise added to each feature map, scaled by a learned per-channel factor. Controls stochastic detail without affecting global structure.
 
-**Truncation trick.** At inference, sample `z`, compute `w = mapping(z)`, then `w' = ŵ + ψ·(w - ŵ)` where `ŵ` is the mean `w` over many samples. `ψ < 1` trades diversity for quality. Almost every StyleGAN demo uses `ψ ≈ 0.7`.
+**Truncation trick.** At inference, sample $z$, compute $w = \text{mapping}(z)$, then $w' = \hat{w} + \psi \cdot (w - \hat{w})$ where $\hat{w}$ is the mean $w$ over many samples. $\psi < 1$ trades diversity for quality. Almost every StyleGAN demo uses $\psi \approx 0.7$.
 
 ## StyleGAN 1 → 2 → 3
 
@@ -45,7 +45,7 @@ where `y_scale` and `y_bias` come from affine projections of `w`. Normalize per 
 | StyleGAN-XL | 2022 | Class-conditional, 1024², ImageNet. |
 | R3GAN | 2024 | Rebrands with stronger reg; closes gap to diffusion on FFHQ-1024 with 20x fewer params. |
 
-In 2026 StyleGAN3 remains the default for (a) narrow-domain photorealism at high FPS, (b) few-shot domain adaptation (train on a new dataset with 100 images, freeze mapping), (c) inversion-based editing (find the `w` that reconstructs a real photo, then edit that `w`). For open-domain text-to-image, it is not the tool — diffusion is.
+In 2026 StyleGAN3 remains the default for (a) narrow-domain photorealism at high FPS, (b) few-shot domain adaptation (train on a new dataset with 100 images, freeze mapping), (c) inversion-based editing (find the $w$ that reconstructs a real photo, then edit that $w$). For open-domain text-to-image, it is not the tool — diffusion is.
 
 ```figure
 gx-stylegan-mapping
@@ -53,7 +53,7 @@ gx-stylegan-mapping
 
 ## Build It
 
-`code/main.py` implements a toy "style-GAN lite" in 1-D: a mapping MLP, a synthesis function that takes a learned constant vector and modulates it with `w`-derived scale/bias, and per-layer noise. It shows that injecting `w` via affine-modulation matches or beats concatenating `z` into the generator's input.
+`code/main.py` implements a toy "style-GAN lite" in 1-D: a mapping MLP, a synthesis function that takes a learned constant vector and modulates it with $w$-derived scale/bias, and per-layer noise. It shows that injecting $w$ via affine-modulation matches or beats concatenating $z$ into the generator's input.
 
 ### Step 1: mapping network
 
@@ -75,7 +75,7 @@ def adain(x, w_scale, w_bias):
     return [w_scale * xi + w_bias for xi in x_norm]
 ```
 
-Per-feature-map scale and bias come from `w` via linear projection.
+Per-feature-map scale and bias come from $w$ via linear projection.
 
 ### Step 3: per-layer noise
 
@@ -91,7 +91,7 @@ Sigma per-channel is learnable.
 - **Droplet artifacts.** StyleGAN 1 produced a blobby droplet in the feature maps because AdaIN zeroed out mean. StyleGAN 2's weight demodulation fixes it by scaling the convolution weights instead.
 - **Texture sticking.** StyleGAN 1 and 2 textures followed pixel coordinates, not object coordinates (visible when interpolating). StyleGAN 3's alias-free convolutions fix this with windowed sinc filters.
 - **Mode coverage.** Truncation `ψ < 0.7` looks clean but samples from a narrow cone; use `ψ = 1.0` if you need diversity.
-- **Inversion is lossy.** Inverting a real photo into `W` is usually done through optimization or an encoder (e4e, ReStyle, HyperStyle). Results drift over many iterations.
+- **Inversion is lossy.** Inverting a real photo into $W$ is usually done through optimization or an encoder (e4e, ReStyle, HyperStyle). Results drift over many iterations.
 
 ## Use It
 
@@ -108,26 +108,26 @@ For product-grade demos where the answer is "photo of a person's face", StyleGAN
 
 ## Ship It
 
-Save `outputs/skill-stylegan-inversion.md`. Skill takes a real photo and outputs: inversion method (e4e / ReStyle / HyperStyle), expected latent loss, editing budget (how far in `W` you can move before artifacts), and a list of known-good editing directions (age, expression, pose).
+Save `outputs/skill-stylegan-inversion.md`. Skill takes a real photo and outputs: inversion method (e4e / ReStyle / HyperStyle), expected latent loss, editing budget (how far in $W$ you can move before artifacts), and a list of known-good editing directions (age, expression, pose).
 
 ## Exercises
 
 1. **Easy.** Run `code/main.py` with `adain_on=True` and `adain_on=False`. Compare the spread of outputs for a fixed latent vs perturbed latent.
-2. **Medium.** Implement mixing regularization: for a training batch, compute `w_a`, `w_b`, and apply `w_a` for the first half of synthesis and `w_b` for the second half. Does the decoder learn disentangled styles?
-3. **Hard.** Take a pretrained StyleGAN3 FFHQ model (ffhq-1024.pkl). Find the `w` direction that controls "smile" by training an SVM on labelled samples; report how far you can push before identity drifts.
+2. **Medium.** Implement mixing regularization: for a training batch, compute $w_a$, $w_b$, and apply $w_a$ for the first half of synthesis and $w_b$ for the second half. Does the decoder learn disentangled styles?
+3. **Hard.** Take a pretrained StyleGAN3 FFHQ model (ffhq-1024.pkl). Find the $w$ direction that controls "smile" by training an SVM on labelled samples; report how far you can push before identity drifts.
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| Mapping network | "The MLP" | `f: Z → W`, 8 layers, decouples latent geometry from data statistics. |
+| Mapping network | "The MLP" | $f: Z \to W$, 8 layers, decouples latent geometry from data statistics. |
 | W space | "The style space" | Output of the mapping network; roughly disentangled. |
-| AdaIN | "Adaptive instance norm" | Normalize feature map, then scale + shift by `w`-projection. |
-| Truncation trick | "Psi" | `w = mean + ψ·(w - mean)`, ψ<1 trades diversity for quality. |
-| Path-length regularization | "PL reg" | Penalizes large changes in image per unit change in `w`; makes `W` smoother. |
+| AdaIN | "Adaptive instance norm" | Normalize feature map, then scale + shift by $w$-projection. |
+| Truncation trick | "Psi" | $w = \text{mean} + \psi \cdot (w - \text{mean})$, $\psi<1$ trades diversity for quality. |
+| Path-length regularization | "PL reg" | Penalizes large changes in image per unit change in $w$; makes $W$ smoother. |
 | Weight demodulation | "The StyleGAN2 fix" | Normalize conv weights instead of activations; kills droplet artifacts. |
 | Alias-free | "StyleGAN3's trick" | Windowed sinc filters; eliminates texture sticking to the pixel grid. |
-| Inversion | "Find w for a real image" | Optimize or encode `x → w` so `G(w) ≈ x`. |
+| Inversion | "Find w for a real image" | Optimize or encode $x \to w$ so $G(w) \approx x$. |
 
 ## Production note: why StyleGAN still ships in 2026
 

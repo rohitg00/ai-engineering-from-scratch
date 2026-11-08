@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-"""Regression checks for the translation registry and workflow publisher."""
+"""Regression checks for the translation registry, leg selection, and workflow publisher."""
 
 from __future__ import annotations
 
+import ast
+import copy
 import json
 import os
 import re
 import shlex
 import stat
 import subprocess
+import sys
 import tempfile
 import textwrap
 import unittest
@@ -16,12 +19,16 @@ from pathlib import Path
 
 from build_readme_i18n import render
 from readme_translations import HERO2, TRANSLATIONS
+import translate_lessons
+import translate_matrix
+import translation_freshness
 
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "translate.yml"
 CURRICULUM_WORKFLOW = ROOT / ".github" / "workflows" / "curriculum.yml"
 LANGUAGES = ROOT / "languages.json"
+SELECTOR = ROOT / "scripts" / "translate_matrix.py"
 PREPARE_STEP = "      - id: set"
 PUBLISH_STEP = "      - name: Publish this phase slice to translations branch (race-safe)"
 LANGUAGE_CODE = re.compile(r"^[a-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$")
@@ -57,8 +64,45 @@ def step_script(marker: str) -> str:
     return textwrap.dedent("\n".join(body))
 
 
+def job_block(name: str) -> str:
+    text = WORKFLOW.read_text(encoding="utf-8")
+    start = text.index(f"\n  {name}:\n")
+    following = re.search(r"\n  [a-z][a-z-]*:\n", text[start + 1 :])
+    return text[start : start + 1 + following.start()] if following else text[start:]
+
+
 def publish_script() -> str:
     return step_script(PUBLISH_STEP)
+
+
+def select(cwd: Path, **values: str) -> tuple[subprocess.CompletedProcess[str], dict]:
+    env = os.environ.copy()
+    for name in ("EVENT", "REQUESTED", "REQUESTED_PHASE", "BEFORE", "AFTER", "FORCED"):
+        env[name] = values.get(name.lower(), "")
+    result = run(sys.executable, str(SELECTOR), cwd=cwd, env=env, capture=True, check=False)
+    outputs = {}
+    for line in result.stdout.splitlines():
+        key, value = line.split("=", 1)
+        outputs[key] = json.loads(value)
+    return result, outputs
+
+
+def legs(outputs: dict) -> list[tuple[str, str]]:
+    return [(leg["lang"], leg["phase"]) for leg in outputs["lessons"]]
+
+
+def lesson_langs(outputs: dict) -> list[str]:
+    return list(dict.fromkeys(leg["lang"] for leg in outputs["lessons"]))
+
+
+def local_imports(script: Path) -> set[str]:
+    names: set[str] = set()
+    for node in ast.walk(ast.parse(script.read_text(encoding="utf-8"))):
+        if isinstance(node, ast.Import):
+            names |= {alias.name.split(".")[0] for alias in node.names}
+        elif isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
+            names.add(node.module.split(".")[0])
+    return {f"scripts/{name}.py" for name in names if (ROOT / "scripts" / f"{name}.py").is_file()}
 
 
 def create_publisher_fixture(root: Path) -> tuple[Path, Path, Path]:
@@ -105,6 +149,20 @@ def publisher_env(remote: Path, runner_temp: Path) -> dict[str, str]:
     return env
 
 
+FIXTURE_PHASES = ("01-alpha", "02-beta", "03-gamma")
+FIXTURE_REGISTRY = {
+    "_comment": "fixture registry",
+    "languages": [
+        {"code": "en", "name": "English", "native": "English", "nllb": "eng_Latn", "source": True},
+        {"code": "fr", "name": "French", "native": "Français", "nllb": "fra_Latn", "ci": True},
+        {"code": "de", "name": "German", "native": "Deutsch", "nllb": "deu_Latn", "ci": True},
+        {"code": "zh-TW", "name": "Traditional Chinese", "native": "繁體中文", "nllb": "zho_Hant", "site": True},
+        {"code": "ja", "name": "Japanese", "native": "日本語", "nllb": "jpn_Jpan"},
+    ],
+}
+FIXTURE_UI = ["fr", "de", "zh-TW"]
+
+
 class TranslateWorkflowContractTest(unittest.TestCase):
     def test_readme_exact_line_translations_skip_fenced_code(self) -> None:
         heading = "| Your goal | Learn on GitHub | Learn on the website |"
@@ -146,6 +204,8 @@ class TranslateWorkflowContractTest(unittest.TestCase):
                     self.assertIsInstance(language["source"], bool)
                 if "ci" in language:
                     self.assertIsInstance(language["ci"], bool)
+                if "site" in language:
+                    self.assertIsInstance(language["site"], bool)
 
                 codes.append(language["code"])
                 if language.get("source") is True:
@@ -158,18 +218,66 @@ class TranslateWorkflowContractTest(unittest.TestCase):
             "the source language must not enter the translation matrix",
         )
 
+    def prepare(self, requested="", registry=None, event="workflow_dispatch", requested_phase=""):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "phases/01-math-foundations").mkdir(parents=True)
+            (root / "languages.json").write_text(
+                json.dumps(registry) if registry else LANGUAGES.read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            return select(root, event=event, requested=requested, requested_phase=requested_phase)
+
+    def test_default_matrices_separate_automatic_lessons_from_site_ui(self) -> None:
+        result, outputs = self.prepare()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        langs = lesson_langs(outputs)
+        self.assertIn("pt-BR", langs)
+        self.assertIn("fa", langs)
+        self.assertNotIn("zh-TW", langs)
+        self.assertEqual(set(outputs["ui_langs"]), set(langs) | {"zh-TW"})
+        self.assertNotIn("en", langs)
+        self.assertNotIn("en", outputs["ui_langs"])
+        self.assertEqual({phase for _, phase in legs(outputs)}, {"01-math-foundations"})
+        workflow = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("include: ${{ fromJSON(needs.prepare.outputs.lessons) }}", workflow)
+        self.assertIn("lang: ${{ fromJSON(needs.prepare.outputs.ui_langs) }}", workflow)
+
+    def test_manual_requests_allow_non_ci_languages_and_exclude_source_and_unknown(self) -> None:
+        result, outputs = self.prepare("en pt-BR zh-TW pt-BR unknown ../../outside")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(lesson_langs(outputs), ["pt-BR", "zh-TW"])
+        self.assertEqual(outputs["ui_langs"], ["pt-BR", "zh-TW"])
+
+    def test_source_and_unknown_only_requests_fail_before_building_a_matrix(self) -> None:
+        for requested in ("en", "unknown", "   "):
+            with self.subTest(requested=requested):
+                result, outputs = self.prepare(requested)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("no registered non-source languages", result.stderr)
+                self.assertEqual(outputs, {})
+
+    def test_empty_automatic_set_skips_instead_of_failing(self) -> None:
+        registry = {"languages": [{"code": "en", "source": True}, {"code": "fr"}]}
+        for event in ("push", "workflow_dispatch"):
+            with self.subTest(event=event):
+                result, outputs = self.prepare(registry=registry, event=event)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(outputs, {"lessons": [], "ui_langs": []})
+
+    def test_source_never_enters_default_matrices_even_if_flagged(self) -> None:
+        result, outputs = self.prepare(registry={"languages": [
+            {"code": "en", "source": True, "ci": True, "site": True},
+            {"code": "fa", "ci": True},
+        ]})
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(legs(outputs), [("fa", "01-math-foundations")])
+        self.assertEqual(outputs["ui_langs"], ["fa"])
+
     def test_default_translation_matrix_fits_github_limit(self) -> None:
-        registry = json.loads(LANGUAGES.read_text(encoding="utf-8"))
-        enabled = [
-            language["code"]
-            for language in registry["languages"]
-            if language.get("ci") is True
-        ]
-        phases = [
-            path.name
-            for path in (ROOT / "phases").iterdir()
-            if path.is_dir() and re.fullmatch(r"[0-9]{2}-[a-z0-9-]+", path.name)
-        ]
+        registry = json.loads(LANGUAGES.read_text(encoding="utf-8"))["languages"]
+        enabled, _ = translate_matrix.automatic(registry)
+        phases = translate_matrix.phase_dirs(ROOT)
         self.assertTrue(enabled)
         self.assertTrue(phases)
         self.assertLessEqual(
@@ -181,14 +289,15 @@ class TranslateWorkflowContractTest(unittest.TestCase):
     def test_registry_changes_trigger_curriculum_checks(self) -> None:
         workflow = CURRICULUM_WORKFLOW.read_text(encoding="utf-8")
         self.assertEqual(workflow.count('- "languages.json"'), 2)
+        self.assertEqual(workflow.count('- "scripts/translate_matrix.py"'), 2)
 
     def test_trigger_and_manual_scope_remain_phase_only(self) -> None:
         workflow = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn('- "phases/**/docs/en.md"', workflow)
         self.assertIn('- "languages.json"', workflow)
         self.assertIn('- ".github/workflows/translate.yml"', workflow)
+        self.assertIn('- "scripts/translate_matrix.py"', workflow)
         self.assertIn("REQUESTED_PHASE: ${{ github.event.inputs.phase }}", workflow)
-        self.assertIn("grep -Fqx -- \"$REQUESTED_PHASE\"", workflow)
         self.assertNotIn("certifications/", workflow)
 
     def test_manual_phase_rejects_traversal_that_resolves_to_a_directory(self) -> None:
@@ -199,28 +308,70 @@ class TranslateWorkflowContractTest(unittest.TestCase):
             (root / "languages.json").write_text(
                 '{"languages":[{"code":"fr","ci":true}]}\n', encoding="utf-8"
             )
-            output = root / "github-output"
-            env = os.environ.copy()
-            env.update(
-                {
-                    "REQUESTED": "fr",
-                    "REQUESTED_PHASE": "01-math-foundations/../02-ml-foundations",
-                    "GITHUB_OUTPUT": str(output),
-                }
+            for phase in ("01-math-foundations/../02-ml-foundations", "phases", "99-missing"):
+                with self.subTest(phase=phase):
+                    result, outputs = select(
+                        root, event="workflow_dispatch", requested="fr", requested_phase=phase
+                    )
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn("unknown phase", result.stderr)
+                    self.assertEqual(outputs, {})
+            result, outputs = select(
+                root, event="workflow_dispatch", requested="fr", requested_phase="02-ml-foundations"
             )
-            result = run(
-                "bash",
-                "-euo",
-                "pipefail",
-                "-c",
-                step_script(PREPARE_STEP),
-                cwd=root,
-                env=env,
-                capture=True,
-                check=False,
-            )
-            self.assertNotEqual(result.returncode, 0)
-            self.assertIn("unknown phase", result.stderr)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(legs(outputs), [("fr", "02-ml-foundations")])
+
+    def test_prepare_passes_the_event_only_through_env(self) -> None:
+        script = step_script(PREPARE_STEP)
+        self.assertNotIn("${{", script)
+        self.assertIn('python3 scripts/translate_matrix.py >> "$GITHUB_OUTPUT"', script)
+        prepare = job_block("prepare")
+        for line in (
+            "EVENT: ${{ github.event_name }}",
+            "BEFORE: ${{ github.event.before }}",
+            "AFTER: ${{ github.sha }}",
+            "FORCED: ${{ github.event.forced }}",
+            "persist-credentials: false",
+            "contents: read",
+        ):
+            self.assertIn(line, prepare)
+        self.assertNotIn("fetch-depth", prepare)
+        self.assertNotIn("contents: write", prepare)
+
+    def test_empty_matrices_skip_their_jobs(self) -> None:
+        self.assertIn("    if: ${{ needs.prepare.outputs.lessons != '[]' }}\n", job_block("translate"))
+        self.assertIn("    if: ${{ needs.prepare.outputs.ui_langs != '[]' }}\n", job_block("ui-strings"))
+        self.assertIn(
+            "    if: ${{ !cancelled() && needs.translate.result != 'skipped' }}\n",
+            job_block("coverage"),
+        )
+
+    def test_full_run_sources_cover_everything_the_legs_execute(self) -> None:
+        def closure(script: str) -> set[str]:
+            reached: set[str] = set()
+            pending = [script]
+            while pending:
+                path = pending.pop()
+                if path not in reached:
+                    reached.add(path)
+                    pending.extend(local_imports(ROOT / path))
+            return reached
+
+        logic = translate_matrix.LOGIC_SOURCES
+        ui = translate_matrix.UI_SOURCES
+        self.assertLessEqual(closure("scripts/translate_lessons.py"), logic)
+        self.assertLessEqual(closure("scripts/translate_ui_strings.py"), logic | ui)
+        self.assertEqual(re.findall(r"python3 (scripts/[\w-]+\.py)", job_block("translate")), ["scripts/translate_lessons.py"])
+        self.assertEqual(re.findall(r"python3 (scripts/[\w-]+\.py)", job_block("ui-strings")), ["scripts/translate_ui_strings.py"])
+        self.assertEqual(re.findall(r"python3 (scripts/[\w-]+\.py)", job_block("prepare")), ["scripts/translate_matrix.py"])
+        requirements = set(re.findall(r"pip install -r (\S+)", WORKFLOW.read_text(encoding="utf-8")))
+        self.assertTrue(requirements)
+        self.assertLessEqual(requirements, logic)
+        self.assertIn(".github/workflows/translate.yml", logic)
+        self.assertNotIn("scripts/translate_matrix.py", logic | ui)
+        for path in logic | ui:
+            self.assertTrue((ROOT / path).is_file(), path)
 
     def test_publisher_uses_retryable_detached_worktree(self) -> None:
         script = publish_script()
@@ -318,6 +469,411 @@ class TranslateWorkflowContractTest(unittest.TestCase):
                 check=False,
             )
             self.assertNotEqual(branch.returncode, 0)
+
+
+class PushSelectionTest(unittest.TestCase):
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.base_dir = Path(self.tmp.name)
+        self.root = self.base_dir / "repo"
+        self.root.mkdir()
+        run("git", "init", "--initial-branch=main", cwd=self.root)
+        run("git", "config", "user.name", "test", cwd=self.root)
+        run("git", "config", "user.email", "test@example.com", cwd=self.root)
+        self.write_registry(FIXTURE_REGISTRY)
+        for phase in FIXTURE_PHASES:
+            self.write(f"phases/{phase}/01-first/docs/en.md", f"# {phase} first\n")
+            self.write(f"phases/{phase}/01-first/code/main.py", "print('hello')\n")
+        for path in sorted(translate_matrix.LOGIC_SOURCES | translate_matrix.UI_SOURCES):
+            self.write(path, "original\n")
+        self.base = self.commit()
+
+    def write(self, path: str, text: str) -> None:
+        target = self.root / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(text, encoding="utf-8")
+
+    def write_registry(self, registry: dict) -> None:
+        self.write("languages.json", json.dumps(registry, ensure_ascii=False, indent=2) + "\n")
+
+    def registry_with(self, code: str, **fields) -> dict:
+        registry = copy.deepcopy(FIXTURE_REGISTRY)
+        for language in registry["languages"]:
+            if language["code"] == code:
+                language.update(fields)
+        return registry
+
+    def commit(self) -> str:
+        run("git", "add", "-A", cwd=self.root)
+        run("git", "commit", "--allow-empty", "-m", "change", cwd=self.root)
+        return run("git", "rev-parse", "HEAD", cwd=self.root, capture=True).stdout.strip()
+
+    def push(self, before: str | None = None, forced: str = "false", cwd: Path | None = None):
+        after = run("git", "rev-parse", "HEAD", cwd=self.root, capture=True).stdout.strip()
+        result, outputs = select(
+            cwd or self.root,
+            event="push",
+            before=self.base if before is None else before,
+            after=after,
+            forced=forced,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(sorted(outputs), ["lessons", "ui_langs"])
+        return outputs, result.stderr
+
+    def every_leg(self) -> list[tuple[str, str]]:
+        return [(lang, phase) for lang in ("fr", "de") for phase in FIXTURE_PHASES]
+
+    def test_one_lesson_runs_its_phase_for_each_automatic_language(self) -> None:
+        self.write("phases/02-beta/01-first/docs/en.md", "# changed\n")
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual(legs(outputs), [("fr", "02-beta"), ("de", "02-beta")])
+        self.assertEqual(outputs["ui_langs"], [])
+
+    def test_unrelated_files_and_selector_changes_select_nothing(self) -> None:
+        self.write("phases/02-beta/01-first/code/main.py", "print('changed')\n")
+        self.write("phases/02-beta/01-first/docs/notes.md", "notes\n")
+        self.write("scripts/translate_matrix.py", "changed\n")
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual(outputs, {"lessons": [], "ui_langs": []})
+
+    def test_registry_metadata_changes_select_nothing(self) -> None:
+        registry = self.registry_with("fr", dir="ltr", locale="fr_FR", native="Francais")
+        registry["_comment"] = "a longer explanation"
+        registry["languages"][3]["dir"] = "ltr"
+        self.write_registry(registry)
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual(outputs, {"lessons": [], "ui_langs": []})
+
+    def test_removing_a_language_from_ci_selects_nothing(self) -> None:
+        self.write_registry(self.registry_with("de", ci=False))
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual(outputs, {"lessons": [], "ui_langs": []})
+
+    def test_newly_automatic_language_runs_every_phase_and_its_interface(self) -> None:
+        self.write_registry(self.registry_with("ja", ci=True))
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual(legs(outputs), [("ja", phase) for phase in FIXTURE_PHASES])
+        self.assertEqual(outputs["ui_langs"], ["ja"])
+
+    def test_site_language_promoted_to_ci_runs_lessons_but_keeps_its_interface(self) -> None:
+        self.write_registry(self.registry_with("zh-TW", ci=True))
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual(legs(outputs), [("zh-TW", phase) for phase in FIXTURE_PHASES])
+        self.assertEqual(outputs["ui_langs"], [])
+
+    def test_newly_listed_site_language_runs_only_its_interface(self) -> None:
+        registry = copy.deepcopy(FIXTURE_REGISTRY)
+        registry["languages"].append(
+            {"code": "ko", "name": "Korean", "native": "한국어", "nllb": "kor_Hang", "site": True}
+        )
+        self.write_registry(registry)
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual(outputs, {"lessons": [], "ui_langs": ["ko"]})
+
+    def test_interface_sources_run_every_interface_language(self) -> None:
+        for path in sorted(translate_matrix.UI_SOURCES):
+            with self.subTest(path=path):
+                self.base = self.commit()
+                self.write(path, f"changed {path}\n")
+                self.commit()
+                outputs, _ = self.push()
+                self.assertEqual(outputs, {"lessons": [], "ui_langs": FIXTURE_UI})
+
+    def test_translation_code_changes_run_every_leg(self) -> None:
+        for path in sorted(translate_matrix.LOGIC_SOURCES):
+            with self.subTest(path=path):
+                self.base = self.commit()
+                self.write(path, f"changed {path}\n")
+                self.commit()
+                outputs, log = self.push()
+                self.assertEqual(legs(outputs), self.every_leg())
+                self.assertEqual(outputs["ui_langs"], FIXTURE_UI)
+                self.assertIn(path, log)
+
+    def test_lessons_and_new_language_merge_without_duplicates(self) -> None:
+        self.write("phases/03-gamma/01-first/docs/en.md", "# changed\n")
+        self.write_registry(self.registry_with("ja", ci=True))
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual(
+            legs(outputs),
+            [("fr", "03-gamma"), ("de", "03-gamma")] + [("ja", phase) for phase in FIXTURE_PHASES],
+        )
+        self.assertEqual(outputs["ui_langs"], ["ja"])
+
+    def test_moved_lesson_runs_both_phases_and_a_removed_phase_runs_none(self) -> None:
+        run("git", "mv", "phases/01-alpha/01-first", "phases/02-beta/02-moved", cwd=self.root)
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual(
+            legs(outputs),
+            [("fr", "01-alpha"), ("fr", "02-beta"), ("de", "01-alpha"), ("de", "02-beta")],
+        )
+        self.base = self.commit()
+        run("git", "rm", "-r", "-q", "phases/03-gamma", cwd=self.root)
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual(outputs, {"lessons": [], "ui_langs": []})
+
+    def test_multi_commit_push_diffs_the_whole_range(self) -> None:
+        self.write("phases/01-alpha/01-first/docs/en.md", "# first edit\n")
+        self.commit()
+        self.write("phases/03-gamma/01-first/docs/en.md", "# second edit\n")
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual({phase for _, phase in legs(outputs)}, {"01-alpha", "03-gamma"})
+
+    def test_unreadable_ranges_run_every_leg(self) -> None:
+        self.write("phases/02-beta/01-first/docs/en.md", "# changed\n")
+        self.commit()
+        marker = self.base_dir / "injected"
+        cases = {
+            "new branch": ("0" * 40, "false"),
+            "force-push": (self.base, "true"),
+            "unknown commit": ("1" * 40, "false"),
+            "empty": ("", "false"),
+            "option-shaped": (f"--upload-pack=touch {marker}", "false"),
+        }
+        for name, (before, forced) in cases.items():
+            with self.subTest(case=name):
+                outputs, log = self.push(before=before, forced=forced)
+                self.assertEqual(legs(outputs), self.every_leg())
+                self.assertEqual(outputs["ui_langs"], FIXTURE_UI)
+                self.assertIn("every leg runs", log)
+        self.assertFalse(marker.exists())
+
+    def test_unreadable_previous_registry_runs_every_leg(self) -> None:
+        self.write("languages.json", "{not json\n")
+        self.base = self.commit()
+        self.write_registry(FIXTURE_REGISTRY)
+        self.commit()
+        outputs, log = self.push()
+        self.assertEqual(legs(outputs), self.every_leg())
+        self.assertIn("cannot be read", log)
+
+    def test_shallow_checkout_fetches_the_previous_commit(self) -> None:
+        self.write("phases/02-beta/01-first/docs/en.md", "# changed\n")
+        self.commit()
+        origin = self.base_dir / "origin.git"
+        shallow = self.base_dir / "shallow"
+        run("git", "clone", "--bare", str(self.root), str(origin), cwd=self.base_dir)
+        run("git", "clone", "--depth=1", f"file://{origin}", str(shallow), cwd=self.base_dir)
+        missing = run("git", "cat-file", "-e", f"{self.base}^{{commit}}", cwd=shallow, check=False)
+        self.assertNotEqual(missing.returncode, 0)
+        outputs, _ = self.push(cwd=shallow)
+        self.assertEqual(legs(outputs), [("fr", "02-beta"), ("de", "02-beta")])
+        fetched = run("git", "cat-file", "-e", f"{self.base}^{{commit}}", cwd=shallow, check=False)
+        self.assertEqual(fetched.returncode, 0)
+
+    def publish(
+        self,
+        caches: dict[tuple[str, str], dict[str, str]],
+        lessons: tuple[str, ...] = (),
+        unpublished: tuple[str, ...] = (),
+    ) -> None:
+        origin = self.base_dir / "origin.git"
+        published = self.base_dir / "published"
+        run("git", "init", "--bare", "--initial-branch=main", str(origin), cwd=self.base_dir)
+        run("git", "init", "--initial-branch=translations", str(published), cwd=self.base_dir)
+        run("git", "config", "user.name", "test", cwd=published)
+        run("git", "config", "user.email", "test@example.com", cwd=published)
+        for (lang, phase), cache in caches.items():
+            target = published / f"i18n/{lang}/.cache/{phase}.json"
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(json.dumps(cache) + "\n", encoding="utf-8")
+            for key in cache:
+                output = f"i18n/{lang}/{key[: -len('/docs/en.md')]}/docs/{lang}.md"
+                if output not in unpublished:
+                    lessons += (output,)
+        for lesson in lessons:
+            target = published / lesson
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text("# reviewed\n", encoding="utf-8")
+        run("git", "add", "-A", cwd=published)
+        run("git", "commit", "-m", "published", cwd=published)
+        run("git", "push", str(origin), "translations", cwd=published)
+        run("git", "remote", "add", "origin", str(origin), cwd=self.root)
+
+    def current_caches(self) -> dict[tuple[str, str], dict[str, str]]:
+        return {
+            (lang, phase): translation_freshness.lesson_sources(self.root, phase)
+            for lang in ("fr", "de")
+            for phase in FIXTURE_PHASES
+        }
+
+    def test_cancelled_run_is_repaired_by_the_next_push(self) -> None:
+        self.publish(self.current_caches())
+        self.write("phases/02-beta/01-first/docs/en.md", "# cancelled run\n")
+        cancelled = self.commit()
+        self.write("phases/03-gamma/01-first/docs/en.md", "# next run\n")
+        self.commit()
+        outputs, log = self.push(before=cancelled)
+        self.assertEqual(
+            legs(outputs),
+            [("fr", "02-beta"), ("fr", "03-gamma"), ("de", "02-beta"), ("de", "03-gamma")],
+        )
+        self.assertIn("published translations behind English: de/02-beta, fr/02-beta", log)
+
+    def test_missing_and_orphaned_records_rerun_their_leg(self) -> None:
+        caches = self.current_caches()
+        del caches[("fr", "01-alpha")]
+        caches[("de", "03-gamma")]["phases/03-gamma/09-removed/docs/en.md"] = "0" * 64
+        self.publish(caches)
+        self.write("phases/02-beta/01-first/code/main.py", "print('changed')\n")
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual(legs(outputs), [("fr", "01-alpha"), ("de", "03-gamma")])
+
+    def test_recorded_lesson_without_its_file_reruns_its_leg(self) -> None:
+        self.publish(self.current_caches(), unpublished=("i18n/de/phases/02-beta/01-first/docs/de.md",))
+        self.write("phases/02-beta/01-first/code/main.py", "print('changed')\n")
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual(legs(outputs), [("de", "02-beta")])
+
+    def test_current_translations_add_no_legs(self) -> None:
+        self.publish(self.current_caches())
+        self.write("phases/02-beta/01-first/docs/en.md", "# changed\n")
+        self.commit()
+        outputs, log = self.push()
+        self.assertEqual(legs(outputs), [("fr", "02-beta"), ("de", "02-beta")])
+        self.assertIn("published translations behind English: none", log)
+
+    def test_contributor_maintained_drift_never_adds_machine_legs(self) -> None:
+        caches = self.current_caches()
+        caches[("zh-TW", "01-alpha")] = {"phases/01-alpha/01-first/docs/en.md": "0" * 64}
+        self.publish(caches)
+        self.write("phases/02-beta/01-first/code/main.py", "print('changed')\n")
+        self.commit()
+        outputs, _ = self.push()
+        self.assertEqual(outputs, {"lessons": [], "ui_langs": []})
+
+    def test_missing_translations_branch_keeps_the_diff_selection(self) -> None:
+        self.write("phases/02-beta/01-first/docs/en.md", "# changed\n")
+        self.commit()
+        outputs, log = self.push()
+        self.assertEqual(legs(outputs), [("fr", "02-beta"), ("de", "02-beta")])
+        self.assertIn("translations branch unavailable", log)
+
+    def test_freshness_report_names_contributor_lessons_to_sync(self) -> None:
+        caches = self.current_caches()
+        caches[("zh-TW", "02-beta")] = translation_freshness.lesson_sources(self.root, "02-beta")
+        self.publish(caches)
+        self.write("phases/02-beta/01-first/docs/en.md", "# upstream fix\n")
+        self.commit()
+        run("git", "fetch", "origin", "+refs/heads/translations:refs/remotes/origin/translations", cwd=self.root)
+        summary = self.base_dir / "summary.md"
+        result = run(
+            sys.executable, str(ROOT / "scripts" / "translation_freshness.py"), "--summary", str(summary),
+            cwd=self.root, capture=True,
+        )
+        self.assertIn("| zh-TW | contributor-maintained | 0 | 1 | 2 | 0 | 0 |", result.stdout)
+        self.assertIn("zh-TW: 1 translation(s) predate their English lesson; review and sync them by hand: 02-beta/01-first", result.stdout)
+        self.assertIn("| fr | automatic | 2 | 1 | 0 | 0 | 0 |", summary.read_text(encoding="utf-8"))
+
+    def test_freshness_report_names_contributor_files_without_a_hash(self) -> None:
+        self.publish(self.current_caches(), lessons=("i18n/zh-TW/phases/01-alpha/01-first/docs/zh-TW.md",))
+        run("git", "fetch", "origin", "+refs/heads/translations:refs/remotes/origin/translations", cwd=self.root)
+        result = run(sys.executable, str(ROOT / "scripts" / "translation_freshness.py"), cwd=self.root, capture=True)
+        self.assertIn("| zh-TW | contributor-maintained | 0 | 0 | 3 | 0 | 1 |", result.stdout)
+        self.assertIn("zh-TW: 1 published translation(s) have no source hash", result.stdout)
+        self.assertIn("01-alpha/01-first", result.stdout)
+
+    def test_freshness_hash_matches_the_translator_cache(self) -> None:
+        for text in ("# plain\n", "# windows\r\nline\r\n", "# unicode \u2014 \u4e2d\n"):
+            with self.subTest(text=text):
+                path = self.root / "phases/01-alpha/01-first/docs/en.md"
+                path.write_bytes(text.encode("utf-8"))
+                expected = translate_lessons.source_hash(path.read_text(encoding="utf-8"))
+                found = translation_freshness.lesson_sources(self.root, "01-alpha")
+                self.assertEqual(found["phases/01-alpha/01-first/docs/en.md"], expected)
+
+
+class TranslateLessonsTest(unittest.TestCase):
+    def setUp(self) -> None:
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        self.root = Path(tmp.name)
+        for name, value in {
+            "ROOT": self.root,
+            "PHASES": self.root / "phases",
+            "OUT_ROOT": self.root / "i18n",
+            "AUTOMATIC": {"fr"},
+        }.items():
+            original = getattr(translate_lessons, name)
+            setattr(translate_lessons, name, value)
+            self.addCleanup(setattr, translate_lessons, name, original)
+        for lesson in ("01-first", "02-second"):
+            self.write(f"phases/01-alpha/{lesson}/docs/en.md", f"# {lesson}\n")
+
+    def write(self, path: str, text: str) -> Path:
+        target = self.root / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(text, encoding="utf-8")
+        return target
+
+    def translate(self, lang: str, *extra: str) -> None:
+        argv = ["translate_lessons.py", "--lang", lang, "--provider", "echo", "--phase", "01-alpha", *extra]
+        original = sys.argv
+        sys.argv = argv
+        try:
+            with open(os.devnull, "w", encoding="utf-8") as sink:
+                stdout, stderr = sys.stdout, sys.stderr
+                sys.stdout = sys.stderr = sink
+                try:
+                    translate_lessons.main()
+                finally:
+                    sys.stdout, sys.stderr = stdout, stderr
+        finally:
+            sys.argv = original
+
+    def cache(self, lang: str) -> dict[str, str]:
+        return json.loads((self.root / f"i18n/{lang}/.cache/01-alpha.json").read_text(encoding="utf-8"))
+
+    def test_contributor_translations_survive_an_english_change(self) -> None:
+        reviewed = self.write("i18n/zh-TW/phases/01-alpha/01-first/docs/zh-TW.md", "# reviewed\n")
+        self.write("i18n/zh-TW/.cache/01-alpha.json", json.dumps({"phases/01-alpha/01-first/docs/en.md": "0" * 64}))
+        self.translate("zh-TW")
+        self.assertEqual(reviewed.read_text(encoding="utf-8"), "# reviewed\n")
+        self.assertEqual(self.cache("zh-TW")["phases/01-alpha/01-first/docs/en.md"], "0" * 64)
+        added = self.root / "i18n/zh-TW/phases/01-alpha/02-second/docs/zh-TW.md"
+        self.assertEqual(added.read_text(encoding="utf-8"), "# 02-second\n")
+        self.translate("zh-TW", "--replace-maintained")
+        self.assertEqual(reviewed.read_text(encoding="utf-8"), "# 01-first\n")
+
+    def test_replace_flag_also_replaces_current_contributor_files(self) -> None:
+        reviewed = self.write("i18n/zh-TW/phases/01-alpha/01-first/docs/zh-TW.md", "# reviewed\n")
+        digest = translate_lessons.source_hash("# 01-first\n")
+        self.write("i18n/zh-TW/.cache/01-alpha.json", json.dumps({"phases/01-alpha/01-first/docs/en.md": digest}))
+        self.translate("zh-TW")
+        self.assertEqual(reviewed.read_text(encoding="utf-8"), "# reviewed\n")
+        self.translate("zh-TW", "--replace-maintained")
+        self.assertEqual(reviewed.read_text(encoding="utf-8"), "# 01-first\n")
+
+    def test_removed_lesson_leaves_the_automatic_slice(self) -> None:
+        self.translate("fr")
+        removed = self.root / "i18n/fr/phases/01-alpha/02-second/docs/fr.md"
+        self.assertTrue(removed.is_file())
+        (self.root / "phases/01-alpha/02-second/docs/en.md").unlink()
+        self.translate("fr")
+        self.assertFalse(removed.exists())
+        self.assertEqual(list(self.cache("fr")), ["phases/01-alpha/01-first/docs/en.md"])
+
+    def test_removed_lesson_keeps_contributor_files(self) -> None:
+        kept = self.write("i18n/zh-TW/phases/01-alpha/09-gone/docs/zh-TW.md", "# reviewed\n")
+        self.write("i18n/zh-TW/.cache/01-alpha.json", json.dumps({"phases/01-alpha/09-gone/docs/en.md": "0" * 64}))
+        self.translate("zh-TW")
+        self.assertTrue(kept.is_file())
+        self.assertIn("phases/01-alpha/09-gone/docs/en.md", self.cache("zh-TW"))
 
 
 if __name__ == "__main__":

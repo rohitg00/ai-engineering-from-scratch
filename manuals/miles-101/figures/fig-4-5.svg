@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 350" role="img" aria-labelledby="fig-4-5-title fig-4-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-5-title">Deterministic inference repeats, and the gap stays</title>
+  <desc id="fig-4-5-desc">Logprob gap per step for four 12-step runs with seed 1. All four stay between 0.0145 and 0.0160. The two Triton runs start at the same value, 0.015404, and then drift apart.</desc>
+  <line x1="70" y1="260.89" x2="620" y2="260.89" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="264.89" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.0145</text>
+  <line x1="70" y1="205.33" x2="620" y2="205.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="209.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.0150</text>
+  <line x1="70" y1="149.78" x2="620" y2="149.78" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="153.78" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.0155</text>
+  <line x1="70" y1="94.22" x2="620" y2="94.22" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="98.22" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.0160</text>
+  <line x1="70" y1="272" x2="620" y2="272" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="72" x2="70" y2="272" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="272" x2="70" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="289" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="220" y1="272" x2="220" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="220" y="289" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="370" y1="272" x2="370" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="370" y="289" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="520" y1="272" x2="520" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="520" y="289" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">9</text>
+  <line x1="620" y1="272" x2="620" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="620" y="289" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">11</text>
+  <text x="345" y="306" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">step</text>
+  <text x="70" y="60" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">logprob gap</text>
+  <path d="M70.0 175.2 L120.0 136.0 L170.0 179.1 L220.0 209.7 L270.0 204.8 L320.0 101.0 L370.0 177.7 L420.0 145.1 L470.0 142.6 L520.0 173.3 L570.0 181.7 L620.0 204.2" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="70" cy="175.22" r="2.4" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="120" cy="136" r="2.4" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="170" cy="179.11" r="2.4" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="220" cy="209.67" r="2.4" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="270" cy="204.78" r="2.4" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="320" cy="101" r="2.4" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="370" cy="177.67" r="2.4" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="420" cy="145.11" r="2.4" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="470" cy="142.56" r="2.4" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="520" cy="173.33" r="2.4" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="570" cy="181.67" r="2.4" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="620" cy="204.22" r="2.4" fill="var(--m-grey-ink, #5e5e59)"/>
+  <path d="M70.0 160.4 L120.0 162.3 L170.0 154.9 L220.0 243.9 L270.0 213.4 L320.0 116.9 L370.0 218.0 L420.0 135.7 L470.0 147.3 L520.0 210.0 L570.0 208.0 L620.0 232.4" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="160.44" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="120" cy="162.33" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="170" cy="154.89" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="220" cy="243.89" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="270" cy="213.44" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="320" cy="116.89" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="370" cy="218" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="420" cy="135.67" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="470" cy="147.33" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="520" cy="210" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="570" cy="208" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="620" cy="232.44" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <path d="M70.0 160.4 L120.0 184.3 L170.0 151.0 L220.0 225.4 L270.0 214.8 L320.0 143.3 L370.0 193.6 L420.0 116.1 L470.0 193.6 L520.0 202.0 L570.0 169.2 L620.0 226.0" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.8" stroke-dasharray="1.5 3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="70" cy="160.44" r="2.4" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="120" cy="184.33" r="2.4" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="170" cy="151" r="2.4" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="220" cy="225.44" r="2.4" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="270" cy="214.78" r="2.4" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="320" cy="143.33" r="2.4" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="370" cy="193.56" r="2.4" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="420" cy="116.11" r="2.4" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="470" cy="193.56" r="2.4" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="520" cy="202" r="2.4" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="570" cy="169.22" r="2.4" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="620" cy="226" r="2.4" fill="var(--m-plum-ink, #8a3d72)"/>
+  <path d="M70.0 169.8 L120.0 192.2 L170.0 169.6 L220.0 253.9 L270.0 204.4 L320.0 128.3 L370.0 198.6 L420.0 158.8 L470.0 170.1 L520.0 173.0 L570.0 203.7 L620.0 228.1" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="70" cy="169.78" r="2.4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="120" cy="192.22" r="2.4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="170" cy="169.56" r="2.4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="220" cy="253.89" r="2.4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="270" cy="204.44" r="2.4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="320" cy="128.33" r="2.4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="370" cy="198.56" r="2.4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="420" cy="158.78" r="2.4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="470" cy="170.11" r="2.4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="520" cy="173" r="2.4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="570" cy="203.67" r="2.4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="620" cy="228.11" r="2.4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="80" y="80.89" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">step 0: both Triton runs gave 0.015404</text>
+  <path d="M70 16 H88" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="94" y="20" font-size="11" fill="var(--m-grey-ink, #5e5e59)">default</text>
+  <path d="M158.2 16 H176.2" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="182.2" y="20" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">deterministic, Triton</text>
+  <path d="M70 36 H88" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2" stroke-dasharray="1.5 3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="94" y="40" font-size="11" fill="var(--m-plum-ink, #8a3d72)">same, second run</text>
+  <path d="M217.6 36 H235.6" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="241.6" y="40" font-size="11" fill="var(--m-indigo-ink, #4b4f9e)">deterministic, FlashInfer</text>
+  <text x="70" y="332" font-size="12" class="m-serif">The engine repeats itself. It still does not compute like the trainer.</text>
+</svg>

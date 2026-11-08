@@ -1,0 +1,6 @@
+$ grep -c "503 Service Unavailable" true-on-policy-fa3.log
+200533
+$ grep "503 Service Unavailable" true-on-policy-fa3.log | head -1 | cut -c1-140
+(RolloutExecutor pid=2543) [2026-10-17 21:03:30.637 rollout_executor] http_utils.py:241 - Error: Server error '503 Service Unavailable' for 
+$ grep "503 Service Unavailable" true-on-policy-fa3.log | tail -1 | cut -c1-140
+(RolloutExecutor pid=2543) [2026-10-17 22:06:46.137 rollout_executor] http_utils.py:241 - Error: Server error '503 Service Unavailable' for 

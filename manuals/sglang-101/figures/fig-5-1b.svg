@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 268" role="img" aria-labelledby="fig-5-1b-title fig-5-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-1b-title">What each line of the benchmark report is computed from</title>
+  <desc id="fig-5-1b-desc">Five lines of the benchmark report, each with the formula calculate_metrics uses and the value from the run at a cap of 8: Concurrency 7.96, Peak concurrent requests 16, median TTFT 785.79 ms, median TPOT 22.52 ms, median ITL 20.35 ms.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">REPORT LINE</text>
+  <text x="232" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">COMPUTED AS</text>
+  <text x="515" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AT CAP 8</text>
+  <rect x="20" y="32" width="200" height="34" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="120" y="52.6" font-size="12" text-anchor="middle" font-weight="700">Concurrency</text>
+  <text x="232" y="54" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sum of E2E latencies / duration</text>
+  <text x="515" y="54" font-size="11.5">7.96</text>
+  <rect x="20" y="78" width="200" height="34" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="120" y="98.6" font-size="12" text-anchor="middle" font-weight="700">Peak concurrent requests</text>
+  <text x="232" y="100" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">most requests active in one second</text>
+  <text x="515" y="100" font-size="11.5">16</text>
+  <rect x="20" y="124" width="200" height="34" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="120" y="144.6" font-size="12" text-anchor="middle" font-weight="700">TTFT</text>
+  <text x="232" y="146" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">send to first streamed chunk</text>
+  <text x="515" y="146" font-size="11.5">785.79 ms</text>
+  <rect x="20" y="170" width="200" height="34" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="120" y="190.6" font-size="12" text-anchor="middle" font-weight="700">TPOT</text>
+  <text x="232" y="192" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">(latency - TTFT) / (tokens - 1)</text>
+  <text x="515" y="192" font-size="11.5">22.52 ms</text>
+  <rect x="20" y="216" width="200" height="34" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="120" y="236.6" font-size="12" text-anchor="middle" font-weight="700">ITL</text>
+  <text x="232" y="238" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">every gap between two chunks, pooled</text>
+  <text x="515" y="238" font-size="11.5">20.35 ms</text>
+  <text x="20" y="262" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Median values for TTFT, TPOT, and ITL.</text>
+</svg>

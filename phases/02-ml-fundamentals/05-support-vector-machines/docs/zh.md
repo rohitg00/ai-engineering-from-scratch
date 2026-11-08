@@ -32,8 +32,8 @@ SVM 直接接回階段 1：最佳化問題是凸的（第 18 課），間隔是�
 
 點 x_i 到超平面的距離是：
 
-```
-distance = |w^T x_i + b| / ||w||
+```math
+\text{distance} = \frac{\lvert w^T x_i + b \rvert}{\lVert w \rVert}
 ```
 
 對一個被正確分類的點：y_i * (w^T x_i + b) > 0。間隔則是超平面到任一側最近點的距離的兩倍。
@@ -51,16 +51,20 @@ graph LR
 
 最佳化問題：
 
-```
-maximize    2 / ||w||     (the margin width)
-subject to  y_i * (w^T x_i + b) >= 1  for all i
+```math
+\begin{aligned}
+\text{maximize} \quad & \frac{2}{\lVert w \rVert} \quad \text{(the margin width)} \\
+\text{subject to} \quad & y_i (w^T x_i + b) \ge 1 \quad \text{for all } i
+\end{aligned}
 ```
 
 等價的寫法（最小化 ||w||^2 比較好最佳化）：
 
-```
-minimize    (1/2) ||w||^2
-subject to  y_i * (w^T x_i + b) >= 1  for all i
+```math
+\begin{aligned}
+\text{minimize} \quad & \frac{1}{2} \lVert w \rVert^2 \\
+\text{subject to} \quad & y_i (w^T x_i + b) \ge 1 \quad \text{for all } i
+\end{aligned}
 ```
 
 這是一個凸的二次規劃問題，有唯一的全域解。剛好落在間隔邊界上的那些資料點（也就是 y_i * (w^T x_i + b) = 1 的點）就是支持向量。只有它們決定了決策邊界。你把任何一個非支持向量的點移動或刪掉，邊界都不會變。
@@ -85,10 +89,12 @@ graph TD
 
 真實資料很少能被完美分開。有些點可能落在邊界的錯誤一側，或是落在間隔之內。軟間隔的寫法引入鬆弛變數，允許這些違規。
 
-```
-minimize    (1/2) ||w||^2 + C * sum(xi_i)
-subject to  y_i * (w^T x_i + b) >= 1 - xi_i
-            xi_i >= 0  for all i
+```math
+\begin{aligned}
+\text{minimize} \quad & \frac{1}{2} \lVert w \rVert^2 + C \sum_i \xi_i \\
+\text{subject to} \quad & y_i (w^T x_i + b) \ge 1 - \xi_i \\
+& \xi_i \ge 0 \quad \text{for all } i
+\end{aligned}
 ```
 
 鬆弛變數 xi_i 度量第 i 個點違反間隔的程度。C 控制這個取捨：
@@ -104,8 +110,8 @@ C 就是正則化強度的倒數。C 大 = 正則化較弱；C 小 = 正則化�
 
 軟間隔 SVM 可以改寫成一個沒有約束的最佳化問題：
 
-```
-minimize    (1/2) ||w||^2 + C * sum(max(0, 1 - y_i * (w^T x_i + b)))
+```math
+\text{minimize} \quad \frac{1}{2} \lVert w \rVert^2 + C \sum_i \max(0, 1 - y_i (w^T x_i + b))
 ```
 
 其中 max(0, 1 - y_i * f(x_i)) 這一項就是合頁損失。當點被正確分類且落在間隔之外時，它是零；當點落在間隔之內或被誤分類時，它是線性的。
@@ -130,9 +136,11 @@ Linear penalty when y*f(x) < 1.
 
 跟邏輯損失（邏輯迴歸用的那個）比較：
 
-```
-Hinge:     max(0, 1 - y*f(x))          Hard cutoff at margin
-Logistic:  log(1 + exp(-y*f(x)))        Smooth, never exactly zero
+```math
+\begin{aligned}
+\text{Hinge:} \quad & \max(0, 1 - y f(x)) && \text{Hard cutoff at margin} \\
+\text{Logistic:} \quad & \log(1 + \exp(-y f(x))) && \text{Smooth, never exactly zero}
+\end{aligned}
 ```
 
 合頁損失會產生稀疏解（只有支持向量的貢獻不為零）。邏輯損失則用到了所有資料點。這讓 SVM 在預測階段更省記憶體。
@@ -141,16 +149,16 @@ Logistic:  log(1 + exp(-y*f(x)))        Smooth, never exactly zero
 
 你可以直接對合頁損失加上 L2 正則化做梯度下降來訓練線性 SVM，不必去解那個有約束的 QP：
 
-```
-L(w, b) = (lambda/2) * ||w||^2 + (1/n) * sum(max(0, 1 - y_i * (w^T x_i + b)))
-
-Gradient with respect to w:
-  If y_i * (w^T x_i + b) >= 1:  dL/dw = lambda * w
-  If y_i * (w^T x_i + b) < 1:   dL/dw = lambda * w - y_i * x_i
-
-Gradient with respect to b:
-  If y_i * (w^T x_i + b) >= 1:  dL/db = 0
-  If y_i * (w^T x_i + b) < 1:   dL/db = -y_i
+```math
+\begin{aligned}
+& L(w, b) = \frac{\lambda}{2} \lVert w \rVert^2 + \frac{1}{n} \sum_i \max(0, 1 - y_i (w^T x_i + b)) \\[6pt]
+& \text{Gradient with respect to } w\text{:} \\
+& \quad \text{If } y_i (w^T x_i + b) \ge 1\text{:} \quad \frac{\partial L}{\partial w} = \lambda w \\
+& \quad \text{If } y_i (w^T x_i + b) < 1\text{:} \quad \frac{\partial L}{\partial w} = \lambda w - y_i x_i \\[6pt]
+& \text{Gradient with respect to } b\text{:} \\
+& \quad \text{If } y_i (w^T x_i + b) \ge 1\text{:} \quad \frac{\partial L}{\partial b} = 0 \\
+& \quad \text{If } y_i (w^T x_i + b) < 1\text{:} \quad \frac{\partial L}{\partial b} = -y_i
+\end{aligned}
 ```
 
 這叫做原始問題（primal）的寫法。它每一個 epoch 的複雜度是 O(n * d)，其中 n 是樣本數、d 是特徵數。對於大型、稀疏、高維度的資料（例如文字分類），這非常快。
@@ -159,18 +167,22 @@ Gradient with respect to b:
 
 SVM 問題的拉格朗日對偶（來自階段 1 第 18 課的 KKT 條件）是：
 
-```
-maximize    sum(alpha_i) - (1/2) * sum_ij(alpha_i * alpha_j * y_i * y_j * (x_i . x_j))
-subject to  0 <= alpha_i <= C
-            sum(alpha_i * y_i) = 0
+```math
+\begin{aligned}
+\text{maximize} \quad & \sum_i \alpha_i - \frac{1}{2} \sum_{i,j} \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) \\
+\text{subject to} \quad & 0 \le \alpha_i \le C \\
+& \sum_i \alpha_i y_i = 0
+\end{aligned}
 ```
 
 對偶問題裡只出現資料點之間的內積 x_i . x_j。這就是關鍵洞見。把每一個內積換成核函式 K(x_i, x_j)，SVM 就能學出非線性的邊界，而且從頭到尾都不需要明確算出那個轉換。
 
-```
-Linear kernel:      K(x, z) = x . z
-Polynomial kernel:  K(x, z) = (x . z + c)^d
-RBF (Gaussian):     K(x, z) = exp(-gamma * ||x - z||^2)
+```math
+\begin{aligned}
+\text{Linear kernel:} \quad & K(x, z) = x \cdot z \\
+\text{Polynomial kernel:} \quad & K(x, z) = (x \cdot z + c)^d \\
+\text{RBF (Gaussian):} \quad & K(x, z) = \exp(-\gamma \lVert x - z \rVert^2)
+\end{aligned}
 ```
 
 RBF 核把資料映射到一個無限維的空間。在輸入空間中靠得很近的點，核值接近 1；離得很遠的點，核值接近 0。它可以學出任何平滑的決策邊界。
@@ -192,11 +204,13 @@ graph LR
 
 支持向量迴歸在資料周圍配一根寬度為 epsilon 的管子。落在管子裡的點損失為零，落在管子外的點則受到線性的懲罰。
 
-```
-minimize    (1/2) ||w||^2 + C * sum(xi_i + xi_i*)
-subject to  y_i - (w^T x_i + b) <= epsilon + xi_i
-            (w^T x_i + b) - y_i <= epsilon + xi_i*
-            xi_i, xi_i* >= 0
+```math
+\begin{aligned}
+\text{minimize} \quad & \frac{1}{2} \lVert w \rVert^2 + C \sum_i (\xi_i + \xi_i^*) \\
+\text{subject to} \quad & y_i - (w^T x_i + b) \le \epsilon + \xi_i \\
+& (w^T x_i + b) - y_i \le \epsilon + \xi_i^* \\
+& \xi_i, \xi_i^* \ge 0
+\end{aligned}
 ```
 
 epsilon 參數控制管子的寬度。管子越寬 = 支持向量越少 = 配適越平滑；管子越窄 = 支持向量越多 = 配適越貼合資料。

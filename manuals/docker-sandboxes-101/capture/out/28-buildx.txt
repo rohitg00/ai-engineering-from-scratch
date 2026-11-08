@@ -1,0 +1,38 @@
+$ docker buildx build --progress=plain -f fixtures/kits/hello-kit/kit.yaml --builder m101-builder -t m101-registry:5000/m101/hello-kit:v1 --push fixtures/kits/hello-kit
+#0 building with "m101-builder" instance using docker-container driver
+#1 [internal] booting buildkit
+#1 pulling image moby/buildkit:buildx-stable-1 done
+#1 creating container buildx_buildkit_m101-builder0 done
+#1 DONE <dur>
+#2 [internal] load build definition from kit.yaml
+#2 DONE <dur>
+#3 resolve image config for docker-image://docker.io/docker/sandbox-kit:3
+#3 DONE <dur>
+#4 docker-image://docker.io/docker/sandbox-kit:3@sha256:<digest>
+#4 DONE <dur>
+#5 [internal] load kit descriptor kit.yaml · sandbox-kit 3.0.0-m.8 (129be2ff)
+#5 DONE <dur>
+#6 [kit] inline build block
+#6 DONE <dur>
+#7 [internal] load metadata for docker.io/docker/sandbox-templates:shell
+#7 DONE <dur>
+#8 [internal] load .dockerignore
+#8 DONE <dur>
+#9 [internal] load build context
+#9 DONE <dur>
+#10 [1/2] FROM docker.io/docker/sandbox-templates:shell
+#10 DONE <dur>
+#11 [2/2] COPY HELLO.md /home/agent/HELLO.md
+#11 DONE <dur>
+#12 [kit] stage sources /usr/share/sandbox/kit/kit
+#12 DONE <dur>
+#13 exporting to image
+#13 exporting layers done
+#13 exporting manifest sha256:<digest> done
+#13 exporting config sha256:<digest> done
+#13 exporting attestation manifest sha256:<digest> done
+#13 exporting manifest list sha256:<digest> done
+#13 pushing manifest for m101-registry:5000/m101/hello-kit:v1@sha256:<digest> done
+#13 DONE <dur>
+View build details: <url>
+[exit 0]

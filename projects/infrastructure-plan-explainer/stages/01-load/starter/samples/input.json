@@ -1,0 +1,65 @@
+{
+  "format_version": "1.0",
+  "terraform_version": "1.6.0",
+  "resource_changes": [
+    {
+      "address": "service.database",
+      "change": {
+        "actions": [
+          "delete",
+          "create"
+        ],
+        "before": {
+          "size": "small",
+          "password": "authored-secret"
+        },
+        "after": {
+          "size": "medium",
+          "password": "authored-secret"
+        },
+        "before_sensitive": {
+          "password": true
+        },
+        "after_sensitive": {
+          "password": true
+        },
+        "after_unknown": {
+          "endpoint": true
+        }
+      }
+    },
+    {
+      "address": "service.application",
+      "change": {
+        "actions": [
+          "update"
+        ],
+        "before": {
+          "replicas": 1
+        },
+        "after": {
+          "replicas": 2
+        },
+        "after_unknown": {
+          "database_endpoint": true
+        }
+      }
+    }
+  ],
+  "configuration": {
+    "root_module": {
+      "resources": [
+        {
+          "address": "service.application",
+          "expressions": {
+            "database_endpoint": {
+              "references": [
+                "service.database.endpoint"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

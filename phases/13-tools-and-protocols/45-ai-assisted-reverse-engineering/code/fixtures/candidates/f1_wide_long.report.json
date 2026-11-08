@@ -1,0 +1,28 @@
+{
+  "candidate": "f1_wide_long",
+  "label": "hand-written test candidate for lesson 45, not the output of any model",
+  "kind": "plausible but wrong",
+  "tool": "hand-written",
+  "target": {
+    "object": "ledger-x86_64-O1-renamed.o",
+    "sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+    "function": "f1"
+  },
+  "source": "f1_wide_long.c",
+  "claims": {
+    "name": "percent_change",
+    "return_type": "int",
+    "parameters": [
+      {"name": "old_value", "type": "int"},
+      {"name": "new_value", "type": "int"}
+    ],
+    "summary": "Computes the percentage change from old_value to new_value. The intermediate product is widened to 64 bits so that the multiplication cannot overflow, then the quotient is truncated to int."
+  },
+  "citations": {
+    "addresses": ["0x0", "0x6", "0xa"],
+    "callees": [],
+    "strings": [],
+    "immediates": [100]
+  },
+  "cost": {"tokens": null, "seconds": null}
+}

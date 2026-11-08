@@ -1,0 +1,12 @@
+title: the first start, with the default maximum model length
+source: manuals/vllm-101/capture/gpu/out-l4/livecheck-2026-10-22.txt
+lines: 105-110
+lang: text
+note: Read the three sizes in the error: the length, the cache it needs and the cache that is free.
+---
+== c18 Qwen3-8B BF16, no max-model-len
+rc=1
+(EngineCore pid=2870799) ERROR 10-22 21:45:27 [core.py:1433]     raise ValueError(
+(EngineCore pid=2870799) ERROR 10-22 21:45:27 [core.py:1433] ValueError: To serve at least one request with the model's max seq len (40960), (5.62 GiB KV cache is needed, which is larger than the available KV cache memory (1.01 GiB). Based on the available memory, the estimated maximum model length is 7360. Try increasing `gpu_m
+    raise ValueError(
+ValueError: To serve at least one request with the model's max seq len (40960), (5.62 GiB KV cache is needed, which is larger than the available KV cache memory (1.01 GiB). Based on the available memory, the estimated maximum model length is 7360. Try increasing `gpu_memory_utilization` (which also controls CPU memory on the CPU

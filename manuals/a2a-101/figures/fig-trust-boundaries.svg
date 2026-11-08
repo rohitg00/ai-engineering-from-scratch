@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 444" role="img" aria-labelledby="fig-trust-boundaries-title fig-trust-boundaries-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-trust-boundaries-title">Trust boundaries in the kit</title>
+  <desc id="fig-trust-boundaries-desc">Six rows, one per place where data crosses between parties in the kit, shown in the order the planner meets them. Agent card: a spoofed card sends messages elsewhere, so the planner verifies signatures over HTTPS. Parts in replies such as review.json: text written as orders, so the planner validates data parts and decides on typed fields. File and URL parts: bad files, or an agent that fetches any URL it is given, so the agent checks type, size, and URLs. Webhook URL: SSRF, so the agent rejects private hosts. Incoming notifications: forgery, so the planner checks Authorization and the task id. Stored records: secrets kept in clear, so agents redact, scope reads, and set retention.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHERE DATA CROSSES</text>
+  <text x="232" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THREAT</text>
+  <text x="432" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CHECK</text>
+  <rect x="232" y="422" width="14" height="12" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="252" y="432" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the planner checks</text>
+  <rect x="432" y="422" width="14" height="12" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="452" y="432" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the remote agent checks</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="28" width="200" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="120" y="48.1" font-size="12" text-anchor="middle" font-weight="700">agent card</text>
+  <text x="120" y="65.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/.well-known/agent-card.json</text>
+  <rect x="232" y="28" width="188" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="326" y="48.1" font-size="12" text-anchor="middle" font-weight="700">spoofed card</text>
+  <text x="326" y="65.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">messages go to its endpoint</text>
+  <rect x="432" y="28" width="188" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="526" y="48.1" font-size="12" text-anchor="middle" font-weight="700">verify signatures</text>
+  <text x="526" y="65.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kid deployer-key-1, HTTPS</text>
+  <line x1="220" y1="53" x2="232" y2="53" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="420" y1="53" x2="432" y2="53" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="94" width="200" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="120" y="114.1" font-size="12" text-anchor="middle" font-weight="700">parts in replies</text>
+  <text x="120" y="131.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">review.json, test-log.txt</text>
+  <rect x="232" y="94" width="188" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="326" y="114.1" font-size="12" text-anchor="middle" font-weight="700">injected orders</text>
+  <text x="326" y="131.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">text that reads as orders</text>
+  <rect x="432" y="94" width="188" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="526" y="114.1" font-size="12" text-anchor="middle" font-weight="700">validate data parts</text>
+  <text x="526" y="131.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">decide on typed fields</text>
+  <line x1="220" y1="119" x2="232" y2="119" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="420" y1="119" x2="432" y2="119" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="160" width="200" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="120" y="180.1" font-size="12" text-anchor="middle" font-weight="700">file and URL parts</text>
+  <text x="120" y="197.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refunds.diff, screenshot.png</text>
+  <rect x="232" y="160" width="188" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="326" y="180.1" font-size="12" text-anchor="middle" font-weight="700">bad files, SSRF</text>
+  <text x="326" y="197.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the agent fetches any URL</text>
+  <rect x="432" y="160" width="188" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="526" y="180.1" font-size="12" text-anchor="middle" font-weight="700">check type and size</text>
+  <text x="526" y="197.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">validate URLs first</text>
+  <line x1="220" y1="185" x2="232" y2="185" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="420" y1="185" x2="432" y2="185" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="226" width="200" height="50" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="120" y="246.1" font-size="12" text-anchor="middle" font-weight="700">webhook URL</text>
+  <text x="120" y="263.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">localhost:41250/a2a-events</text>
+  <rect x="232" y="226" width="188" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="326" y="246.1" font-size="12" text-anchor="middle" font-weight="700">SSRF</text>
+  <text x="326" y="263.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">posts to internal hosts</text>
+  <rect x="432" y="226" width="188" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="526" y="246.1" font-size="12" text-anchor="middle" font-weight="700">reject private hosts</text>
+  <text x="526" y="263.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">or keep an allowlist</text>
+  <line x1="220" y1="251" x2="232" y2="251" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="420" y1="251" x2="432" y2="251" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="292" width="200" height="50" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="120" y="312.1" font-size="12" text-anchor="middle" font-weight="700">POST /a2a-events</text>
+  <text x="120" y="329.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a notification arrives</text>
+  <rect x="232" y="292" width="188" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="326" y="312.1" font-size="12" text-anchor="middle" font-weight="700">forged notification</text>
+  <text x="326" y="329.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">acts on a fake event</text>
+  <rect x="432" y="292" width="188" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="526" y="312.1" font-size="12" text-anchor="middle" font-weight="700">check Authorization</text>
+  <text x="526" y="329.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">and that taskId is yours</text>
+  <line x1="220" y1="317" x2="232" y2="317" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="420" y1="317" x2="432" y2="317" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="358" width="200" height="50" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="120" y="378.1" font-size="12" text-anchor="middle" font-weight="700">stored records</text>
+  <text x="120" y="395.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">history, configs, logs</text>
+  <rect x="232" y="358" width="188" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="326" y="378.1" font-size="12" text-anchor="middle" font-weight="700">secrets kept in clear</text>
+  <text x="326" y="395.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">hook_secret_91d2 echoed</text>
+  <rect x="432" y="358" width="188" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="526" y="378.1" font-size="12" text-anchor="middle" font-weight="700">redact, scope reads</text>
+  <text x="526" y="395.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">set a retention policy</text>
+  <line x1="220" y1="383" x2="232" y2="383" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="420" y1="383" x2="432" y2="383" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  </g>
+</svg>

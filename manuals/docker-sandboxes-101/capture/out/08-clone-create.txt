@@ -1,0 +1,27 @@
+$ sbx create --clone shell $CAPTURE/fixtures/repo-clone --name m101-clone
+✓ Git repository detected: $CAPTURE/fixtures/repo-clone
+
+sandbox    m101-clone
+agent      shell
+workspace  $CAPTURE/fixtures/repo-clone (rw)
+image      docker/sandbox-templates:shell-docker
+cpu        10
+memory     32 GiB
+
+Pulling image
+  <layers>
+✓ Image ready
+  Git daemon: git://127.0.0.1:<port>/repo-clone
+  Remote: sandbox-m101-clone
+✓ Created sandbox m101-clone
+  mount  $CAPTURE/fixtures/repo-clone → /run/sandbox/source (ro, source)
+
+To connect to this sandbox, run:
+  sbx run --name m101-clone
+[exit 0]
+
+$ sbx ls
+SANDBOX      AGENT   STATUS    PORTS                        WORKSPACE
+m101-clone   shell   running   127.0.0.1:<port>->9418/tcp4   $CAPTURE/fixtures/repo-clone
+m101-demo    shell   stopped                                $CAPTURE/fixtures/repo
+[exit 0]

@@ -1,0 +1,3 @@
+$ docker-agent run --exec --last fixtures/agents/dmr.yaml 'Say hello.'
+Hello
+[exit 0]

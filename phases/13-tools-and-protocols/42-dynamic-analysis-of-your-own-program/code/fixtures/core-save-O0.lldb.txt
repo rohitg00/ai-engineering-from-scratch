@@ -1,0 +1,35 @@
+# lesson 42 capture
+# command: lldb -b -o settings set interpreter.stop-command-source-on-error false -s core-save-O0.lldb ./account-O0
+# cwd: fixtures
+# lldb: lldb-1703.0.236.21
+# date: 2026-10-14
+(lldb) target create "./account-O0"
+Current executable set to '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account-O0' (arm64).
+(lldb) settings set interpreter.stop-command-source-on-error false
+(lldb) command source -s 0 'core-save-O0.lldb'
+Executing commands in '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/core-save-O0.lldb'.
+(lldb) breakpoint set -n bump
+Breakpoint 1: where = account-O0`bump + 12 at account.c:13:19, address = 0x00000001000004bc
+(lldb) run
+sizeof 32 align 8
+offsets 0 4 8 16 24
+Process 26114 launched: '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account-O0' (arm64)
+Process 26114 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = breakpoint 1.1
+    frame #0: 0x00000001000004bc account-O0`bump(a=0x000000016fdfe008, by=5) at account.c:13:19
+   10  	};
+   11  	
+   12  	int bump(struct account *a, int by) {
+-> 13  	    a->balance += by;
+    	                  ^
+   14  	    return a->balance;
+   15  	}
+   16  	
+Target 0: (account-O0) stopped.
+(lldb) process save-core --style stack account-O0-stack.core
+Saving 49152 bytes of data for memory region at 0x16fdf4000
+
+Modified-memory or stack-memory only corefile created.  This corefile may 
+not show library/framework/app binaries on a different system, or when 
+those binaries have been updated/modified. Copies are not included
+in this corefile.  Use --style full to include all process memory.

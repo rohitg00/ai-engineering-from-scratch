@@ -1,0 +1,113 @@
+{
+  "id": "log-volume-reduction-lab",
+  "title": "Log Volume Reduction Lab",
+  "tagline": "Shrink a noisy log stream while keeping evidence of rare failures.",
+  "summary": "Help an engineer build compact log context for an assistant. Learn bounded template grouping, counts and representative examples, then compare uniform and rarity-aware sampling on authored failure fixtures. Export compressed JSONL and a coverage report showing which important events were lost.",
+  "level": 2,
+  "source": "core",
+  "status": "ready",
+  "hours": 8,
+  "languages": [
+    "Rust",
+    "Python"
+  ],
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "Compact log context JSONL and rare-event coverage comparison",
+  "prerequisiteProjects": [
+    "token-counter-and-cost-meter"
+  ],
+  "demo": {
+    "command": [
+      "python3",
+      "demo.py"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-parse-bounded-logs",
+      "title": "Parse and bound log records",
+      "summary": "Turn each line into a validated, located record.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "starter",
+      "concepts": [
+        "UTF-8",
+        "bounds",
+        "locators"
+      ],
+      "timeout": 120,
+      "figure": "pj-log-volume-reduction-lab-1"
+    },
+    {
+      "id": "02-group-templates",
+      "title": "Group repeated templates with source locators",
+      "summary": "Count repetition without discarding its source range.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "BTreeMap",
+        "representatives",
+        "group identity"
+      ],
+      "timeout": 120,
+      "figure": "pj-log-volume-reduction-lab-2"
+    },
+    {
+      "id": "03-compare-samplers",
+      "title": "Compare sampling policies on rare events",
+      "summary": "Spend a fixed record budget on common or rare templates.",
+      "hours": 2,
+      "language": "rust",
+      "difficulty": "core",
+      "concepts": [
+        "sampling",
+        "rarity",
+        "determinism"
+      ],
+      "timeout": 120,
+      "figure": "pj-log-volume-reduction-lab-3"
+    },
+    {
+      "id": "04-export-coverage",
+      "title": "Export compact context and coverage",
+      "summary": "Measure which diagnostic templates survive compression.",
+      "hours": 2,
+      "language": "rust+python",
+      "difficulty": "core",
+      "concepts": [
+        "JSONL",
+        "cross-language contract",
+        "coverage"
+      ],
+      "timeout": 120,
+      "figure": "pj-log-volume-reduction-lab-4",
+      "runners": [
+        {
+          "language": "rust"
+        },
+        {
+          "language": "python"
+        }
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded local command output. See the README for input and scope."
+    }
+  ]
+}

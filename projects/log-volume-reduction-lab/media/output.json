@@ -1,0 +1,17 @@
+{
+  "title": "Log Volume Reduction Lab | actual local output",
+  "recordedAt": "2026-10-09T14:11:37Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "demo.py"
+      ],
+      "cwd": "./projects/log-volume-reduction-lab/solution",
+      "exitCode": 0,
+      "output": "records=200 selected=8 retained_templates=1 output=/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/tmptn74tail/uniform.jsonl\nrecords=200 selected=8 retained_templates=2 output=/var/folders/sm/xdl0smbd691_f1nqt5d5r5vm0000gn/T/tmptn74tail/rarity.jsonl\n{\n  \"uniform\": {\n    \"schemaVersion\": 1,\n    \"records\": 200,\n    \"templates\": 2,\n    \"retainedTemplates\": 1,\n    \"representedRecords\": 199,\n    \"rareTemplates\": 1,\n    \"retainedRareTemplates\": 0,\n    \"rareCoverage\": 0.0,\n    \"lostRare\": [\n      {\n        \"level\": \"ERROR\",\n        \"template\": \"disk full at /data\"\n      }\n    ]\n  },\n  \"rarity\": {\n    \"schemaVersion\": 1,\n    \"records\": 200,\n    \"templates\": 2,\n    \"retainedTemplates\": 2,\n    \"representedRecords\": 200,\n    \"rareTemplates\": 1,\n    \"retainedRareTemplates\": 1,\n    \"rareCoverage\": 1.0,\n    \"lostRare\": []\n  }\n}\n",
+      "durationMs": 410
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

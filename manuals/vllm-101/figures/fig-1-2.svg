@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 346" role="img" aria-labelledby="fig-1-2-title fig-1-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-2-title">The six startup lines to read after every start</title>
+  <desc id="fig-1-2-desc">Six lines from the startup log of vLLM 0.31.0 on a DGX Spark with Qwen3-30B-A3B: version 0.31.0, the V2 model runner, the FLASH_ATTN attention backend, 56.93 GiB of weights loaded in 330 seconds, 31.32 GiB left for the KV cache, and a pool of 234,960 tokens.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">LOG LINE</text>
+  <text x="250" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">OUR VALUE</text>
+  <text x="410" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT IT DECIDES</text>
+  <rect x="20" y="30" width="218" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="52.45" font-size="11.5" font-weight="700">version</text>
+  <text x="250" y="54" font-size="12" font-weight="700" fill="var(--m-ink, #1a1a1a)">0.31.0</text>
+  <text x="410" y="54" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the release that runs</text>
+  <rect x="20" y="80" width="218" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="102.45" font-size="11.5" font-weight="700">Using V2 Model Runner</text>
+  <text x="250" y="104" font-size="12" font-weight="700" fill="var(--m-ink, #1a1a1a)">V2</text>
+  <text x="410" y="104" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">which model runner runs</text>
+  <rect x="20" y="130" width="218" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="152.45" font-size="11.5" font-weight="700">attention backend</text>
+  <text x="250" y="154" font-size="12" font-weight="700" fill="var(--m-ink, #1a1a1a)">FLASH_ATTN</text>
+  <text x="410" y="154" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">which kernels run attention</text>
+  <rect x="20" y="180" width="218" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="202.45" font-size="11.5" font-weight="700">Model loading took</text>
+  <text x="250" y="204" font-size="12" font-weight="700" fill="var(--m-ink, #1a1a1a)">56.93 GiB, 330 s</text>
+  <text x="410" y="204" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">memory the weights hold</text>
+  <rect x="20" y="230" width="218" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="252.45" font-size="11.5" font-weight="700">Available KV cache memory</text>
+  <text x="250" y="254" font-size="12" font-weight="700" fill="var(--m-ink, #1a1a1a)">31.32 GiB</text>
+  <text x="410" y="254" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">memory left for the KV cache</text>
+  <rect x="20" y="280" width="218" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="302.45" font-size="11.5" font-weight="700">GPU KV cache size</text>
+  <text x="250" y="304" font-size="12" font-weight="700" fill="var(--m-green-ink, #336b40)">234,960 tokens</text>
+  <text x="410" y="304" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">how many users fit</text>
+  <text x="20" y="338" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Find each line once after every start, before you send traffic.</text>
+</svg>

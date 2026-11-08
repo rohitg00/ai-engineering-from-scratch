@@ -1,0 +1,20 @@
+Logprob gap between the engine and a trainer forward pass, by dtype
+Date: 2026-10-23
+Machine: NVIDIA L4, the second GPU of the node (GPU1), shared with its owner, no clock lock. The clock does not change these values.
+Engine: SGLang 0.5.22 serving Qwen/Qwen3-0.6B with --dtype bfloat16 or --dtype float16, --disable-radix-cache. Not the Miles image build.
+Requests: 32 ShareGPT prompts with the chat template and thinking off. Temperature 1, top-p 1, top-k off, so no sampling mask applies. Up to 64 sampled tokens each, ignore_eos not set. 1,961 sampled tokens from 32 prompts. 3 answers ended at the end token before 64 tokens: prompt 21 after 29, prompt 22 after 37, prompt 24 after 39, which is 87 tokens short of 2,048. The same 3 answers ended early in both dtypes, and every returned token had a logprob.
+Trainer side: a Transformers forward pass over the same tokens in BF16, FP16 or FP32, on the same GPU. No training run.
+
+Absolute logprob gap per token, engine against Transformers:
+
+engine   trainer   median    p90      mean     max
+BF16     BF16      0.0073    0.087    0.027    0.355
+BF16     FP16      0.0079    0.053    0.019    0.279
+BF16     FP32      0.0076    0.053    0.019    0.280
+FP16     BF16      0.0085    0.061    0.021    0.265
+FP16     FP16      0.00094   0.010    0.0032   0.033
+FP16     FP32      0.0010    0.0068   0.0024   0.023
+
+FP16 on both sides cuts the median gap about 7.8x against BF16 on both sides, the mean about 8.4x, and the worst token about 10x.
+FP16 on one side only does not help: 0.0079 and 0.0085.
+The BF16 engine stays at about 0.0076 even against FP32, so the BF16 rounding of the engine sets that floor.

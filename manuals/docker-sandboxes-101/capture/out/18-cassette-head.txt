@@ -1,0 +1,13 @@
+104 lines, first 12, cut at 160 columns:
+---
+version: 2
+interactions:
+- id: 0
+  request:
+    proto: HTTP/1.1
+    proto_major: 1
+    proto_minor: 1
+    content_length: 0
+    host: localhost:12434
+    body: "{\"messages\":[{\"content\":\"You answer questions about the files in the working directory.\\nUse the tools to look; never guess. Answer in one sent
+    url: http://127.0.0.1:12434/v1/chat/completions

@@ -1,0 +1,12 @@
+                 (undefined) external ___stack_chk_fail (from libSystem)
+                 (undefined) external ___stack_chk_guard (from libSystem)
+0000000100000000 (__TEXT,__text) [referenced dynamically] external __mh_execute_header
+0000000100004040 (__DATA_CONST,__const) external _fns
+                 (undefined) external _grade (from libledger)
+                 (undefined) external _grade_label (from libledger)
+0000000100000558 (__TEXT,__text) external _main
+0000000100004050 (__DATA_CONST,__const) non-external _names
+                 (undefined) external _percent_change (from libledger)
+                 (undefined) external _printf (from libSystem)
+                 (undefined) external _puts (from libSystem)
+                 (undefined) external _total (from libledger)

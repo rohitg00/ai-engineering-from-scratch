@@ -1,0 +1,28 @@
+{
+  "candidate": "f1_safe_div",
+  "label": "hand-written test candidate for lesson 45, not the output of any model",
+  "kind": "invented helper",
+  "tool": "hand-written",
+  "target": {
+    "object": "ledger-x86_64-O1-renamed.o",
+    "sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+    "function": "f1"
+  },
+  "source": "f1_safe_div.c",
+  "claims": {
+    "name": "percent_change",
+    "return_type": "int",
+    "parameters": [
+      {"name": "before", "type": "int"},
+      {"name": "after", "type": "int"}
+    ],
+    "summary": "Scales the difference by 100 and passes it to the helper safe_div at 0x40, which returns 0 for a zero divisor and logs the message division by zero."
+  },
+  "citations": {
+    "addresses": ["0x0", "0x6", "0x40"],
+    "callees": ["safe_div"],
+    "strings": ["division by zero"],
+    "immediates": [100]
+  },
+  "cost": {"tokens": null, "seconds": null}
+}

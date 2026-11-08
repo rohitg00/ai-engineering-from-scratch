@@ -1,0 +1,112 @@
+{
+  "title": "Dataset Contract Gate",
+  "tagline": "Quarantine invalid records and fail ingestion on explicit dataset rules.",
+  "level": 2,
+  "summary": "Define a small versioned data contract, check field types and bounds, find every row in duplicate groups, and export accepted records separately from quarantine. A CLI exit code gates ingestion while a source-line report explains failures.",
+  "languageWhy": {
+    "Python": "Standard dictionaries, numeric checks and JSONL IO make cross-row validation easy to inspect."
+  },
+  "prerequisiteProjects": [
+    "dataset-split-auditor",
+    "json-schema-output-guard"
+  ],
+  "id": "dataset-contract-gate",
+  "languages": [
+    "Python"
+  ],
+  "source": "core",
+  "status": "ready",
+  "hours": 8,
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "prerequisites": [
+    "Python 3.12+; dictionaries, lists and command-line IO"
+  ],
+  "youWillBuild": "accepted.jsonl, quarantine.jsonl, receipt.json and review.html",
+  "skills": [
+    "Validate an explicit quality contract",
+    "Check each record without coercion",
+    "Find all rows in a duplicate group",
+    "Export partitions and enforce the dataset gate"
+  ],
+  "figures": true,
+  "overviewFigure": "pj-dataset-contract-gate-1",
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.jsonl",
+      "--contract",
+      "samples/contract.json",
+      "--output",
+      "demo-output"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-validate-contract",
+      "title": "Validate an explicit quality contract",
+      "summary": "Require version=1 and a nonempty fields object.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "starter",
+      "concepts": [
+        "validate an explicit quality contract"
+      ],
+      "figure": "pj-dataset-contract-gate-1"
+    },
+    {
+      "id": "02-check-records",
+      "title": "Check each record without coercion",
+      "summary": "Consume a validated contract.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "check each record without coercion"
+      ],
+      "figure": "pj-dataset-contract-gate-2"
+    },
+    {
+      "id": "03-check-uniqueness",
+      "title": "Find all rows in a duplicate group",
+      "summary": "For each unique column, index valid typed values to one-based input row numbers.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "find all rows in a duplicate group"
+      ],
+      "figure": "pj-dataset-contract-gate-3"
+    },
+    {
+      "id": "04-quarantine-and-gate",
+      "title": "Export partitions and enforce the dataset gate",
+      "summary": "Return schema_version=1, passed, counts, dataset_issues, duplicates, accepted and quarantine.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "export partitions and enforce the dataset gate"
+      ],
+      "figure": "pj-dataset-contract-gate-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

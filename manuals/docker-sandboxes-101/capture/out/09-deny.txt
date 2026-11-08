@@ -1,0 +1,4 @@
+$ sbx policy deny network --sandbox m101-policy example.com
+warning: UDP rule saved, but UDP egress is disabled; enable experimental features and feature.udp-egress to use UDP
+Rule added to policy local (scope: sandbox:m101-policy): <uuid> (example.com [tcp,udp])
+[exit 0]

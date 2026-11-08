@@ -12,7 +12,7 @@
 - Split the inference pipeline into Thinker (text reasoning) and Talker (speech synthesis) and explain why parallel streaming works.
 - Compute the time-to-first-audio-byte (TTFAB) budget for a conversational interaction, component by component.
 - Describe TMRoPE's time-aligned position encoding across vision, audio, and text within the Thinker.
-- Name the three real-time conversational patterns: half-duplex, turn-taking, full-duplex.
+- Name the two real-time conversational patterns, half-duplex and full-duplex, and explain how VAD turn-taking drives the half-duplex handoff.
 
 ## The Problem
 
@@ -41,10 +41,10 @@ The separation matters. Thinker has to be big for good reasoning. Talker can be 
 
 Running both in parallel:
 
-1. Thinker emits text token t_i.
-2. Talker consumes t_i (via streaming) and emits speech tokens s_i, s_{i+1}, ..., s_{i+k}.
+1. Thinker emits text token $t_i$.
+2. Talker consumes $t_i$ (via streaming) and emits speech tokens $s_i, s_{i+1}, \ldots, s_{i+k}$.
 3. Speech decoder consumes speech tokens as they come and emits audio samples.
-4. By the time Thinker is at text token t_{i+3}, Talker has already streamed audio for t_0..t_{i+2}.
+4. By the time Thinker is at text token $t_{i+3}$, Talker has already streamed audio for $t_0, \ldots, t_{i+2}$.
 
 ### TMRoPE — time-aligned multimodal positions
 
@@ -85,7 +85,7 @@ For a typical streaming interaction:
 - Residual-VQ decode: 30ms.
 - Speech waveform decode: 50-80ms.
 
-Total TTFAB: 320-510ms at 7B, 600-900ms at 70B. Frontier quality usually means 70B+; hence the frontier latency gap.
+Total TTFAB: 320-490ms at 7B, 600-900ms at 70B. Frontier quality usually means 70B+; hence the frontier latency gap.
 
 ### Token-rate math
 

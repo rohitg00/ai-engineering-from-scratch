@@ -1,0 +1,27 @@
+Speculative decoding on real prompts, SGLang 0.5.22 (backlog B-01a)
+Date: 2026-10-23
+Machine: NVIDIA L4, GPU0 of the node, clock lock 900 MHz. Model: Qwen/Qwen3-8B, EAGLE3 draft with 3 draft tokens, NGRAM with the defaults.
+Load: 128 output tokens with ignore-eos, 2 seeds, prefix cache flushed before each run. Rows use only runs at a median clock of 900 MHz.
+Datasets: random (the benchmark tool's random set), ShareGPT, GSM8K questions, and code prompts.
+
+median TPOT at 8 users: default / EAGLE3 / NGRAM
+random     67.6 to 68.2 / 33.8 to 39.4 / 68.2 to 71.4 ms
+ShareGPT   66.4 to 68.6 / 39.5 to 43.1 / 69.5 to 72.4 ms
+GSM8K      65.5 / 33.3 to 34.3 / 54.6 to 55.0 ms
+code       65.9 to 66.4 / 36.8 / 58.2 to 58.8 ms
+
+mean acceptance length at 8 users: EAGLE3 / NGRAM
+random     2.48 to 2.78 / 1.50 to 1.57
+ShareGPT   2.35 to 2.43 / 1.22 to 1.25
+GSM8K      2.69 to 2.78 / 1.44 to 1.46
+code       2.57 to 2.58 / 1.37 to 1.38
+
+output tok/s at 32 users: default / EAGLE3 / NGRAM
+random     250 to 254 / 239 to 242 / 236 to 250
+ShareGPT   281 to 288 / 277 to 283 / 245 to 256
+GSM8K      397 / 648 to 660 / 433 to 435
+code       365 to 366 / 566 to 581 / 377 to 386
+
+median TTFT at 32 users, EAGLE3 against default: random 8.6 to 8.7 s against 3.2 to 3.5 s, ShareGPT 5.7 to 7.0 s against 2.7 to 3.0 s.
+P99 ITL at 32 users with NGRAM: 244 to 779 ms, against 83 to 106 ms for the default.
+The 1-user default runs throttled below 300 MHz and are left out. vLLM EAGLE3 and NGRAM on these datasets did not run.

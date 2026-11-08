@@ -29,9 +29,11 @@ Kingma 在 2013 年的 VAE 這樣解：訓練編碼器輸出一個*分布* `q(z|
 
 **損失。** 證據下界（Evidence Lower BOund，ELBO），兩項：
 
-```
-loss = reconstruction + β · KL[q(z|x) || N(0, I)]
-     = ||x - x̂||²  + β · Σ_i ( σ_i² + μ_i² - log σ_i² - 1 ) / 2
+```math
+\begin{aligned}
+\text{loss} &= \text{reconstruction} + \beta \cdot \mathrm{KL}[q(z \mid x) \,\Vert\, \mathcal{N}(0, I)] \\
+&= \lVert x - \hat{x} \rVert^2 + \beta \cdot \sum_i \frac{\sigma_i^2 + \mu_i^2 - \log \sigma_i^2 - 1}{2}
+\end{aligned}
 ```
 
 重建項把 `x̂` 推向 `x`。KL 項把 `q(z|x)` 推向先驗。兩者互相拉扯。β 小（<1）＝樣本更銳利、編碼空間比較不高斯。β 大（>1）＝編碼空間更乾淨、樣本更模糊。β-VAE（Higgins，2017）讓這個旋鈕出了名，也開啟了解耦表示的研究。

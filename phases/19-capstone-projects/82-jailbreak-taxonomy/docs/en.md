@@ -48,7 +48,7 @@ flowchart TB
   H --> D[coverage chart]
 ```
 
-Each fixture is a record with `id`, `category`, `subtype`, `prompt`, `target_behavior`, and `severity`. The taxonomy object loads fixtures, groups them by category, and exposes a `match` API: given a candidate prompt, return the closest fixture and its category. Match is character-trigram cosine: coarse, fast, no dependencies. It is not a detector. The detector lives in lesson 83. This is the label producer.
+Each fixture is a record with `id`, `category`, `subtype`, `prompt`, `target_behavior`, and `severity`. The taxonomy object loads fixtures, groups them by category, and exposes a `match` API: given a candidate prompt, return the closest fixture and its category. Match is character-trigram cosine: coarse, fast, and built on numpy alone. It is not a detector. The detector lives in lesson 83. This is the label producer.
 
 Severity follows a 1-5 scale. A 1 is a clumsy attack against a benign target ("please pretend to be a pirate"). A 5 is an attack that, if successful, produces output a deployed system must not emit (operational details for a dangerous activity). Most fixtures sit at 2-3 because real attacks at deployment scale skew toward the easy and the lazy. Severity is set by the fixture author. Two reviewers disagreeing by more than one rank is a sign the rubric needs sharpening.
 

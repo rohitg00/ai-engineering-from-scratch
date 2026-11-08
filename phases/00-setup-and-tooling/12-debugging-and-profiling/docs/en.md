@@ -395,3 +395,15 @@ See `outputs/prompt-debug-ai-code.md` for a prompt that helps diagnose AI-specif
 3. Use `tracemalloc` to find which line in your data loading pipeline allocates the most memory.
 4. Set up TensorBoard for a simple training run and identify whether the model is overfitting.
 5. Use `breakpoint()` inside a training loop. Practice inspecting tensor shapes, devices, and gradient values from the debugger prompt.
+
+### Hints
+
+**Exercise 1.** Run `python3 phases/00-setup-and-tooling/12-debugging-and-profiling/code/debug_tools.py` and read the output of each demo function. Then change the model in `demo_nan_detection` so that its output divides by zero, and run again; `detect_nan` must print a NaN warning with the step number.
+
+**Exercise 2.** Run the loop under `python -m cProfile -s cumtime your_script.py`, or wrap it in `cProfile.Profile()`. Read the top rows of the `cumtime` column; the function with the largest time that is your own code is the slowest one.
+
+**Exercise 3.** Call `tracemalloc.start()` before the data loading code and `tracemalloc.take_snapshot()` after it, as in `demo_memory_tracking`. Print `snapshot.statistics("lineno")[:5]`; the first line shows the file and line number with the largest allocation.
+
+**Exercise 4.** Log the training loss and the validation loss to a `SummaryWriter` at each epoch, then run `tensorboard --logdir=runs`. If the training loss continues to go down while the validation loss goes up, the model overfits.
+
+**Exercise 5.** Put `breakpoint()` inside the loop after `loss.backward()` and run the script. At the `(Pdb)` prompt, print `x.shape`, `x.device`, and `next(model.parameters()).grad`, then type `c` to continue to the next step.

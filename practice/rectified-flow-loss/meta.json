@@ -1,0 +1,24 @@
+{
+  "id": "rectified-flow-loss",
+  "title": "Rectified flow loss and Euler sampler",
+  "kind": "research",
+  "summary": "Interpolate along straight paths, regress the velocity x1 - x0 with the flow matching loss, and integrate a velocity field with Euler steps.",
+  "difficulty": "medium",
+  "tags": ["rectified-flow", "flow-matching", "generative-models", "ode-solvers"],
+  "lesson": "phases/08-generative-ai/13-flow-matching-rectified-flows",
+  "cheatsheet": "diffusion-models",
+  "minutes": 25,
+  "entry": ["interpolate", "target_velocity", "flow_matching_loss", "euler_sample"],
+  "collections": ["papers-to-code", "deep-learning-core"],
+  "time_limit_s": 10,
+  "method": "rectified-flow",
+  "paper": {"title": "Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow", "authors": "Liu, Gong and Liu", "year": 2022, "url": "https://arxiv.org/abs/2209.03003"},
+  "mutants": {
+    "euler_in_place": "Updates x with += on an array that shares memory with x0, so the input of the caller changes.",
+    "euler_one_step_short": "Loops over num_steps - 1 steps, so the sample stops before t = 1.",
+    "euler_time_at_end": "Reads the velocity at the end of each step, (k + 1) / n, not at its start.",
+    "interpolation_swapped": "Puts the weight t on x0 and 1 - t on x1, so the path runs backward.",
+    "mean_over_all_elements": "Takes the mean of the squared error over every element, not the sum over features and the mean over the batch.",
+    "target_reversed": "Uses x0 - x1 as the target velocity, so the sign is wrong."
+  }
+}

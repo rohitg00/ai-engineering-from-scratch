@@ -64,7 +64,7 @@ The image keys and values are computed once at the start of the decode and held 
 
 ### Block composition
 
-A decoder block runs: pre-LN -> self-attention -> residual -> pre-LN -> cross-attention -> residual -> pre-LN -> feed-forward -> residual. Three sub-layers, each with its own LayerNorm. The Flamingo paper added a learned gate on cross-attention so the model could opt out of the image path at training-time stability cost; the canonical baseline (used here) has no gate.
+A decoder block runs: pre-LN -> self-attention -> residual -> pre-LN -> cross-attention -> residual -> pre-LN -> feed-forward -> residual. Three sub-layers, each with its own LayerNorm. The Flamingo paper added a learned tanh gate on cross-attention, initialised at zero, so the frozen language model starts out unchanged and training stays stable; the canonical baseline (used here) has no gate.
 
 ```python
 class DecoderBlock:

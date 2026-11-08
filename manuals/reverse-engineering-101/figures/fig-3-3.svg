@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 456" role="img" aria-labelledby="fig-3-3-title fig-3-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-3-title">The load image of ledger-arm64-O1</title>
+  <desc id="fig-3-3-desc">Four LC_SEGMENT_64 commands drawn as rows from low to high address. __PAGEZERO at 0x0 spans 4 GiB with no file bytes. __TEXT at 0x100000000 maps file bytes 0 to 16384 and holds __text, __stubs, __cstring, __const and __unwind_info, and LC_MAIN points at entryoff 1488 inside it. __DATA_CONST at 0x100004000 maps bytes 16384 to 32768 and holds __got and __const. __LINKEDIT at 0x100008000 maps bytes 32768 to 33872 and holds the chained fixups, the exports trie, the function starts, the symbol and string tables, and the code signature.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ADDRESS</text>
+  <text x="140" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SEGMENT AND SECTIONS</text>
+  <text x="540" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FILE OFFSET</text>
+  <text x="20" y="46" font-size="11">0x0</text>
+  <rect x="140" y="30" width="380" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="152" y="47.25" font-size="12.5" font-weight="700">__PAGEZERO · 4 GiB reserved</text>
+  <text x="152" y="64.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">vmsize 4294967296 · filesize 0 · prot 0</text>
+  <text x="540" y="46" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">none</text>
+  <text x="20" y="102" font-size="11">0x100000000</text>
+  <rect x="140" y="86" width="380" height="138" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="152" y="112.75" font-size="12.5" font-weight="700">__TEXT · r-x</text>
+  <text x="152" y="130.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">__text 0x100000500 · 576 B · file 1280</text>
+  <text x="152" y="145.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">__stubs 0x100000740 · 48 B · file 1856</text>
+  <text x="152" y="160.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">__cstring 0x100000770 · 95 B · file 1904</text>
+  <text x="152" y="175.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">__const 0x1000007d0 · 64 B · file 2000</text>
+  <text x="152" y="190.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">__unwind_info 0x100000810 · 96 B · file 2064</text>
+  <text x="152" y="205.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">LC_MAIN entryoff 1488 · entry at 0x1000005d0</text>
+  <text x="540" y="102" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0 to 16384</text>
+  <text x="20" y="252" font-size="11">0x100004000</text>
+  <rect x="140" y="236" width="380" height="76" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="152" y="261.75" font-size="12.5" font-weight="700">__DATA_CONST · rw-</text>
+  <text x="152" y="279.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">__got 0x100004000 · 48 B · file 16384</text>
+  <text x="152" y="294.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">__const 0x100004030 · 40 B · file 16432</text>
+  <text x="540" y="252" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">16384 to 32768</text>
+  <text x="20" y="340" font-size="11">0x100008000</text>
+  <rect x="140" y="324" width="380" height="122" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="152" y="350.25" font-size="12.5" font-weight="700">__LINKEDIT · r-- · no sections</text>
+  <text x="152" y="367.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">chained fixups file 32768 · 176 B</text>
+  <text x="152" y="382.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">exports trie file 32944 · 104 B</text>
+  <text x="152" y="397.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">function starts file 33048 · 8 B</text>
+  <text x="152" y="412.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">symtab file 33056 · 13 symbols · strtab file 33304</text>
+  <text x="152" y="427.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">code signature file 33456 · 416 B</text>
+  <text x="540" y="340" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">32768 to 33872</text>
+</svg>

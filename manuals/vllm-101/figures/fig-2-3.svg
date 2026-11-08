@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 252" role="img" aria-labelledby="fig-2-3-title fig-2-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-3-title">On a DGX Spark, vLLM takes a share of one memory pool</title>
+  <desc id="fig-2-3-desc">The GB10 reports 121.7 GiB in total. With a fraction of 0.75, vLLM takes 91.3 GiB: 56.93 GiB of weights, 31.32 GiB of KV cache, and about 3 GiB for the startup profile and the CUDA graphs. The other 30.4 GiB stays with the operating system, the page cache, and other programs.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONE 121.7 GIB POOL, CPU AND GPU TOGETHER</text>
+  <rect x="20" y="30" width="278.67" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="300.67" y="30" width="152.41" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="455.09" y="30" width="13.04" height="46" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="470.12" y="30" width="149.88" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <line x1="20" y1="92" x2="470.12" y2="92" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2"/>
+  <text x="20" y="108" font-size="11.5" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">vLLM, --gpu-memory-utilization 0.75, 91.3 GiB</text>
+  <rect x="20" y="130" width="12" height="12" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="42" y="140" font-size="12" font-weight="700">56.93 GiB</text>
+  <text x="170" y="140" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">weights</text>
+  <rect x="20" y="156" width="12" height="12" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="42" y="166" font-size="12" font-weight="700">31.32 GiB</text>
+  <text x="170" y="166" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">KV cache</text>
+  <rect x="20" y="182" width="12" height="12" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="42" y="192" font-size="12" font-weight="700">about 3 GiB</text>
+  <text x="170" y="192" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">profile and graphs</text>
+  <rect x="20" y="208" width="12" height="12" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="42" y="218" font-size="12" font-weight="700">30.4 GiB</text>
+  <text x="170" y="218" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">operating system, page cache, other programs</text>
+</svg>

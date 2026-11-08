@@ -1,0 +1,9 @@
+title: the weights and the pool of a default start that was kept
+source: manuals/sglang-101/capture/gpu/out-gb10/server-default.log
+lines: 18-20
+lang: text
+note: Add the K and the V sizes, and compare them with the growth in the guard log.
+---
+[2026-10-17 14:18:29] Load weight end. elapsed=323.61 s, type=Qwen3MoeForCausalLM, avail mem=54.84 GB, mem usage=57.75 GB.
+[2026-10-17 14:18:32] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 227243, K size: 10.40 GB, V size: 10.40 GB
+[2026-10-17 14:18:32] Memory pool end. avail mem=31.22 GB

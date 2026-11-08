@@ -1,0 +1,6 @@
+$ sbx mcp inspect m101-deepwiki
+Name:      m101-deepwiki
+Type:      remote
+URL:       https://mcp.deepwiki.com/mcp
+Transport: streamable-http
+[exit 0]

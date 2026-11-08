@@ -1,0 +1,13 @@
+schemaVersion: "2"
+kind: mixin
+name: hello-mixin
+description: Installs tree and adds a greeting file to the workspace.
+setup:
+  install:
+    - command: apt-get update && apt-get install -y tree
+      user: "0"
+      description: Install tree
+permissions:
+  network:
+    allow:
+      - example.com

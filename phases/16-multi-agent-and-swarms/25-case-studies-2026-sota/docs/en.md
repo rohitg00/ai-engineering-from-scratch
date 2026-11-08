@@ -57,7 +57,7 @@ This is the reference case for role specialization (Phase 16 · 08) and structur
 The production population-scale case. Timeline:
 
 - **Nov 2025:** Clawdbot (Peter Steinberger's local ReAct-loop coding agent) ships.
-- **Dec 2025 – Mar 2026:** renamed twice (Clawdbot → OpenClaw → continued under OpenClaw).
+- **Jan 2026:** renamed twice in one week (Clawdbot → Moltbot on January 27 after trademark complaints, then Moltbot → OpenClaw three days later).
 - **Feb 2026:** Moltbook launches as an agent-only social network on the same primitives; ~2.3M agent accounts within days.
 - **Mar 2026 (2026-03-10):** Meta acquires Moltbook.
 - **Mar 2026:** China restricts OpenClaw on government computers.

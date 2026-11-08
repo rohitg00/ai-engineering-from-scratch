@@ -51,7 +51,7 @@ Transfusion 問：我們能不能兩個都要？讓影像維持連續，卻仍�
 M[i, j] = 1 if:
   (i is text and j is text and j <= i)   # causal for text
   OR (i is image and j is image and same_image_block(i, j))   # bidirectional within image
-  OR (i is text and j is image and j < i_image_end)   # text attends to previous images
+  OR (i is text and j is image and j < i)   # text attends to images that closed before it
   OR (i is image and j is text and j < i_image_start)   # image attends to preceding text
 ```
 
@@ -62,9 +62,9 @@ M[i, j] = 1 if:
 擴散損失是標準的：對一個影像 patch 加雜訊，要求模型預測那份雜訊（或等價地，預測乾淨的 patch）。Transfusion 的版本用的是流匹配 —— 預測從帶噪到乾淨的速度場。
 
 訓練期間：
-1. 對每個影像 patch x0，取樣一個隨機時間步 t。
-2. 取樣雜訊 ε，算出 xt = (1-t) * x0 + t * ε（流匹配用的線性內插）。
-3. Transformer 預測 v_theta(xt, t)；損失 = MSE(v_theta(xt, t), ε - x0)。
+1. 對每個影像 patch $x_0$，取樣一個隨機時間步 $t$。
+2. 取樣雜訊 $\epsilon$，算出 $x_t = (1-t) \cdot x_0 + t \cdot \epsilon$（流匹配用的線性內插）。
+3. Transformer 預測 $v_\theta(x_t, t)$；$\text{loss} = \mathop{\mathrm{MSE}}(v_\theta(x_t, t), \epsilon - x_0)$。
 4. 與同一條序列上的文字 NTP 損失一起反向傳播。
 
 推論時，生成是這樣進行的：
@@ -97,7 +97,7 @@ MMDiT 的關鍵差異：
 
 Janus-Pro（見單元 12.15）精煉了 Transfusion 的想法，把理解與生成的視覺編碼器解耦 —— 一個用 SigLIP、一個用 VQ —— 同時共享 Transformer 主體。Show-o（見單元 12.14）則把擴散換成離散擴散（遮罩預測）。統一生成這個家族在 Transfusion 之後迅速分岔。
 
-2026 年那些會吐影像的生產級 VLM —— Gemini 3 Pro、GPT-5、Claude Opus 4.7 的影像生成路徑 —— 幾乎可以肯定用的是這個家族的某個後裔。細節並未公開。
+那些能原生輸出影像的閉源生產級模型，或許用的是這個家族的某個後裔，但它們的架構並未公開，所以任何這類說法都只能當作猜測。
 
 ```figure
 cfg-guidance-scale
@@ -111,7 +111,7 @@ cfg-guidance-scale
 - 影像是 4x4 的位元組網格。
 - 一對共享權重的線性投影充當 Transformer 的替身；文字上跑 NTP 損失，帶噪 patch 上跑 MSE 損失。
 - 訓練迴圈交替執行兩個損失，注意力遮罩是明確寫出來的。
-- 生成時，一次前向傳播就產出一段文字字幕與一張 4x4 影像。
+- 一個遮罩示範會印出「文字、影像、文字」序列的區塊三角注意力樣式。程式不跑生成：真正的取樣器會先逐詞元解碼文字，再用許多步對影像 patch 去噪，下面的練習會算出要幾步。
 
 那個 Transformer 是玩具。真正的成品是雙損失的接線、注意力遮罩的建構，以及推論迴圈。
 

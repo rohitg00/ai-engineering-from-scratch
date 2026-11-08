@@ -1,0 +1,11 @@
+{
+  "title": "chart-storyboard-builder",
+  "url": "http://127.0.0.1:8879/projects/chart-storyboard-builder/solution/demo-output/storyboard.html",
+  "actions": [
+    [
+      "js",
+      "window.scrollTo(0,400)"
+    ]
+  ],
+  "kind": "browser capture"
+}

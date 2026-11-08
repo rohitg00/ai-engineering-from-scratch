@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-2-1-title fig-2-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-1-title">1.7B fits for short steps, and 4B does not</title>
+  <desc id="fig-2-1-desc">Blue bars: the trainer state of full fine-tuning with Adam, estimated at 16 bytes per parameter, before activations and the engine. Rose bars: the node memory that Ray read when it stopped the two 4B runs, 115.86 GB with the engine memory fraction at 0.4 and 119.18 GB at 0.2, out of 121.69 GB. Ray stops a worker above 95 percent of the node, about 115.6 GB.</desc>
+  <line x1="60" y1="266" x2="620" y2="266" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="270" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="60" y1="217.54" x2="620" y2="217.54" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="221.54" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">30</text>
+  <line x1="60" y1="169.08" x2="620" y2="169.08" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="173.08" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">60</text>
+  <line x1="60" y1="120.62" x2="620" y2="120.62" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="124.62" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">90</text>
+  <line x1="60" y1="72.15" x2="620" y2="72.15" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="76.15" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">120</text>
+  <line x1="60" y1="266" x2="620" y2="266" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="56" x2="60" y2="266" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">GB</text>
+  <line x1="60" y1="69.42" x2="620" y2="69.42" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="64" y="64.42" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">node, 121.7 GB</text>
+  <line x1="60" y1="79.25" x2="620" y2="79.25" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <rect class="m-knock" x="61" y="82.67" width="237" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="64" y="93.25" font-size="11" fill="var(--m-rose-ink, #b0344d)">Ray stops a worker above 95 percent</text>
+  <rect x="86" y="250.49" width="60" height="15.51" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="116" y="244.49" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">about 10 GB</text>
+  <text x="116" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0.6B</text>
+  <rect x="198" y="222.06" width="60" height="43.94" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="228" y="216.06" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">about 27 GB</text>
+  <text x="228" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1.7B</text>
+  <rect x="310" y="162.62" width="60" height="103.38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="340" y="156.62" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">about 64 GB</text>
+  <text x="340" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4B</text>
+  <rect x="422" y="78.84" width="60" height="187.16" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="452" y="72.84" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)"> </text>
+  <text x="452" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4B, run 1</text>
+  <rect x="534" y="73.48" width="60" height="192.52" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="564" y="67.48" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)"> </text>
+  <text x="564" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4B, run 2</text>
+  <text x="452" y="152.92" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">115.9 GB</text>
+  <text x="564" y="152.92" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">119.2 GB</text>
+  <path d="M60 18 H78" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="84" y="22" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">trainer state, estimate</text>
+  <path d="M253.79999999999998 18 H271.79999999999995" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="277.8" y="22" font-size="11" fill="var(--m-rose-ink, #b0344d)">node memory at the Ray kill</text>
+  <text x="60" y="324" font-size="12" class="m-serif">Lowering the engine memory did not save 4B. All runs used 256-token answers.</text>
+</svg>

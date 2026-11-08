@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-7-2b-title fig-7-2b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-2b-title">GPU memory across one colocated RL step</title>
+  <desc id="fig-7-2b-desc">Six phases of one Miles step on shared GPUs. SGLang holds weights, KV cache, and CUDA graphs while it generates, releases all three, the trainer runs alone, then SGLang gets its weights back, receives the new weights, and finally gets its KV cache and CUDA graphs back.</desc>
+  <defs><marker id="fig-7-2b-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <text x="180" y="22" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">GENERATE</text>
+  <text x="260" y="22" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">RELEASE</text>
+  <text x="340" y="22" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">TRAIN</text>
+  <text x="420" y="22" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONLOAD</text>
+  <text x="500" y="22" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">UPDATE</text>
+  <text x="580" y="22" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONLOAD KV</text>
+  <text x="20" y="62" font-size="11.5">SGLang weights</text>
+  <rect x="144" y="40" width="72" height="32" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="224" y="40" width="72" height="32" fill="none"/>
+  <rect x="304" y="40" width="72" height="32" fill="none"/>
+  <rect x="384" y="40" width="72" height="32" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="464" y="40" width="72" height="32" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="544" y="40" width="72" height="32" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="140" y1="78" x2="620" y2="78" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="20" y="108" font-size="11.5">SGLang KV cache</text>
+  <rect x="144" y="86" width="72" height="32" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="224" y="86" width="72" height="32" fill="none"/>
+  <rect x="304" y="86" width="72" height="32" fill="none"/>
+  <rect x="384" y="86" width="72" height="32" fill="none"/>
+  <rect x="464" y="86" width="72" height="32" fill="none"/>
+  <rect x="544" y="86" width="72" height="32" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <line x1="140" y1="124" x2="620" y2="124" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="20" y="154" font-size="11.5">CUDA graphs</text>
+  <rect x="144" y="132" width="72" height="32" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="224" y="132" width="72" height="32" fill="none"/>
+  <rect x="304" y="132" width="72" height="32" fill="none"/>
+  <rect x="384" y="132" width="72" height="32" fill="none"/>
+  <rect x="464" y="132" width="72" height="32" fill="none"/>
+  <rect x="544" y="132" width="72" height="32" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="140" y1="170" x2="620" y2="170" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="20" y="200" font-size="11.5">trainer</text>
+  <rect x="144" y="178" width="72" height="32" fill="none"/>
+  <rect x="224" y="178" width="72" height="32" fill="none"/>
+  <rect x="304" y="178" width="72" height="32" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect x="384" y="178" width="72" height="32" fill="none"/>
+  <rect x="464" y="178" width="72" height="32" fill="none"/>
+  <rect x="544" y="178" width="72" height="32" fill="none"/>
+  <line x1="140" y1="216" x2="620" y2="216" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.4"/>
+  <line x1="224" y1="236" x2="296" y2="236" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-2b-head-amber)"/>
+  <text x="260" y="258" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">POST /release_memory_occupation</text>
+  <text x="500" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink, #1a1a1a)">POST /update_weights_from_tensor</text>
+  <text x="20" y="286" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">filled cell: the memory is resident on the GPU · empty cell: released or offloaded</text>
+</svg>

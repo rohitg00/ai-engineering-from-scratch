@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 322" role="img" aria-labelledby="fig-4-5-title fig-4-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-5-title">A jump table at -O0 and a value table at -O1</title>
+  <desc id="fig-4-5-desc">Two columns. Left, grade in the lesson 33 fixture ledger-x86_64-O0.o: a bounds check, a leaq with a relocation against .rodata, a scaled load, an add and jmpq through rax; the table in .rela.rodata holds five relocations whose targets are 0x91, 0x88, 0x7f, 0x76 and 0x76, so the graph has 8 blocks and 11 edges. Right, _grade in the arm64 -O1 capture: a compare and b.hi, an adrp and add that form 0x1000007d0, and one ldr that returns one of the five values 1, 2, 3, 4, 4; the dossier has 3 blocks, 2 edges and an empty jump_tables list.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A · GRADE AT -O0, X86-64 OBJECT</text>
+  <text x="336" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">B · _GRADE AT -O1, ARM64 EXECUTABLE</text>
+  <line x1="320" y1="8" x2="320" y2="314" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="28" width="284" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="162" y="51.45" font-size="11.5" text-anchor="middle" font-weight="400">lesson 33 fixture ledger-x86_64-O0.o</text>
+  <rect x="336" y="28" width="284" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="478" y="51.45" font-size="11.5" text-anchor="middle" font-weight="400">capture 06-function-grade.json</text>
+  <text x="20" y="90" font-size="11">5d: subl $0x4, %eax</text>
+  <text x="20" y="104" font-size="11">60: ja 0x9a</text>
+  <text x="20" y="118" font-size="11">66: leaq (%rip), %rcx</text>
+  <text x="20" y="132" font-size="11">    R_X86_64_PC32 .rodata-0x4</text>
+  <text x="20" y="146" font-size="11">6d: movslq (%rcx,%rax,4), %rax</text>
+  <text x="20" y="160" font-size="11">71: addq %rcx, %rax</text>
+  <text x="20" y="174" font-size="11">74: jmpq *%rax</text>
+  <text x="336" y="90" font-size="11">0x534: cmp w8, #0x4</text>
+  <text x="336" y="104" font-size="11">0x538: b.hi 0x10000054c</text>
+  <text x="336" y="118" font-size="11">0x53c: adrp x9, 0x100000000</text>
+  <text x="336" y="132" font-size="11">0x540: add x9, x9, #0x7d0</text>
+  <text x="336" y="146" font-size="11">0x544: ldr w0, [x9, w8, UXTW #0x2]</text>
+  <text x="336" y="160" font-size="11">0x548: ret</text>
+  <text x="336" y="174" font-size="11">0x54c: mov w0, #0x0</text>
+  <rect x="20" y="200" width="284" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="162" y="220.25" font-size="12.5" text-anchor="middle" font-weight="700">.rela.rodata: five relocations</text>
+  <text x="162" y="237.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">targets 0x91 0x88 0x7f 0x76 0x76</text>
+  <rect x="336" y="200" width="284" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="478" y="220.25" font-size="12.5" text-anchor="middle" font-weight="700">__const at 0x1000007d0</text>
+  <text x="478" y="237.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">u32 values 1 2 3 4 4 · file offset 2000</text>
+  <rect x="20" y="262" width="284" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="162" y="282.25" font-size="12.5" text-anchor="middle" font-weight="700">jmpq *%rax reaches 5 blocks</text>
+  <text x="162" y="299.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">8 blocks and 11 edges with the table</text>
+  <rect x="336" y="262" width="284" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="478" y="282.25" font-size="12.5" text-anchor="middle" font-weight="700">ldr returns one value</text>
+  <text x="478" y="299.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">3 blocks · 2 edges · jump_tables []</text>
+</svg>

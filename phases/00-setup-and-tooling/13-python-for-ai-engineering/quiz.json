@@ -1,0 +1,78 @@
+{
+  "lesson": "13-python-for-ai-engineering",
+  "title": "Python for AI Engineering",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "You run one training script two times and get a different test score each time. Which change makes the train and test split the same in every run?",
+      "options": [
+        "Use a larger test fraction for the split",
+        "Shuffle the indexes with random.Random(42)",
+        "Call random.shuffle two times instead of once",
+        "Convert the dataset list to a tuple first"
+      ],
+      "correct": 1,
+      "explanation": "A generator with a fixed seed gives the same sequence in every run. The shuffled order and the split then stay the same. The other changes leave the shuffle random or have no effect on the order."
+    },
+    {
+      "stage": "check",
+      "question": "What does a call to a generator function return?",
+      "options": [
+        "A generator object that runs the body on each next() call",
+        "A list that holds every value that the function yields",
+        "The first value that the function yields, and then it stops",
+        "None, because the function body has no return statement"
+      ],
+      "correct": 0,
+      "explanation": "The call runs none of the body. It returns a generator object. Each next() call runs the body to the next yield and pauses there."
+    },
+    {
+      "stage": "check",
+      "question": "The call batches(range(10), 4) uses the default drop_last=False. Which batch sizes does it give?",
+      "options": [
+        "2, 4, 4",
+        "4, 4, 2",
+        "4, 4, 4",
+        "4, 4"
+      ],
+      "correct": 1,
+      "explanation": "islice takes up to four items at a time. Ten items give two full batches and a last batch of two items. With drop_last=True, the generator removes the last batch."
+    },
+    {
+      "stage": "check",
+      "question": "Why is a pure-Python dot product over a million floats much slower than the NumPy dot product?",
+      "options": [
+        "Python floats have less precision than the NumPy float64 values",
+        "The for loop makes a full copy of the list on every single pass",
+        "The interpreter does type checks and makes objects per element",
+        "The zip() function sorts both input lists before it pairs the items"
+      ],
+      "correct": 2,
+      "explanation": "Both versions do the same arithmetic on 64-bit floats. The Python loop runs about ten bytecode instructions for each element and makes a float object for each result. NumPy runs one compiled loop over raw 8-byte values."
+    },
+    {
+      "stage": "post",
+      "question": "The function def add(item, bucket=[]) appends item to bucket and returns bucket. You call add(1) and then add(2). What does the second call return?",
+      "options": [
+        "[1]",
+        "[2, 1]",
+        "[2]",
+        "[1, 2]"
+      ],
+      "correct": 3,
+      "explanation": "Python evaluates the default list once, when it runs the def statement. Both calls append to that one list. Use None as the default and create the list inside the function."
+    },
+    {
+      "stage": "post",
+      "question": "You standardize the features before you train a model. Where must the means and standard deviations come from?",
+      "options": [
+        "The training split only",
+        "The test split only",
+        "Each mini-batch on its own",
+        "The training and test splits together"
+      ],
+      "correct": 0,
+      "explanation": "Statistics from the test split put test information into training, and the test score is then too high. Compute them on the training split, and apply the same values to the test split."
+    }
+  ]
+}

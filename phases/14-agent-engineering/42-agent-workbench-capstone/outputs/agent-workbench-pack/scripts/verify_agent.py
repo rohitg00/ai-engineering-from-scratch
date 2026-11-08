@@ -14,13 +14,13 @@ ROOT = Path(__file__).resolve().parent.parent
 def _load_json(path: Path, default):
     if not path.exists():
         return default
-    return json.loads(path.read_text())
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _load_jsonl(path: Path) -> list[dict]:
     if not path.exists():
         return []
-    return [json.loads(ln) for ln in path.read_text().splitlines() if ln.strip()]
+    return [json.loads(ln) for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
 
 
 def _normalize_command(cmd) -> str:
@@ -78,7 +78,7 @@ def main() -> int:
     report = run_checks(args.task_id)
     out = ROOT / "outputs" / "verification" / f"{args.task_id}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(report, indent=2) + "\n")
+    out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
     if not report["passed"]:
         print("verification failed", file=sys.stderr)

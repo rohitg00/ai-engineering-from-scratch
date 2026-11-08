@@ -16,7 +16,7 @@
 
 ## The Problem
 
-A naive allreduce over N ranks sends N times the tensor to a root and broadcasts N times back. Bandwidth scales as O(N) per rank, the root becomes a bottleneck, and the wall-clock floor is the slowest link times N. Ring allreduce flattens that into 2(N-1) chunks of size T/N, so per-rank bytes drop to 2T(N-1)/N independent of cluster size. Tree allreduce wins on small N and high-latency links because depth is log2(N) hops instead of 2(N-1). Pick the wrong topology for the cluster shape and the slowest GPU dictates step time.
+A naive allreduce over N ranks sends N times the tensor to a root and broadcasts N times back. Bandwidth scales as $O(N)$ per rank, the root becomes a bottleneck, and the wall-clock floor is the slowest link times N. Ring allreduce flattens that into $2(N-1)$ chunks of size $T/N$, so per-rank bytes drop to $2T(N-1)/N$, which approaches $2T$ as N grows and never exceeds it, whatever the cluster size. Tree allreduce wins on small N and high-latency links because depth is $\log_2(N)$ hops instead of $2(N-1)$. Pick the wrong topology for the cluster shape and the slowest GPU dictates step time.
 
 Every distributed training framework you will read this track depends on these four primitives. PyTorch DDP synchronises gradients with one allreduce per parameter bucket. ZeRO shards optimiser state by reduce_scatter and broadcasts updated parameters by allgather. FSDP turns the full forward into allgather plus reduce_scatter. Pipeline parallel needs broadcast for activations across stage groups. If you cannot implement the four collectives, you cannot reason about why training stalls, why the gradient mismatch shows up at rank 3, or why the pipeline bubble doubles when you swap topologies.
 
@@ -97,7 +97,7 @@ Production patterns:
 
 ## Ship It
 
-Use the queue-mesh primitives in lessons 77-81. Lesson 77 wires allreduce into DDP. Lesson 78 wires reduce_scatter into ZeRO. Lesson 79 wires broadcast into pipeline activations. Lesson 81 composes all four into the end-to-end demo.
+Use the queue-mesh primitives in lessons 77-81. Lesson 77 wires allreduce into DDP. Lesson 78 wires reduce_scatter into ZeRO. Lesson 79 moves pipeline activations with point-to-point send and recv, not a collective. Lesson 81 composes all four into the end-to-end demo.
 
 ## Exercises
 

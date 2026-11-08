@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 236" role="img" aria-labelledby="fig-6-3b-title fig-6-3b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-3b-title">The KVPoll states of one transfer</title>
+  <desc id="fig-6-3b-desc">Four states in a row: Bootstrapping 1, WaitingForInput 2, Transferring 3, and Success 4. Each moves to the next. Below them, Failed 0 can be reached from bootstrapping, waiting, and transferring.</desc>
+  <defs><marker id="fig-6-3b-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-6-3b-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONE REQUEST, ONE TRANSFER</text>
+  <rect x="20" y="34" width="140" height="50" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="90" y="54.1" font-size="12" text-anchor="middle" font-weight="700">Bootstrapping</text>
+  <text x="90" y="71.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">KVPoll 1</text>
+  <rect x="176" y="34" width="140" height="50" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="246" y="54.1" font-size="12" text-anchor="middle" font-weight="700">WaitingForInput</text>
+  <text x="246" y="71.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">KVPoll 2</text>
+  <rect x="332" y="34" width="140" height="50" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="402" y="54.1" font-size="12" text-anchor="middle" font-weight="700">Transferring</text>
+  <text x="402" y="71.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">KVPoll 3</text>
+  <rect x="488" y="34" width="140" height="50" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="558" y="54.1" font-size="12" text-anchor="middle" font-weight="700">Success</text>
+  <text x="558" y="71.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">KVPoll 4</text>
+  <line x1="160" y1="59" x2="175" y2="59" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-3b-head-amber)"/>
+  <line x1="316" y1="59" x2="331" y2="59" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-3b-head-amber)"/>
+  <line x1="472" y1="59" x2="487" y2="59" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-3b-head-amber)"/>
+  <rect x="230" y="164" width="180" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="320" y="184.25" font-size="12.5" text-anchor="middle" font-weight="700">Failed</text>
+  <text x="320" y="201.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">KVPoll 0</text>
+  <line x1="90" y1="84" x2="260" y2="163" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-3b-head-rose)"/>
+  <line x1="246" y1="84" x2="320" y2="163" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-3b-head-rose)"/>
+  <line x1="402" y1="84" x2="380" y2="163" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-3b-head-rose)"/>
+</svg>

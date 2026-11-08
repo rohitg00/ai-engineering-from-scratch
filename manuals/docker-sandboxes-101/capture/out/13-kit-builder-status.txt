@@ -1,0 +1,5 @@
+$ sbx kit builder status
+Builder:      not created (the first source-form kit build creates it)
+Builder kit:  docker.io/docker/sbx-kit-builder:1
+Kit registry: 127.0.0.1:5411 — reachable
+[exit 0]

@@ -1,0 +1,89 @@
+{"agent_name": "root", "available_agents": [{"description": "Runs shell commands under a permission list and a hook.", "model": "ai/qwen3:4b", "name": "root", "provider": "dmr"}], "current_agent": "root", "timestamp": "<ts>", "type": "team_info"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_started"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_finished"}
+{"agent_name": "root", "available_tools": 1, "loading": false, "timestamp": "<ts>", "type": "toolset_info"}
+{"message": "Run the shell command: echo m101-ok", "session_id": "<uuid>", "session_position": 0, "timestamp": "<ts>", "type": "user_message"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "stream_started"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_started"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_finished"}
+{"agent_name": "root", "available_tools": 1, "loading": false, "timestamp": "<ts>", "type": "toolset_info"}
+{"agent_name": "root", "description": "Runs shell commands under a permission list and a hook.", "model": "dmr/ai/qwen3:4b", "timestamp": "<ts>", "type": "agent_info"}
+{"agent_name": "root", "assistant_message_empty": true, "has_tool_calls": true, "session_id": "<uuid>", "timestamp": "<ts>", "type": "message_added"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "token_usage", "usage": {"context_length": "<n>", "context_limit": "<n>", "cost": "<n>", "input_tokens": "<n>", "last_message": {"Cost": 0, "Model": "dmr/ai/qwen3:4b", "cached_input_tokens": "<n>", "cached_write_tokens": "<n>", "finish_reason": "tool_calls", "input_tokens": "<n>", "output_tokens": "<n>"}, "output_tokens": "<n>"}}
+{"agent_name": "root", "timestamp": "<ts>", "tool_call": {"function": {"arguments": "{\"cmd\": \"echo m101-ok\"}", "name": "shell"}, "id": "<call-id>", "type": "function"}, "tool_definition": {"annotations": {"idempotentHint": false, "readOnlyHint": false, "title": "Shell"}, "category": "shell", "description": "Executes the given shell command with zsh on macOS. If unsure which shell syntax to use, call get_environment_info first.", "name": "shell", "outputSchema": {"type": "string"}, "parameters": {"additionalProperties": false, "properties": {"cmd": {"description": "Shell command", "type": "string"}, "cwd": {"description": "Working directory (default \".\")", "type": "string"}, "timeout": {"description": "Timeout in seconds (default 30)", "type": "integer"}}, "required": ["cmd"], "type": "object"}}, "type": "tool_call"}
+{"agent_name": "root", "hook_event": "pre_tool_use_pre_yolo", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_started"}
+{"agent_name": "root", "hook_event": "tool_input_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_started"}
+{"agent_name": "root", "hook_event": "tool_response_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_started"}
+{"agent_name": "root", "hook_event": "tool_response_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_started"}
+{"agent_name": "root", "allowed": true, "duration_ms": "<n>", "hook_event": "pre_tool_use_pre_yolo", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_finished"}
+{"agent_name": "root", "allowed": true, "duration_ms": "<n>", "hook_event": "tool_input_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_finished"}
+{"agent_name": "root", "allowed": true, "duration_ms": "<n>", "hook_event": "tool_response_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_finished"}
+{"agent_name": "root", "allowed": true, "duration_ms": "<n>", "hook_event": "tool_response_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_finished"}
+{"agent_name": "root", "output": "m101-ok\n", "timestamp": "<ts>", "tool_call_id": "<call-id>", "tool_definition": {"annotations": {"idempotentHint": false, "readOnlyHint": false, "title": "Shell"}, "category": "shell", "description": "Executes the given shell command with zsh on macOS. If unsure which shell syntax to use, call get_environment_info first.", "name": "shell", "outputSchema": {"type": "string"}, "parameters": {"additionalProperties": false, "properties": {"cmd": {"description": "Shell command", "type": "string"}, "cwd": {"description": "Working directory (default \".\")", "type": "string"}, "timeout": {"description": "Timeout in seconds (default 30)", "type": "integer"}}, "required": ["cmd"], "type": "object"}}, "type": "tool_call_output"}
+{"agent_name": "root", "response": "m101-ok", "result": {"output": "m101-ok"}, "timestamp": "<ts>", "tool_call_id": "<call-id>", "tool_definition": {"annotations": {"idempotentHint": false, "readOnlyHint": false, "title": "Shell"}, "category": "shell", "description": "Executes the given shell command with zsh on macOS. If unsure which shell syntax to use, call get_environment_info first.", "name": "shell", "outputSchema": {"type": "string"}, "parameters": {"additionalProperties": false, "properties": {"cmd": {"description": "Shell command", "type": "string"}, "cwd": {"description": "Working directory (default \".\")", "type": "string"}, "timeout": {"description": "Timeout in seconds (default 30)", "type": "integer"}}, "required": ["cmd"], "type": "object"}}, "type": "tool_call_response"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "message_added"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_started"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_finished"}
+{"agent_name": "root", "available_tools": 1, "loading": false, "timestamp": "<ts>", "type": "toolset_info"}
+{"agent_name": "root", "description": "Runs shell commands under a permission list and a hook.", "model": "dmr/ai/qwen3:4b", "timestamp": "<ts>", "type": "agent_info"}
+{"agent_name": "root", "content": "echo m101-ok\nm101-ok", "message_id": "<uuid>", "session_id": "<uuid>", "timestamp": "<ts>", "type": "agent_choice"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "message_added"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "token_usage", "usage": {"context_length": "<n>", "context_limit": "<n>", "cost": "<n>", "input_tokens": "<n>", "last_message": {"Cost": 0, "Model": "dmr/ai/qwen3:4b", "cached_input_tokens": "<n>", "cached_write_tokens": "<n>", "finish_reason": "stop", "input_tokens": "<n>", "output_tokens": "<n>"}, "output_tokens": "<n>"}}
+{"agent_name": "root", "finish_reason": "stop", "reason": "normal", "session_id": "<uuid>", "timestamp": "<ts>", "type": "stream_stopped"}
+{"agent_name": "root", "available_agents": [{"description": "Runs shell commands under a permission list and a hook.", "model": "ai/qwen3:4b", "name": "root", "provider": "dmr"}], "current_agent": "root", "timestamp": "<ts>", "type": "team_info"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_started"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_finished"}
+{"agent_name": "root", "available_tools": 1, "loading": false, "timestamp": "<ts>", "type": "toolset_info"}
+{"message": "Run the shell command: pwd", "session_id": "<uuid>", "session_position": 4, "timestamp": "<ts>", "type": "user_message"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "stream_started"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_started"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_finished"}
+{"agent_name": "root", "available_tools": 1, "loading": false, "timestamp": "<ts>", "type": "toolset_info"}
+{"agent_name": "root", "description": "Runs shell commands under a permission list and a hook.", "model": "dmr/ai/qwen3:4b", "timestamp": "<ts>", "type": "agent_info"}
+{"agent_name": "root", "assistant_message_empty": true, "has_tool_calls": true, "session_id": "<uuid>", "timestamp": "<ts>", "type": "message_added"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "token_usage", "usage": {"context_length": "<n>", "context_limit": "<n>", "cost": "<n>", "input_tokens": "<n>", "last_message": {"Cost": 0, "Model": "dmr/ai/qwen3:4b", "cached_input_tokens": "<n>", "cached_write_tokens": "<n>", "finish_reason": "tool_calls", "input_tokens": "<n>", "output_tokens": "<n>"}, "output_tokens": "<n>"}}
+{"agent_name": "root", "metadata": {"blast_radius": "safe", "category": "fs-read", "reason": "Command matches safe read-only pattern: pwd", "safety_label": "safe"}, "timestamp": "<ts>", "tool_call": {"function": {"arguments": "{\"cmd\": \"pwd\"}", "name": "shell"}, "id": "<call-id>", "type": "function"}, "tool_definition": {"annotations": {"idempotentHint": false, "readOnlyHint": false, "title": "Shell"}, "category": "shell", "description": "Executes the given shell command with zsh on macOS. If unsure which shell syntax to use, call get_environment_info first.", "name": "shell", "outputSchema": {"type": "string"}, "parameters": {"additionalProperties": false, "properties": {"cmd": {"description": "Shell command", "type": "string"}, "cwd": {"description": "Working directory (default \".\")", "type": "string"}, "timeout": {"description": "Timeout in seconds (default 30)", "type": "integer"}}, "required": ["cmd"], "type": "object"}}, "type": "tool_call_confirmation"}
+{"agent_name": "root", "hook_event": "pre_tool_use_pre_yolo", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_started"}
+{"agent_name": "root", "hook_event": "tool_input_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_started"}
+{"agent_name": "root", "hook_event": "tool_response_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_started"}
+{"agent_name": "root", "allowed": true, "duration_ms": "<n>", "hook_event": "pre_tool_use_pre_yolo", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_finished"}
+{"agent_name": "root", "allowed": true, "duration_ms": "<n>", "hook_event": "tool_input_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_finished"}
+{"agent_name": "root", "allowed": true, "duration_ms": "<n>", "hook_event": "tool_response_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_finished"}
+{"agent_name": "root", "response": "The user rejected the tool call.", "result": {"isError": true, "output": "The user rejected the tool call."}, "timestamp": "<ts>", "tool_call_id": "<call-id>", "tool_definition": {"annotations": {"idempotentHint": false, "readOnlyHint": false, "title": "Shell"}, "category": "shell", "description": "Executes the given shell command with zsh on macOS. If unsure which shell syntax to use, call get_environment_info first.", "name": "shell", "outputSchema": {"type": "string"}, "parameters": {"additionalProperties": false, "properties": {"cmd": {"description": "Shell command", "type": "string"}, "cwd": {"description": "Working directory (default \".\")", "type": "string"}, "timeout": {"description": "Timeout in seconds (default 30)", "type": "integer"}}, "required": ["cmd"], "type": "object"}}, "type": "tool_call_response"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "message_added"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_started"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_finished"}
+{"agent_name": "root", "available_tools": 1, "loading": false, "timestamp": "<ts>", "type": "toolset_info"}
+{"agent_name": "root", "description": "Runs shell commands under a permission list and a hook.", "model": "dmr/ai/qwen3:4b", "timestamp": "<ts>", "type": "agent_info"}
+{"agent_name": "root", "content": "pwd\nThe user rejected the tool call.", "message_id": "<uuid>", "session_id": "<uuid>", "timestamp": "<ts>", "type": "agent_choice"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "message_added"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "token_usage", "usage": {"context_length": "<n>", "context_limit": "<n>", "cost": "<n>", "input_tokens": "<n>", "last_message": {"Cost": 0, "Model": "dmr/ai/qwen3:4b", "cached_input_tokens": "<n>", "cached_write_tokens": "<n>", "finish_reason": "stop", "input_tokens": "<n>", "output_tokens": "<n>"}, "output_tokens": "<n>"}}
+{"agent_name": "root", "finish_reason": "stop", "reason": "normal", "session_id": "<uuid>", "timestamp": "<ts>", "type": "stream_stopped"}
+{"agent_name": "root", "available_agents": [{"description": "Runs shell commands under a permission list and a hook.", "model": "ai/qwen3:4b", "name": "root", "provider": "dmr"}], "current_agent": "root", "timestamp": "<ts>", "type": "team_info"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_started"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_finished"}
+{"agent_name": "root", "available_tools": 1, "loading": false, "timestamp": "<ts>", "type": "toolset_info"}
+{"message": "Run the shell command: rm -rf work/m101-nothing", "session_id": "<uuid>", "session_position": 8, "timestamp": "<ts>", "type": "user_message"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "stream_started"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_started"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_finished"}
+{"agent_name": "root", "available_tools": 1, "loading": false, "timestamp": "<ts>", "type": "toolset_info"}
+{"agent_name": "root", "description": "Runs shell commands under a permission list and a hook.", "model": "dmr/ai/qwen3:4b", "timestamp": "<ts>", "type": "agent_info"}
+{"agent_name": "root", "assistant_message_empty": true, "has_tool_calls": true, "session_id": "<uuid>", "timestamp": "<ts>", "type": "message_added"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "token_usage", "usage": {"context_length": "<n>", "context_limit": "<n>", "cost": "<n>", "input_tokens": "<n>", "last_message": {"Cost": 0, "Model": "dmr/ai/qwen3:4b", "cached_input_tokens": "<n>", "cached_write_tokens": "<n>", "finish_reason": "tool_calls", "input_tokens": "<n>", "output_tokens": "<n>"}, "output_tokens": "<n>"}}
+{"agent_name": "root", "hook_event": "pre_tool_use_pre_yolo", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_started"}
+{"agent_name": "root", "hook_event": "tool_input_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_started"}
+{"agent_name": "root", "hook_event": "tool_response_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_started"}
+{"agent_name": "root", "allowed": true, "duration_ms": "<n>", "hook_event": "pre_tool_use_pre_yolo", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_finished"}
+{"agent_name": "root", "allowed": true, "duration_ms": "<n>", "hook_event": "tool_input_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_finished"}
+{"agent_name": "root", "allowed": true, "duration_ms": "<n>", "hook_event": "tool_response_transform", "session_id": "<uuid>", "timestamp": "<ts>", "type": "hook_finished"}
+{"agent_name": "root", "response": "Tool 'shell' is denied by permissions configuration.", "result": {"isError": true, "output": "Tool 'shell' is denied by permissions configuration."}, "timestamp": "<ts>", "tool_call_id": "<call-id>", "tool_definition": {"annotations": {"idempotentHint": false, "readOnlyHint": false, "title": "Shell"}, "category": "shell", "description": "Executes the given shell command with zsh on macOS. If unsure which shell syntax to use, call get_environment_info first.", "name": "shell", "outputSchema": {"type": "string"}, "parameters": {"additionalProperties": false, "properties": {"cmd": {"description": "Shell command", "type": "string"}, "cwd": {"description": "Working directory (default \".\")", "type": "string"}, "timeout": {"description": "Timeout in seconds (default 30)", "type": "integer"}}, "required": ["cmd"], "type": "object"}}, "type": "tool_call_response"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "message_added"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_started"}
+{"agent_name": "root", "timestamp": "<ts>", "type": "mcp_init_finished"}
+{"agent_name": "root", "available_tools": 1, "loading": false, "timestamp": "<ts>", "type": "toolset_info"}
+{"agent_name": "root", "description": "Runs shell commands under a permission list and a hook.", "model": "dmr/ai/qwen3:4b", "timestamp": "<ts>", "type": "agent_info"}
+{"agent_name": "root", "content": "rm -rf work/m101-nothing\nTool 'shell' is denied by permissions configuration.", "message_id": "<uuid>", "session_id": "<uuid>", "timestamp": "<ts>", "type": "agent_choice"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "message_added"}
+{"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "token_usage", "usage": {"context_length": "<n>", "context_limit": "<n>", "cost": "<n>", "input_tokens": "<n>", "last_message": {"Cost": 0, "Model": "dmr/ai/qwen3:4b", "cached_input_tokens": "<n>", "cached_write_tokens": "<n>", "finish_reason": "stop", "input_tokens": "<n>", "output_tokens": "<n>"}, "output_tokens": "<n>"}}
+{"agent_name": "root", "finish_reason": "stop", "reason": "normal", "session_id": "<uuid>", "timestamp": "<ts>", "type": "stream_stopped"}

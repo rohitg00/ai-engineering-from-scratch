@@ -1,0 +1,161 @@
+[
+  {
+    "exchange": 1,
+    "title": "SendStreamingMessage: deploy to staging",
+    "events": [
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "task": {
+            "id": "ecf2dcb6-79c8-48f8-8868-24a0541781f4",
+            "contextId": "9e8e6bcf-b117-48b9-992a-67971cddcb1b",
+            "status": {
+              "state": "TASK_STATE_SUBMITTED",
+              "timestamp": "2026-10-06T09:00:00.250Z"
+            },
+            "history": [
+              {
+                "messageId": "6513270e-269e-4d37-b2a7-4de452e6b438",
+                "contextId": "9e8e6bcf-b117-48b9-992a-67971cddcb1b",
+                "taskId": "ecf2dcb6-79c8-48f8-8868-24a0541781f4",
+                "role": "ROLE_USER",
+                "parts": [
+                  {
+                    "text": "Deploy build 2026.10.06-1 to staging"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "statusUpdate": {
+            "taskId": "ecf2dcb6-79c8-48f8-8868-24a0541781f4",
+            "contextId": "9e8e6bcf-b117-48b9-992a-67971cddcb1b",
+            "status": {
+              "state": "TASK_STATE_WORKING",
+              "message": {
+                "messageId": "b157c0f0-4506-4ee9-9e6b-bc0989b8ff63",
+                "contextId": "9e8e6bcf-b117-48b9-992a-67971cddcb1b",
+                "taskId": "ecf2dcb6-79c8-48f8-8868-24a0541781f4",
+                "role": "ROLE_AGENT",
+                "parts": [
+                  {
+                    "text": "Preparing build 2026.10.06-1 for staging"
+                  }
+                ]
+              },
+              "timestamp": "2026-10-06T09:00:00.500Z"
+            }
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "statusUpdate": {
+            "taskId": "ecf2dcb6-79c8-48f8-8868-24a0541781f4",
+            "contextId": "9e8e6bcf-b117-48b9-992a-67971cddcb1b",
+            "status": {
+              "state": "TASK_STATE_AUTH_REQUIRED",
+              "message": {
+                "messageId": "e110a262-357c-4004-9776-14208a841017",
+                "contextId": "9e8e6bcf-b117-48b9-992a-67971cddcb1b",
+                "taskId": "ecf2dcb6-79c8-48f8-8868-24a0541781f4",
+                "role": "ROLE_AGENT",
+                "parts": [
+                  {
+                    "text": "An operator must approve this deploy at http://localhost:41243/approve/ecf2dcb6-79c8-48f8-8868-24a0541781f4"
+                  }
+                ]
+              },
+              "timestamp": "2026-10-06T09:00:00.750Z"
+            }
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "statusUpdate": {
+            "taskId": "ecf2dcb6-79c8-48f8-8868-24a0541781f4",
+            "contextId": "9e8e6bcf-b117-48b9-992a-67971cddcb1b",
+            "status": {
+              "state": "TASK_STATE_WORKING",
+              "message": {
+                "messageId": "4913547e-c3a1-4786-8c68-207b32cfb20d",
+                "contextId": "9e8e6bcf-b117-48b9-992a-67971cddcb1b",
+                "taskId": "ecf2dcb6-79c8-48f8-8868-24a0541781f4",
+                "role": "ROLE_AGENT",
+                "parts": [
+                  {
+                    "text": "Approved by an operator. Rolling out to staging"
+                  }
+                ]
+              },
+              "timestamp": "2026-10-06T09:00:01.000Z"
+            }
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "ecf2dcb6-79c8-48f8-8868-24a0541781f4",
+            "contextId": "9e8e6bcf-b117-48b9-992a-67971cddcb1b",
+            "artifact": {
+              "artifactId": "deploy-report",
+              "name": "deploy-report.json",
+              "parts": [
+                {
+                  "data": {
+                    "environment": "staging",
+                    "build": "2026.10.06-1",
+                    "url": "https://staging.example.com",
+                    "healthChecks": "3 of 3 passing"
+                  },
+                  "mediaType": "application/json"
+                }
+              ]
+            },
+            "lastChunk": true
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "statusUpdate": {
+            "taskId": "ecf2dcb6-79c8-48f8-8868-24a0541781f4",
+            "contextId": "9e8e6bcf-b117-48b9-992a-67971cddcb1b",
+            "status": {
+              "state": "TASK_STATE_COMPLETED",
+              "message": {
+                "messageId": "2a617260-4bd3-4e34-b7fb-f0a81f4680fc",
+                "contextId": "9e8e6bcf-b117-48b9-992a-67971cddcb1b",
+                "taskId": "ecf2dcb6-79c8-48f8-8868-24a0541781f4",
+                "role": "ROLE_AGENT",
+                "parts": [
+                  {
+                    "text": "Build 2026.10.06-1 is live on staging"
+                  }
+                ]
+              },
+              "timestamp": "2026-10-06T09:00:01.250Z"
+            }
+          }
+        }
+      }
+    ]
+  }
+]

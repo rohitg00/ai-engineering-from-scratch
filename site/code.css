@@ -1,0 +1,201 @@
+:root {
+  --cb-bg: var(--code-bg, #efece0);
+  --cb-edge: var(--rule-soft, rgba(26, 26, 26, 0.16));
+  --cb-ink: var(--ink, #1a1a1a);
+  --cb-soft: var(--ink-soft, #4a4a4a);
+  --cb-mute: #66655f;
+  --cb-accent: var(--blueprint, #3553ff);
+  --cb-k: #2a45d6;
+  --cb-s: #2d6e35;
+  --cb-n: #9c3d1c;
+  --cb-f: #6a3fb5;
+  --cb-v: #7a5200;
+  --cb-c: #66655f;
+  --cb-p: #4a4a4a;
+  --cb-a-black: #1a1a1a;
+  --cb-a-red: #b42318;
+  --cb-a-green: #2d6e35;
+  --cb-a-yellow: #7a5200;
+  --cb-a-blue: #2a45d6;
+  --cb-a-magenta: #9b2c8f;
+  --cb-a-cyan: #0f6670;
+  --cb-a-white: #4a4a4a;
+}
+
+[data-theme="dark"] {
+  --cb-mute: #8f8d88;
+  --cb-k: #8aa5ff;
+  --cb-s: #9ed39a;
+  --cb-n: #f2a07b;
+  --cb-f: #c9a6ff;
+  --cb-v: #e3c06b;
+  --cb-c: #8f8d88;
+  --cb-p: #b8b6b0;
+  --cb-a-black: #8f8d88;
+  --cb-a-red: #ff8a80;
+  --cb-a-green: #9ed39a;
+  --cb-a-yellow: #e3c06b;
+  --cb-a-blue: #8aa5ff;
+  --cb-a-magenta: #f0a0e8;
+  --cb-a-cyan: #7fd6df;
+  --cb-a-white: #e8e6dc;
+}
+
+code,
+pre,
+kbd,
+samp,
+textarea {
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
+.cb {
+  min-width: 0;
+  max-width: 100%;
+  margin: 16px 0;
+  border: 1px solid var(--cb-edge);
+  background: var(--cb-bg);
+}
+
+.cb-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 34px;
+  padding-left: 12px;
+  border-bottom: 1px solid var(--cb-edge);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.68rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cb-mute);
+}
+
+.cb-label {
+  flex: 0 0 auto;
+}
+
+.cb-head > :not(.cb-label):not(.cb-copy) {
+  min-width: 0;
+}
+
+.cb-copy {
+  align-self: stretch;
+  min-width: 72px;
+  min-height: 34px;
+  margin-left: auto;
+  padding: 0 12px;
+  border: 0;
+  border-left: 1px solid var(--cb-edge);
+  background: transparent;
+  color: var(--cb-soft);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.cb-copy:hover,
+.cb-copy:focus-visible {
+  color: var(--cb-accent);
+}
+
+.cb-copy:focus-visible {
+  outline: 2px solid var(--cb-accent);
+  outline-offset: -2px;
+}
+
+.cb pre {
+  position: static;
+  margin: 0;
+  padding: 12px 14px;
+  overflow-x: auto;
+  border: 0;
+  background: none;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  white-space: pre;
+  tab-size: 4;
+}
+
+.cb pre code {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cb-ink);
+  font: inherit;
+  white-space: inherit;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.cb[data-kind="output"] pre code,
+.cb-o {
+  color: var(--cb-soft);
+}
+
+.cb-p {
+  color: var(--cb-mute);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+:is(.cb, .cs-ann) .k { color: var(--cb-k); }
+:is(.cb, .cs-ann) .s { color: var(--cb-s); }
+:is(.cb, .cs-ann) .n { color: var(--cb-n); }
+:is(.cb, .cs-ann) .f { color: var(--cb-f); }
+:is(.cb, .cs-ann) .v { color: var(--cb-v); }
+:is(.cb, .cs-ann) .p { color: var(--cb-p); }
+:is(.cb, .cs-ann) .u { color: var(--cb-k); text-decoration: underline; }
+:is(.cb, .cs-ann) .c { color: var(--cb-c); font-style: italic; }
+:is(.cb, .cs-ann) .i { font-style: italic; }
+:is(.cb, .cs-ann) .b { font-weight: 700; }
+.syn-keyword { color: var(--cb-k); }
+.syn-string { color: var(--cb-s); }
+.syn-number { color: var(--cb-n); }
+.syn-comment { color: var(--cb-c); font-style: italic; }
+.a-black { color: var(--cb-a-black); }
+.a-red { color: var(--cb-a-red); }
+.a-green { color: var(--cb-a-green); }
+.a-yellow { color: var(--cb-a-yellow); }
+.a-blue { color: var(--cb-a-blue); }
+.a-magenta { color: var(--cb-a-magenta); }
+.a-cyan { color: var(--cb-a-cyan); }
+.a-white { color: var(--cb-a-white); }
+
+.cs-ann > .cb-copy {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 0;
+  min-height: 0;
+  padding: 1px 6px;
+  border: 1px solid var(--cb-edge);
+  background: var(--bg, #fafaf5);
+  font-size: 0.82em;
+}
+
+.cs-ann > .cb-copy + * {
+  padding-right: 56px;
+}
+
+.pr-layout > * {
+  min-width: 0;
+}
+
+@media print {
+  .cb-copy {
+    display: none;
+  }
+
+  .cb pre {
+    overflow: visible;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}

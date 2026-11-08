@@ -1,0 +1,17 @@
+title: the auto-kit that docker-agent staged under the workspace
+source: manuals/docker-sandboxes-101/capture/out/27-kit-cache.txt
+lang: console
+note: The manifest has two fields and nothing about a database.
+---
+$ find fixtures/repo-sandbox/.m101/cache/sandbox-kits -maxdepth 3 | sort
+fixtures/repo-sandbox/.m101/cache/sandbox-kits
+fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash>
+fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash>/manifest.json
+fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash>/prompt_files
+fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash>/skills
+
+$ cat fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash>/manifest.json
+{
+  "agent_ref": "$CAPTURE/fixtures/agents/files-sandbox.yaml",
+  "built_at": "<ts>"
+}

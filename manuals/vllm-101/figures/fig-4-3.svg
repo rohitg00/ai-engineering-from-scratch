@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-4-3-title fig-4-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-3-title">Eager mode cost 1.2 to 2.3 percent of the time per token on the L4</title>
+  <desc id="fig-4-3-desc">Median time per output token against users at the same time on an NVIDIA L4 with Qwen3-8B, three seeds per point, both runs on 2026-10-21. Eager mode is 1.2 to 2.3 percent slower at every concurrency, for example 61.1 against 60.4 ms at one user and 131.4 against 129.2 ms at 64 users.</desc>
+  <line x1="66" y1="270" x2="606" y2="270" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="274" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="66" y1="200" x2="606" y2="200" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="204" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">80</text>
+  <line x1="66" y1="130" x2="606" y2="130" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="134" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">110</text>
+  <line x1="66" y1="60" x2="606" y2="60" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="64" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">140</text>
+  <line x1="66" y1="270" x2="606" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="60" x2="66" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="270" x2="66" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="66" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="156" y1="270" x2="156" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="156" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="246" y1="270" x2="246" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="246" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="336" y1="270" x2="336" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="336" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="426" y1="270" x2="426" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="426" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16</text>
+  <line x1="516" y1="270" x2="516" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="516" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">32</text>
+  <line x1="606" y1="270" x2="606" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="606" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">64</text>
+  <text x="336" y="304" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">users at the same time</text>
+  <text x="66" y="48" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median ms per token</text>
+  <path d="M66.0 245.8 L156.0 238.7 L246.0 237.1 L336.0 233.2 L426.0 224.1 L516.0 148.2 L606.0 85.2 L606.0 87.8 L516.0 149.3 L426.0 224.6 L336.0 233.5 L246.0 237.1 L156.0 238.7 L66.0 245.9 Z" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.14" stroke="none"/>
+  <path d="M66.0 245.8 L156.0 238.7 L246.0 237.1 L336.0 233.3 L426.0 224.5 L516.0 149.2 L606.0 85.3" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="66" cy="245.83" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="156" cy="238.66" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="246" cy="237.1" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="336" cy="233.25" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="426" cy="224.52" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="516" cy="149.16" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="606" cy="85.32" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <path d="M66.0 244.2 L156.0 236.2 L246.0 234.3 L336.0 230.4 L426.0 220.5 L516.0 145.5 L606.0 74.6 L606.0 86.9 L516.0 146.6 L426.0 220.9 L336.0 230.4 L246.0 234.3 L156.0 236.4 L66.0 244.2 Z" fill="var(--m-rose-ink, #b0344d)" fill-opacity="0.14" stroke="none"/>
+  <path d="M66.0 244.2 L156.0 236.3 L246.0 234.3 L336.0 230.4 L426.0 220.7 L516.0 146.1 L606.0 80.0" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="66" cy="244.17" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="156" cy="236.28" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="246" cy="234.3" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="336" cy="230.38" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="426" cy="220.72" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="516" cy="146.08" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="606" cy="80.02" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <path d="M66 18 H84" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="90" y="22" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">default, -O2</text>
+  <path d="M187.2 18 H205.2" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="211.2" y="22" font-size="11" fill="var(--m-rose-ink, #b0344d)">--enforce-eager</text>
+</svg>

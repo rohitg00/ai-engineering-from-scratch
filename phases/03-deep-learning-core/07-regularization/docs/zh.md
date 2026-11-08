@@ -43,8 +43,8 @@ graph LR
 
 最簡單、詮釋卻最優雅的正則化手法。訓練時，以機率 p 把每個神經元的輸出隨機設為零。
 
-```
-output = activation(z) * mask    where mask[i] ~ Bernoulli(1 - p)
+```math
+\text{output} = \text{activation}(z) \cdot \text{mask} \quad \text{where }\text{mask}[i] \sim \text{Bernoulli}(1 - p)
 ```
 
 p = 0.5 時，每一次前向傳播都有一半的神經元被歸零。網路必須學出有冗餘的表示，因為它無法預測哪些神經元會在。這防止了共適應（co-adaptation）—— 神經元學會依賴某些特定的其他神經元存在。
@@ -53,9 +53,11 @@ p = 0.5 時，每一次前向傳播都有一半的神經元被歸零。網路必
 
 實務上，這個縮放是在訓練時做，而不是測試時做（inverted dropout，反向 dropout）：
 
-```
-During training:  output = activation(z) * mask / (1 - p)
-During testing:   output = activation(z)   (no change needed)
+```math
+\begin{aligned}
+\text{During training:} \quad & \text{output} = \text{activation}(z) \cdot \text{mask} / (1 - p) \\
+\text{During testing:} \quad & \text{output} = \text{activation}(z) \quad \text{(no change needed)}
+\end{aligned}
 ```
 
 這樣更乾淨，因為測試端的程式碼完全不需要知道 dropout 的存在。
@@ -66,8 +68,8 @@ During testing:   output = activation(z)   (no change needed)
 
 把所有權重的平方大小加進損失裡：
 
-```
-total_loss = task_loss + (lambda / 2) * sum(w_i^2)
+```math
+\text{total\_loss} = \text{task\_loss} + \frac{\lambda}{2} \sum_i w_i^2
 ```
 
 正則化項的梯度是 lambda * w。這意味著每一步都會把每個權重朝零縮小一個與它自身大小成正比的比例。大權重被罰得更重。模型被推向那種沒有任何單一權重佔主導的解。
@@ -88,11 +90,13 @@ lambda 這個超參數控制強度。典型值：
 
 對某一層上一個 mini-batch 的激活值：
 
-```
-mu = (1/B) * sum(x_i)           (batch mean)
-sigma^2 = (1/B) * sum((x_i - mu)^2)   (batch variance)
-x_hat = (x_i - mu) / sqrt(sigma^2 + eps)   (normalize)
-y = gamma * x_hat + beta        (scale and shift)
+```math
+\begin{aligned}
+\mu &= \frac{1}{B} \sum_i x_i && \text{(batch mean)} \\
+\sigma^2 &= \frac{1}{B} \sum_i (x_i - \mu)^2 && \text{(batch variance)} \\
+\hat{x} &= \frac{x_i - \mu}{\sqrt{\sigma^2 + \epsilon}} && \text{(normalize)} \\
+y &= \gamma \hat{x} + \beta && \text{(scale and shift)}
+\end{aligned}
 ```
 
 Gamma 與 beta 是可學習的參數，讓網路在「不正規化才最好」的情況下能把正規化撤銷掉。少了它們，你就是在強迫每一層的輸出都是零均值、單位變異數，而那未必是網路想要的。
@@ -107,11 +111,13 @@ BatchNorm 有一個根本的限制：它依賴批次統計量。批次大小是 
 
 改成跨特徵正規化，而不是跨批次。對單一個樣本：
 
-```
-mu = (1/D) * sum(x_j)           (feature mean)
-sigma^2 = (1/D) * sum((x_j - mu)^2)   (feature variance)
-x_hat = (x_j - mu) / sqrt(sigma^2 + eps)
-y = gamma * x_hat + beta
+```math
+\begin{aligned}
+\mu &= \frac{1}{D} \sum_j x_j && \text{(feature mean)} \\
+\sigma^2 &= \frac{1}{D} \sum_j (x_j - \mu)^2 && \text{(feature variance)} \\
+\hat{x} &= \frac{x_j - \mu}{\sqrt{\sigma^2 + \epsilon}} \\
+y &= \gamma \hat{x} + \beta
+\end{aligned}
 ```
 
 D 是特徵維度。每個樣本各自獨立正規化 —— 完全不依賴批次大小。這就是 Transformer 用 LayerNorm 而不是 BatchNorm 的原因。序列長度會變動、批次大小往往很小（生成時甚至只有 1），而且訓練與推論的運算完全相同。
@@ -122,9 +128,11 @@ Transformer 裡的 LayerNorm 會放在每個自注意力區塊與每個前饋區
 
 把 LayerNorm 的減平均去掉。由 Zhang 與 Sennrich（2019）提出。
 
-```
-rms = sqrt((1/D) * sum(x_j^2))
-y = gamma * x / rms
+```math
+\begin{aligned}
+\text{rms} &= \sqrt{\frac{1}{D} \sum_j x_j^2} \\
+y &= \gamma \cdot \frac{x}{\text{rms}}
+\end{aligned}
 ```
 
 就這樣。不算平均值，也沒有 beta 參數。他們的觀察是：LayerNorm 裡的重新置中（減掉平均值）對模型表現的貢獻極小，卻要花運算。把它拿掉，可以在準確率相同的情況下少掉約 10% 的額外開銷。

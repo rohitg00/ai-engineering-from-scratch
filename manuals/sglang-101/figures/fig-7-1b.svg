@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 452" role="img" aria-labelledby="fig-7-1b-title fig-7-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-1b-title">The order to change SGLang settings</title>
+  <desc id="fig-7-1b-desc">Seven settings in the order this manual changes them: measure with sglang.benchmark.serving, size the KV pool, order the prompt, cap concurrency at the knee, then CUDA graphs and attention backends, then parallelism, and disaggregation last. Each row names the section that measures it.</desc>
+  <circle cx="30" cy="38" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-olive-ink, #515f26)" stroke-width="1"/>
+  <text x="30" y="42" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">1</text>
+  <rect x="52" y="14" width="568" height="48" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="64" y="33.25" font-size="12.5" font-weight="700">measure with sglang.benchmark.serving</text>
+  <text x="64" y="50.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">TTFT, TPOT, and output tok/s at three concurrency levels · 5.1</text>
+  <line x1="30" y1="48" x2="30" y2="89" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <circle cx="30" cy="100" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="30" y="104" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">2</text>
+  <rect x="52" y="76" width="568" height="48" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="64" y="95.25" font-size="12.5" font-weight="700">--mem-fraction-static</text>
+  <text x="64" y="112.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">size the KV pool for the machine you share · 3.2</text>
+  <line x1="30" y1="110" x2="30" y2="151" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <circle cx="30" cy="162" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <text x="30" y="166" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">3</text>
+  <rect x="52" y="138" width="568" height="48" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="64" y="157.25" font-size="12.5" font-weight="700">prompt order</text>
+  <text x="64" y="174.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">shared text first, per-request text last, read cached_tokens · 3.4</text>
+  <line x1="30" y1="172" x2="30" y2="213" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <circle cx="30" cy="224" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="30" y="228" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">4</text>
+  <rect x="52" y="200" width="568" height="48" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="64" y="219.25" font-size="12.5" font-weight="700">--max-running-requests</text>
+  <text x="64" y="236.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">cap concurrency at the knee you measured · 5.1</text>
+  <line x1="30" y1="234" x2="30" y2="275" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <circle cx="30" cy="286" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="30" y="290" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">5</text>
+  <rect x="52" y="262" width="568" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="64" y="281.25" font-size="12.5" font-weight="700">--cuda-graph-backend-decode, --attention-backend</text>
+  <text x="64" y="298.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one change per run, after steps 1 to 4 · 4.1, 4.2</text>
+  <line x1="30" y1="296" x2="30" y2="337" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <circle cx="30" cy="348" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1"/>
+  <text x="30" y="352" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">6</text>
+  <rect x="52" y="324" width="568" height="48" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="64" y="343.25" font-size="12.5" font-weight="700">--tp-size, --dp-size, --attn-dp-size</text>
+  <text x="64" y="360.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">only when one replica is saturated · 6.1</text>
+  <line x1="30" y1="358" x2="30" y2="399" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <circle cx="30" cy="410" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1"/>
+  <text x="30" y="414" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">7</text>
+  <rect x="52" y="386" width="568" height="48" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="64" y="405.25" font-size="12.5" font-weight="700">--disaggregation-mode</text>
+  <text x="64" y="422.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">only when prefill measurably delays decode · 6.3</text>
+</svg>

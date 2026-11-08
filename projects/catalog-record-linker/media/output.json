@@ -1,0 +1,16 @@
+{
+  "title": "catalog-record-linker",
+  "url": "http://127.0.0.1:8879/projects/catalog-record-linker/solution/demo-output/review.html",
+  "actions": [
+    [
+      "fill",
+      "#filter",
+      "a"
+    ],
+    [
+      "js",
+      "document.querySelector('#filter').value='';document.querySelector('#filter').dispatchEvent(new Event('input'))"
+    ]
+  ],
+  "kind": "browser capture"
+}

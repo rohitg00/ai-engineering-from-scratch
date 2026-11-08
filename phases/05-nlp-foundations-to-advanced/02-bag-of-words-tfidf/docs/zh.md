@@ -23,9 +23,11 @@
 
 **TF-IDF** 替詞袋模型重新配權重。一個在每份文件裡都出現的詞不帶資訊，所以把它調小。一個在整個語料庫裡稀有、卻在某一份文件裡頻繁出現的詞是訊號，所以把它調大。
 
-```
-TF-IDF(w, d) = TF(w, d) * IDF(w)
-             = count(w in d) / |d| * log(N / df(w))
+```math
+\begin{aligned}
+\text{TF-IDF}(w, d) &= \text{TF}(w, d) \cdot \text{IDF}(w) \\
+&= \frac{\mathop{\mathrm{count}}(w \text{ in } d)}{|d|} \cdot \log\frac{N}{\mathop{\mathrm{df}}(w)}
+\end{aligned}
 ```
 
 其中 `TF` 是該詞在該文件裡的詞頻，`df` 是文件頻率（有幾份文件含有這個詞），`N` 是文件總數。那個 `log` 讓無所不在的詞的權重不會失控。

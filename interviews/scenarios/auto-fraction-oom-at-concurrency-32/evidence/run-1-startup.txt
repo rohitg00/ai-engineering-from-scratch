@@ -1,0 +1,8 @@
+title: the pool line of the first start
+source: manuals/sglang-101/capture/out/oom-exploratory.log
+lines: 3-4
+lang: text
+note: Read sys_available, kv_budget and pool_size.
+---
+# run 1 startup
+[2026-10-16 13:30:31] Auto-sized attention KV pool: sys_available=27.81 GB, mlx_limit=51.8 GB, mlx_used=0.31 GB, kv_budget=24.25 GB, bytes_per_slot=114688, pool_size=227022

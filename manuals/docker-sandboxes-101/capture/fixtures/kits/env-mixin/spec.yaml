@@ -1,0 +1,11 @@
+schemaVersion: "2"
+kind: mixin
+name: env-mixin
+description: Adds one variable and one allowed host, nothing else.
+environment:
+  variables:
+    M101_FROM_KIT: "yes"
+permissions:
+  network:
+    allow:
+      - example.org

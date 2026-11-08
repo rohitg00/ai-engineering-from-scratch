@@ -1,0 +1,64 @@
+
+dispatch-x86_64-O2.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <dispatch>:
+       0: 83 ff 0f                     	cmpl	$0xf, %edi
+       3: 0f 87 82 00 00 00            	ja	0x8b <dispatch+0x8b>
+       9: 89 f8                        	movl	%edi, %eax
+       b: 48 8d 0d 00 00 00 00         	leaq	(%rip), %rcx            # 0x12 <dispatch+0x12>
+		000000000000000e:  R_X86_64_PC32	.rodata-0x4
+      12: 48 63 04 81                  	movslq	(%rcx,%rax,4), %rax
+      16: 48 01 c8                     	addq	%rcx, %rax
+      19: ff e0                        	jmpq	*%rax
+      1b: 89 f7                        	movl	%esi, %edi
+      1d: e9 00 00 00 00               	jmp	0x22 <dispatch+0x22>
+		000000000000001e:  R_X86_64_PLT32	f0-0x4
+      22: 89 f7                        	movl	%esi, %edi
+      24: e9 00 00 00 00               	jmp	0x29 <dispatch+0x29>
+		0000000000000025:  R_X86_64_PLT32	f14-0x4
+      29: 89 f7                        	movl	%esi, %edi
+      2b: e9 00 00 00 00               	jmp	0x30 <dispatch+0x30>
+		000000000000002c:  R_X86_64_PLT32	f11-0x4
+      30: 89 f7                        	movl	%esi, %edi
+      32: e9 00 00 00 00               	jmp	0x37 <dispatch+0x37>
+		0000000000000033:  R_X86_64_PLT32	f4-0x4
+      37: 89 f7                        	movl	%esi, %edi
+      39: e9 00 00 00 00               	jmp	0x3e <dispatch+0x3e>
+		000000000000003a:  R_X86_64_PLT32	f12-0x4
+      3e: 89 f7                        	movl	%esi, %edi
+      40: e9 00 00 00 00               	jmp	0x45 <dispatch+0x45>
+		0000000000000041:  R_X86_64_PLT32	f9-0x4
+      45: 89 f7                        	movl	%esi, %edi
+      47: e9 00 00 00 00               	jmp	0x4c <dispatch+0x4c>
+		0000000000000048:  R_X86_64_PLT32	f2-0x4
+      4c: 89 f7                        	movl	%esi, %edi
+      4e: e9 00 00 00 00               	jmp	0x53 <dispatch+0x53>
+		000000000000004f:  R_X86_64_PLT32	f15-0x4
+      53: 89 f7                        	movl	%esi, %edi
+      55: e9 00 00 00 00               	jmp	0x5a <dispatch+0x5a>
+		0000000000000056:  R_X86_64_PLT32	f3-0x4
+      5a: 89 f7                        	movl	%esi, %edi
+      5c: e9 00 00 00 00               	jmp	0x61 <dispatch+0x61>
+		000000000000005d:  R_X86_64_PLT32	f7-0x4
+      61: 89 f7                        	movl	%esi, %edi
+      63: e9 00 00 00 00               	jmp	0x68 <dispatch+0x68>
+		0000000000000064:  R_X86_64_PLT32	f1-0x4
+      68: 89 f7                        	movl	%esi, %edi
+      6a: e9 00 00 00 00               	jmp	0x6f <dispatch+0x6f>
+		000000000000006b:  R_X86_64_PLT32	f5-0x4
+      6f: 89 f7                        	movl	%esi, %edi
+      71: e9 00 00 00 00               	jmp	0x76 <dispatch+0x76>
+		0000000000000072:  R_X86_64_PLT32	f13-0x4
+      76: 89 f7                        	movl	%esi, %edi
+      78: e9 00 00 00 00               	jmp	0x7d <dispatch+0x7d>
+		0000000000000079:  R_X86_64_PLT32	f6-0x4
+      7d: 89 f7                        	movl	%esi, %edi
+      7f: e9 00 00 00 00               	jmp	0x84 <dispatch+0x84>
+		0000000000000080:  R_X86_64_PLT32	f10-0x4
+      84: 89 f7                        	movl	%esi, %edi
+      86: e9 00 00 00 00               	jmp	0x8b <dispatch+0x8b>
+		0000000000000087:  R_X86_64_PLT32	f8-0x4
+      8b: b8 ff ff ff ff               	movl	$0xffffffff, %eax       # imm = 0xFFFFFFFF
+      90: c3                           	retq

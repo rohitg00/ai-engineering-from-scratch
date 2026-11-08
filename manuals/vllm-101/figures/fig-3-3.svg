@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-3-3-title fig-3-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-3-title">A larger token budget at 0.5 requests per second on the DGX Spark</title>
+  <desc id="fig-3-3-desc">vLLM with Qwen3-30B-A3B on an NVIDIA GB10, prompts of 1,024 to 4,096 tokens, 64 to 256 output tokens, 0.5 requests per second, three seeds. With a budget of 2,048 tokens, the median first token took 1,145 ms and the P99 ITL was 574 ms. With 16,384 tokens, the first token took 906 ms and the P99 ITL was 798 ms.</desc>
+  <text x="66" y="30" font-size="12" fill="var(--m-ink, #1a1a1a)">median first token, ms</text>
+  <line x1="66" y1="260" x2="286" y2="260" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="264" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="66" y1="155" x2="286" y2="155" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="159" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">750</text>
+  <line x1="66" y1="50" x2="286" y2="50" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="54" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1,500</text>
+  <line x1="66" y1="260" x2="286" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="50" x2="66" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <rect x="91" y="99.74" width="60" height="160.26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="121" y="93.74" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">1,145</text>
+  <text x="121" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2,048</text>
+  <rect x="201" y="133.14" width="60" height="126.86" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="231" y="127.14" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">906</text>
+  <text x="231" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16,384</text>
+  <text x="366" y="30" font-size="12" fill="var(--m-ink, #1a1a1a)">P99 ITL, ms</text>
+  <line x1="366" y1="260" x2="586" y2="260" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="360" y="264" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="366" y1="155" x2="586" y2="155" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="360" y="159" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <line x1="366" y1="50" x2="586" y2="50" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="360" y="54" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1,000</text>
+  <line x1="366" y1="260" x2="586" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="366" y1="50" x2="366" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <rect x="391" y="139.56" width="60" height="120.44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="421" y="133.56" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">574</text>
+  <text x="421" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2,048</text>
+  <rect x="501" y="92.46" width="60" height="167.54" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="531" y="86.46" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">798</text>
+  <text x="531" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16,384</text>
+  <text x="66" y="312" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Lower is better on both. Bars are labelled by --max-num-batched-tokens.</text>
+</svg>

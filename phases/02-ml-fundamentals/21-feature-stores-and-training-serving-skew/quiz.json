@@ -1,0 +1,78 @@
+{
+  "lesson": "21-feature-stores-and-training-serving-skew",
+  "title": "Feature Stores and Training-Serving Skew",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A team joins churn labels to a user feature table on user_id only. The table holds each user's newest values. What goes wrong?",
+      "options": [
+        "The join drops every user who has more than one label in the set",
+        "Training rows get feature values from after the label time",
+        "Nothing, because the newest values are the most accurate ones",
+        "The model trains slower because the table has too many columns"
+      ],
+      "correct": 1,
+      "explanation": "Newest values come from after most label times. For churn, they already show the quiet period that the label measures, so the input contains the answer."
+    },
+    {
+      "stage": "check",
+      "question": "A label is at day 20. Feature rows exist at days 6, 17, and 24, and the TTL is 7 days. Which row does a point-in-time join use?",
+      "options": [
+        "No row, so the default value is used",
+        "The day 6 row",
+        "The day 17 row",
+        "The day 24 row"
+      ],
+      "correct": 2,
+      "explanation": "The join keeps rows at or before day 20, takes the latest one, and checks its age. Day 17 is 3 days old, inside the 7-day TTL."
+    },
+    {
+      "stage": "check",
+      "question": "Training fills a missing purchase history with 365 days. The serving service fills it with -1. What kind of skew is this?",
+      "options": [
+        "Different defaults between the two paths",
+        "Stale features from a failed materialization job",
+        "Concept drift in the relation between input and label",
+        "Time travel from a naive join on the user key"
+      ],
+      "correct": 0,
+      "explanation": "The two paths disagree only when a value is missing. New users then get an input that the model never saw in training."
+    },
+    {
+      "stage": "check",
+      "question": "Why does a feature registry create a new version when a definition changes, instead of editing the old one?",
+      "options": [
+        "Editing a definition deletes the backfilled history in the offline store",
+        "Models trained on the old definition still need the old values",
+        "The online store can hold only one feature per entity at a time",
+        "Versions make the point-in-time join run faster on large tables"
+      ],
+      "correct": 1,
+      "explanation": "A deployed model expects the feature exactly as it was during training. A silent edit changes its inputs without a retrain."
+    },
+    {
+      "stage": "post",
+      "question": "Logged serving values match the training join exactly, but values computed fresh on request differ on 83 percent of requests. What does this show?",
+      "options": [
+        "The online store is broken, because fresh values are always the correct values",
+        "The point-in-time join leaks the future, because snapshots are newer than requests",
+        "The model trained on snapshot values, so a fresh compute path would add skew",
+        "The registry has two versions of each feature, and serving reads the wrong one"
+      ],
+      "correct": 2,
+      "explanation": "Freshness is part of the feature. A path that is fresher than the training data gives the model inputs from a different distribution."
+    },
+    {
+      "stage": "post",
+      "question": "A backfill that runs today writes rows for last year's dates, using data that was corrected last month. How does a strict point-in-time join avoid the leak?",
+      "options": [
+        "It joins on the entity key only and takes the newest row for each label",
+        "It also requires the created timestamp to be at or before the label time",
+        "It shortens the TTL so that last year's rows expire before training starts",
+        "It runs the backfill again with the online store as its data source"
+      ],
+      "correct": 1,
+      "explanation": "The event timestamp says when a value was true. The created timestamp says when the system knew it. A strict join checks both."
+    }
+  ]
+}

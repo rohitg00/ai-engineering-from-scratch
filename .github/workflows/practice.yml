@@ -1,0 +1,64 @@
+name: Practice problems
+
+on:
+  pull_request:
+    paths:
+      - 'practice/**'
+      - 'scripts/practice/**'
+      - 'site/build-practice.js'
+      - 'site/practice.js'
+      - 'site/practice.css'
+      - 'site/practice-store.js'
+      - 'site/practice-worker.js'
+      - 'site/test_practice.js'
+      - 'site/test_practice_store.js'
+      - 'site/test_code_render.js'
+      - 'site/lib/**'
+      - 'site/lesson-markdown.js'
+      - 'site/code.css'
+      - 'site/code-copy.js'
+      - 'research/methods.json'
+      - '.github/workflows/practice.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'practice/**'
+      - 'scripts/practice/**'
+      - 'site/build-practice.js'
+      - '.github/workflows/practice.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: practice-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install numpy
+        run: python3 -m pip install 'numpy>=2.2,<3'
+      - name: Each solution passes, each starter and mutant fails, fixtures are current, no statement shows the solution
+        run: python3 scripts/practice/validate.py --summary "$RUNNER_TEMP/practice.json"
+      - name: The harness reports diverging losses and contains exits from learner code
+        run: python3 scripts/practice/test_harness.py
+      - name: Pages, run data and storage
+        run: node --test site/test_practice.js site/test_practice_store.js site/test_code_render.js
+      - name: No page or run file shows the solution, same bytes twice
+        run: node site/build-practice.js --check
+      - name: Problem generator
+        env:
+          PRACTICE_PYTHON: python3
+        run: node --test scripts/practice/test_generate.js

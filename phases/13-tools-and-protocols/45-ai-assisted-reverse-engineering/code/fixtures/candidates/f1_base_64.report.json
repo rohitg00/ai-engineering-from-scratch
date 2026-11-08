@@ -1,0 +1,28 @@
+{
+  "candidate": "f1_base_64",
+  "label": "hand-written test candidate for lesson 45, not the output of any model",
+  "kind": "wrong constant",
+  "tool": "hand-written",
+  "target": {
+    "object": "ledger-x86_64-O1-renamed.o",
+    "sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+    "function": "f1"
+  },
+  "source": "f1_base_64.c",
+  "claims": {
+    "name": "percent_change",
+    "return_type": "int",
+    "parameters": [
+      {"name": "before", "type": "int"},
+      {"name": "after", "type": "int"}
+    ],
+    "summary": "Returns 0 when before is 0. Otherwise the instruction at 0x6 multiplies the difference by the immediate 64 and the result is divided by before."
+  },
+  "citations": {
+    "addresses": ["0x0", "0x6", "0xa"],
+    "callees": [],
+    "strings": [],
+    "immediates": [64]
+  },
+  "cost": {"tokens": null, "seconds": null}
+}

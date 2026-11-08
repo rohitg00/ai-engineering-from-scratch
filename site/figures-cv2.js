@@ -62,8 +62,9 @@
     var steps = ['1 · dense grid of boxes', '2 · score each box', '3 · sort by objectness', '4 · drop high-IoU overlaps', '5 · one box per object'];
     steps.forEach(function (s, i) {
       var y = 56 + i * 34;
-      var dot = svgEl('circle', { cx: 296, cy: y - 4, r: '5', fill: SOFT });
-      dot.appendChild(anim('fill', SOFT + ';' + SOFT + ';' + BLUE + ';' + BLUE, '5s', { keyTimes: '0;' + (0.12 + i * 0.16).toFixed(2) + ';' + (0.2 + i * 0.16).toFixed(2) + ';1' }));
+      svg.appendChild(svgEl('circle', { cx: 296, cy: y - 4, r: '5', fill: SOFT }));
+      var dot = svgEl('circle', { cx: 296, cy: y - 4, r: '5', fill: BLUE, opacity: '0' });
+      dot.appendChild(anim('opacity', '0;0;1;1', '5s', { keyTimes: '0;' + (0.12 + i * 0.16).toFixed(2) + ';' + (0.2 + i * 0.16).toFixed(2) + ';1' }));
       svg.appendChild(dot);
       svg.appendChild(txt(310, y, s, 11));
     });
@@ -144,10 +145,14 @@
     svg.appendChild(svgEl('path', { d: 'M 364 70 L 414 70', stroke: SOFT, 'stroke-width': '2' }));
     // D's P(real) gauge bar
     svg.appendChild(svgEl('rect', { x: 430, y: 50, width: 70, height: 12, fill: 'var(--bg-surface,#eee)' }));
+    var swing = { calcMode: 'spline', keySplines: '.4 0 .6 1;.4 0 .6 1;.4 0 .6 1;.4 0 .6 1', keyTimes: '0;0.3;0.55;0.8;1' };
     var gauge = svgEl('rect', { x: 430, y: 50, width: 18, height: 12, fill: WARN });
-    gauge.appendChild(anim('width', '12;30;20;46;38', '4.5s', { calcMode: 'spline', keySplines: '.4 0 .6 1;.4 0 .6 1;.4 0 .6 1;.4 0 .6 1', keyTimes: '0;0.3;0.55;0.8;1' }));
-    gauge.appendChild(anim('fill', WARN + ';' + WARN + ';' + BLUE, '4.5s', { keyTimes: '0;0.6;1' }));
+    gauge.appendChild(anim('width', '12;30;20;46;38', '4.5s', swing));
     svg.appendChild(gauge);
+    var real = svgEl('rect', { x: 430, y: 50, width: 18, height: 12, fill: BLUE, opacity: '0' });
+    real.appendChild(anim('width', '12;30;20;46;38', '4.5s', swing));
+    real.appendChild(anim('opacity', '0;0;1', '4.5s', { keyTimes: '0;0.6;1' }));
+    svg.appendChild(real);
     svg.appendChild(txt(430, 80, 'P(real) →', 9));
     // tug-of-war loss bars at the bottom
     svg.appendChild(txt(14, 150, 'minimax — G pushes the score up, D pushes it down', 11));

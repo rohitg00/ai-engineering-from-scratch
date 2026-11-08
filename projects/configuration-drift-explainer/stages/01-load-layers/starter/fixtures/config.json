@@ -1,0 +1,23 @@
+{
+  "layers": [
+    {
+      "name": "defaults.json",
+      "values": {
+        "timeout": 30,
+        "api_token": "fixture-token-default",
+        "region": "local"
+      }
+    },
+    {
+      "name": "env:TIMEOUT",
+      "values": {
+        "timeout": 5
+      }
+    }
+  ],
+  "observed": {
+    "timeout": 30,
+    "api_token": "fixture-token-live",
+    "region": "local"
+  }
+}

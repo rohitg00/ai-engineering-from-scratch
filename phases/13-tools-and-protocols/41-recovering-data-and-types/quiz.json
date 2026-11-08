@@ -1,0 +1,102 @@
+{
+  "lesson": "41-recovering-data-and-types",
+  "title": "Recovering Data and Types: Structs, Arrays, C++ Objects, and DWARF",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A listing shows addl 0x4(%rax), %ecx where %rax holds the first parameter. What does this instruction prove about the parameter's type?",
+      "options": [
+        "That it points at an object with a 4-byte field at offset 4, with no name, no struct size, and no information about the other bytes",
+        "That the parameter is an int",
+        "That it points at a struct whose field at offset 4 is a 4-byte integer named balance",
+        "That the object is 8 bytes long"
+      ],
+      "correct": 0,
+      "explanation": "The displacement gives the offset and the l suffix gives the width. Names, the struct size, and the other members are not in these bytes."
+    },
+    {
+      "stage": "check",
+      "question": "Apply the System V rules to struct account { char kind; int balance; short code; double rate; const char *label; }. What are the member offsets and the size?",
+      "options": [
+        "0, 8, 16, 24, 32 and size 40, because every member is aligned to 8",
+        "0, 1, 5, 7, 15 and size 23, because members are packed",
+        "0, 4, 8, 12, 16 and size 24, because every member is aligned to 4",
+        "0, 4, 8, 16, 24 and size 32, because each member goes to the lowest offset that is a multiple of its alignment and the size is a multiple of the strictest alignment, 8"
+      ],
+      "correct": 3,
+      "explanation": "int needs 4 so it goes to 4, double needs 8 so it goes to 16, the pointer follows at 24, and 32 is already a multiple of 8. Nine bytes are padding."
+    },
+    {
+      "stage": "check",
+      "question": "At -O2 a loop reads 4-byte values at offsets 4, 36, 68, 100, 132, 164, 196, and 228 from a pointer and advances the pointer by 256 each pass. What should the pass report?",
+      "options": [
+        "Eight 4-byte fields and a struct of at least 232 bytes",
+        "A stride of 4, the greatest common divisor of the offsets",
+        "One 4-byte field at offset 4 with an element stride of 32, because 256 is 8 times 32 and there are exactly 8 offsets, so the loop was unrolled 8 times",
+        "A stride of 256 and one field at offset 4"
+      ],
+      "correct": 2,
+      "explanation": "Same-width accesses d bytes apart with a loop step of k times d and k distinct offsets are k copies of one element access. Folding them gives one field and stride 32."
+    },
+    {
+      "stage": "check",
+      "question": "In the relocatable -g object, every entry of .debug_str_offsets is zero in the file. How does a reader find the string for DW_AT_name with form DW_FORM_strx1?",
+      "options": [
+        "It reads the string from .debug_line_str",
+        "It applies the R_X86_64_32 relocations of .rela.debug_str_offsets, then reads the 4-byte entry at str_offsets_base plus 4 times the index, which is the offset into .debug_str",
+        "It reads the index as a direct offset into .debug_str",
+        "It searches .debug_str for the member name"
+      ],
+      "correct": 1,
+      "explanation": "In a relocatable object the string offsets table holds placeholders. The relocation addends carry the real offsets, and str_offsets_base, which is 8, skips the table header."
+    },
+    {
+      "stage": "check",
+      "question": "describe contains movq (%rdi), %rax followed by callq *0x10(%rax). Which virtual function does this call reach on a Rect?",
+      "options": [
+        "The destructor, because slot 0 is the first entry",
+        "It cannot be known without running the program",
+        "Rect::area(), because the vptr points at the address point and 0x10 divided by 8 is slot 2, which the vtable relocations and DW_AT_vtable_elem_location both assign to area",
+        "Rect::name(), because 0x10 is the second entry after the typeinfo pointer"
+      ],
+      "correct": 2,
+      "explanation": "The vptr holds the address point, 16 bytes past the symbol, after offset-to-top and the typeinfo pointer. Slot 0 and 1 are the two destructors, slot 2 is area, slot 3 is name."
+    },
+    {
+      "stage": "post",
+      "question": "What does the Itanium mangled name _ZNK4Rect4areaEv encode?",
+      "options": [
+        "Rect::area() const: _Z prefix, N opens a nested name, K marks a const member function, 4Rect and 4area are length-prefixed names, E closes, v is an empty parameter list",
+        "A vtable for Rect",
+        "Rect::area(void*)",
+        "area(Rect) with one parameter"
+      ],
+      "correct": 0,
+      "explanation": "Section 5.1 of the Itanium C++ ABI: the special names _ZTV, _ZTI, and _ZTS are vtable, typeinfo, and typeinfo name; a plain function encodes its nested name and then its parameter types."
+    },
+    {
+      "stage": "post",
+      "question": "Ghidra without DWARF printed *(int *)(param_1 + 4) for bump. Which single change makes it print a->balance?",
+      "options": [
+        "Re-running auto analysis",
+        "A struct type in the Data Type Manager with a 4-byte int member at offset 4, applied to the parameter, which the decompiler then propagates; DWARF supplies that struct automatically and the recovered layout lets you type it by hand",
+        "Switching the decompiler to a different calling convention",
+        "Renaming param_1 to a"
+      ],
+      "correct": 1,
+      "explanation": "The instructions are identical in both objects. The decompiler output changes when a data type is available for the parameter, whether it came from DWARF or from the analyst."
+    },
+    {
+      "stage": "post",
+      "question": "The pass recovers five fields and size 32 for struct account from three builds. Which of these does it still fail to recover from the instructions?",
+      "options": [
+        "The width of each field",
+        "The element stride of the array",
+        "The member names, the const qualifier, and the exact pointee type of the pointer at offset 24",
+        "Which field holds a floating-point value"
+      ],
+      "correct": 2,
+      "explanation": "Widths come from the mnemonics, the stride from the loops, and the float from the SSE scalar instructions. Names and qualifiers exist only in the source and in DWARF, and the pointee is known only to be elements 1 byte apart."
+    }
+  ]
+}

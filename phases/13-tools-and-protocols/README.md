@@ -134,6 +134,29 @@ Its first lab gets a skill into a real host in about ten minutes.
   not the next Agent Skills lesson after 22. Complete lessons 06 through 20
   before taking it.
 
+## Reverse engineering path
+
+Fourteen lessons teach how to read a compiled program you built yourself. Lessons 32 to 36 build the core pipeline: you parse the file, decode its instructions, lift them to pseudocode, record what you know as evidence, and prove a rebuilt function equal to the original. Lessons 37 to 45 teach the field around that pipeline: its history and main tools, calling conventions, compiler idioms, linking and stripped binaries, type recovery, debugging, bytecode formats, binary diffing and symbolic execution, and AI-assisted analysis. Each lesson runs the real tools on the same fixtures. The companion manual, [Reverse Engineering 101](../../manuals/reverse-engineering-101/), runs the same fixture through rea 6.7.0 and Ghidra 12.1.4.
+
+| Lesson | What you build | Time |
+|---|---|---|
+| [32](32-program-anatomy-elf-from-scratch/) | An ELF reader: headers, sections, symbols, relocations | 2 hr |
+| [33](33-disassembly-and-control-flow/) | An x86-64 decoder, linear sweep, recursive descent, and a control-flow graph | 2 hr 30 min |
+| [34](34-lifting-to-pseudocode/) | A lifter from instructions to structured pseudocode | 2 hr 30 min |
+| [35](35-evidence-confidence-and-unknowns/) | An evidence ledger with confidence, limitations, and unknowns | 1 hr 45 min |
+| [36](36-rebuild-and-prove-equal/) | A differential test harness and a byte comparison that masks relocations | 1 hr 50 min |
+| [37](37-the-reverse-engineering-landscape/) | A comparison harness over five tools, with a history timeline and four IRs | 2 hr 30 min |
+| [38](38-calling-conventions-and-stack-frames/) | A calling-convention analyzer for System V, Windows x64, and AArch64 | 2 hr 20 min |
+| [39](39-compiler-idioms-and-optimization/) | An idiom recognizer that decodes division, switches, loops, and selects | 2 hr 30 min |
+| [40](40-linking-loading-and-stripped-binaries/) | PE, Mach-O fixup, and ELF link readers, and a function finder for stripped builds | 2 hr 40 min |
+| [41](41-recovering-data-and-types/) | A struct and C++ type recovery pass checked against a DWARF reader | 2 hr 20 min |
+| [42](42-dynamic-analysis-of-your-own-program/) | An lldb harness that confirms or refutes static claims | 2 hr 10 min |
+| [43](43-bytecode-and-managed-formats/) | Readers for .pyc, JVM class, .NET CIL, and WebAssembly | 2 hr 30 min |
+| [44](44-binary-diffing-and-symbolic-execution/) | A function differ and a small symbolic executor | 2 hr 30 min |
+| [45](45-ai-assisted-reverse-engineering/) | A ground-truth scorecard for AI reconstructions and analysis reports | 2 hr 20 min |
+
+Every target in this path is a program you wrote and compiled. Lesson 32 starts with the law and the authorization rules. To follow the path with a tutor that records your progress, run the `learn-reverse-engineering` skill. Its order and checkpoints are in the [Reverse Engineering manifest](../../learning-paths/reverse-engineering.json).
+
 ## Full phase
 
 See [ROADMAP.md](../../ROADMAP.md) for the full lesson plan.

@@ -1,0 +1,109 @@
+{
+  "request": {
+    "jsonrpc": "2.0",
+    "id": 6,
+    "method": "tools/call",
+    "params": {
+      "name": "procedure_assembly",
+      "arguments": {
+        "procedure": "_grade"
+      }
+    }
+  },
+  "response": {
+    "result": {
+      "_meta": {
+        "provenance": {
+          "untrusted_content": true,
+          "source": "analysis_target"
+        }
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "<cut by run.py: the text copy of structuredContent, 3991 bytes>"
+        }
+      ],
+      "structuredContent": {
+        "evidence_id": "ev_2c883c7b915976c5f4d3ab0b2b3bec32ffae8048575ef6d0d9538f512f0b34d1",
+        "subject": {
+          "name": "ledger-arm64-O1",
+          "digest": {
+            "sha256": "01b5d08b08fb94678be5919d0e753d44b505a53107c95b94634f0e5d41c9e375"
+          },
+          "local_path": "$CAPTURE/fixtures/ledger-arm64-O1",
+          "format": "mach-o",
+          "architecture": "arm64"
+        },
+        "provider": {
+          "id": "ghidra",
+          "name": "Ghidra",
+          "version": "12.1.4"
+        },
+        "analysis_profile": {
+          "provider": {
+            "id": "ghidra",
+            "name": "Ghidra",
+            "version": "12.1.4"
+          },
+          "parameters": {
+            "target_kind": "executable",
+            "target_format": "mach-o",
+            "architecture": "arm64",
+            "available_architectures": [
+              "arm64"
+            ],
+            "import_mode": "ephemeral-source-immutable",
+            "annotation_policy": "atomic-function-entry-metadata-v1",
+            "load_image_observations": "source-mappings-entry-context-v2",
+            "function_body_evidence": "complete-inclusive-ranges-v1",
+            "function_references": "complete-body-and-entry-reference-manager-v2",
+            "call_relationship_coverage": "function-body-call-coverage-v5",
+            "function_dossier_coverage": "observed-facets-and-call-relationships-v1",
+            "string_inventory_evidence": "defined-data-coverage-v1",
+            "location_resolution": "explicit-address-exact-entry-symbol-first-v3",
+            "procedure_file_offset_resolution": "address-first-unique-target-source-mapping-v2",
+            "instruction_flow_evidence": "decoded-return-pcode-v1",
+            "instruction_references": "exact-address-incoming-without-synthetic-entry-v2",
+            "function_boundary_observations": "ghidra-function-boundary-limitations-v4",
+            "no_return_repair": "returning-imports-decoded-return-v2",
+            "process_launch": "inspected-jvm-launch-support-v1",
+            "jump_table_evidence": "typed-case-default-blocks-v1",
+            "decompiler_jump_loads": true,
+            "loader": "auto-from-header",
+            "language_id": "auto-from-header",
+            "compiler_spec_id": "auto-default",
+            "analyzer_preset": "ghidra-default"
+          },
+          "digest": "3fc72c9b4b78498fb992b938f8f3389dc670244a293c1d40abf5e1d10162ed3b"
+        },
+        "predicate_type": "rea.analysis",
+        "operation": "procedure_assembly",
+        "parameters": {
+          "procedure": "_grade"
+        },
+        "raw_result": {
+          "value": "0x100000518: mov w8, #0x6667\n0x10000051c: movk w8, #0x6666, LSL #16\n0x100000520: smull x8, w0, w8\n0x100000524: lsr x9, x8, #0x3f\n0x100000528: asr x8, x8, #0x22\n0x10000052c: add w8, w8, w9\n0x100000530: sub w8, w8, #0x6\n0x100000534: cmp w8, #0x4\n0x100000538: b.hi 0x10000054c\n0x10000053c: adrp x9, 0x100000000\n0x100000540: add x9, x9, #0x7d0\n0x100000544: ldr w0, [x9, w8, UXTW #0x2]\n0x100000548: ret\n0x10000054c: mov w0, #0x0\n0x100000550: ret",
+          "limitations": []
+        },
+        "normalized_result": "0x100000518: mov w8, #0x6667\n0x10000051c: movk w8, #0x6666, LSL #16\n0x100000520: smull x8, w0, w8\n0x100000524: lsr x9, x8, #0x3f\n0x100000528: asr x8, x8, #0x22\n0x10000052c: add w8, w8, w9\n0x100000530: sub w8, w8, #0x6\n0x100000534: cmp w8, #0x4\n0x100000538: b.hi 0x10000054c\n0x10000053c: adrp x9, 0x100000000\n0x100000540: add x9, x9, #0x7d0\n0x100000544: ldr w0, [x9, w8, UXTW #0x2]\n0x100000548: ret\n0x10000054c: mov w0, #0x0\n0x100000550: ret",
+        "confidence": "observed",
+        "authority": "shipped-artifact",
+        "environment": null,
+        "limitations": [
+          "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+          "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+          "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+          "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+          "Assembly is Ghidra Listing text and does not claim textual equivalence with Hopper output.",
+          "macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state."
+        ],
+        "relationship_coverage": null,
+        "locations": [],
+        "evidence_links": []
+      }
+    },
+    "jsonrpc": "2.0",
+    "id": 6
+  }
+}

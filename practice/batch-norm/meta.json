@@ -1,0 +1,22 @@
+{
+  "id": "batch-norm",
+  "title": "Batch normalization forward and backward",
+  "kind": "implement",
+  "summary": "Training and inference forward passes with running statistics, and the full backward pass for x, gamma and beta.",
+  "difficulty": "hard",
+  "tags": ["batch-norm", "normalization", "gradients", "backpropagation"],
+  "lesson": "phases/03-deep-learning-core/07-regularization",
+  "cheatsheet": "deep-learning-training",
+  "minutes": 45,
+  "entry": ["batchnorm_forward", "batchnorm_backward"],
+  "collections": ["deep-learning-core"],
+  "time_limit_s": 10,
+  "mutants": {
+    "backward_ignores_batch_stats": "Returns grad_output * gamma / std for dx and forgets that x also moves the batch mean and variance.",
+    "eps_outside_sqrt": "Divides by sqrt(var) + eps, not by sqrt(var + eps).",
+    "in_place_running_mean": "Updates running_mean in place, so the caller's array changes.",
+    "inference_uses_batch_stats": "Uses the batch mean and variance in inference mode, not the running statistics.",
+    "momentum_swapped": "Gives the old running value the weight momentum and the batch value the weight 1 - momentum.",
+    "unbiased_variance": "Uses the unbiased variance with N - 1, not the biased variance with N."
+  }
+}

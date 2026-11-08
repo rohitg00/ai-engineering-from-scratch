@@ -1,0 +1,2 @@
+Picked up JAVA_TOOL_OPTIONS: -Djava.io.tmpdir=/private/tmp/claude-501/-Users-rohitghumare/ad9da9d9-690c-4364-a7e6-c3d208cf87c6/scratchpad/ledger-version-tracking/tmp -Dapplication.settingsdir=/private/tmp/claude-501/-Users-rohitghumare/ad9da9d9-690c-4364-a7e6-c3d208cf87c6/scratchpad/ledger-version-tracking/settings -Dapplication.cachedir=/private/tmp/claude-501/-Users-rohitghumare/ad9da9d9-690c-4364-a7e6-c3d208cf87c6/scratchpad/ledger-version-tracking/cache
+Ghidra 12.1.4

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-4-4-title fig-4-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-4-title">How SGLang decides the weight format</title>
+  <desc id="fig-4-4-desc">Four rows, each a checkpoint and a quantization flag. An FP8 checkpoint with no flag runs as fp8. A modelopt checkpoint with modelopt_fp4 is a known compatible pair and runs. A GPTQ checkpoint with no flag is converted at runtime and runs on the Marlin kernel. A GPTQ checkpoint with the flag gptq on a CUDA build skips the conversion and fails at startup with Unknown quantization method.</desc>
+  <defs><marker id="fig-4-4-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-4-4-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CHECKPOINT QUANT_METHOD</text>
+  <text x="230" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">--QUANTIZATION</text>
+  <text x="430" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">RESULT AT STARTUP</text>
+  <rect x="20" y="30" width="150" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="95" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">fp8</text>
+  <text x="95" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">weights on disk</text>
+  <rect x="230" y="30" width="150" height="48" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="305" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">not set</text>
+  <text x="305" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">your command line</text>
+  <rect x="430" y="30" width="190" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="525" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">fp8</text>
+  <text x="525" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">read from the checkpoint</text>
+  <line x1="170" y1="54" x2="229" y2="54" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-4-head-ink)"/>
+  <line x1="380" y1="54" x2="429" y2="54" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-4-head-ink)"/>
+  <rect x="20" y="104" width="150" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="95" y="123.25" font-size="12.5" text-anchor="middle" font-weight="700">modelopt</text>
+  <text x="95" y="140.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">weights on disk</text>
+  <rect x="230" y="104" width="150" height="48" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="305" y="123.25" font-size="12.5" text-anchor="middle" font-weight="700">modelopt_fp4</text>
+  <text x="305" y="140.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">your command line</text>
+  <rect x="430" y="104" width="190" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="525" y="123.25" font-size="12.5" text-anchor="middle" font-weight="700">modelopt_fp4</text>
+  <text x="525" y="140.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">known compatible pair</text>
+  <line x1="170" y1="128" x2="229" y2="128" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-4-head-ink)"/>
+  <line x1="380" y1="128" x2="429" y2="128" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-4-head-ink)"/>
+  <rect x="20" y="178" width="150" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="95" y="197.25" font-size="12.5" text-anchor="middle" font-weight="700">gptq</text>
+  <text x="95" y="214.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">weights on disk</text>
+  <rect x="230" y="178" width="150" height="48" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="305" y="197.25" font-size="12.5" text-anchor="middle" font-weight="700">not set</text>
+  <text x="305" y="214.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">your command line</text>
+  <rect x="430" y="178" width="190" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="525" y="197.25" font-size="12.5" text-anchor="middle" font-weight="700">gptq_marlin</text>
+  <text x="525" y="214.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">converted at runtime</text>
+  <line x1="170" y1="202" x2="229" y2="202" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-4-head-ink)"/>
+  <line x1="380" y1="202" x2="429" y2="202" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-4-head-ink)"/>
+  <rect x="20" y="252" width="150" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="95" y="271.25" font-size="12.5" text-anchor="middle" font-weight="700">gptq</text>
+  <text x="95" y="288.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">weights on disk</text>
+  <rect x="230" y="252" width="150" height="48" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="305" y="271.25" font-size="12.5" text-anchor="middle" font-weight="700">gptq</text>
+  <text x="305" y="288.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">your command line</text>
+  <rect x="430" y="252" width="190" height="48" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="525" y="271.25" font-size="12.5" text-anchor="middle" font-weight="700">startup error</text>
+  <text x="525" y="288.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Unknown quantization method</text>
+  <line x1="170" y1="276" x2="229" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-4-head-ink)"/>
+  <line x1="380" y1="276" x2="429" y2="276" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-4-head-rose)"/>
+</svg>

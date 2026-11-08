@@ -106,7 +106,7 @@ The runner is a thin wrapper that survives every framework migration because it 
 2. Add a `redaction` step that strips lines matching `^Bearer ` or `password=`. Test on a fixture record.
 3. Cap total `feedback_record.jsonl` size at 1 MB by rotating to `.1`, `.2` files. Defend the rotation policy.
 4. Add a `parent_command_id` so retry chains are visible: which command produced the input that the next command consumed.
-5. Pipe the JSONL into a tiny TUI that highlights the latest non-zero exit. Eight key features the TUI must show to be useful in a review.
+5. Pipe the JSONL into a tiny TUI that highlights the latest non-zero exit. List eight key features the TUI must show to be useful in a review.
 
 ## Key Terms
 

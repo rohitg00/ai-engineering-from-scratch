@@ -1,0 +1,9 @@
+$ sbx kit pack ./fixtures/kits/hello-mixin -o $CAPTURE/work/hello-mixin.zip
+Packed artifact to $CAPTURE/work/hello-mixin.zip
+[exit 0]
+
+$ zip listing of work/hello-mixin.zip (size, name)
+       0  files/
+       0  files/workspace/
+      22  files/workspace/HELLO.md
+     297  spec.yaml

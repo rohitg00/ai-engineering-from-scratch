@@ -53,6 +53,7 @@ def _load_registry():
 _REG = _load_registry()
 LANG_NAMES = {entry["code"]: entry["name"] for entry in _REG if not entry.get("source")}
 NLLB_CODES = {entry["code"]: entry.get("nllb") for entry in _REG}
+AUTOMATIC = {entry["code"] for entry in _REG if entry.get("ci") is True and not entry.get("source")}
 
 # Inline span vocabulary, named once so the two protection lists compose from the
 # same regexes instead of copy-pasting them.
@@ -280,6 +281,10 @@ def main():
     ap.add_argument("--phase", help="limit to one phase dir name")
     ap.add_argument("--only", help="limit to one lesson path (phases/.../lesson)")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument(
+        "--replace-maintained", action="store_true",
+        help="replace existing translations of a language without ci: true",
+    )
     args = ap.parse_args()
 
     cpath = cache_path(args.lang, args.phase)
@@ -291,11 +296,14 @@ def main():
         cpath.parent.mkdir(parents=True, exist_ok=True)
         cpath.write_text(json.dumps(cache, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    translated = skipped = 0
+    maintained = args.lang not in AUTOMATIC and not args.replace_maintained
+    translated = skipped = kept = 0
+    current = set()
     for doc in targets():
         rel = str(doc.relative_to(ROOT))
         if args.phase and f"/{args.phase}/" not in f"/{rel}":
             continue
+        current.add(rel)
         if args.only and not (rel == args.only.strip("/") or rel.startswith(args.only.strip("/") + "/")):
             continue
 
@@ -303,8 +311,13 @@ def main():
         h = source_hash(src)
         dst = out_path(doc, args.lang)
         # key is the lesson path; the cache file is already per-language
-        if cache.get(rel) == h and dst.is_file():
+        replacing = args.replace_maintained and args.lang not in AUTOMATIC
+        if cache.get(rel) == h and dst.is_file() and not replacing:
             skipped += 1
+            continue
+        if maintained and dst.is_file():
+            print(f"kept {dst.relative_to(ROOT)}: maintained by contributors; English changed, sync it by hand", file=sys.stderr)
+            kept += 1
             continue
 
         if args.dry_run:
@@ -327,9 +340,19 @@ def main():
         save_cache()
         print(f"translated {rel} -> {args.lang}")
 
+    removed = 0
+    if args.phase and not args.only and not maintained:
+        for rel in sorted(key for key in cache if key.startswith(f"phases/{args.phase}/") and key not in current):
+            gone = out_path(ROOT / rel, args.lang)
+            print(f"{'would remove' if args.dry_run else 'removed'} {gone.relative_to(ROOT)}: its English lesson no longer exists")
+            removed += 1
+            if not args.dry_run:
+                gone.unlink(missing_ok=True)
+                del cache[rel]
+
     if not args.dry_run:
         save_cache()
-    print(f"{args.lang}: {translated} translated, {skipped} unchanged (cache hit)")
+    print(f"{args.lang}: {translated} translated, {skipped} unchanged (cache hit), {kept} kept, {removed} removed")
 
 
 if __name__ == "__main__":

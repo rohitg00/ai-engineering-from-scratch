@@ -19,6 +19,14 @@
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
+  function formatCount(value) {
+    return (Number(value) || 0).toLocaleString('en');
+  }
+
+  function countLabel(value, singular, plural) {
+    return formatCount(value) + ' ' + (Number(value) === 1 ? singular : plural);
+  }
+
   function readStore(key, fallback) {
     try {
       var raw = localStorage.getItem(key);
@@ -82,7 +90,8 @@
   }
 
   function projectHref(id, stageId) {
-    return 'project.html?id=' + encodeURIComponent(id) + (stageId ? '&stage=' + encodeURIComponent(stageId) : '');
+    var href = 'project?id=' + encodeURIComponent(id) + (stageId ? '&stage=' + encodeURIComponent(stageId) : '');
+    return window.AIFSRouteLinks ? window.AIFSRouteLinks.adaptHref(href) : href;
   }
 
   function totalHours(project) {
@@ -309,7 +318,7 @@
     var total = project.stages.length;
     var pct = total ? Math.round((done / total) * 100) : 0;
     return '<a class="pj-card is-ready" href="' + projectHref(project.id) + '">' +
-      '<div class="pj-card-top">' + sourceBadge(project) + '<span class="pj-card-meta">' + total + ' stages · ~' + totalHours(project) + 'h</span></div>' +
+      '<div class="pj-card-top">' + sourceBadge(project) + '<span class="pj-card-meta">' + countLabel(total, 'stage', 'stages') + ' · ~' + formatCount(totalHours(project)) + 'h</span></div>' +
       '<h3>' + esc(project.title) + '</h3>' +
       '<p>' + esc(project.tagline || project.summary || '') + '</p>' +
       languageChips(project.languages) +
@@ -370,11 +379,21 @@
       [DATA.planned.length, 'on the roadmap'],
       [DATA.levels.length, 'levels'],
       [community, 'from the community'],
-    ].map(function (s) { return '<div><strong>' + s[0] + '</strong><span>' + s[1] + '</span></div>'; }).join('');
+    ].map(function (s) { return '<div><strong>' + formatCount(s[0]) + '</strong><span>' + s[1] + '</span></div>'; }).join('');
 
-    var first = DATA.projects[0];
     var start = document.getElementById('pjStartLink');
-    if (first && start) start.href = projectHref(first.id);
+
+    var roleSelect = document.getElementById('pjRole');
+    var roleNote = document.getElementById('pjRoleNote');
+    var roles = DATA.roles || [];
+    var role = new URLSearchParams(window.location.search).get('role') || '';
+    if (!roles.some(function (r) { return r.id === role; })) role = '';
+    if (roleSelect) {
+      roleSelect.innerHTML = '<option value="">All roles</option>' + roles.map(function (r) {
+        return '<option value="' + esc(r.id) + '">' + esc(r.title) + '</option>';
+      }).join('');
+      roleSelect.value = role;
+    }
 
     var sources = [['all', 'All'], ['core', 'Core'], ['community', 'Community']];
     var current = readStore(SOURCE_KEY, 'all');
@@ -384,11 +403,26 @@
       filter.innerHTML = sources.map(function (s) {
         return '<button type="button" class="pj-chip' + (s[0] === current ? ' is-active' : '') + '" data-source="' + s[0] + '" aria-pressed="' + (s[0] === current) + '">' + s[1] + '</button>';
       }).join('');
-      var include = function (item) { return current === 'all' || item.source === current; };
+      var picked = roles.filter(function (r) { return r.id === role; })[0];
+      var include = function (item) {
+        if (picked && picked.projects.indexOf(item.id) === -1) return false;
+        return current === 'all' || item.source === current;
+      };
+      var first = DATA.projects.filter(function (p) { return !picked || picked.projects.indexOf(p.id) !== -1; })[0];
+      if (first && start) start.href = projectHref(first.id);
+      showPlanned.disabled = !!picked;
+      showPlanned.title = picked ? 'Planned projects are not part of a role route yet' : '';
+      if (roleNote) {
+        roleNote.hidden = !picked;
+        roleNote.innerHTML = picked
+          ? 'These projects give proof for <strong>' + esc(picked.title) + '</strong>. Start with the lowest level and finish one project before you start the next. <a href="learning-paths.html#career-route-' + esc(picked.id) + '">See the lessons for this route</a>.'
+          : '';
+      }
       ladder.innerHTML = DATA.levels.map(function (level) {
         var ready = DATA.projects.filter(function (p) { return p.level === level.level && include(p); });
-        var planned = showPlanned.checked ? DATA.planned.filter(function (p) { return p.level === level.level && include(p); }) : [];
+        var planned = showPlanned.checked && !picked ? DATA.planned.filter(function (p) { return p.level === level.level && include(p); }) : [];
         var cards = ready.map(projectCard).join('') + planned.map(plannedCard).join('');
+        if (!cards && picked) return '';
         if (!cards) {
           cards = current === 'community'
             ? '<div class="pj-empty">No community projects at this level yet. <a href="#submit">Be the first.</a></div>'
@@ -398,6 +432,9 @@
           '<header class="pj-level-head"><div class="pj-level-n">' + level.level + '</div><div><h3>' + esc(level.name) + '</h3><p>' + esc(level.summary) + '</p></div></header>' +
           '<div class="pj-level-cards">' + cards + '</div></section>';
       }).join('');
+      if (picked && !ladder.innerHTML) {
+        ladder.innerHTML = '<div class="pj-empty">No ' + esc(current) + ' projects for this role yet. Choose All to see its projects.</div>';
+      }
     }
 
     filter.addEventListener('click', function (event) {
@@ -408,6 +445,16 @@
       draw();
     });
     showPlanned.addEventListener('change', draw);
+    if (roleSelect) {
+      roleSelect.addEventListener('change', function () {
+        role = roleSelect.value;
+        var url = new URL(window.location.href);
+        if (role) url.searchParams.set('role', role);
+        else url.searchParams.delete('role');
+        window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+        draw();
+      });
+    }
     draw();
   }
 
@@ -457,7 +504,7 @@
         '<div class="pj-eyebrow">LEVEL ' + project.level + ' · ' + esc(level.name.toUpperCase()) + '</div>' +
         '<h1>' + esc(project.title) + '</h1>' +
         '<p class="pj-lede">' + esc(project.summary || project.tagline || '') + '</p>' +
-        '<div class="pj-meta-row"><span>' + project.stages.length + ' stages</span><span>~' + totalHours(project) + ' hours</span><span>' + esc((project.languages || []).join(', ')) + '</span>' + sourceBadge(project) + '</div>' +
+        '<div class="pj-meta-row"><span>' + countLabel(project.stages.length, 'stage', 'stages') + '</span><span>~' + countLabel(totalHours(project), 'hour', 'hours') + '</span><span>' + esc((project.languages || []).join(', ')) + '</span>' + sourceBadge(project) + '</div>' +
         (skills ? '<div class="pj-skills">' + skills + '</div>' : '') +
       '</div><div class="pj-hero-side">' +
         (project.youWillBuild ? '<div class="pj-side-block"><div class="pj-eyebrow">YOU END UP WITH</div><p>' + esc(project.youWillBuild) + '</p></div>' : '') +
@@ -489,6 +536,7 @@
     if (certificateHost && window.AIFSProjectCertificates) window.AIFSProjectCertificates.mount(certificateHost, project);
 
     var requested = params.get('stage');
+    var shownStage = requested;
     var stageIndex = Math.max(0, project.stages.findIndex(function (s) { return s.id === requested; }));
     if (!requested) {
       var progress = progressFor(project.id);
@@ -504,7 +552,10 @@
         '<div class="pj-progress-head"><span>Your progress</span><strong>' + done + ' / ' + project.stages.length + '</strong></div>' +
         '<div class="pj-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><span style="width:' + pct + '%"></span></div>' +
         '<p class="pj-small">Self-reported progress, saved in this browser. Import grader evidence below for a certificate.</p>';
-      document.getElementById('pjStageList').innerHTML = project.stages.map(function (stage, index) {
+      var list = document.getElementById('pjStageList');
+      var active = document.activeElement;
+      var focusedIndex = active && list.contains && list.contains(active) ? active.getAttribute('data-stage-index') : null;
+      list.innerHTML = project.stages.map(function (stage, index) {
         var isDone = !!progress[stage.id];
         return '<li><a href="' + projectHref(project.id, stage.id) + '" data-stage-index="' + index + '" class="pj-stage-link' +
           (index === stageIndex ? ' is-current' : '') + (isDone ? ' is-done' : '') + '"' + (index === stageIndex ? ' aria-current="step"' : '') + '>' +
@@ -512,6 +563,18 @@
           '<span class="pj-stage-text"><span class="pj-stage-title">' + esc(stage.title) + '</span>' +
           '<span class="pj-stage-sub">' + esc(stage.difficulty || '') + (stage.hours ? ' · ~' + stage.hours + 'h' : '') + (stageLanguages(stage).length ? ' · ' + esc(stageLanguages(stage).join(' + ')) : '') + '</span></span></a></li>';
       }).join('');
+      if (focusedIndex === null) return;
+      var link = list.querySelector('[data-stage-index="' + focusedIndex + '"]');
+      if (link) link.focus({ preventScroll: true });
+    }
+
+    function paintToggle() {
+      var toggle = document.getElementById('pjToggleDone');
+      if (!toggle) return;
+      var isDone = !!progressFor(project.id)[project.stages[stageIndex].id];
+      toggle.setAttribute('data-done', String(isDone));
+      toggle.classList.toggle('secondary', isDone);
+      toggle.textContent = isDone ? 'Mark as not done' : 'Mark stage complete';
     }
 
     var requestVersion = 0;
@@ -538,7 +601,7 @@
         '<div class="pj-doc" id="pjDoc"><p class="pj-loading">Loading the lesson…</p></div>' +
         (stage.demo ? '<details class="pj-context pj-stage-recording"><summary>Watch the stage ' + stage.number + ' recording</summary>' + demoFigure(stage.demo, project.contentBase || project.path) + '</details>' : '') +
         '<footer class="pj-stage-foot">' +
-          '<button type="button" class="pj-action' + (isDone ? ' secondary' : '') + '" id="pjToggleDone">' + (isDone ? 'Mark as not done' : 'Mark stage complete') + '</button>' +
+          '<button type="button" class="pj-action' + (isDone ? ' secondary' : '') + '" id="pjToggleDone" data-done="' + isDone + '">' + (isDone ? 'Mark as not done' : 'Mark stage complete') + '</button>' +
           '<div class="pj-stage-nav">' +
             (prev ? '<a class="pj-action secondary" href="' + projectHref(project.id, prev.id) + '" data-stage-index="' + (stageIndex - 1) + '">← ' + esc(prev.title) + '</a>' : '') +
             (next ? '<a class="pj-action secondary" href="' + projectHref(project.id, next.id) + '" data-stage-index="' + (stageIndex + 1) + '">' + esc(next.title) + ' →</a>' : '') +
@@ -546,10 +609,11 @@
           '<a class="pj-source-link" href="' + esc(repoFileUrl(stage.doc)) + '" target="_blank" rel="noopener">View this lesson on GitHub</a>' +
         '</footer>';
 
-      document.getElementById('pjToggleDone').addEventListener('click', function () {
-        setStageDone(project.id, stage.id, !progressFor(project.id)[stage.id]);
+      var toggle = document.getElementById('pjToggleDone');
+      toggle.addEventListener('click', function () {
+        setStageDone(project.id, stage.id, toggle.getAttribute('data-done') !== 'true');
         drawRail();
-        drawStage();
+        paintToggle();
       });
 
       fetch(stage.contentUrl || contentUrl(stage.doc)).then(function (res) {
@@ -569,7 +633,10 @@
 
     function go(index, push) {
       stageIndex = index;
-      if (push) history.pushState({ stage: index }, '', projectHref(project.id, project.stages[index].id));
+      if (push) {
+        shownStage = project.stages[index].id;
+        history.pushState({ stage: index }, '', projectHref(project.id, shownStage));
+      }
       drawRail();
       drawStage();
       var title = document.getElementById('pjStageTitle');
@@ -584,8 +651,15 @@
     });
     window.addEventListener('popstate', function () {
       var s = new URLSearchParams(window.location.search).get('stage');
+      if (s === shownStage) return;
+      shownStage = s;
       var idx = project.stages.findIndex(function (st) { return st.id === s; });
       go(idx === -1 ? 0 : idx, false);
+    });
+    window.addEventListener('storage', function (event) {
+      if (event.key && event.key !== PROGRESS_KEY) return;
+      drawRail();
+      paintToggle();
     });
 
     go(stageIndex, false);

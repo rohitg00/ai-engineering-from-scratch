@@ -1,0 +1,4 @@
+sym.percent_change  46 0x8000040 | UNMATCH  (0.239130) | 0x8000040   16 sym.percent_change
+         sym.grade 118 0x8000070 | UNMATCH  (0.512195) | 0x8000050   46 sym.grade
+         sym.total  66 0x80000f0 | UNMATCH  (0.303030) | 0x8000080   31 sym.total
+   sym.grade_label  39 0x8000140 | UNMATCH  (0.523810) | 0x80000a0   63 sym.grade_label

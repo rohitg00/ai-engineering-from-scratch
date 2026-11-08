@@ -43,16 +43,20 @@ def text_to_image_stub(prompt, seed=42):
     if not has_diffusers():
         print("  diffusers not installed. `pip install diffusers transformers accelerate` to run.")
         return None
-    if not torch.cuda.is_available():
-        print("  CUDA not available; running SD on CPU is extremely slow. Skipping real call.")
+    if torch.cuda.is_available():
+        device = "cuda"
+    elif torch.backends.mps.is_available():
+        device = "mps"
+    else:
+        print("  No GPU (CUDA/MPS); running SD on CPU is extremely slow. Skipping real call.")
         return None
     from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
     pipe = StableDiffusionPipeline.from_pretrained(
         "runwayml/stable-diffusion-v1-5",
         torch_dtype=torch.float16,
-    ).to("cuda")
+    ).to(device)
     pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
-    gen = torch.Generator("cuda").manual_seed(seed)
+    gen = torch.Generator(device).manual_seed(seed)
     out = pipe(prompt, guidance_scale=7.5, num_inference_steps=25, generator=gen).images[0]
     path = os.path.expanduser("~/sd_demo.png")
     out.save(path)

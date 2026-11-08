@@ -86,8 +86,8 @@ RoIAlign 在 COCO 上白白把遮罩 AP 拉高 3 到 4 個點。現在只要在�
 
 Mask R-CNN 有四種損失加在一起：
 
-```
-L = L_rpn_cls + L_rpn_box + L_box_cls + L_box_reg + L_mask
+```math
+L = L_{\text{rpn\_cls}} + L_{\text{rpn\_box}} + L_{\text{box\_cls}} + L_{\text{box\_reg}} + L_{\text{mask}}
 ```
 
 - `L_rpn_cls`、`L_rpn_box` —— RPN 區域提議的 objectness 加邊界框迴歸。

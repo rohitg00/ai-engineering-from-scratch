@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-4-4-title fig-4-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-4-title">Replaying the sampled tokens lowers the gap</title>
+  <desc id="fig-4-4-desc">Mean absolute difference between the engine and trainer log probabilities, per step, for 12 steps with seed 1. Median 0.0153 with the full vocabulary and 0.0135 with top-p and top-k replay.</desc>
+  <line x1="70" y1="256" x2="620" y2="256" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="260" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.012</text>
+  <line x1="70" y1="211.56" x2="620" y2="211.56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="215.56" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.013</text>
+  <line x1="70" y1="167.11" x2="620" y2="167.11" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="171.11" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.014</text>
+  <line x1="70" y1="122.67" x2="620" y2="122.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="126.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.015</text>
+  <line x1="70" y1="78.22" x2="620" y2="78.22" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="82.22" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.016</text>
+  <line x1="70" y1="256" x2="620" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="56" x2="70" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="256" x2="70" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="220" y1="256" x2="220" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="220" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="370" y1="256" x2="370" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="370" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="520" y1="256" x2="520" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="520" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">9</text>
+  <line x1="620" y1="256" x2="620" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="620" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">11</text>
+  <text x="345" y="290" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">step</text>
+  <text x="70" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">logprob gap, mean absolute difference</text>
+  <path d="M70.0 110.6 L120.0 94.9 L170.0 112.2 L220.0 124.4 L270.0 122.4 L320.0 80.9 L370.0 111.6 L420.0 98.6 L470.0 97.6 L520.0 109.9 L570.0 113.2 L620.0 122.2" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="70" cy="110.62" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="120" cy="94.93" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="170" cy="112.18" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="220" cy="124.4" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="270" cy="122.44" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="320" cy="80.93" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="370" cy="111.6" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="420" cy="98.58" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="470" cy="97.56" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="520" cy="109.87" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="570" cy="113.2" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="620" cy="122.22" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <path d="M70.0 186.0 L120.0 190.3 L170.0 187.3 L220.0 221.4 L270.0 208.9 L320.0 164.5 L370.0 188.1 L420.0 169.2 L470.0 181.7 L520.0 202.1 L570.0 210.8 L620.0 210.8" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="186.04" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="120" cy="190.27" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="170" cy="187.33" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="220" cy="221.42" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="270" cy="208.93" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="320" cy="164.53" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="370" cy="188.09" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="420" cy="169.24" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="470" cy="181.69" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="520" cy="202.13" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="570" cy="210.76" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="620" cy="210.76" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <path d="M70 18 H88" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="94" y="22" font-size="11" fill="var(--m-grey-ink, #5e5e59)">full vocabulary</text>
+  <path d="M211 18 H229" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="235" y="22" font-size="11" fill="var(--m-green-ink, #336b40)">top-p 0.95, top-k 64, replayed</text>
+  <text x="70" y="316" font-size="12" class="m-serif">Median gap 0.0153 to 0.0135, about 12 percent lower. One seed.</text>
+</svg>

@@ -1,0 +1,40 @@
+arch     cil
+baddr    0x400000
+binsz    5120
+bintype  pe
+bits     32
+canary   true
+injprot  false
+retguard false
+class    PE32
+cmp.csum 0x0000eac2
+compiled Fri Aug 31 18:05:33 2068
+crypto   false
+endian   little
+havecode true
+hdr.csum 0x00000000
+laddr    0x0
+lang     cil
+linenum  false
+lsyms    false
+machine  i386
+nx       true
+os       windows
+overlay  false
+cc       cdecl
+pic      true
+relocs   false
+signed   false
+sanitize false
+static   false
+stripped false
+uncaps   false
+subsys   dotnet
+va       true
+HINT: Relocs not applied, some references may not resolve: use -e bin.relocs.apply=true
+0   0x00000251 0x00402051 GLOBAL FUNC 14               Ledger.PercentChange(int:before,int:after):int
+0   0x0000026c 0x0040206c GLOBAL FUNC 45               Ledger.Grade(int:score):int
+0   0x000002a8 0x004020a8 GLOBAL FUNC 28               Ledger.Total(int[]:values):int
+0   0x000002c5 0x004020c5 GLOBAL FUNC 13               Ledger.GradeLabel(int:score):string
+0   0x000002e0 0x004020e0 GLOBAL FUNC 98               Ledger.Main():void
+0   0x00000343 0x00402143 GLOBAL FUNC 52               Ledger..cctor():void

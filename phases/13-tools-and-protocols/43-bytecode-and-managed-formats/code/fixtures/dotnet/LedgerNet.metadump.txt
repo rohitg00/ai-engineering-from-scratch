@@ -1,0 +1,336 @@
+[pe]
+machine I386 0x014c
+sections 3
+section .text va=0x2000 vsize=0x980 raw=0x200 rawsize=0xa00
+section .rsrc va=0x4000 vsize=0x550 raw=0xc00 rawsize=0x600
+section .reloc va=0x6000 vsize=0xc raw=0x1200 rawsize=0x200
+pe32plus False
+clrdir rva=0x2008 size=72
+[cli]
+runtime 2.5
+metadata rva=0x2178 size=1924
+flags 0x1 ILOnly
+entrypoint 0x06000005
+[metadata]
+version v4.0.30319
+heap UserString size=28 offset=0x63c
+heap String size=829 offset=0x2fc
+heap Blob size=284 offset=0x668
+heap Guid size=16 offset=0x658
+table Module id=0x00 rows=1 rowsize=10 offset=0xbc
+table TypeRef id=0x01 rows=21 rowsize=6 offset=0xc6
+table TypeDef id=0x02 rows=4 rowsize=14 offset=0x144
+table Field id=0x04 rows=2 rowsize=6 offset=0x17c
+table MethodDef id=0x06 rows=6 rowsize=14 offset=0x188
+table Param id=0x08 rows=5 rowsize=6 offset=0x1dc
+table MemberRef id=0x0a rows=16 rowsize=6 offset=0x1fa
+table CustomAttribute id=0x0c rows=12 rowsize=6 offset=0x25a
+table ClassLayout id=0x0f rows=1 rowsize=8 offset=0x2a2
+table StandAloneSig id=0x11 rows=3 rowsize=2 offset=0x2aa
+table FieldRva id=0x1d rows=1 rowsize=6 offset=0x2b0
+table Assembly id=0x20 rows=1 rowsize=22 offset=0x2b6
+table AssemblyRef id=0x23 rows=2 rowsize=20 offset=0x2cc
+table NestedClass id=0x29 rows=1 rowsize=4 offset=0x2f4
+[typedefs]
+typedef 0x02000001 <Module> flags=0x0 fields=0 methods=0
+typedef 0x02000002 Ledger flags=0x100181 fields=1 methods=6
+typedef 0x02000003 <PrivateImplementationDetails> flags=0x100 fields=1 methods=0
+typedef 0x02000004 __StaticArrayInitTypeSize=12 flags=0x113 fields=0 methods=0
+[fields]
+field 0x04000001 Labels sig=06 1d 0e
+field 0x04000002 D5E745D51458A32F87387E924B4F385771CE219E8AD01927322D18E39588C202 sig=06 11 10
+[methods]
+method 0x06000001 PercentChange rva=0x2050 flags=0x96 implflags=0x0 sig=00 02 08 08 08 params=[1:before,2:after]
+body 0x06000001 size=15 maxstack=8 codesize=14 localsinit=False localsig=0x00000000 locals=[] exceptions=0
+il 0x06000001 02 2d 02 16 2a 03 02 59 1f 64 5a 02 5b 2a
+method 0x06000002 Grade rva=0x2060 flags=0x96 implflags=0x0 sig=00 01 08 08 params=[1:score]
+body 0x06000002 size=57 maxstack=2 codesize=45 localsinit=True localsig=0x11000001 locals=[07 01 08] exceptions=0
+il 0x06000002 02 1f 0a 5b 0a 06 1c 59 45 05 00 00 00 08 00 00 00 06 00 00 00 04 00 00 00 02 00 00 00 02 00 00 00 2b 08 1a 2a 19 2a 18 2a 17 2a 16 2a
+method 0x06000003 Total rva=0x209c flags=0x96 implflags=0x0 sig=00 01 08 1d 08 params=[1:values]
+body 0x06000003 size=40 maxstack=2 codesize=28 localsinit=True localsig=0x11000002 locals=[07 04 08 1d 08 08 08] exceptions=0
+il 0x06000003 16 0a 02 0b 16 0c 2b 0c 07 08 94 0d 06 09 58 0a 08 17 58 0c 08 07 8e 69 32 ee 06 2a
+method 0x06000004 GradeLabel rva=0x20c4 flags=0x96 implflags=0x0 sig=00 01 0e 08 params=[1:score]
+body 0x06000004 size=14 maxstack=8 codesize=13 localsinit=False localsig=0x00000000 locals=[] exceptions=0
+il 0x06000004 7e 01 00 00 04 02 28 02 00 00 06 9a 2a
+method 0x06000005 Main rva=0x20d4 flags=0x96 implflags=0x0 sig=00 00 01 params=[]
+body 0x06000005 size=110 maxstack=5 codesize=98 localsinit=True localsig=0x11000003 locals=[07 02 1d 08 08] exceptions=0
+il 0x06000005 19 8d 10 00 00 01 25 d0 02 00 00 04 28 0d 00 00 0a 0a 1b 8d 14 00 00 01 25 16 1f 64 1f 7d 28 01 00 00 06 0b 12 01 28 0e 00 00 0a a2 25 17 72 01 00 00 70 a2 25 18 06 28 03 00 00 06 0b 12 01 28 0e 00 00 0a a2 25 19 72 01 00 00 70 a2 25 1a 1f 5f 28 04 00 00 06 a2 28 0f 00 00 0a 28 10 00 00 0a 2a
+method 0x06000006 .cctor rva=0x2142 flags=0x1891 implflags=0x0 sig=00 00 01 params=[]
+body 0x06000006 size=53 maxstack=8 codesize=52 localsinit=False localsig=0x00000000 locals=[] exceptions=0
+il 0x06000006 1b 8d 14 00 00 01 25 16 72 05 00 00 70 a2 25 17 72 09 00 00 70 a2 25 18 72 0d 00 00 70 a2 25 19 72 11 00 00 70 a2 25 1a 72 15 00 00 70 a2 80 01 00 00 04 2a
+[memberrefs]
+memberref 0x0a000001 System.Runtime.CompilerServices.CompilationRelaxationsAttribute::.ctor sig=20 01 01 08
+memberref 0x0a000002 System.Runtime.CompilerServices.RuntimeCompatibilityAttribute::.ctor sig=20 00 01
+memberref 0x0a000003 System.Diagnostics.DebuggableAttribute::.ctor sig=20 01 01 11 11
+memberref 0x0a000004 System.Runtime.Versioning.TargetFrameworkAttribute::.ctor sig=20 01 01 0e
+memberref 0x0a000005 System.Reflection.AssemblyCompanyAttribute::.ctor sig=20 01 01 0e
+memberref 0x0a000006 System.Reflection.AssemblyConfigurationAttribute::.ctor sig=20 01 01 0e
+memberref 0x0a000007 System.Reflection.AssemblyFileVersionAttribute::.ctor sig=20 01 01 0e
+memberref 0x0a000008 System.Reflection.AssemblyInformationalVersionAttribute::.ctor sig=20 01 01 0e
+memberref 0x0a000009 System.Reflection.AssemblyProductAttribute::.ctor sig=20 01 01 0e
+memberref 0x0a00000a System.Reflection.AssemblyTitleAttribute::.ctor sig=20 01 01 0e
+memberref 0x0a00000b System.Runtime.CompilerServices.RefSafetyRulesAttribute::.ctor sig=20 01 01 08
+memberref 0x0a00000c System.Runtime.CompilerServices.CompilerGeneratedAttribute::.ctor sig=20 00 01
+memberref 0x0a00000d System.Runtime.CompilerServices.RuntimeHelpers::InitializeArray sig=00 02 01 12 49 11 4d
+memberref 0x0a00000e System.Int32::ToString sig=20 00 0e
+memberref 0x0a00000f System.String::Concat sig=00 01 0e 1d 0e
+memberref 0x0a000010 System.Console::WriteLine sig=00 01 01 0e
+[typerefs]
+typeref 0x01000001 System.Runtime.CompilerServices.CompilationRelaxationsAttribute
+typeref 0x01000002 System.Runtime.CompilerServices.RuntimeCompatibilityAttribute
+typeref 0x01000003 System.Diagnostics.DebuggableAttribute
+typeref 0x01000004 .DebuggingModes
+typeref 0x01000005 System.Runtime.Versioning.TargetFrameworkAttribute
+typeref 0x01000006 System.Reflection.AssemblyCompanyAttribute
+typeref 0x01000007 System.Reflection.AssemblyConfigurationAttribute
+typeref 0x01000008 System.Reflection.AssemblyFileVersionAttribute
+typeref 0x01000009 System.Reflection.AssemblyInformationalVersionAttribute
+typeref 0x0100000a System.Reflection.AssemblyProductAttribute
+typeref 0x0100000b System.Reflection.AssemblyTitleAttribute
+typeref 0x0100000c System.Runtime.CompilerServices.RefSafetyRulesAttribute
+typeref 0x0100000d System.Object
+typeref 0x0100000e System.Runtime.CompilerServices.CompilerGeneratedAttribute
+typeref 0x0100000f System.ValueType
+typeref 0x01000010 System.Int32
+typeref 0x01000011 System.Runtime.CompilerServices.RuntimeHelpers
+typeref 0x01000012 System.Array
+typeref 0x01000013 System.RuntimeFieldHandle
+typeref 0x01000014 System.String
+typeref 0x01000015 System.Console
+[userstrings]
+userstring 0x1 %20
+userstring 0x5 F
+userstring 0x9 D
+userstring 0xd C
+userstring 0x11 B
+userstring 0x15 A
+userstring 0x19 
+userstring 0x1a 
+userstring 0x1b 
+[opcodes]
+opcode 0x0000 nop InlineNone size=1
+opcode 0x0001 break InlineNone size=1
+opcode 0x0002 ldarg.0 InlineNone size=1
+opcode 0x0003 ldarg.1 InlineNone size=1
+opcode 0x0004 ldarg.2 InlineNone size=1
+opcode 0x0005 ldarg.3 InlineNone size=1
+opcode 0x0006 ldloc.0 InlineNone size=1
+opcode 0x0007 ldloc.1 InlineNone size=1
+opcode 0x0008 ldloc.2 InlineNone size=1
+opcode 0x0009 ldloc.3 InlineNone size=1
+opcode 0x000a stloc.0 InlineNone size=1
+opcode 0x000b stloc.1 InlineNone size=1
+opcode 0x000c stloc.2 InlineNone size=1
+opcode 0x000d stloc.3 InlineNone size=1
+opcode 0x000e ldarg.s ShortInlineVar size=1
+opcode 0x000f ldarga.s ShortInlineVar size=1
+opcode 0x0010 starg.s ShortInlineVar size=1
+opcode 0x0011 ldloc.s ShortInlineVar size=1
+opcode 0x0012 ldloca.s ShortInlineVar size=1
+opcode 0x0013 stloc.s ShortInlineVar size=1
+opcode 0x0014 ldnull InlineNone size=1
+opcode 0x0015 ldc.i4.m1 InlineNone size=1
+opcode 0x0016 ldc.i4.0 InlineNone size=1
+opcode 0x0017 ldc.i4.1 InlineNone size=1
+opcode 0x0018 ldc.i4.2 InlineNone size=1
+opcode 0x0019 ldc.i4.3 InlineNone size=1
+opcode 0x001a ldc.i4.4 InlineNone size=1
+opcode 0x001b ldc.i4.5 InlineNone size=1
+opcode 0x001c ldc.i4.6 InlineNone size=1
+opcode 0x001d ldc.i4.7 InlineNone size=1
+opcode 0x001e ldc.i4.8 InlineNone size=1
+opcode 0x001f ldc.i4.s ShortInlineI size=1
+opcode 0x0020 ldc.i4 InlineI size=1
+opcode 0x0021 ldc.i8 InlineI8 size=1
+opcode 0x0022 ldc.r4 ShortInlineR size=1
+opcode 0x0023 ldc.r8 InlineR size=1
+opcode 0x0025 dup InlineNone size=1
+opcode 0x0026 pop InlineNone size=1
+opcode 0x0027 jmp InlineMethod size=1
+opcode 0x0028 call InlineMethod size=1
+opcode 0x0029 calli InlineSig size=1
+opcode 0x002a ret InlineNone size=1
+opcode 0x002b br.s ShortInlineBrTarget size=1
+opcode 0x002c brfalse.s ShortInlineBrTarget size=1
+opcode 0x002d brtrue.s ShortInlineBrTarget size=1
+opcode 0x002e beq.s ShortInlineBrTarget size=1
+opcode 0x002f bge.s ShortInlineBrTarget size=1
+opcode 0x0030 bgt.s ShortInlineBrTarget size=1
+opcode 0x0031 ble.s ShortInlineBrTarget size=1
+opcode 0x0032 blt.s ShortInlineBrTarget size=1
+opcode 0x0033 bne.un.s ShortInlineBrTarget size=1
+opcode 0x0034 bge.un.s ShortInlineBrTarget size=1
+opcode 0x0035 bgt.un.s ShortInlineBrTarget size=1
+opcode 0x0036 ble.un.s ShortInlineBrTarget size=1
+opcode 0x0037 blt.un.s ShortInlineBrTarget size=1
+opcode 0x0038 br InlineBrTarget size=1
+opcode 0x0039 brfalse InlineBrTarget size=1
+opcode 0x003a brtrue InlineBrTarget size=1
+opcode 0x003b beq InlineBrTarget size=1
+opcode 0x003c bge InlineBrTarget size=1
+opcode 0x003d bgt InlineBrTarget size=1
+opcode 0x003e ble InlineBrTarget size=1
+opcode 0x003f blt InlineBrTarget size=1
+opcode 0x0040 bne.un InlineBrTarget size=1
+opcode 0x0041 bge.un InlineBrTarget size=1
+opcode 0x0042 bgt.un InlineBrTarget size=1
+opcode 0x0043 ble.un InlineBrTarget size=1
+opcode 0x0044 blt.un InlineBrTarget size=1
+opcode 0x0045 switch InlineSwitch size=1
+opcode 0x0046 ldind.i1 InlineNone size=1
+opcode 0x0047 ldind.u1 InlineNone size=1
+opcode 0x0048 ldind.i2 InlineNone size=1
+opcode 0x0049 ldind.u2 InlineNone size=1
+opcode 0x004a ldind.i4 InlineNone size=1
+opcode 0x004b ldind.u4 InlineNone size=1
+opcode 0x004c ldind.i8 InlineNone size=1
+opcode 0x004d ldind.i InlineNone size=1
+opcode 0x004e ldind.r4 InlineNone size=1
+opcode 0x004f ldind.r8 InlineNone size=1
+opcode 0x0050 ldind.ref InlineNone size=1
+opcode 0x0051 stind.ref InlineNone size=1
+opcode 0x0052 stind.i1 InlineNone size=1
+opcode 0x0053 stind.i2 InlineNone size=1
+opcode 0x0054 stind.i4 InlineNone size=1
+opcode 0x0055 stind.i8 InlineNone size=1
+opcode 0x0056 stind.r4 InlineNone size=1
+opcode 0x0057 stind.r8 InlineNone size=1
+opcode 0x0058 add InlineNone size=1
+opcode 0x0059 sub InlineNone size=1
+opcode 0x005a mul InlineNone size=1
+opcode 0x005b div InlineNone size=1
+opcode 0x005c div.un InlineNone size=1
+opcode 0x005d rem InlineNone size=1
+opcode 0x005e rem.un InlineNone size=1
+opcode 0x005f and InlineNone size=1
+opcode 0x0060 or InlineNone size=1
+opcode 0x0061 xor InlineNone size=1
+opcode 0x0062 shl InlineNone size=1
+opcode 0x0063 shr InlineNone size=1
+opcode 0x0064 shr.un InlineNone size=1
+opcode 0x0065 neg InlineNone size=1
+opcode 0x0066 not InlineNone size=1
+opcode 0x0067 conv.i1 InlineNone size=1
+opcode 0x0068 conv.i2 InlineNone size=1
+opcode 0x0069 conv.i4 InlineNone size=1
+opcode 0x006a conv.i8 InlineNone size=1
+opcode 0x006b conv.r4 InlineNone size=1
+opcode 0x006c conv.r8 InlineNone size=1
+opcode 0x006d conv.u4 InlineNone size=1
+opcode 0x006e conv.u8 InlineNone size=1
+opcode 0x006f callvirt InlineMethod size=1
+opcode 0x0070 cpobj InlineType size=1
+opcode 0x0071 ldobj InlineType size=1
+opcode 0x0072 ldstr InlineString size=1
+opcode 0x0073 newobj InlineMethod size=1
+opcode 0x0074 castclass InlineType size=1
+opcode 0x0075 isinst InlineType size=1
+opcode 0x0076 conv.r.un InlineNone size=1
+opcode 0x0079 unbox InlineType size=1
+opcode 0x007a throw InlineNone size=1
+opcode 0x007b ldfld InlineField size=1
+opcode 0x007c ldflda InlineField size=1
+opcode 0x007d stfld InlineField size=1
+opcode 0x007e ldsfld InlineField size=1
+opcode 0x007f ldsflda InlineField size=1
+opcode 0x0080 stsfld InlineField size=1
+opcode 0x0081 stobj InlineType size=1
+opcode 0x0082 conv.ovf.i1.un InlineNone size=1
+opcode 0x0083 conv.ovf.i2.un InlineNone size=1
+opcode 0x0084 conv.ovf.i4.un InlineNone size=1
+opcode 0x0085 conv.ovf.i8.un InlineNone size=1
+opcode 0x0086 conv.ovf.u1.un InlineNone size=1
+opcode 0x0087 conv.ovf.u2.un InlineNone size=1
+opcode 0x0088 conv.ovf.u4.un InlineNone size=1
+opcode 0x0089 conv.ovf.u8.un InlineNone size=1
+opcode 0x008a conv.ovf.i.un InlineNone size=1
+opcode 0x008b conv.ovf.u.un InlineNone size=1
+opcode 0x008c box InlineType size=1
+opcode 0x008d newarr InlineType size=1
+opcode 0x008e ldlen InlineNone size=1
+opcode 0x008f ldelema InlineType size=1
+opcode 0x0090 ldelem.i1 InlineNone size=1
+opcode 0x0091 ldelem.u1 InlineNone size=1
+opcode 0x0092 ldelem.i2 InlineNone size=1
+opcode 0x0093 ldelem.u2 InlineNone size=1
+opcode 0x0094 ldelem.i4 InlineNone size=1
+opcode 0x0095 ldelem.u4 InlineNone size=1
+opcode 0x0096 ldelem.i8 InlineNone size=1
+opcode 0x0097 ldelem.i InlineNone size=1
+opcode 0x0098 ldelem.r4 InlineNone size=1
+opcode 0x0099 ldelem.r8 InlineNone size=1
+opcode 0x009a ldelem.ref InlineNone size=1
+opcode 0x009b stelem.i InlineNone size=1
+opcode 0x009c stelem.i1 InlineNone size=1
+opcode 0x009d stelem.i2 InlineNone size=1
+opcode 0x009e stelem.i4 InlineNone size=1
+opcode 0x009f stelem.i8 InlineNone size=1
+opcode 0x00a0 stelem.r4 InlineNone size=1
+opcode 0x00a1 stelem.r8 InlineNone size=1
+opcode 0x00a2 stelem.ref InlineNone size=1
+opcode 0x00a3 ldelem InlineType size=1
+opcode 0x00a4 stelem InlineType size=1
+opcode 0x00a5 unbox.any InlineType size=1
+opcode 0x00b3 conv.ovf.i1 InlineNone size=1
+opcode 0x00b4 conv.ovf.u1 InlineNone size=1
+opcode 0x00b5 conv.ovf.i2 InlineNone size=1
+opcode 0x00b6 conv.ovf.u2 InlineNone size=1
+opcode 0x00b7 conv.ovf.i4 InlineNone size=1
+opcode 0x00b8 conv.ovf.u4 InlineNone size=1
+opcode 0x00b9 conv.ovf.i8 InlineNone size=1
+opcode 0x00ba conv.ovf.u8 InlineNone size=1
+opcode 0x00c2 refanyval InlineType size=1
+opcode 0x00c3 ckfinite InlineNone size=1
+opcode 0x00c6 mkrefany InlineType size=1
+opcode 0x00d0 ldtoken InlineTok size=1
+opcode 0x00d1 conv.u2 InlineNone size=1
+opcode 0x00d2 conv.u1 InlineNone size=1
+opcode 0x00d3 conv.i InlineNone size=1
+opcode 0x00d4 conv.ovf.i InlineNone size=1
+opcode 0x00d5 conv.ovf.u InlineNone size=1
+opcode 0x00d6 add.ovf InlineNone size=1
+opcode 0x00d7 add.ovf.un InlineNone size=1
+opcode 0x00d8 mul.ovf InlineNone size=1
+opcode 0x00d9 mul.ovf.un InlineNone size=1
+opcode 0x00da sub.ovf InlineNone size=1
+opcode 0x00db sub.ovf.un InlineNone size=1
+opcode 0x00dc endfinally InlineNone size=1
+opcode 0x00dd leave InlineBrTarget size=1
+opcode 0x00de leave.s ShortInlineBrTarget size=1
+opcode 0x00df stind.i InlineNone size=1
+opcode 0x00e0 conv.u InlineNone size=1
+opcode 0x00f8 prefix7 InlineNone size=1
+opcode 0x00f9 prefix6 InlineNone size=1
+opcode 0x00fa prefix5 InlineNone size=1
+opcode 0x00fb prefix4 InlineNone size=1
+opcode 0x00fc prefix3 InlineNone size=1
+opcode 0x00fd prefix2 InlineNone size=1
+opcode 0x00fe prefix1 InlineNone size=1
+opcode 0x00ff prefixref InlineNone size=1
+opcode 0xfe00 arglist InlineNone size=2
+opcode 0xfe01 ceq InlineNone size=2
+opcode 0xfe02 cgt InlineNone size=2
+opcode 0xfe03 cgt.un InlineNone size=2
+opcode 0xfe04 clt InlineNone size=2
+opcode 0xfe05 clt.un InlineNone size=2
+opcode 0xfe06 ldftn InlineMethod size=2
+opcode 0xfe07 ldvirtftn InlineMethod size=2
+opcode 0xfe09 ldarg InlineVar size=2
+opcode 0xfe0a ldarga InlineVar size=2
+opcode 0xfe0b starg InlineVar size=2
+opcode 0xfe0c ldloc InlineVar size=2
+opcode 0xfe0d ldloca InlineVar size=2
+opcode 0xfe0e stloc InlineVar size=2
+opcode 0xfe0f localloc InlineNone size=2
+opcode 0xfe11 endfilter InlineNone size=2
+opcode 0xfe12 unaligned. ShortInlineI size=2
+opcode 0xfe13 volatile. InlineNone size=2
+opcode 0xfe14 tail. InlineNone size=2
+opcode 0xfe15 initobj InlineType size=2
+opcode 0xfe16 constrained. InlineType size=2
+opcode 0xfe17 cpblk InlineNone size=2
+opcode 0xfe18 initblk InlineNone size=2
+opcode 0xfe1a rethrow InlineNone size=2
+opcode 0xfe1c sizeof InlineType size=2
+opcode 0xfe1d refanytype InlineNone size=2
+opcode 0xfe1e readonly. InlineNone size=2

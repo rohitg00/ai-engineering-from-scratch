@@ -25,8 +25,8 @@ Karras 等人（2019, NVIDIA）提出：不要再把 `z` 直接餵進卷積層�
 
 **AdaIN。**
 
-```
-AdaIN(x, y) = y_scale · (x - mean(x)) / std(x) + y_bias
+```math
+\mathop{\mathrm{AdaIN}}(x, y) = y_{\text{scale}} \cdot \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x)} + y_{\text{bias}}
 ```
 
 其中 `y_scale` 與 `y_bias` 來自 `w` 的仿射投影。先對每張特徵圖正規化，再重新賦予風格。這裡的「風格」指的就是特徵圖的一階與二階統計量。

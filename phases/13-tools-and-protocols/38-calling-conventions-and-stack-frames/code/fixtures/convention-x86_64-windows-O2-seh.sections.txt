@@ -1,0 +1,15 @@
+
+convention-x86_64-windows-O2-seh.o:	file format coff-x86-64
+
+Sections:
+Idx Name          Size     VMA              Type
+  0 .text         0000030d 0000000000000000 TEXT
+  1 .data         00000000 0000000000000000 DATA
+  2 .bss          00000000 0000000000000000 BSS
+  3 .rdata        00000010 0000000000000000 DATA
+  4 .xdata        00000034 0000000000000000 DATA
+  5 .rdata        00000008 0000000000000000 DATA
+  6 .rdata        00000004 0000000000000000 DATA
+  7 .rdata        00000010 0000000000000000 DATA
+  8 .pdata        00000048 0000000000000000 DATA
+  9 .llvm_addrsig 00000000 0000000000000000 

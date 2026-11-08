@@ -45,8 +45,8 @@ flowchart LR
 
 G 想讓 D 判斷錯誤。D 想判斷正確。形式化寫下來：
 
-```
-min_G max_D  E_x[log D(x)] + E_z[log(1 - D(G(z)))]
+```math
+\min_G \max_D \; \mathbb{E}_x[\log D(x)] + \mathbb{E}_z[\log(1 - D(G(z)))]
 ```
 
 從右往左讀：D 在真實影像（`log D(real)`）和假影像（`log (1 - D(fake))`）上都要把準確率最大化。G 則要把 D 在假影像上的準確率最小化——它希望 `D(G(z))` 高。
@@ -57,9 +57,11 @@ Goodfellow 證明了這個極小極大存在一個全域均衡：`p_G = p_data`�
 
 上面那個形式在數值上不穩定。訓練初期每一張假影像的 `D(G(z))` 都接近零，所以 `log(1 - D(G(z)))` 對 G 的梯度會消失。解法：把 G 的損失翻過來。
 
-```
-L_D = -E_x[log D(x)] - E_z[log(1 - D(G(z)))]
-L_G = -E_z[log D(G(z))]                          # non-saturating
+```math
+\begin{aligned}
+L_D &= -\mathbb{E}_x[\log D(x)] - \mathbb{E}_z[\log(1 - D(G(z)))] \\
+L_G &= -\mathbb{E}_z[\log D(G(z))] \qquad \text{(non-saturating)}
+\end{aligned}
 ```
 
 現在當 `D(G(z))` 接近零時，G 的損失很大，梯度也帶有資訊。每一個現代 GAN 都用這個變體來訓練。

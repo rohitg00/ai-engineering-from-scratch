@@ -1,0 +1,103 @@
+{
+  "id": "ui-string-localization-workbench",
+  "title": "UI String Localization Workbench",
+  "tagline": "Review translated interface text without breaking its placeholders.",
+  "summary": "Help a small product team localize JSON message catalogs while retaining stable keys, variable placeholders and contextual notes. Compare recorded or real provider proposals in a UI preview, require review of ambiguous strings, and export an approved locale catalog and unresolved-string queue.",
+  "level": 2,
+  "languages": [
+    "TypeScript"
+  ],
+  "source": "core",
+  "prerequisiteProjects": [
+    "glossary-hovercard-publisher"
+  ],
+  "status": "ready",
+  "hours": 8,
+  "youWillBuild": "Reviewed locale JSON, an interactive message preview and unresolved-strings.json",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "languageWhy": {
+    "TypeScript": "Typed local transformations and portable browser interfaces run with Node standard libraries."
+  },
+  "figures": true,
+  "overviewFigure": "pj-ui-string-localization-workbench-1",
+  "demo": {
+    "command": [
+      "node",
+      "cli.ts",
+      "sample.json",
+      "output"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-catalog-contract",
+      "title": "Read message keys, placeholders and context",
+      "summary": "placeholders(text:string):string[]; readCatalog(value:unknown):Message[]",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-ui-string-localization-workbench-1",
+      "concepts": [
+        "Read message keys, placeholders and context"
+      ]
+    },
+    {
+      "id": "02-recorded-proposals",
+      "title": "Generate bounded translation proposals",
+      "summary": "proposeTranslations(messages:Message[],recorded:unknown,locale:string):Proposal[]",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-ui-string-localization-workbench-2",
+      "concepts": [
+        "Generate bounded translation proposals"
+      ]
+    },
+    {
+      "id": "03-message-preview",
+      "title": "Preview strings with supplied interpolation values",
+      "summary": "previewMessage(template:string,values:Record<string,string|number>):string",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-ui-string-localization-workbench-3",
+      "concepts": [
+        "Preview strings with supplied interpolation values"
+      ]
+    },
+    {
+      "id": "04-approved-catalog",
+      "title": "Export approved locale and unresolved questions",
+      "summary": "reviewTranslations(messages,proposals,value?):{catalog,unresolved,review}; renderWorkbench(messages,proposals,state,locale,values?):string",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-ui-string-localization-workbench-4",
+      "concepts": [
+        "Export approved locale and unresolved questions"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

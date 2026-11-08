@@ -1,0 +1,14 @@
+ledger_main [arm64]:
+    -fixup_chain_details:
+  0x00004000:  raw: 0x8010000000000000         bind: (next: 002, bindOrdinal: 0x000000)
+  0x00004008:  raw: 0x8010000000000001         bind: (next: 002, bindOrdinal: 0x000001)
+  0x00004010:  raw: 0x8010000000000002         bind: (next: 002, bindOrdinal: 0x000002)
+  0x00004018:  raw: 0x8010000000000003         bind: (next: 002, bindOrdinal: 0x000003)
+  0x00004020:  raw: 0x8010000000000004         bind: (next: 002, bindOrdinal: 0x000004)
+  0x00004028:  raw: 0x8010000000000005         bind: (next: 002, bindOrdinal: 0x000005)
+  0x00004030:  raw: 0x8010000000000006         bind: (next: 002, bindOrdinal: 0x000006)
+  0x00004038:  raw: 0x8010000000000007         bind: (next: 002, bindOrdinal: 0x000007)
+  0x00004040:  raw: 0x8010000000000000         bind: (next: 002, bindOrdinal: 0x000000)
+  0x00004048:  raw: 0x8010000000000000         bind: (next: 002, bindOrdinal: 0x000000)
+  0x00004050:  raw: 0x00100000000006D6       rebase: (next: 002, target: 0x000000006D6)
+  0x00004058:  raw: 0x00000000000006DB       rebase: (next: 000, target: 0x000000006DB)

@@ -1,0 +1,18 @@
+# lesson 42 capture
+# command: lldb -b -o settings set interpreter.stop-command-source-on-error false -s types-O0.lldb ./account-O0
+# cwd: fixtures
+# lldb: lldb-1703.0.236.21
+# date: 2026-10-14
+(lldb) target create "./account-O0"
+Current executable set to '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account-O0' (arm64).
+(lldb) settings set interpreter.stop-command-source-on-error false
+(lldb) command source -s 0 'types-O0.lldb'
+Executing commands in '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/types-O0.lldb'.
+(lldb) script import sys; print(sys.version.split()[0])
+3.9.6
+(lldb) script print([(f.name, f.byte_offset, f.type.name) for f in lldb.target.FindFirstType("account").get_fields_array()])
+[('kind', 0, 'char'), ('balance', 4, 'int'), ('code', 8, 'short'), ('rate', 16, 'double'), ('label', 24, 'const char *')]
+(lldb) script print(lldb.target.FindFirstType("account").size)
+32
+(lldb) script print([(c.function.name, hex(c.function.addr.file_addr), hex(c.function.end_addr.file_addr), c.function.addr.line_entry.line) for n in ('bump', 'classify', 'sum_balances') for c in lldb.target.FindFunctions(n)])
+[('bump', '0x1000004b0', '0x1000004e0', 12), ('classify', '0x1000004e0', '0x100000538', 17), ('sum_balances', '0x100000538', '0x1000005a0', 23)]

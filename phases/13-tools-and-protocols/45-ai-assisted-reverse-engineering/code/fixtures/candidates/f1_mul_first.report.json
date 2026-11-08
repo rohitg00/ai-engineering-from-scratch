@@ -1,0 +1,28 @@
+{
+  "candidate": "f1_mul_first",
+  "label": "hand-written test candidate for lesson 45, not the output of any model",
+  "kind": "correct",
+  "tool": "hand-written",
+  "target": {
+    "object": "ledger-x86_64-O1-renamed.o",
+    "sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+    "function": "f1"
+  },
+  "source": "f1_mul_first.c",
+  "claims": {
+    "name": "percent_change",
+    "return_type": "int",
+    "parameters": [
+      {"name": "before", "type": "int"},
+      {"name": "after", "type": "int"}
+    ],
+    "summary": "Returns 0 when before is 0. Otherwise returns 100 times the difference after minus before, divided by before, all in 32-bit signed arithmetic with truncation toward zero."
+  },
+  "citations": {
+    "addresses": ["0x0", "0x2", "0x6", "0x9", "0xa"],
+    "callees": [],
+    "strings": [],
+    "immediates": [100]
+  },
+  "cost": {"tokens": null, "seconds": null}
+}

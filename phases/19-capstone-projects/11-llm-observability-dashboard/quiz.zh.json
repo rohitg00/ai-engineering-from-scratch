@@ -52,7 +52,7 @@
     },
     {
       "stage": "check",
-      "question": "針對注入的 PII 外洩迴歸，這份交付物的 MTTR 目標是多少？",
+      "question": "針對注入的 PII 外洩迴歸，這份交付物的偵測時間（MTTD）目標是多少？",
       "options": [
         "1 小時以內",
         "24 小時以內",

@@ -9,7 +9,7 @@
         "HDF5 has a smaller logo",
         "JSONL is deprecated",
         "Random reasons",
-        "HDF5 offers chunked, integer-only, memory-mapped reads with O(1) random access; JSONL forces the parser onto every hot-path read"
+        "HDF5 offers chunked, integer-only, cache-friendly reads with O(1) random access; JSONL forces the parser onto every hot-path read"
       ],
       "correct": 3,
       "explanation": "The dataloader wants a flat token stream with addressable slices; HDF5 supplies that natively."

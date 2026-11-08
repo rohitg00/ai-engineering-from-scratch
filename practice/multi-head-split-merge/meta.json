@@ -1,0 +1,22 @@
+{
+  "id": "multi-head-split-merge",
+  "title": "Split heads, merge heads, multi-head attention",
+  "kind": "implement",
+  "summary": "Reshape (B, T, D) into H heads and back, then run batched multi-head self-attention with given projection matrices.",
+  "difficulty": "medium",
+  "tags": ["attention", "multi-head-attention", "transformers", "reshape"],
+  "lesson": "phases/07-transformers-deep-dive/03-multi-head-attention",
+  "cheatsheet": "transformers-attention",
+  "minutes": 30,
+  "entry": ["split_heads", "merge_heads", "multi_head_attention"],
+  "collections": ["transformers-from-scratch"],
+  "time_limit_s": 10,
+  "mutants": {
+    "no_max_shift": "Calls np.exp on the raw scores, so large activations overflow to infinity.",
+    "no_output_projection": "Returns the merged heads and forgets to multiply by w_o.",
+    "reshape_no_transpose": "Splits with x.reshape(B, H, T, d_head) and no transpose, so the head axis mixes tokens and features.",
+    "scale_by_d_model": "Divides the scores by sqrt(D), not by sqrt(d_head).",
+    "softmax_wrong_axis": "Takes the softmax over the query axis, not over the key axis.",
+    "strided_heads": "Gives head h the columns h, h + H, h + 2H and so on, not one block of d_head neighbor columns."
+  }
+}

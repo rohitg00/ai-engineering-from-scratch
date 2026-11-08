@@ -1,0 +1,21 @@
+{
+  "id": "sgd-momentum",
+  "title": "SGD with momentum",
+  "kind": "implement",
+  "summary": "One momentum update with the lesson's velocity rule, and a loop that minimizes a quadratic with or without Nesterov lookahead.",
+  "difficulty": "easy",
+  "tags": ["optimizers", "momentum", "gradient-descent"],
+  "lesson": "phases/03-deep-learning-core/06-optimizers",
+  "cheatsheet": "deep-learning-training",
+  "minutes": 20,
+  "entry": ["momentum_step", "minimize_quadratic"],
+  "collections": ["optimizers"],
+  "time_limit_s": 10,
+  "mutants": {
+    "ema_velocity": "Scales the gradient by 1 minus beta, so the velocity is an average and not the lesson's sum.",
+    "old_velocity_update": "Moves the parameters with the old velocity and not the new velocity.",
+    "lookahead_sign": "Computes the Nesterov gradient at x plus lr times beta times v, the wrong side.",
+    "grad_sign": "Uses b minus A x as the gradient, so the loop climbs away from the minimum.",
+    "in_place_velocity": "Updates the velocity in place with *= and +=, so the caller's velocity array changes."
+  }
+}

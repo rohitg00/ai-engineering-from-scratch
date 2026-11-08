@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-4-2-title fig-4-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-2-title">Which decode batches replay a graph</title>
+  <desc id="fig-4-2-desc">A decode batch arrives at the decode CUDA graph runner on an 80 GB GPU at tensor parallel size 1, where max_bs is 256. A batch of 13 fits and replays the graph captured for 16. A batch of 256 replays the largest graph. A batch of 300 is above max_bs and runs eager, one launch per kernel, and the scheduler log shows cuda graph False.</desc>
+  <defs><marker id="fig-4-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-4-2-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">DECODE BATCH</text>
+  <text x="250" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CAN_RUN_GRAPH</text>
+  <text x="450" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT RUNS</text>
+  <rect x="20" y="30" width="150" height="48" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="95" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">bs = 13</text>
+  <text x="95" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">running requests</text>
+  <rect x="250" y="30" width="130" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="315" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">13 &lt;= 256</text>
+  <text x="315" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">fits</text>
+  <rect x="450" y="30" width="170" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="535" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">replay graph 16</text>
+  <text x="535" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">3 padded slots</text>
+  <line x1="170" y1="54" x2="249" y2="54" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-2-head-ink)"/>
+  <line x1="380" y1="54" x2="449" y2="54" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-2-head-ink)"/>
+  <rect x="20" y="110" width="150" height="48" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="95" y="129.25" font-size="12.5" text-anchor="middle" font-weight="700">bs = 256</text>
+  <text x="95" y="146.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">running requests</text>
+  <rect x="250" y="110" width="130" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="315" y="129.25" font-size="12.5" text-anchor="middle" font-weight="700">256 &lt;= 256</text>
+  <text x="315" y="146.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">fits</text>
+  <rect x="450" y="110" width="170" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="535" y="129.25" font-size="12.5" text-anchor="middle" font-weight="700">replay graph 256</text>
+  <text x="535" y="146.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">largest bucket</text>
+  <line x1="170" y1="134" x2="249" y2="134" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-2-head-ink)"/>
+  <line x1="380" y1="134" x2="449" y2="134" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-2-head-ink)"/>
+  <rect x="20" y="190" width="150" height="48" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="95" y="209.25" font-size="12.5" text-anchor="middle" font-weight="700">bs = 300</text>
+  <text x="95" y="226.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">running requests</text>
+  <rect x="250" y="190" width="130" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="315" y="209.25" font-size="12.5" text-anchor="middle" font-weight="700">300 &gt; 256</text>
+  <text x="315" y="226.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">too large</text>
+  <rect x="450" y="190" width="170" height="48" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="535" y="209.25" font-size="12.5" text-anchor="middle" font-weight="700">eager forward</text>
+  <text x="535" y="226.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">cuda graph: False</text>
+  <line x1="170" y1="214" x2="249" y2="214" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-2-head-ink)"/>
+  <line x1="380" y1="214" x2="449" y2="214" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-2-head-rose)"/>
+  <text x="20" y="268" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">captured sizes: 1, 2, 4, 8, 12, then 16 to 256 in steps of 8</text>
+  <text x="20" y="286" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">max_bs 256 is the default on an 80 GB GPU at TP 1</text>
+</svg>

@@ -11,7 +11,7 @@
 
 - Explain masked discrete diffusion: the schedule that masks tokens uniformly then asks the transformer to recover them.
 - Compare parallel image decoding (Show-o, MaskGIT) to autoregressive image decoding (Chameleon, Emu3) on speed and quality.
-- Name the three tasks Show-o handles in one checkpoint: T2I, VQA, image inpainting.
+- Name the four tasks Show-o handles in one checkpoint: text generation, VQA, T2I, image inpainting.
 - Pick a masking schedule (cosine, linear, truncated) and reason about its effect on sample quality.
 
 ## The Problem
@@ -69,11 +69,11 @@ The inpainting capability comes for free from the masked-prediction training. Ma
 
 The schedule of how many tokens to unmask per step shapes quality. Show-o recommends cosine:
 
-```
-mask_ratio(t) = cos(pi * t / (2 * T))   # t = 0..T
+```math
+\text{mask\_ratio}(t) = \cos\left(\frac{\pi t}{2T}\right) \qquad t = 0, \ldots, T
 ```
 
-At step 0, all tokens masked (ratio 1.0). At step T, none masked. Cosine concentrates mass on mid-range ratios where prediction is most informative. Linear schedules also work but plateau faster.
+At step 0, all tokens masked (ratio 1.0). At step $T$, none masked. Cosine concentrates mass on mid-range ratios where prediction is most informative. Linear schedules also work but plateau faster.
 
 ### Show-o2
 
@@ -117,7 +117,7 @@ This lesson produces `outputs/skill-unified-gen-model-picker.md`. Given a produc
 
 3. Cosine schedule vs linear schedule: trace the number of unmasked tokens per step for T=8. Which is more balanced?
 
-4. A 512x512 Show-o image is 1024 tokens. At vocab K=16384, the model emits 1024 * log2(16384) = 14,336 bits (~1.75 KiB) of data. Stable Diffusion outputs 512*512*24 bits = 6,291,456 bits (~768 KiB) of raw pixels. What is the compression ratio and what quality does it buy?
+4. A 512x512 Show-o image is 1024 tokens. At vocab $K=16384$, the model emits $1024 \cdot \log_2(16384) = 14{,}336$ bits (~1.75 KiB) of data. Stable Diffusion outputs 512*512*24 bits = 6,291,456 bits (~768 KiB) of raw pixels. What is the compression ratio and what quality does it buy?
 
 5. Read LlamaGen (arXiv:2406.06525). How is LlamaGen's class-conditional autoregressive image model different from Show-o's masked approach?
 

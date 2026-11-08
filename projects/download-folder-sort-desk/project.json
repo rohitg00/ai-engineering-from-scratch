@@ -1,0 +1,108 @@
+{
+  "id": "download-folder-sort-desk",
+  "title": "Download Folder Sort Desk",
+  "level": 1,
+  "languages": [
+    "Python"
+  ],
+  "source": "core",
+  "tagline": "Turn a crowded folder into a reviewable filing plan.",
+  "summary": "Help someone organize local downloads by combining file metadata, content hashes and an explainable category score. Generate collision-free destination proposals and duplicate groups, then export an HTML review desk and a JSON move plan that another file manager can consume.",
+  "prerequisiteProjects": [],
+  "status": "ready",
+  "hours": 8,
+  "prerequisites": [
+    "Python 3.10+; lists, dictionaries and functions"
+  ],
+  "skills": [
+    "Inventory files and compute content identities",
+    "Score categories from visible file features",
+    "Plan destinations and surface naming conflicts",
+    "Export a reviewed filing plan for a file manager"
+  ],
+  "youWillBuild": "A searchable HTML filing plan, duplicate groups and moves.json",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "overviewFigure": "pj-download-folder-sort-desk-1",
+  "figures": true,
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.json",
+      "--output",
+      "demo-output"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-inventory",
+      "title": "Inventory files and compute content identities",
+      "summary": "Hash bytes and retain root-relative file identities.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "starter",
+      "concepts": [
+        "content identity",
+        "filesystem traversal"
+      ],
+      "figure": "pj-download-folder-sort-desk-1"
+    },
+    {
+      "id": "02-score",
+      "title": "Score categories from visible file features",
+      "summary": "Explain categories from extension and filename evidence.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "scoring",
+        "tie breaking"
+      ],
+      "figure": "pj-download-folder-sort-desk-2"
+    },
+    {
+      "id": "03-destinations",
+      "title": "Plan destinations and surface naming conflicts",
+      "summary": "Reserve each destination before planning the next file.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "collision handling",
+        "duplicate groups"
+      ],
+      "figure": "pj-download-folder-sort-desk-3"
+    },
+    {
+      "id": "04-review",
+      "title": "Export a reviewed filing plan for a file manager",
+      "summary": "Check source identities before consuming selected moves.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "approval",
+        "stale data"
+      ],
+      "figure": "pj-download-folder-sort-desk-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

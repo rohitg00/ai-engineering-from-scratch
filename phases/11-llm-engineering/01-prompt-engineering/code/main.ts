@@ -3,7 +3,7 @@
 // deterministic scoring. Mirrors code/prompt_engineering.py.
 // Sources:
 //   https://platform.openai.com/docs/guides/text-generation
-//   https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering
+//   https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
 //   https://ai.google.dev/gemini-api/docs/text-generation
 
 import { createHash } from "node:crypto";

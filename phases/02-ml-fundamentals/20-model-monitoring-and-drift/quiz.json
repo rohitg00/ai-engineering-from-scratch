@@ -1,0 +1,78 @@
+{
+  "lesson": "20-model-monitoring-and-drift",
+  "title": "Monitoring Models in Production — Data Drift and Concept Drift",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A model service answers every request with HTTP 200 and normal latency. What can it still hide?",
+      "options": [
+        "Nothing, because a healthy service always returns correct predictions",
+        "Memory leaks, because HTTP 200 responses never allocate new memory",
+        "Wrong predictions, because the data moved away from the training data",
+        "Slow queries, because an HTTP 200 status means the request took over one second"
+      ],
+      "correct": 2,
+      "explanation": "System health checks show that the service answers. They say nothing about whether the answers are still right for today's data."
+    },
+    {
+      "stage": "check",
+      "question": "Fraudsters change tactics, so the same payment features now carry a different fraud risk. Which kind of drift is this?",
+      "options": [
+        "Covariate drift, because P(x) changed",
+        "Prior drift, because P(y) changed alone",
+        "No drift, because the inputs look the same",
+        "Concept drift, because P(y | x) changed"
+      ],
+      "correct": 3,
+      "explanation": "The input distribution can stay the same while the correct answer for each input changes. That is concept drift, and only labeled outcomes reveal it."
+    },
+    {
+      "stage": "check",
+      "question": "One of 10 reference-decile bins holds 10 percent of the reference and 30 percent of the current window. What does this bin add to PSI?",
+      "options": [
+        "About 1.10, the natural log of the ratio 0.30 / 0.10",
+        "About 0.66, three times the difference in shares",
+        "About 0.22, which is (0.30 - 0.10) times ln(3)",
+        "About 0.20, the difference between the two shares"
+      ],
+      "correct": 2,
+      "explanation": "Each bin adds (current share minus reference share) times the log of their ratio. Here that is 0.20 times 1.099, about 0.22."
+    },
+    {
+      "stage": "check",
+      "question": "A drift monitor checks 50 features every hour at alpha 0.05, and nothing has changed. About how many false alarms does it raise per day?",
+      "options": [
+        "About 2.5",
+        "About 60",
+        "About 1200",
+        "None, because alpha protects every test"
+      ],
+      "correct": 1,
+      "explanation": "The monitor runs 50 times 24, or 1200 tests per day. Each one has a 5 percent false-alarm rate, so about 60 fire on unchanged data."
+    },
+    {
+      "stage": "post",
+      "question": "With one million events in each window, the KS test reports p = 2e-7 for a feature, and D is 0.004. What should the alert policy do?",
+      "options": [
+        "Log it at most as a warning, because the effect size D is tiny",
+        "Page the on-call engineer, because the p-value is far below alpha",
+        "Retrain at once, because any significant result means concept drift",
+        "Ignore KS and switch to PSI, because KS is invalid for large windows"
+      ],
+      "correct": 0,
+      "explanation": "Large samples make tiny gaps significant. The policy needs an effect-size threshold on D as well as a p-value threshold before it alerts a person."
+    },
+    {
+      "stage": "post",
+      "question": "Input monitors stay quiet, but accuracy on newly labeled events falls from 0.95 to 0.78. What is the right next step?",
+      "options": [
+        "Ignore it, because input drift tests found nothing wrong at all",
+        "Lower the PSI thresholds until the input monitors fire too",
+        "Retrain on the original training data with more epochs",
+        "Treat it as concept drift and collect recent labels to retrain"
+      ],
+      "correct": 3,
+      "explanation": "Stable inputs with falling accuracy point to a change in P(y | x). Retraining on old labels teaches the old concept again, so recent labels come first."
+    }
+  ]
+}

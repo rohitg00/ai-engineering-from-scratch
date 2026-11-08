@@ -1,0 +1,11 @@
+title: the guard log around the first pause
+source: manuals/sglang-101/capture/gpu/incidents/gb10-memory-guard-pauses.txt
+lines: 1-5
+lang: text
+note: Read the process name, the growth in five seconds, and the time until the guard reported normal.
+---
+2026-10-16T12:53:16+00:00 2026/10/16 12:53:16 guardian level: Critical: 34.2 GiB left before the freeze zone.
+2026-10-16T12:53:16+00:00 2026/10/16 12:53:16 guardian pause: Paused sglang::schedul (pid 2983880, rohit): it grew 36.7 GiB in 5s with 34.2 GiB left. Resume or stop it from the app.
+2026-10-16T12:53:24+00:00 2026/10/16 12:53:24 guardian level: Back to normal: 28.9 GiB available.
+2026-10-16T12:53:28+00:00 2026/10/16 12:53:28 guardian level: Critical: 30.2 GiB left before the freeze zone.
+2026-10-16T12:53:48+00:00 2026/10/16 12:53:48 guardian level: Back to normal: 31.9 GiB available.

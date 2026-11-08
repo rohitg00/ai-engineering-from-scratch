@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 370" role="img" aria-labelledby="fig-5-3e-title fig-5-3e-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-3e-title">The same choice at a fixed arrival rate</title>
+  <desc id="fig-5-3e-desc">Median time to first token and P99 time per output token against a Poisson arrival rate from 0.5 to 16 requests per second for SGLang 0.5.22 and vLLM 0.31.0 with Qwen3-8B on one NVIDIA L4, with KV pools of 24,094 and 24,096 tokens, 512 input and 128 output tokens, and three seeds per point, on a log scale. Up to 2 requests per second all four lines stay under 1,000 ms. From 4 requests per second the first-token lines rise to many seconds, vLLM lower, and the vLLM P99 time per token rises above the SGLang line, 187 against 127 ms at 4.</desc>
+  <line x1="70" y1="306" x2="606" y2="306" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="310" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="70" y1="288.31" x2="606" y2="288.31" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="292.31" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="70" y1="260.28" x2="606" y2="260.28" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="264.28" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <line x1="70" y1="229.55" x2="606" y2="229.55" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="233.55" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <line x1="70" y1="170.79" x2="606" y2="170.79" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="174.79" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10k</text>
+  <line x1="70" y1="112.04" x2="606" y2="112.04" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="116.04" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100k</text>
+  <line x1="70" y1="306" x2="606" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="84" x2="70" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="306" x2="70" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="323" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0.5</text>
+  <line x1="177.2" y1="306" x2="177.2" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="177.2" y="323" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="284.4" y1="306" x2="284.4" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="284.4" y="323" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="391.6" y1="306" x2="391.6" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="391.6" y="323" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="498.8" y1="306" x2="498.8" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="498.8" y="323" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="606" y1="306" x2="606" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="606" y="323" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16</text>
+  <text x="338" y="340" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">offered request rate, requests per second (Poisson)</text>
+  <text x="70" y="72" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ms (log scale)</text>
+  <path d="M70.0 261.6 L177.2 274.1 L284.4 266.4 L391.6 171.2 L498.8 137.2 L606.0 112.0 L606.0 113.4 L498.8 138.4 L391.6 175.2 L284.4 269.2 L177.2 276.1 L70.0 262.3 Z" fill="var(--m-blue-ink, #2f5d9a)" fill-opacity="0.1" stroke="none"/>
+  <path d="M70.0 261.7 L177.2 275.4 L284.4 268.1 L391.6 171.9 L498.8 137.3 L606.0 112.7" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="261.67" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="177.2" cy="275.42" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="284.4" cy="268.12" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="391.6" cy="171.9" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="498.8" cy="137.26" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="606" cy="112.67" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <path d="M70.0 257.8 L177.2 273.0 L284.4 265.0 L391.6 171.6 L498.8 144.6 L606.0 113.5 L606.0 114.3 L498.8 146.1 L391.6 177.3 L284.4 268.0 L177.2 273.4 L70.0 259.3 Z" fill="var(--m-amber-ink, #85590c)" fill-opacity="0.1" stroke="none"/>
+  <path d="M70.0 258.9 L177.2 273.3 L284.4 266.7 L391.6 175.5 L498.8 145.0 L606.0 113.5" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="258.87" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="177.2" cy="273.33" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="284.4" cy="266.74" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="391.6" cy="175.54" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="498.8" cy="144.97" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="606" cy="113.53" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <path d="M70.0 293.0 L177.2 294.7 L284.4 283.2 L391.6 282.0 L498.8 277.5 L606.0 271.4 L606.0 273.0 L498.8 278.0 L391.6 282.3 L284.4 284.4 L177.2 295.3 L70.0 293.9 Z" fill="var(--m-blue-ink, #2f5d9a)" fill-opacity="0.1" stroke="none"/>
+  <path d="M70.0 293.7 L177.2 295.2 L284.4 283.6 L391.6 282.2 L498.8 277.8 L606.0 272.1" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="70" cy="293.7" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="177.2" cy="295.21" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="284.4" cy="283.58" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="391.6" cy="282.17" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="498.8" cy="277.75" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="606" cy="272.11" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <path d="M70.0 294.1 L177.2 297.6 L284.4 285.5 L391.6 271.8 L498.8 264.9 L606.0 257.8 L606.0 258.8 L498.8 265.7 L391.6 274.1 L284.4 286.5 L177.2 298.0 L70.0 295.2 Z" fill="var(--m-amber-ink, #85590c)" fill-opacity="0.1" stroke="none"/>
+  <path d="M70.0 294.6 L177.2 297.9 L284.4 286.1 L391.6 272.3 L498.8 265.1 L606.0 258.5" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="70" cy="294.6" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="177.2" cy="297.87" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="284.4" cy="286.1" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="391.6" cy="272.34" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="498.8" cy="265.1" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="606" cy="258.49" r="2.8" fill="var(--m-amber-ink, #85590c)"/>
+  <path d="M70 18 H88" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="94" y="22" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">SGLang median TTFT</text>
+  <path d="M230.8 18 H248.8" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="254.8" y="22" font-size="11" fill="var(--m-amber-ink, #85590c)">vLLM median TTFT</text>
+  <path d="M70 40 H88" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="94" y="44" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">SGLang P99 TPOT</text>
+  <path d="M211 40 H229" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="235" y="44" font-size="11" fill="var(--m-amber-ink, #85590c)">vLLM P99 TPOT</text>
+</svg>

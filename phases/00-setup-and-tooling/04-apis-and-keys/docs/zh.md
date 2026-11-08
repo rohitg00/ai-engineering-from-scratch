@@ -146,6 +146,14 @@ with urllib.request.urlopen(req) as resp:
 2. 試試原始 HTTP 的版本，把回應格式和 SDK 版本的比一比
 3. 故意用一組錯的 API 金鑰，把錯誤訊息讀過一遍
 
+### 提示
+
+**練習 1。** 在 Anthropic Console 建立一組金鑰，照本課的方式放進 `ANTHROPIC_API_KEY`，然後執行 `code/first_api_call.py`。腳本印出模型的回覆、而且沒有錯誤，呼叫就成功了。
+
+**練習 2。** `code/first_api_call.py` 裡的兩個函式都只印出文字和詞元數。在 `call_with_sdk()` 裡加上 `print(response)`，在 `call_raw_http()` 裡加上 `print(result)`，再執行腳本，看看兩份完整的回應。比較欄位名稱：原始 JSON 裡的 `content`、`usage` 與 `stop_reason` 欄位，正是 SDK 轉成物件屬性的那些。
+
+**練習 3。** 只在一個終端機裡把 `ANTHROPIC_API_KEY` 設成假的值，然後再執行一次腳本。在輸出裡找出 HTTP 狀態碼與錯誤類型；驗證失敗會回傳 401 狀態。
+
 ## 關鍵術語
 
 | 術語 | 大家怎麼說 | 實際上是什麼 |

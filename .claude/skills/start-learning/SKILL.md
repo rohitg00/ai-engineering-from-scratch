@@ -2,7 +2,7 @@
 name: start-learning
 version: 1.0.0
 description: >
-  One-time onboarding for the AI Engineering from Scratch curriculum (523
+  One-time onboarding for the AI Engineering from Scratch curriculum (542
   lessons, 20 phases). Interviews the learner, runs the placement quiz, and
   writes LEARNING.md, a persistent study plan the learn skill drives.
   Trigger phrases: "start learning", "set up the course", "begin the
@@ -13,7 +13,7 @@ tags: [onboarding, curriculum, ai-engineering, learning-plan]
 # Start Learning
 
 You are onboarding a learner into the **AI Engineering from Scratch**
-curriculum: 523 lessons across 20 phases, from linear algebra to autonomous
+curriculum: 542 lessons across 20 phases, from linear algebra to autonomous
 agents. Your job is to produce `LEARNING.md`, a single file in the current
 directory that captures why they are learning, where they should start, and
 what their path looks like. Every later `learn` session reads and updates
@@ -49,7 +49,9 @@ against these supported state files and their route owners:
 - `MCP-ENGINEERING-LEARNING.md` is the legacy filename for that same
   `learn-mcp` route, not a separate route.
 - `AGENT-SKILLS-LEARNING.md` belongs to `learn-agent-skills`.
+- `REVERSE-ENGINEERING-LEARNING.md` belongs to `learn-reverse-engineering`.
 - `CLAUDE-CERTIFICATION.md` belongs to `claude-certification`.
+- `INTERVIEW-LEARNING.md` belongs to `interview-prep` for interview practice.
 
 If the learner names a route in a resume or continue request, dispatch to its
 owner immediately even when other state files exist, then stop this skill.
@@ -89,6 +91,17 @@ Codex, `/learn-agent-skills` in Claude Code, or ask another compatible host to
 use `learn-agent-skills`. The dedicated tutor owns the five-lesson order,
 real-host evidence, sandbox boundaries, the Lesson 25 and tool-poisoning
 prerequisite gate before Lesson 26, and the release gate.
+
+## Focused Reverse Engineering handoff
+
+If the learner explicitly wants Reverse Engineering instead of the full course,
+or `REVERSE-ENGINEERING-LEARNING.md` exists and they ask to resume that route,
+do not run placement and do not create `LEARNING.md`. Route to the portable
+skill `learn-reverse-engineering`, whose source is
+`learning-paths/reverse-engineering.json` and whose state file is
+`REVERSE-ENGINEERING-LEARNING.md`. Use `learn-reverse-engineering` in Codex,
+`/learn-reverse-engineering` in Claude Code, or ask another compatible host to
+use `learn-reverse-engineering`.
 
 If `LEARNING.md` already exists, do not overwrite it. Summarize what it says
 (mission, entry point, progress so far) and offer exactly three paths:

@@ -1,0 +1,36 @@
+$ sbx create shell $CAPTURE/fixtures/repo-kit --name m101-kit --kit ./fixtures/kits/hello-mixin
+
+sandbox    m101-kit
+agent      shell
+kit        ./fixtures/kits/hello-mixin
+workspace  $CAPTURE/fixtures/repo-kit (rw)
+image      docker/sandbox-templates:shell-docker
+cpu        10
+memory     32 GiB
+
+Pulling image
+  <layers>
+✓ Image ready
+→ set 7 environment variable(s)
+→ run 1 install command(s)
+  $ apt-get update && apt-get install -y tree (kit=hello-mixin, user=0)
+  ✓ apt-get update && apt-get install -y tree (kit=hello-mixin, user=0, <dur>)
+→ register 1 startup command(s), run on every container start
+  + sh -c { command -v apt-get && apt-get update -qq -y || true… (kit=shell, user=root)
+  view startup log: cat /var/log/sbx-kit-startup.log
+→ copy 1 workspace file(s), after workspace is ready
+✓ Created sandbox m101-kit
+
+To connect to this sandbox, run:
+  sbx run --name m101-kit
+[exit 0]
+
+$ sbx exec m101-kit sh -c 'command -v tree; tree --version | head -1; echo; ls; echo; cat HELLO.md'
+/usr/bin/tree
+tree v2.3.1 (c) 1996 - 2026 by Steve Baker, Thomas Moore, Francesc Rocher, Florian Sesser, Kyosuke Tokoro
+
+HELLO.md
+README.md
+
+Hello from the mixin.
+[exit 0]

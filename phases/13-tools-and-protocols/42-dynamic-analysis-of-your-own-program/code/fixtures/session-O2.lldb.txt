@@ -1,0 +1,77 @@
+# lesson 42 capture
+# command: lldb -b -o settings set interpreter.stop-command-source-on-error false -s session-O2.lldb ./account-O2
+# cwd: fixtures
+# lldb: lldb-1703.0.236.21
+# date: 2026-10-14
+(lldb) target create "./account-O2"
+Current executable set to '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account-O2' (arm64).
+(lldb) settings set interpreter.stop-command-source-on-error false
+(lldb) command source -s 0 'session-O2.lldb'
+Executing commands in '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/session-O2.lldb'.
+(lldb) breakpoint set -n bump
+Breakpoint 1: where = account-O2`bump at account.c:13:16, address = 0x0000000100000460
+(lldb) breakpoint set -n classify
+Breakpoint 2: where = account-O2`classify at account.c:18:12, address = 0x0000000100000474
+(lldb) breakpoint set -n sum_balances
+Breakpoint 3: where = account-O2`sum_balances at account.c:25:5, address = 0x000000010000048c
+(lldb) target stop-hook add -o "register read x0 x1 pc" -o "memory read -s4 -fx -c24 $x0" -o "frame variable -P 1"
+Stop hook #1 added.
+(lldb) run
+      x0 = 0x0000000000000000
+      x1 = 0x0000000000000000
+      pc = 0x00000001000109c0  dyld`_dyld_start
+sizeof 32 align 8
+offsets 0 4 8 16 24
+class 0 1 -1
+sum 315
+Process 26056 launched: '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account-O2' (arm64)
+Process 26056 exited with status = 0 (0x00000000)
+(lldb) watchpoint set variable a->balance
+error: Command requires a process which is currently stopped.
+(lldb) watchpoint list
+No watchpoints currently set.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) continue
+error: Process must be launched.
+(lldb) breakpoint list
+Current breakpoints:
+1: name = 'bump', locations = 1, resolved = 1, hit count = 0
+  1.1: where = account-O2`bump at account.c:13:16, address = 0x0000000100000460, resolved, hit count = 0 
+
+2: name = 'classify', locations = 1, resolved = 1, hit count = 0
+  2.1: where = account-O2`classify at account.c:18:12, address = 0x0000000100000474, resolved, hit count = 0 
+
+3: name = 'sum_balances', locations = 1, resolved = 1, hit count = 0
+  3.1: where = account-O2`sum_balances at account.c:25:5, address = 0x000000010000048c, resolved, hit count = 0 
+
+(lldb) watchpoint list -v
+No watchpoints currently set.

@@ -97,7 +97,7 @@ python train.py > output.log 2> errors.log
 python train.py > train_full.log 2>&1
 ```
 
-The three redirects you need:
+The four redirects and the pipe you need:
 
 | Symbol | What it does |
 |--------|-------------|
@@ -335,6 +335,16 @@ Here's when each tool comes into play during this course:
 2. Add the aliases from `code/shell_aliases.sh` to your shell config and reload with `source ~/.zshrc` (or `~/.bashrc`).
 3. Create a fake training log with `for i in $(seq 1 100); do echo "epoch $i loss: $(echo "scale=4; 1/$i" | bc)"; sleep 0.1; done > fake_train.log` and then use `grep`, `tail`, and `awk` to extract just the loss values.
 4. Set up an SSH config entry for a server you have access to (or use `localhost` to practice the syntax).
+
+### Hints
+
+**Exercise 1.** Start with `tmux new -s practice`, then split with the prefix `Ctrl+B` followed by `"` and `%`, and move between panes with `Ctrl+B` and an arrow key. Detach with `Ctrl+B` then `d`, run `tmux ls`, and attach again with `tmux attach -t practice`; all three programs must still run.
+
+**Exercise 2.** Copy the lines from `code/shell_aliases.sh` to the end of `~/.zshrc` or `~/.bashrc`, then run `source` on that file. Run `alias` or `type <name>` for one of the new aliases to confirm that the shell knows it.
+
+**Exercise 3.** First run `tail -5 fake_train.log` to see the line format. Then filter with `grep loss` and print only the last field with `awk '{print $NF}'`; the output must be 100 numbers that get smaller.
+
+**Exercise 4.** Copy the `Host gpu` block from the lesson into `~/.ssh/config` and change `HostName` and `User` to your server, or to `localhost` and your user name. Run `ssh -G gpu` to print the settings that SSH will use. If you have a reachable SSH server that accepts your key, run `ssh gpu` to connect.
 
 ## Key Terms
 

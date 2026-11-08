@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-3-2b-title fig-3-2b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-2b-title">With the cache on, the first token stays near 400 ms at every shared length</title>
+  <desc id="fig-3-2b-desc">Median time to first token against the shared system prompt length, on an NVIDIA L4 with Qwen3-8B, 8 users, three seeds, log scale. With the cache on, it stays between 375 and 488 ms. With it off, it grows to 1,213 ms at 1,024 tokens and 13,353 ms at 4,096 tokens, where the GPU clock also fell.</desc>
+  <line x1="70" y1="280" x2="606" y2="280" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="284" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <line x1="70" y1="218.08" x2="606" y2="218.08" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="222.08" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <line x1="70" y1="161.57" x2="606" y2="161.57" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="165.57" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3k</text>
+  <line x1="70" y1="99.65" x2="606" y2="99.65" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="103.65" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10k</text>
+  <line x1="70" y1="280" x2="606" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="64" x2="70" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="280" x2="70" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="204" y1="280" x2="204" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="204" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1,024</text>
+  <line x1="338" y1="280" x2="338" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="338" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2,048</text>
+  <line x1="472" y1="280" x2="472" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="472" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3,072</text>
+  <line x1="606" y1="280" x2="606" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="606" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4,096</text>
+  <text x="338" y="314" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">shared system prompt, tokens</text>
+  <text x="70" y="52" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median TTFT, ms (log scale)</text>
+  <path d="M70.0 259.7 L103.5 254.7 L204.0 256.4 L338.0 254.2 L606.0 252.6 L606.0 270.2 L338.0 268.8 L204.0 265.9 L103.5 255.3 L70.0 269.1 Z" fill="var(--m-green-ink, #336b40)" fill-opacity="0.14" stroke="none"/>
+  <path d="M70.0 264.2 L103.5 255.0 L204.0 265.7 L338.0 264.0 L606.0 268.6" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="264.2" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="103.5" cy="254.97" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="204" cy="265.74" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="338" cy="263.99" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="606" cy="268.56" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <path d="M70.0 264.2 L103.5 227.8 L204.0 208.1 L338.0 169.7 L606.0 84.3 L606.0 85.2 L338.0 170.0 L204.0 208.2 L103.5 233.1 L70.0 268.7 Z" fill="var(--m-rose-ink, #b0344d)" fill-opacity="0.14" stroke="none"/>
+  <path d="M70.0 266.2 L103.5 232.7 L204.0 208.1 L338.0 169.9 L606.0 84.8" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="70" cy="266.23" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="103.5" cy="232.68" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="208.13" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="338" cy="169.94" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="606" cy="84.78" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="600" y="76.78" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-rose-ink, #b0344d)">13,353</text>
+  <rect class="m-knock" x="211" y="201.57" width="35.7" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="214" y="212.15" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">1,213</text>
+  <path d="M70 18 H88" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="94" y="22" font-size="11" fill="var(--m-green-ink, #336b40)">prefix cache on, the default</text>
+  <path d="M296.79999999999995 18 H314.79999999999995" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="320.8" y="22" font-size="11" fill="var(--m-rose-ink, #b0344d)">prefix cache off</text>
+</svg>

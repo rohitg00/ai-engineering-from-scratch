@@ -1,0 +1,96 @@
+{
+  "bookmarks": [
+    {
+      "title": "Community maps",
+      "children": [
+        {
+          "id": "map-1",
+          "title": "Map basics",
+          "url": "https://example.invalid/maps#intro",
+          "notes": "Start with coordinates and a local map"
+        },
+        {
+          "id": "map-2",
+          "title": "Map basics saved again",
+          "url": "https://EXAMPLE.invalid:443/maps#scale",
+          "notes": "A duplicate document"
+        },
+        {
+          "id": "map-3",
+          "title": "Field notes",
+          "url": "https://example.invalid/notes",
+          "notes": "Record shade and benches"
+        },
+        {
+          "id": "map-4",
+          "title": "Coordinates primer",
+          "url": "https://example.invalid/coordinates",
+          "notes": "Use latitude and longitude"
+        },
+        {
+          "id": "map-5",
+          "title": "Walking route",
+          "url": "https://example.invalid/route",
+          "notes": "Community route guide"
+        },
+        {
+          "id": "map-6",
+          "title": "Open data",
+          "url": "https://example.invalid/data",
+          "notes": "Map sources"
+        }
+      ]
+    },
+    {
+      "title": "Reading later",
+      "children": [
+        {
+          "id": "later-1",
+          "title": "Map symbols",
+          "url": "https://example.invalid/symbols",
+          "notes": "Choose a useful legend"
+        },
+        {
+          "id": "later-2",
+          "title": "Bench survey",
+          "url": "https://example.invalid/survey",
+          "notes": "Field observation methods"
+        },
+        {
+          "id": "later-3",
+          "title": "Map basics print view",
+          "url": "https://example.invalid/maps?view=print",
+          "notes": "Query is kept distinct"
+        },
+        {
+          "id": "later-4",
+          "title": "Scale and distance",
+          "url": "https://example.invalid/scale",
+          "notes": "Map scale examples"
+        },
+        {
+          "id": "later-5",
+          "title": "Accessible paths",
+          "url": "https://example.invalid/paths",
+          "notes": "Community walks"
+        },
+        {
+          "id": "later-6",
+          "title": "Publish a map",
+          "url": "https://example.invalid/publish",
+          "notes": "Sharing a community map"
+        }
+      ]
+    }
+  ],
+  "topics": {
+    "Mapping": [
+      "map",
+      "coordinates"
+    ],
+    "Community": [
+      "community",
+      "field"
+    ]
+  }
+}

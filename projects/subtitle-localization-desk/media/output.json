@@ -1,0 +1,12 @@
+{
+  "title": "subtitle-localization-desk",
+  "url": "http://127.0.0.1:8879/projects/subtitle-localization-desk/solution/demo-output/review.html",
+  "actions": [
+    [
+      "fill",
+      "#decisions",
+      "{\"fingerprint\": \"57b374e10ee4d76789187d83d385ef58c17ba629db5f32c4e9fdf98fbb1bab8a\", \"cues\": {\"map\": {\"text\": \"Abre el mapa.\", \"approved\": true}, \"route\": {\"text\": \"Elige una ruta.\", \"approved\": false}, \"zoom\": {\"text\": \"Ampl\\u00eda tu calle.\", \"approved\": false}, \"marker\": {\"text\": \"A\\u00f1ade un marcador.\", \"approved\": false}, \"label\": {\"text\": \"Escribe un nombre descriptivo y completo para el marcador de tu calle.\", \"approved\": false}, \"save\": {\"text\": \"Guarda el mapa.\", \"approved\": false}}}"
+    ]
+  ],
+  "kind": "browser capture"
+}

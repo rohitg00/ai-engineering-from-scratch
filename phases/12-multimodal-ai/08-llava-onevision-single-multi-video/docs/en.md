@@ -1,6 +1,6 @@
 # LLaVA-OneVision: Single-Image, Multi-Image, Video in One Model
 
-> Before LLaVA-OneVision (Li et al., August 2024) the open-VLM world had separate lineages: LLaVA-1.5 for single images, multi-image models like Mantis and VILA, video models like Video-LLaVA and Video-LLaMA. Each won its benchmark and failed at the others. LLaVA-OneVision argued a single curriculum could train one model to dominate all three scenarios, and that the emergent task-transfer effects (single-image skills exported to video, multi-image reasoning exported to single-image) beat the sum of specialists. The recipe is deceptively simple: a visual-token budget that stays constant across scenarios, plus an explicit curriculum that moves from single-image to OneVision (multi-image) to video. This lesson reads the budget, the curriculum, and the emergent behaviors.
+> Before LLaVA-OneVision (Li et al., August 2024) the open-VLM world had separate lineages: LLaVA-1.5 for single images, multi-image models like Mantis and VILA, video models like Video-LLaVA and Video-LLaMA. Each won its benchmark and failed at the others. LLaVA-OneVision argued a single curriculum could train one model to dominate all three scenarios, and that the emergent task-transfer effects (single-image skills exported to video, multi-image reasoning exported to single-image) beat the sum of specialists. The recipe is deceptively simple: a visual-token budget balanced across scenarios, plus an explicit curriculum that moves from single-image to OneVision (multi-image) to video. This lesson reads the budget, the curriculum, and the emergent behaviors.
 
 **Type:** Build
 **Languages:** Python (stdlib, token budget solver + curriculum planner)
@@ -9,7 +9,7 @@
 
 ## Learning Objectives
 
-- Design a visual-token budget that holds constant across single-image, multi-image, and video inputs.
+- Design a visual-token budget that stays balanced across single-image, multi-image, and video inputs.
 - Order a training curriculum that transfers skills from single-image to video without catastrophic forgetting.
 - Explain why a single model beats specialists at the same parameter count when curriculum is done right.
 - Name the three emergent capabilities reported by LLaVA-OneVision: multi-camera reasoning, set-of-mark prompting, iPhone-screenshot agent.
@@ -32,13 +32,13 @@ Pre-OneVision, the default answer was "train one scenario, ignore the others." V
 
 ### The OneVision token budget
 
-LLaVA-OneVision picks a unified visual-token budget of approximately 3000-4000 tokens per sample, allocated differently per scenario:
+LLaVA-OneVision does not fix one exact token count. It balances the maximum visual-token count per sample so the three scenarios land in the same range, roughly 6,000 to 9,000 tokens, allocated differently per scenario:
 
-- Single image: AnyRes-9 (3x3 tiles + thumbnail), each tile at 384 with 729 patches, aggressive bilinear pooling 2x2 → 182 per tile. Total: 9 * 182 + 182 = 1820 tokens. Or AnyRes-4 at 729-per-tile = 2916 + 729.
-- Multi-image: each image at moderate resolution (384, no tiling), 729 tokens with no pooling. Budget 6 images → 4374 tokens.
-- Video: 32 frames at 384 resolution with aggressive 3x3 bilinear pool → 81 tokens per frame. Total: 32 * 81 = 2592 tokens.
+- Single image: AnyRes-Max-9 (up to 9 tiles + one base view), each 384x384 view giving 729 tokens from SigLIP SO400M. Maximum: 729 * (1 + 9) = 7290 tokens.
+- Multi-image: each image at 384 with no tiling, 729 tokens with no pooling. Up to 12 images → 8748 tokens.
+- Video: up to 32 frames at 384 with 2x2 bilinear pooling → 196 tokens per frame. Total: 32 * 196 = 6272 tokens.
 
-The allocation maintains roughly constant total tokens. The LLM never sees a batch that blows its context. The encoder produces different geometry per scenario, but the LLM consumes the same budget.
+The allocation keeps the maximum totals in the same band, so no scenario dominates the context or the gradient. The encoder produces different geometry per scenario, but the LLM consumes a similar budget. The `code/main.py` planner below uses a smaller toy budget of 4096 to show the same balancing logic.
 
 ### The three-stage curriculum
 
@@ -111,18 +111,18 @@ This lesson produces `outputs/skill-onevision-budget-planner.md`. Given a target
 
 4. The paper reports video benchmarks trained on only 8 frames per sample. Does that generalize to 30-second videos at inference? What breaks first — the token budget or the temporal reasoning?
 
-5. Bilinear pooling of 24x24 patches to 12x12 is a 4x reduction per dim. Implement the pooling in stdlib Python and verify that the mean over each 2x2 block matches the bilinear output.
+5. Bilinear pooling of 24x24 patches to 12x12 is a 2x reduction per dimension, so 4x fewer tokens. Implement the pooling in stdlib Python and verify that the mean over each 2x2 block matches the bilinear output.
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|------------------------|
-| OneVision scenario | "Single-image, multi-image, or video" | One of three input shapes the unified VLM handles; the budget stays constant across |
-| Token budget | "How many tokens per sample" | Total visual tokens the LLM sees per training / inference sample, typically 3000-4000 |
+| OneVision scenario | "Single-image, multi-image, or video" | One of three input shapes the unified VLM handles; the budget stays balanced across |
+| Token budget | "How many tokens per sample" | Total visual tokens the LLM sees per training / inference sample, about 6k to 9k at most in LLaVA-OneVision |
 | Curriculum | "Training order" | Stage ordering (single-image → multi-image → video) chosen for emergent transfer |
 | Bilinear pooling | "Token shrink" | Applying bilinear interpolation to the patch grid (2D) to reduce token count while preserving locality |
 | Emergent skill | "Not trained, still works" | Capability that appears at inference without matching training data, due to curriculum composition |
-| AnyRes-k | "k-tile setup" | k sub-tiles of fixed resolution plus one thumbnail, typical k ∈ {4, 9} |
+| AnyRes-k | "k-tile setup" | k sub-tiles of fixed resolution plus one thumbnail, typical $k \in \lbrace 4, 9 \rbrace$ |
 | Task transfer | "Cross-scenario generalization" | Skills learned on single-image that apply to video (and vice versa) via shared backbone |
 
 ## Further Reading

@@ -1,0 +1,23 @@
+SGLang 101 live checks, determinism items
+Date: 2026-10-23
+Machine: NVIDIA L4 (SM 8.9), the second GPU of the node (GPU1), shared with its owner and capped at about 17 GB. Both L4s were throttled to about 555 MHz at 88 C, so no speed in this file counts.
+Engine: SGLang 0.5.22, torch 2.14.1+cu130, driver 615.71.09.
+Model: Qwen/Qwen3-8B-FP8 in place of Qwen/Qwen3-8B, because BF16 8B does not fit in 17 GB next to the owner's processes. --mem-fraction-static 0.7, port 30001.
+
+Probe: one prompt 5 times alone, then 5 times in a batch of 16, temperature 0.
+
+server                                    distinct texts   pattern
+default                                   3                A, B, B, B, B, C, B, B, B, B
+--enable-deterministic-inference          1                all ten the same
+
+On the default server the first request alone differs and the four later requests alone match each other.
+One batched request differed. On BF16 Qwen/Qwen3-8B (the earlier L4 run), the batched requests gave two more texts.
+
+Deterministic mode with no --attention-backend, startup log:
+Attention backend not specified. Falling back to 'fa3' for deterministic inference
+The server ran on fa3 on SM 8.9 with no error. The default server on this GPU uses flashinfer.
+
+python3 -m sglang.test.test_deterministic --n-trials 50 --test-mode single
+Total samples: 50, Unique samples: 1
+python3 -m sglang.test.test_deterministic --n-start 1 --n-trials 50 --test-mode prefix
+Unique samples 1 at prefix lengths 1, 511, 2,048 and 4,097 (306 to 330 samples each)

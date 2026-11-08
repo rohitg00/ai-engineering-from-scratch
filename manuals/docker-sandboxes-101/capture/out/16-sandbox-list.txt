@@ -1,0 +1,5 @@
+$ docker-agent sandbox list
+Persistent sandbox allowlist is empty.
+
+Add a host with: docker agent sandbox allow <host>
+[exit 0]

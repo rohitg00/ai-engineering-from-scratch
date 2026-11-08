@@ -1,0 +1,6 @@
+{
+  "reference": "./fixtures/kits/hello-mixin",
+  "kind": "directory",
+  "valid": true,
+  "warnings": []
+}

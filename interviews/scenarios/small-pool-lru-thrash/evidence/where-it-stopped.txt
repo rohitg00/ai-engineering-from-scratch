@@ -1,0 +1,15 @@
+title: the abort, the hang, and what hid the fault
+source: manuals/sglang-101/capture/gpu/out-l4/small-pool-crash.txt
+lines: 18-26
+lang: text
+note: Both failures stop in the same call, and the last three lines say what made the fault disappear.
+---
+The abort:
+torch.AcceleratorError: CUDA error: an illegal memory access was encountered
+Last Python frames: scheduler.py process_batch_result, then batch_result_processor.py process_batch_result_decode, then torch/cuda/streams.py synchronize (copy_done.synchronize() on the decode result).
+
+The hang: the py-spy stack sits in the same synchronize call, under process_batch_result_decode, under event_loop_overlap. The GPU stays at 100 percent and the log stops.
+
+The fault did not appear with kernel launches serialized (0 of 5) or with CUDA graphs off (0 of 4).
+With launch blocking on, the fault did not occur, so no traceback names the faulting kernel.
+Nothing was filed upstream.

@@ -179,7 +179,7 @@
       "explanation": "Guidance should live at the narrowest scope where it is true. A concise root preserves discoverability, while versioned path rules reduce irrelevant context and remain reproducible for the team.",
       "references": [
         "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
-        "https://docs.anthropic.com/en/docs/claude-code/memory",
+        "https://code.claude.com/docs/en/memory",
         "certifications/claude/lessons/15-claude-code-for-development-teams"
       ]
     },
@@ -223,7 +223,7 @@
       "explanation": "Fresh declared inputs make CI reproducible and reviewable. Interactive context, hidden local hooks, and deployment credentials introduce unstated state and unnecessary authority.",
       "references": [
         "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
-        "https://docs.anthropic.com/en/docs/claude-code/sdk/sdk-headless"
+        "https://code.claude.com/docs/en/headless"
       ]
     },
     {

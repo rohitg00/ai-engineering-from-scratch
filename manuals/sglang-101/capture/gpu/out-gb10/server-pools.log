@@ -1,0 +1,9 @@
+mixed/default: [2026-10-17 19:58:15] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 236185, K size: 10.81 GB, V size: 10.81 GB
+mixed/mixed-chunk: [2026-10-21 06:26:47] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 236751, K size: 10.84 GB, V size: 10.84 GB
+mixed/graphs-on-b: [2026-10-21 08:00:36] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 251910, K size: 11.53 GB, V size: 11.53 GB
+waves/default: [2026-10-17 18:40:33] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 256063, K size: 11.72 GB, V size: 11.72 GB
+waves/mixed-chunk: [2026-10-21 06:58:38] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 259786, K size: 11.89 GB, V size: 11.89 GB
+waves/graphs-on-b: [2026-10-21 08:23:00] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 234958, K size: 10.76 GB, V size: 10.76 GB
+load/default: [2026-10-16 16:11:44] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 234600, K size: 10.74 GB, V size: 10.74 GB
+load/graphs-on-b: [2026-10-21 09:06:59] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 233303, K size: 10.68 GB, V size: 10.68 GB
+load/graphs-off-b: [2026-10-21 09:50:36] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 234866, K size: 10.75 GB, V size: 10.75 GB

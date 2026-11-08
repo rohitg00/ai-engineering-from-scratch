@@ -41,8 +41,8 @@ prediction-game
 
 **n-gram 機率：** `P(w_i | w_{i-n+1}, ..., w_{i-1})`。固定 `n`（trigram 通常取 3，4-gram 取 4）。從計數算出來：
 
-```text
-P(w | context) = count(context, w) / count(context)
+```math
+P(w \mid \text{context}) = \frac{\mathop{\mathrm{count}}(\text{context}, w)}{\mathop{\mathrm{count}}(\text{context})}
 ```
 
 **零計數問題。** 任何在訓練裡沒出現過的 n-gram，機率都是零。2007 年一份在 Brown 語料庫上的研究發現，即使是 4-gram 模型，保留集裡也有 30% 的 4-gram 在訓練中沒見過。不做平滑，你沒辦法在任何真實文本上做評估。
@@ -60,8 +60,8 @@ Kneser-Ney 的洞見很深。「San Francisco」是常見的 bigram。unigram「
 
 **評估：困惑度。** 在保留測試集上，每個詞的平均負對數似然的指數。越低越好。困惑度 100 代表模型的困惑程度，相當於在 100 個詞裡均勻亂挑。
 
-```text
-perplexity = exp(- (1/N) * Σ log P(w_i | context_i))
+```math
+\text{perplexity} = \exp\left(-\frac{1}{N} \sum_i \log P(w_i \mid \text{context}_i)\right)
 ```
 
 ```figure

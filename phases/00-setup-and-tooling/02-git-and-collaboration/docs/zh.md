@@ -106,6 +106,14 @@ git push origin my-progress
 2. 寫一份 `.gitignore`，排除模型檢查點檔案（`.pt`、`.pth`、`.safetensors`）
 3. 用 `git log --oneline` 看這個儲存庫的提交歷史，讀讀各個單元是怎麼被加進來的
 
+### 提示
+
+**練習 1。** 在 GitHub 上按 Fork，再用 `git clone` 複製你自己那份 fork 的網址。執行 `git push -u origin my-progress` 之後，到 GitHub 打開你的 fork，確認分支清單裡有 `my-progress`，而且裡面有你的檔案。
+
+**練習 2。** 在儲存庫根目錄的 `.gitignore` 裡，每種副檔名加一條規則，例如 `*.pt`。為每種副檔名各建一個空檔案，再執行 `git status`；它們都不能出現在未追蹤檔案清單裡。
+
+**練習 3。** 先執行 `git log --oneline`，再執行 `git log --oneline -- phases/00-setup-and-tooling`，只列出改動過這個階段的提交。挑一個提交執行 `git show --stat <hash>`，看看它加了哪些單元檔案。
+
 ## 關鍵術語
 
 | 術語 | 大家怎麼說 | 實際上是什麼 |

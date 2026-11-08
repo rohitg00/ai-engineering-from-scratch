@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 372" role="img" aria-labelledby="fig-extension-activation-title fig-extension-activation-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-extension-activation-title">Activating an extension, and the error when a required one is missing</title>
+  <desc id="fig-extension-activation-desc">A sequence with two lifelines: a client and the Research Assistant Agent from the sample card in section 4.6.1 of the specification. The client fetches the card and reads two extensions under capabilities.extensions: https://standards.org/extensions/citations/v1 and https://example.com/extensions/geolocation/v1. It sends a message with the A2A-Extensions header naming the geolocation extension and with latitude and longitude in metadata under that URI. The agent answers 200 and echoes the header, which the extensions guide recommends and the SDKs do differently. A second message without the header gets ExtensionSupportRequiredError, code -32008, when the card marks the extension required.</desc>
+  <defs><marker id="fig-extension-activation-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-extension-activation-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <rect x="25" y="8" width="150" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="100" y="22.25" font-size="12.5" text-anchor="middle" font-weight="700">client</text>
+  <text x="100" y="39.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A2A client</text>
+  <line x1="100" y1="46" x2="100" y2="360" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="325" y="8" width="210" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="430" y="22.25" font-size="12.5" text-anchor="middle" font-weight="700">Research Assistant Agent</text>
+  <text x="430" y="39.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the §4.6.1 sample card</text>
+  <line x1="430" y1="46" x2="430" y2="360" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="84" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="88" font-size="11" text-anchor="middle">1</text>
+  <line x1="100" y1="84" x2="429" y2="84" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-extension-activation-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M100 84 L429 84" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="151.6" y="67.03" width="226.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="265" y="78" font-size="11.5" text-anchor="middle">GET /.well-known/agent-card.json</text>
+  <rect class="m-knock" x="143.2" y="88.42" width="243.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="265" y="99" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the client reads capabilities.extensions</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="128" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="132" font-size="11" text-anchor="middle">2</text>
+  <line x1="430" y1="128" x2="101" y2="128" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-extension-activation-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M430 128 L101 128" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="161.95" y="111.03" width="206.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="265" y="122" font-size="11.5" text-anchor="middle">card: capabilities.extensions</text>
+  <rect class="m-knock" x="169.93" y="132.42" width="190.14" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="265" y="143" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">citations/v1 and geolocation/v1</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="172" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="176" font-size="11" text-anchor="middle">3</text>
+  <line x1="100" y1="172" x2="429" y2="172" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-extension-activation-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M100 172 L429 172" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="199.9" y="155.03" width="130.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="265" y="166" font-size="11.5" text-anchor="middle">POST /message:send</text>
+  <rect class="m-knock" x="172.9" y="176.42" width="184.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="265" y="187" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A2A-Extensions: geolocation/v1</text>
+  <rect class="m-knock" x="125.38" y="191.42" width="279.24" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="265" y="202" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">metadata keyed by the URI: latitude, longitude</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="232" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="236" font-size="11" text-anchor="middle">4</text>
+  <line x1="430" y1="232" x2="101" y2="232" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-extension-activation-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M430 232 L101 232" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="161.95" y="215.03" width="206.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="265" y="226" font-size="11.5" text-anchor="middle">200 OK, A2A-Extensions echoed</text>
+  <rect class="m-knock" x="149.14" y="236.42" width="231.72" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="265" y="247" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the guide says SHOULD, and SDKs differ</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="276" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="280" font-size="11" text-anchor="middle">5</text>
+  <line x1="100" y1="276" x2="429" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-extension-activation-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M100 276 L429 276" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="134.35" y="259.03" width="261.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="265" y="270" font-size="11.5" text-anchor="middle">POST /message:send, no A2A-Extensions</text>
+  <rect class="m-knock" x="137.26" y="280.42" width="255.48" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="265" y="291" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">when the card marks the extension required</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="320" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="324" font-size="11" text-anchor="middle">6</text>
+  <line x1="430" y1="320" x2="101" y2="320" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-extension-activation-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M430 320 L101 320" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="161.95" y="303.03" width="206.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="265" y="314" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">ExtensionSupportRequiredError</text>
+  <rect class="m-knock" x="152.11" y="324.42" width="225.78" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="265" y="335" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">-32008, HTTP 400, FAILED_PRECONDITION</text>
+  </g>
+</svg>

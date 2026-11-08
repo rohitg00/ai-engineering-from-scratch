@@ -83,11 +83,13 @@ Marigold（Ke et al., CVPR 2024）把深度估計重新表述成條件式的影�
 
 要把一個帶深度 `d` 的像素 `(u, v)` 提升成相機座標下的 3D 點 `(X, Y, Z)`：
 
-```
-fx, fy, cx, cy = camera intrinsics
-X = (u - cx) * d / fx
-Y = (v - cy) * d / fy
-Z = d
+```math
+\begin{aligned}
+f_x, f_y, c_x, c_y &= \text{camera intrinsics} \\
+X &= (u - c_x) \cdot d / f_x \\
+Y &= (v - c_y) \cdot d / f_y \\
+Z &= d
+\end{aligned}
 ```
 
 相機內參來自 EXIF metadata、校正板，或是單目內參估計器（Perspective Fields、UniDepth）。沒有內參，你還是可以假設 60 到 70 度的 FOV 與中等解析度的主點，硬渲染出一團點雲 —— 拿來視覺化可以，拿來量測不行。

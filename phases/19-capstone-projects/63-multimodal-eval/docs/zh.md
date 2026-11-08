@@ -49,15 +49,14 @@ flowchart TB
 
 ### BLEU-4
 
-```text
-BLEU-4 = BP * exp(mean(log p1, log p2, log p3, log p4))
+```math
+\text{BLEU-4} = \text{BP} \cdot \exp\big(\text{mean}(\log p_1, \log p_2, \log p_3, \log p_4)\big)
 ```
 
 其中 `p_n` 是修正後的 n-gram 精確率（生成的 n-gram 中出現在任一參考裡的裁切計數，除以生成的 n-gram 總數），而 `BP` 是簡短懲罰：
 
-```text
-BP = 1                if generated length > reference length
-   = exp(1 - r/g)     otherwise, where r is reference length and g is generated
+```math
+\text{BP} = \begin{cases} 1 & \text{if generated length} > \text{reference length} \\ \exp(1 - r/g) & \text{otherwise, where } r \text{ is reference length and } g \text{ is generated} \end{cases}
 ```
 
 在某些 `p_n` 為零的小樣本情況下需要平滑。這個實作用的是 Chen 與 Cherry 的「方法一」（對任何為零的計數，把分子與分母各加 1），那是低計數區間下最安全的預設。

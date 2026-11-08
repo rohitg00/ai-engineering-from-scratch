@@ -1,0 +1,41 @@
+{
+  "request": {
+    "jsonrpc": "2.0",
+    "id": 3,
+    "method": "tools/call",
+    "params": {
+      "name": "open_binary",
+      "arguments": {
+        "path": "$CAPTURE/fixtures/ledger-arm64-O1",
+        "provider_id": "ghidra"
+      }
+    }
+  },
+  "response": {
+    "result": {
+      "_meta": {
+        "provenance": {
+          "untrusted_content": true,
+          "source": "analysis_target"
+        }
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "<cut by run.py: the text copy of structuredContent, 249 bytes>"
+        }
+      ],
+      "structuredContent": {
+        "result": {
+          "path": "$CAPTURE/fixtures/ledger-arm64-O1",
+          "format": "mach-o",
+          "kind": "executable",
+          "sha256": "01b5d08b08fb94678be5919d0e753d44b505a53107c95b94634f0e5d41c9e375",
+          "architecture": "arm64"
+        }
+      }
+    },
+    "jsonrpc": "2.0",
+    "id": 3
+  }
+}

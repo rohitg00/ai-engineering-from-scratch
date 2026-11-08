@@ -1,0 +1,11 @@
+title: the graph capture and the KV cache sizing
+source: manuals/vllm-101/capture/gpu/out-gb10/server-load-vllm.log
+lines: 58-62
+lang: text
+note: Read the capture time, the free memory for the cache, and the block override in the second to last line.
+---
+(EngineCore pid=143) INFO 10-21 10:59:45 [model_runner.py:1087] Graph capturing finished in 39 secs, took 1.17 GiB
+(EngineCore pid=143) INFO 10-21 10:59:46 [gpu_worker.py:692] Available KV cache memory: 31.32 GiB
+(EngineCore pid=143) INFO 10-21 10:59:46 [gpu_worker.py:707] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.7500 is equivalent to --gpu-memory-utilization=0.7399 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.7601. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=143) INFO 10-21 10:59:46 [kv_cache_utils.py:2772] Overriding num_gpu_blocks=21381 with num_gpu_blocks_override=14685
+(EngineCore pid=143) INFO 10-21 10:59:46 [kv_cache_utils.py:2464] GPU KV cache size: 234,960 tokens, Maximum concurrency for 8,192 tokens per request: 28.68x

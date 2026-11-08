@@ -1,0 +1,372 @@
+{
+ "tool": "radare2",
+ "version": "radare2 6.2.4 +0 abi:152 @ darwin-arm_64",
+ "fixture": "sweep-trap.o",
+ "commands": {
+  "iSj": {
+   "command": "r2 -e scr.color=0 -qc iSj sweep-trap.o",
+   "output": [
+    {
+     "name": "",
+     "size": 0,
+     "vsize": 0,
+     "type": "NULL",
+     "perm": "----",
+     "flags": 0,
+     "paddr": 0,
+     "vaddr": 134217728
+    },
+    {
+     "name": ".strtab",
+     "size": 55,
+     "vsize": 55,
+     "type": "STRTAB",
+     "perm": "----",
+     "flags": 0,
+     "paddr": 176,
+     "vaddr": 134217904
+    },
+    {
+     "name": ".text",
+     "size": 36,
+     "vsize": 36,
+     "type": "PROGBITS",
+     "perm": "-r-x",
+     "flags": 6,
+     "paddr": 64,
+     "vaddr": 134217792
+    },
+    {
+     "name": ".note.GNU-stack",
+     "size": 0,
+     "vsize": 0,
+     "type": "PROGBITS",
+     "perm": "----",
+     "flags": 0,
+     "paddr": 100,
+     "vaddr": 134217828
+    },
+    {
+     "name": ".symtab",
+     "size": 72,
+     "vsize": 72,
+     "type": "SYMTAB",
+     "perm": "----",
+     "flags": 0,
+     "paddr": 104,
+     "vaddr": 134217832
+    }
+   ]
+  },
+  "aaa; aflj": {
+   "command": "r2 -e scr.color=0 -qc 'aaa; aflj' sweep-trap.o",
+   "output": [
+    {
+     "addr": 134217792,
+     "name": "sym.lookup",
+     "size": 24,
+     "is-pure": "false",
+     "realsz": 20,
+     "noreturn": false,
+     "recursive": false,
+     "stackframe": 0,
+     "calltype": "amd64",
+     "cost": 9,
+     "cc": 1,
+     "bits": 64,
+     "type": "fcn",
+     "nbbs": 2,
+     "tracecov": 0,
+     "is-lineal": false,
+     "ninstrs": 6,
+     "edges": 1,
+     "ebbs": 1,
+     "signature": "sym.lookup (int64_t arg1);",
+     "minaddr": 134217792,
+     "maxaddr": 134217816,
+     "maxbbins": 4,
+     "midbbins": 3.0,
+     "ratbbins": 1.333,
+     "indegree": 0,
+     "outdegree": 0,
+     "nlocals": 0,
+     "nargs": 1,
+     "difftype": "new"
+    },
+    {
+     "addr": 134217824,
+     "name": "sym.plus_one",
+     "size": 4,
+     "is-pure": "true",
+     "realsz": 4,
+     "noreturn": false,
+     "recursive": false,
+     "stackframe": 0,
+     "calltype": "amd64",
+     "cost": 4,
+     "cc": 1,
+     "bits": 64,
+     "type": "fcn",
+     "nbbs": 1,
+     "tracecov": 0,
+     "is-lineal": true,
+     "ninstrs": 2,
+     "edges": 0,
+     "ebbs": 1,
+     "signature": "sym.plus_one (int64_t arg1);",
+     "minaddr": 134217824,
+     "maxaddr": 134217828,
+     "maxbbins": 2,
+     "midbbins": 2.0,
+     "ratbbins": 1.0,
+     "indegree": 0,
+     "outdegree": 0,
+     "nlocals": 0,
+     "nargs": 1,
+     "difftype": "new"
+    }
+   ]
+  },
+  "aaa; afbj @ 0x8000040": {
+   "command": "r2 -e scr.color=0 -qc 'aaa; afbj @ 0x8000040' sweep-trap.o",
+   "output": [
+    {
+     "addr": 134217792,
+     "size": 16,
+     "jump": 134217812,
+     "opaddr": 134217792,
+     "inputs": 0,
+     "outputs": 1,
+     "ninstr": 4,
+     "instrs": [
+      134217792,
+      134217795,
+      134217802,
+      134217806
+     ],
+     "traced": 0
+    },
+    {
+     "addr": 134217812,
+     "size": 4,
+     "opaddr": 18446744073709551615,
+     "inputs": 1,
+     "outputs": 0,
+     "ninstr": 2,
+     "instrs": [
+      134217812,
+      134217815
+     ],
+     "traced": 0
+    }
+   ]
+  },
+  "aaa; pdfj @ 0x8000040": {
+   "command": "r2 -e scr.color=0 -qc 'aaa; pdfj @ 0x8000040' sweep-trap.o",
+   "output": {
+    "name": "sym.lookup",
+    "size": 20,
+    "addr": 134217792,
+    "ops": [
+     {
+      "addr": 134217792,
+      "esil": "32,edi,~,rax,=",
+      "refptr": 0,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217813,
+      "size": 3,
+      "opcode": "movsxd rax, edi",
+      "disasm": "movsxd rax, edi",
+      "bytes": "4863c7",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0,
+      "flags": [
+       "section..text",
+       "sym.lookup",
+       "rip"
+      ],
+      "comment": "WzAyXSAtci14IHNlY3Rpb24gc2l6ZSAzNiBuYW1lZCAudGV4dA=="
+     },
+     {
+      "addr": 134217795,
+      "ptr": 134217808,
+      "esil": "0x6,rip,+,rcx,=",
+      "refptr": 8,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217809,
+      "size": 7,
+      "opcode": "lea rcx, [rip + 6]",
+      "disasm": "lea rcx, [0x08000050]",
+      "bytes": "488d0d06000000",
+      "family": "cpu",
+      "type": "lea",
+      "reloc": false,
+      "type_num": 33,
+      "type2_num": 0,
+      "refs": [
+       {
+        "addr": 134217808,
+        "type": "DATA",
+        "perm": "r--"
+       }
+      ]
+     },
+     {
+      "addr": 134217802,
+      "esil": "rax,rcx,+,[1],rax,=",
+      "refptr": 1,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217812,
+      "size": 4,
+      "opcode": "movzx eax, byte [rcx + rax]",
+      "disasm": "movzx eax, byte [rcx + rax]",
+      "bytes": "0fb60401",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "addr": 134217806,
+      "esil": "0x8000054,rip,=",
+      "refptr": 0,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217814,
+      "size": 2,
+      "opcode": "jmp 0x8000054",
+      "disasm": "jmp 0x8000054",
+      "bytes": "eb04",
+      "family": "cpu",
+      "type": "jmp",
+      "reloc": false,
+      "type_num": 1,
+      "type2_num": 0,
+      "jump": 134217812,
+      "refs": [
+       {
+        "addr": 134217812,
+        "type": "CODE",
+        "perm": "--x"
+       }
+      ]
+     },
+     {
+      "addr": 134217812,
+      "val": 1,
+      "esil": "1,eax,+=,31,$o,of,:=,31,$s,sf,:=,$z,zf,:=,31,$c,cf,:=,$p,pf,:=,3,$c,af,:=,eax,rax,=",
+      "refptr": 0,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217813,
+      "size": 3,
+      "opcode": "add eax, 1",
+      "disasm": "add eax, 1",
+      "bytes": "83c001",
+      "family": "cpu",
+      "type": "add",
+      "reloc": false,
+      "type_num": 17,
+      "type2_num": 0,
+      "xrefs": [
+       {
+        "addr": 134217806,
+        "type": "CODE",
+        "perm": "--x"
+       }
+      ]
+     },
+     {
+      "addr": 134217815,
+      "esil": "rsp,[8],rip,=,8,rsp,+=",
+      "refptr": 0,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217815,
+      "size": 1,
+      "opcode": "ret",
+      "disasm": "ret",
+      "bytes": "c3",
+      "family": "cpu",
+      "type": "ret",
+      "reloc": false,
+      "type_num": 5,
+      "type2_num": 0
+     }
+    ]
+   }
+  },
+  "aaa; pdc @ 0x8000040": {
+   "command": "r2 -e scr.color=0 -qc 'aaa; pdc @ 0x8000040' sweep-trap.o",
+   "output": "// callconv: rax amd64 (rdi, rsi, rdx, rcx, r8, r9, stack);\nvoid sym.lookup (int64_t arg1) {\n    rax = edi     // arg1 // [02] -r-x section size 36 named .text\n    rcx = rip + 6 // 0x8000050\n    eax = byte [rcx + rax]\n    // CODE XREF from sym.lookup @ 0x800004e(x)\n    eax += 1\n    return 1\n}\n\n"
+  },
+  "aaa; afbj @ 0x8000060": {
+   "command": "r2 -e scr.color=0 -qc 'aaa; afbj @ 0x8000060' sweep-trap.o",
+   "output": [
+    {
+     "addr": 134217824,
+     "size": 4,
+     "opaddr": 134217824,
+     "inputs": 0,
+     "outputs": 0,
+     "ninstr": 2,
+     "instrs": [
+      134217824,
+      134217827
+     ],
+     "traced": 0
+    }
+   ]
+  },
+  "aaa; pdfj @ 0x8000060": {
+   "command": "r2 -e scr.color=0 -qc 'aaa; pdfj @ 0x8000060' sweep-trap.o",
+   "output": {
+    "name": "sym.plus_one",
+    "size": 4,
+    "addr": 134217824,
+    "ops": [
+     {
+      "addr": 134217824,
+      "esil": "0x1,rdi,+,eax,=,eax,rax,=",
+      "refptr": 4,
+      "fcn_addr": 134217824,
+      "fcn_last": 134217825,
+      "size": 3,
+      "opcode": "lea eax, [rdi + 1]",
+      "disasm": "lea eax, [rdi + 1]",
+      "bytes": "8d4701",
+      "family": "cpu",
+      "type": "lea",
+      "reloc": false,
+      "type_num": 33,
+      "type2_num": 0,
+      "flags": [
+       "sym.plus_one"
+      ]
+     },
+     {
+      "addr": 134217827,
+      "esil": "rsp,[8],rip,=,8,rsp,+=",
+      "refptr": 0,
+      "fcn_addr": 134217824,
+      "fcn_last": 134217827,
+      "size": 1,
+      "opcode": "ret",
+      "disasm": "ret",
+      "bytes": "c3",
+      "family": "cpu",
+      "type": "ret",
+      "reloc": false,
+      "type_num": 5,
+      "type2_num": 0
+     }
+    ]
+   }
+  },
+  "aaa; pdc @ 0x8000060": {
+   "command": "r2 -e scr.color=0 -qc 'aaa; pdc @ 0x8000060' sweep-trap.o",
+   "output": "// callconv: rax amd64 (rdi, rsi, rdx, rcx, r8, r9, stack);\nvoid sym.plus_one (int64_t arg1) {\n    eax = rdi + 1 // arg1\n    return\n}\n\n"
+  }
+ }
+}

@@ -1,0 +1,266 @@
+.lesson-article h3.wt-step-current {
+  color: var(--blueprint);
+}
+
+.lesson-article h3.wt-step-current::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 10px 2px 0;
+  background: var(--blueprint);
+  vertical-align: middle;
+}
+
+.wt-pin-btn:focus-visible,
+.wt-dock-btn:focus-visible,
+.wt-revisit-btn:focus-visible {
+  outline: 2px solid var(--blueprint);
+  outline-offset: 2px;
+}
+
+.wt-figbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: -8px 0 20px;
+}
+
+.wt-pin-btn {
+  min-height: 32px;
+  padding: 4px 10px;
+  border: 1px solid var(--rule-soft);
+  background: var(--bg);
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: border-color var(--motion-press) var(--ease-out), color var(--motion-press) var(--ease-out);
+}
+
+.wt-figbar.is-pinned {
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 20px;
+  padding: 14px;
+  border: 1px dashed var(--blueprint);
+  background: var(--blueprint-tint);
+}
+
+.wt-pin-btn:hover,
+.wt-figbar.is-pinned .wt-pin-btn {
+  border-color: var(--blueprint);
+  color: var(--blueprint);
+}
+
+.wt-dock {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 790;
+  width: 520px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - var(--header-offset) - 40px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--ink);
+  box-shadow: var(--shadow-hard-lg);
+  animation: wt-dock-in var(--motion-enter) var(--ease-out);
+}
+
+.wt-figbar[hidden],
+.wt-dock[hidden] {
+  display: none;
+}
+
+.wt-dock-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 6px 6px 12px;
+  border-bottom: 1px solid var(--rule-soft);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.wt-dock-title {
+  margin-right: auto;
+  color: var(--blueprint);
+}
+
+.wt-dock-btn {
+  min-height: 28px;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--ink-soft);
+  font: inherit;
+  cursor: pointer;
+}
+
+.wt-dock-btn:hover {
+  border-color: var(--blueprint);
+  color: var(--blueprint);
+}
+
+.wt-dock-close {
+  font-size: 16px;
+  line-height: 1;
+  text-transform: none;
+}
+
+.wt-dock-body {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.wt-dock-body .lesson-figure,
+.wt-dock-body .lf {
+  margin: 0;
+  border: 0;
+}
+
+@media (min-width: 1440px) {
+  body.wt-split .lesson-main {
+    padding-right: 568px;
+  }
+
+  body.wt-split .toc-sidebar {
+    width: 568px;
+    padding-left: 32px;
+    padding-right: 300px;
+  }
+
+  body.wt-split .wt-dock {
+    top: calc(var(--header-offset) + 16px);
+    bottom: auto;
+    right: 24px;
+    box-shadow: none;
+  }
+}
+
+.wt-revisit {
+  margin: 40px 0 24px;
+  padding: 20px 22px;
+  border: 1px solid var(--ink);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-hard);
+}
+
+.wt-revisit-label {
+  margin: 0 0 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--blueprint);
+}
+
+.lesson-article .wt-revisit-title {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.wt-revisit-prompt {
+  margin: 0 0 12px;
+}
+
+.wt-revisit-check {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.wt-revisit-check summary {
+  cursor: pointer;
+  color: var(--blueprint);
+}
+
+.wt-revisit-check p {
+  margin: 8px 0 0;
+}
+
+.wt-revisit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wt-revisit-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 7px 12px;
+  border: 1px solid var(--ink);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--motion-press) var(--ease-out), background var(--motion-press) var(--ease-out);
+}
+
+.wt-revisit-btn:hover {
+  background: var(--blueprint-tint);
+}
+
+.wt-revisit-btn:active {
+  transform: scale(0.97);
+}
+
+.wt-revisit-btn.is-primary {
+  background: var(--blueprint);
+  border-color: var(--blueprint);
+  color: var(--bg);
+}
+
+.wt-revisit-btn.is-quiet {
+  border-color: transparent;
+  color: var(--ink-soft);
+}
+
+.wt-revisit-status {
+  margin: 10px 0 0;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.wt-revisit-status:empty {
+  display: none;
+}
+
+@keyframes wt-dock-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wt-dock { animation: none; }
+  .wt-pin-btn, .wt-revisit-btn { transition: none; }
+}
+
+@media (max-width: 900px) {
+  .wt-dock {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    width: auto;
+    max-height: 48vh;
+  }
+
+  body.wt-has-dock .lesson-main {
+    padding-bottom: 50vh;
+  }
+}
+
+@media print {
+  .wt-dock, .wt-figbar, .wt-revisit { display: none !important; }
+}

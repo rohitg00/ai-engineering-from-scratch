@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 344" role="img" aria-labelledby="fig-4-1-title fig-4-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-1-title">EAGLE3 output at 1 and 32 users with the clock locked at 900 MHz</title>
+  <desc id="fig-4-1-desc">Median output tokens per second on an NVIDIA L4 with Qwen3-8B and the SM clock locked at 900 MHz, two seeds per bar, 2026-10-22. At one user, draft depth 1 gave 22.4, depth 3 gave 31.3, and depth 5 gave 31.7 tokens per second. The run with no speculation at one user is not shown, because its clock fell to 210 MHz. At 32 users, no speculation gave 208.8, depth 1 gave 271.1, depth 3 gave 333.6, and depth 5 gave 289.5 tokens per second.</desc>
+  <text x="66" y="30" font-size="12" fill="var(--m-ink, #1a1a1a)">1 user, output tok/s</text>
+  <line x1="66" y1="260" x2="276" y2="260" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="264" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="66" y1="155" x2="276" y2="155" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="159" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">20</text>
+  <line x1="66" y1="50" x2="276" y2="50" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="54" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">40</text>
+  <line x1="66" y1="260" x2="276" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="50" x2="66" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <rect x="81" y="142.51" width="40" height="117.5" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="101" y="136.51" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">22.4</text>
+  <text x="101" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">k = 1</text>
+  <rect x="151" y="95.62" width="40" height="164.38" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="171" y="89.62" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">31.3</text>
+  <text x="171" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">k = 3</text>
+  <rect x="221" y="93.42" width="40" height="166.58" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="241" y="87.42" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">31.7</text>
+  <text x="241" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">k = 5</text>
+  <text x="356" y="30" font-size="12" fill="var(--m-ink, #1a1a1a)">32 users, output tok/s</text>
+  <line x1="356" y1="260" x2="606" y2="260" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="350" y="264" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="356" y1="155" x2="606" y2="155" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="350" y="159" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="356" y1="50" x2="606" y2="50" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="350" y="54" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">400</text>
+  <line x1="356" y1="260" x2="606" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="356" y1="50" x2="356" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <rect x="367.25" y="150.4" width="40" height="109.6" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="387.25" y="144.4" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">208.8</text>
+  <text x="387.25" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">none</text>
+  <rect x="429.75" y="117.67" width="40" height="142.33" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="449.75" y="111.67" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">271.1</text>
+  <text x="449.75" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">k = 1</text>
+  <rect x="492.25" y="84.84" width="40" height="175.16" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="512.25" y="78.84" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">333.6</text>
+  <text x="512.25" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">k = 3</text>
+  <rect x="554.75" y="108.03" width="40" height="151.97" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="574.75" y="102.03" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">289.5</text>
+  <text x="574.75" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">k = 5</text>
+  <text x="66" y="306" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Higher is better. k is the draft depth.</text>
+  <text x="66" y="324" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The 1-user run with no speculation is left out: its clock fell to 210 MHz.</text>
+</svg>

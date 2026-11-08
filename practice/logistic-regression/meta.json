@@ -1,0 +1,22 @@
+{
+  "id": "logistic-regression",
+  "title": "Logistic regression from scratch",
+  "kind": "implement",
+  "summary": "A stable sigmoid, the binary cross-entropy loss and its gradient, and a gradient descent loop that records the loss.",
+  "difficulty": "medium",
+  "tags": ["logistic-regression", "classification", "gradients", "numerical-stability"],
+  "lesson": "phases/02-ml-fundamentals/03-logistic-regression",
+  "cheatsheet": "classical-ml",
+  "minutes": 25,
+  "entry": ["sigmoid", "compute_loss", "compute_gradients", "fit"],
+  "collections": ["classical-ml"],
+  "time_limit_s": 10,
+  "mutants": {
+    "bias_not_updated": "Computes the bias gradient but never updates the bias in fit.",
+    "grad_sum_not_mean": "Sums the weight gradient over the examples and does not divide by n.",
+    "grad_wrong_sign": "Uses y - p and not p - y, so the gradient points uphill.",
+    "history_before_update": "Records the loss before the gradient step and not after it.",
+    "loss_log_of_sigmoid": "Takes the log of the sigmoid output, so a confident wrong prediction gives an infinite loss.",
+    "sigmoid_branches_swapped": "Swaps the two branches of the stable sigmoid, so the output is 1 - sigmoid(z)."
+  }
+}

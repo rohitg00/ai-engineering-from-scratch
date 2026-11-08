@@ -1,0 +1,27 @@
+{
+  "candidate": "f2_case10_wrong",
+  "label": "hand-written test candidate for lesson 45, not the output of any model",
+  "kind": "wrong constant",
+  "tool": "hand-written",
+  "target": {
+    "object": "ledger-x86_64-O1-renamed.o",
+    "sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+    "function": "f2"
+  },
+  "source": "f2_case10_wrong.c",
+  "claims": {
+    "name": "grade",
+    "return_type": "int",
+    "parameters": [
+      {"name": "score", "type": "int"}
+    ],
+    "summary": "Divides score by 10, subtracts 6, and reads a five-entry table. Tens 6, 7, 8 give 1, 2, 3. Tens 9 gives 4 and tens 10 gives 3. Other values return 0."
+  },
+  "citations": {
+    "addresses": ["0x10", "0x27", "0x2c", "0x33", "0x3a"],
+    "callees": [],
+    "strings": [],
+    "immediates": [1717986919, -6, 4]
+  },
+  "cost": {"tokens": null, "seconds": null}
+}

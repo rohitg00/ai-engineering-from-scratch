@@ -1,0 +1,105 @@
+{
+  "id": "configuration-drift-explainer",
+  "title": "Configuration Drift Explainer",
+  "tagline": "Explain why two environments resolve the same setting differently.",
+  "summary": "Help a developer compare declared defaults, environment overrides and observed JSON configuration. Preserve precedence and redaction rules, expose shadowed values, and attach every explanation to its source file or variable name. Export a drift report that an assistant can consume without receiving secret values.",
+  "level": 2,
+  "source": "core",
+  "status": "ready",
+  "hours": 8,
+  "languages": [
+    "Go"
+  ],
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "youWillBuild": "Redacted configuration diff and precedence evidence JSON",
+  "prerequisiteProjects": [
+    "json-schema-output-guard"
+  ],
+  "demo": {
+    "command": [
+      "go",
+      "run",
+      "."
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-load-layers",
+      "title": "Load named configuration layers",
+      "summary": "Reject ambiguous configuration before comparing environments.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "starter",
+      "concepts": [
+        "bounded JSON",
+        "scalar values",
+        "source identity"
+      ],
+      "timeout": 120,
+      "figure": "pj-configuration-drift-explainer-1"
+    },
+    {
+      "id": "02-resolve-provenance",
+      "title": "Resolve precedence with provenance",
+      "summary": "Keep every shadowed setting while choosing the last declared value.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "last-write precedence",
+        "history",
+        "determinism"
+      ],
+      "timeout": 120,
+      "figure": "pj-configuration-drift-explainer-2"
+    },
+    {
+      "id": "03-compare-effective-values",
+      "title": "Compare effective values",
+      "summary": "Distinguish equal, changed, missing and unexpected keys.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "presence",
+        "redaction",
+        "stable ordering"
+      ],
+      "timeout": 120,
+      "figure": "pj-configuration-drift-explainer-3"
+    },
+    {
+      "id": "04-export-ci-evidence",
+      "title": "Export redacted CI evidence",
+      "summary": "Produce a report an assistant can consume without receiving secret values.",
+      "hours": 2,
+      "language": "go",
+      "difficulty": "core",
+      "concepts": [
+        "JSON artifact",
+        "CI exit status",
+        "consumer contract"
+      ],
+      "timeout": 120,
+      "figure": "pj-configuration-drift-explainer-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded local command output. See the README for input and scope."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+# 1. canonical payload (RFC 8785): the card without signatures, keys sorted, no spaces
+{"capabilities":{"extendedAgentCard":true,"streaming":true},"defaultInputModes":["text/plain"],"defaultOutputModes":["text/plain","application/json"],"description":"Deploys a tagged build to staging after an operator approves it.","name":"deployer","provider":{"organization":"Platform Team","url":"https://deploy.example.com"},"securityRequirements":[{"schemes":{"bearer":{"list":[]}}}],"securitySchemes":{"bearer":{"httpAuthSecurityScheme":{"description":"A token issued by the platform team.","scheme":"Bearer"}}},"skills":[{"description":"Deploy one tagged build to staging, with operator approval.","examples":["Deploy build 2026.10.06-1 to staging"],"id":"deploy","name":"Deploy a build","tags":["deploy","staging"]}],"supportedInterfaces":[{"protocolBinding":"JSONRPC","protocolVersion":"1.0","url":"http://localhost:41243/a2a/jsonrpc"},{"protocolBinding":"HTTP+JSON","protocolVersion":"1.0","url":"http://localhost:41243/a2a/rest"}],"version":"1.4.1"}
+
+# 2. protected header, decoded
+{"alg": "HS256", "typ": "JOSE", "kid": "deployer-key-1"}
+
+# 3. JWS signing input: BASE64URL(header) '.' BASE64URL(payload)
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJkZXBsb3llci1rZXktMSJ9.eyJjYXBhYmlsaXRpZXMiOnsiZXh0ZW5kZWRBZ2VudENhcmQiOnRydWUsInN0cmVhbWluZyI6dHJ1ZX0sImRlZmF1bHRJbnB1dE1vZGVzIjpbInRleHQvcGxhaW4iXSwiZGVmYXVsdE91dHB1dE1vZGVzIjpbInRleHQvcGxhaW4iLCJhcHBsaWNhdGlvbi9qc29uIl0sImRlc2NyaXB0aW9uIjoiRGVwbG95cyBhIHRhZ2dlZCBidWlsZCB0byBzdGFnaW5nIGFmdGVyIGFuIG9wZXJhdG9yIGFwcHJvdmVzIGl0LiIsIm5hbWUiOiJkZXBsb3llciIsInByb3ZpZGVyIjp7Im9yZ2FuaXphdGlvbiI6IlBsYXRmb3JtIFRlYW0iLCJ1cmwiOiJodHRwczovL2RlcGxveS5leGFtcGxlLmNvbSJ9LCJzZWN1cml0eVJlcXVpcmVtZW50cyI6W3sic2NoZW1lcyI6eyJiZWFyZXIiOnsibGlzdCI6W119fX1dLCJzZWN1cml0eVNjaGVtZXMiOnsiYmVhcmVyIjp7Imh0dHBBdXRoU2VjdXJpdHlTY2hlbWUiOnsiZGVzY3JpcHRpb24iOiJBIHRva2VuIGlzc3VlZCBieSB0aGUgcGxhdGZvcm0gdGVhbS4iLCJzY2hlbWUiOiJCZWFyZXIifX19LCJza2lsbHMiOlt7ImRlc2NyaXB0aW9uIjoiRGVwbG95IG9uZSB0YWdnZWQgYnVpbGQgdG8gc3RhZ2luZywgd2l0aCBvcGVyYXRvciBhcHByb3ZhbC4iLCJleGFtcGxlcyI6WyJEZXBsb3kgYnVpbGQgMjAyNi4xMC4wNi0xIHRvIHN0YWdpbmciXSwiaWQiOiJkZXBsb3kiLCJuYW1lIjoiRGVwbG95IGEgYnVpbGQiLCJ0YWdzIjpbImRlcGxveSIsInN0YWdpbmciXX1dLCJzdXBwb3J0ZWRJbnRlcmZhY2VzIjpbeyJwcm90b2NvbEJpbmRpbmciOiJKU09OUlBDIiwicHJvdG9jb2xWZXJzaW9uIjoiMS4wIiwidXJsIjoiaHR0cDovL2xvY2FsaG9zdDo0MTI0My9hMmEvanNvbnJwYyJ9LHsicHJvdG9jb2xCaW5kaW5nIjoiSFRUUCtKU09OIiwicHJvdG9jb2xWZXJzaW9uIjoiMS4wIiwidXJsIjoiaHR0cDovL2xvY2FsaG9zdDo0MTI0My9hMmEvcmVzdCJ9XSwidmVyc2lvbiI6IjEuNC4xIn0
+
+# 4. the signature entry published in the card
+{
+  "protected": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJkZXBsb3llci1rZXktMSJ9",
+  "signature": "yPk834ji_dOVmxElhzV3yTYBT9NVp8Bx1j5K0LQmOww"
+}
+
+# 5. verify the published card: True
+# 6. verify after changing the description to name production: False

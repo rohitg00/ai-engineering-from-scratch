@@ -1,0 +1,23 @@
+{
+  "id": "grouped-query-attention",
+  "title": "Grouped-query attention",
+  "kind": "research",
+  "summary": "GQA forward with H query heads and G shared key and value groups, plus mean pooling of a multi-head checkpoint into groups.",
+  "difficulty": "medium",
+  "tags": ["attention", "gqa", "transformers", "kv-cache"],
+  "lesson": "phases/07-transformers-deep-dive/03-multi-head-attention",
+  "cheatsheet": "attention-variants",
+  "minutes": 30,
+  "entry": ["repeat_kv", "grouped_query_attention", "mean_pool_kv_heads"],
+  "collections": ["papers-to-code", "transformers-from-scratch"],
+  "time_limit_s": 10,
+  "method": "grouped-query-attention",
+  "paper": {"title": "GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints", "authors": "Ainslie et al.", "year": 2023, "url": "https://arxiv.org/abs/2305.13245"},
+  "mutants": {
+    "no_divisibility_check": "Does not raise ValueError when n_heads is not a multiple of n_kv_heads.",
+    "pool_sum_not_mean": "Sums the heads of each group in place of the mean.",
+    "pool_wrong_grouping": "Reshapes the projection to (D, r, G, d_head), so each group pools heads that are G apart.",
+    "scale_by_d_model": "Divides the scores by sqrt(D), not by sqrt(d_head).",
+    "tile_not_repeat": "Uses np.tile, so query head h uses group h mod G and not group h // r."
+  }
+}

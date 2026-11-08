@@ -1,0 +1,974 @@
+{
+ "tool": "angr",
+ "versions": {
+  "angr": "10.0.3",
+  "pyvex": "10.0.3",
+  "cle": "10.0.3",
+  "archinfo": "10.0.3"
+ },
+ "fixture": "ledger-x86_64-O2.o",
+ "command": "venv/bin/python capture_angr.py ledger-x86_64-O2.o OUT.json",
+ "analysis": "angr.Project(path, auto_load_libs=False); project.analyses.CFGFast(normalize=True, data_references=True); project.analyses.Decompiler(function, cfg=cfg.model)",
+ "loader": "ELF",
+ "arch": "AMD64",
+ "base": 4194304,
+ "sections": {
+  ".text": {
+   "vaddr": 4194304,
+   "size": 271
+  },
+  ".rodata": {
+   "vaddr": 4194576,
+   "size": 80
+  },
+  ".rodata.str1.1": {
+   "vaddr": 4194656,
+   "size": 10
+  }
+ },
+ "relocations": 8,
+ "functions": [
+  {
+   "name": "percent_change",
+   "addr": 4194304,
+   "size": 16,
+   "fromSymbol": true,
+   "blocks": [
+    {
+     "addr": 4194304,
+     "size": 4,
+     "instructions": [
+      {
+       "addr": 4194304,
+       "size": 2,
+       "bytes": "85ff",
+       "text": "test edi, edi"
+      },
+      {
+       "addr": 4194306,
+       "size": 2,
+       "bytes": "7409",
+       "text": "je 0x40000d"
+      }
+     ],
+     "vexStatements": 19,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194308,
+     "size": 9,
+     "instructions": [
+      {
+       "addr": 4194308,
+       "size": 2,
+       "bytes": "29fe",
+       "text": "sub esi, edi"
+      },
+      {
+       "addr": 4194310,
+       "size": 3,
+       "bytes": "6bc664",
+       "text": "imul eax, esi, 0x64"
+      },
+      {
+       "addr": 4194313,
+       "size": 1,
+       "bytes": "99",
+       "text": "cdq"
+      },
+      {
+       "addr": 4194314,
+       "size": 2,
+       "bytes": "f7ff",
+       "text": "idiv edi"
+      },
+      {
+       "addr": 4194316,
+       "size": 1,
+       "bytes": "c3",
+       "text": "ret"
+      }
+     ],
+     "vexStatements": 43,
+     "jumpkind": "Ijk_Ret"
+    },
+    {
+     "addr": 4194317,
+     "size": 3,
+     "instructions": [
+      {
+       "addr": 4194317,
+       "size": 2,
+       "bytes": "31c0",
+       "text": "xor eax, eax"
+      },
+      {
+       "addr": 4194319,
+       "size": 1,
+       "bytes": "c3",
+       "text": "ret"
+      }
+     ],
+     "vexStatements": 14,
+     "jumpkind": "Ijk_Ret"
+    }
+   ],
+   "edges": [
+    {
+     "from": 4194304,
+     "to": 4194308,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194304,
+     "to": 4194317,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    }
+   ],
+   "decompiled": "unsigned int percent_change(unsigned int a0, unsigned int a1)\n{\n    if (!a0)\n        return 0;\n    return (a1 - a0) * 100 / a0;\n}\n",
+   "decompileError": null
+  },
+  {
+   "name": "grade",
+   "addr": 4194320,
+   "size": 46,
+   "fromSymbol": true,
+   "blocks": [
+    {
+     "addr": 4194320,
+     "size": 33,
+     "instructions": [
+      {
+       "addr": 4194320,
+       "size": 3,
+       "bytes": "4863c7",
+       "text": "movsxd rax, edi"
+      },
+      {
+       "addr": 4194323,
+       "size": 7,
+       "bytes": "4869c067666666",
+       "text": "imul rax, rax, 0x66666667"
+      },
+      {
+       "addr": 4194330,
+       "size": 3,
+       "bytes": "4889c1",
+       "text": "mov rcx, rax"
+      },
+      {
+       "addr": 4194333,
+       "size": 4,
+       "bytes": "48c1f922",
+       "text": "sar rcx, 0x22"
+      },
+      {
+       "addr": 4194337,
+       "size": 4,
+       "bytes": "48c1e83f",
+       "text": "shr rax, 0x3f"
+      },
+      {
+       "addr": 4194341,
+       "size": 2,
+       "bytes": "01c1",
+       "text": "add ecx, eax"
+      },
+      {
+       "addr": 4194343,
+       "size": 3,
+       "bytes": "83c1fa",
+       "text": "add ecx, -6"
+      },
+      {
+       "addr": 4194346,
+       "size": 2,
+       "bytes": "31c0",
+       "text": "xor eax, eax"
+      },
+      {
+       "addr": 4194348,
+       "size": 3,
+       "bytes": "83f904",
+       "text": "cmp ecx, 4"
+      },
+      {
+       "addr": 4194351,
+       "size": 2,
+       "bytes": "770c",
+       "text": "ja 0x40003d"
+      }
+     ],
+     "vexStatements": 49,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194353,
+     "size": 12,
+     "instructions": [
+      {
+       "addr": 4194353,
+       "size": 2,
+       "bytes": "89c8",
+       "text": "mov eax, ecx"
+      },
+      {
+       "addr": 4194355,
+       "size": 7,
+       "bytes": "488d0dea000000",
+       "text": "lea rcx, [rip + 0xea]"
+      },
+      {
+       "addr": 4194362,
+       "size": 3,
+       "bytes": "8b0481",
+       "text": "mov eax, dword ptr [rcx + rax*4]"
+      }
+     ],
+     "vexStatements": 13,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194365,
+     "size": 1,
+     "instructions": [
+      {
+       "addr": 4194365,
+       "size": 1,
+       "bytes": "c3",
+       "text": "ret"
+      }
+     ],
+     "vexStatements": 7,
+     "jumpkind": "Ijk_Ret"
+    }
+   ],
+   "edges": [
+    {
+     "from": 4194320,
+     "to": 4194353,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194320,
+     "to": 4194365,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194353,
+     "to": 4194365,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    }
+   ],
+   "decompiled": "extern unsigned int g_400124[4];\n\nunsigned int grade(int a0)\n{\n    unsigned int v1;  // ecx\n    unsigned int v2;  // eax\n\n    v1 = (unsigned int)((long long)(a0 * 1717986919) >> 0x22) + (unsigned int)(a0 * 1717986919 >> 63) - 6;\n    v2 = 0;\n    if (v1 <= 4)\n        v2 = g_400124[v1];\n    return v2;\n}\n",
+   "decompileError": null
+  },
+  {
+   "name": "sub_40003e",
+   "addr": 4194366,
+   "size": 2,
+   "fromSymbol": false,
+   "blocks": [
+    {
+     "addr": 4194366,
+     "size": 2,
+     "instructions": [
+      {
+       "addr": 4194366,
+       "size": 2,
+       "bytes": "6690",
+       "text": "nop"
+      }
+     ],
+     "vexStatements": 1,
+     "jumpkind": "Ijk_Boring"
+    }
+   ],
+   "edges": [
+    {
+     "from": 4194366,
+     "to": 4194368,
+     "type": "transition",
+     "outside": true,
+     "target": "BlockNode"
+    }
+   ],
+   "decompiled": null,
+   "decompileError": null
+  },
+  {
+   "name": "total",
+   "addr": 4194368,
+   "size": 140,
+   "fromSymbol": true,
+   "blocks": [
+    {
+     "addr": 4194368,
+     "size": 4,
+     "instructions": [
+      {
+       "addr": 4194368,
+       "size": 2,
+       "bytes": "85f6",
+       "text": "test esi, esi"
+      },
+      {
+       "addr": 4194370,
+       "size": 2,
+       "bytes": "7e0d",
+       "text": "jle 0x400051"
+      }
+     ],
+     "vexStatements": 19,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194372,
+     "size": 7,
+     "instructions": [
+      {
+       "addr": 4194372,
+       "size": 2,
+       "bytes": "89f1",
+       "text": "mov ecx, esi"
+      },
+      {
+       "addr": 4194374,
+       "size": 3,
+       "bytes": "83fe07",
+       "text": "cmp esi, 7"
+      },
+      {
+       "addr": 4194377,
+       "size": 2,
+       "bytes": "7709",
+       "text": "ja 0x400054"
+      }
+     ],
+     "vexStatements": 26,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194379,
+     "size": 6,
+     "instructions": [
+      {
+       "addr": 4194379,
+       "size": 2,
+       "bytes": "31d2",
+       "text": "xor edx, edx"
+      },
+      {
+       "addr": 4194381,
+       "size": 2,
+       "bytes": "31c0",
+       "text": "xor eax, eax"
+      },
+      {
+       "addr": 4194383,
+       "size": 2,
+       "bytes": "eb6f",
+       "text": "jmp 0x4000c0"
+      }
+     ],
+     "vexStatements": 9,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194385,
+     "size": 3,
+     "instructions": [
+      {
+       "addr": 4194385,
+       "size": 2,
+       "bytes": "31c0",
+       "text": "xor eax, eax"
+      },
+      {
+       "addr": 4194387,
+       "size": 1,
+       "bytes": "c3",
+       "text": "ret"
+      }
+     ],
+     "vexStatements": 14,
+     "jumpkind": "Ijk_Ret"
+    },
+    {
+     "addr": 4194388,
+     "size": 44,
+     "instructions": [
+      {
+       "addr": 4194388,
+       "size": 2,
+       "bytes": "89ca",
+       "text": "mov edx, ecx"
+      },
+      {
+       "addr": 4194390,
+       "size": 6,
+       "bytes": "81e2f8ffff7f",
+       "text": "and edx, 0x7ffffff8"
+      },
+      {
+       "addr": 4194396,
+       "size": 2,
+       "bytes": "89c8",
+       "text": "mov eax, ecx"
+      },
+      {
+       "addr": 4194398,
+       "size": 3,
+       "bytes": "c1e803",
+       "text": "shr eax, 3"
+      },
+      {
+       "addr": 4194401,
+       "size": 5,
+       "bytes": "25ffffff0f",
+       "text": "and eax, 0xfffffff"
+      },
+      {
+       "addr": 4194406,
+       "size": 4,
+       "bytes": "48c1e005",
+       "text": "shl rax, 5"
+      },
+      {
+       "addr": 4194410,
+       "size": 4,
+       "bytes": "660fefc0",
+       "text": "pxor xmm0, xmm0"
+      },
+      {
+       "addr": 4194414,
+       "size": 2,
+       "bytes": "31f6",
+       "text": "xor esi, esi"
+      },
+      {
+       "addr": 4194416,
+       "size": 4,
+       "bytes": "660fefc9",
+       "text": "pxor xmm1, xmm1"
+      },
+      {
+       "addr": 4194420,
+       "size": 12,
+       "bytes": "6666662e0f1f840000000000",
+       "text": "nop word ptr cs:[rax + rax]"
+      }
+     ],
+     "vexStatements": 36,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194432,
+     "size": 28,
+     "instructions": [
+      {
+       "addr": 4194432,
+       "size": 5,
+       "bytes": "f30f6f1437",
+       "text": "movdqu xmm2, xmmword ptr [rdi + rsi]"
+      },
+      {
+       "addr": 4194437,
+       "size": 4,
+       "bytes": "660ffec2",
+       "text": "paddd xmm0, xmm2"
+      },
+      {
+       "addr": 4194441,
+       "size": 6,
+       "bytes": "f30f6f543710",
+       "text": "movdqu xmm2, xmmword ptr [rdi + rsi + 0x10]"
+      },
+      {
+       "addr": 4194447,
+       "size": 4,
+       "bytes": "660ffeca",
+       "text": "paddd xmm1, xmm2"
+      },
+      {
+       "addr": 4194451,
+       "size": 4,
+       "bytes": "4883c620",
+       "text": "add rsi, 0x20"
+      },
+      {
+       "addr": 4194455,
+       "size": 3,
+       "bytes": "4839f0",
+       "text": "cmp rax, rsi"
+      },
+      {
+       "addr": 4194458,
+       "size": 2,
+       "bytes": "75e4",
+       "text": "jne 0x400080"
+      }
+     ],
+     "vexStatements": 36,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194460,
+     "size": 30,
+     "instructions": [
+      {
+       "addr": 4194460,
+       "size": 4,
+       "bytes": "660ffec8",
+       "text": "paddd xmm1, xmm0"
+      },
+      {
+       "addr": 4194464,
+       "size": 5,
+       "bytes": "660f70c1ee",
+       "text": "pshufd xmm0, xmm1, 0xee"
+      },
+      {
+       "addr": 4194469,
+       "size": 4,
+       "bytes": "660ffec1",
+       "text": "paddd xmm0, xmm1"
+      },
+      {
+       "addr": 4194473,
+       "size": 5,
+       "bytes": "660f70c855",
+       "text": "pshufd xmm1, xmm0, 0x55"
+      },
+      {
+       "addr": 4194478,
+       "size": 4,
+       "bytes": "660ffec8",
+       "text": "paddd xmm1, xmm0"
+      },
+      {
+       "addr": 4194482,
+       "size": 4,
+       "bytes": "660f7ec8",
+       "text": "movd eax, xmm1"
+      },
+      {
+       "addr": 4194486,
+       "size": 2,
+       "bytes": "39ca",
+       "text": "cmp edx, ecx"
+      },
+      {
+       "addr": 4194488,
+       "size": 2,
+       "bytes": "7411",
+       "text": "je 0x4000cb"
+      }
+     ],
+     "vexStatements": 58,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194490,
+     "size": 6,
+     "instructions": [
+      {
+       "addr": 4194490,
+       "size": 6,
+       "bytes": "660f1f440000",
+       "text": "nop word ptr [rax + rax]"
+      }
+     ],
+     "vexStatements": 1,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194496,
+     "size": 11,
+     "instructions": [
+      {
+       "addr": 4194496,
+       "size": 3,
+       "bytes": "030497",
+       "text": "add eax, dword ptr [rdi + rdx*4]"
+      },
+      {
+       "addr": 4194499,
+       "size": 3,
+       "bytes": "48ffc2",
+       "text": "inc rdx"
+      },
+      {
+       "addr": 4194502,
+       "size": 3,
+       "bytes": "4839d1",
+       "text": "cmp rcx, rdx"
+      },
+      {
+       "addr": 4194505,
+       "size": 2,
+       "bytes": "75f5",
+       "text": "jne 0x4000c0"
+      }
+     ],
+     "vexStatements": 30,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194507,
+     "size": 1,
+     "instructions": [
+      {
+       "addr": 4194507,
+       "size": 1,
+       "bytes": "c3",
+       "text": "ret"
+      }
+     ],
+     "vexStatements": 7,
+     "jumpkind": "Ijk_Ret"
+    }
+   ],
+   "edges": [
+    {
+     "from": 4194368,
+     "to": 4194372,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194368,
+     "to": 4194385,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194372,
+     "to": 4194379,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194372,
+     "to": 4194388,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194379,
+     "to": 4194496,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194388,
+     "to": 4194432,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194432,
+     "to": 4194432,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194432,
+     "to": 4194460,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194460,
+     "to": 4194490,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194460,
+     "to": 4194507,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194490,
+     "to": 4194496,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194496,
+     "to": 4194496,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194496,
+     "to": 4194507,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    }
+   ],
+   "decompiled": "double total(uint128_t *a0, unsigned int a1)\n{\n    unsigned long j;  // rcx\n    unsigned long v2;  // rdx\n    __m128i v3;  // xmm0\n    unsigned long long i;  // rsi\n    __m128i v5;  // xmm1\n    unsigned long v6;  // xmm0lq\n    unsigned long v7;  // xmm0lq\n\n    if ((int)a1 <= 0)\n        return v7;\n    j = a1;\n    if (a1 <= 7)\n    {\n        v2 = 0;\n    }\n    else\n    {\n        v2 = (unsigned int)j & 0x7ffffff8;\n        v3 = _mm_setzero_si128();\n        i = 0;\n        v5 = _mm_setzero_si128();\n        do\n        {\n            v3 = _mm_add_epi32(v3, *(int128_t *)((char *)a0 + i));\n            v5 = _mm_add_epi32(v5, *(int128_t *)((char *)a0 + i + 16));\n            i += 32;\n        } while (((unsigned int)((j & 0xffffffff) >> 3) & 0xfffffff) * 32 != i);\n        if ((unsigned int)v2 == (unsigned int)j)\n            return _mm_cvtsi128_si64(_mm_add_epi32(_mm_shuffle_epi32(_mm_add_epi32(v5, v3), 0xee), _mm_add_epi32(v5, v3)));\n    }\n    do\n    {\n        v2 += 1;\n    } while (j != v2);\n    return v6;\n}\n",
+   "decompileError": null
+  },
+  {
+   "name": "sub_4000cc",
+   "addr": 4194508,
+   "size": 4,
+   "fromSymbol": false,
+   "blocks": [
+    {
+     "addr": 4194508,
+     "size": 4,
+     "instructions": [
+      {
+       "addr": 4194508,
+       "size": 4,
+       "bytes": "0f1f4000",
+       "text": "nop dword ptr [rax]"
+      }
+     ],
+     "vexStatements": 1,
+     "jumpkind": "Ijk_Boring"
+    }
+   ],
+   "edges": [
+    {
+     "from": 4194508,
+     "to": 4194512,
+     "type": "transition",
+     "outside": true,
+     "target": "BlockNode"
+    }
+   ],
+   "decompiled": null,
+   "decompileError": null
+  },
+  {
+   "name": "grade_label",
+   "addr": 4194512,
+   "size": 63,
+   "fromSymbol": true,
+   "blocks": [
+    {
+     "addr": 4194512,
+     "size": 31,
+     "instructions": [
+      {
+       "addr": 4194512,
+       "size": 3,
+       "bytes": "4863c7",
+       "text": "movsxd rax, edi"
+      },
+      {
+       "addr": 4194515,
+       "size": 7,
+       "bytes": "4869c067666666",
+       "text": "imul rax, rax, 0x66666667"
+      },
+      {
+       "addr": 4194522,
+       "size": 3,
+       "bytes": "4889c1",
+       "text": "mov rcx, rax"
+      },
+      {
+       "addr": 4194525,
+       "size": 4,
+       "bytes": "48c1f922",
+       "text": "sar rcx, 0x22"
+      },
+      {
+       "addr": 4194529,
+       "size": 4,
+       "bytes": "48c1e83f",
+       "text": "shr rax, 0x3f"
+      },
+      {
+       "addr": 4194533,
+       "size": 2,
+       "bytes": "01c8",
+       "text": "add eax, ecx"
+      },
+      {
+       "addr": 4194535,
+       "size": 3,
+       "bytes": "83c0fa",
+       "text": "add eax, -6"
+      },
+      {
+       "addr": 4194538,
+       "size": 3,
+       "bytes": "83f804",
+       "text": "cmp eax, 4"
+      },
+      {
+       "addr": 4194541,
+       "size": 2,
+       "bytes": "770f",
+       "text": "ja 0x4000fe"
+      }
+     ],
+     "vexStatements": 48,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194543,
+     "size": 15,
+     "instructions": [
+      {
+       "addr": 4194543,
+       "size": 2,
+       "bytes": "89c0",
+       "text": "mov eax, eax"
+      },
+      {
+       "addr": 4194545,
+       "size": 7,
+       "bytes": "488d0d40000000",
+       "text": "lea rcx, [rip + 0x40]"
+      },
+      {
+       "addr": 4194552,
+       "size": 4,
+       "bytes": "488b04c1",
+       "text": "mov rax, qword ptr [rcx + rax*8]"
+      },
+      {
+       "addr": 4194556,
+       "size": 2,
+       "bytes": "eb02",
+       "text": "jmp 0x400100"
+      }
+     ],
+     "vexStatements": 13,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194558,
+     "size": 2,
+     "instructions": [
+      {
+       "addr": 4194558,
+       "size": 2,
+       "bytes": "31c0",
+       "text": "xor eax, eax"
+      }
+     ],
+     "vexStatements": 6,
+     "jumpkind": "Ijk_Boring"
+    },
+    {
+     "addr": 4194560,
+     "size": 15,
+     "instructions": [
+      {
+       "addr": 4194560,
+       "size": 7,
+       "bytes": "488d0d09000000",
+       "text": "lea rcx, [rip + 9]"
+      },
+      {
+       "addr": 4194567,
+       "size": 4,
+       "bytes": "48630481",
+       "text": "movsxd rax, dword ptr [rcx + rax*4]"
+      },
+      {
+       "addr": 4194571,
+       "size": 3,
+       "bytes": "4801c8",
+       "text": "add rax, rcx"
+      },
+      {
+       "addr": 4194574,
+       "size": 1,
+       "bytes": "c3",
+       "text": "ret"
+      }
+     ],
+     "vexStatements": 24,
+     "jumpkind": "Ijk_Ret"
+    }
+   ],
+   "edges": [
+    {
+     "from": 4194512,
+     "to": 4194543,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194512,
+     "to": 4194558,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194543,
+     "to": 4194560,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    },
+    {
+     "from": 4194558,
+     "to": 4194560,
+     "type": "transition",
+     "outside": false,
+     "target": "BlockNode"
+    }
+   ],
+   "decompiled": "extern unsigned long long g_400138[4];\n\nlong long grade_label(int a0)\n{\n    unsigned int v1;  // eax\n\n    v1 = (unsigned int)(a0 * 1717986919 >> 63) + (unsigned int)((long long)(a0 * 1717986919) >> 0x22) - 6;\n    return *(int *)(4 * (v1 <= 4 ? g_400138[v1] : 0) + 4194576) + (char *)&labels.rel[0];\n}\n",
+   "decompileError": null
+  }
+ ],
+ "memoryData": [
+  {
+   "addr": 4194576,
+   "size": 2,
+   "sort": "string"
+  },
+  {
+   "addr": 4194578,
+   "size": 18,
+   "sort": "None"
+  },
+  {
+   "addr": 4194596,
+   "size": 20,
+   "sort": "unknown"
+  },
+  {
+   "addr": 4194616,
+   "size": 40,
+   "sort": "unknown"
+  }
+ ]
+}

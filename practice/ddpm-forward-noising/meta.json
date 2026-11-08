@@ -1,0 +1,24 @@
+{
+  "id": "ddpm-forward-noising",
+  "title": "DDPM noise schedule, closed form noising and posterior",
+  "kind": "research",
+  "summary": "Build the linear beta schedule and alpha bars, sample x_t from x_0 in closed form, and compute the mean and variance of q(x_{t-1} | x_t, x_0).",
+  "difficulty": "medium",
+  "tags": ["diffusion", "ddpm", "generative-models", "noise-schedule"],
+  "lesson": "phases/08-generative-ai/06-diffusion-ddpm-from-scratch",
+  "cheatsheet": "diffusion-models",
+  "minutes": 30,
+  "entry": ["make_schedule", "q_sample", "posterior_mean_variance"],
+  "collections": ["papers-to-code", "deep-learning-core"],
+  "time_limit_s": 10,
+  "method": "diffusion",
+  "paper": {"title": "Denoising Diffusion Probabilistic Models", "authors": "Ho, Jain and Abbeel", "year": 2020, "url": "https://arxiv.org/abs/2006.11239"},
+  "mutants": {
+    "batch_t_not_reshaped": "Does not reshape the coefficients for an array of timesteps, so they do not broadcast over the batch.",
+    "no_sqrt": "Uses alpha_bar and 1 - alpha_bar as the coefficients of x_t, without the square roots.",
+    "prev_is_current": "Uses alpha_bar_t in place of alpha_bar_{t-1} in the posterior.",
+    "prev_wraps_to_last": "Builds alpha_bar_{t-1} with np.roll, so t = 0 reads the last step, not 1.",
+    "schedule_misses_end": "Divides by T, not by T - 1, so the last beta is below beta_end.",
+    "variance_is_beta": "Returns beta_t as the posterior variance, not the tilde beta of the paper."
+  }
+}

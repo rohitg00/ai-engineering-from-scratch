@@ -61,8 +61,8 @@ flowchart TB
 
 這一課用的 UCB 公式是經典的 UCB1。
 
-```text
-ucb(branch) = mean_reward(branch) + c * sqrt( ln(total_runs) / runs(branch) )
+```math
+\text{ucb}(\text{branch}) = \text{mean\_reward}(\text{branch}) + c \sqrt{ \frac{\ln(\text{total\_runs})}{\text{runs}(\text{branch})} }
 ```
 
 `total_runs` 是所有分支上已完成實驗的總數。`c` 是探索權重；這一課預設 `sqrt(2)`。跑過零次的分支拿到 `+inf`，所以沒試過的分支永遠最先被排。平均獎勵高的分支會維持高分，直到其他分支追上；跑了很多次卻沒什麼獎勵的分支，則會被跑得較少的替代選項蓋過去。

@@ -97,7 +97,7 @@ Early transformers used post-LN (`x = LN(x + sublayer(x))`) and struggled to tra
 
 - 16x16 patches -> 196 tokens, standard.
 - 32x32 patches -> 49 tokens, faster but lower resolution.
-- 8x8 patches -> 784 tokens, finer but O(n^2) attention cost scales badly.
+- 8x8 patches -> 784 tokens, finer but $O(n^2)$ attention cost scales badly.
 
 Bigger patches = fewer tokens = faster but less spatial detail. SwinV2 uses 4x4 patches in hierarchical windows.
 

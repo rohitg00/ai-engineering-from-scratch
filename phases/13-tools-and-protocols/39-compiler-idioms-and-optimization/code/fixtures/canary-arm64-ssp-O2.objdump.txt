@@ -1,0 +1,39 @@
+
+canary-arm64-ssp-O2.o:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000000000 <with_canary>:
+       0: d10183ff     	sub	sp, sp, #0x60
+       4: a9057bfd     	stp	x29, x30, [sp, #0x50]
+       8: 90000008     	adrp	x8, 0x0 <with_canary>
+		0000000000000008:  R_AARCH64_ADR_GOT_PAGE	__stack_chk_guard
+       c: 910143fd     	add	x29, sp, #0x50
+      10: f9400108     	ldr	x8, [x8]
+		0000000000000010:  R_AARCH64_LD64_GOT_LO12_NC	__stack_chk_guard
+      14: aa0003e1     	mov	x1, x0
+      18: 910023e0     	add	x0, sp, #0x8
+      1c: 528007e2     	mov	w2, #0x3f               // =63
+      20: f9400108     	ldr	x8, [x8]
+      24: f81f83a8     	stur	x8, [x29, #-0x8]
+      28: 94000000     	bl	0x28 <with_canary+0x28>
+		0000000000000028:  R_AARCH64_CALL26	strncpy
+      2c: 90000008     	adrp	x8, 0x0 <with_canary>
+		000000000000002c:  R_AARCH64_ADR_GOT_PAGE	__stack_chk_guard
+      30: f9400108     	ldr	x8, [x8]
+		0000000000000030:  R_AARCH64_LD64_GOT_LO12_NC	__stack_chk_guard
+      34: 394023e0     	ldrb	w0, [sp, #0x8]
+      38: f85f83a9     	ldur	x9, [x29, #-0x8]
+      3c: f9400108     	ldr	x8, [x8]
+      40: eb09011f     	cmp	x8, x9
+      44: 54000081     	b.ne	0x54 <with_canary+0x54>
+      48: a9457bfd     	ldp	x29, x30, [sp, #0x50]
+      4c: 910183ff     	add	sp, sp, #0x60
+      50: d65f03c0     	ret
+      54: 94000000     	bl	0x54 <with_canary+0x54>
+		0000000000000054:  R_AARCH64_CALL26	__stack_chk_fail
+
+0000000000000058 <plain_leaf>:
+      58: 52800028     	mov	w8, #0x1                // =1
+      5c: 1b002020     	madd	w0, w1, w0, w8
+      60: d65f03c0     	ret

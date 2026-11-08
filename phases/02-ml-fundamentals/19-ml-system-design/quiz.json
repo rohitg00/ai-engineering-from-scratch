@@ -1,0 +1,78 @@
+{
+  "lesson": "19-ml-system-design",
+  "title": "ML System Design — From Problem to Deployed Model",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A team reports an offline AUC of 0.91 for a churn model. What is missing before anyone can call the model useful?",
+      "options": [
+        "The decision that uses each score and a baseline to compare against",
+        "A larger gradient-boosted model with more trees and a tuned learning rate",
+        "An AUC above 0.95, because production systems reject lower scores",
+        "A GPU server, because churn models need accelerators to serve traffic"
+      ],
+      "correct": 0,
+      "explanation": "An offline metric alone says nothing about value. The design needs the action that each score starts and the strongest baseline that the model must beat."
+    },
+    {
+      "stage": "check",
+      "question": "What is a guardrail metric?",
+      "options": [
+        "A metric that only the security team is allowed to read",
+        "The metric with the largest value on the validation set",
+        "The offline metric that the training job minimizes on each batch",
+        "A metric that must not get worse when the new model launches"
+      ],
+      "correct": 3,
+      "explanation": "Guardrails protect the parts of the system that the model is not trying to improve, such as cost, latency, and complaint rate."
+    },
+    {
+      "stage": "check",
+      "question": "Scores must be at most 30 minutes old, and one full batch run takes one hour. What follows?",
+      "options": [
+        "Batch inference still works if you run the job twice as often each day",
+        "Online inference cannot work, because it is slower than a key-value lookup read",
+        "Batch inference works if you add replicas to the key-value store",
+        "Batch inference cannot meet the limit, so the design needs online scoring"
+      ],
+      "correct": 3,
+      "explanation": "A batch score is at least as old as one run. When the staleness limit is shorter than the job, no schedule can meet it."
+    },
+    {
+      "stage": "check",
+      "question": "A churn model scores F1 0.56. The majority baseline scores 0.00, and a one-feature rule scores 0.46. What is the lift?",
+      "options": [
+        "0.51, the average gain over the two baselines in the comparison",
+        "0.10, measured against the rule, which is the strongest baseline",
+        "0.56, measured against the majority baseline, which scores zero",
+        "0.00, because lift is only defined against the current production system"
+      ],
+      "correct": 1,
+      "explanation": "Lift is the gap to the strongest baseline. Comparing with the weakest baseline makes any model look good."
+    },
+    {
+      "stage": "post",
+      "question": "A fraud model blocks risky payments, and the team retrains it each month on labeled payments. What problem does this create?",
+      "options": [
+        "Blocked payments never get a fraud label, so the training data loses examples",
+        "The monthly retraining schedule makes the model overfit to the most recent month",
+        "Blocking payments raises the p99 latency of the model service above its budget",
+        "Labeled payments leak the label because the label is stored in the same table"
+      ],
+      "correct": 0,
+      "explanation": "This is a feedback loop. The model's decisions remove outcomes from future training data, so keep a small random holdout that the model does not block."
+    },
+    {
+      "stage": "post",
+      "question": "Which rollout stage lets a new model score live traffic while nobody uses its output?",
+      "options": [
+        "Canary release",
+        "A/B test with a holdout",
+        "Shadow deployment",
+        "Full rollout with rollback"
+      ],
+      "correct": 2,
+      "explanation": "In shadow mode, the system logs the new model's predictions and compares them with the current model. Users see only the current model's decisions."
+    }
+  ]
+}

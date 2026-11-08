@@ -1,0 +1,794 @@
+2026-10-18T10:57:59Z pause at 80C
+2026-10-18T10:58:14Z resume at 68C
+2026-10-18T10:59:05Z pause at 81C
+2026-10-18T10:59:38Z pause at 80C
+2026-10-18T11:00:38Z resume at 65C after 60 s
+2026-10-18T11:01:39Z pause at 80C
+2026-10-18T11:25:29Z resume by hand after rule change
+2026-10-18T11:25:34Z pause at 81C
+2026-10-18T11:26:35Z resume at 70C after 61 s
+2026-10-18T11:26:50Z pause at 80C
+2026-10-18T11:27:45Z resume by hand after rule change to 84/74
+2026-10-18T11:28:16Z pause at 84C
+2026-10-18T11:29:01Z resume at 70C after 45 s
+2026-10-18T11:29:37Z pause at 85C
+2026-10-18T11:30:22Z resume at 71C after 45 s
+2026-10-18T11:30:52Z pause at 85C
+2026-10-18T11:31:38Z resume at 71C after 46 s
+2026-10-18T11:31:58Z pause at 85C
+2026-10-18T11:32:44Z resume at 70C after 46 s
+2026-10-18T11:33:30Z pause at 84C
+2026-10-18T11:34:15Z resume at 71C after 45 s
+2026-10-18T11:34:45Z pause at 85C
+2026-10-18T11:35:31Z resume at 71C after 46 s
+2026-10-18T11:36:01Z pause at 85C
+2026-10-18T11:36:47Z resume at 71C after 46 s
+2026-10-18T11:37:22Z pause at 85C
+2026-10-18T11:38:08Z resume at 71C after 46 s
+2026-10-18T11:38:28Z pause at 84C
+2026-10-18T11:39:14Z resume at 70C after 46 s
+2026-10-18T11:39:54Z pause at 84C
+2026-10-18T11:40:40Z resume at 71C after 46 s
+2026-10-18T11:41:15Z pause at 85C
+2026-10-18T11:42:01Z resume at 71C after 46 s
+2026-10-18T11:42:11Z pause at 84C
+2026-10-18T11:42:56Z resume at 69C after 45 s
+2026-10-18T11:43:32Z pause at 85C
+2026-10-18T11:44:18Z resume at 71C after 46 s
+2026-10-18T11:44:48Z pause at 84C
+2026-10-18T11:45:33Z resume at 71C after 45 s
+2026-10-18T11:45:59Z pause at 84C
+2026-10-18T11:46:44Z resume at 70C after 45 s
+2026-10-18T11:47:25Z pause at 84C
+2026-10-18T11:48:10Z resume at 71C after 45 s
+2026-10-18T11:48:26Z pause at 84C
+2026-10-18T11:49:11Z resume at 69C after 45 s
+2026-10-18T11:49:52Z pause at 84C
+2026-10-18T11:50:37Z resume at 70C after 45 s
+2026-10-18T11:51:08Z pause at 84C
+2026-10-18T11:51:53Z resume at 71C after 45 s
+2026-10-18T11:52:19Z pause at 84C
+2026-10-18T11:53:04Z resume at 70C after 45 s
+2026-10-18T11:53:45Z pause at 84C
+2026-10-18T11:54:30Z resume at 71C after 45 s
+2026-10-18T11:55:01Z pause at 85C
+2026-10-18T11:55:46Z resume at 71C after 45 s
+2026-10-18T11:56:37Z pause at 84C
+2026-10-18T11:57:23Z resume at 70C after 46 s
+2026-10-18T11:57:43Z pause at 84C
+2026-10-18T11:58:28Z resume at 70C after 45 s
+2026-10-18T11:59:04Z pause at 84C
+2026-10-18T11:59:49Z resume at 71C after 45 s
+2026-10-18T12:00:30Z pause at 84C
+2026-10-18T12:01:16Z resume at 71C after 46 s
+2026-10-18T12:01:36Z pause at 84C
+2026-10-18T12:02:21Z resume at 70C after 45 s
+2026-10-18T12:02:52Z pause at 85C
+2026-10-18T12:03:37Z resume at 71C after 45 s
+2026-10-18T12:03:58Z pause at 86C
+2026-10-18T12:04:43Z resume at 70C after 45 s
+2026-10-18T12:05:14Z pause at 84C
+2026-10-18T12:05:59Z resume at 70C after 45 s
+2026-10-18T12:07:20Z pause at 85C
+2026-10-18T12:08:06Z resume at 71C after 46 s
+2026-10-18T12:08:31Z pause at 84C
+2026-10-18T12:09:17Z resume at 71C after 46 s
+2026-10-18T12:09:47Z pause at 84C
+2026-10-18T12:10:33Z resume at 71C after 46 s
+2026-10-18T12:11:08Z pause at 85C
+2026-10-18T12:11:54Z resume at 71C after 46 s
+2026-10-18T12:12:29Z pause at 84C
+2026-10-18T12:13:15Z resume at 71C after 46 s
+2026-10-18T12:13:50Z pause at 85C
+2026-10-18T12:14:36Z resume at 71C after 46 s
+2026-10-18T12:14:51Z pause at 85C
+2026-10-18T12:15:37Z resume at 70C after 46 s
+2026-10-18T12:16:07Z pause at 84C
+2026-10-18T12:16:53Z resume at 70C after 46 s
+2026-10-18T12:17:23Z pause at 85C
+2026-10-18T12:18:08Z resume at 70C after 45 s
+2026-10-18T12:18:34Z pause at 84C
+2026-10-18T12:19:19Z resume at 70C after 45 s
+2026-10-18T12:20:00Z pause at 84C
+2026-10-18T12:20:46Z resume at 71C after 46 s
+2026-10-18T12:21:11Z pause at 85C
+2026-10-18T12:21:56Z resume at 70C after 45 s
+2026-10-18T12:22:22Z pause at 84C
+2026-10-18T12:23:07Z resume at 70C after 45 s
+2026-10-18T12:23:33Z pause at 84C
+2026-10-18T12:24:18Z resume at 70C after 45 s
+2026-10-18T12:24:49Z pause at 84C
+2026-10-18T12:25:34Z resume at 70C after 45 s
+2026-10-18T12:26:00Z pause at 84C
+2026-10-18T12:26:45Z resume at 70C after 45 s
+2026-10-18T12:27:26Z pause at 84C
+2026-10-18T12:28:11Z resume at 71C after 45 s
+2026-10-18T12:28:42Z pause at 84C
+2026-10-18T12:29:27Z resume at 70C after 45 s
+2026-10-18T12:30:03Z pause at 85C
+2026-10-18T12:30:48Z resume at 71C after 45 s
+2026-10-18T12:31:09Z pause at 84C
+2026-10-18T12:31:54Z resume at 70C after 45 s
+2026-10-18T12:32:19Z pause at 84C
+2026-10-18T12:33:05Z resume at 70C after 46 s
+2026-10-18T12:33:46Z pause at 84C
+2026-10-18T12:34:31Z resume at 71C after 45 s
+2026-10-18T12:35:07Z pause at 85C
+2026-10-18T12:35:52Z resume at 71C after 45 s
+2026-10-18T12:36:28Z pause at 85C
+2026-10-18T12:37:13Z resume at 71C after 45 s
+2026-10-18T12:37:49Z pause at 84C
+2026-10-18T12:38:34Z resume at 70C after 45 s
+2026-10-18T12:39:05Z pause at 85C
+2026-10-18T12:39:50Z resume at 70C after 45 s
+2026-10-18T12:40:31Z pause at 84C
+2026-10-18T12:41:16Z resume at 71C after 45 s
+2026-10-18T12:41:32Z pause at 85C
+2026-10-18T12:42:17Z resume at 69C after 45 s
+2026-10-18T12:42:53Z pause at 85C
+2026-10-18T12:43:38Z resume at 70C after 45 s
+2026-10-18T12:44:19Z pause at 84C
+2026-10-18T12:45:04Z resume at 71C after 45 s
+2026-10-18T12:45:30Z pause at 84C
+2026-10-18T12:46:15Z resume at 70C after 45 s
+2026-10-18T12:46:56Z pause at 84C
+2026-10-18T12:47:41Z resume at 71C after 45 s
+2026-10-18T12:48:07Z pause at 87C
+2026-10-18T12:48:52Z resume at 70C after 45 s
+2026-10-18T12:49:33Z pause at 85C
+2026-10-18T12:50:18Z resume at 70C after 45 s
+2026-10-18T12:50:49Z pause at 84C
+2026-10-18T12:51:34Z resume at 71C after 45 s
+2026-10-18T12:51:44Z pause at 84C
+2026-10-18T12:52:30Z resume at 69C after 46 s
+2026-10-18T12:53:26Z pause at 86C
+2026-10-18T12:54:11Z resume at 71C after 45 s
+2026-10-18T12:54:47Z pause at 84C
+2026-10-18T12:55:32Z resume at 71C after 45 s
+2026-10-18T12:56:08Z pause at 84C
+2026-10-18T12:56:53Z resume at 71C after 45 s
+2026-10-18T12:57:19Z pause at 86C
+2026-10-18T12:58:04Z resume at 70C after 45 s
+2026-10-18T12:58:45Z pause at 84C
+2026-10-18T12:59:30Z resume at 71C after 45 s
+2026-10-18T12:59:45Z pause at 84C
+2026-10-18T13:00:31Z resume at 69C after 46 s
+2026-10-18T13:01:12Z pause at 85C
+2026-10-18T13:01:57Z resume at 70C after 45 s
+2026-10-18T13:02:22Z pause at 86C
+2026-10-18T13:03:08Z resume at 70C after 46 s
+2026-10-18T13:03:33Z pause at 84C
+2026-10-18T13:04:19Z resume at 70C after 46 s
+2026-10-18T13:05:05Z pause at 84C
+2026-10-18T13:05:50Z resume at 71C after 45 s
+2026-10-18T13:06:31Z pause at 84C
+2026-10-18T13:07:16Z resume at 70C after 45 s
+2026-10-18T13:07:31Z pause at 85C
+2026-10-18T13:08:17Z resume at 69C after 46 s
+2026-10-18T13:09:13Z pause at 85C
+2026-10-18T13:09:58Z resume at 70C after 45 s
+2026-10-18T13:10:34Z pause at 84C
+2026-10-18T13:11:19Z resume at 71C after 45 s
+2026-10-18T13:11:45Z pause at 85C
+2026-10-18T13:12:30Z resume at 70C after 45 s
+2026-10-18T13:12:56Z pause at 84C
+2026-10-18T13:13:41Z resume at 70C after 45 s
+2026-10-18T13:14:07Z pause at 84C
+2026-10-18T13:14:52Z resume at 70C after 45 s
+2026-10-18T13:15:28Z pause at 85C
+2026-10-18T13:16:13Z resume at 71C after 45 s
+2026-10-18T13:16:49Z pause at 84C
+2026-10-18T13:17:34Z resume at 71C after 45 s
+2026-10-18T13:18:05Z pause at 84C
+2026-10-18T13:18:50Z resume at 70C after 45 s
+2026-10-18T13:19:16Z pause at 84C
+2026-10-18T13:20:01Z resume at 70C after 45 s
+2026-10-18T13:20:37Z pause at 85C
+2026-10-18T13:21:22Z resume at 71C after 45 s
+2026-10-18T13:21:58Z pause at 84C
+2026-10-18T13:22:43Z resume at 70C after 45 s
+2026-10-18T13:23:19Z pause at 84C
+2026-10-18T13:24:04Z resume at 71C after 45 s
+2026-10-18T13:24:35Z pause at 85C
+2026-10-18T13:25:20Z resume at 71C after 45 s
+2026-10-18T13:26:01Z pause at 86C
+2026-10-18T13:26:46Z resume at 71C after 45 s
+2026-10-18T13:27:22Z pause at 85C
+2026-10-18T13:28:07Z resume at 71C after 45 s
+2026-10-18T13:28:38Z pause at 84C
+2026-10-18T13:29:23Z resume at 71C after 45 s
+2026-10-18T13:30:09Z pause at 84C
+2026-10-18T13:30:54Z resume at 71C after 45 s
+2026-10-18T13:31:30Z pause at 84C
+2026-10-18T13:32:15Z resume at 71C after 45 s
+2026-10-18T13:32:46Z pause at 84C
+2026-10-18T13:33:31Z resume at 71C after 45 s
+2026-10-18T13:34:02Z pause at 84C
+2026-10-18T13:34:47Z resume at 71C after 45 s
+2026-10-18T13:35:28Z pause at 85C
+2026-10-18T13:36:13Z resume at 71C after 45 s
+2026-10-18T13:36:49Z pause at 85C
+2026-10-18T13:37:34Z resume at 71C after 45 s
+2026-10-18T13:38:00Z pause at 85C
+2026-10-18T13:38:45Z resume at 70C after 45 s
+2026-10-18T13:39:16Z pause at 84C
+2026-10-18T13:40:01Z resume at 71C after 45 s
+2026-10-18T13:40:37Z pause at 85C
+2026-10-18T13:41:22Z resume at 71C after 45 s
+2026-10-18T13:41:58Z pause at 84C
+2026-10-18T13:42:43Z resume at 71C after 45 s
+2026-10-18T13:43:14Z pause at 84C
+2026-10-18T13:43:59Z resume at 71C after 45 s
+2026-10-18T13:44:35Z pause at 84C
+2026-10-18T13:45:20Z resume at 71C after 45 s
+2026-10-18T13:46:01Z pause at 87C
+2026-10-18T13:46:47Z resume at 71C after 46 s
+2026-10-18T13:47:22Z pause at 86C
+2026-10-18T13:48:08Z resume at 72C after 46 s
+2026-10-18T13:48:33Z pause at 86C
+2026-10-18T13:49:18Z resume at 71C after 45 s
+2026-10-18T13:49:54Z pause at 84C
+2026-10-18T13:50:39Z resume at 71C after 45 s
+2026-10-18T13:51:15Z pause at 84C
+2026-10-18T13:52:01Z resume at 71C after 46 s
+2026-10-18T13:52:26Z pause at 84C
+2026-10-18T13:53:11Z resume at 71C after 45 s
+2026-10-18T13:53:42Z pause at 86C
+2026-10-18T13:54:27Z resume at 70C after 45 s
+2026-10-18T13:55:03Z pause at 85C
+2026-10-18T13:55:48Z resume at 71C after 45 s
+2026-10-18T13:56:24Z pause at 84C
+2026-10-18T13:57:10Z resume at 71C after 46 s
+2026-10-18T13:57:35Z pause at 84C
+2026-10-18T13:58:20Z resume at 70C after 45 s
+2026-10-18T13:58:46Z pause at 84C
+2026-10-18T13:59:31Z resume at 70C after 45 s
+2026-10-18T13:59:52Z pause at 84C
+2026-10-18T14:00:37Z resume at 69C after 45 s
+2026-10-18T14:01:23Z pause at 85C
+2026-10-18T14:02:08Z resume at 71C after 45 s
+2026-10-18T14:02:49Z pause at 84C
+2026-10-18T14:03:34Z resume at 71C after 45 s
+2026-10-18T14:03:55Z pause at 84C
+2026-10-18T14:04:40Z resume at 70C after 45 s
+2026-10-18T14:05:11Z pause at 86C
+2026-10-18T14:05:56Z resume at 70C after 45 s
+2026-10-18T14:06:22Z pause at 85C
+2026-10-18T14:07:07Z resume at 70C after 45 s
+2026-10-18T14:07:53Z pause at 84C
+2026-10-18T14:08:38Z resume at 71C after 45 s
+2026-10-18T14:09:14Z pause at 85C
+2026-10-18T14:09:59Z resume at 70C after 45 s
+2026-10-18T14:10:35Z pause at 84C
+2026-10-18T14:11:20Z resume at 71C after 45 s
+2026-10-18T14:11:46Z pause at 84C
+2026-10-18T14:12:31Z resume at 70C after 45 s
+2026-10-18T14:13:27Z pause at 84C
+2026-10-18T14:14:13Z resume at 70C after 46 s
+2026-10-18T14:14:48Z pause at 86C
+2026-10-18T14:15:34Z resume at 71C after 46 s
+2026-10-18T14:16:09Z pause at 84C
+2026-10-18T14:16:55Z resume at 71C after 46 s
+2026-10-18T14:17:25Z pause at 84C
+2026-10-18T14:18:11Z resume at 71C after 46 s
+2026-10-18T14:18:41Z pause at 86C
+2026-10-18T14:19:27Z resume at 70C after 46 s
+2026-10-18T14:19:57Z pause at 84C
+2026-10-18T14:20:43Z resume at 71C after 46 s
+2026-10-18T14:21:18Z pause at 85C
+2026-10-18T14:22:04Z resume at 70C after 46 s
+2026-10-18T14:22:39Z pause at 84C
+2026-10-18T14:23:25Z resume at 71C after 46 s
+2026-10-18T14:23:50Z pause at 84C
+2026-10-18T14:24:36Z resume at 70C after 46 s
+2026-10-18T14:25:26Z pause at 84C
+2026-10-18T14:26:12Z resume at 70C after 46 s
+2026-10-18T14:26:52Z pause at 84C
+2026-10-18T14:27:38Z resume at 70C after 46 s
+2026-10-18T14:28:13Z pause at 84C
+2026-10-18T14:28:59Z resume at 71C after 46 s
+2026-10-18T14:29:34Z pause at 85C
+2026-10-18T14:30:20Z resume at 71C after 46 s
+2026-10-18T14:30:56Z pause at 84C
+2026-10-18T14:31:41Z resume at 70C after 45 s
+2026-10-18T14:32:12Z pause at 84C
+2026-10-18T14:32:57Z resume at 71C after 45 s
+2026-10-18T14:33:33Z pause at 85C
+2026-10-18T14:34:18Z resume at 70C after 45 s
+2026-10-18T14:34:54Z pause at 84C
+2026-10-18T14:35:39Z resume at 70C after 45 s
+2026-10-18T14:36:15Z pause at 84C
+2026-10-18T14:37:00Z resume at 71C after 45 s
+2026-10-18T14:37:36Z pause at 84C
+2026-10-18T14:38:21Z resume at 71C after 45 s
+2026-10-18T14:38:47Z pause at 84C
+2026-10-18T14:39:32Z resume at 70C after 45 s
+2026-10-18T14:40:08Z pause at 85C
+2026-10-18T14:40:53Z resume at 70C after 45 s
+2026-10-18T14:41:18Z pause at 85C
+2026-10-18T14:42:04Z resume at 70C after 46 s
+2026-10-18T14:42:45Z pause at 84C
+2026-10-18T14:43:30Z resume at 71C after 45 s
+2026-10-18T14:44:16Z pause at 86C
+2026-10-18T14:45:01Z resume at 71C after 45 s
+2026-10-18T14:45:22Z pause at 84C
+2026-10-18T14:46:07Z resume at 70C after 45 s
+2026-10-18T14:46:43Z pause at 84C
+2026-10-18T14:47:28Z resume at 70C after 45 s
+2026-10-18T14:48:04Z pause at 84C
+2026-10-18T14:48:49Z resume at 71C after 45 s
+2026-10-18T14:49:25Z pause at 85C
+2026-10-18T14:50:10Z resume at 71C after 45 s
+2026-10-18T14:50:41Z pause at 84C
+2026-10-18T14:51:26Z resume at 71C after 45 s
+2026-10-18T14:52:02Z pause at 84C
+2026-10-18T14:52:47Z resume at 71C after 45 s
+2026-10-18T14:53:18Z pause at 84C
+2026-10-18T14:54:03Z resume at 71C after 45 s
+2026-10-18T14:54:44Z pause at 84C
+2026-10-18T14:55:29Z resume at 71C after 45 s
+2026-10-18T14:55:49Z pause at 84C
+2026-10-18T14:56:35Z resume at 70C after 46 s
+2026-10-18T14:57:16Z pause at 84C
+2026-10-18T14:58:01Z resume at 71C after 45 s
+2026-10-18T14:58:32Z pause at 85C
+2026-10-18T14:59:17Z resume at 71C after 45 s
+2026-10-18T14:59:37Z pause at 84C
+2026-10-18T15:00:23Z resume at 70C after 46 s
+2026-10-18T15:01:04Z pause at 84C
+2026-10-18T15:01:49Z resume at 71C after 45 s
+2026-10-18T15:02:25Z pause at 85C
+2026-10-18T15:03:10Z resume at 71C after 45 s
+2026-10-18T15:03:41Z pause at 84C
+2026-10-18T15:04:26Z resume at 71C after 45 s
+2026-10-18T15:04:57Z pause at 84C
+2026-10-18T15:05:42Z resume at 71C after 45 s
+2026-10-18T15:06:02Z pause at 84C
+2026-10-18T15:06:48Z resume at 70C after 46 s
+2026-10-18T15:07:28Z pause at 85C
+2026-10-18T15:08:14Z resume at 70C after 46 s
+2026-10-18T15:08:49Z pause at 85C
+2026-10-18T15:09:35Z resume at 71C after 46 s
+2026-10-18T15:10:10Z pause at 85C
+2026-10-18T15:10:56Z resume at 71C after 46 s
+2026-10-18T15:11:32Z pause at 85C
+2026-10-18T15:12:17Z resume at 71C after 45 s
+2026-10-18T15:12:37Z pause at 84C
+2026-10-18T15:13:23Z resume at 70C after 46 s
+2026-10-18T15:14:04Z pause at 85C
+2026-10-18T15:14:49Z resume at 71C after 45 s
+2026-10-18T15:15:20Z pause at 85C
+2026-10-18T15:16:05Z resume at 71C after 45 s
+2026-10-18T15:16:41Z pause at 84C
+2026-10-18T15:17:26Z resume at 71C after 45 s
+2026-10-18T15:17:56Z pause at 84C
+2026-10-18T15:18:42Z resume at 71C after 46 s
+2026-10-18T15:19:12Z pause at 84C
+2026-10-18T15:19:58Z resume at 70C after 46 s
+2026-10-18T15:20:28Z pause at 86C
+2026-10-18T15:21:14Z resume at 70C after 46 s
+2026-10-18T15:21:54Z pause at 85C
+2026-10-18T15:22:40Z resume at 71C after 46 s
+2026-10-18T15:23:10Z pause at 84C
+2026-10-18T15:23:56Z resume at 71C after 46 s
+2026-10-18T15:24:31Z pause at 85C
+2026-10-18T15:25:17Z resume at 71C after 46 s
+2026-10-18T15:25:53Z pause at 86C
+2026-10-18T15:26:38Z resume at 71C after 45 s
+2026-10-18T15:27:19Z pause at 86C
+2026-10-18T15:28:04Z resume at 71C after 45 s
+2026-10-18T15:28:35Z pause at 84C
+2026-10-18T15:29:20Z resume at 71C after 45 s
+2026-10-18T15:29:56Z pause at 84C
+2026-10-18T15:30:41Z resume at 71C after 45 s
+2026-10-18T15:31:17Z pause at 84C
+2026-10-18T15:32:02Z resume at 71C after 45 s
+2026-10-18T15:32:38Z pause at 84C
+2026-10-18T15:33:23Z resume at 71C after 45 s
+2026-10-18T15:33:54Z pause at 85C
+2026-10-18T15:34:39Z resume at 71C after 45 s
+2026-10-18T15:35:04Z pause at 87C
+2026-10-18T15:35:50Z resume at 70C after 46 s
+2026-10-18T15:36:26Z pause at 85C
+2026-10-18T15:37:11Z resume at 71C after 45 s
+2026-10-18T15:37:42Z pause at 84C
+2026-10-18T15:38:27Z resume at 70C after 45 s
+2026-10-18T15:39:03Z pause at 84C
+2026-10-18T15:39:48Z resume at 71C after 45 s
+2026-10-18T15:40:13Z pause at 86C
+2026-10-18T15:40:59Z resume at 70C after 46 s
+2026-10-18T15:41:40Z pause at 84C
+2026-10-18T15:42:25Z resume at 71C after 45 s
+2026-10-18T15:43:01Z pause at 84C
+2026-10-18T15:43:46Z resume at 71C after 45 s
+2026-10-18T15:44:11Z pause at 85C
+2026-10-18T15:44:57Z resume at 70C after 46 s
+2026-10-18T15:45:32Z pause at 84C
+2026-10-18T15:46:18Z resume at 71C after 46 s
+2026-10-18T15:46:54Z pause at 84C
+2026-10-18T15:47:39Z resume at 71C after 45 s
+2026-10-18T15:48:04Z pause at 85C
+2026-10-18T15:48:50Z resume at 71C after 46 s
+2026-10-18T15:49:31Z pause at 84C
+2026-10-18T15:50:16Z resume at 71C after 45 s
+2026-10-18T15:50:41Z pause at 84C
+2026-10-18T15:51:27Z resume at 71C after 46 s
+2026-10-18T15:51:52Z pause at 84C
+2026-10-18T15:52:38Z resume at 71C after 46 s
+2026-10-18T15:56:21Z pause at 84C
+2026-10-18T15:57:06Z resume at 71C after 45 s
+2026-10-18T15:57:31Z pause at 84C
+2026-10-18T15:58:17Z resume at 70C after 46 s
+2026-10-18T15:58:47Z pause at 84C
+2026-10-18T15:59:33Z resume at 70C after 46 s
+2026-10-18T16:00:13Z pause at 85C
+2026-10-18T16:00:59Z resume at 71C after 46 s
+2026-10-18T16:01:40Z pause at 84C
+2026-10-18T16:02:25Z resume at 71C after 45 s
+2026-10-18T16:03:06Z pause at 84C
+2026-10-18T16:03:51Z resume at 72C after 45 s
+2026-10-18T16:04:17Z pause at 84C
+2026-10-18T16:05:02Z resume at 71C after 45 s
+2026-10-18T16:05:07Z pause at 84C
+2026-10-18T16:05:53Z resume at 68C after 46 s
+2026-10-18T16:06:28Z pause at 84C
+2026-10-18T16:07:14Z resume at 70C after 46 s
+2026-10-18T16:07:49Z pause at 84C
+2026-10-18T16:08:35Z resume at 70C after 46 s
+2026-10-18T16:08:50Z pause at 84C
+2026-10-18T16:09:35Z resume at 69C after 45 s
+2026-10-18T16:10:21Z pause at 84C
+2026-10-18T16:11:07Z resume at 71C after 46 s
+2026-10-18T16:11:32Z pause at 84C
+2026-10-18T16:12:17Z resume at 70C after 45 s
+2026-10-18T16:12:53Z pause at 85C
+2026-10-18T16:13:38Z resume at 71C after 45 s
+2026-10-18T16:13:59Z pause at 84C
+2026-10-18T16:14:44Z resume at 70C after 45 s
+2026-10-18T16:15:25Z pause at 86C
+2026-10-18T16:16:10Z resume at 71C after 45 s
+2026-10-18T16:16:46Z pause at 84C
+2026-10-18T16:17:31Z resume at 71C after 45 s
+2026-10-18T16:18:07Z pause at 85C
+2026-10-18T16:18:53Z resume at 71C after 46 s
+2026-10-18T16:19:13Z pause at 84C
+2026-10-18T16:19:58Z resume at 70C after 45 s
+2026-10-18T16:20:29Z pause at 86C
+2026-10-18T16:21:14Z resume at 70C after 45 s
+2026-10-18T16:21:40Z pause at 84C
+2026-10-18T16:22:25Z resume at 70C after 45 s
+2026-10-18T16:23:01Z pause at 86C
+2026-10-18T16:23:46Z resume at 71C after 45 s
+2026-10-18T16:24:27Z pause at 84C
+2026-10-18T16:25:12Z resume at 71C after 45 s
+2026-10-18T16:25:43Z pause at 84C
+2026-10-18T16:26:28Z resume at 71C after 45 s
+2026-10-18T16:26:54Z pause at 87C
+2026-10-18T16:27:39Z resume at 71C after 45 s
+2026-10-18T16:28:05Z pause at 84C
+2026-10-18T16:28:50Z resume at 71C after 45 s
+2026-10-18T16:29:15Z pause at 84C
+2026-10-18T16:30:01Z resume at 70C after 46 s
+2026-10-18T16:30:31Z pause at 86C
+2026-10-18T16:31:17Z resume at 70C after 46 s
+2026-10-18T16:31:58Z pause at 84C
+2026-10-18T16:32:43Z resume at 71C after 45 s
+2026-10-18T16:33:14Z pause at 85C
+2026-10-18T16:33:59Z resume at 70C after 45 s
+2026-10-18T16:34:30Z pause at 85C
+2026-10-18T16:35:15Z resume at 71C after 45 s
+2026-10-18T16:35:35Z pause at 84C
+2026-10-18T16:36:21Z resume at 70C after 46 s
+2026-10-18T16:36:51Z pause at 84C
+2026-10-18T16:37:37Z resume at 70C after 46 s
+2026-10-18T16:38:07Z pause at 84C
+2026-10-18T16:38:53Z resume at 70C after 46 s
+2026-10-18T16:39:23Z pause at 84C
+2026-10-18T16:40:09Z resume at 70C after 46 s
+2026-10-18T16:40:44Z pause at 85C
+2026-10-18T16:41:30Z resume at 71C after 46 s
+2026-10-18T16:42:05Z pause at 86C
+2026-10-18T16:42:51Z resume at 71C after 46 s
+2026-10-18T16:43:21Z pause at 86C
+2026-10-18T16:44:07Z resume at 71C after 46 s
+2026-10-18T16:44:32Z pause at 85C
+2026-10-18T16:45:18Z resume at 70C after 46 s
+2026-10-18T16:45:58Z pause at 84C
+2026-10-18T16:46:44Z resume at 71C after 46 s
+2026-10-18T16:46:59Z pause at 84C
+2026-10-18T16:47:45Z resume at 69C after 46 s
+2026-10-18T16:48:41Z pause at 84C
+2026-10-18T16:49:26Z resume at 70C after 45 s
+2026-10-18T16:49:51Z pause at 84C
+2026-10-18T16:50:37Z resume at 70C after 46 s
+2026-10-18T16:51:02Z pause at 85C
+2026-10-18T16:51:48Z resume at 70C after 46 s
+2026-10-18T16:52:29Z pause at 84C
+2026-10-18T16:53:14Z resume at 71C after 45 s
+2026-10-18T16:53:34Z pause at 84C
+2026-10-18T16:54:20Z resume at 70C after 46 s
+2026-10-18T16:54:55Z pause at 85C
+2026-10-18T16:55:41Z resume at 71C after 46 s
+2026-10-18T16:56:11Z pause at 84C
+2026-10-18T16:56:57Z resume at 70C after 46 s
+2026-10-18T16:58:03Z pause at 84C
+2026-10-18T16:58:48Z resume at 70C after 45 s
+2026-10-18T16:59:14Z pause at 84C
+2026-10-18T16:59:59Z resume at 70C after 45 s
+2026-10-18T17:00:40Z pause at 85C
+2026-10-18T17:01:25Z resume at 71C after 45 s
+2026-10-18T17:01:56Z pause at 85C
+2026-10-18T17:02:41Z resume at 70C after 45 s
+2026-10-18T17:03:12Z pause at 85C
+2026-10-18T17:03:57Z resume at 71C after 45 s
+2026-10-18T17:04:33Z pause at 84C
+2026-10-18T17:05:18Z resume at 71C after 45 s
+2026-10-18T17:05:49Z pause at 85C
+2026-10-18T17:06:34Z resume at 71C after 45 s
+2026-10-18T17:07:10Z pause at 84C
+2026-10-18T17:07:55Z resume at 71C after 45 s
+2026-10-18T17:08:31Z pause at 85C
+2026-10-18T17:09:16Z resume at 71C after 45 s
+2026-10-18T17:09:47Z pause at 84C
+2026-10-18T17:10:32Z resume at 71C after 45 s
+2026-10-18T17:11:13Z pause at 84C
+2026-10-18T17:11:58Z resume at 71C after 45 s
+2026-10-18T17:12:34Z pause at 84C
+2026-10-18T17:13:19Z resume at 72C after 45 s
+2026-10-18T17:13:40Z pause at 84C
+2026-10-18T17:14:25Z resume at 71C after 45 s
+2026-10-18T17:15:01Z pause at 85C
+2026-10-18T17:15:46Z resume at 71C after 45 s
+2026-10-18T17:16:22Z pause at 84C
+2026-10-18T17:17:07Z resume at 71C after 45 s
+2026-10-18T17:17:43Z pause at 84C
+2026-10-18T17:18:28Z resume at 71C after 45 s
+2026-10-18T17:18:44Z pause at 84C
+2026-10-18T17:19:29Z resume at 70C after 45 s
+2026-10-18T17:20:05Z pause at 85C
+2026-10-18T17:20:50Z resume at 71C after 45 s
+2026-10-18T17:21:10Z pause at 86C
+2026-10-18T17:21:56Z resume at 70C after 46 s
+2026-10-18T17:22:26Z pause at 86C
+2026-10-18T17:23:12Z resume at 70C after 46 s
+2026-10-18T17:23:53Z pause at 84C
+2026-10-18T17:24:38Z resume at 71C after 45 s
+2026-10-18T17:25:09Z pause at 84C
+2026-10-18T17:25:54Z resume at 71C after 45 s
+2026-10-18T17:26:30Z pause at 87C
+2026-10-18T17:27:15Z resume at 71C after 45 s
+2026-10-18T17:27:40Z pause at 84C
+2026-10-18T17:28:26Z resume at 71C after 46 s
+2026-10-18T17:29:02Z pause at 85C
+2026-10-18T17:29:47Z resume at 71C after 45 s
+2026-10-18T17:30:28Z pause at 86C
+2026-10-18T17:31:13Z resume at 71C after 45 s
+2026-10-18T17:31:44Z pause at 88C
+2026-10-18T17:32:29Z resume at 71C after 45 s
+2026-10-18T17:33:05Z pause at 84C
+2026-10-18T17:33:50Z resume at 71C after 45 s
+2026-10-18T17:34:20Z pause at 86C
+2026-10-18T17:35:06Z resume at 71C after 46 s
+2026-10-18T17:35:42Z pause at 84C
+2026-10-18T17:36:27Z resume at 71C after 45 s
+2026-10-18T17:36:58Z pause at 85C
+2026-10-18T17:37:43Z resume at 71C after 45 s
+2026-10-18T17:38:08Z pause at 84C
+2026-10-18T17:38:54Z resume at 70C after 46 s
+2026-10-18T17:39:09Z pause at 84C
+2026-10-18T17:39:55Z resume at 69C after 46 s
+2026-10-18T17:41:36Z pause at 84C
+2026-10-18T17:42:22Z resume at 71C after 46 s
+2026-10-18T17:43:07Z pause at 86C
+2026-10-18T17:43:53Z resume at 71C after 46 s
+2026-10-18T17:44:33Z pause at 84C
+2026-10-18T17:45:19Z resume at 71C after 46 s
+2026-10-18T17:46:00Z pause at 87C
+2026-10-18T17:46:45Z resume at 71C after 45 s
+2026-10-18T17:47:21Z pause at 85C
+2026-10-18T17:48:06Z resume at 71C after 45 s
+2026-10-18T17:48:52Z pause at 84C
+2026-10-18T17:49:37Z resume at 72C after 45 s
+2026-10-18T17:50:18Z pause at 84C
+2026-10-18T17:51:03Z resume at 72C after 45 s
+2026-10-18T17:51:29Z pause at 84C
+2026-10-18T17:52:14Z resume at 71C after 45 s
+2026-10-18T17:52:40Z pause at 86C
+2026-10-18T17:53:25Z resume at 71C after 45 s
+2026-10-18T17:53:56Z pause at 85C
+2026-10-18T17:54:41Z resume at 71C after 45 s
+2026-10-18T17:55:17Z pause at 86C
+2026-10-18T17:56:02Z resume at 70C after 45 s
+2026-10-18T17:56:43Z pause at 84C
+2026-10-18T17:57:28Z resume at 72C after 45 s
+2026-10-18T17:58:09Z pause at 84C
+2026-10-18T17:58:54Z resume at 72C after 45 s
+2026-10-18T17:59:30Z pause at 84C
+2026-10-18T18:00:15Z resume at 71C after 45 s
+2026-10-18T18:00:51Z pause at 84C
+2026-10-18T18:01:36Z resume at 71C after 45 s
+2026-10-18T18:02:22Z pause at 85C
+2026-10-18T18:03:08Z resume at 72C after 46 s
+2026-10-18T18:03:43Z pause at 84C
+2026-10-18T18:04:29Z resume at 71C after 46 s
+2026-10-18T18:04:44Z pause at 84C
+2026-10-18T18:05:29Z resume at 70C after 45 s
+2026-10-18T18:06:20Z pause at 84C
+2026-10-18T18:07:06Z resume at 72C after 46 s
+2026-10-18T18:07:51Z pause at 85C
+2026-10-18T18:08:37Z resume at 71C after 46 s
+2026-10-18T18:08:57Z pause at 84C
+2026-10-18T18:09:43Z resume at 71C after 46 s
+2026-10-18T18:10:23Z pause at 84C
+2026-10-18T18:11:09Z resume at 71C after 46 s
+2026-10-18T18:11:19Z pause at 85C
+2026-10-18T18:12:04Z resume at 69C after 45 s
+2026-10-18T18:12:50Z pause at 84C
+2026-10-18T18:13:36Z resume at 71C after 46 s
+2026-10-18T18:14:06Z pause at 84C
+2026-10-18T18:14:51Z resume at 71C after 45 s
+2026-10-18T18:15:27Z pause at 84C
+2026-10-18T18:16:12Z resume at 71C after 45 s
+2026-10-18T18:17:08Z pause at 86C
+2026-10-18T18:17:54Z resume at 71C after 46 s
+2026-10-18T18:18:35Z pause at 84C
+2026-10-18T18:19:20Z resume at 72C after 45 s
+2026-10-18T18:20:06Z pause at 85C
+2026-10-18T18:20:51Z resume at 72C after 45 s
+2026-10-18T18:21:52Z pause at 84C
+2026-10-18T18:22:38Z resume at 71C after 46 s
+2026-10-18T18:23:18Z pause at 85C
+2026-10-18T18:24:04Z resume at 72C after 46 s
+2026-10-18T18:24:19Z pause at 85C
+2026-10-18T18:25:04Z resume at 71C after 45 s
+2026-10-18T18:25:40Z pause at 84C
+2026-10-18T18:26:25Z resume at 71C after 45 s
+2026-10-18T18:27:06Z pause at 84C
+2026-10-18T18:27:52Z resume at 71C after 46 s
+2026-10-18T18:28:32Z pause at 84C
+2026-10-18T18:29:18Z resume at 71C after 46 s
+2026-10-18T18:29:53Z pause at 84C
+2026-10-18T18:30:39Z resume at 71C after 46 s
+2026-10-18T18:31:45Z pause at 84C
+2026-10-18T18:32:30Z resume at 71C after 45 s
+2026-10-18T18:33:06Z pause at 84C
+2026-10-18T18:33:51Z resume at 71C after 45 s
+2026-10-18T18:34:37Z pause at 84C
+2026-10-18T18:35:22Z resume at 71C after 45 s
+2026-10-18T18:36:08Z pause at 84C
+2026-10-18T18:36:54Z resume at 71C after 46 s
+2026-10-18T18:37:34Z pause at 86C
+2026-10-18T18:38:20Z resume at 72C after 46 s
+2026-10-18T18:39:00Z pause at 84C
+2026-10-18T18:39:46Z resume at 72C after 46 s
+2026-10-18T18:40:16Z pause at 87C
+2026-10-18T18:41:02Z resume at 71C after 46 s
+2026-10-18T18:41:42Z pause at 84C
+2026-10-18T18:42:28Z resume at 72C after 46 s
+2026-10-18T18:42:53Z pause at 84C
+2026-10-18T18:43:39Z resume at 71C after 46 s
+2026-10-18T18:44:09Z pause at 84C
+2026-10-18T18:44:55Z resume at 71C after 46 s
+2026-10-18T18:45:45Z pause at 84C
+2026-10-18T18:46:31Z resume at 71C after 46 s
+2026-10-18T18:47:12Z pause at 84C
+2026-10-18T18:47:57Z resume at 72C after 45 s
+2026-10-18T18:48:28Z pause at 85C
+2026-10-18T18:49:13Z resume at 71C after 45 s
+2026-10-18T18:50:24Z pause at 85C
+2026-10-18T18:51:10Z resume at 71C after 46 s
+2026-10-18T18:52:05Z pause at 84C
+2026-10-18T18:52:51Z resume at 71C after 46 s
+2026-10-18T18:53:37Z pause at 85C
+2026-10-18T18:54:22Z resume at 72C after 45 s
+2026-10-18T18:55:03Z pause at 85C
+2026-10-18T18:55:48Z resume at 71C after 45 s
+2026-10-18T18:56:24Z pause at 84C
+2026-10-18T18:57:09Z resume at 72C after 45 s
+2026-10-18T18:57:45Z pause at 84C
+2026-10-18T18:58:30Z resume at 72C after 45 s
+2026-10-18T18:59:01Z pause at 84C
+2026-10-18T18:59:46Z resume at 71C after 45 s
+2026-10-18T19:00:17Z pause at 84C
+2026-10-18T19:01:02Z resume at 71C after 45 s
+2026-10-18T19:01:48Z pause at 86C
+2026-10-18T19:02:33Z resume at 71C after 45 s
+2026-10-18T19:03:44Z pause at 84C
+2026-10-18T19:04:30Z resume at 71C after 46 s
+2026-10-18T19:05:11Z pause at 84C
+2026-10-18T19:05:56Z resume at 72C after 45 s
+2026-10-18T19:06:27Z pause at 85C
+2026-10-18T19:07:12Z resume at 71C after 45 s
+2026-10-18T19:07:58Z pause at 84C
+2026-10-18T19:08:43Z resume at 72C after 45 s
+2026-10-18T19:09:24Z pause at 84C
+2026-10-18T19:10:09Z resume at 72C after 45 s
+2026-10-18T19:10:45Z pause at 85C
+2026-10-18T19:11:30Z resume at 72C after 45 s
+2026-10-18T19:12:21Z pause at 84C
+2026-10-18T19:13:07Z resume at 71C after 46 s
+2026-10-18T19:13:42Z pause at 85C
+2026-10-18T19:14:28Z resume at 71C after 46 s
+2026-10-18T19:15:03Z pause at 84C
+2026-10-18T19:15:49Z resume at 72C after 46 s
+2026-10-18T19:16:19Z pause at 85C
+2026-10-18T19:17:05Z resume at 71C after 46 s
+2026-10-18T19:17:45Z pause at 84C
+2026-10-18T19:18:31Z resume at 72C after 46 s
+2026-10-18T19:19:01Z pause at 84C
+2026-10-18T19:19:47Z resume at 71C after 46 s
+2026-10-18T19:20:32Z pause at 86C
+2026-10-18T19:21:18Z resume at 72C after 46 s
+2026-10-18T19:21:38Z pause at 84C
+2026-10-18T19:22:24Z resume at 71C after 46 s
+2026-10-18T19:23:09Z pause at 84C
+2026-10-18T19:23:55Z resume at 71C after 46 s
+2026-10-18T19:24:41Z pause at 84C
+2026-10-18T19:25:26Z resume at 72C after 45 s
+2026-10-18T19:25:57Z pause at 85C
+2026-10-18T19:26:42Z resume at 71C after 45 s
+2026-10-18T19:27:23Z pause at 85C
+2026-10-18T19:28:08Z resume at 71C after 45 s
+2026-10-18T19:28:39Z pause at 84C
+2026-10-18T19:29:24Z resume at 70C after 45 s
+2026-10-18T19:30:15Z pause at 86C
+2026-10-18T19:31:00Z resume at 72C after 45 s
+2026-10-18T19:31:56Z pause at 88C
+2026-10-18T19:32:42Z resume at 71C after 46 s
+2026-10-18T19:33:07Z pause at 85C
+2026-10-18T19:33:53Z resume at 70C after 46 s
+2026-10-18T19:34:38Z pause at 85C
+2026-10-18T19:35:24Z resume at 71C after 46 s
+2026-10-18T19:36:09Z pause at 84C
+2026-10-18T19:36:55Z resume at 71C after 46 s
+2026-10-18T19:37:30Z pause at 85C
+2026-10-18T19:38:16Z resume at 71C after 46 s
+2026-10-18T19:38:52Z pause at 84C
+2026-10-18T19:39:37Z resume at 72C after 45 s
+2026-10-18T19:40:18Z pause at 84C
+2026-10-18T19:41:03Z resume at 72C after 45 s
+2026-10-18T19:41:59Z pause at 84C
+2026-10-18T19:42:44Z resume at 72C after 45 s
+2026-10-18T19:43:10Z pause at 84C
+2026-10-18T19:43:55Z resume at 71C after 45 s
+2026-10-18T19:44:31Z pause at 84C
+2026-10-18T19:45:16Z resume at 71C after 45 s
+2026-10-18T19:45:52Z pause at 85C
+2026-10-18T19:46:37Z resume at 70C after 45 s
+2026-10-18T19:47:13Z pause at 84C
+2026-10-18T19:47:58Z resume at 69C after 45 s
+2026-10-18T19:48:44Z pause at 85C
+2026-10-18T19:49:30Z resume at 72C after 46 s
+2026-10-18T19:50:10Z pause at 85C
+2026-10-18T19:50:56Z resume at 72C after 46 s
+2026-10-18T19:51:31Z pause at 84C
+2026-10-18T19:52:17Z resume at 71C after 46 s
+2026-10-18T19:52:57Z pause at 85C
+2026-10-18T19:53:43Z resume at 72C after 46 s
+2026-10-18T19:54:54Z pause at 84C
+2026-10-18T19:55:39Z resume at 71C after 45 s
+2026-10-18T19:56:25Z pause at 85C
+2026-10-18T19:57:11Z resume at 72C after 46 s
+2026-10-18T19:57:26Z pause at 85C
+2026-10-18T19:58:11Z resume at 70C after 45 s
+2026-10-18T19:59:12Z pause at 84C
+2026-10-18T19:59:58Z resume at 70C after 46 s
+2026-10-18T20:00:48Z pause at 84C
+2026-10-18T20:01:34Z resume at 71C after 46 s
+2026-10-18T20:02:25Z pause at 86C
+2026-10-18T20:03:10Z resume at 71C after 45 s
+2026-10-18T20:03:46Z pause at 84C
+2026-10-18T20:04:31Z resume at 71C after 45 s
+2026-10-18T20:05:12Z pause at 85C
+2026-10-18T20:05:57Z resume at 71C after 45 s
+2026-10-18T20:06:53Z pause at 85C
+2026-10-18T20:07:39Z resume at 71C after 46 s
+2026-10-18T20:08:09Z pause at 84C
+2026-10-18T20:08:55Z resume at 71C after 46 s
+2026-10-18T20:09:40Z pause at 84C
+2026-10-18T20:10:26Z resume at 72C after 46 s
+2026-10-18T20:11:01Z pause at 84C
+2026-10-18T20:11:47Z resume at 71C after 46 s
+2026-10-18T20:12:17Z pause at 84C
+2026-10-18T20:13:03Z resume at 71C after 46 s
+2026-10-18T20:13:33Z done

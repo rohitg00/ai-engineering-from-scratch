@@ -1,0 +1,148 @@
+name: Cheat sheets
+
+on:
+  pull_request:
+    paths:
+      - 'cheatsheets/**'
+      - 'phases/**'
+      - 'manuals/**'
+      - 'projects/**'
+      - 'scripts/cheatsheets/**'
+      - 'site/cheatsheet-topics.js'
+      - 'site/cheatsheet-evidence.js'
+      - 'site/test_cheatsheet_topics.js'
+      - 'site/build-cheatsheets.js'
+      - 'site/cheatsheets.css'
+      - 'site/cheatsheets-print.css'
+      - 'site/cheatsheets.js'
+      - 'site/test_cheatsheets.js'
+      - 'site/lesson-markdown.js'
+      - 'site/build-hubs.js'
+      - 'site/version-assets.js'
+      - 'lib/hub-routes.js'
+      - 'api/lesson.js'
+      - 'scripts/print_cheatsheets.js'
+      - 'vercel.json'
+      - '.github/workflows/cheatsheets.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'cheatsheets/**'
+      - 'phases/**'
+      - 'manuals/**'
+      - 'projects/**'
+      - 'scripts/cheatsheets/**'
+      - 'site/cheatsheet-topics.js'
+      - 'site/cheatsheet-evidence.js'
+      - 'site/test_cheatsheet_topics.js'
+      - 'site/build-cheatsheets.js'
+      - 'site/cheatsheets.css'
+      - 'site/cheatsheets-print.css'
+      - 'site/cheatsheets.js'
+      - 'site/test_cheatsheets.js'
+      - 'site/lesson-markdown.js'
+      - 'site/build-hubs.js'
+      - 'site/version-assets.js'
+      - 'lib/hub-routes.js'
+      - 'api/lesson.js'
+      - 'scripts/print_cheatsheets.js'
+      - 'vercel.json'
+      - '.github/workflows/cheatsheets.yml'
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to attach the PDF to, for example v2026.11 or v2026.11.1. The tag must contain the cheatsheets folder. Leave empty to upload an artifact only.'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cheatsheets-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check the release tag
+        if: inputs.tag != ''
+        env:
+          TAG: ${{ inputs.tag }}
+        run: '[[ "$TAG" =~ ^v[0-9]{4}\.[0-9]{2}(\.[0-9]+)?$ ]] || { echo "invalid tag: $TAG"; exit 1; }'
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.tag }}
+      - name: Check that the tag contains the cheat sheet tools
+        if: inputs.tag != ''
+        env:
+          TAG: ${{ inputs.tag }}
+        run: '[[ -f cheatsheets/AUTHORING.md && -f scripts/print_cheatsheets.js ]] || { echo "$TAG was released before the cheat sheet tools. Pick a newer tag."; exit 1; }'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Topic schema, coverage map, generator, fact grounding, layout, links and attribution tests
+        run: |
+          set -euo pipefail
+          tests=""
+          for file in site/test_cheatsheets.js site/test_cheatsheet_topics.js scripts/cheatsheets/test_generate.js; do
+            if [ -f "$file" ]; then tests="$tests $file"; fi
+          done
+          node --test $tests
+      - name: Every lesson in a topic, every fact in its from files, every evidence line in a source, two pages at most, no broken link, same bytes twice
+        run: node site/build-cheatsheets.js --check
+      - name: Quality rubric on every sheet
+        if: hashFiles('site/cheatsheet-topics.js') != ''
+        run: node site/build-cheatsheets.js --check-quality
+
+  pdf:
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ inputs.tag }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install the print tools outside the repository
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: '1'
+        run: npm install --no-save --no-package-lock --prefix "$RUNNER_TEMP/print" katex@0.16.47 puppeteer-core@24.10.0 pdf-lib@1.17.1
+      - name: Write the print edition
+        run: |
+          set -euo pipefail
+          edition="$(git log -1 --format=%cs)"
+          node site/build-cheatsheets.js --print dist/cheatsheets --edition "$edition" --katex "$RUNNER_TEMP/print/node_modules/katex"
+      - name: Print to PDF
+        env:
+          NODE_PATH: ${{ runner.temp }}/print/node_modules
+        run: |
+          set -euo pipefail
+          export CHROME_PATH="$(command -v google-chrome || command -v google-chrome-stable)"
+          "$CHROME_PATH" --version
+          node scripts/print_cheatsheets.js dist/cheatsheets/print.html dist/cheatsheets/aiefs-cheatsheets.pdf
+          test -s dist/cheatsheets/aiefs-cheatsheets.pdf
+      - name: Upload the PDF
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cheatsheets-pdf
+          path: dist/cheatsheets/aiefs-cheatsheets.pdf
+      - name: Attach to the release
+        if: github.event_name == 'release' || inputs.tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: gh release upload "$RELEASE_TAG" dist/cheatsheets/aiefs-cheatsheets.pdf --clobber

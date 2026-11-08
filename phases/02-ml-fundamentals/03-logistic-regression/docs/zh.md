@@ -44,8 +44,8 @@ actual: 0   0   0   0   1   1   1   1   1   1
 
 sigmoid 函式剛好就做到這些事：
 
-```
-sigmoid(z) = 1 / (1 + e^(-z))
+```math
+\sigma(z) = \frac{1}{1 + e^{-z}}
 ```
 
 性質：
@@ -76,8 +76,8 @@ flowchart LR
 
 邏輯迴歸不能用 MSE。MSE 搭配 sigmoid 會產生非凸的成本曲面，上面有很多局部極小值。改用二元交叉熵（log loss）：
 
-```
-Loss = -(1/n) * sum(y * log(p) + (1-y) * log(1-p))
+```math
+\text{Loss} = -\frac{1}{n} \sum \left( y \log(p) + (1-y) \log(1-p) \right)
 ```
 
 它為什麼有效：
@@ -92,9 +92,11 @@ Loss = -(1/n) * sum(y * log(p) + (1-y) * log(1-p))
 
 二元交叉熵搭配 sigmoid 的梯度形式很乾淨：
 
-```
-dL/dw = (1/n) * sum((p - y) * x)
-dL/db = (1/n) * sum(p - y)
+```math
+\begin{aligned}
+\frac{\partial L}{\partial w} &= \frac{1}{n} \sum (p - y) \, x \\
+\frac{\partial L}{\partial b} &= \frac{1}{n} \sum (p - y)
+\end{aligned}
 ```
 
 這看起來跟線性迴歸的梯度一模一樣。差別在於 p = sigmoid(wx + b)，而不是 p = wx + b。sigmoid 引入了非線性，但梯度的更新規則不變。
@@ -114,8 +116,8 @@ flowchart TD
 
 對二維輸入（兩個特徵）來說，決策邊界就是這條線：
 
-```
-w1*x1 + w2*x2 + b = 0
+```math
+w_1 x_1 + w_2 x_2 + b = 0
 ```
 
 落在一側的點被分類成 1，落在另一側的被分類成 0。邏輯迴歸產生的決策邊界永遠是線性的。如果你需要彎曲的邊界，就得加入多項式特徵，或改用非線性模型。
@@ -124,16 +126,16 @@ w1*x1 + w2*x2 + b = 0
 
 二元邏輯迴歸處理兩個類別。要處理 k 個類別，就用 softmax 函式：
 
-```
-softmax(z_i) = e^(z_i) / sum(e^(z_j) for all j)
+```math
+\text{softmax}(z_i) = \frac{e^{z_i}}{\sum_j e^{z_j}}
 ```
 
 每個類別都有自己的權重向量。模型為每個類別算出一個分數 z_i，然後 softmax 把這些分數轉換成加總為 1 的機率。預測結果就是機率最高的那個類別。
 
 損失函式變成類別交叉熵：
 
-```
-Loss = -(1/n) * sum(sum(y_k * log(p_k)))
+```math
+\text{Loss} = -\frac{1}{n} \sum \sum_k y_k \log(p_k)
 ```
 
 其中 y_k 對真實類別是 1，其他全是 0（one-hot 編碼）。
@@ -150,18 +152,18 @@ Loss = -(1/n) * sum(sum(y_k * log(p_k)))
 | 實際為負 | 假正例（FP） | 真負例（TN） |
 
 **精確率**：在所有被預測為正的樣本裡，有多少真的是正的？
-```
-Precision = TP / (TP + FP)
+```math
+\text{Precision} = \frac{TP}{TP + FP}
 ```
 
 **召回率**（敏感度）：在所有實際為正的樣本裡，我們抓到了多少？
-```
-Recall = TP / (TP + FN)
+```math
+\text{Recall} = \frac{TP}{TP + FN}
 ```
 
 **F1 分數**：精確率與召回率的調和平均。平衡這兩個指標。
-```
-F1 = 2 * (Precision * Recall) / (Precision + Recall)
+```math
+F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
 ```
 
 什麼時候該優先考慮哪一個：

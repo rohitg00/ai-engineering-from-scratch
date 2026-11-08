@@ -38,6 +38,7 @@
       "A deployment and staged rollout record"
     ]
   },
+  "projects": ["token-counter-and-cost-meter", "json-schema-output-guard", "doc-qa-with-citations", "research-report-agent", "llm-gateway-with-fallbacks", "streaming-answer-recovery"],
   "readinessCriteria": [
     "Can choose prompts, schemas, retrieval, and tools based on a product requirement.",
     "Can build an evaluation set before tuning behavior.",
