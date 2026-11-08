@@ -41,10 +41,8 @@
 
 正式定義：
 
-```
-f'(x) = lim   f(x + h) - f(x)
-        h->0  -----------------
-                     h
+```math
+f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}
 ```
 
 在程式碼裡，你會跳過極限，直接用一個非常小的 h。這就是數值導數。
@@ -53,11 +51,12 @@ f'(x) = lim   f(x + h) - f(x)
 
 真實的函式有很多輸入。神經網路的損失取決於數千個權重。偏導數會把除了一個之外的所有變數都當成常數，然後對那一個變數取導數。
 
-```
-f(x, y) = x^2 + 3xy + y^2
-
-df/dx = 2x + 3y     (treat y as a constant)
-df/dy = 3x + 2y     (treat x as a constant)
+```math
+\begin{aligned}
+f(x, y) &= x^2 + 3xy + y^2 \\[4pt]
+\frac{\partial f}{\partial x} &= 2x + 3y \quad \text{(treat } y \text{ as a constant)} \\
+\frac{\partial f}{\partial y} &= 3x + 2y \quad \text{(treat } x \text{ as a constant)}
+\end{aligned}
 ```
 
 每個偏導數回答的問題是：如果我只推動這一個權重，損失會怎麼變？
@@ -66,8 +65,8 @@ df/dy = 3x + 2y     (treat x as a constant)
 
 梯度把每一個偏導數收進同一個向量裡。對函式 f(x, y, z) 來說，梯度是：
 
-```
-grad f = [ df/dx, df/dy, df/dz ]
+```math
+\nabla f = \left[ \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z} \right]
 ```
 
 梯度指向最陡上升的方向。要最小化一個函式，就往相反方向走。
@@ -191,15 +190,14 @@ Example: y = (3x + 1)^2
 
 Hessian 是二階偏導數所組成的矩陣。對函式 f(x1, x2, ..., xn) 來說，Hessian 的第 (i, j) 項是：
 
-```
-H[i][j] = d^2f / (dx_i * dx_j)
+```math
+H_{ij} = \frac{\partial^2 f}{\partial x_i \, \partial x_j}
 ```
 
 對雙變數函式 f(x, y)：
 
-```
-H = | d^2f/dx^2    d^2f/dxdy |
-    | d^2f/dydx    d^2f/dy^2 |
+```math
+H = \begin{bmatrix} \dfrac{\partial^2 f}{\partial x^2} & \dfrac{\partial^2 f}{\partial x \, \partial y} \\[8pt] \dfrac{\partial^2 f}{\partial y \, \partial x} & \dfrac{\partial^2 f}{\partial y^2} \end{bmatrix}
 ```
 
 **在臨界點（梯度 = 0 之處）Hessian 告訴你什麼：**
@@ -237,9 +235,11 @@ Eigenvalues: 2 and 2 (both positive)
 
 牛頓法用 Hessian 走出比梯度下降更好的最佳化步伐。它不只是跟著斜率走，還把曲率考慮進來：
 
-```
-Newton's update:    w_new = w_old - H^(-1) * gradient
-Gradient descent:   w_new = w_old - lr * gradient
+```math
+\begin{aligned}
+\text{Newton's update:} \quad & w_{\text{new}} = w_{\text{old}} - H^{-1} \cdot \text{gradient} \\
+\text{Gradient descent:} \quad & w_{\text{new}} = w_{\text{old}} - \text{lr} \cdot \text{gradient}
+\end{aligned}
 ```
 
 牛頓法收斂得更快，因為 Hessian 會「重新縮放」梯度 —— 陡的方向踏小步，平的方向踏大步。
@@ -260,8 +260,8 @@ Gradient descent:   w_new = w_old - lr * gradient
 
 任何平滑函式都能在局部用多項式近似：
 
-```
-f(x + h) = f(x) + f'(x)*h + (1/2)*f''(x)*h^2 + (1/6)*f'''(x)*h^3 + ...
+```math
+f(x + h) = f(x) + f'(x)\,h + \frac{1}{2} f''(x)\,h^2 + \frac{1}{6} f'''(x)\,h^3 + \cdots
 ```
 
 你納入的項數越多，近似就越好 —— 但只在點 x 附近成立。
@@ -292,26 +292,26 @@ Higher orders          Finer structure     Rarely used in ML
 在 ML 裡你很少會手算積分，但這個概念到處都在：
 
 **機率。** 對一個密度為 p(x) 的連續隨機變數：
-```
-P(a < X < b) = integral from a to b of p(x) dx
+```math
+P(a < X < b) = \int_a^b p(x) \, dx
 ```
 機率密度曲線在 a 與 b 之間的面積，就是落在那個範圍內的機率。
 
 **期望值。** 以機率加權後的平均結果：
-```
-E[f(X)] = integral of f(x) * p(x) dx
+```math
+\mathbb{E}[f(X)] = \int f(x) \, p(x) \, dx
 ```
 在某個資料分布上的期望損失就是一個積分。訓練所最小化的，是它的經驗近似。
 
 **KL 散度。** 衡量兩個分布差異有多大：
-```
-KL(p || q) = integral of p(x) * log(p(x) / q(x)) dx
+```math
+\mathrm{KL}(p \,\|\, q) = \int p(x) \log \frac{p(x)}{q(x)} \, dx
 ```
 用在 VAE、知識蒸餾與貝氏推論裡。
 
 **正規化常數。** 在貝氏推論中：
-```
-p(w | data) = p(data | w) * p(w) / integral of p(data | w) * p(w) dw
+```math
+p(w \mid \text{data}) = \frac{p(\text{data} \mid w) \, p(w)}{\int p(\text{data} \mid w) \, p(w) \, dw}
 ```
 分母是對所有可能參數值取的積分。它常常算不出來，所以我們才用 MCMC、變分推論這類近似方法。
 

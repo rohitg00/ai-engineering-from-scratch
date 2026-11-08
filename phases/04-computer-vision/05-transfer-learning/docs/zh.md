@@ -100,8 +100,8 @@ backbone.heads.head = nn.Linear(..., num_classes)                       # torchv
 
 現代微調（BEiT、DINOv2、ViT-B 的微調）在用的、比較平滑的差異化學習率版本。不再把層分組成 stage，而是讓每一層的學習率都比它上面那層再小一點：
 
-```
-lr_layer_k = base_lr * decay^(L - k)
+```math
+\text{lr\_layer}_k = \text{base\_lr} \cdot \text{decay}^{L - k}
 ```
 
 取 decay = 0.75、L = 12 個 transformer 區塊，第一個區塊的訓練學習率是頭的 `0.75^11 ≈ 0.04x`。這對 transformer 微調比對 CNN 更重要，CNN 通常用 stage 分組的學習率就夠了。

@@ -55,8 +55,8 @@ flowchart LR
 
 單純的文字條件控制學的是對每個提示詞 `c` 的 `epsilon_theta(x_t, t, c)`。CFG 則是拿同一個網路訓練，但有 10% 的時候把 `c` 丟掉（換成空的嵌入），於是得到一個同時能預測有條件與無條件噪聲的單一模型。推論時：
 
-```
-eps = eps_uncond + w * (eps_cond - eps_uncond)
+```math
+\epsilon = \epsilon_{\text{uncond}} + w \cdot (\epsilon_{\text{cond}} - \epsilon_{\text{uncond}})
 ```
 
 `w` 是引導強度。`w=0` 是無條件，`w=1` 是單純的有條件，`w>1` 會把輸出往「更聽提示詞的話」推，代價是多樣性變差。SD 的預設值是 `w=7.5`。

@@ -51,8 +51,8 @@
 
 一個函式 f 是凸函數，若它的定義域是凸集，且對定義域中任兩點 x、y 以及任意 t 在 [0, 1] 之間：
 
-```
-f(tx + (1-t)y) <= t*f(x) + (1-t)*f(y)
+```math
+f(tx + (1-t)y) \le t f(x) + (1-t) f(y)
 ```
 
 幾何上的意思是：圖形上任兩點之間的線段都落在圖形之上，或貼著圖形。
@@ -131,18 +131,20 @@ graph LR
 
 函式 f: R^n -> R 的 Hessian 矩陣 H 是一個 n x n 的二階偏導數矩陣。
 
-```
-H[i][j] = d^2 f / (dx_i dx_j)
+```math
+H_{ij} = \frac{\partial^2 f}{\partial x_i \, \partial x_j}
 ```
 
 對 f(x, y) = x^2 + 3xy + y^2 來說：
 
-```
-df/dx = 2x + 3y       d^2f/dx^2 = 2      d^2f/dxdy = 3
-df/dy = 3x + 2y       d^2f/dydx = 3      d^2f/dy^2 = 2
-
-H = [ 2  3 ]
-    [ 3  2 ]
+```math
+\begin{gathered}
+\begin{aligned}
+\frac{\partial f}{\partial x} &= 2x + 3y & \frac{\partial^2 f}{\partial x^2} &= 2 & \frac{\partial^2 f}{\partial x \, \partial y} &= 3 \\
+\frac{\partial f}{\partial y} &= 3x + 2y & \frac{\partial^2 f}{\partial y \, \partial x} &= 3 & \frac{\partial^2 f}{\partial y^2} &= 2
+\end{aligned} \\[8pt]
+H = \begin{bmatrix} 2 & 3 \\ 3 & 2 \end{bmatrix}
+\end{gathered}
 ```
 
 Hessian 告訴你曲率的資訊：
@@ -157,12 +159,11 @@ Hessian 告訴你曲率的資訊：
 
 梯度下降用的是一階資訊（梯度）。牛頓法用的是二階資訊（Hessian）。它在當前的點配一個二次近似，然後直接跳到那個二次函式的最小值。
 
-```
-Update rule:
-  x_new = x - H^(-1) * gradient
-
-Compare to gradient descent:
-  x_new = x - lr * gradient
+```math
+\begin{aligned}
+\text{Update rule:} \quad & x_{\text{new}} = x - H^{-1} \cdot \text{gradient} \\
+\text{Compare to gradient descent:} \quad & x_{\text{new}} = x - \text{lr} \cdot \text{gradient}
+\end{aligned}
 ```
 
 牛頓法把純量學習率換成了 Hessian 的逆。這會自動根據區域曲率調整步伐大小與方向。
@@ -220,15 +221,17 @@ graph LR
 
 解法：引入一個新變數（拉格朗日乘數 lambda），然後解這個無約束問題：
 
-```
-L(x, lambda) = f(x) + lambda * g(x)
+```math
+L(x, \lambda) = f(x) + \lambda g(x)
 ```
 
 在解的位置上，L 的梯度為零：
 
-```
-dL/dx = df/dx + lambda * dg/dx = 0
-dL/dlambda = g(x) = 0
+```math
+\begin{aligned}
+\frac{\partial L}{\partial x} &= \frac{\partial f}{\partial x} + \lambda \frac{\partial g}{\partial x} = 0 \\
+\frac{\partial L}{\partial \lambda} &= g(x) = 0
+\end{aligned}
 ```
 
 幾何上的直覺：在帶約束的最小值處，f 的梯度必須與約束 g 的梯度平行。如果它們不平行，你就還能沿著約束曲面移動、把 f 再壓低一些。
@@ -242,15 +245,15 @@ graph LR
 
 例子：在 x + y = 1 的約束下最小化 f(x,y) = x^2 + y^2。
 
-```
-L = x^2 + y^2 + lambda(x + y - 1)
-
-dL/dx = 2x + lambda = 0  =>  x = -lambda/2
-dL/dy = 2y + lambda = 0  =>  y = -lambda/2
-dL/dlambda = x + y - 1 = 0
-
-From first two: x = y
-Substituting: 2x = 1, so x = y = 0.5, lambda = -1
+```math
+\begin{aligned}
+L &= x^2 + y^2 + \lambda(x + y - 1) \\[4pt]
+\frac{\partial L}{\partial x} &= 2x + \lambda = 0 \implies x = -\lambda/2 \\
+\frac{\partial L}{\partial y} &= 2y + \lambda = 0 \implies y = -\lambda/2 \\
+\frac{\partial L}{\partial \lambda} &= x + y - 1 = 0 \\[4pt]
+&\text{From first two: } x = y \\
+&\text{Substituting: } 2x = 1, \text{ so } x = y = 0.5, \ \lambda = -1
+\end{aligned}
 ```
 
 直線 x + y = 1 上離原點最近的點是 (0.5, 0.5)。
@@ -263,11 +266,13 @@ Karush-Kuhn-Tucker 條件把拉格朗日乘數法擴充到不等式約束。
 
 KKT 條件（最佳性的必要條件）：
 
-```
-1. Stationarity:    df/dx + sum(lambda_i * dg_i/dx) = 0
-2. Primal feasibility:  g_i(x) <= 0  for all i
-3. Dual feasibility:    lambda_i >= 0  for all i
-4. Complementary slackness:  lambda_i * g_i(x) = 0  for all i
+```math
+\begin{aligned}
+&\text{1. Stationarity:} && \frac{\partial f}{\partial x} + \sum_i \lambda_i \frac{\partial g_i}{\partial x} = 0 \\
+&\text{2. Primal feasibility:} && g_i(x) \le 0 \quad \text{for all } i \\
+&\text{3. Dual feasibility:} && \lambda_i \ge 0 \quad \text{for all } i \\
+&\text{4. Complementary slackness:} && \lambda_i \, g_i(x) = 0 \quad \text{for all } i
+\end{aligned}
 ```
 
 互補鬆弛是這裡的關鍵洞見：要嘛約束是作用中的（g_i = 0，解就坐在邊界上），要嘛乘數為零（這個約束無關緊要）。一個不影響解的約束，其 lambda = 0。
@@ -280,22 +285,24 @@ L1 與 L2 正則化不是隨手湊出來的技巧。它們其實是換了個樣�
 
 **L2 正則化（Ridge）：**
 
-```
-minimize  Loss(w)  subject to  ||w||^2 <= t
-
-Equivalent unconstrained form:
-minimize  Loss(w) + lambda * ||w||^2
+```math
+\begin{aligned}
+&\text{minimize } \text{Loss}(w) \text{ subject to } \lVert w \rVert^2 \le t \\[4pt]
+&\text{Equivalent unconstrained form:} \\
+&\text{minimize } \text{Loss}(w) + \lambda \lVert w \rVert^2
+\end{aligned}
 ```
 
 約束 ||w||^2 <= t 定義出一個球（二維是圓，三維是球面）。解就落在損失等高線第一次碰到這個球的位置。
 
 **L1 正則化（LASSO）：**
 
-```
-minimize  Loss(w)  subject to  ||w||_1 <= t
-
-Equivalent unconstrained form:
-minimize  Loss(w) + lambda * ||w||_1
+```math
+\begin{aligned}
+&\text{minimize } \text{Loss}(w) \text{ subject to } \lVert w \rVert_1 \le t \\[4pt]
+&\text{Equivalent unconstrained form:} \\
+&\text{minimize } \text{Loss}(w) + \lambda \lVert w \rVert_1
+\end{aligned}
 ```
 
 約束 ||w||_1 <= t 定義出一個菱形（二維是轉了 45 度的正方形）。
@@ -315,11 +322,13 @@ minimize  Loss(w) + lambda * ||w||_1
 
 拉格朗日對偶函式：
 
-```
-Primal: minimize f(x) subject to g(x) <= 0
-Lagrangian: L(x, lambda) = f(x) + lambda * g(x)
-Dual function: d(lambda) = min_x L(x, lambda)
-Dual problem: maximize d(lambda) subject to lambda >= 0
+```math
+\begin{aligned}
+&\text{Primal:} && \text{minimize } f(x) \text{ subject to } g(x) \le 0 \\
+&\text{Lagrangian:} && L(x, \lambda) = f(x) + \lambda g(x) \\
+&\text{Dual function:} && d(\lambda) = \min_x L(x, \lambda) \\
+&\text{Dual problem:} && \text{maximize } d(\lambda) \text{ subject to } \lambda \ge 0
+\end{aligned}
 ```
 
 對偶為什麼重要：

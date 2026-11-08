@@ -28,8 +28,8 @@ GAN 是一發到位的生成：雜訊進去、圖片出來，一次前向傳播�
 
 取一張圖片 `x_0`。加一點點高斯雜訊得到 `x_1`。再加一點點得到 `x_2`。持續 T 步，直到 `x_T` 幾乎跟純高斯雜訊分不出來。
 
-```
-q(x_t | x_{t-1}) = N(x_t; sqrt(1 - beta_t) * x_{t-1},  beta_t * I)
+```math
+q(x_t \mid x_{t-1}) = \mathcal{N}\left(x_t; \sqrt{1 - \beta_t} \, x_{t-1}, \; \beta_t I\right)
 ```
 
 `beta_t` 是一個很小的變異數排程，典型做法是在 T=1000 步之間從 0.0001 線性遞增到 0.02。每一步都稍微把訊號縮小一點，並注入新的雜訊。
@@ -38,16 +38,13 @@ q(x_t | x_{t-1}) = N(x_t; sqrt(1 - beta_t) * x_{t-1},  beta_t * I)
 
 一步一步加雜訊是一條馬可夫鏈，但數學會摺疊起來：你可以一步就從 `x_0` 直接取樣出 `x_t`。
 
-```
-Define alpha_t = 1 - beta_t
-Define alpha_bar_t = prod_{s=1..t} alpha_s
-
-Then:
-  q(x_t | x_0) = N(x_t; sqrt(alpha_bar_t) * x_0,  (1 - alpha_bar_t) * I)
-
-Equivalently:
-  x_t = sqrt(alpha_bar_t) * x_0 + sqrt(1 - alpha_bar_t) * epsilon
-  where epsilon ~ N(0, I)
+```math
+\begin{aligned}
+&\text{Define } \alpha_t = 1 - \beta_t \\
+&\text{Define } \bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s \\[6pt]
+&\text{Then: } q(x_t \mid x_0) = \mathcal{N}\left(x_t; \sqrt{\bar{\alpha}_t} \, x_0, \; (1 - \bar{\alpha}_t) I\right) \\[6pt]
+&\text{Equivalently: } x_t = \sqrt{\bar{\alpha}_t} \, x_0 + \sqrt{1 - \bar{\alpha}_t} \, \epsilon \quad \text{where } \epsilon \sim \mathcal{N}(0, I)
+\end{aligned}
 ```
 
 這一條式子就是擴散之所以實用的全部原因。訓練時你挑一個隨機的 `t`，直接從 `x_0` 取樣出 `x_t`，然後一步完成訓練 —— 完全不需要模擬整條馬可夫鏈。

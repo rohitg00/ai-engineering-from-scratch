@@ -41,8 +41,8 @@ features += weight_a * control_a(depth) + weight_b * control_b(pose)
 
 對模型裡任何一個線性層 `W ∈ R^{d×d}`，凍結 `W`，再加上一個低秩差量：
 
-```
-W' = W + ΔW,  ΔW = B @ A,  A ∈ R^{r×d},  B ∈ R^{d×r}
+```math
+W' = W + \Delta W, \quad \Delta W = B A, \quad A \in \mathbb{R}^{r \times d}, \quad B \in \mathbb{R}^{d \times r}
 ```
 
 其中 `r << d`。注意力層通常用 rank 4 到 16，重度微調則用 rank 64 到 128。新增的參數量是 `2 · d · r`，而不是 `d²`。以 SDXL 注意力層 `d=640`、`r=16` 為例：每個轉接層 2 萬個參數，而不是 41 萬 —— 少了 20 倍。放到整個模型上：一個 LoRA 通常是 20 到 200MB，而基礎模型是 5GB。

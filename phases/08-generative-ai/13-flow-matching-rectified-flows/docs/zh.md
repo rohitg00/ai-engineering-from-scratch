@@ -23,20 +23,20 @@ DDPM 的反向過程是一段從 `N(0, I)` 走回資料分布的 1000 步隨機�
 
 定義：
 
-```
-x_t = t · x_1 + (1 - t) · x_0,   t ∈ [0, 1]
+```math
+x_t = t \cdot x_1 + (1 - t) \cdot x_0, \quad t \in [0, 1]
 ```
 
 其中 `x_0 ~ data`、`x_1 ~ N(0, I)`。沿著這條直線的時間導數是常數：
 
-```
-dx_t / dt = x_1 - x_0
+```math
+\frac{dx_t}{dt} = x_1 - x_0
 ```
 
 定義一個神經向量場 `v_θ(x_t, t)`，訓練它去匹配這個導數：
 
-```
-L = E_{x_0, x_1, t} || v_θ(x_t, t) - (x_1 - x_0) ||²
+```math
+L = \mathbb{E}_{x_0, x_1, t} \left\lVert v_\theta(x_t, t) - (x_1 - x_0) \right\rVert^2
 ```
 
 這就是**條件流匹配**（conditional flow matching）損失（Lipman 2023）。訓練是免模擬的：你從來不用把 ODE 展開來跑。只要取樣 `(x_0, x_1, t)` 然後做迴歸就好。
@@ -45,8 +45,8 @@ L = E_{x_0, x_1, t} || v_θ(x_t, t) - (x_1 - x_0) ||²
 
 推論時，把學到的向量場沿時間*往回*積分：
 
-```
-x_{t-Δt} = x_t - Δt · v_θ(x_t, t)
+```math
+x_{t-\Delta t} = x_t - \Delta t \cdot v_\theta(x_t, t)
 ```
 
 從 `x_1 ~ N(0, I)` 出發，一路 Euler 步進到 `t=0`。

@@ -91,8 +91,8 @@ flowchart TD
 
 **怎麼修：** 差分。不要去建模原始值，改成建模相鄰兩個值之間的變化：
 
-```
-diff[t] = value[t] - value[t-1]
+```math
+\text{diff}[t] = \text{value}[t] - \text{value}[t-1]
 ```
 
 如果做一輪差分還不足以讓序列定態，就再做一次（二階差分）。現實世界的序列大多最多只需要兩輪。

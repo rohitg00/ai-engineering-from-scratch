@@ -80,8 +80,8 @@ graph TD
 
 損失函式用的是成對偏好的 Bradley-Terry 模型：
 
-```
-loss = -log(sigmoid(reward(preferred) - reward(rejected)))
+```math
+\text{loss} = -\log\big(\mathop{\mathrm{sigmoid}}(\text{reward}(\text{preferred}) - \text{reward}(\text{rejected}))\big)
 ```
 
 這就是核心方程式。`sigmoid(reward(A) - reward(B))` 給出回應 A 被偏好勝過回應 B 的機率。損失會推著獎勵模型給偏好的那個回應更高的分數。
@@ -96,8 +96,8 @@ PPO 是一種強化學習演算法。在 RLHF 裡，「環境」是獎勵模型�
 
 目標函式：
 
-```
-maximize: E[R(prompt, response)] - beta * KL(policy || reference)
+```math
+\text{maximize:} \quad \mathbb{E}[R(\text{prompt}, \text{response})] - \beta \cdot \mathrm{KL}(\text{policy} \,\|\, \text{reference})
 ```
 
 第一項推著模型去生成高獎勵的回應。第二項（KL 散度懲罰）防止模型偏離 SFT 檢查點太遠。
@@ -135,10 +135,12 @@ graph LR
 
 PPO 用「裁剪代理目標」來避免更新幅度過大。新策略與舊策略機率之間的比值會被裁剪到 [1 - epsilon, 1 + epsilon] 的區間裡，epsilon 通常取 0.2。
 
-```
-ratio = pi_new(action | state) / pi_old(action | state)
-clipped_ratio = clip(ratio, 1 - epsilon, 1 + epsilon)
-loss = -min(ratio * advantage, clipped_ratio * advantage)
+```math
+\begin{aligned}
+\text{ratio} &= \pi_{\text{new}}(\text{action} \mid \text{state}) / \pi_{\text{old}}(\text{action} \mid \text{state}) \\
+\text{clipped\_ratio} &= \mathop{\mathrm{clip}}(\text{ratio}, 1 - \epsilon, 1 + \epsilon) \\
+\text{loss} &= -\min(\text{ratio} \cdot \text{advantage}, \text{clipped\_ratio} \cdot \text{advantage})
+\end{aligned}
 ```
 
 優勢函式估計目前這個回應比預期品質好多少。在 RLHF 裡：

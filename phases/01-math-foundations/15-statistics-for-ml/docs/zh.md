@@ -77,9 +77,11 @@ For latency monitoring:
 
 **樣本統計 vs 母體統計。** 從樣本計算變異數時，要除以 (n-1) 而不是 n。這叫貝塞爾校正。它補償的是「你的樣本平均數並不是真正的母體平均數」這件事。分母用 n，你會系統性地低估真正的變異數；用 (n-1)，這個估計就是無偏的。
 
-```
-Population variance: sigma^2 = (1/N) * sum((x_i - mu)^2)
-Sample variance:     s^2     = (1/(n-1)) * sum((x_i - x_bar)^2)
+```math
+\begin{aligned}
+\text{Population variance:} \quad \sigma^2 &= \frac{1}{N} \sum (x_i - \mu)^2 \\
+\text{Sample variance:} \quad s^2 &= \frac{1}{n-1} \sum (x_i - \bar{x})^2
+\end{aligned}
 ```
 
 實務上：n 很大時（幾千個樣本），差別微乎其微；n 很小時（幾十個樣本），就有影響了。
@@ -205,10 +207,11 @@ t 檢定比較的是平均數。它有好幾種變體。
 
 **單樣本 t 檢定：** 母體平均數是否與某個假設值不同？
 
-```
-t = (x_bar - mu_0) / (s / sqrt(n))
-
-degrees of freedom = n - 1
+```math
+\begin{aligned}
+t &= \frac{\bar{x} - \mu_0}{s / \sqrt{n}} \\[4pt]
+\text{degrees of freedom} &= n - 1
+\end{aligned}
 ```
 
 **雙樣本 t 檢定（獨立）：** 兩組的平均數是否不同？
@@ -297,12 +300,13 @@ engineering cost of deploying a new model.
 
 **效應量**量化這個差異有多大，而且不受樣本大小影響：
 
-```
-Cohen's d = (mean_1 - mean_2) / pooled_std
-
-d = 0.2:  small effect
-d = 0.5:  medium effect
-d = 0.8:  large effect
+```math
+\begin{aligned}
+\text{Cohen's } d &= \frac{\text{mean}_1 - \text{mean}_2}{\text{pooled\_std}} \\[4pt]
+d &= 0.2: \quad \text{small effect} \\
+d &= 0.5: \quad \text{medium effect} \\
+d &= 0.8: \quad \text{large effect}
+\end{aligned}
 ```
 
 永遠同時報告 p 值與效應量。p 值告訴你這個差異是不是真的，效應量告訴你它重不重要。

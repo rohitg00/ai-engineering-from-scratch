@@ -32,39 +32,41 @@ DPO 把 RLHF 化簡成單一一步監督式學習。一個模型。一個損失�
 
 RLHF 最佳化的是這個目標函式：
 
-```
-maximize: E[R(x, y)] - beta * KL(pi || pi_ref)
+```math
+\text{maximize:} \quad \mathbb{E}[R(x, y)] - \beta \cdot \mathrm{KL}(\pi \,\|\, \pi_{\text{ref}})
 ```
 
 其中 R 是獎勵模型，pi 是策略，pi_ref 是參考模型，beta 是 KL 係數。
 
 DPO 論文證明了這個目標函式有一個封閉形式的最佳解。對任何獎勵函式 R，最佳策略是：
 
-```
-pi*(y | x) = pi_ref(y | x) * exp(R(x, y) / beta) / Z(x)
+```math
+\pi^*(y \mid x) = \pi_{\text{ref}}(y \mid x) \cdot \exp(R(x, y) / \beta) / Z(x)
 ```
 
 其中 Z(x) 是一個正規化常數。重新整理後：
 
-```
-R(x, y) = beta * log(pi*(y | x) / pi_ref(y | x)) + beta * log Z(x)
+```math
+R(x, y) = \beta \log \frac{\pi^*(y \mid x)}{\pi_{\text{ref}}(y \mid x)} + \beta \log Z(x)
 ```
 
 這就是突破所在。獎勵完全用策略模型的機率與參考模型的機率表示出來了。你不需要訓練另一個獎勵模型。獎勵*隱含*在機率比值裡。
 
 把它代入 Bradley-Terry 偏好模型：
 
-```
-P(y_w > y_l | x) = sigmoid(R(x, y_w) - R(x, y_l))
-                  = sigmoid(beta * (log pi(y_w|x)/pi_ref(y_w|x) - log pi(y_l|x)/pi_ref(y_l|x)))
+```math
+\begin{aligned}
+P(y_w > y_l \mid x) &= \mathop{\mathrm{sigmoid}}(R(x, y_w) - R(x, y_l)) \\
+&= \mathop{\mathrm{sigmoid}}\left(\beta \left(\log \frac{\pi(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)} - \log \frac{\pi(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)}\right)\right)
+\end{aligned}
 ```
 
 Z(x) 項會抵消掉，因為兩個回應都以同一個提示詞 x 為條件。剩下的東西只跟策略模型與參考模型在被偏好回應和被拒絕回應上的對數機率有關。
 
 ### DPO 損失
 
-```
-L_DPO = -log(sigmoid(beta * (log pi(y_w|x)/pi_ref(y_w|x) - log pi(y_l|x)/pi_ref(y_l|x))))
+```math
+L_{\text{DPO}} = -\log \mathop{\mathrm{sigmoid}}\left(\beta \left(\log \frac{\pi(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)} - \log \frac{\pi(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)}\right)\right)
 ```
 
 我們把每一塊拆開來看：

@@ -32,8 +32,8 @@ SFT 給你的：模型現在會回答問題，而不是把問題續寫下去。�
 
 對每個提示詞，從 SFT 模型抽 K 份補完。標註員替它們排序。訓練一個獎勵模型，替任何提示詞－回應配對打分，使得在 `y_w` 優於 `y_l` 的配對上：
 
-```
-L_RM = -log sigmoid(r(x, y_w) - r(x, y_l))
+```math
+L_{\text{RM}} = -\log \sigma\big(r(x, y_w) - r(x, y_l)\big)
 ```
 
 這就是 Bradley-Terry 成對偏好損失。RM 通常從 SFT 模型初始化，把語言模型頭換成一個純量頭。
@@ -44,8 +44,8 @@ L_RM = -log sigmoid(r(x, y_w) - r(x, y_l))
 
 定義目標函式：
 
-```
-J(pi) = E_{x~D, y~pi(.|x)} [ r(x, y) ] - beta * KL(pi(.|x) || pi_SFT(.|x))
+```math
+J(\pi) = \mathbb{E}_{x \sim D,\, y \sim \pi(\cdot \mid x)} \big[ r(x, y) \big] - \beta \, \mathrm{KL}\big(\pi(\cdot \mid x) \,\|\, \pi_{\text{SFT}}(\cdot \mid x)\big)
 ```
 
 用 PPO 最大化它。那個 KL 項讓 `pi` 不會離 SFT 策略太遠。少了它，最佳化器會找到對抗樣本 —— 那些在 RM 之下拿高分的字串，之所以拿高分是因為 RM 沒看過它們，不是因為人類真的偏好它們。
@@ -56,8 +56,8 @@ J(pi) = E_{x~D, y~pi(.|x)} [ r(x, y) ] - beta * KL(pi(.|x) || pi_SFT(.|x))
 
 RLHF 之後，模型較受人類偏好，但在標準基準（SQuAD、HellaSwag、DROP）上退步了。Ouyang 等人把這叫做對齊稅，並用 PPO-ptx 修它：把預訓練的梯度混進 RL 目標函式，讓模型不會忘掉那些它從未被獎勵過的下游任務。
 
-```
-J_ptx(pi) = J(pi) + gamma * E_{x~D_pretrain} [ log pi(x) ]
+```math
+J_{\text{ptx}}(\pi) = J(\pi) + \gamma \, \mathbb{E}_{x \sim D_{\text{pretrain}}} \big[ \log \pi(x) \big]
 ```
 
 PPO-ptx 後來成了標準。Anthropic、DeepMind 與 Meta 都用了某種變體。

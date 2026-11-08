@@ -54,8 +54,8 @@ flowchart LR
 
 ### 三元組損失的形式化寫法
 
-```
-L = max(0, ||f(a) - f(p)||^2 - ||f(a) - f(n)||^2 + margin)
+```math
+L = \max\left(0, \lVert f(a) - f(p) \rVert^2 - \lVert f(a) - f(n) \rVert^2 + \text{margin}\right)
 ```
 
 把錨點 `a` 拉近正樣本 `p`，推離負樣本 `n`，再用一個 `margin` 確保兩者之間留有間隙。這種三張影像的結構可以推廣到任何相似度排序關係。

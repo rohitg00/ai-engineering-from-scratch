@@ -33,8 +33,8 @@ f -> tokenize at (H/p)x(W/p): token grid z_K of shape (H/p, W/p)
 
 每一個 z_k 都用同一本碼書（典型大小 4096 到 16384）。各尺度的量化並不是彼此獨立的 —— 訓練的方式是讓各尺度的殘差加總起來能重建出 f：
 
-```
-f ≈ upsample(embed(z_1), target_size) + ... + upsample(embed(z_K), target_size)
+```math
+f \approx \mathop{\mathrm{upsample}}(\mathop{\mathrm{embed}}(z_1), \text{target\_size}) + \cdots + \mathop{\mathrm{upsample}}(\mathop{\mathrm{embed}}(z_K), \text{target\_size})
 ```
 
 這是**殘差 VQ**（residual VQ）的一種變體。尺度 k 補的是尺度 1..k-1 漏掉的東西。解碼器吃下所有尺度嵌入的總和，產生影像。

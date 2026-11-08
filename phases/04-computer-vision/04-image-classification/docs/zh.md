@@ -52,15 +52,17 @@ flowchart LR
 
 分類器對每張影像產生 `C` 個數字，稱為 logits。套上 softmax 就把它們轉成機率分布：
 
-```
-softmax(z)_i = exp(z_i) / sum_j exp(z_j)
+```math
+\mathop{\mathrm{softmax}}(z)_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}
 ```
 
 交叉熵量測的是正確類別的負對數機率：
 
-```
-CE(z, y) = -log( softmax(z)_y )
-        = -z_y + log( sum_j exp(z_j) )
+```math
+\begin{aligned}
+\mathrm{CE}(z, y) &= -\log\left( \mathop{\mathrm{softmax}}(z)_y \right) \\
+&= -z_y + \log\left( \sum_j \exp(z_j) \right)
+\end{aligned}
 ```
 
 右邊那個形式才是數值穩定的版本（log-sum-exp）。PyTorch 的 `nn.CrossEntropyLoss` 把 softmax + NLL 融合成一個運算，直接吃原始 logits。自己先套一次 softmax 幾乎一定是 bug —— 你算出來的是 log(softmax(softmax(z)))，一個沒有意義的量。

@@ -30,8 +30,8 @@
 
 迴歸的預設選擇。算出預測與目標之間的平方差，再對所有樣本取平均。
 
-```
-MSE = (1/n) * sum((y_pred - y_true)^2)
+```math
+\text{MSE} = \frac{1}{n} \sum (y_{\text{pred}} - y_{\text{true}})^2
 ```
 
 平方為什麼重要：它會以二次方的力度懲罰大誤差。誤差 2 的代價是誤差 1 的 4 倍。誤差 10 的代價是 100 倍。這讓 MSE 對離群值很敏感 —— 單一個錯得離譜的預測就能主宰整個損失。
@@ -40,8 +40,8 @@ MSE = (1/n) * sum((y_pred - y_true)^2)
 
 MSE 對某個預測的梯度是：
 
-```
-dMSE/dy_pred = (2/n) * (y_pred - y_true)
+```math
+\frac{\partial \text{MSE}}{\partial y_{\text{pred}}} = \frac{2}{n} (y_{\text{pred}} - y_{\text{true}})
 ```
 
 對誤差是線性的。誤差越大，梯度越大。這對迴歸是優點（大誤差需要大幅修正），對分類卻是缺陷（你想以指數方式懲罰自信但答錯的預測，而不是線性）。
@@ -52,8 +52,8 @@ dMSE/dy_pred = (2/n) * (y_pred - y_true)
 
 **二元交叉熵（BCE）：**
 
-```
-BCE = -(y * log(p) + (1 - y) * log(1 - p))
+```math
+\text{BCE} = -\left(y \log(p) + (1 - y) \log(1 - p)\right)
 ```
 
 其中 y 是真實標籤（0 或 1），p 是預測出的機率。
@@ -62,8 +62,8 @@ BCE = -(y * log(p) + (1 - y) * log(1 - p))
 
 梯度講的是同一個故事：
 
-```
-dBCE/dp = -(y/p) + (1-y)/(1-p)
+```math
+\frac{\partial \text{BCE}}{\partial p} = -\frac{y}{p} + \frac{1-y}{1-p}
 ```
 
 當 y = 1 而 p 接近零時，梯度是 -1/p，會趨向負無限大。模型拿到一個巨大的梯度訊號去修正自己的錯誤。當 p 接近 1 時，梯度極小。已經對了，沒什麼要修的。
@@ -72,8 +72,8 @@ dBCE/dp = -(y/p) + (1-y)/(1-p)
 
 用於目標以 one-hot 編碼的多類別分類。
 
-```
-CCE = -sum(y_i * log(p_i))
+```math
+\text{CCE} = -\sum_i y_i \log(p_i)
 ```
 
 只有真實類別會貢獻損失（因為其他所有 y_i 都是零）。如果有 10 個類別，而正確類別拿到 0.1 的機率（等於亂猜），損失是 -log(0.1) = 2.3。如果正確類別拿到 0.9，損失是 -log(0.9) = 0.105。模型於是學會把機率質量集中在正確答案上。
@@ -102,8 +102,8 @@ graph TD
 
 標準的 one-hot 標籤說的是「這 100% 是類別 3，其他全都 0%」。這是很強的斷言。標籤平滑（label smoothing）把它放軟：
 
-```
-smooth_label = (1 - alpha) * one_hot + alpha / num_classes
+```math
+\text{smooth\_label} = (1 - \alpha) \cdot \text{one\_hot} + \frac{\alpha}{\text{num\_classes}}
 ```
 
 當 alpha = 0.1、類別數為 10 時：目標從 [0, 0, 1, 0, ...] 變成 [0.01, 0.01, 0.91, 0.01, ...]。模型追的目標是 0.91，而不是 1.0。
@@ -118,8 +118,8 @@ smooth_label = (1 - alpha) * one_hot + alpha / num_classes
 
 拿一張圖片，做出它的兩個增強視角（裁切、旋轉、色彩抖動）。這是「正樣本對」—— 它們的嵌入應該相似。批次裡其他每一張圖片都構成「負樣本對」—— 它們的嵌入應該不同。
 
-```
-L = -log(exp(sim(z_i, z_j) / tau) / sum(exp(sim(z_i, z_k) / tau)))
+```math
+L = -\log \frac{\exp(\text{sim}(z_i, z_j) / \tau)}{\sum_k \exp(\text{sim}(z_i, z_k) / \tau)}
 ```
 
 其中 sim() 是餘弦相似度，z_i 與 z_j 是正樣本對，總和跑過所有負樣本，而 tau（溫度）控制分布有多尖銳。溫度越低 = 負樣本越「硬」= 分離得越激烈。
@@ -130,8 +130,8 @@ L = -log(exp(sim(z_i, z_j) / tau) / sum(exp(sim(z_i, z_k) / tau)))
 
 吃三個輸入：anchor、positive（同類別）、negative（不同類別）。
 
-```
-L = max(0, d(anchor, positive) - d(anchor, negative) + margin)
+```math
+L = \max\left(0, d(\text{anchor}, \text{positive}) - d(\text{anchor}, \text{negative}) + \text{margin}\right)
 ```
 
 margin（通常是 0.2 到 1.0）強制正負距離之間至少要有一段間隔。如果負樣本本來就離得夠遠，損失就是零 —— 沒有梯度，沒有更新。這讓訓練變有效率，但需要小心地做三元組挖掘（挑出貼近 anchor 的困難負樣本）。
@@ -140,8 +140,8 @@ margin（通常是 0.2 到 1.0）強制正負距離之間至少要有一段間�
 
 給不平衡資料集用的。標準交叉熵對所有分類正確的樣本一視同仁。Focal Loss（焦點損失）則調降簡單樣本的權重：
 
-```
-FL = -alpha * (1 - p_t)^gamma * log(p_t)
+```math
+\text{FL} = -\alpha (1 - p_t)^\gamma \log(p_t)
 ```
 
 其中 p_t 是真實類別的預測機率，gamma 控制聚焦程度。gamma = 0 時，這就是標準交叉熵。gamma = 2 時（預設值）：

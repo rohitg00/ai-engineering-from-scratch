@@ -94,20 +94,20 @@ graph LR
 
 **餘弦相似度**：兩個向量夾角的餘弦值。範圍從 -1（相反）到 1（相同）。忽略長度，只在乎方向。這是 RAG 的預設。
 
-```
-cosine_sim(a, b) = dot(a, b) / (||a|| * ||b||)
+```math
+\mathop{\mathrm{cosine\_sim}}(a, b) = \frac{\mathop{\mathrm{dot}}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
 ```
 
 **點積**：原始的內積。較長的向量會拿到較高的分數。當長度本身承載資訊時（較長的文件可能更相關）就有用。
 
-```
-dot(a, b) = sum(a_i * b_i)
+```math
+\mathop{\mathrm{dot}}(a, b) = \sum_i a_i b_i
 ```
 
 **L2（歐幾里得）距離**：向量空間裡的直線距離。距離越小 = 越相似。對長度差異敏感。
 
-```
-L2(a, b) = sqrt(sum((a_i - b_i)^2))
+```math
+\mathop{\mathrm{L2}}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
 ```
 
 餘弦相似度是標準做法。它以長度做正規化，所以能優雅地處理長度不同的文件。當有人說「向量搜尋」時，他們幾乎都是指餘弦相似度。

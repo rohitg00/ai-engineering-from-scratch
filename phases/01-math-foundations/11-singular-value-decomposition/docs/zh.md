@@ -26,11 +26,8 @@ SVD 對任何矩陣都成立。任何形狀、任何秩，沒有附加條件。�
 
 每一個矩陣，不論形狀，都依序執行三個操作：旋轉、縮放、旋轉。SVD 把這個分解寫得明明白白。
 
-```
-A = U * Sigma * V^T
-
-      m x n     m x m    m x n    n x n
-     (any)    (rotate)  (scale)  (rotate)
+```math
+\underset{\substack{m \times n \\ \text{(any)}}}{A} = \underset{\substack{m \times m \\ \text{(rotate)}}}{U} \cdot \underset{\substack{m \times n \\ \text{(scale)}}}{\Sigma} \cdot \underset{\substack{n \times n \\ \text{(rotate)}}}{V^T}
 ```
 
 給定任意矩陣 A，SVD 把它分解成：
@@ -50,16 +47,16 @@ graph LR
 
 對一個 m x n 的矩陣 A：
 
-```
-A = U * Sigma * V^T
-
-where:
-  U     is m x m, orthogonal (U^T U = I)
-  Sigma is m x n, diagonal (singular values on the diagonal)
-  V     is n x n, orthogonal (V^T V = I)
-
-The singular values sigma_1 >= sigma_2 >= ... >= sigma_r > 0
-where r = rank(A)
+```math
+\begin{aligned}
+& A = U \cdot \Sigma \cdot V^T \\[6pt]
+& \text{where:} \\
+& \quad U \text{ is } m \times m, \text{ orthogonal } (U^T U = I) \\
+& \quad \Sigma \text{ is } m \times n, \text{ diagonal (singular values on the diagonal)} \\
+& \quad V \text{ is } n \times n, \text{ orthogonal } (V^T V = I) \\[6pt]
+& \text{The singular values } \sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_r > 0 \\
+& \text{where } r = \mathop{\mathrm{rank}}(A)
+\end{aligned}
 ```
 
 U 的各行向量（欄）稱為左奇異向量，V 的各欄稱為右奇異向量，Sigma 對角線上的元素稱為奇異值。奇異值永遠非負，而且照慣例由大到小排序。
@@ -98,15 +95,15 @@ The full matrix is the sum of r such matrices, where r is the rank.
 
 這個形式是低秩近似的基礎。每一項都疊上一層結構：第一項抓住最重要的那個模式，第二項抓住次重要的，依此類推。把這個和截斷，就得到在任何給定秩之下最好的近似。
 
-```
-Rank-1 approx:    A_1 = sigma_1 * u_1 * v_1^T
-                  (captures the dominant pattern)
-
-Rank-2 approx:    A_2 = sigma_1 * u_1 * v_1^T + sigma_2 * u_2 * v_2^T
-                  (captures the two most important patterns)
-
-Rank-k approx:    A_k = sum of top k terms
-                  (optimal by the Eckart-Young theorem)
+```math
+\begin{aligned}
+\text{Rank-1 approx:} \quad & A_1 = \sigma_1 u_1 v_1^T \\
+& \text{(captures the dominant pattern)} \\[6pt]
+\text{Rank-2 approx:} \quad & A_2 = \sigma_1 u_1 v_1^T + \sigma_2 u_2 v_2^T \\
+& \text{(captures the two most important patterns)} \\[6pt]
+\text{Rank-}k\text{ approx:} \quad & A_k = \text{sum of top } k \text{ terms} \\
+& \text{(optimal by the Eckart-Young theorem)}
+\end{aligned}
 ```
 
 ### 與特徵分解的關係
@@ -142,16 +139,16 @@ So:
 
 Eckart-Young-Mirsky 定理說：A 的最佳秩 k 近似（在 Frobenius 範數與譜範數下都成立）就是只保留前 k 個奇異值及其對應向量所得到的結果：
 
-```
-A_k = U_k * Sigma_k * V_k^T
-
-where:
-  U_k     is m x k  (first k columns of U)
-  Sigma_k is k x k  (top-left k x k block of Sigma)
-  V_k     is n x k  (first k columns of V)
-
-Approximation error = sigma_{k+1}  (in spectral norm)
-                    = sqrt(sigma_{k+1}^2 + ... + sigma_r^2)  (in Frobenius norm)
+```math
+\begin{aligned}
+& A_k = U_k \cdot \Sigma_k \cdot V_k^T \\[6pt]
+& \text{where:} \\
+& \quad U_k \text{ is } m \times k \quad \text{(first } k \text{ columns of } U\text{)} \\
+& \quad \Sigma_k \text{ is } k \times k \quad \text{(top-left } k \times k \text{ block of } \Sigma\text{)} \\
+& \quad V_k \text{ is } n \times k \quad \text{(first } k \text{ columns of } V\text{)} \\[6pt]
+& \text{Approximation error} = \sigma_{k+1} \quad \text{(in spectral norm)} \\
+& \text{Approximation error} = \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad \text{(in Frobenius norm)}
+\end{aligned}
 ```
 
 這不只是「一個不錯的」近似，它是可以證明的、秩 k 之下最好的近似。沒有其他秩 k 的矩陣比它更接近 A。

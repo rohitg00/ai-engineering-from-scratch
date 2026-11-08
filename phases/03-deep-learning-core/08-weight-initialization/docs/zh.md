@@ -38,14 +38,14 @@
 
 考慮一層有 fan_in 個輸入：
 
-```
-z = w1*x1 + w2*x2 + ... + w_n*x_n
+```math
+z = w_1 x_1 + w_2 x_2 + \cdots + w_n x_n
 ```
 
 如果每個權重 wi 都取自變異數為 Var(w) 的分布，而每個輸入 xi 的變異數是 Var(x)，那麼輸出的變異數是：
 
-```
-Var(z) = fan_in * Var(w) * Var(x)
+```math
+\mathrm{Var}(z) = \text{fan}_{\text{in}} \cdot \mathrm{Var}(w) \cdot \mathrm{Var}(x)
 ```
 
 如果 Var(w) = 1 且 fan_in = 512，輸出變異數就是輸入變異數的 512 倍。經過 10 層之後：512^10 = 1.2e27。你的訊號爆炸了。
@@ -58,20 +58,20 @@ Var(z) = fan_in * Var(w) * Var(x)
 
 Glorot 與 Bengio（2010）針對 sigmoid 與 tanh 激活函式推導出解答。要讓變異數在前向傳播與反向傳遞裡都保持穩定：
 
-```
-Var(w) = 2 / (fan_in + fan_out)
+```math
+\mathrm{Var}(w) = \frac{2}{\text{fan}_{\text{in}} + \text{fan}_{\text{out}}}
 ```
 
 實務上，權重取自：
 
-```
-w ~ Uniform(-limit, limit)  where limit = sqrt(6 / (fan_in + fan_out))
+```math
+w \sim \text{Uniform}(-\text{limit}, \text{limit}) \quad \text{where } \text{limit} = \sqrt{\frac{6}{\text{fan}_{\text{in}} + \text{fan}_{\text{out}}}}
 ```
 
 或是：
 
-```
-w ~ Normal(0, sqrt(2 / (fan_in + fan_out)))
+```math
+w \sim \text{Normal}\left(0, \sqrt{\frac{2}{\text{fan}_{\text{in}} + \text{fan}_{\text{out}}}}\right)
 ```
 
 這行得通，是因為 sigmoid 與 tanh 在零附近大致是線性的，而初始化得當的激活值就落在那一帶。變異數能穿過幾十層都保持穩定。
@@ -82,14 +82,14 @@ ReLU 會殺掉一半的輸出（所有負值都變成零）。有效的 fan_in �
 
 He 等人（2015）調整了公式：
 
-```
-Var(w) = 2 / fan_in
+```math
+\mathrm{Var}(w) = \frac{2}{\text{fan}_{\text{in}}}
 ```
 
 權重取自：
 
-```
-w ~ Normal(0, sqrt(2 / fan_in))
+```math
+w \sim \text{Normal}\left(0, \sqrt{\frac{2}{\text{fan}_{\text{in}}}}\right)
 ```
 
 那個 2 倍係數補償了 ReLU 把一半激活值歸零的損失。少了它，訊號每層會縮小約 0.5 倍。50 層下來：0.5^50 = 8.8e-16。Kaiming 初始化防止了這件事。
@@ -98,8 +98,8 @@ w ~ Normal(0, sqrt(2 / fan_in))
 
 GPT-2 帶進了另一種做法。殘差連接會把每個子層的輸出加回它的輸入：
 
-```
-x = x + sublayer(x)
+```math
+x = x + \text{sublayer}(x)
 ```
 
 每一次相加都會讓變異數變大。有 N 個殘差層時，變異數會跟著 N 成正比成長。GPT-2 把殘差層的權重乘上 1/sqrt(2N) 做縮放，其中 N 是層數。這讓累積下來的訊號大小維持穩定。

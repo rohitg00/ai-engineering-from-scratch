@@ -19,24 +19,24 @@ Sohl-Dickstein 等人（2015）給過一個理論上的答案：定義一條逐�
 
 **前向過程 `q`。** 分 `T` 個小步驟加入高斯雜訊。它的閉合形式 —— 也就是這套數學算得動的原因 —— 是累積之後那一步同樣是高斯的：
 
-```
-q(x_t | x_0) = N( sqrt(α̅_t) · x_0,  (1 - α̅_t) · I )
+```math
+q(x_t \mid x_0) = \mathcal{N}\left( \sqrt{\bar{\alpha}_t} \cdot x_0, (1 - \bar{\alpha}_t) \cdot I \right)
 ```
 
 其中對某個 `β_t` 排程而言 `α̅_t = ∏_{s=1..t} (1 - β_s)`。在 T=1000 步之間把 `β_t` 從 1e-4 線性拉到 0.02，`x_T` 就近似於 `N(0, I)`。
 
 **反向過程 `p_θ`。** 學一個神經網路 `ε_θ(x_t, t)`，讓它預測當初加進去的雜訊。給定 `x_t`，就這樣去噪：
 
-```
-x_{t-1} = (1 / sqrt(α_t)) · ( x_t - (β_t / sqrt(1 - α̅_t)) · ε_θ(x_t, t) )  +  σ_t · z
+```math
+x_{t-1} = \frac{1}{\sqrt{\alpha_t}} \cdot \left( x_t - \frac{\beta_t}{\sqrt{1 - \bar{\alpha}_t}} \cdot \epsilon_\theta(x_t, t) \right) + \sigma_t \cdot z
 ```
 
 其中 `σ_t` 不是 `sqrt(β_t)` 就是一個學出來的變異數。式子很醜，但它就只是代數 —— 從後驗 `q(x_{t-1} | x_t, x_0)` 解出 `x_{t-1}`，再把 `x_0` 換成用雜訊預測出來的估計值。
 
 **訓練損失。**
 
-```
-L_simple = E_{x_0, t, ε} [ || ε - ε_θ( sqrt(α̅_t) · x_0 + sqrt(1 - α̅_t) · ε,  t ) ||² ]
+```math
+L_{\text{simple}} = \mathbb{E}_{x_0, t, \epsilon} \left[ \left\lVert \epsilon - \epsilon_\theta\left( \sqrt{\bar{\alpha}_t} \cdot x_0 + \sqrt{1 - \bar{\alpha}_t} \cdot \epsilon, t \right) \right\rVert^2 \right]
 ```
 
 從資料裡取樣一個 `x_0`，挑一個隨機的 `t`，取樣 `ε ~ N(0, I)`，用閉合形式一步算出帶雜訊的 `x_t`，然後對雜訊做迴歸。一個損失，沒有極小極大，沒有 KL，沒有重參數化技巧。

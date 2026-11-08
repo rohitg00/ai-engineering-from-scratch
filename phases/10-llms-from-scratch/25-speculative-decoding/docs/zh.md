@@ -53,8 +53,8 @@ For each drafted token x_t:
 
 若草稿模型的逐詞元接受率為 `α`，則每次驗證前向傳播的期望產出詞元數為：
 
-```
-E[tokens] = (1 - α^{K+1}) / (1 - α)        # K = draft length, α in [0, 1]
+```math
+\mathbb{E}[\text{tokens}] = \frac{1 - \alpha^{K+1}}{1 - \alpha} \qquad K = \text{draft length}, \ \alpha \in [0, 1]
 ```
 
 在 `α = 0.8, K = 4` 時：`(1 - 0.8^5)/(1 - 0.8) = 3.36`，每次前向傳播 3.36 個詞元。一次驗證前向傳播的成本大約是 `cost_q * K + cost_p`（K 步草稿加一次驗證）。若 `cost_p >> cost_q * K`，吞吐量的加速比就是 `3.36× / 1 = 3.36×`。

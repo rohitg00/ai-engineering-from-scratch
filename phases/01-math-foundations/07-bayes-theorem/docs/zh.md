@@ -30,24 +30,24 @@
 
 你在單元 06 已經知道條件機率是：
 
-```
-P(A|B) = P(A and B) / P(B)
+```math
+P(A \mid B) = \frac{P(A \text{ and } B)}{P(B)}
 ```
 
 對稱地也有：
 
-```
-P(B|A) = P(A and B) / P(A)
+```math
+P(B \mid A) = \frac{P(A \text{ and } B)}{P(A)}
 ```
 
 兩個式子共用同一個分子：P(A and B)。把它們畫上等號再整理一下：
 
-```
-P(A and B) = P(A|B) * P(B) = P(B|A) * P(A)
-
-Therefore:
-
-P(A|B) = P(B|A) * P(A) / P(B)
+```math
+\begin{aligned}
+P(A \text{ and } B) &= P(A \mid B) \cdot P(B) = P(B \mid A) \cdot P(A) \\[4pt]
+&\text{Therefore:} \\[4pt]
+P(A \mid B) &= \frac{P(B \mid A) \cdot P(A)}{P(B)}
+\end{aligned}
 ```
 
 這就是貝氏定理。四個量，一條式子。
@@ -63,28 +63,28 @@ P(A|B) = P(B|A) * P(A) / P(B)
 
 證據項 P(B) 的作用是正規化因子。你可以用全機率定律把它展開：
 
-```
-P(B) = P(B|A) * P(A) + P(B|not A) * P(not A)
+```math
+P(B) = P(B \mid A) \cdot P(A) + P(B \mid \text{not } A) \cdot P(\text{not } A)
 ```
 
 ### 醫學檢驗的例子
 
 某疾病每 10,000 人影響 1 人。檢驗準確率為 99%（能揪出 99% 的病人，並有 1% 的機率給出偽陽性）。
 
-```
-P(sick)          = 0.0001     (prior: disease is rare)
-P(positive|sick) = 0.99       (likelihood: test catches it)
-P(positive|healthy) = 0.01    (false positive rate)
-
-P(positive) = P(positive|sick) * P(sick) + P(positive|healthy) * P(healthy)
-            = 0.99 * 0.0001 + 0.01 * 0.9999
-            = 0.000099 + 0.009999
-            = 0.010098
-
-P(sick|positive) = P(positive|sick) * P(sick) / P(positive)
-                 = 0.99 * 0.0001 / 0.010098
-                 = 0.0098
-                 = 0.98%
+```math
+\begin{aligned}
+P(\text{sick}) &= 0.0001 \quad \text{(prior: disease is rare)} \\
+P(\text{positive} \mid \text{sick}) &= 0.99 \quad \text{(likelihood: test catches it)} \\
+P(\text{positive} \mid \text{healthy}) &= 0.01 \quad \text{(false positive rate)} \\[6pt]
+P(\text{positive}) &= P(\text{positive} \mid \text{sick}) \cdot P(\text{sick}) + P(\text{positive} \mid \text{healthy}) \cdot P(\text{healthy}) \\
+&= 0.99 \cdot 0.0001 + 0.01 \cdot 0.9999 \\
+&= 0.000099 + 0.009999 \\
+&= 0.010098 \\[6pt]
+P(\text{sick} \mid \text{positive}) &= P(\text{positive} \mid \text{sick}) \cdot P(\text{sick}) / P(\text{positive}) \\
+&= 0.99 \cdot 0.0001 / 0.010098 \\
+&= 0.0098 \\
+&= 0.98\%
+\end{aligned}
 ```
 
 不到 1%。先驗完全主導了結果。當一個狀況很罕見時，就算檢驗很準，產出的陽性結果也大多是偽陽性。這就是醫生為什麼要再開一次確認檢驗。
@@ -93,18 +93,18 @@ P(sick|positive) = P(positive|sick) * P(sick) / P(positive)
 
 你收到一封含有「lottery」這個字的郵件。它是垃圾郵件嗎？
 
-```
-P(spam)                = 0.3      (30% of email is spam)
-P("lottery"|spam)      = 0.05     (5% of spam emails contain "lottery")
-P("lottery"|not spam)  = 0.001    (0.1% of legitimate emails contain "lottery")
-
-P("lottery") = 0.05 * 0.3 + 0.001 * 0.7
-             = 0.015 + 0.0007
-             = 0.0157
-
-P(spam|"lottery") = 0.05 * 0.3 / 0.0157
-                  = 0.955
-                  = 95.5%
+```math
+\begin{aligned}
+P(\text{spam}) &= 0.3 \quad \text{(30\% of email is spam)} \\
+P(\text{"lottery"} \mid \text{spam}) &= 0.05 \quad \text{(5\% of spam emails contain "lottery")} \\
+P(\text{"lottery"} \mid \text{not spam}) &= 0.001 \quad \text{(0.1\% of legitimate emails contain "lottery")} \\[6pt]
+P(\text{"lottery"}) &= 0.05 \cdot 0.3 + 0.001 \cdot 0.7 \\
+&= 0.015 + 0.0007 \\
+&= 0.0157 \\[6pt]
+P(\text{spam} \mid \text{"lottery"}) &= 0.05 \cdot 0.3 / 0.0157 \\
+&= 0.955 \\
+&= 95.5\%
+\end{aligned}
 ```
 
 一個字就把機率從 30% 推到 95.5%。真正的垃圾郵件過濾器會同時對數百個字套用貝氏定理。
@@ -113,18 +113,16 @@ P(spam|"lottery") = 0.05 * 0.3 / 0.0157
 
 單純貝氏把這套做法推廣到多個特徵上，方法是假設在給定類別的條件下，所有特徵都彼此條件獨立：
 
-```
-P(class | feature_1, feature_2, ..., feature_n)
-  = P(class) * P(feature_1|class) * P(feature_2|class) * ... * P(feature_n|class)
-    / P(feature_1, feature_2, ..., feature_n)
+```math
+P(\text{class} \mid \text{feature}_1, \text{feature}_2, \ldots, \text{feature}_n) = \frac{P(\text{class}) \cdot P(\text{feature}_1 \mid \text{class}) \cdot P(\text{feature}_2 \mid \text{class}) \cdots P(\text{feature}_n \mid \text{class})}{P(\text{feature}_1, \text{feature}_2, \ldots, \text{feature}_n)}
 ```
 
 「樸素」指的就是這個獨立假設。在文本裡，詞的出現並不獨立（「New」跟「York」是相關的）。但這個假設在實務上出乎意料地好用，因為分類器只需要把各類別排出高低，不需要產出校準過的機率。
 
 既然分母對所有類別都一樣，你可以直接略過它，只比較分子：
 
-```
-score(class) = P(class) * product of P(feature_i | class)
+```math
+\text{score}(\text{class}) = P(\text{class}) \cdot \prod_i P(\text{feature}_i \mid \text{class})
 ```
 
 挑分數最高的那個類別。
@@ -133,16 +131,16 @@ score(class) = P(class) * product of P(feature_i | class)
 
 你要怎麼從訓練資料得到 P(feature|class)？數次數。
 
-```
-P("free"|spam) = (number of spam emails containing "free") / (total spam emails)
+```math
+P(\text{"free"} \mid \text{spam}) = \frac{\text{number of spam emails containing "free"}}{\text{total spam emails}}
 ```
 
 這就是 MLE：選出讓觀測資料最有可能出現的參數值。你在最大化概似函式，而對離散計數來說，它就化簡成相對頻率。
 
 問題來了：如果某個字在訓練時從未出現在垃圾郵件裡，MLE 會給它機率零。一個沒見過的字就會把整個乘積歸零。用 拉普拉斯平滑來修：
 
-```
-P(word|class) = (count(word, class) + 1) / (total_words_in_class + vocabulary_size)
+```math
+P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class}) + 1}{\text{total\_words\_in\_class} + \text{vocabulary\_size}}
 ```
 
 給每個計數都加 1，就能保證機率永遠不會是零。
@@ -155,8 +153,8 @@ MAP 問的是：哪些參數能最大化 P(parameters|data)？
 
 根據貝氏定理：
 
-```
-P(parameters|data) proportional to P(data|parameters) * P(parameters)
+```math
+P(\text{parameters} \mid \text{data}) \propto P(\text{data} \mid \text{parameters}) \cdot P(\text{parameters})
 ```
 
 MAP 對參數本身加上了一個先驗。如果你認為參數應該要小，就把這個想法編碼成一個懲罰大數值的先驗。這跟 ML 裡的 L2 正則化是同一件事。ridge 回歸裡的「ridge」懲罰項，字面上就是權重上的高斯先驗。
@@ -361,10 +359,12 @@ Beta 先驗的幾個特例：
 
 更新規則簡單到不行：
 
-```
-Prior:     Beta(a, b)
-Data:      s successes, f failures
-Posterior: Beta(a + s, b + f)
+```math
+\begin{aligned}
+\text{Prior:} \quad & \text{Beta}(a, b) \\
+\text{Data:} \quad & s \text{ successes}, f \text{ failures} \\
+\text{Posterior:} \quad & \text{Beta}(a + s, b + f)
+\end{aligned}
 ```
 
 不用積分。不用取樣。只要加法。

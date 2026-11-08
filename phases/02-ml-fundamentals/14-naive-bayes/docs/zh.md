@@ -30,8 +30,8 @@
 
 貝氏定理把條件機率翻轉過來：
 
-```
-P(class | features) = P(features | class) * P(class) / P(features)
+```math
+P(\text{class} \mid \text{features}) = \frac{P(\text{features} \mid \text{class}) \cdot P(\text{class})}{P(\text{features})}
 ```
 
 我們想要的是 `P(class | features)`——在已知文件裡有哪些詞的條件下，這份文件屬於某個類別的機率。我們可以從下面幾項算出它：
@@ -47,8 +47,8 @@ P(class | features) = P(features | class) * P(class) / P(features)
 
 條件獨立假設是這樣的：在給定類別的條件下，每個特徵都彼此條件獨立。
 
-```
-P(w1, w2, ..., wn | class) = P(w1 | class) * P(w2 | class) * ... * P(wn | class)
+```math
+P(w_1, w_2, \ldots, w_n \mid \text{class}) = P(w_1 \mid \text{class}) \cdot P(w_2 \mid \text{class}) \cdots P(w_n \mid \text{class})
 ```
 
 於是你不必去估一個辦不到的聯合分布，只要估 n 個簡單的單特徵分布。每一個都只需要一組計數。
@@ -78,26 +78,28 @@ P(w1, w2, ..., wn | class) = P(w1 | class) * P(w2 | class) * ... * P(wn | class)
 
 加上拉普拉斯平滑（alpha=1）之後：
 
-```
-P(free | spam)    = (80 + 1) / (150 + 3) = 81/153 = 0.529
-P(money | spam)   = (60 + 1) / (150 + 3) = 61/153 = 0.399
-P(meeting | spam) = (10 + 1) / (150 + 3) = 11/153 = 0.072
-
-P(free | not-spam)    = (5 + 1) / (115 + 3) = 6/118 = 0.051
-P(money | not-spam)   = (10 + 1) / (115 + 3) = 11/118 = 0.093
-P(meeting | not-spam) = (100 + 1) / (115 + 3) = 101/118 = 0.856
+```math
+\begin{aligned}
+P(\text{free} \mid \text{spam}) &= (80 + 1) / (150 + 3) = 81/153 = 0.529 \\
+P(\text{money} \mid \text{spam}) &= (60 + 1) / (150 + 3) = 61/153 = 0.399 \\
+P(\text{meeting} \mid \text{spam}) &= (10 + 1) / (150 + 3) = 11/153 = 0.072 \\[6pt]
+P(\text{free} \mid \text{not-spam}) &= (5 + 1) / (115 + 3) = 6/118 = 0.051 \\
+P(\text{money} \mid \text{not-spam}) &= (10 + 1) / (115 + 3) = 11/118 = 0.093 \\
+P(\text{meeting} \mid \text{not-spam}) &= (100 + 1) / (115 + 3) = 101/118 = 0.856
+\end{aligned}
 ```
 
 新來的郵件裡有：「free」（2 次）、「money」（1 次）、「meeting」（0 次）。
 
-```
-log P(spam | email) = log(0.4) + 2*log(0.529) + 1*log(0.399) + 0*log(0.072)
-                    = -0.916 + 2*(-0.637) + (-0.919) + 0
-                    = -3.109
-
-log P(not-spam | email) = log(0.6) + 2*log(0.051) + 1*log(0.093) + 0*log(0.856)
-                        = -0.511 + 2*(-2.976) + (-2.375) + 0
-                        = -8.838
+```math
+\begin{aligned}
+\log P(\text{spam} \mid \text{email}) &= \log(0.4) + 2 \log(0.529) + 1 \log(0.399) + 0 \log(0.072) \\
+&= -0.916 + 2(-0.637) + (-0.919) + 0 \\
+&= -3.109 \\[6pt]
+\log P(\text{not-spam} \mid \text{email}) &= \log(0.6) + 2 \log(0.051) + 1 \log(0.093) + 0 \log(0.856) \\
+&= -0.511 + 2(-2.976) + (-2.375) + 0 \\
+&= -8.838
+\end{aligned}
 ```
 
 spam 以很大的差距勝出。「free」出現兩次，是垃圾郵件的強烈證據。注意「meeting」沒有出現，對兩邊的對數總和都貢獻零（0 * log(P)）——在多項式 NB 裡，缺席的詞完全沒有作用。會明確為詞的缺席建模的是伯努利 NB。
@@ -110,8 +112,8 @@ spam 以很大的差距勝出。「free」出現兩次，是垃圾郵件的強�
 
 把每個特徵當成計數來建模。最適合特徵是詞頻或 TF-IDF 值的文本資料。
 
-```
-P(word_i | class) = (count of word_i in class + alpha) / (total words in class + alpha * vocab_size)
+```math
+P(\text{word}_i \mid \text{class}) = \frac{\text{count of } \text{word}_i \text{ in class} + \alpha}{\text{total words in class} + \alpha \cdot \text{vocab\_size}}
 ```
 
 其中的 `alpha` 就是拉普拉斯平滑（下面會說明）。這個變體是文本分類的主力。
@@ -120,8 +122,8 @@ P(word_i | class) = (count of word_i in class + alpha) / (total words in class +
 
 把每個特徵當成常態分布來建模。最適合連續特徵。
 
-```
-P(x_i | class) = (1 / sqrt(2 * pi * var)) * exp(-(x_i - mean)^2 / (2 * var))
+```math
+P(x_i \mid \text{class}) = \frac{1}{\sqrt{2 \pi \cdot \text{var}}} \cdot \exp\left(-\frac{(x_i - \text{mean})^2}{2 \cdot \text{var}}\right)
 ```
 
 每個類別在每個特徵上都有自己的平均值與變異數。當特徵在每個類別內部確實呈鐘形曲線時，這招很有效。
@@ -130,8 +132,8 @@ P(x_i | class) = (1 / sqrt(2 * pi * var)) * exp(-(x_i - mean)^2 / (2 * var))
 
 把每個特徵當成二元值（出現或未出現）來建模。最適合短文本或二元特徵向量。
 
-```
-P(word_i | class) = (docs in class containing word_i + alpha) / (total docs in class + 2 * alpha)
+```math
+P(\text{word}_i \mid \text{class}) = \frac{\text{docs in class containing } \text{word}_i + \alpha}{\text{total docs in class} + 2 \alpha}
 ```
 
 跟多項式不同，伯努利會明確地為一個詞的缺席施加懲罰。如果「free」通常出現在垃圾郵件裡，但這封郵件裡沒有，伯努利就把這件事當成反對垃圾郵件的證據。
@@ -152,8 +154,8 @@ P(word_i | class) = (docs in class containing word_i + alpha) / (total docs in c
 
 拉普拉斯平滑會給每個特徵計數都加上一個小小的量 `alpha`（通常是 1）：
 
-```
-P(word_i | class) = (count(word_i, class) + alpha) / (total_words_in_class + alpha * vocab_size)
+```math
+P(\text{word}_i \mid \text{class}) = \frac{\text{count}(\text{word}_i, \text{class}) + \alpha}{\text{total\_words\_in\_class} + \alpha \cdot \text{vocab\_size}}
 ```
 
 alpha=1 時，每個詞至少都拿到一點點機率。測試郵件裡出現「discombobulate」，不會再把垃圾郵件的機率整個殺掉。這個平滑有貝氏上的解讀：它等同於在詞分布上放一個均勻的 Dirichlet 先驗。
@@ -175,8 +177,8 @@ alpha 的效果：
 
 解法是：在對數空間裡運算。不要把機率相乘，改成把它們的對數相加：
 
-```
-log P(class | x1, x2, ..., xn) = log P(class) + sum_i log P(xi | class)
+```math
+\log P(\text{class} \mid x_1, x_2, \ldots, x_n) = \log P(\text{class}) + \sum_i \log P(x_i \mid \text{class})
 ```
 
 這讓預測變成一次內積：
@@ -221,8 +223,8 @@ flowchart LR
 
 實務上我們在對數空間裡運算，以避免浮點下溢。不把很多小機率相乘，而是把它們的對數相加：
 
-```
-log P(class | features) = log P(class) + sum_i log P(feature_i | class)
+```math
+\log P(\text{class} \mid \text{features}) = \log P(\text{class}) + \sum_i \log P(\text{feature}_i \mid \text{class})
 ```
 
 ```figure

@@ -30,10 +30,8 @@
 
 給定 N 個樣本 x[0], x[1], ..., x[N-1]，離散傅立葉轉換（Discrete Fourier Transform）會產生 N 個頻率係數 X[0], X[1], ..., X[N-1]：
 
-```
-X[k] = sum_{n=0}^{N-1} x[n] * e^(-2*pi*i*k*n/N)
-
-for k = 0, 1, ..., N-1
+```math
+X[k] = \sum_{n=0}^{N-1} x[n] \, e^{-2\pi i k n/N} \qquad \text{for } k = 0, 1, \ldots, N-1
 ```
 
 每個 X[k] 都是複數。它的大小 |X[k]| 告訴你頻率 k 的振幅，它的相位角 angle(X[k]) 則告訴你該頻率的相位偏移。
@@ -44,8 +42,8 @@ for k = 0, 1, ..., N-1
 
 **X[0]：DC 成分。** 這是所有樣本的總和——與平均值成正比。它代表訊號的常數（零頻率）偏移。
 
-```
-X[0] = sum_{n=0}^{N-1} x[n] * e^0 = sum of all samples
+```math
+X[0] = \sum_{n=0}^{N-1} x[n] \, e^0 = \text{sum of all samples}
 ```
 
 **1 <= k <= N/2 的 X[k]：正頻率。** X[k] 代表每 N 個樣本 k 個週期的頻率。k 越大表示頻率越高（振盪越快）。
@@ -58,10 +56,8 @@ X[0] = sum_{n=0}^{N-1} x[n] * e^0 = sum of all samples
 
 反 DFT 從頻率係數重建出原始訊號：
 
-```
-x[n] = (1/N) * sum_{k=0}^{N-1} X[k] * e^(2*pi*i*k*n/N)
-
-for n = 0, 1, ..., N-1
+```math
+x[n] = \frac{1}{N} \sum_{k=0}^{N-1} X[k] \, e^{2\pi i k n/N} \qquad \text{for } n = 0, 1, \ldots, N-1
 ```
 
 跟正向 DFT 只差兩點：指數的符號是正的（不是負的），而且多了一個 1/N 的正規化因子。
@@ -80,12 +76,13 @@ Cooley-Tukey 演算法（最常見的 FFT）靠的是分而治之：
 2. 遞迴地各算一半的 DFT。
 3. 用「旋轉因子」e^(-2*pi*i*k/N) 把兩個半長度的 DFT 合併起來。
 
-```
-X[k] = E[k] + e^(-2*pi*i*k/N) * O[k]          for k = 0, ..., N/2 - 1
-X[k + N/2] = E[k] - e^(-2*pi*i*k/N) * O[k]    for k = 0, ..., N/2 - 1
-
-where E = DFT of even-indexed samples
-      O = DFT of odd-indexed samples
+```math
+\begin{aligned}
+X[k] &= E[k] + e^{-2\pi i k/N} \, O[k] && \text{for } k = 0, \ldots, N/2 - 1 \\
+X[k + N/2] &= E[k] - e^{-2\pi i k/N} \, O[k] && \text{for } k = 0, \ldots, N/2 - 1 \\[6pt]
+\text{where } E &= \text{DFT of even-indexed samples} \\
+O &= \text{DFT of odd-indexed samples}
+\end{aligned}
 ```
 
 這個對稱性讓每一層遞迴只做 O(N) 的工作，而總共有 log2(N) 層。合計：O(N log N)。
@@ -114,19 +111,23 @@ FFT 要求訊號長度是 2 的次方。實務上，訊號會補零到下一個 
 
 **相位頻譜**是 angle(X[k])——每個頻率的相位偏移。大部分分析任務裡，你在意的是功率頻譜，相位可以忽略。
 
-```
-Power at frequency k:  P[k] = |X[k]|^2 = X[k].real^2 + X[k].imag^2
-Phase at frequency k:  phi[k] = atan2(X[k].imag, X[k].real)
+```math
+\begin{aligned}
+\text{Power at frequency } k: \quad P[k] &= |X[k]|^2 = \mathop{\mathrm{Re}}(X[k])^2 + \mathop{\mathrm{Im}}(X[k])^2 \\
+\text{Phase at frequency } k: \quad \phi[k] &= \mathop{\mathrm{atan2}}(\mathop{\mathrm{Im}}(X[k]), \mathop{\mathrm{Re}}(X[k]))
+\end{aligned}
 ```
 
 ### 頻率解析度
 
 DFT 的頻率解析度取決於樣本數 N 與取樣率 fs。
 
-```
-Frequency of bin k:      f_k = k * fs / N
-Frequency resolution:    delta_f = fs / N
-Maximum frequency:       f_max = fs / 2  (Nyquist)
+```math
+\begin{aligned}
+\text{Frequency of bin } k: \quad & f_k = k \cdot f_s / N \\
+\text{Frequency resolution:} \quad & \Delta f = f_s / N \\
+\text{Maximum frequency:} \quad & f_{\max} = f_s / 2 \quad \text{(Nyquist)}
+\end{aligned}
 ```
 
 要分辨兩個很接近的頻率，你需要更多樣本。要捕捉高頻，你需要更高的取樣率。
@@ -137,10 +138,11 @@ Maximum frequency:       f_max = fs / 2  (Nyquist)
 
 **時域裡的摺積，等於頻域裡的逐點相乘。**
 
-```
-x * h = IFFT(FFT(x) . FFT(h))
-
-where * is convolution and . is element-wise multiplication
+```math
+\begin{aligned}
+& x * h = \text{IFFT}(\text{FFT}(x) \cdot \text{FFT}(h)) \\[4pt]
+& \text{where } * \text{ is convolution and } \cdot \text{ is element-wise multiplication}
+\end{aligned}
 ```
 
 為什麼這件事重要：
@@ -183,9 +185,11 @@ DFT 假設訊號是週期的——它把這 N 個樣本當成一個無限重複�
 | Hamming | 修正餘弦 | 中等 | 更低（-42 dB） | 音訊處理、語音分析 |
 | Blackman | 三重餘弦 | 寬 | 非常低（-58 dB） | 抑制側瓣特別關鍵時 |
 
-```
-Hann window:    w[n] = 0.5 * (1 - cos(2*pi*n / (N-1)))
-Hamming window: w[n] = 0.54 - 0.46 * cos(2*pi*n / (N-1))
+```math
+\begin{aligned}
+\text{Hann window:} \quad & w[n] = 0.5 \left(1 - \cos\frac{2\pi n}{N-1}\right) \\
+\text{Hamming window:} \quad & w[n] = 0.54 - 0.46 \cos\frac{2\pi n}{N-1}
+\end{aligned}
 ```
 
 加窗的方式是在 DFT 之前把它跟訊號逐元素相乘：`X = DFT(x * w)`。
@@ -208,9 +212,11 @@ Parseval 定理說的是：總能量在兩個域裡是一樣的。能量在轉�
 
 最初的 Transformer 用的是正弦式位置編碼：
 
-```
-PE(pos, 2i)   = sin(pos / 10000^(2i/d_model))
-PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
+```math
+\begin{aligned}
+PE(pos, 2i) &= \sin\left(pos / 10000^{2i/d_{\text{model}}}\right) \\
+PE(pos, 2i+1) &= \cos\left(pos / 10000^{2i/d_{\text{model}}}\right)
+\end{aligned}
 ```
 
 每一組維度對 (2i, 2i+1) 都以不同的頻率振盪。這些頻率以幾何級數排列，從高頻（維度 0,1）到低頻（最後幾個維度）。這讓每個位置在所有頻帶上都有一個獨一無二的樣態——就像傅立葉係數能唯一標識一個訊號那樣。

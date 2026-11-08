@@ -148,8 +148,8 @@ flowchart TD
 
 異常分數是以所有樹的平均路徑長度為基礎，再用隨機二元搜尋樹的期望路徑長度做正規化：
 
-```
-score(x) = 2^(-average_path_length(x) / c(n))
+```math
+\text{score}(x) = 2^{-\text{average\_path\_length}(x) / c(n)}
 ```
 
 其中 `c(n)` 是 n 個樣本的期望路徑長度。分數接近 1 表示異常。分數接近 0.5 表示正常。分數接近 0 表示非常正常（深藏在稠密的群裡）。

@@ -58,9 +58,11 @@ loss = (loss_i2t + loss_t2i) / 2
 
 SigLIP（Zhai et al., 2023）把 softmax 換成逐配對的 sigmoid：
 
-```
-loss = mean over pairs of log(1 + exp(-y_ij * sim_ij))
-y_ij = +1 if matching, -1 otherwise
+```math
+\begin{aligned}
+\text{loss} &= \mathop{\mathrm{mean}}\limits_{\text{pairs}} \log\left(1 + \exp(-y_{ij} \cdot \text{sim}_{ij})\right) \\
+y_{ij} &= \begin{cases} +1 & \text{if matching} \\ -1 & \text{otherwise} \end{cases}
+\end{aligned}
 ```
 
 逐配對的損失函式擺脫了 CLIP 所需要的批次層級正規化。SigLIP 在小批次大小下訓練得更好，而在同樣的資料量下能追平甚至超過 CLIP。

@@ -148,12 +148,14 @@ A = L @ U
 
 為什麼要做分解，而不是直接消去就好？因為一旦有了 L 與 U，對任何新的 b 解 Ax = b 都只要 O(n^2)：
 
-```
-Ax = b
-LUx = b
-Let y = Ux:
-  Ly = b    (forward substitution, O(n^2))
-  Ux = y    (back substitution, O(n^2))
+```math
+\begin{aligned}
+Ax &= b \\
+LUx &= b \\
+&\text{Let } y = Ux\text{:} \\
+Ly &= b \quad \text{(forward substitution, } O(n^2)\text{)} \\
+Ux &= y \quad \text{(back substitution, } O(n^2)\text{)}
+\end{aligned}
 ```
 
 O(n^3) 的成本在分解時付一次就好，之後每次求解都是 O(n^2)。如果你要用同一個 A 但不同的 b 解一千個系統，LU 在總工作量上省下大約 1000/3 倍。
@@ -232,7 +234,7 @@ This is the sum of squared residuals:
 
 讓它最小的那個解滿足正規方程：
 
-```
+```math
 A^T A x = A^T b
 ```
 
@@ -258,18 +260,22 @@ This is linear regression. x[0] is the intercept, x[1] is the slope.
 
 這個對應是完全精確的。在線性迴歸裡，你的資料矩陣 X 每一列是一個樣本，每一欄是一個特徵；目標向量 y 每個元素對應一個樣本。權重向量 w 滿足：
 
-```
-X^T X w = X^T y
-w = (X^T X)^(-1) X^T y
+```math
+\begin{aligned}
+X^T X w &= X^T y \\
+w &= (X^T X)^{-1} X^T y
+\end{aligned}
 ```
 
 這就是線性迴歸的閉式解。每一次呼叫 `sklearn.linear_model.LinearRegression.fit()` 算的都是這個（或是用 QR、SVD 算的等價版本）。
 
 在矩陣上加一個正則化項 lambda * I，你就得到 ridge 迴歸：
 
-```
-(X^T X + lambda * I) w = X^T y
-w = (X^T X + lambda * I)^(-1) X^T y
+```math
+\begin{aligned}
+(X^T X + \lambda I) w &= X^T y \\
+w &= (X^T X + \lambda I)^{-1} X^T y
+\end{aligned}
 ```
 
 正則化讓矩陣的條件變好（更容易精確地反轉），同時把權重往零方向收縮以避免過度擬合。當 lambda > 0 時，X^T X + lambda * I 永遠是對稱正定的，所以你可以用 Cholesky 來解。
@@ -278,10 +284,11 @@ w = (X^T X + lambda * I)^(-1) X^T y
 
 偽逆 A+ 把矩陣求逆推廣到非方陣與奇異矩陣上。對任何矩陣 A：
 
-```
-x = A+ b
-
-where A+ = V Sigma+ U^T    (computed via SVD)
+```math
+\begin{aligned}
+x &= A^+ b \\[4pt]
+\text{where } A^+ &= V \Sigma^+ U^T \quad \text{(computed via SVD)}
+\end{aligned}
 ```
 
 Sigma+ 的做法是：把每個非零奇異值取倒數，再把結果轉置。如果 A = U Sigma V^T，那麼 A+ = V Sigma+ U^T。
@@ -307,8 +314,8 @@ NumPy 的 `np.linalg.lstsq` 與 `np.linalg.pinv` 內部都用 SVD。
 
 條件數衡量解對輸入的微小變動有多敏感。對一個矩陣 A，條件數是：
 
-```
-kappa(A) = ||A|| * ||A^(-1)|| = sigma_max / sigma_min
+```math
+\kappa(A) = \lVert A \rVert \cdot \lVert A^{-1} \rVert = \frac{\sigma_{\max}}{\sigma_{\min}}
 ```
 
 其中 sigma_max 與 sigma_min 分別是最大與最小的奇異值。

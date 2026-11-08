@@ -74,22 +74,22 @@ DeepSeek 在 DeepSeekMath 論文（2024）中提出 GRPO，並把它當成 DeepS
 
 回想一下 PPO 的目標函式（來自單元 07）：
 
-```
-L_PPO = E[min(r(theta) * A, clip(r(theta), 1-eps, 1+eps) * A)]
+```math
+L_{\text{PPO}} = \mathbb{E}\left[\min\left(r(\theta) \cdot A, \mathop{\mathrm{clip}}(r(\theta), 1-\epsilon, 1+\epsilon) \cdot A\right)\right]
 ```
 
 其中 `A` 是優勢，通常用 GAE 搭配一個學來的價值網路 `V(s)` 估計。價值網路是第二個模型，大小跟策略一樣。它讓記憶體翻倍，還帶來自己的一套訓練迴圈。
 
 GRPO 把價值函式丟掉。對每一個提示詞，它取樣一組 G 個回應（通常 G=16 或 64）。算出每個回應的獎勵之後，在群組內做正規化：
 
-```
-A_i = (r_i - mean(r_1, ..., r_G)) / std(r_1, ..., r_G)
+```math
+A_i = \frac{r_i - \mathop{\mathrm{mean}}(r_1, \ldots, r_G)}{\mathop{\mathrm{std}}(r_1, \ldots, r_G)}
 ```
 
 優勢就是該回應的獎勵相對於同組手足的 z 分數。沒有價值函式。群組自己就是基準線。
 
-```
-L_GRPO = E[min(r(theta) * A_group, clip(r(theta), 1-eps, 1+eps) * A_group)] - beta * KL(pi || pi_ref)
+```math
+L_{\text{GRPO}} = \mathbb{E}\left[\min\left(r(\theta) \cdot A_{\text{group}}, \mathop{\mathrm{clip}}(r(\theta), 1-\epsilon, 1+\epsilon) \cdot A_{\text{group}}\right)\right] - \beta \cdot \mathrm{KL}(\pi \,\|\, \pi_{\text{ref}})
 ```
 
 對參考模型的 KL 散度懲罰還在，跟 PPO 一樣。裁剪比例也還在。消失的是那個獨立的評論者網路。

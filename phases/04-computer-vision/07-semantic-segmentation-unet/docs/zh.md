@@ -89,8 +89,8 @@ flowchart LR
 
 在 C 個類別的語意分割裡，模型輸出是 `(N, C, H, W)`。目標是 `(N, H, W)`，值為整數類別 ID。交叉熵和分類的情況一模一樣，只是套用在每一個空間位置上：
 
-```
-Loss = mean over (n, h, w) of -log( softmax(logits[n, :, h, w])[target[n, h, w]] )
+```math
+\text{Loss} = \mathop{\mathrm{mean}}\limits_{(n, h, w)} \left[ -\log\left( \mathop{\mathrm{softmax}}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
 ```
 
 PyTorch 的 `F.cross_entropy` 原生就吃這個形狀，不需要 reshape。
@@ -101,17 +101,19 @@ PyTorch 的 `F.cross_entropy` 原生就吃這個形狀，不需要 reshape。
 
 Dice 損失的解法是直接最佳化預測遮罩與真實遮罩之間的重疊：
 
-```
-Dice(p, y) = 2 * sum(p * y) / (sum(p) + sum(y) + epsilon)
-Dice_loss = 1 - Dice
+```math
+\begin{aligned}
+\mathop{\mathrm{Dice}}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
+\text{Dice}_{\text{loss}} &= 1 - \text{Dice}
+\end{aligned}
 ```
 
 其中 `p` 是某個類別的 sigmoid/softmax 機率圖，`y` 是二元的真實標註遮罩。只有在重疊完美時，損失才會是零。因為它是基於比值的，所以類別不平衡與它無關。
 
 實務上請用**組合損失**：
 
-```
-L = L_cross_entropy + lambda * L_dice       (lambda ~ 1)
+```math
+L = L_{\text{cross\_entropy}} + \lambda \cdot L_{\text{dice}} \qquad (\lambda \approx 1)
 ```
 
 交叉熵在訓練前期提供穩定的梯度；Dice 讓訓練後段專注在真正把遮罩形狀對上。這個組合是醫療影像的預設做法，在任何類別不平衡的資料集上都很難打敗。

@@ -28,7 +28,7 @@
 
 線性迴歸假設輸入 (x) 與輸出 (y) 之間存在線性關係：
 
-```
+```math
 y = wx + b
 ```
 
@@ -37,8 +37,8 @@ y = wx + b
 
 當輸入（特徵）有多個時，這會擴展成：
 
-```
-y = w1*x1 + w2*x2 + ... + wn*xn + b
+```math
+y = w_1 x_1 + w_2 x_2 + \cdots + w_n x_n + b
 ```
 
 或寫成向量形式：`y = w^T * x + b`
@@ -49,8 +49,8 @@ y = w1*x1 + w2*x2 + ... + wn*xn + b
 
 你要怎麼衡量「盡可能接近」？你需要一個單一數字，用來刻畫你的預測錯得多離譜。最常見的選擇是均方誤差（MSE）：
 
-```
-MSE = (1/n) * sum((y_predicted - y_actual)^2)
+```math
+\text{MSE} = \frac{1}{n} \sum (y_{\text{predicted}} - y_{\text{actual}})^2
 ```
 
 為什麼要平方？有兩個理由。第一，它對大誤差的懲罰比對小誤差重得多（誤差 10 的糟糕程度是誤差 1 的 100 倍，不是 10 倍）。第二，平方函式處處平滑可微，這讓最佳化變得很直接。
@@ -76,16 +76,20 @@ flowchart TD
 
 對 y_hat = wx + b 的 MSE 來說：
 
-```
-dMSE/dw = (2/n) * sum((y_hat - y) * x)
-dMSE/db = (2/n) * sum(y_hat - y)
+```math
+\begin{aligned}
+\frac{\partial \text{MSE}}{\partial w} &= \frac{2}{n} \sum (\hat{y} - y) \, x \\
+\frac{\partial \text{MSE}}{\partial b} &= \frac{2}{n} \sum (\hat{y} - y)
+\end{aligned}
 ```
 
 更新規則：
 
-```
-w = w - learning_rate * dMSE/dw
-b = b - learning_rate * dMSE/db
+```math
+\begin{aligned}
+w &= w - \text{learning\_rate} \cdot \frac{\partial \text{MSE}}{\partial w} \\
+b &= b - \text{learning\_rate} \cdot \frac{\partial \text{MSE}}{\partial b}
+\end{aligned}
 ```
 
 學習率控制步伐大小。太大：你會衝過最小值然後發散。太小：訓練久到沒完沒了。常見的起始值：0.01、0.001 或 0.0001。
@@ -94,8 +98,8 @@ b = b - learning_rate * dMSE/db
 
 專就線性迴歸而言，有一個直接的公式能算出最佳權重，完全不需要迭代：
 
-```
-w = (X^T * X)^(-1) * X^T * y
+```math
+w = (X^T X)^{-1} X^T y
 ```
 
 它靠反轉一個矩陣，一步就把 w 解出來。在小資料集上完全夠用。碰上大資料集（數百萬列或數千個特徵）時，梯度下降更受青睞，因為矩陣反轉對特徵數而言是 O(n^3)。
@@ -104,8 +108,8 @@ w = (X^T * X)^(-1) * X^T * y
 
 有多個特徵時，模型變成：
 
-```
-y = w1*x1 + w2*x2 + ... + wn*xn + b
+```math
+y = w_1 x_1 + w_2 x_2 + \cdots + w_n x_n + b
 ```
 
 一切運作方式都一樣：MSE 是成本函式，梯度下降同時更新所有權重。唯一的差別是你在配適一個超平面，而不是一條線。
@@ -116,8 +120,8 @@ y = w1*x1 + w2*x2 + ... + wn*xn + b
 
 那如果關係不是線性的呢？你還是可以用線性迴歸，做法是建立多項式特徵：
 
-```
-y = w1*x + w2*x^2 + w3*x^3 + b
+```math
+y = w_1 x + w_2 x^2 + w_3 x^3 + b
 ```
 
 這依然算是「線性」迴歸，因為模型對權重 (w1, w2, w3) 而言是線性的。你只是拿 x 的非線性特徵來用而已。
@@ -128,9 +132,11 @@ y = w1*x + w2*x^2 + w3*x^3 + b
 
 MSE 告訴你錯得多離譜，但這個數字取決於 y 的尺度。R 平方 (R^2) 提供一個與尺度無關的衡量：
 
-```
-R^2 = 1 - (sum of squared residuals) / (sum of squared deviations from mean)
-    = 1 - SS_res / SS_tot
+```math
+\begin{aligned}
+R^2 &= 1 - \frac{\text{sum of squared residuals}}{\text{sum of squared deviations from mean}} \\
+&= 1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}}
+\end{aligned}
 ```
 
 - R^2 = 1.0：完美預測
@@ -141,8 +147,8 @@ R^2 = 1 - (sum of squared residuals) / (sum of squared deviations from mean)
 
 當特徵很多時，模型可能會給出很大的權重而過度擬合。Ridge 迴歸（L2 正則化）加上一個懲罰項：
 
-```
-Cost = MSE + lambda * sum(w_i^2)
+```math
+\text{Cost} = \text{MSE} + \lambda \sum w_i^2
 ```
 
 這個懲罰項會抑制過大的權重。超參數 lambda 控制其間的取捨：lambda 越大，權重越小、正則化越強。這會在後面的單元裡深入探討。現在你只要知道它存在，以及它為什麼有幫助。

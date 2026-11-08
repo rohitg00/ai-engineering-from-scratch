@@ -69,10 +69,12 @@ flowchart LR
 
 **TF-IDF：** Term Frequency-Inverse Document Frequency（詞頻－逆文件頻率）。依照一個詞在所有文件中有多獨特來給它權重。像「the」這種常見詞權重很低。稀有而有辨識力的詞權重很高。
 
-```
-TF(word, doc) = count(word in doc) / total words in doc
-IDF(word) = log(total docs / docs containing word)
-TF-IDF = TF * IDF
+```math
+\begin{aligned}
+\text{TF}(\text{word}, \text{doc}) &= \frac{\text{count(word in doc)}}{\text{total words in doc}} \\
+\text{IDF}(\text{word}) &= \log \frac{\text{total docs}}{\text{docs containing word}} \\
+\text{TF-IDF} &= \text{TF} \cdot \text{IDF}
+\end{aligned}
 ```
 
 ### 遺漏值

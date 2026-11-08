@@ -67,14 +67,14 @@ Step 10000: Expected distance from origin ~ 100 (sqrt(10000))
 
 馬可夫鏈是一個依照固定機率在各狀態之間轉移的系統。關鍵性質是：下一個狀態只取決於當前狀態，跟歷史無關。
 
-```
-P(X_{t+1} = j | X_t = i, X_{t-1} = ...) = P(X_{t+1} = j | X_t = i)
+```math
+P(X_{t+1} = j \mid X_t = i, X_{t-1} = \ldots) = P(X_{t+1} = j \mid X_t = i)
 ```
 
 這就是馬可夫性質。它意味著你可以用一個狀態轉移矩陣 P 描述整個動態：
 
-```
-P[i][j] = probability of going from state i to state j
+```math
+P[i][j] = \text{probability of going from state } i \text{ to state } j
 ```
 
 P 的每一列加起來都是 1（你總得去某個地方）。
@@ -127,8 +127,8 @@ graph LR
 
 語言模型裡的詞元生成近似是一個馬可夫過程。給定當前的上下文，模型輸出下一個詞元的分布。溫度控制的是分布的尖銳程度：
 
-```
-P(token_i) = exp(logit_i / temperature) / sum(exp(logit_j / temperature))
+```math
+P(\text{token}_i) = \frac{\exp(\text{logit}_i / \text{temperature})}{\sum_j \exp(\text{logit}_j / \text{temperature})}
 ```
 
 - Temperature = 1.0：標準分布
@@ -149,8 +149,8 @@ Top-k 取樣把候選截斷成機率最高的 k 個詞元。Top-p（nucleus）�
 
 在離散模擬裡，你可以這樣近似布朗運動：
 
-```
-B(t + dt) = B(t) + sqrt(dt) * z,    where z ~ N(0, 1)
+```math
+B(t + dt) = B(t) + \sqrt{dt} \, z, \quad \text{where } z \sim \mathcal{N}(0, 1)
 ```
 
 sqrt(dt) 這個縮放很重要。它來自把中央極限定理套用到隨機漫步上的結果。
@@ -159,8 +159,8 @@ sqrt(dt) 這個縮放很重要。它來自把中央極限定理套用到隨機�
 
 梯度下降找的是一個函式的最小值。Langevin 動力學找的則是正比於 exp(-U(x)/T) 的機率分布，其中 U 是能量函式、T 是溫度。
 
-```
-x_{t+1} = x_t - dt * gradient(U(x_t)) + sqrt(2 * T * dt) * z_t
+```math
+x_{t+1} = x_t - dt \, \nabla U(x_t) + \sqrt{2 T \, dt} \, z_t
 ```
 
 有兩股力作用在粒子上：
@@ -171,8 +171,8 @@ x_{t+1} = x_t - dt * gradient(U(x_t)) + sqrt(2 * T * dt) * z_t
 
 **跟擴散模型的關聯。** 擴散模型的前向過程是：
 
-```
-x_t = sqrt(alpha_t) * x_{t-1} + sqrt(1 - alpha_t) * noise
+```math
+x_t = \sqrt{\alpha_t} \, x_{t-1} + \sqrt{1 - \alpha_t} \cdot \text{noise}
 ```
 
 這是一條馬可夫鏈，逐步把資料跟雜訊混在一起。走了足夠多步之後，x_T 就是純粹的高斯雜訊。
@@ -409,14 +409,14 @@ print(f"Approximate mixing time: {1/spectral_gap:.1f} steps")
 
 擴散模型值得特別留意。DDPM（Ho et al., 2020）定義了一條前向馬可夫鏈：
 
-```
-q(x_t | x_{t-1}) = N(x_t; sqrt(1-beta_t) * x_{t-1}, beta_t * I)
+```math
+q(x_t \mid x_{t-1}) = \mathcal{N}\left(x_t; \sqrt{1-\beta_t} \, x_{t-1}, \beta_t I\right)
 ```
 
 其中 beta_t 是雜訊排程。走了 T 步之後，x_T 大約就是 N(0, I)。反向過程則由一個預測雜訊的神經網路來參數化：
 
-```
-p_theta(x_{t-1} | x_t) = N(x_{t-1}; mu_theta(x_t, t), sigma_t^2 * I)
+```math
+p_\theta(x_{t-1} \mid x_t) = \mathcal{N}\left(x_{t-1}; \mu_\theta(x_t, t), \sigma_t^2 I\right)
 ```
 
 生成過程的每一步，都是一條學出來的馬可夫鏈上的一步。理解馬可夫鏈，就是理解擴散模型是怎麼、以及為什麼能生成資料。

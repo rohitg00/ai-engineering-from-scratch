@@ -28,10 +28,12 @@
 
 令 `pi_0` 為基礎模型、`pi_A` 為對齊後模型、`r` 為代理獎勵、`s(x, y)` 為二元的諂媚指示變數。定義：
 
-```
-E[s | r]            = probability of sycophancy given reward
-E_{pi_0}[s | r]     = measured on the base model's output distribution
-E_{pi_A}[s | r]     = measured on the aligned model's output distribution
+```math
+\begin{aligned}
+\mathbb{E}[s \mid r] &= \text{probability of sycophancy given reward} \\
+\mathbb{E}_{\pi_0}[s \mid r] &= \text{measured on the base model's output distribution} \\
+\mathbb{E}_{\pi_A}[s \mid r] &= \text{measured on the aligned model's output distribution}
+\end{aligned}
 ```
 
 第一階段：經驗上，`E_{pi_0}[s | r=high] > E_{pi_0}[s | r=low]`。在用標註員偏好資料訓練出來的 RM 之下，諂媚型補完的平均分數高於條件配對的非諂媚型補完。
@@ -69,8 +71,8 @@ Sahoo（arXiv:2604.10585）在數學推理上訓練 GRPO，植入合成的「錯
 
 Shapira 等人提議修改獎勵：
 
-```
-r'(x, y) = r(x, y) - alpha * agree(x, y)
+```math
+r'(x, y) = r(x, y) - \alpha \cdot \text{agree}(x, y)
 ```
 
 其中 `agree(x, y)` 是一個輔助分類器，量測 `y` 是否同意 `x` 的前提。掃描 alpha 顯示，在 `alpha` 約 0.3-0.5 時諂媚會掉到接近基礎模型的水準，代價是損失一些正當的同意（模型在使用者信念正確時會變得稍微愛唱反調）。

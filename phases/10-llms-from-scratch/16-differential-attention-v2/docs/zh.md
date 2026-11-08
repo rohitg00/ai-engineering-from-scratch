@@ -28,8 +28,8 @@ DIFF V1 有三個問題，讓它進不了前沿的預訓練管線。它的 value
 
 對一個查詢 `q` 與鍵 `K = [k_1, ..., k_N]`，注意力權重是：
 
-```
-w_i = exp(q . k_i / sqrt(d)) / sum_j exp(q . k_j / sqrt(d))
+```math
+w_i = \frac{\exp(q \cdot k_i / \sqrt{d})}{\sum_j \exp(q \cdot k_j / \sqrt{d})}
 ```
 
 沒有任何一個 `w_i` 會是零。如果 `k_i` 與 `q` 完全無關，分數 `q . k_i` 也不會是 0 —— 它會在零附近以變異數 `||q||^2 / d` 波動。經過 softmax 正規化後，每個無關詞元對加權和仍然貢獻 `O(1/N)`。無關詞元的總貢獻是 `O((N-1)/N) = O(1)` —— 這可不是個小量。
@@ -40,15 +40,17 @@ w_i = exp(q . k_i / sqrt(d)) / sum_j exp(q . k_j / sqrt(d))
 
 把每個頭的 Q 與 K 投影切成兩份：Q = (Q_1, Q_2) 與 K = (K_1, K_2)。算出兩張注意力圖：
 
-```
-A_1 = softmax(Q_1 K_1^T / sqrt(d))
-A_2 = softmax(Q_2 K_2^T / sqrt(d))
+```math
+\begin{aligned}
+A_1 &= \mathop{\mathrm{softmax}}(Q_1 K_1^T / \sqrt{d}) \\
+A_2 &= \mathop{\mathrm{softmax}}(Q_2 K_2^T / \sqrt{d})
+\end{aligned}
 ```
 
 輸出：
 
-```
-DiffAttn = (A_1 - lambda * A_2) V
+```math
+\mathop{\mathrm{DiffAttn}} = (A_1 - \lambda \cdot A_2) V
 ```
 
 這個減法會消掉兩張圖共有的那份雜訊分布。如果兩張圖對那 12.7 萬個無關詞元都給出大致均勻的權重（在隨機初始化下必然如此），它們就會互相抵銷。而訊號 —— 集中在少數真正相關詞元上的尖峰權重 —— 只有在兩張圖裡以相同幅度出現時才會被抵銷，而模型一旦訓練起來就不會這樣。

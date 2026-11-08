@@ -45,40 +45,42 @@ where:
 
 **加法。** 實部相加，虛部相加。
 
-```
-(a + bi) + (c + di) = (a + c) + (b + d)i
-
-Example: (3 + 2i) + (1 + 4i) = 4 + 6i
+```math
+\begin{aligned}
+(a + bi) + (c + di) &= (a + c) + (b + d)i \\[4pt]
+\text{Example: } (3 + 2i) + (1 + 4i) &= 4 + 6i
+\end{aligned}
 ```
 
 **乘法。** 用分配律，並記得 i^2 = -1。
 
-```
-(a + bi)(c + di) = ac + adi + bci + bdi^2
-                 = ac + adi + bci - bd
-                 = (ac - bd) + (ad + bc)i
-
-Example: (3 + 2i)(1 + 4i) = 3 + 12i + 2i + 8i^2
-                            = 3 + 14i - 8
-                            = -5 + 14i
+```math
+\begin{aligned}
+(a + bi)(c + di) &= ac + adi + bci + bdi^2 \\
+&= ac + adi + bci - bd \\
+&= (ac - bd) + (ad + bc)i \\[8pt]
+\text{Example: } (3 + 2i)(1 + 4i) &= 3 + 12i + 2i + 8i^2 \\
+&= 3 + 14i - 8 \\
+&= -5 + 14i
+\end{aligned}
 ```
 
 **共軛。** 把虛部的符號反過來。
 
-```
-conjugate of (a + bi) = a - bi
+```math
+\text{conjugate of } (a + bi) = a - bi
 ```
 
 一個複數與它的共軛相乘，結果永遠是實數：
 
-```
+```math
 (a + bi)(a - bi) = a^2 + b^2
 ```
 
 **除法。** 分子與分母同乘分母的共軛。
 
-```
-(a + bi) / (c + di) = (a + bi)(c - di) / (c^2 + d^2)
+```math
+\frac{a + bi}{c + di} = \frac{(a + bi)(c - di)}{c^2 + d^2}
 ```
 
 這會消掉分母裡的虛部，給你一個乾淨的複數。
@@ -99,23 +101,24 @@ z = 0 + 4i  corresponds to the point (0, 4) on the imaginary axis
 
 平面上任何一點，都能用它到原點的距離、以及它與正實軸的夾角來描述。
 
-```
-z = r * (cos(theta) + i*sin(theta))
-
-where:
-  r = |z| = sqrt(a^2 + b^2)     (magnitude, or modulus)
-  theta = atan2(b, a)             (phase, or argument)
+```math
+\begin{aligned}
+z &= r (\cos\theta + i \sin\theta) \\[4pt]
+\text{where: } r &= |z| = \sqrt{a^2 + b^2} \quad \text{(magnitude, or modulus)} \\
+\theta &= \mathop{\mathrm{atan2}}(b, a) \quad \text{(phase, or argument)}
+\end{aligned}
 ```
 
 直角座標形式（a + bi）適合做加法，極座標形式（r, theta）適合做乘法。
 
 **極座標形式下的乘法。** 模相乘，角度相加。
 
-```
-z1 = r1 * e^(i*theta1)
-z2 = r2 * e^(i*theta2)
-
-z1 * z2 = (r1 * r2) * e^(i*(theta1 + theta2))
+```math
+\begin{aligned}
+z_1 &= r_1 e^{i\theta_1} \\
+z_2 &= r_2 e^{i\theta_2} \\[4pt]
+z_1 z_2 &= (r_1 r_2) \, e^{i(\theta_1 + \theta_2)}
+\end{aligned}
 ```
 
 這就是複數為何完美適合表示旋轉的原因。乘上一個模為 1 的複數，就是一次純粹的旋轉。
@@ -124,16 +127,17 @@ z1 * z2 = (r1 * r2) * e^(i*(theta1 + theta2))
 
 連接複指數與三角學的橋樑：
 
-```
-e^(i*theta) = cos(theta) + i*sin(theta)
+```math
+e^{i\theta} = \cos\theta + i \sin\theta
 ```
 
 這是這一課最重要的公式。當 theta = pi：
 
-```
-e^(i*pi) = cos(pi) + i*sin(pi) = -1 + 0i = -1
-
-Therefore: e^(i*pi) + 1 = 0
+```math
+\begin{aligned}
+e^{i\pi} &= \cos\pi + i \sin\pi = -1 + 0i = -1 \\[4pt]
+\text{Therefore: } e^{i\pi} + 1 &= 0
+\end{aligned}
 ```
 
 五個基本常數（e、i、pi、1、0）被連在同一條方程式裡。
@@ -148,14 +152,13 @@ Therefore: e^(i*pi) + 1 = 0
 
 把複數 (x + yi) 乘上 e^(i*theta)，就是把點 (x, y) 繞原點旋轉 theta 角。
 
-```
-Rotation via complex multiplication:
-  (x + yi) * (cos(theta) + i*sin(theta))
-  = (x*cos(theta) - y*sin(theta)) + (x*sin(theta) + y*cos(theta))i
-
-Rotation via matrix multiplication:
-  [cos(theta)  -sin(theta)] [x]   [x*cos(theta) - y*sin(theta)]
-  [sin(theta)   cos(theta)] [y] = [x*sin(theta) + y*cos(theta)]
+```math
+\begin{aligned}
+&\text{Rotation via complex multiplication:} \\
+&\quad (x + yi)(\cos\theta + i \sin\theta) = (x \cos\theta - y \sin\theta) + (x \sin\theta + y \cos\theta)i \\[8pt]
+&\text{Rotation via matrix multiplication:} \\
+&\quad \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} x \cos\theta - y \sin\theta \\ x \sin\theta + y \cos\theta \end{bmatrix}
+\end{aligned}
 ```
 
 兩者結果完全相同。複數乘法「就是」2D 旋轉。旋轉矩陣只是把複數乘法用矩陣記法寫出來而已。
@@ -177,11 +180,12 @@ graph TD
 
 這個旋轉點的實部是 cos(omega*t)，虛部是 sin(omega*t)。一個正弦訊號，就是一個旋轉複數的影子。
 
-```
-e^(i*omega*t) = cos(omega*t) + i*sin(omega*t)
-
-Real part:      cos(omega*t)    -- a cosine wave
-Imaginary part: sin(omega*t)    -- a sine wave
+```math
+\begin{aligned}
+e^{i\omega t} &= \cos(\omega t) + i \sin(\omega t) \\[4pt]
+\text{Real part: } & \cos(\omega t) \quad \text{-- a cosine wave} \\
+\text{Imaginary part: } & \sin(\omega t) \quad \text{-- a sine wave}
+\end{aligned}
 ```
 
 這就是相量表示法。你不必去追一條扭來扭去的正弦波，只要追一支平順旋轉的箭頭。相位平移變成角度偏移，振幅變化變成模的變化，訊號相加變成向量相加。
@@ -190,8 +194,8 @@ Imaginary part: sin(omega*t)    -- a sine wave
 
 N 次單位根是單位圓上 N 個等間距的點：
 
-```
-w_k = e^(2*pi*i*k/N)    for k = 0, 1, 2, ..., N-1
+```math
+w_k = e^{2\pi i k/N} \quad \text{for } k = 0, 1, 2, \ldots, N-1
 ```
 
 N = 4 時，這些根是：1、i、-1、-i（四個羅盤方位）。
@@ -203,8 +207,8 @@ N = 8 時，你會得到那四個羅盤方位，再加上四條對角線方向�
 
 訊號 x[0], x[1], ..., x[N-1] 的離散傅立葉轉換是：
 
-```
-X[k] = sum_{n=0}^{N-1} x[n] * e^(-2*pi*i*k*n/N)
+```math
+X[k] = \sum_{n=0}^{N-1} x[n] \, e^{-2\pi i k n/N}
 ```
 
 每個 X[k] 衡量的是訊號與第 k 個單位根——也就是頻率為 k 的複正弦——相關性有多強。DFT 把一個訊號拆成 N 個旋轉相量，並告訴你每一個的振幅與相位。
@@ -229,9 +233,11 @@ X[k] = sum_{n=0}^{N-1} x[n] * e^(-2*pi*i*k*n/N)
 
 **正弦位置編碼**（原始 Transformer 論文）：
 
-```
-PE(pos, 2i) = sin(pos / 10000^(2i/d))
-PE(pos, 2i+1) = cos(pos / 10000^(2i/d))
+```math
+\begin{aligned}
+PE(pos, 2i) &= \sin\left(pos / 10000^{2i/d}\right) \\
+PE(pos, 2i+1) &= \cos\left(pos / 10000^{2i/d}\right)
+\end{aligned}
 ```
 
 這些 sin 與 cos 成對出現，正是不同頻率複指數的實部與虛部。每個頻率為編碼位置提供不同的「解析度」。低頻變化慢（粗略位置），高頻變化快（精細位置）。合在一起，就給每個位置一組獨一無二的頻率指紋。

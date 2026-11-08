@@ -38,8 +38,8 @@ minimize L(w) where:
 
 最簡單的最佳化器。算出損失對每一個權重的梯度，把每個權重往它自己梯度的反方向移動，步伐大小乘上學習率。
 
-```
-w = w - lr * gradient
+```math
+w = w - \text{lr} \cdot \text{gradient}
 ```
 
 整個演算法就這樣。一行。
@@ -94,9 +94,11 @@ SGD 與小批次帶來的雜訊不是缺陷。它幫助你逃出淺的區域最�
 
 原始版梯度下降只看當下的梯度。如果梯度來回鋸齒（在狹長的山谷裡很常見），進展就會很慢。動量的做法是把過去的梯度累積成一個速度項，藉此解決這個問題。
 
-```
-v = beta * v + gradient
-w = w - lr * v
+```math
+\begin{aligned}
+v &= \beta \cdot v + \text{gradient} \\
+w &= w - \text{lr} \cdot v
+\end{aligned}
 ```
 
 這個比喻是：一顆滾下山坡的球。它不會在每個坑窪處停下來重新起步。它會在方向一致的路上累積速度，並抑制來回震盪。
@@ -127,14 +129,14 @@ Adam（Adaptive Moment Estimation）為每個權重追蹤兩件事：
 1. 一階動量（m）：梯度的移動平均（就像動量）
 2. 二階動量（v）：梯度平方的移動平均（梯度的大小）
 
-```
-m = beta1 * m + (1 - beta1) * gradient
-v = beta2 * v + (1 - beta2) * gradient^2
-
-m_hat = m / (1 - beta1^t)    bias correction
-v_hat = v / (1 - beta2^t)    bias correction
-
-w = w - lr * m_hat / (sqrt(v_hat) + epsilon)
+```math
+\begin{aligned}
+m &= \beta_1 \cdot m + (1 - \beta_1) \cdot \text{gradient} \\
+v &= \beta_2 \cdot v + (1 - \beta_2) \cdot \text{gradient}^2 \\[4pt]
+\hat{m} &= m / (1 - \beta_1^t) \quad \text{bias correction} \\
+\hat{v} &= v / (1 - \beta_2^t) \quad \text{bias correction} \\[4pt]
+w &= w - \text{lr} \cdot \hat{m} / (\sqrt{\hat{v}} + \epsilon)
+\end{aligned}
 ```
 
 除以 `sqrt(v_hat)` 是這裡的關鍵洞見。梯度大的權重會被一個大的數字除（有效步伐變小）。梯度小的權重會被一個小的數字除（有效步伐變大）。每個權重都拿到自己的自適應學習率。
@@ -205,8 +207,8 @@ gradient-descent
 
 Rosenbrock 函式是經典的最佳化基準。它的最小值在 (1, 1)，位在一條狹長彎曲的山谷裡 —— 谷很好找，但很難沿著它走。
 
-```
-f(x, y) = (1 - x)^2 + 100 * (y - x^2)^2
+```math
+f(x, y) = (1 - x)^2 + 100 \cdot (y - x^2)^2
 ```
 
 ```python

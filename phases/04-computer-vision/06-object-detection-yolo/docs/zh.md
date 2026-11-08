@@ -74,11 +74,13 @@ At each grid cell, every anchor emits (tx, ty, tw, th, obj, c_1, ..., c_C).
 
 原始的 `tx, ty, tw, th` 並不是框的座標；它們是回歸目標，畫出來之前要先轉換：
 
-```
-centre x  = (sigmoid(tx) + cell_x) * stride
-centre y  = (sigmoid(ty) + cell_y) * stride
-width     = anchor_w * exp(tw)
-height    = anchor_h * exp(th)
+```math
+\begin{aligned}
+\text{centre } x &= (\sigma(t_x) + \text{cell}_x) \cdot \text{stride} \\
+\text{centre } y &= (\sigma(t_y) + \text{cell}_y) \cdot \text{stride} \\
+\text{width} &= \text{anchor}_w \cdot \exp(t_w) \\
+\text{height} &= \text{anchor}_h \cdot \exp(t_h)
+\end{aligned}
 ```
 
 `sigmoid` 把中心偏移量鎖在網格單元內。`exp` 讓寬度能自由地相對錨框縮放，又不會翻成負值。`stride` 把網格座標放大回像素。從 v2 之後，每個 YOLO 版本的這個解碼步驟都一樣。
@@ -87,8 +89,8 @@ height    = anchor_h * exp(th)
 
 偵測領域裡衡量兩個框有多像的通用指標：
 
-```
-IoU(A, B) = area(A intersect B) / area(A union B)
+```math
+\mathrm{IoU}(A, B) = \frac{\mathop{\mathrm{area}}(A \cap B)}{\mathop{\mathrm{area}}(A \cup B)}
 ```
 
 IoU = 1 表示完全相同；IoU = 0 表示毫無重疊。預測框與真實框之間的 IoU，決定一個預測算不算真正例（一般取 IoU >= 0.5）。兩個預測框之間的 IoU，則是 NMS 用來去重的依據。
@@ -113,11 +115,13 @@ NMS(boxes, scores, iou_threshold):
 
 YOLO 的損失是三個損失加權相加：
 
-```
-L = lambda_coord * L_box(pred, target, where obj=1)
-  + lambda_obj   * L_obj(pred, 1,     where obj=1)
-  + lambda_noobj * L_obj(pred, 0,     where obj=0)
-  + lambda_cls   * L_cls(pred, target, where obj=1)
+```math
+\begin{aligned}
+L = {} & \lambda_{\text{coord}} \cdot L_{\text{box}}(\text{pred}, \text{target}, \text{where obj}=1) \\
++ {} & \lambda_{\text{obj}} \cdot L_{\text{obj}}(\text{pred}, 1, \text{where obj}=1) \\
++ {} & \lambda_{\text{noobj}} \cdot L_{\text{obj}}(\text{pred}, 0, \text{where obj}=0) \\
++ {} & \lambda_{\text{cls}} \cdot L_{\text{cls}}(\text{pred}, \text{target}, \text{where obj}=1)
+\end{aligned}
 ```
 
 只有含物件的網格單元才對邊界框回歸損失與分類損失有貢獻。不含物件的網格單元只貢獻 objectness 損失（教模型保持安靜）。`lambda_noobj` 通常設得很小（約 0.5），因為絕大多數網格單元都是空的，否則負樣本會主宰整個損失。

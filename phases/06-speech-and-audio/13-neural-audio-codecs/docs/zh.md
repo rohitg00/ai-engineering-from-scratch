@@ -129,8 +129,8 @@ acoustic = codes[:, 1:]
 
 以 Mimi 的 12.5 Hz × 8 個碼本、一段 10 秒的語音片段來算：
 
-```
-N_tokens = 10 * 12.5 * 8 = 1000 tokens
+```math
+N_{\text{tokens}} = 10 \times 12.5 \times 8 = 1000 \text{ tokens}
 ```
 
 1000 個詞元對 transformer 來說是微不足道的上下文長度。一個 256M 參數的 transformer，在現代 GPU 上能以毫秒等級生成 10 秒的語音。

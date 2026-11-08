@@ -30,8 +30,8 @@
 
 一個機率為 p 的事件，它的訊息量是：
 
-```
-I(x) = -log(p(x))
+```math
+I(x) = -\log(p(x))
 ```
 
 用 log 以 2 為底得到位元（bits）。用自然對數得到 nats。想法相同，只是單位不同。
@@ -50,15 +50,17 @@ Certain event      1.0            0.0
 
 熵是一個分布中所有可能結果的期望驚訝度。
 
-```
-H(P) = -sum( p(x) * log(p(x)) )  for all x
+```math
+H(P) = -\sum_{x} p(x) \log(p(x))
 ```
 
 對一個二元變數來說，公平硬幣有最大的熵：1 位元。偏差硬幣（99% 正面）的熵很低：0.08 位元。你早就知道會發生什麼，所以每一次拋擲幾乎沒告訴你任何事。
 
-```
-Fair coin:    H = -(0.5 * log2(0.5) + 0.5 * log2(0.5)) = 1.0 bit
-Biased coin:  H = -(0.99 * log2(0.99) + 0.01 * log2(0.01)) = 0.08 bits
+```math
+\begin{aligned}
+\text{Fair coin:} \quad & H = -(0.5 \log_2(0.5) + 0.5 \log_2(0.5)) = 1.0 \text{ bit} \\
+\text{Biased coin:} \quad & H = -(0.99 \log_2(0.99) + 0.01 \log_2(0.01)) = 0.08 \text{ bits}
+\end{aligned}
 ```
 
 熵衡量一個分布中無法再削減的不確定性。你不可能壓縮到比它更低。
@@ -67,16 +69,16 @@ Biased coin:  H = -(0.99 * log2(0.99) + 0.01 * log2(0.01)) = 0.08 bits
 
 交叉熵衡量的是：當你用分布 Q 去編碼實際上來自分布 P 的事件時，平均的驚訝度有多大。
 
-```
-H(P, Q) = -sum( p(x) * log(q(x)) )  for all x
+```math
+H(P, Q) = -\sum_{x} p(x) \log(q(x))
 ```
 
 P 是真實分布（標籤）。Q 是你模型的預測。如果 Q 完全符合 P，交叉熵就等於熵。只要有任何落差，它就會變大。
 
 在分類問題裡，P 是一個 one-hot 向量（正確類別的機率是 1，其他全是 0）。這讓交叉熵簡化成：
 
-```
-H(P, Q) = -log(q(true_class))
+```math
+H(P, Q) = -\log(q(\text{true\_class}))
 ```
 
 這就是分類問題交叉熵損失的全部公式。把正確類別的預測機率最大化就對了。
@@ -85,9 +87,11 @@ H(P, Q) = -log(q(true_class))
 
 KL 散度衡量的是：用 Q 取代 P 會讓你多付出多少額外的驚訝度。
 
-```
-D_KL(P || Q) = sum( p(x) * log(p(x) / q(x)) )  for all x
-             = H(P, Q) - H(P)
+```math
+\begin{aligned}
+D_{KL}(P \,\|\, Q) &= \sum_{x} p(x) \log(p(x) / q(x)) \\
+&= H(P, Q) - H(P)
+\end{aligned}
 ```
 
 交叉熵就是熵加上 KL 散度。既然真實分布的熵在訓練過程中是常數，最小化交叉熵就等於最小化 KL 散度。你是在把模型的分布推向真實分布。
@@ -98,9 +102,11 @@ KL 散度不對稱：D_KL(P || Q) != D_KL(Q || P)。它不是真正的距離度�
 
 互資訊衡量的是：知道其中一個變數，能告訴你關於另一個變數多少事。
 
-```
-I(X; Y) = H(X) - H(X|Y)
-        = H(X) + H(Y) - H(X, Y)
+```math
+\begin{aligned}
+I(X; Y) &= H(X) - H(X \mid Y) \\
+&= H(X) + H(Y) - H(X, Y)
+\end{aligned}
 ```
 
 如果 X 與 Y 獨立，互資訊是零。知道一個，對另一個毫無幫助。如果它們完全相關，互資訊就等於任一個變數的熵。
@@ -111,8 +117,8 @@ I(X; Y) = H(X) - H(X|Y)
 
 H(Y|X) 衡量的是：在你觀察到 X 之後，關於 Y 還剩下多少不確定性。
 
-```
-H(Y|X) = H(X,Y) - H(X)
+```math
+H(Y \mid X) = H(X,Y) - H(X)
 ```
 
 兩種極端：
@@ -121,8 +127,8 @@ H(Y|X) = H(X,Y) - H(X)
 
 條件熵永遠非負，而且不會超過 H(Y)：
 
-```
-0 <= H(Y|X) <= H(Y)
+```math
+0 \le H(Y \mid X) \le H(Y)
 ```
 
 在機器學習裡，條件熵出現在決策樹中。每一次分裂時，演算法都會挑出讓 H(Y|X) 最小的特徵 X ——也就是最能消除標籤 Y 不確定性的那個特徵。
@@ -131,14 +137,14 @@ H(Y|X) = H(X,Y) - H(X)
 
 H(X,Y) 是 X 與 Y 合起來看的聯合分布的熵。
 
-```
-H(X,Y) = -sum sum p(x,y) * log(p(x,y))   for all x, y
+```math
+H(X,Y) = -\sum_{x} \sum_{y} p(x,y) \log(p(x,y))
 ```
 
 關鍵性質：
 
-```
-H(X,Y) <= H(X) + H(Y)
+```math
+H(X,Y) \le H(X) + H(Y)
 ```
 
 等號在 X 與 Y 獨立時成立。如果它們共用了一些資訊，聯合熵就會小於各自熵的總和。「少掉」的那部分熵，恰好就是互資訊。
@@ -175,11 +181,13 @@ graph TD
 
 互資訊 I(X;Y) 量化的是：知道其中一個變數，能減少多少關於另一個變數的不確定性。
 
-```
-I(X;Y) = H(X) - H(X|Y)
-       = H(Y) - H(Y|X)
-       = H(X) + H(Y) - H(X,Y)
-       = sum sum p(x,y) * log(p(x,y) / (p(x) * p(y)))
+```math
+\begin{aligned}
+I(X;Y) &= H(X) - H(X \mid Y) \\
+&= H(Y) - H(Y \mid X) \\
+&= H(X) + H(Y) - H(X,Y) \\
+&= \sum_{x} \sum_{y} p(x,y) \log\left(\frac{p(x,y)}{p(x) \, p(y)}\right)
+\end{aligned}
 ```
 
 性質：
@@ -206,8 +214,8 @@ I(X;Y) = H(X) - H(X|Y)
 
 標準的分類用的是硬目標：[0, 0, 1, 0]。正確類別拿到機率 1，其他全都是 0。標籤平滑把它換成軟目標：
 
-```
-soft_target = (1 - epsilon) * hard_target + epsilon / num_classes
+```math
+\text{soft\_target} = (1 - \epsilon) \cdot \text{hard\_target} + \epsilon / \text{num\_classes}
 ```
 
 當 epsilon = 0.1、類別數為 4 時：
@@ -224,8 +232,8 @@ soft_target = (1 - epsilon) * hard_target + epsilon / num_classes
 
 加上標籤平滑的交叉熵損失變成：
 
-```
-L = (1 - epsilon) * CE(hard_target, prediction) + epsilon * H_uniform(prediction)
+```math
+L = (1 - \epsilon) \cdot \text{CE}(\text{hard\_target}, \text{prediction}) + \epsilon \cdot H_{\text{uniform}}(\text{prediction})
 ```
 
 第二項會懲罰離均勻分布太遠的預測——一種直接針對自信程度的正則化。
@@ -238,10 +246,12 @@ L = (1 - epsilon) * CE(hard_target, prediction) + epsilon * H_uniform(prediction
 
 **最大概似觀點。** 對 N 個訓練樣本，其真實類別為 y_i：
 
-```
-Likelihood     = product( q(y_i) )
-Log-likelihood = sum( log(q(y_i)) )
-Negative log-likelihood = -sum( log(q(y_i)) )
+```math
+\begin{aligned}
+\text{Likelihood} &= \prod_i q(y_i) \\
+\text{Log-likelihood} &= \sum_i \log(q(y_i)) \\
+\text{Negative log-likelihood} &= -\sum_i \log(q(y_i))
+\end{aligned}
 ```
 
 最後那一行就是交叉熵損失。最小化交叉熵 = 在你的模型下最大化訓練資料的概似。
@@ -264,9 +274,11 @@ log base 10  -> hartleys  (rarely used)
 
 困惑度是交叉熵的指數。它告訴你：模型實際上是在多少個等可能的選項之間猶豫不決。
 
-```
-Perplexity = 2^H(P,Q)   (if using bits)
-Perplexity = e^H(P,Q)   (if using nats)
+```math
+\begin{aligned}
+\text{Perplexity} &= 2^{H(P,Q)} \quad \text{(if using bits)} \\
+\text{Perplexity} &= e^{H(P,Q)} \quad \text{(if using nats)}
+\end{aligned}
 ```
 
 一個困惑度為 50 的語言模型，平均而言就像是必須從 50 個可能的下一個詞元裡均勻挑選那樣困惑。越低越好。

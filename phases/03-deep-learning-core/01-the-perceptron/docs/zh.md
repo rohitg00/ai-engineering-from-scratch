@@ -40,9 +40,8 @@ graph LR
 
 階梯函式非常粗暴：如果加權總和加上偏差項 >= 0，就輸出 1，否則輸出 0。
 
-```
-step(z) = 1  if z >= 0
-           0  if z < 0
+```math
+\text{step}(z) = \begin{cases} 1 & \text{if } z \ge 0 \\ 0 & \text{if } z < 0 \end{cases}
 ```
 
 這是一個線性分類器。權重與偏差項定義出一條線（在更高維度則是一個超平面），把輸入空間切成兩個區域。

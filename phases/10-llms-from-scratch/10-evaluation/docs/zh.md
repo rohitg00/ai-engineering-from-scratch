@@ -67,8 +67,8 @@ graph TD
 
 困惑度衡量一個模型對某段詞元序列有多驚訝。形式上，它是平均負對數概似取指數：
 
-```
-PPL = exp(-1/N * sum(log P(token_i | context)))
+```math
+\text{PPL} = \exp\left(-\frac{1}{N} \sum_i \log P(\text{token}_i \mid \text{context})\right)
 ```
 
 困惑度 10 的意思是，模型平均而言在每個詞元位置上的不確定程度，相當於要從 10 個選項裡均勻亂猜。愈低愈好。GPT-2 在 WikiText-103 上的困惑度約 30。GPT-3 約 20。Llama 3 8B 約 7。

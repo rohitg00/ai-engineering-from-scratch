@@ -34,8 +34,8 @@
 
 L1 範數把所有分量的絕對值加起來。
 
-```
-||x||_1 = |x_1| + |x_2| + ... + |x_n|
+```math
+\lVert x \rVert_1 = |x_1| + |x_2| + \cdots + |x_n|
 ```
 
 它之所以叫曼哈頓距離，是因為它衡量的是你在城市棋盤格街道上走的路程——只能沿著座標軸方向前進，不能走對角線。
@@ -63,8 +63,8 @@ On a grid, you walk 3 blocks east and 4 blocks north.
 
 L2 範數就是直線距離：各分量平方和的平方根。
 
-```
-||x||_2 = sqrt(x_1^2 + x_2^2 + ... + x_n^2)
+```math
+\lVert x \rVert_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}
 ```
 
 這就是你在幾何課學到的那個距離。n 維空間裡的畢氏定理。
@@ -89,17 +89,19 @@ The straight line, cutting diagonally through the grid.
 
 與損失函式的關聯：均方誤差（MSE）是 L2 距離平方的平均。平方讓大誤差受到的懲罰遠重於小誤差。
 
-```
-MAE (L1 loss):  |y - y_hat|         Linear penalty. Robust to outliers.
-MSE (L2 loss):  (y - y_hat)^2       Quadratic penalty. Sensitive to outliers.
+```math
+\begin{aligned}
+\text{MAE (L1 loss):} \quad & |y - \hat{y}| && \text{Linear penalty. Robust to outliers.} \\
+\text{MSE (L2 loss):} \quad & (y - \hat{y})^2 && \text{Quadratic penalty. Sensitive to outliers.}
+\end{aligned}
 ```
 
 ### Lp 範數：整個家族
 
 L1 與 L2 都是 Lp 範數的特例：
 
-```
-||x||_p = (|x_1|^p + |x_2|^p + ... + |x_n|^p)^(1/p)
+```math
+\lVert x \rVert_p = (|x_1|^p + |x_2|^p + \cdots + |x_n|^p)^{1/p}
 ```
 
 不同的 p 值會產生不同形狀的「單位球」（也就是所有與原點距離為 1 的點所構成的集合）：
@@ -115,17 +117,18 @@ p=inf:  Square/hypercube   (flat sides along axes)
 
 當 p 趨於無窮大，Lp 範數會收斂到絕對值最大的那個分量。
 
-```
-||x||_inf = max(|x_1|, |x_2|, ..., |x_n|)
+```math
+\lVert x \rVert_\infty = \max(|x_1|, |x_2|, \ldots, |x_n|)
 ```
 
 兩點之間的距離，由它們差異最大的那一個維度決定。其他維度全部被忽略。
 
-```
-Point A = (1, 1)
-Point B = (4, 5)
-
-L-inf distance = max(|4-1|, |5-1|) = max(3, 4) = 4
+```math
+\begin{aligned}
+\text{Point } A &= (1, 1) \\
+\text{Point } B &= (4, 5) \\[6pt]
+L_\infty \text{ distance} &= \max(|4-1|, |5-1|) = \max(3, 4) = 4
+\end{aligned}
 ```
 
 什麼時候用無窮範數：
@@ -138,19 +141,20 @@ L-inf distance = max(|4-1|, |5-1|) = max(3, 4) = 4
 
 餘弦相似度衡量兩個向量之間的夾角，忽略它們的大小。
 
-```
-cos_sim(a, b) = (a . b) / (||a||_2 * ||b||_2)
+```math
+\text{cos\_sim}(a, b) = \frac{a \cdot b}{\lVert a \rVert_2 \, \lVert b \rVert_2}
 ```
 
 它的範圍從 -1（方向相反）到 +1（方向相同）。互相垂直的向量餘弦相似度為 0。
 
 餘弦距離把它轉成距離：cosine_distance = 1 - cosine_similarity。範圍從 0（方向完全相同）到 2（方向完全相反）。
 
-```
-a = (1, 0)    b = (1, 1)
-
-cos_sim = (1*1 + 0*1) / (1 * sqrt(2)) = 1/sqrt(2) = 0.707
-cos_dist = 1 - 0.707 = 0.293
+```math
+\begin{aligned}
+& a = (1, 0) \qquad b = (1, 1) \\[6pt]
+& \text{cos\_sim} = \frac{1 \cdot 1 + 0 \cdot 1}{1 \cdot \sqrt{2}} = \frac{1}{\sqrt{2}} = 0.707 \\
+& \text{cos\_dist} = 1 - 0.707 = 0.293
+\end{aligned}
 ```
 
 餘弦為什麼在 NLP 與嵌入領域一統天下：在文字裡，文件長度不該影響相似度。一篇談貓的文章，就算長度是另一篇談貓的文章的兩倍，兩者仍然應該算「相似」。餘弦相似度忽略大小（長度），只在意方向。兩篇詞彙分布相同、長度不同的文件會指向同一個方向，餘弦相似度是 1.0。
@@ -166,16 +170,17 @@ cos_dist = 1 - 0.707 = 0.293
 
 兩個向量的內積是：
 
-```
-a . b = a_1*b_1 + a_2*b_2 + ... + a_n*b_n
-      = ||a|| * ||b|| * cos(angle)
+```math
+\begin{aligned}
+a \cdot b &= a_1 b_1 + a_2 b_2 + \cdots + a_n b_n \\
+&= \lVert a \rVert \, \lVert b \rVert \cos(\text{angle})
+\end{aligned}
 ```
 
 餘弦相似度就是內積除以兩者的大小做正規化。當兩個向量都已經正規化成單位長度（大小 = 1），內積與餘弦相似度就完全相同。
 
-```
-If ||a|| = 1 and ||b|| = 1:
-    a . b = cos(angle between a and b)
+```math
+\text{If } \lVert a \rVert = 1 \text{ and } \lVert b \rVert = 1: \quad a \cdot b = \cos(\text{angle between } a \text{ and } b)
 ```
 
 它們何時會不同：內積包含了大小的資訊。大小較大的向量會拿到較高的內積分數。這在某些檢索系統裡很有用——你希望「熱門」項目排得更前面，大小就成了品質或重要性的隱含訊號。
@@ -202,8 +207,8 @@ Both agree on direction, but dot product also reflects magnitude.
 
 馬氏距離把資料的共變異結構考慮進來。
 
-```
-d_M(x, y) = sqrt((x - y)^T * S^(-1) * (x - y))
+```math
+d_M(x, y) = \sqrt{(x - y)^T S^{-1} (x - y)}
 ```
 
 其中 S 是資料的共變異矩陣。
@@ -231,8 +236,8 @@ because it accounts for the height-weight correlation.
 
 Jaccard 相似度衡量兩個集合之間的重疊程度。
 
-```
-J(A, B) = |A intersect B| / |A union B|
+```math
+J(A, B) = \frac{|A \cap B|}{|A \cup B|}
 ```
 
 範圍從 0（完全不重疊）到 1（兩集合相同）。Jaccard 距離 = 1 - Jaccard 相似度。
@@ -294,14 +299,14 @@ Edit distance = 3
 
 KL 散度衡量一個機率分布與另一個分布差多少。單元 09 會細講，但它該出現在這裡，因為大家都把它當「距離」用，儘管它並不是。
 
-```
-D_KL(P || Q) = sum(p(x) * log(p(x) / q(x)))
+```math
+D_{KL}(P \,\|\, Q) = \sum_x p(x) \log\frac{p(x)}{q(x)}
 ```
 
 關鍵性質：KL 散度不對稱。
 
-```
-D_KL(P || Q) != D_KL(Q || P)
+```math
+D_{KL}(P \,\|\, Q) \ne D_{KL}(Q \,\|\, P)
 ```
 
 這表示它不滿足距離度量最基本的要求。它也不滿足三角不等式。它是一種散度，不是距離。
@@ -320,14 +325,14 @@ D_KL(P || Q) != D_KL(Q || P)
 
 Wasserstein 距離衡量把一個機率分布變成另一個所需的最小「工作量」。可以這樣想：如果一個分布是一堆土，另一個是一個坑，你得搬多少土、搬多遠？
 
-```
-W(P, Q) = inf over all transport plans gamma of E[d(x, y)]
+```math
+W(P, Q) = \inf_{\gamma} \mathbb{E}[d(x, y)] \quad \text{(over all transport plans } \gamma\text{)}
 ```
 
 對一維分布來說，它會簡化成兩者累積分布函式之差的絕對值積分：
 
-```
-W_1(P, Q) = integral |CDF_P(x) - CDF_Q(x)| dx
+```math
+W_1(P, Q) = \int |\text{CDF}_P(x) - \text{CDF}_Q(x)| \, dx
 ```
 
 Wasserstein 為什麼重要：

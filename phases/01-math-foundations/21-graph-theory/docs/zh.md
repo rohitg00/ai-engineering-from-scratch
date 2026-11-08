@@ -51,9 +51,8 @@
 
 鄰接矩陣 A 是最核心的表示法。對一張有 n 個節點的圖：
 
-```
-A[i][j] = 1    if there is an edge from node i to node j
-A[i][j] = 0    otherwise
+```math
+A[i][j] = \begin{cases} 1 & \text{if there is an edge from node } i \text{ to node } j \\ 0 & \text{otherwise} \end{cases}
 ```
 
 對無向圖來說，A 是對稱的：A[i][j] = A[j][i]。對有權重圖來說，A[i][j] 就是邊 (i, j) 的權重。
@@ -77,9 +76,11 @@ A = [[0, 1, 1],
 
 度矩陣 D 是對角矩陣：
 
-```
-D[i][i] = degree of node i
-D[i][j] = 0    for i != j
+```math
+\begin{aligned}
+D[i][i] &= \text{degree of node } i \\
+D[i][j] &= 0 \quad \text{for } i \ne j
+\end{aligned}
 ```
 
 上面那個三角形的例子：D = diag(2, 2, 2)，因為每個節點都連到另外兩個節點。
@@ -136,10 +137,8 @@ L = D - A。譜圖論裡最重要的矩陣。
 
 以三角形為例：
 
-```
-D = [[2, 0, 0],    A = [[0, 1, 1],    L = [[2, -1, -1],
-     [0, 2, 0],         [1, 0, 1],         [-1, 2, -1],
-     [0, 0, 2]]         [1, 1, 0]]         [-1, -1,  2]]
+```math
+D = \begin{bmatrix} 2 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 2 \end{bmatrix} \qquad A = \begin{bmatrix} 0 & 1 & 1 \\ 1 & 0 & 1 \\ 1 & 1 & 0 \end{bmatrix} \qquad L = \begin{bmatrix} 2 & -1 & -1 \\ -1 & 2 & -1 \\ -1 & -1 & 2 \end{bmatrix}
 ```
 
 拉普拉斯矩陣有幾個很了不起的性質：
@@ -187,20 +186,20 @@ graph TD
 
 圖神經網路的核心運算。每個節點從鄰居收集訊息、把它們聚合起來，然後更新自己的狀態。
 
-```
-h_v^(k+1) = UPDATE(h_v^(k), AGGREGATE({h_u^(k) : u in neighbors(v)}))
+```math
+h_v^{(k+1)} = \text{UPDATE}\left(h_v^{(k)}, \text{AGGREGATE}\left(\{h_u^{(k)} : u \in \text{neighbors}(v)\}\right)\right)
 ```
 
 最簡單的形式裡，AGGREGATE = 平均，UPDATE = 線性變換 + 活化函式：
 
-```
-h_v^(k+1) = sigma(W * mean({h_u^(k) : u in neighbors(v)}))
+```math
+h_v^{(k+1)} = \sigma\left(W \cdot \text{mean}\left(\{h_u^{(k)} : u \in \text{neighbors}(v)\}\right)\right)
 ```
 
 這其實就是矩陣乘法換了個樣子。如果 H 是所有節點特徵組成的矩陣，A 是鄰接矩陣：
 
-```
-H^(k+1) = sigma(A_norm * H^(k) * W)
+```math
+H^{(k+1)} = \sigma\left(A_{\text{norm}} H^{(k)} W\right)
 ```
 
 其中 A_norm 是正規化的鄰接矩陣（每一列加起來等於 1）。
@@ -464,8 +463,8 @@ print(f"Cluster B: {group_b}")
 
 GNN 值得特別提一下。GCN（Kipf & Welling, 2017）裡的圖卷積運算，用的是加上自迴圈後的鄰接矩陣 A_hat = A + I：
 
-```text
-H^(l+1) = sigma(D_hat^(-1/2) * A_hat * D_hat^(-1/2) * H^(l) * W^(l))
+```math
+H^{(l+1)} = \sigma\left(\hat{D}^{-1/2} \hat{A} \hat{D}^{-1/2} H^{(l)} W^{(l)}\right)
 ```
 
 其中 A_hat = A + I（鄰接矩陣加上自迴圈），D_hat 是 A_hat 的度矩陣。自迴圈確保每個節點在聚合時也算進自己的特徵。這正是帶對稱正規化的訊息傳遞。D_hat^(-1/2) * A_hat * D_hat^(-1/2) 就是正規化鄰接矩陣。拉普拉斯矩陣之所以會出現，是因為這種正規化跟 L_sym = I - D^(-1/2) * A * D^(-1/2) 有關。懂了拉普拉斯矩陣，就懂了 GCN 為什麼有效。

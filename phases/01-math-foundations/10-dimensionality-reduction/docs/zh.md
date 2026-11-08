@@ -171,16 +171,18 @@ Kernel PCA 與標準 PCA 的取捨：
 
 對 PCA 來說，重建誤差跟解釋變異量之間有個很乾淨的關係：
 
-```
-Reconstruction error = sum of eigenvalues NOT included
-Total variance = sum of ALL eigenvalues
-Fraction lost = (sum of dropped eigenvalues) / (sum of all eigenvalues)
+```math
+\begin{aligned}
+\text{Reconstruction error} &= \text{sum of eigenvalues NOT included} \\
+\text{Total variance} &= \text{sum of ALL eigenvalues} \\
+\text{Fraction lost} &= \frac{\text{sum of dropped eigenvalues}}{\text{sum of all eigenvalues}}
+\end{aligned}
 ```
 
 每個成分的解釋變異量比例是：
 
-```
-explained_ratio_k = eigenvalue_k / sum(all eigenvalues)
+```math
+\text{explained\_ratio}_k = \frac{\text{eigenvalue}_k}{\sum \text{all eigenvalues}}
 ```
 
 把累積解釋變異量對成分個數畫出來，就得到那條「肘部」曲線。成分個數的正確答案在這幾個地方：

@@ -100,20 +100,20 @@ MTEB（Massive Text Embedding Benchmark）v2 涵蓋檢索、分類、分群、�
 
 **餘弦相似度**：兩個向量夾角的餘弦值。範圍從 -1（相反）到 1（方向相同）。忽略長度 —— 一個 10 個字的句子和一份 500 字的文件，只要方向相同就能拿到 1.0。這是 90% 場景的預設選擇。
 
-```
-cosine_sim(a, b) = dot(a, b) / (||a|| * ||b||)
+```math
+\mathop{\mathrm{cosine\_sim}}(a, b) = \frac{\mathop{\mathrm{dot}}(a, b)}{\lVert a \rVert \cdot \lVert b \rVert}
 ```
 
 **點積**：兩個向量的原始內積。當向量已正規化（單位長度）時，與餘弦相似度完全相同，而且計算更快。OpenAI 的嵌入是正規化過的，所以點積和餘弦給出相同的排序。
 
-```
-dot(a, b) = sum(a_i * b_i)
+```math
+\mathop{\mathrm{dot}}(a, b) = \sum_i a_i b_i
 ```
 
 **歐幾里得（L2）距離**：向量空間裡的直線距離。越小 = 越相似。對長度差異敏感。當空間中的絕對位置（而不只是方向）有意義時再用它。
 
-```
-L2(a, b) = sqrt(sum((a_i - b_i)^2))
+```math
+\mathop{\mathrm{L2}}(a, b) = \sqrt{\sum_i (a_i - b_i)^2}
 ```
 
 該用哪一個：

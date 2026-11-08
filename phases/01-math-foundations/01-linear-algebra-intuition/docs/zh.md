@@ -71,12 +71,13 @@ graph LR
 
 兩個向量的內積告訴你它們有多相似。
 
-```
-a · b = a₁×b₁ + a₂×b₂ + ... + aₙ×bₙ
-
-Same direction:      a · b > 0  (similar)
-Perpendicular:       a · b = 0  (unrelated)
-Opposite direction:  a · b < 0  (dissimilar)
+```math
+\begin{aligned}
+a \cdot b &= a_1 \times b_1 + a_2 \times b_2 + \cdots + a_n \times b_n \\[4pt]
+\text{Same direction:} \quad a \cdot b &> 0 \quad \text{(similar)} \\
+\text{Perpendicular:} \quad a \cdot b &= 0 \quad \text{(unrelated)} \\
+\text{Opposite direction:} \quad a \cdot b &< 0 \quad \text{(dissimilar)}
+\end{aligned}
 ```
 
 搜尋引擎、推薦系統與 RAG 就是這樣運作的 —— 找出內積大的向量。
@@ -121,8 +122,8 @@ v1 與 v2 互相獨立 —— 兩者既不是彼此的純量倍數，也不是�
 
 把向量 **a** 投影到向量 **b** 上，得到的是 **a** 在 **b** 方向上的分量：
 
-```
-proj_b(a) = (a dot b / b dot b) * b
+```math
+\mathop{\mathrm{proj}}_b(a) = \frac{a \cdot b}{b \cdot b} \, b
 ```
 
 殘差 (a - proj_b(a)) 與 b 垂直。這種正交分解是最小平方擬合的基礎。

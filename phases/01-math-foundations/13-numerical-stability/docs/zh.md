@@ -141,20 +141,22 @@ log(1e-46) = -inf        (input underflowed to 0, then log(0) = -inf)
 
 技巧是：在取指數之前先減掉最大值。
 
-```
-log(sum(exp(x_i))) = max(x) + log(sum(exp(x_i - max(x))))
+```math
+\log\left(\sum_i \exp(x_i)\right) = \max(x) + \log\left(\sum_i \exp(x_i - \max(x))\right)
 ```
 
 為什麼行得通：減掉 `max(x)` 之後，最大的指數項是 `exp(0) = 1`。不可能溢位。總和裡至少有一項是 1，所以總和至少是 1，而 `log(1) = 0`。也不可能下溢成 `-inf`。
 
 證明：
 
-```
-log(sum(exp(x_i)))
-= log(sum(exp(x_i - c + c)))                    (add and subtract c)
-= log(sum(exp(x_i - c) * exp(c)))               (exp(a+b) = exp(a)*exp(b))
-= log(exp(c) * sum(exp(x_i - c)))               (factor out exp(c))
-= c + log(sum(exp(x_i - c)))                    (log(a*b) = log(a) + log(b))
+```math
+\begin{aligned}
+& \log\left(\sum_i \exp(x_i)\right) \\
+&= \log\left(\sum_i \exp(x_i - c + c)\right) && \text{(add and subtract } c\text{)} \\
+&= \log\left(\sum_i \exp(x_i - c) \cdot \exp(c)\right) && (\exp(a+b) = \exp(a) \cdot \exp(b)) \\
+&= \log\left(\exp(c) \cdot \sum_i \exp(x_i - c)\right) && \text{(factor out } \exp(c)\text{)} \\
+&= c + \log\left(\sum_i \exp(x_i - c)\right) && (\log(a \cdot b) = \log(a) + \log(b))
+\end{aligned}
 ```
 
 令 `c = max(x)`，溢位就消失了。
@@ -170,8 +172,8 @@ log(sum(exp(x_i)))
 
 softmax 把 logits 轉成機率：
 
-```
-softmax(x_i) = exp(x_i) / sum(exp(x_j))
+```math
+\mathop{\mathrm{softmax}}(x_i) = \frac{\exp(x_i)}{\sum_j \exp(x_j)}
 ```
 
 沒有這個技巧，[100, 101, 102] 這樣的 logits 會造成溢位：
@@ -242,8 +244,8 @@ math.isfinite(x)    # True if x is neither nan nor inf
 
 中心差分公式：
 
-```
-df/dx ~= (f(x + h) - f(x - h)) / (2h)
+```math
+\frac{df}{dx} \approx \frac{f(x + h) - f(x - h)}{2h}
 ```
 
 它的精度是 O(h^2)，遠好過只有 O(h) 的前向差分 `(f(x+h) - f(x)) / h`。
@@ -252,8 +254,8 @@ h 怎麼選：太大，近似就不準。太小，災難性抵銷會毀掉答案
 
 檢查方式：算出解析梯度和數值梯度之間的相對差異。
 
-```
-relative_error = |grad_analytical - grad_numerical| / max(|grad_analytical|, |grad_numerical|, 1e-8)
+```math
+\text{relative\_error} = \frac{\lvert \text{grad}_{\text{analytical}} - \text{grad}_{\text{numerical}} \rvert}{\max(\lvert \text{grad}_{\text{analytical}} \rvert, \lvert \text{grad}_{\text{numerical}} \rvert, 10^{-8})}
 ```
 
 經驗法則：
@@ -350,8 +352,8 @@ Layer 50: values in [0, inf]
 
 正規化在每一層都把激活值重新置中、重新縮放：
 
-```
-LayerNorm(x) = (x - mean(x)) / (std(x) + epsilon) * gamma + beta
+```math
+\mathop{\mathrm{LayerNorm}}(x) = \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x) + \epsilon} \cdot \gamma + \beta
 ```
 
 其中的 `epsilon`（通常是 1e-5）避免在所有激活值都相同時除以零。可學習的參數 `gamma` 和 `beta` 讓網路能還原它需要的任何尺度。
