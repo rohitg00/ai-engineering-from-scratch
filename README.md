@@ -28,7 +28,7 @@ Free, open source, MIT. Learn on the website, with a coding agent, or by running
 </p>
 
 ## Demo code
-- [ai-engineering-from-scratch-demo](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
+- [`ai-engineering-from-scratch-demo`](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
 
 
 <details>

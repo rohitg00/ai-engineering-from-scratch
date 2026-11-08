@@ -29,6 +29,10 @@ Miễn phí, mã nguồn mở, giấy phép MIT. Học trên trang web, cùng t�
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Trang web"></a>
 </p>
 
+## Mã minh họa
+- [`ai-engineering-from-scratch-demo`](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
+
+
 <details>
 <summary>Đọc bằng ngôn ngữ của bạn</summary>
 

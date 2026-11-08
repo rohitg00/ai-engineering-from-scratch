@@ -29,6 +29,10 @@ Gratis, open source, met MIT-licentie. Leer op de webpagina, met een programmeer
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Webpagina"></a>
 </p>
 
+## Democode
+- [`ai-engineering-from-scratch-demo`](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
+
+
 <details>
 <summary>Lees in je eigen taal</summary>
 

@@ -29,8 +29,8 @@ Kostenlos, quelloffen, MIT-lizenziert. Lerne auf der Webseite, mit einem Program
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Webseite"></a>
 </p>
 
-## Demo code
-- [ai-engineering-from-scratch-demo](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
+## Democode
+- [`ai-engineering-from-scratch-demo`](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
 
 
 <details>

@@ -29,6 +29,10 @@ Zdarma, s otevřeným zdrojovým kódem, pod licencí MIT. Učte se na webu, s p
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Webové stránky"></a>
 </p>
 
+## Ukázkový kód
+- [`ai-engineering-from-scratch-demo`](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
+
+
 <details>
 <summary>Číst ve svém jazyce</summary>
 

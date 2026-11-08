@@ -29,6 +29,10 @@ Gratis, åben kildekode, MIT-licens. Lær på hjemmesiden, med en kodeagent elle
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Hjemmeside"></a>
 </p>
 
+## Demokode
+- [`ai-engineering-from-scratch-demo`](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
+
+
 <details>
 <summary>Læs på dit sprog</summary>
 

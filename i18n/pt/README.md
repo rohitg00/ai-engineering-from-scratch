@@ -29,8 +29,8 @@ Gratuito, de código aberto, com licença MIT. Aprenda no sítio web, com um age
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Sítio web"></a>
 </p>
 
-## Demo code
-- [ai-engineering-from-scratch-demo](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
+## Código de demonstração
+- [`ai-engineering-from-scratch-demo`](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
 
 
 <details>

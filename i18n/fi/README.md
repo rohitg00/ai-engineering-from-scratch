@@ -29,6 +29,10 @@ Maksuton, avoin lähdekoodi, MIT-lisenssi. Opi verkkosivustolla, koodausagentin 
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Verkkosivusto"></a>
 </p>
 
+## Esimerkkikoodi
+- [`ai-engineering-from-scratch-demo`](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
+
+
 <details>
 <summary>Lue omalla kielelläsi</summary>
 

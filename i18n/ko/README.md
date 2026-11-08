@@ -29,8 +29,8 @@
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="웹사이트"></a>
 </p>
 
-## Demo code
-- [ai-engineering-from-scratch-demo](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
+## 데모 코드
+- [`ai-engineering-from-scratch-demo`](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
 
 
 <details>

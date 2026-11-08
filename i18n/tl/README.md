@@ -29,6 +29,10 @@ Libre, open source, lisensiyang MIT. Matuto sa websayt, kasama ang isang coding 
   <a href="https://aiengineeringfromscratch.com"><img src="https://img.shields.io/badge/web-aiengineeringfromscratch.com-3553ff?style=flat-square&labelColor=fafaf5" alt="Websayt"></a>
 </p>
 
+## Demo na code
+- [`ai-engineering-from-scratch-demo`](https://github.com/yennanliu/ai_experiment/tree/main/ai-engineering-from-scratch-demo)
+
+
 <details>
 <summary>Magbasa sa iyong wika</summary>
 
