@@ -198,8 +198,10 @@ jobs:
         run: node scripts/interviews/validate.js && node --test scripts/interviews/test_validate.js site/test_interviews.js && node site/build-interviews.js --check
       - name: code blocks render by kind and copy commands only
         run: node --test site/test_code_render.js site/test_lesson_code.js
+      - name: llms.txt keeps one discovery section after the summary
+        run: node --test site/test_build_agents.js
       - name: build the static site
-        run: node site/build.js && node site/build-projects.js --strict && node site/build-agents.js
+        run: node site/build.js && node site/build-projects.js --strict && node site/build-agents.js && node site/build-agents.js && test "$(grep -c '^## API and MCP$' site/llms.txt)" = 1
       - name: deployment bundles stay small and preserve runtime assets
         run: |
           npm install --prefix "$RUNNER_TEMP/function-trace" --no-save --no-package-lock @vercel/nft@1.5.0
