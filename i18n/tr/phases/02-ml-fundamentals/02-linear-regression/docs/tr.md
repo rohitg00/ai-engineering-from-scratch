@@ -3,7 +3,7 @@
 > Düzsel geri dönüş, verilerinizi en iyi düz çizgiyi çizer. Bu makine öğrenme "hello world"ıdır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra, Calculus, Optimization), Phase 2 Lesson 1
 **Time:** ~90 minutes
 

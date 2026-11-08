@@ -3,7 +3,7 @@
 > Lojiistik gerileme, olasılıklarla evet veya hayır sorularına cevap vermek için düz çizgiyi S eğriye eğer.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
 **Time:** ~90 minutes
 
@@ -503,6 +503,7 @@ Scikit-learn çözücü seçeneklerini (liblinear, lbfgs, saga), otomatik düzen
 
 Bu ders şunları ortaya çıkarır:
 - `code/logistic_regression.py`- metriklerle sıfırdan lojistik geri dönüş
+- `code/main.rs`- Rust'deki aynı kod, sadece STDlib.`rustc --edition 2021 code/main.rs && ./main`- Evet .
 
 ## Egzersizler
 
