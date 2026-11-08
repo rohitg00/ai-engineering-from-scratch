@@ -1,3 +1,7 @@
+// Lesson: Graph Theory for Machine Learning (phase 01 / lesson 21)
+// TypeScript port of code/graph_theory.py. Node standard library only.
+// Source: phases/01-math-foundations/21-graph-theory/docs/en.md
+// Run: npx tsx phases/01-math-foundations/21-graph-theory/code/graph_theory.ts
 type Random = () => number;
 type Matrix = number[][];
 
@@ -349,6 +353,9 @@ function dfs(graph: Graph, start: number): number[] {
 }
 
 function connectedComponents(graph: Graph): number[][] {
+  if (graph.directed) {
+    throw new Error("connected_components requires an undirected graph");
+  }
   const visited = new Set<number>();
   const components: number[][] = [];
   for (let node = 0; node < graph.n; node++) {
@@ -391,6 +398,18 @@ function spectralClustering(graph: Graph, k = 2): number[] {
   }
   if (!(k >= 2 && k <= graph.n)) {
     throw new Error(`k must satisfy 2 <= k <= ${graph.n}, got k=${k}`);
+  }
+  if (graph.directed) {
+    throw new Error("spectral_clustering requires an undirected graph");
+  }
+
+  const components = connectedComponents(graph);
+  if (k === 2 && components.length > 1) {
+    const labels: number[] = new Array<number>(graph.n).fill(1);
+    for (const node of components[0]!) {
+      labels[node] = 0;
+    }
+    return labels;
   }
 
   const L = graph.laplacian();

@@ -1,3 +1,7 @@
+// Lesson: Sampling Methods (phase 01 / lesson 16)
+// TypeScript port of code/sampling.py. Node standard library only.
+// Source: phases/01-math-foundations/16-sampling-methods/docs/en.md
+// Run: npx tsx phases/01-math-foundations/16-sampling-methods/code/sampling.ts
 function mulberry32(seed: number): () => number {
   let state = seed >>> 0;
   return () => {
@@ -136,11 +140,8 @@ function truncatedNormalDemo(mu: number, sigma: number, a: number, b: number, n 
   for (let i = 0; i <= 1000; i++) {
     normConst += (normalPdf(a + ((b - a) * i) / 1000, mu, sigma) * (b - a)) / 1000;
   }
-  let mVal = -Infinity;
-  for (let i = 0; i <= 200; i++) {
-    const x = a + ((b - a) * i) / 200;
-    mVal = Math.max(mVal, normalPdf(x, mu, sigma) / (1.0 / (b - a)));
-  }
+  const peak = Math.min(Math.max(mu, a), b);
+  const mVal = normalPdf(peak, mu, sigma) / (1.0 / (b - a));
 
   const target = (x: number): number => {
     if (a <= x && x <= b) {

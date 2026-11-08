@@ -1,3 +1,8 @@
+// Lesson: Logistic Regression (phase 02 / lesson 03)
+// Rust port of code/logistic_regression.py. Standard library only.
+// Source: phases/02-ml-fundamentals/03-logistic-regression/docs/en.md
+// Build: rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+
 struct Rng {
     state: u32,
 }

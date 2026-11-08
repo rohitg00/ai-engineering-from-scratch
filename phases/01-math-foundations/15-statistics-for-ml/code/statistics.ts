@@ -1,3 +1,7 @@
+// Lesson: Statistics for Machine Learning (phase 01 / lesson 15)
+// TypeScript port of code/statistics.py. Node standard library only.
+// Source: phases/01-math-foundations/15-statistics-for-ml/docs/en.md
+// Run: npx tsx phases/01-math-foundations/15-statistics-for-ml/code/statistics.ts
 function mulberry32(seed: number): () => number {
   let state = seed >>> 0;
   return () => {
@@ -216,7 +220,7 @@ function tStatisticTwoSample(data1: number[], data2: number[]): number {
   const v2 = variance(data2, true);
   const se = Math.sqrt(v1 / n1 + v2 / n2);
   if (se === 0) {
-    return 0.0;
+    throw new Error("both samples have zero variance, so the t statistic is undefined");
   }
   return (m1 - m2) / se;
 }

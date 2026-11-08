@@ -1,3 +1,7 @@
+// Lesson: Convex Optimization (phase 01 / lesson 18)
+// TypeScript port of code/convex.py. Node standard library only.
+// Source: phases/01-math-foundations/18-convex-optimization/docs/en.md
+// Run: npx tsx phases/01-math-foundations/18-convex-optimization/code/convex.ts
 type Point = number[];
 type Matrix2 = number[][];
 type GradientFn = (x: Point) => Point;
@@ -238,7 +242,7 @@ function lagrangeSolve(
     if (hasInvalid(x)) {
       break;
     }
-    history.push({ x: [...x], lam, gv });
+    history.push({ x: [...x], lam, gv: gVal(x) });
   }
   return history;
 }

@@ -46,7 +46,7 @@ class NaiveBayes:
         )
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         best_class = None
         best_score = float("-inf")
 
@@ -61,7 +61,7 @@ class NaiveBayes:
         return best_class
 
     def predict_proba(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         scores = {}
 
         for cls in self.class_counts:

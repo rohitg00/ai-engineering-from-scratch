@@ -1,3 +1,7 @@
+// Lesson: Dimensionality Reduction (phase 01 / lesson 10)
+// TypeScript port of code/dim_reduction.py. Node standard library only.
+// Source: phases/01-math-foundations/10-dimensionality-reduction/docs/en.md
+// Run: npx tsx phases/01-math-foundations/10-dimensionality-reduction/code/dim_reduction.ts
 type Matrix = number[][];
 
 function mulberry32(seed: number): () => number {

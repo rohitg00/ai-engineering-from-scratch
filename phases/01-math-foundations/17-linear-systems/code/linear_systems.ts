@@ -1,3 +1,7 @@
+// Lesson: Linear Systems (phase 01 / lesson 17)
+// TypeScript port of code/linear_systems.py. Node standard library only.
+// Source: phases/01-math-foundations/17-linear-systems/docs/en.md
+// Run: npx tsx phases/01-math-foundations/17-linear-systems/code/linear_systems.ts
 type Vector = number[];
 type Matrix = number[][];
 
@@ -454,10 +458,12 @@ function singularValues(A: Matrix): Vector {
 
 function conditionNumber(A: Matrix): number {
   const S = singularValues(A);
-  if (S[S.length - 1]! < 1e-15) {
+  const largest = S[0]!;
+  const smallest = S[S.length - 1]!;
+  if (smallest === 0 || smallest <= largest * Number.EPSILON * Number.EPSILON) {
     return Infinity;
   }
-  return S[0]! / S[S.length - 1]!;
+  return largest / smallest;
 }
 
 function conjugateGradient(A: Matrix, b: Vector, tol = 1e-10, maxIter?: number): { x: Vector; iterations: number } {
@@ -468,6 +474,9 @@ function conjugateGradient(A: Matrix, b: Vector, tol = 1e-10, maxIter?: number):
   let r = subtractVectors(b, matVec(A, x));
   let p = [...r];
   let rsOld = dot(r, r);
+  if (Math.sqrt(rsOld) < tol) {
+    return { x, iterations: 0 };
+  }
 
   for (let k = 0; k < limit; k++) {
     const Ap = matVec(A, p);

@@ -1,3 +1,7 @@
+// Lesson: Information Theory (phase 01 / lesson 09)
+// TypeScript port of code/information_theory.py. Node standard library only.
+// Source: phases/01-math-foundations/09-information-theory/docs/en.md
+// Run: npx tsx phases/01-math-foundations/09-information-theory/code/information_theory.ts
 type Random = () => number;
 
 function mulberry32(seed: number): Random {
@@ -80,9 +84,11 @@ function entropy(probs: number[], base = 2): number {
 }
 
 function crossEntropy(p: number[], q: number[], base = 2): number {
+  if (p.length !== q.length) {
+    throw new Error("p and q must have the same length");
+  }
   let total = 0.0;
-  const length = Math.min(p.length, q.length);
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < p.length; i++) {
     const pi = p[i]!;
     const qi = q[i]!;
     if (pi > 0) {
@@ -139,8 +145,9 @@ function softmax(logits: number[]): number[] {
 }
 
 function crossEntropyLoss(trueClass: number, logits: number[]): number {
-  const probs = softmax(logits);
-  return -Math.log(probs[trueClass]!);
+  const maxLogit = Math.max(...logits);
+  const logSumExp = maxLogit + Math.log(sum(logits.map((z) => Math.exp(z - maxLogit))));
+  return logSumExp - logits[trueClass]!;
 }
 
 function negativeLogLikelihood(labels: number[], allLogits: number[][]): number {
@@ -405,7 +412,7 @@ function main(): void {
   const ceAvg = negativeLogLikelihood(labels, allLogits);
   let logLikelihoodSum = 0;
   for (let i = 0; i < nSamples; i++) {
-    logLikelihoodSum += Math.log(softmax(allLogits[i]!)[labels[i]!]!);
+    logLikelihoodSum -= crossEntropyLoss(labels[i]!, allLogits[i]!);
   }
   const nllAvg = -logLikelihoodSum / nSamples;
 

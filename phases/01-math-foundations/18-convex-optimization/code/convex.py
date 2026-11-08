@@ -119,7 +119,7 @@ def lagrange_solve(f_grad, g_val, g_grad, x0, lr=0.01,
         lam = lam + lr_lambda * gv
         if any(math.isnan(xi) or math.isinf(xi) for xi in x):
             break
-        history.append((x[:], lam, gv))
+        history.append((x[:], lam, g_val(x)))
     return history
 
 

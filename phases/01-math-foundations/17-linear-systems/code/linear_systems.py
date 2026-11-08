@@ -106,7 +106,7 @@ def ridge_regression(A, b, lam):
 
 def condition_number(A):
     _, S, _ = np.linalg.svd(A)
-    if S[-1] < 1e-15:
+    if S[-1] == 0 or S[-1] <= S[0] * np.finfo(float).eps ** 2:
         return float("inf")
     return S[0] / S[-1]
 
@@ -120,6 +120,8 @@ def conjugate_gradient(A, b, tol=1e-10, max_iter=None):
     r = b.astype(float) - A @ x
     p = r.copy()
     rs_old = r @ r
+    if np.sqrt(rs_old) < tol:
+        return x, 0
 
     for k in range(max_iter):
         Ap = A @ p

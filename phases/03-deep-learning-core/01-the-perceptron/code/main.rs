@@ -1,3 +1,8 @@
+// Lesson: The Perceptron (phase 03 / lesson 01)
+// Rust port of code/perceptron.py. Standard library only.
+// Source: phases/03-deep-learning-core/01-the-perceptron/docs/en.md
+// Build: rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+
 struct Rng {
     state: u32,
 }

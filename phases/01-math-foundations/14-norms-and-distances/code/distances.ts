@@ -1,3 +1,7 @@
+// Lesson: Norms and Distances (phase 01 / lesson 14)
+// TypeScript port of code/distances.py. Node standard library only.
+// Source: phases/01-math-foundations/14-norms-and-distances/docs/en.md
+// Run: npx tsx phases/01-math-foundations/14-norms-and-distances/code/distances.ts
 type Vector = number[];
 type Matrix = number[][];
 
@@ -226,7 +230,9 @@ function jaccardDistance(setA: Set<string>, setB: Set<string>): number {
   return 1.0 - jaccardSimilarity(setA, setB);
 }
 
-function editDistance(s1: string, s2: string): number {
+function editDistance(first: string, second: string): number {
+  const s1 = [...first];
+  const s2 = [...second];
   const m = s1.length;
   const n = s2.length;
   const dp: number[][] = Array.from({ length: m + 1 }, () => new Array<number>(n + 1).fill(0));

@@ -1,3 +1,8 @@
+// Lesson: Linear Regression (phase 02 / lesson 02)
+// Rust port of code/linear_regression.py. Standard library only.
+// Source: phases/02-ml-fundamentals/02-linear-regression/docs/en.md
+// Build: rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+
 const TRUE_W: f64 = 3.0;
 const TRUE_B: f64 = 7.0;
 const N_SAMPLES: usize = 100;

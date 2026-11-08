@@ -283,9 +283,9 @@ jobs:
         run: |
           npm install --prefix "$RUNNER_TEMP/ts" --no-save --no-package-lock tsx@4.19.2 typescript@5.6.3 @types/node@22.10.2
           bin="$RUNNER_TEMP/ts/node_modules/.bin"
-          "$bin/tsc" --strict --noEmit --target es2022 --module nodenext --moduleResolution nodenext --types node --typeRoots "$RUNNER_TEMP/ts/node_modules/@types" phases/01-math-foundations/*/code/*.ts
           for file in phases/01-math-foundations/*/code/*.ts; do
             echo "::group::$file"
+            "$bin/tsc" --strict --noEmit --target es2022 --module nodenext --moduleResolution nodenext --types node --typeRoots "$RUNNER_TEMP/ts/node_modules/@types" "$file"
             timeout 120 "$bin/tsx" "$file" > /dev/null
             echo "::endgroup::"
           done

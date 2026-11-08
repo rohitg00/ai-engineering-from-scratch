@@ -61,10 +61,8 @@ def truncated_normal_demo(mu, sigma, a, b, n=5000):
         normal_pdf(a + (b - a) * i / 1000, mu, sigma) * (b - a) / 1000
         for i in range(1001)
     )
-    M_val = max(
-        normal_pdf(x, mu, sigma) / (1.0 / (b - a))
-        for x in [a + (b - a) * i / 200 for i in range(201)]
-    )
+    peak = min(max(mu, a), b)
+    M_val = normal_pdf(peak, mu, sigma) / (1.0 / (b - a))
 
     def target(x):
         if a <= x <= b:

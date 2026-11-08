@@ -1,3 +1,7 @@
+// Lesson: Numerical Stability (phase 01 / lesson 13)
+// TypeScript port of code/numerical.py. Node standard library only.
+// Source: phases/01-math-foundations/13-numerical-stability/docs/en.md
+// Run: npx tsx phases/01-math-foundations/13-numerical-stability/code/numerical.ts
 class OverflowError extends Error {}
 class DomainError extends Error {}
 class ZeroDivisionError extends Error {}
@@ -156,8 +160,8 @@ function logsumexpStable(values: number[]): number {
 
 function logSoftmaxStable(logits: number[]): number[] {
   const c = Math.max(...logits);
-  const lse = c + log(sum(logits.map((z) => exp(z - c))));
-  return logits.map((z) => z - lse);
+  const shiftedLse = log(sum(logits.map((z) => exp(z - c))));
+  return logits.map((z) => z - c - shiftedLse);
 }
 
 function crossEntropyNaive(trueClass: number, logits: number[]): number {
@@ -802,7 +806,7 @@ function demoCommonBugs(): void {
   banner("DEMO 13: Common ML Numerical Bugs");
 
   console.log("\n  Bug 1: log(0) from confident wrong prediction");
-  let logits = [100.0, -100.0, -100.0];
+  let logits = [500.0, -500.0, -500.0];
   const probs = softmaxStable(logits);
   console.log(`  Softmax: ${pyStrList(probs.map((p) => fmtE(p, 2)))}`);
   let line = `  If true class is 1: log(${fmtE(probs[1]!, 2)}) = `;

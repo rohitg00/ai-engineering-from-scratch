@@ -9,8 +9,6 @@
 //   https://arxiv.org/abs/2306.00978  (AWQ)
 // Build: rustc --edition 2021 -O code/main.rs -o /tmp/lesson_quant && /tmp/lesson_quant
 
-use std::f64;
-
 fn lcg(seed: &mut u64) -> f64 {
     *seed = seed.wrapping_mul(6364136223846793005).wrapping_add(1442695040888963407);
     let bits = (*seed >> 11) as u64;

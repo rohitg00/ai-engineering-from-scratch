@@ -1,6 +1,14 @@
+// Lesson: Tensor Operations (phase 01 / lesson 12)
+// TypeScript port of code/tensors.py. Node standard library only.
+// Source: phases/01-math-foundations/12-tensor-operations/docs/en.md
+// Run: npx tsx phases/01-math-foundations/12-tensor-operations/code/tensors.ts
 type Nested = number | Nested[];
 type DType = "int64" | "float64" | "float32";
 type Order = "C" | "F";
+
+function allocate(dtype: DType, size: number): Float64Array | Float32Array {
+  return dtype === "float32" ? new Float32Array(size) : new Float64Array(size);
+}
 
 function product(values: number[]): number {
   let result = 1;
@@ -119,11 +127,13 @@ class NDArray {
 
   static fromValues(values: number[], shape: number[], dtype: DType = "float64", order: Order = "C"): NDArray {
     if (order === "C") {
-      return new NDArray(Float64Array.from(values), shape, dtype);
+      const data = allocate(dtype, values.length);
+      data.set(values);
+      return new NDArray(data, shape, dtype);
     }
     const reversed = [...shape].reverse();
     const fStrides = computeStrides(reversed).reverse();
-    const data = new Float64Array(values.length);
+    const data = allocate(dtype, values.length);
     let position = 0;
     forEachIndex(shape, (index) => {
       let flat = 0;
@@ -142,7 +152,7 @@ class NDArray {
 
   static randn(shape: number[], dtype: DType = "float64"): NDArray {
     const size = product(shape);
-    const data = dtype === "float32" ? new Float32Array(size) : new Float64Array(size);
+    const data = allocate(dtype, size);
     for (let i = 0; i < size; i++) {
       data[i] = standardNormal();
     }
@@ -150,7 +160,7 @@ class NDArray {
   }
 
   static full(shape: number[], value: number, dtype: DType = "float64"): NDArray {
-    return new NDArray(new Float64Array(product(shape)).fill(value), shape, dtype);
+    return new NDArray(allocate(dtype, product(shape)).fill(value), shape, dtype);
   }
 
   static arange(count: number): NDArray {
@@ -237,6 +247,9 @@ class NDArray {
     if (unknown !== -1) {
       const known = product(shape.filter((size) => size !== -1));
       shape[unknown] = this.size / known;
+      if (!Number.isInteger(shape[unknown])) {
+        throw new Error(`cannot reshape array of size ${this.size} into shape ${pyShape(newShape)}`);
+      }
     }
     if (product(shape) !== this.size) {
       throw new Error(`cannot reshape array of size ${this.size} into shape ${pyShape(shape)}`);
@@ -332,7 +345,7 @@ function broadcastShapes(a: number[], b: number[]): number[] {
         `operands could not be broadcast together with shapes ${pyShape(a)} ${pyShape(b)}`,
       );
     }
-    result.push(Math.max(sizeA, sizeB));
+    result.push(sizeA === 1 ? sizeB : sizeA);
   }
   return result;
 }
@@ -416,7 +429,12 @@ function einsum(subscripts: string, ...operands: NDArray[]): NDArray {
   const sizes = new Map<string, number>();
   inputLetters.forEach((letters, k) => {
     [...letters].forEach((letter, axis) => {
-      sizes.set(letter, operands[k]!.shape[axis]!);
+      const size = operands[k]!.shape[axis]!;
+      const seen = sizes.get(letter);
+      if (seen !== undefined && seen !== size) {
+        throw new Error(`einsum: label ${letter} has sizes ${seen} and ${size}`);
+      }
+      sizes.set(letter, size);
     });
   });
 
@@ -612,6 +630,9 @@ class Tensor {
 
   squeeze(dim?: number): Tensor {
     if (dim !== undefined) {
+      if (dim < 0) {
+        dim += this._shape.length;
+      }
       if (this._shape[dim] !== 1) {
         return this.reshape(this._shape);
       }

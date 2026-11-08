@@ -1,3 +1,7 @@
+// Lesson: The Fourier Transform (phase 01 / lesson 20)
+// TypeScript port of code/fourier.py. Node standard library only.
+// Source: phases/01-math-foundations/20-fourier-transform/docs/en.md
+// Run: npx tsx phases/01-math-foundations/20-fourier-transform/code/fourier.ts
 import { writeFileSync } from "node:fs";
 
 type Random = () => number;
@@ -143,7 +147,10 @@ function idft(X: Sample[]): Complex[] {
 
 function fft(x: Sample[]): Complex[] {
   const N = x.length;
-  if (N <= 1) {
+  if (N === 0) {
+    return [];
+  }
+  if (N === 1) {
     return [toComplex(x[0]!)];
   }
   if (N % 2 !== 0) {
@@ -167,6 +174,9 @@ function fft(x: Sample[]): Complex[] {
 
 function ifft(X: Sample[]): Complex[] {
   const N = X.length;
+  if (N === 0) {
+    return [];
+  }
   const conjX = X.map((xk) => (xk instanceof Complex ? xk.conjugate() : new Complex(xk)));
   const result = fft(conjX);
   return result.map((r) => new Complex(r.real / N, -r.imag / N));
@@ -193,6 +203,9 @@ function spectralAnalysis(signal: number[], sampleRate: number): [number[], numb
 }
 
 function hannWindow(N: number): number[] {
+  if (N === 1) {
+    throw new RangeError("window length must not be 1");
+  }
   const window: number[] = [];
   for (let n = 0; n < N; n++) {
     window.push(0.5 * (1 - Math.cos((2 * Math.PI * n) / (N - 1))));
@@ -201,6 +214,9 @@ function hannWindow(N: number): number[] {
 }
 
 function hammingWindow(N: number): number[] {
+  if (N === 1) {
+    throw new RangeError("window length must not be 1");
+  }
   const window: number[] = [];
   for (let n = 0; n < N; n++) {
     window.push(0.54 - 0.46 * Math.cos((2 * Math.PI * n) / (N - 1)));
@@ -220,6 +236,9 @@ function applyWindow(signal: number[], window: number[]): number[] {
 function convolveDirect(x: number[], h: number[]): number[] {
   const N = x.length;
   const M = h.length;
+  if (N === 0 || M === 0) {
+    return [];
+  }
   const outLength = N + M - 1;
   const result: number[] = new Array<number>(outLength).fill(0);
   for (let n = 0; n < outLength; n++) {
@@ -277,11 +296,13 @@ function generateSignal(
 
 function positionalEncoding(pos: number, dModel: number): number[] {
   const pe: number[] = new Array<number>(dModel).fill(0);
-  for (let i = 0; i < Math.floor(dModel / 2); i++) {
+  for (let i = 0; 2 * i < dModel; i++) {
     const freq = 1 / 10000 ** ((2 * i) / dModel);
     const angle = pos * freq;
     pe[2 * i] = Math.sin(angle);
-    pe[2 * i + 1] = Math.cos(angle);
+    if (2 * i + 1 < dModel) {
+      pe[2 * i + 1] = Math.cos(angle);
+    }
   }
   return pe;
 }

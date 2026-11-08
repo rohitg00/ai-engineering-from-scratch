@@ -130,7 +130,7 @@ def t_statistic_two_sample(data1, data2):
     v2 = variance(data2, sample=True)
     se = math.sqrt(v1 / n1 + v2 / n2)
     if se == 0:
-        return 0.0
+        raise ValueError("both samples have zero variance, so the t statistic is undefined")
     return (m1 - m2) / se
 
 

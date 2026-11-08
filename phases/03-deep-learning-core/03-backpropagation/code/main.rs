@@ -1,3 +1,8 @@
+// Lesson: Backpropagation from Scratch (phase 03 / lesson 03)
+// Rust port of code/main.py. Standard library only.
+// Source: phases/03-deep-learning-core/03-backpropagation/docs/en.md
+// Build: rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+
 use std::cell::RefCell;
 use std::collections::HashSet;
 use std::fmt;

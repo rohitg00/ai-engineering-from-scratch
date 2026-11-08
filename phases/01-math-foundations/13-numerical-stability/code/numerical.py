@@ -613,7 +613,7 @@ def demo_common_bugs():
     print("=" * 60)
 
     print("\n  Bug 1: log(0) from confident wrong prediction")
-    logits = [100.0, -100.0, -100.0]
+    logits = [500.0, -500.0, -500.0]
     probs = softmax_stable(logits)
     print(f"  Softmax: {[f'{p:.2e}' for p in probs]}")
     print(f"  If true class is 1: log({probs[1]:.2e}) = ", end="")

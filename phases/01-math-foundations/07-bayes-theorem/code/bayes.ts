@@ -1,3 +1,7 @@
+// Lesson: Bayes' Theorem (phase 01 / lesson 07)
+// TypeScript port of code/bayes.py. Node standard library only.
+// Source: phases/01-math-foundations/07-bayes-theorem/docs/en.md
+// Run: npx tsx phases/01-math-foundations/07-bayes-theorem/code/bayes.ts
 type Random = () => number;
 
 function mulberry32(seed: number): Random {
@@ -90,7 +94,7 @@ class NaiveBayes {
   }
 
   predict(document: string): string {
-    const words = document.toLowerCase().split(/\s+/).filter((word) => word.length > 0);
+    const words = document.toLowerCase().split(/\s+/).filter((word) => this.vocab.has(word));
     let bestClass = "";
     let bestScore = -Infinity;
 
@@ -109,7 +113,7 @@ class NaiveBayes {
   }
 
   predictProba(document: string): Map<string, number> {
-    const words = document.toLowerCase().split(/\s+/).filter((word) => word.length > 0);
+    const words = document.toLowerCase().split(/\s+/).filter((word) => this.vocab.has(word));
     const scores = new Map<string, number>();
 
     for (const cls of this.classCounts.keys()) {
