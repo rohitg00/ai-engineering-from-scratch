@@ -3,7 +3,7 @@
 > 信息理论是惊喜的,损失函数是基于它.
 
 **Type:** Learn
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > 每个信号都是阴影波的总和. 福利尔转换告诉你哪些.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -426,7 +426,7 @@ spectrogram = np.abs(Zxx) ** 2
 
 ## 运送它
 
-跑步`code/fourier.py`产生`outputs/prompt-spectral-analyzer.md`现在,我们要去.
+跑步`code/fourier.py`产生`outputs/prompt-spectral-analyzer.md`字体编写版本,`code/fourier.ts`写着同一个文件.
 
 ## 运动
 

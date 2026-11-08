@@ -3,7 +3,7 @@
 > 概率是你预期的,贝叶斯定理是你学习的.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lesson 06 (Probability Fundamentals)
 **Time:** ~75 minutes
 
@@ -145,6 +145,8 @@ P(\text{word} \mid \text{class}) = \frac{\text{count}(\text{word}, \text{class})
 
 增加1个数量,确保没有可能性是零的.
 
+没有在任何培训信息中出现的单词都不在词汇中.`predict`没有证据证明任何一个类.
+
 ### 后期最大 (MAP)
 
 们需要什么参数才能达到最大的水平?$P(\text{data} \mid \text{parameters})$现在,我们要去.
@@ -235,7 +237,7 @@ class NaiveBayes:
                 self.vocab.add(word)
 
     def predict(self, document):
-        words = document.lower().split()
+        words = [word for word in document.lower().split() if word in self.vocab]
         total_docs = sum(self.class_counts.values())
         vocab_size = len(self.vocab)
         best_class = None
@@ -335,7 +337,7 @@ for msg, pred in zip(test_messages, predictions):
 
 ## 运送它
 
-代码在 果中是 果的代码, 代码在 果的代码中是 果的代码.`code/bayes.py`无需超越Python的标准库的依赖性.
+代码在 果中是 果的代码, 代码在 果的代码中是 果的代码.`code/bayes.py`通过Python的标准库,它运行无关.`code/bayes.ts`仅使用 Node 标准库.
 
 ### 结合的先驱
 

@@ -3,7 +3,7 @@
 > 通过从正面角度看,我们可以找到它.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -197,6 +197,13 @@ pca-axes
 ```
 
 ## 建立它
+
+类型字符号端口已启动`code/dim_reduction.ts`现在,MNIST的演示需要学习,所以它们只运行在Python中.
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
 
 ### 步骤1:从零开始进行PCA
 

@@ -3,7 +3,7 @@
 > 你的距离函数定义了"类似"的意思.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -436,7 +436,7 @@ norm-unit-balls
 
 ### 步骤1:所有标准和距离函数
 
-看到`code/distances.py`每个函数都是从零开始构建的,只使用基本的Python数学.
+看到`code/distances.py`根据Python的基本数学,每个函数都是从头开始构建的.`code/distances.ts`是一个具有相同的功能和演示的TypeScript端口.
 
 ### 步骤2:相同的数据,不同的距离,不同的邻居
 

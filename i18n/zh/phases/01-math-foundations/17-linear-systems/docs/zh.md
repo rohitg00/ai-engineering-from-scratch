@@ -3,7 +3,7 @@
 > 解决问题$Ax = b$现在还在运行神经网络的数学中最古老的问题.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors & Matrices), 03 (Matrix Transformations)
 **Time:** ~120 minutes
 
@@ -546,6 +546,7 @@ print(f"Ridge weights (sklearn): {ridge_sk.coef_}")
 
 这一课产生了:
 - `code/linear_systems.py`包含从零开始的高斯消除,LU分解,Cholesky分解,最小方形和脊回归的实现
+- `code/linear_systems.ts`它与小的从零开始的参考解决器相比,因为TypeScript没有NumPy.
 - 工作证明正常方程和Skularn的线性回归产生相同的重量
 
 ## 运动

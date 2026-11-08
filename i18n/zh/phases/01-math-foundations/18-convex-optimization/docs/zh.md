@@ -3,7 +3,7 @@
 > 曲的问题有一个谷,神经网络有数百万.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
 **Time:** ~90 minutes
 

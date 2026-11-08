@@ -3,7 +3,7 @@
 > 浮点是一个漏洞的抽象,它会在训练中咬你,你不会看到它.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04
 **Time:** ~120 minutes
 
@@ -558,7 +558,7 @@ check_tensor("bad",  [1.0, float('nan'), 3.0])
 check_tensor("ugly", [1.0, float('inf'), 3.0])
 ```
 
-看到`code/numerical.py`对于所有证明的边缘情况的完整实施.
+看到`code/numerical.py`文件  文件 文件 文件 文件 文件 文件 文件 文件`code/numerical.ts`是一个具有相同的功能和演示的TypeScript端口.
 
 ## 运送它
 

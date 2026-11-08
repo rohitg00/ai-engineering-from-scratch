@@ -3,7 +3,7 @@
 > 如果你的数据有联系,你需要图形理论.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-03 (linear algebra, matrices)
 **Time:** ~90 minutes
 

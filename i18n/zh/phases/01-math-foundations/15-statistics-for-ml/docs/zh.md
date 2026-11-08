@@ -3,7 +3,7 @@
 > 统计是如何知道你的模型是否真的有效,或者只是幸运.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06 (Probability and Distributions), 07 (Bayes' Theorem)
 **Time:** ~120 minutes
 

@@ -3,7 +3,7 @@
 > 采样是人工智能如何探索可能性的空间.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06-07 (Probability, Bayes' Theorem)
 **Time:** ~120 minutes
 
@@ -608,6 +608,8 @@ def gumbel_softmax(logits, temperature):
 显示温度下降使输出接近单热向量.
 
 完整的实现,所有可视化都在`code/sampling.py`现在,我们要去.
+
+类型字符号端口已启动`code/sampling.ts`它使用了自己的种子随机发电机,所以随机数量与Python输出不同.
 
 ## 用它
 

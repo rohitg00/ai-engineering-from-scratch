@@ -3,7 +3,7 @@
 > 电压器是数据和深度学习之间的共同语言. 每个图像,每句话,每一个梯度都流过它们.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -107,7 +107,12 @@ tensor-broadcast
 
 ## 建立它
 
-代码生活在`code/tensors.py`每一步都指向了执行.
+代码生活在`code/tensors.py`任何步骤都会引用执行.`code/tensors.ts`打印出相同的输出.
+
+```bash
+python3 code/tensors.py
+npx tsx code/tensors.ts
+```
 
 ### 步骤1:电压存储和步骤
 
