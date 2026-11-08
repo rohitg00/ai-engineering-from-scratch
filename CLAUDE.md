@@ -42,6 +42,11 @@ delete them to tidy an upstream diff):
 | `.gitignore` alias-stub block | leaves generated redirect stubs untracked-but-dirty |
 | `CLAUDE.md` | this file |
 
+One upstream file carries a fork edit, so expect it in sync conflicts and keep the edit:
+`.github/workflows/interviews.yml` skips its "PR leaves the generated READMEs to main" step on
+`sync/upstream-*` branches, because a sync brings in upstream's already-generated
+`interviews/**/README.md` and would otherwise always fail. Name sync branches `sync/upstream-YYYY-MM`.
+
 Before merging any branch into `main`, check that it deletes nothing:
 `git diff --diff-filter=D --name-only main..<branch>` must come back empty.
 

@@ -44,8 +44,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+      # Fork: an upstream sync carries upstream's already-generated READMEs.
       - name: A pull request leaves the generated READMEs to main
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'sync/upstream-')
         env:
           BASE_REF: ${{ github.base_ref }}
         run: |
