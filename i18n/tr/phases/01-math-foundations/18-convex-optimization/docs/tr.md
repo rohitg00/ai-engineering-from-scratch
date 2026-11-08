@@ -3,7 +3,7 @@
 > Konves sorunlarının tek bir vadisi var, sinir ağlarının milyonlarca.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 04 (Calculus for ML), 08 (Optimization)
 **Time:** ~90 minutes
 

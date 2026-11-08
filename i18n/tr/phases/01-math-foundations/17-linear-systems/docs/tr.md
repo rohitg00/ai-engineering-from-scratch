@@ -3,7 +3,7 @@
 > Çözüm$Ax = b$Matematikte hâlâ sinir ağınızı çalıştıran en eski problem.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors & Matrices), 03 (Matrix Transformations)
 **Time:** ~120 minutes
 
@@ -546,6 +546,7 @@ print(f"Ridge weights (sklearn): {ridge_sk.coef_}")
 
 Bu ders şunları ortaya çıkarır:
 - `code/linear_systems.py`Gaussian ortadan kaldırma, LU parçalanma, Cholesky parçalanma, en az kare ve kıyıs geri dönüşü baştan başlayan uygulamalar içerir.
+- `code/linear_systems.ts`Bu, küçük sıfırdan referans çözücülerine karşı karşılaştırılır, çünkü TypeScript'in NumPy'si yoktur.
 - Normal denklemlerin ve sklearn'ın Hattı Gerileme'nin aynı ağırlıkları ürettiğini gösteren bir çalışma göstergesi
 
 ## Egzersizler

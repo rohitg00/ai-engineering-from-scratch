@@ -3,7 +3,7 @@
 > Her sinyal sinüs dalgalarının toplamıdır. Fourier dönüşümü hangisini söyler.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04, 19 (complex numbers)
 **Time:** ~90 minutes
 
@@ -426,7 +426,7 @@ Spektrogram matrisinin şekli vardır (n_frequencies, n_time_frames). Her sütun
 
 ## Gönder
 
-Çık .`code/fourier.py`üretmek için`outputs/prompt-spectral-analyzer.md`- Evet .
+Çık .`code/fourier.py`üretmek için`outputs/prompt-spectral-analyzer.md`TypeScript sürümü,`code/fourier.ts`, aynı dosyayı yazıyor.
 
 ## Egzersizler
 

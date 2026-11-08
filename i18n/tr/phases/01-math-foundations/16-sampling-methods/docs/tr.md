@@ -3,7 +3,7 @@
 > Örnekleme, AI'nin olasılık alanını nasıl keşfettiğini gösterir.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06-07 (Probability, Bayes' Theorem)
 **Time:** ~120 minutes
 
@@ -608,6 +608,8 @@ def gumbel_softmax(logits, temperature):
 Düşen sıcaklığın çıkışın bir sıcaktan uzak bir vektöre nasıl yaklaştığını göster.
 
 Tüm görsellemeler ile birlikte tam uygulamalar `code/sampling.py`- Evet .
+
+TypeScript portu çalıştırıldı `code/sampling.ts`Kendi ürünü rastgele jeneratörünü kullanıyor, bu yüzden rastgele sayıları Python çıkışından farklıdır.
 
 ## Kullan
 

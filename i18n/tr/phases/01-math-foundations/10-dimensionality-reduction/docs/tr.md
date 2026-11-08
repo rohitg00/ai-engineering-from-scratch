@@ -3,7 +3,7 @@
 > Yüksek boyutlu verilerin yapısı vardır. Doğru açıdan bakarak bulabilirsiniz.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations), 03 (Eigenvalues & Eigenvectors), 06 (Probability & Distributions)
 **Time:** ~90 minutes
 
@@ -197,6 +197,13 @@ pca-axes
 ```
 
 ## Yapın
+
+TypeScript portu çalıştırıldı `code/dim_reduction.ts`MNIST demoları scikit öğrenmesi gerekiyor, bu yüzden sadece Python'da çalışıyorlar.
+
+```bash
+python3 code/dim_reduction.py
+npx tsx code/dim_reduction.ts
+```
 
 ### Adım 1: PCA sıfırdan
 

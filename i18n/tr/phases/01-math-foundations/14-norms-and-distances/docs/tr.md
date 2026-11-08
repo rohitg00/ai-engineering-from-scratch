@@ -3,7 +3,7 @@
 > Mesafe fonksiyonunuz "aynı" ne anlama geldiğini belirler.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -436,7 +436,7 @@ norm-unit-balls
 
 ### Adım 1: Tüm norm ve mesafe fonksiyonları
 
-Bakın .`code/distances.py`Her fonksiyon, sadece temel Python matematikini kullanarak sıfırdan inşa edilmiştir.
+Bakın .`code/distances.py`Bu işlemler, Python'un temel matematiklerini kullanarak tamamlanmıştır.`code/distances.ts`Aynı fonksiyon ve demo ile bir TypeScript portu.
 
 ### Adım 2: Aynı veriler, farklı mesafeler, farklı komşular
 

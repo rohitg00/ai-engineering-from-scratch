@@ -3,7 +3,7 @@
 > İstatistikler, modelinizin gerçekten işe yaradığını veya sadece şanslı olduğunu nasıl anlamanızı sağlar.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 06 (Probability and Distributions), 07 (Bayes' Theorem)
 **Time:** ~120 minutes
 

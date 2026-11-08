@@ -3,7 +3,7 @@
 > Tensorlar veriler ve derin öğrenme arasındaki ortak dil. Her görüntü, her cümle, her gradient onların içinden akıyor.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01 (Linear Algebra Intuition), 02 (Vectors, Matrices & Operations)
 **Time:** ~90 minutes
 
@@ -107,7 +107,12 @@ tensor-broadcast
 
 ## Yapın
 
-Kod içinde yaşıyor .`code/tensors.py`Her adım, orada uygulanmaya işaret eder.
+Kod içinde yaşıyor .`code/tensors.py`. her adım orada uygulanmaya atıfta bulunur.`code/tensors.ts`Aynı çıkışı yazdırır.
+
+```bash
+python3 code/tensors.py
+npx tsx code/tensors.ts
+```
 
 ### Adım 1: Tensiyon depolama ve adımlar
 

@@ -3,7 +3,7 @@
 > Dalga geçiş noktası, sızdırıcı bir soyutlama.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04
 **Time:** ~120 minutes
 
@@ -558,7 +558,7 @@ check_tensor("bad",  [1.0, float('nan'), 3.0])
 check_tensor("ugly", [1.0, float('inf'), 3.0])
 ```
 
-Bakın .`code/numerical.py`Tüm kenar durumları gösterilen tam uygulamalar için.
+Bakın .`code/numerical.py`Tüm kenar durumları gösterilen tam uygulamalar için.`code/numerical.ts`Aynı fonksiyon ve demo ile bir TypeScript portu.
 
 ## Gönder
 
