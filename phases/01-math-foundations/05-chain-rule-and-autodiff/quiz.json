@@ -10,7 +10,7 @@
     {
       "stage": "pre",
       "question": "What is a computational graph?",
-      "options": ["A directed graph where nodes are operations and edges carry values forward or gradients backward", "A diagram showing the architecture of a neural network, drawn before any code runs to plan the layers", "A graph database used for storing training data, optimized for traversing dataset relationships quickly", "A plot of loss vs training steps, used to visualize convergence during training"],
+      "options": ["A directed graph where nodes are operations and edges carry values forward or gradients backward", "A diagram showing only the finished layers of a neural network as boxes on a slide, with no operations and no data-flow arrows drawn between them", "A graph database used for storing training data, optimized for traversing dataset relationships quickly", "A plot of loss vs training steps, used to visualize convergence during training"],
       "correct": 0,
       "explanation": "A computational graph represents the sequence of operations in a computation. Data flows forward through the graph, and gradients flow backward during backpropagation."
     },

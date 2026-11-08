@@ -15,7 +15,7 @@
   },
   {
     "question": "In the backward pass, why do we use '+=' instead of '=' when accumulating gradients?",
-    "options": ["It's a Python convention that the language requires for augmented assignment in loops", "A value might be used in multiple operations, so its gradient is the sum of gradients from all paths", "It makes the code run faster because in-place addition skips allocating a new tensor for every edge in the graph", "It prevents overflow by keeping each partial gradient small and bounded inside a narrow range"],
+    "options": ["It's a Python convention that the language requires for augmented assignment in loops", "A value might be used in multiple operations, so its gradient is the sum of gradients from all paths", "It makes the gradient contributions from different branches multiply together instead of add up, since the chain rule combines sibling branches by multiplication, not addition", "It prevents overflow by keeping each partial gradient small and bounded inside a narrow range"],
     "correct": 1,
     "explanation": "When a Value is used as input to multiple operations (e.g., x used in both x*w1 and x*w2), its total gradient is the sum of the gradients flowing back from each operation. Using += accumulates these correctly.",
     "stage": "post"
