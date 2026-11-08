@@ -41,6 +41,7 @@ delete them to tidy an upstream diff):
 | `scripts/pages_aliases.mjs` | `/catalog`, `/glossary`, `/path`, `/roadmap`, `/about` clean URLs |
 | `.gitignore` alias-stub block | leaves generated redirect stubs untracked-but-dirty |
 | `CLAUDE.md` | this file |
+| `docs/fork-sync.md` | the upstream-sync runbook and the per-sync log — read it before syncing, append to it after |
 
 Upstream files that carry a fork edit. Expect them in sync conflicts and keep the fork's side:
 
