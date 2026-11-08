@@ -3,7 +3,7 @@
 > A regressão linear traça a melhor linha reta através dos seus dados. É o "mundo de olá" do aprendizado de máquina.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra, Calculus, Optimization), Phase 2 Lesson 1
 **Time:** ~90 minutes
 
