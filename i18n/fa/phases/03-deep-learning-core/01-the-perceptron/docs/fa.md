@@ -3,7 +3,7 @@
 > درکترون اتم شبکه های عصبی است. آن را باز کنید و وزن، تعصب و تصمیم می گیرید.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra Intuition)
 **Time:** ~60 minutes
 

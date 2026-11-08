@@ -3,7 +3,7 @@
 > بازپاشش الگوریتم است که یادگیری را ممکن می کند. بدون آن، شبکه های عصبی فقط ژنراتورهای تصادفی گران قیمت هستند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Lesson 03.02 (Multi-Layer Networks)
 **Time:** ~120 minutes
 
