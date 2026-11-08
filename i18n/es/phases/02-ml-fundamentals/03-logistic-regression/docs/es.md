@@ -3,7 +3,7 @@
 > La regresión logística dobla una línea recta en una curva S para responder preguntas de sí o no con probabilidades.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
 **Time:** ~90 minutes
 
@@ -503,6 +503,7 @@ Su implementación desde cero produce el mismo límite de decisión y métricas.
 
 Esta lección produce:
 - `code/logistic_regression.py`- Regresión logística desde cero con métricas
+- `code/main.rs`- El mismo código en Rust, sólo en SDL.`rustc --edition 2021 code/main.rs && ./main`¿ Qué ?
 
 ## Los ejercicios
 
