@@ -1,0 +1,186 @@
+vLLM 0.31.0 live checks of the manual commands, 2026-10-22, one NVIDIA L4 (GPU1, shared with another user's processes, clocks not locked).
+Models: Qwen/Qwen3-0.6B, Qwen/Qwen3-8B-FP8, Qwen/Qwen3-8B, Qwen/Qwen3-14B-AWQ. Port 8010. Lines below come from the check scripts' output, with the benchmark argument dumps and Python warnings left out.
+
+### lc1
+UP c01 after 110 s
+== c01 startup lines
+(APIServer pid=2812801) INFO 10-22 21:24:23 [api_utils.py:286] non-default args: {'model_tag': 'Qwen/Qwen3-0.6B', 'port': 8010, 'reasoning_parser': 'qwen3', 'gpu_memory_utilization': 0.5}
+(EngineCore pid=2813854) INFO 10-22 21:24:39 [gpu_worker.py:479] Using V2 Model Runner
+(EngineCore pid=2813854) INFO 10-22 21:24:41 [cuda.py:526] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore pid=2813854) INFO 10-22 21:24:43 [model_runner.py:407] Model loading took 1.12 GiB memory and 3.909338 seconds
+(EngineCore pid=2813854) INFO 10-22 21:25:26 [gpu_worker.py:692] Available KV cache memory: 9.02 GiB
+(EngineCore pid=2813854) INFO 10-22 21:25:26 [kv_cache_utils.py:2464] GPU KV cache size: 84,480 tokens, Maximum concurrency for 40,960 tokens per request: 2.06x
+INFO:     Application startup complete.
+== c02 thinking off
+finish stop
+content 'Three prime numbers are: **2, 3, and 5**.'
+reasoning None
+False ['annotations', 'audio', 'content', 'function_call', 'reasoning', 'refusal', 'role']
+== c03 thinking on, 64 tokens
+finish length
+content None
+reasoning "\nOkay, the user asked me to name three prime numbers. Let me think. First, what's a prime number? A prime number is a nu"
+== c05 python streaming
+Three prime numbers are **2, 3, and 5**.
+chunks 15
+== c33 attention backend
+(EngineCore pid=2813854) INFO 10-22 21:24:41 [cuda.py:526] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+== c19 budget
+compile_ranges_endpoints': [2048]
+== c12 default host
+0.0.0.0:8010
+== metrics
+vllm:num_requests_running{engine="0",model_name="Qwen/Qwen3-0.6B"} 0.0
+vllm:kv_cache_usage_perc{engine="0",model_name="Qwen/Qwen3-0.6B"} 0.0
+vllm:prefix_cache_queries_total{engine="0",model_name="Qwen/Qwen3-0.6B"} 47.0
+vllm:prefix_cache_hits_total{engine="0",model_name="Qwen/Qwen3-0.6B"} 16.0
+
+### lc2
+== c10 --disable-log-requests
+rc=2
+vllm: error: unrecognized arguments: --disable-log-requests
+== c04 no parser, thinking on
+UP c04 after 55 s
+content '<think>\nOkay, the user asked me to name three prime numbers. Let me think. First'
+reasoning None
+== c44 max_tokens above max model len
+HTTP/1.1 400 Bad Request
+{"error":{"message":"max_tokens=50000 cannot be greater than max_model_len=40960. Please request fewer output tokens. (parameter=max_tokens, value=50000)","type":"BadRequestError","param":"max_tokens","code":400}}
+== c07 c08 c09 served name + api key
+UP c08 after 55 s
+(APIServer pid=2824304) INFO 10-22 21:28:08 [api_utils.py:286] non-default args: {'model_tag': 'Qwen/Qwen3-0.6B', 'host': '127.0.0.1', 'port': 8010, 'served_model_name': ['chat'], 'gpu_memory_utilization': 0.5}
+/v1/models       nokey=401 key=200
+/health          nokey=200 key=200
+/metrics         nokey=200 key=200
+/invocations     nokey=405 key=405
+/version         nokey=200 key=200
+/tokenize        nokey=405 key=405
+/v2/x            nokey=401 key=404
+/inference/x     nokey=401 key=404
+/cohere/x        nokey=401 key=404
+/ping            nokey=200 key=200
+/load            nokey=200 key=200
+/server_info     nokey=404 key=404
+{"error":"Unauthorized"}
+['chat']
+chat-as-chat 200
+invocations-nokey 200
+listen 127.0.0.1:8010
+== c11 config file
+UP c11 after 55 s
+['chat']
+(APIServer pid=2827396) INFO 10-22 21:29:03 [api_utils.py:286] non-default args: {'model_tag': 'Qwen/Qwen3-0.6B', 'port': 8010, 'served_model_name': ['chat'], 'gpu_memory_utilization': 0.5}
+== c14 kv scale grep
+8B rc=0
+8B-FP8 done
+== c46 HF_HUB_OFFLINE
+UP c46 after 100 s
+offline start ok
+
+### lc3
+== c26 reasoning on
+UP c26 after 140 s
+finish stop | reasoning_chars 4277 | completion_tokens 1938
+reasoning_head '\nOkay, so I need to figure out if 91 is a prime number. Hmm, let me start by recalling what a prime '
+content '\n\nTo determine whether **91** is a prime number, we begin by recalling the definition: a **prime number** is a natural number greater than 1 that has no positive divisors other than 1 and itself. If a number has any divi'
+== c27 enable_thinking false
+finish stop | reasoning_chars 0 | completion_tokens 147
+reasoning_head ''
+content "No, **91 is not a prime number**.\n\n### Why?\n\nA **prime number** is a number greater than 1 that has no positive divisors other than 1 and itself.\n\nLet's check if 91 can be divided evenly by any numbers other than 1 and 9"
+== c29 thinking_token_budget 10
+finish stop | reasoning_chars 33 | completion_tokens 368
+reasoning_head '\nOkay, so I need to figure out if'
+content '\n\nTo determine whether **91** is a prime number, we need to check if it has any divisors other than **1** and itself.\n\n---\n\n### Step 1: Understand what a prime number is  \nA **prime number** is a number greater than **1*'
+== c30 stream order
+stream field order ['reasoning', 'content']
+== c28 server default thinking off
+UP c28 after 100 s
+finish stop | reasoning_chars 0 | completion_tokens 127
+reasoning_head ''
+content "No, **91 is not a prime number**.\n\n**Explanation:**\n\nA prime number is a number greater than 1 that has no positive divisors other than 1 and itself.\n\nLet's check if 91 has any divisors other than 1 and 91:\n\n- 91 ÷ 7 = 1"
+-- request turns it on
+finish stop | reasoning_chars 3197 | completion_tokens 1499
+reasoning_head '\nOkay, so I need to figure out if 91 is a prime number. Let me start by recalling what a prime numbe'
+content '\n\nTo determine whether 91 is a prime number, we must first understand the definition of a prime number: a number greater than 1 that has no positive divisors other than 1 and itself.\n\n---\n\n### Step 1: Check for Divisibil'
+== c18 Qwen3-8B BF16, no max-model-len
+rc=1
+(EngineCore pid=2870799) ERROR 10-22 21:45:27 [core.py:1433]     raise ValueError(
+(EngineCore pid=2870799) ERROR 10-22 21:45:27 [core.py:1433] ValueError: To serve at least one request with the model's max seq len (40960), (5.62 GiB KV cache is needed, which is larger than the available KV cache memory (1.01 GiB). Based on the available memory, the estimated maximum model length is 7360. Try increasing `gpu_m
+    raise ValueError(
+ValueError: To serve at least one request with the model's max seq len (40960), (5.62 GiB KV cache is needed, which is larger than the available KV cache memory (1.01 GiB). Based on the available memory, the estimated maximum model length is 7360. Try increasing `gpu_memory_utilization` (which also controls CPU memory on the CPU
+
+### lc4
+== c25 sleep and wake
+UP c25 after 110 s
+mem awake: 14861 MiB
+sleep http=200 bytes=0
+{"is_sleeping":true}
+mem asleep: 4245 MiB
+wake http=200 bytes=0
+{"is_sleeping":false}
+mem woken: 14865 MiB
+request after wake 200
+(EngineCore pid=2878241) INFO 10-22 21:47:45 [cumem.py:282] CuMemAllocator: sleep freed 10.37 GiB memory in total, of which 1.35 GiB is backed up in CPU and the rest 9.02 GiB is discarded directly.
+(EngineCore pid=2878241) INFO 10-22 21:47:45 [gpu_worker.py:303] Sleep mode freed 10.37 GiB memory, 4.14 GiB memory is still in use.
+(EngineCore pid=2878241) INFO 10-22 21:47:45 [abstract.py:355] It took 1.930889 seconds to fall asleep.
+== c24 batch invariant
+UP c24 after 135 s
+31:torch/_dynamo/variables/functions.py:2590: UserWarning: Dynamo detected a call to a `functools.lru_cache`-wrapped function at 'batch_invariant.py:290'.
+34:  File "vllm/model_executor/determinism/batch_invariant.py", line 290, in matmul_persistent
+52:(EngineCore pid=2884419) WARNING 10-22 21:49:27 [sampling_params.py:544] Random sampling without an explicit seed may not be batch invariant. Set seed in SamplingParams or use temperature=0.
+identical alone vs batch of 32: True
+== c24b same probe without batch invariance
+UP c24b after 50 s
+identical alone vs batch of 32 (default mode): False
+== c20 c21 kv offloading
+UP c20 after 140 s
+(EngineCore pid=2894900) INFO 10-22 21:52:09 [factory.py:62] Creating v1 connector with name: OffloadingConnector and engine_id: c6784a39-3d33-40bf-81c8-d18c3f7856d2
+(EngineCore pid=2894900) INFO 10-22 21:53:09 [factory.py:62] Creating v1 connector with name: OffloadingConnector and engine_id: c6784a39-3d33-40bf-81c8-d18c3f7856d2
+turn1 prompt tokens 2182
+vllm:external_prefix_cache_hits_total turn1 + 0.0 turn2 + 0.0
+vllm:external_prefix_cache_queries_total turn1 + 2182.0 turn2 + 33.0
+vllm:prefix_cache_hits_total turn1 + 0.0 turn2 + 2176.0
+vllm:prefix_cache_queries_total turn1 + 2182.0 turn2 + 2209.0
+turn2 prompt tokens 2209
+== c22 offline LLM class
+OUT>  The sentences should be concise and highlight the key events that shaped the ci
+OUT>  What do you think about the sea's rise?   First, I saw the sea in spring, it wa
+(MainProcess pid=2901422) INFO 10-22 21:55:05 [core_client.py:767] [shutdown] MPClient: cleaning up background resources
+(MainProcess pid=2901422) INFO 10-22 21:55:05 [core_client.py:769] [shutdown] MPClient: complete
+mem after offline: 3506 MiB
+== c32 -O1
+UP c32 after 110 s
+compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'bin
+cudagraph_mode': <CUDAGraphMode.PIECEWISE: 1>
+(EngineCore pid=2907209) INFO 10-22 21:56:08 [backends.py:391] Compiling a graph for compile range (1, 2048) takes 27.37 s
+(EngineCore pid=2907209) INFO 10-22 21:56:20 [model_runner.py:1087] Graph capturing finished in 6 secs, took 0.27 GiB
+(EngineCore pid=2907209) INFO 10-22 21:56:46 [model_runner.py:1087] Graph capturing finished in 5 secs, took 0.05 GiB
+== c45 VLLM_DISABLE_COMPILE_CACHE
+UP c45 after 75 s
+(EngineCore pid=2912607) INFO 10-22 21:57:19 [core.py:129] Initializing a V1 LLM engine (v0.31.0) with config: model='Qwen/Qwen3-0.6B', speculative_config=None, tokenizer='Qwen/Qwen3-0.6B', skip_token
+(EngineCore pid=2912607) INFO 10-22 21:57:31 [backends.py:1088] vLLM's torch.compile cache is disabled.
+== default start compile lines for comparison
+(EngineCore pid=2891683) INFO 10-22 21:50:36 [decorators.py:312] Directly load AOT compilation from path /root/.cache/vllm/torch_compile_cache/torch_aot_compile/d6b4aa73f94868dc1c77304b30924ab2629fbec
+
+### lc5
+== c15 AWQ 14B
+UP c15 after 360 s
+quantization=auto_awq
+(EngineCore pid=2917635) INFO 10-22 21:58:56 [__init__.py:870] Using MarlinLinearKernel for mixed-precision linear
+(EngineCore pid=2917635) INFO 10-22 21:58:56 [auto_awq.py:451] Using MarlinLinearKernel for AutoAWQMarlinLinearMethod
+(EngineCore pid=2917635) INFO 10-22 22:00:17 [model_runner.py:407] Model loading took 9.44 GiB memory and 81.083856 seconds
+(EngineCore pid=2917635) INFO 10-22 22:02:18 [kv_cache_utils.py:2464] GPU KV cache size: 36,272 tokens, Maximum concurrency for 8,192 tokens per request: 4.43x
+content 'Sure! Here are three prime numbers: 2, 3, and 5.'
+== c34 SGLang client against vLLM
+UP c34 after 65 s
+sglang 0.5.22
+rc=0
+Waiting up to 60s for http://0.0.0.0:8010/v1/models to become ready...
+Successful requests:                     16        
+Output token throughput (tok/s):         32.28     
+Median TTFT (ms):                        143.52    
+Median TPOT (ms):                        30.72     
+Median ITL (ms):                         28.37     
+
+### c02 response (thinking off)
+{"id":"chatcmpl-be7faf6c4cbd933a","object":"chat.completion","created":1792704360,"model":"Qwen/Qwen3-0.6B","choices":[{"index":0,"message":{"role":"assistant","content":"Three prime numbers are: **2, 3, and 5**.","refusal":null,"annotations":null,"audio":null,"function_call":null,"reasoning":null},"logprobs":null,"finish_reason":"stop","stop_reason":null,"token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.31.0-77ee8c5b","usage":{"prompt_tokens":17,"total_tokens":34,"completion_tokens":17,"prompt_tokens_details":null,"completion_tokens_details":{"reasoning_tokens":0}},"prompt_logprobs":null,"prompt_token_ids":null,"prompt_text":null,"kv_transfer_params":null,"ec_transfer_params":null,"metrics":null}

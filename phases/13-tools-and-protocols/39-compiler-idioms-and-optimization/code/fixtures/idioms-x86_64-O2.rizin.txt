@@ -1,0 +1,50 @@
+# command: rizin -e scr.color=0 -qc 'aaa; afl; pdf @ sym.div10s; pdf @ sym.table_switch; aoi 1 @ sym.div10s+3' idioms-x86_64-O2.o
+# version: rizin 0.9.1 @ darwin-arm-64
+[2KWARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+WARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+ERROR: Cannot peek memory without specifying an address (esil address: 0x080003aa)
+ERROR: Cannot peek memory without specifying an address (esil address: 0x08000279)
+0x08000040    1 16           sym.div10u
+0x08000050    1 24           sym.div10s
+0x08000070    1 23           sym.div7u
+0x08000090    1 24           sym.div3s
+0x080000b0    1 31           sym.mod10s
+0x080000d0    1 16           sym.mod8s
+0x080000e0    1 4            sym.mul9
+0x080000f0    1 19           sym.linear_switch
+0x08000110    3 23           sym.table_switch
+0x08000130    8 36           sym.call_switch
+0x08000160   12 68           sym.sparse_switch
+0x080001b0    1 23           sym.two_cases
+0x080001d0    1 8            sym.clamp_max
+0x080001e0    1 8            sym.abs_int
+0x080001f0    1 8            sym.is_pos
+0x08000200    1 7            sym.tail_caller
+0x08000210    1 4            sym.leaf_add
+0x08000220    1 6            sym.twice_sum
+0x08000230   10 140          sym.sum_n
+0x080002c0    1 27           sym.sum4
+0x080002e0    1 73           sym.poly8
+0x08000330    3 14           sym.fill
+0x08000340    1 5            sym.copy_n
+0x08000350    1 7            sym.copy16
+0x08000360   15 256          sym.digest
+┌ sym.div10s(int64_t arg1);
+│           ; arg int64_t arg1 @ rdi
+│           0x08000050      movsxd rax, edi                            ; arg1
+│           0x08000053      imul  rax, rax, 0x66666667
+│           0x0800005a      mov   rcx, rax
+│           0x0800005d      shr   rcx, 0x3f
+│           0x08000061      sar   rax, 0x22
+│           0x08000065      add   eax, ecx
+└           0x08000067      ret
+┌ sym.table_switch(unsigned long arg1);
+│           ; arg unsigned long arg1 @ rdi
+│           0x08000110      mov   eax, 0xffffffff                      ; -1
+│           0x08000115      cmp   edi, 0x06                            ; 6 ; arg1
+│       ┌─< 0x08000118      jnbe  0x8000126
+│       │   0x0800011a      mov   eax, edi                             ; arg1
+│       │   0x0800011c      lea   rcx, qword data.08000488             ; 0x8000488 ; "\n"; RELOC 32 .rodata @ 0x08000460 - 0x80000fb
+│       │   0x08000123      mov   eax, dword [rcx+rax*4]
+└       └─> 0x08000126      ret
+0x8000053 (seq (set _tmp_xp (* (cast 128 (msb (var rax)) (var rax)) (cast 128 (msb (bv 32 0x66666667)) (bv 32 0x66666667)))) (set _dest (cast 64 false (var _tmp_xp))) (set rax (var _dest)) (branch (== (cast 128 (msb (var _dest)) (var _dest)) (var _tmp_xp)) (seq (set cf false) (set of false)) (seq (set cf true) (set of true))))

@@ -45,7 +45,7 @@ graph LR
 
 ### Rotation
 
-A 2D rotation by angle theta keeps distances and angles intact. It moves every point along a circular arc.
+A 2D rotation by angle $\theta$ keeps distances and angles intact. It moves every point along a circular arc.
 
 ```mermaid
 graph LR
@@ -66,18 +66,12 @@ graph LR
 
 In 3D, you rotate around an axis. Each axis has its own rotation matrix:
 
-```
-Rz(theta) = | cos  -sin  0 |     Rotate around z-axis
-            | sin   cos  0 |     (x-y plane spins, z stays)
-            |  0     0   1 |
-
-Rx(theta) = | 1   0     0    |   Rotate around x-axis
-            | 0  cos  -sin   |   (y-z plane spins, x stays)
-            | 0  sin   cos   |
-
-Ry(theta) = |  cos  0  sin |     Rotate around y-axis
-            |   0   1   0  |     (x-z plane spins, y stays)
-            | -sin  0  cos |
+```math
+\begin{aligned}
+R_z(\theta) &= \begin{bmatrix} \cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1 \end{bmatrix} \quad \text{Rotate around z-axis (x-y plane spins, z stays)} \\[6pt]
+R_x(\theta) &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & \cos\theta & -\sin\theta \\ 0 & \sin\theta & \cos\theta \end{bmatrix} \quad \text{Rotate around x-axis (y-z plane spins, x stays)} \\[6pt]
+R_y(\theta) &= \begin{bmatrix} \cos\theta & 0 & \sin\theta \\ 0 & 1 & 0 \\ -\sin\theta & 0 & \cos\theta \end{bmatrix} \quad \text{Rotate around y-axis (x-z plane spins, y stays)}
+\end{aligned}
 ```
 
 ### Scaling
@@ -123,8 +117,8 @@ graph LR
 ```
 
 Shear matrices:
-- `Shx = [[1, k], [0, 1]]` shifts x by k * y
-- `Shy = [[1, 0], [k, 1]]` shifts y by k * x
+- `Shx = [[1, k], [0, 1]]` shifts $x$ by $k \cdot y$
+- `Shy = [[1, 0], [k, 1]]` shifts $y$ by $k \cdot x$
 
 ### Reflection
 
@@ -196,7 +190,7 @@ The matrix stretches space by 3x along [1, 1] and keeps [1, -1] unchanged. Every
 
 ### Eigendecomposition
 
-If a matrix has n linearly independent eigenvectors, it can be decomposed:
+If a matrix has $n$ linearly independent eigenvectors, it can be decomposed:
 
 ```
 A = V @ D @ V^(-1)
@@ -210,7 +204,7 @@ This says: rotate into eigenvector coordinates, scale along each axis, rotate ba
 
 ### Why eigenvalues matter
 
-**PCA.** The eigenvectors of the covariance matrix are the principal components. The eigenvalues tell you how much variance each component captures. Sort by eigenvalue, keep the top k, and you have dimensionality reduction.
+**PCA.** The eigenvectors of the covariance matrix are the principal components. The eigenvalues tell you how much variance each component captures. Sort by eigenvalue, keep the top $k$, and you have dimensionality reduction.
 
 **Stability.** In recurrent networks and dynamical systems, eigenvalues with magnitude > 1 cause outputs to explode. Magnitude < 1 causes them to vanish. This is the vanishing/exploding gradient problem stated in one sentence.
 
@@ -309,7 +303,7 @@ print(f"Same? {result1 == result2}")
 
 ### Step 3: Eigenvalues from scratch (2x2)
 
-For a 2x2 matrix `[[a, b], [c, d]]`, eigenvalues solve the characteristic equation: `lambda^2 - (a+d)*lambda + (ad - bc) = 0`.
+For a 2x2 matrix `[[a, b], [c, d]]`, eigenvalues solve the characteristic equation: $\lambda^2 - (a+d)\lambda + (ad - bc) = 0$.
 
 ```python
 def eigenvalues_2x2(matrix):
@@ -443,6 +437,14 @@ This lesson builds the geometric foundation for PCA (Phase 2) and neural network
 
 3. Create a composition of three transformations (rotate 30 degrees, scale by [1.5, 0.8], shear with kx=0.3) and apply it to 8 points arranged in a circle. Print before and after coordinates. Compute the determinant of the composed matrix and verify it equals the product of the individual determinants.
 
+### Hints
+
+**Exercise 1.** Apply `rotation_2d`, `scaling_2d`, and `shearing_2d` to each corner with `mat_vec_mul`. For the rotation, compute the 4 side lengths and the 2 diagonals before and after; each must stay the same.
+
+**Exercise 2.** Write the characteristic equation $\lambda^2 - (\text{trace})\lambda + \det = 0$ and solve it. Check that your two values add up to the trace (7) and multiply to the determinant (10), then compare with `eigenvalues_2x2` and `np.linalg.eigvals`.
+
+**Exercise 3.** Build the three matrices, with `shearing_2d(0.3, 0)` for the shear, multiply them with `mat_mul` in the order of application, and apply the result to 8 points $(\cos\theta, \sin\theta)$. The rotation has a determinant of 1 and the shear has a determinant of 1, so `det_2x2` of the composition must equal $1.5 \times 0.8 = 1.2$.
+
 ## Key Terms
 
 | Term | What people say | What it actually means |
@@ -454,9 +456,9 @@ This lesson builds the geometric foundation for PCA (Phase 2) and neural network
 | Composition | "Do two things" | Multiplying transformation matrices to chain operations. Order matters: B @ A means apply A first, then B. |
 | Eigenvector | "Special direction" | A direction that the matrix only scales, never rotates. The transformation's fingerprint. |
 | Eigenvalue | "How much it stretches" | The scalar factor by which the matrix scales its eigenvector. Can be negative (flip) or complex (rotation). |
-| Eigendecomposition | "Break the matrix apart" | Writing a matrix as V @ D @ V^(-1), separating it into its fundamental scaling directions and magnitudes. |
+| Eigendecomposition | "Break the matrix apart" | Writing a matrix as $V D V^{-1}$, separating it into its fundamental scaling directions and magnitudes. |
 | Determinant | "A single number from a matrix" | The factor by which the transformation scales area (2D) or volume (3D). Zero means the transformation is irreversible. |
-| Characteristic equation | "Where eigenvalues come from" | det(A - lambda * I) = 0. The polynomial whose roots are the eigenvalues. |
+| Characteristic equation | "Where eigenvalues come from" | $\det(A - \lambda I) = 0$. The polynomial whose roots are the eigenvalues. |
 
 ## Further Reading
 

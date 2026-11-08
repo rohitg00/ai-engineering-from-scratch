@@ -1,0 +1,9 @@
+                 (undefined) external ___stack_chk_fail (from libSystem)
+                 (undefined) external ___stack_chk_guard (from libSystem)
+0000000100000000 (__TEXT,__text) [referenced dynamically] external __mh_execute_header
+                 (undefined) external _grade (from libledger)
+                 (undefined) external _grade_label (from libledger)
+                 (undefined) external _percent_change (from libledger)
+                 (undefined) external _printf (from libSystem)
+                 (undefined) external _puts (from libSystem)
+                 (undefined) external _total (from libledger)

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 336" role="img" aria-labelledby="fig-6-4-title fig-6-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-4-title">How cache_aware picks a server</title>
+  <desc id="fig-6-4-desc">A decision flow. First the gateway tests whether loads are imbalanced: the busiest minus the lightest is more than 64 and the busiest is more than 1.5 times the lightest. If yes, the request goes to the least-loaded server. If no, the gateway computes the match rate against its character tree. Above 0.3 the request goes to the server with the longest match. At 0.3 or below it goes to the least-loaded server. Every outcome inserts the request text into the tree.</desc>
+  <defs><marker id="fig-6-4-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <rect x="230" y="12" width="180" height="32" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="320" y="31.75" font-size="12.5" text-anchor="middle" font-weight="700">request text</text>
+  <rect x="150" y="74" width="290" height="50" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="295" y="94.25" font-size="12.5" text-anchor="middle" font-weight="700">imbalanced?</text>
+  <text x="295" y="111.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">max - min &gt; 64 and max &gt; 1.5 x min</text>
+  <rect x="150" y="168" width="340" height="50" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="320" y="188.25" font-size="12.5" text-anchor="middle" font-weight="700">match rate &gt; 0.3?</text>
+  <text x="320" y="205.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">matched characters / request characters</text>
+  <rect x="500" y="74" width="130" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="565" y="94.25" font-size="12.5" text-anchor="middle" font-weight="700">least-loaded</text>
+  <text x="565" y="111.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">server</text>
+  <rect x="150" y="262" width="200" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="250" y="282.25" font-size="12.5" text-anchor="middle" font-weight="700">longest match</text>
+  <text x="250" y="299.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">server in the tree</text>
+  <rect x="410" y="262" width="220" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="520" y="282.25" font-size="12.5" text-anchor="middle" font-weight="700">least-loaded</text>
+  <text x="520" y="299.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">random among ties</text>
+  <line x1="320" y1="44" x2="320" y2="73" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-4-head-ink)"/>
+  <line x1="440" y1="99" x2="499" y2="99" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-4-head-ink)"/>
+  <rect class="m-knock" x="456.65" y="82.03" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="470" y="93" font-size="11.5" text-anchor="middle">yes</text>
+  <line x1="320" y1="124" x2="320" y2="167" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-4-head-ink)"/>
+  <rect class="m-knock" x="325" y="134.53" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="328" y="145.5" font-size="11.5">no</text>
+  <line x1="250" y1="218" x2="250" y2="261" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-4-head-ink)"/>
+  <rect class="m-knock" x="255" y="228.53" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="258" y="239.5" font-size="11.5">yes</text>
+  <line x1="470" y1="218" x2="470" y2="261" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-4-head-ink)"/>
+  <rect class="m-knock" x="475" y="228.53" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="478" y="239.5" font-size="11.5">no</text>
+  <text x="20" y="98" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">step 1</text>
+  <text x="20" y="192" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">step 2</text>
+  <text x="20" y="286" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">step 3</text>
+  <text x="20" y="330" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">every outcome inserts the request text under the chosen server</text>
+</svg>

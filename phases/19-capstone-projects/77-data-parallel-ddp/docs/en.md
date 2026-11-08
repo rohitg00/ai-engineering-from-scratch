@@ -57,7 +57,7 @@ A transformer has thousands of parameter tensors. One allreduce per tensor pays 
 
 ### Why pin the seed
 
-Every rank must call `torch.manual_seed(seed + rank)` for shuffling but `torch.manual_seed(seed)` for parameter init. A single shared seed means every rank sees the same batch order (defeating data parallel); a rank-specific seed for params means initial parameters disagree by float epsilon and gradient sync no longer makes the replicas identical. Get the seed pattern right or the test for parameter equivalence fails on step 1.
+Every rank must call `torch.manual_seed(seed + rank)` for shuffling but `torch.manual_seed(seed)` for parameter init. A single shared seed for shuffling means every rank sees the same batch order (defeating data parallel). For parameters, the rank 0 broadcast at construction is what makes the replicas identical, and it overwrites whatever each rank initialised. The shared init seed is the backup: if the broadcast is skipped or broken, rank-specific init gives every replica different starting weights, and gradient sync alone never pulls them back together. Get the seed pattern right or the test for parameter equivalence fails on step 1.
 
 ```figure
 ci-ddp-grad-sync

@@ -9,7 +9,7 @@
 
 ## Learning Objectives
 
-- Enumerate the six core gateway features (routing, fallback, retries, rate limits, secrets, observability, guardrails).
+- Enumerate the seven core gateway features (routing, fallback, retries, rate limits, secrets, observability, guardrails).
 - Map four 2026 gateways (LiteLLM, Portkey, Kong AI, Bifrost) to scale ceilings and use cases.
 - Cite the Kong benchmark (228% vs Portkey, 859% vs LiteLLM) and explain why it matters for >500 RPS.
 - Choose self-hosted vs managed given data residency and ops budget.
@@ -22,7 +22,7 @@ Reinventing this at the app layer couples every service to every provider. A gat
 
 ## The Concept
 
-### Six core features
+### Seven core features
 
 1. **Provider routing** — OpenAI, Anthropic, Gemini, self-hosted, etc. behind one API.
 2. **Fallback** — on 429, 5xx, or quality failure, retry elsewhere.
@@ -109,7 +109,7 @@ This lesson produces `outputs/skill-gateway-picker.md`. Given scale, ops posture
 ## Exercises
 
 1. Run `code/main.py`. Configure fallback from OpenAI→Anthropic→self-hosted. What's the expected hit rate at 5% provider error rate?
-2. Your SLA is TTFT P99 < 200 ms on a 300 ms baseline. Which gateways stay within budget?
+2. Your SLA is TTFT P99 < 320 ms and the model alone measures 300 ms at P99. Which gateways stay within budget?
 3. A healthcare customer requires self-hosted + PII redaction + audit. Pick Portkey OSS or Kong.
 4. Compare LiteLLM vs Kong: at what RPS ceiling should a team migrate?
 5. Design a rate-limit policy for a multi-tenant SaaS: free tier, trial tier, paid tier. Token-bucket or sliding-window?

@@ -1,0 +1,12 @@
+{
+  "title": "field-notes-map-builder",
+  "url": "http://127.0.0.1:8879/projects/field-notes-map-builder/solution/output/report.html",
+  "actions": [
+    [
+      "select",
+      "section:nth-of-type(1) select",
+      "keep-group"
+    ]
+  ],
+  "kind": "browser capture"
+}

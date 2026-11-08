@@ -1,0 +1,79 @@
+
+tiny-x86_64.exe:	file format coff-x86-64
+Characteristics 0x22
+	executable
+	large address aware
+
+Time/Date               Thu Jan  1 05:30:00 1970
+Magic                   020b	(PE32+)
+MajorLinkerVersion      14
+MinorLinkerVersion      0
+SizeOfCode              0000000000000200
+SizeOfInitializedData   0000000000000600
+SizeOfUninitializedData 0000000000000000
+AddressOfEntryPoint     0000000000001000
+BaseOfCode              0000000000001000
+ImageBase               0000000140000000
+SectionAlignment        00001000
+FileAlignment           00000200
+MajorOSystemVersion     6
+MinorOSystemVersion     0
+MajorImageVersion       0
+MinorImageVersion       0
+MajorSubsystemVersion   6
+MinorSubsystemVersion   0
+Win32Version            00000000
+SizeOfImage             00005000
+SizeOfHeaders           00000200
+CheckSum                00000000
+Subsystem               00000003	(Windows CUI)
+DllCharacteristics      00008160
+					HIGH_ENTROPY_VA
+					DYNAMIC_BASE
+					NX_COMPAT
+					TERMINAL_SERVER_AWARE
+SizeOfStackReserve      0000000000100000
+SizeOfStackCommit       0000000000001000
+SizeOfHeapReserve       0000000000100000
+SizeOfHeapCommit        0000000000001000
+LoaderFlags             00000000
+NumberOfRvaAndSizes     00000010
+
+The Data Directory
+Entry 0 0000000000002080 0000004d Export Directory [.edata (or where ever we found it)]
+Entry 1 0000000000002000 00000028 Import Directory [parts of .idata]
+Entry 2 0000000000000000 00000000 Resource Directory [.rsrc]
+Entry 3 0000000000000000 00000000 Exception Directory [.pdata]
+Entry 4 0000000000000000 00000000 Security Directory
+Entry 5 0000000000004000 0000000c Base Relocation Directory [.reloc]
+Entry 6 0000000000000000 00000000 Debug Directory
+Entry 7 0000000000000000 00000000 Description Directory
+Entry 8 0000000000000000 00000000 Special Directory
+Entry 9 0000000000000000 00000000 Thread Storage Directory [.tls]
+Entry a 0000000000000000 00000000 Load Configuration Directory
+Entry b 0000000000000000 00000000 Bound Import Directory
+Entry c 0000000000002040 00000018 Import Address Table Directory
+Entry d 0000000000000000 00000000 Delay Import Directory
+Entry e 0000000000000000 00000000 CLR Runtime Header
+Entry f 0000000000000000 00000000 Reserved
+
+The Import Tables:
+  lookup 00002028 time 00000000 fwd 00000000 name 00002068 addr 00002040
+
+    DLL Name: msvcrt.dll
+    Hint/Ord  Name
+           0  puts
+           0  exit
+
+Export Table:
+ DLL name: tiny-x86_64.exe
+ Ordinal base: 1
+ Ordinal      RVA  Name
+       1   0x1000  tiny_entry
+
+Sections:
+Idx Name          Size     VMA              Type
+  0 .text         0000001a 0000000140001000 TEXT
+  1 .rdata        000000dc 0000000140002000 DATA
+  2 .data         00000008 0000000140003000 DATA
+  3 .reloc        0000000c 0000000140004000 DATA

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="fig-2-2-title fig-2-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-2-title">The nine checks of rea doctor for the Ghidra scope</title>
+  <desc id="fig-2-2-desc">Nine boxes in three rows, read left to right then down, each with the detail the capture Mac returned: node 22.22.0, ghidra with GHIDRA_INSTALL_DIR at ghidra/12.1.4/libexec, ghidra-platform darwin, ghidra-architecture arm64, ghidra-installation application.properties, ghidra-version 12.1.4 against the policy 12.1.x with JDK 21, ghidra-headless support/analyzeHeadless, ghidra-native_decompiler os/mac_arm_64/decompile which reports mach-o arm64 and matches, and ghidra-java 21.0.12.1 as a 64-bit JDK. Arrows connect the checks in order. Two result boxes at the bottom read healthy true for the explicit scope with providers ghidra and exit 0, and environment_healthy false for the audit-wide set that the capture filtered out.</desc>
+  <defs><marker id="fig-2-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-2-2-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">REA DOCTOR --PROVIDER GHIDRA · IN ORDER</text>
+  <rect x="20" y="30" width="190" height="64" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="115" y="49.3" font-size="11" text-anchor="middle" font-weight="700">node</text>
+  <text x="115" y="66.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">22.22.0</text>
+  <text x="115" y="81.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ok true, healthy</text>
+  <rect x="225" y="30" width="190" height="64" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="49.3" font-size="11" text-anchor="middle" font-weight="700">ghidra</text>
+  <text x="320" y="66.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">GHIDRA_INSTALL_DIR</text>
+  <text x="320" y="81.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ghidra/12.1.4/libexec</text>
+  <rect x="430" y="30" width="190" height="64" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="525" y="49.3" font-size="11" text-anchor="middle" font-weight="700">ghidra-platform</text>
+  <text x="525" y="66.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">darwin</text>
+  <text x="525" y="81.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ok true, healthy</text>
+  <rect x="20" y="114" width="190" height="64" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="115" y="133.3" font-size="11" text-anchor="middle" font-weight="700">ghidra-architecture</text>
+  <text x="115" y="150.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">arm64</text>
+  <text x="115" y="165.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ok true, healthy</text>
+  <rect x="225" y="114" width="190" height="64" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="133.3" font-size="11" text-anchor="middle" font-weight="700">ghidra-installation</text>
+  <text x="320" y="150.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">application.properties</text>
+  <text x="320" y="165.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ok true, healthy</text>
+  <rect x="430" y="114" width="190" height="64" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="525" y="133.3" font-size="11" text-anchor="middle" font-weight="700">ghidra-version</text>
+  <text x="525" y="150.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">12.1.4</text>
+  <text x="525" y="165.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">policy: 12.1.x, JDK 21</text>
+  <rect x="20" y="198" width="190" height="64" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="115" y="217.3" font-size="11" text-anchor="middle" font-weight="700">ghidra-headless</text>
+  <text x="115" y="234.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">support/analyzeHeadless</text>
+  <text x="115" y="249.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ok true, healthy</text>
+  <rect x="225" y="198" width="190" height="64" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="217.3" font-size="11" text-anchor="middle" font-weight="700">ghidra-native_decompiler</text>
+  <text x="320" y="234.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">os/mac_arm_64/decompile</text>
+  <text x="320" y="249.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mach-o arm64 matches</text>
+  <rect x="430" y="198" width="190" height="64" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="525" y="217.3" font-size="11" text-anchor="middle" font-weight="700">ghidra-java</text>
+  <text x="525" y="234.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">21.0.12.1, 64-bit JDK</text>
+  <text x="525" y="249.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ok true, healthy</text>
+  <line x1="210" y1="62" x2="224" y2="62" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <line x1="415" y1="62" x2="429" y2="62" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <path d="M525 94 V104 H115 V113" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-2-2-head-ink)"/>
+  <line x1="210" y1="146" x2="224" y2="146" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <line x1="415" y1="146" x2="429" y2="146" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <path d="M525 178 V188 H115 V197" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-2-2-head-ink)"/>
+  <line x1="210" y1="230" x2="224" y2="230" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <line x1="415" y1="230" x2="429" y2="230" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <path d="M525 262 V276 H165 V289" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-2-2-head-amber)"/>
+  <path d="M525 262 V276 H475 V289" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-2-2-head-ink)"/>
+  <rect x="20" y="290" width="290" height="56" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="165" y="305.6" font-size="12" text-anchor="middle" font-weight="700">healthy: true</text>
+  <text x="165" y="322.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">scope explicit, providers [ghidra]</text>
+  <text x="165" y="337.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">exit 0, under one second</text>
+  <rect x="330" y="290" width="290" height="56" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="475" y="305.6" font-size="12" text-anchor="middle" font-weight="700">environment_healthy: false</text>
+  <text x="475" y="322.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the audit-wide set, outside this scope</text>
+  <text x="475" y="337.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">filtered out of the capture</text>
+</svg>

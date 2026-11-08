@@ -1,6 +1,6 @@
 # RL for Games — AlphaZero, MuZero, and the LLM-Reasoning Era
 
-> 1992: TD-Gammon beat human champions at backgammon with pure TD. 2016: AlphaGo beat Lee Sedol. 2017: AlphaZero dominated chess, shogi, and Go from scratch. 2024: DeepSeek-R1 proved the same recipe, with GRPO replacing PPO, works on reasoning. Games are the benchmark that drives every breakthrough in this phase.
+> 1992: TD-Gammon beat human champions at backgammon with pure TD. 2016: AlphaGo beat Lee Sedol. 2017: AlphaZero dominated chess, shogi, and Go from scratch. 2025: DeepSeek-R1 proved the same recipe, with GRPO replacing PPO, works on reasoning. Games are the benchmark that drives every breakthrough in this phase.
 
 **Type:** Build
 **Languages:** Python
@@ -30,19 +30,19 @@ while True:
 
 **AlphaZero (2017).** Silver et al. Given a game (chess, shogi, Go) with known rules:
 
-- Policy-value network: one tower `f_θ(s) → (p, v)`. `p` is a prior over legal moves. `v` is the expected game outcome.
-- Monte Carlo Tree Search (MCTS): at each move, expand a tree of possible continuations. Use `(p, v)` as the prior + bootstrap. Select nodes by UCB (PUCT): `a* = argmax Q(s, a) + c · p(a|s) · √N(s) / (1 + N(s, a))`.
-- Self-play: play games agent-vs-agent. At move `t`, the MCTS visit distribution `π_t` becomes the policy training target.
-- Loss: `L = (v - z)² - π · log p + c · ||θ||²`. `z` is the game outcome (+1 / 0 / -1).
+- Policy-value network: one tower $f_\theta(s) \to (p, v)$. $p$ is a prior over legal moves. $v$ is the expected game outcome.
+- Monte Carlo Tree Search (MCTS): at each move, expand a tree of possible continuations. Use $(p, v)$ as the prior + bootstrap. Select nodes by UCB (PUCT): $a^{\ast} = \arg\max_a Q(s, a) + c \cdot p(a \mid s) \cdot \sqrt{N(s)} / (1 + N(s, a))$.
+- Self-play: play games agent-vs-agent. At move $t$, the MCTS visit distribution $\pi_t$ becomes the policy training target.
+- Loss: $L = (v - z)^2 - \pi \cdot \log p + c \cdot \lVert \theta \rVert^2$. $z$ is the game outcome (+1 / 0 / -1).
 
 Zero human knowledge. Zero handcrafted heuristics. A single recipe that mastered chess, shogi, and Go after a few tens of millions of self-play games each.
 
 **MuZero (2019).** Schrittwieser et al. Removes the requirement that the rules are known.
 
-- Instead of a fixed environment, learn a *latent dynamics model* `(h, g, f)`:
-  - `h(s)`: encode observation to latent state.
-  - `g(s_latent, a)`: predict next latent state + reward.
-  - `f(s_latent)`: predict policy prior + value.
+- Instead of a fixed environment, learn a *latent dynamics model* $(h, g, f)$:
+  - $h(s)$: encode observation to latent state.
+  - $g(s_{\text{latent}}, a)$: predict next latent state + reward.
+  - $f(s_{\text{latent}})$: predict policy prior + value.
 - MCTS runs in the *learned latent space*. Same search, same training loop.
 - Works on Go, chess, shogi *and* Atari — one algorithm, no rule knowledge.
 
@@ -54,13 +54,13 @@ Zero human knowledge. Zero handcrafted heuristics. A single recipe that mastered
 
 - "Game": answer a math / coding / reasoning problem. "Win" = verifier (test case passes, numerical answer matches) returns 1.
 - Policy: the LLM. Actions: tokens. State: prompt + response-so-far.
-- No critic (PPO-style V_φ). Instead, for each prompt, sample `G` completions from the policy. Compute reward for each. Use the **group-relative advantage** `A_i = (r_i - mean_r) / std_r` as the signal for REINFORCE-style update.
+- No critic (PPO-style $V_\phi$). Instead, for each prompt, sample $G$ completions from the policy. Compute reward for each. Use the **group-relative advantage** $A_i = (r_i - \text{mean}_r) / \text{std}_r$ as the signal for REINFORCE-style update.
 - KL penalty to reference policy to prevent drift (like RLHF).
 - Full loss:
 
-  `L_GRPO(θ) = -E_{q, {o_i}} [ (1/G) Σ_i A_i · log π_θ(o_i | q) ] + β · KL(π_θ || π_ref)`
+  $L_{\text{GRPO}}(\theta) = -\mathbb E_{q, \lbrace o_i \rbrace} \left[ \frac{1}{G} \sum_i A_i \cdot \log \pi_\theta(o_i \mid q) \right] + \beta \cdot \mathrm{KL}(\pi_\theta \Vert \pi_{\text{ref}})$
 
-No reward model, no critic, no MCTS. Group-relative baseline replaces all three. Matches or exceeds PPO-RLHF quality on reasoning benchmarks at a fraction of the compute.
+No learned reward model, no critic, no MCTS. A rule-based verifier supplies the reward, the group-relative baseline replaces the critic, and the search step is dropped. Matches or exceeds PPO-RLHF quality on reasoning benchmarks at a fraction of the compute.
 
 **The R1 recipe in full.** DeepSeek-R1 (DeepSeek 2025) is two models in one paper:
 
@@ -86,7 +86,7 @@ f3-selfplay-ladder
 
 ## Build It
 
-The code in `code/main.py` implements **GRPO in miniature** — a bandit with multiple groups of samples. The algorithm is the same as on an LLM; only the policy and environment are simpler. It teaches the *loss* and the *group-relative advantage*, which is the 2025 innovation.
+The code in `code/main.py` implements **GRPO in miniature**: a bandit with multiple groups of samples. The algorithm is the same as on an LLM; only the policy and environment are simpler. It teaches the *loss* and the *group-relative advantage*, which is the 2024 innovation from DeepSeekMath.
 
 ### Step 1: a tiny verifier environment
 
@@ -144,7 +144,7 @@ Same diagnostics as RLHF: mean KL to reference, policy entropy, reward-over-time
 ## Pitfalls
 
 - **Reward hacking via verifier gaming.** GRPO inherits RLHF's risk: if the verifier is wrong or exploitable, the LLM will find the exploit. Robust verifiers (multiple test cases, formal proofs) matter.
-- **Group size too small.** Variance of the group baseline goes like `1/√G`. Below `G = 4`, the advantage signal is noisy; standard choice is `G = 8` to `64`.
+- **Group size too small.** Variance of the group-mean baseline goes like $1/G$ (its standard error like $1/\sqrt{G}$). Below $G = 4$, the advantage signal is noisy; standard choice is $G = 8$ to 64.
 - **Length bias.** LLM completions of different lengths have different log-probabilities. Normalize by token count, or use sequence-level log-prob, or truncate to max length.
 - **Pure self-play cycles.** AlphaZero-style training can get stuck in dominance loops on general-sum games. Mitigated by diverse opponent pools (league play, Lesson 10).
 - **Search-policy mismatch.** AlphaZero trains the policy to mimic search output. If the policy net is too small to represent the search's distribution, training stalls.
@@ -195,7 +195,7 @@ Refuse AlphaZero on imperfect-info games (route to CFR). Refuse GRPO without a t
 
 ## Exercises
 
-1. **Easy.** Implement the GRPO bandit in `code/main.py`. Train on 2 prompts × 4 answer tokens each. Converge in < 1,000 updates with `G=8`.
+1. **Easy.** Implement the GRPO bandit in `code/main.py`. Train on 2 prompts × 4 answer tokens each. Converge in < 1,000 updates with $G=8$.
 2. **Medium.** Plug in PPO (clipped) and vanilla REINFORCE. Compare sample efficiency and reward variance to GRPO on the same bandit.
 3. **Hard.** Extend to a length-2 "reasoning chain": the agent emits two tokens and the verifier rewards the pair. Measure how GRPO handles the credit assignment across two-step sequences. (Hint: compute group advantage per *full sequence*, propagate to both token positions.)
 
@@ -203,11 +203,11 @@ Refuse AlphaZero on imperfect-info games (route to CFR). Refuse GRPO without a t
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| MCTS | "Tree search with learned net" | Monte Carlo Tree Search; UCB1/PUCT selection with learned `(p, v)` priors. |
+| MCTS | "Tree search with learned net" | Monte Carlo Tree Search; UCB1/PUCT selection with learned $(p, v)$ priors. |
 | AlphaZero | "Self-play + MCTS" | Policy-value net trained to match MCTS visits and game outcome. |
 | MuZero | "Learned-model AlphaZero" | Same loop but in latent space via learned dynamics. |
 | GRPO | "Critic-free PPO" | Group Relative Policy Optimization; REINFORCE with group-mean baseline + KL. |
-| PUCT | "AlphaZero's UCB" | `Q + c · p · √N / (1 + N_a)` — balances value estimate with prior. |
+| PUCT | "AlphaZero's UCB" | $Q + c \cdot p \cdot \sqrt{N} / (1 + N_a)$ — balances value estimate with prior. |
 | Self-play | "Agent vs past self" | Standard for zero-sum; symmetric training signal. |
 | League play | "Population-based self-play" | Past + current + exploiters sampled as opponents. |
 | Verifier reward | "Verifiable RL" | Reward comes from a deterministic checker (tests pass, answer matches). |

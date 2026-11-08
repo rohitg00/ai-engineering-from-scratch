@@ -39,15 +39,15 @@ features += weight_a * control_a(depth) + weight_b * control_b(pose)
 
 ### LoRA (Hu et al., 2021)
 
-For any linear layer `W ∈ R^{d×d}` in the model, freeze `W` and add a low-rank delta:
+For any linear layer $W \in \mathbb{R}^{d \times d}$ in the model, freeze $W$ and add a low-rank delta:
 
+```math
+W' = W + \Delta W, \quad \Delta W = B A, \quad A \in \mathbb{R}^{r \times d}, \quad B \in \mathbb{R}^{d \times r}
 ```
-W' = W + ΔW,  ΔW = B @ A,  A ∈ R^{r×d},  B ∈ R^{d×r}
-```
 
-with `r << d`. Rank 4-16 is standard for attention, rank 64-128 for heavy fine-tunes. Number of new parameters: `2 · d · r` instead of `d²`. For SDXL attention with `d=640`, `r=16`: 20k params per adapter instead of 410k — a 20x reduction. Across the whole model: a LoRA is usually 20-200MB vs the base 5GB.
+with $r \ll d$. Rank 4-16 is standard for attention, rank 64-128 for heavy fine-tunes. Number of new parameters: $2 \cdot d \cdot r$ instead of $d^2$. For SDXL attention with $d=640$, $r=16$: 20k params per adapter instead of 410k — a 20x reduction. Across the whole model: a LoRA is usually 20-200MB vs the base 5GB.
 
-At inference you can scale the LoRA: `W' = W + α · B @ A`. `α = 0.5-1.5` is normal. Multiple LoRAs stack additively (with the usual caveat that they interact in non-linear ways).
+At inference you can scale the LoRA: $W' = W + \alpha \cdot B A$. $\alpha = 0.5\text{-}1.5$ is normal. Multiple LoRAs stack additively (with the usual caveat that they interact in non-linear ways).
 
 ### IP-Adapter (Ye et al., 2023)
 
@@ -74,7 +74,7 @@ v4-controlnet-zero
 
 `code/main.py` simulates the two mechanisms on 1-D:
 
-1. **LoRA.** A pretrained linear layer `W`. Freeze it. Train a low-rank `B @ A` such that `W + BA` matches a target linear layer. Show that `r = 1` is enough to learn a rank-1 correction perfectly.
+1. **LoRA.** A pretrained linear layer $W$. Freeze it. Train a low-rank $BA$ such that $W + BA$ matches a target linear layer. Show that $r = 1$ is enough to learn a rank-1 correction perfectly.
 
 2. **ControlNet-lite.** A "frozen base" predictor and a "side network" that reads an extra signal. The side network's output is gated by a learnable scalar initialized to zero (our version of zero-conv). Train and watch the gate ramp up.
 
@@ -98,11 +98,11 @@ At step 0 the output is identical to base. Early training updates `gate` slowly 
 
 ## Pitfalls
 
-- **Over-scaling LoRAs.** `α = 2` or `α = 3` is a common "make it stronger" hack that produces over-stylized / broken outputs. Keep `α ≤ 1.5`.
+- **Over-scaling LoRAs.** $\alpha = 2$ or $\alpha = 3$ is a common "make it stronger" hack that produces over-stylized / broken outputs. Keep $\alpha \le 1.5$.
 - **ControlNet weight conflict.** Using a Pose ControlNet at weight 1.0 and a Depth ControlNet at weight 1.0 usually overshoots. Sum of weights ≈ 1.0 is a safe default.
 - **LoRA on the wrong base.** SDXL LoRAs silently no-op on SD 1.5 because the attention dimensions do not match. Diffusers will warn in 0.30+.
 - **Textual Inversion drift.** Tokens trained on one checkpoint drift badly on another. LoRA is more portable.
-- **LoRA weight-merging and storage.** You can bake a LoRA into the base model weights for faster inference (no runtime addition), but you lose the ability to scale `α` at runtime. Keep both versions.
+- **LoRA weight-merging and storage.** You can bake a LoRA into the base model weights for faster inference (no runtime addition), but you lose the ability to scale $\alpha$ at runtime. Keep both versions.
 
 ## Use It
 
@@ -125,7 +125,7 @@ Save `outputs/skill-sd-toolkit-composer.md`. Skill takes a task (input assets: p
 
 1. **Easy.** In `code/main.py`, vary the LoRA rank `r` from 1 to 4. At what rank does the LoRA exactly match a rank-2 target delta?
 2. **Medium.** Train two separate LoRAs on two target transforms. Load them together and show their additive interaction. When does the interaction break linearity?
-3. **Hard.** Use diffusers to stack: SDXL-base + Canny-ControlNet (weight 0.8) + a style LoRA (α 0.8) + IP-Adapter (weight 0.6). Measure FID-vs-prompt-adherence trade-off as the stack weights vary.
+3. **Hard.** Use diffusers to stack: SDXL-base + Canny-ControlNet (weight 0.8) + a style LoRA ($\alpha$ 0.8) + IP-Adapter (weight 0.6). Measure FID-vs-prompt-adherence trade-off as the stack weights vary.
 
 ## Key Terms
 
@@ -133,9 +133,9 @@ Save `outputs/skill-sd-toolkit-composer.md`. Skill takes a task (input assets: p
 |------|-----------------|-----------------------|
 | ControlNet | "Spatial control" | Cloned encoder + zero-conv skips; reads a conditioning image. |
 | Zero convolution | "Starts as identity" | 1×1 conv initialized to zero; ControlNet starts as no-op. |
-| LoRA | "Low-rank adapter" | `W + B @ A`, `r << d`; 100x fewer params than a full fine-tune. |
+| LoRA | "Low-rank adapter" | $W + BA$, $r \ll d$; 100x fewer params than a full fine-tune. |
 | rank r | "The knob" | LoRA compression; 4-16 typical, 64+ for heavy personalization. |
-| α | "LoRA strength" | Runtime scaling of the LoRA delta. |
+| $\alpha$ | "LoRA strength" | Runtime scaling of the LoRA delta. |
 | IP-Adapter | "Reference image" | Small image-conditioning adapter via CLIP-image tokens. |
 | DreamBooth | "Full subject fine-tune" | Train the full model on ~30 images of a subject. |
 | Textual Inversion | "New token" | Learn a new word embedding only; legacy, mostly replaced. |
@@ -144,7 +144,7 @@ Save `outputs/skill-sd-toolkit-composer.md`. Skill takes a task (input assets: p
 
 A real text-to-image SaaS serves hundreds of LoRAs and a dozen ControlNets over the same base checkpoint. The serving problem looks a lot like LLM multi-tenancy (the production literature covers the LLM case under continuous batching and LoRAX / S-LoRA):
 
-- **Hot-swap LoRAs, do not merge.** Merging `W' = W + α·B·A` into the base gives ~3-5% faster per-step inference but freezes `α` and the base. Keep LoRAs hot in VRAM as rank-r deltas; diffusers exposes `pipe.load_lora_weights()` + `pipe.set_adapters([...], adapter_weights=[...])` for per-request activation. Swap cost is the `2 · d · r · num_layers` weights — MB-scale, sub-second.
+- **Hot-swap LoRAs, do not merge.** Merging $W' = W + \alpha \cdot B \cdot A$ into the base gives ~3-5% faster per-step inference but freezes $\alpha$ and the base. Keep LoRAs hot in VRAM as rank-r deltas; diffusers exposes `pipe.load_lora_weights()` + `pipe.set_adapters([...], adapter_weights=[...])` for per-request activation. Swap cost is the `2 · d · r · num_layers` weights — MB-scale, sub-second.
 - **ControlNet as a second attention lane.** The cloned encoder runs in parallel with the base. Two ControlNets at weight 1.0 each = two extra forward passes per step, not one merged pass. Batch-size headroom drops quadratically. Budget for ~1.5× step cost per active ControlNet.
 - **Quantized LoRAs too.** If you quantized the base (see Lesson 07, Flux on 8GB), the LoRA delta also quantizes cleanly to 8-bit or 4-bit. QLoRA-style loading lets you stack 5-10 LoRAs on top of a 4-bit Flux base without blowing memory.
 

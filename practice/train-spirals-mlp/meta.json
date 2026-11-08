@@ -1,0 +1,40 @@
+{
+  "id": "train-spirals-mlp",
+  "title": "Train a tanh network on two spirals",
+  "kind": "train",
+  "summary": "Train a 2-24-24-1 tanh network with mini-batch Adam until it separates two noisy spirals with 95 percent held-out accuracy.",
+  "difficulty": "medium",
+  "tags": [
+    "mlp",
+    "backpropagation",
+    "adam",
+    "mini-batch"
+  ],
+  "lesson": "phases/03-deep-learning-core/10-mini-framework",
+  "cheatsheet": "deep-learning-training",
+  "minutes": 45,
+  "entry": [
+    "train",
+    "predict"
+  ],
+  "collections": [
+    "train-tiny-models",
+    "deep-learning-core"
+  ],
+  "time_limit_s": 25,
+  "budget": {
+    "steps": 1500
+  },
+  "target": {
+    "metric": "held-out accuracy",
+    "value": 0.95
+  },
+  "mutants": {
+    "missing_tanh_derivative": "Forgets the factor 1 - h1 ** 2 when it sends the gradient back through the first tanh layer.",
+    "gradient_sign": "Uses t - p as the output gradient, so Adam climbs the loss instead of descending it.",
+    "global_rng_shuffle": "Shuffles with np.random.permutation and not with the rng argument, so two runs with one seed differ.",
+    "adam_no_sqrt": "Divides by v_hat and not by its square root, so the Adam step has the wrong scale.",
+    "shuffles_caller_arrays": "Shuffles X and y in place at the start, so the caller's arrays change.",
+    "over_budget": "Trains for 2500 steps, more than the budget of 1500."
+  }
+}

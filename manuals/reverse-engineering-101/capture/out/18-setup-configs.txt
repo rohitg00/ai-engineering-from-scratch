@@ -1,0 +1,22 @@
+# claude-jsonc.json after rea setup --dry-run
+{
+  // my servers
+  "mcpServers": {},
+}
+
+# claude-duplicate.json after rea setup --yes
+{
+  "mcpServers": {
+    "rea": {"command": "old-rea", "args": ["mcp"]},
+    "rea": {
+      "command": "$HOME/.npm/_npx/<hash>/node_modules/rea-agents/scripts/rea.mjs",
+      "args": [
+        "mcp"
+      ],
+      "env": {
+        "GHIDRA_INSTALL_DIR": "/opt/homebrew/Cellar/ghidra/12.1.4/libexec",
+        "JAVA_HOME": "/opt/homebrew/Cellar/openjdk@21/21.0.12.1/libexec/openjdk.jdk/Contents/Home"
+      }
+    }
+  }
+}

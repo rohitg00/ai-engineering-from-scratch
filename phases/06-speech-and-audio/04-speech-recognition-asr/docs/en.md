@@ -37,7 +37,7 @@ Advantages: highest quality on offline ASR, easy to train with standard seq2seq 
 
 ### WER: the one number
 
-**Word Error Rate** = `(S + D + I) / N`, where S=substitutions, D=deletions, I=insertions, N=reference word count. Matches Levenshtein edit distance at the word level. Lower is better. A WER above 20% is generally unusable; below 5% is human-parity for read speech. 2026 numbers on standard benchmarks:
+**Word Error Rate** = $(S + D + I) / N$, where $S$=substitutions, $D$=deletions, $I$=insertions, $N$=reference word count. Matches Levenshtein edit distance at the word level. Lower is better. A WER above 20% is generally unusable; below 5% is human-parity for read speech. 2026 numbers on standard benchmarks:
 
 | Model | LibriSpeech test-clean | LibriSpeech test-other | Size |
 |-------|------------------------|------------------------|------|

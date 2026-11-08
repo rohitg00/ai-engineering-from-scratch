@@ -1,0 +1,19 @@
+$ sbx policy inspect <uuid>
+Rule:         <uuid>
+Rule ID:      <uuid>
+Policy:       <uuid>
+Policy ID:    <uuid>
+Source:       local
+Created via:  added
+Applies to:   sandbox:m101-policy
+Type:         network
+Decision:     allow
+Protocols:    tcp
+Action:       net:connect:tcp
+Status:       active
+Editable:     yes
+Remove:       sbx policy rm network --id <uuid> --sandbox m101-policy
+
+Resources (1)
+  example.com
+[exit 0]

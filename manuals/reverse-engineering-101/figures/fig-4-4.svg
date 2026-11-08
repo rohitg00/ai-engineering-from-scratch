@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 350" role="img" aria-labelledby="fig-4-4-title fig-4-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-4-title">The three basic blocks of _grade</title>
+  <desc id="fig-4-4-desc">A control-flow graph of three blocks from the basic_blocks facet. The entry block from 0x100000518 to 0x10000053c holds nine instructions: the constant 0x66666667, the signed multiply and shifts that divide by ten, the subtract of 6, and the compare with 4 followed by b.hi. One successor is the table block at 0x10000053c, which forms the address 0x1000007d0, loads one 32-bit word and returns. The other is the default block at 0x10000054c, which returns zero. Neither leaf block has a successor.</desc>
+  <defs><marker id="fig-4-4-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <rect x="120" y="20" width="400" height="160" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="132" y="36" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BLOCK 0X100000518 TO 0X10000053C</text>
+  <text x="132" y="52" font-size="11">0x100000518: mov w8, #0x6667</text>
+  <text x="132" y="66" font-size="11">0x10000051c: movk w8, #0x6666, LSL #16</text>
+  <text x="132" y="80" font-size="11">0x100000520: smull x8, w0, w8</text>
+  <text x="132" y="94" font-size="11">0x100000524: lsr x9, x8, #0x3f</text>
+  <text x="132" y="108" font-size="11">0x100000528: asr x8, x8, #0x22</text>
+  <text x="132" y="122" font-size="11">0x10000052c: add w8, w8, w9</text>
+  <text x="132" y="136" font-size="11">0x100000530: sub w8, w8, #0x6</text>
+  <text x="132" y="150" font-size="11">0x100000534: cmp w8, #0x4</text>
+  <text x="132" y="164" font-size="11">0x100000538: b.hi 0x10000054c</text>
+  <line x1="170" y1="180" x2="170" y2="239" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-4-head-ink)"/>
+  <rect class="m-knock" x="175" y="198.53" width="102.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="178" y="209.5" font-size="11.5">b.hi not taken</text>
+  <rect class="m-knock" x="175" y="213.92" width="77.28" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="178" y="224.5" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">index 0 to 4</text>
+  <line x1="470" y1="180" x2="470" y2="239" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-4-head-ink)"/>
+  <rect class="m-knock" x="475" y="198.53" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="478" y="209.5" font-size="11.5">b.hi taken</text>
+  <rect class="m-knock" x="475" y="213.92" width="83.22" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="478" y="224.5" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">index above 4</text>
+  <rect x="20" y="240" width="300" height="90" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="32" y="256" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BLOCK 0X10000053C · TABLE READ</text>
+  <text x="32" y="272" font-size="11">0x10000053c: adrp x9, 0x100000000</text>
+  <text x="32" y="286" font-size="11">0x100000540: add x9, x9, #0x7d0</text>
+  <text x="32" y="300" font-size="11">0x100000544: ldr w0, [x9, w8, UXTW #0x2]</text>
+  <text x="32" y="314" font-size="11">0x100000548: ret</text>
+  <rect x="340" y="240" width="280" height="62" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="352" y="256" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BLOCK 0X10000054C · DEFAULT</text>
+  <text x="352" y="272" font-size="11">0x10000054c: mov w0, #0x0</text>
+  <text x="352" y="286" font-size="11">0x100000550: ret</text>
+  <text x="20" y="342" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">successors from basic_blocks: 0x518 → 0x53c and 0x54c · 0x53c → none · 0x54c → none</text>
+</svg>

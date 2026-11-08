@@ -1,0 +1,22 @@
+{
+  "id": "tool-call-parser",
+  "title": "Parse and validate tool calls",
+  "kind": "implement",
+  "summary": "Parse tool calls from a raw model reply and validate their arguments against a JSON Schema subset with JSON pointer error paths.",
+  "difficulty": "hard",
+  "tags": ["tool-calling", "json-schema", "parsing", "agents"],
+  "lesson": "phases/19-capstone-projects/21-tool-registry-schema-validation",
+  "cheatsheet": "tool-calling",
+  "minutes": 50,
+  "entry": ["parse_tool_calls", "validate_args", "check_reply"],
+  "collections": ["agent-building-blocks"],
+  "time_limit_s": 10,
+  "mutants": {
+    "additional_default_false": "Treats a schema without additionalProperties as if it were false, so extra keys always fail.",
+    "bool_is_integer": "Tests int before bool, so true and false count as integers.",
+    "escape_order": "Escapes / before ~ in a path segment, so ~1 becomes ~01.",
+    "no_return_after_type": "Keeps checking the children after a type error, so one bad value gives extra errors.",
+    "required_after_props": "Reports missing required properties after the errors of the keys.",
+    "single_decode": "Does not decode the arguments string, so the arguments stay a JSON string."
+  }
+}

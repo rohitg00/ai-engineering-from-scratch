@@ -1,0 +1,15 @@
+title: the caveats of the ratio test and the rule for using it
+source: manuals/sglang-101/sections/5-1-sglang-benchmark-serving.md
+lines: 247-255
+lang: text
+note: The last paragraph says which ratio to use for what.
+---
+**We measured** a first token 6.9 times slower with fixed lengths on BF16, and 11.8 times slower on FP8. The FP8 runs at the two ratios had median clocks of 1,185 and 2,040 MHz. So part of the FP8 factor is the clock. Mixed lengths sent fewer tokens. In seed 1 they sent 17,870 input tokens at a ratio of 0.0, against 32,768 at 1.0. So part of the gap is less work.
+
+The cache can explain another part. In each seed, the run at 1.0 came first and started with an empty cache. The runs at 0.5 and 0.0 came after it. Each of their prompts is the first part of a prompt from the run at 1.0. The BF16 pool of 24,094 tokens held only part of the 32,768 tokens of that run. The FP8 pool of 142,369 tokens could hold all of them.
+
+Less work and the cache do not explain the other half of the result. With mixed lengths, P99 ITL rose from 82 to 300 ms. New prompts arrived one by one, and each prefill stopped the running decodes. With fixed lengths, prefill happened only between waves.
+
+The GB10 gave the same shape with Qwen3-30B-A3B, three seeds per point. With fixed lengths, the BF16 median TTFT was 1,650 ms and P99 ITL 169 ms. With mixed lengths, they were 320 ms and 230 ms. FP8 went from 1,050 ms and 92 ms to 188 ms and 127 ms. Two GPUs and two models show the same trade, so on both of our machines it came from the workload, not from the hardware.
+
+The two settings measure two different servers. Fixed lengths measure bursts: a slow first token and smooth tokens after it. Mixed lengths measure steady traffic: a fast first token and stalls in the stream. Keep `--random-range-ratio 1.0` when you compare two builds, because it repeats exactly. Before you set a latency target from it, run your real length distribution too.

@@ -1,0 +1,8 @@
+title: a deny rule added while the allow rule still exists
+source: manuals/docker-sandboxes-101/capture/out/09-deny-conflict.txt
+lang: console
+note: The CLI refuses it and names the rule it conflicts with.
+---
+$ sbx policy deny network --sandbox m101-policy example.com
+error: deny network rule: deny:   "example.com" conflicts with existing allow rule "<uuid>" (name "<uuid>") for tcp
+[exit 1]

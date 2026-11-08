@@ -1,0 +1,9 @@
+ledger_main:
+chained fixups header (LC_DYLD_CHAINED_FIXUPS)
+  fixups_version = 0
+  starts_offset  = 32
+  imports_offset = 80
+  symbols_offset = 112
+  imports_count  = 8
+  imports_format = 1 (DYLD_CHAINED_IMPORT)
+  symbols_format = 0

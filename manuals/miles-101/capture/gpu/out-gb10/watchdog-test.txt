@@ -1,0 +1,14 @@
+$ docker run -d --rm --name wd-dead busybox:latest sh -c 'while true; do echo "Error: Server error 503 Service Unavailable for url http://x/generate"; sleep 0.1; done'
+$ sh capture/gpu/watchdog.sh wd-dead 100
+2026-10-22T15:41:09Z wd-dead: more than 100 errors from the rollout engine in each of 6 checks, last 578 in 60 s, stopping the run
+wd-dead
+$ echo $?
+1
+time from start to stop: 183 s
+
+$ docker run -d --rm --name wd-burst busybox:latest sh -c 'for r in 1 2 3; do end=$(( $(date +%s) + 60 )); while [ $(date +%s) -lt $end ]; do echo "Error: Server error 503 Service Unavailable for url http://x/generate"; sleep 0.1; done; sleep 120; done'
+$ sh capture/gpu/watchdog.sh wd-burst 100
+2026-10-22T15:47:10Z wd-burst: the run ended
+$ echo $?
+0
+time from start to end: 541 s

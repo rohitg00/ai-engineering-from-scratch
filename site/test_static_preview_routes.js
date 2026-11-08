@@ -157,3 +157,20 @@ test('deployed routes and canonical SEO URLs remain extensionless', () => {
   assert.doesNotMatch(lesson, /rel="canonical"[^>]+lesson\.html/);
   assert.doesNotMatch(certification, /rel="canonical"[^>]+certification\.html/);
 });
+
+test('all page links use clean production URLs and remain usable in static previews', () => {
+  const production = loadRouteRuntime('https://aiengineeringfromscratch.com/projects');
+  const preview = loadRouteRuntime('http://localhost:8000/site/projects.html');
+  const pages = fs.readdirSync(__dirname).filter(name => name.endsWith('.html') && name !== '404.html');
+  for (const page of pages) {
+    const clean = page === 'index.html' ? './' : page.slice(0, -5);
+    assert.equal(production.api.adaptHref(page + '?id=x&stage=y#main'), clean + '?id=x&stage=y#main', page);
+    if (page !== 'index.html') assert.equal(preview.api.adaptHref(clean + '?id=x&stage=y#main'), page + '?id=x&stage=y#main', page);
+  }
+  for (const href of ['https://elsewhere.example/projects.html', '//elsewhere.example/lesson.html', '#main', 'style.css', '/api/resource?path=/project.html']) {
+    assert.equal(production.api.adaptHref(href), href);
+  }
+  const link = testLink('project.html?id=dataset-split-auditor&stage=03-split-groups');
+  production.mutate({ type: 'childList', addedNodes: [link] });
+  assert.equal(link.value(), 'project?id=dataset-split-auditor&stage=03-split-groups');
+});

@@ -1,0 +1,17 @@
+title: the routes of a vLLM server with an API key, with and without the key
+source: manuals/vllm-101/capture/gpu/out-l4/livecheck-2026-10-22.txt
+lines: 52-62
+lang: text
+note: Find the routes that answer without a key, and think about which of them touch the model.
+---
+/v1/models       nokey=401 key=200
+/health          nokey=200 key=200
+/metrics         nokey=200 key=200
+/invocations     nokey=405 key=405
+/version         nokey=200 key=200
+/tokenize        nokey=405 key=405
+/v2/x            nokey=401 key=404
+/inference/x     nokey=401 key=404
+/cohere/x        nokey=401 key=404
+/ping            nokey=200 key=200
+/load            nokey=200 key=200

@@ -1,0 +1,19 @@
+Prefix cache and a repeated benchmark run (backlog B-04)
+Date: 2026-10-22 and 2026-10-23
+Machine: NVIDIA L4, the second GPU of the node (GPU1). This GPU is shared with its owner and has no clock lock. The median SM clock moved between 375 and 1,860 MHz in this block. Compare only pairs from the same session.
+Engines: SGLang 0.5.22 and vLLM 0.31.0. Model: Qwen/Qwen3-0.6B.
+Load: 64 prompts, concurrency 16, random dataset, 512 tokens in and 128 tokens out, the same seed in every run.
+
+Median TTFT in ms. For each engine, the four runs ran one after the other on one server, in the order shown. Per-run clocks are not in this summary:
+
+engine        fresh   repeat, not flushed   repeat after a flush   repeat, not flushed
+SGLang 0.6B   394     82.5                  289                    77
+vLLM 0.6B     925     148                   1,163                  184
+
+A repeat without a flush reads about 4.8x lower TTFT on SGLang and about 6x lower on vLLM.
+A flush brings the TTFT back to the range of the fresh run.
+TPOT changes by less than 15 percent between these runs.
+
+Cached prompt tokens in the greedy probe of the same block (ShareGPT prompts after one system prompt of about 170 tokens):
+SGLang: first pass 6,119, warm pass 8,131
+vLLM:   first pass 5,952, warm pass 7,872

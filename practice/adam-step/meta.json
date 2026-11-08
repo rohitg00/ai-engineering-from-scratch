@@ -1,0 +1,21 @@
+{
+  "id": "adam-step",
+  "title": "Adam and AdamW step",
+  "kind": "implement",
+  "summary": "One Adam update with bias correction and a step counter that starts at 1, plus AdamW decoupled weight decay, as a pure function of the state.",
+  "difficulty": "medium",
+  "tags": ["optimizers", "adam", "weight-decay"],
+  "lesson": "phases/03-deep-learning-core/06-optimizers",
+  "cheatsheet": "deep-learning-training",
+  "minutes": 25,
+  "entry": ["init_adam_state", "adam_step"],
+  "collections": ["optimizers", "deep-learning-core"],
+  "time_limit_s": 10,
+  "mutants": {
+    "no_bias_correction": "Uses m and v directly and skips the division by 1 minus beta to the t.",
+    "step_off_by_one": "Uses t plus 1 in the bias correction, so the first step acts as step 2.",
+    "eps_inside_sqrt": "Puts epsilon inside the square root, so tiny gradients give a much smaller step.",
+    "coupled_weight_decay": "Adds weight_decay times params to the gradient, which is L2 in Adam and not AdamW.",
+    "in_place_state": "Updates the old state arrays with *= and +=, so the caller's m and v change."
+  }
+}

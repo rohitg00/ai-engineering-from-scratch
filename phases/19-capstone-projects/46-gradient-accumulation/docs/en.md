@@ -9,7 +9,7 @@
 
 ## Learning Objectives
 
-- Derive the effective batch identity: `effective_batch = micro_batch * accum_steps`.
+- Derive the effective batch identity: `effective_batch = micro_batch * accum_steps * world_size`, which is `micro_batch * accum_steps` on the single device this lesson uses.
 - Implement loss-per-micro-batch scaling so the accumulated gradient matches a single full-batch backward.
 - Skip optimizer synchronization until the last micro-batch (sync-on-last-step).
 - Read a throughput against effective batch curve and explain the diminishing return.

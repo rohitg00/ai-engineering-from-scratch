@@ -1,0 +1,314 @@
+account-O2.dSYM/Contents/Resources/DWARF/account-O2:	file format Mach-O arm64
+
+.debug_info contents:
+0x00000000: Compile Unit: length = 0x00000182, format = DWARF32, version = 0x0005, unit_type = DW_UT_compile, abbr_offset = 0x0000, addr_size = 0x08 (next unit at 0x00000186)
+
+0x0000000c: DW_TAG_compile_unit
+              DW_AT_producer	("Apple clang version 17.0.0 (clang-1700.6.3.2)")
+              DW_AT_language	(DW_LANG_C11)
+              DW_AT_name	("account.c")
+              DW_AT_LLVM_sysroot	("/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk")
+              DW_AT_APPLE_sdk	("MacOSX.sdk")
+              DW_AT_str_offsets_base	(0x00000008)
+              DW_AT_stmt_list	(0x00000000)
+              DW_AT_comp_dir	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures")
+              DW_AT_APPLE_optimized	(true)
+              DW_AT_low_pc	(0x0000000100000460)
+              DW_AT_high_pc	(0x00000001000006bc)
+              DW_AT_addr_base	(0x00000008)
+
+0x00000025:   DW_TAG_base_type
+                DW_AT_name	("char")
+                DW_AT_encoding	(DW_ATE_signed_char)
+                DW_AT_byte_size	(0x01)
+
+0x00000029:   DW_TAG_base_type
+                DW_AT_name	("__ARRAY_SIZE_TYPE__")
+                DW_AT_byte_size	(0x08)
+                DW_AT_encoding	(DW_ATE_unsigned)
+
+0x0000002d:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000100000460)
+                DW_AT_high_pc	(0x0000000100000474)
+                DW_AT_APPLE_omit_frame_ptr	(true)
+                DW_AT_frame_base	(DW_OP_reg31 WSP)
+                DW_AT_call_all_calls	(true)
+                DW_AT_name	("bump")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                DW_AT_decl_line	(12)
+                DW_AT_prototyped	(true)
+                DW_AT_type	(0x0000011c "int")
+                DW_AT_external	(true)
+                DW_AT_APPLE_optimized	(true)
+
+0x0000003c:     DW_TAG_formal_parameter
+                  DW_AT_location	(0x0000000c: 
+                     [0x0000000100000460, 0x0000000100000470): DW_OP_reg0 W0
+                     [0x0000000100000470, 0x0000000100000474): DW_OP_entry_value(DW_OP_reg0 W0), DW_OP_stack_value)
+                  DW_AT_name	("a")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(12)
+                  DW_AT_type	(0x0000012f "account *")
+
+0x00000048:     DW_TAG_formal_parameter
+                  DW_AT_location	(DW_OP_reg1 W1)
+                  DW_AT_name	("by")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(12)
+                  DW_AT_type	(0x0000011c "int")
+
+0x00000052:     NULL
+
+0x00000053:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x0000000100000474)
+                DW_AT_high_pc	(0x000000010000048c)
+                DW_AT_APPLE_omit_frame_ptr	(true)
+                DW_AT_frame_base	(DW_OP_reg31 WSP)
+                DW_AT_call_all_calls	(true)
+                DW_AT_name	("classify")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                DW_AT_decl_line	(17)
+                DW_AT_prototyped	(true)
+                DW_AT_type	(0x0000011c "int")
+                DW_AT_external	(true)
+                DW_AT_APPLE_optimized	(true)
+
+0x00000062:     DW_TAG_formal_parameter
+                  DW_AT_location	(0x0000001c: 
+                     [0x0000000100000474, 0x0000000100000488): DW_OP_reg0 W0
+                     [0x0000000100000488, 0x000000010000048c): DW_OP_entry_value(DW_OP_reg0 W0), DW_OP_stack_value)
+                  DW_AT_name	("a")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(17)
+                  DW_AT_type	(0x0000016f "const account *")
+
+0x0000006e:     NULL
+
+0x0000006f:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x000000010000048c)
+                DW_AT_high_pc	(0x000000010000062c)
+                DW_AT_APPLE_omit_frame_ptr	(true)
+                DW_AT_frame_base	(DW_OP_reg31 WSP)
+                DW_AT_call_all_calls	(true)
+                DW_AT_name	("sum_balances")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                DW_AT_decl_line	(23)
+                DW_AT_prototyped	(true)
+                DW_AT_type	(0x0000011c "int")
+                DW_AT_external	(true)
+                DW_AT_APPLE_optimized	(true)
+
+0x0000007e:     DW_TAG_formal_parameter
+                  DW_AT_location	(0x0000002c: 
+                     [0x000000010000048c, 0x00000001000004b4): DW_OP_reg0 W0
+                     [0x00000001000004b4, 0x00000001000004b8): DW_OP_entry_value(DW_OP_reg0 W0), DW_OP_stack_value
+                     [0x00000001000004b8, 0x0000000100000628): DW_OP_reg0 W0
+                     [0x0000000100000628, 0x000000010000062c): DW_OP_entry_value(DW_OP_reg0 W0), DW_OP_stack_value)
+                  DW_AT_name	("list")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(23)
+                  DW_AT_type	(0x0000016f "const account *")
+
+0x0000008a:     DW_TAG_formal_parameter
+                  DW_AT_location	(0x0000004c: 
+                     [0x000000010000048c, 0x00000001000004f4): DW_OP_reg1 W1
+                     [0x000000010000050c, 0x000000010000058c): DW_OP_entry_value(DW_OP_reg1 W1), DW_OP_stack_value)
+                  DW_AT_name	("count")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(23)
+                  DW_AT_type	(0x0000011c "int")
+
+0x00000096:     DW_TAG_variable
+                  DW_AT_location	(0x0000005e: 
+                     [0x000000010000048c, 0x0000000100000614): DW_OP_consts +0, DW_OP_stack_value
+                     [0x0000000100000614, 0x000000010000062c): DW_OP_reg8 W8)
+                  DW_AT_name	("sum")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(24)
+                  DW_AT_type	(0x0000011c "int")
+
+0x000000a2:     DW_TAG_lexical_block
+                  DW_AT_ranges	(0x0000000c
+                     [0x000000010000048c, 0x00000001000004ac)
+                     [0x00000001000004b8, 0x0000000100000624))
+
+0x000000a7:       DW_TAG_variable
+                    DW_AT_location	(0x00000070: 
+                       [0x000000010000048c, 0x00000001000004ac): DW_OP_consts +0, DW_OP_stack_value
+                       [0x00000001000004b8, 0x0000000100000614): DW_OP_consts +0, DW_OP_stack_value)
+                    DW_AT_name	("i")
+                    DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                    DW_AT_decl_line	(25)
+                    DW_AT_type	(0x0000011c "int")
+
+0x000000b3:       NULL
+
+0x000000b4:     NULL
+
+0x000000b5:   DW_TAG_subprogram
+                DW_AT_low_pc	(0x000000010000062c)
+                DW_AT_high_pc	(0x00000001000006bc)
+                DW_AT_frame_base	(DW_OP_reg29 W29)
+                DW_AT_call_all_calls	(true)
+                DW_AT_name	("main")
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                DW_AT_decl_line	(29)
+                DW_AT_prototyped	(true)
+                DW_AT_type	(0x0000011c "int")
+                DW_AT_external	(true)
+                DW_AT_APPLE_optimized	(true)
+
+0x000000c4:     DW_TAG_variable
+                  DW_AT_location	(0x00000082: 
+                     [0x000000010000063c, 0x0000000100000678): DW_OP_piece 0x4, DW_OP_constu 0x64, DW_OP_stack_value, DW_OP_piece 0x4, DW_OP_piece 0x1c, DW_OP_constu 0xfa, DW_OP_stack_value, DW_OP_piece 0x4, DW_OP_piece 0x1c, DW_OP_constu 0xffffffffffffffd8, DW_OP_stack_value, DW_OP_piece 0x4
+                     [0x0000000100000678, 0x00000001000006bc): DW_OP_piece 0x4, DW_OP_constu 0x64, DW_OP_stack_value, DW_OP_piece 0x4, DW_OP_piece 0x1c, DW_OP_constu 0xff, DW_OP_stack_value, DW_OP_piece 0x4, DW_OP_piece 0x1c, DW_OP_constu 0xffffffffffffffd8, DW_OP_stack_value, DW_OP_piece 0x4)
+                  DW_AT_name	("rows")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(30)
+                  DW_AT_type	(0x00000179 "account[3]")
+
+0x000000d0:     DW_TAG_variable
+                  DW_AT_location	(0x000000cc: 
+                     [0x0000000100000678, 0x00000001000006bc): DW_OP_consts -1, DW_OP_stack_value)
+                  DW_AT_name	("loan")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(43)
+                  DW_AT_type	(0x0000011c "int")
+
+0x000000dc:     DW_TAG_variable
+                  DW_AT_location	(0x000000d6: 
+                     [0x0000000100000678, 0x00000001000006bc): DW_OP_consts +1, DW_OP_stack_value)
+                  DW_AT_name	("savings")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(42)
+                  DW_AT_type	(0x0000011c "int")
+
+0x000000e8:     DW_TAG_variable
+                  DW_AT_location	(0x000000e0: 
+                     [0x0000000100000678, 0x00000001000006bc): DW_OP_consts +0, DW_OP_stack_value)
+                  DW_AT_name	("cash")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(41)
+                  DW_AT_type	(0x0000011c "int")
+
+0x000000f4:     DW_TAG_call_site
+                  DW_AT_call_origin	(0x0000010d "printf")
+                  DW_AT_call_return_pc	(0x0000000100000654)
+
+0x000000fa:     DW_TAG_call_site
+                  DW_AT_call_origin	(0x0000010d "printf")
+                  DW_AT_call_return_pc	(0x0000000100000678)
+
+0x00000100:     DW_TAG_call_site
+                  DW_AT_call_origin	(0x0000010d "printf")
+                  DW_AT_call_return_pc	(0x0000000100000694)
+
+0x00000106:     DW_TAG_call_site
+                  DW_AT_call_origin	(0x0000010d "printf")
+                  DW_AT_call_return_pc	(0x00000001000006a8)
+
+0x0000010c:     NULL
+
+0x0000010d:   DW_TAG_subprogram
+                DW_AT_name	("printf")
+                DW_AT_decl_file	("/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_printf.h")
+                DW_AT_decl_line	(34)
+                DW_AT_prototyped	(true)
+                DW_AT_type	(0x0000011c "int")
+                DW_AT_declaration	(true)
+                DW_AT_external	(true)
+                DW_AT_APPLE_optimized	(true)
+
+0x00000115:     DW_TAG_formal_parameter
+                  DW_AT_type	(0x00000120 "restrict ")
+
+0x0000011a:     DW_TAG_unspecified_parameters
+
+0x0000011b:     NULL
+
+0x0000011c:   DW_TAG_base_type
+                DW_AT_name	("int")
+                DW_AT_encoding	(DW_ATE_signed)
+                DW_AT_byte_size	(0x04)
+
+0x00000120:   DW_TAG_restrict_type
+                DW_AT_type	(0x00000125 "const char *")
+
+0x00000125:   DW_TAG_pointer_type
+                DW_AT_type	(0x0000012a "const char")
+
+0x0000012a:   DW_TAG_const_type
+                DW_AT_type	(0x00000025 "char")
+
+0x0000012f:   DW_TAG_pointer_type
+                DW_AT_type	(0x00000134 "account")
+
+0x00000134:   DW_TAG_structure_type
+                DW_AT_name	("account")
+                DW_AT_byte_size	(0x20)
+                DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                DW_AT_decl_line	(4)
+
+0x00000139:     DW_TAG_member
+                  DW_AT_name	("kind")
+                  DW_AT_type	(0x00000025 "char")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(5)
+                  DW_AT_data_member_location	(0x00)
+
+0x00000142:     DW_TAG_member
+                  DW_AT_name	("balance")
+                  DW_AT_type	(0x0000011c "int")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(6)
+                  DW_AT_data_member_location	(0x04)
+
+0x0000014b:     DW_TAG_member
+                  DW_AT_name	("code")
+                  DW_AT_type	(0x00000167 "short")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(7)
+                  DW_AT_data_member_location	(0x08)
+
+0x00000154:     DW_TAG_member
+                  DW_AT_name	("rate")
+                  DW_AT_type	(0x0000016b "double")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(8)
+                  DW_AT_data_member_location	(0x10)
+
+0x0000015d:     DW_TAG_member
+                  DW_AT_name	("label")
+                  DW_AT_type	(0x00000125 "const char *")
+                  DW_AT_decl_file	("/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account.c")
+                  DW_AT_decl_line	(9)
+                  DW_AT_data_member_location	(0x18)
+
+0x00000166:     NULL
+
+0x00000167:   DW_TAG_base_type
+                DW_AT_name	("short")
+                DW_AT_encoding	(DW_ATE_signed)
+                DW_AT_byte_size	(0x02)
+
+0x0000016b:   DW_TAG_base_type
+                DW_AT_name	("double")
+                DW_AT_encoding	(DW_ATE_float)
+                DW_AT_byte_size	(0x08)
+
+0x0000016f:   DW_TAG_pointer_type
+                DW_AT_type	(0x00000174 "const account")
+
+0x00000174:   DW_TAG_const_type
+                DW_AT_type	(0x00000134 "account")
+
+0x00000179:   DW_TAG_array_type
+                DW_AT_type	(0x00000134 "account")
+
+0x0000017e:     DW_TAG_subrange_type
+                  DW_AT_type	(0x00000029 "__ARRAY_SIZE_TYPE__")
+                  DW_AT_count	(0x03)
+
+0x00000184:     NULL
+
+0x00000185:   NULL

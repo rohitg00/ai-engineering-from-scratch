@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-3-1-title fig-3-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-1-title">A cap of 16 sequences against the default as users grow</title>
+  <desc id="fig-3-1-desc">Output tokens per second and median time to first token against users at the same time, on an NVIDIA L4 with Qwen3-8B, three seeds per point, 2026-10-21. The two configs match up to 16 users. At 32 users, the default gave 275.1 tokens per second with a first token in 1.8 s, and the cap of 16 gave 171.8 tokens per second with a first token in 12.3 s.</desc>
+  <path d="M66 18 H84" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="90" y="22" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">default</text>
+  <path d="M154.2 18 H172.2" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="178.2" y="22" font-size="11" fill="var(--m-rose-ink, #b0344d)">--max-num-seqs 16</text>
+  <line x1="66" y1="260" x2="296" y2="260" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="264" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="66" y1="193.33" x2="296" y2="193.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="197.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="66" y1="126.67" x2="296" y2="126.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="130.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="66" y1="60" x2="296" y2="60" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="64" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <line x1="66" y1="260" x2="296" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="60" x2="66" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="260" x2="66" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="66" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="142.67" y1="260" x2="142.67" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="142.67" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="219.33" y1="260" x2="219.33" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="219.33" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16</text>
+  <line x1="296" y1="260" x2="296" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="296" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">64</text>
+  <text x="181" y="294" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">users</text>
+  <text x="66" y="48" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">output tok/s</text>
+  <line x1="376" y1="260" x2="606" y2="260" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="370" y="264" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.1</text>
+  <line x1="376" y1="193.33" x2="606" y2="193.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="370" y="197.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="376" y1="126.67" x2="606" y2="126.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="370" y="130.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="376" y1="60" x2="606" y2="60" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="370" y="64" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="376" y1="260" x2="606" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="376" y1="60" x2="376" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="376" y1="260" x2="376" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="376" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="452.67" y1="260" x2="452.67" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="452.67" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="529.33" y1="260" x2="529.33" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="529.33" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16</text>
+  <line x1="606" y1="260" x2="606" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="606" y="277" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">64</text>
+  <text x="491" y="294" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">users</text>
+  <text x="376" y="48" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median first token, s</text>
+  <path d="M66.0 250.8 L104.3 239.2 L142.7 218.8 L181.0 184.8 L219.3 125.8 L257.7 76.6 L296.0 97.5 L296.0 98.6 L257.7 76.8 L219.3 126.1 L181.0 184.9 L142.7 218.8 L104.3 239.2 L66.0 251.3 Z" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.14" stroke="none"/>
+  <path d="M66.0 251.0 L104.3 239.2 L142.7 218.8 L181.0 184.8 L219.3 125.8 L257.7 76.6 L296.0 98.5" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="66" cy="251.01" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="104.33" cy="239.16" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="142.67" cy="218.81" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="181" cy="184.81" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="219.33" cy="125.8" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="257.67" cy="76.57" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="296" cy="98.45" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <path d="M376.0 241.2 L414.3 251.9 L452.7 249.9 L491.0 233.1 L529.3 229.3 L567.7 176.3 L606.0 123.4" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="376" cy="241.22" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="414.33" cy="251.92" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="452.67" cy="249.93" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="491" cy="233.14" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="529.33" cy="229.35" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="567.67" cy="176.31" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="606" cy="123.44" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <path d="M66.0 250.9 L104.3 239.2 L142.7 218.9 L181.0 184.9 L219.3 125.9 L257.7 145.0 L296.0 167.1 L296.0 168.8 L257.7 145.8 L219.3 126.3 L181.0 185.1 L142.7 219.1 L104.3 239.2 L66.0 251.3 Z" fill="var(--m-rose-ink, #b0344d)" fill-opacity="0.14" stroke="none"/>
+  <path d="M66.0 251.1 L104.3 239.2 L142.7 218.9 L181.0 185.0 L219.3 126.1 L257.7 145.5 L296.0 167.9" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="66" cy="251.1" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="104.33" cy="239.16" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="142.67" cy="218.95" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="181" cy="185.02" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="219.33" cy="126.09" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="257.67" cy="145.48" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="296" cy="167.95" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <path d="M376.0 241.4 L414.3 251.9 L452.7 249.8 L491.0 232.4 L529.3 229.4 L567.7 120.6 L606.0 86.6" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="376" cy="241.41" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="414.33" cy="251.92" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="452.67" cy="249.81" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="491" cy="232.39" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="529.33" cy="229.38" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="567.67" cy="120.6" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="606" cy="86.61" r="2.8" fill="var(--m-rose-ink, #b0344d)"/>
+</svg>

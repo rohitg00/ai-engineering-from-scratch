@@ -1,0 +1,6 @@
+$ sbx secret set-custom --host host.docker.internal --host localhost --env M101_RECV_KEY --value m101-dummy-receiver-0000
+Applied secret updates for <n> running sandbox(es)
+Saved custom secret placeholder "sbx-cs-<rand>" for target "host.docker.internal, localhost" env "M101_RECV_KEY" in scope "(global)"
+Generated placeholder: sbx-cs-<rand>
+You may need to update environment variable M101_RECV_KEY inside existing sandboxes to "sbx-cs-<rand>" (the placeholder value).
+[exit 0]

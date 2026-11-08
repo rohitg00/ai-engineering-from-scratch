@@ -1,0 +1,22 @@
+
+candidates/f2_clamp.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <grade>:
+       0: 83 ff 64                     	cmpl	$0x64, %edi
+       3: b9 64 00 00 00               	movl	$0x64, %ecx
+       8: 0f 4c cf                     	cmovll	%edi, %ecx
+       b: 31 c0                        	xorl	%eax, %eax
+       d: 85 c9                        	testl	%ecx, %ecx
+       f: 0f 4e c8                     	cmovlel	%eax, %ecx
+      12: 48 69 c9 9a 99 99 19         	imulq	$0x1999999a, %rcx, %rcx # imm = 0x1999999A
+      19: 48 c1 e9 20                  	shrq	$0x20, %rcx
+      1d: 83 c1 fa                     	addl	$-0x6, %ecx
+      20: 83 f9 04                     	cmpl	$0x4, %ecx
+      23: 77 0c                        	ja	0x31 <grade+0x31>
+      25: 89 c8                        	movl	%ecx, %eax
+      27: 48 8d 0d 00 00 00 00         	leaq	(%rip), %rcx            # 0x2e <grade+0x2e>
+		000000000000002a:  R_X86_64_PC32	.rodata-0x4
+      2e: 8b 04 81                     	movl	(%rcx,%rax,4), %eax
+      31: c3                           	retq

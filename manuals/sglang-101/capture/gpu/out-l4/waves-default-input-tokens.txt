@@ -1,0 +1,3 @@
+ratio 1.0, seed 1: Total input tokens: 32768 
+ratio 0.5, seed 1: Total input tokens: 24504 
+ratio 0.0, seed 1: Total input tokens: 17870 

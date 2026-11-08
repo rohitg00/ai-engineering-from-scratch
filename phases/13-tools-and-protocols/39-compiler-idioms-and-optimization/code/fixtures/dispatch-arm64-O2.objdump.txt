@@ -1,0 +1,67 @@
+
+dispatch-arm64-O2.o:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000000000 <dispatch>:
+       0: 71003c1f     	cmp	w0, #0xf
+       4: 54000508     	b.hi	0xa4 <dispatch+0xa4>
+       8: 2a0003e8     	mov	w8, w0
+       c: 90000009     	adrp	x9, 0x0 <dispatch>
+		000000000000000c:  R_AARCH64_ADR_PREL_PG_HI21	.rodata
+      10: 91000129     	add	x9, x9, #0x0
+		0000000000000010:  R_AARCH64_ADD_ABS_LO12_NC	.rodata
+      14: 1000008a     	adr	x10, 0x24 <dispatch+0x24>
+      18: 3868692b     	ldrb	w11, [x9, x8]
+      1c: 8b0b094a     	add	x10, x10, x11, lsl #2
+      20: d61f0140     	br	x10
+      24: 2a0103e0     	mov	w0, w1
+      28: 14000000     	b	0x28 <dispatch+0x28>
+		0000000000000028:  R_AARCH64_JUMP26	f0
+      2c: 2a0103e0     	mov	w0, w1
+      30: 14000000     	b	0x30 <dispatch+0x30>
+		0000000000000030:  R_AARCH64_JUMP26	f14
+      34: 2a0103e0     	mov	w0, w1
+      38: 14000000     	b	0x38 <dispatch+0x38>
+		0000000000000038:  R_AARCH64_JUMP26	f11
+      3c: 2a0103e0     	mov	w0, w1
+      40: 14000000     	b	0x40 <dispatch+0x40>
+		0000000000000040:  R_AARCH64_JUMP26	f4
+      44: 2a0103e0     	mov	w0, w1
+      48: 14000000     	b	0x48 <dispatch+0x48>
+		0000000000000048:  R_AARCH64_JUMP26	f12
+      4c: 2a0103e0     	mov	w0, w1
+      50: 14000000     	b	0x50 <dispatch+0x50>
+		0000000000000050:  R_AARCH64_JUMP26	f9
+      54: 2a0103e0     	mov	w0, w1
+      58: 14000000     	b	0x58 <dispatch+0x58>
+		0000000000000058:  R_AARCH64_JUMP26	f2
+      5c: 2a0103e0     	mov	w0, w1
+      60: 14000000     	b	0x60 <dispatch+0x60>
+		0000000000000060:  R_AARCH64_JUMP26	f15
+      64: 2a0103e0     	mov	w0, w1
+      68: 14000000     	b	0x68 <dispatch+0x68>
+		0000000000000068:  R_AARCH64_JUMP26	f3
+      6c: 2a0103e0     	mov	w0, w1
+      70: 14000000     	b	0x70 <dispatch+0x70>
+		0000000000000070:  R_AARCH64_JUMP26	f7
+      74: 2a0103e0     	mov	w0, w1
+      78: 14000000     	b	0x78 <dispatch+0x78>
+		0000000000000078:  R_AARCH64_JUMP26	f1
+      7c: 2a0103e0     	mov	w0, w1
+      80: 14000000     	b	0x80 <dispatch+0x80>
+		0000000000000080:  R_AARCH64_JUMP26	f5
+      84: 2a0103e0     	mov	w0, w1
+      88: 14000000     	b	0x88 <dispatch+0x88>
+		0000000000000088:  R_AARCH64_JUMP26	f13
+      8c: 2a0103e0     	mov	w0, w1
+      90: 14000000     	b	0x90 <dispatch+0x90>
+		0000000000000090:  R_AARCH64_JUMP26	f6
+      94: 2a0103e0     	mov	w0, w1
+      98: 14000000     	b	0x98 <dispatch+0x98>
+		0000000000000098:  R_AARCH64_JUMP26	f10
+      9c: 2a0103e0     	mov	w0, w1
+      a0: 14000000     	b	0xa0 <dispatch+0xa0>
+		00000000000000a0:  R_AARCH64_JUMP26	f8
+      a4: 12800000     	mov	w0, #-0x1               // =-1
+      a8: d65f03c0     	ret

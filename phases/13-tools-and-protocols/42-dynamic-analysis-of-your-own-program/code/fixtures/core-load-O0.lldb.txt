@@ -1,0 +1,22 @@
+# lesson 42 capture
+# command: lldb -b -c account-O0-stack.core -o settings set interpreter.stop-command-source-on-error false -s core-load-O0.lldb ./account-O0
+# cwd: fixtures
+# lldb: lldb-1703.0.236.21
+# date: 2026-10-14
+(lldb) target create "./account-O0" --core "account-O0-stack.core"
+Core file '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account-O0-stack.core' (arm64) was loaded.
+(lldb) settings set interpreter.stop-command-source-on-error false
+(lldb) command source -s 0 'core-load-O0.lldb'
+Executing commands in '/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/core-load-O0.lldb'.
+(lldb) bt
+* thread #1, stop reason = ESR_EC_BRK_AARCH64 (fault address: 0x0)
+  * frame #0: 0x00000001000004bc account-O0`bump(a=0x000000016fdfe008, by=5) at account.c:13:19
+    frame #1: 0x0000000100000640 account-O0`main at account.c:40:5
+    frame #2: 0x000000019a949d54 dyld`start + 7184
+(lldb) frame variable *a
+(account) *a = (kind = 's', balance = 250, code = 9, rate = 1.25, label = "")
+(lldb) frame variable a->label
+(const char *) a->label = 0x0000000100000719 ""
+(lldb) memory read -s4 -fx -c8 $x0
+0x16fdfe008: 0x00000073 0x000000fa 0x00000009 0x00000000
+0x16fdfe018: 0x00000000 0x3ff40000 0x00000719 0x00000001

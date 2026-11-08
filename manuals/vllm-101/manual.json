@@ -1,0 +1,393 @@
+{
+  "id": "vllm-101",
+  "title": "vLLM 101",
+  "subtitle": "Serve, size, tune, and debug open models with vLLM, with measured answers for each decision",
+  "summary": "How to install vLLM, fit a model on your GPU, tune it for your traffic, and fix it from a symptom. Measured on an NVIDIA L4 and a DGX Spark with vLLM 0.31.0.",
+  "audience": "You have called a model through an API and now you want to serve an open model yourself. You know what a token and a GPU are. You want to know which settings matter before you pay for them.",
+  "edition": "2026.10",
+  "status": "ready",
+  "pin": {
+    "subject": "vLLM",
+    "version": "0.31.0",
+    "source": "https://github.com/vllm-project/vllm",
+    "commit": "db9527a46873454610df6dbedf79a36d6bf1a7f6",
+    "date": "2026-10-05",
+    "verified": "2026-10-22"
+  },
+  "outcomes": [
+    "Install vLLM, serve a model, and read the startup lines that size the server.",
+    "Predict how many users fit on your GPU, and fix an out-of-memory failure at startup.",
+    "Pick the one or two flags that matter for your traffic, and leave the rest at the default.",
+    "Decide from a measurement when speculative decoding, FP8, or a compile level pays.",
+    "Debug a slow or broken server from the symptom you see."
+  ],
+  "palette": [
+    {
+      "hue": "blue",
+      "meaning": "the vLLM server: the API server process and the engine core"
+    },
+    {
+      "hue": "violet",
+      "meaning": "the model and its forward pass: kernels, attention backends, CUDA graphs"
+    },
+    {
+      "hue": "green",
+      "meaning": "the KV cache: blocks, the block pool, cached prefixes"
+    },
+    {
+      "hue": "plum",
+      "meaning": "model compute: prefill and decode steps"
+    },
+    {
+      "hue": "olive",
+      "meaning": "the client and the network: HTTP, the OpenAI API, the benchmark client"
+    },
+    {
+      "hue": "indigo",
+      "meaning": "streams and messages between processes, and streamed tokens"
+    },
+    {
+      "hue": "amber",
+      "meaning": "lifecycle: request states and scheduler steps"
+    },
+    {
+      "hue": "teal",
+      "meaning": "durable state: weights on disk, host memory, offloaded KV"
+    },
+    {
+      "hue": "rose",
+      "meaning": "failure: out of memory, preemption, aborts, crashes"
+    },
+    {
+      "hue": "grey",
+      "meaning": "outside vLLM: the operating system, other programs, the GPU driver"
+    }
+  ],
+  "sources": [
+    {
+      "name": "vLLM source at the release tag",
+      "path": "v0.31.0 (db9527a4)",
+      "usedFor": "every default and mechanism in Part 8 and the reference"
+    },
+    {
+      "name": "Recorded runs",
+      "path": "capture/gpu/ (NVIDIA L4 with Qwen3-8B, DGX Spark GB10 with Qwen3-30B-A3B, vLLM 0.31.0)",
+      "usedFor": "every listing and every number marked as measured"
+    },
+    {
+      "name": "vLLM documentation at the tag",
+      "path": "docs/ at v0.31.0",
+      "usedFor": "install paths and documented behaviour, checked against the code"
+    },
+    {
+      "name": "vLLM GitHub issues and pull requests",
+      "path": "github.com/vllm-project/vllm",
+      "usedFor": "incidents and the history of each feature"
+    },
+    {
+      "name": "Papers",
+      "path": "the PagedAttention paper (SOSP 2023)",
+      "usedFor": "the original design of the block pool"
+    }
+  ],
+  "front": "front.md",
+  "plate": {
+    "figure": "plate-vllm-request",
+    "title": "One block pool on one L4",
+    "caption": "The Scheduler fills one step under a 2,048-token budget. The block table maps each request to blocks that are not all next to each other. On our L4 the pool held 1,506 blocks of 16 tokens. From capture/gpu/summary/l4.json and capture/gpu/out-l4/server-h2h-prefix-vllm.log."
+  },
+  "parts": [
+    {
+      "number": 1,
+      "title": "Start",
+      "thesis": "You can serve a model with vLLM and prove it works before you change a single setting.",
+      "summary": "Install vLLM, serve a first model, check its health, name the numbers that judge a server, and set the common server options.",
+      "accent": "blue",
+      "sections": [
+        {
+          "id": "1.1",
+          "file": "sections/1-1-install-vllm-and-serve-your-first-model.md"
+        },
+        {
+          "id": "1.2",
+          "file": "sections/1-2-check-that-the-server-is-healthy.md"
+        },
+        {
+          "id": "1.3",
+          "file": "sections/1-3-understand-what-happens-to-your-request.md"
+        },
+        {
+          "id": "1.4",
+          "file": "sections/1-4-set-the-server-options-every-deployment-needs.md"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Size It",
+      "thesis": "The KV cache decides how many users fit, so count it before you pick a GPU or a flag.",
+      "summary": "Memory per token, out-of-memory fixes, unified memory on a DGX Spark, FP8 for the KV cache and the weights, and long contexts.",
+      "accent": "green",
+      "sections": [
+        {
+          "id": "2.1",
+          "file": "sections/2-1-count-the-memory-before-you-pick-a-gpu.md"
+        },
+        {
+          "id": "2.2",
+          "file": "sections/2-2-fix-out-of-memory-at-startup.md"
+        },
+        {
+          "id": "2.3",
+          "file": "sections/2-3-size-memory-on-a-dgx-spark.md"
+        },
+        {
+          "id": "2.4",
+          "file": "sections/2-4-fit-more-users-with-an-fp8-kv-cache.md"
+        },
+        {
+          "id": "2.5",
+          "file": "sections/2-5-fit-a-bigger-model-with-fp8-weights.md"
+        },
+        {
+          "id": "2.6",
+          "file": "sections/2-6-serve-long-contexts-and-hybrid-models.md"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Tune for Your Traffic",
+      "thesis": "Each kind of traffic needs a different one or two flags, and most defaults are already right.",
+      "summary": "Recipes for chat, RAG and agents, long documents, long sessions, JSON, batch jobs, multi-LoRA, reproducible outputs, RL rollouts, and reasoning models.",
+      "accent": "amber",
+      "sections": [
+        {
+          "id": "3.1",
+          "file": "sections/3-1-tune-chat-for-many-users.md"
+        },
+        {
+          "id": "3.2",
+          "file": "sections/3-2-make-repeated-prompts-hit-the-prefix-cache.md"
+        },
+        {
+          "id": "3.3",
+          "file": "sections/3-3-keep-long-prompts-from-stalling-short-ones.md"
+        },
+        {
+          "id": "3.4",
+          "file": "sections/3-4-keep-long-sessions-cheap.md"
+        },
+        {
+          "id": "3.5",
+          "file": "sections/3-5-return-valid-json-and-tool-calls.md"
+        },
+        {
+          "id": "3.6",
+          "file": "sections/3-6-run-batch-and-offline-jobs.md"
+        },
+        {
+          "id": "3.7",
+          "file": "sections/3-7-serve-many-fine-tunes-with-multi-lora.md"
+        },
+        {
+          "id": "3.8",
+          "file": "sections/3-8-get-reproducible-outputs.md"
+        },
+        {
+          "id": "3.9",
+          "file": "sections/3-9-use-vllm-as-an-rl-rollout-engine.md"
+        },
+        {
+          "id": "3.10",
+          "file": "sections/3-10-serve-reasoning-models.md"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Speed Features",
+      "thesis": "A speed feature pays only for some traffic, so decide from a measurement on your own load.",
+      "summary": "Speculative decoding, CUDA graphs and compile levels, async scheduling, and the attention backend.",
+      "accent": "violet",
+      "sections": [
+        {
+          "id": "4.1",
+          "file": "sections/4-1-speed-up-decode-with-eagle3.md"
+        },
+        {
+          "id": "4.2",
+          "file": "sections/4-2-use-n-gram-speculation-for-copy-heavy-work.md"
+        },
+        {
+          "id": "4.3",
+          "file": "sections/4-3-keep-cuda-graphs-and-compile-on.md"
+        },
+        {
+          "id": "4.4",
+          "file": "sections/4-4-leave-async-scheduling-on.md"
+        },
+        {
+          "id": "4.5",
+          "file": "sections/4-5-change-the-attention-backend-only-for-a-reason.md"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Measure",
+      "thesis": "A benchmark tells you something only when it matches your traffic and records its conditions.",
+      "summary": "Benchmark your own server, watch it in production, and decide between vLLM and SGLang for one workload.",
+      "accent": "olive",
+      "sections": [
+        {
+          "id": "5.1",
+          "file": "sections/5-1-benchmark-your-server-in-15-minutes.md"
+        },
+        {
+          "id": "5.2",
+          "file": "sections/5-2-watch-vllm-in-production.md"
+        },
+        {
+          "id": "5.3",
+          "file": "sections/5-3-decide-between-vllm-and-sglang.md"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Scale Out",
+      "thesis": "Add GPUs only after one GPU is tuned, and pick the layout from the shape of the work.",
+      "summary": "Tensor, pipeline, and data parallelism, expert parallelism, prefill and decode on separate servers, Kubernetes, and other accelerators.",
+      "accent": "indigo",
+      "sections": [
+        {
+          "id": "6.1",
+          "file": "sections/6-1-choose-tensor-pipeline-or-data-parallelism.md"
+        },
+        {
+          "id": "6.2",
+          "file": "sections/6-2-serve-moe-models-with-expert-parallelism.md"
+        },
+        {
+          "id": "6.3",
+          "file": "sections/6-3-split-prefill-and-decode.md"
+        },
+        {
+          "id": "6.4",
+          "file": "sections/6-4-run-vllm-on-kubernetes.md"
+        },
+        {
+          "id": "6.5",
+          "file": "sections/6-5-run-vllm-on-other-accelerators.md"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Operate and Debug",
+      "thesis": "Start from the symptom you see, read one log line or metric, and change one setting.",
+      "summary": "Troubleshooting by symptom, and running vLLM in production.",
+      "accent": "rose",
+      "sections": [
+        {
+          "id": "7.1",
+          "file": "sections/7-1-troubleshoot-by-symptom.md"
+        },
+        {
+          "id": "7.2",
+          "file": "sections/7-2-run-vllm-in-production.md"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "How vLLM Works",
+      "thesis": "The internals explain the defaults, and you can read this part when a default surprises you.",
+      "summary": "Processes, the scheduler, the KV block pool, attention backends, the model runner, compile and graphs, speculation, KV connectors, and history.",
+      "accent": "plum",
+      "sections": [
+        {
+          "id": "8.1",
+          "file": "sections/8-1-why-vllm-runs-three-kinds-of-process.md"
+        },
+        {
+          "id": "8.2",
+          "file": "sections/8-2-why-one-token-budget-replaces-a-prefill-phase.md"
+        },
+        {
+          "id": "8.3",
+          "file": "sections/8-3-how-the-block-pool-manages-kv-memory.md"
+        },
+        {
+          "id": "8.4",
+          "file": "sections/8-4-how-vllm-picks-an-attention-backend.md"
+        },
+        {
+          "id": "8.5",
+          "file": "sections/8-5-what-model-runner-v2-changed.md"
+        },
+        {
+          "id": "8.6",
+          "file": "sections/8-6-how-compile-and-cuda-graphs-are-captured.md"
+        },
+        {
+          "id": "8.7",
+          "file": "sections/8-7-how-speculative-decoding-checks-drafts.md"
+        },
+        {
+          "id": "8.8",
+          "file": "sections/8-8-how-kv-connectors-move-the-cache.md"
+        },
+        {
+          "id": "8.9",
+          "file": "sections/8-9-where-vllm-came-from.md"
+        }
+      ]
+    }
+  ],
+  "reference": {
+    "title": "Reference",
+    "thesis": "Look up a flag, a metric, an incident, a version pin, or a figure here.",
+    "accent": "grey",
+    "sections": [
+      {
+        "id": "R.1",
+        "file": "sections/r-1-flags-and-defaults.md"
+      },
+      {
+        "id": "R.2",
+        "file": "sections/r-2-metrics.md"
+      },
+      {
+        "id": "R.3",
+        "file": "sections/r-3-incident-index.md"
+      },
+      {
+        "id": "R.4",
+        "file": "sections/r-4-version-pins.md"
+      },
+      {
+        "id": "R.5",
+        "file": "sections/r-5-glossary.md"
+      },
+      {
+        "id": "R.6",
+        "file": "sections/r-6-sources.md"
+      },
+      {
+        "id": "R.7",
+        "file": "sections/r-7-lab-notes.md"
+      },
+      {
+        "id": "R.8",
+        "file": "sections/r-8-figure-index.md"
+      }
+    ]
+  },
+  "related": [
+    "phases/17-infrastructure-and-production/04-vllm-serving-internals",
+    "phases/17-infrastructure-and-production/08-inference-metrics-goodput",
+    "phases/17-infrastructure-and-production/05-eagle3-speculative-decoding"
+  ]
+}

@@ -1,0 +1,16 @@
+# Live check 2026-10-23, Qwen3-0.6B. ckpt-a: 2 steps with --save /ckpt/run-a --save-interval 20 --load /ckpt/run-a on an empty folder. ckpt-a-resume: same flags, 4 steps.
+## ckpt-a
+[FSDP] Saved checkpoint to /ckpt/run-a/iter_0000002
+lines mentioning a missing tracker or folder: 0
+## ckpt-a-resume
+[FSDP] Loaded model from /ckpt/run-a/iter_0000002/model
+[FSDP] Loaded optimizer from /ckpt/run-a/iter_0000002/optimizer
+[FSDP] Loaded LR scheduler from /ckpt/run-a/iter_0000002/lr_scheduler
+[FSDP] Saved checkpoint to /ckpt/run-a/iter_0000004
+step 2:
+step 3:
+## folder
+iter_0000002
+iter_0000004
+latest_checkpointed_iteration.txt
+rollout

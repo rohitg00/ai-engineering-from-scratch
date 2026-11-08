@@ -1,0 +1,148 @@
+
+ledger-names.wasm:	file format wasm 0x1
+
+Sections:
+
+     Type start=0x0000000a end=0x0000001a (size=0x00000010) count: 3
+   Import start=0x0000001c end=0x00000027 (size=0x0000000b) count: 1
+ Function start=0x00000029 end=0x0000002e (size=0x00000005) count: 4
+   Memory start=0x00000030 end=0x00000033 (size=0x00000003) count: 1
+   Export start=0x00000035 end=0x0000006e (size=0x00000039) count: 5
+     Code start=0x00000071 end=0x0000010f (size=0x0000009e) count: 4
+     Data start=0x00000111 end=0x00000122 (size=0x00000011) count: 1
+   Custom start=0x00000125 end=0x000001a9 (size=0x00000084) "name"
+
+Section Details:
+
+Type[3]:
+ - type[0] (i32) -> nil
+ - type[1] (i32, i32) -> i32
+ - type[2] (i32) -> i32
+Import[1]:
+ - func[0] sig=0 <log> <- env.log
+Function[4]:
+ - func[1] sig=1 <percent_change>
+ - func[2] sig=2 <grade>
+ - func[3] sig=1 <total>
+ - func[4] sig=2 <grade_label>
+Memory[1]:
+ - memory[0] pages: initial=1
+Export[5]:
+ - memory[0] -> "memory"
+ - func[1] <percent_change> -> "percent_change"
+ - func[2] <grade> -> "grade"
+ - func[3] <total> -> "total"
+ - func[4] <grade_label> -> "grade_label"
+Code[4]:
+ - func[1] size=23 <percent_change>
+ - func[2] size=63 <grade>
+ - func[3] size=44 <total>
+ - func[4] size=23 <grade_label>
+Data[1]:
+ - segment[0] memory=0 size=10 - init i32=1024
+  - 0000400: 4600 4400 4300 4200 4100                 F.D.C.B.A.
+Custom:
+ - name: "name"
+ - func[0] <log>
+ - func[1] <percent_change>
+ - func[2] <grade>
+ - func[3] <total>
+ - func[4] <grade_label>
+ - func[1] local[0] <before>
+ - func[1] local[1] <after>
+ - func[2] local[0] <score>
+ - func[2] local[1] <bucket>
+ - func[3] local[0] <values>
+ - func[3] local[1] <count>
+ - func[3] local[2] <sum>
+ - func[3] local[3] <i>
+ - func[4] local[0] <score>
+ - func[4] local[1] <g>
+
+Code Disassembly:
+
+000073 func[1] <percent_change>:
+ 000074: 20 00                      | local.get 0 <before>
+ 000076: 45                         | i32.eqz
+ 000077: 04 7f                      | if i32
+ 000079: 41 00                      |   i32.const 0
+ 00007b: 05                         | else
+ 00007c: 20 01                      |   local.get 1 <after>
+ 00007e: 20 00                      |   local.get 0 <before>
+ 000080: 6b                         |   i32.sub
+ 000081: 41 e4 00                   |   i32.const 100
+ 000084: 6c                         |   i32.mul
+ 000085: 20 00                      |   local.get 0 <before>
+ 000087: 6d                         |   i32.div_s
+ 000088: 0b                         | end
+ 000089: 0b                         | end
+00008b func[2] <grade>:
+ 00008c: 01 7f                      | local[1] type=i32
+ 00008e: 20 00                      | local.get 0 <score>
+ 000090: 41 0a                      | i32.const 10
+ 000092: 6d                         | i32.div_s
+ 000093: 21 01                      | local.set 1 <bucket>
+ 000095: 02 7f                      | block i32
+ 000097: 02 40                      |   block
+ 000099: 02 40                      |     block
+ 00009b: 02 40                      |       block
+ 00009d: 02 40                      |         block
+ 00009f: 02 40                      |           block
+ 0000a1: 20 01                      |             local.get 1 <bucket>
+ 0000a3: 0e 0b 04 04 04 04 04 04 03 |             br_table 4 4 4 4 4 4 3 2 1 0 0 4
+ 0000ac: 02 01 00 00 04             | 
+ 0000b1: 0b                         |           end
+ 0000b2: 41 04                      |           i32.const 4
+ 0000b4: 0c 04                      |           br 4
+ 0000b6: 0b                         |         end
+ 0000b7: 41 03                      |         i32.const 3
+ 0000b9: 0c 03                      |         br 3
+ 0000bb: 0b                         |       end
+ 0000bc: 41 02                      |       i32.const 2
+ 0000be: 0c 02                      |       br 2
+ 0000c0: 0b                         |     end
+ 0000c1: 41 01                      |     i32.const 1
+ 0000c3: 0c 01                      |     br 1
+ 0000c5: 0b                         |   end
+ 0000c6: 41 00                      |   i32.const 0
+ 0000c8: 0b                         | end
+ 0000c9: 0b                         | end
+0000cb func[3] <total>:
+ 0000cc: 02 7f                      | local[2..3] type=i32
+ 0000ce: 02 40                      | block
+ 0000d0: 03 40                      |   loop
+ 0000d2: 20 03                      |     local.get 3 <i>
+ 0000d4: 20 01                      |     local.get 1 <count>
+ 0000d6: 4e                         |     i32.ge_s
+ 0000d7: 0d 01                      |     br_if 1
+ 0000d9: 20 02                      |     local.get 2 <sum>
+ 0000db: 20 00                      |     local.get 0 <values>
+ 0000dd: 20 03                      |     local.get 3 <i>
+ 0000df: 41 04                      |     i32.const 4
+ 0000e1: 6c                         |     i32.mul
+ 0000e2: 6a                         |     i32.add
+ 0000e3: 28 02 00                   |     i32.load 2 0
+ 0000e6: 6a                         |     i32.add
+ 0000e7: 21 02                      |     local.set 2 <sum>
+ 0000e9: 20 03                      |     local.get 3 <i>
+ 0000eb: 41 01                      |     i32.const 1
+ 0000ed: 6a                         |     i32.add
+ 0000ee: 21 03                      |     local.set 3 <i>
+ 0000f0: 0c 00                      |     br 0
+ 0000f2: 0b                         |   end
+ 0000f3: 0b                         | end
+ 0000f4: 20 02                      | local.get 2 <sum>
+ 0000f6: 0b                         | end
+0000f8 func[4] <grade_label>:
+ 0000f9: 01 7f                      | local[1] type=i32
+ 0000fb: 20 00                      | local.get 0 <score>
+ 0000fd: 10 02                      | call 2 <grade>
+ 0000ff: 21 01                      | local.set 1 <g>
+ 000101: 20 01                      | local.get 1 <g>
+ 000103: 10 00                      | call 0 <log>
+ 000105: 41 80 08                   | i32.const 1024
+ 000108: 20 01                      | local.get 1 <g>
+ 00010a: 41 02                      | i32.const 2
+ 00010c: 6c                         | i32.mul
+ 00010d: 6a                         | i32.add
+ 00010e: 0b                         | end

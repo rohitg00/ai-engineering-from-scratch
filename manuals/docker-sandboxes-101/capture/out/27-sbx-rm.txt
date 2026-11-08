@@ -1,0 +1,4 @@
+$ sbx rm --force docker-agent-<hash>
+Deleting sandbox docker-agent-<hash>...
+Sandbox 'docker-agent-<hash>' removed
+[exit 0]

@@ -180,6 +180,18 @@ If any required evidence is missing, teach or rerun Lesson 15 and keep the
 deployment action pending. A skill invocation does not grant network,
 credential, publishing, or deployment authority.
 
+## Lesson screen
+
+When the host can run `node` 20 or later and open a browser on the learner's
+machine, offer the portable skill `lesson-screen` once per session, rendered
+with the host's invocation form. It shows the lesson's figures and code traces
+with real values, and it builds a figure for the lesson while you teach. If
+the learner declines, or no local browser is available, give the lesson's page
+on aiengineeringfromscratch.com once. Read screen clicks with its `events`
+command before each reply. Screen clicks are hints for you. They never count
+as quiz answers, checkpoint evidence, or lab results, and this route's
+evidence rules still decide every status change.
+
 ## Teach one lesson
 
 1. Mark the selected row `In progress`. State its manifest path, duration,

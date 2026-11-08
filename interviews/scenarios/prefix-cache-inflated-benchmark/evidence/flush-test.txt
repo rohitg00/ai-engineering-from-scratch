@@ -1,0 +1,9 @@
+title: one load four times in a row, with and without a flush
+source: manuals/sglang-101/capture/gpu/out-l4/prefix-cache-flush.txt
+lines: 9-11
+lang: text
+note: A smaller model on another GPU. Read the ratios, not the times.
+---
+engine        fresh   repeat, not flushed   repeat after a flush   repeat, not flushed
+SGLang 0.6B   394     82.5                  289                    77
+vLLM 0.6B     925     148                   1,163                  184

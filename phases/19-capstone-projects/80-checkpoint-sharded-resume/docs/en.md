@@ -52,7 +52,7 @@ Three fields are load-bearing. `world_size` makes a resume on a different size l
 
 ### Atomic write
 
-The standard pattern: write every shard to `<name>.tmp`, write the manifest to `manifest.json.tmp`, fsync each, then rename. POSIX rename within the same filesystem is atomic; either the new file is fully present or the old one is. A crash before the final rename leaves the previous checkpoint as the live one. Without atomic write a crash can leave a partial shard with a present manifest that points at it, and the load corrupts the optimiser state on resume.
+The standard pattern: write every shard to `<name>.tmp`, write the manifest to `manifest.json.tmp`, fsync each, rename the shards, and rename the manifest last. One POSIX rename within the same filesystem is atomic: either the new file is fully present or the old one is. A set of renames is not a transaction, so the manifest rename is the commit point, and the loader checks every shard against the manifest hashes. Write each checkpoint into its own step directory; then a crash before the manifest rename leaves the previous checkpoint as the live one. Reusing one directory breaks that guarantee, because the shard renames replace the old shards before the new manifest lands. Without atomic write a crash can leave a partial shard with a present manifest that points at it, and the load corrupts the optimiser state on resume.
 
 ### Three failure modes the schema must defend against
 

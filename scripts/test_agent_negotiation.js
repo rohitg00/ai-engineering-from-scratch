@@ -40,6 +40,7 @@ test('returns 406 when the client rejects both supported types', () => {
   assert.deepEqual(JSON.parse(result.body), {
     type: 'about:blank', title: 'Not Acceptable', status: 406,
     code: 'representation_not_supported', detail: 'Request text/html or text/markdown.',
+    hint: 'See /docs and /openapi.json for supported requests.',
   });
   assert.equal(result.headers['cache-control'], 'no-store');
 });
@@ -90,6 +91,7 @@ test('explicit rejections take precedence over wildcard preferences', () => {
   assert.match(request('text/html;q=0, text/*').headers['content-type'], /^text\/markdown/);
   assert.match(request('text/*;q=0.2, */*;q=1, text/html;q=0.5').headers['content-type'], /^text\/html/);
   assert.match(request(undefined).headers['content-type'], /^text\/html/);
+  assert.match(request('*/*').headers['content-type'], /^text\/html/);
 });
 
 test('GET and HEAD return identical metadata with no HEAD body', () => {

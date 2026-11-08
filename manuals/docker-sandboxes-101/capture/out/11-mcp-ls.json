@@ -1,0 +1,17 @@
+{
+  "gateway": {
+    "name": "LOCAL",
+    "local": true,
+    "operator": "managed by you",
+    "decision": "local",
+    "signed_in_as": "<docker-user>"
+  },
+  "servers": [
+    {
+      "name": "m101-deepwiki",
+      "transport": "remote http",
+      "status": "ready",
+      "type": "remote"
+    }
+  ]
+}

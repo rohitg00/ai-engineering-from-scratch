@@ -19,7 +19,7 @@ Build plan:
 6. Weekly PSI / KL drift detector on pooled prompt embeddings; alert threshold 0.2.
 7. Prometheus exporter for eval score aggregates and latency percentiles; Alertmanager to Slack (warning) + PagerDuty (critical).
 8. Next.js 15 App Router dashboard: overview, trace search + waterfall, eval trends, drift chart, alerts.
-9. Regression probe: inject a response pattern that leaks fake SSNs 1% of the time; measure MTTR (alert-fire time).
+9. Regression probe: inject a response pattern that leaks fake SSNs 1% of the time; measure MTTD (time from deploy to alert fire).
 
 Assessment rubric:
 
@@ -27,7 +27,7 @@ Assessment rubric:
 |:-:|---|---|
 | 25 | Trace-schema coverage | Number of SDK families producing canonical GenAI spans (target 6+) |
 | 20 | Eval correctness | DeepEval / RAGAS scores vs hand-labeled set |
-| 20 | Dashboard UX | MTTR on injected regression (target under 5 minutes) |
+| 20 | Dashboard UX | MTTD on injected regression (target under 5 minutes) |
 | 20 | Cost / scale | Sustained 1k spans/sec ingest without backlog |
 | 15 | Alerting + drift detection | Prometheus/Alertmanager chain exercised end to end |
 
@@ -44,4 +44,4 @@ Refusal rules:
 - Refuse to claim "multi-SDK support" without a per-SDK canonical-span regression test.
 - Refuse to ship drift detection without a baseline window; zero-shot drift is useless.
 
-Output: a repo containing the collector config, the ClickHouse schema, the Next.js 15 dashboard, the eval jobs, the drift detector, the alerting chain, the 10k-trace demo dataset with annotated regressions, and a write-up documenting MTTR for the injected PII regression plus the top three dashboard UX improvements that dropped MTTR over iteration.
+Output: a repo containing the collector config, the ClickHouse schema, the Next.js 15 dashboard, the eval jobs, the drift detector, the alerting chain, the 10k-trace demo dataset with annotated regressions, and a write-up documenting MTTD for the injected PII regression plus the top three dashboard UX improvements that dropped MTTD over iteration.

@@ -32,6 +32,9 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
+User-agent: YouBot
+Allow: /
+
 # --- Allowed: AI grounding / answer engines (drive citations) ---
 # Google-Extended gates AI Overviews + Gemini grounding (highest-volume AI
 # answer surface); ClaudeBot now also serves Claude retrieval. Allowing them
@@ -92,9 +95,6 @@ Disallow: /
 User-agent: peer39_crawler
 Disallow: /
 
-User-agent: YouBot
-Disallow: /
-
 User-agent: Timpibot
 Disallow: /
 
@@ -134,3 +134,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://aiengineeringfromscratch.com/sitemap.xml
+Sitemap: https://aiengineeringfromscratch.com/sitemap-index.xml
+Sitemap: https://aiengineeringfromscratch.com/sitemap-manuals.xml

@@ -1,0 +1,102 @@
+{
+  "lesson": "38-calling-conventions-and-stack-frames",
+  "title": "Calling Conventions and Stack Frames: System V, Windows x64, and AArch64",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "The same C function double mixed(int i, double d, long long l, float f) is compiled for Linux x86-64 and for Windows x64. Which registers hold the four arguments?",
+      "options": [
+        "Both use edi, xmm0, rsi, xmm1, because both ABIs fill integer and SSE lists in order",
+        "System V: edi, xmm0, rsi, xmm1 (two lists). Microsoft x64: ecx, xmm1, r8, xmm3 (one slot per position)",
+        "System V passes d and f on the stack, because SSE registers carry only return values",
+        "Both use ecx, xmm0, rdx, xmm1, because both ABIs start the integer list at rcx"
+      ],
+      "correct": 1,
+      "explanation": "psABI 3.2.3 assigns INTEGER and SSE classes from two separate register lists. The Microsoft convention is positional: argument k uses RCX/RDX/R8/R9 or XMM0 to XMM3 for slot k, so a double in slot 1 goes to XMM1 and a float in slot 3 in XMM3."
+    },
+    {
+      "stage": "check",
+      "question": "At -O2 the Microsoft x64 build of eight_args reads its fifth argument at 0x28(%rsp) with no prologue. Where does 0x28 come from?",
+      "options": [
+        "The frame pointer offset plus the saved rbp that the prologue pushed before the body",
+        "Five 8-byte argument slots counted up from the stack pointer, one slot per argument",
+        "Alignment padding that the compiler chose so the load is on a 16-byte boundary",
+        "8 bytes of return address plus the 32-byte shadow store for the four register arguments"
+      ],
+      "correct": 3,
+      "explanation": "On entry 0(%rsp) is the return address and 8(%rsp) to 39(%rsp) are the four home slots. The first stack argument therefore starts at 40, which is 0x28."
+    },
+    {
+      "stage": "check",
+      "question": "keeps at -O2 on System V begins with pushq %rbp; pushq %r14; pushq %rbx and then calls ext with no subq. Why is the stack aligned at the call?",
+      "options": [
+        "24 bytes of pushes plus the 8-byte return address is 32, a multiple of 16",
+        "The callee ext realigns the stack in its own prologue before it uses it",
+        "Every pushq keeps the stack 16-byte aligned, so any number of pushes is aligned",
+        "The red zone absorbs the misalignment, so the call does not need a subq"
+      ],
+      "correct": 0,
+      "explanation": "psABI 3.2.2 says (%rsp + 8) is a multiple of 16 on entry. Three pushes bring the depth to 24, and 24 + 8 = 32, so the call site is aligned without a subq."
+    },
+    {
+      "stage": "check",
+      "question": "The AArch64 keeps prologue is stp x29, x30, [sp, #-0x30]!; str x21, [sp, #0x10]; mov x29, sp; stp x20, x19, [sp, #0x20]. Where is the frame record?",
+      "options": [
+        "At the top of the frame next to the caller, because the record must be above the saves",
+        "At sp+0 and sp+8 after the prologue: x29 at the lower address, x30 above, x29 points at it",
+        "Nowhere, because a function that saves x21 does not need a frame record",
+        "In x19 and x20, because the stp of x20 and x19 stores the record last"
+      ],
+      "correct": 1,
+      "explanation": "The pre-indexed stp stores x29 at the new sp and x30 at sp+8, and mov x29, sp makes x29 point at the pair. The Apple arm64 build of the same function puts the record at the top of the frame instead."
+    },
+    {
+      "stage": "check",
+      "question": "At -O0 the System V build of eight_args stores six argument registers to -0x8(%rbp) through -0x30(%rbp) without a subq. What makes those stores legal?",
+      "options": [
+        "They sit in the 128-byte red zone below rsp, and the leaf makes no call that overwrites them",
+        "rbp points 48 bytes below rsp after the prologue, so the stores are above rsp",
+        "The caller allocated the 48 bytes before the call, as part of its outgoing area",
+        "The stores go into the caller's frame, which the callee owns until it returns"
+      ],
+      "correct": 0,
+      "explanation": "The red zone is the 128 bytes beyond %rsp that signal handlers do not modify. The Microsoft and AArch64 Linux builds of the same function allocate the space with subq or sub sp instead, because those ABIs have no red zone."
+    },
+    {
+      "stage": "post",
+      "question": "struct big big_ret(long long seed) returns a 32-byte struct. How does each ABI return it?",
+      "options": [
+        "All three return it in four registers, because each ABI has four result registers",
+        "Buffer address in rdi (seed to rsi), in rcx (seed to rdx), or in x8 (seed stays in x0)",
+        "System V and Microsoft x64 return it in rax:rdx, and AArch64 returns it in x0:x1",
+        "All three return it on the stack above the return address, in the caller's frame"
+      ],
+      "correct": 1,
+      "explanation": "psABI 3.2.3 classes a 32-byte aggregate as MEMORY and passes the address in %rdi as if it were the first argument. Microsoft shifts the real arguments right by one after the hidden pointer in RCX. AAPCS64 6.9 uses the indirect result register x8 and leaves x0 to x7 untouched."
+    },
+    {
+      "stage": "post",
+      "question": "radare2 6.2.4 lists seven arguments for eight_args at -O2 on System V: rdi, rsi, rdx, r8, r9 and two stack slots. Which argument is missing and why?",
+      "options": [
+        "rcx, because its only read is the index of leaq (%rdx,%rcx), %rax",
+        "r9, because r9 is callee-saved and the tool skips callee-saved registers",
+        "The second stack slot, because 16 bytes above rsp is outside the frame",
+        "Nothing, because the function reads only seven values from its inputs"
+      ],
+      "correct": 0,
+      "explanation": "The source has eight parameters and the bytes read %rcx once, inside a lea. The analyzer in this lesson counts base and index registers as reads and finds all six register arguments. The tool output disagrees with the source, so record it as a finding to verify."
+    },
+    {
+      "stage": "post",
+      "question": "The .xdata entry for keeps in the Windows object is 01 07 04 00 07 32 03 30 02 70 01 60. What does it say?",
+      "options": [
+        "Version 1, frame register rbp with offset 0x70, and three pushes of rbx, rdi, rsi",
+        "Version 1, a 7-byte prolog, an 8-byte allocation at offset 7, then pushes of rbx, rdi, rsi",
+        "Version 1, a 7-byte prolog, and three nonvolatile saves into the shadow store",
+        "Version 1, a 7-byte prolog, a 32-byte allocation at offset 7, then pushes of rbx, rdi, rsi"
+      ],
+      "correct": 3,
+      "explanation": "The UNWIND_CODE byte 0x32 is op 2 (UWOP_ALLOC_SMALL) with info 3, so 3*8+8 = 32 bytes. The bytes 0x30, 0x70, 0x60 are op 0 (UWOP_PUSH_NONVOL) with register numbers 3, 7, 6: rbx, rdi, rsi. That matches the prologue 56 57 53 48 83 ec 20 read from the bytes."
+    }
+  ]
+}

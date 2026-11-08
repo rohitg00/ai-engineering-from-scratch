@@ -52,12 +52,12 @@ Every provider needs five things:
 | Result block | role `tool`, `tool_call_id` | `user` with `tool_result`, `tool_use_id` | `functionResponse` with matching `id` |
 | Force-a-tool | `tool_choice: {type: "function", function: {name}}` | `tool_choice: {type: "tool", name}` | `tool_config: {function_calling_config: {mode: "ANY"}}` |
 | Forbid tools | `tool_choice: "none"` | `tool_choice: {type: "none"}` | `mode: "NONE"` |
-| Strict schema | `strict: true` | schema-is-schema (always enforced) | `responseSchema` at request level |
+| Strict schema | `strict: true` | `strict: true` per tool (opt-in) | `responseSchema` at request level |
 
 ### Limits you will actually hit
 
 - **OpenAI.** 128 tools per request. Schema depth 5. Argument string <= 8192 bytes. Strict mode requires no `$ref`, no `oneOf`/`anyOf`/`allOf` with overlap, every property listed in `required`.
-- **Anthropic.** 64 tools per request. Schema depth effectively unbounded but practical limit 10. No strict-mode flag; schema is a contract and the model tends to comply.
+- **Anthropic.** 64 tools per request. Schema depth effectively unbounded but practical limit 10. Strict tool use is opt-in with `strict: true` on the tool definition. Without it, the schema is a contract the model tends to follow, not a guarantee.
 - **Gemini.** 64 functions per request. Schema types are OpenAPI 3.0 subset (slight divergence from JSON Schema 2020-12). Parallel calls unique-id since Gemini 3.
 
 ### `tool_choice` behavior
@@ -94,7 +94,7 @@ Invalid-argument errors look different too.
 
 - **OpenAI (non-strict).** Model returns `arguments: "{bad json}"`, your JSON parse fails, you inject an error message and re-call.
 - **OpenAI (strict).** Validation happens during decoding; invalid JSON is impossible but `refusal` can appear.
-- **Anthropic.** `input` may contain unexpected fields; schema is advisory. Validate server-side.
+- **Anthropic (non-strict).** `input` may contain unexpected fields; the schema is advisory. Validate server-side. With `strict: true`, sampling is constrained to the schema.
 - **Gemini.** OpenAPI 3.0 quirk: `enum` on object fields silently ignored; validate yourself.
 
 ### The translator pattern

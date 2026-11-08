@@ -11,7 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import translate_ui_strings as ui  # noqa: E402
 
 
-FIXED_TOKENS = ("SKILL.md", "README.md", "phases/", "start-learning", "@rohitg00", "(⌘K)")
+FIXED_TOKENS = ("SKILL.md", "README.md", "phases/", "start-learning", "@rohitg00", "(⌘K)", "{n}")
 
 
 class SourceFileTest(unittest.TestCase):
@@ -88,6 +88,7 @@ class BuildLanguageTest(unittest.TestCase):
             "Use start-learning to begin the course.",
             "Follow @rohitg00",
             "Search (⌘K)",
+            "Every lesson across all {n} phases.",
             "Requires a local clone. Run copied commands from the repository root, the directory containing README.md and phases/.",
         ]
         seen = []
@@ -114,6 +115,22 @@ class BuildLanguageTest(unittest.TestCase):
 
 
 class EndToEndTest(unittest.TestCase):
+    def test_default_run_writes_all_site_languages_without_translating_english(self):
+        keys, _ = ui.load_source()
+        with tempfile.TemporaryDirectory() as tmp:
+            ui.main(["--provider", "echo", "--out", tmp])
+            written = {entry.name for entry in Path(tmp).iterdir()}
+            expected = {
+                entry["code"] for entry in ui.lessons._load_registry()
+                if (entry.get("ci") or entry.get("site")) and not entry.get("source")
+            }
+            self.assertEqual(written, expected)
+            self.assertTrue({"pt-BR", "fa", "zh-TW"} <= written)
+            self.assertNotIn("en", written)
+            for lang in written:
+                data = json.loads((Path(tmp) / lang / "ui.json").read_text(encoding="utf-8"))
+                self.assertEqual(list(data["strings"]), keys)
+
     def test_echo_provider_writes_every_language(self):
         keys, overrides = ui.load_source()
         with tempfile.TemporaryDirectory() as tmp:
@@ -149,8 +166,9 @@ class EndToEndTest(unittest.TestCase):
 
     def test_unknown_language_fails_loudly(self):
         with tempfile.TemporaryDirectory() as tmp:
-            with self.assertRaises(SystemExit):
-                ui.main(["--lang", "xx", "--provider", "echo", "--out", tmp])
+            for lang in ("xx", "en"):
+                with self.subTest(lang=lang), self.assertRaises(SystemExit):
+                    ui.main(["--lang", lang, "--provider", "echo", "--out", tmp])
 
 
 if __name__ == "__main__":

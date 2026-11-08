@@ -1,0 +1,9 @@
+title: the 400 answer to a request with max_tokens of 50000
+source: manuals/vllm-101/capture/gpu/out-l4/livecheck-2026-10-22.txt
+lines: 46-48
+lang: text
+note: Read the two numbers in the message and the parameter that it names.
+---
+== c44 max_tokens above max model len
+HTTP/1.1 400 Bad Request
+{"error":{"message":"max_tokens=50000 cannot be greater than max_model_len=40960. Please request fewer output tokens. (parameter=max_tokens, value=50000)","type":"BadRequestError","param":"max_tokens","code":400}}

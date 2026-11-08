@@ -1,0 +1,17 @@
+$ sbx create shell --name m101-policy
+
+sandbox    m101-policy
+agent      shell
+workspace  none · no workspace bind mount
+image      docker/sandbox-templates:shell-docker
+cpu        10
+memory     32 GiB
+
+Pulling image
+  <layers>
+✓ Image ready
+✓ Created sandbox m101-policy
+
+To connect to this sandbox, run:
+  sbx run --name m101-policy
+[exit 0]

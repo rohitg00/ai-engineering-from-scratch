@@ -141,13 +141,13 @@ graph LR
     style V fill:#1a1a2e,stroke:#0f3460,color:#fff
 ```
 
-The division by sqrt(d_k) -- sqrt(64) = 8 -- is scaling. Without it, the dot products grow large for high-dimensional vectors, pushing softmax into regions where gradients are nearly zero. This was one of the key insights in the original "Attention Is All You Need" paper.
+The division by $\sqrt{d_k}$ -- $\sqrt{64} = 8$ -- is scaling. Without it, the dot products grow large for high-dimensional vectors, pushing softmax into regions where gradients are nearly zero. This was one of the key insights in the original "Attention Is All You Need" paper.
 
 ### KV Cache: Why Inference Is Fast
 
-During training, you process the entire sequence at once. During inference, you generate one token at a time. Without optimization, generating token N requires recomputing attention for all N-1 previous tokens. That is O(N^2) per generated token, or O(N^3) total for a sequence of length N.
+During training, you process the entire sequence at once. During inference, you generate one token at a time. Without optimization, generating token $N$ requires recomputing attention for all $N-1$ previous tokens. That is $O(N^2)$ per generated token, or $O(N^3)$ total for a sequence of length $N$.
 
-KV Cache solves this. After computing K and V for each token, store them. When generating token N+1, you only need to compute Q for the new token and look up the cached K and V from all previous tokens. This reduces per-token cost from O(N) to O(1) for the K and V computation. The attention score calculation is still O(N) because you attend to all previous positions, but you avoid redundant matrix multiplications on the input.
+KV Cache solves this. After computing K and V for each token, store them. When generating token $N+1$, you only need to compute Q for the new token and look up the cached K and V from all previous tokens. This reduces per-token cost from $O(N)$ to $O(1)$ for the K and V computation. The attention score calculation is still $O(N)$ because you attend to all previous positions, but you avoid redundant matrix multiplications on the input.
 
 For GPT-2 with 12 layers and 12 heads, the KV cache stores 2 (K + V) x 12 layers x 12 heads x 64 dims = 18,432 values per token. For a 1024-token sequence, that is about 75MB in FP32. For Llama 3 405B with 128 layers, the KV cache for a single sequence can exceed 10GB. This is why long-context inference is memory-bound.
 
@@ -211,7 +211,7 @@ The learning rate schedule matters more than you might expect. GPT-2 warms up fr
 |-----------|-------|------------|
 | Token embeddings | (50257, 768) | 38,597,376 |
 | Position embeddings | (1024, 768) | 786,432 |
-| Per-block attention (W_q, W_k, W_v, W_out) | 4 x (768, 768) | 2,359,296 |
+| Per-block attention ($W_q, W_k, W_v, W_{\text{out}}$) | 4 x (768, 768) | 2,359,296 |
 | Per-block FFN (up + down) | (768, 3072) + (3072, 768) | 4,718,592 |
 | Per-block LayerNorms (2x) | 2 x 768 x 2 | 3,072 |
 | Final LayerNorm | 768 x 2 | 1,536 |
@@ -221,6 +221,10 @@ The learning rate schedule matters more than you might expect. GPT-2 warms up fr
 The output projection (logits head) shares weights with the token embedding matrix. This is called weight tying -- it reduces the parameter count by 38M and improves performance because it forces the model to use the same representation space for input and output.
 
 ## Build It
+
+```figure
+iso-machine {"machine":"mini-gpt"}
+```
 
 ### Step 1: Embedding Layer
 
@@ -258,7 +262,7 @@ def attention(Q, K, V, mask=None):
     return weights @ V
 ```
 
-The softmax implementation subtracts the maximum before exponentiating. Without this, exp(large_number) overflows to infinity. This is a numerical stability trick that does not change the output because softmax(x - c) = softmax(x) for any constant c.
+The softmax implementation subtracts the maximum before exponentiating. Without this, exp(large_number) overflows to infinity. This is a numerical stability trick that does not change the output because $\mathop{\mathrm{softmax}}(x - c) = \mathop{\mathrm{softmax}}(x)$ for any constant $c$.
 
 ### Step 3: Multi-Head Attention
 
@@ -504,7 +508,7 @@ This lesson produces `outputs/prompt-gpt-architecture-analyzer.md` -- a prompt t
 
 1. Modify the model to use 24 layers and 16 heads instead of 12/12. Count the parameters. How does doubling the depth compare to doubling the width (embedding dimension)?
 
-2. Implement the GELU activation function (GELU(x) = x * 0.5 * (1 + erf(x / sqrt(2)))) and replace the ReLU in the feedforward network. Run training for 500 steps with each activation and compare the final loss.
+2. Implement the GELU activation function $(\mathop{\mathrm{GELU}}(x) = x \cdot 0.5 \cdot (1 + \mathop{\mathrm{erf}}(x / \sqrt{2})))$ and replace the ReLU in the feedforward network. Run training for 500 steps with each activation and compare the final loss.
 
 3. Add a KV cache to the generation function. Store K and V tensors for each layer after the first forward pass, and reuse them for subsequent tokens. Measure the speedup: generate 200 tokens with and without the cache and compare wall-clock time.
 
@@ -525,7 +529,7 @@ This lesson produces `outputs/prompt-gpt-architecture-analyzer.md` -- a prompt t
 | Weight tying | "Sharing embeddings" | Using the same matrix for input token embeddings and the output projection head -- saves 38M params in GPT-2 |
 | Residual connection | "Skip connection" | Adding the input directly to the output of a sublayer (x + sublayer(x)) -- enables gradient flow in deep networks |
 | Layer normalization | "Normalizing activations" | Normalizing across the feature dimension to mean 0 and variance 1, with learnable scale and bias parameters |
-| Cross-entropy loss | "How wrong the predictions are" | -log(probability assigned to the correct next token), averaged over all positions -- the standard LLM training objective |
+| Cross-entropy loss | "How wrong the predictions are" | $-\log(\text{probability assigned to the correct next token})$, averaged over all positions -- the standard LLM training objective |
 
 ## Further Reading
 

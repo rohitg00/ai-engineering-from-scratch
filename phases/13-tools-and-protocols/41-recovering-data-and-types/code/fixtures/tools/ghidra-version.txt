@@ -1,0 +1,3 @@
+application.version=12.1.4
+application.release.name=PUBLIC
+openjdk version "21.0.12.1" 2026-08-18

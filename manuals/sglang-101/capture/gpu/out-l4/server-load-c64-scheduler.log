@@ -1,0 +1,4 @@
+# runs/l4/load/default/server.log (BF16), the decode line with the most running requests at the highest token usage
+[2026-10-16 20:31:03] Decode batch, #running-req: 38, #token: 23810, token usage: 0.99, cuda graph: True, gen throughput (token/s): 448.67, #queue-req: 26
+# runs/l4/load/fp8/server.log (FP8 weights and KV), the decode line at 64 running requests with the highest token usage
+[2026-10-16 21:34:09] Decode batch, #running-req: 64, #token: 40635, token usage: 0.29, cuda graph: False, gen throughput (token/s): 1143.15, #queue-req: 0

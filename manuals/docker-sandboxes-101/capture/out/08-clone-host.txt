@@ -1,0 +1,43 @@
+$ git -C $CAPTURE/fixtures/repo-clone remote -v
+sandbox-m101-clone	git://127.0.0.1:<port>/repo-clone (fetch)
+sandbox-m101-clone	git://127.0.0.1:<port>/repo-clone (push)
+[exit 0]
+
+$ git -C $CAPTURE/fixtures/repo-clone config --local --list --show-origin
+file:.git/config	core.repositoryformatversion=0
+file:.git/config	core.filemode=true
+file:.git/config	core.bare=false
+file:.git/config	core.logallrefupdates=true
+file:.git/config	core.ignorecase=true
+file:.git/config	core.precomposeunicode=true
+file:.git/config	remote.sandbox-m101-clone.url=git://127.0.0.1:<port>/repo-clone
+file:.git/config	remote.sandbox-m101-clone.fetch=+refs/heads/*:refs/remotes/sandbox-m101-clone/*
+file:.git/config	remote.sandbox-m101-clone.fetch=+refs/heads/*:refs/sandboxes/m101-clone/*
+[exit 0]
+
+$ git -C $CAPTURE/fixtures/repo-clone ls-remote sandbox-m101-clone
+81e11df2aceeb2e92c0b62f2486d8eddc262e55b	HEAD
+81e11df2aceeb2e92c0b62f2486d8eddc262e55b	refs/heads/main
+c7dfd56b852b5eb46727fef2f29c08fe02cc9d88	refs/remotes/origin/HEAD
+c7dfd56b852b5eb46727fef2f29c08fe02cc9d88	refs/remotes/origin/main
+[exit 0]
+
+$ git -C $CAPTURE/fixtures/repo-clone fetch sandbox-m101-clone
+remote: warning: unable to access '/root/.config/git/attributes': Permission denied        
+From git://127.0.0.1:<port>/repo-clone
+   c7dfd56..81e11df  main       -> sandbox-m101-clone/main
+   c7dfd56..81e11df  main       -> refs/sandboxes/m101-clone/main
+[exit 0]
+
+$ git -C $CAPTURE/fixtures/repo-clone for-each-ref
+c7dfd56b852b5eb46727fef2f29c08fe02cc9d88 commit	refs/heads/main
+81e11df2aceeb2e92c0b62f2486d8eddc262e55b commit	refs/remotes/sandbox-m101-clone/HEAD
+81e11df2aceeb2e92c0b62f2486d8eddc262e55b commit	refs/remotes/sandbox-m101-clone/main
+81e11df2aceeb2e92c0b62f2486d8eddc262e55b commit	refs/sandboxes/m101-clone/main
+[exit 0]
+
+$ git -C $CAPTURE/fixtures/repo-clone log --oneline --all
+81e11df from sandbox
+c7dfd56 second
+086df68 first
+[exit 0]

@@ -1,0 +1,95 @@
+### 1 · initialize
+POST /mcp HTTP/1.1
+Host: 127.0.0.1:8081
+Accept: application/json, text/event-stream
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "initialize",
+  "params": {
+    "protocolVersion": "2026-07-28",
+    "capabilities": {},
+    "clientInfo": {
+      "name": "m101",
+      "version": "0"
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-transform
+Connection: keep-alive
+Content-Type: text/event-stream
+Date: <http-date>
+Transfer-Encoding: chunked
+
+event: message
+data: {"jsonrpc":"2.0","id":1,"result":{"capabilities":{"logging":{},"tools":{"listChanged":true}},"protocolVersion":"2025-11-25","serverInfo":{"name":"docker agent","version":"v1.149.0"}}}
+
+### 2 · notifications/initialized
+POST /mcp HTTP/1.1
+Host: 127.0.0.1:8081
+Accept: application/json, text/event-stream
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "method": "notifications/initialized"
+}
+
+HTTP/1.1 202 Accepted
+Date: <http-date>
+
+
+
+### 3 · tools/list
+POST /mcp HTTP/1.1
+Host: 127.0.0.1:8081
+Accept: application/json, text/event-stream
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "tools/list"
+}
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-transform
+Connection: keep-alive
+Content-Type: text/event-stream
+Date: <http-date>
+Transfer-Encoding: chunked
+
+event: message
+data: {"jsonrpc":"2.0","id":2,"result":{"ttlMs":0,"cacheScope":"public","tools":[{"annotations":{"destructiveHint":false,"idempotentHint":true,"openWorldHint":false,"readOnlyHint":true,"title":"Answers every message with the word pong."},"description":"Answers every message with the word pong.","inputSchema":{"additionalProperties":false,"properties":{"message":{"description":"the message to send to the agent","type":"string"}},"required":["message"],"type":"object"},"name":"pong","outputSchema":{"additionalProperties":false,"properties":{"response":{"description":"the response from the agent","type":"string"}},"required":["response"],"type":"object"}}]}}
+
+### 4 · tools/call
+POST /mcp HTTP/1.1
+Host: 127.0.0.1:8081
+Accept: application/json, text/event-stream
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "tools/call",
+  "params": {
+    "name": "pong",
+    "arguments": {
+      "message": "ping"
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache, no-transform
+Connection: keep-alive
+Content-Type: text/event-stream
+Date: <http-date>
+Transfer-Encoding: chunked
+
+event: message
+data: {"jsonrpc":"2.0","id":3,"result":{"content":[{"type":"text","text":"{\"response\":\"pong\"}"}],"structuredContent":{"response":"pong"}}}

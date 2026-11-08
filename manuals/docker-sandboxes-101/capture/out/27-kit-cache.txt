@@ -1,0 +1,12 @@
+$ find fixtures/repo-sandbox/.m101/cache/sandbox-kits -maxdepth 3 | sort
+fixtures/repo-sandbox/.m101/cache/sandbox-kits
+fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash>
+fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash>/manifest.json
+fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash>/prompt_files
+fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash>/skills
+
+$ cat fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash>/manifest.json
+{
+  "agent_ref": "$CAPTURE/fixtures/agents/files-sandbox.yaml",
+  "built_at": "<ts>"
+}

@@ -1,0 +1,7 @@
+libledger.stripped.dylib [arm64]:
+    -exports:
+        offset      symbol
+        0x00000428  _grade
+        0x00000498  _grade_label
+        0x00000410  _percent_change
+        0x00000464  _total

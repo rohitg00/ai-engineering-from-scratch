@@ -28,14 +28,14 @@ This lesson builds every major distance function from scratch, shows you when ea
 
 ### Norms: measuring vector magnitude
 
-A norm measures the "size" of a vector. Every distance function between two vectors can be written as the norm of their difference: d(a, b) = ||a - b||. So understanding norms is understanding distances.
+A norm measures the "size" of a vector. Every distance function between two vectors can be written as the norm of their difference: $d(a, b) = \lVert a - b \rVert$. So understanding norms is understanding distances.
 
 ### L1 Norm (Manhattan distance)
 
 The L1 norm sums the absolute values of all components.
 
-```
-||x||_1 = |x_1| + |x_2| + ... + |x_n|
+```math
+\lVert x \rVert_1 = |x_1| + |x_2| + \cdots + |x_n|
 ```
 
 It is called Manhattan distance because it measures how far you walk on a city grid where you can only move along axes. No diagonals.
@@ -54,7 +54,7 @@ When to use L1:
 - When you want robustness to outliers (a single huge difference does not dominate)
 - Feature selection problems (L1 regularization promotes sparsity)
 
-Connection to L1 regularization (Lasso): adding ||w||_1 to your loss function penalizes the sum of absolute weight values. This pushes small weights to exactly zero, performing automatic feature selection. The L1 penalty creates diamond-shaped constraint regions in weight space, and the corners of diamonds lie on the axes where some weights are zero.
+Connection to L1 regularization (Lasso): adding $\lVert w \rVert_1$ to your loss function penalizes the sum of absolute weight values. This pushes small weights to exactly zero, performing automatic feature selection. The L1 penalty creates diamond-shaped constraint regions in weight space, and the corners of diamonds lie on the axes where some weights are zero.
 
 Connection to loss functions: Mean Absolute Error (MAE) is the average L1 distance between predictions and targets. It penalizes all errors linearly, making it robust to outliers compared to MSE.
 
@@ -62,11 +62,11 @@ Connection to loss functions: Mean Absolute Error (MAE) is the average L1 distan
 
 The L2 norm is the straight-line distance. Square root of the sum of squared components.
 
-```
-||x||_2 = sqrt(x_1^2 + x_2^2 + ... + x_n^2)
+```math
+\lVert x \rVert_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}
 ```
 
-This is the distance you learned in geometry class. Pythagoras in n dimensions.
+This is the distance you learned in geometry class. Pythagoras in $n$ dimensions.
 
 ```
 Point A = (1, 1)
@@ -83,24 +83,26 @@ When to use L2:
 - Physical distances (spatial data, sensor readings)
 - Image similarity at the pixel level
 
-Connection to L2 regularization (Ridge): adding ||w||_2^2 to your loss function penalizes large weights. Unlike L1, it does not push weights to zero. It shrinks all weights toward zero proportionally. The L2 penalty creates circular constraint regions, so there are no corners on axes. Weights get small but rarely exactly zero.
+Connection to L2 regularization (Ridge): adding $\lVert w \rVert_2^2$ to your loss function penalizes large weights. Unlike L1, it does not push weights to zero. It shrinks all weights toward zero proportionally. The L2 penalty creates circular constraint regions, so there are no corners on axes. Weights get small but rarely exactly zero.
 
 Connection to loss functions: Mean Squared Error (MSE) is the average of L2 distances squared. Squaring penalizes large errors more heavily than small ones.
 
-```
-MAE (L1 loss):  |y - y_hat|         Linear penalty. Robust to outliers.
-MSE (L2 loss):  (y - y_hat)^2       Quadratic penalty. Sensitive to outliers.
+```math
+\begin{aligned}
+\text{MAE (L1 loss):} \quad & |y - \hat{y}| && \text{Linear penalty. Robust to outliers.} \\
+\text{MSE (L2 loss):} \quad & (y - \hat{y})^2 && \text{Quadratic penalty. Sensitive to outliers.}
+\end{aligned}
 ```
 
 ### Lp Norms: the general family
 
 L1 and L2 are special cases of the Lp norm:
 
-```
-||x||_p = (|x_1|^p + |x_2|^p + ... + |x_n|^p)^(1/p)
+```math
+\lVert x \rVert_p = (|x_1|^p + |x_2|^p + \cdots + |x_n|^p)^{1/p}
 ```
 
-Different values of p produce different shaped "unit balls" (the set of all points at distance 1 from the origin):
+Different values of $p$ produce different shaped "unit balls" (the set of all points at distance at most 1 from the origin; the shapes below are their boundaries):
 
 ```
 p=1:    Diamond shape      (corners on axes)
@@ -111,19 +113,20 @@ p=inf:  Square/hypercube   (flat sides along axes)
 
 ### L-infinity Norm (Chebyshev distance)
 
-As p approaches infinity, the Lp norm converges to the maximum absolute component.
+As $p$ approaches infinity, the Lp norm converges to the maximum absolute component.
 
-```
-||x||_inf = max(|x_1|, |x_2|, ..., |x_n|)
+```math
+\lVert x \rVert_\infty = \max(|x_1|, |x_2|, \ldots, |x_n|)
 ```
 
 The distance between two points is determined by the single dimension where they differ the most. All other dimensions are ignored.
 
-```
-Point A = (1, 1)
-Point B = (4, 5)
-
-L-inf distance = max(|4-1|, |5-1|) = max(3, 4) = 4
+```math
+\begin{aligned}
+\text{Point } A &= (1, 1) \\
+\text{Point } B &= (4, 5) \\[6pt]
+L_\infty \text{ distance} &= \max(|4-1|, |5-1|) = \max(3, 4) = 4
+\end{aligned}
 ```
 
 When to use L-infinity:
@@ -135,19 +138,20 @@ When to use L-infinity:
 
 Cosine similarity measures the angle between two vectors, ignoring their magnitudes.
 
-```
-cos_sim(a, b) = (a . b) / (||a||_2 * ||b||_2)
+```math
+\text{cos\_sim}(a, b) = \frac{a \cdot b}{\lVert a \rVert_2 \, \lVert b \rVert_2}
 ```
 
 It ranges from -1 (opposite directions) to +1 (same direction). Perpendicular vectors have cosine similarity 0.
 
 Cosine distance converts it to a distance: cosine_distance = 1 - cosine_similarity. This ranges from 0 (identical direction) to 2 (opposite direction).
 
-```
-a = (1, 0)    b = (1, 1)
-
-cos_sim = (1*1 + 0*1) / (1 * sqrt(2)) = 1/sqrt(2) = 0.707
-cos_dist = 1 - 0.707 = 0.293
+```math
+\begin{aligned}
+& a = (1, 0) \qquad b = (1, 1) \\[6pt]
+& \text{cos\_sim} = \frac{1 \cdot 1 + 0 \cdot 1}{1 \cdot \sqrt{2}} = \frac{1}{\sqrt{2}} = 0.707 \\
+& \text{cos\_dist} = 1 - 0.707 = 0.293
+\end{aligned}
 ```
 
 Why cosine dominates NLP and embeddings: in text, document length should not affect similarity. A document about cats that is twice as long as another document about cats should still be "similar." Cosine similarity ignores magnitude (length) and only cares about direction. Two documents with the same word distribution but different lengths point in the same direction and get cosine similarity 1.0.
@@ -162,16 +166,17 @@ When to use cosine similarity:
 
 The dot product of two vectors is:
 
-```
-a . b = a_1*b_1 + a_2*b_2 + ... + a_n*b_n
-      = ||a|| * ||b|| * cos(angle)
+```math
+\begin{aligned}
+a \cdot b &= a_1 b_1 + a_2 b_2 + \cdots + a_n b_n \\
+&= \lVert a \rVert \, \lVert b \rVert \cos(\text{angle})
+\end{aligned}
 ```
 
 Cosine similarity is the dot product normalized by both magnitudes. When both vectors are already unit-normalized (magnitude = 1), dot product and cosine similarity are identical.
 
-```
-If ||a|| = 1 and ||b|| = 1:
-    a . b = cos(angle between a and b)
+```math
+\text{If } \lVert a \rVert = 1 \text{ and } \lVert b \rVert = 1: \quad a \cdot b = \cos(\text{angle between } a \text{ and } b)
 ```
 
 When they differ: dot product includes magnitude information. A vector with larger magnitude gets a higher dot product score. This matters in some retrieval systems where you want "popular" items to rank higher. The magnitude acts as an implicit quality or importance signal.
@@ -197,13 +202,13 @@ Euclidean distance treats all dimensions equally. But if your features are corre
 
 Mahalanobis distance accounts for the covariance structure of the data.
 
-```
-d_M(x, y) = sqrt((x - y)^T * S^(-1) * (x - y))
+```math
+d_M(x, y) = \sqrt{(x - y)^T S^{-1} (x - y)}
 ```
 
-where S is the covariance matrix of the data.
+where $S$ is the covariance matrix of the data.
 
-Intuitively: Mahalanobis distance first decorrelates and normalizes the data (whitening), then computes L2 distance in that transformed space. If S is the identity matrix (uncorrelated, unit variance features), Mahalanobis distance reduces to Euclidean distance.
+Intuitively: Mahalanobis distance first decorrelates and normalizes the data (whitening), then computes L2 distance in that transformed space. If $S$ is the identity matrix (uncorrelated, unit variance features), Mahalanobis distance reduces to Euclidean distance.
 
 ```
 Example: height and weight are correlated.
@@ -225,8 +230,8 @@ When to use Mahalanobis distance:
 
 Jaccard similarity measures overlap between two sets.
 
-```
-J(A, B) = |A intersect B| / |A union B|
+```math
+J(A, B) = \frac{|A \cap B|}{|A \cup B|}
 ```
 
 It ranges from 0 (no overlap) to 1 (identical sets). Jaccard distance = 1 - Jaccard similarity.
@@ -263,7 +268,7 @@ sittin -> sitting (insert g)
 Edit distance = 3
 ```
 
-Computed using dynamic programming. Fill a matrix where entry (i, j) is the edit distance between the first i characters of string A and the first j characters of string B.
+Computed using dynamic programming. Fill a matrix where entry $(i, j)$ is the edit distance between the first $i$ characters of string A and the first $j$ characters of string B.
 
 ```
         ""  s  i  t  t  i  n  g
@@ -286,20 +291,20 @@ When to use edit distance:
 
 KL divergence measures how one probability distribution differs from another. Covered in Lesson 09, but it belongs in this discussion because people use it as a "distance" despite it not being one.
 
-```
-D_KL(P || Q) = sum(p(x) * log(p(x) / q(x)))
+```math
+D_{KL}(P \,\|\, Q) = \sum_x p(x) \log\frac{p(x)}{q(x)}
 ```
 
 Critical property: KL divergence is NOT symmetric.
 
-```
-D_KL(P || Q) != D_KL(Q || P)
+```math
+D_{KL}(P \,\|\, Q) \ne D_{KL}(Q \,\|\, P)
 ```
 
 This means it fails the basic requirement of a distance metric. It also does not satisfy the triangle inequality. It is a divergence, not a distance.
 
-Forward KL (D_KL(P || Q)) is "mean-seeking": Q tries to cover all modes of P.
-Reverse KL (D_KL(Q || P)) is "mode-seeking": Q focuses on a single mode of P.
+Forward KL $(D_{KL}(P \Vert Q))$ is "mean-seeking": $Q$ tries to cover all modes of $P$.
+Reverse KL $(D_{KL}(Q \Vert P))$ is "mode-seeking": $Q$ focuses on a single mode of $P$.
 
 When you see KL divergence:
 - VAEs (the KL term in the ELBO pushes the latent distribution toward a prior)
@@ -311,14 +316,14 @@ When you see KL divergence:
 
 Wasserstein distance measures the minimum "work" needed to transform one probability distribution into another. Think of it as: if one distribution is a pile of dirt and the other is a hole, how much dirt do you have to move and how far?
 
-```
-W(P, Q) = inf over all transport plans gamma of E[d(x, y)]
+```math
+W(P, Q) = \inf_{\gamma} \mathbb{E}[d(x, y)] \quad \text{(over all transport plans } \gamma\text{)}
 ```
 
 For 1D distributions, it simplifies to the integral of the absolute difference of the cumulative distribution functions:
 
-```
-W_1(P, Q) = integral |CDF_P(x) - CDF_Q(x)| dx
+```math
+W_1(P, Q) = \int |\text{CDF}_P(x) - \text{CDF}_Q(x)| \, dx
 ```
 
 Why Wasserstein matters:
@@ -353,7 +358,7 @@ When to use Wasserstein:
 | Set overlap (tags, categories) | Jaccard | Data is naturally set-valued, not vectorial |
 | String matching | Edit distance | Operations map to human editing intuition |
 | Outlier detection | Mahalanobis | Accounts for feature correlations and scales |
-| Comparing distributions | KL divergence | Measures information lost by using Q instead of P |
+| Comparing distributions | KL divergence | Measures information lost by using $Q$ instead of $P$ |
 | GAN training | Wasserstein | Provides gradients even when distributions do not overlap |
 | Embeddings (vector DB) | Cosine or dot product | Embeddings are trained to encode meaning in direction |
 | Recommendation | Dot product | Magnitude can encode popularity or confidence |
@@ -404,7 +409,7 @@ Why L1 produces sparsity but L2 does not: picture the constraint region in 2D we
 
 Every distance function implies a nearest neighbor search problem: given a query point, find the closest points in a dataset.
 
-Exact nearest neighbor search is O(n * d) per query in a dataset of n points with d dimensions. For large datasets, this is too slow.
+Exact nearest neighbor search is $O(n \cdot d)$ per query in a dataset of $n$ points with $d$ dimensions. For large datasets, this is too slow.
 
 Approximate Nearest Neighbor (ANN) algorithms trade a small amount of accuracy for massive speed gains:
 
@@ -469,7 +474,7 @@ When you call `model.encode(text)` and then search a vector database, this is wh
 
 ## Exercises
 
-1. Compute L1, L2, and L-infinity distances between (1, 2, 3) and (4, 0, 6). Verify that L-inf <= L2 <= L1 always holds for any pair of points. Prove why this ordering is guaranteed.
+1. Compute L1, L2, and L-infinity distances between (1, 2, 3) and (4, 0, 6). Verify that $L_\infty \le L_2 \le L_1$ always holds for any pair of points. Prove why this ordering is guaranteed.
 
 2. Create two vectors where cosine similarity is high (> 0.9) but L2 distance is large (> 10). Explain geometrically what is happening. Then create two vectors where cosine similarity is low (< 0.3) but L2 distance is small (< 0.5).
 
@@ -479,6 +484,18 @@ When you call `model.encode(text)` and then search a vector database, this is wh
 
 5. Implement MinHash for approximate Jaccard similarity. Generate 100 random sets, compute exact Jaccard for all pairs, and compare with MinHash approximation using 50, 100, and 200 hash functions. Plot the approximation error.
 
+### Hints
+
+**Exercise 1.** The difference vector is (-3, 2, -3), so compute the three norms of that vector with `l1_norm`, `l2_norm`, and `linf_norm`. For the proof, compare the largest $\lvert d_i \rvert$ with the sum of squares, and compare the sum of squares with the square of the sum of absolute values.
+
+**Exercise 2.** Cosine similarity ignores length, so start with two vectors that point in almost the same direction and make one of them much longer. For the second case, use two short vectors near the origin that point in different directions, then check both conditions with `cosine_similarity` and `l2_distance`.
+
+**Exercise 3.** Call `find_nearest_neighbor(query, dataset, distance_fn)` once for each of `l1_distance`, `l2_distance`, `cosine_distance`, and `mahalanobis_distance`. `demo_different_neighbors` shows a dataset where the metrics disagree, so read it first and then change the points until all four answers differ.
+
+**Exercise 4.** Write the cumulative sum of each distribution, then add the absolute differences of the two cumulative sums. Check both hand results with `wasserstein_1d(p, q)`, then explain the larger value by how far the probability mass must move.
+
+**Exercise 5.** For each hash function, the MinHash signature of a set is the minimum hash value over its elements, and the fraction of hash functions where two sets get the same minimum estimates their Jaccard similarity. Compare each estimate with `jaccard_similarity`; the error should fall roughly as $1/\sqrt{k}$ for $k$ hash functions.
+
 ## Key Terms
 
 | Term | What people say | What it actually means |
@@ -486,15 +503,15 @@ When you call `model.encode(text)` and then search a vector database, this is wh
 | Norm | "Size of a vector" | A function that maps a vector to a non-negative scalar, satisfying triangle inequality, absolute homogeneity, and zero only for the zero vector |
 | L1 norm | "Manhattan distance" | Sum of absolute component values. Produces sparsity in optimization. Robust to outliers |
 | L2 norm | "Euclidean distance" | Square root of sum of squared components. The straight-line distance in Euclidean space |
-| Lp norm | "Generalized norm" | The p-th root of the sum of p-th powers of absolute components. L1 and L2 are special cases |
-| L-infinity norm | "Max norm" or "Chebyshev distance" | The maximum absolute component value. The limit of Lp as p approaches infinity |
+| Lp norm | "Generalized norm" | The $p$-th root of the sum of $p$-th powers of absolute components. L1 and L2 are special cases |
+| L-infinity norm | "Max norm" or "Chebyshev distance" | The maximum absolute component value. The limit of Lp as $p$ approaches infinity |
 | Cosine similarity | "Angle between vectors" | Dot product normalized by both magnitudes. Ranges from -1 to +1. Ignores vector length |
 | Cosine distance | "1 minus cosine similarity" | Converts cosine similarity to a distance. Ranges from 0 to 2 |
 | Dot product | "Unnormalized cosine" | Sum of component-wise products. Equals cosine similarity times both magnitudes |
 | Mahalanobis distance | "Correlation-aware distance" | L2 distance in a space that has been whitened (decorrelated and normalized) using the data covariance matrix |
 | Jaccard similarity | "Set overlap" | Size of intersection divided by size of union. For sets, not vectors |
 | Edit distance | "Levenshtein distance" | Minimum insertions, deletions, and substitutions to transform one string into another |
-| KL divergence | "Distance between distributions" | Not a true distance (not symmetric). Measures extra bits from using Q to encode P |
+| KL divergence | "Distance between distributions" | Not a true distance (not symmetric). Measures extra bits from using $Q$ to encode $P$ |
 | Wasserstein distance | "Earth mover's distance" | Minimum work to transport mass from one distribution to another. A true metric |
 | Approximate nearest neighbor | "ANN search" | Algorithms (HNSW, LSH, IVF) that find approximately closest points much faster than exact search |
 | HNSW | "The vector DB algorithm" | Hierarchical Navigable Small World graph. Multi-layer graph for fast approximate nearest neighbor search |

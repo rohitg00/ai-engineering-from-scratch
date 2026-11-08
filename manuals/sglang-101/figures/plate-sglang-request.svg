@@ -1,0 +1,306 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 694" role="img" aria-labelledby="plate-sglang-request-title plate-sglang-request-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="plate-sglang-request-title">One radix tree on one L4</title>
+  <desc id="plate-sglang-request-desc">The three SGLang processes run on the host CPU: the TokenizerManager, the Scheduler, and the DetokenizerManager, joined by ZMQ IPC. Below them is one NVIDIA L4 card with its SM array of 58 SMs and its 24 GB of GDDR6 drawn as one memory slab. In that memory the radix tree holds KV prefixes. The system prompt is one shared node of 2,998 tokens, and each repeated request attaches below it. A request with the id at the end attaches there too, with 2,986 of 3,033 tokens cached. A request with the id at the start shares only 6 tokens and starts its own branch. On our L4 the first request waited 2,143.9 ms for its first token, and the repeats waited 82.5 ms.</desc>
+  <defs><marker id="plate-sglang-request-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker><marker id="plate-sglang-request-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">HOST CPU · THREE SGLANG 0.5.22 PROCESSES</text>
+  <text x="620" y="18" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">Qwen3-8B</text>
+  <rect x="20" y="30" width="170" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="105" y="51.25" font-size="12.5" text-anchor="middle" font-weight="700">TokenizerManager</text>
+  <text x="105" y="68.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">text to token ids</text>
+  <rect x="240" y="30" width="160" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="320" y="51.25" font-size="12.5" text-anchor="middle" font-weight="700">Scheduler</text>
+  <text x="320" y="68.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">match_prefix, batches</text>
+  <rect x="450" y="30" width="170" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="535" y="51.25" font-size="12.5" text-anchor="middle" font-weight="700">DetokenizerManager</text>
+  <text x="535" y="68.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">token ids to text</text>
+  <polygon points="14,175 626,175 626,169 626,119 14,119 14,169" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="14,175 626,175 626,169 14,169" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="14,169 626,169 626,119 14,119" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="14,169 626,169 626,119 14,119" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polyline points="14,169 626,169" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="14,175 626,175 626,169 626,119 14,119 14,169" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-linejoin="round"/>
+  <polygon points="68.63,150 105,129 123.24,134.07 159.61,155.07 123.24,176.07 105,171" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="105,103 141.37,124 141.37,150 105,171 68.63,150 68.63,124" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="105,103 141.37,124 105,145 68.63,124" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="105,103 141.37,124 105,145 68.63,124" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="68.63,150 105,171 105,145 68.63,124" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="141.37,150 105,171 105,145 141.37,124" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="141.37,150 105,171 105,145 141.37,124" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="105,145 141.37,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="105,145 68.63,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="105,145 105,171" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="105,103 141.37,124 141.37,150 105,171 68.63,150 68.63,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="104.13,111.5 126.65,124.5 123.19,126.5 100.67,113.5" fill="var(--m-blue-ink, #2f5d9a)" fill-opacity="0.55"/>
+  <polygon points="95.47,116.5 117.99,129.5 114.53,131.5 92.01,118.5" fill="var(--m-blue-ink, #2f5d9a)" fill-opacity="0.55"/>
+  <polygon points="86.81,121.5 109.33,134.5 105.87,136.5 83.35,123.5" fill="var(--m-blue-ink, #2f5d9a)" fill-opacity="0.55"/>
+  <polygon points="283.63,150 320,129 338.24,134.07 374.61,155.07 338.24,176.07 320,171" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="320,103 356.37,124 356.37,150 320,171 283.63,150 283.63,124" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="320,103 356.37,124 320,145 283.63,124" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="320,103 356.37,124 320,145 283.63,124" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="283.63,150 320,171 320,145 283.63,124" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="356.37,150 320,171 320,145 356.37,124" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="356.37,150 320,171 320,145 356.37,124" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="320,145 356.37,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="320,145 283.63,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="320,145 320,171" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="320,103 356.37,124 356.37,150 320,171 283.63,150 283.63,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="289.69,135.9 313.07,149.4 313.07,147 289.69,133.5" fill="var(--m-amber-ink, #85590c)" fill-opacity="0.8"/>
+  <polygon points="289.69,141.9 307.01,151.9 307.01,149.5 289.69,139.5" fill="var(--m-amber-ink, #85590c)" fill-opacity="0.8"/>
+  <polygon points="289.69,147.9 300.95,154.4 300.95,152 289.69,145.5" fill="var(--m-amber-ink, #85590c)" fill-opacity="0.8"/>
+  <polygon points="498.63,150 535,129 553.24,134.07 589.61,155.07 553.24,176.07 535,171" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="535,103 571.37,124 571.37,150 535,171 498.63,150 498.63,124" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="535,103 571.37,124 535,145 498.63,124" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="535,103 571.37,124 535,145 498.63,124" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="498.63,150 535,171 535,145 498.63,124" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="571.37,150 535,171 535,145 571.37,124" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="571.37,150 535,171 535,145 571.37,124" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="535,145 571.37,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="535,145 498.63,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="535,145 535,171" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="535,103 571.37,124 571.37,150 535,171 498.63,150 498.63,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="561.85,145.5 572.24,151.5 572.24,153.5 554.92,163.5 544.53,157.5 544.53,155.5" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="561.85,145.5 572.24,151.5 554.92,161.5 544.53,155.5" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="561.85,145.5 572.24,151.5 554.92,161.5 544.53,155.5" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="544.53,157.5 554.92,163.5 554.92,161.5 544.53,155.5" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="572.24,153.5 554.92,163.5 554.92,161.5 572.24,151.5" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="572.24,153.5 554.92,163.5 554.92,161.5 572.24,151.5" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="554.92,161.5 572.24,151.5" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="554.92,161.5 544.53,155.5" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="554.92,161.5 554.92,163.5" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="561.85,145.5 572.24,151.5 572.24,153.5 554.92,163.5 544.53,157.5 544.53,155.5" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-linejoin="round"/>
+  <polyline points="105,84 105,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="105" cy="124" r="2" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <polyline points="320,84 320,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="320" cy="124" r="2" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <polyline points="535,84 535,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="535" cy="124" r="2" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <path d="M143.3730668 137 L281.6269332 137" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#plate-sglang-request-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M143.3730668 137 L281.6269332 137" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="186.4" y="118.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="212.5" y="129" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">ZMQ IPC</text>
+  </g>
+  <text x="20" y="206" font-size="11" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">x86_64 host</text>
+  <line x1="20" y1="216" x2="620" y2="216" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="236" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">NVIDIA L4 · GPU MEMORY</text>
+  <polygon points="14,545 626,545 630.8,546.2 18.8,546.2" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="14,545 626,545 626,537 626,372 14,372 14,537" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="14,545 626,545 626,537 14,537" fill="var(--m-grey-fill, #ecebe3)"/>
+  <polygon points="14,537 626,537 626,372 14,372" fill="var(--m-grey-fill, #ecebe3)"/>
+  <polygon points="14,537 626,537 626,372 14,372" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polyline points="14,537 626,537" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="14,545 626,545 626,537 626,372 14,372 14,537" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.4" stroke-linejoin="round"/>
+  <polygon points="100,406.5 165.82,444.5 165.82,454.5 100,492.5 34.18,454.5 34.18,444.5" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="100,406.5 165.82,444.5 100,482.5 34.18,444.5" fill="var(--m-grey-fill, #ecebe3)"/>
+  <polygon points="100,406.5 165.82,444.5 100,482.5 34.18,444.5" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="34.18,454.5 100,492.5 100,482.5 34.18,444.5" fill="var(--m-grey-fill, #ecebe3)"/>
+  <polygon points="165.82,454.5 100,492.5 100,482.5 165.82,444.5" fill="var(--m-grey-fill, #ecebe3)"/>
+  <polygon points="165.82,454.5 100,492.5 100,482.5 165.82,444.5" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="100,482.5 165.82,444.5" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="100,482.5 34.18,444.5" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="100,482.5 100,492.5" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="100,406.5 165.82,444.5 165.82,454.5 100,492.5 34.18,454.5 34.18,444.5" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="107.79,415 113.86,418.5 107.79,422 101.73,418.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="115.59,419.5 121.65,423 115.59,426.5 109.53,423" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="123.38,424 129.44,427.5 123.38,431 117.32,427.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="131.18,428.5 137.24,432 131.18,435.5 125.11,432" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="138.97,433 145.03,436.5 138.97,440 132.91,436.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="146.77,437.5 152.83,441 146.77,444.5 140.7,441" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="92.21,415 98.27,418.5 92.21,422 86.14,418.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="100,419.5 106.06,423 100,426.5 93.94,423" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="107.79,424 113.86,427.5 107.79,431 101.73,427.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="115.59,428.5 121.65,432 115.59,435.5 109.53,432" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="123.38,433 129.44,436.5 123.38,440 117.32,436.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="131.18,437.5 137.24,441 131.18,444.5 125.11,441" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="138.97,442 145.03,445.5 138.97,449 132.91,445.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="146.77,446.5 152.83,450 146.77,453.5 140.7,450" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="84.41,419.5 90.47,423 84.41,426.5 78.35,423" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="92.21,424 98.27,427.5 92.21,431 86.14,427.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="100,428.5 106.06,432 100,435.5 93.94,432" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="107.79,433 113.86,436.5 107.79,440 101.73,436.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="115.59,437.5 121.65,441 115.59,444.5 109.53,441" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="123.38,442 129.44,445.5 123.38,449 117.32,445.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="131.18,446.5 137.24,450 131.18,453.5 125.11,450" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="138.97,451 145.03,454.5 138.97,458 132.91,454.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="76.62,424 82.68,427.5 76.62,431 70.56,427.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="84.41,428.5 90.47,432 84.41,435.5 78.35,432" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="92.21,433 98.27,436.5 92.21,440 86.14,436.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="100,437.5 106.06,441 100,444.5 93.94,441" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="107.79,442 113.86,445.5 107.79,449 101.73,445.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="115.59,446.5 121.65,450 115.59,453.5 109.53,450" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="123.38,451 129.44,454.5 123.38,458 117.32,454.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="131.18,455.5 137.24,459 131.18,462.5 125.11,459" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="68.82,428.5 74.89,432 68.82,435.5 62.76,432" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="76.62,433 82.68,436.5 76.62,440 70.56,436.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="84.41,437.5 90.47,441 84.41,444.5 78.35,441" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="92.21,442 98.27,445.5 92.21,449 86.14,445.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="100,446.5 106.06,450 100,453.5 93.94,450" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="107.79,451 113.86,454.5 107.79,458 101.73,454.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="115.59,455.5 121.65,459 115.59,462.5 109.53,459" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="123.38,460 129.44,463.5 123.38,467 117.32,463.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="61.03,433 67.09,436.5 61.03,440 54.97,436.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="68.82,437.5 74.89,441 68.82,444.5 62.76,441" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="76.62,442 82.68,445.5 76.62,449 70.56,445.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="84.41,446.5 90.47,450 84.41,453.5 78.35,450" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="92.21,451 98.27,454.5 92.21,458 86.14,454.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="100,455.5 106.06,459 100,462.5 93.94,459" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="107.79,460 113.86,463.5 107.79,467 101.73,463.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="115.59,464.5 121.65,468 115.59,471.5 109.53,468" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="53.23,437.5 59.3,441 53.23,444.5 47.17,441" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="61.03,442 67.09,445.5 61.03,449 54.97,445.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="68.82,446.5 74.89,450 68.82,453.5 62.76,450" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="76.62,451 82.68,454.5 76.62,458 70.56,454.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="84.41,455.5 90.47,459 84.41,462.5 78.35,459" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="92.21,460 98.27,463.5 92.21,467 86.14,463.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="100,464.5 106.06,468 100,471.5 93.94,468" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="107.79,469 113.86,472.5 107.79,476 101.73,472.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="53.23,446.5 59.3,450 53.23,453.5 47.17,450" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="61.03,451 67.09,454.5 61.03,458 54.97,454.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="68.82,455.5 74.89,459 68.82,462.5 62.76,459" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="76.62,460 82.68,463.5 76.62,467 70.56,463.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.7"/>
+  <polygon points="200,527 612,527 612,519 612,374 200,374 200,519" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="200,527 612,527 612,519 200,519" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="200,519 612,519 612,374 200,374" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="200,519 612,519 612,374 200,374" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polyline points="200,519 612,519" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="200,527 612,527 612,519 612,374 200,374 200,519" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.2" stroke-linejoin="round"/>
+  <line x1="268.67" y1="527" x2="268.67" y2="519" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1" stroke-opacity="0.8"/>
+  <line x1="337.33" y1="527" x2="337.33" y2="519" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1" stroke-opacity="0.8"/>
+  <line x1="406" y1="527" x2="406" y2="519" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1" stroke-opacity="0.8"/>
+  <line x1="474.67" y1="527" x2="474.67" y2="519" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1" stroke-opacity="0.8"/>
+  <line x1="543.33" y1="527" x2="543.33" y2="519" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1" stroke-opacity="0.8"/>
+  <line x1="232" y1="445.5" x2="302" y2="445.5" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="232" y1="445.5" x2="342" y2="503" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2"/>
+  <line x1="302" y1="445.5" x2="500" y2="378" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="302" y1="445.5" x2="500" y2="400.5" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="302" y1="445.5" x2="500" y2="423" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="302" y1="445.5" x2="500" y2="445.5" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <line x1="302" y1="445.5" x2="500" y2="478" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <polygon points="232,434.5 244.12,441.5 244.12,446.5 232,453.5 219.88,446.5 219.88,441.5" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="232,434.5 244.12,441.5 232,448.5 219.88,441.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="232,434.5 244.12,441.5 232,448.5 219.88,441.5" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="219.88,446.5 232,453.5 232,448.5 219.88,441.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="244.12,446.5 232,453.5 232,448.5 244.12,441.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="244.12,446.5 232,453.5 232,448.5 244.12,441.5" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="232,448.5 244.12,441.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="232,448.5 219.88,441.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="232,448.5 232,453.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="232,434.5 244.12,441.5 244.12,446.5 232,453.5 219.88,446.5 219.88,441.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="302,417.5 327.98,432.5 327.98,446.5 302,461.5 276.02,446.5 276.02,432.5" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="302,417.5 327.98,432.5 302,447.5 276.02,432.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="302,417.5 327.98,432.5 302,447.5 276.02,432.5" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="276.02,446.5 302,461.5 302,447.5 276.02,432.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="327.98,446.5 302,461.5 302,447.5 327.98,432.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="327.98,446.5 302,461.5 302,447.5 327.98,432.5" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="302,447.5 327.98,432.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="302,447.5 276.02,432.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="302,447.5 302,461.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="302,417.5 327.98,432.5 327.98,446.5 302,461.5 276.02,446.5 276.02,432.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="342,490 355.86,498 355.86,504 342,512 328.14,504 328.14,498" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="342,490 355.86,498 342,506 328.14,498" fill="var(--m-rose-fill, #f7e4e7)"/>
+  <polygon points="342,490 355.86,498 342,506 328.14,498" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="328.14,504 342,512 342,506 328.14,498" fill="var(--m-rose-fill, #f7e4e7)"/>
+  <polygon points="355.86,504 342,512 342,506 355.86,498" fill="var(--m-rose-fill, #f7e4e7)"/>
+  <polygon points="355.86,504 342,512 342,506 355.86,498" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="342,506 355.86,498" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="342,506 328.14,498" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="342,506 342,512" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="342,490 355.86,498 355.86,504 342,512 328.14,504 328.14,498" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="500,366 512.12,373 512.12,379 500,386 487.88,379 487.88,373" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="500,366 512.12,373 500,380 487.88,373" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="500,366 512.12,373 500,380 487.88,373" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="487.88,379 500,386 500,380 487.88,373" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="512.12,379 500,386 500,380 512.12,373" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="512.12,379 500,386 500,380 512.12,373" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="500,380 512.12,373" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="500,380 487.88,373" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="500,380 500,386" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="500,366 512.12,373 512.12,379 500,386 487.88,379 487.88,373" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="500,388.5 512.12,395.5 512.12,401.5 500,408.5 487.88,401.5 487.88,395.5" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="500,388.5 512.12,395.5 500,402.5 487.88,395.5" fill="var(--m-plum-fill, #f4e6ef)"/>
+  <polygon points="500,388.5 512.12,395.5 500,402.5 487.88,395.5" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="487.88,401.5 500,408.5 500,402.5 487.88,395.5" fill="var(--m-plum-fill, #f4e6ef)"/>
+  <polygon points="512.12,401.5 500,408.5 500,402.5 512.12,395.5" fill="var(--m-plum-fill, #f4e6ef)"/>
+  <polygon points="512.12,401.5 500,408.5 500,402.5 512.12,395.5" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="500,402.5 512.12,395.5" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="500,402.5 487.88,395.5" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="500,402.5 500,408.5" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="500,388.5 512.12,395.5 512.12,401.5 500,408.5 487.88,401.5 487.88,395.5" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="500,411 512.12,418 512.12,424 500,431 487.88,424 487.88,418" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="500,411 512.12,418 500,425 487.88,418" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="500,411 512.12,418 500,425 487.88,418" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="487.88,424 500,431 500,425 487.88,418" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="512.12,424 500,431 500,425 512.12,418" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="512.12,424 500,431 500,425 512.12,418" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="500,425 512.12,418" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="500,425 487.88,418" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="500,425 500,431" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="500,411 512.12,418 512.12,424 500,431 487.88,424 487.88,418" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="500,433.5 512.12,440.5 512.12,446.5 500,453.5 487.88,446.5 487.88,440.5" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="500,433.5 512.12,440.5 500,447.5 487.88,440.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="500,433.5 512.12,440.5 500,447.5 487.88,440.5" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="487.88,446.5 500,453.5 500,447.5 487.88,440.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="512.12,446.5 500,453.5 500,447.5 512.12,440.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="512.12,446.5 500,453.5 500,447.5 512.12,440.5" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="500,447.5 512.12,440.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="500,447.5 487.88,440.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="500,447.5 500,453.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="500,433.5 512.12,440.5 512.12,446.5 500,453.5 487.88,446.5 487.88,440.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="500,465 513.86,473 513.86,479 500,487 486.14,479 486.14,473" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="500,465 513.86,473 500,481 486.14,473" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="500,465 513.86,473 500,481 486.14,473" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="486.14,479 500,487 500,481 486.14,473" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="513.86,479 500,487 500,481 513.86,473" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="513.86,479 500,487 500,481 513.86,473" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="500,481 513.86,473" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="500,481 486.14,473" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="500,481 500,487" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="500,465 513.86,473 513.86,479 500,487 486.14,479 486.14,473" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="20" y="262" font-size="12" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">SM array</text>
+  <text x="20" y="278" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">58 SMs, Ada</text>
+  <polyline points="100,284 100,444.5" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="100" cy="444.5" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <polyline points="196,572 240,523" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="240" cy="523" r="2" fill="var(--m-ink-mute, #6f6f6a)"/>
+  <text x="20" y="576" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">24 GB GDDR6, six packages</text>
+  <text x="232" y="330" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">root</text>
+  <polyline points="232,336 232,441.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="232" cy="441.5" r="2" fill="var(--m-green-ink, #336b40)"/>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="290" y="262" font-size="12" text-anchor="end" font-weight="700" fill="var(--m-green-ink, #336b40)">system prompt node</text>
+  <text x="290" y="278" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">2,998 tokens, shared</text>
+  <polyline points="276,284 302,432.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="302" cy="432.5" r="2" fill="var(--m-green-ink, #336b40)"/>
+  <polyline points="342,584 342,506" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="342" cy="506" r="2" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="342" y="598" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">id at the start: 6 of 3,032 cached, own branch</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <path d="M301.8134666 162.5 L301.8134666 428.5" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-sglang-request-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M301.8134666 162.5 L301.8134666 428.5" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="307" y="289.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="310" y="300" font-size="11.5">match_prefix</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <text x="620" y="262" font-size="12" text-anchor="end" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">repeat request, round 3</text>
+  <text x="620" y="278" font-size="11" text-anchor="end" fill="var(--m-plum-ink, #8a3d72)">1 new token, 2,998 of</text>
+  <text x="620" y="294" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">2,999 cached</text>
+  <polyline points="560,300 500,395.5" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="500" cy="395.5" r="2" fill="var(--m-plum-ink, #8a3d72)"/>
+  <polyline points="500,562 500,481" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="500" cy="481" r="2" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="576" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">id at the end: 2,986 of 3,033</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <path d="M358.3730668 137 L496.6269332 137" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#plate-sglang-request-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M358.3730668 137 L496.6269332 137" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="401.4" y="118.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="427.5" y="129" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">ZMQ IPC</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="634" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">TIME TO FIRST TOKEN ON OUR L4, SAME 2,999-TOKEN PROMPT</text>
+  <text x="20" y="656" font-size="12" font-weight="700" fill="var(--m-rose-ink, #b0344d)">first request 2,143.9 ms</text>
+  <text x="330" y="656" font-size="12" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">repeats 82.5 ms, median of 4</text>
+  </g>
+  <text x="20" y="682" font-size="11" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">first request: 3 cached tokens, the system prompt was not yet in the tree</text>
+</svg>

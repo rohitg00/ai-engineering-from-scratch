@@ -1,0 +1,4 @@
+94fca3db18f93cfbc1c2d11a3d26b9e46fd19dec677b06976199d6981a477247  178398  export_evidence_bundle over MCP, out/11-bundle-O1.json
+47160c2de738f54a9f9e496d0552b290f34c789ea63523c985c33787d9d30be9  178397  evidence-export over the CLI, $WORK/canonical-O1.json
+same bytes as the MCP export: no
+same JSON content as the MCP export: yes

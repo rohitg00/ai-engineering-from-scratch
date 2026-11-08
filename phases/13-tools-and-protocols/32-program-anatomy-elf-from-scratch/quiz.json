@@ -1,0 +1,78 @@
+{
+  "lesson": "32-program-anatomy-elf-from-scratch",
+  "title": "Program Anatomy: An ELF Reader From Scratch",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which rule applies to every analysis target in lessons 32 to 36?",
+      "options": [
+        "The target is a program you wrote and compiled yourself",
+        "The target is a program with a published source map",
+        "The target is a program smaller than one megabyte",
+        "The target is any program installed on your machine"
+      ],
+      "correct": 0,
+      "explanation": "The track analyzes only code you own. That keeps every lesson inside the authorization rules of 17 U.S.C. 1201(f), Directive 2009/24/EC, Sega, and Connectix."
+    },
+    {
+      "stage": "check",
+      "question": "A symbol in a relocatable object has st_value 0x10 and st_shndx 2, and section 2 has sh_offset 0x40 and sh_addr 0. Where are its bytes in the file?",
+      "options": [
+        "At file offset 0x50, the section offset plus the value",
+        "At file offset 0x42, the section index plus the value",
+        "At file offset 0x10, because st_value is a file offset",
+        "At file offset 0x40, the start of its section"
+      ],
+      "correct": 0,
+      "explanation": "In an object st_value is an offset inside the symbol's section. The file offset is sh_offset + st_value - sh_addr, here 0x40 + 0x10 - 0 = 0x50."
+    },
+    {
+      "stage": "check",
+      "question": "A record in .rela.text reads offset 0x36, R_X86_64_PC32, .rodata+0x10, and the lea instruction that holds the field ends at 0x3a. Where does the lea point after linking?",
+      "options": [
+        "At .rodata+0x36, the offset of the field",
+        "At .rodata+0x10, the addend names the target",
+        "At .text+0x10, relocations always point into the patched section",
+        "At .rodata+0x14, since S + A - P is added to the end of the instruction"
+      ],
+      "correct": 3,
+      "explanation": "The processor adds the stored value to 0x3a. The stored value is S + A - P with P = 0x36, so the result is .rodata + 0x10 + 4 = .rodata + 0x14."
+    },
+    {
+      "stage": "check",
+      "question": "Which structure does the ELF loader read to map an executable into memory?",
+      "options": [
+        "The string table, found through e_shstrndx",
+        "The program header table, found through e_phoff",
+        "The symbol table, found through .symtab",
+        "The section header table, found through e_shoff"
+      ],
+      "correct": 1,
+      "explanation": "Program headers are the execution view. A stripped executable can have no section header table at all and still run."
+    },
+    {
+      "stage": "post",
+      "question": "How does a Mach-O reader find the length of a function from an nlist_64 entry?",
+      "options": [
+        "It reads the n_desc field, which stores the function size in bytes",
+        "It takes the next symbol address in the same section minus this one",
+        "It reads the size from the section_64 record that contains the symbol",
+        "It reads the size from the LC_SYMTAB command, one field per symbol"
+      ],
+      "correct": 1,
+      "explanation": "nlist_64 has n_strx, n_type, n_sect, n_desc, and n_value, and no size field. The ELF st_size has no Mach-O counterpart in an object file."
+    },
+    {
+      "stage": "post",
+      "question": "Why do the lesson tests compare the reader with captured llvm-objdump text instead of running the tool?",
+      "options": [
+        "Because captured text parses faster than running the tool in each test",
+        "Because llvm-objdump cannot read relocatable objects without a Linux sysroot",
+        "Because the comparison runs on any machine and the oracle cannot drift",
+        "Because the course forbids every external tool, including the compiler"
+      ],
+      "correct": 2,
+      "explanation": "The fixture holds the tool output from one known tool version. The tests need no tool installed, and a later tool release cannot change what the reader is compared against."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+
+candidates/f2_thresholds.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <grade_points>:
+       0: b8 04 00 00 00               	movl	$0x4, %eax
+       5: 83 ff 59                     	cmpl	$0x59, %edi
+       8: 7f 1c                        	jg	0x26 <grade_points+0x26>
+       a: b8 03 00 00 00               	movl	$0x3, %eax
+       f: 83 ff 4f                     	cmpl	$0x4f, %edi
+      12: 7f 12                        	jg	0x26 <grade_points+0x26>
+      14: b8 02 00 00 00               	movl	$0x2, %eax
+      19: 83 ff 45                     	cmpl	$0x45, %edi
+      1c: 7f 08                        	jg	0x26 <grade_points+0x26>
+      1e: 31 c0                        	xorl	%eax, %eax
+      20: 83 ff 3c                     	cmpl	$0x3c, %edi
+      23: 0f 9d c0                     	setge	%al
+      26: c3                           	retq

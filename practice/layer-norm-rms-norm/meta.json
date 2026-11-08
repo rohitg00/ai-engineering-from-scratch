@@ -1,0 +1,21 @@
+{
+  "id": "layer-norm-rms-norm",
+  "title": "LayerNorm and RMSNorm",
+  "kind": "implement",
+  "summary": "LayerNorm with gamma and beta and RMSNorm with a weight, both over the last axis, with eps inside the square root.",
+  "difficulty": "easy",
+  "tags": ["layer-norm", "rms-norm", "normalization", "transformers"],
+  "lesson": "phases/07-transformers-deep-dive/05-full-transformer",
+  "cheatsheet": "transformers-attention",
+  "minutes": 15,
+  "entry": ["layer_norm", "rms_norm"],
+  "collections": ["transformers-from-scratch", "deep-learning-core"],
+  "time_limit_s": 10,
+  "mutants": {
+    "ignores_eps_argument": "Uses a fixed eps of 1e-5 in LayerNorm and ignores the eps that the caller passes.",
+    "mean_over_batch_axis": "Takes the LayerNorm mean over axis 0, not over the last axis.",
+    "rms_eps_outside_sqrt": "Adds eps after the square root in RMSNorm.",
+    "rms_subtracts_mean": "Uses the variance in RMSNorm, so it subtracts the mean as LayerNorm does.",
+    "unbiased_variance": "Uses the unbiased variance with D - 1 in LayerNorm."
+  }
+}

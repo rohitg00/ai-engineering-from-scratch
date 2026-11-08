@@ -1,0 +1,321 @@
+{
+  "request": {
+    "jsonrpc": "2.0",
+    "id": 24,
+    "method": "tools/call",
+    "params": {
+      "name": "inspect_wasm_artifact",
+      "arguments": {
+        "path": "$CAPTURE/fixtures/wasm/ledger.wasm"
+      }
+    }
+  },
+  "response": {
+    "result": {
+      "_meta": {
+        "provenance": {
+          "untrusted_content": true,
+          "source": "analysis_target"
+        }
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "<cut by run.py: the text copy of structuredContent, 10265 bytes>"
+        }
+      ],
+      "structuredContent": {
+        "evidence_id": "ev_3a09e4b07c52156c44d48985795162c81355d82edc62a7255a1310d9da3e5884",
+        "subject": {
+          "name": "ledger.wasm",
+          "digest": {
+            "sha256": "699f6ff7737b6f59db95a37840ed9c11f7ad9d69c29a6a240b8ecf0b79275e99"
+          },
+          "local_path": "$CAPTURE/fixtures/wasm/ledger.wasm",
+          "format": "file",
+          "architecture": null
+        },
+        "provider": {
+          "id": "wabt-artifact",
+          "name": "REA WABT artifact adapter",
+          "version": "wabt@1.0.42"
+        },
+        "analysis_profile": null,
+        "predicate_type": "rea.analysis",
+        "operation": "inspect_wasm_artifact",
+        "parameters": {
+          "path": "$CAPTURE/fixtures/wasm/ledger.wasm",
+          "glue_paths": [],
+          "candidate_paths": []
+        },
+        "raw_result": null,
+        "normalized_result": {
+          "artifact": {
+            "path": "$CAPTURE/fixtures/wasm/ledger.wasm",
+            "sha256": "699f6ff7737b6f59db95a37840ed9c11f7ad9d69c29a6a240b8ecf0b79275e99",
+            "bytes": 290
+          },
+          "validation": "valid",
+          "sections": [
+            {
+              "kind": "Type",
+              "start": 10,
+              "end": 26,
+              "bytes": 16,
+              "description": "count: 3"
+            },
+            {
+              "kind": "Import",
+              "start": 28,
+              "end": 39,
+              "bytes": 11,
+              "description": "count: 1"
+            },
+            {
+              "kind": "Function",
+              "start": 41,
+              "end": 46,
+              "bytes": 5,
+              "description": "count: 4"
+            },
+            {
+              "kind": "Memory",
+              "start": 48,
+              "end": 51,
+              "bytes": 3,
+              "description": "count: 1"
+            },
+            {
+              "kind": "Export",
+              "start": 53,
+              "end": 110,
+              "bytes": 57,
+              "description": "count: 5"
+            },
+            {
+              "kind": "Code",
+              "start": 113,
+              "end": 271,
+              "bytes": 158,
+              "description": "count: 4"
+            },
+            {
+              "kind": "Data",
+              "start": 273,
+              "end": 290,
+              "bytes": 17,
+              "description": "count: 1"
+            }
+          ],
+          "interface": {
+            "state": "complete",
+            "entries": [
+              {
+                "direction": "import",
+                "module": "env",
+                "name": "log",
+                "kind": "func",
+                "index": 0,
+                "signature": {
+                  "kind": "func",
+                  "params": [
+                    "i32"
+                  ],
+                  "results": []
+                },
+                "wat_form": "(import \"env\" \"log\" (func (;0;) (type 0)))",
+                "issue": null
+              },
+              {
+                "direction": "export",
+                "module": null,
+                "name": "memory",
+                "kind": "memory",
+                "index": 0,
+                "signature": {
+                  "kind": "memory",
+                  "page_size": "65536",
+                  "address_type": "i32",
+                  "minimum": "1",
+                  "maximum": null,
+                  "shared": false
+                },
+                "wat_form": "(export \"memory\" (memory 0))",
+                "issue": null
+              },
+              {
+                "direction": "export",
+                "module": null,
+                "name": "percent_change",
+                "kind": "func",
+                "index": 1,
+                "signature": {
+                  "kind": "func",
+                  "params": [
+                    "i32",
+                    "i32"
+                  ],
+                  "results": [
+                    "i32"
+                  ]
+                },
+                "wat_form": "(export \"percent_change\" (func 1))",
+                "issue": null
+              },
+              {
+                "direction": "export",
+                "module": null,
+                "name": "grade",
+                "kind": "func",
+                "index": 2,
+                "signature": {
+                  "kind": "func",
+                  "params": [
+                    "i32"
+                  ],
+                  "results": [
+                    "i32"
+                  ]
+                },
+                "wat_form": "(export \"grade\" (func 2))",
+                "issue": null
+              },
+              {
+                "direction": "export",
+                "module": null,
+                "name": "total",
+                "kind": "func",
+                "index": 3,
+                "signature": {
+                  "kind": "func",
+                  "params": [
+                    "i32",
+                    "i32"
+                  ],
+                  "results": [
+                    "i32"
+                  ]
+                },
+                "wat_form": "(export \"total\" (func 3))",
+                "issue": null
+              },
+              {
+                "direction": "export",
+                "module": null,
+                "name": "grade_label",
+                "kind": "func",
+                "index": 4,
+                "signature": {
+                  "kind": "func",
+                  "params": [
+                    "i32"
+                  ],
+                  "results": [
+                    "i32"
+                  ]
+                },
+                "wat_form": "(export \"grade_label\" (func 4))",
+                "issue": null
+              }
+            ],
+            "issues": []
+          },
+          "imports": [
+            "(import \"env\" \"log\" (func (;0;) (type 0)))"
+          ],
+          "exports": [
+            "(export \"memory\" (memory 0))",
+            "(export \"percent_change\" (func 1))",
+            "(export \"grade\" (func 2))",
+            "(export \"total\" (func 3))",
+            "(export \"grade_label\" (func 4))"
+          ],
+          "headers": "\nmodule.wasm:\tfile format wasm 0x1\n\nSections:\n\n     Type start=0x0000000a end=0x0000001a (size=0x00000010) count: 3\n   Import start=0x0000001c end=0x00000027 (size=0x0000000b) count: 1\n Function start=0x00000029 end=0x0000002e (size=0x00000005) count: 4\n   Memory start=0x00000030 end=0x00000033 (size=0x00000003) count: 1\n   Export start=0x00000035 end=0x0000006e (size=0x00000039) count: 5\n     Code start=0x00000071 end=0x0000010f (size=0x0000009e) count: 4\n     Data start=0x00000111 end=0x00000122 (size=0x00000011) count: 1\n\n",
+          "details": "module.wasm:\tfile format wasm 0x1\n\nSection Details:\n\nType[3]:\n - type[0] (i32) -> nil\n - type[1] (i32, i32) -> i32\n - type[2] (i32) -> i32\nImport[1]:\n - func[0] sig=0 <env.log> <- env.log\nFunction[4]:\n - func[1] sig=1 <percent_change>\n - func[2] sig=2 <grade>\n - func[3] sig=1 <total>\n - func[4] sig=2 <grade_label>\nMemory[1]:\n - memory[0] pages: initial=1\nExport[5]:\n - memory[0] -> \"memory\"\n - func[1] <percent_change> -> \"percent_change\"\n - func[2] <grade> -> \"grade\"\n - func[3] <total> -> \"total\"\n - func[4] <grade_label> -> \"grade_label\"\nCode[4]:\n - func[1] size=23 <percent_change>\n - func[2] size=63 <grade>\n - func[3] size=44 <total>\n - func[4] size=23 <grade_label>\nData[1]:\n - segment[0] memory=0 size=10 - init i32=1024\n  - 0000400: 4600 4400 4300 4200 4100                 F.D.C.B.A.\n",
+          "wat": {
+            "text": "(module\n  (type (;0;) (func (param i32)))\n  (type (;1;) (func (param i32 i32) (result i32)))\n  (type (;2;) (func (param i32) (result i32)))\n  (import \"env\" \"log\" (func (;0;) (type 0)))\n  (func (;1;) (type 1) (param i32 i32) (result i32)\n    local.get 0\n    i32.eqz\n    if (result i32)  ;; label = @1\n      i32.const 0\n    else\n      local.get 1\n      local.get 0\n      i32.sub\n      i32.const 100\n      i32.mul\n      local.get 0\n      i32.div_s\n    end)\n  (func (;2;) (type 2) (param i32) (result i32)\n    (local i32)\n    local.get 0\n    i32.const 10\n    i32.div_s\n    local.set 1\n    block (result i32)  ;; label = @1\n      block  ;; label = @2\n        block  ;; label = @3\n          block  ;; label = @4\n            block  ;; label = @5\n              block  ;; label = @6\n                local.get 1\n                br_table 4 (;@2;) 4 (;@2;) 4 (;@2;) 4 (;@2;) 4 (;@2;) 4 (;@2;) 3 (;@3;) 2 (;@4;) 1 (;@5;) 0 (;@6;) 0 (;@6;) 4 (;@2;)\n              end\n              i32.const 4\n              br 4 (;@1;)\n            end\n            i32.const 3\n            br 3 (;@1;)\n          end\n          i32.const 2\n          br 2 (;@1;)\n        end\n        i32.const 1\n        br 1 (;@1;)\n      end\n      i32.const 0\n    end)\n  (func (;3;) (type 1) (param i32 i32) (result i32)\n    (local i32 i32)\n    block  ;; label = @1\n      loop  ;; label = @2\n        local.get 3\n        local.get 1\n        i32.ge_s\n        br_if 1 (;@1;)\n        local.get 2\n        local.get 0\n        local.get 3\n        i32.const 4\n        i32.mul\n        i32.add\n        i32.load\n        i32.add\n        local.set 2\n        local.get 3\n        i32.const 1\n        i32.add\n        local.set 3\n        br 0 (;@2;)\n      end\n    end\n    local.get 2)\n  (func (;4;) (type 2) (param i32) (result i32)\n    (local i32)\n    local.get 0\n    call 2\n    local.set 1\n    local.get 1\n    call 0\n    i32.const 1024\n    local.get 1\n    i32.const 2\n    i32.mul\n    i32.add)\n  (memory (;0;) 1)\n  (export \"memory\" (memory 0))\n  (export \"percent_change\" (func 1))\n  (export \"grade\" (func 2))\n  (export \"total\" (func 3))\n  (export \"grade_label\" (func 4))\n  (data (;0;) (i32.const 1024) \"F\\00D\\00C\\00B\\00A\\00\"))\n",
+            "sha256": "37eab56abb8a930e1dbc4462865f94decad0b8c858435fa397d41cb3eda78b84",
+            "representation": "decoded-wat"
+          },
+          "tool_profile": {
+            "source": "https://github.com/WebAssembly/wabt",
+            "release": "1.0.42",
+            "source_commit": "ff0ef7e0009402740c805a9744c09b05be063e48",
+            "commands": [
+              {
+                "tool": "wasm-validate",
+                "path": "/opt/homebrew/Cellar/wabt/1.0.42_1/bin/wasm-validate",
+                "sha256": "99a52c782fcd4fbeb285ef9d65353147ac0b98b04dee4574c87c407367b984d7",
+                "version_banner": "1.0.42\n",
+                "arguments": [
+                  "--enable-all",
+                  "module.wasm"
+                ]
+              },
+              {
+                "tool": "wasm-objdump",
+                "path": "/opt/homebrew/Cellar/wabt/1.0.42_1/bin/wasm-objdump",
+                "sha256": "8e806545e007fae53398ee5622d7074154cf777d49cbd535a65588e2e4949b96",
+                "version_banner": "1.0.42\n",
+                "arguments": [
+                  "-h",
+                  "-x",
+                  "module.wasm"
+                ]
+              },
+              {
+                "tool": "wasm2wat",
+                "path": "/opt/homebrew/Cellar/wabt/1.0.42_1/bin/wasm2wat",
+                "sha256": "06ad42bdee5de405aba61e74fb60a7015032df281bae38164694bee51554a6de",
+                "version_banner": "1.0.42\n",
+                "arguments": [
+                  "--enable-all",
+                  "module.wasm"
+                ]
+              }
+            ],
+            "timeout_ms": 30000,
+            "output_budget_bytes": 33554432
+          },
+          "candidates": [
+            {
+              "path": "$CAPTURE/fixtures/wasm/ledger.wasm",
+              "sha256": "699f6ff7737b6f59db95a37840ed9c11f7ad9d69c29a6a240b8ecf0b79275e99",
+              "bytes": 290
+            }
+          ],
+          "glue": [],
+          "runtime_execution": "not-performed",
+          "network_fetch": "not-performed",
+          "limitations": [
+            "WAT is a decoded representation, not original source or proof of runtime behavior. Custom annotations may retain payloads, but WAT does not establish original binary layout or round-trip byte identity. Original bytes and objdump output remain authoritative.",
+            "Imports and exports retain exact top-level WABT WAT forms. Names remain escaped producer text; unescaped objdump display names are not parsed as unambiguous identifiers.",
+            "JavaScript references are AST-observed static literals only. Candidate matches are associations, not proven data flow, URL-to-file identity or runtime loading. Computed references and aliases are not resolved.",
+            "No target execution or implicit fetch. WABT tools are trusted caller-supplied executables; SHA-256 identifies their bytes, not publisher authenticity. No OS memory sandbox is claimed.",
+            "Each subprocess has a 30-second deadline and 32 MiB combined output budget. Oversized output fails instead of producing truncated success."
+          ]
+        },
+        "confidence": "observed",
+        "authority": "shipped-artifact",
+        "environment": null,
+        "limitations": [
+          "WAT is a decoded representation, not original source or proof of runtime behavior. Custom annotations may retain payloads, but WAT does not establish original binary layout or round-trip byte identity. Original bytes and objdump output remain authoritative.",
+          "Imports and exports retain exact top-level WABT WAT forms. Names remain escaped producer text; unescaped objdump display names are not parsed as unambiguous identifiers.",
+          "JavaScript references are AST-observed static literals only. Candidate matches are associations, not proven data flow, URL-to-file identity or runtime loading. Computed references and aliases are not resolved.",
+          "No target execution or implicit fetch. WABT tools are trusted caller-supplied executables; SHA-256 identifies their bytes, not publisher authenticity. No OS memory sandbox is claimed.",
+          "Each subprocess has a 30-second deadline and 32 MiB combined output budget. Oversized output fails instead of producing truncated success."
+        ],
+        "relationship_coverage": null,
+        "locations": [
+          {
+            "kind": "artifact-path",
+            "path": "$CAPTURE/fixtures/wasm/ledger.wasm"
+          }
+        ],
+        "evidence_links": []
+      }
+    },
+    "jsonrpc": "2.0",
+    "id": 24
+  }
+}

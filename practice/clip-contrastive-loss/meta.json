@@ -1,0 +1,24 @@
+{
+  "id": "clip-contrastive-loss",
+  "title": "CLIP symmetric contrastive loss",
+  "kind": "research",
+  "summary": "Normalize image and text embeddings, build the temperature-scaled similarity matrix, and compute the symmetric InfoNCE loss and its gradient.",
+  "difficulty": "medium",
+  "tags": ["clip", "contrastive-learning", "loss-functions", "gradients"],
+  "lesson": "phases/04-computer-vision/18-open-vocab-clip",
+  "cheatsheet": "self-supervised-clip",
+  "minutes": 30,
+  "entry": ["similarity_logits", "symmetric_infonce", "symmetric_infonce_grad"],
+  "collections": ["papers-to-code", "deep-learning-core"],
+  "time_limit_s": 10,
+  "method": "clip",
+  "paper": {"title": "Learning Transferable Visual Models From Natural Language Supervision", "authors": "Radford et al.", "year": 2021, "url": "https://arxiv.org/abs/2103.00020"},
+  "mutants": {
+    "grad_no_half": "Adds the two gradient terms and divides by N, not by 2N.",
+    "grad_rows_twice": "Uses the row softmax for the text term of the gradient, not the column softmax.",
+    "image_loss_only": "Returns only the image to text cross-entropy and drops the text to image term.",
+    "no_max_shift": "Calls np.exp on the raw logits, so large logits overflow to infinity.",
+    "no_normalize": "Skips the L2 normalization, so the logits depend on the length of each embedding.",
+    "times_temperature": "Multiplies the similarities by the temperature instead of dividing by it."
+  }
+}

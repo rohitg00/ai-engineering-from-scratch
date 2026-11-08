@@ -48,7 +48,7 @@ Irish DPC (21 May 2025): Meta's plan to train on first-party public EU/EEA adult
 
 Convergent principle: legitimate interest can justify training on publicly available first-party content with opt-out. Consent is not required.
 
-### Brazilian ANPD (June 2024)
+### Brazilian ANPD (July 2024)
 
 Suspended Meta's processing of Brazilian user data for AI training over insufficient information transparency. Different result than the EU DPAs — ANPD prioritized transparency over legitimate-interest admissibility.
 

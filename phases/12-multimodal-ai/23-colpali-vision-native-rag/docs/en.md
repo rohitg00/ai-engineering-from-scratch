@@ -36,28 +36,28 @@ ColPali's fix: skip OCR, embed the page image directly. Use ColBERT-style late i
 
 ColBERT (Khattab & Zaharia, arXiv:2004.12832) is a text retrieval method. Instead of one vector per document, it produces one vector per token. At query time:
 
-- Query tokens get their own embeddings (N_q vectors).
-- Document tokens get embeddings (N_d vectors, typically cached).
-- Score = sum over query tokens of max over document tokens of cosine similarity: Σ_i max_j cos(q_i, d_j).
+- Query tokens get their own embeddings ($N_q$ vectors).
+- Document tokens get embeddings ($N_d$ vectors, typically cached).
+- Score = sum over query tokens of max over document tokens of cosine similarity: $\sum_i \max_j \cos(q_i, d_j)$.
 
 This is the MaxSim operation. Each query token "picks" its best-matching document token. The final score is the sum.
 
-Pros: strong recall, handles term-level semantics. Cons: N_d vectors per document, storage expensive.
+Pros: strong recall, handles term-level semantics. Cons: $N_d$ vectors per document, storage expensive.
 
 ### ColPali
 
 ColPali (Faysse et al., arXiv:2407.01449) applies the ColBERT pattern to images.
 
-- Each page is encoded by PaliGemma (ViT + language) into patch embeddings: N_p vectors per page.
-- Each user query (text) is encoded into query-token embeddings: N_q vectors.
-- Score = Σ_i max_j cos(q_i, p_j), i.e., MaxSim over query-text-tokens and page-image-patches.
+- Each page is encoded by PaliGemma (ViT + language) into patch embeddings: $N_p$ vectors per page.
+- Each user query (text) is encoded into query-token embeddings: $N_q$ vectors.
+- Score = $\sum_i \max_j \cos(q_i, p_j)$, i.e., MaxSim over query-text-tokens and page-image-patches.
 - Retrieve top-k pages by total score.
 
 At document-ingestion time: embed every page with PaliGemma, store all patch embeddings. At query time: embed the query tokens, compute MaxSim against all stored page embeddings, return top-k pages.
 
 Pros: end-to-end beats text-RAG by 20-40% on visually rich documents. Each patch-vector captures local layout and content.
 
-Cons: N_p patches × 4-byte floats × D-dim vectors per page = storage grows fast. Mitigated by PQ / OPQ quantization.
+Cons: $N_p$ patches × 4-byte floats × $D$-dim vectors per page = storage grows fast. Mitigated by PQ / OPQ quantization.
 
 ### ColQwen2 and ColSmol
 
@@ -95,10 +95,10 @@ No OCR anywhere. Figures, charts, fonts, layout all flow into the answer.
 
 A 50-page financial report with 729 patches per page and 128-dim embeddings:
 
-- ColPali: 50 * 729 * 128 * 4 bytes = ~18 MB raw, ~4 MB after PQ.
+- ColPali: 50 * 729 * 128 * 4 bytes = ~18 MB raw, ~2.3 MB after 8x PQ.
 - Text-RAG: 50 chunks * 768-dim * 4 bytes = ~150 kB.
 
-ColPali is ~30x more storage per document. At scale, OPQ / PQ brings it down to ~5-10x, usually tolerable.
+ColPali is ~120x more storage per document raw. At scale, 8x OPQ / PQ brings it down to ~15x, usually tolerable.
 
 ### When text-RAG still wins
 
@@ -128,7 +128,7 @@ This lesson produces `outputs/skill-vision-rag-designer.md`. Given a document-RA
 
 1. A 200-page annual report at 729 patches per page, 128-dim emb, 4-byte floats. Compute raw storage and PQ-compressed (8x) storage.
 
-2. MaxSim is Σ_i max_j cos(q_i, p_j). What does this sum capture that a simple mean similarity does not?
+2. MaxSim is $\sum_i \max_j \cos(q_i, p_j)$. What does this sum capture that a simple mean similarity does not?
 
 3. ColPali indexes pages as patch sets. What changes if we instead index at the word level (as ColBERT does)? Trade-offs?
 
@@ -143,7 +143,7 @@ This lesson produces `outputs/skill-vision-rag-designer.md`. Given a document-RA
 | Late interaction | "ColBERT-style" | Retrieval using per-token or per-patch embeddings + MaxSim, not a single doc vector |
 | MaxSim | "Max-over-patches" | For each query token, pick the highest-similarity document token; sum across query |
 | Bi-encoder | "Single-vector" | One vector per document; faster but loses granularity |
-| Multi-vector | "Many-vectors-per-doc" | Store N_p vectors per document / page; storage cost grows but recall improves |
+| Multi-vector | "Many-vectors-per-doc" | Store $N_p$ vectors per document / page; storage cost grows but recall improves |
 | Patch embedding | "Page feature" | One vector per image patch from a VLM encoder, cached per page |
 | ViDoRe | "Vision doc bench" | ColPali's benchmark suite for visual document retrieval |
 | PQ quantization | "Product quantization" | Compression that maintains vector similarity while shrinking storage ~8x |

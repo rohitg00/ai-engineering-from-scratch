@@ -74,8 +74,8 @@ That one formula — **shared weights, locality, sliding window** — is the ent
 
 Given input spatial size `H`, kernel size `K`, padding `P`, stride `S`:
 
-```
-H_out = floor( (H - K + 2P) / S ) + 1
+```math
+H_{\text{out}} = \left\lfloor \frac{H - K + 2P}{S} \right\rfloor + 1
 ```
 
 Memorise this. You will compute it dozens of times per architecture.
@@ -88,7 +88,7 @@ Memorise this. You will compute it dozens of times per architecture.
 | Pool 2x2 | 32 | 2 | 0 | 2 | 16 |
 | Large receptive field | 32 | 7 | 3 | 2 | 16 |
 
-"Same padding" means pick P so that H_out == H when S == 1. For odd K, that is P = (K - 1) / 2. That is why 3x3 kernels dominate — they are the smallest odd kernel that still has a centre.
+"Same padding" means pick $P$ so that $H_{\text{out}} = H$ when $S = 1$. For odd $K$, that is $P = (K - 1) / 2$. That is why 3x3 kernels dominate — they are the smallest odd kernel that still has a centre.
 
 ### Padding
 

@@ -1,0 +1,23 @@
+ledger_main_nochain [arm64]:
+    -fixups:
+        segment         section          address             type   target
+        __DATA_CONST    __const          0x100004010           bind  libledger/_grade
+        __DATA_CONST    __const          0x100004018           bind  libSystem/___stack_chk_guard
+        __DATA_CONST    __got            0x100004000           bind  libSystem/___stack_chk_guard
+        __DATA_CONST    __got            0x100004008           bind  libSystem/dyld_stub_binder
+        __DATA          __la_symbol_ptr  0x100008000      lazy-bind  libSystem/___stack_chk_fail
+        __DATA          __la_symbol_ptr  0x100008008      lazy-bind  libledger/_grade
+        __DATA          __la_symbol_ptr  0x100008010      lazy-bind  libledger/_grade_label
+        __DATA          __la_symbol_ptr  0x100008018      lazy-bind  libledger/_percent_change
+        __DATA          __la_symbol_ptr  0x100008020      lazy-bind  libSystem/_printf
+        __DATA          __la_symbol_ptr  0x100008028      lazy-bind  libSystem/_puts
+        __DATA          __la_symbol_ptr  0x100008030      lazy-bind  libledger/_total
+        __DATA_CONST    __const          0x100004020         rebase  0x100000896
+        __DATA_CONST    __const          0x100004028         rebase  0x10000089B
+        __DATA          __la_symbol_ptr  0x100008000         rebase  0x10000081C
+        __DATA          __la_symbol_ptr  0x100008008         rebase  0x100000828
+        __DATA          __la_symbol_ptr  0x100008010         rebase  0x100000834
+        __DATA          __la_symbol_ptr  0x100008018         rebase  0x100000840
+        __DATA          __la_symbol_ptr  0x100008020         rebase  0x10000084C
+        __DATA          __la_symbol_ptr  0x100008028         rebase  0x100000858
+        __DATA          __la_symbol_ptr  0x100008030         rebase  0x100000864

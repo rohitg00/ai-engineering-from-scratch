@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 2,
+  "mediaType": "application/vnd.oci.image.manifest.v1+json",
+  "config": {
+    "mediaType": "application/vnd.oci.image.config.v1+json",
+    "digest": "sha256:<digest>",
+    "size": "<n>"
+  },
+  "layers": [
+    "16 layers"
+  ],
+  "annotations": {
+    "org.opencontainers.image.description": "A shell workload with one network grant, in the v3 descriptor form.",
+    "org.opencontainers.image.licenses": "Apache-2.0",
+    "org.opencontainers.image.title": "hello-kit",
+    "org.opencontainers.image.version": "1.0.0",
+    "vnd.docker.sandbox.kit.built-by": "{\"name\":\"docker/sandbox-kit\",\"version\":\"3.0.0-m.8\",\"revision\":\"129be2ff45e8f9463450eb3cf04ddcb52c2b76e5\"}",
+    "vnd.docker.sandbox.kit.capabilities": "com.docker.sandbox/network-policy@2",
+    "vnd.docker.sandbox.kit.descriptor": {
+      "schemaVersion": "3",
+      "displayName": "hello-kit",
+      "description": "A shell workload with one network grant, in the v3 descriptor form.",
+      "version": "1.0.0",
+      "licenses": [
+        "Apache-2.0"
+      ],
+      "kind": "workload",
+      "provides": [
+        "deb/adduser@3.153",
+        "deb/apt@3.2.0",
+        "deb/base-files@14",
+        "deb/base-passwd@3.6.8",
+        "deb/bash@5.3",
+        "... 397 more derived provides entries"
+      ],
+      "capabilities": [
+        {
+          "type": "com.docker.sandbox/network-policy@2",
+          "config": {
+            "runtime": {
+              "allow": [
+                "example.com"
+              ]
+            }
+          }
+        }
+      ],
+      "build": "FROM docker/sandbox-templates:shell\nCOPY HELLO.md /home/agent/HELLO.md\n"
+    },
+    "vnd.docker.sandbox.kit.schema-version": "3"
+  }
+}

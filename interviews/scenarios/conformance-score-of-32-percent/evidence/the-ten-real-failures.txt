@@ -1,0 +1,7 @@
+title: the ten requirements that fail on a real assertion, by class
+source: manuals/a2a-101/research/tck-run.md
+lines: 101-101
+lang: text
+note: Count how many are the server's own.
+---
+Of the 10 requirements that fail in run 2 on a real assertion, none fails on the kit's account at MUST level: seven are the TCK's (class b: CORE-SEND-003, HTTP_JSON-ERR-001, HTTP_JSON-SVC-001, JSONRPC-SSE-002, PUSH-CREATE-001, CARD-CACHE-003), two are the agent story (class c: DM-ART-001, DM-MSG-001) and two are SHOULD-level omissions the kit documents (class e: CARD-CACHE-001, CARD-CACHE-002). Section 4 has the kit-defect record.

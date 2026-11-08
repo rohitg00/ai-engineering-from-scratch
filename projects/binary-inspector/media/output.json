@@ -1,0 +1,39 @@
+{
+  "title": "Binary Inspector | Inspect a stripped build",
+  "recordedAt": "2026-10-14T12:52:56Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "cli.py",
+        "inspect",
+        "fixtures/tally-arm64-O2.stripped",
+        "--truth",
+        "fixtures/tally-arm64-O2",
+        "--json",
+        "report.json",
+        "--html",
+        "report.html"
+      ],
+      "cwd": "/private/tmp/aiefs-re/projects/binary-inspector/solution",
+      "exitCode": 0,
+      "output": "tally-arm64-O2.stripped: macho64 arm64 executable, 50264 bytes\n  sections 9  segments 5  symbols 5  imports 4  exports 1\n  relocations 0  fixups 8  strings 56  file entropy 0.522\n  __TEXT,__text                r-x size    768 entropy 5.8595\n  __TEXT,__stubs               r-x size     36 entropy 3.2307\n  __TEXT,__const               r-x size     32 entropy 3.2467\n  __TEXT,__cstring             r-x size    111 entropy 4.6413\n  __TEXT,__unwind_info         r-x size     96 entropy 1.6045\n  __DATA_CONST,__got           rw- size     32 entropy 1.6175\n  __DATA_CONST,__const         rw- size     32 entropy 1.7190\n  __DATA,__data                rw- size      4 entropy 0.8113\n  import /usr/lib/libSystem.B.dylib/___stack_chk_fail 0x100004000\n  import /usr/lib/libSystem.B.dylib/___stack_chk_guard 0x100004008\n  import /usr/lib/libSystem.B.dylib/_printf 0x100004010\n  import /usr/lib/libSystem.B.dylib/_puts 0x100004018\n  function starts scored against the unstripped build:\n    symbols                found   0  true   0  precision 0.0000  recall 0.0000\n    function_starts_table  found   6  true   6  precision 1.0000  recall 1.0000\n    prologues              found   1  true   1  precision 1.0000  recall 0.1667\n    call_targets           found   5  true   5  precision 1.0000  recall 0.8333\n    entry                  found   1  true   1  precision 1.0000  recall 0.1667\n    recovered              found   6  true   6  precision 1.0000  recall 1.0000\nwrote report.json\nwrote report.html\n",
+      "durationMs": 200
+    },
+    {
+      "command": [
+        "python3",
+        "cli.py",
+        "diff",
+        "fixtures/tally-arm64-O0",
+        "fixtures/tally-arm64-O2",
+        "--json",
+        "diff.json"
+      ],
+      "cwd": "/private/tmp/aiefs-re/projects/binary-inspector/solution",
+      "exitCode": 0,
+      "output": "tally-arm64-O0 -> tally-arm64-O2\nsection __TEXT,__text: 848 -> 768 (-80)\nsection __TEXT,__unwind_info: 104 -> 96 (-8)\nsymbol _banner: 0x100000970 -> 0x100000920\nsymbol _tally_bucket: 0x100000800 -> 0x100000868\nsymbol _tally_checksum: 0x1000008d0 -> 0x1000008b4\nsymbol _tally_name: 0x100000878 -> 0x100000890\nsymbol _tally_scale: 0x1000007d8 -> 0x100000848\nsymbol _tally_sum: 0x10000075c -> 0x100000740\n+ string \tJ }\n+ string tally-arm64-O2\n- string  0*]\n- string tally-arm64-O0\n- string |(xX\nrecovered function starts: 6 -> 6\nwrote diff.json\n",
+      "durationMs": 215
+    }
+  ]
+}

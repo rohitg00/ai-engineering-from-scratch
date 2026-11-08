@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="fig-2-1-title fig-2-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-1-title">The three processes of one SGLang server</title>
+  <desc id="fig-2-1-desc">A client sends POST /generate to the main process, pid 5782, which holds the HTTP server and the TokenizerManager. A TokenizedGenerateReqInput goes over ZMQ to scheduler_0, pid 5909, which runs the MLX model. A BatchTokenIDOutput goes to the detokenizer, which sends a BatchStrOutput back to the main process, and the main process answers the client.</desc>
+  <defs><marker id="fig-2-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-2-1-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker><marker id="fig-2-1-head-plum" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-plum-ink, #8a3d72)"/></marker></defs>
+  <rect x="20" y="16" width="170" height="40" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="105" y="31.25" font-size="12.5" text-anchor="middle" font-weight="700">client</text>
+  <text x="105" y="48.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">curl or the benchmark</text>
+  <rect x="20" y="90" width="170" height="80" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="105" y="117.75" font-size="12.5" text-anchor="middle" font-weight="700">main · pid 5782</text>
+  <text x="105" y="135.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HTTP server</text>
+  <text x="105" y="150.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">TokenizerManager</text>
+  <rect x="235" y="90" width="190" height="80" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="330" y="117.6" font-size="12" text-anchor="middle" font-weight="700">scheduler_0 · pid 5909</text>
+  <text x="330" y="134.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">queue and batches</text>
+  <text x="330" y="149.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">KV pool and radix tree</text>
+  <rect x="470" y="90" width="150" height="80" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="545" y="125.25" font-size="12.5" text-anchor="middle" font-weight="700">detokenizer</text>
+  <text x="545" y="142.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">token ids to text</text>
+  <rect x="235" y="214" width="190" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="330" y="233.25" font-size="12.5" text-anchor="middle" font-weight="700">MLX model</text>
+  <text x="330" y="250.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Qwen3-0.6B-4bit</text>
+  <line x1="70" y1="56" x2="70" y2="89" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-1-head-ink)"/>
+  <circle cx="52" cy="73" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="52" y="77" font-size="11" text-anchor="middle">1</text>
+  <line x1="190" y1="115" x2="234" y2="115" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-2-1-head-indigo)"/>
+  <circle cx="212" cy="101" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="212" y="105" font-size="11" text-anchor="middle">2</text>
+  <line x1="330" y1="170" x2="330" y2="213" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-2-1-head-plum)"/>
+  <circle cx="348" cy="192" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="348" y="196" font-size="11" text-anchor="middle">3</text>
+  <line x1="425" y1="115" x2="469" y2="115" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-2-1-head-indigo)"/>
+  <circle cx="447" cy="101" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="447" y="105" font-size="11" text-anchor="middle">4</text>
+  <path d="M545 170 L545 300 L105 300 L105 171" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#fig-2-1-head-indigo)"/>
+  <circle cx="470" cy="286" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="470" y="290" font-size="11" text-anchor="middle">5</text>
+  <line x1="150" y1="89" x2="150" y2="57" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1-head-ink)"/>
+  <circle cx="168" cy="73" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="168" y="77" font-size="11" text-anchor="middle">6</text>
+  <text x="20" y="340" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE NUMBERED STEPS</text>
+  <circle cx="29" cy="358" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="29" y="362" font-size="11" text-anchor="middle">1</text>
+  <text x="46" y="362" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">POST /generate over HTTP</text>
+  <circle cx="29" cy="380" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="29" y="384" font-size="11" text-anchor="middle">2</text>
+  <text x="46" y="384" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">TokenizedGenerateReqInput over ZMQ</text>
+  <circle cx="29" cy="402" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="29" y="406" font-size="11" text-anchor="middle">3</text>
+  <text x="46" y="406" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">forward pass and sampling</text>
+  <circle cx="339" cy="358" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="339" y="362" font-size="11" text-anchor="middle">4</text>
+  <text x="356" y="362" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">BatchTokenIDOutput over ZMQ</text>
+  <circle cx="339" cy="380" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="339" y="384" font-size="11" text-anchor="middle">5</text>
+  <text x="356" y="384" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">BatchStrOutput over ZMQ</text>
+  <circle cx="339" cy="402" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="339" y="406" font-size="11" text-anchor="middle">6</text>
+  <text x="356" y="406" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HTTP response with the text</text>
+</svg>

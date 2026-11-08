@@ -31,11 +31,11 @@ Inputs:
 
 Loop, for k in 1..K:
 1. A is prompted with the goal G and the history of (prompt, response) pairs so far.
-2. A emits a new prompt p_k.
-3. Submit p_k to T; receive response r_k.
-4. J scores (p_k, r_k) on the goal.
+2. A emits a new prompt $p_k$.
+3. Submit $p_k$ to T; receive response $r_k$.
+4. J scores $(p_k, r_k)$ on the goal.
 5. If score >= threshold, halt — jailbreak found.
-6. Else, append (p_k, r_k) to A's history; continue.
+6. Else, append $(p_k, r_k)$ to A's history; continue.
 
 Empirical result (NeurIPS 2023): >50% attack success rate against GPT-3.5-turbo, Llama-2-7B-chat; mean queries to success in the 10-20 range.
 

@@ -1,0 +1,5 @@
+health before SIGTERM: 200
+sent SIGTERM to the server process only
+health during drain: 503
+in-flight request: {"status": 200, "completion_tokens": 3000, "finish_reason": {"type": "length", "length": 3000}, "seconds": 14.2}
+server exit code: 0

@@ -3,7 +3,7 @@
 > Four primitives: Agent, Task, Crew, Process. Two top-level shapes: Crews (autonomous, role-based collaboration) and Flows (event-driven, deterministic). CrewAI is the 2026 reference implementation, and its docs are blunt: "for any production-ready application, start with a Flow."
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (with numpy)
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 14 (Actor Model)
 **Time:** ~75 minutes
 
@@ -14,8 +14,8 @@
 - Distinguish Crews (autonomous role-based) from Flows (event-driven deterministic), and explain the docs' production recommendation.
 - Wire tools with the `@tool` decorator and `BaseTool` subclass; reason about structured outputs vs free text.
 - Name the four CrewAI memory types and when each pays off.
-- Implement a stdlib three-agent crew (researcher, writer, editor) that produces a brief.
-- Spot the three CrewAI failure modes: prompt-bloat, manager-LLM tax, brittle handoffs.
+- Implement a three-agent crew (researcher, writer, editor) in plain Python that produces a brief.
+- Spot the four CrewAI failure modes: prompt-bloat, manager-LLM tax, brittle handoffs, Crew-as-prod.
 
 ## The Problem
 
@@ -120,7 +120,7 @@ Enable on the Crew with `memory=True` or per-type config. Backed by an embedding
 - Sub-second latency budgets. Hierarchical adds round trips. Even Sequential serializes prompts that include backstories and prior outputs.
 - Single-agent loops. Skip the framework; an agent loop (Lesson 1) plus a tool registry is shorter.
 
-Lesson 17 (Agent Framework Tradeoffs) lays this out in a matrix. The short version: CrewAI sits in the "collaborative role-based" corner.
+Lesson 28 (Orchestration Patterns) compares the topologies side by side. The short version: CrewAI sits in the "collaborative role-based" corner.
 
 ### Dependency shape
 
@@ -129,7 +129,7 @@ Independent of LangChain. Python 3.10 to 3.13. Uses `uv`. Star count: see [crewA
 ### Where this pattern goes wrong
 
 - **Prompt-bloat from backstories.** A 2000-word backstory per agent and a five-agent crew burns the context budget before the first tool call. Keep backstories under 200 words. Reuse phrases across agents; do not repeat house style five times.
-- **Manager-LLM token tax.** Hierarchical process adds a manager LLM call before every specialist call. On a five-task crew that is six LLM calls instead of five, and the manager call carries the full task list plus prior outputs. Switch to Sequential unless routing depends on output.
+- **Manager-LLM token tax.** Hierarchical process adds a manager LLM call before every specialist call. On a five-task crew that is ten LLM calls instead of five, and the manager call carries the full task list plus prior outputs. Switch to Sequential unless routing depends on output.
 - **Brittle handoffs.** Task N's `expected_output` is "an outline". Task N+1 reads it as `context` and tries to parse three sections. The LLM produced four. The downstream Agent ad-libs. Fix with `output_pydantic` on Task N so Task N+1 reads a typed object, not free text.
 - **Crew-as-prod.** Free-form Crew shipped to production without a Flow wrapper. Output variability is high; replay is impossible; on-call cannot diff a bad run against a good one. Wrap with a Flow.
 
@@ -139,7 +139,7 @@ ae-crew-vs-flow
 
 ## Build It
 
-`code/main.py` implements stdlib versions of both shapes plus a three-agent crew.
+`code/main.py` implements plain-Python versions of both shapes plus a three-agent crew. The only dependency outside the standard library is numpy, for the mocked similarity.
 
 Shape:
 

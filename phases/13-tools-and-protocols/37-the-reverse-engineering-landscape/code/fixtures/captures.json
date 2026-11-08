@@ -1,0 +1,158 @@
+{
+ "captured": "2026-10-14",
+ "host": {
+  "platform": "Darwin-25.2.0-arm64-arm-64bit-Mach-O",
+  "machine": "arm64"
+ },
+ "compiler": "Apple clang version 17.0.0 (clang-1700.6.3.2)",
+ "tools": {
+  "llvm-objdump": {
+   "binary": "llvm-objdump",
+   "version": "Apple LLVM version 17.0.0"
+  },
+  "radare2": {
+   "binary": "r2",
+   "version": "radare2 6.2.4 +0 abi:152 @ darwin-arm_64"
+  },
+  "rizin": {
+   "binary": "rizin",
+   "version": "rizin 0.9.1 @ darwin-arm-64"
+  },
+  "angr": {
+   "binary": "python",
+   "version": "10.0.3"
+  },
+  "ghidra": {
+   "binary": "analyzeHeadless",
+   "version": "12.1.4"
+  }
+ },
+ "files": [
+  {
+   "tool": "llvm-objdump",
+   "fixture": "ledger-x86_64-O0.o",
+   "file": "ledger-x86_64-O0.objdump.txt",
+   "command": "llvm-objdump -d -r ledger-x86_64-O0.o"
+  },
+  {
+   "tool": "llvm-objdump",
+   "fixture": "ledger-x86_64-O1.o",
+   "file": "ledger-x86_64-O1.objdump.txt",
+   "command": "llvm-objdump -d -r ledger-x86_64-O1.o"
+  },
+  {
+   "tool": "llvm-objdump",
+   "fixture": "ledger-x86_64-O2.o",
+   "file": "ledger-x86_64-O2.objdump.txt",
+   "command": "llvm-objdump -d -r ledger-x86_64-O2.o"
+  },
+  {
+   "tool": "llvm-objdump",
+   "fixture": "sweep-trap.o",
+   "file": "sweep-trap.objdump.txt",
+   "command": "llvm-objdump -d -r sweep-trap.o"
+  },
+  {
+   "tool": "radare2",
+   "fixture": "ledger-x86_64-O0.o",
+   "file": "ledger-x86_64-O0.radare2.json",
+   "command": "r2 -e scr.color=0 -qc '<command>' ledger-x86_64-O0.o"
+  },
+  {
+   "tool": "radare2",
+   "fixture": "ledger-x86_64-O1.o",
+   "file": "ledger-x86_64-O1.radare2.json",
+   "command": "r2 -e scr.color=0 -qc '<command>' ledger-x86_64-O1.o"
+  },
+  {
+   "tool": "radare2",
+   "fixture": "ledger-x86_64-O2.o",
+   "file": "ledger-x86_64-O2.radare2.json",
+   "command": "r2 -e scr.color=0 -qc '<command>' ledger-x86_64-O2.o"
+  },
+  {
+   "tool": "radare2",
+   "fixture": "sweep-trap.o",
+   "file": "sweep-trap.radare2.json",
+   "command": "r2 -e scr.color=0 -qc '<command>' sweep-trap.o"
+  },
+  {
+   "tool": "rizin",
+   "fixture": "ledger-x86_64-O0.o",
+   "file": "ledger-x86_64-O0.rizin.json",
+   "command": "rizin -e scr.color=0 -qc '<command>' ledger-x86_64-O0.o"
+  },
+  {
+   "tool": "rizin",
+   "fixture": "ledger-x86_64-O1.o",
+   "file": "ledger-x86_64-O1.rizin.json",
+   "command": "rizin -e scr.color=0 -qc '<command>' ledger-x86_64-O1.o"
+  },
+  {
+   "tool": "rizin",
+   "fixture": "ledger-x86_64-O2.o",
+   "file": "ledger-x86_64-O2.rizin.json",
+   "command": "rizin -e scr.color=0 -qc '<command>' ledger-x86_64-O2.o"
+  },
+  {
+   "tool": "rizin",
+   "fixture": "sweep-trap.o",
+   "file": "sweep-trap.rizin.json",
+   "command": "rizin -e scr.color=0 -qc '<command>' sweep-trap.o"
+  },
+  {
+   "tool": "angr",
+   "fixture": "ledger-x86_64-O0.o",
+   "file": "ledger-x86_64-O0.angr.json",
+   "command": "python capture_angr.py ledger-x86_64-O0.o ledger-x86_64-O0.angr.json"
+  },
+  {
+   "tool": "angr",
+   "fixture": "ledger-x86_64-O1.o",
+   "file": "ledger-x86_64-O1.angr.json",
+   "command": "python capture_angr.py ledger-x86_64-O1.o ledger-x86_64-O1.angr.json"
+  },
+  {
+   "tool": "angr",
+   "fixture": "ledger-x86_64-O2.o",
+   "file": "ledger-x86_64-O2.angr.json",
+   "command": "python capture_angr.py ledger-x86_64-O2.o ledger-x86_64-O2.angr.json"
+  },
+  {
+   "tool": "angr",
+   "fixture": "sweep-trap.o",
+   "file": "sweep-trap.angr.json",
+   "command": "python capture_angr.py sweep-trap.o sweep-trap.angr.json"
+  },
+  {
+   "tool": "ghidra",
+   "fixture": "ledger-x86_64-O0.o",
+   "file": "ledger-x86_64-O0.ghidra.json",
+   "command": "analyzeHeadless PROJECT_DIR lesson37 -import ledger-x86_64-O0.o -scriptPath . -postScript ExportAnalysis.java ledger-x86_64-O0.ghidra.json -deleteProject"
+  },
+  {
+   "tool": "ghidra",
+   "fixture": "ledger-x86_64-O1.o",
+   "file": "ledger-x86_64-O1.ghidra.json",
+   "command": "analyzeHeadless PROJECT_DIR lesson37 -import ledger-x86_64-O1.o -scriptPath . -postScript ExportAnalysis.java ledger-x86_64-O1.ghidra.json -deleteProject"
+  },
+  {
+   "tool": "ghidra",
+   "fixture": "ledger-x86_64-O2.o",
+   "file": "ledger-x86_64-O2.ghidra.json",
+   "command": "analyzeHeadless PROJECT_DIR lesson37 -import ledger-x86_64-O2.o -scriptPath . -postScript ExportAnalysis.java ledger-x86_64-O2.ghidra.json -deleteProject"
+  },
+  {
+   "tool": "ghidra",
+   "fixture": "sweep-trap.o",
+   "file": "sweep-trap.ghidra.json",
+   "command": "analyzeHeadless PROJECT_DIR lesson37 -import sweep-trap.o -scriptPath . -postScript ExportAnalysis.java sweep-trap.ghidra.json -deleteProject"
+  },
+  {
+   "tool": "ir",
+   "fixture": "raw bytes",
+   "file": "ir-lifts.json",
+   "command": "python capture_ir.py ir-lifts.json, then r2 and rizin commands recorded per instruction"
+  }
+ ]
+}

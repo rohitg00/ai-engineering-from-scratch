@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-2-3-title fig-2-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-3-title">Ray reads one memory for the whole GB10</title>
+  <desc id="fig-2-3-desc">The memory Ray read when it stopped the first 4B run, as one bar of 121.69 GB. The trainer process used 36.77 GB and the engine processes 4.06 GB. The rest of the 115.86 GB in use was not in the process list. Our reading is that most of it is GPU allocations. 5.83 GB was free.</desc>
+  <text x="20" y="30" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">NODE MEMORY WHEN RAY STOPPED THE TRAINER, 121.7 GB</text>
+  <rect x="20" y="48" width="181.3" height="56" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <polyline points="110.65,104 110.65,119" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="110.65" cy="119" r="2" fill="var(--m-ink-mute, #6f6f6a)"/>
+  <text x="110.65" y="132" font-size="11.5" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">trainer process, 36.8 GB</text>
+  <rect x="201.3" y="48" width="20.02" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <polyline points="211.31,104 211.31,141" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="211.31" cy="141" r="2" fill="var(--m-ink-mute, #6f6f6a)"/>
+  <text x="211.31" y="154" font-size="11.5" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">engine, 4.1 GB</text>
+  <rect x="221.31" y="48" width="369.94" height="56" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <polyline points="406.28,104 406.28,119" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="406.28" cy="119" r="2" fill="var(--m-ink-mute, #6f6f6a)"/>
+  <text x="406.28" y="132" font-size="11.5" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">the rest of the used memory, 75.0 GB</text>
+  <rect x="591.25" y="48" width="28.75" height="56" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-dasharray="5 4"/>
+  <polyline points="605.63,104 605.63,141" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="605.63" cy="141" r="2" fill="var(--m-ink-mute, #6f6f6a)"/>
+  <text x="570" y="154" font-size="11.5" text-anchor="middle" fill="var(--m-green-ink, #336b40)">free, 5.8 GB</text>
+  <line x1="590" y1="40" x2="590" y2="112" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="586" y="40" font-size="11" text-anchor="end" fill="var(--m-rose-ink, #b0344d)">kill above 95 percent</text>
+  <text x="20" y="210" font-size="12" class="m-serif">On a GB10 the GPU and the CPU share this memory.</text>
+  <text x="20" y="234" font-size="12" class="m-serif">Our reading: GPU allocations count as used memory, so a Ray kill is real.</text>
+  <text x="20" y="270" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Process sizes are the resident memory that Ray listed for its top processes.</text>
+</svg>

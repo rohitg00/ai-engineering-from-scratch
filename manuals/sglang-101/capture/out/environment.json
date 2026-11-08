@@ -1,0 +1,9 @@
+{
+  "sglang": "0.5.22",
+  "torch": "2.13.0",
+  "mlx": "0.32.4",
+  "python": "3.12.12",
+  "macos": "26.2",
+  "machine": "arm64",
+  "model": "mlx-community/Qwen3-0.6B-4bit"
+}

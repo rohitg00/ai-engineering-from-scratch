@@ -21,31 +21,31 @@ This breaks tabular convergence proofs (Q-learning's guarantee assumes a station
 
 ![Four MARL regimes: indep, centralized critic, self-play, league](../assets/marl.svg)
 
-**Formalism: Markov Game.** A generalization of MDP: states `S`, a joint action `a = (a_1, …, a_n)`, transition `P(s' | s, a)`, and per-agent rewards `R_i(s, a, s')`. Each agent `i` maximizes its own return under its own policy `π_i`. If rewards are identical, it is **fully cooperative**. If zero-sum, it is **adversarial**. If mixed, it is **general-sum**.
+**Formalism: Markov Game.** A generalization of MDP: states $S$, a joint action $a = (a_1, \ldots, a_n)$, transition $P(s' \mid s, a)$, and per-agent rewards $R_i(s, a, s')$. Each agent $i$ maximizes its own return under its own policy $\pi_i$. If rewards are identical, it is **fully cooperative**. If zero-sum, it is **adversarial**. If mixed, it is **general-sum**.
 
 **Core challenges:**
 
-- **Non-stationarity.** `P(s' | s, a_i)` from agent `i`'s view depends on `π_{-i}`, which is changing.
+- **Non-stationarity.** $P(s' \mid s, a_i)$ from agent $i$'s view depends on $\pi_{-i}$, which is changing.
 - **Credit assignment.** With a shared reward, which agent caused it?
 - **Exploration coordination.** Agents must explore complementary strategies, not redundantly explore the same state.
-- **Scalability.** The joint action space grows exponentially in `n`.
+- **Scalability.** The joint action space grows exponentially in $n$.
 - **Partial observability.** Each agent sees only its own observation; the global state is hidden.
 
 **Four dominant regimes:**
 
 **1. Independent Q-learning / independent PPO (IQL, IPPO).** Each agent learns its own Q or policy, treating others as part of the environment. Simple, sometimes it works (especially with experience replay acting as a smoothing agent-modeling trick). Theoretical convergence: none. In practice: fine for loosely-coupled tasks, bad for tightly-coupled ones.
 
-**2. Centralized training, decentralized execution (CTDE).** Most common modern paradigm. Each agent has its own *policy* `π_i` that conditions on local observation `o_i` — standard decentralized execution at deployment. During *training*, a centralized critic `Q(s, a_1, …, a_n)` conditions on the full global state and joint action. Examples:
+**2. Centralized training, decentralized execution (CTDE).** Most common modern paradigm. Each agent has its own *policy* $\pi_i$ that conditions on local observation $o_i$ — standard decentralized execution at deployment. During *training*, a centralized critic $Q(s, a_1, \ldots, a_n)$ conditions on the full global state and joint action. Examples:
 - **MADDPG** (Lowe et al. 2017): DDPG with a centralized critic per agent.
-- **COMA** (Foerster et al. 2017): counterfactual baseline — ask "what would my reward have been if I'd taken action `a'` instead?" — isolates my contribution.
+- **COMA** (Foerster et al. 2017): counterfactual baseline — ask "what would my reward have been if I'd taken action $a'$ instead?" — isolates my contribution.
 - **MAPPO** / **IPPO** with shared critic (Yu et al. 2022): PPO with a centralized value function. Dominant in 2026 for cooperative MARL.
-- **QMIX** (Rashid et al. 2018): value decomposition — `Q_tot(s, a) = f(Q_1(s, a_1), …, Q_n(s, a_n))` with monotonic mixing.
+- **QMIX** (Rashid et al. 2018): value decomposition — $Q_{\text{tot}}(s, a) = f(Q_1(s, a_1), \ldots, Q_n(s, a_n))$ with monotonic mixing.
 
 **3. Self-play.** Two copies of the same agent play each other. The opponent's policy *is* my policy from a past snapshot. AlphaGo / AlphaZero / MuZero. OpenAI Five. Works best for zero-sum games; the training signal is symmetric.
 
 **4. League play.** An extension of self-play to general-sum / adversarial environments: keep a population of past and current policies, sample an opponent from the league, train against them. Adds exploiters (specialize in beating the current best) and main exploiters (specialize in beating exploiters). AlphaStar (StarCraft II). Needed when the game admits "rock-paper-scissors" strategy cycles.
 
-**Communication.** Allow agents to send learned messages `m_i` to each other. Works in cooperative settings. Foerster et al. (2016) showed that differentiable inter-agent communication can be trained end-to-end. Today's LLM-based multi-agent systems (Phase 16) essentially communicate in natural language.
+**Communication.** Allow agents to send learned messages $m_i$ to each other. Works in cooperative settings. Foerster et al. (2016) showed that differentiable inter-agent communication can be trained end-to-end. Today's LLM-based multi-agent systems (Phase 16) essentially communicate in natural language.
 
 ```figure
 f3-marl-orbit
@@ -86,10 +86,15 @@ def independent_q(env, episodes, alpha, gamma, epsilon):
     Q1, Q2 = defaultdict(default_q), defaultdict(default_q)
     for _ in range(episodes):
         s = env.reset()
+        done = False
         while not done:
             a1 = epsilon_greedy(Q1, s, epsilon)
             a2 = epsilon_greedy(Q2, s, epsilon)
             s_next, r, done = env.step(s, (a1, a2))
+            if done:
+                Q1[s][a1] += alpha * (r - Q1[s][a1])
+                Q2[s][a2] += alpha * (r - Q2[s][a2])
+                break
             target1 = r + gamma * max(Q1[s_next].values())
             target2 = r + gamma * max(Q2[s_next].values())
             Q1[s][a1] += alpha * (target1 - Q1[s][a1])
@@ -101,11 +106,11 @@ Works on this task because rewards are dense and aligned. Fails on tightly-coupl
 
 ### Step 3: centralized Q with decomposed-value update
 
-Use one Q over joint actions `Q(s, a_1, a_2)`. Update from shared reward. Decentralize at execution by marginalizing: `π_i(s) = argmax_{a_i} max_{a_{-i}} Q(s, a_1, a_2)`. Trades exponential joint action space for a *correct* global view.
+Use one Q over joint actions $Q(s, a_1, a_2)$. Update from shared reward. Decentralize at execution by marginalizing: $\pi_i(s) = \arg\max_{a_i} \max_{a_{-i}} Q(s, a_1, a_2)$. Trades exponential joint action space for a *correct* global view.
 
 ### Step 4: simple self-play (adversarial 2-agent)
 
-Same agent, two roles. Train agent A against agent B; after `K` episodes, copy A's weights into B. Symmetric training, consistent progress. The AlphaZero recipe in miniature.
+Same agent, two roles. Train agent A against agent B; after $K$ episodes, copy A's weights into B. Symmetric training, consistent progress. The AlphaZero recipe in miniature.
 
 ## Pitfalls
 
@@ -167,11 +172,11 @@ Refuse independent Q-learning on tightly-coupled cooperative tasks. Refuse to re
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| Markov game | "Multi-agent MDP" | `(S, A_1, …, A_n, P, R_1, …, R_n)`; each agent has its own reward. |
+| Markov game | "Multi-agent MDP" | $(S, A_1, \ldots, A_n, P, R_1, \ldots, R_n)$; each agent has its own reward. |
 | CTDE | "Centralized training, decentralized execution" | Joint critic at training time; each agent's policy uses only local obs. |
 | IPPO | "Independent PPO" | Each agent runs PPO separately. Simple baseline; often underrated. |
 | MAPPO | "Multi-agent PPO" | PPO with a centralized value function conditioned on global state. |
-| QMIX | "Monotonic value decomposition" | `Q_tot = f_monotone(Q_1, …, Q_n)` allows decentralized argmax. |
+| QMIX | "Monotonic value decomposition" | $Q_{\text{tot}} = f_{\text{monotone}}(Q_1, \ldots, Q_n)$ allows decentralized argmax. |
 | COMA | "Counterfactual multi-agent" | Advantage = my Q minus expected Q marginalizing over my action. |
 | Self-play | "Agent vs past self" | Single agent, two roles; standard for zero-sum games. |
 | League play | "Population training" | Cache past policies, sample opponents from the pool; handles strategy cycles. |

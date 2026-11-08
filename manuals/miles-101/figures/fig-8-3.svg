@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="fig-8-3-title fig-8-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-3-title">Two fixes for two different halves</title>
+  <desc id="fig-8-3-desc">The trainer and the engine compute the same model with different kernels, so their log probabilities differ. Deterministic inference fixes only the engine half: the same input gives the same output for any batch. True on-policy mode fixes the gap itself by making both sides run the same kernels, which works only where its contract holds: FlashAttention 3 on Hopper GPUs, compute capability 9.0, and Qwen3 dense models.</desc>
+  <defs><marker id="fig-8-3-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <rect x="20" y="40" width="270" height="76" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="155" y="65.75" font-size="12.5" text-anchor="middle" font-weight="700">trainer, FSDP</text>
+  <text x="155" y="83.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">its own attention kernel</text>
+  <text x="155" y="98.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">its own matmul and sum order</text>
+  <rect x="350" y="40" width="270" height="76" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="485" y="65.75" font-size="12.5" text-anchor="middle" font-weight="700">engine, SGLang</text>
+  <text x="485" y="83.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">its attention backend</text>
+  <text x="485" y="98.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sum order changes with batch</text>
+  <line x1="290" y1="78" x2="349" y2="78" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="320" y="140" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">gap about 0.015</text>
+  <rect x="350" y="156" width="270" height="64" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="485" y="183.25" font-size="12.5" text-anchor="middle" font-weight="700">deterministic inference</text>
+  <text x="485" y="200.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">engine repeats itself, any batch</text>
+  <line x1="485" y1="116" x2="485" y2="155" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-3-head-amber)"/>
+  <text x="350" y="238" font-size="11.5" fill="var(--m-rose-ink, #b0344d)">gap stays about 0.015 in our runs</text>
+  <rect x="20" y="156" width="270" height="64" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="155" y="183.25" font-size="12.5" text-anchor="middle" font-weight="700">true on-policy contract</text>
+  <text x="155" y="200.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">same kernels on both sides</text>
+  <line x1="155" y1="116" x2="155" y2="155" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-3-head-amber)"/>
+  <text x="20" y="238" font-size="11.5" fill="var(--m-green-ink, #336b40)">gap goes to zero, where the contract holds</text>
+  <text x="20" y="278" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT THE CONTRACT PINS AT MILES MAIN</text>
+  <text x="20" y="300" font-size="12" class="m-serif">FlashAttention 3 on both sides, Hopper GPUs only</text>
+  <text x="20" y="320" font-size="12" class="m-serif">Qwen3 dense models only</text>
+  <text x="20" y="344" font-size="12" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A GB10 is compute capability 12.1, so the contract does not start there.</text>
+</svg>

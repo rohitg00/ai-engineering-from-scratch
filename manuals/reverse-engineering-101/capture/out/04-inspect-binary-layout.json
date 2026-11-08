@@ -1,0 +1,14 @@
+{
+  "code": "capability_unavailable",
+  "category": "unsupported_provider",
+  "message": "The initial real-verified pwntools artifact profile supports Linux x64 only.",
+  "retryable": false,
+  "remediation": {
+    "action": "The initial real-verified pwntools artifact profile supports Linux x64 only."
+  },
+  "details": {
+    "provider_id": "pwntools-elf",
+    "operation": "inspect_binary_layout",
+    "reason": "The initial real-verified pwntools artifact profile supports Linux x64 only."
+  }
+}

@@ -1,0 +1,383 @@
+INFO: Analyze all flags starting with sym. and entry0 (aa)
+INFO: Analyze imports (af@@@i)
+INFO: Name local plt stubs from their got relocs (anal.plt)
+INFO: Analyze symbols (af@@@s)
+INFO: Running plugin pre-analysis hooks
+INFO: Analyze all functions arguments/locals (afva@@F)
+INFO: Analyze function calls (aac)
+INFO: Analyze len bytes of instructions for references (aar)
+ERROR: invalid memory at 0x080005d0
+INFO: Finding and parsing C++ vtables (avrr)
+INFO: Analyzing methods (af @@ method.*)
+INFO: Recovering local variables (afva@@@F)
+INFO: Type matching analysis for all functions (aaft)
+INFO: Propagate noreturn information (aanr)
+INFO: Use -AA or aaaa to perform additional experimental analysis
+[afcl]
+amd64
+amd64syscall
+dlang
+golang
+golang_abi0
+ms
+p9
+reg
+swift
+[afc leaf_add]
+amd64
+[afi leaf_add]
+#
+addr: 0x08000040
+name: sym.leaf_add
+size: 4
+is-pure: true
+realsz: 4
+stackframe: 0
+callconv: amd64
+cyclic-cost: 4
+cyclomatic-complexity: 1
+bits: 64
+type: fcn [NEW]
+num-bbs: 1
+num-instrs: 2
+edges: 0
+minaddr: 0x08000040
+maxaddr: 0x08000044
+is-lineal: true
+end-bbs: 1
+maxbbins: 2
+midbbins: 2.00
+ratbbins: 1.00
+noreturn: false
+recursive: false
+in-degree: 0
+out-degree: 0
+locals: 0
+args: 1
+
+[afv leaf_add]
+arg int64_t arg1 @ rdi
+[afs leaf_add]
+void sym.leaf_add (int64_t arg1);
+[afc eight_args]
+amd64
+[afi eight_args]
+#
+addr: 0x08000050
+name: sym.eight_args
+size: 27
+is-pure: true
+realsz: 27
+stackframe: 0
+callconv: amd64
+cyclic-cost: 10
+cyclomatic-complexity: 1
+bits: 64
+type: fcn [NEW]
+num-bbs: 1
+num-instrs: 8
+edges: 0
+minaddr: 0x08000050
+maxaddr: 0x0800006b
+is-lineal: true
+end-bbs: 1
+maxbbins: 8
+midbbins: 8.00
+ratbbins: 1.00
+noreturn: false
+recursive: false
+in-degree: 0
+out-degree: 0
+locals: 0
+args: 7
+
+[afv eight_args]
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+arg int64_t arg3 @ rdx
+arg int64_t arg4 @ r8
+arg int64_t arg5 @ r9
+arg int64_t arg_8h @ rsp+0x8
+arg int64_t arg_10h @ rsp+0x10
+[afs eight_args]
+void sym.eight_args (int64_t arg1, int64_t arg2, int64_t arg3, int64_t arg4, int64_t arg5, int64_t arg_8h, int64_t arg_10h);
+[afc mixed]
+amd64
+[afi mixed]
+#
+addr: 0x08000070
+name: sym.mixed
+size: 29
+is-pure: true
+realsz: 29
+stackframe: 0
+callconv: amd64
+cyclic-cost: 10
+cyclomatic-complexity: 1
+bits: 64
+type: fcn [NEW]
+num-bbs: 1
+num-instrs: 8
+edges: 0
+minaddr: 0x08000070
+maxaddr: 0x0800008d
+is-lineal: true
+end-bbs: 1
+maxbbins: 8
+midbbins: 8.00
+ratbbins: 1.00
+noreturn: false
+recursive: false
+in-degree: 0
+out-degree: 0
+locals: 0
+args: 3
+
+[afv mixed]
+arg double arg1 @ xmm0
+arg double arg2 @ xmm1
+arg double arg3 @ xmm2
+[afs mixed]
+void sym.mixed (double arg1, double arg2, double arg3);
+[afc by_value]
+amd64
+[afi by_value]
+#
+addr: 0x08000090
+name: sym.by_value
+size: 9
+is-pure: true
+realsz: 9
+stackframe: 0
+callconv: amd64
+cyclic-cost: 5
+cyclomatic-complexity: 1
+bits: 64
+type: fcn [NEW]
+num-bbs: 1
+num-instrs: 3
+edges: 0
+minaddr: 0x08000090
+maxaddr: 0x08000099
+is-lineal: true
+end-bbs: 1
+maxbbins: 3
+midbbins: 3.00
+ratbbins: 1.00
+noreturn: false
+recursive: false
+in-degree: 0
+out-degree: 0
+locals: 0
+args: 2
+
+[afv by_value]
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+[afs by_value]
+void sym.by_value (int64_t arg1, int64_t arg2);
+[afc big_ret]
+amd64
+[afi big_ret]
+#
+addr: 0x080000a0
+name: sym.big_ret
+size: 31
+is-pure: true
+realsz: 31
+stackframe: 0
+callconv: amd64
+cyclic-cost: 11
+cyclomatic-complexity: 1
+bits: 64
+type: fcn [NEW]
+num-bbs: 1
+num-instrs: 9
+edges: 0
+minaddr: 0x080000a0
+maxaddr: 0x080000bf
+is-lineal: true
+end-bbs: 1
+maxbbins: 9
+midbbins: 9.00
+ratbbins: 1.00
+noreturn: false
+recursive: false
+in-degree: 0
+out-degree: 0
+locals: 0
+args: 2
+
+[afv big_ret]
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+[afs big_ret]
+void sym.big_ret (int64_t arg1, int64_t arg2);
+[afc sum_varargs]
+amd64
+[afi sum_varargs]
+#
+addr: 0x080000c0
+name: sym.sum_varargs
+size: 283
+is-pure: true
+realsz: 275
+stackframe: 88
+callconv: amd64
+cyclic-cost: 92
+cyclomatic-complexity: 10
+bits: 64
+type: fcn [NEW]
+num-bbs: 20
+num-instrs: 76
+edges: 26
+minaddr: 0x080000c0
+maxaddr: 0x080001db
+is-lineal: false
+end-bbs: 2
+maxbbins: 8
+midbbins: 3.80
+ratbbins: 2.11
+noreturn: false
+recursive: false
+in-degree: 0
+out-degree: 0
+locals: 4
+args: 15
+
+[afv sum_varargs]
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+arg int64_t arg3 @ rdx
+arg int64_t arg4 @ rcx
+arg int64_t arg5 @ r8
+arg int64_t arg6 @ r9
+arg double arg7 @ xmm0
+arg double arg8 @ xmm1
+arg double arg9 @ xmm2
+arg double arg10 @ xmm3
+arg double arg11 @ xmm4
+arg double arg12 @ xmm5
+arg double arg13 @ xmm6
+arg double arg14 @ xmm7
+arg int64_t arg_60h @ rsp+0x60
+var double var_10h @ rsp+0x10
+var double var_20h @ rsp+0x20
+var double var_30h @ rsp+0x30
+var double var_40h @ rsp+0x40
+[afs sum_varargs]
+void sym.sum_varargs (int64_t arg1, int64_t arg2, int64_t arg3, int64_t arg4, int64_t arg5, int64_t arg6, double arg7, double arg8, double arg9, double arg10, double arg11, double arg12, double arg13, double arg14, int64_t arg_60h);
+[afc keeps]
+amd64
+[afi keeps]
+#
+addr: 0x080001e0
+name: sym.keeps
+size: 45
+is-pure: true
+realsz: 45
+stackframe: 24
+callconv: amd64
+cyclic-cost: 29
+cyclomatic-complexity: 3
+bits: 64
+type: fcn [NEW]
+num-bbs: 6
+num-instrs: 22
+edges: 7
+minaddr: 0x080001e0
+maxaddr: 0x0800020d
+is-lineal: true
+end-bbs: 1
+maxbbins: 6
+midbbins: 3.67
+ratbbins: 1.64
+noreturn: false
+recursive: false
+in-degree: 0
+out-degree: 1
+locals: 0
+args: 1
+
+[afv keeps]
+arg int64_t arg1 @ rdi
+[afs keeps]
+void sym.keeps (int64_t arg1);
+[afc call8]
+amd64
+[afi call8]
+#
+addr: 0x08000210
+name: sym.call8
+size: 48
+is-pure: true
+realsz: 48
+stackframe: 24
+callconv: amd64
+cyclic-cost: 17
+cyclomatic-complexity: 1
+bits: 64
+type: fcn [NEW]
+num-bbs: 1
+num-instrs: 13
+edges: 0
+minaddr: 0x08000210
+maxaddr: 0x08000240
+is-lineal: true
+end-bbs: 1
+maxbbins: 13
+midbbins: 13.00
+ratbbins: 1.00
+noreturn: false
+recursive: false
+in-degree: 0
+out-degree: 1
+locals: 0
+args: 0
+
+[afv call8]
+[afs call8]
+void sym.call8 ();
+[afc call_varargs]
+amd64
+[afi call_varargs]
+#
+addr: 0x08000260
+name: sym.call_varargs
+size: 27
+is-pure: true
+realsz: 27
+stackframe: 0
+callconv: amd64
+cyclic-cost: 7
+cyclomatic-complexity: 1
+bits: 64
+type: fcn [NEW]
+num-bbs: 1
+num-instrs: 6
+edges: 0
+minaddr: 0x08000260
+maxaddr: 0x0800027b
+is-lineal: true
+end-bbs: 1
+maxbbins: 6
+midbbins: 6.00
+ratbbins: 1.00
+noreturn: false
+recursive: false
+in-degree: 0
+out-degree: 0
+locals: 0
+args: 0
+
+[afv call_varargs]
+[afs call_varargs]
+void sym.call_varargs ();
+[afcr eight_args]
+cc.amd64.ret0: rax
+cc.amd64.arg0: rdi
+cc.amd64.arg1: rsi
+cc.amd64.arg2: rdx
+cc.amd64.arg3: rcx
+cc.amd64.arg4: r8
+cc.amd64.arg5: r9

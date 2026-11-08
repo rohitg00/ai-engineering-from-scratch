@@ -11,7 +11,7 @@ Given a generation product spec (image or video, target resolution, quality tier
 
 Produce:
 
-1. Token count. Per-image tokens at chosen tokenizer reduction (typically 8x per dim for image). Per-video tokens with 3D VQ (typically 4x4x4 spatiotemporal).
+1. Token count. Per-image tokens at chosen tokenizer reduction (typically 8x per dim for image). Per-video tokens with 3D VQ (typically 4 frames x 8x8 pixels per token).
 2. Inference latency. Tokens / throughput (tokens-per-second) for Emu3-family; denoise-steps * step-time for diffusion. Cite concrete A100 / H100 ranges.
 3. Quality ceiling. Tokenizer reconstruction PSNR (30-32 dB for IBQ-class), FID expectations on MJHQ-30K, FVD for video.
 4. CFG configuration. Recommended guidance weight (gamma) per task; typical 3.0 for standard gen, 5-7 for strong prompt adherence.

@@ -1,0 +1,9 @@
+title: the binding in the PORTS column of sbx ls
+source: manuals/docker-sandboxes-101/capture/out/05-ports-ls.txt
+lang: console
+note: The column names the host address and the protocol.
+---
+$ sbx ls
+SANDBOX     AGENT   STATUS    PORTS                        WORKSPACE
+m101-demo   shell   running   127.0.0.1:18081->8080/tcp4   $CAPTURE/fixtures/repo
+[exit 0]

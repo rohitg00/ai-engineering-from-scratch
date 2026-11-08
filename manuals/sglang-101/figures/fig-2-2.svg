@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="fig-2-2-title fig-2-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-2-title">One turn of the scheduler loop</title>
+  <desc id="fig-2-2-desc">ingest_requests drains new requests, calc_priority orders the waiting queue with the fcfs default, PrefillAdder.add_one_req admits requests while the KV budget allows. If anything is admitted the turn runs a prefill batch, otherwise one decode step for every running request. process_batch_result then appends tokens and checks stops, and the next turn starts.</desc>
+  <defs><marker id="fig-2-2-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-2-2-head-plum" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-plum-ink, #8a3d72)"/></marker><marker id="fig-2-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="100" y="16" width="300" height="48" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="250" y="35.25" font-size="12.5" text-anchor="middle" font-weight="700">ingest_requests</text>
+  <text x="250" y="52.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">drain ZMQ, add to the waiting queue</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <line x1="250" y1="64" x2="250" y2="85" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-2-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M250 64 L250 85" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="100" y="86" width="300" height="48" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="250" y="105.25" font-size="12.5" text-anchor="middle" font-weight="700">calc_priority</text>
+  <text x="250" y="122.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">order the queue: fcfs by default</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <line x1="250" y1="134" x2="250" y2="155" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-2-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M250 134 L250 155" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="100" y="156" width="300" height="48" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="250" y="175.25" font-size="12.5" text-anchor="middle" font-weight="700">PrefillAdder.add_one_req</text>
+  <text x="250" y="192.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">admit while the KV budget allows</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <line x1="170" y1="204" x2="170" y2="247" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-2-2-head-plum)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-plum-ink, #8a3d72)" opacity="0"><animateMotion path="M170 204 L170 247" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="175" y="214.53" width="61.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="178" y="225.5" font-size="11.5" fill="var(--m-plum-ink, #8a3d72)">admitted</text>
+  <line x1="340" y1="204" x2="340" y2="247" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-2-2-head-plum)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-plum-ink, #8a3d72)" opacity="0"><animateMotion path="M340 204 L340 247" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="345" y="214.53" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="348" y="225.5" font-size="11.5" fill="var(--m-plum-ink, #8a3d72)">nothing admitted</text>
+  <rect x="20" y="248" width="250" height="48" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="145" y="267.25" font-size="12.5" text-anchor="middle" font-weight="700">prefill batch</text>
+  <text x="145" y="284.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">EXTEND forward of admitted requests</text>
+  <rect x="300" y="248" width="300" height="48" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="450" y="267.25" font-size="12.5" text-anchor="middle" font-weight="700">decode step</text>
+  <text x="450" y="284.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one token for every running request</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <line x1="170" y1="296" x2="170" y2="335" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M170 296 L170 335" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <line x1="340" y1="296" x2="340" y2="335" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M340 296 L340 335" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="100" y="336" width="300" height="48" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="250" y="355.25" font-size="12.5" text-anchor="middle" font-weight="700">process_batch_result</text>
+  <text x="250" y="372.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">append tokens, check stops, send results</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <path d="M400 360 L620 360 L620 40 L401 40" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-2-2-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M400 360 L620 360 L620 40 L401 40" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="487.3" y="22.42" width="65.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="520" y="33" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">next turn</text>
+  </g>
+</svg>

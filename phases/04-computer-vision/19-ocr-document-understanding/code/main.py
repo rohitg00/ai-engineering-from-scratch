@@ -54,8 +54,11 @@ def synthetic_line(text, height=32, char_width=16):
     img = np.ones((height, W), dtype=np.float32)
     for i, c in enumerate(text):
         x = i * char_width
-        shade = 0.0 if c.isalnum() else 0.5
-        img[6:height - 6, x + 2:x + char_width - 2] = shade
+        code = VOCAB.index(c) if c in VOCAB else 0
+        for bit in range(6):
+            if code >> bit & 1:
+                y = 4 + 4 * bit
+                img[y:y + 3, x + 2:x + char_width - 2] = 0.0
     return img
 
 
@@ -86,7 +89,7 @@ def main():
     print(f"params: {sum(p.numel() for p in model.parameters()):,}")
 
     train_strings = [f"abc{d}" for d in range(10)] + [f"xy{d}{d+1}" for d in range(10)]
-    for step in range(200):
+    for step in range(400):
         idx = np.random.choice(len(train_strings), 8)
         strings = [train_strings[i] for i in idx]
         imgs, targets, target_lens = build_batch(strings, max_len=5)

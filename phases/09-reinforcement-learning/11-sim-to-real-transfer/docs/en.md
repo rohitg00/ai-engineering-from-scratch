@@ -31,7 +31,7 @@ You need a policy that is *robust to sim-to-real distribution shift*. Three hist
 
 **Domain Adaptation.** Train in sim, fine-tune with a small amount of real data. Two flavors:
 
-- **Real2Sim2Real:** learn a residual simulator `f(s, a, z) - f_sim(s, a)` using real rollouts, train in the corrected sim. Closes the gap without much real data.
+- **Real2Sim2Real:** learn a residual simulator $f(s, a, z) - f_{\text{sim}}(s, a)$ using real rollouts, train in the corrected sim. Closes the gap without much real data.
 - **Observation adaptation:** train a policy that maps real obs → sim-like obs via a learned feature extractor (e.g., GAN pixel-to-pixel). The controller stays in sim.
 
 **Privileged learning / teacher-student.** Miki et al. 2022 (ANYmal quadruped). Train a *teacher* in simulation that has access to privileged information (ground truth friction, terrain height, IMU drift). Distill a *student* that only sees real-sensor observations. The student learns to infer privileged features from history, robust across physical parameters.
@@ -128,7 +128,7 @@ Refuse to deploy without (a) a zero-shot sim-variant test, (b) a safety shield, 
 
 ## Exercises
 
-1. **Easy.** Train a Q-learning agent on the fixed-slip GridWorld (slip=0.0). Evaluate on slip ∈ {0.0, 0.1, 0.3, 0.5}. Plot return vs slip.
+1. **Easy.** Train a Q-learning agent on the fixed-slip GridWorld (slip=0.0). Evaluate on $\text{slip} \in \lbrace 0.0, 0.1, 0.3, 0.5 \rbrace$. Plot return vs slip.
 2. **Medium.** Train a DR Q-learning agent sampling `slip ~ Uniform[0, 0.3]`. Evaluate the same sweep. How much does DR buy at slip=0.5 (out-of-distribution)?
 3. **Hard.** Implement a curriculum: start with slip=0.0, widen the DR range every time the policy hits 90% of optimal. Measure total environment steps to reach slip=0.3 zero-shot vs. a fixed DR baseline.
 

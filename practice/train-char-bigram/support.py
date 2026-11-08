@@ -1,0 +1,75 @@
+import numpy as np
+
+VOCAB = " abcdefghijklmnopqrstuvwxyz.,"
+
+TEXT = (
+    'a training memory technique that saves only selected forward pass activations and '
+    'recomputes the omitted ones during backpropagation. a function applied after a '
+    'linear or affine layer that introduces nonlinearity. without it, composing layers '
+    'with weights and biases collapses to one affine transformation. relu, gelu, and silu'
+    ' are common choices. the choice directly affects whether gradients flow during '
+    'training. adaptive moment estimation. it combines an exponential average of '
+    'gradients with an exponential average of squared gradients, applies bias correction,'
+    ' and adapts the update scale per parameter. it is a useful baseline, but it still '
+    'needs a suitable learning rate and schedule. an adam variant that decouples weight '
+    'decay from the gradient based parameter update. that makes the shrinkage behavior '
+    'easier to reason about than adding an l penalty inside adam s adaptively scaled '
+    'gradient. a pre acceptance gate that decides whether a request may enter a bounded '
+    'queue or service under the system s current capacity, priority, and policy. a '
+    'software system that lets a model select actions toward a goal, observe tool or '
+    'environment results, and continue under an orchestration policy. an agent may use a '
+    'loop, a state machine, a workflow engine, or human approvals. the model is one '
+    'component, not the entire system. the runtime around a model that assembles context,'
+    ' exposes tools, manages state, enforces limits, records traces, and decides when the'
+    ' agent should continue, retry, ask, or stop. information stored outside the model '
+    'and selected for use in later agent steps, such as prior decisions, user '
+    'preferences, task episodes, or verified facts. the explicit data an agent carries '
+    'across steps, such as the current objective, completed actions, tool results, open '
+    'questions, budgets, approvals, and artifact references. a discoverable directory of '
+    'procedural instructions whose entry point is skill.md , with optional references, '
+    'scripts, and assets that a compatible runtime can load in stages. a documented '
+    'analysis of how an ai system can affect people, organizations, and environments, '
+    'including context, hazards, likelihood, impact, controls, residual risk, and '
+    'monitoring responsibilities. the effort to make a model or ai system behave in ways '
+    'that match intended goals, constraints, and human preferences across both expected '
+    'and adversarial situations. a control point that blocks a consequential action until'
+    ' an authorized person or policy grants permission. a search method that returns '
+    'vectors likely to be among the nearest to a query without exhaustively comparing the'
+    ' query with every stored vector. a mechanism that forms contextual representations '
+    'by comparing query vectors with key vectors, normalizing the resulting scores, and '
+    'using them to combine value vectors. masks, position rules, or sparse patterns can '
+    'restrict which positions participate. a discrete identifier produced by an audio '
+    'codec or tokenizer for a short segment or feature of an audio signal, sometimes '
+    'across several codebooks. a durable, access controlled record of security or '
+    'accountability relevant events, including who or what acted, what changed, when it '
+    'happened, and the resulting status. a system that records or transforms tensor '
+    'operations so it can compute derivatives, usually with reverse mode automatic '
+    'differentiation. you write the forward computation and the framework derives the '
+    'gradients needed for backpropagation. the task and system pipeline that maps a '
+    'speech signal to a transcription, often with optional token or segment timing and '
+    'confidence information. a factorization in which each output token is predicted from'
+    ' the tokens that precede it. during generation, the selected token is appended to '
+    'the sequence and becomes part of the next prediction s context. a control loop that '
+    'changes the number or capacity of serving workers from observed demand, resource '
+    'use, or application metrics within configured bounds. the proportion of eligible '
+    'service interactions or time windows in which users can obtain the defined '
+    'acceptable service under a stated measurement boundary. a flow control mechanism '
+    'that slows or rejects upstream work when a downstream component cannot process it '
+    'safely at the current rate. an efficient application of the chain rule that '
+    'propagates derivatives from a scalar loss backward through a computation graph. it '
+    'computes gradients an optimizer uses those gradients to update parameters. the '
+    'number of examples whose losses contribute to one gradient estimate before an '
+    'optimizer update. larger batches can improve hardware utilization and reduce '
+    'gradient noise, but they require more memory and may need different learning rate or'
+    ' scheduling choices. overlap or information leakage between evaluation examples and '
+    'data used to pretrain, tune, prompt, select, or otherwise improve the evaluated '
+    'system.'
+)
+
+
+def encode(text):
+    return np.array([VOCAB.index(ch) for ch in text], dtype=int)
+
+
+def decode(ids):
+    return "".join(VOCAB[int(i)] for i in ids)

@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 666" role="img" aria-labelledby="fig-8-1-title fig-8-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-1-title">One connection from initialize to close_binary</title>
+  <desc id="fig-8-1-desc">Three lifelines: the capture client re101-capture 1.0.0, rea mcp from rea-agents 6.7.0 over stdio, and Ghidra 12.1.4 headless with a fresh project. Fifteen numbered exchanges: initialize with protocolVersion 2025-06-18 and the reply naming rea 6.7.0 with tools and prompts; tools/list and the reply of 207 tools in 284 ms; open_binary on ledger-arm64-O1 with provider_id ghidra, answered mach-o arm64 in 1,632 ms after the install checks and before any import; list_procedures, which makes rea start the Ghidra import, auto-analysis and bridge under its 330,000 ms deadline, Ghidra reports ready, and the reply lists 13 procedures after 6,349 ms; procedure_assembly for _grade answered with 15 instructions in 4 ms from the session; close_binary, which shuts Ghidra down and deletes the ephemeral project, answered result null in 491 ms.</desc>
+  <defs><marker id="fig-8-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-8-1-head-plum" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-plum-ink, #8a3d72)"/></marker><marker id="fig-8-1-head-olive" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-olive-ink, #515f26)"/></marker></defs>
+  <rect x="25" y="8" width="170" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="110" y="23.1" font-size="12" text-anchor="middle" font-weight="700">client</text>
+  <text x="110" y="40.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">re101-capture 1.0.0</text>
+  <line x1="110" y1="48" x2="110" y2="658" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="235" y="8" width="170" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="320" y="23.1" font-size="12" text-anchor="middle" font-weight="700">rea mcp</text>
+  <text x="320" y="40.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rea-agents 6.7.0, stdio</text>
+  <line x1="320" y1="48" x2="320" y2="658" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="445" y="8" width="170" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="530" y="23.1" font-size="12" text-anchor="middle" font-weight="700">Ghidra 12.1.4</text>
+  <text x="530" y="40.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">headless, fresh project</text>
+  <line x1="530" y1="48" x2="530" y2="658" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="80" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="84" font-size="11" text-anchor="middle">1</text>
+  <line x1="110" y1="80" x2="319" y2="80" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 80 L319 80" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="177" y="63.03" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="214.5" y="74" font-size="11.5" text-anchor="middle">initialize</text>
+  <rect class="m-knock" x="134.28" y="84.42" width="160.44" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="214.5" y="95" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">protocolVersion 2025-06-18</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="118" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="122" font-size="11" text-anchor="middle">2</text>
+  <line x1="320" y1="118" x2="111" y2="118" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M320 118 L111 118" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="126.25" y="101.03" width="178.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="215.5" y="112" font-size="11.5" text-anchor="middle">rea 6.7.0, tools, prompts</text>
+  <rect class="m-knock" x="135.28" y="122.42" width="160.44" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="215.5" y="133" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">instructions for the model</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="156" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="160" font-size="11" text-anchor="middle">3</text>
+  <line x1="110" y1="156" x2="319" y2="156" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 156 L319 156" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="177" y="139.03" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="214.5" y="150" font-size="11.5" text-anchor="middle">tools/list</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="194" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="198" font-size="11" text-anchor="middle">4</text>
+  <line x1="320" y1="194" x2="111" y2="194" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M320 194 L111 194" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="181.45" y="177.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="215.5" y="188" font-size="11.5" text-anchor="middle">207 tools</text>
+  <rect class="m-knock" x="194.68" y="198.42" width="41.64" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="215.5" y="209" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">284 ms</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="232" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="236" font-size="11" text-anchor="middle">5</text>
+  <line x1="110" y1="232" x2="319" y2="232" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 232 L319 232" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="118.35" y="215.03" width="192.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="214.5" y="226" font-size="11.5" text-anchor="middle">open_binary ledger-arm64-O1</text>
+  <rect class="m-knock" x="158.04" y="236.42" width="112.92" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="214.5" y="247" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">provider_id ghidra</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="270" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="274" font-size="11" text-anchor="middle">6</text>
+  <line x1="320" y1="270" x2="111" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M320 270 L111 270" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="136.6" y="253.03" width="157.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="215.5" y="264" font-size="11.5" text-anchor="middle">mach-o arm64, 1,632 ms</text>
+  <rect class="m-knock" x="123.4" y="274.42" width="184.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="215.5" y="285" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">install checked, no import yet</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="308" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="312" font-size="11" text-anchor="middle">7</text>
+  <line x1="110" y1="308" x2="319" y2="308" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 308 L319 308" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="159.75" y="291.03" width="109.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="214.5" y="302" font-size="11.5" text-anchor="middle">list_procedures</text>
+  <rect class="m-knock" x="128.34" y="312.42" width="172.32" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="214.5" y="323" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the first Ghidra-backed call</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="346" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="16" y="350" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">8</text>
+  <line x1="320" y1="346" x2="529" y2="346" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-8-1-head-plum)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-plum-ink, #8a3d72)" opacity="0"><animateMotion path="M320 346 L529 346" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="321.45" y="329.03" width="206.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="424.5" y="340" font-size="11.5" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">import, auto-analysis, bridge</text>
+  <rect class="m-knock" x="365.07" y="350.42" width="118.86" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="424.5" y="361" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">deadline 330,000 ms</text>
+  </g>
+  <g data-beat="9"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="384" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="388" font-size="11" text-anchor="middle">9</text>
+  <line x1="530" y1="384" x2="321" y2="384" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M530 384 L321 384" keyPoints="0;0;1;1" keyTimes="0;0.857;0.955;1" calcMode="linear" dur="5.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.857;0.871;0.955;1" dur="5.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="405.25" y="367.03" width="40.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="425.5" y="378" font-size="11.5" text-anchor="middle">ready</text>
+  <rect class="m-knock" x="363.1" y="388.42" width="124.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="425.5" y="399" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one imported Program</text>
+  </g>
+  <g data-beat="10"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="422" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="426" font-size="11" text-anchor="middle">10</text>
+  <line x1="320" y1="422" x2="111" y2="422" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M320 422 L111 422" keyPoints="0;0;1;1" keyTimes="0;0.871;0.96;1" calcMode="linear" dur="6.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.871;0.884;0.96;1" dur="6.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="133.15" y="405.03" width="164.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="215.5" y="416" font-size="11.5" text-anchor="middle">13 procedures, 6,349 ms</text>
+  </g>
+  <g data-beat="11"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.93;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="6.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.93;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="6.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="460" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="464" font-size="11" text-anchor="middle">11</text>
+  <line x1="110" y1="460" x2="319" y2="460" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 460 L319 460" keyPoints="0;0;1;1" keyTimes="0;0.882;0.963;1" calcMode="linear" dur="6.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.882;0.894;0.963;1" dur="6.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="125.25" y="443.03" width="178.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="214.5" y="454" font-size="11.5" text-anchor="middle">procedure_assembly _grade</text>
+  </g>
+  <g data-beat="12"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.936;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.936;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="498" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="502" font-size="11" text-anchor="middle">12</text>
+  <line x1="320" y1="498" x2="111" y2="498" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M320 498 L111 498" keyPoints="0;0;1;1" keyTimes="0;0.892;0.966;1" calcMode="linear" dur="7.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.892;0.903;0.966;1" dur="7.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="140.05" y="481.03" width="150.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="215.5" y="492" font-size="11.5" text-anchor="middle">15 instructions, 4 ms</text>
+  <rect class="m-knock" x="144.19" y="502.42" width="142.62" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="215.5" y="513" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">served from the session</text>
+  </g>
+  <g data-beat="13"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.941;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.941;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="536" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="540" font-size="11" text-anchor="middle">13</text>
+  <line x1="110" y1="536" x2="319" y2="536" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 536 L319 536" keyPoints="0;0;1;1" keyTimes="0;0.9;0.969;1" calcMode="linear" dur="8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.9;0.91;0.969;1" dur="8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="170.1" y="519.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="214.5" y="530" font-size="11.5" text-anchor="middle">close_binary</text>
+  </g>
+  <g data-beat="14"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.945;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="8.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.945;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="8.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="574" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="578" font-size="11" text-anchor="middle">14</text>
+  <line x1="320" y1="574" x2="529" y2="574" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-1-head-olive)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-olive-ink, #515f26)" opacity="0"><animateMotion path="M320 574 L529 574" keyPoints="0;0;1;1" keyTimes="0;0.907;0.971;1" calcMode="linear" dur="8.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.907;0.916;0.971;1" dur="8.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="338.7" y="557.03" width="171.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="424.5" y="568" font-size="11.5" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">shutdown, delete project</text>
+  <rect class="m-knock" x="347.25" y="578.42" width="154.5" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="424.5" y="589" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ephemeral project removed</text>
+  </g>
+  <g data-beat="15"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.949;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="8.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.949;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="8.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="612" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="616" font-size="11" text-anchor="middle">15</text>
+  <line x1="320" y1="612" x2="111" y2="612" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M320 612 L111 612" keyPoints="0;0;1;1" keyTimes="0;0.913;0.973;1" calcMode="linear" dur="9.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.913;0.922;0.973;1" dur="9.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="146.95" y="595.03" width="137.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="215.5" y="606" font-size="11.5" text-anchor="middle">result null, 491 ms</text>
+  </g>
+</svg>

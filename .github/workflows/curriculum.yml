@@ -10,6 +10,8 @@ on:
       - ".claude/skills/**"
       - "scripts/audit_lessons.py"
       - "scripts/run_lesson_tests.py"
+      - "scripts/link_check.py"
+      - "scripts/test_link_check.py"
       - "scripts/audit_certifications.py"
       - "scripts/check_mcpa_wire.py"
       - "scripts/test_check_mcpa_wire.py"
@@ -18,6 +20,8 @@ on:
       - "scripts/debias_quizzes.py"
       - "scripts/check_quiz_bias.py"
       - "scripts/build_readme_i18n.py"
+      - "scripts/audit_readme_locales.py"
+      - "scripts/test_audit_readme_locales.py"
       - "scripts/readme_translations.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
@@ -25,13 +29,20 @@ on:
       - "scripts/test_agent_negotiation.js"
       - "scripts/test_agent_readiness.py"
       - "scripts/test_seo_routes.js"
+      - "scripts/test_function_bundles.js"
       - "scripts/test_skill_artifact_bundles.py"
       - "scripts/test_translate_workflow.py"
+      - "scripts/translate_matrix.py"
+      - "scripts/translation_freshness.py"
+      - "scripts/translate_lessons.py"
       - "scripts/translate_ui_strings.py"
       - "scripts/test_translate_ui_strings.py"
       - "site/test_learning_paths.js"
       - "languages.json"
       - "README.md"
+      - "i18n/*/README.md"
+      - "i18n/readme-source.sha256"
+      - "docs/i18n.md"
       - "CONTRIBUTING.md"
       - "SPONSORS.md"
       - "BACKERS.md"
@@ -40,7 +51,15 @@ on:
       - "glossary/**"
       - "site/build.js"
       - "site/**"
+      - "scripts/agent-machine/**"
+      - "scripts/decompiler-machine/**"
+      - "scripts/gpu-machine/**"
       - "api/**"
+      - "lib/**"
+      - "scripts/test_agent_api.js"
+      - "scripts/test_agent_wire.js"
+      - "scripts/test_api_state.js"
+      - "scripts/serve-agent-site.js"
       - "vercel.json"
       - ".github/workflows/curriculum.yml"
       - ".github/workflows/translate.yml"
@@ -53,6 +72,8 @@ on:
       - ".claude/skills/**"
       - "scripts/audit_lessons.py"
       - "scripts/run_lesson_tests.py"
+      - "scripts/link_check.py"
+      - "scripts/test_link_check.py"
       - "scripts/audit_certifications.py"
       - "scripts/check_mcpa_wire.py"
       - "scripts/test_check_mcpa_wire.py"
@@ -61,6 +82,8 @@ on:
       - "scripts/debias_quizzes.py"
       - "scripts/check_quiz_bias.py"
       - "scripts/build_readme_i18n.py"
+      - "scripts/audit_readme_locales.py"
+      - "scripts/test_audit_readme_locales.py"
       - "scripts/readme_translations.py"
       - "scripts/build_catalog.py"
       - "scripts/check_readme_counts.py"
@@ -68,13 +91,20 @@ on:
       - "scripts/test_agent_negotiation.js"
       - "scripts/test_agent_readiness.py"
       - "scripts/test_seo_routes.js"
+      - "scripts/test_function_bundles.js"
       - "scripts/test_skill_artifact_bundles.py"
       - "scripts/test_translate_workflow.py"
+      - "scripts/translate_matrix.py"
+      - "scripts/translation_freshness.py"
+      - "scripts/translate_lessons.py"
       - "scripts/translate_ui_strings.py"
       - "scripts/test_translate_ui_strings.py"
       - "site/test_learning_paths.js"
       - "languages.json"
       - "README.md"
+      - "i18n/*/README.md"
+      - "i18n/readme-source.sha256"
+      - "docs/i18n.md"
       - "CONTRIBUTING.md"
       - "SPONSORS.md"
       - "BACKERS.md"
@@ -83,7 +113,15 @@ on:
       - "glossary/**"
       - "site/build.js"
       - "site/**"
+      - "scripts/agent-machine/**"
+      - "scripts/decompiler-machine/**"
+      - "scripts/gpu-machine/**"
       - "api/**"
+      - "lib/**"
+      - "scripts/test_agent_api.js"
+      - "scripts/test_agent_wire.js"
+      - "scripts/test_api_state.js"
+      - "scripts/serve-agent-site.js"
       - "vercel.json"
       - ".github/workflows/curriculum.yml"
       - ".github/workflows/translate.yml"
@@ -114,6 +152,8 @@ jobs:
         run: find certifications/*/lessons -path '*/code/main.py' -print0 | xargs -0 -r -n1 python3
       - name: MCPA wire-shape checker tests
         run: python3 scripts/test_check_mcpa_wire.py
+      - name: external link-checker extraction tests
+        run: python3 -m unittest scripts.test_link_check
       - name: MCPA lesson transcripts match the 2026-07-28 wire shape
         run: python3 scripts/check_mcpa_wire.py
       - name: skill artifact bundles install without losing companion files
@@ -122,10 +162,50 @@ jobs:
         run: node --test site/test_build_artifacts.js
       - name: returning visitors receive updated site assets
         run: node --test site/test_asset_cache.js
+      - name: lesson math renders outside code and money stays text
+        run: node --test site/test_lesson_math.js
       - name: command copying preserves keyboard focus
         run: node --test site/test_project_copy.js
+      - name: homepage curiosity supports pointer and keyboard input
+        run: node --test site/test_intelligence_check.js
+      - name: the skills page stays in sync with the skills folder
+        run: node --test site/test_skills_page.js
+      - name: lesson screen serves screens locally, records clicks, and checks machine specs
+        run: node --test site/test_lesson_screen.js
+      - name: the star note asks engaged readers at most twice
+        run: node --test site/test_star_nudge.js
+      - name: assessment attempts survive reloads, expired timers, and a second tab
+        run: node --test site/test_certification_state.js
+      - name: the theme menu offers system, light, and dark on every page
+        run: node --test site/test_theme_menu.js site/test_overlays.js site/test_tts_navigation.js
+      - name: lesson walkthrough syncs steps and schedules revisits
+        run: node --test site/test_lesson_walkthrough.js
+      - name: lesson quizzes are placed once, before the footer, in every language
+        run: node --test site/test_quiz_placement.js
+      - name: agent machine simulation and page stay in sync
+        run: node --test site/test_agent_machine.js
+      - name: decompiler machine simulation and page stay in sync
+        run: node --test site/test_decompiler_machine.js
+      - name: GPU machine simulation and page stay in sync
+        run: node --test site/test_gpu_machine.js
+      - name: lesson highlights re-anchor and survive storage faults
+        run: node --test site/test_highlights.js site/test_highlights_store.js
+      - name: my highlights page filters, exports, and stays local
+        run: node --test site/test_highlights_page.js
+      - name: practice pages hide the solution and progress survives storage faults
+        run: node --test site/test_practice.js site/test_practice_store.js site/test_projects_state.js
+      - name: the interview bank follows its contract and its pages fold the answers
+        run: node scripts/interviews/validate.js && node --test scripts/interviews/test_validate.js site/test_interviews.js && node site/build-interviews.js --check
+      - name: code blocks render by kind and copy commands only
+        run: node --test site/test_code_render.js site/test_lesson_code.js
       - name: build the static site
-        run: node site/build.js
+        run: node site/build.js && node site/build-projects.js --strict && node site/build-agents.js
+      - name: deployment bundles stay small and preserve runtime assets
+        run: |
+          npm install --prefix "$RUNNER_TEMP/function-trace" --no-save --no-package-lock @vercel/nft@1.5.0
+          NODE_PATH="$RUNNER_TEMP/function-trace/node_modules" node --test scripts/test_function_bundles.js
+      - name: public API and MCP contracts
+        run: node --test scripts/test_agent_api.js scripts/test_agent_wire.js scripts/test_api_state.js
       - name: dynamic lesson and certification routes preserve their public contracts
         run: node --test scripts/test_seo_routes.js
       - name: agent-facing discovery surfaces stay complete
@@ -134,6 +214,10 @@ jobs:
         run: node --test scripts/test_agent_negotiation.js
       - name: static preview routes stay navigable
         run: node --test site/test_static_preview_routes.js
+      - name: clean page URLs and published discovery links stay consistent
+        run: node --test site/test_clean_urls.js
+      - name: synced writing keeps full articles and canonical metadata
+        run: node --test site/test_portfolio_sync.js site/test_writing_mirror.js site/test_portfolio_cache.js site/test_writing_seo.js
       - name: learning paths links and routes stay valid
         run: node --test site/test_learning_paths.js
       - name: sponsor placement preserves approved artwork and ownership
@@ -148,6 +232,8 @@ jobs:
         run: python3 scripts/debias_certification_questions.py --check
       - name: README translations are in sync with English
         run: python3 scripts/build_readme_i18n.py --check
+      - name: README locale audit detects untranslated text and structural drift
+        run: python3 scripts/test_audit_readme_locales.py
       - name: translation workflow publisher retries safely
         run: python3 scripts/test_translate_workflow.py
       - name: interface-string translator pins, reuses, and protects correctly
@@ -193,7 +279,7 @@ jobs:
         run: python3 scripts/build_catalog.py
       - name: sync README counts
         run: python3 scripts/check_readme_counts.py --fix
-      - name: regenerate README translations from the synced English
+      - name: sync README stats and validate complete translations
         run: python3 scripts/build_readme_i18n.py
       - name: commit + push if README changed
         env:

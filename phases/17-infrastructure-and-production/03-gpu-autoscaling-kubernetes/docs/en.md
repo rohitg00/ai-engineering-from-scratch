@@ -20,7 +20,7 @@ Your team ships an LLM-serving service on Kubernetes. You set up HPA with `DCGM_
 
 Separately, you use Cluster Autoscaler for nodes. A 1M-token prompt arrives at 2 a.m.; the cluster spends 3 minutes provisioning a node, and the request times out.
 
-Separately again, you deploy a 70B model requiring 8 GPUs across 2 nodes. The cluster has 7 GPUs free and 1 spread across 3 nodes. Cluster Autoscaler provisions a node for the 1 missing GPU. Seven nodes wait 4 minutes burning money while Kubernetes gets the last GPU up.
+Separately again, you deploy a 70B model requiring 8 GPUs across 2 nodes. The cluster has 7 GPUs free, scattered across 3 nodes, and needs 1 more. Cluster Autoscaler provisions a node for the 1 missing GPU. The 7 reserved GPUs sit idle for 4 minutes burning money while Kubernetes gets the last GPU up.
 
 Three layers, three different failure modes. GPU-aware autoscaling in 2026 is not "turn on HPA." It's composing node provisioning, gang scheduling, and application-signal autoscaling.
 

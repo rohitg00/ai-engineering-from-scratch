@@ -1,0 +1,5 @@
+$ docker-agent run --exec --working-dir fixtures/repo --fake work/cassettes/18-files fixtures/agents/files.yaml 'List the files in the working directory.' 'How many lines does README.md have? Count them with a shell command.'
+[... 299 lines of model reasoning cut by run.py ...]
+
+README.md has 1 line.
+[exit 0]

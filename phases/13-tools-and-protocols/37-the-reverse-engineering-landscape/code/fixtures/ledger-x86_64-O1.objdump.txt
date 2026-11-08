@@ -1,0 +1,71 @@
+
+ledger-x86_64-O1.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <percent_change>:
+       0: 85 ff                        	testl	%edi, %edi
+       2: 74 09                        	je	0xd <percent_change+0xd>
+       4: 29 fe                        	subl	%edi, %esi
+       6: 6b c6 64                     	imull	$0x64, %esi, %eax
+       9: 99                           	cltd
+       a: f7 ff                        	idivl	%edi
+       c: c3                           	retq
+       d: 31 c0                        	xorl	%eax, %eax
+       f: c3                           	retq
+
+0000000000000010 <grade>:
+      10: 48 63 c7                     	movslq	%edi, %rax
+      13: 48 69 c0 67 66 66 66         	imulq	$0x66666667, %rax, %rax # imm = 0x66666667
+      1a: 48 89 c1                     	movq	%rax, %rcx
+      1d: 48 c1 f9 22                  	sarq	$0x22, %rcx
+      21: 48 c1 e8 3f                  	shrq	$0x3f, %rax
+      25: 01 c1                        	addl	%eax, %ecx
+      27: 83 c1 fa                     	addl	$-0x6, %ecx
+      2a: 31 c0                        	xorl	%eax, %eax
+      2c: 83 f9 04                     	cmpl	$0x4, %ecx
+      2f: 77 0c                        	ja	0x3d <grade+0x2d>
+      31: 89 c8                        	movl	%ecx, %eax
+      33: 48 8d 0d 00 00 00 00         	leaq	(%rip), %rcx            # 0x3a <grade+0x2a>
+		0000000000000036:  R_X86_64_PC32	.rodata+0x10
+      3a: 8b 04 81                     	movl	(%rcx,%rax,4), %eax
+      3d: c3                           	retq
+      3e: 66 90                        	nop
+
+0000000000000040 <total>:
+      40: 85 f6                        	testl	%esi, %esi
+      42: 7e 18                        	jle	0x5c <total+0x1c>
+      44: 89 f1                        	movl	%esi, %ecx
+      46: 31 d2                        	xorl	%edx, %edx
+      48: 31 c0                        	xorl	%eax, %eax
+      4a: 66 0f 1f 44 00 00            	nopw	(%rax,%rax)
+      50: 03 04 97                     	addl	(%rdi,%rdx,4), %eax
+      53: 48 ff c2                     	incq	%rdx
+      56: 48 39 d1                     	cmpq	%rdx, %rcx
+      59: 75 f5                        	jne	0x50 <total+0x10>
+      5b: c3                           	retq
+      5c: 31 c0                        	xorl	%eax, %eax
+      5e: c3                           	retq
+      5f: 90                           	nop
+
+0000000000000060 <grade_label>:
+      60: 48 63 c7                     	movslq	%edi, %rax
+      63: 48 69 c0 67 66 66 66         	imulq	$0x66666667, %rax, %rax # imm = 0x66666667
+      6a: 48 89 c1                     	movq	%rax, %rcx
+      6d: 48 c1 f9 22                  	sarq	$0x22, %rcx
+      71: 48 c1 e8 3f                  	shrq	$0x3f, %rax
+      75: 01 c8                        	addl	%ecx, %eax
+      77: 83 c0 fa                     	addl	$-0x6, %eax
+      7a: 83 f8 04                     	cmpl	$0x4, %eax
+      7d: 77 0f                        	ja	0x8e <grade_label+0x2e>
+      7f: 89 c0                        	movl	%eax, %eax
+      81: 48 8d 0d 00 00 00 00         	leaq	(%rip), %rcx            # 0x88 <grade_label+0x28>
+		0000000000000084:  R_X86_64_PC32	.rodata+0x24
+      88: 48 8b 04 c1                  	movq	(%rcx,%rax,8), %rax
+      8c: eb 02                        	jmp	0x90 <grade_label+0x30>
+      8e: 31 c0                        	xorl	%eax, %eax
+      90: 48 8d 0d 00 00 00 00         	leaq	(%rip), %rcx            # 0x97 <grade_label+0x37>
+		0000000000000093:  R_X86_64_PC32	.rodata-0x4
+      97: 48 63 04 81                  	movslq	(%rcx,%rax,4), %rax
+      9b: 48 01 c8                     	addq	%rcx, %rax
+      9e: c3                           	retq

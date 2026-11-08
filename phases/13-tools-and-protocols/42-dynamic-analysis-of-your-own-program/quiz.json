@@ -1,0 +1,90 @@
+{
+  "lesson": "42-dynamic-analysis-of-your-own-program",
+  "title": "Dynamic Analysis of Your Own Program: Debuggers, Traces, and Confirming Static Claims",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "You set breakpoints on bump, classify, and sum_balances in a build of your own program, run it to completion, and every breakpoint reports hit count = 0. What does that run prove?",
+      "options": [
+        "That the program has no functions",
+        "That no out-of-line copy of the three functions ran for this input in this build, and nothing about other inputs or other builds",
+        "That the breakpoints were set at the wrong addresses",
+        "The three functions are dead code and can be removed"
+      ],
+      "correct": 1,
+      "explanation": "A hit count is an observation about one execution of one build. At -O2 the compiler inlined the three functions and folded the results into constants, so the exported copies never ran. The functions are still in the symbol table."
+    },
+    {
+      "stage": "check",
+      "question": "At the bump breakpoint lldb prints x0 = 0x16fdfe008, x1 = 0x5, and memory read -s4 -fx -c8 $x0 prints 0x00000073 0x000000fa 0x00000009 0x00000000 0x00000000 0x3ff40000 0x00000719 0x00000001. Which static claim does the second word confirm?",
+      "options": [
+        "That balance is at offset 4 and holds 250, the value DWARF puts at DW_AT_data_member_location 0x04",
+        "That rate is a float",
+        "That x1 holds the struct pointer",
+        "That the struct is 16 bytes long"
+      ],
+      "correct": 0,
+      "explanation": "The words are the struct bytes starting at a. Word 1 sits at offset 4, holds 0xfa = 250, and matches frame variable a->balance. Words 4 and 5 are the IEEE-754 double 1.25 at offset 16, and words 6 and 7 are the label pointer at offset 24."
+    },
+    {
+      "stage": "check",
+      "question": "In classify at -O0 the first conditional branch is tbz w8, #0x1f, 0x100000504 with the fall-through at 0x1000004f4. The run stops at 0x1000004f4 for an account with balance -40. Is the lesson 33 edge claim confirmed or refuted?",
+      "options": [
+        "Refuted, because the branch to 0x100000504 was not taken",
+        "Confirmed, because tbz branches when bit 31 is zero, so a negative balance falls through to the return -1 block exactly as the lifted condition predicts",
+        "Not observed, because tbz is not a conditional branch",
+        "Refuted, because -40 is less than 200"
+      ],
+      "correct": 1,
+      "explanation": "tbz is test bit and branch if zero. Bit 31 of -40 is set, so the branch is not taken and execution falls through. The static claim says the taken edge is for balance >= 0 and the fall-through edge is for balance < 0, which is what the stop shows."
+    },
+    {
+      "stage": "check",
+      "question": "watchpoint set variable a->balance reports size = 4, type = m, and watchpoint list prints Number of supported hardware watchpoints: 4. Why does lldb report a count at all?",
+      "options": [
+        "Because macOS allows only four debuggers at once",
+        "Because data watchpoints use per-core debug registers, DR0 to DR3 on x86-64 and DBGWVR/DBGWCR pairs on arm64, so a fixed number of them exist and a wide region can use more than one",
+        "Because watchpoints are implemented in software and lldb limits them to keep the process fast",
+        "Because the count is the number of bytes watched"
+      ],
+      "correct": 1,
+      "explanation": "Hardware watchpoints compare every memory access against a small set of address registers. x86-64 has four, arm64 implementations have between 2 and 64, and this machine reports 4. When the slots run out lldb refuses the next watchpoint."
+    },
+    {
+      "stage": "post",
+      "question": "You saved a core with process save-core --style stack at the bump breakpoint. Loading it with lldb -c shows balance = 250 but label = \"\" with the pointer 0x100000719 intact. What happened?",
+      "options": [
+        "lldb cannot print strings from core files",
+        "The core is corrupt",
+        "The program never set label",
+        "The string lives in the __TEXT segment of the executable, which a stack-style core does not include, so the pointer is present and the bytes behind it are not"
+      ],
+      "correct": 3,
+      "explanation": "A stack-style core saves the stack and modified memory, 49152 bytes here. The literal \"savings\" is read-only data in the binary. lldb warns that such a core may not show binaries, and --style full includes all process memory."
+    },
+    {
+      "stage": "post",
+      "question": "On Apple silicon, why does clang -g -o account account.c produce a binary that lldb can debug without any extra signing step?",
+      "options": [
+        "Because the Command Line Tools disable System Integrity Protection",
+        "Because the linker ad-hoc signs arm64 output by default (flags adhoc,linker-signed), the binary is not hardened, and it has no entitlements, so Apple's rule that the target must opt out of debugging does not apply",
+        "Because lldb ignores code signatures",
+        "Because the binary carries the com.apple.security.cs.debugger entitlement"
+      ],
+      "correct": 1,
+      "explanation": "codesign -dvvv shows Signature=adhoc and flags=0x20002(adhoc,linker-signed) with no entitlements. The debugger side is covered by debugserver, which Apple signed with its own private entitlements. Only a hardened binary without get-task-allow refuses the task port."
+    },
+    {
+      "stage": "post",
+      "question": "Which statement about record-and-replay with rr is correct for a learner on an Apple silicon Mac?",
+      "options": [
+        "rr works inside Docker on macOS because Docker runs Linux",
+        "rr replaces lldb on macOS since 5.9.0",
+        "rr runs on macOS and records with dtrace",
+        "rr is Linux only, needs hardware performance counters, and no virtualization on macOS exposes them, so the only path is a Linux machine or a VM elsewhere with counter virtualization enabled"
+      ],
+      "correct": 3,
+      "explanation": "rr records on Linux with perf counters on Intel, AMD Zen, or certain AArch64 cores including Apple M-series under Linux. Its own wiki says no virtualization on macOS supports performance counter virtualization, which rules out Docker and Colima VMs on this machine."
+    }
+  ]
+}

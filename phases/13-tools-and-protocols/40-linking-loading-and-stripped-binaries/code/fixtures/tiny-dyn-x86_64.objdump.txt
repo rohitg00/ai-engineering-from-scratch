@@ -1,0 +1,75 @@
+
+tiny-dyn-x86_64:	file format elf64-x86-64
+
+Program Header:
+  INTERP off    0x0000000000000120 vaddr 0x0000000000000120 paddr 0x0000000000000120 align 2**0
+         filesz 0x000000000000001c memsz 0x000000000000001c flags r--
+    LOAD off    0x0000000000000000 vaddr 0x0000000000000000 paddr 0x0000000000000000 align 2**12
+         filesz 0x0000000000000247 memsz 0x0000000000000247 flags r-x
+    LOAD off    0x0000000000001000 vaddr 0x0000000000001000 paddr 0x0000000000001000 align 2**12
+         filesz 0x00000000000000e8 memsz 0x00000000000000e8 flags rw-
+ DYNAMIC off    0x0000000000001000 vaddr 0x0000000000001000 paddr 0x0000000000001000 align 2**3
+         filesz 0x00000000000000c0 memsz 0x00000000000000c0 flags rw-
+
+Dynamic Section:
+  NEEDED   libc.so.6
+  HASH     0x00000000000001a0
+  STRTAB   0x0000000000000188
+  SYMTAB   0x0000000000000140
+  STRSZ    0x0000000000000015
+  SYMENT   0x0000000000000018
+  PLTGOT   0x00000000000010c0
+  PLTRELSZ 0x0000000000000030
+  PLTREL   0x0000000000000007
+  JMPREL   0x00000000000001b8
+  FLAGS_1  0x0000000008000000
+
+Sections:
+Idx Name          Size     VMA              Type
+  0               00000000 0000000000000000 
+  1 .interp       0000001c 0000000000000120 DATA
+  2 .dynsym       00000048 0000000000000140 
+  3 .dynstr       00000015 0000000000000188 
+  4 .hash         00000018 00000000000001a0 
+  5 .rela.plt     00000030 00000000000001b8 
+  6 .plt          00000030 00000000000001f0 TEXT
+  7 .text         00000014 0000000000000220 TEXT
+  8 .rodata       0000000f 0000000000000238 DATA
+  9 .dynamic      000000c0 0000000000001000 
+ 10 .got.plt      00000028 00000000000010c0 DATA
+ 11 .shstrtab     00000058 0000000000000000 
+
+DYNAMIC SYMBOL TABLE:
+0000000000000000      DF *UND*	0000000000000000 puts
+0000000000000000      DF *UND*	0000000000000000 exit
+
+DYNAMIC RELOCATION RECORDS
+OFFSET           TYPE                     VALUE
+00000000000010d8 R_X86_64_JUMP_SLOT       puts
+00000000000010e0 R_X86_64_JUMP_SLOT       exit
+
+Disassembly of section .plt:
+
+00000000000001f0 <.plt>:
+     1f0: ff 35 d2 0e 00 00            	pushq	0xed2(%rip)             # 0x10c8
+     1f6: ff 25 d4 0e 00 00            	jmpq	*0xed4(%rip)            # 0x10d0
+     1fc: 0f 1f 40 00                  	nopl	(%rax)
+
+0000000000000200 <puts@plt>:
+     200: ff 25 d2 0e 00 00            	jmpq	*0xed2(%rip)            # 0x10d8
+     206: 68 00 00 00 00               	pushq	$0x0
+     20b: e9 e0 ff ff ff               	jmp	0x1f0 <.plt>
+
+0000000000000210 <exit@plt>:
+     210: ff 25 ca 0e 00 00            	jmpq	*0xeca(%rip)            # 0x10e0
+     216: 68 01 00 00 00               	pushq	$0x1
+     21b: e9 d0 ff ff ff               	jmp	0x1f0 <.plt>
+
+Disassembly of section .text:
+
+0000000000000220 <.text>:
+     220: 48 8d 3d 11 00 00 00         	leaq	0x11(%rip), %rdi        # 0x238
+     227: e8 d4 ff ff ff               	callq	0x200 <puts@plt>
+     22c: 31 ff                        	xorl	%edi, %edi
+     22e: e8 dd ff ff ff               	callq	0x210 <exit@plt>
+     233: f4                           	hlt

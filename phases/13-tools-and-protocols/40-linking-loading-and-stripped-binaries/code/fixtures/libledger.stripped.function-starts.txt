@@ -1,0 +1,6 @@
+libledger.stripped.dylib [arm64]:
+    -function_starts:
+        0x00000410  <anon-00000410>
+        0x00000428  <anon-00000428>
+        0x00000464  <anon-00000464>
+        0x00000498  <anon-00000498>

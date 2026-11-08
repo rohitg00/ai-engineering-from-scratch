@@ -1,0 +1,21 @@
+{
+  "id": "lora-forward",
+  "title": "LoRA linear layer",
+  "kind": "implement",
+  "summary": "Forward pass of a linear layer with a low rank adapter, merge of the adapter into the weight, and the trainable parameter count.",
+  "difficulty": "easy",
+  "tags": ["lora", "fine-tuning", "linear-algebra"],
+  "lesson": "phases/11-llm-engineering/08-fine-tuning-lora",
+  "cheatsheet": "lora-fine-tuning",
+  "minutes": 15,
+  "entry": ["lora_forward", "merge_lora", "count_trainable"],
+  "collections": ["llm-inference"],
+  "time_limit_s": 10,
+  "mutants": {
+    "alpha_not_divided": "Scales the adapter path by alpha and forgets to divide by the rank.",
+    "count_product": "Counts r times in_features times out_features, the size of a full matrix product, not of A and B.",
+    "merge_in_place": "Adds the adapter into W in place, so the caller's frozen weight changes.",
+    "rank_from_w": "Reads the rank from the number of rows of W, not from the number of rows of A.",
+    "rank_over_alpha": "Uses r / alpha as the merge scale, the inverse of the correct scale."
+  }
+}

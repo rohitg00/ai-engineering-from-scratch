@@ -53,7 +53,7 @@ Result: Qwen2-VL-7B matched GPT-4o on several multimodal benchmarks and beat it 
 
 Qwen2.5-VL's big shift was video. Dynamic FPS is not just "sample more frames when needed." The paper formalized:
 
-- Absolute time tokens. Instead of positional indices (frame 0, 1, 2...), use actual timestamps. "At 0:04, the cat jumps." The model sees `<time>0.04</time>` tokens interleaved with frame tokens.
+- Absolute time in the position IDs. Instead of frame indices (frame 0, 1, 2...), the temporal axis of M-RoPE follows actual timestamps, so the gap between two frames' IDs tracks the seconds between them. "At 0:04, the cat jumps." No extra text tokens carry the time, so the encoding adds no sequence length.
 - Dynamic FPS. Sample at 1 FPS for slow footage, 4+ FPS for action. The user or trainer chooses; M-RoPE adapts.
 - Window attention in ViT. Spatial attention is windowed (local within blocks) for throughput; global attention every few layers.
 - Explicit JSON output format. Trained on tool-call data: "{\"tool\": \"click\", \"coords\": [380, 220]}". Agent-ready out of the box.
@@ -71,10 +71,12 @@ The lineage takeaway: by 2025 the Qwen-VL architecture had stabilized. Additiona
 
 Classical RoPE rotates a query `q` of dimension `d` by position `m` using paired coordinates:
 
-```
-q_rot[2i]   = q[2i]   * cos(m * theta_i) - q[2i+1] * sin(m * theta_i)
-q_rot[2i+1] = q[2i]   * sin(m * theta_i) + q[2i+1] * cos(m * theta_i)
-theta_i     = 10000^(-2i/d)
+```math
+\begin{aligned}
+q_{\text{rot}}[2i] &= q[2i] \cos(m \theta_i) - q[2i+1] \sin(m \theta_i) \\
+q_{\text{rot}}[2i+1] &= q[2i] \sin(m \theta_i) + q[2i+1] \cos(m \theta_i) \\
+\theta_i &= 10000^{-2i/d}
+\end{aligned}
 ```
 
 M-RoPE splits the hidden dim into three bands. Say `d = 96`. Assign 32 dims to temporal, 32 to height, 32 to width. Each band rotates by its own axis position. A patch at (t=5, h=10, w=20) gets rotations `R_t(5)`, `R_h(10)`, `R_w(20)` applied to its three bands.
@@ -90,7 +92,7 @@ Given a video of duration `T` seconds and a target-tokens budget `B`:
 1. Compute the maximum FPS you can afford: `fps_max = B / (T * tokens_per_frame)`.
 2. Pick a target FPS from `{1, 2, 4, 8}` that satisfies `fps <= fps_max`.
 3. If motion is high (optical-flow heuristic or explicit user request), pick higher FPS. If motion is low, pick lower.
-4. Sample uniformly at the chosen FPS; insert `<time>t</time>` tokens between frames.
+4. Sample uniformly at the chosen FPS; set each frame's M-RoPE temporal ID from its timestamp in seconds.
 
 Qwen2.5-VL trains this logic implicitly; at inference the user controls via `fps` parameter. A 60-second action sequence at 4 FPS with 81 tokens per frame = 19440 tokens, manageable in a 32k context.
 
@@ -145,7 +147,7 @@ This lesson produces `outputs/skill-qwen-vl-pipeline-designer.md`. Given a video
 |------|-----------------|------------------------|
 | M-RoPE | "Multimodal RoPE" | 3D rotary position embedding with temporal, height, and width bands in the hidden dim |
 | Dynamic FPS | "Smart sampling" | Frame sampling rate chosen per video based on motion, duration, and token budget |
-| Absolute time token | "Timestamp token" | `<time>t</time>` interleaved in the sequence so the model sees actual seconds not frame index |
+| Absolute time encoding | "Time-aligned M-RoPE" | Temporal position IDs set from each frame's timestamp, so the model sees actual seconds, not frame index, with no extra tokens |
 | Window attention | "Local attention" | Spatial self-attention restricted to small windows for speed; global attention added periodically |
 | Structured agent output | "JSON mode" | Training data supervision teaching the VLM to emit parseable JSON with coords and tool names |
 | min_pixels / max_pixels | "Resolution bounds" | Per-request Qwen2.5-VL controls bounding total pixel count and therefore token count |

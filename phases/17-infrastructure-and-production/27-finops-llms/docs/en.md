@@ -130,7 +130,7 @@ This lesson produces `outputs/skill-finops-plan.md`. Given product and scale, de
 1. Run `code/main.py`. At what z-score does the kill switch fire? How do you pick the threshold?
 2. Design a per-tenant, per-task cost dashboard. What are the 5 views you build first?
 3. Your largest tenant is unit-economics-negative. Propose three interventions ordered by customer impact.
-4. Compute cost per resolved ticket for a support product: 3M tokens/ticket, ~800 tickets/day, GPT-5 cached rate.
+4. Compute cost per resolved ticket for a support product: 3M tokens/ticket, ~800 tickets/day, all input at the GPT-5 cached rate of $0.125/M (launch list price; check the live rate card).
 5. Argue whether retroactive tagging can ever work. When is it acceptable?
 
 ## Key Terms

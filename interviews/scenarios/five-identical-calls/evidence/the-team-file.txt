@@ -1,0 +1,19 @@
+title: the coordinator agent of the team file
+source: manuals/docker-sandboxes-101/capture/fixtures/agents/team.yaml
+lines: 3-15
+lang: yaml
+note: The root agent has an iteration limit, one sub-agent, one handoff target and the background_agents toolset.
+---
+agents:
+  root:
+    model: local
+    description: Coordinates a writer and a reviewer.
+    instruction: |
+      You coordinate two colleagues and never write text yourself.
+      For every request: first call transfer_task to ask the writer for
+      the text, then call handoff to pass the conversation to the reviewer.
+    max_iterations: 6
+    sub_agents: [writer]
+    handoffs: [reviewer]
+    toolsets:
+      - type: background_agents

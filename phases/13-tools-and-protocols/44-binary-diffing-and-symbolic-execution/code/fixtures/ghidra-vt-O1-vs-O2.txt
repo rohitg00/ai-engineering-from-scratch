@@ -1,0 +1,76 @@
+VT|ghidra|12.1.4
+VT|program|source|ledger-x86_64-O1.o|x86:LE:64:default|00100000
+VT|block|source|.text|00100000|0010009e|159
+VT|block|source|.rodata|001000a0|001000ef|80
+VT|block|source|.rodata.str1.1|001000f0|001000f9|10
+VT|block|source|.comment|.comment::00000000|.comment::0000002e|47
+VT|block|source|.rela.rodata|.rela.rodata::00000000|.rela.rodata::00000077|120
+VT|block|source|.rela.text|.rela.text::00000000|.rela.text::00000047|72
+VT|block|source|.strtab|.strtab::00000000|.strtab::000000bd|190
+VT|block|source|.symtab|.symtab::00000000|.symtab::00000137|312
+VT|block|source|_elfHeader|_elfHeader::00000000|_elfHeader::0000003f|64
+VT|block|source|_elfSectionHeaders|_elfSectionHeaders::00000000|_elfSectionHeaders::000002bf|704
+VT|function|source|percent_change|00100000|16
+VT|function|source|grade|00100010|46
+VT|function|source|total|00100040|31
+VT|function|source|grade_label|00100060|63
+VT|program|destination|ledger-x86_64-O2.o|x86:LE:64:default|00100000
+VT|block|destination|.text|00100000|0010010e|271
+VT|block|destination|.rodata|00100110|0010015f|80
+VT|block|destination|.rodata.str1.1|00100160|00100169|10
+VT|block|destination|.comment|.comment::00000000|.comment::0000002e|47
+VT|block|destination|.rela.rodata|.rela.rodata::00000000|.rela.rodata::00000077|120
+VT|block|destination|.rela.text|.rela.text::00000000|.rela.text::00000047|72
+VT|block|destination|.strtab|.strtab::00000000|.strtab::000000bd|190
+VT|block|destination|.symtab|.symtab::00000000|.symtab::00000137|312
+VT|block|destination|_elfHeader|_elfHeader::00000000|_elfHeader::0000003f|64
+VT|block|destination|_elfSectionHeaders|_elfSectionHeaders::00000000|_elfSectionHeaders::000002bf|704
+VT|function|destination|percent_change|00100000|16
+VT|function|destination|grade|00100010|46
+VT|function|destination|total|00100040|140
+VT|function|destination|grade_label|001000d0|63
+VT|correlator-available|BSim Function Matching
+VT|correlator-available|Combined Function and Data Reference Match
+VT|correlator-available|Data Reference Match
+VT|correlator-available|Duplicate Data Match
+VT|correlator-available|Duplicate Function Instructions Match
+VT|correlator-available|Duplicate Exact Symbol Name Match
+VT|correlator-available|Exact Data Match
+VT|correlator-available|Exact Function Bytes Match
+VT|correlator-available|Exact Function Instructions Match
+VT|correlator-available|Exact Function Mnemonics Match
+VT|correlator-available|Function Reference Match
+VT|correlator-available|Similar Data Match
+VT|correlator-available|Similar Symbol Name Match
+VT|correlator-available|Exact Symbol Name Match
+VT|correlator|Exact Symbol Name Match|9
+VT|match|Exact Symbol Name Match|.L.str.1|001000f2|2|.L.str.1|00100162|2|Data|1.000|10.000
+VT|match|Exact Symbol Name Match|.L.str.2|001000f4|2|.L.str.2|00100164|2|Data|1.000|10.000
+VT|match|Exact Symbol Name Match|.L.str.3|001000f6|2|.L.str.3|00100166|2|Data|1.000|10.000
+VT|match|Exact Symbol Name Match|.L.str.4|001000f8|2|.L.str.4|00100168|2|Data|1.000|10.000
+VT|match|Exact Symbol Name Match|labels.rel|001000a0|4|labels.rel|00100110|4|Data|1.000|10.000
+VT|match|Exact Symbol Name Match|grade|00100010|46|grade|00100010|46|Function|1.000|10.000
+VT|match|Exact Symbol Name Match|percent_change|00100000|16|percent_change|00100000|16|Function|1.000|10.000
+VT|match|Exact Symbol Name Match|grade_label|00100060|63|grade_label|001000d0|63|Function|1.000|10.000
+VT|match|Exact Symbol Name Match|total|00100040|31|total|00100040|140|Function|1.000|10.000
+VT|correlator|Exact Data Match|0
+VT|correlator|Exact Function Bytes Match|2
+VT|match|Exact Function Bytes Match|percent_change|00100000|16|percent_change|00100000|16|Function|1.000|10.000
+VT|match|Exact Function Bytes Match|grade_label|00100060|63|grade_label|001000d0|63|Function|1.000|10.000
+VT|correlator|Exact Function Instructions Match|3
+VT|match|Exact Function Instructions Match|grade_label|00100060|63|grade_label|001000d0|63|Function|1.000|10.000
+VT|match|Exact Function Instructions Match|percent_change|00100000|16|percent_change|00100000|16|Function|1.000|10.000
+VT|match|Exact Function Instructions Match|grade|00100010|46|grade|00100010|46|Function|1.000|10.000
+VT|correlator|Exact Function Mnemonics Match|3
+VT|match|Exact Function Mnemonics Match|grade|00100010|46|grade|00100010|46|Function|1.000|10.000
+VT|match|Exact Function Mnemonics Match|percent_change|00100000|16|percent_change|00100000|16|Function|1.000|10.000
+VT|match|Exact Function Mnemonics Match|grade_label|00100060|63|grade_label|001000d0|63|Function|1.000|10.000
+VT|correlator|Duplicate Function Instructions Match|0
+VT|match-set|Manual Match|0
+VT|match-set|Implied Match|0
+VT|match-set|Exact Symbol Name Match|9
+VT|match-set|Exact Data Match|0
+VT|match-set|Exact Function Bytes Match|2
+VT|match-set|Exact Function Instructions Match|3
+VT|match-set|Exact Function Mnemonics Match|3
+VT|match-set|Duplicate Function Instructions Match|0

@@ -1,0 +1,7 @@
+unit version 5 unit_type DW_UT_compile address_size 8
+struct account byte_size 32
+  +0 char kind
+  +4 int balance
+  +8 short code
+  +16 double rate
+  +24 const char * label

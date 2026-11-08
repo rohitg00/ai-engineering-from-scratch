@@ -4,6 +4,7 @@ const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
 const { versionHtml, versionSite } = require('./version-assets');
+const { cardTags, cardVersion, pageCard } = require('../lib/og-cards');
 const config = require('../vercel.json');
 
 function fixture(t) {
@@ -71,6 +72,29 @@ test('missing assets or paths outside the site fail before any page is rewritten
   assert.throws(() => versionHtml('<script src="../outside.js"></script>', root), /outside the site/);
 });
 
+test('the deploy pass writes every card tag with a content version and an unknown card stops the build', t => {
+  const root = fixture(t);
+  const cards = { 'page/about': pageCard('about', {}) };
+  fs.writeFileSync(path.join(root, 'og-cards.json'), JSON.stringify({ version: 1, cards }));
+  const card = 'https://aiengineeringfromscratch.com/og/page/about.png';
+  fs.writeFileSync(path.join(root, 'about.html'), [
+    '<head>',
+    `  <meta property="og:image" content="${card}">`,
+    '  <meta name="twitter:card" content="summary">',
+    `  <meta name="twitter:image" content="${card}?v=0123abcd">`,
+    '</head>',
+  ].join('\n'));
+  versionSite(root);
+  const versioned = `${card}?v=${cardVersion(cards['page/about'])}`;
+  const html = fs.readFileSync(path.join(root, 'about.html'), 'utf8');
+  assert.equal(html, ['<head>'].concat(cardTags(versioned, cards['page/about']).map(tag => `  ${tag}`), '</head>').join('\n'));
+  versionSite(root);
+  assert.equal(fs.readFileSync(path.join(root, 'about.html'), 'utf8'), html);
+  fs.writeFileSync(path.join(root, 'missing.html'), '<meta property="og:image" content="https://aiengineeringfromscratch.com/og/page/missing.png">');
+  assert.throws(() => versionSite(root), /No social card for page\/missing/);
+  assert.equal(fs.readFileSync(path.join(root, 'about.html'), 'utf8'), html);
+});
+
 function responseHeaders(url) {
   const headers = {};
   for (const rule of config.headers) {
@@ -82,7 +106,7 @@ function responseHeaders(url) {
 }
 
 test('HTML and mutable scripts/styles must revalidate, including old query strings', () => {
-  for (const url of ['/', '/index.html', '/projects.html', '/project.html', '/about', '/catalog',
+  for (const url of ['/', '/index.html', '/projects.html', '/project.html', '/projects', '/project', '/learning-paths', '/roadmap', '/about', '/catalog',
     '/header.js?v=20260927a', '/style.css?v=old', '/figures/projects/dataset-split-auditor.js']) {
     const policy = responseHeaders(url)['cache-control'];
     assert.match(policy, /(?:^|, )max-age=0(?:,|$)/, url);
@@ -108,7 +132,7 @@ function invoke(handler, query, accept = 'text/html') {
 test('server-rendered pages revalidate in browsers while keeping CDN reuse and errors uncached', () => {
   const lessonPath = 'phases/01-math/01-vectors';
   const lesson = require('../api/lesson').createHandler({ loadAssets: () => ({
-    template: '<!-- AIFS:LESSON-SEO:START --><!-- AIFS:LESSON-SEO:END --><!-- AIFS:LESSON-FALLBACK:START --><!-- AIFS:LESSON-FALLBACK:END -->',
+    template: '<!-- AIFS:LESSON-SEO:START --><!-- AIFS:LESSON-SEO:END --><!-- AIFS:LESSON-FALLBACK:START --><!-- AIFS:LESSON-FALLBACK:END --><!-- AIFS:LESSON-HUBS:START --><!-- AIFS:LESSON-HUBS:END -->',
     manifest: { lessons: { [lessonPath]: { path: lessonPath, title: 'Vectors' } } },
   }) });
   const certification = require('../api/certification').createHandler({ loadAssets: () => ({

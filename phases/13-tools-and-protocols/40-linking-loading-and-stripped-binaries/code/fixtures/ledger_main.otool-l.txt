@@ -1,0 +1,230 @@
+ledger_main:
+Load command 0
+      cmd LC_SEGMENT_64
+  cmdsize 72
+  segname __PAGEZERO
+   vmaddr 0x0000000000000000
+   vmsize 0x0000000100000000
+  fileoff 0
+ filesize 0
+  maxprot 0x00000000
+ initprot 0x00000000
+   nsects 0
+    flags 0x0
+Load command 1
+      cmd LC_SEGMENT_64
+  cmdsize 472
+  segname __TEXT
+   vmaddr 0x0000000100000000
+   vmsize 0x0000000000004000
+  fileoff 0
+ filesize 16384
+  maxprot 0x00000005
+ initprot 0x00000005
+   nsects 5
+    flags 0x0
+Section
+  sectname __text
+   segname __TEXT
+      addr 0x0000000100000558
+      size 0x0000000000000100
+    offset 1368
+     align 2^2 (4)
+    reloff 0
+    nreloc 0
+     flags 0x80000400
+ reserved1 0
+ reserved2 0
+Section
+  sectname __stubs
+   segname __TEXT
+      addr 0x0000000100000658
+      size 0x0000000000000054
+    offset 1624
+     align 2^2 (4)
+    reloff 0
+    nreloc 0
+     flags 0x80000408
+ reserved1 0 (index into indirect symbol table)
+ reserved2 12 (size of stubs)
+Section
+  sectname __const
+   segname __TEXT
+      addr 0x00000001000006b0
+      size 0x0000000000000010
+    offset 1712
+     align 2^4 (16)
+    reloff 0
+    nreloc 0
+     flags 0x00000000
+ reserved1 0
+ reserved2 0
+Section
+  sectname __cstring
+   segname __TEXT
+      addr 0x00000001000006c0
+      size 0x000000000000001f
+    offset 1728
+     align 2^0 (1)
+    reloff 0
+    nreloc 0
+     flags 0x00000002
+ reserved1 0
+ reserved2 0
+Section
+  sectname __unwind_info
+   segname __TEXT
+      addr 0x00000001000006e0
+      size 0x0000000000000058
+    offset 1760
+     align 2^2 (4)
+    reloff 0
+    nreloc 0
+     flags 0x00000000
+ reserved1 0
+ reserved2 0
+Load command 2
+      cmd LC_SEGMENT_64
+  cmdsize 232
+  segname __DATA_CONST
+   vmaddr 0x0000000100004000
+   vmsize 0x0000000000004000
+  fileoff 16384
+ filesize 16384
+  maxprot 0x00000003
+ initprot 0x00000003
+   nsects 2
+    flags 0x10
+Section
+  sectname __got
+   segname __DATA_CONST
+      addr 0x0000000100004000
+      size 0x0000000000000040
+    offset 16384
+     align 2^3 (8)
+    reloff 0
+    nreloc 0
+     flags 0x00000006
+ reserved1 7 (index into indirect symbol table)
+ reserved2 0
+Section
+  sectname __const
+   segname __DATA_CONST
+      addr 0x0000000100004040
+      size 0x0000000000000020
+    offset 16448
+     align 2^3 (8)
+    reloff 0
+    nreloc 0
+     flags 0x00000000
+ reserved1 0
+ reserved2 0
+Load command 3
+      cmd LC_SEGMENT_64
+  cmdsize 72
+  segname __LINKEDIT
+   vmaddr 0x0000000100008000
+   vmsize 0x0000000000004000
+  fileoff 32768
+ filesize 1080
+  maxprot 0x00000001
+ initprot 0x00000001
+   nsects 0
+    flags 0x0
+Load command 4
+      cmd LC_DYLD_CHAINED_FIXUPS
+  cmdsize 16
+  dataoff 32768
+ datasize 208
+Load command 5
+      cmd LC_DYLD_EXPORTS_TRIE
+  cmdsize 16
+  dataoff 32976
+ datasize 64
+Load command 6
+     cmd LC_SYMTAB
+ cmdsize 24
+  symoff 33048
+   nsyms 12
+  stroff 33304
+ strsize 136
+Load command 7
+            cmd LC_DYSYMTAB
+        cmdsize 80
+      ilocalsym 0
+      nlocalsym 1
+     iextdefsym 1
+     nextdefsym 3
+      iundefsym 4
+      nundefsym 8
+         tocoff 0
+           ntoc 0
+      modtaboff 0
+        nmodtab 0
+   extrefsymoff 0
+    nextrefsyms 0
+ indirectsymoff 33240
+  nindirectsyms 15
+      extreloff 0
+        nextrel 0
+      locreloff 0
+        nlocrel 0
+Load command 8
+          cmd LC_LOAD_DYLINKER
+      cmdsize 32
+         name /usr/lib/dyld (offset 12)
+Load command 9
+     cmd LC_UUID
+ cmdsize 24
+    uuid 3E1692E8-7540-373B-85D7-A026943ED8AA
+Load command 10
+      cmd LC_BUILD_VERSION
+  cmdsize 32
+ platform 1
+    minos 26.0
+      sdk 26.2
+   ntools 1
+     tool 3
+  version 1230.1
+Load command 11
+      cmd LC_SOURCE_VERSION
+  cmdsize 16
+  version 0.0
+Load command 12
+       cmd LC_MAIN
+   cmdsize 24
+  entryoff 1368
+ stacksize 0
+Load command 13
+          cmd LC_LOAD_DYLIB
+      cmdsize 48
+         name @rpath/libledger.dylib (offset 24)
+   time stamp 2 Thu Jan  1 05:30:02 1970
+      current version 0.0.0
+compatibility version 0.0.0
+Load command 14
+          cmd LC_LOAD_DYLIB
+      cmdsize 56
+         name /usr/lib/libSystem.B.dylib (offset 24)
+   time stamp 2 Thu Jan  1 05:30:02 1970
+      current version 1356.0.0
+compatibility version 1.0.0
+Load command 15
+          cmd LC_RPATH
+      cmdsize 32
+         path @executable_path (offset 12)
+Load command 16
+      cmd LC_FUNCTION_STARTS
+  cmdsize 16
+  dataoff 33040
+ datasize 8
+Load command 17
+      cmd LC_DATA_IN_CODE
+  cmdsize 16
+  dataoff 33048
+ datasize 0
+Load command 18
+      cmd LC_CODE_SIGNATURE
+  cmdsize 16
+  dataoff 33440
+ datasize 408

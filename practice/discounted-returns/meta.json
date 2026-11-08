@@ -1,0 +1,22 @@
+{
+  "id": "discounted-returns",
+  "title": "Discounted returns with episode ends",
+  "kind": "implement",
+  "summary": "Reward-to-go returns for one episode and for a batch of joined episodes with done flags, plus return normalization.",
+  "difficulty": "easy",
+  "tags": ["reinforcement-learning", "returns", "policy-gradients"],
+  "lesson": "phases/09-reinforcement-learning/06-policy-gradients-reinforce",
+  "cheatsheet": "reinforcement-learning",
+  "minutes": 15,
+  "entry": ["returns_to_go", "batch_returns", "normalize"],
+  "collections": ["rl-basics"],
+  "time_limit_s": 10,
+  "mutants": {
+    "discount_includes_reward": "Computes G = gamma * (r + G), so the reward of the current step is also discounted.",
+    "forward_sum": "Sums the discounted rewards from the start of the episode, not from step t to the end.",
+    "no_epsilon": "Divides by the standard deviation without 1e-8, so equal returns give NaN.",
+    "no_reset_at_done": "Ignores the done flags, so the return of one episode includes rewards of the next episode.",
+    "reset_after_add": "Resets the return after it stores the done step, so the reset cuts the wrong episode.",
+    "sample_std": "Uses the sample standard deviation (ddof = 1), not the population standard deviation."
+  }
+}

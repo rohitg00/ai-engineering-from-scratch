@@ -1,0 +1,10 @@
+ledger_main [arm64]:
+    -imports:
+      0x0000  _grade  (from libledger)
+      0x0001  _grade_label  (from libledger)
+      0x0002  _percent_change  (from libledger)
+      0x0003  _total  (from libledger)
+      0x0004  ___stack_chk_fail  (from libSystem)
+      0x0005  ___stack_chk_guard  (from libSystem)
+      0x0006  _printf  (from libSystem)
+      0x0007  _puts  (from libSystem)

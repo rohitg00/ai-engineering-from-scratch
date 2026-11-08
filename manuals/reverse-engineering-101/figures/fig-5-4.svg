@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 404" role="img" aria-labelledby="fig-5-4-title fig-5-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-4-title">One analyze_function call through the snapshot cache</title>
+  <desc id="fig-5-4-desc">Top row: the call analyze_function with procedure _percent_change passes the cacheable test, because Ghidra marks the operation cachePolicy snapshot and mutatesArtifact false, and becomes a query id. Middle: the query id is the SHA-256 of canonical JSON holding the target digest 01b5d08b08fb with kind executable, format mach-o and architecture arm64, the binding of provider ghidra 12.1.4 with profile digest 3fc72c9b4b7, the operation, and the parameters. Bottom left: on a hit the entry is replayed with the limitation that the call did not re-run the provider. Bottom right: on a miss the Ghidra bridge answers, Evidence ev_b492c85e is recorded, and an entry is stored under the id. Last row: a mutating call such as annotate_native_function invalidates the cache before rea dispatches it to Ghidra, even when its reply later fails, and later snapshot exports are refused.</desc>
+  <defs><marker id="fig-5-4-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-5-4-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <rect x="20" y="28" width="220" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="130" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">analyze_function</text>
+  <text x="130" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">{&quot;procedure&quot;: &quot;_percent_change&quot;}</text>
+  <rect x="270" y="28" width="160" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="350" y="41.75" font-size="12.5" text-anchor="middle" font-weight="700">cacheable?</text>
+  <text x="350" y="59.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">cachePolicy snapshot</text>
+  <text x="350" y="74.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mutatesArtifact false</text>
+  <rect x="460" y="28" width="160" height="52" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="540" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">query id</text>
+  <text x="540" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">query_ and a SHA-256</text>
+  <line x1="240" y1="54" x2="269" y2="54" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
+  <line x1="430" y1="54" x2="459" y2="54" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
+  <rect class="m-knock" x="431.15" y="37.03" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="444.5" y="48" font-size="11.5" text-anchor="middle">yes</text>
+  <rect x="20" y="104" width="600" height="92" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="30" y="122" font-size="12" font-weight="700" fill="var(--m-teal-ink, #18696a)">query_ = SHA-256 of canonical JSON</text>
+  <text x="30" y="140" font-size="11">target: sha256 01b5d08b, executable, mach-o, arm64</text>
+  <text x="30" y="155" font-size="11">binding: provider ghidra 12.1.4, analysis_profile digest 3fc72c9b</text>
+  <text x="30" y="170" font-size="11">operation: analyze_function</text>
+  <text x="30" y="185" font-size="11">parameters: {&quot;procedure&quot;: &quot;_percent_change&quot;}</text>
+  <line x1="540" y1="80" x2="540" y2="103" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
+  <rect x="20" y="236" width="290" height="74" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="165" y="253.25" font-size="12.5" text-anchor="middle" font-weight="700">entry found: replay it</text>
+  <text x="165" y="270.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">limitation added: Loaded from a local</text>
+  <text x="165" y="285.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">REA analysis snapshot; this call did</text>
+  <text x="165" y="300.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">not re-run the provider.</text>
+  <rect x="330" y="236" width="290" height="74" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="475" y="253.25" font-size="12.5" text-anchor="middle" font-weight="700">no entry: call the Ghidra bridge</text>
+  <text x="475" y="270.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5 to 7 s for the first call on a target,</text>
+  <text x="475" y="285.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">then Evidence ev_b492c85e is recorded</text>
+  <text x="475" y="300.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">and an entry is stored under the id</text>
+  <line x1="165" y1="196" x2="165" y2="235" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-4-head-ink)"/>
+  <rect class="m-knock" x="170" y="204.53" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="173" y="215.5" font-size="11.5">hit</text>
+  <line x1="475" y1="196" x2="475" y2="235" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
+  <rect class="m-knock" x="480" y="204.53" width="33.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="483" y="215.5" font-size="11.5">miss</text>
+  <rect x="20" y="334" width="290" height="56" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="165" y="349.75" font-size="12.5" text-anchor="middle" font-weight="700">annotate_native_function</text>
+  <text x="165" y="367.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a mutating call, before rea</text>
+  <text x="165" y="382.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dispatches it to Ghidra</text>
+  <rect x="330" y="334" width="290" height="56" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="475" y="349.75" font-size="12.5" text-anchor="middle" font-weight="700">invalidateSnapshot</text>
+  <text x="475" y="367.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">entries dropped, even if the call fails,</text>
+  <text x="475" y="382.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">lookups miss, snapshot exports refused</text>
+  <line x1="310" y1="362" x2="329" y2="362" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-4-head-amber)"/>
+</svg>

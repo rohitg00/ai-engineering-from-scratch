@@ -1,0 +1,21 @@
+{
+  "id": "bpe-merge-step",
+  "title": "BPE pair counts and merges",
+  "kind": "implement",
+  "summary": "Count weighted adjacent pairs, pick the best pair with a fixed tie rule, merge it without overlap and train a BPE merge list.",
+  "difficulty": "medium",
+  "tags": ["tokenization", "bpe", "subword"],
+  "lesson": "phases/19-capstone-projects/30-bpe-tokenizer-from-scratch",
+  "cheatsheet": "tokenization",
+  "minutes": 30,
+  "entry": ["count_pairs", "best_pair", "apply_merge", "train"],
+  "collections": ["llm-inference"],
+  "time_limit_s": 10,
+  "mutants": {
+    "first_seen_tie": "Picks the first pair with the highest count in dict order, not the smallest pair.",
+    "mutates_input": "Clears and refills the caller's corpus dict, so the input changes.",
+    "no_min_count": "Does not stop when the best pair has a count of 1, so it merges pairs that do not repeat.",
+    "overlapping_merge": "Moves one position after a match, so the merge overlaps and [a, a, a] gives [new, new, a].",
+    "unweighted_counts": "Adds 1 for each pair and ignores the word frequency."
+  }
+}

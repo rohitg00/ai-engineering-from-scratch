@@ -1,0 +1,23 @@
+
+canary-x86_64-cet-O2.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <with_canary>:
+       0: f3 0f 1e fa                  	endbr64
+       4: 48 83 ec 48                  	subq	$0x48, %rsp
+       8: 48 89 fe                     	movq	%rdi, %rsi
+       b: 48 89 e7                     	movq	%rsp, %rdi
+       e: ba 3f 00 00 00               	movl	$0x3f, %edx
+      13: e8 00 00 00 00               	callq	0x18 <with_canary+0x18>
+		0000000000000014:  R_X86_64_PLT32	strncpy-0x4
+      18: 0f be 04 24                  	movsbl	(%rsp), %eax
+      1c: 48 83 c4 48                  	addq	$0x48, %rsp
+      20: c3                           	retq
+      21: 66 66 66 66 66 66 2e 0f 1f 84 00 00 00 00 00 	nopw	%cs:(%rax,%rax)
+
+0000000000000030 <plain_leaf>:
+      30: f3 0f 1e fa                  	endbr64
+      34: 0f af fe                     	imull	%esi, %edi
+      37: 8d 47 01                     	leal	0x1(%rdi), %eax
+      3a: c3                           	retq

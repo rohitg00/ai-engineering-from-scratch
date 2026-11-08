@@ -1,0 +1,7 @@
+(TrainerController pid=2656) ray.exceptions.OutOfMemoryError: 1 worker(s) were killed due to the node running low on memory. Memory on the node (IP: 172.17.0.3, ID: 08904870a17c5413c623abfc21db2e7fcfdc39d5be90e997b2391f37) was 115.86GB / 121.69GB (0.952127)
+(TrainerController pid=2656) To see more information about memory usage on this node, use `ray logs raylet.out -ip 172.17.0.3`
+(TrainerController pid=2656) Top 10 memory users: PID	MEM(GB)	COMMAND
+(TrainerController pid=2656) 2657	36.77	ray::FSDPTrainRayActor.train
+(TrainerController pid=2656) 3402	2.73	sglang::scheduler
+(TrainerController pid=2656) 2650	1.33	ray::RolloutExecutor
+To adjust the kill threshold, set the environment variable `RAY_memory_usage_threshold` when starting Ray. To disable worker killing, set the environment variable `RAY_memory_monitor_refresh_ms` to zero.

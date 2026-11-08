@@ -1,0 +1,19 @@
+Admission caps at 64 users, vLLM 0.31.0 against SGLang 0.5.22 (backlog B-05)
+Date: 2026-10-23
+Machine: NVIDIA L4, GPU0 of the node, clock lock 900 MHz (a ceiling). Model: Qwen/Qwen3-8B.
+Load: 64 users at once, 256 requests, random dataset, 512 tokens in and 128 out, 2 seeds, prefix cache flushed before each run.
+Many runs throttled below the lock. Compare the rows whose clock is 900 MHz.
+
+config                        median SM clock (s1/s2)   median TTFT       P99 ITL               output tok/s
+SGLang default                900 / 900                 19.4 s            143 to 153 ms         225 to 231
+vLLM default                  405 / 405                 13.5 to 14.2 s    1,647 to 1,778 ms     174
+vLLM default, earlier run     900                       11.8 s            1,359 ms              220
+--max-num-seqs 48             435 / 375                 13.8 to 15.2 s    1,656 to 1,749 ms     171 to 195
+--max-num-seqs 32             900 / 795                 17.2 to 20.6 s    1,163 to 1,399 ms     196 to 230
+--max-num-seqs 16             255 / 255                 61.7 to 64.7 s    1,548 to 1,692 ms     108 to 110
+--max-num-active-seqs 48      900 / 900                 11.8 s            1,329 to 1,373 ms     215 to 218
+--max-num-active-seqs 32      435 / 810                 21.8 to 22.7 s    1,380 to 1,658 ms     187 to 202
+--max-num-active-seqs 16      795 / 683                 44.8 to 48.8 s    1,133 to 1,139 ms     129 to 136
+
+The earlier vLLM default run at 900 MHz was in the same session without a flush. It ran at a different clock from the flushed default run, so the two default rows are not a flush comparison.
+No cap we tried brought the vLLM P99 ITL near the SGLang value. Lower caps moved the wait to the first token.

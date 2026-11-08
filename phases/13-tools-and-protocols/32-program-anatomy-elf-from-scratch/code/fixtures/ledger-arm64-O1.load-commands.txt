@@ -1,0 +1,121 @@
+ledger-arm64-O1.o:
+Mach header
+      magic cputype cpusubtype  caps    filetype ncmds sizeofcmds      flags
+MH_MAGIC_64   ARM64        ALL  0x00      OBJECT     5        616 SUBSECTIONS_VIA_SYMBOLS
+Load command 0
+      cmd LC_SEGMENT_64
+  cmdsize 472
+  segname 
+   vmaddr 0x0000000000000000
+   vmsize 0x00000000000001c8
+  fileoff 648
+ filesize 456
+  maxprot rwx
+ initprot rwx
+   nsects 5
+    flags (none)
+Section
+  sectname __text
+   segname __TEXT
+      addr 0x0000000000000000
+      size 0x00000000000000d0
+    offset 648
+     align 2^2 (4)
+    reloff 1104
+    nreloc 6
+      type S_REGULAR
+attributes PURE_INSTRUCTIONS SOME_INSTRUCTIONS
+ reserved1 0
+ reserved2 0
+Section
+  sectname __const
+   segname __DATA
+      addr 0x00000000000000d0
+      size 0x0000000000000028
+    offset 856
+     align 2^3 (8)
+    reloff 1152
+    nreloc 5
+      type S_REGULAR
+attributes (none)
+ reserved1 0
+ reserved2 0
+Section
+  sectname __cstring
+   segname __TEXT
+      addr 0x00000000000000f8
+      size 0x000000000000000a
+    offset 896
+     align 2^0 (1)
+    reloff 0
+    nreloc 0
+      type S_CSTRING_LITERALS
+attributes (none)
+ reserved1 0
+ reserved2 0
+Section
+  sectname __const
+   segname __TEXT
+      addr 0x0000000000000108
+      size 0x0000000000000040
+    offset 912
+     align 2^3 (8)
+    reloff 0
+    nreloc 0
+      type S_REGULAR
+attributes (none)
+ reserved1 0
+ reserved2 0
+Section
+  sectname __compact_unwind
+   segname __LD
+      addr 0x0000000000000148
+      size 0x0000000000000080
+    offset 976
+     align 2^3 (8)
+    reloff 1192
+    nreloc 4
+      type S_REGULAR
+attributes DEBUG
+ reserved1 0
+ reserved2 0
+Load command 1
+       cmd LC_BUILD_VERSION
+   cmdsize 24
+  platform macos
+       sdk 26.2
+     minos 26.0
+    ntools 0
+Load command 2
+      cmd LC_LINKER_OPTIMIZATION_HINT
+  cmdsize 16
+  dataoff 1224
+ datasize 16
+Load command 3
+     cmd LC_SYMTAB
+ cmdsize 24
+  symoff 1240
+   nsyms 17
+  stroff 1512
+ strsize 176
+Load command 4
+            cmd LC_DYSYMTAB
+        cmdsize 80
+      ilocalsym 0
+      nlocalsym 13
+     iextdefsym 13
+     nextdefsym 4
+      iundefsym 17
+      nundefsym 0
+         tocoff 0
+           ntoc 0
+      modtaboff 0
+        nmodtab 0
+   extrefsymoff 0
+    nextrefsyms 0
+ indirectsymoff 0
+  nindirectsyms 0
+      extreloff 0
+        nextrel 0
+      locreloff 0
+        nlocrel 0

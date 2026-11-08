@@ -1,0 +1,78 @@
+{
+  "lesson": "36-rebuild-and-prove-equal",
+  "title": "Rebuild and Prove Equal: Differential Tests, Byte Comparison, and the Evidence Loop",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A rebuilt percent_change passes four hand-written tests. What does that prove?",
+      "options": [
+        "The rebuild agrees with the original on those four inputs and nothing more",
+        "The rebuild compiles to the same bytes",
+        "The decompiler output was correct",
+        "The rebuild equals the original for every input"
+      ],
+      "correct": 0,
+      "explanation": "A test set proves agreement on the inputs it contains. Zero, negative, rounding, and overflow cells are where rebuilds diverge."
+    },
+    {
+      "stage": "check",
+      "question": "The original computes (after - before) * 100 / before in 32-bit int. The rebuild uses a 64-bit intermediate. Where do they differ?",
+      "options": [
+        "Never, because the cast back to int removes the difference",
+        "On inputs where the 32-bit product wraps and before is not 1 or -1",
+        "On every input with a negative before",
+        "Only when before is zero"
+      ],
+      "correct": 1,
+      "explanation": "The original divides the wrapped 32-bit product. The rebuild divides the exact 64-bit product and truncates afterwards. For before equal to 1 or -1 the two agree after truncation."
+    },
+    {
+      "stage": "check",
+      "question": "Two x86-64 ELF objects hold the same 46 code bytes for grade, including zero bytes in the relocation field. Why is the byte compare still not enough?",
+      "options": [
+        "The addend lives in the .rela.text record, and the table those records point at can differ",
+        "Zero bytes never appear in machine code",
+        "The function size is stored in .rodata",
+        "RELA objects cannot be compared"
+      ],
+      "correct": 0,
+      "explanation": "In a RELA object the field bytes are zero and the addend is in the relocation record. Mask the field, compare the record shape, then read and compare the constants at the target."
+    },
+    {
+      "stage": "check",
+      "question": "The grid contains before = -1 and after = 536870911. The compiled x86-64 original executes idiv with INT_MIN / -1. What happens?",
+      "options": [
+        "It returns INT_MIN",
+        "It raises a divide error and the process gets SIGFPE",
+        "It returns 0 because the guard handles it",
+        "It returns INT_MAX"
+      ],
+      "correct": 1,
+      "explanation": "x86-64 idiv raises #DE when the quotient does not fit. AArch64 sdiv returns INT_MIN for the same operands, so the oracle depends on the architecture."
+    },
+    {
+      "stage": "post",
+      "question": "What did the 2026 study of LLM decompiler refinement measure when the build rate rose from 75% to 90%?",
+      "options": [
+        "Behaviour match rose by the same amount",
+        "The study did not measure behaviour",
+        "Readability fell and behaviour was unchanged",
+        "Behaviour match fell from 74% to 62%"
+      ],
+      "correct": 3,
+      "explanation": "Liu, Raff, and Micinski (arXiv 2609.05370) found that invented types, callees, and guards made more candidates compile while fewer matched the original on fuzzed inputs."
+    },
+    {
+      "stage": "post",
+      "question": "Leg one could not run because the host has no C compiler. Leg two passed for both functions. What is the proof status?",
+      "options": [
+        "unknown, because an unverified claim never aggregates to pass",
+        "pass, because every claim that ran passed",
+        "pass, because byte equality implies behaviour equality",
+        "fail, because a leg did not run"
+      ],
+      "correct": 0,
+      "explanation": "fail wins, then unknown. A claim that was not checked stays unknown, and unknown never becomes pass."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+title: the second CancelTask on the same id, status and code
+source: manuals/a2a-101/capture/out/10-cancel.http
+lines: 138-163
+lang: text
+note: The HTTP status and the code that replaced result.
+---
+### 3 · CancelTask: again
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "CancelTask",
+  "params": {
+    "id": "f22ed7af-848d-4f4d-8cd1-3204d1e1bbaf"
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "error": {
+    "code": -32002,
+    "message": "Task cannot be canceled",
+    "data": [
+      {

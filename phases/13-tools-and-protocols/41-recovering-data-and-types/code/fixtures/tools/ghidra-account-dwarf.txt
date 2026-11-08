@@ -1,0 +1,114 @@
+STRUCT /DWARF/account.c/account size=32 align=8
+  +0 char kind
+  +4 int balance
+  +8 short code
+  +16 double rate
+  +24 char * label
+STRUCT /ELF/Elf64_Ehdr size=64 align=1
+  +0 byte e_ident_magic_num
+  +1 string e_ident_magic_str
+  +4 byte e_ident_class
+  +5 byte e_ident_data
+  +6 byte e_ident_version
+  +7 byte e_ident_osabi
+  +8 byte e_ident_abiversion
+  +9 byte[7] e_ident_pad
+  +16 word e_type
+  +18 word e_machine
+  +20 dword e_version
+  +24 qword e_entry
+  +32 qword e_phoff
+  +40 qword e_shoff
+  +48 dword e_flags
+  +52 word e_ehsize
+  +54 word e_phentsize
+  +56 word e_phnum
+  +58 word e_shentsize
+  +60 word e_shnum
+  +62 word e_shstrndx
+STRUCT /ELF/Elf64_Rela size=24 align=1
+  +0 qword r_offset
+  +8 qword r_info
+  +16 qword r_addend
+STRUCT /ELF/Elf64_Shdr size=64 align=1
+  +0 dword sh_name
+  +4 Elf_SectionHeaderType sh_type
+  +8 qword sh_flags
+  +16 qword sh_addr
+  +24 qword sh_offset
+  +32 qword sh_size
+  +40 dword sh_link
+  +44 dword sh_info
+  +48 qword sh_addralign
+  +56 qword sh_entsize
+STRUCT /ELF/Elf64_Sym size=24 align=1
+  +0 dword st_name
+  +4 byte st_info
+  +5 byte st_other
+  +6 word st_shndx
+  +8 qword st_value
+  +16 qword st_size
+SIG int bump(account * a, int by)
+C 
+C int bump(account *a,int by)
+C 
+C {
+C   int by_local;
+C   account *a_local;
+C   
+C   a->balance = by + a->balance;
+C   return a->balance;
+C }
+SIG int sum_balances(account * list, int count)
+C 
+C int sum_balances(account *list,int count)
+C 
+C {
+C   int i;
+C   int sum;
+C   int count_local;
+C   account *list_local;
+C   
+C   sum = 0;
+C   for (i = 0; i < count; i = i + 1) {
+C     sum = list[i].balance + sum;
+C   }
+C   return sum;
+C }
+SIG int tag(account * a)
+C 
+C int tag(account *a)
+C 
+C {
+C   account *a_local;
+C   int local_c;
+C   
+C   if (a->kind == 'l') {
+C     local_c = -(int)a->code;
+C   }
+C   else {
+C     local_c = (int)a->code;
+C   }
+C   return local_c;
+C }
+SIG double projected(account * a)
+C 
+C double projected(account *a)
+C 
+C {
+C   account *a_local;
+C   
+C   return (double)a->balance * a->rate;
+C }
+SIG int label_length(account * a)
+C 
+C int label_length(account *a)
+C 
+C {
+C   int n;
+C   account *a_local;
+C   
+C   for (n = 0; a->label[n] != '\0'; n = n + 1) {
+C   }
+C   return n;
+C }

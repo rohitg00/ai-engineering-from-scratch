@@ -1,0 +1,41 @@
+[
+  {
+    "agent": "root",
+    "tools": [
+      {
+        "name": "shell",
+        "category": "shell",
+        "description": "Executes the given shell command with zsh on macOS. If unsure which shell syntax to use, call get_environment_info first.",
+        "parameters": {
+          "additionalProperties": false,
+          "properties": {
+            "cmd": {
+              "description": "Shell command",
+              "type": "string"
+            },
+            "cwd": {
+              "description": "Working directory (default \".\")",
+              "type": "string"
+            },
+            "timeout": {
+              "description": "Timeout in seconds (default 30)",
+              "type": "integer"
+            }
+          },
+          "required": [
+            "cmd"
+          ],
+          "type": "object"
+        },
+        "annotations": {
+          "idempotentHint": false,
+          "readOnlyHint": false,
+          "title": "Shell"
+        },
+        "outputSchema": {
+          "type": "string"
+        }
+      }
+    ]
+  }
+]

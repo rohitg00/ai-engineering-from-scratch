@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 270" role="img" aria-labelledby="fig-8-1-title fig-8-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-1-title">A server with -tp 4 runs six processes</title>
+  <desc id="fig-8-1-desc">vllm serve starts one API server process. It starts one engine core process, which runs the scheduler and the KV cache manager. The engine core starts one GPU worker for each GPU, four workers for tensor parallel size 4. Six processes in total.</desc>
+  <defs><marker id="fig-8-1-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker><marker id="fig-8-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <rect x="230" y="20" width="180" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="320" y="39.25" font-size="12.5" text-anchor="middle" font-weight="700">API server</text>
+  <text x="320" y="56.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HTTP, tokenizer</text>
+  <rect x="230" y="104" width="180" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="320" y="123.25" font-size="12.5" text-anchor="middle" font-weight="700">engine core</text>
+  <text x="320" y="140.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">scheduler, KV manager</text>
+  <line x1="320" y1="68" x2="320" y2="103" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-8-1-head-indigo)"/>
+  <rect class="m-knock" x="325" y="74.53" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="328" y="85.5" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">ZeroMQ</text>
+  <rect x="32" y="196" width="126" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="95" y="215.25" font-size="12.5" text-anchor="middle" font-weight="700">worker 0</text>
+  <text x="95" y="232.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">GPU 0, rank 0</text>
+  <path d="M320 152 V174 H95 V195" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-8-1-head-ink)"/>
+  <rect x="182" y="196" width="126" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="245" y="215.25" font-size="12.5" text-anchor="middle" font-weight="700">worker 1</text>
+  <text x="245" y="232.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">GPU 1, rank 1</text>
+  <path d="M320 152 V174 H245 V195" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-8-1-head-ink)"/>
+  <rect x="332" y="196" width="126" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="395" y="215.25" font-size="12.5" text-anchor="middle" font-weight="700">worker 2</text>
+  <text x="395" y="232.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">GPU 2, rank 2</text>
+  <path d="M320 152 V174 H395 V195" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-8-1-head-ink)"/>
+  <rect x="482" y="196" width="126" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="545" y="215.25" font-size="12.5" text-anchor="middle" font-weight="700">worker 3</text>
+  <text x="545" y="232.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">GPU 3, rank 3</text>
+  <path d="M320 152 V174 H545 V195" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-8-1-head-ink)"/>
+  <text x="20" y="264" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Count: 1 API server + 1 engine core + 4 workers = 6 processes.</text>
+</svg>

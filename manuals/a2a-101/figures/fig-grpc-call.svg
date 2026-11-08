@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 352" role="img" aria-labelledby="fig-grpc-call-title fig-grpc-call-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-grpc-call-title">One SendStreamingMessage call over gRPC</title>
+  <desc id="fig-grpc-call-desc">A sequence with two lifelines, a client stub and the A2AService in package lf.a2a.v1. The client sends one SendStreamingMessage rpc with a SendMessageRequest and the a2a-version and a2a-extensions metadata keys. The server answers with a stream of StreamResponse messages: first the task, then status_update and artifact_update payloads, then a status_update with a terminal state. The rpc status ends the stream. The figure uses proto names only, because the kit has no gRPC capture.</desc>
+  <defs><marker id="fig-grpc-call-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-grpc-call-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
+  <rect x="55" y="8" width="150" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="130" y="22.25" font-size="12.5" text-anchor="middle" font-weight="700">client</text>
+  <text x="130" y="39.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">generated stub</text>
+  <line x1="130" y1="46" x2="130" y2="340" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="425" y="8" width="150" height="38" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="500" y="22.25" font-size="12.5" text-anchor="middle" font-weight="700">A2AService</text>
+  <text x="500" y="39.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">lf.a2a.v1</text>
+  <line x1="500" y1="46" x2="500" y2="340" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="84" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="88" font-size="11" text-anchor="middle">1</text>
+  <line x1="130" y1="84" x2="499" y2="84" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-grpc-call-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M130 84 L499 84" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="174" y="67.03" width="282" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="78" font-size="11.5" text-anchor="middle">SendStreamingMessage(SendMessageRequest)</text>
+  <rect class="m-knock" x="202.11" y="88.42" width="225.78" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="99" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">metadata: a2a-version, a2a-extensions</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="132" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="136" font-size="11" text-anchor="middle">2</text>
+  <line x1="500" y1="132" x2="131" y2="132" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-grpc-call-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M500 132 L131 132" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="232.65" y="115.03" width="164.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="126" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">StreamResponse { task }</text>
+  <rect class="m-knock" x="213.99" y="136.42" width="202.02" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="147" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the Task as the server created it</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="180" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="184" font-size="11" text-anchor="middle">3</text>
+  <line x1="500" y1="180" x2="131" y2="180" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-grpc-call-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M500 180 L131 180" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="201.6" y="163.03" width="226.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="174" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">StreamResponse { status_update }</text>
+  <rect class="m-knock" x="249.63" y="184.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="195" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">TaskStatusUpdateEvent</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="228" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="232" font-size="11" text-anchor="middle">4</text>
+  <line x1="500" y1="228" x2="131" y2="228" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-grpc-call-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M500 228 L131 228" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="194.7" y="211.03" width="240.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="222" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">StreamResponse { artifact_update }</text>
+  <rect class="m-knock" x="211.02" y="232.42" width="207.96" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="243" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">TaskArtifactUpdateEvent, one chunk</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="276" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="280" font-size="11" text-anchor="middle">5</text>
+  <line x1="500" y1="276" x2="131" y2="276" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-grpc-call-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M500 276 L131 276" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="201.6" y="259.03" width="226.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="270" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">StreamResponse { status_update }</text>
+  <rect class="m-knock" x="252.6" y="280.42" width="124.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="291" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a terminal TaskState</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="324" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="328" font-size="11" text-anchor="middle">6</text>
+  <line x1="500" y1="324" x2="131" y2="324" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-grpc-call-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M500 324 L131 324" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="277.5" y="307.03" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="318" font-size="11.5" text-anchor="middle">rpc status</text>
+  <rect class="m-knock" x="228.84" y="328.42" width="172.32" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="339" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the stream ends with the rpc</text>
+  </g>
+</svg>

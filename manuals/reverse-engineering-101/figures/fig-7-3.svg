@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 412" role="img" aria-labelledby="fig-7-3-title fig-7-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-3-title">Where each of the eight candidates stops</title>
+  <desc id="fig-7-3-desc">Four checks run top down on the left: size, masked bytes, relocation records, and referenced constants, then a pass box. To the right of the size check, three candidates stop: percent_change_wide with 16 against 26 bytes, percent_change_div_first with 16 against 18 bytes, and grade_thresholds with 46 against 39 bytes and 1 against 0 relocations. No candidate stops at masked bytes or at relocation records. At referenced constants, grade_case10_wrong stops with the tables 1, 2, 3, 4, 4 against 1, 2, 3, 4, 3. Four candidates pass: percent_change_mul_first and percent_change_split with 16 bytes and no relocation, and grade_switch and grade_table with 46 bytes and the table 1, 2, 3, 4, 4.</desc>
+  <defs><marker id="fig-7-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-7-3-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <rect x="20" y="30" width="170" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="105" y="53.6" font-size="12" text-anchor="middle" font-weight="700">size</text>
+  <line x1="105" y1="70" x2="105" y2="109" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-3-head-ink)"/>
+  <rect class="m-knock" x="110" y="78.92" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="113" y="89.5" font-size="11">equal</text>
+  <rect x="210" y="30" width="200" height="36" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="310" y="42.8" font-size="11" text-anchor="middle" font-weight="700">percent_change_wide</text>
+  <text x="310" y="59.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">16 vs 26 bytes</text>
+  <rect x="420" y="30" width="200" height="36" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="520" y="42.8" font-size="11" text-anchor="middle" font-weight="700">percent_change_div_first</text>
+  <text x="520" y="59.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">16 vs 18 bytes</text>
+  <rect x="210" y="72" width="200" height="36" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="310" y="84.8" font-size="11" text-anchor="middle" font-weight="700">grade_thresholds</text>
+  <text x="310" y="101.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">46 vs 39 bytes, 0 relocations</text>
+  <line x1="190" y1="50" x2="209" y2="50" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-3-head-rose)"/>
+  <rect x="20" y="110" width="170" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="105" y="133.6" font-size="12" text-anchor="middle" font-weight="700">masked bytes</text>
+  <line x1="105" y1="150" x2="105" y2="179" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-3-head-ink)"/>
+  <rect class="m-knock" x="110" y="153.92" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="113" y="164.5" font-size="11">equal</text>
+  <rect x="210" y="112" width="200" height="36" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="310" y="133.3" font-size="11" text-anchor="middle" font-weight="700">no candidate stops here</text>
+  <line x1="190" y1="130" x2="209" y2="130" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-3-head-ink)"/>
+  <rect x="20" y="180" width="170" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="105" y="203.6" font-size="12" text-anchor="middle" font-weight="700">relocation records</text>
+  <line x1="105" y1="220" x2="105" y2="249" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-3-head-ink)"/>
+  <rect class="m-knock" x="110" y="223.92" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="113" y="234.5" font-size="11">equal</text>
+  <rect x="210" y="182" width="200" height="36" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="310" y="203.3" font-size="11" text-anchor="middle" font-weight="700">no candidate stops here</text>
+  <line x1="190" y1="200" x2="209" y2="200" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-3-head-ink)"/>
+  <rect x="20" y="250" width="170" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="105" y="273.6" font-size="12" text-anchor="middle" font-weight="700">referenced constants</text>
+  <line x1="105" y1="290" x2="105" y2="319" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-3-head-ink)"/>
+  <rect class="m-knock" x="110" y="293.92" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="113" y="304.5" font-size="11">equal</text>
+  <rect x="210" y="250" width="200" height="36" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="310" y="262.8" font-size="11" text-anchor="middle" font-weight="700">grade_case10_wrong</text>
+  <text x="310" y="279.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1, 2, 3, 4, 4 vs 1, 2, 3, 4, 3</text>
+  <line x1="190" y1="270" x2="209" y2="270" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-3-head-rose)"/>
+  <rect x="20" y="320" width="170" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="105" y="343.6" font-size="12" text-anchor="middle" font-weight="700">pass</text>
+  <line x1="190" y1="340" x2="209" y2="340" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-3-head-ink)"/>
+  <rect x="210" y="320" width="200" height="36" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="310" y="332.8" font-size="11" text-anchor="middle" font-weight="700">percent_change_mul_first</text>
+  <text x="310" y="349.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">16 bytes, no relocation</text>
+  <rect x="420" y="320" width="200" height="36" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="520" y="332.8" font-size="11" text-anchor="middle" font-weight="700">percent_change_split</text>
+  <text x="520" y="349.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">16 bytes, no relocation</text>
+  <rect x="210" y="362" width="200" height="36" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="310" y="374.8" font-size="11" text-anchor="middle" font-weight="700">grade_switch</text>
+  <text x="310" y="391.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">46 bytes, table 1, 2, 3, 4, 4</text>
+  <rect x="420" y="362" width="200" height="36" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="520" y="374.8" font-size="11" text-anchor="middle" font-weight="700">grade_table</text>
+  <text x="520" y="391.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">46 bytes, table 1, 2, 3, 4, 4</text>
+</svg>

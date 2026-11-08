@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 396" role="img" aria-labelledby="fig-task-not-found-title fig-task-not-found-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-task-not-found-title">One error in two JSON bindings</title>
+  <desc id="fig-task-not-found-desc">Two columns. Left, a JSON-RPC GetTask for task 00000000 posted to /a2a/jsonrpc gets HTTP 200 OK with an error member: code -32001, message Task not found, and a data array. Right, the same lookup as GET /a2a/rest/tasks/00000000 gets HTTP 404 Not Found with a google.rpc.Status body: code 404, status NOT_FOUND, the same message, and a details array. Lines from data and details lead to one shared box, the google.rpc.ErrorInfo with reason TASK_NOT_FOUND, domain a2a-protocol.org, and the task id in metadata.</desc>
+  <defs><marker id="fig-task-not-found-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A · JSON-RPC</text>
+  <text x="334" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">B · HTTP+JSON</text>
+  <line x1="320" y1="30" x2="320" y2="260" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="30" width="286" height="89" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="32" y="48" font-size="11">POST /a2a/jsonrpc</text>
+  <text x="32" y="63" font-size="11">A2A-Version: 1.0</text>
+  <text x="32" y="78" font-size="11">&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;id&quot;: 1,</text>
+  <text x="32" y="93" font-size="11">&quot;method&quot;: &quot;GetTask&quot;,</text>
+  <text x="32" y="108" font-size="11">&quot;params&quot;: {&quot;id&quot;: &quot;00000000&quot;}</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <line x1="163" y1="119" x2="163" y2="140" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-task-not-found-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M163 119 L163 140" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="20" y="141" width="286" height="119" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="32" y="159" font-size="11" font-weight="700">HTTP/1.1 200 OK</text>
+  <text x="32" y="174" font-size="11">Content-Type: application/json</text>
+  <text x="32" y="189" font-size="11">&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;id&quot;: 1,</text>
+  <text x="32" y="204" font-size="11">&quot;error&quot;: {</text>
+  <text x="45.2" y="219" font-size="11" font-weight="700">&quot;code&quot;: -32001,</text>
+  <text x="45.2" y="234" font-size="11">&quot;message&quot;: &quot;Task not found&quot;,</text>
+  <text x="45.2" y="249" font-size="11">&quot;data&quot;: [</text>
+  <text x="104.6" y="249" font-size="11" font-style="italic" fill="var(--m-ink-soft, #4a4a4a)">ErrorInfo</text>
+  <text x="164" y="249" font-size="11">]</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="334" y="30" width="286" height="89" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="346" y="48" font-size="11">GET /a2a/rest/tasks/00000000</text>
+  <text x="346" y="63" font-size="11">A2A-Version: 1.0</text>
+  <text x="346" y="78" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no body: the id is in the path</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <line x1="477" y1="119" x2="477" y2="140" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-task-not-found-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M477 119 L477 140" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="334" y="141" width="286" height="119" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="346" y="159" font-size="11" font-weight="700">HTTP/1.1 404 Not Found</text>
+  <text x="346" y="174" font-size="11">Content-Type: application/a2a+json</text>
+  <text x="346" y="189" font-size="11">&quot;error&quot;: {</text>
+  <text x="359.2" y="204" font-size="11" font-weight="700">&quot;code&quot;: 404,</text>
+  <text x="359.2" y="219" font-size="11">&quot;status&quot;: &quot;NOT_FOUND&quot;,</text>
+  <text x="359.2" y="234" font-size="11">&quot;message&quot;: &quot;Task not found&quot;,</text>
+  <text x="359.2" y="249" font-size="11">&quot;details&quot;: [</text>
+  <text x="438.4" y="249" font-size="11" font-style="italic" fill="var(--m-ink-soft, #4a4a4a)">ErrorInfo</text>
+  <text x="497.8" y="249" font-size="11">]</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <line x1="163" y1="260" x2="163" y2="296" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1.2"/>
+  <text x="171" y="282" font-size="11.5">data[0]</text>
+  <line x1="477" y1="260" x2="477" y2="296" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1.2"/>
+  <text x="485" y="282" font-size="11.5">details[0]</text>
+  <rect x="20" y="296" width="600" height="89" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="32" y="314" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">google.rpc.ErrorInfo, the same object in both bindings</text>
+  <text x="32" y="329" font-size="11">&quot;@type&quot;: &quot;type.googleapis.com/google.rpc.ErrorInfo&quot;,</text>
+  <text x="32" y="344" font-size="11" font-weight="700">&quot;reason&quot;: &quot;TASK_NOT_FOUND&quot;,</text>
+  <text x="32" y="359" font-size="11">&quot;domain&quot;: &quot;a2a-protocol.org&quot;,</text>
+  <text x="32" y="374" font-size="11">&quot;metadata&quot;: {&quot;taskId&quot;: &quot;00000000&quot;}</text>
+  </g>
+</svg>

@@ -47,7 +47,7 @@ Perplexity is `exp(mean negative log-likelihood per token)`. The implementation 
 - The mean must be over actual token positions, not over batch * sequence. Padding tokens have to be excluded from the denominator or perplexity will look better than it is.
 - The model predicts the next token, so logits at position `i` predict the token at position `i+1`. Off-by-one mistakes here are silent: the loss still trains, but the metric becomes meaningless.
 
-The eval computes per-batch sums of `-log p(token)` over non-pad positions and a per-batch token count, then divides at the end. This is numerically safer than averaging per-batch perplexities (which under-weights short sequences) and matches the textbook definition.
+The eval computes per-batch sums of `-log p(token)` over non-pad positions and a per-batch token count, then divides at the end. This is numerically safer than averaging per-batch perplexities (which gives every batch equal weight, so each token in a short batch counts more than a token in a long batch) and matches the textbook definition.
 
 ## Exact-match, with normalisation
 

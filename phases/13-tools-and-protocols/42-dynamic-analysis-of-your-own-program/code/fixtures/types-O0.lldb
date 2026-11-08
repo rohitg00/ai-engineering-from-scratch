@@ -1,0 +1,4 @@
+script import sys; print(sys.version.split()[0])
+script print([(f.name, f.byte_offset, f.type.name) for f in lldb.target.FindFirstType("account").get_fields_array()])
+script print(lldb.target.FindFirstType("account").size)
+script print([(c.function.name, hex(c.function.addr.file_addr), hex(c.function.end_addr.file_addr), c.function.addr.line_entry.line) for n in ('bump', 'classify', 'sum_balances') for c in lldb.target.FindFunctions(n)])

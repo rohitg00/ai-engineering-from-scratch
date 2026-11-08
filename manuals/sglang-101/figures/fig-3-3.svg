@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-3-3-title fig-3-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-3-title">One benchmark, two cache settings</title>
+  <desc id="fig-3-3-desc">Three pairs of bars for the shared-prefix benchmark on the capture Mac, radix cache on against --disable-radix-cache. Duration is 48.81 s against 129.68 s, median time to first token is 1,358 ms against 7,222 ms, and output throughput is 83.91 against 31.59 tokens per second.</desc>
+  <rect x="20" y="16" width="14" height="12" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="40" y="26" font-size="11.5">radix cache on</text>
+  <rect x="170" y="16" width="14" height="12" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="190" y="26" font-size="11.5">--disable-radix-cache</text>
+  <text x="20" y="52" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BENCHMARK DURATION</text>
+  <rect x="20" y="60" width="146.43" height="22" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="174.43" y="76" font-size="11.5">48.81 s</text>
+  <rect x="20" y="88" width="389.04" height="22" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="417.04" y="104" font-size="11.5">129.68 s</text>
+  <text x="20" y="136" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">MEDIAN TIME TO FIRST TOKEN</text>
+  <rect x="20" y="144" width="71.3" height="22" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="99.3" y="160" font-size="11.5">1,358 ms</text>
+  <rect x="20" y="172" width="379.16" height="22" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="407.16" y="188" font-size="11.5">7,222 ms</text>
+  <text x="20" y="220" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">OUTPUT TOKENS PER SECOND</text>
+  <rect x="20" y="228" width="352.42" height="22" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="380.42" y="244" font-size="11.5">83.91 tok/s</text>
+  <rect x="20" y="256" width="132.68" height="22" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="160.68" y="272" font-size="11.5">31.59 tok/s</text>
+  <text x="20" y="292" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">64 prompts · 4 groups of 16 · 2,048-token shared system prompt · max concurrency 8</text>
+</svg>

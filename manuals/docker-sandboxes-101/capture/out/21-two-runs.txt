@@ -1,0 +1,7 @@
+$ docker-agent run --exec --last --working-dir fixtures/repo --fake work/cassettes/18-files fixtures/agents/files.yaml 'List the files in the working directory.' 'How many lines does README.md have? Count them with a shell command.'
+README.md has 1 line.
+[exit 0]
+
+$ docker-agent run --exec --last --working-dir fixtures/repo --fake work/cassettes/18-files fixtures/agents/files.yaml 'List the files in the working directory.' 'How many lines does README.md have? Count them with a shell command.'
+README.md has 1 line.
+[exit 0]

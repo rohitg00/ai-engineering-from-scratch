@@ -1,0 +1,26 @@
+$ sbx version
+sbx version: v0.47.0 0411f50ee4700fe7bd37e6e7e3aced563e850ca9
+[exit 0]
+
+$ docker-agent version
+docker-agent version v1.149.0
+Commit: Homebrew
+[exit 0]
+
+$ sw_vers
+ProductName:		macOS
+ProductVersion:		26.2
+BuildVersion:		25C56
+[exit 0]
+
+$ uname -m
+arm64
+[exit 0]
+
+$ sysctl kern.hv_support
+kern.hv_support: 1
+[exit 0]
+
+$ python3 --version
+Python 3.14.6
+[exit 0]

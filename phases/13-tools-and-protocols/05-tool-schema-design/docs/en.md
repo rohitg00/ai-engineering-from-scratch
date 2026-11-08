@@ -84,7 +84,7 @@ Rule of thumb: if the `action` argument has more than three values, split the to
 ### Parameter design
 
 - **Enum every closed set.** `units: "celsius" | "fahrenheit"` not `units: string`. Enums tell the model the universe of acceptable values.
-- **Required vs optional.** Mark the minimum needed. Everything else optional. OpenAI strict mode requires every field in `required`; add an `is_default: true` convention in your code and let the model omit it.
+- **Required vs optional.** Mark the minimum needed. Everything else optional. OpenAI strict mode requires every field in `required`, so the model cannot omit one. Type an optional field as a union with `null` and let the model send `null` when it has no value.
 - **Typed IDs.** `note_id: string` is fine but add a `pattern` (`^note-[0-9]{8}$`) to catch hallucinated ids.
 - **No overly flexible types.** Avoid `type: any`. The model will hallucinate shapes.
 - **Describe the field.** `{"type": "string", "description": "ISO 8601 date in UTC, e.g. 2026-04-22"}`. The description is part of the model's prompt.

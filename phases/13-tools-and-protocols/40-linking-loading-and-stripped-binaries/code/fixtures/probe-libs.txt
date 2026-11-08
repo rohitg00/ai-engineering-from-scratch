@@ -1,0 +1,70 @@
+lief 1.0.0-d05b3499b | pyelftools 0.33 | pefile 2024.8.26
+
+== pyelftools: tiny-dyn-x86_64
+ e_type ET_DYN | e_machine EM_X86_64 | sections 12
+  .rela.plt 0x10d8 R_X86_64_JUMP_SLOT puts
+  .rela.plt 0x10e0 R_X86_64_JUMP_SLOT exit
+  DT_NEEDED 0xb libc.so.6
+  DT_HASH 0x1a0
+  DT_STRTAB 0x188
+  DT_SYMTAB 0x140
+  DT_STRSZ 0x15
+  DT_SYMENT 0x18
+  DT_PLTGOT 0x10c0
+  DT_PLTRELSZ 0x30
+  DT_PLTREL 0x7
+  DT_JMPREL 0x1b8
+  DT_FLAGS_1 0x8000000
+  DT_NULL 0x0
+
+== pyelftools: main-x86_64-O1.o relocations
+  .rela.text 0xf R_X86_64_PC32 .L__const.main.v-0x4
+  .rela.text 0x21 R_X86_64_PC32 .rodata-0x4
+  .rela.text 0x2d R_X86_64_PLT32 puts-0x4
+  .rela.text 0x34 R_X86_64_PC32 fns-0x4
+  .rela.text 0x44 R_X86_64_PC32 .L.str-0x4
+  .rela.text 0x4d R_X86_64_PLT32 printf-0x4
+  .rela.text 0x5c R_X86_64_PLT32 percent_change-0x4
+  .rela.text 0x68 R_X86_64_PLT32 grade-0x4
+  .rela.text 0x78 R_X86_64_PLT32 total-0x4
+  .rela.text 0x85 R_X86_64_PLT32 grade_label-0x4
+  .rela.text 0x8c R_X86_64_PC32 .L.str.1-0x4
+  .rela.text 0x9e R_X86_64_PLT32 printf-0x4
+  .rela.text 0xaa R_X86_64_PC32 .L.str.2-0x4
+  .rela.text 0xaf R_X86_64_PLT32 puts-0x4
+  .rela.data.rel.ro 0x0 R_X86_64_64 grade+0x0
+  .rela.data.rel.ro 0x8 R_X86_64_64 grade+0x0
+  .rela.rodata 0x0 R_X86_64_PC32 .rodata.str1.1+0x16
+  .rela.rodata 0x4 R_X86_64_PC32 .L.str.4+0x4
+
+== lief: main-x86_64.obj (COFF)
+ type Binary | machine MACHINE_TYPES.AMD64
+ sections ['.text', '.data', '.bss', '.rdata', '.rdata', '.rdata', '.rdata', '.rdata', '.rdata', '/16']
+ relocations [('0xd', 'AMD64_REL32', '.rdata'), ('0x21', 'AMD64_REL32', 'names'), ('0x2a', 'AMD64_REL32', 'puts'), ('0x31', 'AMD64_REL32', 'fns'), ('0x40', 'AMD64_REL32', '??_C@_03PMGGPEJJ@?$CFd?6?$AA@'), ('0x47', 'AMD64_REL32', 'printf'), ('0x51', 'AMD64_REL32', 'grade_label'), ('0x63', 'AMD64_REL32', 'total'), ('0x6f', 'AMD64_REL32', 'grade'), ('0x80', 'AMD64_REL32', 'percent_change'), ('0x8c', 'AMD64_REL32', '??_C@_0N@FGAKPGKN@?$CFd?5?$CFd?5?$CFd?5?$CFs?6?$AA@'), ('0x99', 'AMD64_REL32', 'printf'), ('0xa5', 'AMD64_REL32', '??_C@_04BFDDMJJI@args?$AA@'), ('0xaa', 'AMD64_REL32', 'puts'), ('0x0', 'AMD64_ADDR64', 'grade'), ('0x8', 'AMD64_ADDR64', 'grade'), ('0x20', 'AMD64_ADDR64', '??_C@_04JDDJEAHN@even?$AA@'), ('0x28', 'AMD64_ADDR64', '??_C@_03PDLBAKOJ@odd?$AA@')]
+ functions ['main']
+
+== pefile: main-x86_64.obj (a COFF object is not an image)
+ PEFormatError: 'DOS Header magic not found.'
+
+== pefile: tiny-x86_64.exe
+ Magic 0x20b | ImageBase 0x140000000 | EntryPoint 0x1000 | DllCharacteristics 0x8160
+ sections [('.text', '0x1000', 512), ('.rdata', '0x2000', 512), ('.data', '0x3000', 512), ('.reloc', '0x4000', 512)]
+ import msvcrt.dll [('puts', '0x140002040', 0), ('exit', '0x140002048', 0)]
+ exports [(1, '0x1000', 'tiny_entry')]
+ base relocations [('0x3000', 10), ('0x3000', 0)]
+ warnings ["Byte 0x00 makes up 92.1484% of the file's contents. This may indicate truncation / malformation."]
+
+== lief: ledger_main (Mach-O)
+ flags ['NOUNDEFS', 'DYLDLINK', 'TWOLEVEL', 'PIE']
+ commands ['SEGMENT_64', 'SEGMENT_64', 'SEGMENT_64', 'SEGMENT_64', 'DYLD_CHAINED_FIXUPS', 'DYLD_EXPORTS_TRIE', 'SYMTAB', 'DYSYMTAB', 'LOAD_DYLINKER', 'UUID', 'BUILD_VERSION', 'SOURCE_VERSION', 'MAIN', 'LOAD_DYLIB', 'LOAD_DYLIB', 'RPATH', 'FUNCTION_STARTS', 'DATA_IN_CODE', 'CODE_SIGNATURE']
+ libraries ['@rpath/libledger.dylib', '/usr/lib/libSystem.B.dylib']
+ chained fixups: version 0 imports_count 8 imports_format IMPORT
+ starts [('PTR_64_OFFSET', 16384, 1)]
+ bindings [('0x100004000', '_grade', 'libledger.dylib'), ('0x100004008', '_grade_label', 'libledger.dylib'), ('0x100004010', '_percent_change', 'libledger.dylib'), ('0x100004018', '_total', 'libledger.dylib'), ('0x100004020', '___stack_chk_fail', 'libSystem.B.dylib'), ('0x100004028', '___stack_chk_guard', 'libSystem.B.dylib'), ('0x100004030', '_printf', 'libSystem.B.dylib'), ('0x100004038', '_puts', 'libSystem.B.dylib'), ('0x100004040', '_grade', 'libledger.dylib'), ('0x100004048', '_grade', 'libledger.dylib')]
+ rebases [('0x100004050', '0'), ('0x100004058', '0')]
+ function_starts ['0x558']
+ imported_functions ['___stack_chk_fail', '___stack_chk_guard', '_grade', '_grade_label', '_percent_change', '_printf', '_puts', '_total']
+ stubs [('__stubs', '__TEXT', '0x100000658', 84, 0, 12)]
+
+== lief: libledger.stripped.dylib exports trie
+ symbols 4 | exports [('_grade', '0x428'), ('_grade_label', '0x498'), ('_percent_change', '0x410'), ('_total', '0x464')]

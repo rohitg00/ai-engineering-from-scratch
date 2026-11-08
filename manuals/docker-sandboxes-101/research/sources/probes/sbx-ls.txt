@@ -1,0 +1,4 @@
+$ sbx ls   # 2026-10-08T06:57Z
+No sandboxes found.
+Launch one: sbx run claude
+[exit 0]

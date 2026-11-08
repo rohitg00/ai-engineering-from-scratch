@@ -11,7 +11,7 @@
 
 A single self-attention head computes one attention matrix. That matrix captures one kind of relationship — usually the one that minimizes loss on whatever the training signal is. If your data has subject-verb agreement, co-reference, long-range discourse, and syntactic chunking all tangled together, a single head smears them into a single soft-max distribution and loses half the signal.
 
-The fix from the 2017 Vaswani paper: run several attention functions in parallel, each with its own Q, K, V projections, and concatenate the outputs. Each head operates in a smaller subspace of dimension `d_model / n_heads`. Total parameters stay the same. Expressive power goes up.
+The fix from the 2017 Vaswani paper: run several attention functions in parallel, each with its own Q, K, V projections, and concatenate the outputs. Each head operates in a smaller subspace of dimension $d_{\text{model}} / n_{\text{heads}}$. Total parameters stay the same. Expressive power goes up.
 
 Multi-head attention is the default every transformer in 2026 ships with. The only argument is about *how many* heads and whether keys and values share projections (Grouped-Query Attention, Multi-Query Attention, Multi-head Latent Attention).
 
@@ -19,7 +19,7 @@ Multi-head attention is the default every transformer in 2026 ships with. The on
 
 ![Multi-head attention splits, attends, concatenates](../assets/multi-head-attention.svg)
 
-**Split.** Take `X` of shape `(N, d_model)`. Project to Q, K, V each of shape `(N, d_model)`. Reshape to `(N, n_heads, d_head)` where `d_head = d_model / n_heads`. Transpose to `(n_heads, N, d_head)`.
+**Split.** Take `X` of shape `(N, d_model)`. Project to Q, K, V each of shape `(N, d_model)`. Reshape to `(N, n_heads, d_head)` where $d_{\text{head}} = d_{\text{model}} / n_{\text{heads}}$. Transpose to `(n_heads, N, d_head)`.
 
 **Attend in parallel.** Run scaled dot-product attention inside each head. Each head produces `(N, d_head)`. The heads operate on different subspaces of the embedding and never talk during the attention computation itself.
 
@@ -36,7 +36,7 @@ Multi-head attention is the default every transformer in 2026 ships with. The on
 | Grouped-query (GQA) | N | G (e.g. N/8) | Llama 2 70B, Llama 3+, Qwen 2+, Mistral |
 | Multi-head latent (MLA) | N | compressed to low-rank | DeepSeek-V2, V3 |
 
-GQA is the modern default because it cuts KV-cache memory by a factor of `N/G` while keeping nearly full quality. MLA goes further by compressing K/V into a latent space, then projecting back at compute time — costs FLOPs, saves a lot more memory.
+GQA is the modern default because it cuts KV-cache memory by a factor of $N/G$ while keeping nearly full quality. MLA goes further by compressing K/V into a latent space, then projecting back at compute time — costs FLOPs, saves a lot more memory.
 
 ```figure
 multihead-split
@@ -129,7 +129,7 @@ out = scaled_dot_product_attention(q, k, v, is_causal=True, enable_gqa=True)
 | Large (~1B) | 2048 | 16 | 128 |
 | Frontier (~70B) | 8192 | 64 | 128 |
 
-`d_head` almost always lands at 64 or 128. It is the unit of how much one head can "see." Drop below 32 and heads start fighting the scaling factor `sqrt(d_head)`; go above 256 and you lose the "many small specialists" benefit.
+`d_head` almost always lands at 64 or 128. It is the unit of how much one head can "see." Drop below 32 and heads start fighting the scaling factor $\sqrt{d_{\text{head}}}$; go above 256 and you lose the "many small specialists" benefit.
 
 ## Ship It
 
@@ -145,7 +145,7 @@ See `outputs/skill-mha-configurator.md`. The skill recommends head count, kv-hea
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| Head | "A single attention circuit" | One Q/K/V projection of dimension `d_head = d_model / n_heads` with its own attention matrix. |
+| Head | "A single attention circuit" | One Q/K/V projection of dimension $d_{\text{head}} = d_{\text{model}} / n_{\text{heads}}$ with its own attention matrix. |
 | d_head | "Head dimension" | Per-head hidden width; almost always 64 or 128 in production. |
 | Split / combine | "Reshape tricks" | `(N, d_model) ↔ (n_heads, N, d_head)` reshape+transpose around attention. |
 | W_o | "Output projection" | `(d_model, d_model)` matrix applied after concatenating heads; where heads mix. |

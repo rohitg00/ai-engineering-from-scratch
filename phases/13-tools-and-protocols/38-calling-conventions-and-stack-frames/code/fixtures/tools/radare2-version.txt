@@ -1,0 +1,4 @@
+radare2 6.2.4 +0 abi:152 @ darwin-arm_64
+birth: git.6.2.4 2026-10-14__16:08:49
+commit: 6.2.4
+options: gpl release -O2 cs:5 cl:2 make

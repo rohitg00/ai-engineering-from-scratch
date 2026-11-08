@@ -27,7 +27,7 @@ Stdlib plus numpy is enough. BLEU is counting and a clamp. ROUGE-L is dynamic pr
 
 ## Tokenisation
 
-The tokenizer is `re.findall(r"\w+", text.lower())`. Lowercase, alphanumeric runs, drop punctuation. Every metric in this lesson uses this exact tokenizer. The runner does not get to choose. If you swap tokenizers, you are running a different benchmark.
+The tokenizer is `re.findall(r"\w+", text.lower())`. Lowercase, runs of word characters (letters, digits, and underscore), drop everything else. Every metric in this lesson uses this exact tokenizer. The runner does not get to choose. If you swap tokenizers, you are running a different benchmark.
 
 ```python
 TOKEN_RE = re.compile(r"\w+", re.UNICODE)
@@ -66,7 +66,7 @@ For multi-target tasks, we take the best F1 over the target list. That matches t
 
 ## BLEU-4
 
-BLEU is the canonical machine-translation metric and it still shows up in summarisation work. The formulation we use is corpus-level BLEU-4 with the standard brevity penalty and additive-one smoothing on modified n-gram counts so a single missing 4-gram does not push the score to zero.
+BLEU is the canonical machine-translation metric and it still shows up in summarisation work. The formulation we use is sentence-level BLEU-4, scored per prediction and reference pair, with the standard brevity penalty and additive-one smoothing on modified n-gram counts so a single missing 4-gram does not push the score to zero.
 
 For each candidate-reference pair, we count modified n-gram precision for n equals 1, 2, 3, 4. Modified precision clips the candidate n-gram count by the maximum count of that n-gram in any reference, so a candidate cannot inflate by repeating one phrase. The geometric mean across the four precisions is wrapped by the brevity penalty.
 
@@ -105,11 +105,11 @@ def lcs_length(a, b):
     return int(dp[n, m])
 ```
 
-The numpy table makes the implementation legible; pure Python lists would work too. Tasks that opt into ROUGE-L pay the O(n m) cost per task. For typical summary lengths that stays under a millisecond.
+The numpy table makes the implementation legible; pure Python lists would work too. Tasks that opt into ROUGE-L pay the $O(n m)$ cost per task. For typical summary lengths that stays under a millisecond.
 
 ## Accuracy
 
-For multi-target classification tasks, accuracy reduces to exact-match against a single normalised target. We expose it as a separate function so the dispatcher can dispatch on `metric_name` without going through string comparisons inside the runner.
+For classification tasks, accuracy reduces to exact-match: the prediction scores 1 if it matches any normalised target in the list. We expose it as a separate function so the dispatcher can dispatch on `metric_name` without going through string comparisons inside the runner.
 
 ## Dispatch contract
 

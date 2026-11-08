@@ -91,7 +91,7 @@ The output shows the bi-encoder's top-N, the cross-encoder's top-K, and a timing
 
 **Cross-encoder is not symmetric.** `rerank(q, d)` and `rerank(d, q)` are different scores. Always feed the query first. If you accidentally swap, recall collapses.
 
-**N is too low to expose the bug.** If you set N = K, the cross-encoder cannot reorder; it can only reweight. The lift looks zero. Pick N at least three times K.
+**N is too low to expose the bug.** If you set N = K, the cross-encoder can reorder the K candidates but cannot bring a new one into the top K. Recall at K cannot move, so the lift looks zero. Pick N at least three times K.
 
 **Training data leaks into the eval.** If the hand-labeled training pairs include the eval queries, the rerank looks magical. Strictly separate train and eval, even on a fixture.
 

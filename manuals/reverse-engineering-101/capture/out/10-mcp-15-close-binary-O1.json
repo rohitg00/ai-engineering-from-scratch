@@ -1,0 +1,32 @@
+{
+  "request": {
+    "jsonrpc": "2.0",
+    "id": 15,
+    "method": "tools/call",
+    "params": {
+      "name": "close_binary",
+      "arguments": {}
+    }
+  },
+  "response": {
+    "result": {
+      "_meta": {
+        "provenance": {
+          "untrusted_content": true,
+          "source": "analysis_target"
+        }
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "<cut by run.py: the text copy of structuredContent, 15 bytes>"
+        }
+      ],
+      "structuredContent": {
+        "result": null
+      }
+    },
+    "jsonrpc": "2.0",
+    "id": 15
+  }
+}

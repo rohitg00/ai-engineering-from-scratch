@@ -169,14 +169,15 @@ h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 400;
   line-height: 1;
+  overflow-wrap: break-word;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--blueprint);
 }
 
-h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); }
-h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
-h3 { font-size: clamp(1.2rem, 2.6vw, 1.6rem); }
+h1 { font-size: clamp(min(2.4rem, 12vw), 6vw, 4.4rem); }
+h2 { font-size: clamp(min(1.8rem, 9vw), 4vw, 2.6rem); }
+h3 { font-size: clamp(min(1.2rem, 6vw), 2.6vw, 1.6rem); }
 h4 { font-size: 1.1rem; }
 
 p {
@@ -262,7 +263,7 @@ p.dropcap::first-letter {
 
 .site-header {
   position: fixed;
-  top: 0;
+  top: var(--site-banner-offset, 0px);
   left: 0;
   right: 0;
   z-index: 100;
@@ -308,6 +309,7 @@ p.dropcap::first-letter {
 
 .logo-icon {
   display: inline-block;
+  flex: 0 0 auto;
   width: 12px;
   height: 12px;
   background: var(--blueprint);
@@ -544,7 +546,7 @@ p.dropcap::first-letter {
 
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-size: clamp(min(1.8rem, 9vw), 4vw, 2.6rem);
   text-align: left;
   text-transform: uppercase;
   color: var(--blueprint);
@@ -642,6 +644,7 @@ p.dropcap::first-letter {
 }
 
 .modal-close:focus-visible,
+.modal-search:focus-visible,
 .modal-lesson-open:focus-visible,
 .modal-lesson-toggle:focus-visible,
 .modal-reset:focus-visible {
@@ -668,7 +671,7 @@ p.dropcap::first-letter {
 
 .modal-title {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 4vw, 2.15rem);
+  font-size: clamp(min(1.75rem, 8.75vw), 4vw, 2.15rem);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   color: var(--ink);
@@ -679,6 +682,19 @@ p.dropcap::first-letter {
   color: var(--ink-soft);
   font-size: 0.95rem;
   line-height: 1.5;
+}
+
+.modal-phase-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.modal-phase-link[hidden] {
+  display: none;
 }
 
 .modal-progress {
@@ -720,6 +736,53 @@ p.dropcap::first-letter {
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform var(--motion-enter) var(--ease-out);
+}
+
+.modal-search-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.modal-search-wrap[hidden] {
+  display: none;
+}
+
+.modal-search-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.modal-search {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 10px 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--rule-soft);
+  border-radius: 0;
+  color: var(--ink);
+  outline: none;
+  transition: border-color var(--motion-feedback) ease;
+}
+
+.modal-search::placeholder {
+  color: var(--ink-mute);
+}
+
+.modal-search:focus {
+  border-color: var(--blueprint);
+}
+
+.modal-search[type="search"]::-webkit-search-decoration,
+.modal-search[type="search"]::-webkit-search-cancel-button,
+.modal-search[type="search"]::-webkit-search-results-button,
+.modal-search[type="search"]::-webkit-search-results-decoration {
+  display: none;
 }
 
 .modal-footer {
@@ -772,6 +835,12 @@ p.dropcap::first-letter {
   padding: 8px 20px;
 }
 
+.modal-lessons-empty {
+  padding: 24px 12px;
+  color: var(--ink-mute);
+  font-size: 0.95rem;
+}
+
 .modal-lesson {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -818,14 +887,17 @@ p.dropcap::first-letter {
 }
 
 .modal-lesson-name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   font-family: var(--font-body);
   font-size: 0.98rem;
   font-weight: 600;
   line-height: 1.35;
   color: var(--ink);
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .modal-lesson-open:hover .modal-lesson-name {
@@ -971,7 +1043,8 @@ p.dropcap::first-letter {
 
 .footer-links {
   display: flex;
-  gap: 24px;
+  flex-wrap: wrap;
+  gap: 10px 24px;
 }
 
 .footer-links a {
@@ -1061,7 +1134,6 @@ body.js-anim .toc-row.in-view {
   .reveal,
   .ascii-rule,
   .toc-row,
-  .stat-row-bar::before,
   .manual-title {
     transition: none !important;
     animation: none !important;
@@ -1070,6 +1142,7 @@ body.js-anim .toc-row.in-view {
     clip-path: none !important;
   }
 
+  .stat-row-bar::before,
   .modal-overlay,
   .modal,
   .modal-progress-bar-fill {
@@ -1439,9 +1512,10 @@ body.js-anim .toc-row.in-view {
   }
 
   .modal-lesson-name {
-    white-space: normal;
+    display: block;
+    -webkit-line-clamp: none;
+    line-clamp: none;
     overflow: visible;
-    text-overflow: clip;
     font-size: 0.96rem;
   }
 
@@ -1510,6 +1584,17 @@ body.js-anim .toc-row.in-view {
     color: var(--blueprint);
     font-size: 0.68rem;
     line-height: 1;
+  }
+
+  .header-inner > .header-github > span:not(.star-count) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .header-github .star-count {
@@ -1959,6 +2044,7 @@ body[data-palette-open] {
   font-family: var(--font-body, Georgia, serif); font-size: 0.9rem; text-align: start;
   color: var(--ink); background: transparent; border: none; cursor: pointer;
   padding: 8px 12px; transition: background 0.12s ease, color 0.12s ease;
+  box-sizing: border-box; text-decoration: none;
 }
 .lang-item:hover { background: var(--blueprint-tint); color: var(--blueprint); }
 .lang-item:focus-visible { outline: 2px solid var(--blueprint); outline-offset: -2px; }
@@ -2357,5 +2443,140 @@ body[data-palette-open] {
 
   .search-toggle {
     flex-shrink: 0;
+  }
+}
+
+.site-banner {
+  position: relative;
+  z-index: 101;
+  background-color: var(--blueprint);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 8px 8px;
+  color: var(--bg);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.site-banner-inner {
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 4px 28px;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.site-banner-tag {
+  flex: 0 0 auto;
+  padding: 1px 7px;
+  background: var(--bg);
+  color: var(--blueprint);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0 var(--rule);
+}
+
+.site-banner-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.35;
+  color: inherit;
+  overflow-wrap: anywhere;
+}
+
+.site-banner-short {
+  display: none;
+}
+
+.site-banner-link,
+.site-banner-link:visited {
+  color: var(--bg);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  border-bottom: none;
+  white-space: nowrap;
+}
+
+.site-banner-link:hover {
+  color: var(--bg);
+  text-decoration-thickness: 2px;
+  border-bottom: none;
+}
+
+.site-banner-link:focus-visible,
+.site-banner-close:focus-visible {
+  outline: 2px solid var(--bg);
+  outline-offset: 3px;
+}
+
+.site-banner-close {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-inline-end: -8px;
+  padding: 0;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--bg);
+  cursor: pointer;
+}
+
+.site-banner-close:hover {
+  border-color: var(--bg);
+}
+
+@media (max-width: 820px) {
+  .site-banner-inner {
+    padding: 4px 16px;
+    gap: 10px;
+  }
+
+  .site-banner-text {
+    font-size: 14px;
+  }
+
+  .site-banner-long {
+    display: none;
+  }
+
+  .site-banner-short {
+    display: inline;
+  }
+}
+
+@media (max-width: 400px) {
+  .site-banner-inner {
+    gap: 8px;
+  }
+
+  .site-banner-text {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-banner-close {
+    transition: border-color 0.15s;
+  }
+}
+
+@media print {
+  .site-banner {
+    display: none;
   }
 }

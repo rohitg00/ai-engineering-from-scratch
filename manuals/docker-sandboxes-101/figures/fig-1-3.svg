@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 716" role="img" aria-labelledby="fig-1-3-title fig-1-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-3-title">One docker-agent run --sandbox, step by step</title>
+  <desc id="fig-1-3-desc">Seven lifelines: the operator, docker-agent v1.149.0 on the host, the .m101 state directories in the workspace, sbx with sandboxd, the sandbox VM, the host proxy on port 3128, and Docker Model Runner on port 12434. Fifteen rows: sandbox allow writes localhost:12434 to the persistent allowlist; run --sandbox --exec stages the kit sandbox-kits/&lt;hash&gt;, asks sbx to create docker-agent-&lt;hash&gt; from docker-agent-sbx-templates:latest, the sandbox becomes running with 10 CPUs and 32 GiB, and docker-agent allows models.dev and localhost:12434 on the proxy. Inside the VM the session store fails with readonly database (1032). An sbx exec then runs docker-agent inside with its data in /tmp/m101; its model call goes to host.docker.internal:12434 through the proxy, which forwards it to localhost:12434; the answer streams back as chat.completion.chunk events and the operator reads README.md with 1 line. sbx rm --force removes the sandbox.</desc>
+  <defs><marker id="fig-1-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-1-3-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-1-3-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-1-3-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker><marker id="fig-1-3-head-plum" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-plum-ink, #8a3d72)"/></marker><marker id="fig-1-3-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
+  <rect x="9" y="8" width="86" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="52" y="22.8" font-size="11" text-anchor="middle" font-weight="700">operator</text>
+  <text x="52" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">your shell</text>
+  <line x1="52" y1="48" x2="52" y2="708" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="98" y="8" width="86" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="141" y="22.8" font-size="11" text-anchor="middle" font-weight="700">docker-agent</text>
+  <text x="141" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">v1.149.0</text>
+  <line x1="141" y1="48" x2="141" y2="708" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="187" y="8" width="86" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="230" y="22.8" font-size="11" text-anchor="middle" font-weight="700">.m101 dirs</text>
+  <text x="230" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in workspace</text>
+  <line x1="230" y1="48" x2="230" y2="708" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="276" y="8" width="86" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="319" y="22.8" font-size="11" text-anchor="middle" font-weight="700">sbx</text>
+  <text x="319" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">and sandboxd</text>
+  <line x1="319" y1="48" x2="319" y2="708" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="365" y="8" width="86" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="408" y="22.8" font-size="11" text-anchor="middle" font-weight="700">sandbox VM</text>
+  <text x="408" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the guest</text>
+  <line x1="408" y1="48" x2="408" y2="708" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="454" y="8" width="86" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="497" y="22.8" font-size="11" text-anchor="middle" font-weight="700">proxy :3128</text>
+  <text x="497" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on the host</text>
+  <line x1="497" y1="48" x2="497" y2="708" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="543" y="8" width="86" height="40" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="586" y="22.8" font-size="11" text-anchor="middle" font-weight="700">Model Runner</text>
+  <text x="586" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">:12434</text>
+  <line x1="586" y1="48" x2="586" y2="708" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="80" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="84" font-size="11" text-anchor="middle">1</text>
+  <line x1="52" y1="80" x2="140" y2="80" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-1-3-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M52 80 L140 80" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="48.15" y="63.03" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="96" y="74" font-size="11.5" text-anchor="middle">sandbox allow</text>
+  <rect class="m-knock" x="48.45" y="84.42" width="95.1" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="96" y="95" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">localhost:12434</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="122" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="126" font-size="11" text-anchor="middle">2</text>
+  <line x1="141" y1="122" x2="229" y2="122" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-1-3-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M141 122 L229 122" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="123.35" y="105.03" width="123.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="185" y="116" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">+ localhost:12434</text>
+  <rect class="m-knock" x="122.6" y="126.42" width="124.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="185" y="137" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">persistent allowlist</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="164" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="168" font-size="11" text-anchor="middle">3</text>
+  <line x1="52" y1="164" x2="140" y2="164" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-1-3-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M52 164 L140 164" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="28" y="147.03" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="100" y="158" font-size="11.5" text-anchor="middle">run --sandbox --exec</text>
+  <rect class="m-knock" x="43.54" y="168.42" width="112.92" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="100" y="179" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">files-sandbox.yaml</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="206" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="210" font-size="11" text-anchor="middle">4</text>
+  <line x1="141" y1="206" x2="229" y2="206" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-1-3-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M141 206 L229 206" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="116.45" y="189.03" width="137.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="185" y="200" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">sandbox-kits/&lt;hash&gt;</text>
+  <rect class="m-knock" x="146.36" y="210.42" width="77.28" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="185" y="221" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the auto-kit</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="248" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="252" font-size="11" text-anchor="middle">5</text>
+  <line x1="141" y1="248" x2="318" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-1-3-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M141 248 L318 248" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="136.8" y="231.03" width="185.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="229.5" y="242" font-size="11.5" text-anchor="middle">create docker-agent-&lt;hash&gt;</text>
+  <rect class="m-knock" x="128.49" y="252.42" width="202.02" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="229.5" y="263" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">docker-agent-sbx-templates:latest</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="290" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="294" font-size="11" text-anchor="middle">6</text>
+  <line x1="319" y1="290" x2="407" y2="290" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-3-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M319 290 L407 290" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="304.8" y="273.03" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="363" y="284" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">created, running</text>
+  <rect class="m-knock" x="297.63" y="294.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="363" y="305" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">cpu 10, memory 32 GiB</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="332" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="336" font-size="11" text-anchor="middle">7</text>
+  <line x1="141" y1="332" x2="496" y2="332" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-1-3-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M141 332 L496 332" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="260.3" y="315.03" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="318.5" y="326" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">allow models.dev</text>
+  <rect class="m-knock" x="259.07" y="336.42" width="118.86" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="318.5" y="347" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">and localhost:12434</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="374" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="16" y="378" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">8</text>
+  <line x1="408" y1="374" x2="231" y2="374" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-3-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M408 374 L231 374" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="233.7" y="357.03" width="171.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="319.5" y="368" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">readonly database (1032)</text>
+  <rect class="m-knock" x="251.16" y="378.42" width="136.68" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="319.5" y="389" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">creating session store</text>
+  </g>
+  <g data-beat="9"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="416" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="420" font-size="11" text-anchor="middle">9</text>
+  <line x1="52" y1="416" x2="407" y2="416" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-1-3-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M52 416 L407 416" keyPoints="0;0;1;1" keyTimes="0;0.857;0.955;1" calcMode="linear" dur="5.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.857;0.871;0.955;1" dur="5.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="140.25" y="399.03" width="178.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="229.5" y="410" font-size="11.5" text-anchor="middle">sbx exec docker-agent run</text>
+  <rect class="m-knock" x="161.16" y="420.42" width="136.68" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="229.5" y="431" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">data dirs in /tmp/m101</text>
+  </g>
+  <g data-beat="10"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="458" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="462" font-size="11" text-anchor="middle">10</text>
+  <line x1="408" y1="458" x2="496" y2="458" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-1-3-head-plum)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-plum-ink, #8a3d72)" opacity="0"><animateMotion path="M408 458 L496 458" keyPoints="0;0;1;1" keyTimes="0;0.871;0.96;1" calcMode="linear" dur="6.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.871;0.884;0.96;1" dur="6.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="359.3" y="441.03" width="185.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="452" y="452" font-size="11.5" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">host.docker.internal:12434</text>
+  <rect class="m-knock" x="395.54" y="462.42" width="112.92" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="452" y="473" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">through HTTP_PROXY</text>
+  </g>
+  <g data-beat="11"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.93;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="6.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.93;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="6.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="500" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="504" font-size="11" text-anchor="middle">11</text>
+  <line x1="497" y1="500" x2="585" y2="500" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-1-3-head-plum)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-plum-ink, #8a3d72)" opacity="0"><animateMotion path="M497 500 L585 500" keyPoints="0;0;1;1" keyTimes="0;0.882;0.963;1" calcMode="linear" dur="6.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.882;0.894;0.963;1" dur="6.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="486.25" y="483.03" width="109.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="541" y="494" font-size="11.5" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">localhost:12434</text>
+  <rect class="m-knock" x="472.66" y="504.42" width="136.68" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="541" y="515" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the sandbox allow rule</text>
+  </g>
+  <g data-beat="12"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.936;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.936;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="542" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="546" font-size="11" text-anchor="middle">12</text>
+  <line x1="586" y1="542" x2="409" y2="542" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-1-3-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M586 542 L409 542" keyPoints="0;0;1;1" keyTimes="0;0.892;0.966;1" calcMode="linear" dur="7.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.892;0.903;0.966;1" dur="7.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="422.05" y="525.03" width="150.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="497.5" y="536" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">chat.completion.chunk</text>
+  <rect class="m-knock" x="438.07" y="546.42" width="118.86" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="497.5" y="557" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the streamed answer</text>
+  </g>
+  <g data-beat="13"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.941;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.941;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="7.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="584" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="588" font-size="11" text-anchor="middle">13</text>
+  <line x1="408" y1="584" x2="53" y2="584" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-3-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M408 584 L53 584" keyPoints="0;0;1;1" keyTimes="0;0.9;0.969;1" calcMode="linear" dur="8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.9;0.91;0.969;1" dur="8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="155.05" y="567.03" width="150.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="230.5" y="578" font-size="11.5" text-anchor="middle">README.md with 1 line</text>
+  <rect class="m-knock" x="209.68" y="588.42" width="41.64" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="230.5" y="599" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">exit 0</text>
+  </g>
+  <g data-beat="14"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.945;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="8.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.945;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="8.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="626" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="630" font-size="11" text-anchor="middle">14</text>
+  <line x1="52" y1="626" x2="318" y2="626" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-1-3-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M52 626 L318 626" keyPoints="0;0;1;1" keyTimes="0;0.907;0.971;1" calcMode="linear" dur="8.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.907;0.916;0.971;1" dur="8.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="133.7" y="609.03" width="102.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="185" y="620" font-size="11.5" text-anchor="middle">sbx rm --force</text>
+  </g>
+  <g data-beat="15"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.949;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="8.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.949;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="8.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="668" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="672" font-size="11" text-anchor="middle">15</text>
+  <line x1="319" y1="668" x2="407" y2="668" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-3-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M319 668 L407 668" keyPoints="0;0;1;1" keyTimes="0;0.913;0.973;1" calcMode="linear" dur="9.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.913;0.922;0.973;1" dur="9.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="335.85" y="651.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="363" y="662" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">removed</text>
+  </g>
+</svg>

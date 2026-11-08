@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-1-3-title fig-1-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-3-title">Reward over 48 steps, three seeds</title>
+  <desc id="fig-1-3-desc">Mean reward per step for three seeds of the same GRPO run on Qwen3-0.6B and GSM8K. Each step jumps around, and the trend goes up for all three seeds.</desc>
+  <line x1="60" y1="266" x2="620" y2="266" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="270" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.5</text>
+  <line x1="60" y1="213.5" x2="620" y2="213.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="217.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.6</text>
+  <line x1="60" y1="161" x2="620" y2="161" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="165" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.7</text>
+  <line x1="60" y1="108.5" x2="620" y2="108.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="112.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.8</text>
+  <line x1="60" y1="56" x2="620" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="60" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.9</text>
+  <line x1="60" y1="266" x2="620" y2="266" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="56" x2="60" y2="266" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="266" x2="60" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="202.98" y1="266" x2="202.98" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="202.98" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">12</text>
+  <line x1="345.96" y1="266" x2="345.96" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="345.96" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">24</text>
+  <line x1="488.94" y1="266" x2="488.94" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="488.94" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">36</text>
+  <line x1="620" y1="266" x2="620" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="620" y="283" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">47</text>
+  <text x="340" y="300" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">step</text>
+  <text x="60" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mean reward of the step</text>
+  <path d="M60.0 222.9 L71.9 210.6 L83.8 147.1 L95.7 184.0 L107.7 220.9 L119.6 235.2 L131.5 161.4 L143.4 173.7 L155.3 143.0 L167.2 194.2 L179.1 218.8 L191.1 186.0 L203.0 159.4 L214.9 147.1 L226.8 227.0 L238.7 208.6 L250.6 169.6 L262.6 132.7 L274.5 175.8 L286.4 188.1 L298.3 155.3 L310.2 153.2 L322.1 184.0 L334.0 188.1 L346.0 132.7 L357.9 147.1 L369.8 179.9 L381.7 149.1 L393.6 157.3 L405.5 126.5 L417.4 108.1 L429.4 216.8 L441.3 153.2 L453.2 157.3 L465.1 173.7 L477.0 130.6 L488.9 71.2 L500.9 173.7 L512.8 171.7 L524.7 97.8 L536.6 124.5 L548.5 120.4 L560.4 112.2 L572.3 173.7 L584.3 101.9 L596.2 136.8 L608.1 163.5 L620.0 112.2" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M60.0 222.9 L71.9 181.9 L83.8 190.1 L95.7 140.9 L107.7 208.6 L119.6 169.6 L131.5 171.7 L143.4 198.3 L155.3 186.0 L167.2 247.5 L179.1 163.5 L191.1 194.2 L203.0 204.5 L214.9 206.5 L226.8 138.9 L238.7 151.2 L250.6 229.1 L262.6 202.4 L274.5 157.3 L286.4 196.3 L298.3 145.0 L310.2 130.6 L322.1 136.8 L334.0 128.6 L346.0 165.5 L357.9 171.7 L369.8 163.5 L381.7 134.8 L393.6 108.1 L405.5 136.8 L417.4 136.8 L429.4 151.2 L441.3 116.3 L453.2 99.9 L465.1 155.3 L477.0 151.2 L488.9 106.0 L500.9 120.4 L512.8 120.4 L524.7 151.2 L536.6 161.4 L548.5 116.3 L560.4 128.6 L572.3 87.6 L584.3 167.6 L596.2 122.4 L608.1 163.5 L620.0 188.1" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.6" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <path d="M60.0 196.3 L71.9 194.2 L83.8 237.3 L95.7 208.6 L107.7 251.6 L119.6 216.8 L131.5 186.0 L143.4 157.3 L155.3 169.6 L167.2 190.1 L179.1 132.7 L191.1 179.9 L203.0 235.2 L214.9 194.2 L226.8 147.1 L238.7 99.9 L250.6 151.2 L262.6 173.7 L274.5 169.6 L286.4 140.9 L298.3 138.9 L310.2 145.0 L322.1 147.1 L334.0 169.6 L346.0 151.2 L357.9 134.8 L369.8 124.5 L381.7 145.0 L393.6 128.6 L405.5 200.4 L417.4 93.7 L429.4 171.7 L441.3 126.5 L453.2 181.9 L465.1 134.8 L477.0 200.4 L488.9 145.0 L500.9 192.2 L512.8 116.3 L524.7 151.2 L536.6 140.9 L548.5 108.1 L560.4 108.1 L572.3 145.0 L584.3 104.0 L596.2 112.2 L608.1 126.5 L620.0 167.6" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.6" stroke-dasharray="1.5 3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M60 18 H78" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="84" y="22" font-size="11" fill="var(--m-green-ink, #336b40)">seed 1234</text>
+  <path d="M161.4 18 H179.4" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="185.4" y="22" font-size="11" fill="var(--m-teal-ink, #18696a)">seed 2</text>
+  <path d="M243 18 H261" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="2" stroke-dasharray="1.5 3.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="267" y="22" font-size="11" fill="var(--m-olive-ink, #515f26)">seed 3</text>
+  <text x="60" y="326" font-size="12" class="m-serif">Gain, last 8 steps against the first 8: +0.122, +0.083, +0.151.</text>
+</svg>

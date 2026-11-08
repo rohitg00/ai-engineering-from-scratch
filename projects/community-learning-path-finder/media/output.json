@@ -1,0 +1,12 @@
+{
+  "title": "community-learning-path-finder",
+  "url": "http://127.0.0.1:8879/projects/community-learning-path-finder/solution/demo-output/learning-map.html",
+  "actions": [
+    [
+      "fill",
+      "#decisions",
+      "{\"fingerprint\": \"21e0bf3eebd4b2e2e7e335fae95ea604d9c63de41046352065cde5aec2e360ef\", \"completed\": [\"basics\"]}"
+    ]
+  ],
+  "kind": "browser capture"
+}

@@ -19,7 +19,7 @@ The practical content: CAIS's four-risk framework is the most widely cited socie
 
 ### CAIS — Center for AI Safety
 
-- Founded: 2022 in San Francisco, by Dan Hendrycks and colleagues (the "Zhang" name refers to an early collaborator, not a current co-founder; see CAIS website for current leadership).
+- Founded: 2022 in San Francisco, by Dan Hendrycks and Oliver Zhang. Hendrycks is Executive and Research Director; Zhang is Managing Director.
 - Status: 501(c)(3) non-profit.
 - Notable 2023 output: statement on extinction risk, co-signed by hundreds of researchers and CEOs. Stated: "Mitigating the risk of extinction from AI should be a global priority alongside other societal-scale risks such as pandemics and nuclear war."
 - 2026 outputs: AI Dashboard for frontier-model evaluation, Remote Labor Index (joint with Scale AI), Superintelligence Strategy Paper, AI Frontiers newsletter.

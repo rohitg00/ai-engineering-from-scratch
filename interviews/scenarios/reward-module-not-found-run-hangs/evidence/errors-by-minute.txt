@@ -1,0 +1,9 @@
+title: every minute of the log that held a 503 line
+source: manuals/miles-101/capture/gpu/out-gb10/custom-rm-noenv-hang.txt
+lines: 14-16
+lang: text
+note: Two minutes hold errors. No other minute of the two hours holds one.
+---
+503 lines by minute (all from the RolloutExecutor):
+     40 2026-10-23 00:24
+      4 2026-10-23 00:25

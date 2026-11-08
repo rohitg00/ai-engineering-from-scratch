@@ -45,7 +45,7 @@
         "Cache-aware routing is impossible across regions",
         "Inter-region routing is forbidden by all hyperscalers",
         "GORGO research found cache hits do not help latency",
-        "Saved prefill can be dwarfed by network RTT, e.g. 440 ms round-trip can dwarf an 800-to-80 ms prefill saving"
+        "Network RTT eats much of the saved prefill, e.g. a 220 ms US-APAC RTT cuts a 720 ms saving to ~500 ms"
       ],
       "correct": 3,
       "explanation": ""

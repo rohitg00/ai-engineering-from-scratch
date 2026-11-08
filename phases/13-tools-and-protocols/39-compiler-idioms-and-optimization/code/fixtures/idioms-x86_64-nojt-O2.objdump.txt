@@ -1,0 +1,428 @@
+
+idioms-x86_64-nojt-O2.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <div10u>:
+       0: 89 f9                        	movl	%edi, %ecx
+       2: b8 cd cc cc cc               	movl	$0xcccccccd, %eax       # imm = 0xCCCCCCCD
+       7: 48 0f af c1                  	imulq	%rcx, %rax
+       b: 48 c1 e8 23                  	shrq	$0x23, %rax
+       f: c3                           	retq
+
+0000000000000010 <div10s>:
+      10: 48 63 c7                     	movslq	%edi, %rax
+      13: 48 69 c0 67 66 66 66         	imulq	$0x66666667, %rax, %rax # imm = 0x66666667
+      1a: 48 89 c1                     	movq	%rax, %rcx
+      1d: 48 c1 e9 3f                  	shrq	$0x3f, %rcx
+      21: 48 c1 f8 22                  	sarq	$0x22, %rax
+      25: 01 c8                        	addl	%ecx, %eax
+      27: c3                           	retq
+      28: 0f 1f 84 00 00 00 00 00      	nopl	(%rax,%rax)
+
+0000000000000030 <div7u>:
+      30: 89 f8                        	movl	%edi, %eax
+      32: 48 69 c0 25 49 92 24         	imulq	$0x24924925, %rax, %rax # imm = 0x24924925
+      39: 48 c1 e8 20                  	shrq	$0x20, %rax
+      3d: 29 c7                        	subl	%eax, %edi
+      3f: d1 ef                        	shrl	%edi
+      41: 01 f8                        	addl	%edi, %eax
+      43: c1 e8 02                     	shrl	$0x2, %eax
+      46: c3                           	retq
+      47: 66 0f 1f 84 00 00 00 00 00   	nopw	(%rax,%rax)
+
+0000000000000050 <div3s>:
+      50: 48 63 c7                     	movslq	%edi, %rax
+      53: 48 69 c0 56 55 55 55         	imulq	$0x55555556, %rax, %rax # imm = 0x55555556
+      5a: 48 89 c1                     	movq	%rax, %rcx
+      5d: 48 c1 e9 3f                  	shrq	$0x3f, %rcx
+      61: 48 c1 e8 20                  	shrq	$0x20, %rax
+      65: 01 c8                        	addl	%ecx, %eax
+      67: c3                           	retq
+      68: 0f 1f 84 00 00 00 00 00      	nopl	(%rax,%rax)
+
+0000000000000070 <mod10s>:
+      70: 48 63 c7                     	movslq	%edi, %rax
+      73: 48 69 c8 67 66 66 66         	imulq	$0x66666667, %rax, %rcx # imm = 0x66666667
+      7a: 48 89 ca                     	movq	%rcx, %rdx
+      7d: 48 c1 ea 3f                  	shrq	$0x3f, %rdx
+      81: 48 c1 f9 22                  	sarq	$0x22, %rcx
+      85: 01 d1                        	addl	%edx, %ecx
+      87: 01 c9                        	addl	%ecx, %ecx
+      89: 8d 0c 89                     	leal	(%rcx,%rcx,4), %ecx
+      8c: 29 c8                        	subl	%ecx, %eax
+      8e: c3                           	retq
+      8f: 90                           	nop
+
+0000000000000090 <mod8s>:
+      90: 89 f8                        	movl	%edi, %eax
+      92: 8d 48 07                     	leal	0x7(%rax), %ecx
+      95: 85 ff                        	testl	%edi, %edi
+      97: 0f 49 cf                     	cmovnsl	%edi, %ecx
+      9a: 83 e1 f8                     	andl	$-0x8, %ecx
+      9d: 29 c8                        	subl	%ecx, %eax
+      9f: c3                           	retq
+
+00000000000000a0 <mul9>:
+      a0: 8d 04 ff                     	leal	(%rdi,%rdi,8), %eax
+      a3: c3                           	retq
+      a4: 66 66 66 2e 0f 1f 84 00 00 00 00 00  	nopw	%cs:(%rax,%rax)
+
+00000000000000b0 <linear_switch>:
+      b0: 83 ff 02                     	cmpl	$0x2, %edi
+      b3: 7e 15                        	jle	0xca <linear_switch+0x1a>
+      b5: 83 ff 04                     	cmpl	$0x4, %edi
+      b8: 7f 24                        	jg	0xde <linear_switch+0x2e>
+      ba: 83 ff 03                     	cmpl	$0x3, %edi
+      bd: 74 3b                        	je	0xfa <linear_switch+0x4a>
+      bf: 83 ff 04                     	cmpl	$0x4, %edi
+      c2: 75 30                        	jne	0xf4 <linear_switch+0x44>
+      c4: b8 32 00 00 00               	movl	$0x32, %eax
+      c9: c3                           	retq
+      ca: 85 ff                        	testl	%edi, %edi
+      cc: 74 20                        	je	0xee <linear_switch+0x3e>
+      ce: 83 ff 01                     	cmpl	$0x1, %edi
+      d1: 74 33                        	je	0x106 <linear_switch+0x56>
+      d3: 83 ff 02                     	cmpl	$0x2, %edi
+      d6: 75 1c                        	jne	0xf4 <linear_switch+0x44>
+      d8: b8 1e 00 00 00               	movl	$0x1e, %eax
+      dd: c3                           	retq
+      de: 83 ff 05                     	cmpl	$0x5, %edi
+      e1: 74 1d                        	je	0x100 <linear_switch+0x50>
+      e3: 83 ff 06                     	cmpl	$0x6, %edi
+      e6: 75 0c                        	jne	0xf4 <linear_switch+0x44>
+      e8: b8 46 00 00 00               	movl	$0x46, %eax
+      ed: c3                           	retq
+      ee: b8 0a 00 00 00               	movl	$0xa, %eax
+      f3: c3                           	retq
+      f4: b8 ff ff ff ff               	movl	$0xffffffff, %eax       # imm = 0xFFFFFFFF
+      f9: c3                           	retq
+      fa: b8 28 00 00 00               	movl	$0x28, %eax
+      ff: c3                           	retq
+     100: b8 3c 00 00 00               	movl	$0x3c, %eax
+     105: c3                           	retq
+     106: b8 14 00 00 00               	movl	$0x14, %eax
+     10b: c3                           	retq
+     10c: 0f 1f 40 00                  	nopl	(%rax)
+
+0000000000000110 <table_switch>:
+     110: 83 ff 02                     	cmpl	$0x2, %edi
+     113: 7e 15                        	jle	0x12a <table_switch+0x1a>
+     115: 83 ff 04                     	cmpl	$0x4, %edi
+     118: 7f 24                        	jg	0x13e <table_switch+0x2e>
+     11a: 83 ff 03                     	cmpl	$0x3, %edi
+     11d: 74 3b                        	je	0x15a <table_switch+0x4a>
+     11f: 83 ff 04                     	cmpl	$0x4, %edi
+     122: 75 30                        	jne	0x154 <table_switch+0x44>
+     124: b8 32 00 00 00               	movl	$0x32, %eax
+     129: c3                           	retq
+     12a: 85 ff                        	testl	%edi, %edi
+     12c: 74 20                        	je	0x14e <table_switch+0x3e>
+     12e: 83 ff 01                     	cmpl	$0x1, %edi
+     131: 74 33                        	je	0x166 <table_switch+0x56>
+     133: 83 ff 02                     	cmpl	$0x2, %edi
+     136: 75 1c                        	jne	0x154 <table_switch+0x44>
+     138: b8 1e 00 00 00               	movl	$0x1e, %eax
+     13d: c3                           	retq
+     13e: 83 ff 05                     	cmpl	$0x5, %edi
+     141: 74 1d                        	je	0x160 <table_switch+0x50>
+     143: 83 ff 06                     	cmpl	$0x6, %edi
+     146: 75 0c                        	jne	0x154 <table_switch+0x44>
+     148: b8 47 00 00 00               	movl	$0x47, %eax
+     14d: c3                           	retq
+     14e: b8 0a 00 00 00               	movl	$0xa, %eax
+     153: c3                           	retq
+     154: b8 ff ff ff ff               	movl	$0xffffffff, %eax       # imm = 0xFFFFFFFF
+     159: c3                           	retq
+     15a: b8 28 00 00 00               	movl	$0x28, %eax
+     15f: c3                           	retq
+     160: b8 3c 00 00 00               	movl	$0x3c, %eax
+     165: c3                           	retq
+     166: b8 14 00 00 00               	movl	$0x14, %eax
+     16b: c3                           	retq
+     16c: 0f 1f 40 00                  	nopl	(%rax)
+
+0000000000000170 <call_switch>:
+     170: 83 ff 01                     	cmpl	$0x1, %edi
+     173: 7e 1a                        	jle	0x18f <call_switch+0x1f>
+     175: 48 89 ce                     	movq	%rcx, %rsi
+     178: 83 ff 02                     	cmpl	$0x2, %edi
+     17b: 74 1e                        	je	0x19b <call_switch+0x2b>
+     17d: 4c 89 c6                     	movq	%r8, %rsi
+     180: 83 ff 03                     	cmpl	$0x3, %edi
+     183: 74 16                        	je	0x19b <call_switch+0x2b>
+     185: 83 ff 04                     	cmpl	$0x4, %edi
+     188: 75 13                        	jne	0x19d <call_switch+0x2d>
+     18a: 4c 89 ce                     	movq	%r9, %rsi
+     18d: ff e6                        	jmpq	*%rsi
+     18f: 85 ff                        	testl	%edi, %edi
+     191: 74 08                        	je	0x19b <call_switch+0x2b>
+     193: 48 89 d6                     	movq	%rdx, %rsi
+     196: 83 ff 01                     	cmpl	$0x1, %edi
+     199: 75 02                        	jne	0x19d <call_switch+0x2d>
+     19b: ff e6                        	jmpq	*%rsi
+     19d: c3                           	retq
+     19e: 66 90                        	nop
+
+00000000000001a0 <sparse_switch>:
+     1a0: 89 f8                        	movl	%edi, %eax
+     1a2: 81 ff 0f 27 00 00            	cmpl	$0x270f, %edi           # imm = 0x270F
+     1a8: 7e 1b                        	jle	0x1c5 <sparse_switch+0x25>
+     1aa: 3d 10 27 00 00               	cmpl	$0x2710, %eax           # imm = 0x2710
+     1af: 74 24                        	je	0x1d5 <sparse_switch+0x35>
+     1b1: 3d 40 42 0f 00               	cmpl	$0xf4240, %eax          # imm = 0xF4240
+     1b6: 74 23                        	je	0x1db <sparse_switch+0x3b>
+     1b8: 3d 00 e1 f5 05               	cmpl	$0x5f5e100, %eax        # imm = 0x5F5E100
+     1bd: 75 22                        	jne	0x1e1 <sparse_switch+0x41>
+     1bf: b8 05 00 00 00               	movl	$0x5, %eax
+     1c4: c3                           	retq
+     1c5: 83 f8 01                     	cmpl	$0x1, %eax
+     1c8: 74 19                        	je	0x1e3 <sparse_switch+0x43>
+     1ca: 83 f8 64                     	cmpl	$0x64, %eax
+     1cd: 75 12                        	jne	0x1e1 <sparse_switch+0x41>
+     1cf: b8 02 00 00 00               	movl	$0x2, %eax
+     1d4: c3                           	retq
+     1d5: b8 03 00 00 00               	movl	$0x3, %eax
+     1da: c3                           	retq
+     1db: b8 04 00 00 00               	movl	$0x4, %eax
+     1e0: c3                           	retq
+     1e1: 31 c0                        	xorl	%eax, %eax
+     1e3: c3                           	retq
+     1e4: 66 66 66 2e 0f 1f 84 00 00 00 00 00  	nopw	%cs:(%rax,%rax)
+
+00000000000001f0 <two_cases>:
+     1f0: 31 c0                        	xorl	%eax, %eax
+     1f2: 83 ff 04                     	cmpl	$0x4, %edi
+     1f5: 0f 94 c0                     	sete	%al
+     1f8: 8d 0c c0                     	leal	(%rax,%rax,8), %ecx
+     1fb: 83 ff 03                     	cmpl	$0x3, %edi
+     1fe: b8 07 00 00 00               	movl	$0x7, %eax
+     203: 0f 45 c1                     	cmovnel	%ecx, %eax
+     206: c3                           	retq
+     207: 66 0f 1f 84 00 00 00 00 00   	nopw	(%rax,%rax)
+
+0000000000000210 <clamp_max>:
+     210: 89 f0                        	movl	%esi, %eax
+     212: 39 f7                        	cmpl	%esi, %edi
+     214: 0f 4f c7                     	cmovgl	%edi, %eax
+     217: c3                           	retq
+     218: 0f 1f 84 00 00 00 00 00      	nopl	(%rax,%rax)
+
+0000000000000220 <abs_int>:
+     220: 89 f8                        	movl	%edi, %eax
+     222: f7 d8                        	negl	%eax
+     224: 0f 48 c7                     	cmovsl	%edi, %eax
+     227: c3                           	retq
+     228: 0f 1f 84 00 00 00 00 00      	nopl	(%rax,%rax)
+
+0000000000000230 <is_pos>:
+     230: 31 c0                        	xorl	%eax, %eax
+     232: 85 ff                        	testl	%edi, %edi
+     234: 0f 9f c0                     	setg	%al
+     237: c3                           	retq
+     238: 0f 1f 84 00 00 00 00 00      	nopl	(%rax,%rax)
+
+0000000000000240 <tail_caller>:
+     240: ff c7                        	incl	%edi
+     242: e9 00 00 00 00               	jmp	0x247 <tail_caller+0x7>
+		0000000000000243:  R_X86_64_PLT32	tail_target-0x4
+     247: 66 0f 1f 84 00 00 00 00 00   	nopw	(%rax,%rax)
+
+0000000000000250 <leaf_add>:
+     250: 8d 04 37                     	leal	(%rdi,%rsi), %eax
+     253: c3                           	retq
+     254: 66 66 66 2e 0f 1f 84 00 00 00 00 00  	nopw	%cs:(%rax,%rax)
+
+0000000000000260 <twice_sum>:
+     260: 8d 04 37                     	leal	(%rdi,%rsi), %eax
+     263: 01 c0                        	addl	%eax, %eax
+     265: c3                           	retq
+     266: 66 2e 0f 1f 84 00 00 00 00 00	nopw	%cs:(%rax,%rax)
+
+0000000000000270 <sum_n>:
+     270: 85 f6                        	testl	%esi, %esi
+     272: 7e 0d                        	jle	0x281 <sum_n+0x11>
+     274: 89 f1                        	movl	%esi, %ecx
+     276: 83 fe 07                     	cmpl	$0x7, %esi
+     279: 77 09                        	ja	0x284 <sum_n+0x14>
+     27b: 31 d2                        	xorl	%edx, %edx
+     27d: 31 c0                        	xorl	%eax, %eax
+     27f: eb 6f                        	jmp	0x2f0 <sum_n+0x80>
+     281: 31 c0                        	xorl	%eax, %eax
+     283: c3                           	retq
+     284: 89 ca                        	movl	%ecx, %edx
+     286: 81 e2 f8 ff ff 7f            	andl	$0x7ffffff8, %edx       # imm = 0x7FFFFFF8
+     28c: 89 c8                        	movl	%ecx, %eax
+     28e: c1 e8 03                     	shrl	$0x3, %eax
+     291: 25 ff ff ff 0f               	andl	$0xfffffff, %eax        # imm = 0xFFFFFFF
+     296: 48 c1 e0 05                  	shlq	$0x5, %rax
+     29a: 66 0f ef c0                  	pxor	%xmm0, %xmm0
+     29e: 31 f6                        	xorl	%esi, %esi
+     2a0: 66 0f ef c9                  	pxor	%xmm1, %xmm1
+     2a4: 66 66 66 2e 0f 1f 84 00 00 00 00 00  	nopw	%cs:(%rax,%rax)
+     2b0: f3 0f 6f 14 37               	movdqu	(%rdi,%rsi), %xmm2
+     2b5: 66 0f fe c2                  	paddd	%xmm2, %xmm0
+     2b9: f3 0f 6f 54 37 10            	movdqu	0x10(%rdi,%rsi), %xmm2
+     2bf: 66 0f fe ca                  	paddd	%xmm2, %xmm1
+     2c3: 48 83 c6 20                  	addq	$0x20, %rsi
+     2c7: 48 39 f0                     	cmpq	%rsi, %rax
+     2ca: 75 e4                        	jne	0x2b0 <sum_n+0x40>
+     2cc: 66 0f fe c8                  	paddd	%xmm0, %xmm1
+     2d0: 66 0f 70 c1 ee               	pshufd	$0xee, %xmm1, %xmm0     # xmm0 = xmm1[2,3,2,3]
+     2d5: 66 0f fe c1                  	paddd	%xmm1, %xmm0
+     2d9: 66 0f 70 c8 55               	pshufd	$0x55, %xmm0, %xmm1     # xmm1 = xmm0[1,1,1,1]
+     2de: 66 0f fe c8                  	paddd	%xmm0, %xmm1
+     2e2: 66 0f 7e c8                  	movd	%xmm1, %eax
+     2e6: 39 ca                        	cmpl	%ecx, %edx
+     2e8: 74 11                        	je	0x2fb <sum_n+0x8b>
+     2ea: 66 0f 1f 44 00 00            	nopw	(%rax,%rax)
+     2f0: 03 04 97                     	addl	(%rdi,%rdx,4), %eax
+     2f3: 48 ff c2                     	incq	%rdx
+     2f6: 48 39 d1                     	cmpq	%rdx, %rcx
+     2f9: 75 f5                        	jne	0x2f0 <sum_n+0x80>
+     2fb: c3                           	retq
+     2fc: 0f 1f 40 00                  	nopl	(%rax)
+
+0000000000000300 <sum4>:
+     300: f3 0f 6f 07                  	movdqu	(%rdi), %xmm0
+     304: 66 0f 70 c8 ee               	pshufd	$0xee, %xmm0, %xmm1     # xmm1 = xmm0[2,3,2,3]
+     309: 66 0f fe c8                  	paddd	%xmm0, %xmm1
+     30d: 66 0f 70 c1 55               	pshufd	$0x55, %xmm1, %xmm0     # xmm0 = xmm1[1,1,1,1]
+     312: 66 0f fe c1                  	paddd	%xmm1, %xmm0
+     316: 66 0f 7e c0                  	movd	%xmm0, %eax
+     31a: c3                           	retq
+     31b: 0f 1f 44 00 00               	nopl	(%rax,%rax)
+
+0000000000000320 <poly8>:
+     320: 8b 07                        	movl	(%rdi), %eax
+     322: 89 c1                        	movl	%eax, %ecx
+     324: c1 e1 05                     	shll	$0x5, %ecx
+     327: 29 c1                        	subl	%eax, %ecx
+     329: 03 4f 04                     	addl	0x4(%rdi), %ecx
+     32c: 89 c8                        	movl	%ecx, %eax
+     32e: c1 e0 05                     	shll	$0x5, %eax
+     331: 29 c8                        	subl	%ecx, %eax
+     333: 03 47 08                     	addl	0x8(%rdi), %eax
+     336: 89 c1                        	movl	%eax, %ecx
+     338: c1 e1 05                     	shll	$0x5, %ecx
+     33b: 29 c1                        	subl	%eax, %ecx
+     33d: 03 4f 0c                     	addl	0xc(%rdi), %ecx
+     340: 89 c8                        	movl	%ecx, %eax
+     342: c1 e0 05                     	shll	$0x5, %eax
+     345: 29 c8                        	subl	%ecx, %eax
+     347: 03 47 10                     	addl	0x10(%rdi), %eax
+     34a: 89 c1                        	movl	%eax, %ecx
+     34c: c1 e1 05                     	shll	$0x5, %ecx
+     34f: 29 c1                        	subl	%eax, %ecx
+     351: 03 4f 14                     	addl	0x14(%rdi), %ecx
+     354: 89 ca                        	movl	%ecx, %edx
+     356: c1 e2 05                     	shll	$0x5, %edx
+     359: 29 ca                        	subl	%ecx, %edx
+     35b: 03 57 18                     	addl	0x18(%rdi), %edx
+     35e: 89 d0                        	movl	%edx, %eax
+     360: c1 e0 05                     	shll	$0x5, %eax
+     363: 29 d0                        	subl	%edx, %eax
+     365: 03 47 1c                     	addl	0x1c(%rdi), %eax
+     368: c3                           	retq
+     369: 0f 1f 80 00 00 00 00         	nopl	(%rax)
+
+0000000000000370 <fill>:
+     370: 85 f6                        	testl	%esi, %esi
+     372: 7e 09                        	jle	0x37d <fill+0xd>
+     374: 89 f2                        	movl	%esi, %edx
+     376: 31 f6                        	xorl	%esi, %esi
+     378: e9 00 00 00 00               	jmp	0x37d <fill+0xd>
+		0000000000000379:  R_X86_64_PLT32	memset-0x4
+     37d: c3                           	retq
+     37e: 66 90                        	nop
+
+0000000000000380 <copy_n>:
+     380: e9 00 00 00 00               	jmp	0x385 <copy_n+0x5>
+		0000000000000381:  R_X86_64_PLT32	memcpy-0x4
+     385: 66 66 2e 0f 1f 84 00 00 00 00 00     	nopw	%cs:(%rax,%rax)
+
+0000000000000390 <copy16>:
+     390: 0f 10 06                     	movups	(%rsi), %xmm0
+     393: 0f 11 07                     	movups	%xmm0, (%rdi)
+     396: c3                           	retq
+     397: 66 0f 1f 84 00 00 00 00 00   	nopw	(%rax,%rax)
+
+00000000000003a0 <digest>:
+     3a0: 31 c9                        	xorl	%ecx, %ecx
+     3a2: b8 00 00 00 00               	movl	$0x0, %eax
+     3a7: 85 f6                        	testl	%esi, %esi
+     3a9: 0f 8e c9 00 00 00            	jle	0x478 <digest+0xd8>
+     3af: 89 f2                        	movl	%esi, %edx
+     3b1: 83 fe 07                     	cmpl	$0x7, %esi
+     3b4: 77 06                        	ja	0x3bc <digest+0x1c>
+     3b6: 31 f6                        	xorl	%esi, %esi
+     3b8: 31 c0                        	xorl	%eax, %eax
+     3ba: eb 64                        	jmp	0x420 <digest+0x80>
+     3bc: 89 d6                        	movl	%edx, %esi
+     3be: 81 e6 f8 ff ff 7f            	andl	$0x7ffffff8, %esi       # imm = 0x7FFFFFF8
+     3c4: 89 d0                        	movl	%edx, %eax
+     3c6: c1 e8 03                     	shrl	$0x3, %eax
+     3c9: 25 ff ff ff 0f               	andl	$0xfffffff, %eax        # imm = 0xFFFFFFF
+     3ce: 48 c1 e0 05                  	shlq	$0x5, %rax
+     3d2: 66 0f ef c0                  	pxor	%xmm0, %xmm0
+     3d6: 45 31 c0                     	xorl	%r8d, %r8d
+     3d9: 66 0f ef c9                  	pxor	%xmm1, %xmm1
+     3dd: 0f 1f 00                     	nopl	(%rax)
+     3e0: f3 42 0f 6f 14 07            	movdqu	(%rdi,%r8), %xmm2
+     3e6: 66 0f fe c2                  	paddd	%xmm2, %xmm0
+     3ea: f3 42 0f 6f 54 07 10         	movdqu	0x10(%rdi,%r8), %xmm2
+     3f1: 66 0f fe ca                  	paddd	%xmm2, %xmm1
+     3f5: 49 83 c0 20                  	addq	$0x20, %r8
+     3f9: 4c 39 c0                     	cmpq	%r8, %rax
+     3fc: 75 e2                        	jne	0x3e0 <digest+0x40>
+     3fe: 66 0f fe c8                  	paddd	%xmm0, %xmm1
+     402: 66 0f 70 c1 ee               	pshufd	$0xee, %xmm1, %xmm0     # xmm0 = xmm1[2,3,2,3]
+     407: 66 0f fe c1                  	paddd	%xmm1, %xmm0
+     40b: 66 0f 70 c8 55               	pshufd	$0x55, %xmm0, %xmm1     # xmm1 = xmm0[1,1,1,1]
+     410: 66 0f fe c8                  	paddd	%xmm0, %xmm1
+     414: 66 0f 7e c8                  	movd	%xmm1, %eax
+     418: 39 d6                        	cmpl	%edx, %esi
+     41a: 74 0f                        	je	0x42b <digest+0x8b>
+     41c: 0f 1f 40 00                  	nopl	(%rax)
+     420: 03 04 b7                     	addl	(%rdi,%rsi,4), %eax
+     423: 48 ff c6                     	incq	%rsi
+     426: 48 39 f2                     	cmpq	%rsi, %rdx
+     429: 75 f5                        	jne	0x420 <digest+0x80>
+     42b: 48 63 d0                     	movslq	%eax, %rdx
+     42e: 48 69 d2 67 66 66 66         	imulq	$0x66666667, %rdx, %rdx # imm = 0x66666667
+     435: 48 89 d6                     	movq	%rdx, %rsi
+     438: 48 c1 ee 3f                  	shrq	$0x3f, %rsi
+     43c: 48 c1 fa 22                  	sarq	$0x22, %rdx
+     440: 01 f2                        	addl	%esi, %edx
+     442: 83 fa 08                     	cmpl	$0x8, %edx
+     445: 7f 16                        	jg	0x45d <digest+0xbd>
+     447: 83 fa 06                     	cmpl	$0x6, %edx
+     44a: 74 20                        	je	0x46c <digest+0xcc>
+     44c: 83 fa 07                     	cmpl	$0x7, %edx
+     44f: 74 22                        	je	0x473 <digest+0xd3>
+     451: 83 fa 08                     	cmpl	$0x8, %edx
+     454: 75 22                        	jne	0x478 <digest+0xd8>
+     456: b9 40 00 00 00               	movl	$0x40, %ecx
+     45b: eb 1b                        	jmp	0x478 <digest+0xd8>
+     45d: 83 c2 f7                     	addl	$-0x9, %edx
+     460: 83 fa 02                     	cmpl	$0x2, %edx
+     463: 73 13                        	jae	0x478 <digest+0xd8>
+     465: b9 80 00 00 00               	movl	$0x80, %ecx
+     46a: eb 0c                        	jmp	0x478 <digest+0xd8>
+     46c: b9 10 00 00 00               	movl	$0x10, %ecx
+     471: eb 05                        	jmp	0x478 <digest+0xd8>
+     473: b9 20 00 00 00               	movl	$0x20, %ecx
+     478: 48 63 d0                     	movslq	%eax, %rdx
+     47b: 48 69 c2 67 66 66 66         	imulq	$0x66666667, %rdx, %rax # imm = 0x66666667
+     482: 48 89 c6                     	movq	%rax, %rsi
+     485: 48 c1 ee 3f                  	shrq	$0x3f, %rsi
+     489: 48 c1 f8 22                  	sarq	$0x22, %rax
+     48d: 01 f0                        	addl	%esi, %eax
+     48f: 01 c0                        	addl	%eax, %eax
+     491: 8d 04 80                     	leal	(%rax,%rax,4), %eax
+     494: 29 c2                        	subl	%eax, %edx
+     496: 83 fa 05                     	cmpl	$0x5, %edx
+     499: b8 05 00 00 00               	movl	$0x5, %eax
+     49e: 0f 4c c2                     	cmovll	%edx, %eax
+     4a1: 01 c8                        	addl	%ecx, %eax
+     4a3: c3                           	retq

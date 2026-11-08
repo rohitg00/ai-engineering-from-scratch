@@ -45,6 +45,7 @@
   var SVG_W = PAD_X * 2 + MAX_COLUMNS * NODE_W + (MAX_COLUMNS - 1) * COLUMN_GAP;
   var SVG_H = PAD_Y * 2 + (TIER_ORDER.length - 1) * TIER_GAP + NODE_H;
   var MIN_ZOOM = 0.7;
+  var NAME_MAX = 22;
   var MAX_ZOOM = 1.3;
 
   var phaseMap = {};
@@ -69,7 +70,12 @@
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
-    if (typeof PHASES === 'undefined' || !Array.isArray(PHASES) || !PREREQS || !validateRoadmapData()) {
+    var phasesLoaded = typeof PHASES !== 'undefined' && Array.isArray(PHASES);
+    if (phasesLoaded && PHASES.length === 0) {
+      showEmptyRoadmap();
+      return;
+    }
+    if (!phasesLoaded || !PREREQS || !validateRoadmapData()) {
       showDataError();
       return;
     }
@@ -233,9 +239,9 @@
       totalLessons += stats.total;
       completedLessons += stats.done;
     }
-    setText('roadmapPhaseCount', String(PHASES.length));
-    setText('roadmapLessonCount', String(totalLessons));
-    setText('roadmapProgressCount', completedLessons + ' / ' + totalLessons);
+    setText('roadmapPhaseCount', formatCount(PHASES.length));
+    setText('roadmapLessonCount', formatCount(totalLessons));
+    setText('roadmapProgressCount', formatCount(completedLessons) + ' / ' + formatCount(totalLessons));
     var recommendation = recommendedPhase();
     setText('roadmapNextPhase', recommendation ? 'Phase ' + formatPhase(recommendation.id) : 'Complete');
   }
@@ -409,6 +415,11 @@
     surface.appendChild(stateText);
 
     var lines = splitName(phase.name);
+    if (lines.join(' ') !== String(phase.name || '').toUpperCase()) {
+      var fullName = svgEl('title');
+      fullName.textContent = phase.name;
+      group.insertBefore(fullName, group.firstChild);
+    }
     for (var i = 0; i < lines.length; i++) {
       var title = svgEl('text', {
         class: 'roadmap-node-title',
@@ -465,7 +476,7 @@
       return phaseMap[id] ? phaseMap[id].name : 'Phase ' + formatPhase(id);
     });
     var text = 'Phase ' + formatPhase(phase.id) + ': ' + phase.name + '. ' + state.label + '. ' +
-      progress.done + ' of ' + progress.total + ' lessons completed.';
+      formatCount(progress.done) + ' of ' + countLabel(progress.total, 'lesson', 'lessons') + ' completed.';
     text += requirements.length ? ' Direct prerequisites: ' + requirements.join(', ') + '.' : ' This is the starting phase.';
     text += unlocks.length ? ' Immediately unlocks: ' + unlocks.join(', ') + '.' : ' This is a final destination.';
     return text;
@@ -473,12 +484,19 @@
 
   function splitName(name) {
     var value = String(name || '').toUpperCase();
-    if (value.length <= 22) return [value];
+    if (value.length <= NAME_MAX) return [value];
     var midpoint = Math.ceil(value.length / 2);
     var split = value.lastIndexOf(' ', midpoint);
     if (split < 5) split = value.indexOf(' ', midpoint);
-    if (split === -1) return [value.slice(0, 22) + '…'];
-    return [value.slice(0, split), value.slice(split + 1)];
+    if (split < 1 || split > NAME_MAX || value.length - split - 1 > NAME_MAX) split = value.lastIndexOf(' ', NAME_MAX);
+    if (split < 1) return [clipLine(value)];
+    return [value.slice(0, split), clipLine(value.slice(split + 1))];
+  }
+
+  function clipLine(line) {
+    if (line.length <= NAME_MAX) return line;
+    var cut = line.lastIndexOf(' ', NAME_MAX - 1);
+    return (cut > 10 ? line.slice(0, cut) : line.slice(0, NAME_MAX - 1)).replace(/[\s,;:&·-]+$/, '') + '…';
   }
 
   function edgePath(fromId, toId) {
@@ -1061,7 +1079,7 @@
   function announceSelection(id) {
     var ancestors = Object.keys(getAncestors(id)).length;
     var descendants = Object.keys(getDescendants(id)).length;
-    setText('roadmapGraphStatus', 'Phase ' + formatPhase(id) + ' selected. ' + ancestors + ' prerequisite phases and ' + descendants + ' downstream phases highlighted.');
+    setText('roadmapGraphStatus', 'Phase ' + formatPhase(id) + ' selected. ' + countLabel(ancestors, 'prerequisite phase', 'prerequisite phases') + ' and ' + countLabel(descendants, 'downstream phase', 'downstream phases') + ' highlighted.');
   }
 
   function phaseState(id) {
@@ -1177,6 +1195,14 @@
 
   function formatPhase(id) { return String(id).padStart(2, '0'); }
 
+  function formatCount(value) {
+    return (Number(value) || 0).toLocaleString('en');
+  }
+
+  function countLabel(value, singular, plural) {
+    return formatCount(value) + ' ' + (Number(value) === 1 ? singular : plural);
+  }
+
   function setText(id, value) {
     var element = document.getElementById(id);
     if (element) element.textContent = value;
@@ -1188,9 +1214,19 @@
     return element;
   }
 
-  function showDataError() {
+  function showGraphMessage(message) {
     var wrap = document.getElementById('roadmapGraphWrap');
-    if (wrap) wrap.innerHTML = '<p>Roadmap data could not be loaded. Rebuild the site and refresh this page.</p>';
+    if (wrap) wrap.innerHTML = '<p class="roadmap-graph-message" dir="auto">' + escapeHtml(message) + '</p>';
+  }
+
+  function showDataError() {
+    showGraphMessage('Roadmap data could not be loaded. Rebuild the site and refresh this page.');
+  }
+
+  function showEmptyRoadmap() {
+    renderHeroStats();
+    setText('roadmapNextPhase', 'None');
+    showGraphMessage('No phases are published yet.');
   }
 
   function escapeHtml(value) {

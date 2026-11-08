@@ -155,8 +155,9 @@
     // K drafted tokens in a row between draft and target; last is rejected
     var ks = [{ x: 140, ok: true }, { x: 190, ok: true }, { x: 240, ok: true }, { x: 290, ok: false }];
     ks.forEach(function (k, i) {
-      var tok = svgEl('rect', { x: k.x, y: 102, width: 30, height: 28, rx: 3, fill: 'none', stroke: SOFT, 'stroke-width': 1.4 });
-      tok.appendChild(anim('stroke', SOFT + ';' + (k.ok ? BP : WARN) + ';' + (k.ok ? BP : WARN), '4s', { begin: (i * 0.4) + 's' }));
+      svg.appendChild(svgEl('rect', { x: k.x, y: 102, width: 30, height: 28, rx: 3, fill: 'none', stroke: SOFT, 'stroke-width': 1.4 }));
+      var tok = svgEl('rect', { x: k.x, y: 102, width: 30, height: 28, rx: 3, fill: 'none', stroke: k.ok ? BP : WARN, 'stroke-width': 1.4, opacity: 0 });
+      tok.appendChild(anim('opacity', '0;1;1', '4s', { begin: (i * 0.4) + 's' }));
       svg.appendChild(tok);
       svg.appendChild(txt(k.x + 15, 120, 't' + (i + 1), 8, MUTE));
       var mark = txt(k.x + 15, 152, k.ok ? 'accept' : 'reject', 7.5, k.ok ? BP : WARN);

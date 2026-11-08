@@ -1,0 +1,11 @@
+{
+  "title": "glossary-hovercard-publisher",
+  "url": "http://127.0.0.1:8879/projects/glossary-hovercard-publisher/solution/output/report.html",
+  "actions": [
+    [
+      "js",
+      "document.querySelector('.term-trigger').click()"
+    ]
+  ],
+  "kind": "browser capture"
+}

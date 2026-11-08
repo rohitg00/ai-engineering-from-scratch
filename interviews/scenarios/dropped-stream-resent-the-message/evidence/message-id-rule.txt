@@ -1,0 +1,7 @@
+title: what a repeated messageId does on every implementation
+source: manuals/a2a-101/sections/3-1-message.md
+lines: 84-84
+lang: text
+note: Read the last sentence.
+---
+Send Message operations are allowed to be idempotent, and an agent can use the `messageId` to find duplicate messages {{spec §3.3.1}}. So a retry of a send that timed out can reuse the same `messageId`. No SDK rejects a repeated id, and without a `taskId` each one creates another task for it.

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="fig-7-2-title fig-7-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-2-title">One weight update between Miles and SGLang</title>
+  <desc id="fig-7-2-desc">Miles rank 0 pauses SGLang in retract mode, opens a weight-update session, sends each bucket as an HTTP description followed by an NCCL broadcast, closes the session so quantized layers are repacked once, sets the new weight version, and resumes generation.</desc>
+  <defs><marker id="fig-7-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-7-2-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
+  <rect x="35" y="10" width="150" height="30" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="110" y="28.6" font-size="12" text-anchor="middle" font-weight="700">Miles rank 0</text>
+  <rect x="425" y="10" width="150" height="30" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="500" y="28.6" font-size="12" text-anchor="middle" font-weight="700">SGLang server</text>
+  <line x1="110" y1="40" x2="110" y2="390" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="500" y1="40" x2="500" y2="390" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="78" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="82" font-size="11" text-anchor="middle">1</text>
+  <line x1="110" y1="78" x2="499" y2="78" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 78 L499 78" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="226.1" y="61.03" width="157.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="72" font-size="11.5" text-anchor="middle">POST /pause_generation</text>
+  <rect class="m-knock" x="153.5" y="82.42" width="303" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="93" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mode retract: running requests return to the queue</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="122" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="126" font-size="11" text-anchor="middle">2</text>
+  <line x1="110" y1="122" x2="499" y2="122" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 122 L499 122" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="215.75" y="105.03" width="178.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="116" font-size="11.5" text-anchor="middle">POST /begin_weight_update</text>
+  <rect class="m-knock" x="171.32" y="126.42" width="267.36" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="137" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">layers prepared for checkpoint-format writes</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="166" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="170" font-size="11" text-anchor="middle">3</text>
+  <line x1="110" y1="166" x2="499" y2="166" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 166 L499 166" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="174.35" y="149.03" width="261.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="160" font-size="11.5" text-anchor="middle">POST /update_weights_from_distributed</text>
+  <rect class="m-knock" x="192.11" y="170.42" width="225.78" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="181" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one bucket: names, dtypes, and shapes</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="210" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1"/>
+  <text x="24" y="214" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">4</text>
+  <line x1="110" y1="210" x2="499" y2="210" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-7-2-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M110 210 L499 210" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="212.3" y="193.03" width="185.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="204" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">NCCL broadcast from rank 0</text>
+  <rect class="m-knock" x="195.08" y="214.42" width="219.84" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="225" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">repeat rows 3 and 4 for every bucket</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="254" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="258" font-size="11" text-anchor="middle">5</text>
+  <line x1="110" y1="254" x2="499" y2="254" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 254 L499 254" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="222.65" y="237.03" width="164.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="248" font-size="11.5" text-anchor="middle">POST /end_weight_update</text>
+  <rect class="m-knock" x="212.9" y="258.42" width="184.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="269" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">quantized layers repacked once</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="298" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="302" font-size="11" text-anchor="middle">6</text>
+  <line x1="110" y1="298" x2="499" y2="298" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 298 L499 298" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="208.85" y="281.03" width="192.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="292" font-size="11.5" text-anchor="middle">POST /update_weight_version</text>
+  <rect class="m-knock" x="201.02" y="302.42" width="207.96" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="313" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">later tokens carry the new version</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="24" cy="342" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="24" y="346" font-size="11" text-anchor="middle">7</text>
+  <line x1="110" y1="342" x2="499" y2="342" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M110 342 L499 342" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="215.75" y="325.03" width="178.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="336" font-size="11.5" text-anchor="middle">POST /continue_generation</text>
+  <rect class="m-knock" x="206.96" y="346.42" width="196.08" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="305" y="357" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">retracted requests prefill again</text>
+  </g>
+</svg>

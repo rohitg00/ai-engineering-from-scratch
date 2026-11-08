@@ -1,0 +1,608 @@
+{
+  "angr": "10.0.3",
+  "python": "3.12.12",
+  "claripy": "angr.rustylib.claripy",
+  "objects": {
+    "ledger-x86_64-O0.o": {
+      "loader": {
+        "backend": "ELF",
+        "minAddress": "0x400000",
+        "relocations": 13,
+        "symbols": {
+          "percent_change": "0x400000",
+          "grade": "0x400030",
+          "total": "0x4000b0",
+          "grade_label": "0x400100"
+        }
+      },
+      "percent_change": {
+        "deadended": 2,
+        "seconds": 0.01,
+        "paths": [
+          {
+            "constraints": [
+              "<Bool before_0_64[31:0] != 0x0>"
+            ],
+            "returns50": {
+              "before": 21055744,
+              "after": 332315210
+            },
+            "before3ReturnsMinus133": 1073741823
+          },
+          {
+            "constraints": [
+              "<Bool before_0_64[31:0] == 0x0>"
+            ],
+            "returns50": null,
+            "before3ReturnsMinus133": null
+          }
+        ]
+      },
+      "grade": {
+        "deadended": 5,
+        "seconds": 0.475,
+        "returns": {
+          "0": [
+            {
+              "min": -2147483648,
+              "max": 2147483647,
+              "samples": [
+                11,
+                368926,
+                1073741835
+              ]
+            }
+          ],
+          "1": [
+            {
+              "min": 60,
+              "max": 69,
+              "samples": [
+                60,
+                61,
+                62
+              ]
+            }
+          ],
+          "2": [
+            {
+              "min": 70,
+              "max": 79,
+              "samples": [
+                70,
+                71,
+                72
+              ]
+            }
+          ],
+          "3": [
+            {
+              "min": 80,
+              "max": 89,
+              "samples": [
+                83,
+                85,
+                88
+              ]
+            }
+          ],
+          "4": [
+            {
+              "min": 90,
+              "max": 109,
+              "samples": [
+                90,
+                91,
+                99
+              ]
+            }
+          ]
+        },
+        "crossChecks": {
+          "scoreIn60to109ReturnsZero": "unsat",
+          "scoreAtLeast110ReturnsNonZero": "unsat"
+        },
+        "explore": {
+          "blocks": [
+            "0x400030",
+            "0x400062",
+            "0x400076",
+            "0x40007f",
+            "0x400088",
+            "0x400091",
+            "0x40009a",
+            "0x4000a1"
+          ],
+          "find": "0x400076",
+          "found": 1,
+          "active": 3,
+          "seconds": 0.47,
+          "min": 90,
+          "max": 109,
+          "samples": [
+            91,
+            93,
+            94,
+            97,
+            101
+          ]
+        }
+      },
+      "total": [
+        {
+          "bound": 2,
+          "deadended": 3,
+          "seconds": 0.014,
+          "countSum": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        },
+        {
+          "bound": 4,
+          "deadended": 5,
+          "seconds": 0.022,
+          "countSum": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              4,
+              10
+            ]
+          ]
+        },
+        {
+          "bound": 8,
+          "deadended": 9,
+          "seconds": 0.046,
+          "countSum": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              4,
+              10
+            ],
+            [
+              5,
+              15
+            ],
+            [
+              6,
+              21
+            ],
+            [
+              7,
+              28
+            ],
+            [
+              8,
+              36
+            ]
+          ]
+        }
+      ]
+    },
+    "ledger-x86_64-O1.o": {
+      "loader": {
+        "backend": "ELF",
+        "minAddress": "0x400000",
+        "relocations": 8,
+        "symbols": {
+          "percent_change": "0x400000",
+          "grade": "0x400010",
+          "total": "0x400040",
+          "grade_label": "0x400060"
+        }
+      },
+      "percent_change": {
+        "deadended": 2,
+        "seconds": 0.005,
+        "paths": [
+          {
+            "constraints": [
+              "<Bool before_38_64[31:0] == 0x0>"
+            ],
+            "returns50": null,
+            "before3ReturnsMinus133": null
+          },
+          {
+            "constraints": [
+              "<Bool before_38_64[31:0] != 0x0>"
+            ],
+            "returns50": {
+              "before": 40566804,
+              "after": 834296877
+            },
+            "before3ReturnsMinus133": 1073741823
+          }
+        ]
+      },
+      "grade": {
+        "deadended": 2,
+        "seconds": 0.408,
+        "returns": {
+          "0": [
+            {
+              "min": -2147483648,
+              "max": 2147483647,
+              "samples": [
+                51,
+                134217774,
+                320901925
+              ]
+            }
+          ],
+          "1": [
+            {
+              "min": 60,
+              "max": 69,
+              "samples": [
+                60,
+                62,
+                65
+              ]
+            }
+          ],
+          "2": [
+            {
+              "min": 70,
+              "max": 79,
+              "samples": [
+                70,
+                71,
+                77
+              ]
+            }
+          ],
+          "3": [
+            {
+              "min": 80,
+              "max": 89,
+              "samples": [
+                81,
+                83,
+                87
+              ]
+            }
+          ],
+          "4": [
+            {
+              "min": 90,
+              "max": 109,
+              "samples": [
+                91,
+                92,
+                98
+              ]
+            }
+          ]
+        },
+        "crossChecks": {
+          "scoreIn60to109ReturnsZero": "unsat",
+          "scoreAtLeast110ReturnsNonZero": "unsat"
+        }
+      },
+      "total": [
+        {
+          "bound": 2,
+          "deadended": 3,
+          "seconds": 0.013,
+          "countSum": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        },
+        {
+          "bound": 4,
+          "deadended": 5,
+          "seconds": 0.02,
+          "countSum": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              4,
+              10
+            ]
+          ]
+        },
+        {
+          "bound": 8,
+          "deadended": 9,
+          "seconds": 0.036,
+          "countSum": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              4,
+              10
+            ],
+            [
+              5,
+              15
+            ],
+            [
+              6,
+              21
+            ],
+            [
+              7,
+              28
+            ],
+            [
+              8,
+              36
+            ]
+          ]
+        }
+      ]
+    },
+    "ledger-x86_64-O2.o": {
+      "loader": {
+        "backend": "ELF",
+        "minAddress": "0x400000",
+        "relocations": 8,
+        "symbols": {
+          "percent_change": "0x400000",
+          "grade": "0x400010",
+          "total": "0x400040",
+          "grade_label": "0x4000d0"
+        }
+      },
+      "percent_change": {
+        "deadended": 2,
+        "seconds": 0.005,
+        "paths": [
+          {
+            "constraints": [
+              "<Bool before_49_64[31:0] == 0x0>"
+            ],
+            "returns50": null,
+            "before3ReturnsMinus133": null
+          },
+          {
+            "constraints": [
+              "<Bool before_49_64[31:0] != 0x0>"
+            ],
+            "returns50": {
+              "before": -24484867,
+              "after": 993934694
+            },
+            "before3ReturnsMinus133": 1073741823
+          }
+        ]
+      },
+      "grade": {
+        "deadended": 2,
+        "seconds": 0.318,
+        "returns": {
+          "0": [
+            {
+              "min": -2147483648,
+              "max": 2147483647,
+              "samples": [
+                52,
+                1076,
+                876855331
+              ]
+            }
+          ],
+          "1": [
+            {
+              "min": 60,
+              "max": 69,
+              "samples": [
+                60,
+                61,
+                63
+              ]
+            }
+          ],
+          "2": [
+            {
+              "min": 70,
+              "max": 79,
+              "samples": [
+                72,
+                74,
+                76
+              ]
+            }
+          ],
+          "3": [
+            {
+              "min": 80,
+              "max": 89,
+              "samples": [
+                80,
+                83,
+                87
+              ]
+            }
+          ],
+          "4": [
+            {
+              "min": 90,
+              "max": 109,
+              "samples": [
+                96,
+                97,
+                101
+              ]
+            }
+          ]
+        },
+        "crossChecks": {
+          "scoreIn60to109ReturnsZero": "unsat",
+          "scoreAtLeast110ReturnsNonZero": "unsat"
+        }
+      },
+      "total": [
+        {
+          "bound": 2,
+          "deadended": 3,
+          "seconds": 0.019,
+          "countSum": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              3
+            ]
+          ]
+        },
+        {
+          "bound": 4,
+          "deadended": 5,
+          "seconds": 0.023,
+          "countSum": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              4,
+              10
+            ]
+          ]
+        },
+        {
+          "bound": 8,
+          "deadended": 9,
+          "seconds": 0.044,
+          "countSum": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              6
+            ],
+            [
+              4,
+              10
+            ],
+            [
+              5,
+              15
+            ],
+            [
+              6,
+              21
+            ],
+            [
+              7,
+              28
+            ],
+            [
+              8,
+              36
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}

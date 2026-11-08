@@ -1,0 +1,27 @@
+{
+  "candidate": "f2_switch",
+  "label": "hand-written test candidate for lesson 45, not the output of any model",
+  "kind": "correct",
+  "tool": "hand-written",
+  "target": {
+    "object": "ledger-x86_64-O1-renamed.o",
+    "sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+    "function": "f2"
+  },
+  "source": "f2_switch.c",
+  "claims": {
+    "name": "grade",
+    "return_type": "int",
+    "parameters": [
+      {"name": "score", "type": "int"}
+    ],
+    "summary": "Divides score by 10 with the multiply by 0x66666667 and shift by 34, subtracts 6, and reads a five-entry table of 1, 2, 3, 4, 4 for tens 6 to 10. Every other tens value returns 0."
+  },
+  "citations": {
+    "addresses": ["0x10", "0x13", "0x1e", "0x27", "0x2c", "0x33", "0x3a"],
+    "callees": [],
+    "strings": [],
+    "immediates": [1717986919, 34, 63, -6, 4]
+  },
+  "cost": {"tokens": null, "seconds": null}
+}

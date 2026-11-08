@@ -28,9 +28,9 @@ The bet was controversial when it published. Two years on, the open-source unifi
 
 The key ingredient is the visual tokenizer. Emu3 trains a custom IBQ-class tokenizer (Inverse Bottleneck Quantizer, SBER-MoVQGAN family) at 8x8 resolution-reduction per token. A 512x512 image becomes 64x64 = 4096 tokens at codebook size 32768.
 
-This is larger than Chameleon's 1024 tokens per 512x512 at K=8192 but cheaper per token (smaller codebook lookups, simpler codec). The key metric: reconstruction PSNR at 30.5 dB, competitive with Stable Diffusion's continuous latent space at 32 dB.
+This is larger than Chameleon's 1024 tokens per 512x512 at K=8192 on both axes: four times the tokens and a codebook four times as large. The extra capacity buys reconstruction quality. The key metric: reconstruction PSNR at 30.5 dB, competitive with Stable Diffusion's continuous latent space at 32 dB.
 
-For video: a 3D VQ tokenizer encodes a spatiotemporal patch (4x4x4 pixels) to one integer. A 4s clip at 8 FPS has 32 frames; at 256x256 with 4x spatial and 4x temporal reduction, the token count is (256/4) * (256/4) * (32/4) = 64 * 64 * 8 = 32,768 tokens.
+For video: a 3D VQ tokenizer encodes a spatiotemporal patch (4 frames x 8x8 pixels) to one integer. A 4s clip at 8 FPS has 32 frames; at 256x256 with 8x spatial and 4x temporal reduction, the token count is (256/8) * (256/8) * (32/4) = 32 * 32 * 8 = 8,192 tokens.
 
 Tokenizer quality is the ceiling. Emu3's contribution is partly "we trained a very good tokenizer."
 
@@ -68,14 +68,14 @@ No task-specific heads. Just different prompt templates. Same checkpoint.
 From Emu3 paper (September 2024):
 
 - Image generation: beats SDXL on MJHQ-30K FID (5.4 vs 5.6), GenEval overall (0.54 vs 0.55 — statistical tie), and Deep-Eval's composite on-par.
-- Image perception: beats LLaVA-1.6 on VQAv2 (75.1 vs 72.4) and roughly matches on MMMU.
+- Image perception: trails LLaVA-1.6 on VQAv2 (75.1 vs 81.8) and MMMU (31.6 vs 35.1), but beats it on SEED-Bench, OCRBench, and ChartQA.
 - Video generation: 4-second-clip quality at competitive FVD with Sora-era publicly benchmarked models.
 
 The numbers are not always winning — Emu3 trades a point here for a point there — but the claim "next-token prediction is all you need" is defensible across modalities.
 
 ### Compute cost
 
-Emu3 was trained on ~300 billion multimodal tokens with a 7B-parameter model. GPU-hours roughly comparable to Llama-2-7B pretraining (2k-4k GPU-years on A100-class silicon). Diffusion models like Stable Diffusion 3 train in similar budgets but need separate text encoders and more complex pipelines.
+Emu3 is an 8B-parameter model. The paper does not publish a GPU-hour total; for scale, Llama-2-7B pretraining used about 184k A100 GPU-hours, roughly 21 GPU-years. Diffusion models like Stable Diffusion 3 train in similar budgets but need separate text encoders and more complex pipelines.
 
 At inference, Emu3 is slower than SDXL per image: 4096 image tokens at 30 tok/s is ~2 minutes per 512x512 image, vs 2-5 seconds for SDXL. Speculative decoding and KV-cache optimization narrow the gap but do not close it. Autoregressive image gen is compute-heavy; this is the standing trade-off.
 
@@ -106,11 +106,11 @@ This lesson produces `outputs/skill-token-gen-cost-analyzer.md`. Given a generat
 
 1. Emu3 produces 4096 tokens per 512x512 image at 8x8 reduction. Compute the equivalent for 1024x1024 and 2048x2048. What happens to inference latency?
 
-2. Read Emu3 Section 3.3 on the video tokenizer. Describe the 3D VQ patch shape and why it is 4x4x4 not 8x8x1.
+2. Read Emu3 Section 3.3 on the video tokenizer. Describe the 3D VQ patch shape and why it spans 4 frames x 8x8 pixels instead of a single frame.
 
 3. Classifier-free guidance weight 5.0 vs 3.0: what visual effect? Trace the math in `code/main.py`.
 
-4. Compute training FLOPs for Emu3-7B at 300B tokens and compare to Stable Diffusion 3. Which was more expensive to train?
+4. Compute training FLOPs for Emu3 (8B) at an assumed 300B tokens and compare to Stable Diffusion 3. Which was more expensive to train?
 
 5. Emu3 beats SDXL on FID but not on VQAv2 vs specialized VLMs. Explain why the unified-loss approach shows different strengths vs specialists on different benchmarks.
 
@@ -120,7 +120,7 @@ This lesson produces `outputs/skill-token-gen-cost-analyzer.md`. Given a generat
 |------|-----------------|------------------------|
 | Next-token prediction | "NTP" | Standard autoregressive loss: predict token[i+1] given token[0..i]; works for every modality when tokenized |
 | IBQ tokenizer | "Inverse bottleneck quantizer" | A class of VQ-VAE with larger codebooks (32768+) and better reconstruction than Chameleon's |
-| 3D VQ | "Spatiotemporal quantizer" | Codebook indexed by (time, row, col); one token covers a 4x4x4 pixel cube |
+| 3D VQ | "Spatiotemporal quantizer" | Codebook indexed by (time, row, col); one token covers 4 frames x 8x8 pixels |
 | Classifier-free guidance | "CFG" | Mix conditional and unconditional logits with weight gamma; boosts image quality at inference |
 | Unified vocabulary | "Shared tokens" | Text + image + video all draw from the same integer space; model predicts whichever modality comes next |
 | MJHQ-30K | "Image gen benchmark" | Midjourney-quality benchmark with 30k prompts; Emu3 reports FID here |

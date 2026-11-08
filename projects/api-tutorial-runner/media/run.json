@@ -1,0 +1,52 @@
+{
+  "title": "API Tutorial Runner | initialize and grade",
+  "recordedAt": "2026-10-09T14:24:26Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "api-tutorial-runner",
+        "--init",
+        "./.project-validation/api-tutorial-runner/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/api-tutorial-runner/recording-starter\n  created  cli.ts\n  created  main.ts\n  created  sample.json\n  created  STAGE-2.md\n  created  STAGE-3.md\n  created  STAGE-4.md\nnext: python3 scripts/project_test.py api-tutorial-runner --stage 1 --path ./.project-validation/api-tutorial-runner/recording-starter\n",
+      "durationMs": 40
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "api-tutorial-runner",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/api-tutorial-runner/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "API Tutorial Runner: grading learner\n  FAIL stage 1: Extract explicit requests from an authored tutorial (6 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 273
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "api-tutorial-runner",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/api-tutorial-runner/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "API Tutorial Runner: grading solution\n  PASS stage 1: Extract explicit requests from an authored tutorial (6 tests)\n  PASS stage 2: Resolve typed variables across steps (6 tests)\n  PASS stage 3: Run bounded requests against a test service (6 tests)\n  PASS stage 4: Export source-linked failures and correction proposals (6 tests)\nreport: ./.project-validation/api-tutorial-runner/solution-final.json\n",
+      "durationMs": 1129
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

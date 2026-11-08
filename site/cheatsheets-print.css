@@ -1,0 +1,116 @@
+@page {
+  size: letter landscape;
+  margin: 7mm;
+}
+
+.cs-print-edition {
+  margin: 0;
+  background: #ffffff;
+  color: #111111;
+}
+
+.cs-print-topic {
+  break-before: page;
+}
+
+.cs-print-edition .site-header {
+  display: none;
+}
+
+.cs-print-edition .cs-poster {
+  padding: 0;
+}
+
+.cs-cover {
+  zoom: 0.71;
+  width: 1400px;
+  padding-top: 40px;
+  font-family: var(--font-body);
+}
+
+.cs-cover-stamp {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #111111;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cs-cover h1 {
+  margin: 40px 0 10px;
+  color: #2f49e0;
+  font-family: var(--font-display);
+  font-size: 120px;
+  font-weight: 400;
+  line-height: 0.9;
+}
+
+.cs-cover .cs-sub {
+  margin-bottom: 30px;
+  font-size: 24px;
+}
+
+.cs-cover-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 19px;
+}
+
+.cs-cover-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+}
+
+.cs-cover-list .cs-code {
+  width: 40px;
+  height: 40px;
+  background: hsl(var(--h) 60% 38%);
+  color: #ffffff;
+  font-size: 22px;
+}
+
+.cs-cover-edition {
+  margin-top: 36px;
+  padding-top: 10px;
+  border-top: 1.5px solid #2f49e0;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+}
+
+.cs-cover-edition p {
+  margin: 0 0 6px;
+}
+
+.cs-cover-edition a,
+.cs-colophon a {
+  color: #2f49e0;
+  text-decoration: none;
+}
+
+.cs-colophon {
+  zoom: 0.71;
+  width: 1400px;
+  max-width: none;
+  break-before: page;
+  padding-top: 160px;
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.cs-colophon p {
+  max-width: 56em;
+  margin: 0 0 14px;
+}

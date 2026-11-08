@@ -72,7 +72,7 @@ stack:   conv 3x3 -> conv 3x3 -> pool 2x2
 repeat:  16 or 19 conv layers
 ```
 
-Two 3x3 convs see the same 5x5 input area as one 5x5 conv but with fewer parameters (2*9*C^2 = 18C^2 vs 25*C^2) and an extra ReLU in between. VGG turned this observation into an entire architecture. The simplicity — one block type, repeated — made it the reference point for everything that came after.
+Two 3x3 convs see the same 5x5 input area as one 5x5 conv but with fewer parameters ($2 \cdot 9 \cdot C^2 = 18C^2$ vs $25 \cdot C^2$) and an extra ReLU in between. VGG turned this observation into an entire architecture. The simplicity — one block type, repeated — made it the reference point for everything that came after.
 
 Cost: 138M parameters, slow to train, expensive at inference.
 
@@ -120,9 +120,11 @@ VGG worked at 19 layers because batch norm (published simultaneously) kept activ
 
 He, Zhang, Ren, Sun proposed one change that fixed everything:
 
-```
-standard block:   y = F(x)
-residual block:   y = F(x) + x
+```math
+\begin{aligned}
+\text{standard block:} \quad & y = F(x) \\
+\text{residual block:} \quad & y = F(x) + x
+\end{aligned}
 ```
 
 The `+ x` means the layer can always choose to do nothing by driving `F(x)` to zero. A 1,000-layer ResNet is now at most as bad as a 1-layer network, because every extra block has a trivial escape hatch. With that guarantee, the optimiser is willing to make every block *slightly* useful — and slightly useful, stacked 100 times, is state-of-the-art.

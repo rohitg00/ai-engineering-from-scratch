@@ -1,0 +1,15 @@
+{
+  "title": "bookmark-path-organizer",
+  "url": "http://127.0.0.1:8879/projects/bookmark-path-organizer/solution/output/report.html",
+  "actions": [
+    [
+      "click",
+      "article:first-child input"
+    ],
+    [
+      "click",
+      "article:first-child button:last-child"
+    ]
+  ],
+  "kind": "browser capture"
+}

@@ -1,0 +1,122 @@
+ledger-x86_64-O1-g.o:	file format elf64-x86-64
+
+.debug_abbrev contents:
+Abbrev table for offset: 0x00000000
+[1] DW_TAG_compile_unit	DW_CHILDREN_yes
+	DW_AT_producer	DW_FORM_strx1
+	DW_AT_language	DW_FORM_data2
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_str_offsets_base	DW_FORM_sec_offset
+	DW_AT_stmt_list	DW_FORM_sec_offset
+	DW_AT_comp_dir	DW_FORM_strx1
+	DW_AT_low_pc	DW_FORM_addrx
+	DW_AT_high_pc	DW_FORM_data4
+	DW_AT_addr_base	DW_FORM_sec_offset
+	DW_AT_loclists_base	DW_FORM_sec_offset
+
+[2] DW_TAG_variable	DW_CHILDREN_no
+	DW_AT_type	DW_FORM_ref4
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+	DW_AT_location	DW_FORM_exprloc
+
+[3] DW_TAG_array_type	DW_CHILDREN_yes
+	DW_AT_type	DW_FORM_ref4
+
+[4] DW_TAG_subrange_type	DW_CHILDREN_no
+	DW_AT_type	DW_FORM_ref4
+	DW_AT_count	DW_FORM_data1
+
+[5] DW_TAG_base_type	DW_CHILDREN_no
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_encoding	DW_FORM_data1
+	DW_AT_byte_size	DW_FORM_data1
+
+[6] DW_TAG_base_type	DW_CHILDREN_no
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_byte_size	DW_FORM_data1
+	DW_AT_encoding	DW_FORM_data1
+
+[7] DW_TAG_variable	DW_CHILDREN_no
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_type	DW_FORM_ref4
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+
+[8] DW_TAG_pointer_type	DW_CHILDREN_no
+	DW_AT_type	DW_FORM_ref4
+
+[9] DW_TAG_const_type	DW_CHILDREN_no
+	DW_AT_type	DW_FORM_ref4
+
+[10] DW_TAG_subprogram	DW_CHILDREN_yes
+	DW_AT_low_pc	DW_FORM_addrx
+	DW_AT_high_pc	DW_FORM_data4
+	DW_AT_frame_base	DW_FORM_exprloc
+	DW_AT_call_all_calls	DW_FORM_flag_present
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+	DW_AT_prototyped	DW_FORM_flag_present
+	DW_AT_type	DW_FORM_ref4
+	DW_AT_external	DW_FORM_flag_present
+
+[11] DW_TAG_formal_parameter	DW_CHILDREN_no
+	DW_AT_location	DW_FORM_exprloc
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+	DW_AT_type	DW_FORM_ref4
+
+[12] DW_TAG_formal_parameter	DW_CHILDREN_no
+	DW_AT_location	DW_FORM_loclistx
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+	DW_AT_type	DW_FORM_ref4
+
+[13] DW_TAG_subprogram	DW_CHILDREN_yes
+	DW_AT_low_pc	DW_FORM_addrx
+	DW_AT_high_pc	DW_FORM_data4
+	DW_AT_frame_base	DW_FORM_exprloc
+	DW_AT_call_all_calls	DW_FORM_flag_present
+	DW_AT_abstract_origin	DW_FORM_ref4
+
+[14] DW_TAG_formal_parameter	DW_CHILDREN_no
+	DW_AT_location	DW_FORM_exprloc
+	DW_AT_abstract_origin	DW_FORM_ref4
+
+[15] DW_TAG_variable	DW_CHILDREN_no
+	DW_AT_location	DW_FORM_loclistx
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+	DW_AT_type	DW_FORM_ref4
+
+[16] DW_TAG_lexical_block	DW_CHILDREN_yes
+	DW_AT_low_pc	DW_FORM_addrx
+	DW_AT_high_pc	DW_FORM_data4
+
+[17] DW_TAG_subprogram	DW_CHILDREN_yes
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+	DW_AT_prototyped	DW_FORM_flag_present
+	DW_AT_type	DW_FORM_ref4
+	DW_AT_external	DW_FORM_flag_present
+	DW_AT_inline	DW_FORM_implicit_const	1
+
+[18] DW_TAG_formal_parameter	DW_CHILDREN_no
+	DW_AT_name	DW_FORM_strx1
+	DW_AT_decl_file	DW_FORM_data1
+	DW_AT_decl_line	DW_FORM_data1
+	DW_AT_type	DW_FORM_ref4
+
+[19] DW_TAG_inlined_subroutine	DW_CHILDREN_yes
+	DW_AT_abstract_origin	DW_FORM_ref4
+	DW_AT_low_pc	DW_FORM_addrx
+	DW_AT_high_pc	DW_FORM_data4
+	DW_AT_call_file	DW_FORM_data1
+	DW_AT_call_line	DW_FORM_data1
+	DW_AT_call_column	DW_FORM_data1
+

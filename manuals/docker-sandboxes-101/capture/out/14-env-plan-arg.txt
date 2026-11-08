@@ -1,0 +1,38 @@
+$ sbx env plan --env-arg greeting=servus ./fixtures/env
+── LOAD ENVIRONMENT
+   reading environment file…
+     $CAPTURE/fixtures/env/sbxenv.yaml
+   ✓ environment loaded
+── ENVIRONMENT PLAN
+   m101-env
+
+   kits:
++    - source: $CAPTURE/fixtures/kits/hello-mixin
+
+   workspace:  (present, not recorded as applied, needs your approval)
+     path: $CAPTURE/fixtures/env
+
+   env:
++    GREETING: servus
+
++  sandbox:
++    name: m101-env
++    agent: shell
+
+   ports:
++    - sandbox: 8080
++      protocol: tcp4
++      host: 18083
+
+   lifecycle:
+     initialize:
++      - command: echo init
++        workdir: $CAPTURE/fixtures/env
++        envFiles:
++          - $CAPTURE/fixtures/env/sbxenv.yaml
+
+   Plan: + 5 to add, ~ 0 to change, - 0 to destroy.
+
+   this plan runs commands on this machine, outside the sandbox, with your own privileges
+   ✓ not approved yet; applying asks once
+[exit 0]

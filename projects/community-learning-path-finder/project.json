@@ -1,0 +1,111 @@
+{
+  "id": "community-learning-path-finder",
+  "title": "Community Learning Path Finder",
+  "level": 3,
+  "languages": [
+    "Python"
+  ],
+  "source": "core",
+  "tagline": "Build a learning path that explains its prerequisites and tradeoffs.",
+  "summary": "Help a learner choose a feasible sequence from an explicit catalog of workshops and resources. Combine prerequisite graphs, stated goals and a time budget, explain why each resource was selected, and export an editable HTML learning map with a machine-readable path for another course platform.",
+  "prerequisiteProjects": [
+    "bookmark-path-organizer",
+    "semantic-notes-search"
+  ],
+  "status": "ready",
+  "hours": 8,
+  "prerequisites": [
+    "Python 3.10+; lists, dictionaries and functions"
+  ],
+  "skills": [
+    "Model resources, goals and prerequisite relationships",
+    "Find feasible paths and expose missing prerequisites",
+    "Rank alternatives under an explicit time budget",
+    "Export an editable learning map and integration contract"
+  ],
+  "youWillBuild": "An HTML learning map, path.json and unmet-prerequisites.json",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "overviewFigure": "pj-community-learning-path-finder-1",
+  "figures": true,
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "samples/input.json",
+      "--output",
+      "demo-output"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-catalog",
+      "title": "Model resources, goals and prerequisite relationships",
+      "summary": "Model resource time, goals and prerequisite edges.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "starter",
+      "concepts": [
+        "directed graphs",
+        "cycle detection"
+      ],
+      "figure": "pj-community-learning-path-finder-1"
+    },
+    {
+      "id": "02-closure",
+      "title": "Find feasible paths and expose missing prerequisites",
+      "summary": "Expand a target into its prerequisite-first sequence.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "dependency closure",
+        "topological ordering"
+      ],
+      "figure": "pj-community-learning-path-finder-2"
+    },
+    {
+      "id": "03-rank",
+      "title": "Rank alternatives under an explicit time budget",
+      "summary": "Maximize goal coverage inside a stated time budget.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "exact search",
+        "tradeoffs"
+      ],
+      "figure": "pj-community-learning-path-finder-3"
+    },
+    {
+      "id": "04-progress",
+      "title": "Export an editable learning map and integration contract",
+      "summary": "Export the learning map and validate completion receipts.",
+      "hours": 2,
+      "language": "python",
+      "difficulty": "core",
+      "concepts": [
+        "course integration",
+        "progress validation"
+      ],
+      "figure": "pj-community-learning-path-finder-4"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "ppo-clip-loss",
+  "title": "PPO clipped surrogate loss",
+  "kind": "implement",
+  "summary": "The PPO loss to minimize from new and old log probabilities and advantages, the clip fraction, and the gradient with respect to the new log probabilities.",
+  "difficulty": "medium",
+  "tags": ["reinforcement-learning", "ppo", "policy-gradient", "gradients"],
+  "lesson": "phases/09-reinforcement-learning/08-ppo",
+  "cheatsheet": "reinforcement-learning",
+  "minutes": 25,
+  "entry": ["ppo_clip_loss", "clip_fraction", "ppo_clip_grad"],
+  "collections": ["rl-basics"],
+  "time_limit_s": 10,
+  "mutants": {
+    "clip_ignores_sign": "Counts every ratio outside [1 - eps, 1 + eps] as clipped, also when the min keeps the unclipped term.",
+    "grad_ignores_clip": "Returns minus r A / N for every sample, also for the clipped samples.",
+    "max_not_min": "Takes the larger of the two terms with np.maximum, so the objective is not a lower bound.",
+    "ratio_from_probs": "Computes the ratio as exp(logp_new) / exp(logp_old), which gives 0 / 0 for very small probabilities.",
+    "sign_flipped": "Returns the surrogate and its gradient without the minus sign, so gradient descent makes the policy worse.",
+    "sum_not_mean": "Sums over the samples and does not divide the loss and the gradient by N."
+  }
+}

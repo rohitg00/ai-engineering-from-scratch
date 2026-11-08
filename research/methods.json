@@ -1,0 +1,3142 @@
+{
+  "version": 1,
+  "methods": {
+    "adaboost": "AdaBoost",
+    "adam": "Adam",
+    "adamw": "AdamW",
+    "agent-harness": "Agent harness",
+    "agent-skills": "Agent skills",
+    "alphaevolve": "AlphaEvolve",
+    "alphazero": "AlphaZero",
+    "attention": "Attention",
+    "autoencoder-ae": "Autoencoder",
+    "batch-normalization": "Batch normalization",
+    "bayesian-optimization": "Bayesian optimization",
+    "bert": "BERT",
+    "bge-m3": "BGE-M3",
+    "bleu": "BLEU",
+    "bm25": "BM25",
+    "bpe": "BPE",
+    "chain-of-thought-cot": "Chain-of-thought (CoT)",
+    "classifier-free-guidance": "Classifier-free guidance",
+    "clip": "CLIP",
+    "cnn": "Convolutional neural network (CNN)",
+    "colbert": "ColBERT",
+    "colpali": "ColPali",
+    "context-compression": "Context compression",
+    "context-engineering": "Context engineering",
+    "controlnet": "ControlNet",
+    "convolution": "Convolution",
+    "cosine-annealing": "Cosine annealing",
+    "ctc": "CTC",
+    "cutmix": "CutMix",
+    "ddim": "DDIM",
+    "dense-passage-retrieval": "Dense passage retrieval (DPR)",
+    "depth-anything": "Depth Anything",
+    "dice-loss": "Dice loss",
+    "diffusion": "Diffusion",
+    "diffusion-transformer-dit": "Diffusion Transformer (DiT)",
+    "dino": "DINO",
+    "direct-preference-optimization-dpo": "DPO",
+    "discrete-diffusion": "Discrete diffusion",
+    "dqn": "DQN",
+    "dropout": "Dropout",
+    "eagle": "EAGLE",
+    "eagle-3": "EAGLE-3",
+    "embedding": "Embedding",
+    "fasttext": "fastText",
+    "feedforward-network": "Feedforward network",
+    "few-shot-prompting": "Few-shot prompting",
+    "fine-tuning": "Fine-tuning",
+    "flash-attention": "FlashAttention",
+    "flow-matching": "Flow matching",
+    "focal-loss": "Focal loss",
+    "fp8": "FP8",
+    "function-calling": "Function calling",
+    "gan": "GAN",
+    "gaussian-splatting": "Gaussian splatting",
+    "gbdt": "Gradient-boosted decision trees (GBDT)",
+    "glove": "GloVe",
+    "gpt": "GPT",
+    "gpt-2": "GPT-2",
+    "gptq": "GPTQ",
+    "gr00t": "GR00T",
+    "gradient-checkpointing": "Gradient checkpointing",
+    "gradient-clipping": "Gradient clipping",
+    "grouped-query-attention": "Grouped-query attention (GQA)",
+    "grpo": "GRPO",
+    "infonce": "InfoNCE",
+    "inpainting": "Inpainting",
+    "isolation-forest": "Isolation forest",
+    "k-means-clustering": "K-means clustering",
+    "key-value-cache": "KV cache",
+    "kl-divergence": "KL divergence",
+    "knn": "k-nearest neighbors (kNN)",
+    "label-smoothing": "Label smoothing",
+    "layer-normalization": "Layer normalization",
+    "learning-rate-scheduler": "Learning rate scheduler",
+    "llava": "LLaVA",
+    "llm-as-a-judge": "LLM-as-a-judge",
+    "logistic-regression": "Logistic regression",
+    "lora": "LoRA",
+    "lstm": "LSTM",
+    "luong-attention": "Luong attention",
+    "mamba": "Mamba",
+    "mamba-3": "Mamba-3",
+    "mask-r-cnn": "Mask R-CNN",
+    "masked-autoencoder": "Masked autoencoder (MAE)",
+    "matryoshka-representation-learning-mrl": "Matryoshka representation learning (MRL)",
+    "mcp": "Model Context Protocol (MCP)",
+    "microscaling-formats": "Microscaling (MX) formats",
+    "mixture-of-experts": "Mixture of experts (MoE)",
+    "monte-carlo-tree-search": "Monte Carlo tree search (MCTS)",
+    "multi-agent-debate": "Multi-agent debate",
+    "multi-head-attention": "Multi-head attention",
+    "multi-latent-attention-mla": "Multi-head latent attention (MLA)",
+    "multi-token-prediction": "Multi-token prediction (MTP)",
+    "muzero": "MuZero",
+    "nerf": "NeRF",
+    "neural-audio-codec": "Neural audio codec",
+    "non-maximum-suppression-nms": "Non-maximum suppression (NMS)",
+    "nvfp4": "NVFP4",
+    "openvla": "OpenVLA",
+    "paged-attention": "PagedAttention",
+    "pass-1": "pass@1",
+    "pca": "PCA",
+    "peft": "PEFT",
+    "perceiver-resampler": "Perceiver resampler",
+    "pi0": "π0",
+    "ppo": "PPO",
+    "pre-training": "Pre-training",
+    "prefill": "Prefill",
+    "prompt-engineering": "Prompt engineering",
+    "q-former": "Q-Former",
+    "qlora": "QLoRA",
+    "qmix": "QMIX",
+    "quantization": "Quantization",
+    "rag": "RAG",
+    "random-forest": "Random forest",
+    "react": "ReAct",
+    "rectified-flow": "Rectified flow",
+    "recursive-self-improvement": "Recursive self-improvement",
+    "reinforce": "REINFORCE",
+    "reranker-cross-encoder": "Cross-encoder reranker",
+    "resnet": "ResNet",
+    "reward-hacking": "Reward hacking",
+    "reward-model": "Reward model",
+    "rlhf": "RLHF",
+    "rmsnorm": "RMSNorm",
+    "rnn": "RNN",
+    "rnn-transducer": "RNN-Transducer (RNN-T)",
+    "roialign": "RoIAlign",
+    "rope": "RoPE",
+    "rouge": "ROUGE",
+    "sam-3": "SAM 3",
+    "scaling-laws": "Scaling laws",
+    "self-consistency": "Self-consistency",
+    "self-play": "Self-play",
+    "sentencepiece": "SentencePiece",
+    "seq2seq": "Seq2seq",
+    "sgd": "SGD",
+    "siglip": "SigLIP",
+    "simclr": "SimCLR",
+    "sliding-window-attention": "Sliding window attention",
+    "softmax": "Softmax",
+    "sparse-attention": "Sparse attention",
+    "spectral-normalization": "Spectral normalization",
+    "spectrogram": "Spectrogram",
+    "speculative-decoding": "Speculative decoding",
+    "stable-diffusion": "Stable Diffusion",
+    "state-space-models": "State space models (SSM)",
+    "support-vector-machine": "Support vector machine (SVM)",
+    "swiglu": "SwiGLU",
+    "t5": "T5",
+    "teacher-forcing": "Teacher forcing",
+    "transformer": "Transformer",
+    "tree-of-thoughts": "Tree of Thoughts",
+    "ttft": "Time to first token (TTFT)",
+    "u-net": "U-Net",
+    "vae": "VAE",
+    "var": "VAR (visual autoregressive modeling)",
+    "vision-transformer": "Vision Transformer (ViT)",
+    "vla": "Vision-language-action model (VLA)",
+    "vq-vae": "VQ-VAE",
+    "watermarking": "Watermarking",
+    "whisper": "Whisper",
+    "word2vec": "Word2Vec",
+    "xavier-initialization": "Xavier initialization",
+    "xgboost": "XGBoost",
+    "yolo": "YOLO"
+  },
+  "tasks": {
+    "3d-generation": "3D generation",
+    "anomaly-detection": "Anomaly detection",
+    "audio-classification": "Audio classification",
+    "audio-compression": "Audio compression",
+    "audio-generation": "Audio generation",
+    "audio-understanding": "Audio understanding",
+    "auto-research": "Automated research",
+    "automatic-speech-recognition": "Automatic speech recognition",
+    "classic-language-modeling": "Classic language modeling",
+    "coding-agents": "Coding agents",
+    "computer-use-agents": "Computer-use agents",
+    "deepfake-detection": "Deepfake detection",
+    "depth-estimation": "Depth estimation",
+    "dialogue-state-tracking": "Dialogue state tracking",
+    "document-understanding": "Document understanding",
+    "embedding-models": "Embedding models",
+    "full-duplex-spoken-dialogue": "Full-duplex spoken dialogue",
+    "image-classification": "Image classification",
+    "image-editing": "Image editing",
+    "image-generation": "Image generation",
+    "image-inpainting": "Image inpainting",
+    "image-retrieval": "Image retrieval",
+    "image-segmentation": "Image segmentation",
+    "image-to-image-translation": "Image-to-image translation",
+    "image-understanding": "Image understanding",
+    "instruction-following": "Instruction following",
+    "language-modeling": "Language modeling",
+    "long-context": "Long context",
+    "machine-translation": "Machine translation",
+    "multi-agent-reinforcement-learning": "Multi-agent reinforcement learning",
+    "named-entity-recognition": "Named entity recognition",
+    "novel-view-synthesis": "Novel view synthesis",
+    "object-detection": "Object detection",
+    "object-tracking": "Object tracking",
+    "ocr": "OCR",
+    "omni-models": "Omni models",
+    "part-of-speech-tagging": "Part-of-speech tagging",
+    "pose-estimation": "Pose estimation",
+    "question-answering": "Question answering",
+    "reasoning": "Reasoning",
+    "reinforcement-learning": "Reinforcement learning",
+    "relation-extraction": "Relation extraction",
+    "retrieval": "Retrieval",
+    "robotics": "Robotics",
+    "speaker-diarization": "Speaker diarization",
+    "speaker-verification": "Speaker verification",
+    "speech-translation": "Speech translation",
+    "summarization": "Summarization",
+    "text-classification": "Text classification",
+    "text-reranking": "Text reranking",
+    "text-to-speech": "Text-to-speech",
+    "time-series-forecasting": "Time series forecasting",
+    "video-generation": "Video generation",
+    "video-temporal-grounding": "Video temporal grounding",
+    "video-understanding": "Video understanding",
+    "voice-activity-detection": "Voice activity detection",
+    "voice-cloning": "Voice cloning",
+    "world-models": "World models"
+  },
+  "lessons": {
+    "phases/01-math-foundations/08-optimization": {
+      "methods": [
+        {
+          "slug": "sgd",
+          "why": "Implements SGD with momentum from scratch on a test function."
+        },
+        {
+          "slug": "adam",
+          "why": "Implements Adam with adaptive learning rates from scratch."
+        }
+      ]
+    },
+    "phases/01-math-foundations/09-information-theory": {
+      "methods": [
+        {
+          "slug": "kl-divergence",
+          "why": "Explains KL divergence in a named section and computes it from scratch."
+        }
+      ]
+    },
+    "phases/01-math-foundations/10-dimensionality-reduction": {
+      "methods": [
+        {
+          "slug": "pca",
+          "why": "Builds PCA from scratch and tests it on synthetic data and MNIST."
+        }
+      ]
+    },
+    "phases/01-math-foundations/13-numerical-stability": {
+      "methods": [
+        {
+          "slug": "gradient-clipping",
+          "why": "Explains clip by value and clip by norm in a named section."
+        }
+      ]
+    },
+    "phases/02-ml-fundamentals/03-logistic-regression": {
+      "methods": [
+        {
+          "slug": "logistic-regression",
+          "why": "Builds logistic regression from scratch with sigmoid and binary cross-entropy."
+        }
+      ]
+    },
+    "phases/02-ml-fundamentals/04-decision-trees": {
+      "methods": [
+        {
+          "slug": "random-forest",
+          "why": "Builds a RandomForest class from bootstrapped decision trees."
+        }
+      ]
+    },
+    "phases/02-ml-fundamentals/05-support-vector-machines": {
+      "methods": [
+        {
+          "slug": "support-vector-machine",
+          "why": "Trains a linear SVM with hinge loss and explains the kernel trick."
+        }
+      ]
+    },
+    "phases/02-ml-fundamentals/06-knn-and-distances": {
+      "methods": [
+        {
+          "slug": "knn",
+          "why": "Builds a KNN classifier and regressor with a KD-tree from scratch."
+        }
+      ]
+    },
+    "phases/02-ml-fundamentals/07-unsupervised-learning": {
+      "methods": [
+        {
+          "slug": "k-means-clustering",
+          "why": "Builds K-means from scratch with the elbow method and silhouette score."
+        }
+      ]
+    },
+    "phases/02-ml-fundamentals/11-ensemble-methods": {
+      "methods": [
+        {
+          "slug": "adaboost",
+          "why": "Builds AdaBoost from scratch with decision stumps."
+        },
+        {
+          "slug": "gbdt",
+          "why": "Builds gradient boosting on decision trees from scratch."
+        },
+        {
+          "slug": "xgboost",
+          "why": "Explains the XGBoost optimizations in a named section."
+        }
+      ]
+    },
+    "phases/02-ml-fundamentals/12-hyperparameter-tuning": {
+      "methods": [
+        {
+          "slug": "bayesian-optimization",
+          "why": "Implements a simplified Bayesian optimization search."
+        }
+      ]
+    },
+    "phases/02-ml-fundamentals/14-naive-bayes": {
+      "methods": [],
+      "tasks": [
+        "text-classification"
+      ]
+    },
+    "phases/02-ml-fundamentals/15-time-series": {
+      "methods": [],
+      "tasks": [
+        "time-series-forecasting"
+      ]
+    },
+    "phases/02-ml-fundamentals/16-anomaly-detection": {
+      "methods": [
+        {
+          "slug": "isolation-forest",
+          "why": "Builds an isolation forest from scratch."
+        }
+      ],
+      "tasks": [
+        "anomaly-detection"
+      ]
+    },
+    "phases/03-deep-learning-core/02-multi-layer-networks": {
+      "methods": [
+        {
+          "slug": "feedforward-network",
+          "why": "Builds a multi-layer feedforward network and its forward pass."
+        }
+      ]
+    },
+    "phases/03-deep-learning-core/05-loss-functions": {
+      "methods": [
+        {
+          "slug": "label-smoothing",
+          "why": "Implements label smoothing for cross-entropy."
+        },
+        {
+          "slug": "focal-loss",
+          "why": "Explains focal loss for imbalanced classes in a named section."
+        },
+        {
+          "slug": "infonce",
+          "why": "Implements a simplified InfoNCE contrastive loss."
+        }
+      ]
+    },
+    "phases/03-deep-learning-core/06-optimizers": {
+      "methods": [
+        {
+          "slug": "sgd",
+          "why": "Implements vanilla SGD and SGD with momentum."
+        },
+        {
+          "slug": "adam",
+          "why": "Implements Adam from momentum and RMSProp terms."
+        },
+        {
+          "slug": "adamw",
+          "why": "Implements AdamW with decoupled weight decay."
+        }
+      ]
+    },
+    "phases/03-deep-learning-core/07-regularization": {
+      "methods": [
+        {
+          "slug": "dropout",
+          "why": "Implements dropout with train and eval modes."
+        },
+        {
+          "slug": "batch-normalization",
+          "why": "Implements batch normalization from scratch."
+        },
+        {
+          "slug": "layer-normalization",
+          "why": "Implements layer normalization from scratch."
+        },
+        {
+          "slug": "rmsnorm",
+          "why": "Implements RMSNorm and compares it with other norms."
+        }
+      ]
+    },
+    "phases/03-deep-learning-core/08-weight-initialization": {
+      "methods": [
+        {
+          "slug": "xavier-initialization",
+          "why": "Derives and implements Xavier/Glorot initialization."
+        }
+      ]
+    },
+    "phases/03-deep-learning-core/09-learning-rate-schedules": {
+      "methods": [
+        {
+          "slug": "learning-rate-scheduler",
+          "why": "Implements step, warmup and 1cycle learning rate schedules."
+        },
+        {
+          "slug": "cosine-annealing",
+          "why": "Implements cosine annealing with linear warmup."
+        }
+      ]
+    },
+    "phases/04-computer-vision/02-convolutions-from-scratch": {
+      "methods": [
+        {
+          "slug": "convolution",
+          "why": "Builds 2D convolution with loops and with im2col."
+        }
+      ]
+    },
+    "phases/04-computer-vision/03-cnns-lenet-to-resnet": {
+      "methods": [
+        {
+          "slug": "cnn",
+          "why": "Builds LeNet-5 and VGG-style convolutional networks."
+        },
+        {
+          "slug": "resnet",
+          "why": "Builds a ResNet BasicBlock and a tiny ResNet."
+        }
+      ]
+    },
+    "phases/04-computer-vision/04-image-classification": {
+      "methods": [
+        {
+          "slug": "label-smoothing",
+          "why": "Explains label smoothing and applies it in the cross-entropy loss of the classifier."
+        },
+        {
+          "slug": "cutmix",
+          "why": "Explains mixup and CutMix label mixing in a named section and builds mixup."
+        }
+      ],
+      "tasks": [
+        "image-classification"
+      ]
+    },
+    "phases/04-computer-vision/05-transfer-learning": {
+      "methods": [
+        {
+          "slug": "fine-tuning",
+          "why": "Fine-tunes a pretrained backbone with frozen layers and discriminative rates."
+        }
+      ]
+    },
+    "phases/04-computer-vision/06-object-detection-yolo": {
+      "methods": [
+        {
+          "slug": "yolo",
+          "why": "Builds a minimal YOLO head, target assignment and losses."
+        },
+        {
+          "slug": "non-maximum-suppression-nms",
+          "why": "Implements non-maximum suppression from scratch."
+        }
+      ],
+      "tasks": [
+        "object-detection"
+      ]
+    },
+    "phases/04-computer-vision/07-semantic-segmentation-unet": {
+      "methods": [
+        {
+          "slug": "u-net",
+          "why": "Builds a U-Net encoder-decoder from scratch."
+        },
+        {
+          "slug": "dice-loss",
+          "why": "Implements Dice loss for segmentation."
+        }
+      ],
+      "tasks": [
+        "image-segmentation"
+      ]
+    },
+    "phases/04-computer-vision/08-instance-segmentation-mask-rcnn": {
+      "methods": [
+        {
+          "slug": "mask-r-cnn",
+          "why": "Explains the Mask R-CNN architecture and runs a pretrained model."
+        },
+        {
+          "slug": "roialign",
+          "why": "Implements RoIAlign from scratch and checks it with torchvision."
+        }
+      ],
+      "tasks": [
+        "image-segmentation"
+      ]
+    },
+    "phases/04-computer-vision/09-image-generation-gans": {
+      "methods": [
+        {
+          "slug": "gan",
+          "why": "Builds a DCGAN-style generator, discriminator and training loop."
+        },
+        {
+          "slug": "spectral-normalization",
+          "why": "Applies spectral normalization to stabilize the discriminator."
+        }
+      ],
+      "tasks": [
+        "image-generation"
+      ]
+    },
+    "phases/04-computer-vision/10-image-generation-diffusion": {
+      "methods": [
+        {
+          "slug": "diffusion",
+          "why": "Builds DDPM forward noising, training loss and sampler."
+        },
+        {
+          "slug": "ddim",
+          "why": "Implements the deterministic DDIM sampler."
+        }
+      ],
+      "tasks": [
+        "image-generation"
+      ]
+    },
+    "phases/04-computer-vision/11-stable-diffusion": {
+      "methods": [
+        {
+          "slug": "stable-diffusion",
+          "why": "Explains the latent diffusion pipeline and runs Stable Diffusion."
+        },
+        {
+          "slug": "classifier-free-guidance",
+          "why": "Explains classifier-free guidance in a named section."
+        },
+        {
+          "slug": "lora",
+          "why": "Loads LoRA weights and sketches LoRA training for Stable Diffusion."
+        }
+      ],
+      "tasks": [
+        "image-generation"
+      ]
+    },
+    "phases/04-computer-vision/12-video-understanding": {
+      "methods": [],
+      "tasks": [
+        "video-understanding"
+      ]
+    },
+    "phases/04-computer-vision/13-3d-vision-nerf": {
+      "methods": [
+        {
+          "slug": "nerf",
+          "why": "Builds a tiny NeRF MLP with positional encoding and volume rendering."
+        }
+      ],
+      "tasks": [
+        "novel-view-synthesis"
+      ]
+    },
+    "phases/04-computer-vision/14-vision-transformers": {
+      "methods": [
+        {
+          "slug": "vision-transformer",
+          "why": "Builds patch embedding, class token and a ViT."
+        }
+      ]
+    },
+    "phases/04-computer-vision/15-real-time-edge": {
+      "methods": [
+        {
+          "slug": "quantization",
+          "why": "Applies post-training static quantization and compares latency."
+        }
+      ]
+    },
+    "phases/04-computer-vision/17-self-supervised-vision": {
+      "methods": [
+        {
+          "slug": "simclr",
+          "why": "Explains SimCLR and builds its two-view augmentation."
+        },
+        {
+          "slug": "dino",
+          "why": "Explains DINO teacher-student self-distillation."
+        },
+        {
+          "slug": "masked-autoencoder",
+          "why": "Explains MAE and implements MAE-style masking."
+        },
+        {
+          "slug": "infonce",
+          "why": "Implements the InfoNCE loss and checks it."
+        }
+      ]
+    },
+    "phases/04-computer-vision/18-open-vocab-clip": {
+      "methods": [
+        {
+          "slug": "clip",
+          "why": "Builds a tiny two-tower CLIP model and zero-shot classifier."
+        },
+        {
+          "slug": "siglip",
+          "why": "Explains the SigLIP sigmoid loss in a named section."
+        }
+      ]
+    },
+    "phases/04-computer-vision/19-ocr-document-understanding": {
+      "methods": [
+        {
+          "slug": "ctc",
+          "why": "Implements CTC loss with a greedy decoder for text recognition."
+        }
+      ],
+      "tasks": [
+        "ocr",
+        "document-understanding"
+      ]
+    },
+    "phases/04-computer-vision/20-image-retrieval-metric": {
+      "methods": [],
+      "tasks": [
+        "image-retrieval"
+      ]
+    },
+    "phases/04-computer-vision/21-keypoint-pose": {
+      "methods": [],
+      "tasks": [
+        "pose-estimation"
+      ]
+    },
+    "phases/04-computer-vision/22-3d-gaussian-splatting": {
+      "methods": [
+        {
+          "slug": "gaussian-splatting",
+          "why": "Builds a differentiable 2D Gaussian splatting rasterizer and fits it."
+        }
+      ]
+    },
+    "phases/04-computer-vision/23-diffusion-transformers-rectified-flow": {
+      "methods": [
+        {
+          "slug": "diffusion-transformer-dit",
+          "why": "Builds a DiT block with AdaLN and a tiny DiT."
+        },
+        {
+          "slug": "rectified-flow",
+          "why": "Implements rectified flow training and an Euler sampler."
+        }
+      ],
+      "tasks": [
+        "image-generation"
+      ]
+    },
+    "phases/04-computer-vision/24-sam3-open-vocab-segmentation": {
+      "methods": [
+        {
+          "slug": "sam-3",
+          "why": "Explains SAM 3 promptable concept segmentation and uses it."
+        }
+      ],
+      "tasks": [
+        "image-segmentation"
+      ]
+    },
+    "phases/04-computer-vision/25-vision-language-models": {
+      "methods": [],
+      "tasks": [
+        "image-understanding"
+      ]
+    },
+    "phases/04-computer-vision/26-monocular-depth": {
+      "methods": [
+        {
+          "slug": "depth-anything",
+          "why": "Explains Depth Anything V3 and uses it to predict depth."
+        }
+      ],
+      "tasks": [
+        "depth-estimation"
+      ]
+    },
+    "phases/04-computer-vision/27-multi-object-tracking": {
+      "methods": [],
+      "tasks": [
+        "object-tracking"
+      ]
+    },
+    "phases/04-computer-vision/28-world-models-video-diffusion": {
+      "methods": [
+        {
+          "slug": "diffusion-transformer-dit",
+          "why": "Builds a tiny video DiT with 3D patches and divided attention."
+        }
+      ],
+      "tasks": [
+        "world-models",
+        "video-generation"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec": {
+      "methods": [
+        {
+          "slug": "word2vec",
+          "why": "Builds skip-gram Word2Vec with negative sampling from scratch."
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword": {
+      "methods": [
+        {
+          "slug": "glove",
+          "why": "Explains GloVe as co-occurrence matrix factorization."
+        },
+        {
+          "slug": "fasttext",
+          "why": "Explains FastText subword-aware embeddings."
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/05-sentiment-analysis": {
+      "methods": [
+        {
+          "slug": "logistic-regression",
+          "why": "Builds logistic regression from scratch for sentiment."
+        }
+      ],
+      "tasks": [
+        "text-classification"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/06-named-entity-recognition": {
+      "methods": [],
+      "tasks": [
+        "named-entity-recognition"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing": {
+      "methods": [],
+      "tasks": [
+        "part-of-speech-tagging"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text": {
+      "methods": [
+        {
+          "slug": "cnn",
+          "why": "Builds a TextCNN classifier in PyTorch."
+        },
+        {
+          "slug": "lstm",
+          "why": "Builds an LSTM text classifier."
+        },
+        {
+          "slug": "rnn",
+          "why": "Explains recurrent networks and the vanishing gradient."
+        }
+      ],
+      "tasks": [
+        "text-classification"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence": {
+      "methods": [
+        {
+          "slug": "seq2seq",
+          "why": "Builds an RNN encoder-decoder with greedy inference."
+        },
+        {
+          "slug": "teacher-forcing",
+          "why": "Trains the decoder with teacher forcing and explains exposure bias."
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/10-attention-mechanism": {
+      "methods": [
+        {
+          "slug": "attention",
+          "why": "Builds additive attention and explains its shapes."
+        },
+        {
+          "slug": "luong-attention",
+          "why": "Implements Luong dot and general attention."
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/11-machine-translation": {
+      "methods": [
+        {
+          "slug": "bleu",
+          "why": "Computes BLEU and chrF for translation output."
+        }
+      ],
+      "tasks": [
+        "machine-translation"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/12-text-summarization": {
+      "methods": [
+        {
+          "slug": "rouge",
+          "why": "Computes ROUGE to evaluate summaries."
+        }
+      ],
+      "tasks": [
+        "summarization"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/13-question-answering": {
+      "methods": [],
+      "tasks": [
+        "question-answering"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/14-information-retrieval-search": {
+      "methods": [
+        {
+          "slug": "bm25",
+          "why": "Builds BM25 ranking from scratch."
+        },
+        {
+          "slug": "dense-passage-retrieval",
+          "why": "Implements dense bi-encoder retrieval."
+        },
+        {
+          "slug": "reranker-cross-encoder",
+          "why": "Reranks fused results with a cross-encoder."
+        }
+      ],
+      "tasks": [
+        "retrieval"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer": {
+      "methods": [],
+      "tasks": [
+        "classic-language-modeling"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/19-subword-tokenization": {
+      "methods": [
+        {
+          "slug": "bpe",
+          "why": "Builds BPE merge learning and encoding from scratch."
+        },
+        {
+          "slug": "sentencepiece",
+          "why": "Trains and uses SentencePiece tokenizers."
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive": {
+      "methods": [
+        {
+          "slug": "matryoshka-representation-learning-mrl",
+          "why": "Applies Matryoshka truncation to embeddings and measures the loss."
+        },
+        {
+          "slug": "bge-m3",
+          "why": "Explains and uses BGE-M3 dense, sparse and multi-vector output."
+        }
+      ],
+      "tasks": [
+        "embedding-models"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag": {
+      "methods": [
+        {
+          "slug": "rag",
+          "why": "Builds and evaluates chunking strategies for a RAG pipeline."
+        }
+      ],
+      "tasks": [
+        "retrieval"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg": {
+      "methods": [],
+      "tasks": [
+        "relation-extraction"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks": {
+      "methods": [
+        {
+          "slug": "llm-as-a-judge",
+          "why": "Explains LLM-as-judge and builds a G-Eval style metric."
+        }
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/28-long-context-evaluation": {
+      "methods": [],
+      "tasks": [
+        "long-context"
+      ]
+    },
+    "phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking": {
+      "methods": [],
+      "tasks": [
+        "dialogue-state-tracking"
+      ]
+    },
+    "phases/06-speech-and-audio/02-spectrograms-mel-features": {
+      "methods": [
+        {
+          "slug": "spectrogram",
+          "why": "Builds STFT, log-mel spectrograms and MFCCs from scratch."
+        }
+      ]
+    },
+    "phases/06-speech-and-audio/03-audio-classification": {
+      "methods": [],
+      "tasks": [
+        "audio-classification"
+      ]
+    },
+    "phases/06-speech-and-audio/04-speech-recognition-asr": {
+      "methods": [
+        {
+          "slug": "ctc",
+          "why": "Implements greedy and beam-search CTC decoding."
+        },
+        {
+          "slug": "rnn-transducer",
+          "why": "Explains the RNN-T predictor and joiner for streaming ASR."
+        }
+      ],
+      "tasks": [
+        "automatic-speech-recognition"
+      ]
+    },
+    "phases/06-speech-and-audio/05-whisper-architecture-finetuning": {
+      "methods": [
+        {
+          "slug": "whisper",
+          "why": "Explains the Whisper architecture, runs it and fine-tunes it."
+        }
+      ],
+      "tasks": [
+        "automatic-speech-recognition"
+      ]
+    },
+    "phases/06-speech-and-audio/06-speaker-recognition-verification": {
+      "methods": [],
+      "tasks": [
+        "speaker-verification",
+        "speaker-diarization"
+      ]
+    },
+    "phases/06-speech-and-audio/07-text-to-speech": {
+      "methods": [],
+      "tasks": [
+        "text-to-speech"
+      ]
+    },
+    "phases/06-speech-and-audio/08-voice-cloning-conversion": {
+      "methods": [],
+      "tasks": [
+        "voice-cloning"
+      ]
+    },
+    "phases/06-speech-and-audio/09-music-generation": {
+      "methods": [],
+      "tasks": [
+        "audio-generation"
+      ]
+    },
+    "phases/06-speech-and-audio/10-audio-language-models": {
+      "methods": [],
+      "tasks": [
+        "audio-understanding"
+      ]
+    },
+    "phases/06-speech-and-audio/13-neural-audio-codecs": {
+      "methods": [
+        {
+          "slug": "neural-audio-codec",
+          "why": "Explains RVQ neural codecs and encodes audio with EnCodec."
+        }
+      ],
+      "tasks": [
+        "audio-compression"
+      ]
+    },
+    "phases/06-speech-and-audio/14-voice-activity-detection-turn-taking": {
+      "methods": [],
+      "tasks": [
+        "voice-activity-detection"
+      ]
+    },
+    "phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki": {
+      "methods": [],
+      "tasks": [
+        "full-duplex-spoken-dialogue",
+        "speech-translation"
+      ]
+    },
+    "phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking": {
+      "methods": [
+        {
+          "slug": "watermarking",
+          "why": "Embeds and detects audio watermarks with AudioSeal."
+        }
+      ],
+      "tasks": [
+        "deepfake-detection"
+      ]
+    },
+    "phases/07-transformers-deep-dive/01-why-transformers": {
+      "methods": [
+        {
+          "slug": "transformer",
+          "why": "Explains why the Transformer replaces recurrence and measures its parallel depth."
+        },
+        {
+          "slug": "rnn",
+          "why": "Measures the serial depth and long-sequence cost of an RNN."
+        }
+      ]
+    },
+    "phases/07-transformers-deep-dive/02-self-attention-from-scratch": {
+      "methods": [
+        {
+          "slug": "attention",
+          "why": "Builds scaled dot-product self-attention with learned Q, K and V projections."
+        }
+      ]
+    },
+    "phases/07-transformers-deep-dive/03-multi-head-attention": {
+      "methods": [
+        {
+          "slug": "multi-head-attention",
+          "why": "Builds multi-head attention by splitting heads and running attention per head."
+        },
+        {
+          "slug": "grouped-query-attention",
+          "why": "Implements a grouped-query attention variant that shares K and V across heads."
+        }
+      ]
+    },
+    "phases/07-transformers-deep-dive/04-positional-encoding": {
+      "methods": [
+        {
+          "slug": "rope",
+          "why": "Implements RoPE on Q and K and verifies its relative-distance property."
+        }
+      ]
+    },
+    "phases/07-transformers-deep-dive/05-full-transformer": {
+      "methods": [
+        {
+          "slug": "transformer",
+          "why": "Builds an encoder and a decoder from the six Transformer pieces."
+        },
+        {
+          "slug": "rmsnorm",
+          "why": "Swaps LayerNorm for RMSNorm in the modernized block."
+        },
+        {
+          "slug": "swiglu",
+          "why": "Swaps the feed-forward layer for a SwiGLU layer in the modernized block."
+        }
+      ]
+    },
+    "phases/07-transformers-deep-dive/06-bert-masked-language-modeling": {
+      "methods": [
+        {
+          "slug": "bert",
+          "why": "Implements BERT masking rules and runs masked language model prediction."
+        }
+      ],
+      "tasks": [
+        "language-modeling"
+      ]
+    },
+    "phases/07-transformers-deep-dive/07-gpt-causal-language-modeling": {
+      "methods": [
+        {
+          "slug": "gpt",
+          "why": "Builds a small GPT with a causal mask and next-token loss."
+        }
+      ],
+      "tasks": [
+        "language-modeling"
+      ]
+    },
+    "phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder": {
+      "methods": [
+        {
+          "slug": "t5",
+          "why": "Implements T5 span corruption and explains the T5 encoder-decoder."
+        }
+      ]
+    },
+    "phases/07-transformers-deep-dive/09-vision-transformers": {
+      "methods": [
+        {
+          "slug": "vision-transformer",
+          "why": "Builds the ViT patchify, linear embedding and CLS token steps."
+        }
+      ]
+    },
+    "phases/07-transformers-deep-dive/10-audio-transformers-whisper": {
+      "methods": [
+        {
+          "slug": "whisper",
+          "why": "Explains the Whisper encoder, decoder and task tokens step by step."
+        },
+        {
+          "slug": "spectrogram",
+          "why": "Computes a simplified log-mel spectrogram as the Whisper input."
+        }
+      ],
+      "tasks": [
+        "automatic-speech-recognition"
+      ]
+    },
+    "phases/07-transformers-deep-dive/11-mixture-of-experts": {
+      "methods": [
+        {
+          "slug": "mixture-of-experts",
+          "why": "Builds a top-k router and explains load balancing and shared experts."
+        }
+      ]
+    },
+    "phases/07-transformers-deep-dive/12-kv-cache-flash-attention": {
+      "methods": [
+        {
+          "slug": "key-value-cache",
+          "why": "Builds a KV cache and compares cached and naive decoding."
+        },
+        {
+          "slug": "flash-attention",
+          "why": "Implements the tiled online softmax that Flash Attention uses."
+        }
+      ]
+    },
+    "phases/07-transformers-deep-dive/13-scaling-laws": {
+      "methods": [
+        {
+          "slug": "scaling-laws",
+          "why": "Computes the Chinchilla loss and the compute-optimal frontier."
+        }
+      ]
+    },
+    "phases/07-transformers-deep-dive/14-build-a-transformer-capstone": {
+      "methods": [
+        {
+          "slug": "transformer",
+          "why": "Builds and trains a complete Transformer model from scratch."
+        }
+      ]
+    },
+    "phases/07-transformers-deep-dive/15-attention-variants": {
+      "methods": [
+        {
+          "slug": "sliding-window-attention",
+          "why": "Builds a sliding window causal mask and compares KV cache size."
+        },
+        {
+          "slug": "sparse-attention",
+          "why": "Builds a local plus strided sparse attention mask."
+        }
+      ]
+    },
+    "phases/07-transformers-deep-dive/16-speculative-decoding": {
+      "methods": [
+        {
+          "slug": "speculative-decoding",
+          "why": "Implements the draft-verify rejection step and measures acceptance rate."
+        }
+      ]
+    },
+    "phases/08-generative-ai/02-autoencoders-vae": {
+      "methods": [
+        {
+          "slug": "autoencoder-ae",
+          "why": "Explains the plain autoencoder and its unstructured code space as the base for the VAE."
+        },
+        {
+          "slug": "vae",
+          "why": "Builds a VAE with the reparameterization trick and the ELBO loss."
+        }
+      ]
+    },
+    "phases/08-generative-ai/03-gans-generator-discriminator": {
+      "methods": [
+        {
+          "slug": "gan",
+          "why": "Trains a generator and a discriminator with the non-saturating loss."
+        }
+      ]
+    },
+    "phases/08-generative-ai/04-conditional-gans-pix2pix": {
+      "methods": [
+        {
+          "slug": "gan",
+          "why": "Trains a conditional GAN with the condition added to both networks."
+        }
+      ],
+      "tasks": [
+        "image-to-image-translation"
+      ]
+    },
+    "phases/08-generative-ai/06-diffusion-ddpm-from-scratch": {
+      "methods": [
+        {
+          "slug": "diffusion",
+          "why": "Builds DDPM: forward noise schedule, training step and reverse sampling."
+        }
+      ]
+    },
+    "phases/08-generative-ai/07-latent-diffusion-stable-diffusion": {
+      "methods": [
+        {
+          "slug": "stable-diffusion",
+          "why": "Explains latent diffusion with an encoder, decoder and z-space denoising."
+        },
+        {
+          "slug": "classifier-free-guidance",
+          "why": "Implements classifier-free guidance for conditional sampling."
+        }
+      ],
+      "tasks": [
+        "image-generation"
+      ]
+    },
+    "phases/08-generative-ai/08-controlnet-lora-conditioning": {
+      "methods": [
+        {
+          "slug": "controlnet",
+          "why": "Builds the zero-init side network that ControlNet uses."
+        },
+        {
+          "slug": "lora",
+          "why": "Implements the LoRA low-rank update math for diffusion models."
+        }
+      ]
+    },
+    "phases/08-generative-ai/09-inpainting-outpainting-editing": {
+      "methods": [
+        {
+          "slug": "inpainting",
+          "why": "Implements mask-aware reverse diffusion for inpainting and outpainting."
+        }
+      ],
+      "tasks": [
+        "image-inpainting",
+        "image-editing"
+      ]
+    },
+    "phases/08-generative-ai/10-video-generation": {
+      "methods": [
+        {
+          "slug": "diffusion-transformer-dit",
+          "why": "Simulates a spatiotemporal DiT that denoises video patches."
+        }
+      ],
+      "tasks": [
+        "video-generation"
+      ]
+    },
+    "phases/08-generative-ai/11-audio-generation": {
+      "methods": [
+        {
+          "slug": "neural-audio-codec",
+          "why": "Explains neural audio codec tokens and trains a token predictor on them."
+        }
+      ],
+      "tasks": [
+        "audio-generation"
+      ]
+    },
+    "phases/08-generative-ai/12-3d-generation": {
+      "methods": [
+        {
+          "slug": "gaussian-splatting",
+          "why": "Builds 2D Gaussian splats, renders them and fits them by gradient descent."
+        }
+      ],
+      "tasks": [
+        "3d-generation"
+      ]
+    },
+    "phases/08-generative-ai/13-flow-matching-rectified-flows": {
+      "methods": [
+        {
+          "slug": "flow-matching",
+          "why": "Implements the flow matching loss and multi-step sampling."
+        },
+        {
+          "slug": "rectified-flow",
+          "why": "Explains rectified flow and compares its step counts with DDPM."
+        }
+      ]
+    },
+    "phases/08-generative-ai/19-visual-autoregressive-var": {
+      "methods": [
+        {
+          "slug": "var",
+          "why": "Builds next-scale prediction over a multi-scale token map, coarse to fine."
+        },
+        {
+          "slug": "vq-vae",
+          "why": "Explains the multi-scale VQ-VAE tokenizer that next-scale prediction uses."
+        }
+      ],
+      "tasks": [
+        "image-generation"
+      ]
+    },
+    "phases/09-reinforcement-learning/05-dqn": {
+      "methods": [
+        {
+          "slug": "dqn",
+          "why": "Builds a DQN with a replay buffer, a Q-network and the target update."
+        }
+      ]
+    },
+    "phases/09-reinforcement-learning/06-policy-gradients-reinforce": {
+      "methods": [
+        {
+          "slug": "reinforce",
+          "why": "Implements REINFORCE with a softmax policy and a baseline."
+        }
+      ]
+    },
+    "phases/09-reinforcement-learning/08-ppo": {
+      "methods": [
+        {
+          "slug": "ppo",
+          "why": "Implements the PPO clipped surrogate with GAE, value and entropy terms."
+        }
+      ]
+    },
+    "phases/09-reinforcement-learning/09-reward-modeling-rlhf": {
+      "methods": [
+        {
+          "slug": "rlhf",
+          "why": "Builds a small RLHF loop with a reward model and a KL monitor."
+        },
+        {
+          "slug": "reward-model",
+          "why": "Trains a Bradley-Terry reward model on preference pairs."
+        }
+      ]
+    },
+    "phases/09-reinforcement-learning/10-multi-agent-rl": {
+      "methods": [
+        {
+          "slug": "self-play",
+          "why": "Implements simple adversarial self-play between two agents."
+        }
+      ],
+      "tasks": [
+        "multi-agent-reinforcement-learning"
+      ]
+    },
+    "phases/09-reinforcement-learning/11-sim-to-real-transfer": {
+      "methods": [],
+      "tasks": [
+        "robotics"
+      ]
+    },
+    "phases/09-reinforcement-learning/12-rl-for-games": {
+      "methods": [
+        {
+          "slug": "grpo",
+          "why": "Implements GRPO in miniature with a group-relative advantage."
+        },
+        {
+          "slug": "alphazero",
+          "why": "Explains the AlphaZero loop of self-play, MCTS and policy improvement."
+        },
+        {
+          "slug": "muzero",
+          "why": "Explains how MuZero runs MCTS in a learned latent model."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/01-tokenizers": {
+      "methods": [
+        {
+          "slug": "bpe",
+          "why": "Builds a BPE tokenizer from scratch and compares it with tiktoken."
+        },
+        {
+          "slug": "sentencepiece",
+          "why": "Explains SentencePiece as the tokenizer that Llama and T5 use."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/02-building-a-tokenizer": {
+      "methods": [
+        {
+          "slug": "bpe",
+          "why": "Builds a byte-level BPE tokenizer with regex pre-tokenization."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/04-pre-training-mini-gpt": {
+      "methods": [
+        {
+          "slug": "gpt-2",
+          "why": "Builds and trains a GPT-2 Small style model with 124M parameters."
+        },
+        {
+          "slug": "pre-training",
+          "why": "Runs a pre-training loop for a mini GPT on next-token loss."
+        }
+      ],
+      "tasks": [
+        "language-modeling"
+      ]
+    },
+    "phases/10-llms-from-scratch/06-instruction-tuning-sft": {
+      "methods": [
+        {
+          "slug": "fine-tuning",
+          "why": "Implements supervised fine-tuning with a masked loss on instruction data."
+        }
+      ],
+      "tasks": [
+        "instruction-following"
+      ]
+    },
+    "phases/10-llms-from-scratch/07-rlhf": {
+      "methods": [
+        {
+          "slug": "rlhf",
+          "why": "Builds the three-stage RLHF pipeline end to end."
+        },
+        {
+          "slug": "reward-model",
+          "why": "Builds a reward model and trains it with the Bradley-Terry loss."
+        },
+        {
+          "slug": "ppo",
+          "why": "Implements a simplified PPO loop against the reward model."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/08-dpo": {
+      "methods": [
+        {
+          "slug": "direct-preference-optimization-dpo",
+          "why": "Implements the DPO loss and training loop on a preference dataset."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/09-constitutional-ai-self-improvement": {
+      "methods": [
+        {
+          "slug": "grpo",
+          "why": "Implements the group-relative advantage and the GRPO update."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/10-evaluation": {
+      "methods": [
+        {
+          "slug": "llm-as-a-judge",
+          "why": "Explains LLM-as-judge failure modes and builds a simulated judge scorer."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/11-quantization": {
+      "methods": [
+        {
+          "slug": "quantization",
+          "why": "Implements symmetric per-tensor and per-channel quantization with a bit-width sweep."
+        },
+        {
+          "slug": "gptq",
+          "why": "Implements a simulated GPTQ quantization step."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/12-inference-optimization": {
+      "methods": [
+        {
+          "slug": "key-value-cache",
+          "why": "Builds a KV cache from scratch and profiles its memory."
+        },
+        {
+          "slug": "prefill",
+          "why": "Explains the compute-bound prefill phase against the memory-bound decode phase."
+        },
+        {
+          "slug": "speculative-decoding",
+          "why": "Builds a speculative decoding simulator."
+        },
+        {
+          "slug": "paged-attention",
+          "why": "Explains PagedAttention as virtual memory for the KV cache."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs": {
+      "methods": [
+        {
+          "slug": "grouped-query-attention",
+          "why": "Explains attention head sharing as a knob that open models turn."
+        },
+        {
+          "slug": "mixture-of-experts",
+          "why": "Explains mixture of experts as a knob in open model configs."
+        },
+        {
+          "slug": "rope",
+          "why": "Explains RoPE as the position knob in open models."
+        },
+        {
+          "slug": "swiglu",
+          "why": "Explains SwiGLU as the feed-forward knob in open models."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/15-speculative-decoding-eagle3": {
+      "methods": [
+        {
+          "slug": "speculative-decoding",
+          "why": "Implements the Leviathan rejection rule and KV rollback bookkeeping."
+        },
+        {
+          "slug": "eagle-3",
+          "why": "Explains the EAGLE-3 draft architecture and its speedup."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/17-native-sparse-attention": {
+      "methods": [
+        {
+          "slug": "sparse-attention",
+          "why": "Builds the three-branch DeepSeek NSA: compressed, top-k selected and sliding window."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/18-multi-token-prediction": {
+      "methods": [
+        {
+          "slug": "multi-token-prediction",
+          "why": "Builds sequential MTP modules with shared embedding, head and per-depth loss."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/20-deepseek-v3-walkthrough": {
+      "methods": [
+        {
+          "slug": "multi-latent-attention-mla",
+          "why": "Explains how DeepSeek-V3 uses MLA in place of GQA."
+        },
+        {
+          "slug": "mixture-of-experts",
+          "why": "Explains the DeepSeek-V3 MoE with auxiliary-loss-free load balancing."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer": {
+      "methods": [
+        {
+          "slug": "state-space-models",
+          "why": "Explains the SSM recurrence and its constant memory cost."
+        },
+        {
+          "slug": "mamba",
+          "why": "Explains the Mamba layers that fill seven of eight Jamba layers."
+        },
+        {
+          "slug": "mamba-3",
+          "why": "Explains the three Mamba-3 changes and the problem each one targets."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/25-speculative-decoding": {
+      "methods": [
+        {
+          "slug": "speculative-decoding",
+          "why": "Explains the two-model setup, the exactness rule and expected speedup."
+        },
+        {
+          "slug": "eagle",
+          "why": "Explains EAGLE tree drafting with feature reuse."
+        }
+      ]
+    },
+    "phases/10-llms-from-scratch/34-gradient-checkpointing": {
+      "methods": [
+        {
+          "slug": "gradient-checkpointing",
+          "why": "Implements checkpoint-every-k and models its memory and recompute cost."
+        }
+      ]
+    },
+    "phases/11-llm-engineering/01-prompt-engineering": {
+      "methods": [
+        {
+          "slug": "prompt-engineering",
+          "why": "Explains the parts of a prompt and the main prompting patterns."
+        }
+      ]
+    },
+    "phases/11-llm-engineering/02-few-shot-cot": {
+      "methods": [
+        {
+          "slug": "few-shot-prompting",
+          "why": "Builds few-shot prompts with similar-example selection."
+        },
+        {
+          "slug": "chain-of-thought-cot",
+          "why": "Explains chain-of-thought prompting and builds CoT prompts."
+        },
+        {
+          "slug": "self-consistency",
+          "why": "Explains self-consistency: sample many reasoning paths and vote."
+        },
+        {
+          "slug": "tree-of-thoughts",
+          "why": "Explains Tree-of-Thought branching exploration."
+        }
+      ]
+    },
+    "phases/11-llm-engineering/04-embeddings": {
+      "methods": [
+        {
+          "slug": "embedding",
+          "why": "Builds embeddings, similarity functions and a brute-force vector index."
+        }
+      ],
+      "tasks": [
+        "embedding-models"
+      ]
+    },
+    "phases/11-llm-engineering/05-context-engineering": {
+      "methods": [
+        {
+          "slug": "context-engineering",
+          "why": "Builds a context budget manager and a full context assembly pipeline."
+        },
+        {
+          "slug": "context-compression",
+          "why": "Builds a conversation history compressor."
+        }
+      ]
+    },
+    "phases/11-llm-engineering/06-rag": {
+      "methods": [
+        {
+          "slug": "rag",
+          "why": "Builds a complete RAG pipeline with chunking, retrieval and prompt construction."
+        }
+      ],
+      "tasks": [
+        "retrieval"
+      ]
+    },
+    "phases/11-llm-engineering/07-advanced-rag": {
+      "methods": [
+        {
+          "slug": "rag",
+          "why": "Extends basic RAG with hybrid search, reranking and query transformation."
+        },
+        {
+          "slug": "bm25",
+          "why": "Implements BM25 keyword scoring for hybrid search."
+        },
+        {
+          "slug": "reranker-cross-encoder",
+          "why": "Explains cross-encoder reranking and builds a simple reranker."
+        }
+      ],
+      "tasks": [
+        "retrieval"
+      ]
+    },
+    "phases/11-llm-engineering/08-fine-tuning-lora": {
+      "methods": [
+        {
+          "slug": "lora",
+          "why": "Builds a LoRA layer, injects it into a model and merges the weights back."
+        },
+        {
+          "slug": "qlora",
+          "why": "Explains QLoRA: 4-bit quantization of the base model plus LoRA."
+        }
+      ]
+    },
+    "phases/11-llm-engineering/09-function-calling": {
+      "methods": [
+        {
+          "slug": "function-calling",
+          "why": "Builds a tool registry and the function calling loop."
+        }
+      ]
+    },
+    "phases/11-llm-engineering/10-evaluation": {
+      "methods": [
+        {
+          "slug": "llm-as-a-judge",
+          "why": "Builds an LLM-as-judge scorer with rubric design."
+        }
+      ]
+    },
+    "phases/11-llm-engineering/14-model-context-protocol": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Builds an MCP server surface with stateless request metadata."
+        }
+      ]
+    },
+    "phases/12-multimodal-ai/01-vision-transformer-patch-tokens": {
+      "methods": [
+        {
+          "slug": "vision-transformer",
+          "why": "Explains ViT patch tokens, positional embeddings and parameter count."
+        }
+      ]
+    },
+    "phases/12-multimodal-ai/02-clip-contrastive-pretraining": {
+      "methods": [
+        {
+          "slug": "clip",
+          "why": "Explains the CLIP dual encoder and zero-shot classification."
+        },
+        {
+          "slug": "infonce",
+          "why": "Explains the InfoNCE loss and its temperature."
+        },
+        {
+          "slug": "siglip",
+          "why": "Explains the SigLIP sigmoid loss and SigLIP 2."
+        }
+      ]
+    },
+    "phases/12-multimodal-ai/03-blip2-qformer-bridge": {
+      "methods": [
+        {
+          "slug": "q-former",
+          "why": "Explains the BLIP-2 Q-Former with learnable queries and two-stage training."
+        }
+      ]
+    },
+    "phases/12-multimodal-ai/04-flamingo-gated-cross-attention": {
+      "methods": [
+        {
+          "slug": "perceiver-resampler",
+          "why": "Explains the Flamingo Perceiver resampler that maps image features to fixed tokens."
+        }
+      ]
+    },
+    "phases/12-multimodal-ai/05-llava-visual-instruction-tuning": {
+      "methods": [
+        {
+          "slug": "llava",
+          "why": "Explains the LLaVA projector and its two training stages."
+        }
+      ]
+    },
+    "phases/12-multimodal-ai/08-llava-onevision-single-multi-video": {
+      "methods": [
+        {
+          "slug": "llava",
+          "why": "Explains LLaVA-OneVision token budgets and its three-stage curriculum."
+        }
+      ]
+    },
+    "phases/12-multimodal-ai/11-chameleon-early-fusion-tokens": {
+      "methods": [
+        {
+          "slug": "vq-vae",
+          "why": "Explains the VQ-VAE image tokenizer behind Chameleon early fusion."
+        }
+      ]
+    },
+    "phases/12-multimodal-ai/12-emu3-next-token-for-generation": {
+      "methods": [],
+      "tasks": [
+        "image-generation",
+        "video-generation"
+      ]
+    },
+    "phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion": {
+      "methods": [
+        {
+          "slug": "diffusion",
+          "why": "Explains the diffusion loss that Transfusion trains inside one transformer."
+        }
+      ]
+    },
+    "phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified": {
+      "methods": [
+        {
+          "slug": "discrete-diffusion",
+          "why": "Explains masked discrete diffusion and parallel sampling in Show-o."
+        }
+      ]
+    },
+    "phases/12-multimodal-ai/16-mio-any-to-any-streaming": {
+      "methods": [],
+      "tasks": [
+        "omni-models"
+      ]
+    },
+    "phases/12-multimodal-ai/17-video-language-temporal-grounding": {
+      "methods": [],
+      "tasks": [
+        "video-understanding",
+        "video-temporal-grounding"
+      ]
+    },
+    "phases/12-multimodal-ai/18-long-video-million-token": {
+      "methods": [],
+      "tasks": [
+        "video-understanding",
+        "long-context"
+      ]
+    },
+    "phases/12-multimodal-ai/19-audio-language-whisper-to-af3": {
+      "methods": [],
+      "tasks": [
+        "audio-understanding"
+      ]
+    },
+    "phases/12-multimodal-ai/20-omni-models-thinker-talker": {
+      "methods": [],
+      "tasks": [
+        "omni-models"
+      ]
+    },
+    "phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot": {
+      "methods": [
+        {
+          "slug": "vla",
+          "why": "Explains vision-language-action models and RT-2 action tokens."
+        },
+        {
+          "slug": "openvla",
+          "why": "Explains OpenVLA as the open 7B VLA reference."
+        },
+        {
+          "slug": "pi0",
+          "why": "Explains the pi0 model and its flow-matching action head."
+        },
+        {
+          "slug": "gr00t",
+          "why": "Explains the GR00T N1 dual-system design for humanoids."
+        }
+      ],
+      "tasks": [
+        "robotics"
+      ]
+    },
+    "phases/12-multimodal-ai/22-document-diagram-understanding": {
+      "methods": [],
+      "tasks": [
+        "document-understanding"
+      ]
+    },
+    "phases/12-multimodal-ai/23-colpali-vision-native-rag": {
+      "methods": [
+        {
+          "slug": "colpali",
+          "why": "Explains ColPali page-image retrieval with late interaction."
+        },
+        {
+          "slug": "colbert",
+          "why": "Explains ColBERT late interaction as the base of ColPali."
+        }
+      ],
+      "tasks": [
+        "retrieval"
+      ]
+    },
+    "phases/12-multimodal-ai/24-multimodal-rag-cross-modal": {
+      "methods": [
+        {
+          "slug": "rag",
+          "why": "Explains multimodal RAG with cross-modal retrieval and fusion."
+        }
+      ],
+      "tasks": [
+        "retrieval"
+      ]
+    },
+    "phases/12-multimodal-ai/25-multimodal-agents-computer-use": {
+      "methods": [],
+      "tasks": [
+        "computer-use-agents"
+      ]
+    },
+    "phases/13-tools-and-protocols/01-the-tool-interface": {
+      "methods": [
+        {
+          "slug": "function-calling",
+          "why": "Explains the four-step tool call loop and builds its minimum machinery."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/02-function-calling-deep-dive": {
+      "methods": [
+        {
+          "slug": "function-calling",
+          "why": "Compares function calling shapes across three providers and builds a translator."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls": {
+      "methods": [
+        {
+          "slug": "function-calling",
+          "why": "Implements parallel and streaming tool calls with id correlation."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/06-mcp-fundamentals": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Explains MCP stateless requests and JSON-RPC envelopes."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/07-building-an-mcp-server": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Builds a stateless MCP server in Python and TypeScript."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/08-building-an-mcp-client": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Builds an MCP client with discovery, routing and fallback."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/09-mcp-transports": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Explains the MCP stdio and Streamable HTTP transports."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/10-mcp-resources-and-prompts": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Builds MCP resources and prompts on a stateless server."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/11-mcp-sampling": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Explains the MCP Sampling migration to stateless MRTR."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/12-mcp-roots-and-elicitation": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Explains MCP roots migration and stateless elicitation."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/13-mcp-async-tasks": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Explains the MCP Tasks extension for durable work."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/14-mcp-apps": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Explains MCP Apps as tool and resource exchanges."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/15-mcp-security-tool-poisoning": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Explains MCP attack surfaces and defenses against tool poisoning."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/16-mcp-security-oauth-2-1": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Builds the MCP OAuth 2.1 authorization flow with PKCE."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/17-mcp-gateways-and-registries": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Explains stateless MCP gateways and registry admission."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/18-mcp-auth-production": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Explains production MCP authorization with issuer-bound tokens."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/22-skills-and-agent-sdks": {
+      "methods": [
+        {
+          "slug": "agent-skills",
+          "why": "Explains the portable agent skill package and its runtime boundary."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure": {
+      "methods": [
+        {
+          "slug": "agent-skills",
+          "why": "Explains agent skill discovery and three-level progressive disclosure."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/25-skill-invocation-and-routing": {
+      "methods": [
+        {
+          "slug": "agent-skills",
+          "why": "Explains agent skill invocation stages and routing."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust": {
+      "methods": [
+        {
+          "slug": "agent-skills",
+          "why": "Explains agent skill permissions, sandboxes and trust layers."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability": {
+      "methods": [
+        {
+          "slug": "agent-skills",
+          "why": "Explains agent skill evals, packaging and portability."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Explains MCP tool contracts, content blocks and pagination."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Explains MCP cancellation, timeouts and backpressure."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Explains MCP registry admission, drift detection and rollback."
+        }
+      ]
+    },
+    "phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Explains MCP conformance testing with transcripts and version eras."
+        }
+      ]
+    },
+    "phases/14-agent-engineering/01-the-agent-loop": {
+      "methods": [
+        {
+          "slug": "react",
+          "why": "Explains the ReAct thought, action and observation loop and builds it."
+        }
+      ]
+    },
+    "phases/14-agent-engineering/04-tree-of-thoughts-lats": {
+      "methods": [
+        {
+          "slug": "tree-of-thoughts",
+          "why": "Explains Tree of Thoughts and builds its breadth-first search over reasoning steps."
+        },
+        {
+          "slug": "monte-carlo-tree-search",
+          "why": "Builds a toy LATS loop that runs MCTS with UCT selection."
+        }
+      ]
+    },
+    "phases/14-agent-engineering/06-tool-use-and-function-calling": {
+      "methods": [
+        {
+          "slug": "function-calling",
+          "why": "Explains tool schemas, argument validation and parallel tool calls."
+        }
+      ]
+    },
+    "phases/14-agent-engineering/11-planning-htn-and-evolutionary": {
+      "methods": [
+        {
+          "slug": "alphaevolve",
+          "why": "Explains the AlphaEvolve evolutionary code search loop in a named section."
+        }
+      ]
+    },
+    "phases/14-agent-engineering/17-claude-agent-sdk": {
+      "methods": [
+        {
+          "slug": "agent-harness",
+          "why": "Explains an importable agent harness with tools, subagents, hooks and sessions."
+        }
+      ]
+    },
+    "phases/14-agent-engineering/20-benchmarks-webarena-osworld": {
+      "methods": [],
+      "tasks": [
+        "computer-use-agents"
+      ]
+    },
+    "phases/14-agent-engineering/21-computer-use-agents": {
+      "methods": [],
+      "tasks": [
+        "computer-use-agents"
+      ]
+    },
+    "phases/14-agent-engineering/25-multi-agent-debate": {
+      "methods": [
+        {
+          "slug": "multi-agent-debate",
+          "why": "Explains multi-agent debate rounds and when debate helps or hurts."
+        }
+      ]
+    },
+    "phases/14-agent-engineering/31-agent-workbench-why-models-fail": {
+      "methods": [
+        {
+          "slug": "agent-harness",
+          "why": "Explains the harness surfaces around the model that make agents reliable."
+        }
+      ]
+    },
+    "phases/15-autonomous-systems/02-star-family-reasoning": {
+      "methods": [],
+      "tasks": [
+        "reasoning"
+      ]
+    },
+    "phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding": {
+      "methods": [
+        {
+          "slug": "alphaevolve",
+          "why": "Explains the AlphaEvolve loop of LLM mutation and machine-checked evaluation."
+        }
+      ]
+    },
+    "phases/15-autonomous-systems/04-darwin-godel-machine": {
+      "methods": [
+        {
+          "slug": "recursive-self-improvement",
+          "why": "Explains the Darwin Godel Machine, an agent that rewrites its own code."
+        }
+      ]
+    },
+    "phases/15-autonomous-systems/05-ai-scientist-v2": {
+      "methods": [],
+      "tasks": [
+        "auto-research"
+      ]
+    },
+    "phases/15-autonomous-systems/06-automated-alignment-research": {
+      "methods": [],
+      "tasks": [
+        "auto-research"
+      ]
+    },
+    "phases/15-autonomous-systems/07-recursive-self-improvement": {
+      "methods": [
+        {
+          "slug": "recursive-self-improvement",
+          "why": "Explains recursive self-improvement and its alignment risks."
+        }
+      ]
+    },
+    "phases/15-autonomous-systems/09-coding-agent-landscape": {
+      "methods": [],
+      "tasks": [
+        "coding-agents"
+      ]
+    },
+    "phases/15-autonomous-systems/11-browser-agents": {
+      "methods": [],
+      "tasks": [
+        "computer-use-agents"
+      ]
+    },
+    "phases/16-multi-agent-and-swarms/07-society-of-mind-debate": {
+      "methods": [
+        {
+          "slug": "multi-agent-debate",
+          "why": "Explains and simulates the Du et al. multi-agent debate algorithm."
+        }
+      ]
+    },
+    "phases/16-multi-agent-and-swarms/15-voting-debate-topology": {
+      "methods": [
+        {
+          "slug": "self-consistency",
+          "why": "Explains self-consistency majority vote as the single-model baseline."
+        },
+        {
+          "slug": "multi-agent-debate",
+          "why": "Explains debate topologies and when vote with debate helps."
+        }
+      ]
+    },
+    "phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo": {
+      "methods": [
+        {
+          "slug": "qmix",
+          "why": "Explains QMIX monotonic value decomposition for cooperative agents."
+        }
+      ],
+      "tasks": [
+        "multi-agent-reinforcement-learning"
+      ]
+    },
+    "phases/17-infrastructure-and-production/04-vllm-serving-internals": {
+      "methods": [
+        {
+          "slug": "paged-attention",
+          "why": "Explains PagedAttention as virtual memory for KV blocks."
+        },
+        {
+          "slug": "prefill",
+          "why": "Explains chunked prefill and how it protects decode latency."
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/05-eagle3-speculative-decoding": {
+      "methods": [
+        {
+          "slug": "speculative-decoding",
+          "why": "Explains draft and verify decoding, acceptance rate and break-even math."
+        },
+        {
+          "slug": "eagle-3",
+          "why": "Explains the EAGLE-3 draft head and its production recipe."
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/06-sglang-radixattention": {
+      "methods": [
+        {
+          "slug": "key-value-cache",
+          "why": "Explains KV cache reuse through a radix tree and cache-aware scheduling."
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell": {
+      "methods": [
+        {
+          "slug": "fp8",
+          "why": "Explains FP8 weights and KV cache as the inference floor."
+        },
+        {
+          "slug": "nvfp4",
+          "why": "Explains NVFP4 on Blackwell and its quality cost."
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/08-inference-metrics-goodput": {
+      "methods": [
+        {
+          "slug": "ttft",
+          "why": "Defines TTFT and measures it together with TPOT, ITL and goodput."
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/09-production-quantization": {
+      "methods": [
+        {
+          "slug": "gptq",
+          "why": "Explains GPTQ and when it fits multi-LoRA serving."
+        },
+        {
+          "slug": "fp8",
+          "why": "Explains FP8 as the reliable middle quantization format."
+        },
+        {
+          "slug": "microscaling-formats",
+          "why": "Explains MXFP4 microscaling as an aggressive format."
+        },
+        {
+          "slug": "nvfp4",
+          "why": "Explains NVFP4 on Blackwell and its calibration needs."
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/11-multi-region-kv-locality": {
+      "methods": [
+        {
+          "slug": "key-value-cache",
+          "why": "Explains KV cache locality and cache-aware routing across regions."
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/17-disaggregated-prefill-decode": {
+      "methods": [
+        {
+          "slug": "prefill",
+          "why": "Explains why prefill is compute-bound and how to run it on separate GPUs."
+        }
+      ]
+    },
+    "phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache": {
+      "methods": [
+        {
+          "slug": "key-value-cache",
+          "why": "Explains KV cache offload to CPU and LMCache with cache-aware routing."
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal": {
+      "methods": [
+        {
+          "slug": "rlhf",
+          "why": "Explains the three-stage RLHF pipeline of SFT, reward model and PPO."
+        },
+        {
+          "slug": "reward-model",
+          "why": "Explains reward model training on human preference pairs."
+        },
+        {
+          "slug": "ppo",
+          "why": "Explains the PPO stage with a KL penalty to the SFT policy."
+        }
+      ],
+      "tasks": [
+        "instruction-following"
+      ]
+    },
+    "phases/18-ethics-safety-alignment/02-reward-hacking-goodhart": {
+      "methods": [
+        {
+          "slug": "reward-hacking",
+          "why": "Explains reward hacking through Goodhart's law and its forms."
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/03-direct-preference-optimization-family": {
+      "methods": [
+        {
+          "slug": "direct-preference-optimization-dpo",
+          "why": "Derives the DPO loss and compares IPO, KTO, SimPO and ORPO."
+        }
+      ]
+    },
+    "phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa": {
+      "methods": [
+        {
+          "slug": "watermarking",
+          "why": "Explains text and image watermarking with SynthID and Stable Signature."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/01-terminal-native-coding-agent": {
+      "methods": [],
+      "tasks": [
+        "coding-agents"
+      ]
+    },
+    "phases/19-capstone-projects/02-rag-over-codebase": {
+      "methods": [
+        {
+          "slug": "rag",
+          "why": "Builds a RAG system for semantic search over code repositories."
+        }
+      ],
+      "tasks": [
+        "retrieval"
+      ]
+    },
+    "phases/19-capstone-projects/04-multimodal-document-qa": {
+      "methods": [
+        {
+          "slug": "colpali",
+          "why": "Builds ColPali-style late-interaction retrieval over page images."
+        }
+      ],
+      "tasks": [
+        "document-understanding"
+      ]
+    },
+    "phases/19-capstone-projects/05-autonomous-research-agent": {
+      "methods": [],
+      "tasks": [
+        "auto-research"
+      ]
+    },
+    "phases/19-capstone-projects/08-production-rag-chatbot": {
+      "methods": [
+        {
+          "slug": "rag",
+          "why": "Builds a production RAG chatbot with ingestion, retrieval and citations."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/09-code-migration-agent": {
+      "methods": [],
+      "tasks": [
+        "coding-agents"
+      ]
+    },
+    "phases/19-capstone-projects/10-multi-agent-software-team": {
+      "methods": [],
+      "tasks": [
+        "coding-agents"
+      ]
+    },
+    "phases/19-capstone-projects/12-video-understanding-pipeline": {
+      "methods": [],
+      "tasks": [
+        "video-understanding"
+      ]
+    },
+    "phases/19-capstone-projects/13-mcp-server-with-registry": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Builds a stateless MCP server with discovery, registry and policy."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/14-speculative-decoding-server": {
+      "methods": [
+        {
+          "slug": "speculative-decoding",
+          "why": "Builds an inference server with draft and verify decoding."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/16-github-issue-to-pr-agent": {
+      "methods": [],
+      "tasks": [
+        "coding-agents"
+      ]
+    },
+    "phases/19-capstone-projects/20-agent-harness-loop-contract": {
+      "methods": [
+        {
+          "slug": "agent-harness",
+          "why": "Builds the harness loop contract with states, hooks and budgets."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/21-tool-registry-schema-validation": {
+      "methods": [
+        {
+          "slug": "function-calling",
+          "why": "Builds a tool registry that validates call arguments against JSON Schema."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/23-function-call-dispatcher": {
+      "methods": [
+        {
+          "slug": "function-calling",
+          "why": "Builds a function call dispatcher with timeouts, retries and dedupe."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/27-eval-harness-fixture-tasks": {
+      "methods": [
+        {
+          "slug": "pass-1",
+          "why": "Implements pass@k scoring and explains why pass@1 alone is not enough."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/30-bpe-tokenizer-from-scratch": {
+      "methods": [
+        {
+          "slug": "bpe",
+          "why": "Builds a byte-level BPE tokenizer with training, encoding and decoding."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/32-token-positional-embeddings": {
+      "methods": [
+        {
+          "slug": "embedding",
+          "why": "Builds token and positional embedding tables, learned and sinusoidal."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/33-multihead-self-attention": {
+      "methods": [
+        {
+          "slug": "multi-head-attention",
+          "why": "Builds causal multi-head self-attention with QKV split and head reshape."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/34-transformer-block": {
+      "methods": [
+        {
+          "slug": "transformer",
+          "why": "Builds a pre-LN Transformer block with attention, MLP and residuals."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/35-gpt-model-assembly": {
+      "methods": [
+        {
+          "slug": "gpt",
+          "why": "Builds a GPT model from blocks, embeddings and a tied LM head."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/36-training-loop-eval": {
+      "methods": [
+        {
+          "slug": "adamw",
+          "why": "Implements AdamW with a weight decay split between parameter groups."
+        },
+        {
+          "slug": "cosine-annealing",
+          "why": "Implements a warmup plus cosine learning rate schedule."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/37-loading-pretrained-weights": {
+      "methods": [
+        {
+          "slug": "gpt-2",
+          "why": "Loads published GPT-2 weights into the local model by name mapping."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/38-classifier-finetuning": {
+      "methods": [
+        {
+          "slug": "fine-tuning",
+          "why": "Fine-tunes a pretrained language model for classification by head swap."
+        }
+      ],
+      "tasks": [
+        "text-classification"
+      ]
+    },
+    "phases/19-capstone-projects/39-instruction-tuning-sft": {
+      "methods": [
+        {
+          "slug": "fine-tuning",
+          "why": "Builds supervised fine-tuning with a loss mask on instruction tokens."
+        }
+      ],
+      "tasks": [
+        "instruction-following"
+      ]
+    },
+    "phases/19-capstone-projects/40-dpo-from-scratch": {
+      "methods": [
+        {
+          "slug": "direct-preference-optimization-dpo",
+          "why": "Implements the DPO loss from scratch with a frozen reference model."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/41-eval-pipeline": {
+      "methods": [
+        {
+          "slug": "llm-as-a-judge",
+          "why": "Builds a local mock LLM-as-judge inside an evaluation pipeline."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/44-cosine-lr-warmup": {
+      "methods": [
+        {
+          "slug": "cosine-annealing",
+          "why": "Implements cosine learning rate decay with linear warmup and a floor."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/45-gradient-clipping-amp": {
+      "methods": [
+        {
+          "slug": "gradient-clipping",
+          "why": "Implements global L2 norm gradient clipping with mixed precision."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/51-literature-retrieval": {
+      "methods": [
+        {
+          "slug": "bm25",
+          "why": "Implements BM25 from scratch for literature retrieval."
+        }
+      ],
+      "tasks": [
+        "retrieval"
+      ]
+    },
+    "phases/19-capstone-projects/57-end-to-end-research-demo": {
+      "methods": [],
+      "tasks": [
+        "auto-research"
+      ]
+    },
+    "phases/19-capstone-projects/58-vision-encoder-patches": {
+      "methods": [
+        {
+          "slug": "vision-transformer",
+          "why": "Builds the ViT patch embedding with a Conv2d and position embeddings."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/59-vit-transformer": {
+      "methods": [
+        {
+          "slug": "vision-transformer",
+          "why": "Builds a 12-layer pre-LN Vision Transformer encoder with a CLS token."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/60-projection-layer-modality-align": {
+      "methods": [
+        {
+          "slug": "llava",
+          "why": "Builds the LLaVA-style two-layer MLP projection from vision to text space."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/61-cross-attention-fusion": {
+      "methods": [
+        {
+          "slug": "attention",
+          "why": "Builds cross-attention from text queries to image keys and values."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/62-vision-language-pretraining": {
+      "methods": [
+        {
+          "slug": "clip",
+          "why": "Implements the CLIP contrastive objective with a learned temperature."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/63-multimodal-eval": {
+      "methods": [
+        {
+          "slug": "bleu",
+          "why": "Implements BLEU-4 to score generated captions."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense": {
+      "methods": [
+        {
+          "slug": "bm25",
+          "why": "Implements BM25 and fuses it with dense retrieval by RRF."
+        }
+      ],
+      "tasks": [
+        "retrieval"
+      ]
+    },
+    "phases/19-capstone-projects/66-reranker-cross-encoder": {
+      "methods": [
+        {
+          "slug": "reranker-cross-encoder",
+          "why": "Trains a tiny cross-encoder that reranks query and document pairs."
+        }
+      ],
+      "tasks": [
+        "text-reranking"
+      ]
+    },
+    "phases/19-capstone-projects/68-rag-eval-precision-recall": {
+      "methods": [
+        {
+          "slug": "rag",
+          "why": "Builds RAG evaluation for retrieval metrics, faithfulness and relevance."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/69-end-to-end-rag-system": {
+      "methods": [
+        {
+          "slug": "rag",
+          "why": "Builds an end-to-end RAG pipeline with citations and an eval loop."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/71-classical-metrics": {
+      "methods": [
+        {
+          "slug": "bleu",
+          "why": "Implements BLEU-4 from scratch."
+        },
+        {
+          "slug": "rouge",
+          "why": "Implements ROUGE-L from scratch with LCS."
+        }
+      ]
+    },
+    "phases/19-capstone-projects/72-code-exec-metric": {
+      "methods": [
+        {
+          "slug": "pass-1",
+          "why": "Implements the pass@k estimator over sandboxed code execution."
+        }
+      ]
+    }
+  },
+  "topics": {
+    "agent-harness": {
+      "methods": [
+        {
+          "slug": "agent-harness",
+          "why": "Covers the harness loop, hooks, budgets, tools, gates and sandbox."
+        }
+      ]
+    },
+    "classical-ml": {
+      "methods": [
+        {
+          "slug": "logistic-regression",
+          "why": "Shows logistic regression with class weights for rare positives."
+        },
+        {
+          "slug": "random-forest",
+          "why": "Shows random forest fit and its default settings."
+        },
+        {
+          "slug": "support-vector-machine",
+          "why": "Shows kernel and linear SVM classifiers."
+        },
+        {
+          "slug": "knn",
+          "why": "Shows k nearest neighbours classification and distance metrics."
+        },
+        {
+          "slug": "k-means-clustering",
+          "why": "Shows K-Means clustering."
+        }
+      ]
+    },
+    "computer-vision": {
+      "methods": [
+        {
+          "slug": "mask-r-cnn",
+          "why": "Diagrams the Mask R-CNN pipeline."
+        },
+        {
+          "slug": "vision-transformer",
+          "why": "Shows the ViT forward pass and patch shapes."
+        },
+        {
+          "slug": "convolution",
+          "why": "Gives convolution shapes, formulas and code."
+        },
+        {
+          "slug": "yolo",
+          "why": "Gives YOLO head shapes and loss settings."
+        },
+        {
+          "slug": "u-net",
+          "why": "Shows U-Net for segmentation."
+        },
+        {
+          "slug": "resnet",
+          "why": "Shows ResNet backbones and head replacement."
+        }
+      ],
+      "tasks": [
+        "image-classification",
+        "object-detection"
+      ]
+    },
+    "deep-learning-training": {
+      "methods": [
+        {
+          "slug": "adamw",
+          "why": "Shows one AdamW step and its defaults."
+        },
+        {
+          "slug": "cosine-annealing",
+          "why": "Shows warmup plus cosine schedule code."
+        },
+        {
+          "slug": "batch-normalization",
+          "why": "Gives BatchNorm code and defaults."
+        },
+        {
+          "slug": "layer-normalization",
+          "why": "Gives LayerNorm use in transformers."
+        },
+        {
+          "slug": "dropout",
+          "why": "Gives dropout code and rates."
+        },
+        {
+          "slug": "xavier-initialization",
+          "why": "Gives Xavier and Kaiming initialization rules."
+        }
+      ]
+    },
+    "diffusion-models": {
+      "methods": [
+        {
+          "slug": "diffusion",
+          "why": "Shows DDPM training, schedule and reverse loop."
+        },
+        {
+          "slug": "stable-diffusion",
+          "why": "Diagrams latent diffusion with a VAE and CFG."
+        },
+        {
+          "slug": "classifier-free-guidance",
+          "why": "Gives CFG label dropout and mixing code."
+        },
+        {
+          "slug": "vae",
+          "why": "Gives VAE reparameterization and failure fixes."
+        },
+        {
+          "slug": "gan",
+          "why": "Gives the GAN generator loss and mode collapse fixes."
+        },
+        {
+          "slug": "flow-matching",
+          "why": "Gives the flow matching target and Euler sampling."
+        }
+      ],
+      "tasks": [
+        "image-generation"
+      ]
+    },
+    "embeddings-vector-search": {
+      "methods": [
+        {
+          "slug": "embedding",
+          "why": "Covers text embeddings, similarity metrics and vector indexes."
+        },
+        {
+          "slug": "reranker-cross-encoder",
+          "why": "Diagrams retrieve then rerank with a cross-encoder."
+        },
+        {
+          "slug": "matryoshka-representation-learning-mrl",
+          "why": "Shows Matryoshka truncation and renormalization."
+        },
+        {
+          "slug": "word2vec",
+          "why": "Shows Word2Vec analogies."
+        },
+        {
+          "slug": "glove",
+          "why": "Gives GloVe weighting defaults."
+        },
+        {
+          "slug": "fasttext",
+          "why": "Shows FastText n-gram vectors for unseen words."
+        }
+      ],
+      "tasks": [
+        "embedding-models",
+        "retrieval"
+      ]
+    },
+    "inference-optimization": {
+      "methods": [
+        {
+          "slug": "key-value-cache",
+          "why": "Covers KV cache sizing, prefix reuse and FP8 KV."
+        },
+        {
+          "slug": "paged-attention",
+          "why": "Gives PagedAttention block defaults in the serving engine."
+        },
+        {
+          "slug": "prefill",
+          "why": "Explains chunked prefill and its effect on ITL."
+        },
+        {
+          "slug": "speculative-decoding",
+          "why": "Covers speculative decoding acceptance and tail latency."
+        },
+        {
+          "slug": "eagle-3",
+          "why": "Shows how to turn on EAGLE-3 drafts."
+        },
+        {
+          "slug": "quantization",
+          "why": "Gives a quantization format picker and calibration rules."
+        }
+      ]
+    },
+    "llm-evaluation": {
+      "methods": [
+        {
+          "slug": "llm-as-a-judge",
+          "why": "Covers rubric judges, bias and judge trust."
+        },
+        {
+          "slug": "bleu",
+          "why": "Gives the BLEU-4 formula and use."
+        },
+        {
+          "slug": "rouge",
+          "why": "Gives the ROUGE-L formula and use."
+        },
+        {
+          "slug": "pass-1",
+          "why": "Gives the pass@k formula and why to report pass@1."
+        }
+      ]
+    },
+    "lora-fine-tuning": {
+      "methods": [
+        {
+          "slug": "lora",
+          "why": "Builds LoRA from scratch and with PEFT."
+        },
+        {
+          "slug": "qlora",
+          "why": "Shows QLoRA with a 4-bit base."
+        },
+        {
+          "slug": "peft",
+          "why": "Shows PEFT adapter setup, save and merge."
+        },
+        {
+          "slug": "fine-tuning",
+          "why": "Shows one SFT training step with label masking."
+        }
+      ]
+    },
+    "math-for-ml": {
+      "methods": [
+        {
+          "slug": "pca",
+          "why": "Shows PCA with SVD."
+        },
+        {
+          "slug": "softmax",
+          "why": "Shows stable softmax and cross-entropy."
+        },
+        {
+          "slug": "sgd",
+          "why": "Gives gradient descent and momentum update rules."
+        },
+        {
+          "slug": "adam",
+          "why": "Gives Adam moments, bias correction and step."
+        }
+      ]
+    },
+    "mcp": {
+      "methods": [
+        {
+          "slug": "mcp",
+          "why": "Covers MCP servers, tools/call and transports."
+        }
+      ]
+    },
+    "prompt-engineering": {
+      "methods": [
+        {
+          "slug": "prompt-engineering",
+          "why": "Covers prompt anatomy, patterns and defaults."
+        },
+        {
+          "slug": "few-shot-prompting",
+          "why": "Shows few-shot prompts and example counts."
+        },
+        {
+          "slug": "chain-of-thought-cot",
+          "why": "Shows zero-shot and few-shot CoT prompts."
+        },
+        {
+          "slug": "self-consistency",
+          "why": "Shows the self-consistency majority vote."
+        },
+        {
+          "slug": "context-engineering",
+          "why": "Shows context window budgeting per query."
+        }
+      ]
+    },
+    "rag": {
+      "methods": [
+        {
+          "slug": "rag",
+          "why": "Covers the end-to-end RAG pipeline and its grading."
+        },
+        {
+          "slug": "bm25",
+          "why": "Gives BM25 defaults for hybrid retrieval."
+        },
+        {
+          "slug": "reranker-cross-encoder",
+          "why": "Shows cross-encoder reranking of candidates."
+        }
+      ],
+      "tasks": [
+        "retrieval"
+      ]
+    },
+    "reinforcement-learning": {
+      "methods": [
+        {
+          "slug": "ppo",
+          "why": "Shows the PPO loop and clipped update."
+        },
+        {
+          "slug": "rlhf",
+          "why": "Diagrams RLHF in three stages."
+        },
+        {
+          "slug": "grpo",
+          "why": "Gives the GRPO group advantage."
+        },
+        {
+          "slug": "dqn",
+          "why": "Gives DQN target net sync and fixes."
+        },
+        {
+          "slug": "reinforce",
+          "why": "Gives the policy gradient formula."
+        },
+        {
+          "slug": "reward-model",
+          "why": "Gives the Bradley-Terry reward model loss."
+        }
+      ],
+      "tasks": [
+        "reinforcement-learning"
+      ]
+    },
+    "sglang-serving": {
+      "methods": [
+        {
+          "slug": "key-value-cache",
+          "why": "Covers the KV pool, RadixCache prefix reuse and retraction."
+        }
+      ]
+    },
+    "tokenization": {
+      "methods": [
+        {
+          "slug": "bpe",
+          "why": "Shows BPE merge training, encoding and decoding."
+        }
+      ]
+    },
+    "tool-calling": {
+      "methods": [
+        {
+          "slug": "function-calling",
+          "why": "Covers tool declaration, calls, results and parallel calls."
+        }
+      ]
+    },
+    "transformers-attention": {
+      "methods": [
+        {
+          "slug": "attention",
+          "why": "Shows the attention forward pass and causal mask."
+        },
+        {
+          "slug": "multi-head-attention",
+          "why": "Shows the multi-head self-attention forward."
+        },
+        {
+          "slug": "transformer",
+          "why": "Diagrams one pre-LN decoder block."
+        },
+        {
+          "slug": "rope",
+          "why": "Gives the RoPE angle formula and code."
+        }
+      ]
+    }
+  },
+  "practice": {}
+}

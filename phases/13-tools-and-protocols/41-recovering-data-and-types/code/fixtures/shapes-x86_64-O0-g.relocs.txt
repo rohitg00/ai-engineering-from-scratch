@@ -1,0 +1,165 @@
+
+shapes-x86_64-O0-g.o:	file format elf64-x86-64
+
+RELOCATION RECORDS FOR [.text]:
+OFFSET           TYPE                     VALUE
+0000000000000052 R_X86_64_PLT32           _ZN4RectC2Eii-0x4
+000000000000005b R_X86_64_PLT32           _ZNK4Rect4nameEv-0x4
+000000000000006f R_X86_64_PLT32           _Z8describeRK5Shapei-0x4
+0000000000000082 R_X86_64_PC32            .L.str-0x4
+0000000000000089 R_X86_64_PLT32           printf-0x4
+000000000000009b R_X86_64_PLT32           _ZN4RectD2Ev-0x4
+00000000000000b9 R_X86_64_PLT32           _ZN4RectD2Ev-0x4
+00000000000000c2 R_X86_64_PLT32           _Unwind_Resume-0x4
+
+RELOCATION RECORDS FOR [.text._ZN4RectC2Eii]:
+OFFSET           TYPE                     VALUE
+000000000000001b R_X86_64_PLT32           _ZN5ShapeC2Ev-0x4
+0000000000000026 R_X86_64_PC32            _ZTV4Rect-0x4
+
+RELOCATION RECORDS FOR [.text._ZNK4Rect4nameEv]:
+OFFSET           TYPE                     VALUE
+000000000000000b R_X86_64_PC32            .L.str.2-0x4
+
+RELOCATION RECORDS FOR [.text._ZN4RectD2Ev]:
+OFFSET           TYPE                     VALUE
+0000000000000011 R_X86_64_PLT32           _ZN5ShapeD2Ev-0x4
+
+RELOCATION RECORDS FOR [.text._ZN5ShapeC2Ev]:
+OFFSET           TYPE                     VALUE
+000000000000000f R_X86_64_PC32            _ZTV5Shape-0x4
+
+RELOCATION RECORDS FOR [.text._ZN4RectD0Ev]:
+OFFSET           TYPE                     VALUE
+0000000000000015 R_X86_64_PLT32           _ZN4RectD2Ev-0x4
+000000000000001e R_X86_64_PLT32           _ZdlPv-0x4
+
+RELOCATION RECORDS FOR [.text._ZNK5Shape4nameEv]:
+OFFSET           TYPE                     VALUE
+000000000000000b R_X86_64_PC32            .L.str.1-0x4
+
+RELOCATION RECORDS FOR [.data.rel.ro._ZTV4Rect]:
+OFFSET           TYPE                     VALUE
+0000000000000008 R_X86_64_64              _ZTI4Rect
+0000000000000010 R_X86_64_64              _ZN4RectD2Ev
+0000000000000018 R_X86_64_64              _ZN4RectD0Ev
+0000000000000020 R_X86_64_64              _ZNK4Rect4areaEv
+0000000000000028 R_X86_64_64              _ZNK4Rect4nameEv
+
+RELOCATION RECORDS FOR [.data.rel.ro._ZTI5Shape]:
+OFFSET           TYPE                     VALUE
+0000000000000000 R_X86_64_64              _ZTVN10__cxxabiv117__class_type_infoE+0x10
+0000000000000008 R_X86_64_64              _ZTS5Shape
+
+RELOCATION RECORDS FOR [.data.rel.ro._ZTI4Rect]:
+OFFSET           TYPE                     VALUE
+0000000000000000 R_X86_64_64              _ZTVN10__cxxabiv120__si_class_type_infoE+0x10
+0000000000000008 R_X86_64_64              _ZTS4Rect
+0000000000000010 R_X86_64_64              _ZTI5Shape
+
+RELOCATION RECORDS FOR [.data.rel.ro._ZTV5Shape]:
+OFFSET           TYPE                     VALUE
+0000000000000008 R_X86_64_64              _ZTI5Shape
+0000000000000010 R_X86_64_64              _ZN5ShapeD2Ev
+0000000000000018 R_X86_64_64              _ZN5ShapeD0Ev
+0000000000000020 R_X86_64_64              __cxa_pure_virtual
+0000000000000028 R_X86_64_64              _ZNK5Shape4nameEv
+
+RELOCATION RECORDS FOR [.debug_info]:
+OFFSET           TYPE                     VALUE
+0000000000000008 R_X86_64_32              .debug_abbrev
+0000000000000011 R_X86_64_32              .debug_str_offsets+0x8
+0000000000000015 R_X86_64_32              .debug_line
+0000000000000023 R_X86_64_32              .debug_addr+0x8
+0000000000000027 R_X86_64_32              .debug_rnglists+0xc
+
+RELOCATION RECORDS FOR [.debug_str_offsets]:
+OFFSET           TYPE                     VALUE
+0000000000000008 R_X86_64_32              .debug_str
+000000000000000c R_X86_64_32              .debug_str+0x2e
+0000000000000010 R_X86_64_32              .debug_str+0x39
+0000000000000014 R_X86_64_32              .debug_str+0x3b
+0000000000000018 R_X86_64_32              .debug_str+0x40
+000000000000001c R_X86_64_32              .debug_str+0x54
+0000000000000020 R_X86_64_32              .debug_str+0x60
+0000000000000024 R_X86_64_32              .debug_str+0x64
+0000000000000028 R_X86_64_32              .debug_str+0x74
+000000000000002c R_X86_64_32              .debug_str+0x7b
+0000000000000030 R_X86_64_32              .debug_str+0x8d
+0000000000000034 R_X86_64_32              .debug_str+0x92
+0000000000000038 R_X86_64_32              .debug_str+0xa4
+000000000000003c R_X86_64_32              .debug_str+0xa9
+0000000000000040 R_X86_64_32              .debug_str+0xaf
+0000000000000044 R_X86_64_32              .debug_str+0xb1
+0000000000000048 R_X86_64_32              .debug_str+0xb3
+000000000000004c R_X86_64_32              .debug_str+0xb8
+0000000000000050 R_X86_64_32              .debug_str+0xc9
+0000000000000054 R_X86_64_32              .debug_str+0xda
+0000000000000058 R_X86_64_32              .debug_str+0xe0
+000000000000005c R_X86_64_32              .debug_str+0xf5
+0000000000000060 R_X86_64_32              .debug_str+0xfe
+0000000000000064 R_X86_64_32              .debug_str+0x103
+0000000000000068 R_X86_64_32              .debug_str+0x111
+000000000000006c R_X86_64_32              .debug_str+0x11e
+0000000000000070 R_X86_64_32              .debug_str+0x12c
+0000000000000074 R_X86_64_32              .debug_str+0x139
+0000000000000078 R_X86_64_32              .debug_str+0x147
+000000000000007c R_X86_64_32              .debug_str+0x155
+0000000000000080 R_X86_64_32              .debug_str+0x157
+0000000000000084 R_X86_64_32              .debug_str+0x15d
+0000000000000088 R_X86_64_32              .debug_str+0x15f
+000000000000008c R_X86_64_32              .debug_str+0x164
+0000000000000090 R_X86_64_32              .debug_str+0x167
+
+RELOCATION RECORDS FOR [.debug_addr]:
+OFFSET           TYPE                     VALUE
+0000000000000008 R_X86_64_64              .rodata.str1.1
+0000000000000010 R_X86_64_64              .rodata.str1.1+0x7
+0000000000000018 R_X86_64_64              .rodata.str1.1+0xd
+0000000000000020 R_X86_64_64              .text
+0000000000000028 R_X86_64_64              .text+0x30
+0000000000000030 R_X86_64_64              .text._ZN4RectC2Eii
+0000000000000038 R_X86_64_64              .text._ZNK4Rect4nameEv
+0000000000000040 R_X86_64_64              .text._ZN4RectD2Ev
+0000000000000048 R_X86_64_64              .text._ZN5ShapeC2Ev
+0000000000000050 R_X86_64_64              .text._ZN4RectD0Ev
+0000000000000058 R_X86_64_64              .text._ZNK4Rect4areaEv
+0000000000000060 R_X86_64_64              .text._ZN5ShapeD2Ev
+0000000000000068 R_X86_64_64              .text._ZN5ShapeD0Ev
+0000000000000070 R_X86_64_64              .text._ZNK5Shape4nameEv
+
+RELOCATION RECORDS FOR [.data.DW.ref.__gxx_personality_v0]:
+OFFSET           TYPE                     VALUE
+0000000000000000 R_X86_64_64              __gxx_personality_v0
+
+RELOCATION RECORDS FOR [.eh_frame]:
+OFFSET           TYPE                     VALUE
+0000000000000020 R_X86_64_PC32            .text
+0000000000000040 R_X86_64_PC32            .text._ZN4RectC2Eii
+0000000000000060 R_X86_64_PC32            .text._ZNK4Rect4nameEv
+0000000000000080 R_X86_64_PC32            .text._ZN4RectD2Ev
+00000000000000a0 R_X86_64_PC32            .text._ZN5ShapeC2Ev
+00000000000000c0 R_X86_64_PC32            .text._ZN4RectD0Ev
+00000000000000e0 R_X86_64_PC32            .text._ZNK4Rect4areaEv
+0000000000000100 R_X86_64_PC32            .text._ZN5ShapeD2Ev
+0000000000000120 R_X86_64_PC32            .text._ZN5ShapeD0Ev
+000000000000013c R_X86_64_PC32            .text._ZNK5Shape4nameEv
+0000000000000167 R_X86_64_PC32            DW.ref.__gxx_personality_v0
+000000000000017c R_X86_64_PC32            .text+0x30
+0000000000000185 R_X86_64_PC32            .gcc_except_table
+
+RELOCATION RECORDS FOR [.debug_line]:
+OFFSET           TYPE                     VALUE
+0000000000000022 R_X86_64_32              .debug_line_str
+000000000000002c R_X86_64_32              .debug_line_str+0x2
+0000000000000031 R_X86_64_32              .debug_line_str+0xd
+000000000000003b R_X86_64_64              .text
+000000000000008b R_X86_64_64              .text._ZN4RectC2Eii
+00000000000000b9 R_X86_64_64              .text._ZNK4Rect4nameEv
+00000000000000d5 R_X86_64_64              .text._ZN4RectD2Ev
+00000000000000ef R_X86_64_64              .text._ZN5ShapeC2Ev
+0000000000000109 R_X86_64_64              .text._ZN4RectD0Ev
+0000000000000124 R_X86_64_64              .text._ZNK4Rect4areaEv
+0000000000000145 R_X86_64_64              .text._ZN5ShapeD2Ev
+000000000000015d R_X86_64_64              .text._ZN5ShapeD0Ev
+0000000000000174 R_X86_64_64              .text._ZNK5Shape4nameEv

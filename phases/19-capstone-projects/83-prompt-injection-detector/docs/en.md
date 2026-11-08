@@ -81,4 +81,4 @@ Run `python3 main.py`. The demo loads the taxonomy, runs the detector on every f
 
 ## Further Reading
 
-Lessons 84 through 87 in this track. The detector here is one of three signals the end to end gate composes.
+Lessons 84 through 87 in this track. The detector here is one of four signals the end to end gate composes, next to the token filter, the classifier, and the rules engine.

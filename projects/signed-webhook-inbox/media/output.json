@@ -1,0 +1,18 @@
+{
+  "title": "Signed Webhook Inbox | actual local output",
+  "recordedAt": "2026-10-09T14:35:16Z",
+  "records": [
+    {
+      "command": [
+        "go",
+        "run",
+        "."
+      ],
+      "cwd": "./projects/signed-webhook-inbox/solution",
+      "exitCode": 0,
+      "output": "{\n  \"firstReplayCreated\": true,\n  \"persistedDelivery\": \"delivery-1\",\n  \"processing\": {\n    \"schemaVersion\": 1,\n    \"deliveryId\": \"delivery-1\",\n    \"runId\": \"review-1\",\n    \"businessEventId\": \"business-42\",\n    \"bodySHA256\": \"17fc59e83381c874a1255cf43419cbc4a8354f8459261d7c3bc7c7bc5c8024da\",\n    \"processedAt\": \"2026-02-02T02:40:00Z\",\n    \"payload\": {\n      \"task\": \"review uploaded report\"\n    }\n  },\n  \"sameRunCreatedAgain\": false,\n  \"statuses\": [\n    202,\n    200,\n    401\n  ]\n}\n",
+      "durationMs": 588
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

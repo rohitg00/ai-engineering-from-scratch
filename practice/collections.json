@@ -1,0 +1,14 @@
+[
+  {"id": "math-foundations", "title": "Math foundations", "summary": "Matrix operations, gradients and optimization written with numpy."},
+  {"id": "classical-ml", "title": "Classical ML", "summary": "The models that come before deep learning, written from the equations."},
+  {"id": "deep-learning-core", "title": "Deep learning core", "summary": "Losses, backpropagation, normalization and optimizers."},
+  {"id": "optimizers", "title": "Optimizers", "summary": "Gradient descent, momentum and Adam, one update rule at a time."},
+  {"id": "transformers-from-scratch", "title": "Transformers from scratch", "summary": "Attention, heads, positions and normalization: the parts of a transformer block."},
+  {"id": "llm-inference", "title": "LLM inference", "summary": "Tokenizers, sampling, beam search, the KV cache and LoRA."},
+  {"id": "rl-basics", "title": "RL basics", "summary": "Returns, advantages and the PPO objective."},
+  {"id": "rag-building-blocks", "title": "RAG building blocks", "summary": "Dense and sparse retrieval scores that a RAG system ranks with."},
+  {"id": "agent-building-blocks", "title": "Agent building blocks", "summary": "The parsing and validation code around an agent loop."},
+  {"id": "papers-to-code", "title": "Papers to code", "summary": "Implement the core method of a research paper and test it against the paper's equations."},
+  {"id": "train-tiny-models", "title": "Train tiny models", "summary": "Train a small model in your browser to a target score inside a step budget."},
+  {"id": "experiment-labs", "title": "Experiment labs", "summary": "Change one variable, measure the effect, and answer with numbers."}
+]

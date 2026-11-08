@@ -1,0 +1,15 @@
+EAGLE3 acceptance on long outputs (backlog B-01b)
+Date: 2026-10-23
+Machine: NVIDIA L4, GPU0 of the node, clock lock 900 MHz (the card throttled to 210 to 510 MHz in this block, so no speed numbers are quoted).
+Model: Qwen/Qwen3-8B with the EAGLE3 draft both engines use (3 draft tokens). 32 requests at 8 users, outputs up to 2,048 tokens without ignore-eos (median 1,800 to 2,000 tokens).
+SGLang 0.5.22: mean acceptance length from the benchmark client.
+vLLM 0.31.0: acceptance from the /metrics counters before and after the run: 1 + accepted tokens / drafts, and accepted tokens per draft position / drafts.
+
+engine          dataset    mean acceptance length   accepted per draft position 1 / 2 / 3
+SGLang EAGLE3   GSM8K      2.68
+SGLang EAGLE3   ShareGPT   2.32
+vLLM EAGLE3     GSM8K      2.69                     0.77 / 0.54 / 0.38
+vLLM EAGLE3     ShareGPT   2.35                     0.67 / 0.42 / 0.26
+
+Short outputs (128 tokens) in the same session on SGLang: GSM8K 2.69 to 2.78, ShareGPT 2.33 to 2.43.
+Acceptance did not fall from 128 tokens to about 2,000 tokens on these datasets.

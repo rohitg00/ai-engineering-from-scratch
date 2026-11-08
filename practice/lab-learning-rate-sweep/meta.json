@@ -1,0 +1,21 @@
+{
+  "id": "lab-learning-rate-sweep",
+  "title": "Sweep the learning rate",
+  "kind": "lab",
+  "summary": "Sweep gradient descent learning rates on a seeded regression, find the best rate and the first rate that diverges, and compare with 2 over the top eigenvalue.",
+  "difficulty": "easy",
+  "tags": ["learning-rate", "gradient-descent", "optimization"],
+  "lesson": "phases/03-deep-learning-core/09-learning-rate-schedules",
+  "cheatsheet": "optimizers-schedules",
+  "minutes": 20,
+  "entry": ["run_sweep", "is_diverged", "best_lr", "smallest_diverging_lr", "stability_bound", "answers"],
+  "collections": ["experiment-labs", "optimizers"],
+  "time_limit_s": 10,
+  "mutants": {
+    "finite_only": "Marks a run as diverged only when its final loss is not finite, so a finite loss that grows counts as stable.",
+    "first_in_list": "Returns the first diverged rate in list order, not the smallest diverged rate.",
+    "hessian_without_two": "Uses X^T X / n as the Hessian and forgets the factor 2, so the bound is twice too large.",
+    "no_divergence_filter": "Calls np.argmin on the raw final losses, so a NaN run becomes the best rate.",
+    "ties_pick_larger": "Picks the larger rate when two runs have the same final loss."
+  }
+}

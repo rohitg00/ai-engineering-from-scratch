@@ -36,7 +36,7 @@ graph LR
     T3 --> T4["4D Tensor<br/>rank 4<br/>shape: (B,C,H,W)"]
 ```
 
-Total elements = product of all sizes. A shape `(2, 3, 4)` holds `2 * 3 * 4 = 24` elements.
+Total elements = product of all sizes. A shape `(2, 3, 4)` holds $2 \cdot 3 \cdot 4 = 24$ elements.
 
 ### Tensor shapes in deep learning
 
@@ -232,7 +232,7 @@ batch_B = np.random.randn(4, 5, 2)
 batch_mm = np.einsum("bij,bjk->bik", batch_A, batch_B)
 ```
 
-The computational cost of a contraction is the product of all index sizes (kept and summed). For `bij,bjk->bik` with B=32, I=128, J=64, K=128: `32 * 128 * 64 * 128 = 33,554,432` multiply-adds.
+The computational cost of a contraction is the product of all index sizes (kept and summed). For `bij,bjk->bik` with $B=32$, $I=128$, $J=64$, $K=128$: $32 \cdot 128 \cdot 64 \cdot 128 = 33{,}554{,}432$ multiply-adds.
 
 ### Step 7: Attention mechanism via einsum
 
@@ -319,6 +319,16 @@ This lesson produces two reusable prompts:
 3. **Hard -- Build einsum from scratch.** Implement a basic `einsum(subscripts, *tensors)` function that handles at least: dot product (`i,i->`), matrix multiply (`ij,jk->ik`), outer product (`i,j->ij`), and transpose (`ij->ji`). Parse the subscript string, identify contracted indices, and loop over all index combinations. Compare your results against `np.einsum`.
 
 4. **Hard -- Attention shape tracker.** Write a function that takes `batch_size`, `seq_len`, `embed_dim`, and `num_heads` as inputs and prints the exact shape at every step of multi-head attention: input, Q/K/V projection, head split, attention scores, softmax weights, weighted sum, head merge, output projection. Verify against the `demo_attention_einsum()` output.
+
+### Hints
+
+**Exercise 1.** Build the tensor from `list(range(24))` so that each element shows its own position. After each `reshape` call, print `flatten().to_list()` and check that it is still 0 to 23 in order.
+
+**Exercise 2.** A dimension can broadcast only when the two sizes are equal or one of them is 1, so check that rule first and raise an error when it fails. For shapes `(3, 1)` and `(1, 4)`, check that entry `[i][j]` of the result equals `a[i][0] + b[0][j]`, and compare the full result with NumPy.
+
+**Exercise 3.** Split the subscripts on `->`. A letter that is in the inputs but not in the output is a summed index, so loop over all values of every letter and add into the output position. Test each of the four cases on small random arrays with `np.allclose(mine, np.einsum(...))`.
+
+**Exercise 4.** Start with the head size `embed_dim // num_heads` and assert that `embed_dim % num_heads == 0`. The attention scores have shape `(batch_size, num_heads, seq_len, seq_len)`, so check your printout against that shape and against the shapes that `demo_attention_einsum()` prints.
 
 ## Key Terms
 

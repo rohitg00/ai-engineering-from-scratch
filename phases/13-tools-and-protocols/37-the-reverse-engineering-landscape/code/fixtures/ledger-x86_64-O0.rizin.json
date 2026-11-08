@@ -1,0 +1,2363 @@
+{
+ "tool": "rizin",
+ "version": "rizin 0.9.1 @ darwin-arm-64",
+ "fixture": "ledger-x86_64-O0.o",
+ "commands": {
+  "iSj": {
+   "command": "rizin -e scr.color=0 -qc iSj ledger-x86_64-O0.o",
+   "output": [
+    {
+     "name": "",
+     "size": 0,
+     "vsize": 0,
+     "perm": "----",
+     "type": "NULL",
+     "paddr": 0,
+     "vaddr": 134217728
+    },
+    {
+     "name": ".strtab",
+     "size": 161,
+     "vsize": 161,
+     "perm": "----",
+     "type": "STRTAB",
+     "paddr": 1066,
+     "vaddr": 134218794
+    },
+    {
+     "name": ".text",
+     "size": 295,
+     "vsize": 295,
+     "perm": "-r-x",
+     "type": "PROGBITS",
+     "flags": [
+      "alloc",
+      "execute"
+     ],
+     "paddr": 64,
+     "vaddr": 134217792
+    },
+    {
+     "name": ".rela.text",
+     "size": 72,
+     "vsize": 72,
+     "perm": "----",
+     "type": "RELA",
+     "flags": [
+      "info"
+     ],
+     "paddr": 752,
+     "vaddr": 134218480
+    },
+    {
+     "name": ".rodata",
+     "size": 20,
+     "vsize": 20,
+     "perm": "-r--",
+     "type": "PROGBITS",
+     "flags": [
+      "alloc"
+     ],
+     "paddr": 360,
+     "vaddr": 134218088
+    },
+    {
+     "name": ".rela.rodata",
+     "size": 120,
+     "vsize": 120,
+     "perm": "----",
+     "type": "RELA",
+     "flags": [
+      "info"
+     ],
+     "paddr": 824,
+     "vaddr": 134218552
+    },
+    {
+     "name": ".data",
+     "size": 40,
+     "vsize": 40,
+     "perm": "-rw-",
+     "type": "PROGBITS",
+     "flags": [
+      "write",
+      "alloc"
+     ],
+     "paddr": 384,
+     "vaddr": 134218112
+    },
+    {
+     "name": ".rela.data",
+     "size": 120,
+     "vsize": 120,
+     "perm": "----",
+     "type": "RELA",
+     "flags": [
+      "info"
+     ],
+     "paddr": 944,
+     "vaddr": 134218672
+    },
+    {
+     "name": ".rodata.str1.1",
+     "size": 10,
+     "vsize": 10,
+     "perm": "-r--",
+     "type": "PROGBITS",
+     "flags": [
+      "alloc",
+      "merge",
+      "strings"
+     ],
+     "paddr": 424,
+     "vaddr": 134218152
+    },
+    {
+     "name": ".comment",
+     "size": 47,
+     "vsize": 47,
+     "perm": "----",
+     "type": "PROGBITS",
+     "flags": [
+      "merge",
+      "strings"
+     ],
+     "paddr": 434,
+     "vaddr": 134218162
+    },
+    {
+     "name": ".note.GNU-stack",
+     "size": 0,
+     "vsize": 0,
+     "perm": "----",
+     "type": "PROGBITS",
+     "paddr": 481,
+     "vaddr": 134218209
+    },
+    {
+     "name": ".llvm_addrsig",
+     "size": 2,
+     "vsize": 2,
+     "perm": "----",
+     "type": "0x6fff4c03",
+     "flags": [
+      "exclude"
+     ],
+     "paddr": 1064,
+     "vaddr": 134218792
+    },
+    {
+     "name": ".symtab",
+     "size": 264,
+     "vsize": 264,
+     "perm": "----",
+     "type": "SYMTAB",
+     "paddr": 488,
+     "vaddr": 134218216
+    }
+   ]
+  },
+  "aaa; aflj": {
+   "command": "rizin -e scr.color=0 -qc 'aaa; aflj' ledger-x86_64-O0.o",
+   "output": [
+    {
+     "offset": 134217792,
+     "name": "sym.percent_change",
+     "size": 46,
+     "is-pure": true,
+     "realsz": 46,
+     "noreturn": false,
+     "stackframe": 8,
+     "calltype": "amd64",
+     "cost": 21,
+     "cc": 2,
+     "loops": 0,
+     "bits": 64,
+     "type": "sym",
+     "nbbs": 4,
+     "edges": 4,
+     "ebbs": 1,
+     "signature": "sym.percent_change(unsigned long arg1, int64_t arg2);",
+     "minbound": 134217792,
+     "maxbound": 134217838,
+     "callrefs": [
+      {
+       "from": 134217815,
+       "to": 134217833,
+       "type": "CODE"
+      }
+     ],
+     "datarefs": [],
+     "codexrefs": [
+      {
+       "from": 134217815,
+       "to": 134217833,
+       "type": "CODE"
+      }
+     ],
+     "dataxrefs": [],
+     "indegree": 1,
+     "outdegree": 0,
+     "nlocals": 3,
+     "nargs": 2,
+     "stackvars": [
+      {
+       "name": "var_14h",
+       "arg": false,
+       "type": "int64_t",
+       "storage": {
+        "type": "stack",
+        "stack": -20
+       }
+      },
+      {
+       "name": "var_10h",
+       "arg": false,
+       "type": "unsigned long",
+       "storage": {
+        "type": "stack",
+        "stack": -16
+       }
+      },
+      {
+       "name": "var_ch",
+       "arg": false,
+       "type": "int64_t",
+       "storage": {
+        "type": "stack",
+        "stack": -12
+       }
+      }
+     ],
+     "regvars": [
+      {
+       "name": "arg1",
+       "arg": true,
+       "type": "unsigned long",
+       "storage": {
+        "type": "reg",
+        "reg": "rdi"
+       }
+      },
+      {
+       "name": "arg2",
+       "arg": true,
+       "type": "int64_t",
+       "storage": {
+        "type": "reg",
+        "reg": "rsi"
+       }
+      }
+     ]
+    },
+    {
+     "offset": 134217840,
+     "name": "sym.grade",
+     "size": 118,
+     "is-pure": false,
+     "realsz": 118,
+     "noreturn": false,
+     "stackframe": 8,
+     "calltype": "amd64",
+     "cost": 41,
+     "cc": 8,
+     "loops": 0,
+     "bits": 64,
+     "type": "sym",
+     "nbbs": 8,
+     "edges": 7,
+     "ebbs": 2,
+     "signature": "sym.grade(int64_t arg1);",
+     "minbound": 134217840,
+     "maxbound": 134217958,
+     "callrefs": [
+      {
+       "from": 134217908,
+       "to": 134217910,
+       "type": "CODE"
+      },
+      {
+       "from": 134217908,
+       "to": 134217919,
+       "type": "CODE"
+      },
+      {
+       "from": 134217908,
+       "to": 134217928,
+       "type": "CODE"
+      },
+      {
+       "from": 134217908,
+       "to": 134217937,
+       "type": "CODE"
+      },
+      {
+       "from": 134217917,
+       "to": 134217953,
+       "type": "CODE"
+      },
+      {
+       "from": 134217926,
+       "to": 134217953,
+       "type": "CODE"
+      },
+      {
+       "from": 134217935,
+       "to": 134217953,
+       "type": "CODE"
+      },
+      {
+       "from": 134217944,
+       "to": 134217953,
+       "type": "CODE"
+      }
+     ],
+     "datarefs": [
+      {
+       "from": 134217894,
+       "to": 134218088,
+       "type": "DATA"
+      }
+     ],
+     "codexrefs": [
+      {
+       "from": 134217908,
+       "to": 134217910,
+       "type": "CODE"
+      },
+      {
+       "from": 134217908,
+       "to": 134217919,
+       "type": "CODE"
+      },
+      {
+       "from": 134217908,
+       "to": 134217928,
+       "type": "CODE"
+      },
+      {
+       "from": 134217908,
+       "to": 134217937,
+       "type": "CODE"
+      },
+      {
+       "from": 134217917,
+       "to": 134217953,
+       "type": "CODE"
+      },
+      {
+       "from": 134217926,
+       "to": 134217953,
+       "type": "CODE"
+      },
+      {
+       "from": 134217935,
+       "to": 134217953,
+       "type": "CODE"
+      },
+      {
+       "from": 134217944,
+       "to": 134217953,
+       "type": "CODE"
+      },
+      {
+       "from": 134218062,
+       "to": 134217840,
+       "type": "CALL"
+      }
+     ],
+     "dataxrefs": [],
+     "indegree": 9,
+     "outdegree": 0,
+     "nlocals": 3,
+     "nargs": 1,
+     "stackvars": [
+      {
+       "name": "var_18h",
+       "arg": false,
+       "type": "int64_t",
+       "storage": {
+        "type": "stack",
+        "stack": -24
+       }
+      },
+      {
+       "name": "var_10h",
+       "arg": false,
+       "type": "int64_t",
+       "storage": {
+        "type": "stack",
+        "stack": -16
+       }
+      },
+      {
+       "name": "var_ch",
+       "arg": false,
+       "type": "int64_t",
+       "storage": {
+        "type": "stack",
+        "stack": -12
+       }
+      }
+     ],
+     "regvars": [
+      {
+       "name": "arg1",
+       "arg": true,
+       "type": "int64_t",
+       "storage": {
+        "type": "reg",
+        "reg": "rdi"
+       }
+      }
+     ]
+    },
+    {
+     "offset": 134217968,
+     "name": "sym.total",
+     "size": 66,
+     "is-pure": true,
+     "realsz": 66,
+     "noreturn": false,
+     "stackframe": 8,
+     "calltype": "amd64",
+     "cost": 25,
+     "cc": 2,
+     "loops": 1,
+     "bits": 64,
+     "type": "sym",
+     "nbbs": 4,
+     "edges": 4,
+     "ebbs": 1,
+     "signature": "sym.total(int64_t arg1, int64_t arg2);",
+     "minbound": 134217968,
+     "maxbound": 134218034,
+     "callrefs": [
+      {
+       "from": 134218027,
+       "to": 134217993,
+       "type": "CODE"
+      }
+     ],
+     "datarefs": [],
+     "codexrefs": [
+      {
+       "from": 134218027,
+       "to": 134217993,
+       "type": "CODE"
+      }
+     ],
+     "dataxrefs": [],
+     "indegree": 1,
+     "outdegree": 0,
+     "nlocals": 4,
+     "nargs": 2,
+     "stackvars": [
+      {
+       "name": "var_1ch",
+       "arg": false,
+       "type": "int64_t",
+       "storage": {
+        "type": "stack",
+        "stack": -28
+       }
+      },
+      {
+       "name": "var_18h",
+       "arg": false,
+       "type": "int64_t",
+       "storage": {
+        "type": "stack",
+        "stack": -24
+       }
+      },
+      {
+       "name": "var_14h",
+       "arg": false,
+       "type": "int64_t",
+       "storage": {
+        "type": "stack",
+        "stack": -20
+       }
+      },
+      {
+       "name": "var_10h",
+       "arg": false,
+       "type": "int64_t",
+       "storage": {
+        "type": "stack",
+        "stack": -16
+       }
+      }
+     ],
+     "regvars": [
+      {
+       "name": "arg1",
+       "arg": true,
+       "type": "int64_t",
+       "storage": {
+        "type": "reg",
+        "reg": "rdi"
+       }
+      },
+      {
+       "name": "arg2",
+       "arg": true,
+       "type": "int64_t",
+       "storage": {
+        "type": "reg",
+        "reg": "rsi"
+       }
+      }
+     ]
+    },
+    {
+     "offset": 134218048,
+     "name": "sym.grade_label",
+     "size": 39,
+     "is-pure": false,
+     "realsz": 39,
+     "noreturn": false,
+     "stackframe": 24,
+     "calltype": "amd64",
+     "cost": 16,
+     "cc": 1,
+     "loops": 0,
+     "bits": 64,
+     "type": "sym",
+     "nbbs": 1,
+     "edges": 0,
+     "ebbs": 1,
+     "signature": "sym.grade_label(int64_t arg1);",
+     "minbound": 134218048,
+     "maxbound": 134218087,
+     "callrefs": [
+      {
+       "from": 134218062,
+       "to": 134217840,
+       "type": "CALL"
+      }
+     ],
+     "datarefs": [
+      {
+       "from": 134218070,
+       "to": 134218112,
+       "type": "DATA"
+      }
+     ],
+     "indegree": 0,
+     "outdegree": 1,
+     "nlocals": 1,
+     "nargs": 1,
+     "stackvars": [
+      {
+       "name": "var_ch",
+       "arg": false,
+       "type": "int64_t",
+       "storage": {
+        "type": "stack",
+        "stack": -12
+       }
+      }
+     ],
+     "regvars": [
+      {
+       "name": "arg1",
+       "arg": true,
+       "type": "int64_t",
+       "storage": {
+        "type": "reg",
+        "reg": "rdi"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  "aaa; afbj @ 0x8000040": {
+   "command": "rizin -e scr.color=0 -qc 'aaa; afbj @ 0x8000040' ledger-x86_64-O0.o",
+   "output": [
+    {
+     "jump": 134217817,
+     "fail": 134217808,
+     "opaddr": 134217792,
+     "addr": 134217792,
+     "size": 16,
+     "inputs": 0,
+     "outputs": 2,
+     "ninstr": 6,
+     "traced": true
+    },
+    {
+     "jump": 134217833,
+     "opaddr": 134217808,
+     "addr": 134217808,
+     "size": 9,
+     "inputs": 1,
+     "outputs": 1,
+     "ninstr": 2,
+     "traced": true
+    },
+    {
+     "jump": 134217833,
+     "opaddr": 134217817,
+     "addr": 134217817,
+     "size": 16,
+     "inputs": 1,
+     "outputs": 1,
+     "ninstr": 6,
+     "traced": true
+    },
+    {
+     "opaddr": 134217833,
+     "addr": 134217833,
+     "size": 5,
+     "inputs": 2,
+     "outputs": 0,
+     "ninstr": 3,
+     "traced": true
+    }
+   ]
+  },
+  "aaa; pdfj @ 0x8000040": {
+   "command": "rizin -e scr.color=0 -qc 'aaa; pdfj @ 0x8000040' ledger-x86_64-O0.o",
+   "output": {
+    "name": "sym.percent_change",
+    "size": 46,
+    "addr": 134217792,
+    "ops": [
+     {
+      "offset": 134217792,
+      "esil": "rbp,8,rsp,-,=[8],8,rsp,-=",
+      "refptr": false,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217837,
+      "size": 1,
+      "opcode": "push rbp",
+      "disasm": "push rbp",
+      "bytes": "55",
+      "family": "cpu",
+      "type": "rpush",
+      "reloc": false,
+      "type_num": 268435468,
+      "type2_num": 0,
+      "flags": [
+       "section..text",
+       "reloc.target..text",
+       "sym..text",
+       "sym.percent_change"
+      ],
+      "comment": "WzAyXSAtci14IHNlY3Rpb24gc2l6ZSAyOTUgbmFtZWQgLnRleHQ="
+     },
+     {
+      "offset": 134217793,
+      "esil": "rsp,rbp,=",
+      "refptr": false,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217835,
+      "size": 3,
+      "opcode": "mov rbp, rsp",
+      "disasm": "mov rbp, rsp",
+      "bytes": "4889e5",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217796,
+      "esil": "edi,0x8,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217835,
+      "size": 3,
+      "opcode": "mov dword [rbp-0x08], edi",
+      "disasm": "mov dword [var_10h], edi",
+      "bytes": "897df8",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217799,
+      "esil": "esi,0xc,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217835,
+      "size": 3,
+      "opcode": "mov dword [rbp-0x0c], esi",
+      "disasm": "mov dword [var_14h], esi",
+      "bytes": "8975f4",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217802,
+      "val": 0,
+      "esil": "0,0x8,rbp,-,[4],==,$z,zf,:=,32,$b,cf,:=,$p,pf,:=,31,$s,sf,:=,0,0x80000000,-,!,31,$o,^,of,:=,3,$b,af,:=",
+      "refptr": true,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217834,
+      "size": 4,
+      "opcode": "cmp dword [rbp-0x08], 0x00",
+      "disasm": "cmp dword [var_10h], 0x00",
+      "bytes": "837df800",
+      "family": "cpu",
+      "type": "cmp",
+      "reloc": false,
+      "type_num": 268435471,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217806,
+      "esil": "zf,!,?{,134217817,rip,=,}",
+      "refptr": false,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217836,
+      "size": 2,
+      "opcode": "jnz 0x8000059",
+      "disasm": "jnz 0x8000059",
+      "bytes": "7509",
+      "family": "cpu",
+      "type": "cjmp",
+      "reloc": false,
+      "type_num": 2147483649,
+      "type2_num": 0,
+      "jump": 134217817,
+      "fail": 134217808
+     },
+     {
+      "offset": 134217808,
+      "val": 0,
+      "esil": "0,0x4,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217831,
+      "size": 7,
+      "opcode": "mov dword [rbp-0x04], 0x00",
+      "disasm": "mov dword [var_ch], 0x00",
+      "bytes": "c745fc00000000",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217815,
+      "esil": "0x8000069,rip,=",
+      "refptr": false,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217836,
+      "size": 2,
+      "opcode": "jmp 0x8000069",
+      "disasm": "jmp 0x8000069",
+      "bytes": "eb10",
+      "family": "cpu",
+      "type": "jmp",
+      "reloc": false,
+      "type_num": 1,
+      "type2_num": 0,
+      "jump": 134217833,
+      "xrefs_from": [
+       {
+        "addr": 134217833,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134217817,
+      "esil": "0xc,rbp,-,[4],rax,=",
+      "refptr": true,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217835,
+      "size": 3,
+      "opcode": "mov eax, dword [rbp-0x0c]",
+      "disasm": "mov eax, dword [var_14h]",
+      "bytes": "8b45f4",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217820,
+      "esil": "0x8,rbp,-,[4],eax,-=,0x8,rbp,-,[4],0x80000000,-,!,31,$o,^,of,:=,31,$s,sf,:=,$z,zf,:=,$p,pf,:=,32,$b,cf,:=,3,$b,af,:=",
+      "refptr": true,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217835,
+      "size": 3,
+      "opcode": "sub eax, dword [rbp-0x08]",
+      "disasm": "sub eax, dword [var_10h]",
+      "bytes": "2b45f8",
+      "family": "cpu",
+      "type": "sub",
+      "reloc": false,
+      "type_num": 18,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217823,
+      "esil": "32,100,~,32,eax,~,*,DUP,eax,=,eax,-,?{,1,1,}{,0,0,},cf,:=,of,:=",
+      "refptr": false,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217835,
+      "size": 3,
+      "opcode": "imul eax, eax, 0x64",
+      "disasm": "imul eax, eax, 0x64",
+      "bytes": "6bc064",
+      "family": "cpu",
+      "type": "mul",
+      "reloc": false,
+      "type_num": 20,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217826,
+      "esil": "0,edx,=,31,eax,>>,?{,0xffffffff,edx,=,}",
+      "refptr": false,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217837,
+      "size": 1,
+      "opcode": "cdq",
+      "disasm": "cdq",
+      "bytes": "99",
+      "family": "cpu",
+      "type": "null",
+      "reloc": false,
+      "type_num": 0,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217827,
+      "esil": "32,0x8,rbp,-,[4],~,32,edx,<<,eax,+,~%,32,0x8,rbp,-,[4],~,32,edx,<<,eax,+,~/,eax,=,edx,=",
+      "refptr": false,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217835,
+      "size": 3,
+      "opcode": "idiv dword [rbp-0x08]",
+      "disasm": "idiv dword [var_10h]",
+      "bytes": "f77df8",
+      "family": "cpu",
+      "type": "div",
+      "reloc": false,
+      "type_num": 21,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217830,
+      "esil": "eax,0x4,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217835,
+      "size": 3,
+      "opcode": "mov dword [rbp-0x04], eax",
+      "disasm": "mov dword [var_ch], eax",
+      "bytes": "8945fc",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217833,
+      "esil": "0x4,rbp,-,[4],rax,=",
+      "refptr": true,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217835,
+      "size": 3,
+      "opcode": "mov eax, dword [rbp-0x04]",
+      "disasm": "mov eax, dword [var_ch]",
+      "bytes": "8b45fc",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0,
+      "xrefs_to": [
+       {
+        "addr": 134217815,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134217836,
+      "esil": "rsp,[8],8,rsp,+=,rbp,=",
+      "refptr": false,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217837,
+      "size": 1,
+      "opcode": "pop rbp",
+      "disasm": "pop rbp",
+      "bytes": "5d",
+      "family": "cpu",
+      "type": "pop",
+      "reloc": false,
+      "type_num": 14,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217837,
+      "esil": "rsp,[8],rip,=,8,rsp,+=",
+      "refptr": false,
+      "fcn_addr": 134217792,
+      "fcn_last": 134217837,
+      "size": 1,
+      "opcode": "ret",
+      "disasm": "ret",
+      "bytes": "c3",
+      "family": "cpu",
+      "type": "ret",
+      "reloc": false,
+      "type_num": 5,
+      "type2_num": 0
+     }
+    ]
+   }
+  },
+  "aaa; afbj @ 0x8000070": {
+   "command": "rizin -e scr.color=0 -qc 'aaa; afbj @ 0x8000070' ledger-x86_64-O0.o",
+   "output": [
+    {
+     "jump": 134217946,
+     "fail": 134217890,
+     "opaddr": 134217840,
+     "addr": 134217840,
+     "size": 50,
+     "inputs": 0,
+     "outputs": 2,
+     "ninstr": 16,
+     "traced": true
+    },
+    {
+     "switch_op": {
+      "addr": 134217908,
+      "min_val": 0,
+      "def_val": 0,
+      "max_val": 0,
+      "cases": [
+       {
+        "addr": 134217937,
+        "jump": 134217937,
+        "value": 0
+       },
+       {
+        "addr": 134217928,
+        "jump": 134217928,
+        "value": 1
+       },
+       {
+        "addr": 134217919,
+        "jump": 134217919,
+        "value": 2
+       },
+       {
+        "addr": 134217910,
+        "jump": 134217910,
+        "value": 3
+       },
+       {
+        "addr": 134217910,
+        "jump": 134217910,
+        "value": 4
+       }
+      ]
+     },
+     "opaddr": 134217890,
+     "addr": 134217890,
+     "size": 20,
+     "inputs": 1,
+     "outputs": 4,
+     "ninstr": 5,
+     "traced": true
+    },
+    {
+     "jump": 134217953,
+     "opaddr": 134217910,
+     "addr": 134217910,
+     "size": 9,
+     "inputs": 0,
+     "outputs": 1,
+     "ninstr": 2,
+     "traced": true
+    },
+    {
+     "jump": 134217953,
+     "opaddr": 134217919,
+     "addr": 134217919,
+     "size": 9,
+     "inputs": 0,
+     "outputs": 1,
+     "ninstr": 2,
+     "traced": true
+    },
+    {
+     "jump": 134217953,
+     "opaddr": 134217928,
+     "addr": 134217928,
+     "size": 9,
+     "inputs": 0,
+     "outputs": 1,
+     "ninstr": 2,
+     "traced": true
+    },
+    {
+     "jump": 134217953,
+     "opaddr": 134217937,
+     "addr": 134217937,
+     "size": 9,
+     "inputs": 0,
+     "outputs": 1,
+     "ninstr": 2,
+     "traced": true
+    },
+    {
+     "jump": 134217953,
+     "opaddr": 134217946,
+     "addr": 134217946,
+     "size": 7,
+     "inputs": 1,
+     "outputs": 1,
+     "ninstr": 1,
+     "traced": true
+    },
+    {
+     "opaddr": 134217953,
+     "addr": 134217953,
+     "size": 5,
+     "inputs": 5,
+     "outputs": 0,
+     "ninstr": 3,
+     "traced": true
+    }
+   ]
+  },
+  "aaa; pdfj @ 0x8000070": {
+   "command": "rizin -e scr.color=0 -qc 'aaa; pdfj @ 0x8000070' ledger-x86_64-O0.o",
+   "output": {
+    "name": "sym.grade",
+    "size": 118,
+    "addr": 134217840,
+    "ops": [
+     {
+      "offset": 134217840,
+      "esil": "rbp,8,rsp,-,=[8],8,rsp,-=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217957,
+      "size": 1,
+      "opcode": "push rbp",
+      "disasm": "push rbp",
+      "bytes": "55",
+      "family": "cpu",
+      "type": "rpush",
+      "reloc": false,
+      "type_num": 268435468,
+      "type2_num": 0,
+      "flags": [
+       "reloc.target.grade",
+       "sym.grade"
+      ],
+      "xrefs_to": [
+       {
+        "addr": 134218062,
+        "type": "CALL"
+       }
+      ]
+     },
+     {
+      "offset": 134217841,
+      "esil": "rsp,rbp,=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217955,
+      "size": 3,
+      "opcode": "mov rbp, rsp",
+      "disasm": "mov rbp, rsp",
+      "bytes": "4889e5",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217844,
+      "esil": "edi,0x8,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217955,
+      "size": 3,
+      "opcode": "mov dword [rbp-0x08], edi",
+      "disasm": "mov dword [var_10h], edi",
+      "bytes": "897df8",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217847,
+      "esil": "32,0x8,rbp,-,[4],~,rax,=",
+      "refptr": true,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217954,
+      "size": 4,
+      "opcode": "movsxd rax, dword [rbp-0x08]",
+      "disasm": "movsxd rax, dword [var_10h]",
+      "bytes": "486345f8",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217851,
+      "esil": "64,1717986919,~,64,rax,~,*,DUP,rax,=,rax,-,?{,1,1,}{,0,0,},cf,:=,of,:=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217951,
+      "size": 7,
+      "opcode": "imul rax, rax, 0x66666667",
+      "disasm": "imul rax, rax, 0x66666667",
+      "bytes": "4869c067666666",
+      "family": "cpu",
+      "type": "mul",
+      "reloc": false,
+      "type_num": 20,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217858,
+      "esil": "rax,rcx,=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217955,
+      "size": 3,
+      "opcode": "mov rcx, rax",
+      "disasm": "mov rcx, rax",
+      "bytes": "4889c1",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217861,
+      "esil": "0,cf,:=,1,34,-,1,<<,rcx,&,?{,1,cf,:=,},34,rcx,>>>>,rcx,=,$z,zf,:=,$p,pf,:=,63,$s,sf,:=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217954,
+      "size": 4,
+      "opcode": "sar rcx, 0x22",
+      "disasm": "sar rcx, 0x22",
+      "bytes": "48c1f922",
+      "family": "cpu",
+      "type": "sar",
+      "reloc": false,
+      "type_num": 25,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217865,
+      "esil": "ecx,rdx,=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217956,
+      "size": 2,
+      "opcode": "mov edx, ecx",
+      "disasm": "mov edx, ecx",
+      "bytes": "89ca",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217867,
+      "val": 63,
+      "esil": "0,cf,:=,1,63,-,1,<<,rax,&,?{,1,cf,:=,},63,rax,>>,rax,=,$z,zf,:=,$p,pf,:=,63,$s,sf,:=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217954,
+      "size": 4,
+      "opcode": "shr rax, 0x3f",
+      "disasm": "shr rax, 0x3f",
+      "bytes": "48c1e83f",
+      "family": "cpu",
+      "type": "shr",
+      "reloc": false,
+      "type_num": 22,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217871,
+      "esil": "eax,rcx,=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217956,
+      "size": 2,
+      "opcode": "mov ecx, eax",
+      "disasm": "mov ecx, eax",
+      "bytes": "89c1",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217873,
+      "esil": "edx,rax,=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217956,
+      "size": 2,
+      "opcode": "mov eax, edx",
+      "disasm": "mov eax, edx",
+      "bytes": "89d0",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217875,
+      "esil": "0x6,rcx,rax,+,-,eax,=",
+      "refptr": true,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217954,
+      "size": 4,
+      "opcode": "lea eax, qword [rax+rcx*1-0x06]",
+      "disasm": "lea eax, qword [rax+rcx*1-0x06]",
+      "bytes": "8d4408fa",
+      "family": "cpu",
+      "type": "lea",
+      "reloc": false,
+      "type_num": 33,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217879,
+      "esil": "eax,rcx,=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217956,
+      "size": 2,
+      "opcode": "mov ecx, eax",
+      "disasm": "mov ecx, eax",
+      "bytes": "89c1",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217881,
+      "esil": "rcx,0x10,rbp,-,=[8]",
+      "refptr": true,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217954,
+      "size": 4,
+      "opcode": "mov qword [rbp-0x10], rcx",
+      "disasm": "mov qword [var_18h], rcx",
+      "bytes": "48894df0",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217885,
+      "val": 4,
+      "esil": "4,eax,-=,4,0x80000000,-,!,31,$o,^,of,:=,31,$s,sf,:=,$z,zf,:=,$p,pf,:=,32,$b,cf,:=,3,$b,af,:=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217955,
+      "size": 3,
+      "opcode": "sub eax, 0x04",
+      "disasm": "sub eax, 0x04",
+      "bytes": "83e804",
+      "family": "cpu",
+      "type": "sub",
+      "reloc": false,
+      "type_num": 18,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217888,
+      "esil": "cf,zf,|,!,?{,134217946,rip,=,}",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217956,
+      "size": 2,
+      "opcode": "jnbe 0x80000da",
+      "disasm": "jnbe 0x80000da",
+      "bytes": "7738",
+      "family": "cpu",
+      "type": "cjmp",
+      "reloc": false,
+      "type_num": 2147483649,
+      "type2_num": 0,
+      "jump": 134217946,
+      "fail": 134217890
+     },
+     {
+      "offset": 134217890,
+      "esil": "0x10,rbp,-,[8],rax,=",
+      "refptr": true,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217954,
+      "size": 4,
+      "opcode": "mov rax, qword [rbp-0x10]",
+      "disasm": "mov rax, qword [var_18h]",
+      "bytes": "488b45f0",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217894,
+      "ptr": 134218088,
+      "esil": "0xbb,rip,+,rcx,=",
+      "refptr": true,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217951,
+      "size": 7,
+      "opcode": "lea rcx, qword [rip+0xbb]",
+      "disasm": "lea rcx, qword reloc.target..rodata",
+      "bytes": "488d0dbb000000",
+      "family": "cpu",
+      "type": "lea",
+      "reloc": true,
+      "type_num": 33,
+      "type2_num": 0,
+      "xrefs_from": [
+       {
+        "addr": 134218088,
+        "type": "DATA"
+       }
+      ]
+     },
+     {
+      "offset": 134217901,
+      "esil": "32,rax,4,*,rcx,+,[4],~,rax,=",
+      "refptr": true,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217954,
+      "size": 4,
+      "opcode": "movsxd rax, dword [rcx+rax*4]",
+      "disasm": "movsxd rax, dword [rcx+rax*4]",
+      "bytes": "48630481",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217905,
+      "esil": "rcx,rax,+=,63,$o,of,:=,63,$s,sf,:=,$z,zf,:=,63,$c,cf,:=,$p,pf,:=,3,$c,af,:=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217955,
+      "size": 3,
+      "opcode": "add rax, rcx",
+      "disasm": "add rax, rcx",
+      "bytes": "4801c8",
+      "family": "cpu",
+      "type": "add",
+      "reloc": false,
+      "type_num": 17,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217908,
+      "esil": "rax,rip,=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217956,
+      "size": 2,
+      "opcode": "jmp rax",
+      "disasm": "jmp rax",
+      "bytes": "ffe0",
+      "family": "cpu",
+      "type": "rjmp",
+      "reloc": false,
+      "type_num": 268435458,
+      "type2_num": 0,
+      "flags": [
+       "switch.0x080000b4"
+      ],
+      "comment": "c3dpdGNoIHRhYmxlICg1IGNhc2VzKSBhdCAweDgwMDAxNjg=",
+      "xrefs_from": [
+       {
+        "addr": 134217910,
+        "type": "CODE"
+       },
+       {
+        "addr": 134217919,
+        "type": "CODE"
+       },
+       {
+        "addr": 134217928,
+        "type": "CODE"
+       },
+       {
+        "addr": 134217937,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134217910,
+      "val": 4,
+      "esil": "4,0x4,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217951,
+      "size": 7,
+      "opcode": "mov dword [rbp-0x04], 0x04",
+      "disasm": "mov dword [var_ch], 0x04",
+      "bytes": "c745fc04000000",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0,
+      "flags": [
+       "case.0x80000b4.3",
+       "case.0x80000b4.4"
+      ],
+      "xrefs_to": [
+       {
+        "addr": 134217908,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134217917,
+      "esil": "0x80000e1,rip,=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217956,
+      "size": 2,
+      "opcode": "jmp 0x80000e1",
+      "disasm": "jmp 0x80000e1",
+      "bytes": "eb22",
+      "family": "cpu",
+      "type": "jmp",
+      "reloc": false,
+      "type_num": 1,
+      "type2_num": 0,
+      "jump": 134217953,
+      "xrefs_from": [
+       {
+        "addr": 134217953,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134217919,
+      "val": 3,
+      "esil": "3,0x4,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217951,
+      "size": 7,
+      "opcode": "mov dword [rbp-0x04], 0x03",
+      "disasm": "mov dword [var_ch], 0x03",
+      "bytes": "c745fc03000000",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0,
+      "flags": [
+       "case.0x80000b4.2"
+      ],
+      "xrefs_to": [
+       {
+        "addr": 134217908,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134217926,
+      "esil": "0x80000e1,rip,=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217956,
+      "size": 2,
+      "opcode": "jmp 0x80000e1",
+      "disasm": "jmp 0x80000e1",
+      "bytes": "eb19",
+      "family": "cpu",
+      "type": "jmp",
+      "reloc": false,
+      "type_num": 1,
+      "type2_num": 0,
+      "jump": 134217953,
+      "xrefs_from": [
+       {
+        "addr": 134217953,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134217928,
+      "val": 2,
+      "esil": "2,0x4,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217951,
+      "size": 7,
+      "opcode": "mov dword [rbp-0x04], 0x02",
+      "disasm": "mov dword [var_ch], 0x02",
+      "bytes": "c745fc02000000",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0,
+      "flags": [
+       "case.0x80000b4.1"
+      ],
+      "xrefs_to": [
+       {
+        "addr": 134217908,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134217935,
+      "esil": "0x80000e1,rip,=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217956,
+      "size": 2,
+      "opcode": "jmp 0x80000e1",
+      "disasm": "jmp 0x80000e1",
+      "bytes": "eb10",
+      "family": "cpu",
+      "type": "jmp",
+      "reloc": false,
+      "type_num": 1,
+      "type2_num": 0,
+      "jump": 134217953,
+      "xrefs_from": [
+       {
+        "addr": 134217953,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134217937,
+      "val": 1,
+      "esil": "1,0x4,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217951,
+      "size": 7,
+      "opcode": "mov dword [rbp-0x04], 0x01",
+      "disasm": "mov dword [var_ch], 0x01",
+      "bytes": "c745fc01000000",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0,
+      "flags": [
+       "case.0x80000b4.0"
+      ],
+      "xrefs_to": [
+       {
+        "addr": 134217908,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134217944,
+      "esil": "0x80000e1,rip,=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217956,
+      "size": 2,
+      "opcode": "jmp 0x80000e1",
+      "disasm": "jmp 0x80000e1",
+      "bytes": "eb07",
+      "family": "cpu",
+      "type": "jmp",
+      "reloc": false,
+      "type_num": 1,
+      "type2_num": 0,
+      "jump": 134217953,
+      "xrefs_from": [
+       {
+        "addr": 134217953,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134217946,
+      "val": 0,
+      "esil": "0,0x4,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217951,
+      "size": 7,
+      "opcode": "mov dword [rbp-0x04], 0x00",
+      "disasm": "mov dword [var_ch], 0x00",
+      "bytes": "c745fc00000000",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217953,
+      "esil": "0x4,rbp,-,[4],rax,=",
+      "refptr": true,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217955,
+      "size": 3,
+      "opcode": "mov eax, dword [rbp-0x04]",
+      "disasm": "mov eax, dword [var_ch]",
+      "bytes": "8b45fc",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0,
+      "xrefs_to": [
+       {
+        "addr": 134217917,
+        "type": "CODE"
+       },
+       {
+        "addr": 134217926,
+        "type": "CODE"
+       },
+       {
+        "addr": 134217935,
+        "type": "CODE"
+       },
+       {
+        "addr": 134217944,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134217956,
+      "esil": "rsp,[8],8,rsp,+=,rbp,=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217957,
+      "size": 1,
+      "opcode": "pop rbp",
+      "disasm": "pop rbp",
+      "bytes": "5d",
+      "family": "cpu",
+      "type": "pop",
+      "reloc": false,
+      "type_num": 14,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217957,
+      "esil": "rsp,[8],rip,=,8,rsp,+=",
+      "refptr": false,
+      "fcn_addr": 134217840,
+      "fcn_last": 134217957,
+      "size": 1,
+      "opcode": "ret",
+      "disasm": "ret",
+      "bytes": "c3",
+      "family": "cpu",
+      "type": "ret",
+      "reloc": false,
+      "type_num": 5,
+      "type2_num": 0
+     }
+    ]
+   }
+  },
+  "aaa; afbj @ 0x80000f0": {
+   "command": "rizin -e scr.color=0 -qc 'aaa; afbj @ 0x80000f0' ledger-x86_64-O0.o",
+   "output": [
+    {
+     "jump": 134217993,
+     "opaddr": 134217968,
+     "addr": 134217968,
+     "size": 25,
+     "inputs": 0,
+     "outputs": 1,
+     "ninstr": 6,
+     "traced": true
+    },
+    {
+     "jump": 134218029,
+     "fail": 134218001,
+     "opaddr": 134217993,
+     "addr": 134217993,
+     "size": 8,
+     "inputs": 2,
+     "outputs": 2,
+     "ninstr": 3,
+     "traced": true
+    },
+    {
+     "jump": 134217993,
+     "opaddr": 134218001,
+     "addr": 134218001,
+     "size": 28,
+     "inputs": 1,
+     "outputs": 1,
+     "ninstr": 9,
+     "traced": true
+    },
+    {
+     "opaddr": 134218029,
+     "addr": 134218029,
+     "size": 5,
+     "inputs": 1,
+     "outputs": 0,
+     "ninstr": 3,
+     "traced": true
+    }
+   ]
+  },
+  "aaa; pdfj @ 0x80000f0": {
+   "command": "rizin -e scr.color=0 -qc 'aaa; pdfj @ 0x80000f0' ledger-x86_64-O0.o",
+   "output": {
+    "name": "sym.total",
+    "size": 66,
+    "addr": 134217968,
+    "ops": [
+     {
+      "offset": 134217968,
+      "esil": "rbp,8,rsp,-,=[8],8,rsp,-=",
+      "refptr": false,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218033,
+      "size": 1,
+      "opcode": "push rbp",
+      "disasm": "push rbp",
+      "bytes": "55",
+      "family": "cpu",
+      "type": "rpush",
+      "reloc": false,
+      "type_num": 268435468,
+      "type2_num": 0,
+      "flags": [
+       "sym.total"
+      ]
+     },
+     {
+      "offset": 134217969,
+      "esil": "rsp,rbp,=",
+      "refptr": false,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218031,
+      "size": 3,
+      "opcode": "mov rbp, rsp",
+      "disasm": "mov rbp, rsp",
+      "bytes": "4889e5",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217972,
+      "esil": "rdi,0x8,rbp,-,=[8]",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218030,
+      "size": 4,
+      "opcode": "mov qword [rbp-0x08], rdi",
+      "disasm": "mov qword [var_10h], rdi",
+      "bytes": "48897df8",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217976,
+      "esil": "esi,0xc,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218031,
+      "size": 3,
+      "opcode": "mov dword [rbp-0x0c], esi",
+      "disasm": "mov dword [var_14h], esi",
+      "bytes": "8975f4",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217979,
+      "val": 0,
+      "esil": "0,0x10,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218027,
+      "size": 7,
+      "opcode": "mov dword [rbp-0x10], 0x00",
+      "disasm": "mov dword [var_18h], 0x00",
+      "bytes": "c745f000000000",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217986,
+      "val": 0,
+      "esil": "0,0x14,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218027,
+      "size": 7,
+      "opcode": "mov dword [rbp-0x14], 0x00",
+      "disasm": "mov dword [var_1ch], 0x00",
+      "bytes": "c745ec00000000",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217993,
+      "esil": "0x14,rbp,-,[4],rax,=",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218031,
+      "size": 3,
+      "opcode": "mov eax, dword [rbp-0x14]",
+      "disasm": "mov eax, dword [var_1ch]",
+      "bytes": "8b45ec",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0,
+      "xrefs_to": [
+       {
+        "addr": 134218027,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134217996,
+      "esil": "0xc,rbp,-,[4],eax,==,$z,zf,:=,32,$b,cf,:=,$p,pf,:=,31,$s,sf,:=,0xc,rbp,-,[4],0x80000000,-,!,31,$o,^,of,:=,3,$b,af,:=",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218031,
+      "size": 3,
+      "opcode": "cmp eax, dword [rbp-0x0c]",
+      "disasm": "cmp eax, dword [var_14h]",
+      "bytes": "3b45f4",
+      "family": "cpu",
+      "type": "cmp",
+      "reloc": false,
+      "type_num": 268435471,
+      "type2_num": 0
+     },
+     {
+      "offset": 134217999,
+      "esil": "of,!,sf,^,?{,134218029,rip,=,}",
+      "refptr": false,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218032,
+      "size": 2,
+      "opcode": "jnl 0x800012d",
+      "disasm": "jnl 0x800012d",
+      "bytes": "7d1c",
+      "family": "cpu",
+      "type": "cjmp",
+      "reloc": false,
+      "type_num": 2147483649,
+      "type2_num": 0,
+      "jump": 134218029,
+      "fail": 134218001
+     },
+     {
+      "offset": 134218001,
+      "esil": "0x8,rbp,-,[8],rax,=",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218030,
+      "size": 4,
+      "opcode": "mov rax, qword [rbp-0x08]",
+      "disasm": "mov rax, qword [var_10h]",
+      "bytes": "488b45f8",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218005,
+      "esil": "32,0x14,rbp,-,[4],~,rcx,=",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218030,
+      "size": 4,
+      "opcode": "movsxd rcx, dword [rbp-0x14]",
+      "disasm": "movsxd rcx, dword [var_1ch]",
+      "bytes": "48634dec",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218009,
+      "esil": "rcx,4,*,rax,+,[4],rax,=",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218031,
+      "size": 3,
+      "opcode": "mov eax, dword [rax+rcx*4]",
+      "disasm": "mov eax, dword [rax+rcx*4]",
+      "bytes": "8b0488",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218012,
+      "esil": "0x10,rbp,-,[4],eax,+=,31,$o,of,:=,31,$s,sf,:=,$z,zf,:=,31,$c,cf,:=,$p,pf,:=,3,$c,af,:=",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218031,
+      "size": 3,
+      "opcode": "add eax, dword [rbp-0x10]",
+      "disasm": "add eax, dword [var_18h]",
+      "bytes": "0345f0",
+      "family": "cpu",
+      "type": "add",
+      "reloc": false,
+      "type_num": 17,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218015,
+      "esil": "eax,0x10,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218031,
+      "size": 3,
+      "opcode": "mov dword [rbp-0x10], eax",
+      "disasm": "mov dword [var_18h], eax",
+      "bytes": "8945f0",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218018,
+      "esil": "0x14,rbp,-,[4],rax,=",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218031,
+      "size": 3,
+      "opcode": "mov eax, dword [rbp-0x14]",
+      "disasm": "mov eax, dword [var_1ch]",
+      "bytes": "8b45ec",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218021,
+      "val": 1,
+      "esil": "1,eax,+=,31,$o,of,:=,31,$s,sf,:=,$z,zf,:=,31,$c,cf,:=,$p,pf,:=,3,$c,af,:=",
+      "refptr": false,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218031,
+      "size": 3,
+      "opcode": "add eax, 0x01",
+      "disasm": "add eax, 0x01",
+      "bytes": "83c001",
+      "family": "cpu",
+      "type": "add",
+      "reloc": false,
+      "type_num": 17,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218024,
+      "esil": "eax,0x14,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218031,
+      "size": 3,
+      "opcode": "mov dword [rbp-0x14], eax",
+      "disasm": "mov dword [var_1ch], eax",
+      "bytes": "8945ec",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218027,
+      "esil": "0x8000109,rip,=",
+      "refptr": false,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218032,
+      "size": 2,
+      "opcode": "jmp 0x8000109",
+      "disasm": "jmp 0x8000109",
+      "bytes": "ebdc",
+      "family": "cpu",
+      "type": "jmp",
+      "reloc": false,
+      "type_num": 1,
+      "type2_num": 0,
+      "jump": 134217993,
+      "xrefs_from": [
+       {
+        "addr": 134217993,
+        "type": "CODE"
+       }
+      ]
+     },
+     {
+      "offset": 134218029,
+      "esil": "0x10,rbp,-,[4],rax,=",
+      "refptr": true,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218031,
+      "size": 3,
+      "opcode": "mov eax, dword [rbp-0x10]",
+      "disasm": "mov eax, dword [var_18h]",
+      "bytes": "8b45f0",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218032,
+      "esil": "rsp,[8],8,rsp,+=,rbp,=",
+      "refptr": false,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218033,
+      "size": 1,
+      "opcode": "pop rbp",
+      "disasm": "pop rbp",
+      "bytes": "5d",
+      "family": "cpu",
+      "type": "pop",
+      "reloc": false,
+      "type_num": 14,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218033,
+      "esil": "rsp,[8],rip,=,8,rsp,+=",
+      "refptr": false,
+      "fcn_addr": 134217968,
+      "fcn_last": 134218033,
+      "size": 1,
+      "opcode": "ret",
+      "disasm": "ret",
+      "bytes": "c3",
+      "family": "cpu",
+      "type": "ret",
+      "reloc": false,
+      "type_num": 5,
+      "type2_num": 0
+     }
+    ]
+   }
+  },
+  "aaa; afbj @ 0x8000140": {
+   "command": "rizin -e scr.color=0 -qc 'aaa; afbj @ 0x8000140' ledger-x86_64-O0.o",
+   "output": [
+    {
+     "opaddr": 134218048,
+     "addr": 134218048,
+     "size": 39,
+     "inputs": 0,
+     "outputs": 0,
+     "ninstr": 12,
+     "traced": true
+    }
+   ]
+  },
+  "aaa; pdfj @ 0x8000140": {
+   "command": "rizin -e scr.color=0 -qc 'aaa; pdfj @ 0x8000140' ledger-x86_64-O0.o",
+   "output": {
+    "name": "sym.grade_label",
+    "size": 39,
+    "addr": 134218048,
+    "ops": [
+     {
+      "offset": 134218048,
+      "esil": "rbp,8,rsp,-,=[8],8,rsp,-=",
+      "refptr": false,
+      "fcn_addr": 134218048,
+      "fcn_last": 134218086,
+      "size": 1,
+      "opcode": "push rbp",
+      "disasm": "push rbp",
+      "bytes": "55",
+      "family": "cpu",
+      "type": "rpush",
+      "reloc": false,
+      "type_num": 268435468,
+      "type2_num": 0,
+      "flags": [
+       "sym.grade_label"
+      ]
+     },
+     {
+      "offset": 134218049,
+      "esil": "rsp,rbp,=",
+      "refptr": false,
+      "fcn_addr": 134218048,
+      "fcn_last": 134218084,
+      "size": 3,
+      "opcode": "mov rbp, rsp",
+      "disasm": "mov rbp, rsp",
+      "bytes": "4889e5",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218052,
+      "val": 16,
+      "esil": "16,rsp,-=,16,0x8000000000000000,-,!,63,$o,^,of,:=,63,$s,sf,:=,$z,zf,:=,$p,pf,:=,64,$b,cf,:=,3,$b,af,:=",
+      "refptr": false,
+      "fcn_addr": 134218048,
+      "fcn_last": 134218083,
+      "size": 4,
+      "opcode": "sub rsp, 0x10",
+      "disasm": "sub rsp, 0x10",
+      "bytes": "4883ec10",
+      "family": "cpu",
+      "type": "sub",
+      "reloc": false,
+      "type_num": 18,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218056,
+      "esil": "edi,0x4,rbp,-,=[4]",
+      "refptr": true,
+      "fcn_addr": 134218048,
+      "fcn_last": 134218084,
+      "size": 3,
+      "opcode": "mov dword [rbp-0x04], edi",
+      "disasm": "mov dword [var_ch], edi",
+      "bytes": "897dfc",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 268435465,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218059,
+      "esil": "0x4,rbp,-,[4],rdi,=",
+      "refptr": true,
+      "fcn_addr": 134218048,
+      "fcn_last": 134218084,
+      "size": 3,
+      "opcode": "mov edi, dword [rbp-0x04]",
+      "disasm": "mov edi, dword [var_ch]",
+      "bytes": "8b7dfc",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218062,
+      "esil": "134217840,rip,8,rsp,-=,rsp,=[],rip,=",
+      "refptr": false,
+      "fcn_addr": 134218048,
+      "fcn_last": 134218082,
+      "size": 5,
+      "opcode": "call 0x8000070",
+      "disasm": "call sym.grade",
+      "bytes": "e81dffffff",
+      "family": "cpu",
+      "type": "call",
+      "reloc": true,
+      "type_num": 3,
+      "type2_num": 0,
+      "jump": 134217840,
+      "fail": 134218067,
+      "xrefs_from": [
+       {
+        "addr": 134217840,
+        "type": "CALL"
+       }
+      ]
+     },
+     {
+      "offset": 134218067,
+      "esil": "32,eax,~,rcx,=",
+      "refptr": false,
+      "fcn_addr": 134218048,
+      "fcn_last": 134218084,
+      "size": 3,
+      "opcode": "movsxd rcx, eax",
+      "disasm": "movsxd rcx, eax",
+      "bytes": "4863c8",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218070,
+      "ptr": 134218112,
+      "esil": "0x23,rip,+,rax,=",
+      "refptr": true,
+      "fcn_addr": 134218048,
+      "fcn_last": 134218080,
+      "size": 7,
+      "opcode": "lea rax, qword [rip+0x23]",
+      "disasm": "lea rax, qword obj.labels",
+      "bytes": "488d0523000000",
+      "family": "cpu",
+      "type": "lea",
+      "reloc": true,
+      "type_num": 33,
+      "type2_num": 0,
+      "xrefs_from": [
+       {
+        "addr": 134218112,
+        "type": "DATA"
+       }
+      ]
+     },
+     {
+      "offset": 134218077,
+      "esil": "rcx,8,*,rax,+,[8],rax,=",
+      "refptr": true,
+      "fcn_addr": 134218048,
+      "fcn_last": 134218083,
+      "size": 4,
+      "opcode": "mov rax, qword [rax+rcx*8]",
+      "disasm": "mov rax, qword [rax+rcx*8]",
+      "bytes": "488b04c8",
+      "family": "cpu",
+      "type": "mov",
+      "reloc": false,
+      "type_num": 9,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218081,
+      "val": 16,
+      "esil": "16,rsp,+=,63,$o,of,:=,63,$s,sf,:=,$z,zf,:=,63,$c,cf,:=,$p,pf,:=,3,$c,af,:=",
+      "refptr": false,
+      "fcn_addr": 134218048,
+      "fcn_last": 134218083,
+      "size": 4,
+      "opcode": "add rsp, 0x10",
+      "disasm": "add rsp, 0x10",
+      "bytes": "4883c410",
+      "family": "cpu",
+      "type": "add",
+      "reloc": false,
+      "type_num": 17,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218085,
+      "esil": "rsp,[8],8,rsp,+=,rbp,=",
+      "refptr": false,
+      "fcn_addr": 134218048,
+      "fcn_last": 134218086,
+      "size": 1,
+      "opcode": "pop rbp",
+      "disasm": "pop rbp",
+      "bytes": "5d",
+      "family": "cpu",
+      "type": "pop",
+      "reloc": false,
+      "type_num": 14,
+      "type2_num": 0
+     },
+     {
+      "offset": 134218086,
+      "esil": "rsp,[8],rip,=,8,rsp,+=",
+      "refptr": false,
+      "fcn_addr": 134218048,
+      "fcn_last": 134218086,
+      "size": 1,
+      "opcode": "ret",
+      "disasm": "ret",
+      "bytes": "c3",
+      "family": "cpu",
+      "type": "ret",
+      "reloc": false,
+      "type_num": 5,
+      "type2_num": 0
+     }
+    ]
+   }
+  }
+ }
+}

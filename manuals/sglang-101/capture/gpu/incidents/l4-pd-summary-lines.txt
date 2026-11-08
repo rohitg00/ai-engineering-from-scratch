@@ -1,0 +1,14 @@
+# Benchmark summary lines of the prefill-decode runs on the two L4s, 2026-10-17. pd: prefill on the full card, decode on the shared card. pd-swap: the other way round.
+load/pd/c1-s1: Successful requests: 16 |Total generated tokens: 2048 |Total generated tokens (retokenized): 2048 |Output token throughput (tok/s): 5.60 |
+load/pd/c2-s1: Successful requests: 16 |Total generated tokens: 2048 |Total generated tokens (retokenized): 512 |Output token throughput (tok/s): 71.70 |
+load/pd/c4-s1: Successful requests: 16 |Total generated tokens: 2048 |Total generated tokens (retokenized): 0 |Output token throughput (tok/s): 2516.97 |
+rate/pd/r0.5-s1: Successful requests: 32 |Total generated tokens: 4096 |Total generated tokens (retokenized): 896 |Output token throughput (tok/s): 62.42 |
+rate/pd/r0.5-s2: Successful requests: 32 |Total generated tokens: 4096 |Total generated tokens (retokenized): 0 |Output token throughput (tok/s): 113.28 |
+rate/pd/r1-s1: Successful requests: 32 |Total generated tokens: 4096 |Total generated tokens (retokenized): 0 |Output token throughput (tok/s): 161.76 |
+rate/pd/r8-s1: Successful requests: 240 |Total generated tokens: 30720 |Total generated tokens (retokenized): 0 |Output token throughput (tok/s): 751.85 |
+load/pd-swap/c1-s1: Successful requests: 16 |Total generated tokens: 2048 |Total generated tokens (retokenized): 2048 |Output token throughput (tok/s): 15.09 |
+load/pd-swap/c2-s1: Successful requests: 16 |Total generated tokens: 2048 |Total generated tokens (retokenized): 2048 |Output token throughput (tok/s): 28.86 |
+load/pd-swap/c4-s1: Successful requests: 16 |Total generated tokens: 2048 |Total generated tokens (retokenized): 2048 |Output token throughput (tok/s): 54.99 |
+load/pd-swap/c8-s1: Successful requests: 32 |Total generated tokens: 4096 |Total generated tokens (retokenized): 4096 |Output token throughput (tok/s): 102.03 |
+load/pd-swap/c16-s1: Successful requests: 64 |Total generated tokens: 8192 |Total generated tokens (retokenized): 2048 |Output token throughput (tok/s): 338.44 |
+load/pd-swap/c32-s1: Successful requests: 128 |Total generated tokens: 16384 |Total generated tokens (retokenized): 0 |Output token throughput (tok/s): 333.41 |

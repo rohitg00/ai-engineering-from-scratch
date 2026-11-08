@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-3-1-title fig-3-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-1-title">More answers per prompt, same learning in 24 steps</title>
+  <desc id="fig-3-1-desc">Reward gain over the first 24 steps, the mean of steps 16 to 23 minus the mean of steps 0 to 7, for 4, 8, and 16 answers per prompt. 4 answers: +0.053. 8 answers, three seeds: +0.050, +0.038, +0.098. 16 answers: +0.097.</desc>
+  <line x1="60" y1="250" x2="620" y2="250" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="254" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.00</text>
+  <line x1="60" y1="40" x2="620" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.12</text>
+  <line x1="60" y1="250" x2="620" y2="250" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="40" x2="60" y2="250" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reward gain over 24 steps</text>
+  <rect x="86" y="157.71" width="60" height="92.29" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="116" y="151.71" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">+0.053</text>
+  <text x="116" y="267" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4, one seed</text>
+  <rect x="198" y="162.84" width="60" height="87.16" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="228" y="156.84" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">+0.050</text>
+  <text x="228" y="267" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8, seed 1234</text>
+  <rect x="310" y="184.2" width="60" height="65.8" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="340" y="178.2" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">+0.038</text>
+  <text x="340" y="267" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8, seed 2</text>
+  <rect x="422" y="78.25" width="60" height="171.75" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="452" y="72.25" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">+0.098</text>
+  <text x="452" y="267" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8, seed 3</text>
+  <rect x="534" y="79.53" width="60" height="170.47" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="564" y="73.53" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">+0.097</text>
+  <text x="564" y="267" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16, one seed</text>
+  <text x="340" y="284" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">answers per prompt</text>
+  <text x="60" y="316" font-size="12" class="m-serif">16 answers stayed inside the range of the three seeds at 8.</text>
+</svg>

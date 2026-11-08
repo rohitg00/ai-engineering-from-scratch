@@ -1,0 +1,11 @@
+$ docker-agent new --model dmr/ai/qwen3:4b 'an agent that greets the user and names one fact about Docker sandboxes'  (in work/, without a controlling terminal)
+
+Welcome to docker agent! 🚀
+
+For any feedback, please visit: https://docker.qualtrics.com/jfe/form/SV_cNsCIg92nQemlfw
+
+We collect anonymous usage data to help improve docker agent. To disable:
+  - Set environment variable: TELEMETRY_ENABLED=false
+
+Error: bubbletea: error opening TTY: bubbletea: could not open TTY: open /dev/tty: device not configured
+[exit 1]

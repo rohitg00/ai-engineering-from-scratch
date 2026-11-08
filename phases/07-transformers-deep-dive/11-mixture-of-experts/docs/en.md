@@ -11,7 +11,7 @@
 
 A dense transformer's FLOPs at inference equal its parameter count (times 2 for forward pass). Scale up a dense model and every token pays the full bill. By 2024 the frontier was hitting a compute wall: to be meaningfully smarter, you needed exponentially more FLOPs per token.
 
-Mixture of Experts breaks this link. Replace each FFN with `E` independent experts + a router that picks `k` experts per token. Total parameters = `E × FFN_size`. Active parameters per token = `k × FFN_size`. Typical 2026 configuration: `E=256`, `k=8`. Storage scales with `E`, compute scales with `k`.
+Mixture of Experts breaks this link. Replace each FFN with $E$ independent experts + a router that picks $k$ experts per token. Total parameters = $E \times \text{FFN size}$. Active parameters per token = $k \times \text{FFN size}$. Typical 2026 configuration: $E=256$, $k=8$. Storage scales with $E$, compute scales with $k$.
 
 The 2026 frontier is almost entirely MoE: DeepSeek-V3 (671B total / 37B active), Mixtral 8×22B, Qwen2.5-MoE, Llama 4, Kimi K2, gpt-oss. On Artificial Analysis's independent leaderboard, the top 10 open-source models are all MoE.
 
@@ -46,7 +46,7 @@ Every expert is an independent FFN (typically SwiGLU). The router is a single li
 If the router puts 90% of tokens through expert 3, the other experts starve. Three fixes have been tried:
 
 1. **Auxiliary load-balancing loss** (Switch Transformer, Mixtral). Add a penalty proportional to the variance in expert usage. Works, but adds a hyperparameter and a second gradient signal.
-2. **Expert capacity + token dropping** (early Switch). Each expert processes at most `C × N/E` tokens; overflow tokens skip the layer. Hurts quality.
+2. **Expert capacity + token dropping** (early Switch). Each expert processes at most $C \times N/E$ tokens; overflow tokens skip the layer. Hurts quality.
 3. **Auxiliary-loss-free balancing** (DeepSeek-V3). Add a learned per-expert bias that shifts the router's top-k selection. Bias is updated outside the training loss. No penalty on the main objective. 2024's big unlock.
 
 DeepSeek-V3's approach: after each training step, for every expert, check if its usage is above or below the target. Nudge the bias by `±γ`. Selection uses `scores + bias`. Expert probabilities used for gating are the raw `scores` unchanged. Decouples routing from expression.
@@ -59,7 +59,7 @@ DeepSeek-V2/V3 also split experts into *shared* and *routed*. Every token passes
 
 Classic MoE (GShard, Switch): each expert is as wide as a full FFN. `E` is small (8–64), `k` is small (1–2).
 
-Modern fine-grained MoE (DeepSeek-V3, Qwen-MoE): each expert is narrower (1/8 FFN size). `E` is large (256+), `k` is larger (8+). Same total parameters, but combinations scale much faster. `C(256, 8) = 400 trillion` possible "experts" per token. Quality goes up, latency stays flat.
+Modern fine-grained MoE (DeepSeek-V3, Qwen-MoE): each expert is narrower (1/8 FFN size). $E$ is large (256+), $k$ is larger (8+). Same total parameters, but combinations scale much faster. $\binom{256}{8} \approx 400$ trillion possible "experts" per token. Quality goes up, latency stays flat.
 
 ### The cost profile
 
@@ -159,7 +159,7 @@ See `outputs/skill-moe-configurator.md`. The skill picks E, k, and shared-expert
 | Auxiliary-loss-free | "DeepSeek-V3's trick" | Balance via per-expert bias on the router's selection only; no extra gradient. |
 | Shared expert | "Always on" | Extra expert through which every token passes; captures common knowledge. |
 | Expert parallelism | "Shard by expert" | Distribute different experts to different GPUs; route tokens across the network. |
-| Sparsity | "Active params < total params" | The ratio `k × expert_size / (E × expert_size)`; 37/671 ≈ 5.5% for DeepSeek-V3. |
+| Sparsity | "Active params < total params" | The ratio $k \times \text{expert size} / (E \times \text{expert size})$; 37/671 ≈ 5.5% for DeepSeek-V3. |
 
 ## Further Reading
 

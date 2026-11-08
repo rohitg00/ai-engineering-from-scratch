@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" role="img" aria-labelledby="fig-1-2-title fig-1-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-2-title">What SGLang owns</title>
+  <desc id="fig-1-2-desc">A stack of nine layers from the client at the top to the hardware at the bottom. SGLang owns the tokenizer manager, the scheduler, the KV pool with its radix cache, the forward pass, and the detokenizer. The model gateway is a separate component. The model weights decide answer quality, and the operator decides the memory budget.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">LAYER</text>
+  <text x="540" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">OWNER</text>
+  <rect x="20" y="30" width="500" height="40" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="32" y="45.25" font-size="12.5" font-weight="700">client</text>
+  <text x="32" y="62.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">curl, the OpenAI SDK, sglang.benchmark.serving</text>
+  <text x="540" y="55" font-size="12" fill="var(--m-ink-soft, #4a4a4a)">yours</text>
+  <rect x="20" y="78" width="500" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="32" y="93.25" font-size="12.5" font-weight="700">sgl-model-gateway</text>
+  <text x="32" y="110.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">routes requests across servers, section 6.4</text>
+  <text x="540" y="103" font-size="12" fill="var(--m-ink-soft, #4a4a4a)">separate</text>
+  <rect x="20" y="126" width="500" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="141.25" font-size="12.5" font-weight="700">TokenizerManager</text>
+  <text x="32" y="158.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HTTP and OpenAI API, text to token ids</text>
+  <text x="540" y="151" font-size="12" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">SGLang</text>
+  <rect x="20" y="174" width="500" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="189.25" font-size="12.5" font-weight="700">Scheduler</text>
+  <text x="32" y="206.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">batches, admission, retraction, overlap</text>
+  <text x="540" y="199" font-size="12" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">SGLang</text>
+  <rect x="20" y="222" width="500" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="32" y="237.25" font-size="12.5" font-weight="700">KV pool and UnifiedRadixCache</text>
+  <text x="32" y="254.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">181,574 slots, cached prefixes</text>
+  <text x="540" y="247" font-size="12" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">SGLang</text>
+  <rect x="20" y="270" width="500" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="32" y="285.25" font-size="12.5" font-weight="700">forward pass</text>
+  <text x="32" y="302.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">attention backend, CUDA graphs, MLX on a Mac</text>
+  <text x="540" y="295" font-size="12" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">SGLang</text>
+  <rect x="20" y="318" width="500" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="333.25" font-size="12.5" font-weight="700">DetokenizerManager</text>
+  <text x="32" y="350.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">token ids to text, stop strings, streaming</text>
+  <text x="540" y="343" font-size="12" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">SGLang</text>
+  <rect x="20" y="366" width="500" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="32" y="381.25" font-size="12.5" font-weight="700">model weights</text>
+  <text x="32" y="398.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mlx-community/Qwen3-0.6B-4bit, answer quality</text>
+  <text x="540" y="391" font-size="12" fill="var(--m-ink-soft, #4a4a4a)">the model</text>
+  <rect x="20" y="414" width="500" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="32" y="429.25" font-size="12.5" font-weight="700">memory budget and hardware</text>
+  <text x="32" y="446.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">--mem-fraction-static, other programs</text>
+  <text x="540" y="439" font-size="12" fill="var(--m-ink-soft, #4a4a4a)">operator</text>
+</svg>

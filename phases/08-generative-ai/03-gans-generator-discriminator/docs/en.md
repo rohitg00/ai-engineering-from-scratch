@@ -11,12 +11,12 @@
 
 VAEs produce blurry samples because their MSE decoder loss is Bayes-optimal for the *mean* image — and the mean of many plausible digits is a fuzzy digit. You want a loss that rewards *plausibility*, not pixel-wise proximity to any one target. There is no closed-form for plausibility. You have to learn it.
 
-Goodfellow's idea: train a classifier `D(x)` to distinguish real images from fakes. Train a generator `G(z)` to fool `D`. The loss signal for `G` is whatever `D` currently thinks makes something look real. This signal updates as `G` improves, chasing a moving target. If both networks converge, `G` has learned the data distribution without ever writing down `log p(x)`.
+Goodfellow's idea: train a classifier $D(x)$ to distinguish real images from fakes. Train a generator $G(z)$ to fool $D$. The loss signal for $G$ is whatever $D$ currently thinks makes something look real. This signal updates as $G$ improves, chasing a moving target. If both networks converge, $G$ has learned the data distribution without ever writing down `log p(x)`.
 
 This is adversarial training. The math is a minimax game:
 
-```
-min_G max_D  E_real[log D(x)] + E_fake[log(1 - D(G(z)))]
+```math
+\min_G \max_D \; \mathbb{E}_{\text{real}}[\log D(x)] + \mathbb{E}_{\text{fake}}[\log(1 - D(G(z)))]
 ```
 
 In 2026 GANs are no longer the SOTA generator (diffusion and flow matching ate that crown). But StyleGAN 2/3 remain the sharpest face models ever shipped, GAN discriminators are used as *perceptual losses* in diffusion training, and adversarial training powers the fast 1-step distillations (SDXL-Turbo, SD3-Turbo, LCM) that let you ship real-time diffusion.
@@ -25,20 +25,20 @@ In 2026 GANs are no longer the SOTA generator (diffusion and flow matching ate t
 
 ![GAN training: generator and discriminator in minimax](../assets/gan.svg)
 
-**Generator `G(z)`.** Maps a noise vector `z ~ N(0, I)` to a sample `x̂`. A decoder-shaped network (dense or transposed conv).
+**Generator $G(z)$.** Maps a noise vector $z \sim \mathcal{N}(0, I)$ to a sample $\hat{x}$. A decoder-shaped network (dense or transposed conv).
 
-**Discriminator `D(x)`.** Maps a sample to a scalar probability (or score). Real → 1, fake → 0.
+**Discriminator $D(x)$.** Maps a sample to a scalar probability (or score). Real → 1, fake → 0.
 
 **Loss.** Two alternating updates:
 
-- **Train `D`:** `loss_D = -[ log D(x) + log(1 - D(G(z))) ]`. Binary cross-entropy on real=1, fake=0.
-- **Train `G`:** `loss_G = -log D(G(z))`. This is the *non-saturating* form Goodfellow used (original `log(1 - D(G(z)))` saturates and kills gradients when `D` is confident).
+- **Train $D$:** $\text{loss}_D = -[ \log D(x) + \log(1 - D(G(z))) ]$. Binary cross-entropy on real=1, fake=0.
+- **Train $G$:** $\text{loss}_G = -\log D(G(z))$. This is the *non-saturating* form Goodfellow used (original $\log(1 - D(G(z)))$ saturates and kills gradients when $D$ is confident).
 
-**Training loop.** One step of `D`, one step of `G`. Repeat.
+**Training loop.** One step of $D$, one step of $G$. Repeat.
 
-**Why it works.** If `G` perfectly matches `p_data`, then `D` cannot do better than chance and outputs 0.5 everywhere; `G` gets no more gradient. Equilibrium.
+**Why it works.** If $G$ perfectly matches $p_{\text{data}}$, then $D$ cannot do better than chance and outputs 0.5 everywhere; $G$ gets no more gradient. Equilibrium.
 
-**Why it breaks.** Mode collapse (`G` finds one mode `D` can't classify and mints it forever), vanishing gradient (`D` learns too fast and `log D` saturates), training instability (learning rates, batch sizes, anything).
+**Why it breaks.** Mode collapse ($G$ finds one mode $D$ can't classify and mints it forever), vanishing gradient ($D$ learns too fast and $\log D$ saturates), training instability (learning rates, batch sizes, anything).
 
 ## Variants that made GANs work
 
@@ -63,7 +63,7 @@ gan-minimax
 
 ### Step 1: non-saturating loss
 
-The vanilla Goodfellow loss `log(1 - D(G(z)))` goes to 0 when D classifies G's fake as fake with high confidence. At that point the gradient for G is basically zero — G cannot improve. The non-saturating form `-log D(G(z))` has the opposite asymptote: it blows up when D is confident, giving G a strong signal.
+The vanilla Goodfellow loss $\log(1 - D(G(z)))$ goes to 0 when D classifies G's fake as fake with high confidence. At that point the gradient for G is basically zero — G cannot improve. The non-saturating form $-\log D(G(z))$ has the opposite asymptote: it blows up when D is confident, giving G a strong signal.
 
 ```python
 def g_loss(d_fake):
@@ -130,7 +130,7 @@ Save `outputs/skill-gan-debugger.md`. Skill takes a failing GAN run (loss curves
 ## Exercises
 
 1. **Easy.** Run `code/main.py` with the stock settings. Then set `D_LR = 5 * G_LR` and rerun. How fast does G's loss collapse to a constant?
-2. **Medium.** Replace the Goodfellow BCE loss with the WGAN loss: `loss_D = E[D(fake)] - E[D(real)]`, `loss_G = -E[D(fake)]`, and clip D's weights to `[-0.01, 0.01]`. Is training more stable? Compare wall-clock convergence.
+2. **Medium.** Replace the Goodfellow BCE loss with the WGAN loss: $\text{loss}_D = \mathbb{E}[D(\text{fake})] - \mathbb{E}[D(\text{real})]$, $\text{loss}_G = -\mathbb{E}[D(\text{fake})]$, and clip D's weights to `[-0.01, 0.01]`. Is training more stable? Compare wall-clock convergence.
 3. **Hard.** Extend the 1-D example to 2-D data (mixture of 8 Gaussians on a ring). Track how many of the 8 modes the generator captures at steps 1k, 5k, 10k. Implement minibatch discrimination and re-measure.
 
 ## Key Terms
@@ -139,8 +139,8 @@ Save `outputs/skill-gan-debugger.md`. Skill takes a failing GAN run (loss curves
 |------|-----------------|-----------------------|
 | Generator | "G" | Noise-to-sample network, `G: z → x̂`. |
 | Discriminator | "D" | Classifier `D: x → [0, 1]`, real vs fake. |
-| Minimax | "The game" | `min_G max_D` of a joint objective. |
-| Non-saturating loss | "The fix" | Use `-log D(G(z))` for G instead of `log(1 - D(G(z)))`. |
+| Minimax | "The game" | $\min_G \max_D$ of a joint objective. |
+| Non-saturating loss | "The fix" | Use $-\log D(G(z))$ for G instead of $\log(1 - D(G(z)))$. |
 | Mode collapse | "G memorized one thing" | Generator produces few distinct outputs despite diverse data. |
 | WGAN | "Wasserstein" | Replace BCE with Earth-Mover distance + gradient penalty; smoother gradient. |
 | Spectral norm | "Lipschitz trick" | Constrain D's weight norms to bound its slope; stabilizes training. |
@@ -150,7 +150,7 @@ Save `outputs/skill-gan-debugger.md`. Skill takes a failing GAN run (loss curves
 
 GANs no longer win on sample quality for open-domain generation, but they still win on inference cost. In production-inference literature vocabulary a GAN has:
 
-- **No prefill, no decode stages.** A single `G(z)` forward pass. TTFT ≈ total latency.
+- **No prefill, no decode stages.** A single $G(z)$ forward pass. TTFT ≈ total latency.
 - **No KV-cache pressure.** The only state is the weights. Batch size is bounded by activation memory, not cache.
 - **Trivial continuous batching.** Since every request takes the same fixed FLOPs, a static batch at the server's target occupancy is usually optimal. No in-flight scheduler needed.
 

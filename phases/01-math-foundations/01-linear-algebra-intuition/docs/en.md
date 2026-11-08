@@ -32,7 +32,7 @@ A vector is just a list of numbers. But those numbers mean something -- they're 
 |---|---|-------|
 | 3 | 2 | The vector points from origin (0,0) to (3, 2) on the plane |
 
-The vector has magnitude sqrt(3^2 + 2^2) = sqrt(13) and points up and to the right.
+The vector has magnitude $\sqrt{3^2 + 2^2} = \sqrt{13}$ and points up and to the right.
 
 In AI, vectors represent everything:
 - A word → a vector of 768 numbers (its "meaning" in embedding space)
@@ -71,19 +71,20 @@ In AI, matrices ARE the model:
 
 The dot product of two vectors tells you how similar they are.
 
-```
-a · b = a₁×b₁ + a₂×b₂ + ... + aₙ×bₙ
-
-Same direction:      a · b > 0  (similar)
-Perpendicular:       a · b = 0  (unrelated)
-Opposite direction:  a · b < 0  (dissimilar)
+```math
+\begin{aligned}
+a \cdot b &= a_1 \times b_1 + a_2 \times b_2 + \cdots + a_n \times b_n \\[4pt]
+\text{Same direction:} \quad a \cdot b &> 0 \quad \text{(similar)} \\
+\text{Perpendicular:} \quad a \cdot b &= 0 \quad \text{(unrelated)} \\
+\text{Opposite direction:} \quad a \cdot b &< 0 \quad \text{(dissimilar)}
+\end{aligned}
 ```
 
 This is literally how search engines, recommendation systems, and RAG work -- find vectors with high dot products.
 
 ### Linear Independence
 
-Vectors are linearly independent if no vector in the set can be written as a combination of the others. If v1, v2, v3 are independent, they span a 3D space. If one is a combination of the others, they only span a plane.
+Vectors are linearly independent if no vector in the set can be written as a combination of the others. If $v_1, v_2, v_3$ are independent, they span a 3D space. If one is a combination of the others, they only span a plane.
 
 Why it matters for AI: your feature matrix should have linearly independent columns. If two features are perfectly correlated (linearly dependent), the model cannot distinguish their effects. This causes multicollinearity in regression -- the weight matrix becomes unstable, and small input changes produce wild output swings.
 
@@ -95,7 +96,7 @@ v2 = [0, 1, 0]
 v3 = [2, 1, 0]   # v3 = 2*v1 + v2
 ```
 
-v1 and v2 are independent -- neither is a scalar multiple or combination of the other. But v3 = 2*v1 + v2, so {v1, v2, v3} is a dependent set. These three vectors all lie in the xy-plane. No matter how you combine them, you cannot reach [0, 0, 1]. You have three vectors but only two dimensions of freedom.
+$v_1$ and $v_2$ are independent -- neither is a scalar multiple or combination of the other. But $v_3 = 2 v_1 + v_2$, so $\lbrace v_1, v_2, v_3 \rbrace$ is a dependent set. These three vectors all lie in the xy-plane. No matter how you combine them, you cannot reach [0, 0, 1]. You have three vectors but only two dimensions of freedom.
 
 In a dataset: if feature_3 = 2*feature_1 + feature_2, adding feature_3 gives the model zero new information. Worse, it makes the normal equations singular -- there is no unique solution for the weights.
 
@@ -105,15 +106,15 @@ A basis is a minimal set of linearly independent vectors that span the entire sp
 
 The standard basis for 3D space is {[1,0,0], [0,1,0], [0,0,1]}. But any three independent vectors in 3D form a valid basis. The choice of basis is a choice of coordinate system.
 
-Rank of a matrix = number of linearly independent columns = number of linearly independent rows. If rank < min(rows, cols), the matrix is rank-deficient. This means:
+Rank of a matrix = number of linearly independent columns = number of linearly independent rows. If $\text{rank} < \min(\text{rows}, \text{cols})$, the matrix is rank-deficient. This means:
 - The system has infinitely many solutions (or none)
 - Information is lost in the transformation
 - The matrix cannot be inverted
 
 | Situation | Rank | What it means for ML |
 |-----------|------|---------------------|
-| Full rank (rank = min(m, n)) | Maximum possible | Unique least-squares solution exists. Model is well-conditioned. |
-| Rank deficient (rank < min(m, n)) | Below maximum | Features are redundant. Infinitely many weight solutions. Regularization needed. |
+| Full rank $(\text{rank} = \min(m, n))$ | Maximum possible | With at least as many rows as columns (full column rank), the least-squares solution is unique. With fewer rows than columns, infinitely many solutions fit exactly. |
+| Rank deficient $(\text{rank} < \min(m, n))$ | Below maximum | Features are redundant. Infinitely many weight solutions. Regularization needed. |
 | Rank 1 | 1 | Every column is a scaled copy of one vector. All data lies on a line. |
 | Near rank-deficient (small singular values) | Numerically low | Matrix is ill-conditioned. Tiny input noise causes large output changes. Use SVD truncation or ridge regression. |
 
@@ -121,11 +122,11 @@ Rank of a matrix = number of linearly independent columns = number of linearly i
 
 Projecting vector **a** onto vector **b** gives the component of **a** in the direction of **b**:
 
-```
-proj_b(a) = (a dot b / b dot b) * b
+```math
+\mathop{\mathrm{proj}}_b(a) = \frac{a \cdot b}{b \cdot b} \, b
 ```
 
-The residual (a - proj_b(a)) is perpendicular to b. This orthogonal decomposition is the foundation of least-squares fitting.
+The residual $(a - \mathop{\mathrm{proj}}_b(a))$ is perpendicular to $b$. This orthogonal decomposition is the foundation of least-squares fitting.
 
 Projection is everywhere in ML:
 - Linear regression minimizes the distance from observations to the column space -- the solution IS a projection
@@ -143,9 +144,9 @@ graph LR
     end
 ```
 
-**Example:** a = [3, 4], b = [1, 0]
+**Example:** $a = [3, 4]$, $b = [1, 0]$
 
-proj_b(a) = (3*1 + 4*0) / (1*1 + 0*0) * [1, 0] = 3 * [1, 0] = [3, 0]
+$\mathop{\mathrm{proj}}_b(a) = (3 \cdot 1 + 4 \cdot 0) / (1 \cdot 1 + 0 \cdot 0) \cdot [1, 0] = 3 \cdot [1, 0] = [3, 0]$
 
 The projection drops the y-component. This is dimensionality reduction in its simplest form -- throw away the directions you don't care about.
 
@@ -448,6 +449,20 @@ LoRA deserves special mention. It fine-tunes large language models by decomposin
 5. Create a 3x3 matrix with rank 2. Verify using the `rank()` method. Then explain what geometric object the columns span.
 6. Project the vector [1, 2, 3] onto [1, 1, 1]. What does the result represent geometrically?
 
+### Hints
+
+**Exercise 1.** Start from `cosine_similarity`, keep the value between -1 and 1, then take the arc cosine and convert radians to degrees. Check that `Vector([1, 0])` and `Vector([0, 1])` give 90 and that a vector with itself gives 0.
+
+**Exercise 2.** Put the two scale factors on the diagonal of a 2x2 matrix and put 0 in the other two cells. The result for [1, 1] must be [2, 3].
+
+**Exercise 3.** Compute the cosine similarity for every pair of the 5 vectors (10 pairs) and keep the largest value. Check your loop first with a vector against itself, which must give 1.
+
+**Exercise 4.** Use `gram_schmidt` on three independent vectors, then compute `dot` for each pair and `magnitude` for each vector. Compare with a tolerance such as `1e-9`, because floating point does not give exact zeros.
+
+**Exercise 5.** Make the third row or column the sum of the first two, so one direction repeats. `rank()` must return 2, and the columns then span a plane through the origin.
+
+**Exercise 6.** Compute the scale $\frac{a \cdot b}{b \cdot b}$ and multiply $b$ by it, or call `project_onto`. Check that the remainder $a$ minus the projection has a dot product of 0 with [1, 1, 1].
+
 ## Key Terms
 
 | Term | What people say | What it actually means |
@@ -461,3 +476,17 @@ LoRA deserves special mention. It fine-tunes large language models by decomposin
 | Projection | "The shadow" | The component of one vector in the direction of another |
 | Basis | "The coordinate axes" | A minimal set of independent vectors that span the space |
 | Orthonormal | "Perpendicular unit vectors" | Vectors that are mutually perpendicular and each have length 1 |
+
+## Summary
+
+| Formula | Meaning |
+|---------|---------|
+| $a \cdot b = \sum_i a_i b_i$ | Dot product. It measures alignment and is the core of attention scores and cosine similarity |
+| $\cos\theta = \frac{a \cdot b}{\lvert a\rvert \lvert b\rvert}$ | Angle between vectors. 1 is the same direction, 0 is orthogonal |
+| $\lvert a\rvert = \sqrt{a \cdot a}$ | Vector magnitude (length) |
+| $y = Ax, y_i = \sum_j A_{ij} x_j$ | Matrix-vector product. A neural-network layer applies it to every input |
+| $\text{proj}_b a = \frac{a \cdot b}{b \cdot b} b$ | Projection of $a$ onto $b$, the part of $a$ along $b$ |
+| $b^\perp = a - \text{proj}_b a$ | Component of $a$ perpendicular to $b$, used in Gram-Schmidt |
+| $\text{rank}(A) \leq \min(m,n)$ | Rank, the number of independent columns. It decides if $Ax = b$ has a solution |
+| $\Delta W = BA$, $B$ is 4096×16, $A$ is 16×4096 | Low-rank update. LoRA replaces a 4096×4096 update (16M parameters) with two rank-16 factors (131K parameters) |
+| Orthonormal basis: $\lvert v_i\rvert = 1, v_i \cdot v_j = 0$ | Stable, reversible transformations such as whitening and QR decomposition |

@@ -1,0 +1,141 @@
+### 1 · ping
+GET /api/ping HTTP/1.1
+Host: 127.0.0.1:8080
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: <http-date>
+
+{
+  "status": "ok"
+}
+
+### 2 · agents
+GET /api/agents HTTP/1.1
+Host: 127.0.0.1:8080
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: <http-date>
+
+[
+  {
+    "name": "pong",
+    "description": "Answers every message with the word pong.",
+    "multi": false
+  }
+]
+
+### 3 · create a session
+POST /api/sessions HTTP/1.1
+Host: 127.0.0.1:8080
+Content-Type: application/json
+
+{}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: <http-date>
+
+{
+  "id": "<uuid>",
+  "origin": "run",
+  "title": "",
+  "messages": null,
+  "created_at": "<ts>",
+  "tools_approved": false,
+  "hide_tool_results": false,
+  "SendUserMessage": true,
+  "max_iterations": 0,
+  "starred": false,
+  "input_tokens": "<n>",
+  "output_tokens": "<n>",
+  "cost": "<n>"
+}
+
+### 4 · run the agent (SSE)
+POST /api/sessions/<uuid>/agent/pong HTTP/1.1
+Host: 127.0.0.1:8080
+Accept: text/event-stream
+Content-Type: application/json
+
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "ping"
+    }
+  ]
+}
+
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Connection: keep-alive
+Content-Type: text/event-stream
+Date: <http-date>
+Transfer-Encoding: chunked
+
+data: {"agent_name": "root", "available_agents": [{"description": "Answers every message with the word pong.", "model": "ai/qwen3:4b", "name": "root", "provider": "dmr"}], "current_agent": "root", "timestamp": "<ts>", "type": "team_info"}
+
+data: {"agent_name": "root", "available_tools": 0, "loading": false, "timestamp": "<ts>", "type": "toolset_info"}
+
+data: {"message": "ping", "session_id": "<uuid>", "session_position": 0, "timestamp": "<ts>", "type": "user_message"}
+
+data: {"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "stream_started"}
+
+data: {"agent_name": "root", "available_tools": 0, "loading": false, "timestamp": "<ts>", "type": "toolset_info"}
+
+data: {"agent_name": "root", "description": "Answers every message with the word pong.", "model": "dmr/ai/qwen3:4b", "timestamp": "<ts>", "type": "agent_info"}
+
+data: {"agent_name": "root", "content": "pong", "message_id": "<uuid>", "session_id": "<uuid>", "timestamp": "<ts>", "type": "agent_choice"}
+
+data: {"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "message_added"}
+
+data: {"agent_name": "root", "session_id": "<uuid>", "timestamp": "<ts>", "type": "token_usage", "usage": {"context_length": "<n>", "context_limit": "<n>", "cost": "<n>", "input_tokens": "<n>", "last_message": {"Cost": 0, "Model": "dmr/ai/qwen3:4b", "cached_input_tokens": "<n>", "cached_write_tokens": "<n>", "finish_reason": "stop", "input_tokens": "<n>", "output_tokens": "<n>"}, "output_tokens": "<n>"}}
+
+data: {"agent_name": "root", "finish_reason": "stop", "reason": "normal", "session_id": "<uuid>", "timestamp": "<ts>", "type": "stream_stopped"}
+
+### 5 · read the session back
+GET /api/sessions/<uuid> HTTP/1.1
+Host: 127.0.0.1:8080
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: <http-date>
+
+{
+  "id": "<uuid>",
+  "title": "",
+  "messages": [
+    {
+      "agent_name": "",
+      "message": {
+        "role": "user",
+        "content": "ping",
+        "created_at": "<ts>"
+      }
+    },
+    {
+      "agent_name": "root",
+      "message": {
+        "message_id": "<uuid>",
+        "role": "assistant",
+        "content": "pong",
+        "reasoning_content": "Hmm, the user just said \"ping\". That's a simple command in networking that sends a test packet to a host. But they're asking me to respond with exactly \"pong\" - no extra words, nothing else.\n\nI recall the instruction says: \"Reply with exactly the word pong and nothing else.\" So I shouldn't add any explanations or context. The user seems to be testing if I follow precise instructions - maybe they're a developer checking API responses or just someone playing with chatbots.\n\nThe safest approach is to output just \"pong\" as requested. No punctuation, no capitalization changes - strictly the word \"pong\". I'll make sure there's nothing after it. \n\nThis is actually a fun little test of instruction-following precision. The user gets exactly what they asked for - a clean, minimal response. Perfect.\n",
+        "created_at": "<ts>",
+        "usage": {
+          "input_tokens": "<n>",
+          "output_tokens": "<n>",
+          "cached_input_tokens": "<n>",
+          "cached_write_tokens": "<n>"
+        },
+        "model": "dmr/ai/qwen3:4b",
+        "finish_reason": "stop"
+      }
+    }
+  ],
+  "created_at": "<ts>",
+  "tools_approved": false,
+  "input_tokens": "<n>",
+  "output_tokens": "<n>"
+}

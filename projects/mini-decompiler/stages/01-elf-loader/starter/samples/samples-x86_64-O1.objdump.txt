@@ -1,0 +1,71 @@
+
+samples-x86_64-O1.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <tenths_and_fifths>:
+       0: 48 63 c7                     	movslq	%edi, %rax
+       3: 48 69 c0 67 66 66 66         	imulq	$0x66666667, %rax, %rax # imm = 0x66666667
+       a: 48 89 c1                     	movq	%rax, %rcx
+       d: 48 c1 f9 22                  	sarq	$0x22, %rcx
+      11: 48 89 c2                     	movq	%rax, %rdx
+      14: 48 c1 ea 3f                  	shrq	$0x3f, %rdx
+      18: 01 d1                        	addl	%edx, %ecx
+      1a: 48 c1 f8 21                  	sarq	$0x21, %rax
+      1e: 01 d0                        	addl	%edx, %eax
+      20: 01 c8                        	addl	%ecx, %eax
+      22: c3                           	retq
+      23: 66 66 66 66 2e 0f 1f 84 00 00 00 00 00       	nopw	%cs:(%rax,%rax)
+
+0000000000000030 <thirds>:
+      30: 01 f7                        	addl	%esi, %edi
+      32: 48 63 c7                     	movslq	%edi, %rax
+      35: 48 69 c0 56 55 55 55         	imulq	$0x55555556, %rax, %rax # imm = 0x55555556
+      3c: 48 89 c1                     	movq	%rax, %rcx
+      3f: 48 c1 e9 3f                  	shrq	$0x3f, %rcx
+      43: 48 c1 e8 20                  	shrq	$0x20, %rax
+      47: 01 c8                        	addl	%ecx, %eax
+      49: c3                           	retq
+      4a: 66 0f 1f 44 00 00            	nopw	(%rax,%rax)
+
+0000000000000050 <band>:
+      50: b8 ff ff ff ff               	movl	$0xffffffff, %eax       # imm = 0xFFFFFFFF
+      55: 83 ff 05                     	cmpl	$0x5, %edi
+      58: 77 0c                        	ja	0x66 <band+0x16>
+      5a: 89 f8                        	movl	%edi, %eax
+      5c: 48 8d 0d 00 00 00 00         	leaq	(%rip), %rcx            # 0x63 <band+0x13>
+		000000000000005f:  R_X86_64_PC32	.rodata-0x4
+      63: 8b 04 81                     	movl	(%rcx,%rax,4), %eax
+      66: c3                           	retq
+      67: 66 0f 1f 84 00 00 00 00 00   	nopw	(%rax,%rax)
+
+0000000000000070 <fold>:
+      70: 85 f6                        	testl	%esi, %esi
+      72: 7e 1f                        	jle	0x93 <fold+0x23>
+      74: 89 f1                        	movl	%esi, %ecx
+      76: 31 d2                        	xorl	%edx, %edx
+      78: 31 f6                        	xorl	%esi, %esi
+      7a: 89 f0                        	movl	%esi, %eax
+      7c: 0f 1f 40 00                  	nopl	(%rax)
+      80: c1 e0 05                     	shll	$0x5, %eax
+      83: 29 f0                        	subl	%esi, %eax
+      85: 03 04 97                     	addl	(%rdi,%rdx,4), %eax
+      88: 48 ff c2                     	incq	%rdx
+      8b: 89 c6                        	movl	%eax, %esi
+      8d: 48 39 d1                     	cmpq	%rdx, %rcx
+      90: 75 ee                        	jne	0x80 <fold+0x10>
+      92: c3                           	retq
+      93: 31 c0                        	xorl	%eax, %eax
+      95: c3                           	retq
+      96: 66 2e 0f 1f 84 00 00 00 00 00	nopw	%cs:(%rax,%rax)
+
+00000000000000a0 <record>:
+      a0: 89 f0                        	movl	%esi, %eax
+      a2: 8b 0f                        	movl	(%rdi), %ecx
+      a4: ff c1                        	incl	%ecx
+      a6: 89 0f                        	movl	%ecx, (%rdi)
+      a8: 03 47 04                     	addl	0x4(%rdi), %eax
+      ab: 89 47 04                     	movl	%eax, 0x4(%rdi)
+      ae: 99                           	cltd
+      af: f7 f9                        	idivl	%ecx
+      b1: c3                           	retq

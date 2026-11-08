@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="fig-2-4-title fig-2-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-4-title">An FP8 KV cache holds twice the tokens in each GiB</title>
+  <desc id="fig-2-4-desc">Computed KV cache tokens that fit in one GiB for Qwen3-8B, which has 36 layers, 8 KV heads and a head size of 128. BF16 uses 2 bytes per value, 144 KiB per token, and holds 7,281 tokens per GiB. FP8 uses 1 byte per value, 72 KiB per token, and holds 14,563 tokens per GiB. These numbers come from the formula, not from a run.</desc>
+  <line x1="66" y1="250" x2="606" y2="250" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="254" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="66" y1="183.33" x2="606" y2="183.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="187.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">6,000</text>
+  <line x1="66" y1="116.67" x2="606" y2="116.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="120.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">12,000</text>
+  <line x1="66" y1="50" x2="606" y2="50" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="54" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">18,000</text>
+  <line x1="66" y1="250" x2="606" y2="250" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="50" x2="66" y2="250" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="66" y="38" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">KV tokens per GiB</text>
+  <rect x="146" y="169.1" width="110" height="80.9" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="201" y="163.1" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">7,281</text>
+  <text x="201" y="267" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">BF16, 144 KiB per token</text>
+  <rect x="416" y="88.19" width="110" height="161.81" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="471" y="82.19" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">14,563</text>
+  <text x="471" y="267" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">FP8, 72 KiB per token</text>
+  <text x="66" y="306" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Computed from the bytes per token. Our runs held the block count fixed.</text>
+</svg>

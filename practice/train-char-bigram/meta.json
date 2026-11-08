@@ -1,0 +1,40 @@
+{
+  "id": "train-char-bigram",
+  "title": "Train a character bigram language model",
+  "kind": "train",
+  "summary": "Train a table of next-character logits with gradient descent until the held-out negative log-likelihood beats a unigram model.",
+  "difficulty": "medium",
+  "tags": [
+    "language-model",
+    "bigram",
+    "cross-entropy",
+    "gradient-descent"
+  ],
+  "lesson": "phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer",
+  "cheatsheet": "text-processing-classic",
+  "minutes": 40,
+  "entry": [
+    "train",
+    "next_log_probs"
+  ],
+  "collections": [
+    "train-tiny-models",
+    "llm-inference"
+  ],
+  "time_limit_s": 15,
+  "budget": {
+    "steps": 300
+  },
+  "target": {
+    "metric": "held-out mean negative log-likelihood (nats per character)",
+    "value": 2.55
+  },
+  "mutants": {
+    "target_as_context": "Counts each next character as its own context, so the model never learns which character follows which.",
+    "reversed_pairs": "Swaps context and target, so the model predicts the previous character from the next one.",
+    "returns_logits": "Returns the raw logits from next_log_probs and forgets the log softmax.",
+    "lr_wrong_sign": "Adds the gradient to W instead of subtracting it, so the loss goes up.",
+    "global_rng": "Draws the first logits from np.random and not from the rng argument, so two runs with one seed differ.",
+    "over_budget": "Trains for 400 steps, more than the budget of 300."
+  }
+}

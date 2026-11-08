@@ -112,7 +112,7 @@ This is SRE-style incident response, applied to agent systems. The three roles c
 
 ### The failure-mode audit
 
-A 2026 best practice is an annual (or per-major-release) failure-mode audit:
+A 2026 best practice is a quarterly (and per-major-release) failure-mode audit:
 
 1. **Trace sample.** Collect ~1000 real execution traces.
 2. **Categorize.** For each trace's failures, map to MAST + Groupthink categories.

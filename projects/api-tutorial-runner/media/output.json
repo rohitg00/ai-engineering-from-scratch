@@ -1,0 +1,20 @@
+{
+  "title": "api-tutorial-runner",
+  "url": "http://127.0.0.1:8879/projects/api-tutorial-runner/solution/output/report.html",
+  "actions": [
+    [
+      "click",
+      "#step-read-loan summary"
+    ],
+    [
+      "fill",
+      "textarea[data-correction]",
+      "Replace bookName with title in the read-loan assertion; the response contains title."
+    ],
+    [
+      "click",
+      "input[data-approved]"
+    ]
+  ],
+  "kind": "browser capture"
+}

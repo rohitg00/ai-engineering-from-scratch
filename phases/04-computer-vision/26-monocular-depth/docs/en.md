@@ -83,14 +83,16 @@ Marigold (Ke et al., CVPR 2024) reframes depth estimation as conditional image-t
 
 To lift a pixel `(u, v)` with depth `d` to a 3D point `(X, Y, Z)` in camera coordinates:
 
-```
-fx, fy, cx, cy = camera intrinsics
-X = (u - cx) * d / fx
-Y = (v - cy) * d / fy
-Z = d
+```math
+\begin{aligned}
+f_x, f_y, c_x, c_y &= \text{camera intrinsics} \\
+X &= (u - c_x) \cdot d / f_x \\
+Y &= (v - c_y) \cdot d / f_y \\
+Z &= d
+\end{aligned}
 ```
 
-Intrinsics come from EXIF metadata, a calibration pattern, or a monocular intrinsics estimator (Perspective Fields, UniDepth). Without intrinsics, you can still render a point cloud by assuming a 60-70° FOV and moderate-resolution principals — usable for visualisation, not for measurement.
+Intrinsics come from EXIF metadata, a calibration pattern, or a monocular intrinsics estimator (Perspective Fields, UniDepth). Without intrinsics, you can still render a point cloud by assuming a 60-70° FOV and a principal point at the image centre. That is usable for visualisation, not for measurement.
 
 ### Evaluation
 
@@ -246,7 +248,7 @@ This lesson produces:
 | Monocular depth | "Single-image depth" | Depth estimation from one RGB frame, no stereo or LiDAR |
 | Relative depth | "Ordered depth" | Ordered z-values without real-world units |
 | Metric depth | "Absolute distance" | Depth in metres; requires calibration or a model trained with metric supervision |
-| AbsRel | "Absolute relative error" | Mean of |d_pred - d_gt| / d_gt; standard depth metric |
+| AbsRel | "Absolute relative error" | Mean of $\lvert d_{\text{pred}} - d_{\text{gt}} \rvert / d_{\text{gt}}$; standard depth metric |
 | Delta accuracy | "delta < 1.25" | Fraction of pixels with prediction within 25% of ground truth |
 | Pinhole camera | "fx, fy, cx, cy" | The camera model used to lift (u, v, d) to (X, Y, Z) |
 | DPT | "Dense Prediction Transformer" | The conv-based decoder used on top of frozen ViT encoders for depth |

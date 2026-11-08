@@ -1,0 +1,2 @@
+$ sglang serve --model-path Qwen/Qwen3-0.6B --cuda-graph-max-bs 8
+sglang serve: error: ambiguous option: --cuda-graph-max-bs could match --cuda-graph-max-bs-decode, --cuda-graph-max-bs-prefill

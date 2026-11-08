@@ -1,0 +1,35 @@
+version: "16"
+
+agents:
+  root:
+    model: local
+    description: Coordinates a writer and a reviewer.
+    instruction: |
+      You coordinate two colleagues and never write text yourself.
+      For every request: first call transfer_task to ask the writer for
+      the text, then call handoff to pass the conversation to the reviewer.
+    max_iterations: 6
+    sub_agents: [writer]
+    handoffs: [reviewer]
+    toolsets:
+      - type: background_agents
+
+  writer:
+    model: local
+    description: Writes one sentence on a given topic.
+    instruction: Write exactly one sentence on the requested topic and nothing else.
+    max_iterations: 3
+
+  reviewer:
+    model: local
+    description: Reviews the sentence it receives.
+    instruction: |
+      The conversation you receive contains one sentence written by a colleague.
+      Reply with the word APPROVED, a colon, and that sentence, and nothing else.
+    max_iterations: 3
+
+models:
+  local:
+    provider: dmr
+    model: ai/qwen3:4b
+    temperature: 0

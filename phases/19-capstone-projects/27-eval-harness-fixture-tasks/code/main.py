@@ -4,6 +4,8 @@ Eval harness for an agent: fixture tasks, scored samples, pass@k.
 See: phases/19-capstone-projects/27-eval-harness-fixture-tasks/docs/en.md
 Concept refs:
   - pass@k = 1 - (1 - p)^k where p is the empirical per-sample pass rate.
+    This is the plug-in estimate. Lesson 72 uses the unbiased estimator
+    1 - C(n - c, k) / C(n, k) for n samples with c passes.
   - Deterministic verifiers: file_equals, regex_match, shell_exit_zero.
 The demo at the bottom runs the bundled fixtures against the reference candidate.
 """
@@ -130,7 +132,7 @@ class EvalReport:
 
 
 def pass_at_k(empirical_pass_rate: float, k: int) -> float:
-    """Probability of at least one pass in k independent samples."""
+    """Plug-in estimate of at least one pass in k independent samples."""
 
     if k <= 0:
         return 0.0

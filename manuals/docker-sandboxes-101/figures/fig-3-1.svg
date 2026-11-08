@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" role="img" aria-labelledby="fig-3-1-title fig-3-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-1-title">The layers of m101-demo and its doors</title>
+  <desc id="fig-3-1-desc">A host row with the sbx CLI, the sandboxd daemon, the keychain, and the forward proxy on gateway.docker.internal:3128. Below a dashed hypervisor line sits the guest: the Linux 7.0.14 aarch64 kernel with 16384-byte pages on Ubuntu 26.04.1, containerd v2.3.5, a private Docker Engine 29.8.1, the agent container running as uid 1000 with sudo and docker groups, and the workspace mounted through virtiofs at the same path. A right column names five doors through the boundary: network, secret, MCP, SSH agent, and bind mount, each with the guest line that opens it.</desc>
+  <defs><marker id="fig-3-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-3-1-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker><marker id="fig-3-1-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-3-1-head-olive" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-olive-ink, #515f26)"/></marker><marker id="fig-3-1-head-grey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-grey-ink, #5e5e59)"/></marker><marker id="fig-3-1-head-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-green-ink, #336b40)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">HOST · MACOS 26.2 ARM64 · SBX 0.47.0</text>
+  <rect x="20" y="26" width="90" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="65" y="43.1" font-size="12" text-anchor="middle" font-weight="700">sbx</text>
+  <text x="65" y="60.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">CLI</text>
+  <rect x="118" y="26" width="150" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="193" y="43.1" font-size="12" text-anchor="middle" font-weight="700">sandboxd</text>
+  <text x="193" y="60.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sandboxd.sock</text>
+  <rect x="276" y="26" width="110" height="44" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="331" y="43.1" font-size="12" text-anchor="middle" font-weight="700">keychain</text>
+  <text x="331" y="60.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">secret store</text>
+  <rect x="394" y="26" width="226" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="507" y="43.1" font-size="12" text-anchor="middle" font-weight="700">forward proxy :3128</text>
+  <text x="507" y="60.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">gateway.docker.internal</text>
+  <line x1="20" y1="88" x2="620" y2="88" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect class="m-knock" x="17" y="72.42" width="223.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="20" y="83" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">hypervisor · kern.hv_support is 1</text>
+  <text x="20" y="110" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">GUEST · M101-DEMO</text>
+  <rect x="20" y="118" width="420" height="330" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="32" y="130" width="396" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="230" y="150.25" font-size="12.5" text-anchor="middle" font-weight="700">kernel Linux 7.0.14 aarch64</text>
+  <text x="230" y="167.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Ubuntu 26.04.1 LTS · getconf PAGESIZE 16384</text>
+  <rect x="32" y="192" width="396" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="230" y="212.25" font-size="12.5" text-anchor="middle" font-weight="700">containerd v2.3.5</text>
+  <text x="230" y="229.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">runc 1.5.1 · erofs root · overlay /</text>
+  <rect x="32" y="254" width="396" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="230" y="274.25" font-size="12.5" text-anchor="middle" font-weight="700">Docker Engine 29.8.1, private</text>
+  <text x="230" y="291.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">images and containers stay in the VM</text>
+  <rect x="32" y="316" width="396" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="230" y="336.25" font-size="12.5" text-anchor="middle" font-weight="700">agent container</text>
+  <text x="230" y="353.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">uid=1000(agent) groups sudo, docker</text>
+  <rect x="32" y="378" width="396" height="56" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="230" y="393.75" font-size="12.5" text-anchor="middle" font-weight="700">$CAPTURE/fixtures/repo</text>
+  <text x="230" y="411.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">virtiofs rw at the same path</text>
+  <text x="230" y="426.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/etc/resolv.conf: virtiofs ro bind</text>
+  <line x1="230" y1="180" x2="230" y2="191" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="230" y1="242" x2="230" y2="253" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="230" y1="304" x2="230" y2="315" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <text x="470" y="110" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">DOORS</text>
+  <rect x="460" y="130" width="160" height="50" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="540" y="150.1" font-size="12" text-anchor="middle" font-weight="700">network</text>
+  <text x="540" y="167.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">HTTPS_PROXY :3128</text>
+  <line x1="460" y1="155" x2="441" y2="155" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" marker-end="url(#fig-3-1-head-indigo)"/>
+  <rect x="460" y="192" width="160" height="50" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="540" y="212.1" font-size="12" text-anchor="middle" font-weight="700">secret</text>
+  <text x="540" y="229.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">proxy-managed sentinel</text>
+  <line x1="460" y1="217" x2="441" y2="217" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-teal)"/>
+  <rect x="460" y="254" width="160" height="50" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="540" y="274.1" font-size="12" text-anchor="middle" font-weight="700">MCP</text>
+  <text x="540" y="291.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">MCP_GATEWAY_URL</text>
+  <line x1="460" y1="279" x2="441" y2="279" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" marker-end="url(#fig-3-1-head-olive)"/>
+  <rect x="460" y="316" width="160" height="50" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="540" y="336.1" font-size="12" text-anchor="middle" font-weight="700">SSH agent</text>
+  <text x="540" y="353.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/run/ssh-agent.sock</text>
+  <line x1="460" y1="341" x2="441" y2="341" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.2" marker-end="url(#fig-3-1-head-grey)"/>
+  <rect x="460" y="378" width="160" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="540" y="398.1" font-size="12" text-anchor="middle" font-weight="700">bind mount</text>
+  <text x="540" y="415.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">host path, rw</text>
+  <line x1="460" y1="403" x2="441" y2="403" stroke="var(--m-green-ink, #336b40)" stroke-width="1.2" marker-end="url(#fig-3-1-head-green)"/>
+</svg>

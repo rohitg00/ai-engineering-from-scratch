@@ -1,0 +1,119 @@
+# command: r2 -e scr.color=0 -qc 'aaa; afl; pdf @ sym.div10s; pdc @ sym.div10s; pdf @ sym.table_switch; pdc @ sym.table_switch; pdf @ sym.mod8s; pdc @ sym.clamp_max; pdc @ sym.mod10s' idioms-x86_64-O2.o
+# version: radare2 6.2.4 +0 abi:152 @ darwin-arm_64
+HINT: Relocs not applied, some references may not resolve: use -e bin.relocs.apply=true
+INFO: Analyze all flags starting with sym. and entry0 (aa)
+INFO: Analyze imports (af@@@i)
+INFO: Name local plt stubs from their got relocs (anal.plt)
+INFO: Analyze symbols (af@@@s)
+INFO: Running plugin pre-analysis hooks
+INFO: Analyze all functions arguments/locals (afva@@F)
+INFO: Analyze function calls (aac)
+INFO: Analyze len bytes of instructions for references (aar)
+ERROR: invalid memory at 0x08000868
+INFO: Finding and parsing C++ vtables (avrr)
+INFO: Analyzing methods (af @@ method.*)
+INFO: Recovering local variables (afva@@@F)
+INFO: Type matching analysis for all functions (aaft)
+INFO: Propagate noreturn information (aanr)
+INFO: Use -AA or aaaa to perform additional experimental analysis
+0x08000040    1     16 sym.div10u
+0x08000050    1     24 sym.div10s
+0x08000070    1     23 sym.div7u
+0x08000090    1     24 sym.div3s
+0x080000b0    1     31 sym.mod10s
+0x080000d0    1     16 sym.mod8s
+0x080000e0    1      4 sym.mul9
+0x080000f0    1     19 sym.linear_switch
+0x08000110    3     23 sym.table_switch
+0x08000130    3     24 sym.call_switch
+0x08000160   12     68 sym.sparse_switch
+0x080001b0    1     23 sym.two_cases
+0x080001d0    1      8 sym.clamp_max
+0x080001e0    1      8 sym.abs_int
+0x080001f0    1      8 sym.is_pos
+0x08000200    2     16 sym.tail_caller
+0x08000210    1      4 sym.leaf_add
+0x08000220    1      6 sym.twice_sum
+0x08000230   10    140 sym.sum_n
+0x080002c0    1     27 sym.sum4
+0x080002e0    1     73 sym.poly8
+0x08000330    3     14 sym.fill
+0x08000340    2     16 sym.copy_n
+0x08000350    1      7 sym.copy16
+0x08000360   11    230 sym.digest
+┌ 24: sym.div10s (int64_t arg1);
+│ `- args(rdi)
+│           0x08000050      4863c7         movsxd rax, edi             ; arg1
+│           0x08000053      4869c06766..   imul rax, rax, 0x66666667
+│           0x0800005a      4889c1         mov rcx, rax
+│           0x0800005d      48c1e93f       shr rcx, 0x3f
+│           0x08000061      48c1f822       sar rax, 0x22
+│           0x08000065      01c8           add eax, ecx
+└           0x08000067      c3             ret
+// callconv: rax amd64 (rdi, rsi, rdx, rcx, r8, r9, stack);
+void sym.div10s (int64_t arg1) {
+    rax = edi     // arg1
+    rax = rax * 0x66666667
+    rcx = rax
+    rcx >>>= 0x3f
+    rax >>= 0x22
+    eax += ecx
+    return
+}
+
+┌ 23: sym.table_switch (uint64_t arg1);
+│ `- args(rdi)
+│           0x08000110      b8ffffffff     mov eax, 0xffffffff         ; -1
+│           0x08000115      83ff06         cmp edi, 6                  ; 6 ; arg1
+│       ┌─< 0x08000118      770c           ja 0x8000126
+│       │   0x0800011a      89f8           mov eax, edi                ; arg1
+│       │   0x0800011c      488d0d0000..   lea rcx, [0x08000123]           ; RELOC 32 .rodata @ 0x08000460 - 0x80000fb
+│       │   ; DATA XREF from sym.table_switch @ 0x800011c(r)
+│       │   0x08000123      8b0481         mov eax, dword [rcx + rax*4]
+│       │   ; CODE XREF from sym.table_switch @ 0x8000118(x)
+└       └─> 0x08000126      c3             ret
+// callconv: rax amd64 (rdi, rsi, rdx, rcx, r8, r9, stack);
+void sym.table_switch (uint64_t arg1) {
+    eax = 0xffffffff // -1
+    v = edi - 6   // 6 // arg1
+    if (((unsigned) v) <= 0) {
+        eax = edi     // arg1
+        rcx = rip     // 0x8000123; RELOC 32 .rodata @ 0x08000460 - 0x80000fb
+        // DATA XREF from sym.table_switch @ 0x800011c(r)
+        eax = dword [rcx + rax*4]
+    }
+    // CODE XREF from sym.table_switch @ 0x8000118(x)
+    return
+}
+
+┌ 16: sym.mod8s (int64_t arg1);
+│ `- args(rdi)
+│           0x080000d0      89f8           mov eax, edi                ; arg1
+│           0x080000d2      8d4807         lea ecx, [rax + 7]
+│           0x080000d5      85ff           test edi, edi               ; arg1
+│           0x080000d7      0f49cf         cmovns ecx, edi             ; arg1
+│           0x080000da      83e1f8         and ecx, 0xfffffff8         ; 4294967288
+│           0x080000dd      29c8           sub eax, ecx
+└           0x080000df      c3             ret
+// callconv: rax amd64 (rdi, rsi, rdx, rcx, r8, r9, stack);
+void sym.clamp_max (uint64_t arg1, int64_t arg2) {
+    eax = esi     // arg2
+    v = edi - esi // arg2
+    cmovg eax edi // arg1
+    return edi
+}
+
+// callconv: rax amd64 (rdi, rsi, rdx, rcx, r8, r9, stack);
+void sym.mod10s (int64_t arg1, int64_t arg2) {
+    rax = edi     // arg1
+    rcx = rax * 0x66666667
+    rdx = rcx     // arg2
+    rdx >>>= 0x3f
+    rcx >>= 0x22  // arg2
+    ecx += edx    // arg2
+    ecx += ecx    // arg2
+    ecx = rcx + rcx*4 // arg2
+    eax -= ecx    // arg2
+    return ecx
+}
+

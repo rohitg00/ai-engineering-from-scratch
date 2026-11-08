@@ -1,0 +1,1129 @@
+{
+  "open": false,
+  "cleanup_pending": false,
+  "capabilities": [
+    {
+      "provider": {
+        "id": "native-macos",
+        "name": "macOS native inspection utilities",
+        "version": null
+      },
+      "shared_limitations": [
+        "Availability and textual formats depend on the installed macOS/Xcode toolchain."
+      ],
+      "groups": [
+        {
+          "operations": [
+            "capture_native_ui_scenario",
+            "observe_native_calls"
+          ],
+          "effects": [
+            "launches_process",
+            "may_show_ui",
+            "may_access_network",
+            "may_write_filesystem"
+          ],
+          "limitations": [],
+          "available": true,
+          "reason": null,
+          "availability_code": null
+        },
+        {
+          "operations": [
+            "demangle_swift",
+            "inspect_macho",
+            "inspect_plist",
+            "inspect_signature",
+            "list_architectures"
+          ],
+          "effects": [
+            "launches_process"
+          ],
+          "limitations": [],
+          "available": true,
+          "reason": null,
+          "availability_code": null
+        },
+        {
+          "operations": [
+            "inspect_native_dispatch_metadata"
+          ],
+          "effects": [],
+          "limitations": [],
+          "available": true,
+          "reason": null,
+          "availability_code": null
+        },
+        {
+          "operations": [
+            "observe_native_ui"
+          ],
+          "effects": [
+            "launches_process",
+            "may_write_filesystem"
+          ],
+          "limitations": [],
+          "available": true,
+          "reason": null,
+          "availability_code": null
+        }
+      ]
+    },
+    {
+      "provider": {
+        "id": "rea-artifact-graph",
+        "name": "REA safe artifact graph provider",
+        "version": "1"
+      },
+      "shared_limitations": [
+        "DMG child inventory automatically uses a read-only native macOS mount; PKG remains root-hash-only.",
+        "ASAR files discovered in filesystem-backed inventories are expanded without bulk extraction; other nested containers remain recorded only."
+      ],
+      "groups": [
+        {
+          "operations": [
+            "decode_interface_builder",
+            "inspect_keyed_archive",
+            "trace_dylib_resolution"
+          ],
+          "effects": [],
+          "limitations": [],
+          "available": true,
+          "reason": null,
+          "availability_code": null
+        },
+        {
+          "operations": [
+            "extract_artifact",
+            "inspect_artifact"
+          ],
+          "effects": [
+            "launches_process",
+            "may_write_filesystem"
+          ],
+          "limitations": [],
+          "available": true,
+          "reason": null,
+          "availability_code": null
+        },
+        {
+          "operations": [
+            "inspect_asset_catalog"
+          ],
+          "effects": [
+            "launches_process"
+          ],
+          "limitations": [],
+          "available": true,
+          "reason": null,
+          "availability_code": null
+        }
+      ]
+    },
+    {
+      "provider": {
+        "id": "rea-dotnet-static",
+        "name": "REA managed static analysis provider",
+        "version": "1"
+      },
+      "shared_limitations": [],
+      "groups": [
+        {
+          "operations": [
+            "inspect_managed_artifact"
+          ],
+          "effects": [],
+          "limitations": [
+            "This capability inventories PE/CLI identity only; inspect_managed_members admits metadata members, signatures, and CIL anchors.",
+            "It never loads the target assembly, resolves dependencies through a CLR, decompiles C#, or executes target code."
+          ],
+          "available": true,
+          "reason": null,
+          "availability_code": null
+        },
+        {
+          "operations": [
+            "inspect_managed_members"
+          ],
+          "effects": [],
+          "limitations": [
+            "This capability decodes PE/CLI metadata members, signatures, and file-backed method bodies; decompiled C# reconstruction and cross-build member comparison are separate operations.",
+            "It never loads the target assembly, resolves dependencies through a CLR, decompiles C#, or executes target code."
+          ],
+          "available": true,
+          "reason": null,
+          "availability_code": null
+        },
+        {
+          "operations": [
+            "inspect_managed_native_boundaries"
+          ],
+          "effects": [],
+          "limitations": [
+            "This capability inventories managed declarations for native boundaries only; native exports, thunks, and addresses require separate native-provider evidence.",
+            "It never loads the target assembly, resolves dependencies through a CLR, decompiles C#, or executes target code."
+          ],
+          "available": true,
+          "reason": null,
+          "availability_code": null
+        }
+      ]
+    },
+    {
+      "provider": {
+        "id": "sqlite",
+        "name": "REA SQLite database inspector",
+        "version": null
+      },
+      "shared_limitations": [
+        "SQLite inspection requires Node.js 24.x >=24.15 or 26+ with the native DatabaseSync.limits API. Other REA features retain their published runtime requirements. The inspection worker verifies the API before querying the snapshot."
+      ],
+      "groups": [
+        {
+          "operations": [
+            "inspect_sqlite_database"
+          ],
+          "effects": [
+            "launches_process",
+            "may_write_filesystem"
+          ],
+          "limitations": [],
+          "available": false,
+          "reason": "SQLite inspection requires Node.js 24.x >=24.15 or 26+ with the native DatabaseSync.limits API. Other REA features retain their published runtime requirements. The inspection worker verifies the API before querying the snapshot.",
+          "availability_code": "unsupported_version"
+        }
+      ]
+    }
+  ],
+  "analysis_provider_binding": null,
+  "analysis_provider_candidates": [
+    {
+      "provider": {
+        "id": "ghidra",
+        "name": "Ghidra",
+        "version": null
+      },
+      "availability": {
+        "status": "available",
+        "code": null,
+        "reason": null,
+        "diagnostics": {
+          "install_dir": "/opt/homebrew/Cellar/ghidra/12.1.4/libexec",
+          "analyze_headless_path": "/opt/homebrew/Cellar/ghidra/12.1.4/libexec/support/analyzeHeadless",
+          "native_decompiler_path": "/opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/Decompiler/os/mac_arm_64/decompile",
+          "application_properties_path": "/opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/application.properties",
+          "provider_version": "12.1.4",
+          "java_command": "/opt/homebrew/opt/openjdk@21/bin/java",
+          "java_home": "/opt/homebrew/Cellar/openjdk@21/21.0.12.1/libexec/openjdk.jdk/Contents/Home",
+          "java_version": "21.0.12.1",
+          "java_vm_name": "OpenJDK 64-Bit Server VM",
+          "java_os_arch": "aarch64",
+          "java_os_name": "Mac OS X",
+          "platform": "darwin",
+          "architecture": "arm64",
+          "checks": [
+            {
+              "name": "configuration",
+              "ok": true,
+              "code": null,
+              "detail": "/opt/homebrew/Cellar/ghidra/12.1.4/libexec"
+            },
+            {
+              "name": "platform",
+              "ok": true,
+              "code": null,
+              "detail": "darwin"
+            },
+            {
+              "name": "architecture",
+              "ok": true,
+              "code": null,
+              "detail": "arm64"
+            },
+            {
+              "name": "installation",
+              "ok": true,
+              "code": null,
+              "detail": "/opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/application.properties"
+            },
+            {
+              "name": "version",
+              "ok": true,
+              "code": null,
+              "detail": "12.1.4"
+            },
+            {
+              "name": "headless",
+              "ok": true,
+              "code": null,
+              "detail": "/opt/homebrew/Cellar/ghidra/12.1.4/libexec/support/analyzeHeadless"
+            },
+            {
+              "name": "native_decompiler",
+              "ok": true,
+              "code": null,
+              "detail": "/opt/homebrew/Cellar/ghidra/12.1.4/libexec/Ghidra/Features/Decompiler/os/mac_arm_64/decompile reports mach-o arm64, which matches darwin/arm64"
+            },
+            {
+              "name": "java",
+              "ok": true,
+              "code": null,
+              "detail": "21.0.12.1; 64-bit; JDK; /opt/homebrew/Cellar/openjdk@21/21.0.12.1/libexec/openjdk.jdk/Contents/Home; accepted a 64-bit full JDK 21 or newer"
+            }
+          ]
+        }
+      },
+      "target_support": {
+        "status": "unknown",
+        "code": null,
+        "reason": "No target is open.",
+        "diagnostics": {}
+      },
+      "selected": false,
+      "capabilities": [
+        {
+          "provider": {
+            "id": "ghidra",
+            "name": "Ghidra",
+            "version": null
+          },
+          "shared_limitations": [
+            "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+            "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+            "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+            "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>."
+          ],
+          "groups": [
+            {
+              "operations": [
+                "address_name",
+                "inspect_native_data_type",
+                "inspect_native_instruction",
+                "procedure_callees",
+                "procedure_callers",
+                "procedure_info",
+                "resolve_native_call_targets"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "address_to_file_offset"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Offsets come from Ghidra source-byte mappings, not virtual-address arithmetic. Uninitialized memory, missing mappings and ambiguous mappings fail explicitly."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "analyze_function"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "References cover the complete Ghidra function-body AddressSet and exact entry. Dossier incoming edges omit sources owned by that function; procedure_references also retains those internal edges.",
+                "The dossier combines Ghidra FunctionManager, Listing, ReferenceManager, BasicBlockModel, and decompiler observations; provider-specific pseudocode and assembly are not cross-provider text invariants.",
+                "Resolved reference metadata identifies computed, indirect, external, call, jump, and data edges; unresolved targetless flows remain unknown, and function classifications distinguish thunks and externals.",
+                "Synthetic Ghidra entry-point references without actionable memory sources are omitted.",
+                "The Java bridge serializes one function request per Program and lets each decompilation run until it completes or the caller cancels."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "annotate_native_function"
+              ],
+              "effects": [
+                "mutates_artifact",
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Names use Ghidra USER_DEFINED source. Name writes accept a leaf name or a fully qualified name within the existing namespace; readback uses the fully qualified name and can be reused without adding namespace prefixes. Edits retain the current namespace; other namespace-like text remains literal leaf-name text. Regular comments map to PRE and inline comments to EOL at the exact function entry. Changes commit together after readback and refreshed analysis; failure rolls them all back.",
+                "Annotation text rejects NUL and unpaired Unicode surrogates before mutation, with the field and UTF-16 index in the error. Supported Unicode and line endings are preserved.",
+                "Metadata edits invalidate immutable analysis snapshots and are discarded on close. CLI returns the updated dossier before session cleanup; this is not a saved Ghidra project."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "inspect_native_load_image"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Independent verification covers admitted DOS MZ, explicitly selected COM with measured entry context, and caller-supplied raw-binary imports. Measured source mappings use inclusive end addresses and complete region digests; no target execution or project mutation occurs."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "list_documents"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "A headless Ghidra session contains exactly one imported Program, unlike Hopper's multi-document GUI session."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "list_names"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "The symbol inventory includes memory and external symbols, including dynamic symbols, but excludes variable and no-address namespace records."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "list_procedures",
+                "procedure_address"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "External functions and local thunks are distinct; procedure metadata identifies both and preserves a thunk target when Ghidra resolves one."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "list_segments"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Memory-block end addresses are exclusive; permissions come from Ghidra MemoryBlock flags rather than inference from section names."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "list_strings"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Only Ghidra-defined string Data is observed; packed or undefined string bytes may be absent. Completeness applies to that inventory, and an empty search does not establish that text is absent from the artifact. If an address is known, use read_bytes and xrefs to inspect bytes and references.",
+                "Charset is reported, while a non-missing terminator cannot distinguish a present terminator from a fixed or Pascal layout."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "procedure_assembly"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Assembly is Ghidra Listing text and does not claim textual equivalence with Hopper output."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "procedure_pseudo_code"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Pseudocode is Ghidra decompiler output, not original source and not text-equivalent to Hopper output.",
+                "External functions and functions without an analyzable body return null; other decompiler failures remain explicit."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "procedure_references"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "References cover the complete Ghidra function-body AddressSet and exact entry, including instruction-interior destinations and embedded-data sources; an enclosing address span does not establish function ownership.",
+                "Reference kinds are direct Ghidra ReferenceManager observations; unresolved computed flows without a target are absent and remain unknown.",
+                "Synthetic Ghidra entry-point references without actionable memory sources are omitted."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "read_binary_inventory_summary"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Only Ghidra-defined string Data is observed; packed or undefined string bytes may be absent. Completeness applies to that inventory, and an empty search does not establish that text is absent from the artifact. If an address is known, use read_bytes and xrefs to inspect bytes and references.",
+                "Counts use the complete defined-string inventory and the same local/external function inventory as list_strings and list_procedures. They do not establish discovery of undefined strings or unidentified functions.",
+                "Memory-block end addresses are exclusive; segment lengths use those observed address coordinates."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "read_bytes"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Bytes reflect Ghidra's initialized memory, including loader fixups. Reads stop at an unmapped or uninitialized byte and report completeness explicitly."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "read_function_instructions"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "This fast path reads only the requested function and does not invoke the decompiler or whole-program string/name inventories.",
+                "Instruction text is Ghidra-specific and does not claim textual equivalence with Hopper output."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "resolve_containing_procedure"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "An exact external entry resolves to its observed function identity even when its body is empty. This does not establish mapped executable bytes or containment of nearby external addresses."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "search_bytes"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Searches initialized loader-adjusted memory independently per block, in provider address order. Bounds and page coverage ends are inclusive. Uninitialized blocks are listed separately. Overlapping matches are included; patterns never cross block boundaries. A cursor resumes the same target, profile and query. Cancellation discards the active search and returns no successful partial page."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "search_procedures"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Regex mode uses Java Pattern semantics. Matcher or compiler stack exhaustion returns a resource constraint without closing the session; literal mode avoids regex recursion and returns complete matching values."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "search_strings"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Only Ghidra-defined string Data is observed; packed or undefined string bytes may be absent. Completeness applies to that inventory, and an empty search does not establish that text is absent from the artifact. If an address is known, use read_bytes and xrefs to inspect bytes and references.",
+                "Regex mode uses Java Pattern semantics. Matcher or compiler stack exhaustion returns a resource constraint without closing the session; literal mode avoids regex recursion and returns complete matching values."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "set_address_name",
+                "set_addresses_names"
+              ],
+              "effects": [
+                "mutates_artifact",
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Names use Ghidra USER_DEFINED source. A local function entry renames that function; any other mapped address receives a new or renamed primary label. Existing symbols retain their namespace and accept leaf names or qualified names within that namespace; qualified readback can be reused without adding namespace prefixes. Readback compares the primary symbol name.",
+                "set_addresses_names applies each address in its own transaction and reports per-address success; invalid names, unmapped addresses, and readback mismatches roll back only that address.",
+                "Metadata edits invalidate immutable analysis snapshots and are discarded on close; this is not a saved Ghidra project."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "xrefs"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "The direct address list projects exact Ghidra references to one address but does not expose their kinds; procedure_references and analyze_function preserve available kind metadata.",
+                "Synthetic Ghidra entry-point references without actionable memory sources are omitted."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "provider": {
+        "id": "hopper",
+        "name": "Hopper Disassembler",
+        "version": null
+      },
+      "availability": {
+        "status": "unavailable",
+        "code": "executable_missing",
+        "reason": "Hopper launcher is missing or not executable: /Applications/Hopper Disassembler.app/Contents/MacOS/hopper",
+        "diagnostics": {
+          "launcher_path": "/Applications/Hopper Disassembler.app/Contents/MacOS/hopper",
+          "platform": "darwin"
+        }
+      },
+      "target_support": {
+        "status": "unknown",
+        "code": null,
+        "reason": "No target is open.",
+        "diagnostics": {}
+      },
+      "selected": false,
+      "capabilities": [
+        {
+          "provider": {
+            "id": "hopper",
+            "name": "Hopper Disassembler",
+            "version": null
+          },
+          "shared_limitations": [
+            "Results depend on Hopper's completed static analysis."
+          ],
+          "groups": [
+            {
+              "operations": [
+                "address_name",
+                "comment",
+                "current_address",
+                "current_document",
+                "current_procedure",
+                "goto_address",
+                "inline_comment",
+                "list_bookmarks",
+                "list_documents",
+                "list_names",
+                "list_procedures",
+                "list_segments",
+                "next_address",
+                "prev_address",
+                "procedure_address",
+                "procedure_assembly",
+                "procedure_callees",
+                "procedure_callers",
+                "procedure_info",
+                "procedure_pseudo_code",
+                "procedure_references",
+                "read_bytes",
+                "read_function_instructions",
+                "resolve_containing_procedure",
+                "xrefs"
+              ],
+              "effects": [
+                "launches_process",
+                "may_show_ui"
+              ],
+              "limitations": [],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "address_to_file_offset"
+              ],
+              "effects": [
+                "launches_process",
+                "may_show_ui"
+              ],
+              "limitations": [
+                "Original-file coordinates require source bytes matching the selected executable digest. A changed, unavailable, or database-only source retains native mapping facts in partial error evidence."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "analyze_function",
+                "list_strings"
+              ],
+              "effects": [
+                "launches_process",
+                "may_show_ui"
+              ],
+              "limitations": [
+                "String values cover native typed objects. Hopper may split long literals into adjacent unterminated fragments; string searches match each object independently.",
+                "Undecodable typed objects retain native display text with an explicit decoding unknown; these values do not establish decoded source literals.",
+                "Reported string encodings are inferred from typed bytes and native display; the original source's intended encoding is unknown."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "search_bytes"
+              ],
+              "effects": [
+                "launches_process",
+                "may_show_ui"
+              ],
+              "limitations": [],
+              "available": false,
+              "reason": "Masked byte search has not been verified for Hopper.",
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "search_procedures"
+              ],
+              "effects": [
+                "launches_process",
+                "may_show_ui"
+              ],
+              "limitations": [
+                "Regex mode uses ECMAScript Unicode semantics in a cancellable worker with a 5-second matching deadline; matching failure leaves the service available. Literal mode retains native casefold semantics."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "search_strings"
+              ],
+              "effects": [
+                "launches_process",
+                "may_show_ui"
+              ],
+              "limitations": [
+                "Regex mode uses ECMAScript Unicode semantics in a cancellable worker with a 5-second matching deadline; matching failure leaves the service available. Literal mode retains native casefold semantics.",
+                "String values cover native typed objects. Hopper may split long literals into adjacent unterminated fragments; string searches match each object independently.",
+                "Undecodable typed objects retain native display text with an explicit decoding unknown; these values do not establish decoded source literals.",
+                "Reported string encodings are inferred from typed bytes and native display; the original source's intended encoding is unknown."
+              ],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "set_address_name",
+                "set_addresses_names",
+                "set_bookmark",
+                "set_comment",
+                "set_inline_comment",
+                "unset_bookmark"
+              ],
+              "effects": [
+                "mutates_artifact",
+                "launches_process",
+                "may_show_ui",
+                "may_write_filesystem"
+              ],
+              "limitations": [],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "provider": {
+        "id": "ida",
+        "name": "IDA MCP adapter",
+        "version": "1"
+      },
+      "availability": {
+        "status": "unavailable",
+        "code": "not_configured",
+        "reason": "Set REA_IDA_MCP_CONFIG to an upstream IDA MCP JSON registration; see docs/ida-provider.md.",
+        "diagnostics": {
+          "configured": false,
+          "live_connection_probed": false
+        }
+      },
+      "target_support": {
+        "status": "unknown",
+        "code": null,
+        "reason": "No target is open.",
+        "diagnostics": {}
+      },
+      "selected": false,
+      "capabilities": [
+        {
+          "provider": {
+            "id": "ida",
+            "name": "IDA MCP adapter",
+            "version": "1"
+          },
+          "shared_limitations": [
+            "Provider version identifies the REA IDA adapter. IDA engine and upstream distribution versions are unknown unless separately observed; MCP serverInfo is reported independently.",
+            "Results describe the current IDA analysis database. Input identity does not prove an unmodified database; patches, annotations, analysis completeness, and database revision remain unknown.",
+            "Live results are never replayed from analysis snapshots. Target checks before and after a request do not provide an atomic lock against external GUI changes.",
+            "Caller cancellation drains the in-flight MCP request before cleanup; it does not prove that IDA engine work was interrupted.",
+            "Headless workers are released through the upstream database lifecycle. Abrupt termination of REA, its proxy, or the supervisor cannot prove worker cleanup; inspect upstream inventory after an interrupted process.",
+            "Complete function body ranges, typed references, unresolved indirect calls, referenced data, and basic blocks are unavailable in this adapter. Empty unsupported dossier facets are unknown, not observed absence."
+          ],
+          "groups": [
+            {
+              "operations": [
+                "analyze_function",
+                "procedure_assembly",
+                "procedure_pseudo_code",
+                "read_function_instructions"
+              ],
+              "effects": [
+                "may_show_ui",
+                "may_access_network"
+              ],
+              "limitations": [],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            },
+            {
+              "operations": [
+                "list_documents",
+                "list_procedures",
+                "list_strings",
+                "procedure_address",
+                "procedure_callees",
+                "procedure_callers",
+                "search_procedures",
+                "search_strings",
+                "xrefs"
+              ],
+              "effects": [
+                "may_access_network"
+              ],
+              "limitations": [],
+              "available": true,
+              "reason": null,
+              "availability_code": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "provider": {
+        "id": "kuna",
+        "name": "Kuna",
+        "version": null
+      },
+      "availability": {
+        "status": "unavailable",
+        "code": "not_configured",
+        "reason": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
+        "diagnostics": {
+          "configured": false,
+          "version_probed": false
+        }
+      },
+      "target_support": {
+        "status": "unknown",
+        "code": null,
+        "reason": "No target is open.",
+        "diagnostics": {}
+      },
+      "selected": false,
+      "capabilities": [
+        {
+          "provider": {
+            "id": "kuna",
+            "name": "Kuna",
+            "version": null
+          },
+          "shared_limitations": [],
+          "groups": [
+            {
+              "operations": [
+                "address_name",
+                "list_procedures",
+                "procedure_address"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Kuna static analysis: addresses and bytes are its observations, procedure entries and extents its derivations, and pseudocode its reconstruction, never original source.",
+                "Kuna may split one function at an entry its own analysis infers; entry extents are upper bounds."
+              ],
+              "available": false,
+              "reason": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
+              "availability_code": "not_configured"
+            },
+            {
+              "operations": [
+                "analyze_function",
+                "procedure_assembly",
+                "procedure_pseudo_code"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Kuna static analysis: addresses and bytes are its observations, procedure entries and extents its derivations, and pseudocode its reconstruction, never original source.",
+                "Pseudocode and assembly are exact Kuna text, not comparable as equal or different with another provider's text.",
+                "Each buffered source facet admits at most 16777216 bytes before allocation; larger text stays accessible in the local project export."
+              ],
+              "available": false,
+              "reason": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
+              "availability_code": "not_configured"
+            },
+            {
+              "operations": [
+                "list_documents"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [],
+              "available": false,
+              "reason": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
+              "availability_code": "not_configured"
+            },
+            {
+              "operations": [
+                "list_strings"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Kuna static analysis: addresses and bytes are its observations, procedure entries and extents its derivations, and pseudocode its reconstruction, never original source.",
+                "Kuna scans its mapped sections or segments for printable runs of at least five characters, including unterminated fragments. Encodings are ASCII, UTF-8 and Latin-range UTF-16LE; other text can remain undiscovered. String scanning skips references; an empty search is not proof of absence."
+              ],
+              "available": false,
+              "reason": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
+              "availability_code": "not_configured"
+            },
+            {
+              "operations": [
+                "procedure_callees",
+                "procedure_callers"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Kuna static analysis: addresses and bytes are its observations, procedure entries and extents its derivations, and pseudocode its reconstruction, never original source.",
+                "Kuna reports call-kind edges between its discovered function nodes. Jump/data edges are excluded; unresolved indirect calls and targets outside that inventory remain unknown."
+              ],
+              "available": false,
+              "reason": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
+              "availability_code": "not_configured"
+            },
+            {
+              "operations": [
+                "search_procedures"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Kuna static analysis: addresses and bytes are its observations, procedure entries and extents its derivations, and pseudocode its reconstruction, never original source.",
+                "Kuna may split one function at an entry its own analysis infers; entry extents are upper bounds.",
+                "Regex mode uses ECMAScript Unicode semantics in a cancellable worker with a 5-second matching deadline; matching failure leaves the service available."
+              ],
+              "available": false,
+              "reason": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
+              "availability_code": "not_configured"
+            },
+            {
+              "operations": [
+                "search_strings"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Kuna static analysis: addresses and bytes are its observations, procedure entries and extents its derivations, and pseudocode its reconstruction, never original source.",
+                "Kuna scans its mapped sections or segments for printable runs of at least five characters, including unterminated fragments. Encodings are ASCII, UTF-8 and Latin-range UTF-16LE; other text can remain undiscovered. String scanning skips references; an empty search is not proof of absence.",
+                "Regex mode uses ECMAScript Unicode semantics in a cancellable worker with a 5-second matching deadline; matching failure leaves the service available."
+              ],
+              "available": false,
+              "reason": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
+              "availability_code": "not_configured"
+            },
+            {
+              "operations": [
+                "xrefs"
+              ],
+              "effects": [
+                "launches_process",
+                "may_write_filesystem"
+              ],
+              "limitations": [
+                "Kuna static analysis: addresses and bytes are its observations, procedure entries and extents its derivations, and pseudocode its reconstruction, never original source.",
+                "Kuna's static reference walk unifies forwarding aliases and omits references internal to that alias class. REA keeps only exact-address incoming edges; an empty result does not prove no reference exists."
+              ],
+              "available": false,
+              "reason": "Set REA_KUNA_COMMAND to the absolute path of a caller-supplied kuna executable (verified with 1.833). REA does not download, install or update Kuna.",
+              "availability_code": "not_configured"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "analysis_run": null,
+  "analysis_activity": {
+    "status": "not_observed",
+    "providers": []
+  },
+  "provider_operation_health": null,
+  "server_identity": {
+    "package": {
+      "name": "rea-agents",
+      "version": "6.7.0",
+      "root_path": "$HOME/.npm/_npx/<hash>/node_modules/rea-agents",
+      "build_commit": null
+    },
+    "server": {
+      "name": "rea",
+      "version": "6.7.0",
+      "started_at": "2026-10-18T09:47:44.450Z",
+      "command_path": "$HOME/.npm/_npx/<hash>/node_modules/rea-agents/scripts/rea.mjs"
+    },
+    "sdk": {
+      "server": "2.3.1",
+      "client_test": "2.3.1",
+      "core": "2.3.1"
+    },
+    "negotiated_protocol_version": null,
+    "client": null,
+    "skill": {
+      "name": "reverse-engineer-anything",
+      "expected_version": "42"
+    },
+    "catalog": {
+      "counts": {
+        "cli_commands": 153,
+        "mcp_tools": 207,
+        "mcp_prompts": 6
+      },
+      "digests": {
+        "tools_sha256": "af39310c9591bb981893ec0d2188b1bcf6e9cc8ba3ac513d5bbefc8ddcb85639",
+        "prompts_sha256": "7152916ab48bd2a9677a5ad9cdbde0a51dc53c113934952ad096e93f5f18aa7e",
+        "combined_sha256": "96d8f6e6ea1b1ba13557216624a3461c738729d53c79b4b0100d1f3a3a32441c"
+      }
+    },
+    "protocol_features": {
+      "progress": true,
+      "cancellation": true,
+      "elicitation": false
+    },
+    "alignment": {
+      "state": "unknown",
+      "reasons": [],
+      "remediation": "Supply expected package, catalog, or registration identity to compare the live server."
+    }
+  }
+}

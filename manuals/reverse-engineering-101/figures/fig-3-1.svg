@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="fig-3-1-title fig-3-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-1-title">The inspect-artifact record for ledger-arm64-O1</title>
+  <desc id="fig-3-1-desc">One Evidence record from the rea-artifact-graph provider. Its subject is ledger-arm64-O1, a 33872-byte Mach-O whose SHA-256 starts 01b5d08b. One substep, inventory_artifact, produced a manifest with one node, one occurrence and no edges. One unexplored branch says open_binary was not run, and the next probe names open_binary with authority native-analysis-provider.</desc>
+  <defs><marker id="fig-3-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-3-1-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE RECORD</text>
+  <text x="360" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT IT SAW</text>
+  <rect x="20" y="26" width="280" height="62" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="160" y="44.75" font-size="12.5" text-anchor="middle" font-weight="700">Evidence ev_0e878985</text>
+  <text x="160" y="62.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">operation inspect_artifact</text>
+  <text x="160" y="77.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">confidence observed · no analysis engine</text>
+  <rect x="360" y="26" width="260" height="62" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="490" y="44.75" font-size="12.5" text-anchor="middle" font-weight="700">subject ledger-arm64-O1</text>
+  <text x="490" y="62.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">format mach-o · 33872 bytes</text>
+  <text x="490" y="77.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sha256 starts 01b5d08b</text>
+  <line x1="300" y1="57" x2="359" y2="57" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <rect class="m-knock" x="305.8" y="40.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="329.5" y="51" font-size="11.5" text-anchor="middle">hashes</text>
+  <rect x="20" y="118" width="280" height="62" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="160" y="136.75" font-size="12.5" text-anchor="middle" font-weight="700">substep inventory_artifact</text>
+  <text x="160" y="154.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">status completed · its own Evidence</text>
+  <text x="160" y="169.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">manifest agm_8e2e5c4c · 1 node · 0 edges</text>
+  <line x1="160" y1="88" x2="160" y2="117" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <rect class="m-knock" x="165" y="91.53" width="33.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="168" y="102.5" font-size="11.5">runs</text>
+  <rect x="360" y="118" width="260" height="62" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="490" y="136.75" font-size="12.5" text-anchor="middle" font-weight="700">occurrence occ_35a9bb48</text>
+  <text x="490" y="154.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">logical_path . · entry_kind file</text>
+  <text x="490" y="169.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kind executable · hash verified</text>
+  <line x1="300" y1="149" x2="359" y2="149" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <rect class="m-knock" x="302.35" y="132.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="329.5" y="143" font-size="11.5" text-anchor="middle">records</text>
+  <rect x="20" y="210" width="280" height="62" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <text x="160" y="228.75" font-size="12.5" text-anchor="middle" font-weight="700">unexplored_branches[0]</text>
+  <text x="160" y="246.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reason format-specific-analysis-required</text>
+  <text x="160" y="261.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">open_binary was not run</text>
+  <line x1="160" y1="180" x2="160" y2="209" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-1-head-amber)"/>
+  <rect class="m-knock" x="165" y="183.53" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="168" y="194.5" font-size="11.5" fill="var(--m-amber-ink, #85590c)">leaves</text>
+  <rect x="360" y="210" width="260" height="62" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="490" y="228.75" font-size="12.5" text-anchor="middle" font-weight="700">next_probe open_binary</text>
+  <text x="490" y="246.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">authority native-analysis-provider</text>
+  <text x="490" y="261.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">bind one deep provider first</text>
+  <line x1="300" y1="241" x2="359" y2="241" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-1-head-amber)"/>
+  <rect class="m-knock" x="312.7" y="224.03" width="33.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="329.5" y="235" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">next</text>
+  <text x="20" y="304" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">coverage complete-within-substeps · 1 substep · 1 observation · 1 branch · 1 probe · 0 omitted</text>
+</svg>

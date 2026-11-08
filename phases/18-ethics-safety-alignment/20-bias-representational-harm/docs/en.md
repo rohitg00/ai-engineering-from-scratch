@@ -12,7 +12,7 @@
 - Define representational vs allocational harm and give one example of each in an LLM deployment.
 - Name the three evaluation-metric categories from Gallegos et al. 2024 and describe one metric from each.
 - Describe intersectionality and why WinoIdentity's uncertainty-based fairness measurement addresses gaps in single-axis bias evaluation.
-- Describe two mechanistic-interpretability approaches to bias (gender neurons, SAE features, attention-head manipulation).
+- Describe three mechanistic-interpretability approaches to bias (gender neurons, SAE features, attention-head manipulation).
 
 ## The Problem
 

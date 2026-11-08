@@ -1,0 +1,29 @@
+angr 10.0.3 convention-x86_64-linux-O2.o arch=AMD64
+[cc leaf_add]
+SimCCSystemVAMD64
+[prototype leaf_add]
+(long long (64 bits), long long (64 bits)) -> int (32 bits)
+[cc eight_args]
+SimCCSystemVAMD64
+[prototype eight_args]
+(long long (64 bits), long long (64 bits), long long (64 bits), long long (64 bits), long long (64 bits), long long (64 bits), long long (64 bits), long long (64 bits)) -> long long (64 bits)
+[cc mixed]
+SimCCSystemVAMD64
+[prototype mixed]
+(long long (64 bits), long long (64 bits), double, float) -> double
+[cc by_value]
+SimCCSystemVAMD64
+[prototype by_value]
+(long long (64 bits), long long (64 bits)) -> long long (64 bits)
+[cc big_ret]
+SimCCSystemVAMD64
+[prototype big_ret]
+(BOT*, long long (64 bits)) -> BOT*
+[cc sum_varargs]
+SimCCSystemVAMD64
+[prototype sum_varargs]
+(long long (64 bits), ...) -> long long (64 bits)
+[cc keeps]
+SimCCSystemVAMD64
+[prototype keeps]
+(long long (64 bits)) -> int (32 bits)

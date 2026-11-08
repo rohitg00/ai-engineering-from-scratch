@@ -11,7 +11,7 @@
 ## Learning Objectives
 
 - Implement LoRA by injecting low-rank adapter matrices (A and B) into a pretrained model's attention layers
-- Calculate the parameter savings of LoRA vs full fine-tuning: rank r with d_model dimensions trains 2*r*d parameters instead of d^2
+- Calculate the parameter savings of LoRA vs full fine-tuning: rank $r$ with $d_{\text{model}}$ dimensions trains $2 \cdot r \cdot d$ parameters instead of $d^2$
 - Fine-tune a model using QLoRA (4-bit quantized base + LoRA adapters) to fit within consumer GPU memory
 - Merge LoRA weights back into the base model for deployment and compare inference speed with and without adapters
 
@@ -37,21 +37,21 @@ Edward Hu and colleagues at Microsoft published LoRA in June 2021. The paper's i
 
 Here's the math. A standard linear layer computes:
 
-```
+```math
 y = Wx
 ```
 
-Where W is a d_out x d_in matrix. For a 4096x4096 attention projection, that's 16,777,216 parameters.
+Where $W$ is a $d_{\text{out}} \times d_{\text{in}}$ matrix. For a 4096x4096 attention projection, that's 16,777,216 parameters.
 
-LoRA freezes W and adds a low-rank decomposition:
+LoRA freezes $W$ and adds a low-rank decomposition:
 
-```
+```math
 y = Wx + BAx
 ```
 
-Where B is (d_out x r) and A is (r x d_in). The rank r is much smaller than d -- typically 8, 16, or 32.
+Where $B$ is $(d_{\text{out}} \times r)$ and $A$ is $(r \times d_{\text{in}})$. The rank $r$ is much smaller than $d$ -- typically 8, 16, or 32.
 
-For r=16 on a 4096x4096 layer:
+For $r=16$ on a 4096x4096 layer:
 - Original parameters: 4096 x 4096 = 16,777,216
 - LoRA parameters: (4096 x 16) + (16 x 4096) = 65,536 + 65,536 = 131,072
 - Reduction: 131,072 / 16,777,216 = 0.78%
@@ -76,18 +76,18 @@ A is initialized with a random Gaussian. B is initialized to zero. This means th
 
 ### The Scaling Factor: Alpha
 
-LoRA introduces a scaling factor alpha that controls how much the low-rank update affects the output:
+LoRA introduces a scaling factor $\alpha$ that controls how much the low-rank update affects the output:
 
-```
-y = Wx + (alpha / r) * BAx
+```math
+y = Wx + \frac{\alpha}{r} \cdot BAx
 ```
 
-When alpha = r, the scaling is 1x. When alpha = 2r (the common default), the scaling is 2x. This hyperparameter controls the learning rate of the LoRA path independently of the base learning rate.
+When $\alpha = r$, the scaling is 1x. When $\alpha = 2r$ (the common default), the scaling is 2x. This hyperparameter controls the learning rate of the LoRA path independently of the base learning rate.
 
 Practical guidance:
-- alpha = 2 * rank is a common community convention (the original paper used alpha = rank in most experiments)
-- alpha = rank gives 1x scaling, conservative but stable
-- Higher alpha means larger updates per step, which can speed convergence or cause instability
+- $\alpha = 2 \cdot \text{rank}$ is a common community convention (the original paper used $\alpha = \text{rank}$ in most experiments)
+- $\alpha = \text{rank}$ gives 1x scaling, conservative but stable
+- Higher $\alpha$ means larger updates per step, which can speed convergence or cause instability
 
 ### Where to Apply LoRA
 
@@ -104,7 +104,7 @@ The sweet spot for most tasks: q_proj + v_proj. This targets the query and value
 
 ### Rank Selection
 
-The rank r controls the expressiveness of the adaptation:
+The rank $r$ controls the expressiveness of the adaptation:
 
 | Rank | Trainable Params (per layer) | Best For |
 |------|---------------------------|----------|
@@ -115,7 +115,7 @@ The rank r controls the expressiveness of the adaptation:
 | 64 | 524,288 | Diminishing returns for most tasks |
 | 128 | 1,048,576 | Rarely justified |
 
-Hu et al. showed that r=4 already captures most of the adaptation for simple tasks. r=8 and r=16 are the most common choices in practice. Going beyond r=64 rarely improves quality and starts to lose LoRA's memory advantage.
+Hu et al. showed that $r=4$ already captures most of the adaptation for simple tasks. $r=8$ and $r=16$ are the most common choices in practice. Going beyond $r=64$ rarely improves quality and starts to lose LoRA's memory advantage.
 
 ### QLoRA: 4-Bit Quantization + LoRA
 
@@ -148,7 +148,7 @@ Does reducing parameters or quantizing the base hurt quality? The results from m
 | QLoRA r=16 (NF4) | 47.5 | 6.61 | 13.4 |
 | QLoRA r=64 (NF4) | 48.1 | 6.70 | 14.2 |
 
-LoRA at r=16 is within 1% of full fine-tuning on most benchmarks. QLoRA at r=16 loses another fraction of a percent. QLoRA at r=64 essentially matches full fine-tuning while using 90% less memory.
+LoRA at $r=16$ is within 1% of full fine-tuning on most benchmarks. QLoRA at $r=16$ loses another fraction of a percent. QLoRA at $r=64$ essentially matches full fine-tuning while using 90% less memory.
 
 ### Real-World Costs
 
@@ -183,7 +183,7 @@ After training, you have two things: the frozen base model and a small LoRA adap
 
 1. **Keep them separate**: Load the base model, load the adapter on top. Swap adapters for different tasks. This is how you serve multiple fine-tuned variants from one base model.
 
-2. **Merge them permanently**: Compute W' = W + (alpha/r) * BA and save the result as a new full model. The merged model is the same size as the original. No inference overhead. No adapter to manage.
+2. **Merge them permanently**: Compute $W' = W + (\alpha/r) \cdot BA$ and save the result as a new full model. The merged model is the same size as the original. No inference overhead. No adapter to manage.
 
 For serving multiple tasks (customer support adapter, code adapter, translation adapter), keep them separate. For deploying a single specialized model, merge.
 
@@ -531,11 +531,11 @@ This lesson produces:
 | LoRA | "Efficient fine-tuning" | Low-Rank Adaptation: freeze base weights, train two small matrices A and B whose product approximates the full weight update |
 | QLoRA | "Fine-tune on a laptop" | Quantized LoRA: load the base model in 4-bit NF4, train LoRA adapters in fp16 on top, enabling 7B fine-tuning in 6GB VRAM |
 | Rank (r) | "How much the model can learn" | The inner dimension of the A and B matrices; controls expressiveness vs. parameter count |
-| Alpha | "LoRA learning rate" | Scaling factor applied to the LoRA output; alpha/r scales the adaptation's contribution to the final output |
+| Alpha | "LoRA learning rate" | Scaling factor applied to the LoRA output; $\alpha/r$ scales the adaptation's contribution to the final output |
 | NF4 | "4-bit quantization" | Normal Float 4: a 4-bit data type with quantization levels at normal distribution quantiles, optimal for neural network weights |
 | Adapter | "The small trained part" | The LoRA A and B matrices saved as a separate file (10-100MB), loadable on top of any copy of the base model |
 | Target modules | "Which layers to LoRA" | The specific linear layers (q_proj, v_proj, etc.) where LoRA adapters are injected |
-| Merging | "Bake it in" | Computing W + (alpha/r) * BA and replacing the original weight, eliminating the adapter overhead at inference |
+| Merging | "Bake it in" | Computing $W + (\alpha/r) \cdot BA$ and replacing the original weight, eliminating the adapter overhead at inference |
 | Paged optimizers | "Don't OOM during training" | Offloading optimizer states (Adam momentum, variance) to CPU when GPU memory is exhausted |
 | Catastrophic forgetting | "Fine-tuning broke everything else" | When updating all weights causes the model to lose previously learned capabilities |
 

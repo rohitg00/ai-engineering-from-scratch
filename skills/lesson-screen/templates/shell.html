@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson screen</title>
+<script>
+(function () {
+  var t = localStorage.getItem('theme');
+  if (t !== 'light' && t !== 'dark') {
+    t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fafaf5;
+  --bg-surface: #f3f1e8;
+  --ink: #1a1a1a;
+  --ink-soft: #4a4a4a;
+  --ink-mute: #7a7a78;
+  --rule-soft: rgba(26, 26, 26, 0.16);
+  --blueprint: #3553ff;
+  --blueprint-tint: rgba(53, 83, 255, 0.08);
+  --blueprint-tint-strong: rgba(53, 83, 255, 0.18);
+  --warn: #b8870f;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Consolas', monospace;
+  --font-body: 'Source Serif 4', 'Source Serif Pro', 'Iowan Old Style', Georgia, serif;
+}
+[data-theme="dark"] {
+  --bg: #0a0d1a;
+  --bg-surface: #131830;
+  --ink: #e8e6dc;
+  --ink-soft: #a8a6a0;
+  --ink-mute: #7a7878;
+  --rule-soft: rgba(232, 230, 220, 0.18);
+  --blueprint: #6b8eff;
+  --blueprint-tint: rgba(107, 142, 255, 0.12);
+  --blueprint-tint-strong: rgba(107, 142, 255, 0.22);
+  --warn: #d4a83d;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--rule-soft);
+  background: var(--bg-surface);
+  flex-wrap: wrap;
+}
+.brand {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--blueprint);
+  padding-right: 12px;
+  border-right: 1px solid var(--rule-soft);
+  white-space: nowrap;
+}
+.screen-title {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 48ch;
+}
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.status .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink-mute);
+  display: inline-block;
+}
+.status.is-live .dot { background: var(--blueprint); }
+.status.is-reconnecting .dot { background: var(--warn); }
+.status.is-stopped .dot { background: var(--ink-mute); }
+.spacer { flex: 1; }
+.pill-latest {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--blueprint);
+  background: var(--blueprint-tint);
+  border: 1px solid var(--blueprint);
+  border-radius: 2px;
+  padding: 0 12px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.pill-latest.is-shown { display: inline-flex; align-items: center; }
+button, select {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+  min-height: 44px;
+  padding: 0 12px;
+  cursor: pointer;
+}
+select { max-width: 40ch; }
+button, select { transition: border-color 180ms cubic-bezier(0.23, 1, 0.32, 1), transform 160ms cubic-bezier(0.23, 1, 0.32, 1); }
+button:active:not(:disabled) { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) {
+  button:hover:not(:disabled), select:hover { border-color: var(--blueprint); }
+}
+button:disabled { opacity: 0.4; cursor: default; border-color: var(--rule-soft); }
+:focus-visible { outline: 2px solid var(--blueprint); outline-offset: 2px; }
+.stage { position: relative; flex: 1; min-height: 0; }
+iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--bg);
+}
+.empty {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  background:
+    radial-gradient(var(--rule-soft) 1px, transparent 1px) 0 0 / 22px 22px,
+    var(--bg);
+}
+.empty.is-shown { display: flex; }
+.stopped-note {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--warn);
+}
+.stopped-note.is-shown { display: inline; }
+@media (max-width: 720px) {
+  .screen-title { max-width: 100%; order: 3; flex-basis: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <span class="brand">Lesson screen</span>
+  <span class="screen-title" id="screenTitle"></span>
+  <span class="status" id="status"><span class="dot"></span><span id="statusText">Live</span></span>
+  <span class="stopped-note" id="stoppedNote">Ask your tutor to start the lesson screen again.</span>
+  <span class="spacer"></span>
+  <button type="button" class="pill-latest" id="latestPill">Latest</button>
+  <button type="button" id="prevBtn" aria-label="Previous screen">&larr; Prev</button>
+  <button type="button" id="nextBtn" aria-label="Next screen">Next &rarr;</button>
+  <select id="history" aria-label="Screen history"></select>
+  <button type="button" id="themeBtn" aria-label="Switch theme">Theme</button>
+</header>
+<main class="stage">
+  <iframe id="frame" title="Lesson screen content"></iframe>
+  <div class="empty" id="empty"><p>Waiting for your tutor. The first screen appears here when the lesson starts.</p></div>
+</main>
+<script>
+(function () {
+  var frame = document.getElementById('frame');
+  var empty = document.getElementById('empty');
+  var titleEl = document.getElementById('screenTitle');
+  var statusEl = document.getElementById('status');
+  var statusText = document.getElementById('statusText');
+  var stoppedNote = document.getElementById('stoppedNote');
+  var historyEl = document.getElementById('history');
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var latestPill = document.getElementById('latestPill');
+  var themeBtn = document.getElementById('themeBtn');
+
+  var screens = [];
+  var current = null;
+  var pinned = false;
+  var stopped = false;
+  var failCount = 0;
+  var probeTimer = null;
+
+  function setStatus(state) {
+    statusEl.className = 'status is-' + state;
+    if (state === 'live') {
+      statusText.textContent = 'Live';
+      stopped = false;
+      stoppedNote.classList.remove('is-shown');
+      failCount = 0;
+    } else if (state === 'reconnecting') {
+      statusText.textContent = 'Reconnecting';
+      stoppedNote.classList.remove('is-shown');
+    } else {
+      statusText.textContent = 'Stopped';
+      stopped = true;
+      stoppedNote.classList.add('is-shown');
+    }
+  }
+
+  function latest() {
+    return screens.length ? screens[screens.length - 1] : null;
+  }
+
+  function renderEmpty() {
+    var has = screens.length > 0;
+    empty.classList.toggle('is-shown', !has);
+    frame.style.visibility = has ? 'visible' : 'hidden';
+  }
+
+  function renderHistory() {
+    var keep = historyEl.value;
+    while (historyEl.firstChild) historyEl.removeChild(historyEl.firstChild);
+    screens.forEach(function (s) {
+      var opt = document.createElement('option');
+      opt.value = s.name;
+      var num = /^(\d+)/.exec(s.name);
+      opt.textContent = (num ? num[1] + ' \u00b7 ' : '') + (s.title || s.name);
+      historyEl.appendChild(opt);
+    });
+    if (current && screens.some(function (s) { return s.name === current; })) {
+      historyEl.value = current;
+    } else if (keep && screens.some(function (s) { return s.name === keep; })) {
+      historyEl.value = keep;
+    }
+    var idx = screens.findIndex(function (s) { return s.name === current; });
+    prevBtn.disabled = idx <= 0;
+    nextBtn.disabled = idx < 0 || idx >= screens.length - 1;
+  }
+
+  function renderPill() {
+    var last = latest();
+    var show = !!(pinned && last && current !== last.name);
+    latestPill.classList.toggle('is-shown', show);
+  }
+
+  function show(name) {
+    if (!name) return;
+    current = name;
+    frame.src = '/s/' + encodeURIComponent(name);
+    var row = screens.find(function (s) { return s.name === name; });
+    titleEl.textContent = row ? row.title : name;
+    historyEl.value = name;
+    renderHistory();
+    renderPill();
+  }
+
+  function update(list) {
+    screens = list || [];
+    renderEmpty();
+    var last = latest();
+    if (!pinned && last) show(last.name);
+    if (pinned && current && !screens.some(function (s) { return s.name === current; })) {
+      pinned = false;
+      if (last) show(last.name);
+    }
+    renderHistory();
+    renderPill();
+  }
+
+  function probe() {
+    if (stopped) return;
+    fetch('/health', { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) throw new Error('down');
+      return fetch('/screens', { cache: 'no-store' });
+    }).then(function (r) {
+      if (r && r.status === 403) { setStatus('stopped'); return; }
+      failCount = 0;
+    }).catch(function () {
+      failCount += 1;
+      if (failCount >= 2) setStatus('stopped');
+    });
+  }
+
+  function connect() {
+    var es = new EventSource('/live');
+    es.addEventListener('screens', function (e) {
+      setStatus('live');
+      try {
+        update(JSON.parse(e.data).screens);
+      } catch (err) {}
+    });
+    es.onerror = function () {
+      if (stopped) return;
+      setStatus('reconnecting');
+      if (!probeTimer) {
+        probe();
+        probeTimer = setInterval(probe, 4000);
+      }
+    };
+    es.onopen = function () {
+      setStatus('live');
+      if (probeTimer) {
+        clearInterval(probeTimer);
+        probeTimer = null;
+      }
+    };
+  }
+
+  historyEl.addEventListener('change', function () {
+    pinned = true;
+    show(historyEl.value);
+  });
+  prevBtn.addEventListener('click', function () {
+    var idx = screens.findIndex(function (s) { return s.name === current; });
+    if (idx > 0) {
+      pinned = true;
+      show(screens[idx - 1].name);
+    }
+  });
+  nextBtn.addEventListener('click', function () {
+    var idx = screens.findIndex(function (s) { return s.name === current; });
+    if (idx >= 0 && idx < screens.length - 1) {
+      pinned = true;
+      show(screens[idx + 1].name);
+    }
+  });
+  latestPill.addEventListener('click', function () {
+    pinned = false;
+    var last = latest();
+    if (last) show(last.name);
+  });
+  themeBtn.addEventListener('click', function () {
+    var now = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    var next = now === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+    themeBtn.textContent = 'Theme: ' + next;
+  });
+
+  window.addEventListener('storage', function (e) {
+    if (e.key !== 'theme' && e.key !== null) return;
+    var t = localStorage.getItem('theme');
+    if (t !== 'light' && t !== 'dark') t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+    themeBtn.textContent = 'Theme: ' + t;
+  });
+  var initial = document.documentElement.getAttribute('data-theme') || 'light';
+  themeBtn.textContent = 'Theme: ' + initial;
+  renderEmpty();
+  connect();
+})();
+</script>
+</body>
+</html>

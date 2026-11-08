@@ -51,7 +51,7 @@ Raw numbers are rarely model-ready. Common transforms:
 
 **Binning:** Converts continuous values into categories. Useful when the relationship between feature and target is non-linear but step-wise (e.g., age groups).
 
-**Polynomial features:** Creates x^2, x^3, x1*x2 terms. Lets linear models capture non-linear relationships at the cost of more features.
+**Polynomial features:** Creates $x^2$, $x^3$, $x_1 x_2$ terms. Lets linear models capture non-linear relationships at the cost of more features.
 
 ### Categorical Features
 
@@ -69,10 +69,12 @@ Models need numbers. Categories need encoding.
 
 **TF-IDF:** Term Frequency-Inverse Document Frequency. Weighs words by how unique they are across documents. Common words like "the" get low weight. Rare, distinctive words get high weight.
 
-```
-TF(word, doc) = count(word in doc) / total words in doc
-IDF(word) = log(total docs / docs containing word)
-TF-IDF = TF * IDF
+```math
+\begin{aligned}
+\text{TF}(\text{word}, \text{doc}) &= \frac{\text{count(word in doc)}}{\text{total words in doc}} \\
+\text{IDF}(\text{word}) &= \log \frac{\text{total docs}}{\text{docs containing word}} \\
+\text{TF-IDF} &= \text{TF} \cdot \text{IDF}
+\end{aligned}
 ```
 
 ### Missing Values
@@ -80,14 +82,14 @@ TF-IDF = TF * IDF
 Real data has holes. Strategies:
 
 - **Drop rows:** Only when missing data is rare and random
-- **Mean/median imputation:** Simple, preserves distribution shape (median is more robust to outliers)
+- **Mean/median imputation:** Simple, keeps the center of the feature (median is more robust to outliers), but shrinks its variance and piles every filled value onto one spike, so the distribution shape changes
 - **Mode imputation:** For categorical features
 - **Indicator column:** Add a binary column "was_this_missing" before imputing. The fact that data is missing can itself be informative
 - **Forward/backward fill:** For time series data
 
 ### Feature Interaction
 
-Sometimes the relationship is in the combination. "Height" and "weight" alone are less predictive than "BMI = weight / height^2". Feature interactions multiply the feature space, so use domain knowledge to pick the right ones.
+Sometimes the relationship is in the combination. "Height" and "weight" alone are less predictive than $\text{BMI} = \text{weight} / \text{height}^2$. Feature interactions multiply the feature space, so use domain knowledge to pick the right ones.
 
 ### Feature Selection
 

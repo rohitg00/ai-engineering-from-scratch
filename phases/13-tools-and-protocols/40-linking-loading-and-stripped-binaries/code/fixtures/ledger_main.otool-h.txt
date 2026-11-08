@@ -1,0 +1,4 @@
+ledger_main:
+Mach header
+      magic  cputype cpusubtype  caps    filetype ncmds sizeofcmds      flags
+ 0xfeedfacf 16777228          0  0x00           2    19       1296 0x00200085

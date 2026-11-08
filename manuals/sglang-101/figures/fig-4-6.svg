@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="fig-4-6-title fig-4-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-6-title">One EAGLE step with steps 3, topk 1, and 4 draft tokens</title>
+  <desc id="fig-4-6-desc">Four stages top to bottom. The draft model runs three steps and proposes draft tokens d1, d2, and d3. The target model runs one forward in TARGET_VERIFY mode over the draft positions. It accepts d1 and d2, rejects d3, and adds its own bonus token, so three tokens are committed and the acceptance length is 3. The draft model then reads the accepted tokens in DRAFT_EXTEND_V2 mode for the next step.</desc>
+  <defs><marker id="fig-4-6-head-plum" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-plum-ink, #8a3d72)"/></marker><marker id="fig-4-6-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">1 · DRAFT, NUM_STEPS 3, TOPK 1</text>
+  <rect x="20" y="28" width="120" height="44" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="80" y="45.25" font-size="12.5" text-anchor="middle" font-weight="700">d1</text>
+  <text x="80" y="62.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">draft step 1</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <line x1="140" y1="50" x2="169" y2="50" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-4-6-head-plum)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-plum-ink, #8a3d72)" opacity="0"><animateMotion path="M140 50 L169 50" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="170" y="28" width="120" height="44" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="230" y="45.25" font-size="12.5" text-anchor="middle" font-weight="700">d2</text>
+  <text x="230" y="62.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">draft step 2</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <line x1="290" y1="50" x2="319" y2="50" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-4-6-head-plum)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-plum-ink, #8a3d72)" opacity="0"><animateMotion path="M290 50 L319 50" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="320" y="28" width="120" height="44" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="380" y="45.25" font-size="12.5" text-anchor="middle" font-weight="700">d3</text>
+  <text x="380" y="62.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">draft step 3</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="104" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">2 · VERIFY, ONE TARGET FORWARD</text>
+  <line x1="320" y1="72" x2="320" y2="113" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-6-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M320 72 L320 113" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="325" y="81.53" width="102.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="328" y="92.5" font-size="11.5">4 draft tokens</text>
+  <rect x="20" y="114" width="600" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="133.25" font-size="12.5" text-anchor="middle" font-weight="700">target model, ForwardMode TARGET_VERIFY</text>
+  <text x="320" y="150.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">scores d1, d2, d3 and the next position with a tree mask</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="196" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">3 · ACCEPT THE LONGEST MATCH</text>
+  <line x1="310" y1="162" x2="310" y2="205" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-6-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M310 162 L310 205" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="20" y="206" width="130" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="85" y="224.25" font-size="12.5" text-anchor="middle" font-weight="700">d1</text>
+  <text x="85" y="241.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">accepted</text>
+  <rect x="170" y="206" width="130" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="235" y="224.25" font-size="12.5" text-anchor="middle" font-weight="700">d2</text>
+  <text x="235" y="241.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">accepted</text>
+  <rect x="320" y="206" width="130" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="385" y="224.25" font-size="12.5" text-anchor="middle" font-weight="700">d3</text>
+  <text x="385" y="241.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rejected</text>
+  <rect x="470" y="206" width="130" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="535" y="224.25" font-size="12.5" text-anchor="middle" font-weight="700">bonus</text>
+  <text x="535" y="241.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">from the target</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="286" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">4 · COMMIT AND REFILL</text>
+  <rect x="20" y="296" width="290" height="56" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="165" y="311.75" font-size="12.5" text-anchor="middle" font-weight="700">commit 3 tokens</text>
+  <text x="165" y="329.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">acceptance length 3</text>
+  <text x="165" y="344.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">d1, d2, bonus</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <line x1="310" y1="324" x2="329" y2="324" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-4-6-head-plum)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-plum-ink, #8a3d72)" opacity="0"><animateMotion path="M310 324 L329 324" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="330" y="296" width="290" height="56" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="475" y="311.75" font-size="12.5" text-anchor="middle" font-weight="700">draft model, DRAFT_EXTEND_V2</text>
+  <text x="475" y="329.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reads d1, d2, bonus</text>
+  <text x="475" y="344.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ready for the next step</text>
+  <text x="20" y="384" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">without speculation the same three tokens take three target forwards</text>
+  </g>
+</svg>

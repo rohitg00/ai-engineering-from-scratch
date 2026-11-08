@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-labelledby="fig-6-3-title fig-6-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-3-title">One disaggregated request</title>
+  <desc id="fig-6-3-desc">Four lifelines: client, gateway, prefill server with its bootstrap server on port 8998, and decode server. The client posts a request to the gateway. The gateway sends it with a bootstrap room to prefill and to decode at the same time. Decode looks up the prefill rank and sends the addresses of reserved KV slots. Prefill runs its forward pass and writes the KV pages into those slots by RDMA. Decode streams tokens to the client.</desc>
+  <defs><marker id="fig-6-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-6-3-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-6-3-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
+  <rect x="18" y="10" width="132" height="30" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="84" y="28.75" font-size="12.5" text-anchor="middle" font-weight="700">client</text>
+  <line x1="84" y1="40" x2="84" y2="370" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="176" y="10" width="132" height="30" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="242" y="28.75" font-size="12.5" text-anchor="middle" font-weight="700">gateway</text>
+  <line x1="242" y1="40" x2="242" y2="370" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="334" y="10" width="132" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="400" y="27.25" font-size="12.5" text-anchor="middle" font-weight="700">prefill</text>
+  <text x="400" y="44.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">bootstrap :8998</text>
+  <line x1="400" y1="54" x2="400" y2="370" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="492" y="10" width="132" height="30" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="558" y="28.75" font-size="12.5" text-anchor="middle" font-weight="700">decode</text>
+  <line x1="558" y1="40" x2="558" y2="370" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="92" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="96" font-size="11" text-anchor="middle">1</text>
+  <line x1="84" y1="92" x2="241" y2="92" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-3-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M84 92 L241 92" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="111.7" y="75.03" width="102.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="163" y="86" font-size="11.5" text-anchor="middle">POST /generate</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="140" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="144" font-size="11" text-anchor="middle">2</text>
+  <line x1="242" y1="140" x2="399" y2="140" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-3-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M242 140 L399 140" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="235.2" y="123.03" width="171.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="321" y="134" font-size="11.5" text-anchor="middle">request + bootstrap_room</text>
+  <rect class="m-knock" x="246.72" y="144.42" width="148.56" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="321" y="155" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one random 63-bit number</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="188" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="192" font-size="11" text-anchor="middle">3</text>
+  <line x1="242" y1="188" x2="557" y2="188" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-3-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M242 188 L557 188" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="317.65" y="171.03" width="164.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="400" y="182" font-size="11.5" text-anchor="middle">same request, same room</text>
+  <rect class="m-knock" x="334.63" y="192.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="400" y="203" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sent at the same time</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="236" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="240" font-size="11" text-anchor="middle">4</text>
+  <line x1="558" y1="236" x2="401" y2="236" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-3-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M558 236 L401 236" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="382.85" y="219.03" width="192.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="479" y="230" font-size="11.5" text-anchor="middle">/route, then slot addresses</text>
+  <rect class="m-knock" x="386.9" y="240.42" width="184.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="479" y="251" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">decode reserves KV slots first</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="284" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="288" font-size="11" text-anchor="middle">5</text>
+  <line x1="400" y1="284" x2="557" y2="284" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-6-3-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M400 284 L557 284" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="400.1" y="267.03" width="157.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="479" y="278" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">KV pages by RDMA write</text>
+  <rect class="m-knock" x="386.9" y="288.42" width="184.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="479" y="299" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">after the prefill forward pass</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="332" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="336" font-size="11" text-anchor="middle">6</text>
+  <line x1="558" y1="332" x2="85" y2="332" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-6-3-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M558 332 L85 332" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="276.6" y="315.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="321" y="326" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">token stream</text>
+  <rect class="m-knock" x="246.72" y="336.42" width="148.56" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="321" y="347" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">decode serves the client</text>
+  </g>
+</svg>

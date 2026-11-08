@@ -1,0 +1,151 @@
+name: Interview bank generate
+
+on:
+  workflow_dispatch:
+    inputs:
+      card:
+        description: 'Card id from interviews/topics.yaml, for example inference-serving'
+        required: true
+        default: ''
+      count:
+        description: 'Number of new questions. The generator writes 5 at most.'
+        required: false
+        default: '3'
+      model:
+        description: 'Model for the drafts. Opus is only for a manual run.'
+        required: false
+        default: 'haiku'
+        type: choice
+        options:
+          - haiku
+          - sonnet
+          - opus
+      token_budget:
+        description: 'Largest number of tokens for the whole run'
+        required: false
+        default: '600000'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: interviews-generate
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check for the API key
+        id: key
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::notice title=Interviews::ANTHROPIC_API_KEY is not set. Add it as a repository secret to turn on interview generation. Nothing to do."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        if: steps.key.outputs.ready == 'true'
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        if: steps.key.outputs.ready == 'true'
+        with:
+          node-version: '24'
+      - name: Check the inputs and the open pull requests
+        id: plan
+        if: steps.key.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CARD: ${{ inputs.card }}
+          COUNT: ${{ inputs.count }}
+          MODEL_INPUT: ${{ inputs.model }}
+          TOKEN_BUDGET: ${{ inputs.token_budget }}
+        run: |
+          set -euo pipefail
+          model="${MODEL_INPUT:-haiku}"
+          case "$model" in haiku|sonnet|opus) ;; *) echo "unknown model: $model"; exit 1 ;; esac
+          count="${COUNT:-3}"
+          budget="${TOKEN_BUDGET:-600000}"
+          [[ "$CARD" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]] || { echo "not a card id: $CARD"; exit 1; }
+          [[ "$count" =~ ^[0-9]+$ ]] || { echo "count must be a number"; exit 1; }
+          [[ "$budget" =~ ^[0-9]+$ ]] || { echo "token_budget must be a number"; exit 1; }
+          if [ "$count" -gt 5 ]; then count=5; fi
+          if [ "$count" -eq 0 ]; then
+            echo "::notice title=Interviews::The count is 0. Nothing to do."
+            echo "card=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          open="$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --limit 100 --json headRefName,isCrossRepository --jq '[.[] | select((.isCrossRepository | not) and (.headRefName | startswith("interviews/auto-")))] | length')"
+          if [ "$open" != "0" ]; then
+            echo "::notice title=Interviews::An interview bank pull request from this generator is already open. Merge or close it before the next run. Nothing to do."
+            echo "card=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          {
+            echo "card=$CARD"
+            echo "count=$count"
+            echo "model=$model"
+            echo "budget=$budget"
+            echo "open=$open"
+          } >> "$GITHUB_OUTPUT"
+      - name: Install the writer tools outside the repository
+        if: steps.key.outputs.ready == 'true' && steps.plan.outputs.card != ''
+        run: npm install --no-save --no-package-lock --prefix "$RUNNER_TEMP/gen" @anthropic-ai/sdk@0.134.0
+      - name: Write the questions
+        if: steps.key.outputs.ready == 'true' && steps.plan.outputs.card != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NODE_PATH: ${{ runner.temp }}/gen/node_modules
+          CARD: ${{ steps.plan.outputs.card }}
+          COUNT: ${{ steps.plan.outputs.count }}
+          MODEL: ${{ steps.plan.outputs.model }}
+          BUDGET: ${{ steps.plan.outputs.budget }}
+          OPEN: ${{ steps.plan.outputs.open }}
+        run: |
+          set -uo pipefail
+          node scripts/interviews/generate.js "$CARD" --count "$COUNT" --model "$MODEL" --token-budget "$BUDGET" --open-prs "$OPEN" --summary "$RUNNER_TEMP/summary.json" || true
+          test -s "$RUNNER_TEMP/summary.json"
+      - name: Report the run in the job summary
+        if: steps.key.outputs.ready == 'true' && steps.plan.outputs.card != ''
+        run: node scripts/interviews/report.js "$RUNNER_TEMP/summary.json" >> "$GITHUB_STEP_SUMMARY"
+      - name: Run the interview bank gates
+        if: steps.key.outputs.ready == 'true' && steps.plan.outputs.card != ''
+        run: |
+          set -euo pipefail
+          node scripts/interviews/validate.js
+          node --test scripts/interviews/test_validate.js scripts/interviews/test_generate.js site/test_interviews.js
+          node site/build-interviews.js --check
+      - name: Open a pull request for review
+        if: steps.key.outputs.ready == 'true' && steps.plan.outputs.card != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CARD: ${{ steps.plan.outputs.card }}
+        run: |
+          set -euo pipefail
+          node scripts/interviews/report.js "$RUNNER_TEMP/summary.json" --paths > "$RUNNER_TEMP/paths.txt"
+          if [ ! -s "$RUNNER_TEMP/paths.txt" ]; then
+            echo "::notice title=Interviews::No question was written."
+            exit 0
+          fi
+          branch="interviews/auto-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          xargs git add -- < "$RUNNER_TEMP/paths.txt"
+          if git diff --cached --name-only | grep -E '(^|/)README\.md$'; then
+            echo "a generated README is staged"
+            exit 1
+          fi
+          node scripts/interviews/report.js "$RUNNER_TEMP/summary.json" --pr > "$RUNNER_TEMP/body.md"
+          node scripts/interviews/report.js "$RUNNER_TEMP/summary.json" --commit > "$RUNNER_TEMP/commit.txt"
+          git commit -q -F "$RUNNER_TEMP/commit.txt"
+          git push -q "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$branch"
+          gh pr create --base main --head "$branch" --title "feat(interviews): new questions for ${CARD}" --body-file "$RUNNER_TEMP/body.md"

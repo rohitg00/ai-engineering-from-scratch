@@ -1,0 +1,12 @@
+{
+  "running": true,
+  "backends": {
+    "diffusers": "Not Installed",
+    "llama.cpp": "Running: llama.cpp b9879-metal (sha256:<digest>) 72874f5",
+    "mlx": "Not Installed: package not installed",
+    "vllm": "Not Installed"
+  },
+  "kind": "Docker Desktop",
+  "endpoint": "http://model-runner.docker.internal/v1/",
+  "endpointHost": "http://localhost/exp/vDD4.40/v1/"
+}

@@ -1,0 +1,6 @@
+Run e4-4b-lowmem on 2026-10-22: Qwen3-4B, --sglang-mem-fraction-static 0.2, default Ray memory threshold.
+(TrainerController pid=2518) ray.exceptions.OutOfMemoryError: 1 worker(s) were killed due to the node running low on memory. Memory on the node (IP: 172.17.0.3, ID: 52a2f7678ec4002fb0c757192d14dfb4606f3204b11008afe40fe377) was 119.18GB / 121.69GB (0.979391)
+(TrainerController pid=2518) Top 10 memory users: PID	MEM(GB)	COMMAND
+(TrainerController pid=2518) 2523	36.75	ray::FSDPTrainRayActor.train
+(TrainerController pid=2518) 3259	2.67	sglang::scheduler
+(TrainerController pid=2518) 2515	1.32	ray::RolloutExecutor

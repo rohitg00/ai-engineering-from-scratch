@@ -1,0 +1,18 @@
+$ curl -sS http://localhost:15000/v2/_catalog
+{"repositories":["m101/agent"]}
+[exit 0]
+
+$ curl -sS http://localhost:15000/v2/m101/agent/tags/list
+{"name":"m101/agent","tags":["v1"]}
+[exit 0]
+
+$ curl -sS -I -H 'Accept: application/vnd.oci.image.manifest.v1+json, application/vnd.oci.image.index.v1+json, application/vnd.docker.distribution.manifest.v2+json' http://localhost:15000/v2/m101/agent/manifests/v1
+HTTP/1.1 200 OK
+Content-Length: 704
+Content-Type: application/vnd.oci.image.manifest.v1+json
+Docker-Content-Digest: sha256:<digest>
+Docker-Distribution-Api-Version: registry/2.0
+Etag: "sha256:<digest>"
+X-Content-Type-Options: nosniff
+Date: <http-date>
+[exit 0]

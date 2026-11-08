@@ -22,8 +22,8 @@ Example input: "Release of a new English-Spanish conversational TTS. Need to con
 
 Example output:
 - Primary: UTMOS (paired audio samples on 50 prompts per language) + human-panel MOS (20 listeners per language, blind A/B vs baseline).
-- Secondary: TTFA median & P95 (must match baseline); SECS &gt; 0.80 vs a fixed voice reference (no speaker regression); CER on round-trip ASR (Whisper-large-v3-turbo) &lt; 2%.
-- Normalization: Whisper-normalizer English + Hugging Face multilingual-normalizer Spanish for round-trip WER.
+- Secondary: TTFA median & P95 (must match baseline); SECS &gt; 0.80 vs a fixed voice reference (no speaker regression); WER on round-trip ASR (Whisper-large-v3-turbo) &lt; 2% per language, English and Spanish (both are space-segmented, so WER fits; use CER for languages without word boundaries).
+- Normalization: `EnglishTextNormalizer` from the `openai-whisper` package for English, and its `BasicTextNormalizer` for Spanish and for code-switched prompts, applied to both reference and hypothesis before round-trip WER. The lesson's `wer()` helper is ASCII-only, so use these normalizers (or an external evaluator) for Spanish.
 - Public benchmark: TTS Arena (English) and Artificial Analysis Speech for relative ELO positioning. Target: within 50 ELO of the closest competitor.
 - In-house: 200 held-out prompts (100 per lang) covering money, dates, product names, 2-sentence narration, emotional read, code-switched. 10 demographic voices.
-- Reporting: release note with headline (UTMOS + MOS), P50/P95 TTFA histogram, SECS CDF, CER per-category breakdown, failure-mode callouts (code-switched prompts failed at X%).
+- Reporting: release note with headline (UTMOS + MOS), P50/P95 TTFA histogram, SECS CDF, WER/CER per-category breakdown, failure-mode callouts (code-switched prompts failed at X%).

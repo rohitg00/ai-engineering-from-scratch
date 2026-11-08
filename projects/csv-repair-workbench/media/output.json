@@ -1,0 +1,21 @@
+{
+  "title": "csv-repair-workbench",
+  "url": "http://127.0.0.1:8879/projects/csv-repair-workbench/solution/demo-output/review.html",
+  "actions": [
+    [
+      "fill",
+      "#filter",
+      "a"
+    ],
+    [
+      "js",
+      "document.querySelector('#filter').value='';document.querySelector('#filter').dispatchEvent(new Event('input'))"
+    ],
+    [
+      "fill",
+      "#decisions",
+      "{\"fingerprint\": \"d4403ab69f98f6066714b8681d1c44d80b8f53b3a7d3a20bcc1e149209dd3d88\", \"cells\": [{\"row\": 2, \"column\": \"date\", \"value\": \"2026-04-03\"}]}"
+    ]
+  ],
+  "kind": "browser capture"
+}

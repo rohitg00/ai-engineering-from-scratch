@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 250" role="img" aria-labelledby="fig-2-3-title fig-2-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-3-title">Why five requests fit in 4,096 tokens and six do not</title>
+  <desc id="fig-2-3-desc">Two bars show a KV pool of 4,096 tokens. In the first, five requests each reserve 256 prompt tokens and 512 output tokens, 3,840 tokens in all, with 256 tokens free. In the second, a sixth request would need 768 more tokens and runs 512 tokens past the end of the pool, so the scheduler keeps it waiting.</desc>
+  <line x1="561.52" y1="30" x2="561.52" y2="176" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="565.52" y="26" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">pool end</text>
+  <text x="70" y="26" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ADMITTED: FIVE REQUESTS</text>
+  <rect x="70" y="36" width="30.72" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="100.72" y="36" width="61.44" height="28" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="162.16" y="36" width="30.72" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="192.88" y="36" width="61.44" height="28" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="254.32" y="36" width="30.72" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="285.04" y="36" width="61.44" height="28" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="346.48" y="36" width="30.72" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="377.2" y="36" width="61.44" height="28" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="438.64" y="36" width="30.72" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="469.36" y="36" width="61.44" height="28" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="530.8" y="36" width="30.72" height="28" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="70" y="84" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">each request reserves 256 prompt + 512 output = 768 tokens</text>
+  <text x="70" y="120" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A SIXTH REQUEST WOULD NEED 4,608</text>
+  <rect x="70" y="130" width="30.72" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="100.72" y="130" width="61.44" height="28" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="162.16" y="130" width="30.72" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="192.88" y="130" width="61.44" height="28" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="254.32" y="130" width="30.72" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="285.04" y="130" width="61.44" height="28" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="346.48" y="130" width="30.72" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="377.2" y="130" width="61.44" height="28" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="438.64" y="130" width="30.72" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="469.36" y="130" width="61.44" height="28" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="530.8" y="130" width="30.72" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="561.52" y="130" width="61.44" height="28" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <line x1="70" y1="182" x2="561.52" y2="182" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="178" x2="70" y2="186" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="530.8" y1="178" x2="530.8" y2="186" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="561.52" y1="178" x2="561.52" y2="186" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="200" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <text x="527.8" y="200" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3,840</text>
+  <text x="564.52" y="200" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">4,096</text>
+  <rect x="70" y="222" width="14" height="12" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="90" y="232" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">prompt KV</text>
+  <rect x="190" y="222" width="14" height="12" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="210" y="232" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reserved output</text>
+  <rect x="350" y="222" width="14" height="12" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="370" y="232" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">free</text>
+  <rect x="430" y="222" width="14" height="12" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="450" y="232" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">does not fit</text>
+</svg>

@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "binary-inspector/report/v1",
+  "title": "Binary Inspector report",
+  "type": "object",
+  "required": ["schema", "file", "header", "sections", "segments", "symbols", "imports", "exports", "relocations", "fixups", "strings", "function_starts", "byte_map", "summary"],
+  "properties": {
+    "schema": {"const": "binary-inspector/report/v1"},
+    "file": {
+      "type": "object",
+      "required": ["name", "size", "sha256"],
+      "properties": {
+        "name": {"type": "string"},
+        "size": {"type": "integer", "minimum": 0},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "header": {
+      "type": "object",
+      "required": ["format", "arch", "bits", "endian", "kind", "entry", "fields"],
+      "properties": {
+        "format": {"enum": ["elf64", "coff", "pe", "macho64"]},
+        "arch": {"type": "string"},
+        "bits": {"type": "integer"},
+        "endian": {"const": "little"},
+        "kind": {"type": "string"},
+        "entry": {"type": ["integer", "null"]},
+        "fields": {"type": "object"}
+      }
+    },
+    "sections": {"type": "array", "items": {"$ref": "#/$defs/region"}},
+    "segments": {"type": "array", "items": {"$ref": "#/$defs/region"}},
+    "symbols": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "value", "kind", "binding", "section", "defined"],
+        "properties": {
+          "name": {"type": "string"},
+          "demangled": {"type": ["string", "null"]},
+          "value": {"type": "integer"},
+          "size": {"type": ["integer", "null"]},
+          "kind": {"type": "string"},
+          "binding": {"type": "string"},
+          "section": {"type": ["string", "null"]},
+          "defined": {"type": "boolean"},
+          "table": {"enum": ["symtab", "dynsym", "coff", "nlist"]}
+        }
+      }
+    },
+    "imports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "library", "slots"],
+        "properties": {
+          "name": {"type": "string"},
+          "library": {"type": ["string", "null"]},
+          "slots": {"type": "array", "items": {"type": "integer"}}
+        }
+      }
+    },
+    "exports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "address"],
+        "properties": {"name": {"type": "string"}, "address": {"type": ["integer", "null"]}}
+      }
+    },
+    "relocations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["section", "offset", "type", "symbol"],
+        "properties": {
+          "section": {"type": ["string", "null"]},
+          "offset": {"type": "integer"},
+          "type": {"type": "string"},
+          "symbol": {"type": ["string", "null"]},
+          "addend": {"type": ["integer", "null"]}
+        }
+      }
+    },
+    "fixups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["offset", "address", "kind", "raw"],
+        "properties": {
+          "offset": {"type": "integer"},
+          "address": {"type": "integer"},
+          "kind": {"enum": ["bind", "rebase"]},
+          "raw": {"type": "integer"}
+        }
+      }
+    },
+    "strings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["offset", "text", "encoding", "section"],
+        "properties": {
+          "offset": {"type": "integer"},
+          "text": {"type": "string"},
+          "encoding": {"enum": ["ascii", "utf-16le"]},
+          "section": {"type": ["string", "null"]},
+          "segment": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "function_starts": {
+      "type": "object",
+      "required": ["symbols", "function_starts_table", "prologues", "call_targets", "entry", "recovered"],
+      "additionalProperties": true
+    },
+    "byte_map": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["offset", "length", "region", "entropy"],
+        "properties": {
+          "offset": {"type": "integer"},
+          "length": {"type": "integer"},
+          "region": {"type": "string"},
+          "entropy": {"type": "number", "minimum": 0, "maximum": 8}
+        }
+      }
+    },
+    "summary": {"type": "object"}
+  },
+  "$defs": {
+    "region": {
+      "type": "object",
+      "required": ["name", "offset", "size", "file_size", "perms", "entropy"],
+      "properties": {
+        "name": {"type": "string"},
+        "offset": {"type": "integer"},
+        "size": {"type": "integer"},
+        "file_size": {"type": "integer"},
+        "perms": {"type": "string", "pattern": "^[r-][w-][x-]$"},
+        "entropy": {"type": "number", "minimum": 0, "maximum": 8}
+      }
+    }
+  }
+}

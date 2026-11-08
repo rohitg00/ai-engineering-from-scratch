@@ -1,0 +1,40 @@
+{
+  "id": "train-xor-mlp",
+  "title": "Train a 2-4-1 network on XOR",
+  "kind": "train",
+  "summary": "Train a small sigmoid network with full-batch gradient descent until it labels noisy XOR points with 95 percent held-out accuracy.",
+  "difficulty": "easy",
+  "tags": [
+    "mlp",
+    "backpropagation",
+    "gradient-descent",
+    "xor"
+  ],
+  "lesson": "phases/03-deep-learning-core/03-backpropagation",
+  "cheatsheet": "neural-net-basics",
+  "minutes": 30,
+  "entry": [
+    "train",
+    "predict"
+  ],
+  "collections": [
+    "train-tiny-models",
+    "deep-learning-core"
+  ],
+  "time_limit_s": 20,
+  "budget": {
+    "steps": 2000
+  },
+  "target": {
+    "metric": "held-out accuracy",
+    "value": 0.95
+  },
+  "mutants": {
+    "lr_wrong_sign": "Adds the gradient to the output weights instead of subtracting it, so the loss goes up.",
+    "zero_init": "Starts every weight at zero, so all hidden units stay the same and the network cannot learn XOR.",
+    "missing_hidden_derivative": "Forgets the sigmoid derivative h * (1 - h) when it sends the gradient back to the hidden layer.",
+    "over_budget": "Trains for 3000 steps, more than the budget of 2000.",
+    "global_rng": "Draws the first weights from np.random and not from the rng argument, so two runs with one seed differ.",
+    "centers_input_in_place": "Centers X with X -= mean in place, so the caller's array changes."
+  }
+}

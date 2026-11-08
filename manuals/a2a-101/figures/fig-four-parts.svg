@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 384" role="img" aria-labelledby="fig-four-parts-title fig-four-parts-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-four-parts-title">Four kinds of part</title>
+  <desc id="fig-four-parts-desc">Top: a part holds exactly one of four content members, text, raw, url or data, and every kind can also carry mediaType, filename and metadata. Below, four parts from the captures in the order they were sent: the refunds.diff file the planner sent as raw base64 with media type text/x-diff, the code-reviewer question as text, the review findings as a data part with media type application/json, and a url part labelled image/png that code-reviewer rejects with error -32005 CONTENT_TYPE_NOT_SUPPORTED.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONE PART HOLDS EXACTLY ONE OF</text>
+  <text x="344" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">OPTIONAL ON EVERY KIND</text>
+  <rect x="20" y="26" width="68" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="54" y="44.75" font-size="12.5" text-anchor="middle" font-weight="700">text</text>
+  <rect x="96" y="26" width="68" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="130" y="44.75" font-size="12.5" text-anchor="middle" font-weight="700">raw</text>
+  <rect x="172" y="26" width="68" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="206" y="44.75" font-size="12.5" text-anchor="middle" font-weight="700">url</text>
+  <rect x="248" y="26" width="68" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="282" y="44.75" font-size="12.5" text-anchor="middle" font-weight="700">data</text>
+  <rect x="344" y="26" width="92" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="390" y="44.75" font-size="12.5" text-anchor="middle" font-weight="400">mediaType</text>
+  <rect x="444" y="26" width="84" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="486" y="44.75" font-size="12.5" text-anchor="middle" font-weight="400">filename</text>
+  <rect x="536" y="26" width="84" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="578" y="44.75" font-size="12.5" text-anchor="middle" font-weight="400">metadata</text>
+  <text x="20" y="76" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FOUR PARTS FROM THE CAPTURES, IN THE ORDER THEY WERE SENT</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="84" width="68" height="66" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="54" y="120.9" font-size="13" text-anchor="middle" font-weight="700">raw</text>
+  <rect x="88" y="84" width="532" height="66" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="100" y="105" font-size="11.5">LS0tIGEvcGF5bWVudHMvcmVmdW5kcy5weQor</text>
+  <text x="358.4" y="105" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">first 36 of 236 base64 characters</text>
+  <text x="100" y="123" font-size="11" fill="var(--m-green-ink, #336b40)">filename &quot;refunds.diff&quot;   mediaType &quot;text/x-diff&quot;</text>
+  <text x="100" y="141" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">sent by the planner, a five-line diff · 06-input-required.http</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="158" width="68" height="66" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="54" y="194.9" font-size="13" text-anchor="middle" font-weight="700">text</text>
+  <rect x="88" y="158" width="532" height="66" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="100" y="179" font-size="11.5">&quot;Which base branch should I compare this diff against?&quot;</text>
+  <text x="100" y="197" font-size="11" fill="var(--m-green-ink, #336b40)">mediaType absent: the kit reads it as text/plain</text>
+  <text x="100" y="215" font-size="11" class="m-serif" fill="var(--m-blue-ink, #2f5d9a)">sent by code-reviewer in status.message · 06-input-required.http</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="232" width="68" height="66" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="54" y="268.9" font-size="13" text-anchor="middle" font-weight="700">data</text>
+  <rect x="88" y="232" width="532" height="66" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="100" y="253" font-size="11.5">&quot;base&quot;: &quot;main&quot;</text>
+  <text x="206.6" y="253" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">plus &quot;findings&quot;, two objects with file, line, severity, finding</text>
+  <text x="100" y="271" font-size="11" fill="var(--m-green-ink, #336b40)">mediaType &quot;application/json&quot;</text>
+  <text x="100" y="289" font-size="11" class="m-serif" fill="var(--m-blue-ink, #2f5d9a)">part 2 of the review.json artifact, sent by code-reviewer · 06-input-required.http</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="306" width="68" height="66" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="54" y="342.9" font-size="13" text-anchor="middle" font-weight="700">url</text>
+  <rect x="88" y="306" width="532" height="66" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="100" y="327" font-size="11.5">&quot;https://example.com/screenshot.png&quot;</text>
+  <text x="100" y="345" font-size="11" fill="var(--m-green-ink, #336b40)">mediaType &quot;image/png&quot;</text>
+  <text x="100" y="363" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">sent by the planner · 11-errors.http</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <rect x="396" y="315" width="214" height="48" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="503" y="334.1" font-size="12" text-anchor="middle" font-weight="700">CONTENT_TYPE_NOT_SUPPORTED</text>
+  <text x="503" y="351.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rejected with error -32005</text>
+  </g>
+</svg>

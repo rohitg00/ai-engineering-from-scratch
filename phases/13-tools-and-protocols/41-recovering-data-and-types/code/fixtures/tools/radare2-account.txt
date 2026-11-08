@@ -1,0 +1,41 @@
+INFO: Analyze all flags starting with sym. and entry0 (aa)
+INFO: Analyze imports (af@@@i)
+INFO: Name local plt stubs from their got relocs (anal.plt)
+INFO: Analyze symbols (af@@@s)
+INFO: Running plugin pre-analysis hooks
+INFO: Analyze all functions arguments/locals (afva@@F)
+INFO: Analyze function calls (aac)
+INFO: Analyze len bytes of instructions for references (aar)
+ERROR: invalid memory at 0x08000d88
+INFO: Finding and parsing C++ vtables (avrr)
+INFO: Analyzing methods (af @@ method.*)
+INFO: Recovering local variables (afva@@@F)
+INFO: Type matching analysis for all functions (aaft)
+INFO: Propagate noreturn information (aanr)
+INFO: Integrate dwarf function information
+INFO: Use -AA or aaaa to perform additional experimental analysis
+[ts]
+[tsc account]
+[afvd in bump]
+arg arg1 =   : rdi : 0x00000000
+arg arg2 =   : rsi : 0x00000000
+var var_8h = 0x00177ff8 = (qword)0x0000000000000000
+var var_ch = 0x00177ff4 = 0x00000000
+[pdf of bump]
+            ;-- section..text:
+            ;-- rip:
+            ; CALL XREF from sym.main @ 0x80001d4(x)
+┌ 33: sym.bump (int64_t arg1, int64_t arg2);
+│ `- args(rdi, rsi) vars(2:sp[0x10..0x14])
+│           0x08000040      55             push rbp                    ; [02] -r-x section size 511 named .text
+│           0x08000041      4889e5         mov rbp, rsp
+│           0x08000044      48897df8       mov qword [var_8h], rdi     ; arg1
+│           0x08000048      8975f4         mov dword [var_ch], esi     ; arg2
+│           0x0800004b      8b4df4         mov ecx, dword [var_ch]
+│           0x0800004e      488b45f8       mov rax, qword [var_8h]
+│           0x08000052      034804         add ecx, dword [rax + 4]
+│           0x08000055      894804         mov dword [rax + 4], ecx
+│           0x08000058      488b45f8       mov rax, qword [var_8h]
+│           0x0800005c      8b4004         mov eax, dword [rax + 4]
+│           0x0800005f      5d             pop rbp
+└           0x08000060      c3             ret                         ; .:18:52

@@ -1,0 +1,11 @@
+$ docker sandbox --help
+"docker sandbox" is deprecated and has been removed.
+
+Please migrate to Docker Sandboxes: https://www.docker.com/products/docker-sandboxes
+[exit 1]
+
+$ docker sandbox version
+"docker sandbox" is deprecated and has been removed.
+
+Please migrate to Docker Sandboxes: https://www.docker.com/products/docker-sandboxes
+[exit 1]

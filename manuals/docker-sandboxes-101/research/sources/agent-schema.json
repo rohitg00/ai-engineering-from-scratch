@@ -1,0 +1,3658 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/docker/docker-agent/blob/main/agent-schema.json",
+  "title": "Docker Agent Configuration",
+  "description": "Configuration schema for Docker Agent v16",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Configuration version",
+      "enum": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ],
+      "examples": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16"
+      ]
+    },
+    "providers": {
+      "type": "object",
+      "description": "Map of custom provider configurations. Providers define reusable defaults (base_url, token_key, api_type) that models can reference.",
+      "additionalProperties": {
+        "$ref": "#/definitions/ProviderConfig"
+      }
+    },
+    "agents": {
+      "type": "object",
+      "description": "Map of agent configurations. At least one agent is required.",
+      "minProperties": 1,
+      "additionalProperties": {
+        "$ref": "#/definitions/AgentConfig"
+      }
+    },
+    "models": {
+      "type": "object",
+      "description": "Map of model configurations",
+      "additionalProperties": {
+        "$ref": "#/definitions/ModelConfig"
+      }
+    },
+    "mcps": {
+      "type": "object",
+      "description": "Map of reusable MCP server definitions. Define MCP servers here and reference them by name from agent toolsets to avoid duplication.",
+      "additionalProperties": {
+        "$ref": "#/definitions/MCPToolset"
+      }
+    },
+    "rag": {
+      "type": "object",
+      "description": "Map of reusable RAG source definitions. Define RAG sources here and reference them by name from agent toolsets to avoid duplication.",
+      "additionalProperties": {
+        "$ref": "#/definitions/RAGToolset"
+      }
+    },
+    "commands": {
+      "type": "object",
+      "description": "Map of reusable, named command groups. Define command sets here and reference them by name from an agent's use_commands to avoid duplication.",
+      "additionalProperties": {
+        "$ref": "#/definitions/Commands"
+      }
+    },
+    "skills": {
+      "type": "object",
+      "description": "Map of reusable, named skill groups. Define skill sets here and reference them by name from an agent's use_skills to avoid duplication.",
+      "additionalProperties": {
+        "$ref": "#/definitions/SkillsConfig"
+      }
+    },
+    "toolsets": {
+      "type": "object",
+      "description": "Map of reusable, named toolset definitions. Define a toolset here and reference it by name from an agent's use_toolsets to share the same toolset across multiple agents.",
+      "additionalProperties": {
+        "$ref": "#/definitions/Toolset"
+      }
+    },
+    "metadata": {
+      "$ref": "#/definitions/Metadata",
+      "description": "Configuration metadata"
+    },
+    "permissions": {
+      "$ref": "#/definitions/PermissionsConfig",
+      "description": "Tool permission configuration for controlling tool approval behavior"
+    },
+    "runtime": {
+      "$ref": "#/definitions/RuntimeDefaults",
+      "description": "Execution-time defaults the agent author wants applied. Values act as defaults only \u2014 explicit CLI flags or user-config settings always win."
+    },
+    "budget": {
+      "$ref": "#/definitions/BudgetConfig",
+      "description": "Ceilings on what a single run may consume before the agent is stopped, regardless of which agent spends. Scoped to a run and shared by every sub-session spawned inside it, so delegated work spends against the same budget as its parent."
+    },
+    "budgets": {
+      "type": "object",
+      "description": "Reusable, named budget definitions. An agent opts into one by listing its name in its 'budgets' field. A named budget is a single shared pot: when several agents reference the same name they draw from the SAME ceiling rather than each getting a copy, so a fan-out to N sub-agents cannot spend N times the limit. Give agents distinct budget names when you want independent pots.",
+      "additionalProperties": {
+        "$ref": "#/definitions/BudgetConfig"
+      }
+    },
+    "flavors": {
+      "type": "object",
+      "description": "Named YAML patches applied on top of the rest of the document when enabled at run time (e.g. 'docker agent run --flavor <name>'). Each flavor is a partial config document merged with JSON Merge Patch semantics: objects merge recursively, scalars and arrays replace, null deletes a key. A key ending in '+' appends its items to the existing array (e.g. 'toolsets+:'); a scalar existing value is promoted to a one-element array first, so 'instruction+:' extends a string instruction. A key ending in '-' removes entries \u2014 from an object by key name, from an array by scalar equality or partial object match (e.g. 'toolsets-: [{type: shell}]'). Enabled flavors are applied in the order they were requested; requested flavors not defined here are ignored.",
+      "additionalProperties": {
+        "type": [
+          "object",
+          "null"
+        ]
+      }
+    },
+    "evaluators": {
+      "type": "object",
+      "description": "Named provider-backed assessments, independent of chat models and decision policies.",
+      "additionalProperties": {
+        "$ref": "#/definitions/EvaluatorConfig"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "agents"
+  ],
+  "definitions": {
+    "Lifecycle": {
+      "type": "object",
+      "description": "Controls how the agent supervises a long-running toolset process (MCP server, remote MCP, LSP server). All fields are optional; pick a profile that matches your taste and override individual knobs as needed.",
+      "additionalProperties": false,
+      "properties": {
+        "profile": {
+          "type": "string",
+          "description": "Shorthand that picks defaults for all the other fields. 'resilient' (default): auto-restart on failure with exponential backoff. 'strict': fail fast \u2014 the agent refuses to start when the toolset is unavailable. 'best-effort': single attempt, no auto-restart.",
+          "enum": [
+            "resilient",
+            "strict",
+            "best-effort"
+          ]
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Marks the toolset as critical to the agent. NOTE: not yet enforced \u2014 a planned eager-startup phase will refuse to start the agent when a required toolset cannot reach Ready within startup_timeout. Defaults to true under the 'strict' profile, false otherwise."
+        },
+        "startup_timeout": {
+          "type": "string",
+          "description": "Cap on the initial Connect+initialize duration. Enforced since v1.94.0: on expiry the toolset stays stopped and the runtime retries on the next turn. Go duration format (e.g. '30s', '2m'). 0 means no timeout."
+        },
+        "call_timeout": {
+          "type": "string",
+          "description": "Cap on an individual tool call, including one reconnect-retry. Enforced: on expiry the call is cancelled and surfaced to the model as a tool error; cancellation is propagated to the server. The budget includes any nested sampling/elicitation time. Go duration format (e.g. '30s', '2m'). 0/unset means no timeout (opt-in; no profile default)."
+        },
+        "restart": {
+          "type": "string",
+          "description": "How the supervisor reacts to an unexpected disconnect.",
+          "enum": [
+            "never",
+            "on_failure",
+            "always"
+          ]
+        },
+        "max_restarts": {
+          "type": "integer",
+          "description": "Maximum number of consecutive restart attempts after a disconnect. 0 = use profile default (5). -1 = unlimited.",
+          "minimum": -1
+        },
+        "backoff": {
+          "type": "object",
+          "description": "Exponential backoff between restart attempts.",
+          "additionalProperties": false,
+          "properties": {
+            "initial": {
+              "type": "string",
+              "description": "First wait between attempts (Go duration format, e.g. '1s'). Defaults to 1s."
+            },
+            "max": {
+              "type": "string",
+              "description": "Cap on the wait (Go duration format). Defaults to 32s."
+            },
+            "multiplier": {
+              "type": "number",
+              "description": "Multiplier applied each attempt. Defaults to 2.",
+              "minimum": 0
+            },
+            "jitter": {
+              "type": "number",
+              "description": "Fraction of the computed delay applied as a uniform random offset. 0 disables (default).",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        }
+      }
+    },
+    "ProviderConfig": {
+      "type": "object",
+      "description": "Configuration for a model provider. Defines reusable defaults that models can inherit by referencing the provider name. Supports any provider type (openai, anthropic, google, amazon-bedrock, etc.).",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "description": "The underlying provider type. Defaults to \"openai\" when not set. Supported values: openai, anthropic, google, amazon-bedrock, dmr, and any built-in alias (requesty, openrouter, azure, xai, ollama, mistral, baseten, ovhcloud, groq, fireworks-ai, deepseek, cerebras, togetherai, huggingface, moonshotai, vercel, cloudflare-workers-ai, cloudflare-ai-gateway, nvidia, github-copilot, chatgpt, opencode, opencode-go, etc.).",
+          "examples": [
+            "openai",
+            "anthropic",
+            "google",
+            "amazon-bedrock"
+          ]
+        },
+        "api_type": {
+          "type": "string",
+          "description": "The API schema type to use. Only applicable for OpenAI-compatible providers.",
+          "enum": [
+            "openai_chatcompletions",
+            "openai_responses"
+          ],
+          "default": "openai_chatcompletions",
+          "examples": [
+            "openai_chatcompletions",
+            "openai_responses"
+          ]
+        },
+        "base_url": {
+          "description": "Base URL for the provider's API endpoint. Required for OpenAI-compatible providers, optional for native providers. Accepts ${env.VAR} / ${VAR} references, substituted from the environment when a model using this provider is loaded.",
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri"
+            },
+            {
+              "type": "string",
+              "pattern": "^\\S*\\$\\{?[A-Za-z_]\\S*$"
+            }
+          ],
+          "examples": [
+            "https://router.example.com/v1"
+          ]
+        },
+        "token_key": {
+          "type": "string",
+          "description": "Environment variable name containing the API token. If not set, requests will use the default token for the provider type.",
+          "examples": [
+            "CUSTOM_PROVIDER_API_KEY",
+            "ANTHROPIC_API_KEY"
+          ]
+        },
+        "unload_api": {
+          "type": "string",
+          "description": "Optional path (or absolute URL) to the provider's model-unload endpoint. POSTed with `{\"model\": \"<id>\"}` when the agent wires the `unload` builtin into its `on_agent_switch` hook chain, to free GPU/RAM held by the previous model. Today only Docker Model Runner exposes such an endpoint; the `unload` builtin is a pure HTTP hook that silently skips non-DMR providers. A relative path is resolved against the scheme+host of base_url; an absolute URL is used verbatim.",
+          "examples": [
+            "/engines/_unload",
+            "/api/unload",
+            "http://localhost:11434/api/unload"
+          ]
+        },
+        "temperature": {
+          "type": "number",
+          "description": "Default sampling temperature for models using this provider.",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "max_tokens": {
+          "type": "integer",
+          "description": "Default maximum output tokens per response for models using this provider. This is the completion budget, NOT the context window: OpenAI-compatible servers require prompt_tokens + max_tokens to fit the context window, so a value close to the window leaves no room for the prompt. Set provider_opts.context_size to declare the window."
+        },
+        "top_p": {
+          "type": "number",
+          "description": "Default top-p (nucleus) sampling parameter.",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "frequency_penalty": {
+          "type": "number",
+          "description": "Default frequency penalty.",
+          "minimum": -2,
+          "maximum": 2
+        },
+        "presence_penalty": {
+          "type": "number",
+          "description": "Default presence penalty.",
+          "minimum": -2,
+          "maximum": 2
+        },
+        "parallel_tool_calls": {
+          "type": "boolean",
+          "description": "Whether to enable parallel tool calls by default."
+        },
+        "provider_opts": {
+          "type": "object",
+          "properties": {
+            "extra_body": {
+              "type": "object",
+              "description": "OpenAI-compatible providers and DMR: top-level Chat Completions request overrides, including OpenAI-client reranking. Explicit values win over generated fields, including internal no-thinking settings; nested objects are replaced, not deep-merged. Streaming calls always force stream=true. Not applied to Responses, embeddings, or DMR model configuration.",
+              "additionalProperties": true
+            }
+          },
+          "description": "Provider-specific options passed through to the underlying client. Anthropic: thinking_prefix_mismatch (error or drop_block), thinking_display (including updates on supported Fable/Mythos models), strict_tools (boolean or list of tool names), cache_diagnostics (boolean), native_compaction (boolean), cache_preserving_updates (boolean). OpenAI-compatible APIs: service_tier (string) selects the processing tier for Chat Completions and Responses requests; use 'fast' or 'priority' for Fast mode at premium pricing on supported models. Google (Gemini): service_tier (string) selects the Gemini API service tier ('flex', 'standard', or 'priority'). Model-level options override these defaults.",
+          "additionalProperties": true
+        },
+        "track_usage": {
+          "type": "boolean",
+          "description": "Whether to track token usage by default."
+        },
+        "thinking_budget": {
+          "description": "Default reasoning effort/budget for models using this provider. Can be an integer token count or a string effort level.",
+          "oneOf": [
+            {
+              "type": "integer",
+              "description": "Token budget for reasoning"
+            },
+            {
+              "type": "string",
+              "description": "Effort level (e.g., \"low\", \"medium\", \"high\", \"none\", \"adaptive\")"
+            }
+          ]
+        },
+        "task_budget": {
+          "description": "Default total-token budget for an agentic task (forwarded to Anthropic as `output_config.task_budget`, with the required `task-budgets-2026-03-13` beta header attached automatically). Configurable on any Claude model \u2014 docker-agent does not gate by model name \u2014 but at the time of writing only Claude Opus 4.7 honors it. Accepts an integer token count or an object {type: tokens, total: N}.",
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Token budget for the full task (combined thinking, tool calls, and output)."
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "tokens"
+                  ],
+                  "description": "Budget kind. Only \"tokens\" is supported today."
+                },
+                "total": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Total budget value."
+                }
+              },
+              "required": [
+                "total"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "auth": {
+          "$ref": "#/definitions/AuthConfig",
+          "description": "Non-API-key authentication scheme. When set, the provider's regular API-key path is bypassed."
+        },
+        "compaction_model": {
+          "type": "string",
+          "description": "Default model used to summarize the conversation when the session of an agent whose model uses this provider is compacted. Value can be a model name from the models section or an inline 'provider/model' spec. Lowest priority in the resolution chain: an agent-level compaction_model wins, then a model-level one, then this provider-level default; when all are omitted, compaction reuses the agent's own model.",
+          "examples": [
+            "openai/gpt-4o-mini",
+            "fast"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "AuthConfig": {
+      "type": "object",
+      "description": "Non-API-key authentication for a model provider. Today only Anthropic Workload Identity Federation is supported (type: workload_identity_federation).",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "workload_identity_federation"
+          ],
+          "description": "Authentication scheme discriminator."
+        },
+        "workload_identity_federation": {
+          "$ref": "#/definitions/FederationAuthConfig",
+          "description": "Parameters for the Anthropic OIDC federation flow. Required when type is workload_identity_federation."
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "workload_identity_federation"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "workload_identity_federation"
+            ]
+          }
+        }
+      ]
+    },
+    "FederationAuthConfig": {
+      "type": "object",
+      "description": "Anthropic OIDC Federation Rule parameters and the source of the JWT identity token to exchange. See https://platform.claude.com/docs/en/build-with-claude/workload-identity-federation",
+      "properties": {
+        "federation_rule_id": {
+          "type": "string",
+          "pattern": "^fdrl_",
+          "description": "Anthropic OidcFederationRule ID. Must start with 'fdrl_'."
+        },
+        "organization_id": {
+          "type": "string",
+          "description": "UUID of the Anthropic organization that owns the federation rule."
+        },
+        "service_account_id": {
+          "type": "string",
+          "pattern": "^svac_",
+          "description": "Optional expected-target check for federation rules with target_type=SERVICE_ACCOUNT. Must start with 'svac_'."
+        },
+        "identity_token": {
+          "$ref": "#/definitions/IdentityTokenSourceConfig",
+          "description": "How to obtain a fresh JWT identity token for each token exchange."
+        }
+      },
+      "required": [
+        "federation_rule_id",
+        "organization_id",
+        "identity_token"
+      ],
+      "additionalProperties": false
+    },
+    "IdentityTokenSourceConfig": {
+      "type": "object",
+      "description": "Source of the JWT identity token used for OIDC federation. Exactly one of file, env, command, or url must be set.",
+      "properties": {
+        "file": {
+          "type": "string",
+          "description": "Path to a file containing the JWT. Re-read on every token exchange (suitable for K8s projected SA tokens, SPIFFE helpers, Vault sidecars)."
+        },
+        "env": {
+          "type": "string",
+          "description": "Name of an environment variable holding the JWT."
+        },
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Subprocess to execute; stdout is used as the JWT. Re-run on every token exchange."
+        },
+        "url": {
+          "type": "string",
+          "description": "HTTP(S) endpoint to GET for the JWT. ${VAR} references in the URL are expanded against the runtime environment."
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "HTTP headers sent with the URL request. Values support ${VAR} expansion. Only valid with 'url'."
+        },
+        "response_field": {
+          "type": "string",
+          "description": "When set, the URL response is parsed as JSON and this top-level field is used as the token. When empty, the entire (trimmed) response body is used. Only valid with 'url'."
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "file"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "env"
+                ]
+              },
+              {
+                "required": [
+                  "command"
+                ]
+              },
+              {
+                "required": [
+                  "url"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "required": [
+            "env"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "file"
+                ]
+              },
+              {
+                "required": [
+                  "command"
+                ]
+              },
+              {
+                "required": [
+                  "url"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "required": [
+            "command"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "file"
+                ]
+              },
+              {
+                "required": [
+                  "env"
+                ]
+              },
+              {
+                "required": [
+                  "url"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "required": [
+            "url"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "file"
+                ]
+              },
+              {
+                "required": [
+                  "env"
+                ]
+              },
+              {
+                "required": [
+                  "command"
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "AgentConfig": {
+      "type": "object",
+      "description": "Configuration for a single agent",
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "Model to use for this agent (can be just model name or provider/model format)",
+          "examples": [
+            "gpt-4",
+            "openai/gpt-4o",
+            "anthropic/claude-sonnet-4-0",
+            "anthropic/claude-sonnet-4-5",
+            "claude"
+          ]
+        },
+        "fallback": {
+          "$ref": "#/definitions/FallbackConfig",
+          "description": "Fallback model configuration for automatic failover and retry behavior"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the agent"
+        },
+        "welcome_message": {
+          "type": "string",
+          "description": "Optional welcome message to display when the agent starts"
+        },
+        "toolsets": {
+          "type": "array",
+          "description": "List of toolsets available to the agent",
+          "items": {
+            "$ref": "#/definitions/Toolset"
+          }
+        },
+        "instruction": {
+          "description": "Instructions for the agent (the system prompt). Accepts a single string or a list of strings; list items are concatenated in order, separated by a blank line.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "instruction_file": {
+          "description": "Path(s) to a file or files, relative to the config file's directory, whose contents become the agent's instruction. Accepts a single string or a list of strings; when several files are given their contents are concatenated in order, separated by a blank line. Loaded at startup. Mutually exclusive with 'instruction'. Each path must be a local relative path inside the config directory (absolute paths and '..' traversal are rejected). Only supported for local file-based configs, not OCI/URL sources.",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "harness": {
+          "$ref": "#/definitions/HarnessConfig",
+          "description": "External coding harness to run this agent with instead of a docker-agent model provider"
+        },
+        "code_mode_tools": {
+          "type": "boolean",
+          "description": "Enable Code Mode for tools"
+        },
+        "sub_agents": {
+          "type": "array",
+          "description": "List of sub-agents. Can be names of agents defined in this config, external references (OCI images like 'namespace/repo' or URLs), or named external references using 'name:reference' syntax (e.g. 'reviewer:myorg/review-pr'). External agents without an explicit name are named after their last path segment. Pin external OCI references to an immutable digest (e.g. 'namespace/repo@sha256:...') to serve them from cache; tag references (including the implicit ':latest') are re-resolved against the registry on every run, even when the sub-agent is never invoked.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "handoffs": {
+          "type": "array",
+          "description": "List of agents this agent can hand off the conversation to. Can be names of agents defined in this config, external references (OCI images like 'namespace/repo' or URLs), or named external references using 'name:reference' syntax (e.g. 'reviewer:myorg/review-pr'). External agents without an explicit name are named after their last path segment. Pin external OCI references to an immutable digest (e.g. 'namespace/repo@sha256:...') to serve them from cache; tag references are re-resolved against the registry on every run.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "force_handoff": {
+          "type": "string",
+          "description": "Name of an agent that unconditionally receives the conversation whenever this agent produces a final response, bypassing the LLM's tool-calling entirely. Guarantees deterministic routing for strict pipelines (e.g. extractor -> summarizer). Can be the name of an agent defined in this config or an external reference. Pin an external OCI reference to an immutable digest (e.g. 'namespace/repo@sha256:...') to avoid a per-run registry lookup. Must not reference the agent itself, and force_handoff chains must not form a cycle."
+        },
+        "routing": {
+          "$ref": "#/definitions/AgentRouting"
+        },
+        "add_date": {
+          "type": "boolean",
+          "description": "Whether to add date information"
+        },
+        "add_environment_info": {
+          "type": "boolean",
+          "description": "Whether to add environment information"
+        },
+        "readonly": {
+          "type": "boolean",
+          "description": "When true, makes every one of this agent's toolsets read-only: only tools whose annotations carry a read-only hint are listed and callable, and all other (mutating) tools are filtered out. Equivalent to setting 'readonly: true' on each toolset. A sub-agent or handoff agent is made read-only by setting this flag on that agent's own definition."
+        },
+        "safety": {
+          "type": "string",
+          "enum": [
+            "strict",
+            "balanced",
+            "restricted",
+            "autonomous"
+          ],
+          "description": "Safety mode new sessions started on this agent default to when the user has not chosen one (no --safety/--yolo flag, no alias option, no user-config setting). Takes precedence over the config-wide runtime.safety. A default only: it never overrides a user choice and never replaces the mode stored on a resumed session. 'restricted' is the fail-closed profile for unattended runs: safe calls auto-approve, every other unmatched call is denied without prompting. Trust warning: 'autonomous' auto-approves every tool call \u2014 review configs from URLs or OCI registries before running them."
+        },
+        "redact_secrets": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enabled by default. When true (the default), the runtime auto-installs the redact_secrets builtin on all three of tool_input_transform (scrubs detected secrets from tool arguments before approval), before_llm_call (scrubs the messages sent to the LLM), and tool_response_transform (scrubs tool output before it reaches event consumers, the persisted session, the post_tool_use hook input, or the next LLM call). Set to false to opt out. The same hook entries can be authored directly in YAML for finer-grained control \u2014 see the hooks.tool_response_transform / hooks.before_llm_call / hooks.tool_input_transform sections. Detection uses the portcullis ruleset (GitHub PATs, AWS keys, Stripe / Slack / GitLab tokens, JWTs, private keys, etc.). Each detected span is replaced with the literal '[REDACTED]'."
+        },
+        "max_iterations": {
+          "type": "integer",
+          "description": "Maximum number of iterations",
+          "minimum": 0
+        },
+        "budgets": {
+          "type": "array",
+          "description": "Names of top-level 'budgets' entries this agent spends against. Every listed budget must be defined under the top-level 'budgets' key. An agent may list several, in which case all apply and the first to be exhausted stops the run. Agents sharing a budget name share one pot, so a fan-out cannot multiply the ceiling.",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "tight"
+            ],
+            [
+              "tight",
+              "daily"
+            ]
+          ]
+        },
+        "max_consecutive_tool_calls": {
+          "type": "integer",
+          "description": "Maximum consecutive identical tool calls before the agent is terminated. Prevents degenerate loops. 0 uses the default of 5.",
+          "minimum": 0
+        },
+        "max_old_tool_call_tokens": {
+          "type": "integer",
+          "description": "Maximum number of tokens to keep from old tool call arguments and results. Older tool calls beyond this budget will have their content replaced with a placeholder. Tokens are approximated as len/4. Truncation is disabled by default; set a positive value to enable it. Set to -1 to disable truncation (unlimited tool content).",
+          "minimum": -1
+        },
+        "max_tool_result_tokens": {
+          "type": "integer",
+          "description": "Maximum number of tokens to keep from each tool result when it is added to the session. Oversized results are truncated middle-out: the head and tail are kept and the removed middle is replaced with a truncation marker. Textual documents attached to the result share the same budget. Tokens are approximated as len/4. The cap is disabled by default; set a positive value to enable it. 0 and -1 both leave tool results unbounded.",
+          "minimum": -1
+        },
+        "num_history_items": {
+          "type": "integer",
+          "description": "Number of history items to keep",
+          "minimum": 0
+        },
+        "session_compaction": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enabled by default. When true (the default), the runtime automatically compacts the session: proactively when the estimated context usage crosses the compaction threshold, and reactively to recover from a context-overflow error. Set to false to disable both automatic triggers for this agent; the manual /compact command remains available."
+        },
+        "compaction_threshold": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "default": 0.9,
+          "description": "Fraction of the model's context window at which proactive auto-compaction triggers for this agent. Must be greater than 0 and at most 1. Defaults to 0.9 (90% of the context window). A compaction_threshold set on the agent's model takes precedence over this value.",
+          "examples": [
+            0.75,
+            0.9
+          ]
+        },
+        "compaction_model": {
+          "type": "string",
+          "description": "Model used to summarize the conversation when this agent's session is compacted (manual /compact, the proactive threshold trigger, or post-overflow recovery). Value can be a model name from the models section or an inline 'provider/model' spec. Highest priority: takes precedence over a compaction_model set on the agent's model or provider; when all are omitted, compaction reuses the agent's own model.",
+          "examples": [
+            "fast",
+            "openai/gpt-4o-mini"
+          ]
+        },
+        "add_prompt_files": {
+          "type": "array",
+          "description": "List of prompt files to add",
+          "items": {
+            "type": "string"
+          }
+        },
+        "add_prompt_files_depth": {
+          "type": "integer",
+          "description": "Also list, by path only, the add_prompt_files names found up to this many directory levels below the working directory (1 = direct subdirectories). Contents are not loaded: the agent reads the ones it needs. Useful in monorepos where each sub-project carries its own AGENTS.md. 0 (default) disables the scan.",
+          "minimum": 0
+        },
+        "commands": {
+          "description": "Named prompts for /commands. Supports simple string format or advanced object format with description and instruction.",
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "description": "Simple command format: the string becomes the instruction"
+                  },
+                  {
+                    "$ref": "#/definitions/CommandConfig"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Simple command format: the string becomes the instruction"
+                    },
+                    {
+                      "$ref": "#/definitions/CommandConfig"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "structured_output": {
+          "type": "object",
+          "description": "Structured output configuration for constraining model responses to a specific JSON schema. Supported by OpenAI (native) and Google Gemini (native). Anthropic requires prompt engineering or tool-based approaches.",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the response format schema"
+            },
+            "description": {
+              "type": "string",
+              "description": "Optional description of what the schema represents"
+            },
+            "strict": {
+              "type": "boolean",
+              "description": "Enable strict schema adherence (OpenAI only). When true, all properties must be in required array.",
+              "default": false
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "native",
+                "tool"
+              ],
+              "description": "How the schema is enforced. 'native' (default) passes it to the provider's native structured-output support. 'tool' exposes an internal tool the model must call with the final JSON; the runtime validates the arguments against the schema. Works with any tool-calling provider.",
+              "default": "native"
+            },
+            "schema": {
+              "type": "object",
+              "description": "JSON Schema object defining the structure of the response. Must include type, properties, and required fields.",
+              "required": [
+                "type",
+                "properties"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "object"
+                  ],
+                  "description": "Schema type, must be 'object' for structured outputs"
+                },
+                "properties": {
+                  "type": "object",
+                  "description": "Object properties with their schemas",
+                  "additionalProperties": true
+                },
+                "required": {
+                  "type": "array",
+                  "description": "List of required property names",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": {
+                  "type": "boolean",
+                  "description": "Whether additional properties are allowed",
+                  "default": false
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "name",
+            "schema"
+          ],
+          "additionalProperties": false
+        },
+        "add_description_parameter": {
+          "type": "boolean",
+          "description": "Whether to add a 'description' parameter to tool calls, allowing the LLM to provide context about why it is calling a tool"
+        },
+        "hooks": {
+          "$ref": "#/definitions/HooksConfig",
+          "description": "Lifecycle hooks for executing shell commands at various points in the agent's execution"
+        },
+        "cache": {
+          "$ref": "#/definitions/CacheConfig",
+          "description": "Optional response cache: when the same user question is asked again, replay the previous answer instead of calling the model."
+        },
+        "skills": {
+          "description": "Enable skills discovery for this agent. Set to true to load all discovered skills from local filesystem sources; false disables skills. A list can mix sources (\"local\" or an HTTP/HTTPS URL), skill names to include, and inline skill definitions (objects). If only names are given, local sources are loaded and filtered to just those skills.",
+          "oneOf": [
+            {
+              "type": "boolean",
+              "description": "When true, loads all discovered local skills. When false, skills are disabled."
+            },
+            {
+              "type": "array",
+              "description": "List combining skill sources, skill names to include, and/or inline skill definitions. String items equal to \"local\" or starting with http:// or https:// are treated as sources; any other string is treated as a skill name filter; object items are inline skill definitions.",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/InlineSkill"
+                  }
+                ]
+              },
+              "examples": [
+                [
+                  "local"
+                ],
+                [
+                  "local",
+                  "https://skills.example.com"
+                ],
+                [
+                  "git",
+                  "docker"
+                ],
+                [
+                  "local",
+                  "docker-build"
+                ]
+              ]
+            }
+          ]
+        },
+        "use_commands": {
+          "type": "array",
+          "description": "Names of reusable command groups (defined in the top-level commands section) to merge into this agent. Inline commands on the agent take precedence on name conflicts.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "use_skills": {
+          "type": "array",
+          "description": "Names of reusable skill groups (defined in the top-level skills section) to merge into this agent. Inline skills on the agent take precedence on name conflicts.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "use_toolsets": {
+          "type": "array",
+          "description": "Names of reusable toolset definitions (defined in the top-level toolsets section) to append to this agent's toolsets. Inline toolsets on the agent come first, followed by each referenced toolset in order.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "Commands": {
+      "description": "A set of named prompts for /commands. Supports simple string format or advanced object format with description and instruction.",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Simple command format: the string becomes the instruction"
+              },
+              {
+                "$ref": "#/definitions/CommandConfig"
+              }
+            ]
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "description": "Simple command format: the string becomes the instruction"
+                },
+                {
+                  "$ref": "#/definitions/CommandConfig"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "SkillsConfig": {
+      "description": "A skills configuration. Set to true to load all discovered local skills; false disables skills. A list can mix sources (\"local\" or an HTTP/HTTPS URL), skill names to include, and inline skill definitions (objects).",
+      "oneOf": [
+        {
+          "type": "boolean",
+          "description": "When true, loads all discovered local skills. When false, skills are disabled."
+        },
+        {
+          "type": "array",
+          "description": "List combining skill sources, skill names to include, and/or inline skill definitions. String items equal to \"local\" or starting with http:// or https:// are treated as sources; any other string is treated as a skill name filter; object items are inline skill definitions.",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/definitions/InlineSkill"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "InlineSkill": {
+      "type": "object",
+      "description": "A skill defined directly in the agent config instead of a SKILL.md file or remote URL. Supports the subset of the skill format that can be expressed in YAML.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^\\S+$",
+          "description": "Skill identifier used by read_skill / run_skill and the /<name> slash command. Must not contain whitespace, which the slash command parser uses to separate the name from its argument."
+        },
+        "description": {
+          "type": "string",
+          "description": "Short description injected into the system prompt so the model knows when the skill applies."
+        },
+        "instructions": {
+          "type": "string",
+          "description": "The skill body (equivalent to the Markdown content below the SKILL.md frontmatter)."
+        },
+        "context": {
+          "type": "string",
+          "enum": [
+            "fork"
+          ],
+          "description": "When set to \"fork\", the skill runs as an isolated sub-agent (exposed via run_skill) instead of inlining into the conversation."
+        },
+        "model": {
+          "type": "string",
+          "description": "Optional model override applied while a fork-mode skill runs. Ignored for non-fork skills."
+        },
+        "allowed_tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tools the skill expects to use (mirrors the SKILL.md allowed-tools field). For a fork-mode skill (context: fork) this is enforced as an allow-list over the parent agent's inherited tools while the skill runs in its sub-session: only tools whose names match an entry are kept (entries support glob patterns like 'read_*', otherwise an exact match). Ignored for non-fork skills."
+        },
+        "toolsets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Names of reusable toolset definitions (from the top-level 'toolsets' section) to expose to this skill while it runs in its fork sub-session, in addition to the parent agent's tools. Only valid for fork-mode skills (context: fork)."
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "instructions"
+      ],
+      "additionalProperties": false
+    },
+    "CommandConfig": {
+      "type": "object",
+      "description": "Advanced command configuration. Set 'instruction' to send a prompt to the current agent. Set 'agent' to switch the active agent to a sub-agent (e.g. /plan -> the 'planner' sub-agent). Both fields can be combined: the agent is switched first, then the instruction is sent to the new agent. Set 'url' to open a URL in the user's browser instead of messaging the agent.",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Description shown in completion dialogs and help text"
+        },
+        "instruction": {
+          "type": "string",
+          "description": "The prompt sent to the agent. Supports bang commands (!`command`) and positional arguments ($1, $2, etc.)"
+        },
+        "agent": {
+          "type": "string",
+          "description": "Name of a sub-agent to switch to when this command is invoked. The agent must be defined in the team configuration. When set without 'instruction', any text typed after the slash command is forwarded as a prompt to the target agent."
+        },
+        "url": {
+          "type": "string",
+          "description": "URL to open in the user's default browser when this command is invoked, instead of sending a prompt to the agent. Any URI scheme the OS knows how to handle works (e.g. https:// or a custom scheme like docker-desktop:// to deep-link into Docker Desktop). The token {{session_id}} is replaced at invocation time with the current session ID (URL-query-escaped)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "HarnessConfig": {
+      "type": "object",
+      "description": "Configuration for running an agent through an external coding-agent CLI via github.com/rumpl/harness",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "External coding harness provider to use",
+          "enum": [
+            "claude-code",
+            "codex",
+            "pi",
+            "opencode"
+          ],
+          "examples": [
+            "claude-code",
+            "codex"
+          ]
+        },
+        "model": {
+          "type": "string",
+          "description": "Optional model name passed to the external harness. When omitted, the external CLI uses its own default model."
+        },
+        "effort": {
+          "type": "string",
+          "description": "Claude Code effort level forwarded as --effort",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        },
+        "agent": {
+          "type": "string",
+          "description": "opencode agent name forwarded as --agent"
+        },
+        "thinking": {
+          "type": "boolean",
+          "description": "Enable opencode thinking output"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "FallbackConfig": {
+      "type": "object",
+      "description": "Configuration for fallback model behavior when the primary model fails",
+      "properties": {
+        "models": {
+          "type": "array",
+          "description": "List of fallback models to try in order if the primary model fails. Each entry can be a model name from the models section or an inline provider/model format (e.g., 'openai/gpt-4o').",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "anthropic/claude-sonnet-4-0",
+              "openai/gpt-4o"
+            ],
+            [
+              "backup_model",
+              "openai/gpt-5.6"
+            ]
+          ]
+        },
+        "retries": {
+          "type": "integer",
+          "description": "Number of retries per model with exponential backoff for retryable errors (5xx, timeouts). Use 0 or omit for default (2 retries = 3 total attempts per model). Use -1 to disable retries entirely (try each model only once).",
+          "minimum": -1,
+          "default": 2
+        },
+        "cooldown": {
+          "type": "string",
+          "description": "Duration to stick with a successful fallback model before retrying the primary. Only applies after a non-retryable error (e.g., 429 rate limit). Use Go duration format (e.g., '1m', '30s', '2m30s'). Default is '1m'.",
+          "pattern": "^([0-9]+(ns|us|\u00b5s|ms|s|m|h))+$",
+          "default": "1m",
+          "examples": [
+            "1m",
+            "30s",
+            "2m30s",
+            "5m"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "CacheConfig": {
+      "type": "object",
+      "description": "Configuration for the agent's response cache. When enabled, the assistant response produced for a given user question is stored and replayed verbatim the next time the same question is asked, skipping the model entirely. Two normalization options control what 'same question' means: case_sensitive (default false) toggles case-insensitive matching, and trim_spaces (default false) strips leading/trailing whitespace before comparison. Set 'path' to persist entries to a JSON file (relative paths resolve against the agent config directory); leave it empty to keep entries in memory only.",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Set to true to enable the cache. When false (or when the cache section is omitted), no caching is performed.",
+          "default": false
+        },
+        "case_sensitive": {
+          "type": "boolean",
+          "description": "When true, questions must match exactly (including case) to hit the cache. Default: false (case-insensitive matching).",
+          "default": false
+        },
+        "trim_spaces": {
+          "type": "boolean",
+          "description": "When true, leading and trailing whitespace is stripped from questions before they are compared. Default: false.",
+          "default": false
+        },
+        "path": {
+          "type": "string",
+          "description": "Path to a JSON file used to persist cache entries across runs. Relative paths are resolved against the agent's config directory. When empty, the cache lives only in memory."
+        }
+      },
+      "additionalProperties": false
+    },
+    "HooksConfig": {
+      "type": "object",
+      "description": "Lifecycle hooks configuration for an agent. Hooks allow running shell commands at various points in the agent's execution lifecycle.",
+      "properties": {
+        "prompt_file_guard": {
+          "type": "array",
+          "description": "Checks loaded and retained prompt-file instructions before storage or use. Every hook must explicitly approve; failures stop the turn in every safety mode.",
+          "items": { "$ref": "#/definitions/NonEvaluatorHookDefinition" }
+        },
+        "skill_content_guard": {
+          "type": "array",
+          "description": "Checks raw skill text before expansion or delivery. Every hook must explicitly approve; denials and failures reject the load in every safety mode.",
+          "items": { "$ref": "#/definitions/NonEvaluatorHookDefinition" }
+        },
+        "pre_tool_use": {
+          "type": "array",
+          "description": "Hooks that run before a tool is executed. Can allow/deny/modify tool calls.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookMatcherConfig"
+          }
+        },
+        "post_tool_use": {
+          "type": "array",
+          "description": "Hooks that run after a tool completes (both success and failure). The result is delivered in tool_response (failed calls carry an is_error flag and any error text). Returning decision=block or exit code 2 stops the run loop after the current tool batch \u2014 useful for circuit-breaker patterns.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookMatcherConfig"
+          }
+        },
+        "permission_request": {
+          "type": "array",
+          "description": "Hooks that run just before the runtime prompts the user to approve a tool call (i.e. when the safety mode and permission rules did not short-circuit the decision). Hooks may auto-allow or auto-deny via hook_specific_output.permission_decision; otherwise control falls through to the interactive confirmation. Tool-matched, like pre_tool_use.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookMatcherConfig"
+          }
+        },
+        "session_start": {
+          "type": "array",
+          "description": "Hooks that run when a session begins. Can load context or setup environment.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "user_prompt_submit": {
+          "type": "array",
+          "description": "Hooks that run once per user message, after the user has submitted their prompt and before the first model call of the turn. The submitted text is passed in the prompt field. Hooks can block submission (decision=block / continue=false / exit code 2) or contribute additional_context that is spliced into the conversation as a transient system message for that turn only. Sub-sessions (transferred tasks, background agents) do NOT fire this event because their kick-off message is synthesised by the runtime.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "user_steering_messages_submit": {
+          "type": "array",
+          "description": "Hooks that run each time the runtime drains the steering queue and appends the queued user messages to the session \u2014 messages the user submitted while the agent was already working (mid-turn, after the model stopped, or while idle before the first model call). The drained messages are passed in the steering_messages field. Like user_prompt_submit, hooks can block the run (decision=block / continue=false / exit code 2) or contribute additional_context that is spliced into the conversation as a transient system message for the steered turn only \u2014 it is NOT persisted to the session.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "user_followup_submit": {
+          "type": "array",
+          "description": "Hooks that run each time the runtime dequeues a follow-up message at the end of a turn and starts a fresh turn for it. Follow-ups are user messages queued for end-of-turn processing (the FollowUp API / queue), distinct from mid-turn steering \u2014 the model sees them as fresh input. The follow-up text is passed in the prompt field. Like user_prompt_submit, hooks can block the run (decision=block / continue=false / exit code 2) or contribute additional_context that is spliced into the conversation as a transient system message for the follow-up turn only \u2014 it is NOT persisted to the session.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "turn_start": {
+          "type": "array",
+          "description": "Hooks that run at the start of every agent turn (each model call). Their AdditionalContext is appended as transient system messages for that turn only \u2014 it is NOT persisted to the session, so per-turn signals (date, prompt files) are recomputed every turn instead of bloating message history on every resume.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "turn_end": {
+          "type": "array",
+          "description": "Hooks that run once per agent turn when the turn finishes \u2014 the symmetric counterpart of turn_start. Fires no matter why the turn ended: a normal stop, an error, a hook-driven shutdown, the loop detector, or context cancellation. The reason is reported via the hook input's reason field ('normal', 'continue', 'steered', 'error', 'canceled', 'hook_blocked', 'loop_detected'). Observational; output is ignored.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "before_llm_call": {
+          "type": "array",
+          "description": "Hooks that run just before each model call (after turn_start has assembled the messages). Use for observability, cost guardrails, or auditing without contributing system messages \u2014 turn_start is the right event for the latter.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "after_llm_call": {
+          "type": "array",
+          "description": "Hooks that run just after each successful model call, before the response is recorded into the session and tool calls are dispatched. Receives the assistant text content in stop_response. Failed calls fire on_error instead.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "session_end": {
+          "type": "array",
+          "description": "Hooks that run when a session ends. Can perform cleanup or logging.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "pre_compact": {
+          "type": "array",
+          "description": "Hooks that run just before the runtime compacts the session transcript into a summary. The trigger is reported in source: 'manual' (user-initiated /compact), 'auto' (proactive threshold), 'overflow' (context-overflow recovery), or 'tool_overflow' (proactive after tool results pushed past the threshold). Hooks may block compaction (decision=block / continue=false / exit code 2) or contribute additional_context that is appended to the compaction prompt \u2014 useful for steering the summary without modifying the agent's instruction.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "subagent_stop": {
+          "type": "array",
+          "description": "Hooks that run when a sub-agent (transferred task, background agent, skill sub-session) finishes. Fires against the parent agent's executor so handlers configured on the orchestrator see every child completion. The sub-agent's name is in agent_name and its final assistant message in stop_response.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "on_user_input": {
+          "type": "array",
+          "description": "Hooks that run when the agent needs user input. Can send notifications or log events.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "stop": {
+          "type": "array",
+          "description": "Hooks that run when the model finishes responding and is about to hand control back to the user. Can perform post-response validation or logging.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "notification": {
+          "type": "array",
+          "description": "Hooks that run when the agent sends a notification (error, warning) to the user. Can send external notifications or log events.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "on_error": {
+          "type": "array",
+          "description": "Hooks that run when the runtime hits an error during a turn (model failures, repetitive tool-call loops). Fires alongside notification (level=error); use this for structured error-only handlers without parsing notification_level.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "on_max_iterations": {
+          "type": "array",
+          "description": "Hooks that run when the runtime reaches its configured max_iterations limit. Fires alongside notification (level=warning); use this for structured handlers (e.g. log to a metrics pipeline) without parsing notification_message.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "on_agent_switch": {
+          "type": "array",
+          "description": "Hooks that run whenever the runtime moves the active agent to a new one (transfer_task, handoff, or the return after a transferred task completes). Receives from_agent, to_agent, and agent_switch_kind in the input. Observational; useful for audit, transcript, and metrics pipelines that track which agent ran which tools.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "on_session_resume": {
+          "type": "array",
+          "description": "Hooks that run when the user explicitly approves the runtime to continue past its configured max_iterations limit. Receives previous_max_iterations and new_max_iterations in the input. Observational; useful for alerting on extended-runtime sessions or for billing/quota pipelines that meter resumes.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "on_tool_approval_decision": {
+          "type": "array",
+          "description": "Hooks that run after the runtime's tool approval chain (custom rules / safety mode / hooks / ask) resolves a verdict for a tool call, before the call is executed (allow) or its error response is recorded (deny / canceled). Receives approval_decision (\"allow\" | \"deny\" | \"canceled\"), approval_source (a stable classifier of which step decided), and safety_label (the runtime classifier's safe / destructive / unknown verdict). Observational; gives audit pipelines a single \"who approved what\" record without re-implementing the chain.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "before_compaction": {
+          "type": "array",
+          "description": "Hooks that run immediately before a session compaction. The Input carries input_tokens, output_tokens, context_limit, and compaction_reason ('threshold', 'overflow', 'manual'). A hook may veto compaction by setting decision='block' (or exiting with code 2), or supply a custom summary via hookSpecificOutput.summary, in which case the runtime applies that summary verbatim and skips the LLM-based summarization. Be cautious about denying when compaction_reason='overflow': the runtime is recovering from a context-overflow error and a denial there will leave the session unable to make progress.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "after_compaction": {
+          "type": "array",
+          "description": "Hooks that run after a successful compaction (a summary was applied to the session). Receives the final summary text in Input.summary alongside input_tokens, output_tokens, context_limit and compaction_reason. Purely observational \u2014 hook output is ignored.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        },
+        "tool_response_transform": {
+          "type": "array",
+          "description": "Hooks that fire between a tool's execution and the runtime's emission/record of the response, with the rewrite reaching event consumers, the persisted session, the post_tool_use hook input, and the next LLM call. A hook may rewrite the tool's textual output by setting hookSpecificOutput.updated_tool_response \u2014 the symmetric counterpart of pre_tool_use's updated_input, applied to tool RESULTS instead of tool ARGUMENTS. The redact_secrets builtin uses this event for the third leg of the redact_secrets feature; custom rewriters can also truncate excessive output, scrub PII, or normalise tool dialects. Tool-matched, like pre_tool_use / post_tool_use.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookMatcherConfig"
+          }
+        },
+        "tool_input_transform": {
+          "type": "array",
+          "description": "Hooks that run before every tool call, ahead of the deterministic approval pipeline (safety mode, permission rules, --yolo) and of tool_guard. Hooks run sequentially, each seeing the preceding rewrite, and may patch tool arguments via hookSpecificOutput.updated_input exactly like pre_tool_use; the approval pipeline and every later hook see the rewritten arguments. Rewrite-only: verdicts belong on tool_guard. Failures follow the hook's on_error policy (default warn; block denies the call). The redact_secrets builtin's argument-scrubbing leg is auto-injected here. Tool-matched, like pre_tool_use; preempt_yolo is rejected because the event always preempts approval.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookMatcherConfig"
+          }
+        },
+        "tool_guard": {
+          "type": "array",
+          "description": "Hooks that run after tool_input_transform and before the deterministic approval pipeline, so their verdict cannot be bypassed by any safety mode (including autonomous / --yolo) or permission allow-rule. Hooks run concurrently; hookSpecificOutput.permission_decision verdicts aggregate to the most restrictive (deny > ask > allow). deny rejects the call; ask forces the interactive prompt even when the session already allowed the tool; allow is advisory (the pipeline still runs). hookSpecificOutput.metadata is merged into the confirmation prompt. updated_input is ignored \u2014 use tool_input_transform to rewrite arguments. Hook execution failures fail closed (deny), like pre_tool_use. Tool-matched; preempt_yolo is rejected because the event always preempts approval.",
+          "items": {
+            "$ref": "#/definitions/HookMatcherConfig"
+          }
+        },
+        "before_agent_run": {
+          "type": "array",
+          "description": "Hooks that run once per agent activation, before the agent's model is selected or its response cache is consulted. A hook may return hookSpecificOutput.transition {action: route, agent} to replace the activation with another agent from the agent's routing.allowed_agents; the skipped agent never calls its model. Each destination has its own activation. At most one hook is allowed per agent after merging identical definitions; requires the agent's routing declaration. Output is always validated strictly and failures block the run; blocking beats any transition.",
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/definitions/RoutingHookDefinition"
+          }
+        },
+        "after_agent_complete": {
+          "type": "array",
+          "description": "Hooks that run once after an agent completes successfully (natural completion, accepted structured output, or a cached answer), before the run decides whether it is finished. A hook may return hookSpecificOutput.transition {action: route, agent} to continue the same conversation with another agent from routing.allowed_agents. Not fired on errors, cancellation, budget stops, iteration-limit pauses, or empty completions. At most one hook is allowed per agent; cannot be combined with force_handoff. Output is always validated strictly and failures block the run.",
+          "maxItems": 1,
+          "items": {
+            "$ref": "#/definitions/RoutingHookDefinition"
+          }
+        },
+        "worktree_create": {
+          "type": "array",
+          "description": "Hooks that run once, just after `docker agent run --worktree` creates a git worktree and before the session starts. They execute inside the new worktree (their working directory is the fresh checkout), and the worktree path, branch, and source repository root are passed in worktree_path / worktree_branch / worktree_source_dir. Use them to prepare the checkout: copy untracked files like .env, install dependencies, warm caches, before the agent begins. A hook may abort the run by blocking (decision=block / continue=false / exit code 2); stdout is surfaced as additional context. Dispatched from the CLI rather than the run loop because the worktree (and the working directory every downstream component captures) must be settled before the runtime and session exist.",
+          "items": {
+            "$ref": "#/definitions/NonEvaluatorHookDefinition"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "HookMatcherConfig": {
+      "type": "object",
+      "description": "Configuration for matching tools and their associated hooks",
+      "properties": {
+        "matcher": {
+          "type": "string",
+          "description": "Regex pattern to match tool names (e.g., 'shell|edit_file'). Use '*' to match all tools. Case-sensitive.",
+          "examples": [
+            "*",
+            "shell",
+            "shell|edit_file|write_file",
+            "mcp__.*"
+          ]
+        },
+        "hooks": {
+          "type": "array",
+          "description": "Hooks to execute when the matcher matches",
+          "items": {
+            "$ref": "#/definitions/HookDefinition"
+          }
+        },
+        "preempt_yolo": {
+          "type": "boolean",
+          "description": "Opt a pre_tool_use entry into firing BEFORE the deterministic approval pipeline (custom allow/ask/deny rules + safety mode). A deny/ask verdict from a preempting hook cannot be bypassed by any safety mode (including autonomous) or permission allow-rules; an allow verdict is advisory (the pipeline still runs Decide() and the rest of pre_tool_use). Default pre_tool_use entries fire AFTER Decide(). Only valid on pre_tool_use; rejected on every other event. Set it on hooks that implement a security-critical check that must not be bypassed by auto-approval."
+        }
+      },
+      "required": [
+        "hooks"
+      ],
+      "additionalProperties": false
+    },
+    "HookDefinition": {
+      "type": "object",
+      "description": "Definition of a lifecycle hook",
+      "properties": {
+        "system_prompt": {
+          "type": "string",
+          "description": "Literal system message for a model hook. Overrides the default; not templated."
+        },
+        "name": {
+          "type": "string",
+          "description": "Optional friendly hook name used in logs and runtime hook events."
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of hook. 'command' executes a shell command; 'builtin' invokes a named in-process Go function registered by the runtime; 'model' asks an LLM and translates its reply into the hook's native output (used for LLM-as-a-judge pre_tool_use, summarizers, etc., with no Go code). The docker-agent runtime ships these builtins: 'add_context' (context-contributing events: renders Go templates in args against hook input and joins non-empty results with newlines as additional context), 'add_date' (turn_start: today's date), 'add_environment_info' (session_start: cwd, git, OS, arch), 'add_prompt_files' (turn_start: contents of named files looked up in the workdir hierarchy and the home directory; args may include '--depth=<N>' to additionally list, by path only, the same filenames found up to N levels below the working directory), 'add_git_status' (turn_start: `git status --short --branch`), 'add_git_diff' (turn_start: `git diff --stat`, or full diff with args=['full']), 'add_directory_listing' (session_start: top-level entries of cwd), 'add_user_info' (session_start: current OS user and hostname), 'add_recent_commits' (session_start: `git log --oneline -n N`, default N=10, override via args=['<N>']), 'max_iterations' (before_llm_call: hard stop after N model calls; args=['<N>'] required), 'redact_secrets' (tool_input_transform or pre_tool_use / before_llm_call / tool_response_transform: scrubs detected secrets from tool arguments, outgoing chat content, and tool output — the same builtin handles all three legs and dispatches on the event; the matching agent-level 'redact_secrets: true' flag auto-injects the entries on tool_input_transform, before_llm_call, and tool_response_transform), 'transform_json' (tool_response_transform: keeps the top-level JSON fields named in args), 'limit_large_tool_results' (tool_response_transform and session_end: stores oversized tool output in a per-session temp file and replaces it with a bounded excerpt; always injected by the runtime), 'safer_shell' (pre_tool_use: deprecated compatibility shim that attaches shell safety classification metadata), 'http_post' (any event: POSTs args[1] to the URL in args[0]), 'snapshot' (session_start, turn_start, turn_end, pre_tool_use, post_tool_use, and session_end: records filesystem snapshots in a shadow git repository), 'unload' (on_agent_switch: POSTs `{\"model\": \"<id>\"}` to the previous agent's DMR model endpoints — e.g. asks Docker Model Runner to release the GPU/RAM held by the just-departing model so the next agent's model can claim it. Pure HTTP, no provider-specific runtime coupling; non-DMR providers are silently skipped. Opt in by adding the entry to the agent's hooks.on_agent_switch list). 'evaluator' assesses tool input through a named evaluator and applies a separate policy (tool_guard only).",
+          "enum": [
+            "command",
+            "builtin",
+            "model",
+            "evaluator"
+          ]
+        },
+        "command": {
+          "type": "string",
+          "description": "Shell command (type=command) or builtin name (type=builtin) to invoke. Command hooks receive JSON input via stdin with tool/session information. Ignored when type=model."
+        },
+        "args": {
+          "type": "array",
+          "description": "Arbitrary string arguments passed to the hook handler. Builtin handlers receive them as a typed parameter; e.g. 'add_context' takes Go text/template strings using hook input fields such as {{ .SessionID }}, 'add_prompt_files' takes the list of prompt files to load, 'add_recent_commits' optionally takes a positive integer commit limit, 'add_git_diff' accepts 'full' to emit the full unified diff, and 'max_iterations' takes a positive integer call limit.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "timeout": {
+          "type": "integer",
+          "description": "Execution timeout in seconds (default: 60)",
+          "minimum": 1,
+          "default": 60
+        },
+        "env": {
+          "type": "object",
+          "description": "Environment variables to add or override for this hook only. Values expand the plain ${env.VAR} form from the OS environment; any other $ is kept literal.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "working_dir": {
+          "type": "string",
+          "description": "Working directory for this hook. Accepts ~, $VAR, ${VAR} and ${env.VAR}. Relative paths are resolved from the agent working directory."
+        },
+        "on_error": {
+          "type": "string",
+          "description": "Policy for execution errors, timeouts, unexpected nonzero exits and invalid output. 'warn' reports and continues (default), 'ignore' continues silently, and 'block' denies block-capable events. pre_tool_use and tool_guard always fail closed. on_error=block is rejected on observational events.",
+          "enum": [
+            "warn",
+            "ignore",
+            "block"
+          ],
+          "default": "warn"
+        },
+        "strict_output": {
+          "type": "boolean",
+          "description": "Require a single JSON output object (or empty stdout), reject unknown fields and outputs unsupported by the hook event. Failures follow on_error; pre_tool_use and tool_guard fail closed.",
+          "default": false
+        },
+        "model": {
+          "type": "string",
+          "description": "Model spec ('provider/model', e.g. 'openai/gpt-4o-mini') invoked by type=model hooks. Required for that type, ignored otherwise."
+        },
+        "prompt": {
+          "type": "string",
+          "description": "User-message template rendered for each invocation of a type=model hook. Parsed as a Go text/template with the hook Input as the data context: {{ .ToolName }}, {{ .ToolInput }}, {{ .StopResponse }}, etc. Required for type=model."
+        },
+        "schema": {
+          "type": "string",
+          "description": "Well-known response interpretation for type=model hooks. Empty: return the model's reply as additional_context. 'pre_tool_use_decision': ask the model for {decision, reason} JSON and produce a permission_decision verdict (allow|ask|deny)."
+        },
+        "evaluator": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Top-level evaluator referenced by type=evaluator hooks: tool_guard hooks use evaluator_policy, before_agent_run and after_agent_complete hooks use routing_policy."
+        },
+        "evaluator_policy": {
+          "$ref": "#/definitions/EvaluatorPolicy"
+        },
+        "routing_policy": {
+          "$ref": "#/definitions/RoutingPolicy"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "command"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "required": [
+              "command"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "builtin"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "required": [
+              "command"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "model"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "required": [
+              "model",
+              "prompt"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "evaluator"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "required": [
+              "evaluator"
+            ],
+            "oneOf": [
+              {
+                "required": [
+                  "evaluator_policy"
+                ]
+              },
+              {
+                "required": [
+                  "routing_policy"
+                ]
+              }
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "evaluator"
+                  ]
+                },
+                {
+                  "required": [
+                    "evaluator_policy"
+                  ]
+                },
+                {
+                  "required": [
+                    "routing_policy"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "ModelConfig": {
+      "type": "object",
+      "description": "Configuration for a model",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "description": "Model provider (e.g., openai, anthropic, dmr)",
+          "examples": [
+            "openai",
+            "anthropic",
+            "dmr",
+            "ollama",
+            "github-copilot",
+            "chatgpt"
+          ]
+        },
+        "model": {
+          "type": "string",
+          "description": "Model name"
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional human-readable summary of the model's purpose or strengths (e.g. 'fast and cheap, good for summaries')"
+        },
+        "temperature": {
+          "type": "number",
+          "description": "Sampling temperature",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "max_tokens": {
+          "type": "integer",
+          "description": "Maximum output tokens per response (the completion budget), NOT the context window. OpenAI-compatible servers require prompt_tokens + max_tokens to fit the context window, so a value close to the window leaves no room for the prompt. Set provider_opts.context_size to declare the window.",
+          "minimum": 1
+        },
+        "top_p": {
+          "type": "number",
+          "description": "Top-p sampling parameter",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "frequency_penalty": {
+          "type": "number",
+          "description": "Frequency penalty",
+          "minimum": -2,
+          "maximum": 2
+        },
+        "presence_penalty": {
+          "type": "number",
+          "description": "Presence penalty",
+          "minimum": -2,
+          "maximum": 2
+        },
+        "base_url": {
+          "description": "Base URL for the model API. Accepts ${env.VAR} / ${VAR} references, substituted from the environment when the model is loaded.",
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "uri"
+            },
+            {
+              "type": "string",
+              "pattern": "^\\S*\\$\\{?[A-Za-z_]\\S*$"
+            }
+          ]
+        },
+        "parallel_tool_calls": {
+          "type": "boolean",
+          "description": "Whether to enable parallel tool calls"
+        },
+        "token_key": {
+          "type": "string",
+          "description": "Token key for authentication"
+        },
+        "bypass_models_gateway": {
+          "type": "boolean",
+          "description": "When true, this model connects directly to its provider, ignoring any configured models gateway (--models-gateway / DOCKER_AGENT_MODELS_GATEWAY). The model then authenticates with the provider's own credentials (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, or token_key) instead of routing through the gateway. A custom base_url (set on the model or inherited from a custom provider definition) implies this bypass even when the flag is false."
+        },
+        "provider_opts": {
+          "type": "object",
+          "properties": {
+            "extra_body": {
+              "type": "object",
+              "description": "OpenAI-compatible providers and DMR: top-level Chat Completions request overrides, including OpenAI-client reranking. Explicit values win over generated fields, including internal no-thinking settings; nested objects are replaced, not deep-merged. Streaming calls always force stream=true. Not applied to Responses, embeddings, or DMR model configuration.",
+              "additionalProperties": true
+            }
+          },
+          "description": "Provider-specific options. Anthropic: thinking_prefix_mismatch (error or drop_block; defaults to drop_block on Fable/Mythos 5.1), strict_tools (true for eligible schemas or a tool-name array requiring strict mode), cache_diagnostics (boolean; Claude API only), native_compaction (boolean; synchronous whole-history signed compaction on Claude API), cache_preserving_updates (boolean; native system/tool/effort changes with turn-scoped reminders on supported models), thinking_display: updates (progress updates beta on Fable 5+ and Mythos 5.1). Sampling parameters: top_k (integer, supported by anthropic, google, amazon-bedrock, and custom OpenAI-compatible providers like vLLM/Ollama), repetition_penalty (float, forwarded to custom OpenAI-compatible providers), min_p (float, forwarded to custom providers), seed (integer, forwarded to OpenAI). Lifecycle: unload_api (string) overrides the unload endpoint inherited from the provider config (relative path resolved against base_url's scheme+host, or an absolute URL); used by the runtime's `unload` on_agent_switch builtin hook to release model resources between agent switches. Infrastructure options: http_headers (map of string to string, adds custom HTTP headers to every request; used for OpenAI-compatible providers like github-copilot which requires Copilot-Integration-Id). dmr: runtime_flags; supports_images (boolean) and supports_pdf (boolean) declare which document attachment types the local model accepts. DMR-hosted models are not in the models.dev catalog, so attachment capabilities cannot be detected automatically and default to text-only; set supports_images: true for a vision model so image attachments are forwarded instead of silently dropped. anthropic/amazon-bedrock (Claude): interleaved_thinking (boolean, default true). anthropic: thinking_display ('summarized', 'omitted', 'updates', or 'display') controls whether thinking blocks are returned in responses when thinking is enabled. Claude Opus 4.7 hides thinking by default ('omitted'); set thinking_display: summarized to receive thinking blocks. 'display' (full thinking blocks) is only accepted by pre-4.6 token-thinking models (e.g. Sonnet 4.5, Haiku 4.5); models from the adaptive-thinking generation onward (Opus/Sonnet 4.6+, Sonnet 5, Fable 5) reject it, and docker-agent fails fast with a configuration error (fallbacks models are validated too); fallbacks (array of model ID strings, in priority order; enables the server-side-fallback beta so requests refused by safety classifiers, e.g. on Claude Fable 5, are retried with the listed models in a single round trip). OpenAI-compatible APIs: service_tier (string, forwarded unchanged to Chat Completions and Responses, including WebSocket and reranking; 'fast' or 'priority' enables Fast mode at premium pricing on supported models; omitted or empty leaves the API default, non-string values are ignored). openai/chatgpt: preserve_reasoning (boolean, default false) preserves ordered Responses output and encrypted reasoning for stateless continuation; native_tool_search also enables output replay. openai: cache_diagnostics (boolean, default false) logs Responses prompt-cache comparison results with --debug on GPT-5.6+; comparisons are scoped to the current session and resolved model; ignored for chatgpt and custom base_url endpoints. transport ('sse' or 'websocket') to choose between SSE and WebSocket streaming for the Responses API; native_tool_search (boolean, default false; also enables ordered output replay) declares the agent's deferred tools with defer_loading and a server-executed tool_search tool so OpenAI's hosted tool search discovers them (only openai models supporting deferred tools, gpt-5.4+; ignored on chatgpt, OpenAI-compatible endpoints including a custom base_url, and Chat Completions requests). openai/anthropic/google: rerank_prompt (string) to fully override the system prompt used for RAG reranking (advanced - prefer using results.reranking.criteria for domain-specific guidance). Google: google_search (boolean) enables Google Search grounding, google_maps (boolean) enables Google Maps grounding, code_execution (boolean) enables server-side code execution, url_context (boolean) enables reading public URLs during generation, output_dimensionality (positive integer) truncates Gemini embedding vectors to that size when the model is used as a RAG embedding_model; service_tier (string, forwarded unchanged as the top-level serviceTier of every generateContent request, including reranking, title generation, and compaction, on the Gemini API, Vertex AI, and the Docker models gateway; 'flex' for discounted, queued processing that may wait up to 15 minutes before the first byte, 'standard' for the default tier, 'priority' for premium processing; omitted or empty leaves the API default, non-string values are ignored; cost estimates are not tier-adjusted, set the model's cost override).",
+          "additionalProperties": true
+        },
+        "track_usage": {
+          "type": "boolean",
+          "description": "Whether to track usage"
+        },
+        "thinking_budget": {
+          "description": "Controls reasoning effort/budget. Use 'none' or 0 to disable thinking. OpenAI: string levels ('none','minimal','low','medium','high','xhigh','max') \u2014 'xhigh' requires gpt-5.2+; 'none' and 'max' require gpt-5.6+ (Sol/Terra/Luna); 'minimal' is not accepted on gpt-5.6+. Anthropic: integer token budget (1024-32768), 'adaptive' (adaptive thinking with high effort by default), 'adaptive/<effort>' where effort is low/medium/high/xhigh/max ('xhigh' is supported by Claude Opus 4.7+), or effort levels ('low','medium','high','xhigh','max') which use adaptive thinking with the given effort. Amazon Bedrock (Claude): integer token budget or effort levels ('low','medium','high') mapped to token budgets. Google Gemini 2.5: integer token budget (-1 for dynamic, 0 to disable, 24576 max). Google Gemini 3: string levels ('minimal' Flash only,'low','medium','high'). Thinking is only enabled when explicitly configured.",
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^(none|minimal|low|medium|high|xhigh|max|adaptive(/low|/medium|/high|/xhigh|/max)?)$",
+              "description": "Reasoning effort level. 'adaptive' uses adaptive thinking with high effort (default). 'adaptive/<effort>' specifies the effort level (low/medium/high/xhigh/max). 'adaptive/xhigh' requires Claude Opus 4.7+. Use 'none' to disable thinking."
+            },
+            {
+              "type": "integer",
+              "minimum": -1,
+              "maximum": 32768,
+              "description": "Token budget for extended thinking (Anthropic, Bedrock Claude, Gemini 2.5). Use 0 to disable thinking."
+            }
+          ],
+          "examples": [
+            "none",
+            0,
+            "minimal",
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max",
+            "adaptive",
+            "adaptive/low",
+            "adaptive/medium",
+            "adaptive/high",
+            "adaptive/xhigh",
+            "adaptive/max",
+            -1,
+            1024,
+            8192,
+            32768
+          ]
+        },
+        "task_budget": {
+          "description": "Total-token budget for a full agentic task (forwarded to Anthropic as `output_config.task_budget`, with the required `task-budgets-2026-03-13` beta header attached automatically). Limits the combined tokens spent on thinking, tool calls, and output across the whole task. Configurable on any Claude model \u2014 docker-agent does not gate by model name \u2014 but at the time of writing only Claude Opus 4.7 honors it. Accepts an integer token count or an object {type: tokens, total: N}.",
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Total token budget for the task (e.g., 128000)."
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "tokens"
+                  ],
+                  "description": "Budget kind. Only \"tokens\" is supported today."
+                },
+                "total": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Total budget value."
+                }
+              },
+              "required": [
+                "total"
+              ],
+              "additionalProperties": false
+            }
+          ],
+          "examples": [
+            64000,
+            128000,
+            {
+              "type": "tokens",
+              "total": 128000
+            }
+          ]
+        },
+        "routing": {
+          "type": "array",
+          "description": "Routing rules for request-based model selection. When configured, this model becomes a router that selects the best model based on the user's input. The model's provider/model fields define the fallback model.",
+          "items": {
+            "$ref": "#/definitions/RoutingRule"
+          }
+        },
+        "auth": {
+          "$ref": "#/definitions/AuthConfig",
+          "description": "Non-API-key authentication scheme for this model. When set, takes precedence over both the provider's API-key path and any auth defined on the referenced ProviderConfig."
+        },
+        "first_available": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Candidate model references in priority order. At load time docker-agent selects the first candidate whose credentials are configured. Candidates may be named models or inline 'provider/model' specs. Local providers (dmr, ollama) need no credentials and make reliable final fallbacks. Mutually exclusive with other model configuration fields.",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "examples": [
+            [
+              "anthropic/claude-sonnet-4-5",
+              "openai/gpt-5.6",
+              "dmr/ai/qwen3"
+            ]
+          ]
+        },
+        "title_model": {
+          "type": "string",
+          "description": "Model used to generate session titles when an agent runs with this model. Lets a heavyweight primary model delegate the cheap title-generation call to a smaller/faster model. Value can be a model name from the models section or an inline 'provider/model' spec. When omitted, title generation reuses the agent's own model.",
+          "examples": [
+            "openai/gpt-4o-mini",
+            "fast"
+          ]
+        },
+        "compaction_model": {
+          "type": "string",
+          "description": "Model used to summarize the conversation when this model's session is compacted (manual /compact, the proactive threshold trigger, or post-overflow recovery). The summary call ingests the whole conversation and is the slowest, most expensive call in a session; pointing this at a smaller/faster model makes compaction cheaper and more reliable without changing the model that runs the conversation. Value can be a model name from the models section or an inline 'provider/model' spec. The agent-level compaction_model takes precedence over this value, which in turn takes precedence over a provider-level default; when all are omitted, compaction reuses the agent's own model. If the compaction model has a smaller context window than the primary, compaction is triggered against the smaller window so the summary call can always ingest the conversation it must compact.",
+          "examples": [
+            "openai/gpt-4o-mini",
+            "fast"
+          ]
+        },
+        "compaction_threshold": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "default": 0.9,
+          "description": "Fraction of the context window at which proactive auto-compaction triggers for agents running this model. Must be greater than 0 and at most 1. Defaults to 0.9 (90% of the context window). Takes precedence over the agent-level compaction_threshold. Cannot be combined with first_available.",
+          "examples": [
+            0.75,
+            0.9
+          ]
+        },
+        "capabilities": {
+          "$ref": "#/definitions/CapabilitiesConfig",
+          "description": "Explicit attachment capability override for models the models.dev catalogue does not describe correctly (custom OpenAI-compatible providers, local models like Ollama, or dropped model versions). When set, the declared flags are authoritative and no models.dev lookup is performed; when omitted, capabilities are detected automatically. Without it, such models fall back to text-only and their image/PDF/audio/video attachments are silently dropped."
+        },
+        "output_capabilities": {
+          "$ref": "#/definitions/OutputCapabilitiesConfig",
+          "description": "Optional generative output capability override for this model. Resolution precedence is explicit false, explicit true, then the exact models.dev record's Modalities.Output=image for an omitted image flag (including an empty block). Unknown or unavailable catalogue metadata stays disabled; model names are never used to infer capability. Cannot be combined with first_available (set output_capabilities.image on the candidate models instead)."
+        },
+        "cost": {
+          "$ref": "#/definitions/CostConfig",
+          "description": "Explicit token pricing (USD per 1M tokens), overriding the models.dev catalogue. Used for per-turn cost computation, session cost tracking, the /model picker, and the after_llm_call hook's cost field. Makes an uncatalogued model (custom base_url provider, local or private deployment) 'priced' instead of billing $0. Prices must not be negative; an all-zero table means 'priced, free'. Cannot be combined with first_available."
+        }
+      },
+      "additionalProperties": false
+    },
+    "CapabilitiesConfig": {
+      "type": "object",
+      "description": "Explicit attachment capabilities for a model, overriding automatic models.dev-based detection. The declared flags must match what the underlying endpoint actually accepts; claiming an unsupported modality results in a provider-side API error.",
+      "properties": {
+        "image": {
+          "type": "boolean",
+          "description": "Whether the model accepts image attachments"
+        },
+        "pdf": {
+          "type": "boolean",
+          "description": "Whether the model accepts PDF (application/pdf) attachments"
+        },
+        "audio": {
+          "type": "boolean",
+          "description": "Whether the model accepts audio attachments"
+        },
+        "video": {
+          "type": "boolean",
+          "description": "Whether the model accepts video attachments"
+        }
+      },
+      "additionalProperties": false
+    },
+    "OutputCapabilitiesConfig": {
+      "type": "object",
+      "description": "Generative output capability overrides for a model. Resolution precedence is explicit false, explicit true, then the exact models.dev record's Modalities.Output=image when the image flag is omitted, including an empty block. Unknown or unavailable catalogue metadata stays disabled; model names are never used to infer capability.",
+      "properties": {
+        "image": {
+          "type": "boolean",
+          "description": "Whether the model can generate image output. Explicit false takes precedence over explicit true; when omitted, Docker Agent uses the exact models.dev record's output modalities and otherwise leaves image output disabled."
+        }
+      },
+      "additionalProperties": false
+    },
+    "CostConfig": {
+      "type": "object",
+      "description": "Explicit token pricing for a model, in USD per one million tokens. Takes precedence over the models.dev catalogue and prices models the catalogue does not know.",
+      "properties": {
+        "input": {
+          "type": "number",
+          "minimum": 0,
+          "description": "USD price per 1M input tokens"
+        },
+        "output": {
+          "type": "number",
+          "minimum": 0,
+          "description": "USD price per 1M output tokens"
+        },
+        "cache_read": {
+          "type": "number",
+          "minimum": 0,
+          "description": "USD price per 1M cached input tokens"
+        },
+        "cache_write": {
+          "type": "number",
+          "minimum": 0,
+          "description": "USD price per 1M cache-write tokens"
+        }
+      },
+      "additionalProperties": false
+    },
+    "RoutingRule": {
+      "type": "object",
+      "description": "A single routing rule that maps example phrases to a target model",
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "Model reference (another model name in the models section or inline spec like 'openai/gpt-4o')"
+        },
+        "examples": {
+          "type": "array",
+          "description": "Example phrases that should trigger routing to this model",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "model",
+        "examples"
+      ],
+      "additionalProperties": false
+    },
+    "Metadata": {
+      "type": "object",
+      "description": "Configuration metadata",
+      "properties": {
+        "author": {
+          "type": "string",
+          "description": "Author of the configuration"
+        },
+        "license": {
+          "type": "string",
+          "description": "License for the configuration"
+        },
+        "readme": {
+          "type": "string",
+          "description": "README or description"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the agent configuration"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the agent configuration (used for OCI registry publishing)"
+        },
+        "tags": {
+          "type": "array",
+          "description": "Tags describing the agent configuration (e.g. for categorization and discovery)",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "RuntimeDefaults": {
+      "type": "object",
+      "description": "Execution-time defaults baked into the agent config. Values act as defaults only; explicit CLI flags and user-config settings still take precedence.",
+      "properties": {
+        "sandbox": {
+          "type": "boolean",
+          "description": "When true, run the agent inside a Docker sandbox by default \u2014 equivalent to passing --sandbox on the command line. An explicit --sandbox=false on the CLI still wins."
+        },
+        "network_allowlist": {
+          "type": "array",
+          "description": "Hosts to add to the sandbox's default-deny network proxy when this agent runs in a sandbox. Each entry is a hostname with an optional ':port' suffix (e.g. 'api.example.com', 'registry.npmjs.org:443'). Unioned with the gateway and tool-install hosts the runner already opens automatically. Use this for hosts the auto-installer can't infer (custom MCP endpoints, third-party APIs, registries not covered by the aqua resolver) instead of relying on the wider fallback host set.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "safety": {
+          "type": "string",
+          "enum": [
+            "strict",
+            "balanced",
+            "restricted",
+            "autonomous"
+          ],
+          "description": "Safety mode new sessions default to when the user has not chosen one (no --safety/--yolo flag, no alias option, no user-config setting). A per-agent 'safety' takes precedence over this config-wide default. A default only: it never overrides a user choice and never replaces the mode stored on a resumed session. 'restricted' is the fail-closed profile for unattended runs: safe calls auto-approve, every other unmatched call is denied without prompting. Trust warning: 'autonomous' auto-approves every tool call \u2014 review configs from URLs or OCI registries before running them."
+        }
+      },
+      "additionalProperties": false
+    },
+    "BudgetConfig": {
+      "type": "object",
+      "description": "Ceilings on what a single run may consume. Every limit is optional; an unset or zero limit is unlimited. The budget is scoped to a run and shared by every sub-session spawned inside it, so a fan-out to sub-agents spends against one budget rather than one per child. Exceeding any limit stops the run with an assistant message and a budget_exceeded event; raising a limit means editing the config, not answering a prompt.",
+      "properties": {
+        "max_cost": {
+          "type": "number",
+          "description": "Maximum spend for the run, in USD. Only responses the runtime can price count towards it: a model with no pricing data (unknown ID, or a custom endpoint without a model-level 'cost' block) contributes nothing, and such a run emits a warning rather than behaving as if the spend were free.",
+          "minimum": 0,
+          "examples": [
+            0.5,
+            5,
+            25
+          ]
+        },
+        "max_tokens": {
+          "type": "integer",
+          "description": "Maximum cumulative input+output tokens for the run, counted over its whole lifetime. This is not the session's context length: compaction resets that, while this keeps counting.",
+          "minimum": 0,
+          "examples": [
+            100000,
+            1000000
+          ]
+        },
+        "max_time": {
+          "type": "string",
+          "description": "Maximum time the agents spend working, in Go duration format (e.g., '10m', '30s', '1h30m'). This is the sum of turn durations, NOT wall-clock since the session opened, so idle time while the user reads and types does not count. Checked at turn boundaries, so it will not interrupt an in-flight model call or tool.",
+          "pattern": "^([0-9]+(ns|us|\u00b5s|ms|s|m|h))+$",
+          "examples": [
+            "30s",
+            "10m",
+            "1h30m"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "PermissionsConfig": {
+      "type": "object",
+      "description": "Tool permission configuration. Controls tool call approval behavior with optional argument matching.",
+      "properties": {
+        "allow": {
+          "type": "array",
+          "description": "Tool patterns that are auto-approved without user confirmation. Supports tool names with glob patterns (e.g., 'read_*') and argument matching (e.g., 'shell:cmd=ls*' to allow shell commands starting with 'ls'). MCP tools can use qualified names (e.g., 'mcp:github:*').",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "shell:cmd=ls*",
+              "shell:cmd=git status*",
+              "shell:cmd=go test*"
+            ],
+            [
+              "mcp:github:get_*",
+              "mcp:github:list_*"
+            ],
+            [
+              "think",
+              "create_todo*",
+              "list_todos"
+            ]
+          ]
+        },
+        "ask": {
+          "type": "array",
+          "description": "Tool patterns that always require user confirmation, even for tools that are normally auto-approved (e.g. read-only tools). Supports the same pattern syntax as allow: tool names with globs and argument matching (e.g., 'fetch' to always ask before fetching URLs).",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "fetch"
+            ],
+            [
+              "mcp:github:get_*"
+            ]
+          ]
+        },
+        "deny": {
+          "type": "array",
+          "description": "Tool patterns that are always rejected. Takes priority over allow patterns. Supports the same pattern syntax as allow: tool names with globs and argument matching (e.g., 'shell:cmd=rm -rf*' to block dangerous rm commands).",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "shell:cmd=rm -rf*",
+              "shell:cmd=sudo*"
+            ],
+            [
+              "shell:cmd=git push --force*",
+              "shell:cmd=git reset --hard*"
+            ],
+            [
+              "mcp:github:delete_*"
+            ]
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "MCPToolset": {
+      "type": "object",
+      "description": "Reusable MCP server definition. Define once at the top level and reference by name from agent toolsets.",
+      "properties": {
+        "command": {
+          "type": "string",
+          "description": "Command to run the MCP server (stdio transport)"
+        },
+        "args": {
+          "type": "array",
+          "description": "Arguments to pass to the command",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ref": {
+          "type": "string",
+          "description": "Docker MCP reference (e.g., 'docker:context7')",
+          "pattern": "^docker:"
+        },
+        "remote": {
+          "$ref": "#/definitions/Remote",
+          "description": "Remote MCP server configuration (streamable-http/SSE transport)"
+        },
+        "config": {
+          "description": "MCP server configuration (for docker refs)"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version/package reference for auto-installation"
+        },
+        "env": {
+          "type": "object",
+          "description": "Environment variables for the MCP server",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "tools": {
+          "type": "array",
+          "description": "Optional list of tools to expose from the MCP server",
+          "items": {
+            "type": "string"
+          }
+        },
+        "instruction": {
+          "type": "string",
+          "description": "Custom instruction for this MCP server's tools. By default, setting this field replaces the toolset's built-in instructions entirely. To enrich (rather than replace) the original instructions, include the placeholder {ORIGINAL_INSTRUCTIONS} in your text \u2014 it will be substituted with the toolset's built-in instructions at runtime. For example: '{ORIGINAL_INSTRUCTIONS}\nAlways prefer JSON output.' will prepend the original instructions and append your extra guidance."
+        },
+        "name": {
+          "type": "string",
+          "description": "Optional display name override for the MCP server"
+        },
+        "defer": {
+          "description": "Deferred loading configuration for tools from this MCP server",
+          "oneOf": [
+            {
+              "type": "boolean",
+              "description": "Set to true to defer all tools"
+            },
+            {
+              "type": "array",
+              "description": "Array of tool names to defer",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "working_dir": {
+          "type": "string",
+          "description": "Optional working directory for the MCP server process. Relative paths are resolved relative to the agent's working directory. Only valid for subprocess-based MCP types (command or ref); not supported for remote MCP toolsets."
+        },
+        "lifecycle": {
+          "$ref": "#/definitions/Lifecycle"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "command"
+          ]
+        },
+        {
+          "required": [
+            "remote"
+          ]
+        },
+        {
+          "required": [
+            "ref"
+          ]
+        }
+      ],
+      "additionalProperties": false
+    },
+    "RAGToolset": {
+      "type": "object",
+      "description": "Reusable RAG source definition. Define once at the top level and reference by name from agent toolsets. RAG config fields (tool, docs, strategies, results, respect_vcs) are specified directly alongside toolset fields.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/RAGConfig"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "instruction": {
+              "type": "string",
+              "description": "Custom instruction for this RAG source"
+            },
+            "tools": {
+              "type": "array",
+              "description": "Optional list of tools to expose",
+              "items": {
+                "type": "string"
+              }
+            },
+            "name": {
+              "type": "string",
+              "description": "Optional display name override for the RAG tool"
+            },
+            "defer": {
+              "description": "Deferred loading configuration",
+              "oneOf": [
+                {
+                  "type": "boolean",
+                  "description": "Set to true to defer all tools"
+                },
+                {
+                  "type": "array",
+                  "description": "Array of tool names to defer",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "Toolset": {
+      "type": "object",
+      "description": "Tool configuration",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of tool",
+          "enum": [
+            "mcp",
+            "mcp_catalog",
+            "script",
+            "think",
+            "memory",
+            "filesystem",
+            "file",
+            "shell",
+            "background_jobs",
+            "tasks",
+            "plan",
+            "session_context",
+            "todo",
+            "fetch",
+            "api",
+            "a2a",
+            "lsp",
+            "user_prompt",
+            "openapi",
+            "open_url",
+            "model_picker",
+            "background_agents",
+            "scheduler",
+            "rag",
+            "git",
+            "webhook",
+            "environment"
+          ]
+        },
+        "instruction": {
+          "type": "string",
+          "description": "Custom instruction for this toolset. By default, setting this field replaces the toolset's built-in instructions entirely. To enrich (rather than replace) the original instructions, include the placeholder {ORIGINAL_INSTRUCTIONS} in your text \u2014 it will be substituted with the toolset's built-in instructions at runtime. For example: '{ORIGINAL_INSTRUCTIONS}\nAlways prefer JSON output.' will prepend the original instructions and append your extra guidance."
+        },
+        "toon": {
+          "type": "string",
+          "description": "A comma-delimited list of regular expressions of tools to toonify"
+        },
+        "readonly": {
+          "type": "boolean",
+          "description": "When true, restricts this toolset to tools whose annotations carry a read-only hint. Every other (mutating) tool is filtered out, so the agent can only list and call the non-mutating subset of the toolset."
+        },
+        "model": {
+          "type": "string",
+          "description": "Model to use for the LLM turn that processes tool results from this toolset. Enables per-tool model routing: cheaper/faster models handle simple tool results (e.g. knowledge-base lookups, file reads) while the agent's primary model handles complex reasoning. Value can be a model name from the models section or an inline provider/model format (e.g. 'openai/gpt-4o-mini')."
+        },
+        "ref": {
+          "type": "string",
+          "description": "Reference to a Docker MCP tool (e.g., 'docker:context7') or a named MCP definition from the top-level 'mcps' section"
+        },
+        "config": {
+          "description": "Tool-specific configuration"
+        },
+        "command": {
+          "type": "string",
+          "description": "Command to execute for MCP tools"
+        },
+        "remote": {
+          "$ref": "#/definitions/Remote",
+          "description": "Remote tool configuration"
+        },
+        "args": {
+          "type": "array",
+          "description": "Arguments for the tool",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tools": {
+          "type": "array",
+          "description": "List of tools to include",
+          "items": {
+            "type": "string"
+          }
+        },
+        "env": {
+          "type": "object",
+          "description": "Environment variables",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "shared": {
+          "type": "boolean",
+          "description": "Whether the tool is shared (for think tool)"
+        },
+        "path": {
+          "type": "string",
+          "description": "Storage path for the memory or tasks toolset"
+        },
+        "shell": {
+          "type": "object",
+          "description": "Shell script configurations (for script tool)",
+          "patternProperties": {
+            "^[A-Za-z_][A-Za-z0-9_\\-]*$": {
+              "$ref": "#/definitions/ScriptShellToolConfig"
+            }
+          },
+          "additionalProperties": false
+        },
+        "post_edit": {
+          "type": "array",
+          "description": "Post-edit commands for filesystem and file tools",
+          "items": {
+            "$ref": "#/definitions/PostEditConfig"
+          }
+        },
+        "api_config": {
+          "$ref": "#/definitions/ApiConfig",
+          "description": "API tool configuration"
+        },
+        "webhook_config": {
+          "$ref": "#/definitions/WebhookConfig",
+          "description": "Webhook tool configuration"
+        },
+        "rag_config": {
+          "$ref": "#/definitions/RAGConfig",
+          "description": "RAG configuration for type: rag toolsets"
+        },
+        "ignore_vcs": {
+          "type": "boolean",
+          "description": "Whether to ignore VCS files (.git directories and .gitignore patterns) in filesystem operations. Default: true",
+          "default": true
+        },
+        "allow_list": {
+          "type": "array",
+          "description": "Allow-list of directories the filesystem or file tool is permitted to access. Each entry may be '.' (the agent's working directory), '~' or '~/...' (the user's home directory), an absolute path, or a relative path (anchored at the working directory). Symlinks are followed before the containment check, so they cannot be used to escape the allow-list. An empty or omitted list preserves the default behaviour (any path the agent process can reach).",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "."
+            ],
+            [
+              ".",
+              "~/projects"
+            ],
+            [
+              "/srv/data",
+              "~/scratch"
+            ]
+          ]
+        },
+        "deny_list": {
+          "type": "array",
+          "description": "Deny-list of directories the filesystem or file tool is forbidden to access. Uses the same expansion rules as 'allow_list'. The deny-list takes precedence over the allow-list: a path that matches both is rejected.",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "~/.ssh",
+              "~/.aws"
+            ],
+            [
+              "/etc",
+              "/var/lib"
+            ]
+          ]
+        },
+        "defer": {
+          "description": "Enable deferred loading for tools in this toolset. Set to true to defer all tools, or an array of tool names to defer only those tools. Deferred tools are not loaded into the agent's context immediately, but can be discovered and loaded on-demand using search_tool and add_tool.",
+          "oneOf": [
+            {
+              "type": "boolean",
+              "description": "Set to true to defer all tools"
+            },
+            {
+              "type": "array",
+              "description": "Array of tool names to defer",
+              "items": {
+                "type": "string"
+              }
+            }
+          ],
+          "examples": [
+            true,
+            [
+              "read_file",
+              "write_file"
+            ]
+          ]
+        },
+        "timeout": {
+          "type": "integer",
+          "description": "HTTP timeout in seconds (valid for type 'fetch', 'api', and 'openapi'). Defaults to 30 seconds when omitted.",
+          "minimum": 1
+        },
+        "max_output_bytes": {
+          "type": "integer",
+          "description": "Maximum OpenAPI text output in bytes (only valid for type 'openapi'). Defaults to 30000 when omitted; 0 disables the text cutoff.",
+          "minimum": 0,
+          "default": 30000
+        },
+        "escape_html": {
+          "type": "boolean",
+          "description": "Restore legacy HTML escaping of <, > and & in multi-URL JSON results (only valid for type 'fetch'). Defaults to false to reduce token usage. Decoded content and single-URL results are unchanged.",
+          "default": false
+        },
+        "allowed_domains": {
+          "type": "array",
+          "description": "Allow-list of domains the fetch tool is permitted to fetch (only valid for type 'fetch'). Patterns are case-insensitive. A bare host ('example.com') matches the apex AND any subdomain. A leading dot ('.example.com') or wildcard ('*.example.com') matches strict subdomains only. CIDR ranges ('10.0.0.0/8', '::1/128') match when the URL host parses as an IP inside the network. Mutually exclusive with 'blocked_domains'.",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "docker.com",
+              "docs.docker.com"
+            ],
+            [
+              "github.com",
+              "raw.githubusercontent.com"
+            ],
+            [
+              "*.example.com"
+            ]
+          ]
+        },
+        "blocked_domains": {
+          "type": "array",
+          "description": "Deny-list of domains the fetch tool is forbidden to fetch (only valid for type 'fetch'). Uses the same matching rules as 'allowed_domains' (bare host, leading-dot or '*.' subdomain wildcard, and CIDR ranges for IP hosts). Mutually exclusive with 'allowed_domains'.",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "internal.example.com"
+            ],
+            [
+              "169.254.169.254"
+            ],
+            [
+              "169.254.0.0/16",
+              "10.0.0.0/8"
+            ]
+          ]
+        },
+        "allow_private_ips": {
+          "type": "boolean",
+          "description": "Opt in to dialling non-public IP addresses (valid for type 'fetch', 'api', 'openapi', 'a2a', and remote MCP toolsets). By default, on the direct path (Docker Desktop unavailable, disabled, or target host is not in the Docker-owned allowlist), protected HTTP clients refuse connections \u2014 after DNS resolution, defeating DNS rebinding \u2014 to loopback, RFC1918 private ranges, link-local (including the cloud metadata endpoint at 169.254.169.254), multicast and the unspecified address. When Docker Desktop is running, only Docker-owned hostnames (docker.com, docker.io families) go through its PAC proxy; dial-time enforcement does not apply on that path. Set this to true when an agent legitimately needs to call internal services. For fetch, 'allowed_domains' / 'blocked_domains' are evaluated independently and still apply."
+        },
+        "sudo_askpass": {
+          "type": "boolean",
+          "description": "Opt in to a sudo privilege escalation flow for the shell toolset (only valid for type 'shell'). When enabled, sudo commands prompt the user for their password through the host UI via SUDO_ASKPASS; in non-interactive runs the prompt is declined automatically. Only a bare 'sudo ...' invocation in a POSIX shell is handled. No effect on Windows. Default false."
+        },
+        "recall": {
+          "type": "boolean",
+          "description": "Opt in to background-job recall for the background_jobs toolset (only valid for type 'background_jobs'). When enabled, run_background_job exposes a recall boolean parameter. If the agent sets recall=true for a background job, the runtime injects a steering message with a short completion sentence and the job output when the job finishes. Default false."
+        },
+        "url": {
+          "type": "string",
+          "description": "URL for the a2a, openapi or open_url tool",
+          "format": "uri"
+        },
+        "headers": {
+          "type": "object",
+          "description": "HTTP headers (supports ${env.VAR} interpolation). Valid for type 'openapi', 'a2a', and 'fetch'. For 'fetch', the headers are sent on every request the toolset issues \u2014 typical use is supplying API tokens (e.g. Authorization: Bearer ${env.MY_TOKEN}). Caller-supplied values override the format-driven Accept header and the default User-Agent.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "Name for the a2a tool"
+        },
+        "file_types": {
+          "type": "array",
+          "description": "File extensions this LSP server handles (e.g., [\".go\", \".mod\"]). Only for lsp toolsets.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "allowed_servers": {
+          "type": "array",
+          "description": "Allow-list of MCP catalog server ids offered by default (only valid for type 'mcp_catalog'). When non-empty, only these servers are searchable and enableable; every other catalog entry is hidden. Combine with 'blocked_servers' to subtract individual ids (block takes precedence). An empty or omitted list offers the full catalog.",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "docker-docs",
+              "microsoft-learn"
+            ]
+          ]
+        },
+        "blocked_servers": {
+          "type": "array",
+          "description": "Block-list of MCP catalog server ids removed from the offered set (only valid for type 'mcp_catalog'). Applied after 'allowed_servers', so a server listed in both is blocked. An empty or omitted list disables the block-list.",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "gitmcp"
+            ]
+          ]
+        },
+        "models": {
+          "type": "array",
+          "description": "List of allowed models for the model_picker tool.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "version": {
+          "type": "string",
+          "description": "Package reference for auto-installation of MCP/LSP tool binaries. Format: 'owner/repo' or 'owner/repo@version'. Set to 'false' to disable auto-install for this toolset."
+        },
+        "working_dir": {
+          "type": "string",
+          "description": "Optional working directory for MCP/LSP toolset processes. Relative paths are resolved relative to the agent's working directory. Only valid for type 'mcp' or 'lsp', and not supported for remote MCP toolsets (no local subprocess)."
+        },
+        "lifecycle": {
+          "$ref": "#/definitions/Lifecycle"
+        }
+      },
+      "additionalProperties": false,
+      "if": {
+        "required": [
+          "max_output_bytes"
+        ]
+      },
+      "then": {
+        "properties": {
+          "type": {
+            "const": "openapi"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "anyOf": [
+        {
+          "allOf": [
+            {
+              "properties": {
+                "type": {
+                  "const": "mcp"
+                }
+              }
+            },
+            {
+              "anyOf": [
+                {
+                  "required": [
+                    "command"
+                  ]
+                },
+                {
+                  "required": [
+                    "remote"
+                  ]
+                },
+                {
+                  "required": [
+                    "ref"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "enum": [
+                "mcp",
+                "mcp_catalog",
+                "script",
+                "think",
+                "memory",
+                "filesystem",
+                "file",
+                "shell",
+                "background_jobs",
+                "tasks",
+                "plan",
+                "session_context",
+                "todo",
+                "fetch",
+                "api",
+                "a2a",
+                "lsp",
+                "user_prompt",
+                "model_picker",
+                "background_agents",
+                "scheduler",
+                "git"
+              ]
+            }
+          }
+        },
+        {
+          "allOf": [
+            {
+              "properties": {
+                "type": {
+                  "const": "lsp"
+                }
+              }
+            },
+            {
+              "required": [
+                "command"
+              ]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "properties": {
+                "type": {
+                  "const": "api"
+                }
+              }
+            },
+            {
+              "required": [
+                "api_config"
+              ]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "properties": {
+                "type": {
+                  "const": "webhook"
+                }
+              }
+            },
+            {
+              "required": [
+                "webhook_config"
+              ]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "properties": {
+                "type": {
+                  "const": "a2a"
+                }
+              }
+            },
+            {
+              "required": [
+                "url"
+              ]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "properties": {
+                "type": {
+                  "const": "openapi"
+                }
+              }
+            },
+            {
+              "required": [
+                "url"
+              ]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "properties": {
+                "type": {
+                  "const": "open_url"
+                }
+              }
+            },
+            {
+              "required": [
+                "url"
+              ]
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "properties": {
+                "type": {
+                  "const": "model_picker"
+                }
+              }
+            },
+            {
+              "required": [
+                "models"
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "background_agents"
+            }
+          }
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "rag"
+            }
+          }
+        }
+      ]
+    },
+    "Remote": {
+      "type": "object",
+      "description": "Remote tool configuration",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "URL for the remote tool",
+          "format": "uri"
+        },
+        "transport_type": {
+          "type": "string",
+          "description": "Transport type for the remote connection"
+        },
+        "headers": {
+          "type": "object",
+          "description": "HTTP headers for remote requests",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "oauth": {
+          "$ref": "#/definitions/RemoteOAuthConfig",
+          "description": "Explicit OAuth credentials for servers that do not support Dynamic Client Registration"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "ScriptShellToolConfig": {
+      "type": "object",
+      "description": "Configuration for custom shell tool",
+      "properties": {
+        "cmd": {
+          "type": "string",
+          "description": "Command to execute"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the shell tool"
+        },
+        "args": {
+          "type": "object",
+          "description": "Arguments schema (passed as properties in JSON schema)",
+          "additionalProperties": true
+        },
+        "required": {
+          "type": "array",
+          "description": "Required arguments",
+          "items": {
+            "type": "string"
+          }
+        },
+        "env": {
+          "type": "object",
+          "description": "Environment variables for the command, layered over the toolset-level env. Values expand the plain ${env.VAR} form from the OS environment; any other $ is kept literal. Keys must not collide with args.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "working_dir": {
+          "type": "string",
+          "description": "Working directory for the command. Accepts ~, $VAR, ${VAR} and ${env.VAR}."
+        }
+      },
+      "additionalProperties": false
+    },
+    "PostEditConfig": {
+      "type": "object",
+      "description": "Post-edit command configuration",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Path pattern for files to apply post-edit command"
+        },
+        "cmd": {
+          "type": "string",
+          "description": "Command to execute after edit"
+        }
+      },
+      "required": [
+        "path",
+        "cmd"
+      ],
+      "additionalProperties": false
+    },
+    "WebhookConfig": {
+      "type": "object",
+      "description": "Webhook tool configuration: delivery destination and credentials",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "description": "Payload shape for the target service",
+          "enum": [
+            "slack",
+            "discord",
+            "ifttt",
+            "telegram",
+            "mattermost",
+            "rocketchat",
+            "googlechat",
+            "teams",
+            "generic"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "description": "Webhook endpoint URL. Usually embeds a secret, so prefer ${env.VAR}"
+        },
+        "headers": {
+          "type": "object",
+          "description": "HTTP headers sent with the request; use ${env.VAR} for tokens",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "chat_id": {
+          "type": "string",
+          "description": "Destination chat id (provider: telegram)"
+        }
+      },
+      "required": [
+        "url"
+      ]
+    },
+    "ApiConfig": {
+      "type": "object",
+      "description": "API tool configuration for making HTTP requests to external APIs",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the API tool"
+        },
+        "instruction": {
+          "type": "string",
+          "description": "Instructions for using the API tool"
+        },
+        "endpoint": {
+          "type": "string",
+          "description": "API endpoint URL",
+          "format": "uri"
+        },
+        "method": {
+          "type": "string",
+          "description": "HTTP method",
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ]
+        },
+        "headers": {
+          "type": "object",
+          "description": "HTTP headers for the request",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "args": {
+          "type": "object",
+          "description": "Arguments schema for the API call",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Argument type"
+              },
+              "description": {
+                "type": "string",
+                "description": "Argument description"
+              }
+            }
+          }
+        },
+        "required": {
+          "type": "array",
+          "description": "Required argument names",
+          "items": {
+            "type": "string"
+          }
+        },
+        "output_schema": {
+          "type": "object",
+          "description": "JSON Schema describing the API tool's output. Used by MCP/Code Mode; tool responses are still returned as strings at runtime.",
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "name",
+        "endpoint",
+        "method"
+      ],
+      "additionalProperties": false
+    },
+    "RAGConfig": {
+      "type": "object",
+      "description": "RAG (Retrieval-Augmented Generation) configuration for document search and retrieval with pluggable strategies. Multiple strategies enable hybrid retrieval and reranking.",
+      "properties": {
+        "tool": {
+          "type": "object",
+          "description": "Tool configuration for the RAG source",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Custom name for the tool (defaults to RAG source name if not specified)"
+            },
+            "description": {
+              "type": "string",
+              "description": "Description of what the tool does (shown to the LLM when selecting tools)"
+            },
+            "instruction": {
+              "type": "string",
+              "description": "Instruction on how the RAG tool should be used effectively (shown in system prompt)"
+            }
+          },
+          "additionalProperties": false
+        },
+        "docs": {
+          "type": "array",
+          "description": "Shared document paths or directories indexed by all strategies",
+          "items": {
+            "type": "string"
+          }
+        },
+        "respect_vcs": {
+          "type": "boolean",
+          "description": "Whether to respect VCS ignore files (e.g., .gitignore) when collecting documents for indexing. When true (default), files matching ignore patterns will be excluded. Can be overridden per-strategy.",
+          "default": true
+        },
+        "indexing_timeout": {
+          "type": "string",
+          "description": "Cap on a single indexing run started by this RAG source, detached from the much shorter 30s toolset-start wait budget: indexing keeps running in the background past that budget and the tool appears once it is ready, resuming from per-file progress on a later start. Go duration format (e.g. '30m', '2h'). Default '30m' when omitted; '0s' means no bound."
+        },
+        "strategies": {
+          "type": "array",
+          "description": "Array of retrieval strategy configurations. Each strategy can have different parameters based on its type.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "description": "Retrieval strategy configuration with type-specific parameters. Structured fields are limited; additional parameters are passed through as-is for strategy-specific use.",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Retrieval strategy type",
+                "enum": [
+                  "bm25",
+                  "chunked-embeddings",
+                  "semantic-embeddings"
+                ]
+              },
+              "embedding_model": {
+                "type": "string",
+                "description": "Embedding model reference for chunked-embeddings and semantic-embeddings strategies (looked up in models map, or 'auto' for automatic selection)",
+                "examples": [
+                  "openai/text-embedding-3-small",
+                  "dmr/embeddinggemma",
+                  "auto"
+                ]
+              },
+              "docs": {
+                "type": "array",
+                "description": "Additional documents for this strategy only (augments shared docs)",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "database": {
+                "type": "string",
+                "description": "Database path or connection string. Currently only simple string values are supported (e.g., './vector.db', './bm25.db')."
+              },
+              "similarity_metric": {
+                "type": "string",
+                "description": "Similarity metric (chunked-embeddings only). Currently only 'cosine_similarity' is implemented.",
+                "enum": [
+                  "cosine_similarity"
+                ]
+              },
+              "vector_dimensions": {
+                "type": "integer",
+                "description": "Vector dimensions for embeddings (chunked-embeddings only). Must match your embedding model's output dimensions and is required for chunked-embeddings strategies.",
+                "minimum": 1,
+                "examples": [
+                  1536,
+                  3072,
+                  1024,
+                  768
+                ]
+              },
+              "k1": {
+                "type": "number",
+                "description": "BM25 term frequency saturation (bm25 only, typically 1.2-2.0)",
+                "minimum": 0
+              },
+              "b": {
+                "type": "number",
+                "description": "BM25 length normalization (bm25 only, 0-1, typically 0.75)",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "threshold": {
+                "type": "number",
+                "description": "Minimum score threshold (0-1 for chunked-embeddings, unbounded for bm25)",
+                "minimum": 0
+              },
+              "limit": {
+                "type": "integer",
+                "description": "Max results from this strategy (candidates for fusion). If unset, defaults to 5 in the implementation.",
+                "minimum": 1
+              },
+              "chunking": {
+                "type": "object",
+                "description": "Text chunking configuration",
+                "properties": {
+                  "size": {
+                    "type": "integer",
+                    "description": "Chunk size in characters. If unset, defaults to 1000 in the implementation.",
+                    "minimum": 1
+                  },
+                  "overlap": {
+                    "type": "integer",
+                    "description": "Overlap between chunks in characters. If unset, defaults to 75 in the implementation.",
+                    "minimum": 0
+                  },
+                  "respect_word_boundaries": {
+                    "type": "boolean",
+                    "description": "When true, chunks will split on the nearest whitespace boundary instead of at the exact character limit, preventing words from being truncated."
+                  },
+                  "code_aware": {
+                    "type": "boolean",
+                    "description": "Enable code-aware chunking for source files. When true, the chunking strategy will prefer AST-based or language-aware processors when available (tree-sitter based), and fall back to plain text chunking for unsupported languages."
+                  }
+                },
+                "additionalProperties": false
+              },
+              "embedding_batch_size": {
+                "type": "integer",
+                "description": "Number of text chunks to send to the embedding API in a single request (chunked-embeddings/semantic-embeddings only)",
+                "minimum": 1,
+                "default": 50
+              },
+              "max_embedding_concurrency": {
+                "type": "integer",
+                "description": "Maximum concurrent embedding batch API requests. For semantic-embeddings, also controls parallel LLM calls for generating chunk summaries.",
+                "minimum": 1,
+                "default": 3
+              },
+              "max_indexing_concurrency": {
+                "type": "integer",
+                "description": "Maximum number of files to index in parallel during initialization",
+                "minimum": 1,
+                "default": 3
+              },
+              "respect_vcs": {
+                "type": "boolean",
+                "description": "Override the RAG-level respect_vcs setting for this strategy only."
+              },
+              "chat_model": {
+                "type": "string",
+                "description": "Chat model used to generate semantic representations for each chunk (semantic-embeddings only, required)",
+                "examples": [
+                  "anthropic/claude-sonnet-4-5",
+                  "openai/gpt-4o-mini"
+                ]
+              },
+              "semantic_prompt": {
+                "type": "string",
+                "description": "Custom prompt template for semantic LLM. Uses JavaScript template literal syntax with the following placeholders: ${path} (full source file path), ${basename} (base name of file), ${chunk_index} (numeric chunk index), ${content} (raw chunk content), ${ast_context} (AST metadata when ast_context is enabled). Only applicable to semantic-embeddings strategy."
+              },
+              "ast_context": {
+                "type": "boolean",
+                "description": "Include TreeSitter-derived AST metadata in the semantic prompt (semantic-embeddings only, requires chunking.code_aware for best results)",
+                "default": false
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "results": {
+          "type": "object",
+          "description": "Result post-processing configuration (fusion, deduplication, limiting). If omitted, sensible defaults are applied in code.",
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "description": "Maximum number of results to return (top K)",
+              "minimum": 1,
+              "default": 15
+            },
+            "fusion": {
+              "type": "object",
+              "description": "Configuration for combining results from multiple strategies. If omitted and multiple strategies are configured, Reciprocal Rank Fusion (rrf) with k=60 is used.",
+              "properties": {
+                "strategy": {
+                  "type": "string",
+                  "description": "Fusion strategy to use",
+                  "enum": [
+                    "rrf",
+                    "reciprocal_rank_fusion",
+                    "weighted",
+                    "max"
+                  ],
+                  "default": "rrf",
+                  "examples": [
+                    "rrf",
+                    "weighted"
+                  ]
+                },
+                "k": {
+                  "type": "integer",
+                  "description": "RRF smoothing parameter k (only for RRF strategy)",
+                  "minimum": 1,
+                  "default": 60
+                },
+                "weights": {
+                  "type": "object",
+                  "description": "Strategy weights for weighted fusion (strategy name -> weight)",
+                  "additionalProperties": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  },
+                  "examples": [
+                    {
+                      "chunked-embeddings": 0.7,
+                      "bm25": 0.3
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            },
+            "reranking": {
+              "type": "object",
+              "description": "Configuration for reranking results using a specialized reranking model. Reranking re-scores the retrieved results to improve relevance accuracy.",
+              "properties": {
+                "model": {
+                  "type": "string",
+                  "description": "Model reference for reranking (can be inline like 'dmr/model-name' or a reference to a defined model)",
+                  "examples": [
+                    "dmr/hf.co/ggml-org/Qwen3-Reranker-0.6B-Q8_0-GGUF",
+                    "reranker_model"
+                  ]
+                },
+                "top_k": {
+                  "type": "integer",
+                  "description": "Optional: only rerank top K results for efficiency. When unset or 0, defaults to the global results.limit (which itself defaults to 15).",
+                  "minimum": 0,
+                  "default": 0
+                },
+                "threshold": {
+                  "type": "number",
+                  "description": "Optional: minimum score threshold after reranking (filter results below this score)",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "default": 0.5
+                },
+                "criteria": {
+                  "type": "string",
+                  "description": "Optional: domain-specific relevance criteria to guide scoring. This text is appended to the base reranking prompt to customize what 'relevance' means for your use case. Supported by OpenAI, Anthropic, and Gemini providers (not DMR native reranking).",
+                  "examples": [
+                    "Prioritize recent information and practical examples over historical context",
+                    "When scoring relevance, focus on code examples and implementation details"
+                  ]
+                }
+              },
+              "required": [
+                "model"
+              ],
+              "additionalProperties": false
+            },
+            "deduplicate": {
+              "type": "boolean",
+              "description": "Remove duplicate documents across strategies",
+              "default": true
+            },
+            "include_score": {
+              "type": "boolean",
+              "description": "Include relevance scores in results",
+              "default": false
+            },
+            "return_full_content": {
+              "type": "boolean",
+              "description": "Return full document content instead of just the matched chunk. The full document is read directly from the file system.",
+              "default": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "strategies"
+      ],
+      "additionalProperties": false
+    },
+    "RemoteOAuthConfig": {
+      "type": "object",
+      "description": "OAuth configuration for remote MCP servers. Set clientId for servers that do not support Dynamic Client Registration (RFC 7591); other fields tune the flow and also apply when the client is registered dynamically",
+      "properties": {
+        "clientId": {
+          "type": "string",
+          "description": "OAuth client ID. When omitted, docker-agent uses Dynamic Client Registration or prompts interactively"
+        },
+        "clientSecret": {
+          "type": "string",
+          "description": "OAuth client secret"
+        },
+        "callbackPort": {
+          "type": "integer",
+          "description": "Fixed port for the OAuth callback server (default: random available port)",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "scopes": {
+          "type": "array",
+          "description": "OAuth scopes to request",
+          "items": {
+            "type": "string"
+          }
+        },
+        "callbackRedirectURL": {
+          "type": "string",
+          "description": "Optional OAuth redirect URI used in place of http://127.0.0.1:{callbackPort}/callback. The literal placeholder ${callbackPort} is replaced with the actual local callback port at runtime. The external URL is expected to redirect the browser back to the local callback server."
+        }
+      }
+    },
+    "EvaluatorConfig": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Evaluator backend (typesafe or openai Decisions), or a named provider."
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instructions": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "boolean",
+            "choice",
+            "score"
+          ]
+        },
+        "base_url": {
+          "type": "string",
+          "description": "API base URL. TypeSafe defaults to https://api.typesafe.ai with /v1/systemone; OpenAI defaults to https://api.openai.com/v1 with /decisions."
+        },
+        "endpoint": {
+          "type": "string",
+          "description": "Exact HTTP(S) evaluator URL, overriding base_url and its default path. No credentials, query, or fragment."
+        },
+        "token_key": {
+          "type": "string",
+          "description": "API key environment variable for direct calls (TYPESAFE_API_KEY or OPENAI_API_KEY)."
+        },
+        "bypass_models_gateway": {
+          "type": "boolean",
+          "description": "Connect directly even when a models gateway is configured. Custom base_url and endpoint do not implicitly bypass the gateway."
+        },
+        "choices": {
+          "type": "object",
+          "minProperties": 2,
+          "maxProperties": 255,
+          "propertyNames": {
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "levels": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 10,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "timeout": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer",
+              "minimum": 0
+            }
+          ],
+          "description": "Request timeout, default 10s."
+        },
+        "cost": {
+          "$ref": "#/definitions/CostConfig",
+          "description": "Explicit USD pricing per one million evaluator input/output tokens. Overrides built-in evaluator pricing, including on custom endpoints. An empty object declares free evaluations; cache rates are unused."
+        }
+      },
+      "required": [
+        "provider",
+        "model",
+        "type",
+        "instructions"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "choice"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "choices"
+            ],
+            "not": {
+              "required": [
+                "levels"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "score"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "levels"
+            ],
+            "not": {
+              "required": [
+                "choices"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "boolean"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "choices"
+                  ]
+                },
+                {
+                  "required": [
+                    "levels"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "EvaluatorPolicy": {
+      "type": "object",
+      "properties": {
+        "decisions": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Choice keys (or true/false for booleans) mapped to guard decisions.",
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "allow",
+              "ask",
+              "deny"
+            ]
+          }
+        },
+        "min_probability": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "description": "Minimum selected-outcome probability to apply its mapping; not the confidence metric."
+        },
+        "fallback": {
+          "type": "string",
+          "enum": [
+            "ask",
+            "deny"
+          ],
+          "description": "Decision for uncertainty or unmapped outcomes; provider failures always block."
+        }
+      },
+      "required": [
+        "decisions",
+        "min_probability",
+        "fallback"
+      ],
+      "additionalProperties": false
+    },
+    "AgentRouting": {
+      "type": "object",
+      "description": "Local agents that this agent's before_agent_run and after_agent_complete hooks may route to. Requires at least one of those hooks; the agent cannot route to itself or to harness agents, and the combined graph of possible routes and force_handoff edges must not contain a cycle.",
+      "properties": {
+        "allowed_agents": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Names of agents defined in this config that a hook may select. A transition to any other agent fails the run."
+        },
+        "default_agent": {
+          "type": "string",
+          "description": "Agent used when a choice-evaluator assessment is uncertain (low probability, tie, invalid distribution) or the evaluator fails. Required when an evaluator selects the route; must be in allowed_agents. Cancellation and budget exhaustion never use it."
+        }
+      },
+      "required": [
+        "allowed_agents"
+      ],
+      "additionalProperties": false
+    },
+    "RoutingPolicy": {
+      "type": "object",
+      "description": "Maps a choice evaluator's outcomes to agents. Kept apart from the evaluator so the same assessment can drive different actions.",
+      "properties": {
+        "routes": {
+          "type": "object",
+          "minProperties": 1,
+          "description": "Every evaluator choice mapped to an agent in routing.allowed_agents. Missing or unknown choices are configuration errors.",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "min_probability": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "description": "Minimum selected-choice probability required to use its route. Enforced by the runtime, not the evaluator prompt; calibrate on representative requests."
+        }
+      },
+      "required": [
+        "routes",
+        "min_probability"
+      ],
+      "additionalProperties": false
+    },
+    "RoutingHookDefinition": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HookDefinition"
+        },
+        {
+          "not": {
+            "properties": {
+              "type": {
+                "const": "model"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": [
+              "evaluator_policy"
+            ]
+          }
+        }
+      ]
+    },
+    "NonEvaluatorHookDefinition": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HookDefinition"
+        },
+        {
+          "not": {
+            "properties": {
+              "type": {
+                "const": "evaluator"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          }
+        }
+      ]
+    },
+    "NonEvaluatorHookMatcherConfig": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HookMatcherConfig"
+        },
+        {
+          "properties": {
+            "hooks": {
+              "items": {
+                "$ref": "#/definitions/NonEvaluatorHookDefinition"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

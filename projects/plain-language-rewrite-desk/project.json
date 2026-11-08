@@ -1,0 +1,103 @@
+{
+  "id": "plain-language-rewrite-desk",
+  "title": "Plain Language Rewrite Desk",
+  "tagline": "Make an explanation easier to read while checking what changed.",
+  "summary": "Help a technical author revise dense prose using visible sentence and vocabulary measures, protected terms and an optional real rewriting provider. Compare original and proposed paragraphs, surface changed numbers and missing definitions, and export only the author's accepted revisions with a Markdown change record.",
+  "level": 2,
+  "languages": [
+    "TypeScript"
+  ],
+  "source": "core",
+  "prerequisiteProjects": [
+    "glossary-hovercard-publisher"
+  ],
+  "status": "ready",
+  "hours": 8,
+  "youWillBuild": "Accepted Markdown, a paragraph-level HTML comparison and revision-decisions.json",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "languageWhy": {
+    "TypeScript": "Typed local transformations and portable browser interfaces run with Node standard libraries."
+  },
+  "figures": true,
+  "overviewFigure": "pj-plain-language-rewrite-desk-1",
+  "demo": {
+    "command": [
+      "node",
+      "cli.ts",
+      "sample.json",
+      "output"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-record-facts",
+      "title": "Segment prose and record protected terms and facts",
+      "summary": "segmentProse(text:string,protectedTerms?:string[]):Paragraph[]",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-plain-language-rewrite-desk-1",
+      "concepts": [
+        "Segment prose and record protected terms and facts"
+      ]
+    },
+    {
+      "id": "02-propose-rewrites",
+      "title": "Produce simpler candidate paragraphs",
+      "summary": "proposeParagraphs(paragraphs:Paragraph[],recorded?:Record<string,string>):{id,candidate,method}[]",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-plain-language-rewrite-desk-2",
+      "concepts": [
+        "Produce simpler candidate paragraphs"
+      ]
+    },
+    {
+      "id": "03-compare-facts",
+      "title": "Compare omissions, numbers and readability measures",
+      "summary": "measures(text:string):{words,sentences,averageWords,longWords}; compareParagraphs(paragraphs,proposals,definitions?):Comparison[]",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-plain-language-rewrite-desk-3",
+      "concepts": [
+        "Compare omissions, numbers and readability measures"
+      ]
+    },
+    {
+      "id": "04-accepted-export",
+      "title": "Export accepted revisions and a change record",
+      "summary": "exportRevisions(comparisons,value?):{markdown,changeRecord,decisions,unresolved}; renderDesk(comparisons,state):string",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-plain-language-rewrite-desk-4",
+      "concepts": [
+        "Export accepted revisions and a change record"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

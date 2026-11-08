@@ -1,0 +1,15 @@
+title: the sessions table and the five newest titles
+source: manuals/docker-sandboxes-101/capture/out/21-session-db.txt
+lines: 19-27
+lang: console
+note: Every exec run has the same title, so a title cannot tell runs apart.
+---
+$ sqlite3 work/data/session.db 'pragma table_info(sessions)'  (12 rows)
+id created_at tools_approved input_tokens output_tokens title cost send_user_message max_iterations working_dir starred permissions agent_model_overrides custom_models_used thinking parent_id instruction_context safety_policy attributes origin
+
+$ sqlite3 work/data/session.db 'select id, title from sessions order by created_at desc limit 5'
+<uuid> | Running agent
+<uuid> | Running agent
+<uuid> | Running agent
+<uuid> | Running agent
+<uuid> | Running agent

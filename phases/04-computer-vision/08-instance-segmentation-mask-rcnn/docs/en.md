@@ -84,10 +84,10 @@ Upsample the 28x28 mask to the proposal's original pixel size to produce the fin
 
 ### Losses
 
-Mask R-CNN has four losses added together:
+Mask R-CNN has five losses added together:
 
-```
-L = L_rpn_cls + L_rpn_box + L_box_cls + L_box_reg + L_mask
+```math
+L = L_{\text{rpn\_cls}} + L_{\text{rpn\_box}} + L_{\text{box\_cls}} + L_{\text{box\_reg}} + L_{\text{mask}}
 ```
 
 - `L_rpn_cls`, `L_rpn_box` — objectness + box regression for the RPN proposals.
@@ -261,7 +261,7 @@ def train_step(model, images, targets, optimizer):
     return {k: v.item() for k, v in loss_dict.items()}
 ```
 
-The `targets` list must have per-image dicts with `boxes`, `labels`, and `masks` (as `(num_instances, H, W)` binary tensors). The model returns a dict of four losses during training and a list of predictions during eval, keyed on `model.training`.
+The `targets` list must have per-image dicts with `boxes`, `labels`, and `masks` (as `(num_instances, H, W)` binary tensors). The model returns a dict of five losses during training and a list of predictions during eval, keyed on `model.training`.
 
 The `pycocotools` evaluator produces mAP@IoU=0.5:0.95 both for boxes and for masks; you need both numbers to know if the box head or the mask head is the bottleneck.
 

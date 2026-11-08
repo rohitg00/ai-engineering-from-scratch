@@ -1,0 +1,4 @@
+$ sbx kit pack ./fixtures/kits/hello-kit -o $CAPTURE/work/hello-kit.zip
+error: pack: invalid artifact: artifact: spec.yaml (or spec.yml) is required: open fixtures/kits/hello-kit/spec.yml: no such file or directory
+  try: sbx kit pack --help
+[exit 1]

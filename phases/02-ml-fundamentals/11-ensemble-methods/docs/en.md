@@ -24,10 +24,10 @@ Ensemble methods do exactly this. They are the most reliable technique for winni
 
 ### Why Ensembles Work
 
-Suppose you have N independent classifiers, each with accuracy p > 0.5. The majority vote has accuracy:
+Suppose you have $N$ independent classifiers, each with accuracy $p > 0.5$. The majority vote has accuracy:
 
-```
-P(majority correct) = sum over k > N/2 of C(N,k) * p^k * (1-p)^(N-k)
+```math
+P(\text{majority correct}) = \sum_{k > N/2} \binom{N}{k} p^k (1-p)^{N-k}
 ```
 
 For 21 classifiers each with 60% accuracy, majority vote accuracy is about 74%. With 101 classifiers, it rises to 84%. The errors cancel out when the models make different mistakes.
@@ -132,7 +132,7 @@ Gradient boosting generalizes boosting to arbitrary loss functions. Instead of r
 3. Final prediction: F_T(x)
 ```
 
-For squared error loss, the pseudo-residuals are just the actual residuals: `r_i = y_i - F_{t-1}(x_i)`. Each tree literally fits the errors of the previous ensemble.
+For squared error loss, the pseudo-residuals are just the actual residuals: $r_i = y_i - F_{t-1}(x_i)$. Each tree literally fits the errors of the previous ensemble.
 
 The learning rate (shrinkage) controls how much each tree contributes. Smaller learning rates require more trees but generalize better. Typical values: 0.01 to 0.3.
 

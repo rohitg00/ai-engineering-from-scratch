@@ -167,7 +167,7 @@ def main() -> None:
     print("-" * 60)
     print("  Qwen-VL   (2023) : 448 res, grounding, Q-Former")
     print("  Qwen2-VL  (2024) : M-RoPE, native res, MLP projector")
-    print("  Qwen2.5-VL(2025) : dynamic FPS, abs-time tokens, JSON agent mode")
+    print("  Qwen2.5-VL(2025) : dynamic FPS, abs-time M-RoPE, JSON agent mode")
     print("  Qwen3-VL  (2025) : Qwen3 base, thinking mode, OCR scale")
 
 

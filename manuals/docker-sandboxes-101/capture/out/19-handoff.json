@@ -1,0 +1,39 @@
+[
+  {
+    "agent_name": "root",
+    "timestamp": "<ts>",
+    "type": "tool_call",
+    "tool_call": {
+      "id": "<call-id>",
+      "type": "function",
+      "function": {
+        "name": "handoff",
+        "arguments": "{\"agent\": \"reviewer\"}"
+      }
+    },
+    "tool_definition": {
+      "name": "handoff",
+      "category": "handoff",
+      "description": "Use this function to hand off the conversation to the selected agent.",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "agent": {
+            "description": "The name of the agent to hand off the conversation to.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "agent"
+        ],
+        "type": "object"
+      },
+      "annotations": {
+        "idempotentHint": false,
+        "readOnlyHint": true,
+        "title": "Handoff Conversation"
+      },
+      "outputSchema": null
+    }
+  }
+]

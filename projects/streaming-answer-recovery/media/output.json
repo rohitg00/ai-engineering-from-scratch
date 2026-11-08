@@ -1,0 +1,23 @@
+{
+  "title": "streaming-answer-recovery",
+  "url": "http://127.0.0.1:8137/",
+  "actions": [
+    [
+      "click",
+      "#answer button:nth-of-type(1)"
+    ],
+    [
+      "js",
+      "(async()=>{for(let i=0;i<60;i++){if(document.querySelector('#answer p').textContent.includes('Status: interrupted'))return true;await new Promise(r=>setTimeout(r,50))}throw Error('status timeout')})()"
+    ],
+    [
+      "click",
+      "#answer button:nth-of-type(1)"
+    ],
+    [
+      "js",
+      "(async()=>{for(let i=0;i<60;i++){if(document.querySelector('#answer p').textContent.includes('Status: completed'))return true;await new Promise(r=>setTimeout(r,50))}throw Error('status timeout')})()"
+    ]
+  ],
+  "kind": "browser capture"
+}

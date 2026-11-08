@@ -1,0 +1,24 @@
+{
+  "id": "mixture-of-experts-gating",
+  "title": "Top-k MoE gating and the Switch load-balancing loss",
+  "kind": "research",
+  "summary": "Route tokens to the top k experts with renormalized softmax gates, and compute the Switch Transformer auxiliary loss E times sum f_i P_i.",
+  "difficulty": "medium",
+  "tags": ["mixture-of-experts", "routing", "load-balancing", "transformers"],
+  "lesson": "phases/07-transformers-deep-dive/11-mixture-of-experts",
+  "cheatsheet": "moe-hybrid-architectures",
+  "minutes": 30,
+  "entry": ["route", "load_balancing_loss"],
+  "collections": ["papers-to-code", "transformers-from-scratch"],
+  "time_limit_s": 10,
+  "method": "mixture-of-experts",
+  "paper": {"title": "Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity", "authors": "Fedus, Zoph and Shazeer", "year": 2021, "url": "https://arxiv.org/abs/2101.03961"},
+  "mutants": {
+    "fraction_from_probs": "Computes f_i from the mean softmax probability, not from the dispatch counts.",
+    "fraction_over_tokens": "Divides the counts by T, not by T times k, so the loss grows with k.",
+    "no_expert_scale": "Forgets the factor E in front of the sum, so a uniform router gives 1 / E.",
+    "no_max_shift": "Calls np.exp on the raw logits, so large logits overflow to infinity.",
+    "softmax_over_all": "Uses the full softmax probabilities of the chosen experts as gates without renormalization.",
+    "ties_to_higher_index": "Sorts the logits ascending and reverses the order, so ties go to the higher expert index."
+  }
+}

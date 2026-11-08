@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 356" role="img" aria-labelledby="fig-2-3-title fig-2-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-3-title">One capability group: analyze_function under ghidra</title>
+  <desc id="fig-2-3-desc">The capability group for analyze_function in the ghidra candidate of rea capabilities, drawn as two tables. The first table is the provider block: provider.id is ghidra, and shared_limitations holds 4 strings that apply to every group of the block. The second table is the group: operations holds the one name analyze_function, effects names the 2 true flags launches_process and may_write_filesystem, so the other 5 flags are false, limitations holds 5 strings that follow the 4 shared strings, available is true, and reason and availability_code are null.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE PROVIDER BLOCK</text>
+  <text x="396" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT THE VALUE MEANS</text>
+  <rect x="20" y="26" width="360" height="28" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="30" y="43.3" font-size="11" font-weight="700">analysis_provider_candidates[0].capabilities[0]</text>
+  <rect x="20" y="54" width="360" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="71" font-size="12" fill="var(--m-ink-soft, #4a4a4a)">provider.id</text>
+  <text x="200" y="71" font-size="12">ghidra</text>
+  <line x1="380" y1="67" x2="390" y2="67" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="396" y="71" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the engine of the block</text>
+  <rect x="20" y="80" width="360" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="97" font-size="12" fill="var(--m-ink-soft, #4a4a4a)">shared_limitations</text>
+  <text x="200" y="97" font-size="12">4 strings</text>
+  <line x1="380" y1="93" x2="390" y2="93" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="396" y="97" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">they apply to every group</text>
+  <text x="20" y="132" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONE GROUP OF THE BLOCK</text>
+  <rect x="20" y="140" width="360" height="28" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="30" y="157.3" font-size="11" font-weight="700">groups[2]</text>
+  <rect x="20" y="168" width="360" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="185" font-size="12" fill="var(--m-ink-soft, #4a4a4a)">operations</text>
+  <text x="200" y="185" font-size="12">1 name</text>
+  <line x1="380" y1="181" x2="390" y2="181" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="396" y="185" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">analyze_function</text>
+  <rect x="20" y="194" width="360" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="211" font-size="12" fill="var(--m-ink-soft, #4a4a4a)">effects</text>
+  <text x="200" y="211" font-size="12">launches_process,</text>
+  <line x1="380" y1="207" x2="390" y2="207" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="396" y="211" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the 2 flags that are true</text>
+  <rect x="20" y="220" width="360" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="200" y="237" font-size="12">may_write_filesystem</text>
+  <line x1="380" y1="233" x2="390" y2="233" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="396" y="237" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the other 5 flags are false</text>
+  <rect x="20" y="246" width="360" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="263" font-size="12" fill="var(--m-ink-soft, #4a4a4a)">limitations</text>
+  <text x="200" y="263" font-size="12">5 strings</text>
+  <line x1="380" y1="259" x2="390" y2="259" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="396" y="263" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">they follow the 4 shared strings</text>
+  <rect x="20" y="272" width="360" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="289" font-size="12" fill="var(--m-ink-soft, #4a4a4a)">available</text>
+  <text x="200" y="289" font-size="12">true</text>
+  <line x1="380" y1="285" x2="390" y2="285" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="396" y="289" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">false carries reason and code</text>
+  <rect x="20" y="298" width="360" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="315" font-size="12" fill="var(--m-ink-soft, #4a4a4a)">reason</text>
+  <text x="200" y="315" font-size="12">null</text>
+  <line x1="380" y1="311" x2="390" y2="311" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="396" y="315" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">text when available is false</text>
+  <rect x="20" y="324" width="360" height="26" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="341" font-size="12" fill="var(--m-ink-soft, #4a4a4a)">availability_code</text>
+  <text x="200" y="341" font-size="12">null</text>
+  <line x1="380" y1="337" x2="390" y2="337" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="396" y="341" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a code when available is false</text>
+</svg>

@@ -1,0 +1,8 @@
+INFO 10-17 16:22:09 [api_utils.py:286] non-default args: {'model_tag': 'Qwen/Qwen3-8B', 'host': '127.0.0.1', 'port': 30000, 'model': 'Qwen/Qwen3-8B', 'max_model_len': 8192, 'gpu_memory_utilization': 0.9, 'num_gpu_blocks_override': 1506}
+INFO 10-17 16:22:26 [topk_topp_sampler.py:124] Using FlashInfer for top-p & top-k sampling.
+2026-10-17 16:22:39,316 - INFO - core.py:564 - flashinfer.jit: Building JIT module sampling; this can take several minutes on first use.
+/data/vllm/.venv/lib/python3.12/site-packages/flashinfer/data/cccl/libcudacxx/include/cuda/std/__cccl/cuda_toolkit.h:41:8: error: #error "CUDA compiler and CUDA toolkit headers are incompatible, please check your include paths"
+RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+flashinfer_python-0.7.0.post1.dist-info
+nvidia_cuda_cccl-13.3.4.3.1.dist-info
+nvidia_cuda_nvcc-13.4.92.dist-info

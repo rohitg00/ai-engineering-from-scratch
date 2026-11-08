@@ -26,7 +26,7 @@ Understanding the perceptron means understanding what "learning" actually means 
 
 ### One Neuron, One Decision
 
-A perceptron takes n inputs, multiplies each by a weight, sums them up, adds a bias, and passes the result through an activation function.
+A perceptron takes $n$ inputs, multiplies each by a weight, sums them up, adds a bias, and passes the result through an activation function.
 
 ```mermaid
 graph LR
@@ -38,11 +38,10 @@ graph LR
     step --> out["output (0 or 1)"]
 ```
 
-The step function is brutal: if the weighted sum plus bias is >= 0, output 1. Otherwise, output 0.
+The step function is brutal: if the weighted sum plus bias is $\ge 0$, output 1. Otherwise, output 0.
 
-```
-step(z) = 1  if z >= 0
-           0  if z < 0
+```math
+\text{step}(z) = \begin{cases} 1 & \text{if } z \ge 0 \\ 0 & \text{if } z < 0 \end{cases}
 ```
 
 This is a linear classifier. The weights and bias define a line (or hyperplane in higher dimensions) that splits the input space into two regions.
@@ -80,7 +79,7 @@ For each training example (x, y_true):
     bias = bias + learning_rate * error
 ```
 
-If the prediction is correct, error = 0, nothing changes. If it predicts 0 but should be 1, weights increase. If it predicts 1 but should be 0, weights decrease. The learning rate controls how big each adjustment is.
+If the prediction is correct, $\text{error} = 0$, nothing changes. If it predicts 0 but should be 1, weights increase. If it predicts 1 but should be 0, weights decrease. The learning rate controls how big each adjustment is.
 
 ### The XOR Problem
 
@@ -213,7 +212,7 @@ It will never converge. This is the hard proof that a single perceptron cannot l
 
 ### Step 4: Solve XOR with two layers
 
-The trick: XOR = (x1 OR x2) AND NOT (x1 AND x2). Combine three perceptrons:
+The trick: $\text{XOR} = (x_1 \text{ OR } x_2) \text{ AND NOT } (x_1 \text{ AND } x_2)$. Combine three perceptrons:
 
 ```mermaid
 graph LR
@@ -359,7 +358,7 @@ This lesson produces:
 ## Exercises
 
 1. Train a perceptron on a NAND gate (the universal gate - any logic circuit can be built from NAND). Verify its weights and bias form a valid decision boundary.
-2. Modify the Perceptron class to track the decision boundary (w1*x1 + w2*x2 + b = 0) at each epoch. Print how the line shifts during training on the AND gate.
+2. Modify the Perceptron class to track the decision boundary ($w_1 x_1 + w_2 x_2 + b = 0$) at each epoch. Print how the line shifts during training on the AND gate.
 3. Build a 3-input perceptron that outputs 1 only when at least 2 of the 3 inputs are 1 (a majority vote function). Is this linearly separable? Why?
 
 ## Key Terms
@@ -372,7 +371,7 @@ This lesson produces:
 | Activation function | "The thing that squishes values" | A function applied after the weighted sum - step function for perceptrons, sigmoid/ReLU for modern networks |
 | Linearly separable | "You can draw a line between them" | A dataset where a single hyperplane can perfectly separate the classes |
 | XOR problem | "The thing perceptrons can't do" | Proof that single-layer networks cannot learn non-linearly-separable functions |
-| Decision boundary | "Where the classifier switches" | The hyperplane w*x + b = 0 that divides input space into two classes |
+| Decision boundary | "Where the classifier switches" | The hyperplane $w \cdot x + b = 0$ that divides input space into two classes |
 | Multi-layer perceptron | "A real neural network" | Perceptrons stacked in layers, where each layer's output feeds the next layer's input |
 
 ## Further Reading

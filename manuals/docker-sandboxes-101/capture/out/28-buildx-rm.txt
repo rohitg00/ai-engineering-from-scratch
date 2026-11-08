@@ -1,0 +1,14 @@
+$ docker buildx rm m101-builder
+m101-builder removed
+[exit 0]
+
+$ docker image rm localhost:15000/m101/hello-kit:docker-driver
+Untagged: localhost:15000/m101/hello-kit:docker-driver
+Untagged: localhost:15000/m101/hello-kit@sha256:<digest>
+Deleted: sha256:<digest>
+[exit 0]
+
+$ docker image rm localhost:15000/docker/sandbox-templates:shell
+Untagged: localhost:15000/docker/sandbox-templates:shell
+Untagged: localhost:15000/docker/sandbox-templates@sha256:<digest>
+[exit 0]

@@ -71,7 +71,7 @@ End-to-end models need more data and compute but skip the error accumulation of 
 
 ### Layout parsing
 
-For structured documents, run a layout detector (LayoutLMv3, DocLayNet) that labels each region: Title, Paragraph, Figure, Table, Footnote. Reading order then becomes "iterate through regions in layout order, concatenate."
+For structured documents, run a layout model (LayoutLMv3, or a detector trained on the DocLayNet dataset) that labels each region: Title, Paragraph, Figure, Table, Footnote. Reading order then becomes "iterate through regions in layout order, concatenate."
 
 For forms, use **Key-Value extraction** models (Donut for visually-rich documents, LayoutLMv3 for plain scans). They take image + detected text + positions and predict structured key-value pairs.
 
@@ -160,18 +160,23 @@ Fixed-height input (the CNN max-pools height to 1). Width is the time dimension 
 
 ### Step 3: Synthetic OCR
 
-Generate black-on-white digit strings for an end-to-end smoke test.
+Generate black-on-white strings for an end-to-end smoke test. Each character becomes a column of six bars that spell its vocabulary index in binary. The image must carry the character's identity: if every character were the same blank box, the model could not tell `a` from `x`, and the loss would stall.
 
 ```python
 import numpy as np
+
+GLYPHS = "0123456789abcdefghijklmnopqrstuvwxyz"
 
 def synthetic_line(text, height=32, char_width=16):
     W = char_width * len(text)
     img = np.ones((height, W), dtype=np.float32)
     for i, c in enumerate(text):
         x = i * char_width
-        shade = 0.0 if c.isalnum() else 0.5
-        img[6:height - 6, x + 2:x + char_width - 2] = shade
+        code = GLYPHS.find(c) + 1
+        for bit in range(6):
+            if code >> bit & 1:
+                y = 4 + 4 * bit
+                img[y:y + 3, x + 2:x + char_width - 2] = 0.0
     return img
 
 
@@ -202,7 +207,7 @@ A real OCR dataset adds fonts, noise, rotation, blur, and colour. The pipeline a
 model = TinyCRNN(vocab_size=len(vocab))
 opt = torch.optim.Adam(model.parameters(), lr=1e-3)
 
-for step in range(200):
+for step in range(400):
     strings = ["abc" + str(step % 10)] * 4 + ["xyz" + str((step + 1) % 10)] * 4
     imgs, targets, target_lens = build_batch(strings, vocab)
     log_probs = model(imgs)  # (W', 8, vocab)
@@ -211,7 +216,7 @@ for step in range(200):
     opt.zero_grad(); loss.backward(); opt.step()
 ```
 
-Loss should drop from ~3 to ~0.2 over 200 steps on this trivial synthetic data.
+Loss should drop from double digits to about 0.3 within 400 steps on this trivial synthetic data. `code/main.py` runs the same loop on its own string set and then decodes three test strings.
 
 ## Use It
 

@@ -1,0 +1,2 @@
+[2026-10-16 20:32:22] Decode batch, #running-req: 33, #token: 19597, token usage: 0.81, cuda graph: True, gen throughput (token/s): 319.70, #queue-req: 0
+[2026-10-18 18:01:00] Decode batch, #running-req: 33, #token: 20422, token usage: 0.85, cuda graph: False, gen throughput (token/s): 350.78, #queue-req: 0

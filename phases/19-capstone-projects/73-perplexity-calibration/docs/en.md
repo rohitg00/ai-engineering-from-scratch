@@ -53,7 +53,7 @@ ECE is biased by bin count and sample size. With ten bins and a hundred predicti
 
 ## What Brier score does that ECE does not
 
-ECE only cares about average gaps. A model that is overconfident on half the bins and underconfident on the other half can have low ECE while being poorly calibrated locally. The Brier score measures squared error against the true outcome per prediction, so it penalises spread directly.
+ECE only cares about the average gap in each bin. It takes the absolute gap per bin, so gaps in different bins do not cancel. Inside one bin they can: if some predictions in a bin are overconfident and others are underconfident, the bin averages can match and the bin adds almost nothing to ECE, while each prediction is poorly calibrated. The Brier score measures squared error against the true outcome per prediction, so it penalises spread directly.
 
 For binary outcomes, Brier is `mean((p_i - y_i)^2)`. It decomposes into reliability, resolution, and uncertainty. We compute the score and the decomposition. The runner reports the scalar but logs the decomposition for the dashboard.
 
@@ -87,7 +87,7 @@ The harness does not assume confidence comes from softmax. It accepts any number
 
 - All predictions wrong: ECE is the average confidence, Brier is high, perplexity is whatever the model thinks of the text.
 - All predictions correct with high confidence: ECE near zero, Brier near zero.
-- Perfectly uncertain predictor at p=0.5: ECE is 0.5 minus accuracy, Brier is 0.25 minus a correction term.
+- Perfectly uncertain predictor at p=0.5: every prediction lands in one bin, so ECE is `|0.5 - accuracy|`. Brier is exactly 0.25, because `(0.5 - y)^2 = 0.25` whether `y` is 0 or 1.
 - Empty input: ECE, Brier, and reliability return `0.0` (or zero-filled arrays). Perplexity returns `NaN` for the zero-token case. None of these paths emit a warning; the runner inspects the values and decides whether to report or skip.
 
 These cases are baked into the tests. A real model on a real benchmark will not hit them, but a buggy adapter or a tiny sample will, and the runner should not crash.

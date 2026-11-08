@@ -1,0 +1,31 @@
+# command: lldb -b -o 'disassemble -n div10s' -o 'disassemble -n table_switch' -o 'disassemble -n mod8s' idioms-x86_64-O2.o
+# version: lldb-1703.0.236.21
+(lldb) target create "idioms-x86_64-O2.o"
+Current executable set to '/private/tmp/aiefs-re/phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/code/fixtures/idioms-x86_64-O2.o' (x86_64).
+(lldb) disassemble -n div10s
+idioms-x86_64-O2.o`div10s:
+idioms-x86_64-O2.o[0x10] <+0>:  movslq %edi, %rax
+idioms-x86_64-O2.o[0x13] <+3>:  imulq  $0x66666667, %rax, %rax   ; imm = 0x66666667 
+idioms-x86_64-O2.o[0x1a] <+10>: movq   %rax, %rcx
+idioms-x86_64-O2.o[0x1d] <+13>: shrq   $0x3f, %rcx
+idioms-x86_64-O2.o[0x21] <+17>: sarq   $0x22, %rax
+idioms-x86_64-O2.o[0x25] <+21>: addl   %ecx, %eax
+idioms-x86_64-O2.o[0x27] <+23>: retq   
+(lldb) disassemble -n table_switch
+idioms-x86_64-O2.o`table_switch:
+idioms-x86_64-O2.o[0xd0] <+0>:  movl   $0xffffffff, %eax         ; imm = 0xFFFFFFFF 
+idioms-x86_64-O2.o[0xd5] <+5>:  cmpl   $0x6, %edi
+idioms-x86_64-O2.o[0xd8] <+8>:  ja     0xe6                      ; <+22>
+idioms-x86_64-O2.o[0xda] <+10>: movl   %edi, %eax
+idioms-x86_64-O2.o[0xdc] <+12>: leaq   (%rip), %rcx              ; <+19>
+idioms-x86_64-O2.o[0xe3] <+19>: movl   (%rcx,%rax,4), %eax
+idioms-x86_64-O2.o[0xe6] <+22>: retq   
+(lldb) disassemble -n mod8s
+idioms-x86_64-O2.o`mod8s:
+idioms-x86_64-O2.o[0x90] <+0>:  movl   %edi, %eax
+idioms-x86_64-O2.o[0x92] <+2>:  leal   0x7(%rax), %ecx
+idioms-x86_64-O2.o[0x95] <+5>:  testl  %edi, %edi
+idioms-x86_64-O2.o[0x97] <+7>:  cmovnsl %edi, %ecx
+idioms-x86_64-O2.o[0x9a] <+10>: andl   $-0x8, %ecx
+idioms-x86_64-O2.o[0x9d] <+13>: subl   %ecx, %eax
+idioms-x86_64-O2.o[0x9f] <+15>: retq   

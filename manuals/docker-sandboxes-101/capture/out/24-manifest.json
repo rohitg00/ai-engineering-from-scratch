@@ -1,0 +1,23 @@
+{
+  "annotations": {
+    "io.docker.agent.version": "v1.149.0",
+    "io.docker.cagent.version": "v1.149.0",
+    "org.opencontainers.image.created": "<ts>",
+    "org.opencontainers.image.description": "OCI artifact containing files.yaml"
+  },
+  "artifactType": "application/vnd.docker.agent.config.v1+json",
+  "config": {
+    "mediaType": "application/vnd.docker.container.image.v1+json",
+    "size": "<n>",
+    "digest": "sha256:<digest>"
+  },
+  "layers": [
+    {
+      "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+      "size": "<n>",
+      "digest": "sha256:<digest>"
+    }
+  ],
+  "mediaType": "application/vnd.oci.image.manifest.v1+json",
+  "schemaVersion": 2
+}

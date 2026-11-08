@@ -1,0 +1,3 @@
+breakpoint set -n bump
+run
+process save-core --style stack account-O0-stack.core

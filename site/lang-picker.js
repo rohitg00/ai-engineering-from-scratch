@@ -6,8 +6,10 @@
 (function () {
   'use strict';
   var LANGS = Array.isArray(window.AIFS_LANGS) ? window.AIFS_LANGS : [{ code: 'en', native: 'English' }];
-  var RTL = { ar: 1, he: 1, fa: 1, ur: 1 };
+  var RTL = {};
+  LANGS.forEach(function (l) { if (l.dir === 'rtl') RTL[l.code] = 1; });
   var pickerId = 0;
+  var applied = '';
 
   function isCertificationLesson() {
     try {
@@ -25,6 +27,7 @@
     if (isCertificationLesson()) return 'en';
     var q = new URLSearchParams(location.search).get('lang');
     if (supported(q)) return q;
+    if (applied) return applied;
     var saved = '';
     try { saved = localStorage.getItem('lang') || ''; } catch (_) {}
     return supported(saved) ? saved : 'en';
@@ -34,11 +37,19 @@
     return 'English';
   }
   function applyDir(code) {
+    applied = supported(code) ? code : 'en';
     document.documentElement.lang = code;
     document.documentElement.dir = RTL[code] ? 'rtl' : 'ltr';
   }
   window.AIFS_currentLang = current;
   window.AIFS_applyLangDir = applyDir;
+
+  function alternateHrefs() {
+    var hrefs = {};
+    var links = document.querySelectorAll('link[rel="alternate"][hreflang]');
+    for (var i = 0; i < links.length; i++) hrefs[links[i].hreflang] = location.pathname + new URL(links[i].href).search;
+    return hrefs;
+  }
 
   function mount(host) {
     pickerId += 1;
@@ -72,6 +83,7 @@
     var currentLabel = btn.querySelector('.lang-current');
     var filter = panel.querySelector('.lang-filter');
     var list = panel.querySelector('.lang-list');
+    var hrefs = alternateHrefs();
 
     function updateButton() {
       var label = nativeOf(current());
@@ -85,8 +97,14 @@
       list.innerHTML = '';
       LANGS.forEach(function (l) {
         if (q && l.native.toLowerCase().indexOf(q) < 0 && l.code.toLowerCase().indexOf(q) < 0) return;
-        var item = document.createElement('button');
-        item.type = 'button';
+        var href = hrefs[l.code];
+        var item = document.createElement(href ? 'a' : 'button');
+        if (href) {
+          item.href = href;
+          item.hreflang = l.code;
+        } else {
+          item.type = 'button';
+        }
         item.className = 'lang-item' + (l.code === cur ? ' is-current' : '');
         item.id = id + 'Option-' + l.code;
         item.setAttribute('role', 'option');
@@ -116,6 +134,7 @@
       filter.value = '';
       panel.hidden = false;
       btn.setAttribute('aria-expanded', 'true');
+      try { document.dispatchEvent(new CustomEvent('aifs:overlayopen', { detail: { source: id } })); } catch (_) {}
       filter.setAttribute('aria-expanded', 'true');
       if (typeof optionIndex === 'number') focusOption(optionIndex < 0 ? options().length - 1 : optionIndex);
       else filter.focus();
@@ -182,13 +201,22 @@
         if (e.key === 'Home') next = 0;
         if (e.key === 'End') next = items.length - 1;
         focusOption(next);
+      } else if (e.key === ' ' && item.tagName === 'A') {
+        e.preventDefault();
+        choose(item.dataset.code);
       }
     });
     list.addEventListener('click', function (e) {
       var item = e.target.closest('.lang-item');
-      if (item) choose(item.dataset.code);
+      if (!item) return;
+      if (item.tagName === 'A' && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button)) return;
+      e.preventDefault();
+      choose(item.dataset.code);
     });
     document.addEventListener('click', function (e) { if (!host.contains(e.target)) close(false); });
+    document.addEventListener('aifs:overlayopen', function (e) {
+      if (!panel.hidden && !(e.detail && e.detail.source === id)) close(false);
+    });
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape' || panel.hidden || e.defaultPrevented) return;
       e.preventDefault();
@@ -197,6 +225,7 @@
     });
 
     updateButton();
+    renderList('');
     applyDir(current());
   }
 

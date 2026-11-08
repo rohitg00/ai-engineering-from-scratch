@@ -1,0 +1,21 @@
+{
+  "id": "gini-best-split",
+  "title": "Gini impurity and the best split",
+  "kind": "implement",
+  "summary": "Gini impurity and the best decision tree split over all features, with midpoint thresholds, weighted child impurity and a fixed tie rule.",
+  "difficulty": "hard",
+  "tags": ["decision-trees", "gini-impurity", "classification", "search"],
+  "lesson": "phases/02-ml-fundamentals/04-decision-trees",
+  "cheatsheet": "classical-ml",
+  "minutes": 35,
+  "entry": ["gini_impurity", "split_impurity", "best_threshold", "best_split"],
+  "collections": ["classical-ml"],
+  "time_limit_s": 10,
+  "mutants": {
+    "feature_axis_rows": "Loops over X.shape[0], the number of rows, and not over the features.",
+    "gini_empty_one": "Has no rule for an empty set, so the impurity of no labels is 1.0 and not 0.0.",
+    "threshold_at_value": "Uses the lower unique value as the threshold and not the midpoint.",
+    "tie_last_wins": "Replaces the best threshold on an equal impurity, so the last tied threshold wins.",
+    "unweighted_children": "Takes the plain mean of the two child impurities and does not weight by size."
+  }
+}

@@ -1,0 +1,26 @@
+
+convention-arm64-macos-O2.o:	file format mach-o arm64
+
+SYMBOL TABLE:
+0000000000000000 l     F __TEXT,__text ltmp0
+00000000000001d0 l     O __TEXT,__literal16 ltmp1
+00000000000001d0 l     O __TEXT,__literal16 lCPI4_0
+00000000000001e0 l     O __LD,__compact_unwind ltmp2
+0000000000000050 g     F __TEXT,__text _big_ret
+0000000000000044 g     F __TEXT,__text _by_value
+0000000000000114 g     F __TEXT,__text _call8
+00000000000001a0 g     F __TEXT,__text _call_big
+0000000000000138 g     F __TEXT,__text _call_mixed
+0000000000000180 g     F __TEXT,__text _call_pair
+000000000000014c g     F __TEXT,__text _call_varargs
+0000000000000008 g     F __TEXT,__text _eight_args
+00000000000000bc g     F __TEXT,__text _keeps
+0000000000000000 g     F __TEXT,__text _leaf_add
+0000000000000028 g     F __TEXT,__text _mixed
+0000000000000074 g     F __TEXT,__text _sum_varargs
+0000000000000000         *UND* _ext
+0000000000000000         *UND* _ext8
+0000000000000000         *UND* _extbig
+0000000000000000         *UND* _extmixed
+0000000000000000         *UND* _extpair
+0000000000000000         *UND* _extva

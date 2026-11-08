@@ -1,0 +1,234 @@
+{
+  "tool": "ghidra",
+  "version": "12.1.4",
+  "fixture": "sweep-trap.o",
+  "language": "x86:LE:64:default",
+  "compilerSpec": "gcc",
+  "imageBase": 1048576,
+  "executableFormat": "Executable and Linking Format (ELF)",
+  "memoryBlocks": [
+    {
+      "name": ".text",
+      "start": 1048576,
+      "size": 36,
+      "execute": true
+    },
+    {
+      "name": ".strtab",
+      "start": 0,
+      "size": 55,
+      "execute": false
+    },
+    {
+      "name": ".symtab",
+      "start": 0,
+      "size": 72,
+      "execute": false
+    },
+    {
+      "name": "_elfHeader",
+      "start": 0,
+      "size": 64,
+      "execute": false
+    },
+    {
+      "name": "_elfSectionHeaders",
+      "start": 0,
+      "size": 320,
+      "execute": false
+    }
+  ],
+  "symbols": [
+    {
+      "name": "lookup",
+      "addr": 1048576,
+      "type": "Function",
+      "source": "IMPORTED"
+    },
+    {
+      "name": "plus_one",
+      "addr": 1048608,
+      "type": "Function",
+      "source": "IMPORTED"
+    }
+  ],
+  "functions": [
+    {
+      "name": "lookup",
+      "entry": 1048576,
+      "bodySize": 20,
+      "bodyMin": 1048576,
+      "bodyMax": 1048599,
+      "symbolSource": "IMPORTED",
+      "instructions": [
+        {
+          "addr": 1048576,
+          "size": 3,
+          "bytes": "4863c7",
+          "text": "MOVSXD RAX,EDI",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x0, 8) INT_SEXT (register, 0x38, 4)"
+          ]
+        },
+        {
+          "addr": 1048579,
+          "size": 7,
+          "bytes": "488d0d06000000",
+          "text": "LEA RCX,[0x100010]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x8, 8) COPY (const, 0x100010, 8)"
+          ]
+        },
+        {
+          "addr": 1048586,
+          "size": 4,
+          "bytes": "0fb60401",
+          "text": "MOVZX EAX,byte ptr [RCX + RAX*0x1]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x9200, 8) INT_MULT (register, 0x0, 8) , (const, 0x1, 8)",
+            "(unique, 0x9400, 8) INT_ADD (register, 0x8, 8) , (unique, 0x9200, 8)",
+            "(unique, 0x23a00, 1) LOAD (const, 0x1b1, 4) , (unique, 0x9400, 8)",
+            "(register, 0x0, 4) INT_ZEXT (unique, 0x23a00, 1)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)"
+          ]
+        },
+        {
+          "addr": 1048590,
+          "size": 2,
+          "bytes": "eb04",
+          "text": "JMP 0x00100014",
+          "flowType": "UNCONDITIONAL_JUMP",
+          "pcode": [
+            " ---  BRANCH (ram, 0x100014, 8)"
+          ]
+        },
+        {
+          "addr": 1048596,
+          "size": 3,
+          "bytes": "83c001",
+          "text": "ADD EAX,0x1",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x200, 1) INT_CARRY (register, 0x0, 4) , (const, 0x1, 4)",
+            "(register, 0x20b, 1) INT_SCARRY (register, 0x0, 4) , (const, 0x1, 4)",
+            "(register, 0x0, 4) INT_ADD (register, 0x0, 4) , (const, 0x1, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)",
+            "(register, 0x207, 1) INT_SLESS (register, 0x0, 4) , (const, 0x0, 4)",
+            "(register, 0x206, 1) INT_EQUAL (register, 0x0, 4) , (const, 0x0, 4)",
+            "(unique, 0x58300, 4) INT_AND (register, 0x0, 4) , (const, 0xff, 4)",
+            "(unique, 0x58400, 1) POPCOUNT (unique, 0x58300, 4)",
+            "(unique, 0x58500, 1) INT_AND (unique, 0x58400, 1) , (const, 0x1, 1)",
+            "(register, 0x202, 1) INT_EQUAL (unique, 0x58500, 1) , (const, 0x0, 1)"
+          ]
+        },
+        {
+          "addr": 1048599,
+          "size": 1,
+          "bytes": "c3",
+          "text": "RET",
+          "flowType": "TERMINATOR",
+          "pcode": [
+            "(register, 0x288, 8) LOAD (const, 0x1b1, 8) , (register, 0x20, 8)",
+            "(register, 0x20, 8) INT_ADD (register, 0x20, 8) , (const, 0x8, 8)",
+            " ---  RETURN (register, 0x288, 8)"
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "start": 1048576,
+          "size": 16,
+          "destinations": [
+            {
+              "to": 1048596,
+              "flow": "UNCONDITIONAL_JUMP"
+            }
+          ]
+        },
+        {
+          "start": 1048596,
+          "size": 4,
+          "destinations": []
+        }
+      ],
+      "decompiled": "\nint lookup(int param_1)\n\n{\n  return (byte)(\u0026DAT_00100010)[param_1] + 1;\n}\n\n"
+    },
+    {
+      "name": "plus_one",
+      "entry": 1048608,
+      "bodySize": 4,
+      "bodyMin": 1048608,
+      "bodyMax": 1048611,
+      "symbolSource": "IMPORTED",
+      "instructions": [
+        {
+          "addr": 1048608,
+          "size": 3,
+          "bytes": "8d4701",
+          "text": "LEA EAX,[RDI + 0x1]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x38, 8) , (const, 0x1, 8)",
+            "(register, 0x0, 4) SUBPIECE (unique, 0x8e00, 8) , (const, 0x0, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)"
+          ]
+        },
+        {
+          "addr": 1048611,
+          "size": 1,
+          "bytes": "c3",
+          "text": "RET",
+          "flowType": "TERMINATOR",
+          "pcode": [
+            "(register, 0x288, 8) LOAD (const, 0x1b1, 8) , (register, 0x20, 8)",
+            "(register, 0x20, 8) INT_ADD (register, 0x20, 8) , (const, 0x8, 8)",
+            " ---  RETURN (register, 0x288, 8)"
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "start": 1048608,
+          "size": 4,
+          "destinations": []
+        }
+      ],
+      "decompiled": "\nint plus_one(int param_1)\n\n{\n  return param_1 + 1;\n}\n\n"
+    }
+  ],
+  "dataReferences": [
+    {
+      "from": 1048579,
+      "to": 1048592,
+      "type": "DATA"
+    },
+    {
+      "from": 1048586,
+      "to": 1048592,
+      "type": "DATA"
+    },
+    {
+      "from": 40,
+      "to": 0,
+      "type": "DATA"
+    },
+    {
+      "from": 80,
+      "to": 0,
+      "type": "DATA"
+    },
+    {
+      "from": 144,
+      "to": 1048576,
+      "type": "DATA"
+    },
+    {
+      "from": 272,
+      "to": 0,
+      "type": "DATA"
+    }
+  ]
+}

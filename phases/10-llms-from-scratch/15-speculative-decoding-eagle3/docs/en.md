@@ -36,8 +36,8 @@ Stack `N` of these calls back to back using one verifier forward pass on `prefix
 
 Let `α` be the expected acceptance rate per drafted token. Let `c = cost(draft) / cost(verifier)` be the cost ratio. The expected number of accepted tokens per verifier forward is:
 
-```
-E[accepted] = (1 - α^(N+1)) / (1 - α)
+```math
+\mathbb{E}[\text{accepted}] = \frac{1 - \alpha^{N+1}}{1 - \alpha}
 ```
 
 The expected total wall time per accepted token is `(N * c + 1) / E[accepted]`. Minimize that with respect to `N` and you get the sweet spot. For `α = 0.8, c = 0.05`: optimal `N` is around 5–7, speedup is 3.2×. For `α = 0.95, c = 0.02`: optimal `N` is around 8–10, speedup pushes 5×.
@@ -70,6 +70,8 @@ For EAGLE-2 tree search, the verifier runs attention with a non-causal mask that
 | EAGLE-2 | EAGLE-1 + dynamic draft tree | 0.80-0.88 | 3-4× | ~60B tokens |
 | EAGLE-3 | Multi-layer feature fusion + TTT | 0.88-0.92 | 3.5-6.5× | ~60-200B tokens |
 | Lookahead | No draft (Jacobi iteration) | N/A | 1.3-1.6× | None |
+
+The `α` column is the per-token acceptance rate along the accepted path, on chat benchmarks, with a draft trained on matching chat data. It is the upper band. Phase 10 · 25 quotes 0.82 for EAGLE-3 from a different setup, and Phase 17 · 05 plans production rollouts with 0.6 to 0.8 on general chat. Measure `α` on your own traffic before you choose `N`.
 
 In 2026 production: vLLM and SGLang default to EAGLE-3 when available, EAGLE-2 otherwise. TensorRT-LLM has the fastest Medusa path for Meta and NVIDIA public models. llama.cpp ships vanilla draft for CPU deployments.
 

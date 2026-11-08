@@ -1,0 +1,17 @@
+# Live checks 2026-10-23, Qwen3-0.6B, 2-step runs on the DGX Spark.
+## wandb without --wandb-group (wandb-tb.log)
+            ~~~~~~~~~~~~~~~~~^~~~~
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'str'
+## wandb with --wandb-group plain (wandb-check.log): step 0: step 1: 
+W&B offline mode enabled. Data will be saved locally.
+debug-internal.log debug.log latest-run offline-run-20261023_034138-mu59u570 offline-run-20261023_034200-mu59u570 offline-run-20261023_034203-mu59u570 
+## tensorboard (tb-check.log): step 0: step 1: 
+Saving tensorboard log to /root/lab/runs/plain/tb.
+events.out.tfevents.1792727435.c56e30506501.2042.0
+events.out.tfevents.1792727457.c56e30506501.2515.0
+## eval-check: --eval-interval 1 --eval-prompt-data gsm8k_test test.parquet, steps 0, 503 lines 5311
+ray.exceptions.RayTaskError: ray::RolloutExecutor.eval() (pid=2511, ip=172.17.0.3, actor_id=30ef216341789a5b8b87b1890200
+    raise HTTPStatusError(message, request=request, response=self)
+## eval-check2: --eval-interval 1 --eval-prompt-data gsm8k_test test.parquet, steps 0, 503 lines 4339
+ray.exceptions.RayTaskError: ray::RolloutExecutor.eval() (pid=2514, ip=172.17.0.3, actor_id=4372e0e5a72e9357095709160200
+    raise HTTPStatusError(message, request=request, response=self)

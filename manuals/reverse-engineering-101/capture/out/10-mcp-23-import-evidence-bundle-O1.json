@@ -1,0 +1,38 @@
+{
+  "request": {
+    "jsonrpc": "2.0",
+    "id": 23,
+    "method": "tools/call",
+    "params": {
+      "name": "import_evidence_bundle",
+      "arguments": {
+        "path": "$WORK/bundle-O1.json"
+      }
+    }
+  },
+  "response": {
+    "result": {
+      "_meta": {
+        "provenance": {
+          "untrusted_content": true,
+          "source": "analysis_target"
+        }
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "<cut by run.py: the text copy of structuredContent, 55 bytes>"
+        }
+      ],
+      "structuredContent": {
+        "result": {
+          "imported": 6,
+          "unknowns_added": 0,
+          "total": 15
+        }
+      }
+    },
+    "jsonrpc": "2.0",
+    "id": 23
+  }
+}

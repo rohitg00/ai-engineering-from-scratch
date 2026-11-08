@@ -1,0 +1,20 @@
+version: "16"
+
+agents:
+  root:
+    model: local
+    description: Lists the files of a small repository and counts lines.
+    instruction: |
+      You answer questions about the files in the working directory.
+      Use the tools to look; never guess. Answer in one sentence that
+      names the files and gives the line count.
+    max_iterations: 8
+    toolsets:
+      - type: filesystem
+      - type: shell
+
+models:
+  local:
+    provider: dmr
+    model: ai/qwen3:4b
+    temperature: 0

@@ -1,0 +1,34 @@
+{
+  "id": "top-k-top-p-sampling",
+  "title": "Temperature, top-k and top-p sampling",
+  "kind": "implement",
+  "summary": "Scale logits by temperature, keep the top k or the top p mass, renormalize, and draw one token with a seeded rng.",
+  "difficulty": "medium",
+  "tags": [
+    "sampling",
+    "decoding",
+    "softmax",
+    "llm-inference"
+  ],
+  "lesson": "phases/07-transformers-deep-dive/07-gpt-causal-language-modeling",
+  "cheatsheet": "bert-gpt-t5",
+  "minutes": 30,
+  "entry": [
+    "top_k_filter",
+    "top_p_filter",
+    "sampling_probs",
+    "sample"
+  ],
+  "collections": [
+    "llm-inference"
+  ],
+  "time_limit_s": 10,
+  "mutants": {
+    "in_place_filter": "Writes minus infinity into the caller's logits in top_k_filter.",
+    "sample_ignores_temperature": "Calls sampling_probs without the temperature in sample, so draws use temperature 1.",
+    "temperature_after_filters": "Divides by the temperature after the filters, so top-p cuts the distribution at temperature 1.",
+    "top_k_ties_high_index": "Sorts with argsort and reverses the result, so ties keep the higher index.",
+    "top_p_drops_crossing": "Drops the token that makes the cumulative sum reach p, and keeps at least one token.",
+    "top_p_vocab_order": "Takes the cumulative sum in vocabulary order, not in order of probability."
+  }
+}

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 446" role="img" aria-labelledby="fig-7-1-title fig-7-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-1-title">What sbx move carries to the cloud</title>
+  <desc id="fig-7-1-desc">Top row, left to right: the local sandbox m101-demo is stopped and captured as one template image, the image is uploaded, and a new cloud sandbox named moved-m101-demo plus a suffix starts from it. Below, the left column lists what travels inside the image: the sandbox filesystem, the kit network rules, the published TCP ports republished under cloud URLs, and the environment variables of the local sandbox. The right column lists what stays on the host: the bind mount, the secrets in the sbx secret store, local policy rules, and running processes, with active HTTP method rules prompting before the move. At the bottom, the destination starts a TTL clock with a one hour default and a 24 hour ceiling.</desc>
+  <defs><marker id="fig-7-1-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-7-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-7-1-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SBX MOVE M101-DEMO --TO CLOUD</text>
+  <rect x="20" y="30" width="200" height="58" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="120" y="46.75" font-size="12.5" text-anchor="middle" font-weight="700">m101-demo</text>
+  <text x="120" y="64.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">local sandbox under sandboxd</text>
+  <text x="120" y="79.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">stopped while it is captured</text>
+  <rect x="260" y="30" width="160" height="58" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="340" y="46.75" font-size="12.5" text-anchor="middle" font-weight="700">template image</text>
+  <text x="340" y="64.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the sandbox filesystem</text>
+  <text x="340" y="79.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one OCI image, pushed</text>
+  <rect x="460" y="30" width="160" height="58" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="540" y="46.75" font-size="12.5" text-anchor="middle" font-weight="700">moved-m101-demo</text>
+  <text x="540" y="64.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">plus a unique suffix</text>
+  <text x="540" y="79.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new id, small shape</text>
+  <line x1="220" y1="59" x2="259" y2="59" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-teal)"/>
+  <rect class="m-knock" x="212.35" y="42.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="239.5" y="53" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">capture</text>
+  <line x1="420" y1="59" x2="459" y2="59" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect class="m-knock" x="415.8" y="42.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="439.5" y="53" font-size="11.5" text-anchor="middle">upload</text>
+  <text x="20" y="124" font-size="11" letter-spacing="1.2" fill="var(--m-green-ink, #336b40)">TRAVELS INSIDE THE IMAGE</text>
+  <text x="330" y="124" font-size="11" letter-spacing="1.2" fill="var(--m-grey-ink, #5e5e59)">STAYS ON THE HOST</text>
+  <rect x="20" y="134" width="290" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="165" y="149.1" font-size="12" text-anchor="middle" font-weight="700">the sandbox container filesystem</text>
+  <text x="165" y="166.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">files, packages, agent state</text>
+  <rect x="20" y="182" width="290" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="165" y="197.1" font-size="12" text-anchor="middle" font-weight="700">kit network rules</text>
+  <text x="165" y="214.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">example.org from env-mixin (12-kit-add.txt)</text>
+  <rect x="20" y="230" width="290" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="165" y="245.1" font-size="12" text-anchor="middle" font-weight="700">published TCP ports</text>
+  <text x="165" y="262.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">republished under cloud HTTPS URLs</text>
+  <rect x="20" y="278" width="290" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="165" y="293.1" font-size="12" text-anchor="middle" font-weight="700">environment variables</text>
+  <text x="165" y="310.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">part of the local image</text>
+  <rect x="330" y="134" width="290" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="475" y="149.1" font-size="12" text-anchor="middle" font-weight="700">host bind mount</text>
+  <text x="475" y="166.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">$CAPTURE/fixtures/repo, not in the image</text>
+  <rect x="330" y="182" width="290" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="475" y="197.1" font-size="12" text-anchor="middle" font-weight="700">secrets in the sbx secret store</text>
+  <text x="475" y="214.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">M101_RECV_KEY, the cloud store is separate</text>
+  <rect x="330" y="230" width="290" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="475" y="245.1" font-size="12" text-anchor="middle" font-weight="700">local policy rules</text>
+  <text x="475" y="262.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">local:&lt;uuid&gt; rules, cloud policy applies</text>
+  <rect x="330" y="278" width="290" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="475" y="293.1" font-size="12" text-anchor="middle" font-weight="700">running processes and memory</text>
+  <text x="475" y="310.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the destination boots from the image</text>
+  <path d="M300 133 V110 H340 V89" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-7-1-head-teal)"/>
+  <rect class="m-knock" x="147" y="95.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="150" y="106" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">copied into the image</text>
+  <rect x="330" y="326" width="290" height="40" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="475" y="341.1" font-size="12" text-anchor="middle" font-weight="700">active HTTP method rules</text>
+  <text x="475" y="358.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">they prompt first, --force keeps the warning</text>
+  <rect x="20" y="376" width="600" height="58" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="320" y="392.75" font-size="12.5" text-anchor="middle" font-weight="700">TTL on the destination</text>
+  <text x="320" y="410.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">default 1h from the server, hard ceiling 24h from creation</text>
+  <text x="320" y="425.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">--on-timeout stop keeps it, delete removes it, sbx --cloud ttl +2h extends it</text>
+  <path d="M540 89 V100 H632 V405 H621" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-7-1-head-amber)"/>
+  <rect class="m-knock" x="543.4" y="101.42" width="85.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="586" y="112" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">clock starts</text>
+</svg>

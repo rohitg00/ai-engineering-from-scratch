@@ -30,7 +30,7 @@ Methodology (from METR blog and papers):
 
 1. Collect a task suite spanning minute-scale to hour-scale expert completion times. Current suites: HCAST (180+ tasks), RE-Bench (71 tasks), SWAA.
 2. Run the model on each task; record success or failure.
-3. Fit a logistic curve: P(success) as a function of log(expert completion time).
+3. Fit a logistic curve: $P(\text{success})$ as a function of $\log(\text{expert completion time})$.
 4. The horizon is the expert-time at which P(success) = 0.5.
 
 The logistic-fit shape is the right one because capability generally has an increasing, plateau-approaching relationship with task difficulty. The 50% point is a choice (could be 10%, 90%); METR reports multiple thresholds in the detailed paper but leads with 50% because it is the most intuitive.
@@ -79,7 +79,7 @@ a5-horizon-fit
 
 ## Use It
 
-`code/main.py` implements a logistic fit of task-success vs log(expert time), given a synthetic result set. It reports the 50% horizon (METR's headline), 10% horizon (conservative), and 90% horizon (optimistic). Also demonstrates what changes when the success rate is artificially inflated by eval-context gaming.
+`code/main.py` implements a logistic fit of task-success vs $\log(\text{expert time})$, given a synthetic result set. It reports the 50% horizon (METR's headline), 10% horizon (conservative), and 90% horizon (optimistic). Also demonstrates what changes when the success rate is artificially inflated by eval-context gaming.
 
 ## Ship It
 

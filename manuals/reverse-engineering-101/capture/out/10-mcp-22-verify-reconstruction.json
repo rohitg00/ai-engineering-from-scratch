@@ -1,0 +1,338 @@
+{
+  "request": {
+    "jsonrpc": "2.0",
+    "id": 22,
+    "method": "tools/call",
+    "params": {
+      "name": "verify_reconstruction",
+      "arguments": {
+        "specification": {
+          "name": "ledger functions rebuilt at -O2 against the -O1 build",
+          "claims": [
+            {
+              "claim_id": "percent-change-pseudocode",
+              "title": "percent_change: the Ghidra pseudocode is the same text in the -O1 and -O2 builds",
+              "kind": "structural-function",
+              "dimension": "pseudocode",
+              "comparison_evidence_id": "ev_2161e17a5ff6c19322e6f6ac34cb2de1a12c22fa75b51ba7fddf2bdfd73fdc48"
+            },
+            {
+              "claim_id": "percent-change-assembly",
+              "title": "percent_change: the Ghidra assembly is the same text in the -O1 and -O2 builds",
+              "kind": "structural-function",
+              "dimension": "assembly",
+              "comparison_evidence_id": "ev_2161e17a5ff6c19322e6f6ac34cb2de1a12c22fa75b51ba7fddf2bdfd73fdc48"
+            },
+            {
+              "claim_id": "total-pseudocode",
+              "title": "total: the Ghidra pseudocode is the same text in the -O1 and -O2 builds",
+              "kind": "structural-function",
+              "dimension": "pseudocode",
+              "comparison_evidence_id": "ev_40ba96d8ce66a46fdd84d1d344f17dc50e0d49d333936cc6eb54320234655393"
+            },
+            {
+              "claim_id": "total-assembly",
+              "title": "total: the Ghidra assembly is the same text in the -O1 and -O2 builds",
+              "kind": "structural-function",
+              "dimension": "assembly",
+              "comparison_evidence_id": "ev_40ba96d8ce66a46fdd84d1d344f17dc50e0d49d333936cc6eb54320234655393"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "response": {
+    "result": {
+      "_meta": {
+        "provenance": {
+          "untrusted_content": true,
+          "source": "analysis_target"
+        }
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "<cut by run.py: the text copy of structuredContent, 22615 bytes>"
+        }
+      ],
+      "structuredContent": {
+        "evidence_id": "ev_ccbaea4b45697017422c68a0dcabbe574c7e1b498aa3f0f3a0b47e351b389e23",
+        "subject": null,
+        "provider": {
+          "id": "rea-reconstruction-verifier",
+          "name": "REA reconstruction verifier",
+          "version": "1"
+        },
+        "analysis_profile": null,
+        "predicate_type": "rea.reconstruction-verification",
+        "operation": "verify_reconstruction",
+        "parameters": {
+          "specification_sha256": "9e8d22fa6db331994f2e80be5b728575a0e9cb17ff1e63d24ece22d235084bfe",
+          "claim_ids": [
+            "percent-change-pseudocode",
+            "percent-change-assembly",
+            "total-pseudocode",
+            "total-assembly"
+          ]
+        },
+        "raw_result": null,
+        "normalized_result": {
+          "status": "fail",
+          "specification_sha256": "9e8d22fa6db331994f2e80be5b728575a0e9cb17ff1e63d24ece22d235084bfe",
+          "summary": {
+            "total": 4,
+            "passed": 2,
+            "failed": 2,
+            "unknown": 0,
+            "behavioral": 0,
+            "structural": 4
+          },
+          "claims": {
+            "items": [
+              {
+                "claim_id": "percent-change-assembly",
+                "kind": "structural-function",
+                "dimension": "assembly",
+                "status": "pass",
+                "observed_status": "unchanged",
+                "comparison_evidence_id": "ev_2161e17a5ff6c19322e6f6ac34cb2de1a12c22fa75b51ba7fddf2bdfd73fdc48",
+                "left_evidence_ids": [
+                  "ev_b492c85eb9570bd5f8e866f94523122c8600ea0106603d90e9ea5445cf757b2a"
+                ],
+                "right_evidence_ids": [
+                  "ev_142cc943d8259d42ce5d62ad5eb0417fcde4de4ee9a20afbfe1fdbc51ed3d259"
+                ],
+                "evidence_links": [
+                  "ev_142cc943d8259d42ce5d62ad5eb0417fcde4de4ee9a20afbfe1fdbc51ed3d259",
+                  "ev_2161e17a5ff6c19322e6f6ac34cb2de1a12c22fa75b51ba7fddf2bdfd73fdc48",
+                  "ev_b492c85eb9570bd5f8e866f94523122c8600ea0106603d90e9ea5445cf757b2a"
+                ],
+                "unknown_ids": [],
+                "limitations": [
+                  "Artifact identity is unavailable for this observation.",
+                  "Assembly is opaque provider text; relocation normalization is unavailable.",
+                  "Exact provider text is compared without address or generated-name normalization; layout-only differences do not establish a behavior change.",
+                  "Left: Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+                  "Left: Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+                  "Left: Pseudocode and assembly are Ghidra-specific representations, not original source or Hopper-equivalent text.",
+                  "Left: References cover the complete Ghidra function-body AddressSet and exact entry. Dossier incoming edges omit sources owned by that function; procedure_references also retains those internal edges.",
+                  "Left: Resolved reference metadata identifies computed, indirect, external, call, jump, and data edges; unresolved targetless flows remain unknown, and function classifications distinguish thunks and externals.",
+                  "Left: Synthetic Ghidra entry-point references without actionable memory sources are omitted.",
+                  "Left: The Java bridge serializes one function request per Program and lets each decompilation run until it completes or the caller cancels.",
+                  "Left: The dossier combines Ghidra FunctionManager, Listing, ReferenceManager, BasicBlockModel, and decompiler observations; provider-specific pseudocode and assembly are not cross-provider text invariants.",
+                  "Left: The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+                  "Left: The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+                  "Left: Thunk and external classifications are Ghidra FunctionManager observations; they do not resolve targetless calls.",
+                  "Left: Unresolved computed or indirect flows without target addresses are not represented as reference edges.",
+                  "Left: macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.",
+                  "Right: Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+                  "Right: Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+                  "Right: Pseudocode and assembly are Ghidra-specific representations, not original source or Hopper-equivalent text.",
+                  "Right: References cover the complete Ghidra function-body AddressSet and exact entry. Dossier incoming edges omit sources owned by that function; procedure_references also retains those internal edges.",
+                  "Right: Resolved reference metadata identifies computed, indirect, external, call, jump, and data edges; unresolved targetless flows remain unknown, and function classifications distinguish thunks and externals.",
+                  "Right: Synthetic Ghidra entry-point references without actionable memory sources are omitted.",
+                  "Right: The Java bridge serializes one function request per Program and lets each decompilation run until it completes or the caller cancels.",
+                  "Right: The dossier combines Ghidra FunctionManager, Listing, ReferenceManager, BasicBlockModel, and decompiler observations; provider-specific pseudocode and assembly are not cross-provider text invariants.",
+                  "Right: The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+                  "Right: The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+                  "Right: Thunk and external classifications are Ghidra FunctionManager observations; they do not resolve targetless calls.",
+                  "Right: Unresolved computed or indirect flows without target addresses are not represented as reference edges.",
+                  "Right: macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state."
+                ]
+              },
+              {
+                "claim_id": "percent-change-pseudocode",
+                "kind": "structural-function",
+                "dimension": "pseudocode",
+                "status": "pass",
+                "observed_status": "unchanged",
+                "comparison_evidence_id": "ev_2161e17a5ff6c19322e6f6ac34cb2de1a12c22fa75b51ba7fddf2bdfd73fdc48",
+                "left_evidence_ids": [
+                  "ev_b492c85eb9570bd5f8e866f94523122c8600ea0106603d90e9ea5445cf757b2a"
+                ],
+                "right_evidence_ids": [
+                  "ev_142cc943d8259d42ce5d62ad5eb0417fcde4de4ee9a20afbfe1fdbc51ed3d259"
+                ],
+                "evidence_links": [
+                  "ev_142cc943d8259d42ce5d62ad5eb0417fcde4de4ee9a20afbfe1fdbc51ed3d259",
+                  "ev_2161e17a5ff6c19322e6f6ac34cb2de1a12c22fa75b51ba7fddf2bdfd73fdc48",
+                  "ev_b492c85eb9570bd5f8e866f94523122c8600ea0106603d90e9ea5445cf757b2a"
+                ],
+                "unknown_ids": [],
+                "limitations": [
+                  "Artifact identity is unavailable for this observation.",
+                  "Exact provider text is compared without address or generated-name normalization; layout-only differences do not establish a behavior change.",
+                  "Left: Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+                  "Left: Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+                  "Left: Pseudocode and assembly are Ghidra-specific representations, not original source or Hopper-equivalent text.",
+                  "Left: References cover the complete Ghidra function-body AddressSet and exact entry. Dossier incoming edges omit sources owned by that function; procedure_references also retains those internal edges.",
+                  "Left: Resolved reference metadata identifies computed, indirect, external, call, jump, and data edges; unresolved targetless flows remain unknown, and function classifications distinguish thunks and externals.",
+                  "Left: Synthetic Ghidra entry-point references without actionable memory sources are omitted.",
+                  "Left: The Java bridge serializes one function request per Program and lets each decompilation run until it completes or the caller cancels.",
+                  "Left: The dossier combines Ghidra FunctionManager, Listing, ReferenceManager, BasicBlockModel, and decompiler observations; provider-specific pseudocode and assembly are not cross-provider text invariants.",
+                  "Left: The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+                  "Left: The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+                  "Left: Thunk and external classifications are Ghidra FunctionManager observations; they do not resolve targetless calls.",
+                  "Left: Unresolved computed or indirect flows without target addresses are not represented as reference edges.",
+                  "Left: macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.",
+                  "Right: Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+                  "Right: Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+                  "Right: Pseudocode and assembly are Ghidra-specific representations, not original source or Hopper-equivalent text.",
+                  "Right: References cover the complete Ghidra function-body AddressSet and exact entry. Dossier incoming edges omit sources owned by that function; procedure_references also retains those internal edges.",
+                  "Right: Resolved reference metadata identifies computed, indirect, external, call, jump, and data edges; unresolved targetless flows remain unknown, and function classifications distinguish thunks and externals.",
+                  "Right: Synthetic Ghidra entry-point references without actionable memory sources are omitted.",
+                  "Right: The Java bridge serializes one function request per Program and lets each decompilation run until it completes or the caller cancels.",
+                  "Right: The dossier combines Ghidra FunctionManager, Listing, ReferenceManager, BasicBlockModel, and decompiler observations; provider-specific pseudocode and assembly are not cross-provider text invariants.",
+                  "Right: The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+                  "Right: The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+                  "Right: Thunk and external classifications are Ghidra FunctionManager observations; they do not resolve targetless calls.",
+                  "Right: Unresolved computed or indirect flows without target addresses are not represented as reference edges.",
+                  "Right: macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state."
+                ]
+              },
+              {
+                "claim_id": "total-assembly",
+                "kind": "structural-function",
+                "dimension": "assembly",
+                "status": "fail",
+                "observed_status": "changed",
+                "comparison_evidence_id": "ev_40ba96d8ce66a46fdd84d1d344f17dc50e0d49d333936cc6eb54320234655393",
+                "left_evidence_ids": [
+                  "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec"
+                ],
+                "right_evidence_ids": [
+                  "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+                ],
+                "evidence_links": [
+                  "ev_40ba96d8ce66a46fdd84d1d344f17dc50e0d49d333936cc6eb54320234655393",
+                  "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                  "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+                ],
+                "unknown_ids": [
+                  "unk_823f4184ea6491913caa6b2aa97fb0467de1a2ecd2a1e5ad7d03d0118996fee8"
+                ],
+                "limitations": [
+                  "Artifact identity is unavailable for this observation.",
+                  "Assembly is opaque provider text; relocation normalization is unavailable.",
+                  "Exact provider text is compared without address or generated-name normalization; layout-only differences do not establish a behavior change.",
+                  "Left: Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+                  "Left: Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+                  "Left: Pseudocode and assembly are Ghidra-specific representations, not original source or Hopper-equivalent text.",
+                  "Left: References cover the complete Ghidra function-body AddressSet and exact entry. Dossier incoming edges omit sources owned by that function; procedure_references also retains those internal edges.",
+                  "Left: Resolved reference metadata identifies computed, indirect, external, call, jump, and data edges; unresolved targetless flows remain unknown, and function classifications distinguish thunks and externals.",
+                  "Left: Synthetic Ghidra entry-point references without actionable memory sources are omitted.",
+                  "Left: The Java bridge serializes one function request per Program and lets each decompilation run until it completes or the caller cancels.",
+                  "Left: The dossier combines Ghidra FunctionManager, Listing, ReferenceManager, BasicBlockModel, and decompiler observations; provider-specific pseudocode and assembly are not cross-provider text invariants.",
+                  "Left: The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+                  "Left: The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+                  "Left: Thunk and external classifications are Ghidra FunctionManager observations; they do not resolve targetless calls.",
+                  "Left: Unresolved computed or indirect flows without target addresses are not represented as reference edges.",
+                  "Left: macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.",
+                  "Residual unknown: Function comparison is changed (comparison ev_40ba96d8ce66a46fdd84d1d344f17dc50e0d49d333936cc6eb54320234655393)",
+                  "Right: Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+                  "Right: Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+                  "Right: Pseudocode and assembly are Ghidra-specific representations, not original source or Hopper-equivalent text.",
+                  "Right: References cover the complete Ghidra function-body AddressSet and exact entry. Dossier incoming edges omit sources owned by that function; procedure_references also retains those internal edges.",
+                  "Right: Resolved reference metadata identifies computed, indirect, external, call, jump, and data edges; unresolved targetless flows remain unknown, and function classifications distinguish thunks and externals.",
+                  "Right: Synthetic Ghidra entry-point references without actionable memory sources are omitted.",
+                  "Right: The Java bridge serializes one function request per Program and lets each decompilation run until it completes or the caller cancels.",
+                  "Right: The dossier combines Ghidra FunctionManager, Listing, ReferenceManager, BasicBlockModel, and decompiler observations; provider-specific pseudocode and assembly are not cross-provider text invariants.",
+                  "Right: The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+                  "Right: The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+                  "Right: Thunk and external classifications are Ghidra FunctionManager observations; they do not resolve targetless calls.",
+                  "Right: Unresolved computed or indirect flows without target addresses are not represented as reference edges.",
+                  "Right: macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state."
+                ]
+              },
+              {
+                "claim_id": "total-pseudocode",
+                "kind": "structural-function",
+                "dimension": "pseudocode",
+                "status": "fail",
+                "observed_status": "changed",
+                "comparison_evidence_id": "ev_40ba96d8ce66a46fdd84d1d344f17dc50e0d49d333936cc6eb54320234655393",
+                "left_evidence_ids": [
+                  "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec"
+                ],
+                "right_evidence_ids": [
+                  "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+                ],
+                "evidence_links": [
+                  "ev_40ba96d8ce66a46fdd84d1d344f17dc50e0d49d333936cc6eb54320234655393",
+                  "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                  "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+                ],
+                "unknown_ids": [
+                  "unk_823f4184ea6491913caa6b2aa97fb0467de1a2ecd2a1e5ad7d03d0118996fee8"
+                ],
+                "limitations": [
+                  "Artifact identity is unavailable for this observation.",
+                  "Exact provider text is compared without address or generated-name normalization; layout-only differences do not establish a behavior change.",
+                  "Left: Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+                  "Left: Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+                  "Left: Pseudocode and assembly are Ghidra-specific representations, not original source or Hopper-equivalent text.",
+                  "Left: References cover the complete Ghidra function-body AddressSet and exact entry. Dossier incoming edges omit sources owned by that function; procedure_references also retains those internal edges.",
+                  "Left: Resolved reference metadata identifies computed, indirect, external, call, jump, and data edges; unresolved targetless flows remain unknown, and function classifications distinguish thunks and externals.",
+                  "Left: Synthetic Ghidra entry-point references without actionable memory sources are omitted.",
+                  "Left: The Java bridge serializes one function request per Program and lets each decompilation run until it completes or the caller cancels.",
+                  "Left: The dossier combines Ghidra FunctionManager, Listing, ReferenceManager, BasicBlockModel, and decompiler observations; provider-specific pseudocode and assembly are not cross-provider text invariants.",
+                  "Left: The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+                  "Left: The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+                  "Left: Thunk and external classifications are Ghidra FunctionManager observations; they do not resolve targetless calls.",
+                  "Left: Unresolved computed or indirect flows without target addresses are not represented as reference edges.",
+                  "Left: macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.",
+                  "Residual unknown: Function comparison is changed (comparison ev_40ba96d8ce66a46fdd84d1d344f17dc50e0d49d333936cc6eb54320234655393)",
+                  "Right: Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+                  "Right: Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+                  "Right: Pseudocode and assembly are Ghidra-specific representations, not original source or Hopper-equivalent text.",
+                  "Right: References cover the complete Ghidra function-body AddressSet and exact entry. Dossier incoming edges omit sources owned by that function; procedure_references also retains those internal edges.",
+                  "Right: Resolved reference metadata identifies computed, indirect, external, call, jump, and data edges; unresolved targetless flows remain unknown, and function classifications distinguish thunks and externals.",
+                  "Right: Synthetic Ghidra entry-point references without actionable memory sources are omitted.",
+                  "Right: The Java bridge serializes one function request per Program and lets each decompilation run until it completes or the caller cancels.",
+                  "Right: The dossier combines Ghidra FunctionManager, Listing, ReferenceManager, BasicBlockModel, and decompiler observations; provider-specific pseudocode and assembly are not cross-provider text invariants.",
+                  "Right: The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+                  "Right: The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+                  "Right: Thunk and external classifications are Ghidra FunctionManager observations; they do not resolve targetless calls.",
+                  "Right: Unresolved computed or indirect flows without target addresses are not represented as reference edges.",
+                  "Right: macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state."
+                ]
+              }
+            ]
+          },
+          "recommended_probes": [],
+          "evidence_links": [
+            "ev_142cc943d8259d42ce5d62ad5eb0417fcde4de4ee9a20afbfe1fdbc51ed3d259",
+            "ev_2161e17a5ff6c19322e6f6ac34cb2de1a12c22fa75b51ba7fddf2bdfd73fdc48",
+            "ev_40ba96d8ce66a46fdd84d1d344f17dc50e0d49d333936cc6eb54320234655393",
+            "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+            "ev_b492c85eb9570bd5f8e866f94523122c8600ea0106603d90e9ea5445cf757b2a",
+            "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+          ],
+          "limitations": [
+            "Pass means every declared claim passed; it does not establish global implementation equivalence."
+          ]
+        },
+        "confidence": "derived",
+        "authority": "analyst-inference",
+        "environment": null,
+        "limitations": [
+          "Artifact identity is unavailable for this observation.",
+          "Pass means every declared claim passed; it does not establish global implementation equivalence."
+        ],
+        "relationship_coverage": null,
+        "locations": [],
+        "evidence_links": [
+          "ev_142cc943d8259d42ce5d62ad5eb0417fcde4de4ee9a20afbfe1fdbc51ed3d259",
+          "ev_2161e17a5ff6c19322e6f6ac34cb2de1a12c22fa75b51ba7fddf2bdfd73fdc48",
+          "ev_40ba96d8ce66a46fdd84d1d344f17dc50e0d49d333936cc6eb54320234655393",
+          "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+          "ev_b492c85eb9570bd5f8e866f94523122c8600ea0106603d90e9ea5445cf757b2a",
+          "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+        ]
+      }
+    },
+    "jsonrpc": "2.0",
+    "id": 22
+  }
+}

@@ -10,7 +10,7 @@
 ## Learning Objectives
 
 - Describe Claude computer use: screenshot in, keyboard/mouse commands out, no accessibility API.
-- Name the three models' benchmark numbers on OSWorld / WebArena / Online-Mind2Web.
+- Recall the launch benchmark numbers this lesson cites: OpenAI CUA on OSWorld / WebArena / WebVoyager, and Gemini 2.5 Computer Use on Online-Mind2Web.
 - Explain the per-step safety pattern Gemini 2.5 Computer Use documents.
 - Summarize the untrusted-input contract all three models enforce.
 

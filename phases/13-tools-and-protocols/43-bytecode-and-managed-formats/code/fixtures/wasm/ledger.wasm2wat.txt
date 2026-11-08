@@ -1,0 +1,92 @@
+(module
+  (type (;0;) (func (param i32)))
+  (type (;1;) (func (param i32 i32) (result i32)))
+  (type (;2;) (func (param i32) (result i32)))
+  (import "env" "log" (func (;0;) (type 0)))
+  (func (;1;) (type 1) (param i32 i32) (result i32)
+    local.get 0
+    i32.eqz
+    if (result i32)  ;; label = @1
+      i32.const 0
+    else
+      local.get 1
+      local.get 0
+      i32.sub
+      i32.const 100
+      i32.mul
+      local.get 0
+      i32.div_s
+    end)
+  (func (;2;) (type 2) (param i32) (result i32)
+    (local i32)
+    local.get 0
+    i32.const 10
+    i32.div_s
+    local.set 1
+    block (result i32)  ;; label = @1
+      block  ;; label = @2
+        block  ;; label = @3
+          block  ;; label = @4
+            block  ;; label = @5
+              block  ;; label = @6
+                local.get 1
+                br_table 4 (;@2;) 4 (;@2;) 4 (;@2;) 4 (;@2;) 4 (;@2;) 4 (;@2;) 3 (;@3;) 2 (;@4;) 1 (;@5;) 0 (;@6;) 0 (;@6;) 4 (;@2;)
+              end
+              i32.const 4
+              br 4 (;@1;)
+            end
+            i32.const 3
+            br 3 (;@1;)
+          end
+          i32.const 2
+          br 2 (;@1;)
+        end
+        i32.const 1
+        br 1 (;@1;)
+      end
+      i32.const 0
+    end)
+  (func (;3;) (type 1) (param i32 i32) (result i32)
+    (local i32 i32)
+    block  ;; label = @1
+      loop  ;; label = @2
+        local.get 3
+        local.get 1
+        i32.ge_s
+        br_if 1 (;@1;)
+        local.get 2
+        local.get 0
+        local.get 3
+        i32.const 4
+        i32.mul
+        i32.add
+        i32.load
+        i32.add
+        local.set 2
+        local.get 3
+        i32.const 1
+        i32.add
+        local.set 3
+        br 0 (;@2;)
+      end
+    end
+    local.get 2)
+  (func (;4;) (type 2) (param i32) (result i32)
+    (local i32)
+    local.get 0
+    call 2
+    local.set 1
+    local.get 1
+    call 0
+    i32.const 1024
+    local.get 1
+    i32.const 2
+    i32.mul
+    i32.add)
+  (memory (;0;) 1)
+  (export "memory" (memory 0))
+  (export "percent_change" (func 1))
+  (export "grade" (func 2))
+  (export "total" (func 3))
+  (export "grade_label" (func 4))
+  (data (;0;) (i32.const 1024) "F\00D\00C\00B\00A\00"))

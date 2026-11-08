@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="fig-2-1-title fig-2-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-1-title">Five questions before the first command</title>
+  <desc id="fig-2-1-desc">Five questions in a column on the left, each with its statute or decision: a lawful copy under 17 U.S.C. 1201(f)(1) and Directive 2009/24/EC Article 6(1)(a), a purpose the law names such as interoperability, study, error correction, or an authorized test, no other way to the facts under 1201(f)(1), Article 6(1)(b), and Sega, only the parts you need under Article 6(1)(c) and C-13/20, and your own expression at the end under Article 6(2)(c), Sega, and Connectix. A dashed rose arrow from each question leads to the box no: stop, get authorization first, README, Disclaimer. A solid arrow down from the last question leads to the green box yes, five times: analyze, which names ledger.c, ledger-main.c, js-app, and ledger.wat, the programs written for this manual.</desc>
+  <defs><marker id="fig-2-1-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker><marker id="fig-2-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FIVE QUESTIONS, IN ORDER</text>
+  <rect x="440" y="26" width="180" height="300" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="530" y="156.25" font-size="12.5" text-anchor="middle" font-weight="700">no: stop</text>
+  <text x="530" y="173.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">get authorization first</text>
+  <text x="530" y="188.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">README, Disclaimer</text>
+  <text x="530" y="203.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rea does not ask this</text>
+  <rect x="20" y="26" width="300" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="170" y="43.1" font-size="12" text-anchor="middle" font-weight="700">A lawful copy</text>
+  <text x="170" y="60.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">U.S.C. 1201(f)(1) · 2009/24/EC Art. 6(1)(a)</text>
+  <line x1="320" y1="48" x2="439" y2="48" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1-head-rose)"/>
+  <rect class="m-knock" x="369.6" y="31.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="379.5" y="42" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <line x1="170" y1="70" x2="170" y2="89" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-1-head-ink)"/>
+  <rect class="m-knock" x="175" y="68.53" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="178" y="79.5" font-size="11.5">yes</text>
+  <rect x="20" y="90" width="300" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="170" y="107.1" font-size="12" text-anchor="middle" font-weight="700">A purpose the law names</text>
+  <text x="170" y="124.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">interoperability, study, error correction, test</text>
+  <line x1="320" y1="112" x2="439" y2="112" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1-head-rose)"/>
+  <rect class="m-knock" x="369.6" y="95.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="379.5" y="106" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <line x1="170" y1="134" x2="170" y2="153" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-1-head-ink)"/>
+  <rect class="m-knock" x="175" y="132.53" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="178" y="143.5" font-size="11.5">yes</text>
+  <rect x="20" y="154" width="300" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="170" y="171.1" font-size="12" text-anchor="middle" font-weight="700">No other way to the facts</text>
+  <text x="170" y="188.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1201(f)(1), Art. 6(1)(b), Sega: no other means</text>
+  <line x1="320" y1="176" x2="439" y2="176" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1-head-rose)"/>
+  <rect class="m-knock" x="369.6" y="159.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="379.5" y="170" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <line x1="170" y1="198" x2="170" y2="217" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-1-head-ink)"/>
+  <rect class="m-knock" x="175" y="196.53" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="178" y="207.5" font-size="11.5">yes</text>
+  <rect x="20" y="218" width="300" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="170" y="235.1" font-size="12" text-anchor="middle" font-weight="700">Only the parts you need</text>
+  <text x="170" y="252.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Art. 6(1)(c) · C-13/20: to the extent necessary</text>
+  <line x1="320" y1="240" x2="439" y2="240" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1-head-rose)"/>
+  <rect class="m-knock" x="369.6" y="223.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="379.5" y="234" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <line x1="170" y1="262" x2="170" y2="281" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-1-head-ink)"/>
+  <rect class="m-knock" x="175" y="260.53" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="178" y="271.5" font-size="11.5">yes</text>
+  <rect x="20" y="282" width="300" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="170" y="299.1" font-size="12" text-anchor="middle" font-weight="700">Your own expression at the end</text>
+  <text x="170" y="316.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Art. 6(2)(c), Sega, Connectix: no copied code</text>
+  <line x1="320" y1="304" x2="439" y2="304" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1-head-rose)"/>
+  <rect class="m-knock" x="369.6" y="287.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="379.5" y="298" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <line x1="170" y1="326" x2="170" y2="349" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-1-head-ink)"/>
+  <rect class="m-knock" x="175" y="326.53" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="178" y="337.5" font-size="11.5">yes</text>
+  <rect x="20" y="350" width="300" height="56" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="170" y="365.6" font-size="12" text-anchor="middle" font-weight="700">yes, five times: analyze</text>
+  <text x="170" y="382.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ledger.c, ledger-main.c, js-app, ledger.wat</text>
+  <text x="170" y="397.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">written for this manual</text>
+</svg>

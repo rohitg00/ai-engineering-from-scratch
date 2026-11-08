@@ -1,0 +1,12 @@
+title: the FP8 start: the checkpoint detection and the warning about scales
+source: manuals/sglang-101/capture/gpu/out-l4/server-fp8.log
+lines: 16-21
+lang: text
+note: Read the line about scaling factors before the weight and pool lines.
+---
+[2026-10-17 15:22:01] Detected fp8 checkpoint.
+[2026-10-17 15:22:01] Found local HF snapshot for Qwen/Qwen3-8B-FP8 at /data/sglang/hf/hub/models--Qwen--Qwen3-8B-FP8/snapshots/220b46e3b2180893580a4454f21f22d3ebb187d3; skipping download.
+Multi-thread loading shards:   0% Completed | 0/2 [00:00<?, ?it/s]Multi-thread loading shards:  50% Completed | 1/2 [00:00<00:00,  1.08it/s]Multi-thread loading shards: 100% Completed | 2/2 [00:01<00:00,  1.07it/s]Multi-thread loading shards: 100% Completed | 2/2 [00:01<00:00,  1.07it/s]
+[2026-10-17 15:22:04] Using FP8 KV cache but no scaling factors provided. Defaulting to scaling factors of 1.0.
+[2026-10-17 15:22:04] Load weight end. elapsed=2.23 s, type=Qwen3ForCausalLM, quant=fp8, fmt=e4m3, avail mem=12.87 GB, mem usage=8.81 GB.
+[2026-10-17 15:22:05] KV Cache is allocated. dtype: torch.float8_e4m3fn, #tokens: 140058, K size: 4.81 GB, V size: 4.81 GB

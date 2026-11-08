@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 444" role="img" aria-labelledby="fig-4-8-title fig-4-8-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-8-title">The sixteen facets of the _grade dossier</title>
+  <desc id="fig-4-8-desc">A table of the sixteen keys of normalized_result in the analyze_function record for _grade: procedure, pseudocode, assembly, comments, callers, callees, incoming_references, outgoing_references, unresolved_calls, referenced_strings, referenced_names, basic_blocks, native_api, native_value_flow, facet_availability and limitations, each with its value for _grade and a note on what the facet holds.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FACET</text>
+  <text x="200" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FOR _GRADE</text>
+  <text x="380" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT IT HOLDS</text>
+  <rect x="20" y="26" width="600" height="26" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="32" y="42.6" font-size="12" font-weight="700">Evidence ev_41e8ca1c · analyze_function · observed</text>
+  <rect x="20" y="52" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="68" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">procedure</text>
+  <text x="200" y="68" font-size="11.5">_grade 0x100000518</text>
+  <line x1="360" y1="64" x2="372" y2="64" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="68" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">entry, classification, body 60 B</text>
+  <rect x="20" y="76" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="92" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">pseudocode</text>
+  <text x="200" y="92" font-size="11.5">one string</text>
+  <line x1="360" y1="88" x2="372" y2="88" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="92" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">decompiler text, compilable false</text>
+  <rect x="20" y="100" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="116" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">assembly</text>
+  <text x="200" y="116" font-size="11.5">15 lines</text>
+  <line x1="360" y1="112" x2="372" y2="112" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="116" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Listing text, address first</text>
+  <rect x="20" y="124" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="140" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">comments</text>
+  <text x="200" y="140" font-size="11.5">[]</text>
+  <line x1="360" y1="136" x2="372" y2="136" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="140" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">database comments at the entry</text>
+  <rect x="20" y="148" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="164" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">callers</text>
+  <text x="200" y="164" font-size="11.5">[]</text>
+  <line x1="360" y1="160" x2="372" y2="160" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="164" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resolved callers only</text>
+  <rect x="20" y="172" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="188" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">callees</text>
+  <text x="200" y="188" font-size="11.5">[]</text>
+  <line x1="360" y1="184" x2="372" y2="184" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="188" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resolved callees only</text>
+  <rect x="20" y="196" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="212" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">incoming_references</text>
+  <text x="200" y="212" font-size="11.5">1 DATA</text>
+  <line x1="360" y1="208" x2="372" y2="208" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="212" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">from 0x10000811a, no owning procedure</text>
+  <rect x="20" y="220" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="236" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">outgoing_references</text>
+  <text x="200" y="236" font-size="11.5">2</text>
+  <line x1="360" y1="232" x2="372" y2="232" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="236" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">CONDITIONAL_JUMP, DATA read</text>
+  <rect x="20" y="244" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="260" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">unresolved_calls</text>
+  <text x="200" y="260" font-size="11.5">[]</text>
+  <line x1="360" y1="256" x2="372" y2="256" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="260" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">calls with no known destination</text>
+  <rect x="20" y="268" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="284" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">referenced_strings</text>
+  <text x="200" y="284" font-size="11.5">[]</text>
+  <line x1="360" y1="280" x2="372" y2="280" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="284" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strings the body reaches</text>
+  <rect x="20" y="292" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="308" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">referenced_names</text>
+  <text x="200" y="308" font-size="11.5">2</text>
+  <line x1="360" y1="304" x2="372" y2="304" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="308" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">LAB_10000054c, DAT_1000007d0</text>
+  <rect x="20" y="316" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="332" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">basic_blocks</text>
+  <text x="200" y="332" font-size="11.5">3</text>
+  <line x1="360" y1="328" x2="372" y2="328" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="332" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">successors inside the body only</text>
+  <rect x="20" y="340" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="356" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">native_api</text>
+  <text x="200" y="356" font-size="11.5">__cdecl, default</text>
+  <line x1="360" y1="352" x2="372" y2="352" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="356" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">signature facts, jump_tables []</text>
+  <rect x="20" y="364" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="380" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">native_value_flow</text>
+  <text x="200" y="380" font-size="11.5">14 ops, 12 edges</text>
+  <line x1="360" y1="376" x2="372" y2="376" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="380" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">high p-code, truncated false</text>
+  <rect x="20" y="388" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="404" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">facet_availability</text>
+  <text x="200" y="404" font-size="11.5">8 facets, available</text>
+  <line x1="360" y1="400" x2="372" y2="400" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="404" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">whether each facet was observed</text>
+  <rect x="20" y="412" width="600" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="32" y="428" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">limitations</text>
+  <text x="200" y="428" font-size="11.5">4 + 10 on the record</text>
+  <line x1="360" y1="424" x2="372" y2="424" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="380" y="428" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">plus 3 in native_api, 5 in value flow</text>
+</svg>

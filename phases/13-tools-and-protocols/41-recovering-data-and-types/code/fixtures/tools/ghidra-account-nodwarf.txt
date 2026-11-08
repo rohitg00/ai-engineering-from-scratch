@@ -1,0 +1,109 @@
+STRUCT /ELF/Elf64_Ehdr size=64 align=1
+  +0 byte e_ident_magic_num
+  +1 string e_ident_magic_str
+  +4 byte e_ident_class
+  +5 byte e_ident_data
+  +6 byte e_ident_version
+  +7 byte e_ident_osabi
+  +8 byte e_ident_abiversion
+  +9 byte[7] e_ident_pad
+  +16 word e_type
+  +18 word e_machine
+  +20 dword e_version
+  +24 qword e_entry
+  +32 qword e_phoff
+  +40 qword e_shoff
+  +48 dword e_flags
+  +52 word e_ehsize
+  +54 word e_phentsize
+  +56 word e_phnum
+  +58 word e_shentsize
+  +60 word e_shnum
+  +62 word e_shstrndx
+STRUCT /ELF/Elf64_Rela size=24 align=1
+  +0 qword r_offset
+  +8 qword r_info
+  +16 qword r_addend
+STRUCT /ELF/Elf64_Shdr size=64 align=1
+  +0 dword sh_name
+  +4 Elf_SectionHeaderType sh_type
+  +8 qword sh_flags
+  +16 qword sh_addr
+  +24 qword sh_offset
+  +32 qword sh_size
+  +40 dword sh_link
+  +44 dword sh_info
+  +48 qword sh_addralign
+  +56 qword sh_entsize
+STRUCT /ELF/Elf64_Sym size=24 align=1
+  +0 dword st_name
+  +4 byte st_info
+  +5 byte st_other
+  +6 word st_shndx
+  +8 qword st_value
+  +16 qword st_size
+SIG undefined bump()
+C 
+C void bump(long param_1,int param_2)
+C 
+C {
+C   *(int *)(param_1 + 4) = param_2 + *(int *)(param_1 + 4);
+C   return;
+C }
+SIG undefined sum_balances()
+C 
+C int sum_balances(long param_1,uint param_2)
+C 
+C {
+C   int iVar1;
+C   long lVar2;
+C   
+C   if (0 < (int)param_2) {
+C     lVar2 = 0;
+C     iVar1 = 0;
+C     do {
+C       iVar1 = iVar1 + *(int *)(param_1 + 4 + lVar2);
+C       lVar2 = lVar2 + 0x20;
+C     } while ((ulong)param_2 << 5 != lVar2);
+C     return iVar1;
+C   }
+C   return 0;
+C }
+SIG undefined tag()
+C 
+C int tag(char *param_1)
+C 
+C {
+C   int iVar1;
+C   
+C   iVar1 = -(int)*(short *)(param_1 + 8);
+C   if (*param_1 != 'l') {
+C     iVar1 = (int)*(short *)(param_1 + 8);
+C   }
+C   return iVar1;
+C }
+SIG undefined projected()
+C 
+C double projected(long param_1)
+C 
+C {
+C   return (double)*(int *)(param_1 + 4) * *(double *)(param_1 + 0x10);
+C }
+SIG undefined label_length()
+C 
+C int label_length(long param_1)
+C 
+C {
+C   char cVar1;
+C   int iVar2;
+C   char *pcVar3;
+C   
+C   pcVar3 = *(char **)(param_1 + 0x18);
+C   iVar2 = -1;
+C   do {
+C     iVar2 = iVar2 + 1;
+C     cVar1 = *pcVar3;
+C     pcVar3 = pcVar3 + 1;
+C   } while (cVar1 != '\0');
+C   return iVar2;
+C }

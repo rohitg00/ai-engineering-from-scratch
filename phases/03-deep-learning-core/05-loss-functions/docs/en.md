@@ -30,8 +30,8 @@ It gets worse. In self-supervised learning, you don't even have labels. Contrast
 
 The default for regression. Compute the squared difference between prediction and target, average over all samples.
 
-```
-MSE = (1/n) * sum((y_pred - y_true)^2)
+```math
+\text{MSE} = \frac{1}{n} \sum (y_{\text{pred}} - y_{\text{true}})^2
 ```
 
 Why squaring matters: it penalizes large errors quadratically. An error of 2 costs 4x as much as an error of 1. An error of 10 costs 100x. This makes MSE sensitive to outliers -- a single wildly wrong prediction dominates the loss.
@@ -40,8 +40,8 @@ Real numbers: if your model predicts housing prices and is off by $10,000 on mos
 
 The gradient of MSE with respect to a prediction is:
 
-```
-dMSE/dy_pred = (2/n) * (y_pred - y_true)
+```math
+\frac{\partial \text{MSE}}{\partial y_{\text{pred}}} = \frac{2}{n} (y_{\text{pred}} - y_{\text{true}})
 ```
 
 Linear in the error. Bigger errors get bigger gradients. This is a feature for regression (large errors need large corrections) and a bug for classification (you want to penalize confident wrong answers exponentially, not linearly).
@@ -52,31 +52,31 @@ The loss function for classification. Rooted in information theory -- it measure
 
 **Binary Cross-Entropy (BCE):**
 
-```
-BCE = -(y * log(p) + (1 - y) * log(1 - p))
+```math
+\text{BCE} = -\left(y \log(p) + (1 - y) \log(1 - p)\right)
 ```
 
-Where y is the true label (0 or 1) and p is the predicted probability.
+Where $y$ is the true label (0 or 1) and $p$ is the predicted probability.
 
-Why -log(p) works: when the true label is 1 and you predict p = 0.99, the loss is -log(0.99) = 0.01. When you predict p = 0.01, the loss is -log(0.01) = 4.6. That 460x difference is why cross-entropy works. It brutally punishes confident wrong predictions while barely penalizing confident correct ones.
+Why $-\log(p)$ works: when the true label is 1 and you predict $p = 0.99$, the loss is $-\log(0.99) = 0.01$. When you predict $p = 0.01$, the loss is $-\log(0.01) = 4.6$. That 460x difference is why cross-entropy works. It brutally punishes confident wrong predictions while barely penalizing confident correct ones.
 
 The gradient tells the same story:
 
-```
-dBCE/dp = -(y/p) + (1-y)/(1-p)
+```math
+\frac{\partial \text{BCE}}{\partial p} = -\frac{y}{p} + \frac{1-y}{1-p}
 ```
 
-When y = 1 and p is near zero, the gradient is -1/p which approaches negative infinity. The model gets an enormous signal to fix its mistake. When p is near 1, the gradient is tiny. Already correct, nothing to fix.
+When $y = 1$ and $p$ is near zero, the gradient is $-1/p$ which approaches negative infinity. The model gets an enormous signal to fix its mistake. When $p$ is near 1, the gradient is tiny. Already correct, nothing to fix.
 
 **Categorical Cross-Entropy:**
 
 For multi-class classification with one-hot encoded targets.
 
-```
-CCE = -sum(y_i * log(p_i))
+```math
+\text{CCE} = -\sum_i y_i \log(p_i)
 ```
 
-Only the true class contributes to the loss (because all other y_i are zero). If there are 10 classes and the correct class gets probability 0.1 (random guessing), the loss is -log(0.1) = 2.3. If the correct class gets probability 0.9, the loss is -log(0.9) = 0.105. The model learns to concentrate probability mass on the right answer.
+Only the true class contributes to the loss (because all other $y_i$ are zero). If there are 10 classes and the correct class gets probability 0.1 (random guessing), the loss is $-\log(0.1) = 2.3$. If the correct class gets probability 0.9, the loss is $-\log(0.9) = 0.105$. The model learns to concentrate probability mass on the right answer.
 
 ### Why MSE Fails for Classification
 
@@ -96,19 +96,19 @@ graph TD
     C3 -->|"CE gradient<br/>explodes near<br/>wrong answer"| Fast["Fast correction"]
 ```
 
-MSE gradients flatten when predictions are near 0 or 1 (due to sigmoid saturation). Cross-entropy gradients compensate for this -- the -log cancels the sigmoid's flat regions, giving strong gradients exactly where they are needed most.
+MSE gradients flatten when predictions are near 0 or 1 (due to sigmoid saturation). Cross-entropy gradients compensate for this -- the $-\log$ cancels the sigmoid's flat regions, giving strong gradients exactly where they are needed most.
 
 ### Label Smoothing
 
 Standard one-hot labels say "this is 100% class 3 and 0% everything else." That's a strong claim. Label smoothing softens it:
 
-```
-smooth_label = (1 - alpha) * one_hot + alpha / num_classes
+```math
+\text{smooth\_label} = (1 - \alpha) \cdot \text{one\_hot} + \frac{\alpha}{\text{num\_classes}}
 ```
 
-With alpha = 0.1 and 10 classes: instead of [0, 0, 1, 0, ...], the target becomes [0.01, 0.01, 0.91, 0.01, ...]. The model targets 0.91 instead of 1.0.
+With $\alpha = 0.1$ and 10 classes: instead of [0, 0, 1, 0, ...], the target becomes [0.01, 0.01, 0.91, 0.01, ...]. The model targets 0.91 instead of 1.0.
 
-Why this works: a model trying to output exactly 1.0 through a softmax needs to push logits to infinity. This causes overconfidence, hurts generalization, and makes the model brittle to distribution shift. Label smoothing caps the target at 0.9 (with alpha=0.1), keeping logits in a reasonable range. GPT and most modern models use label smoothing or its equivalent.
+Why this works: a model trying to output exactly 1.0 through a softmax needs to push logits to infinity. This causes overconfidence, hurts generalization, and makes the model brittle to distribution shift. Label smoothing caps the target at 0.9 (with $\alpha = 0.1$), keeping logits in a reasonable range. GPT and most modern models use label smoothing or its equivalent.
 
 ### Contrastive Loss
 
@@ -118,20 +118,20 @@ No labels. No classes. Just pairs of inputs and the question: are these similar 
 
 Take one image. Create two augmented views of it (crop, rotate, color jitter). These are the "positive pair" -- they should have similar embeddings. Every other image in the batch forms a "negative pair" -- they should have different embeddings.
 
-```
-L = -log(exp(sim(z_i, z_j) / tau) / sum(exp(sim(z_i, z_k) / tau)))
+```math
+L = -\log \frac{\exp(\text{sim}(z_i, z_j) / \tau)}{\sum_k \exp(\text{sim}(z_i, z_k) / \tau)}
 ```
 
-Where sim() is cosine similarity, z_i and z_j are the positive pair, the sum is over all negatives, and tau (temperature) controls how sharp the distribution is. Lower temperature = harder negatives = more aggressive separation.
+Where $\text{sim}()$ is cosine similarity, $z_i$ and $z_j$ are the positive pair, the sum is over all negatives, and $\tau$ (temperature) controls how sharp the distribution is. Lower temperature = harder negatives = more aggressive separation.
 
-Real numbers: batch size 256 means 255 negatives per positive pair. Temperature tau = 0.07 (SimCLR default). The loss looks like a softmax over similarities -- it wants the positive pair's similarity to be highest among all 256 options.
+Real numbers: batch size 256 means 255 negatives per positive pair. Temperature $\tau = 0.07$ (SimCLR default). The loss looks like a softmax over similarities -- it wants the positive pair's similarity to be highest among all 256 options.
 
 **Triplet Loss:**
 
 Takes three inputs: anchor, positive (same class), negative (different class).
 
-```
-L = max(0, d(anchor, positive) - d(anchor, negative) + margin)
+```math
+L = \max\left(0, d(\text{anchor}, \text{positive}) - d(\text{anchor}, \text{negative}) + \text{margin}\right)
 ```
 
 The margin (typically 0.2-1.0) enforces a minimum gap between positive and negative distances. If the negative is already far enough away, the loss is zero -- no gradient, no update. This makes training efficient but requires careful triplet mining (choosing hard negatives that are close to the anchor).
@@ -140,14 +140,14 @@ The margin (typically 0.2-1.0) enforces a minimum gap between positive and negat
 
 For imbalanced datasets. Standard cross-entropy treats all correctly classified examples equally. Focal loss down-weights easy examples:
 
-```
-FL = -alpha * (1 - p_t)^gamma * log(p_t)
+```math
+\text{FL} = -\alpha (1 - p_t)^\gamma \log(p_t)
 ```
 
-Where p_t is the predicted probability of the true class and gamma controls the focusing. With gamma = 0, this is standard cross-entropy. With gamma = 2 (the default):
+Where $p_t$ is the predicted probability of the true class and $\gamma$ controls the focusing. With $\gamma = 0$, this is standard cross-entropy. With $\gamma = 2$ (the default):
 
-- Easy example (p_t = 0.9): weight = (0.1)^2 = 0.01. Effectively ignored.
-- Hard example (p_t = 0.1): weight = (0.9)^2 = 0.81. Full gradient signal.
+- Easy example ($p_t = 0.9$): weight $= (0.1)^2 = 0.01$. Effectively ignored.
+- Hard example ($p_t = 0.1$): weight $= (0.9)^2 = 0.81$. Full gradient signal.
 
 Focal loss was introduced by Lin et al. for object detection, where 99% of candidate regions are background (easy negatives). Without focal loss, the model drowns in easy background examples and never learns to detect objects. With it, the model focuses its capacity on the hard, ambiguous cases that matter.
 
@@ -213,7 +213,7 @@ def mse_gradient(predictions, targets):
 
 ### Step 2: Binary Cross-Entropy
 
-The log(0) problem is real. If the model predicts exactly 0 for a positive example, log(0) = negative infinity. Clipping prevents this.
+The log(0) problem is real. If the model predicts exactly 0 for a positive example, $\log(0) = -\infty$. Clipping prevents this.
 
 ```python
 import math
@@ -425,15 +425,15 @@ This lesson produces:
 
 ## Exercises
 
-1. Implement Huber loss (smooth L1 loss), which is MSE for small errors and MAE for large errors. Train a regression network predicting y = sin(x) with MSE vs Huber when 5% of training targets have random noise added (outliers). Compare final test error.
+1. Implement Huber loss (smooth L1 loss), which is MSE for small errors and MAE for large errors. Train a regression network predicting $y = \sin(x)$ with MSE vs Huber when 5% of training targets have random noise added (outliers). Compare final test error.
 
-2. Add focal loss to the binary classification training loop. Create an imbalanced dataset (90% class 0, 10% class 1). Compare standard BCE vs focal loss (gamma=2) on the minority class recall after 200 epochs.
+2. Add focal loss to the binary classification training loop. Create an imbalanced dataset (90% class 0, 10% class 1). Compare standard BCE vs focal loss ($\gamma = 2$) on the minority class recall after 200 epochs.
 
 3. Implement triplet loss with semi-hard negative mining. Generate 2D embedding data for 5 classes. For each anchor, find the hardest negative that is still farther than the positive (semi-hard). Compare convergence to random triplet selection.
 
 4. Run the MSE vs cross-entropy comparison but track gradient magnitudes at each layer during training. Plot the average gradient norm per epoch. Verify that cross-entropy produces larger gradients in early epochs when the model is most uncertain.
 
-5. Implement KL divergence loss and verify that minimizing KL(true || predicted) gives the same gradients as cross-entropy when the true distribution is one-hot. Then try soft targets (like knowledge distillation) where the "true" distribution comes from a teacher model's softmax output.
+5. Implement KL divergence loss and verify that minimizing $\mathrm{KL}(\text{true} \Vert \text{predicted})$ gives the same gradients as cross-entropy when the true distribution is one-hot. Then try soft targets (like knowledge distillation) where the "true" distribution comes from a teacher model's softmax output.
 
 ## Key Terms
 
@@ -441,12 +441,12 @@ This lesson produces:
 |------|----------------|----------------------|
 | Loss function | "How wrong the model is" | A differentiable function mapping predictions and targets to a scalar that the optimizer minimizes |
 | MSE | "Average squared error" | Mean of squared differences between predictions and targets; penalizes large errors quadratically |
-| Cross-entropy | "The classification loss" | Measures divergence between predicted probability distribution and true distribution using -log(p) |
-| Binary cross-entropy | "BCE" | Cross-entropy for two classes: -(y*log(p) + (1-y)*log(1-p)) |
+| Cross-entropy | "The classification loss" | Measures divergence between predicted probability distribution and true distribution using $-\log(p)$ |
+| Binary cross-entropy | "BCE" | Cross-entropy for two classes: $-(y \log(p) + (1-y) \log(1-p))$ |
 | Label smoothing | "Softening the targets" | Replacing hard 0/1 targets with soft values (e.g., 0.1/0.9) to prevent overconfidence and improve generalization |
 | Contrastive loss | "Pull together, push apart" | A loss that learns representations by making similar pairs close and dissimilar pairs far in embedding space |
 | InfoNCE | "The CLIP/SimCLR loss" | Normalized temperature-scaled cross-entropy over similarity scores; treats contrastive learning as classification |
-| Focal loss | "The imbalanced data fix" | Cross-entropy weighted by (1-p_t)^gamma to down-weight easy examples and focus on hard ones |
+| Focal loss | "The imbalanced data fix" | Cross-entropy weighted by $(1-p_t)^\gamma$ to down-weight easy examples and focus on hard ones |
 | Triplet loss | "Anchor-positive-negative" | Pushes anchor closer to positive than negative by at least a margin in embedding space |
 | Temperature | "Sharpness knob" | A scalar divisor on logits/similarities that controls how peaked the resulting distribution is; lower = sharper |
 

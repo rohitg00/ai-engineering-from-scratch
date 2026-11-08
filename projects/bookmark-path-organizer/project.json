@@ -1,0 +1,101 @@
+{
+  "id": "bookmark-path-organizer",
+  "title": "Bookmark Path Organizer",
+  "tagline": "Make a useful reading path from saved links.",
+  "summary": "Help a reader recover a useful collection from an exported bookmark pile. Normalize URLs conservatively, merge exact duplicates, score user-defined topics from saved titles and notes, and export an editable reading path as HTML and JSON.",
+  "level": 1,
+  "languages": [
+    "TypeScript"
+  ],
+  "source": "core",
+  "prerequisiteProjects": [],
+  "status": "ready",
+  "hours": 8,
+  "youWillBuild": "A standalone reading-path page and bookmarks.json with retained original URLs",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "languageWhy": {
+    "TypeScript": "Typed local transformations and portable browser interfaces run with Node standard libraries."
+  },
+  "figures": true,
+  "overviewFigure": "pj-bookmark-path-organizer-1",
+  "demo": {
+    "command": [
+      "node",
+      "cli.ts",
+      "sample.json",
+      "output"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-import-hierarchy",
+      "title": "Import bookmarks with their original hierarchy",
+      "summary": "importBookmarks(input: unknown): Bookmark[]",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-bookmark-path-organizer-1",
+      "concepts": [
+        "Import bookmarks with their original hierarchy"
+      ]
+    },
+    {
+      "id": "02-explain-duplicates",
+      "title": "Normalize links and explain duplicate groups",
+      "summary": "normalizeURL(value: string): string; groupDuplicates(items: Bookmark[]): Group[]",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-bookmark-path-organizer-2",
+      "concepts": [
+        "Normalize links and explain duplicate groups"
+      ]
+    },
+    {
+      "id": "03-rank-reading-path",
+      "title": "Rank topics and assemble a reading path",
+      "summary": "readingPath(groups: Group[], topics: Record<string,string[]>): Reading[]",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-bookmark-path-organizer-3",
+      "concepts": [
+        "Rank topics and assemble a reading path"
+      ]
+    },
+    {
+      "id": "04-export-progress",
+      "title": "Export an editable collection and progress file",
+      "summary": "applyProgress(items: Reading[], value?: unknown): {items: Reading[]; progress: Progress}; renderCollection(items: Reading[], progress: Progress): string",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-bookmark-path-organizer-4",
+      "concepts": [
+        "Export an editable collection and progress file"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

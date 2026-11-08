@@ -1,0 +1,195 @@
+### 1 · SendMessage: return immediately
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "b8a1abcd-1a69-46c7-8da4-f9fc3c6da5d7",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "Run the unit tests for payments-api at commit 9f3c2e1"
+        }
+      ]
+    },
+    "configuration": {
+      "returnImmediately": true
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "task": {
+      "id": "d0c28826-28b8-4b15-8b53-4e01ae7a5a3c",
+      "contextId": "3afa8576-7a83-4167-bb58-01c3b0942c8f",
+      "status": {
+        "state": "TASK_STATE_SUBMITTED",
+        "timestamp": "2026-10-06T09:00:01.000Z"
+      },
+      "history": [
+        {
+          "messageId": "b8a1abcd-1a69-46c7-8da4-f9fc3c6da5d7",
+          "contextId": "3afa8576-7a83-4167-bb58-01c3b0942c8f",
+          "taskId": "d0c28826-28b8-4b15-8b53-4e01ae7a5a3c",
+          "role": "ROLE_USER",
+          "parts": [
+            {
+              "text": "Run the unit tests for payments-api at commit 9f3c2e1"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+
+### 2 · GetTask: still working
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "GetTask",
+  "params": {
+    "id": "d0c28826-28b8-4b15-8b53-4e01ae7a5a3c",
+    "historyLength": 0
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "id": "d0c28826-28b8-4b15-8b53-4e01ae7a5a3c",
+    "contextId": "3afa8576-7a83-4167-bb58-01c3b0942c8f",
+    "status": {
+      "state": "TASK_STATE_WORKING",
+      "message": {
+        "messageId": "fb999be8-dce9-416b-b397-d74b090f121a",
+        "contextId": "3afa8576-7a83-4167-bb58-01c3b0942c8f",
+        "taskId": "d0c28826-28b8-4b15-8b53-4e01ae7a5a3c",
+        "role": "ROLE_AGENT",
+        "parts": [
+          {
+            "text": "Checking out 9f3c2e1 and starting the suite"
+          }
+        ]
+      },
+      "timestamp": "2026-10-06T09:00:01.250Z"
+    },
+    "artifacts": [
+      {
+        "artifactId": "test-log",
+        "name": "test-log.txt",
+        "parts": [
+          {
+            "text": "collected 12 items\n"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+### 3 · GetTask: completed
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "GetTask",
+  "params": {
+    "id": "d0c28826-28b8-4b15-8b53-4e01ae7a5a3c",
+    "historyLength": 0
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "result": {
+    "id": "d0c28826-28b8-4b15-8b53-4e01ae7a5a3c",
+    "contextId": "3afa8576-7a83-4167-bb58-01c3b0942c8f",
+    "status": {
+      "state": "TASK_STATE_COMPLETED",
+      "message": {
+        "messageId": "cea54ab9-aab6-406a-9398-a67a67c85207",
+        "contextId": "3afa8576-7a83-4167-bb58-01c3b0942c8f",
+        "taskId": "d0c28826-28b8-4b15-8b53-4e01ae7a5a3c",
+        "role": "ROLE_AGENT",
+        "parts": [
+          {
+            "text": "1 failed, 11 passed"
+          }
+        ]
+      },
+      "timestamp": "2026-10-06T09:00:01.500Z"
+    },
+    "artifacts": [
+      {
+        "artifactId": "test-log",
+        "name": "test-log.txt",
+        "parts": [
+          {
+            "text": "collected 12 items\n"
+          },
+          {
+            "text": "tests/test_charges.py ........  [ 66%]\n"
+          },
+          {
+            "text": "tests/test_refunds.py ..F.  [100%]\n"
+          },
+          {
+            "text": "FAILED tests/test_refunds.py::test_partial_refund - AssertionError: 450 != 500\n"
+          },
+          {
+            "text": "1 failed, 11 passed in 4.21s\n"
+          }
+        ]
+      },
+      {
+        "artifactId": "summary",
+        "name": "summary.json",
+        "parts": [
+          {
+            "data": {
+              "passed": 11,
+              "failed": 1,
+              "failures": [
+                {
+                  "test": "tests/test_refunds.py::test_partial_refund",
+                  "error": "AssertionError: 450 != 500"
+                }
+              ]
+            },
+            "mediaType": "application/json"
+          }
+        ]
+      }
+    ]
+  }
+}

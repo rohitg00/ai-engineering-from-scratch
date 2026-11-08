@@ -1,0 +1,193 @@
+### 1 · agent card
+GET /.well-known/agent-card.json HTTP/1.1
+Host: 127.0.0.1:8082
+
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: *
+Content-Type: application/json
+Date: <http-date>
+
+{
+  "supportedInterfaces": [
+    {
+      "url": "http://127.0.0.1:8082/invoke",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "capabilities": {
+    "streaming": true
+  },
+  "defaultInputModes": [],
+  "defaultOutputModes": [],
+  "description": "Answers every message with the word pong.",
+  "name": "pong",
+  "skills": [
+    {
+      "description": "Answers every message with the word pong.",
+      "id": "pong_",
+      "name": "",
+      "tags": [
+        "llm",
+        "docker agent"
+      ]
+    }
+  ],
+  "version": "v1.149.0"
+}
+
+### 2 · SendMessage (A2A 1.0 names)
+POST /invoke HTTP/1.1
+Host: 127.0.0.1:8082
+A2A-Version: 1.0
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "m101-0001",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "ping"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: <http-date>
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "task": {
+      "id": "<uuid>",
+      "artifacts": [
+        {
+          "artifactId": "<uuid>",
+          "metadata": {
+            "adk_partial": true
+          },
+          "parts": [
+            {
+              "data": {},
+              "metadata": {
+                "adk_partial": true
+              }
+            }
+          ]
+        },
+        {
+          "artifactId": "<uuid>",
+          "parts": [
+            {
+              "text": "pong"
+            }
+          ]
+        }
+      ],
+      "contextId": "<uuid>",
+      "history": [
+        {
+          "messageId": "m101-0001",
+          "parts": [
+            {
+              "text": "ping"
+            }
+          ],
+          "role": "ROLE_USER"
+        }
+      ],
+      "metadata": {
+        "adk_app_name": "pong",
+        "adk_session_id": "<uuid>",
+        "adk_user_id": "A2A_USER_<uuid>",
+        "https://google.github.io/adk-docs/a2a/a2a-extension/": true
+      },
+      "status": {
+        "state": "TASK_STATE_COMPLETED",
+        "timestamp": "<ts>"
+      }
+    }
+  }
+}
+
+### 3 · GetTask
+POST /invoke HTTP/1.1
+Host: 127.0.0.1:8082
+A2A-Version: 1.0
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "GetTask",
+  "params": {
+    "id": "<uuid>"
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Date: <http-date>
+
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "result": {
+    "id": "<uuid>",
+    "artifacts": [
+      {
+        "artifactId": "<uuid>",
+        "metadata": {
+          "adk_partial": true
+        },
+        "parts": [
+          {
+            "data": {},
+            "metadata": {
+              "adk_partial": true
+            }
+          }
+        ]
+      },
+      {
+        "artifactId": "<uuid>",
+        "parts": [
+          {
+            "text": "pong"
+          }
+        ]
+      }
+    ],
+    "contextId": "<uuid>",
+    "history": [
+      {
+        "messageId": "m101-0001",
+        "parts": [
+          {
+            "text": "ping"
+          }
+        ],
+        "role": "ROLE_USER"
+      }
+    ],
+    "metadata": {
+      "adk_app_name": "pong",
+      "adk_session_id": "<uuid>",
+      "adk_user_id": "A2A_USER_<uuid>",
+      "https://google.github.io/adk-docs/a2a/a2a-extension/": true
+    },
+    "status": {
+      "state": "TASK_STATE_COMPLETED",
+      "timestamp": "<ts>"
+    }
+  }
+}

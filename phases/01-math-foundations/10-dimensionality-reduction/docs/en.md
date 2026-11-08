@@ -38,9 +38,9 @@ Dimension    Avg distance ratio (max/min between random points)
 1000         ~1.02
 ```
 
-**Volume concentrates in corners.** A unit hypercube in d dimensions has 2^d corners. In 100 dimensions, nearly all the volume is in the corners, far from the center. Data points spread to the edges and your models starve for data in the interior.
+**Volume concentrates in corners.** A unit hypercube in $d$ dimensions has $2^d$ corners. In 100 dimensions, nearly all the volume is in the corners, far from the center. Data points spread to the edges and your models starve for data in the interior.
 
-**You need exponentially more data.** To maintain the same density of samples in a space, going from 2D to 20D means you need 10^18 times more data. You never have enough. Reducing dimensions brings the data density back to something workable.
+**You need exponentially more data.** To maintain the same density of samples in a space, going from 2D to 20D means you need $10^{18}$ times more data. You never have enough. Reducing dimensions brings the data density back to something workable.
 
 ### PCA: find the directions that matter
 
@@ -88,7 +88,7 @@ Three strategies:
 
 1. **Threshold.** Keep enough components to explain 90-95% of the variance.
 2. **Elbow method.** Plot explained variance per component. Look for a sharp drop-off.
-3. **Downstream performance.** Use PCA as preprocessing. Sweep k and measure your model's accuracy. The best k is wherever accuracy plateaus.
+3. **Downstream performance.** Use PCA as preprocessing. Sweep $k$ and measure your model's accuracy. The best $k$ is wherever accuracy plateaus.
 
 ### t-SNE: preserve neighborhoods
 
@@ -101,7 +101,7 @@ Key properties of t-SNE:
 - Stochastic. Different runs produce different layouts.
 - Perplexity parameter controls how many neighbors to consider (typical range: 5-50).
 - Distances between clusters in the output are not meaningful. Only the clusters themselves are.
-- Slow on large datasets. O(n^2) by default.
+- Slow on large datasets. $O(n^2)$ by default.
 
 ### UMAP: faster, better global structure
 
@@ -135,27 +135,27 @@ Standard PCA finds linear subspaces. It rotates your coordinate system and drops
 Kernel PCA applies PCA in a high-dimensional feature space induced by a kernel function, without explicitly computing the coordinates in that space. This is the kernel trick -- the same idea behind SVMs.
 
 The algorithm:
-1. Compute the kernel matrix K where K_ij = k(x_i, x_j)
+1. Compute the kernel matrix $K$ where $K_{ij} = k(x_i, x_j)$
 2. Center the kernel matrix in feature space
 3. Eigendecompose the centered kernel matrix
-4. The top eigenvectors (scaled by 1/sqrt(eigenvalue)) are the projections
+4. The top eigenvectors (scaled by $1/\sqrt{\text{eigenvalue}}$) are the projections
 
 Common kernel functions:
 
 | Kernel | Formula | Good for |
 |--------|---------|----------|
-| RBF (Gaussian) | exp(-gamma * \|\|x - y\|\|^2) | Most nonlinear data, smooth manifolds |
-| Polynomial | (x . y + c)^d | Polynomial relationships |
-| Sigmoid | tanh(alpha * x . y + c) | Neural network-like mappings |
+| RBF (Gaussian) | $\exp(-\gamma \lVert x - y \rVert^2)$ | Most nonlinear data, smooth manifolds |
+| Polynomial | $(x \cdot y + c)^d$ | Polynomial relationships |
+| Sigmoid | $\tanh(\alpha x \cdot y + c)$ | Neural network-like mappings |
 
 When to use kernel PCA vs standard PCA:
 
 | Criterion | Standard PCA | Kernel PCA |
 |-----------|-------------|------------|
 | Data structure | Linear subspace | Nonlinear manifold |
-| Speed | O(min(n^2 d, d^2 n)) | O(n^2 d + n^3) |
+| Speed | $O(\min(n^2 d, d^2 n))$ | $O(n^2 d + n^3)$ |
 | Interpretability | Components are linear combinations of features | Components lack direct feature interpretation |
-| Scalability | Works on millions of samples | Kernel matrix is n x n, memory-limited |
+| Scalability | Works on millions of samples | Kernel matrix is $n \times n$, memory-limited |
 | Reconstruction | Direct inverse transform | Requires pre-image approximation |
 
 The classic example: concentric circles in 2D. Two rings of points, one inside the other. Standard PCA projects both onto the same line -- useless for classification. Kernel PCA with an RBF kernel maps the inner circle and outer circle to different regions, making them linearly separable.
@@ -165,22 +165,24 @@ The classic example: concentric circles in 2D. Two rings of points, one inside t
 How good is your dimensionality reduction? You compressed 784 dimensions to 50. What did you lose?
 
 Measure reconstruction error:
-1. Project data to k dimensions: X_reduced = X @ W_k
-2. Reconstruct: X_hat = X_reduced @ W_k^T
-3. Compute MSE: mean((X - X_hat)^2)
+1. Project data to $k$ dimensions: $X_{\text{reduced}} = X W_k$
+2. Reconstruct: $\hat{X} = X_{\text{reduced}} W_k^T$
+3. Compute MSE: $\text{mean}((X - \hat{X})^2)$
 
 For PCA, reconstruction error has a clean relationship to explained variance:
 
-```
-Reconstruction error = sum of eigenvalues NOT included
-Total variance = sum of ALL eigenvalues
-Fraction lost = (sum of dropped eigenvalues) / (sum of all eigenvalues)
+```math
+\begin{aligned}
+\text{Reconstruction error} &= \text{sum of eigenvalues NOT included} \\
+\text{Total variance} &= \text{sum of ALL eigenvalues} \\
+\text{Fraction lost} &= \frac{\text{sum of dropped eigenvalues}}{\text{sum of all eigenvalues}}
+\end{aligned}
 ```
 
 The explained variance ratio for each component is:
 
-```
-explained_ratio_k = eigenvalue_k / sum(all eigenvalues)
+```math
+\text{explained\_ratio}_k = \frac{\text{eigenvalue}_k}{\sum \text{all eigenvalues}}
 ```
 
 Plotting cumulative explained variance against number of components gives you the "elbow" curve. The right number of components is where:
@@ -188,7 +190,7 @@ Plotting cumulative explained variance against number of components gives you th
 - Cumulative variance crosses your threshold (usually 0.90 or 0.95)
 - Downstream task performance plateaus
 
-Reconstruction error is useful beyond choosing k. You can use it for anomaly detection: samples with high reconstruction error are outliers that do not fit the learned subspace. This is the basis of PCA-based anomaly detection in production systems.
+Reconstruction error is useful beyond choosing $k$. You can use it for anomaly detection: samples with high reconstruction error are outliers that do not fit the learned subspace. This is the basis of PCA-based anomaly detection in production systems.
 
 ```figure
 pca-axes
@@ -353,6 +355,14 @@ This lesson produces:
 
 3. Take a dataset with 50 features where only 5 are informative (generate one with `sklearn.datasets.make_classification`). Apply PCA and check whether the explained variance curve correctly identifies that the data is effectively 5-dimensional.
 
+### Hints
+
+**Exercise 1.** Read `inverse_transform` in the `PCA` class and fit one model for each number of components. Compute `reconstruction_error` for 10, 50, and 200 components; the error must fall as the number of components grows.
+
+**Exercise 2.** Fit `sklearn.manifold.TSNE` three times on the same subset, changing only `perplexity`, and use the same `random_state`. Low perplexity looks at few neighbors, so expect small tight groups; high perplexity looks at more neighbors, so expect larger, smoother groups.
+
+**Exercise 3.** Call `make_classification(n_features=50, n_informative=5, n_redundant=45)`, fit `PCA`, and print the cumulative explained variance. Redundant features are linear combinations of the informative ones, so the curve reaches almost 1.0 at 5 components. Then try `n_redundant=0`: the other 45 features are independent noise, and the curve does not flatten.
+
 ## Key Terms
 
 | Term | What people say | What it actually means |
@@ -360,8 +370,8 @@ This lesson produces:
 | Curse of dimensionality | "Too many features" | Distances, volumes, and data density all behave counterintuitively as dimensions grow. Models need exponentially more data to compensate. |
 | PCA | "Reduce dimensions" | Rotate your coordinate system so the axes align with the directions of maximum variance, then drop the low-variance axes. |
 | Principal component | "An important direction" | An eigenvector of the covariance matrix. The direction in feature space along which the data varies most. |
-| Explained variance ratio | "How much info this component has" | The fraction of total variance captured by one principal component. Sum the top k ratios to see how much k components preserve. |
-| Covariance matrix | "How features correlate" | A symmetric matrix where entry (i,j) measures how feature i and feature j move together. Diagonal entries are individual variances. |
+| Explained variance ratio | "How much info this component has" | The fraction of total variance captured by one principal component. Sum the top $k$ ratios to see how much $k$ components preserve. |
+| Covariance matrix | "How features correlate" | A symmetric matrix where entry $(i,j)$ measures how feature $i$ and feature $j$ move together. Diagonal entries are individual variances. |
 | t-SNE | "That cluster plot" | A nonlinear method that maps high-dimensional data to 2D by preserving pairwise neighborhood probabilities. Good for visualization, not for preprocessing. |
 | UMAP | "Faster t-SNE" | A nonlinear method based on topological data analysis. Preserves both local and some global structure. Scales better than t-SNE. |
 | Perplexity | "A t-SNE knob" | Controls the effective number of neighbors each point considers. Low perplexity focuses on very local structure. High perplexity captures broader patterns. |

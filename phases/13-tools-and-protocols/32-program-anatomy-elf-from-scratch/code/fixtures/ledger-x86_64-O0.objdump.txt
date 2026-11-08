@@ -1,0 +1,52 @@
+
+ledger-x86_64-O0.o:	file format elf64-x86-64
+
+Sections:
+Idx Name            Size     VMA              Type
+  0                 00000000 0000000000000000 
+  1 .strtab         000000a1 0000000000000000 
+  2 .text           00000127 0000000000000000 TEXT
+  3 .rela.text      00000048 0000000000000000 
+  4 .rodata         00000014 0000000000000000 DATA
+  5 .rela.rodata    00000078 0000000000000000 
+  6 .data           00000028 0000000000000000 DATA
+  7 .rela.data      00000078 0000000000000000 
+  8 .rodata.str1.1  0000000a 0000000000000000 DATA
+  9 .comment        0000002f 0000000000000000 
+ 10 .note.GNU-stack 00000000 0000000000000000 
+ 11 .llvm_addrsig   00000002 0000000000000000 
+ 12 .symtab         00000108 0000000000000000 
+
+SYMBOL TABLE:
+0000000000000000 l    df *ABS*	0000000000000000 ledger.c
+0000000000000000 l    d  .text	0000000000000000 .text
+0000000000000000 l    d  .rodata	0000000000000000 .rodata
+0000000000000000 l     O .data	0000000000000028 labels
+0000000000000000 l    d  .data	0000000000000000 .data
+0000000000000000 l    d  .rodata.str1.1	0000000000000000 .rodata.str1.1
+0000000000000000 g     F .text	000000000000002e percent_change
+0000000000000030 g     F .text	0000000000000076 grade
+00000000000000b0 g     F .text	0000000000000042 total
+0000000000000100 g     F .text	0000000000000027 grade_label
+
+RELOCATION RECORDS FOR [.text]:
+OFFSET           TYPE                     VALUE
+0000000000000069 R_X86_64_PC32            .rodata-0x4
+000000000000010f R_X86_64_PLT32           grade-0x4
+0000000000000119 R_X86_64_PC32            .data-0x4
+
+RELOCATION RECORDS FOR [.rodata]:
+OFFSET           TYPE                     VALUE
+0000000000000000 R_X86_64_PC32            .text+0x91
+0000000000000004 R_X86_64_PC32            .text+0x8c
+0000000000000008 R_X86_64_PC32            .text+0x87
+000000000000000c R_X86_64_PC32            .text+0x82
+0000000000000010 R_X86_64_PC32            .text+0x86
+
+RELOCATION RECORDS FOR [.data]:
+OFFSET           TYPE                     VALUE
+0000000000000000 R_X86_64_64              .rodata.str1.1
+0000000000000008 R_X86_64_64              .rodata.str1.1+0x2
+0000000000000010 R_X86_64_64              .rodata.str1.1+0x4
+0000000000000018 R_X86_64_64              .rodata.str1.1+0x6
+0000000000000020 R_X86_64_64              .rodata.str1.1+0x8

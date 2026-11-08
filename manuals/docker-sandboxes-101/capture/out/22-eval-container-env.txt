@@ -1,0 +1,28 @@
+$ docker-agent eval fixtures/agents/files.yaml fixtures/evals --judge-model dmr/ai/qwen3:4b -c 1 -e DOCKER_AGENT_MODELS_GATEWAY=http://model-runner.docker.internal/engines --output work/eval-results-container-env
+Evaluation run: <run>
+Loading evaluation sessions...
+Validating judge model...
+Pre-building 1 container image(s)...
+Running 2 evaluations with concurrency 1
+
+✓ Count the lines of README.md ($0.000000)
+  ✓ size S
+  ✓ tool calls
+  ✓ relevance 1/1
+✗ List the files in the working directory ($0.000000)
+  ✓ size S
+  ✓ relevance 1/1
+  ✗ tool calls score 0.67
+[██████████] 100% (2/2) ✓1 ✗1 (tools ✗1)
+
+✅          Sizes: 2/2 passed (100.0%)
+✅     Tool Calls: 83.3% avg F1 (2 evals)
+✅      Relevance: 2/2 passed (100.0%)
+
+Total Cost: $0.000000
+Total Time: <dur>
+
+Sessions DB: $CAPTURE/work/eval-results-container-env/<run>.db
+Sessions JSON: $CAPTURE/work/eval-results-container-env/<run>.json
+Log: $CAPTURE/work/eval-results-container-env/<run>.log
+[exit 0]

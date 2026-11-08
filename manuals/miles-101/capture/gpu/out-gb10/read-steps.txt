@@ -1,0 +1,22 @@
+$ grep -o "'rollout/raw_reward': [0-9.]*" plain.log | head -10
+'rollout/raw_reward': 0.62890625
+'rollout/raw_reward': 0.59375
+'rollout/raw_reward': 0.7578125
+'rollout/raw_reward': 0.69140625
+'rollout/raw_reward': 0.58984375
+'rollout/raw_reward': 0.5859375
+'rollout/raw_reward': 0.6875
+'rollout/raw_reward': 0.67578125
+'rollout/raw_reward': 0.74609375
+'rollout/raw_reward': 0.6484375
+$ grep -o "'train/train_rollout_logprob_abs_diff': [0-9.]*" plain.log | head -10
+'train/train_rollout_logprob_abs_diff': 0.015336457639932632
+'train/train_rollout_logprob_abs_diff': 0.01610221341252327
+'train/train_rollout_logprob_abs_diff': 0.014312651939690113
+'train/train_rollout_logprob_abs_diff': 0.015629252418875694
+'train/train_rollout_logprob_abs_diff': 0.015349497087299824
+'train/train_rollout_logprob_abs_diff': 0.01628461480140686
+'train/train_rollout_logprob_abs_diff': 0.014715931378304958
+'train/train_rollout_logprob_abs_diff': 0.015263394452631474
+'train/train_rollout_logprob_abs_diff': 0.01513341348618269
+'train/train_rollout_logprob_abs_diff': 0.016122153028845787

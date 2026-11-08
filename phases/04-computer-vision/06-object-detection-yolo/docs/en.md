@@ -74,11 +74,13 @@ Modern detectors often use FPN with different anchor sets per resolution — sma
 
 The raw `tx, ty, tw, th` are not box coordinates; they are regression targets to be transformed before plotting:
 
-```
-centre x  = (sigmoid(tx) + cell_x) * stride
-centre y  = (sigmoid(ty) + cell_y) * stride
-width     = anchor_w * exp(tw)
-height    = anchor_h * exp(th)
+```math
+\begin{aligned}
+\text{centre } x &= (\sigma(t_x) + \text{cell}_x) \cdot \text{stride} \\
+\text{centre } y &= (\sigma(t_y) + \text{cell}_y) \cdot \text{stride} \\
+\text{width} &= \text{anchor}_w \cdot \exp(t_w) \\
+\text{height} &= \text{anchor}_h \cdot \exp(t_h)
+\end{aligned}
 ```
 
 `sigmoid` keeps centre offsets inside the cell. `exp` lets the width scale freely from the anchor without a sign flip. `stride` scales the grid coordinates back to pixels. This decode step is the same in every YOLO version since v2.
@@ -87,11 +89,11 @@ height    = anchor_h * exp(th)
 
 Detection's universal similarity metric between two boxes:
 
-```
-IoU(A, B) = area(A intersect B) / area(A union B)
+```math
+\mathrm{IoU}(A, B) = \frac{\mathop{\mathrm{area}}(A \cap B)}{\mathop{\mathrm{area}}(A \cup B)}
 ```
 
-IoU = 1 means identical; IoU = 0 means no overlap. IoU between the prediction and the ground-truth box is what decides whether a prediction counts as a true positive (typically IoU >= 0.5). IoU between two predictions is what NMS uses to deduplicate.
+$\mathrm{IoU} = 1$ means identical; $\mathrm{IoU} = 0$ means no overlap. IoU between the prediction and the ground-truth box is what decides whether a prediction counts as a true positive (typically $\mathrm{IoU} \ge 0.5$). IoU between two predictions is what NMS uses to deduplicate.
 
 ### Non-maximum suppression
 
@@ -113,11 +115,13 @@ Typical threshold: 0.45 for object detection. Recent detectors replace standard 
 
 YOLO loss is three losses added with weights:
 
-```
-L = lambda_coord * L_box(pred, target, where obj=1)
-  + lambda_obj   * L_obj(pred, 1,     where obj=1)
-  + lambda_noobj * L_obj(pred, 0,     where obj=0)
-  + lambda_cls   * L_cls(pred, target, where obj=1)
+```math
+\begin{aligned}
+L = {} & \lambda_{\text{coord}} \cdot L_{\text{box}}(\text{pred}, \text{target}, \text{where obj}=1) \\
++ {} & \lambda_{\text{obj}} \cdot L_{\text{obj}}(\text{pred}, 1, \text{where obj}=1) \\
++ {} & \lambda_{\text{noobj}} \cdot L_{\text{obj}}(\text{pred}, 0, \text{where obj}=0) \\
++ {} & \lambda_{\text{cls}} \cdot L_{\text{cls}}(\text{pred}, \text{target}, \text{where obj}=1)
+\end{aligned}
 ```
 
 Only cells that contain an object contribute to the box-regression and classification losses. Cells without objects contribute only to the objectness loss (teaching the model to stay silent). `lambda_noobj` is usually small (~0.5) because the vast majority of cells are empty and would otherwise dominate the total loss.
@@ -199,8 +203,10 @@ def encode(box_xyxy, cell_x, cell_y, stride, anchor_wh):
     cy = 0.5 * (y1 + y2)
     w = x2 - x1
     h = y2 - y1
-    tx = cx / stride - cell_x
-    ty = cy / stride - cell_y
+    off_x = np.clip(cx / stride - cell_x, 1e-6, 1 - 1e-6)
+    off_y = np.clip(cy / stride - cell_y, 1e-6, 1 - 1e-6)
+    tx = np.log(off_x / (1 - off_x))
+    ty = np.log(off_y / (1 - off_y))
     tw = np.log(w / anchor_wh[0] + 1e-8)
     th = np.log(h / anchor_wh[1] + 1e-8)
     return np.array([tx, ty, tw, th])
@@ -219,7 +225,7 @@ def sigmoid(x):
     return 1.0 / (1.0 + np.exp(-x))
 ```
 
-Test: encode a box then decode — you should get back something very close to the original (up to the sigmoid inverse not being perfectly invertible when `tx` is not in the post-sigmoid range).
+Test: encode a box whose centre is strictly inside the cell, then decode, and you should get the original box back up to float error. `encode` stores the centre offset as a logit, the inverse of the `sigmoid` in `decode`. The clip keeps the logit finite; a centre exactly on a cell edge moves by at most `1e-6` cells. `assign_targets` below stores the same logits, so the head trains in the space that `decode` expects.
 
 ### Step 4: A minimal YOLO head
 
@@ -269,8 +275,10 @@ def assign_targets(boxes_xyxy, classes, anchors, stride, grid_size, num_classes)
         best = int(np.argmax(ious))
         aw, ah = anchors[best]
 
-        target[gy, gx, best, 0] = cx / stride - gx
-        target[gy, gx, best, 1] = cy / stride - gy
+        off_x = np.clip(cx / stride - gx, 1e-6, 1 - 1e-6)
+        off_y = np.clip(cy / stride - gy, 1e-6, 1 - 1e-6)
+        target[gy, gx, best, 0] = np.log(off_x / (1 - off_x))
+        target[gy, gx, best, 1] = np.log(off_y / (1 - off_y))
         target[gy, gx, best, 2] = np.log(bw / aw + 1e-8)
         target[gy, gx, best, 3] = np.log(bh / ah + 1e-8)
         target[gy, gx, best, 4] = 1.0
@@ -315,7 +323,7 @@ def yolo_loss(pred, target, has_obj, lambda_coord=5.0, lambda_obj=1.0, lambda_no
                    "obj_neg": loss_obj_neg.item(), "cls": loss_cls.item()}
 ```
 
-Five hyper-parameters that every YOLO tutorial either hardcodes or sweeps. The ratios matter: `lambda_coord=5, lambda_noobj=0.5` mirrors the original YOLOv1 paper and still works as a reasonable default.
+Four loss weights that every YOLO tutorial either hardcodes or sweeps. The ratios matter: `lambda_coord=5, lambda_noobj=0.5` mirrors the original YOLOv1 paper and still works as a reasonable default.
 
 ### Step 7: Inference pipeline
 

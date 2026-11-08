@@ -11,7 +11,7 @@
 
 - Explain why an LLM that can only generate text cannot, on its own, take actions against the real world.
 - Draw the four-step tool-call loop (describe → decide → execute → observe) and name who owns each step.
-- Write a tool description as three parts: name, JSON Schema input, and a deterministic executor function.
+- Write a tool definition as four parts: name, description, JSON Schema input, and a deterministic executor function.
 - Distinguish pure and side-effecting tools and state why the split matters for safety.
 
 ## The Problem
@@ -28,7 +28,7 @@ The four-step loop is the invariant underneath all of these. Everything else in 
 
 ### Step one: describe
 
-The host declares each tool with three fields.
+The host declares each tool to the model with three fields. The fourth part, the executor, stays on the host side and never reaches the model.
 
 - **Name.** A stable, machine-readable identifier. `get_weather`, not "weather thing".
 - **Description.** A one-paragraph natural-language brief. "Use when the user asks about current conditions for a specific city. Do not use for historical data."
@@ -112,7 +112,7 @@ tp-tool-loop
 
 What to look at:
 
-- The tool registry holds three fields per tool: name, description, schema, and an executor reference.
+- The tool registry holds four fields per tool: name, description, schema, and an executor reference. Only the first three go to the model.
 - The validator is a minimal JSON Schema subset (types, required, enum, min/max) written in stdlib only. Phase 13 · 04 ships a fuller one.
 - The loop bounds iteration count at five. Production agents need exactly this kind of circuit breaker.
 

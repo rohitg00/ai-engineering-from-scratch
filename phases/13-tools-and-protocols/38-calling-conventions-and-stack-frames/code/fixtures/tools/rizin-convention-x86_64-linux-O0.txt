@@ -1,0 +1,420 @@
+[2KWARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+WARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+[afcl]
+amd64
+amd64syscall
+ms
+reg
+swift
+[afc leaf_add]
+amd64
+[afi leaf_add]
+offset: 0x08000040
+name: sym.leaf_add
+size: 18
+is-pure: true
+realsz: 18
+stackframe: 8
+call-convention: amd64
+cyclomatic-cost: 10
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 2
+args: 2
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+var int64_t var_10h @ stack - 0x10
+var int64_t var_ch @ stack - 0xc
+[afvl leaf_add]
+var int64_t var_10h @ stack - 0x10
+var int64_t var_ch @ stack - 0xc
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+[afc eight_args]
+amd64
+[afi eight_args]
+offset: 0x08000060
+name: sym.eight_args
+size: 70
+is-pure: true
+realsz: 70
+stackframe: 8
+call-convention: amd64
+cyclomatic-cost: 22
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 6
+args: 8
+arg int64_t arg5 @ r8
+arg int64_t arg6 @ r9
+arg int64_t arg4 @ rcx
+arg int64_t arg1 @ rdi
+arg int64_t arg3 @ rdx
+arg int64_t arg2 @ rsi
+var int64_t var_38h @ stack - 0x38
+var int64_t var_30h @ stack - 0x30
+var int64_t var_28h @ stack - 0x28
+var int64_t var_20h @ stack - 0x20
+var int64_t var_18h @ stack - 0x18
+var int64_t var_10h @ stack - 0x10
+arg int64_t arg_8h @ stack + 0x8
+arg int64_t arg_10h @ stack + 0x10
+[afvl eight_args]
+var int64_t var_38h @ stack - 0x38
+var int64_t var_30h @ stack - 0x30
+var int64_t var_28h @ stack - 0x28
+var int64_t var_20h @ stack - 0x20
+var int64_t var_18h @ stack - 0x18
+var int64_t var_10h @ stack - 0x10
+arg int64_t arg_8h @ stack + 0x8
+arg int64_t arg_10h @ stack + 0x10
+arg int64_t arg5 @ r8
+arg int64_t arg6 @ r9
+arg int64_t arg4 @ rcx
+arg int64_t arg1 @ rdi
+arg int64_t arg3 @ rdx
+arg int64_t arg2 @ rsi
+[afc mixed]
+amd64
+[afi mixed]
+offset: 0x080000b0
+name: sym.mixed
+size: 56
+is-pure: true
+realsz: 56
+stackframe: 8
+call-convention: amd64
+cyclomatic-cost: 17
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 4
+args: 4
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+arg int64_t arg7 @ xmm0
+arg int64_t arg8 @ xmm1
+var int64_t var_24h @ stack - 0x24
+var int64_t var_20h @ stack - 0x20
+var int64_t var_18h @ stack - 0x18
+var int64_t var_ch @ stack - 0xc
+[afvl mixed]
+var int64_t var_24h @ stack - 0x24
+var int64_t var_20h @ stack - 0x20
+var int64_t var_18h @ stack - 0x18
+var int64_t var_ch @ stack - 0xc
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+arg int64_t arg7 @ xmm0
+arg int64_t arg8 @ xmm1
+[afc by_value]
+amd64
+[afi by_value]
+offset: 0x080000f0
+name: sym.by_value
+size: 52
+is-pure: true
+realsz: 52
+stackframe: 8
+call-convention: amd64
+cyclomatic-cost: 18
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 4
+args: 2
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+var int64_t var_28h @ stack - 0x28
+var int64_t var_20h @ stack - 0x20
+var int64_t var_18h @ stack - 0x18
+var int64_t var_10h @ stack - 0x10
+[afvl by_value]
+var int64_t var_28h @ stack - 0x28
+var int64_t var_20h @ stack - 0x20
+var int64_t var_18h @ stack - 0x18
+var int64_t var_10h @ stack - 0x10
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+[afc big_ret]
+amd64
+[afi big_ret]
+offset: 0x08000130
+name: sym.big_ret
+size: 56
+is-pure: true
+realsz: 56
+stackframe: 8
+call-convention: amd64
+cyclomatic-cost: 19
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs:
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 0
+data-xrefs:
+locals: 1
+args: 2
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+var int64_t var_10h @ stack - 0x10
+[afvl big_ret]
+var int64_t var_10h @ stack - 0x10
+arg int64_t arg1 @ rdi
+arg int64_t arg2 @ rsi
+[afc sum_varargs]
+amd64
+[afi sum_varargs]
+offset: 0x08000170
+name: sym.sum_varargs
+size: 278
+is-pure: true
+realsz: 278
+stackframe: 136
+call-convention: amd64
+cyclomatic-cost: 70
+cyclomatic-complexity: 4
+loops: 1
+bits: 64
+type: sym
+num-bbs: 9
+edges: 11
+end-bbs: 1
+call-refs: 0x08000260 J 0x08000200 J
+data-refs:
+code-xrefs: 0x08000241 J 0x08000278 J
+noreturn: false
+in-degree: 2
+out-degree: 0
+data-xrefs:
+locals: 21
+args: 12
+arg int64_t arg5 @ r8
+arg int64_t arg6 @ r9
+arg int64_t arg4 @ rcx
+arg int64_t arg1 @ rdi
+arg int64_t arg3 @ rdx
+arg int64_t arg2 @ rsi
+arg int64_t arg7 @ xmm0
+arg int64_t arg8 @ xmm1
+arg int64_t arg9 @ xmm2
+arg int64_t arg10 @ xmm3
+arg int64_t arg11 @ xmm4
+var int64_t var_100h @ stack - 0x100
+var int64_t var_f8h @ stack - 0xf8
+var int64_t var_ech @ stack - 0xec
+var int64_t var_e8h @ stack - 0xe8
+var int64_t var_e0h @ stack - 0xe0
+var int64_t var_d8h @ stack - 0xd8
+var int64_t var_d0h @ stack - 0xd0
+var int64_t var_c8h @ stack - 0xc8
+var int64_t var_c0h @ stack - 0xc0
+var int64_t var_b8h @ stack - 0xb8
+var int64_t var_a8h @ stack - 0xa8
+var int64_t var_98h @ stack - 0x98
+var int64_t var_88h @ stack - 0x88
+var int64_t var_78h @ stack - 0x78
+var int64_t var_68h @ stack - 0x68
+var int64_t var_58h @ stack - 0x58
+var int64_t var_48h @ stack - 0x48
+var int64_t var_30h @ stack - 0x30
+var int64_t var_2ch @ stack - 0x2c
+var int64_t var_28h @ stack - 0x28
+var int64_t var_ch @ stack - 0xc
+arg int64_t arg_8h @ stack + 0x8
+[afvl sum_varargs]
+var int64_t var_100h @ stack - 0x100
+var int64_t var_f8h @ stack - 0xf8
+var int64_t var_ech @ stack - 0xec
+var int64_t var_e8h @ stack - 0xe8
+var int64_t var_e0h @ stack - 0xe0
+var int64_t var_d8h @ stack - 0xd8
+var int64_t var_d0h @ stack - 0xd0
+var int64_t var_c8h @ stack - 0xc8
+var int64_t var_c0h @ stack - 0xc0
+var int64_t var_b8h @ stack - 0xb8
+var int64_t var_a8h @ stack - 0xa8
+var int64_t var_98h @ stack - 0x98
+var int64_t var_88h @ stack - 0x88
+var int64_t var_78h @ stack - 0x78
+var int64_t var_68h @ stack - 0x68
+var int64_t var_58h @ stack - 0x58
+var int64_t var_48h @ stack - 0x48
+var int64_t var_30h @ stack - 0x30
+var int64_t var_2ch @ stack - 0x2c
+var int64_t var_28h @ stack - 0x28
+var int64_t var_ch @ stack - 0xc
+arg int64_t arg_8h @ stack + 0x8
+arg int64_t arg5 @ r8
+arg int64_t arg6 @ r9
+arg int64_t arg4 @ rcx
+arg int64_t arg1 @ rdi
+arg int64_t arg3 @ rdx
+arg int64_t arg2 @ rsi
+arg int64_t arg7 @ xmm0
+arg int64_t arg8 @ xmm1
+arg int64_t arg9 @ xmm2
+arg int64_t arg10 @ xmm3
+arg int64_t arg11 @ xmm4
+[afc keeps]
+amd64
+[afi keeps]
+offset: 0x08000290
+name: sym.keeps
+size: 67
+is-pure: true
+realsz: 67
+stackframe: 24
+call-convention: amd64
+cyclomatic-cost: 27
+cyclomatic-complexity: 2
+loops: 1
+bits: 64
+type: sym
+num-bbs: 4
+edges: 4
+end-bbs: 1
+call-refs: 0x08000898 C 0x080002a9 J
+data-refs:
+code-xrefs: 0x080002c8 J
+noreturn: false
+in-degree: 1
+out-degree: 1
+data-xrefs:
+locals: 3
+args: 1
+arg int64_t arg1 @ rdi
+var int64_t var_14h @ stack - 0x14
+var int64_t var_10h @ stack - 0x10
+var int64_t var_ch @ stack - 0xc
+[afvl keeps]
+var int64_t var_14h @ stack - 0x14
+var int64_t var_10h @ stack - 0x10
+var int64_t var_ch @ stack - 0xc
+arg int64_t arg1 @ rdi
+[afc call8]
+amd64
+[afi call8]
+offset: 0x080002e0
+name: sym.call8
+size: 68
+is-pure: true
+realsz: 68
+stackframe: 24
+call-convention: amd64
+cyclomatic-cost: 19
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs: 0x080008a0 C
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 1
+data-xrefs:
+locals: 1
+args: 0
+var int64_t var_10h @ stack - 0x10
+[afvl call8]
+var int64_t var_10h @ stack - 0x10
+[afc call_varargs]
+amd64
+[afi call_varargs]
+offset: 0x08000360
+name: sym.call_varargs
+size: 33
+is-pure: true
+realsz: 33
+stackframe: 8
+call-convention: amd64
+cyclomatic-cost: 14
+cyclomatic-complexity: 1
+loops: 0
+bits: 64
+type: sym
+num-bbs: 1
+edges: 0
+end-bbs: 1
+call-refs: 0x080008b0 C
+data-refs:
+code-xrefs:
+noreturn: false
+in-degree: 0
+out-degree: 1
+data-xrefs:
+locals: 0
+args: 0
+[afvl call_varargs]
+[afcr eight_args]
+name: amd64
+ret: rax
+arg0: rdi
+arg1: rsi
+arg2: rdx
+arg3: rcx
+arg4: r8
+arg5: r9
+arg6: xmm0
+arg7: xmm1
+arg8: xmm2
+arg9: xmm3
+arg10: xmm4

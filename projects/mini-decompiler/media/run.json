@@ -1,0 +1,48 @@
+{
+  "title": "Mini Decompiler | Build and verify",
+  "recordedAt": "2026-10-14T12:44:12Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "mini-decompiler",
+        "--init",
+        "/tmp/claude-501/md-learner-zqiD"
+      ],
+      "cwd": "/private/tmp/aiefs-re",
+      "exitCode": 0,
+      "output": "workspace  /private/tmp/claude-501/md-learner-zqiD\n  created  minidec/__init__.py\n  created  minidec/__main__.py\n  created  minidec/cli.py\n  created  minidec/elf.py\n  created  samples/samples-x86_64-O0.o\n  created  samples/samples-x86_64-O0.objdump.txt\n  created  samples/samples-x86_64-O1.o\n  created  samples/samples-x86_64-O1.objdump.txt\n  created  samples/samples.c\n  created  minidec/decoder.py\n  created  minidec/cfg.py\n  created  minidec/ir.py\n  created  minidec/ssa.py\n  created  minidec/passes.py\n  created  minidec/types.py\n  created  minidec/emit.py\n  created  minidec/structure.py\n  created  minidec/verify.py\nnext: python3 scripts/project_test.py mini-decompiler --stage 1 --path /private/tmp/claude-501/md-learner-zqiD\n",
+      "durationMs": 196
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "mini-decompiler",
+        "--stage",
+        "1",
+        "--path",
+        "/tmp/claude-501/md-learner-zqiD"
+      ],
+      "cwd": "/private/tmp/aiefs-re",
+      "exitCode": 1,
+      "output": "Mini Decompiler: grading learner\n  FAIL stage 1: Read an ELF relocatable object (11 tests)\n       not implemented yet: Stage 1: implement ElfObject.__init__\n",
+      "durationMs": 254
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "mini-decompiler",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-re",
+      "exitCode": 0,
+      "output": "Mini Decompiler: grading solution\n  PASS stage 1: Read an ELF relocatable object (11 tests)\n  PASS stage 2: Decode the x86-64 subset (17 tests)\n  PASS stage 3: Recover control flow (12 tests)\n  PASS stage 4: Lift to IR and build SSA (15 tests)\n  PASS stage 5: Simplify and fold idioms (13 tests)\n  PASS stage 6: Recover the signature and types (11 tests)\n  PASS stage 7: Structure the graph and emit C (10 tests)\n  PASS stage 8: Prove the output (16 tests)\n",
+      "durationMs": 4323
+    }
+  ]
+}

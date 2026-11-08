@@ -1,0 +1,17 @@
+Speed cost of VLLM_BATCH_INVARIANT=1 (backlog B-03, clock-locked rerun)
+Date: 2026-10-23
+Machine: NVIDIA L4, GPU0 of the node, clock lock 900 MHz. Engine: vLLM 0.31.0.
+Load: random dataset, 512 tokens in and 128 out, 2 seeds per point, prefix cache reset before each run.
+Order on one GPU: default, then VLLM_BATCH_INVARIANT=1, then default again. The cost is read against both default blocks.
+
+Qwen/Qwen3-0.6B, every run at a median clock of 900 MHz. The two default blocks agree within 1 percent:
+users   median TPOT default / batch-invariant   output tok/s default / batch-invariant
+1       6.9 / 16.9 ms (2.4x)                    140.6 / 58.7 (58% lower)
+8       9.9 / 18.2 ms (1.8x)                    755 / 420 (44% lower)
+32      18.8 / 25.9 ms (1.4x)                   1,565 / 1,154 (26% lower)
+
+Qwen/Qwen3-8B, rows where all three blocks ran at a median clock of 900 MHz:
+users   median TPOT default / batch-invariant   output tok/s default / batch-invariant
+8       70.0 / 97.4 ms (1.4x)                   103.4 / 75.1 (27% lower)
+32      109 / 139 ms (1.3x)                     245 / 188 (23% lower)
+The 1-user runs of Qwen3-8B throttled to 210 to 510 MHz and are left out.

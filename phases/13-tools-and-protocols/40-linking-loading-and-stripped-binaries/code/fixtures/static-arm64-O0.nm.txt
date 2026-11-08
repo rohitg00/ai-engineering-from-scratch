@@ -1,0 +1,13 @@
+                 U ___stack_chk_fail
+                 U ___stack_chk_guard
+                 U _printf
+                 U _puts
+0000000100000000 T __mh_execute_header
+0000000100000598 T _main
+00000001000006ec T _percent_change
+000000010000073c T _grade
+00000001000007d8 T _total
+000000010000083c T _grade_label
+0000000100004020 S _fns
+0000000100004030 s _names
+0000000100008000 d _labels

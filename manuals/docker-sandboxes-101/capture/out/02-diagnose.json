@@ -1,0 +1,102 @@
+{
+  "version": "1.0",
+  "checks": [
+    {
+      "name": "CLI binary",
+      "status": "pass",
+      "message": "found",
+      "detail": "/opt/homebrew/Caskroom/sbx/0.47.0/Sbx.app/Contents/MacOS/sbx",
+      "hint": ""
+    },
+    {
+      "name": "Binary version",
+      "status": "pass",
+      "message": "v0.47.0",
+      "detail": "",
+      "hint": ""
+    },
+    {
+      "name": "Daemon",
+      "status": "pass",
+      "message": "healthy",
+      "detail": "version v0.47.0",
+      "hint": ""
+    },
+    {
+      "name": "Daemon diagnostics",
+      "status": "pass",
+      "message": "collected (<n> bytes)",
+      "detail": "",
+      "hint": ""
+    },
+    {
+      "name": "Virtualization",
+      "status": "pass",
+      "message": "supported",
+      "detail": "kern.hv_support is 1",
+      "hint": ""
+    },
+    {
+      "name": "mkfs.erofs",
+      "status": "pass",
+      "message": "found",
+      "detail": "/opt/homebrew/Caskroom/sbx/0.47.0/Sbx.app/Contents/libexec/mkfs.erofs, default block size <n> bytes, guest kernel page size <n> bytes",
+      "hint": ""
+    },
+    {
+      "name": "Storage directories",
+      "status": "pass",
+      "message": "all 1 paths present",
+      "detail": "",
+      "hint": ""
+    },
+    {
+      "name": "Directory permissions",
+      "status": "pass",
+      "message": "all writable",
+      "detail": "",
+      "hint": ""
+    },
+    {
+      "name": "Disk space",
+      "status": "pass",
+      "message": "<n>GiB free",
+      "detail": "<n>GiB free of <n>GiB on the state directory's volume",
+      "hint": ""
+    },
+    {
+      "name": "Version match",
+      "status": "pass",
+      "message": "v0.47.0",
+      "detail": "",
+      "hint": ""
+    },
+    {
+      "name": "Socket",
+      "status": "pass",
+      "message": "responsive",
+      "detail": "",
+      "hint": ""
+    },
+    {
+      "name": "SSH client config",
+      "status": "pass",
+      "message": "not configured",
+      "detail": "",
+      "hint": ""
+    },
+    {
+      "name": "Authentication",
+      "status": "pass",
+      "message": "authenticated",
+      "detail": "",
+      "hint": ""
+    }
+  ],
+  "summary": {
+    "pass": 13,
+    "warn": 0,
+    "fail": 0,
+    "skip": 0
+  }
+}

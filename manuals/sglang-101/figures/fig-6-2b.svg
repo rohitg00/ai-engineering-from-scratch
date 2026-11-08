@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 262" role="img" aria-labelledby="fig-6-2b-title fig-6-2b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-2b-title">EP16 and EP32 at two batch sizes</title>
+  <desc id="fig-6-2b-desc">A two by two comparison of DeepSeek-R1 decode throughput on H20 from Ant Group. At batch 8, EP16 gave 278 tokens per second and EP32 gave 293. At batch 32, EP16 gave 675 and EP32 gave 585. About half of the MoE traffic stayed on NVLink at EP16 and about a quarter at EP32.</desc>
+  <text x="20" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">DEEPSEEK-R1 DECODE ON H20</text>
+  <rect x="180" y="32" width="210" height="30" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="285" y="50.75" font-size="12.5" text-anchor="middle" font-weight="700">--ep-size 16</text>
+  <rect x="410" y="32" width="210" height="30" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="515" y="50.75" font-size="12.5" text-anchor="middle" font-weight="700">--ep-size 32</text>
+  <text x="20" y="104" font-size="12" font-weight="700">batch 8</text>
+  <rect x="180" y="70" width="210" height="56" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="285" y="93.25" font-size="12.5" text-anchor="middle" font-weight="700">278 tokens/s</text>
+  <text x="285" y="110.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">slower at this batch</text>
+  <rect x="410" y="70" width="210" height="56" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="413" y="73" width="204" height="50" fill="none" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="515" y="93.25" font-size="12.5" text-anchor="middle" font-weight="700">293 tokens/s</text>
+  <text x="515" y="110.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">faster at this batch</text>
+  <text x="20" y="172" font-size="12" font-weight="700">batch 32</text>
+  <rect x="180" y="138" width="210" height="56" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="183" y="141" width="204" height="50" fill="none" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="285" y="161.25" font-size="12.5" text-anchor="middle" font-weight="700">675 tokens/s</text>
+  <text x="285" y="178.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">faster at this batch</text>
+  <rect x="410" y="138" width="210" height="56" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="515" y="161.25" font-size="12.5" text-anchor="middle" font-weight="700">585 tokens/s</text>
+  <text x="515" y="178.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">slower at this batch</text>
+  <text x="20" y="228" font-size="12" font-weight="700">MoE traffic</text>
+  <text x="285" y="228" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-indigo-ink, #4b4f9e)">about 50% on NVLink</text>
+  <text x="515" y="228" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-indigo-ink, #4b4f9e)">about 25% on NVLink</text>
+  <text x="20" y="252" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Measured by Ant Group, LMSYS blog, 2025-09-26.</text>
+</svg>

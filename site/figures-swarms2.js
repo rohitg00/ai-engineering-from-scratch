@@ -49,18 +49,18 @@
     }
     for (i = 0; i < N; i++) {
       var isByz = (i === byz);
-      var g = svgEl('g', {});
-      var c = svgEl('circle', { cx: px[i], cy: py[i], r: '15', stroke: isByz ? WARN : BP, 'stroke-width': '2', fill: SURF });
-      if (isByz) {
-        c.setAttribute('fill', WARN);
-      } else {
+      svg.appendChild(svgEl('circle', { cx: px[i], cy: py[i], r: '15', stroke: isByz ? WARN : BP, 'stroke-width': '2', fill: isByz ? WARN : SURF }));
+      svg.appendChild(txt(px[i], py[i] + 4, isByz ? 'X' : String(i), '11', isByz ? BG : BP));
+      if (!isByz) {
         // flip to consensus color in a staggered wave, then hold
         var begin = (i * (period / N)).toFixed(2);
-        c.appendChild(svgEl('animate', { attributeName: 'fill', values: SURF + ';' + SURF + ';' + BP + ';' + BP, keyTimes: '0;0.12;0.2;1', dur: period + 's', begin: begin + 's', repeatCount: 'indefinite' }));
+        var g = svgEl('g', { opacity: '0' }, [
+          svgEl('circle', { cx: px[i], cy: py[i], r: '15', stroke: BP, 'stroke-width': '2', fill: BP }),
+          txt(px[i], py[i] + 4, String(i), '11', BG)
+        ]);
+        g.appendChild(svgEl('animate', { attributeName: 'opacity', values: '0;0;1;1', keyTimes: '0;0.12;0.2;1', dur: period + 's', begin: begin + 's', repeatCount: 'indefinite' }));
+        svg.appendChild(g);
       }
-      g.appendChild(c);
-      g.appendChild(txt(px[i], py[i] + 4, isByz ? 'X' : String(i), '11', isByz ? BG : BP));
-      svg.appendChild(g);
     }
     svg.appendChild(txt(CX, CY + 4, 'agree?', '11', MUTE));
     svg.appendChild(txt(CX, H - 16, 'wave of agreement spreads around the ring  ·  node X (byzantine) never joins', '10', MUTE));
@@ -267,8 +267,9 @@
     svg.appendChild(svgEl('rect', { x: CX - 70, y: CY - 38, width: 140, height: 76, rx: '6', fill: SURF, stroke: BP, 'stroke-width': '2' }));
     svg.appendChild(txt(CX, CY - 14, 'BLACKBOARD', '10', BP));
     // a fact entry that turns from blue (verified) to gold (poisoned) and back
-    var fact = svgEl('rect', { x: CX - 54, y: CY, width: 108, height: 16, rx: '3', fill: BP });
-    fact.appendChild(anim('fill', BP + ';' + BP + ';' + WARN + ';' + WARN + ';' + BP, 8, { keyTimes: '0;0.25;0.35;0.8;1' }));
+    svg.appendChild(svgEl('rect', { x: CX - 54, y: CY, width: 108, height: 16, rx: '3', fill: BP }));
+    var fact = svgEl('rect', { x: CX - 54, y: CY, width: 108, height: 16, rx: '3', fill: WARN, opacity: '0' });
+    fact.appendChild(anim('opacity', '0;0;1;1;0', 8, { keyTimes: '0;0.25;0.35;0.8;1' }));
     svg.appendChild(fact);
     var agents = [
       { x: 70, y: 50, w: 1 }, { x: 70, y: 210, w: 1 },
@@ -290,9 +291,13 @@
       var mm = svgEl('animateMotion', { dur: (isW ? 4 : 4.5) + 's', repeatCount: 'indefinite', begin: (i * 0.4).toFixed(2) + 's' });
       if (rev) { mm.setAttribute('keyPoints', '1;0'); mm.setAttribute('keyTimes', '0;1'); }
       mm.appendChild(svgEl('mpath', { href: '#lf-bb-e' + i }));
-      pkt.appendChild(mm);
       // the poisoned reader's packet flashes gold to show adoption
-      if (i === poisonReader) pkt.appendChild(anim('fill', BP + ';' + WARN + ';' + WARN + ';' + BP, 4.5, { keyTimes: '0;0.4;0.7;1' }));
+      if (i === poisonReader) {
+        var adopted = svgEl('circle', { r: '4', fill: WARN, opacity: '0' });
+        adopted.appendChild(anim('opacity', '0;1;1;0', 4.5, { keyTimes: '0;0.4;0.7;1' }));
+        pkt = svgEl('g', {}, [pkt, adopted]);
+      }
+      pkt.appendChild(mm);
       svg.appendChild(pkt);
     }
     svg.appendChild(txt(W / 2, H - 12, 'W writes, R reads  ·  a poisoned fact (gold) propagates to every reader', '10', MUTE));
@@ -319,17 +324,19 @@
     }
     var period = 7.5, settle = N; // hop through all, then settle on one
     for (i = 0; i < N; i++) {
-      var on = svgEl('circle', { cx: px[i], cy: py[i], r: '17', fill: SURF, stroke: BP, 'stroke-width': '2' });
+      svg.appendChild(svgEl('circle', { cx: px[i], cy: py[i], r: '17', fill: SURF, stroke: BP, 'stroke-width': '2' }));
+      svg.appendChild(txt(px[i], py[i] + 4, String.fromCharCode(65 + i), '11', BP));
       // each agent lights up in turn as the token visits, last one (index 2) holds
       var lit = (i === 2);
       var k0 = (i / N).toFixed(3), k1 = ((i + 0.5) / N).toFixed(3);
-      var vals = lit
-        ? SURF + ';' + SURF + ';' + BP + ';' + BP
-        : SURF + ';' + SURF + ';' + BP + ';' + SURF + ';' + SURF;
+      var vals = lit ? '0;0;1;1' : '0;0;1;0;0';
       var kt = lit ? ('0;' + k0 + ';' + k1 + ';1') : ('0;' + k0 + ';' + k1 + ';' + ((i + 1) / N).toFixed(3) + ';1');
-      on.appendChild(svgEl('animate', { attributeName: 'fill', values: vals, keyTimes: kt, dur: period + 's', repeatCount: 'indefinite' }));
+      var on = svgEl('g', { opacity: '0' }, [
+        svgEl('circle', { cx: px[i], cy: py[i], r: '17', fill: BP, stroke: BP, 'stroke-width': '2' }),
+        txt(px[i], py[i] + 4, String.fromCharCode(65 + i), '11', BG)
+      ]);
+      on.appendChild(svgEl('animate', { attributeName: 'opacity', values: vals, keyTimes: kt, dur: period + 's', repeatCount: 'indefinite' }));
       svg.appendChild(on);
-      svg.appendChild(txt(px[i], py[i] + 4, String.fromCharCode(65 + i), '11', BP));
     }
     // selector token hops between agents then rests on the chosen one (index 2)
     var order = [0, 1, 2, 3, 4, 2], motVals = '', j;

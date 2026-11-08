@@ -58,7 +58,7 @@ The fix in AlphaEvolve: ship a held-out evaluator the LLM has never seen, with i
 
 The LLM can produce compilable, semantically plausible modifications. A random-mutation GA on a 2000-line Python file almost always produces syntax errors. The LLM also concentrates search on plausible neighborhoods (change one function, not random bytes) which dramatically reduces wasted evaluator calls.
 
-The evaluator, in turn, catches the LLM's confabulations. LLMs will confidently claim that a function "is O(n log n) in the limit" when it is actually O(n^2); a wall-clock benchmark makes the question settled.
+The evaluator, in turn, catches the LLM's confabulations. LLMs will confidently claim that a function "is $O(n \log n)$ in the limit" when it is actually $O(n^2)$; a wall-clock benchmark makes the question settled.
 
 ### Where AlphaEvolve fits in the frontier stack
 

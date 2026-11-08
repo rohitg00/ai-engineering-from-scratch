@@ -1,0 +1,11 @@
+{
+  "migration": "ALTER TABLE attendees ADD COLUMN city TEXT; DELETE FROM attendees WHERE id=2;",
+  "rollback": "ALTER TABLE attendees DROP COLUMN city;",
+  "invariants": [
+    {
+      "table": "attendees",
+      "same_rows": true,
+      "min_rows": 2
+    }
+  ]
+}

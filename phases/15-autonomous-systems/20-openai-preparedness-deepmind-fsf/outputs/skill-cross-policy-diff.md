@@ -13,7 +13,7 @@ Produce:
 
 1. **OpenAI PF v2 classification.** Tracked or Research. If Tracked, name the Capabilities + Safeguards Report triggers. If Research, note the policy language is "potential" mitigations.
 2. **Anthropic RSP v3.0 classification.** Which threshold (ASL-3, AI R&D-4, hardcoded prohibition)? Which mitigation (affirmative case, security + deployment)? Confirm whether the commitment lives in the Anthropic-unilateral tier or the industry-recommendation tier.
-3. **DeepMind FSF v3 classification.** Which domain (Cyber, Bio, ML R&D, CBRN)? Which CCL or Tracked Capability Level? Is deceptive alignment monitoring invoked?
+3. **DeepMind FSF v3 classification.** Which domain (CBRN, Cyber, Harmful Manipulation, ML R&D)? Which CCL or Tracked Capability Level? Is deceptive alignment monitoring invoked?
 4. **Convergence summary.** Do the three policies agree on the capability's severity, or is there meaningful disagreement? Which classification is most rigorous, which least?
 5. **Measurement dependency.** Every classification depends on capability measurement. Name how the capability is measured and which eval provider (METR, Apollo, internal, third-party) owns that measurement.
 

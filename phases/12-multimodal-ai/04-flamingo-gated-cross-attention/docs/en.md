@@ -20,7 +20,7 @@ BLIP-2 feeds 32 visual tokens into a frozen LLM's input layer. Works for one ima
 
 Flamingo's answer: do not change the LLM's input stream at all. Insert extra cross-attention layers between existing LLM blocks. Text tokens still flow through the LLM's causal self-attention as always. Between every few LLM blocks, text tokens also cross-attend to image features via a new gated layer. The gate (initialized to zero) means at step zero the new layers are no-ops — the model behaves exactly like the pretrained LLM. As training progresses the gate opens and visual information starts flowing.
 
-The second question Flamingo answered: how do you handle a variable number of images (0, 1, or many) per prompt? A Perceiver resampler — a small cross-attention module that takes whatever number of patches you have and produces a fixed number of visual latent tokens. The LLM cross-attention layer sees the same shape regardless of how many images are in the prompt.
+The second question Flamingo answered: how do you handle a variable number of images (0, 1, or many) per prompt? A Perceiver resampler — a small cross-attention module that takes whatever number of patches you have and produces a fixed number of visual latent tokens per image. The total grows with the image count, but each text token reads only one image's latents, so what any single text token sees in cross-attention has the same shape regardless of how many images are in the prompt.
 
 ## The Concept
 
@@ -30,18 +30,18 @@ Flamingo starts with a frozen Chinchilla 70B LLM. All 70B weights untouched. The
 
 ### Perceiver resampler
 
-For each image in the prompt, the ViT produces N patch tokens. The Perceiver resampler has K fixed learnable latents (Flamingo uses K=64). Each resampler block is two sub-steps:
+For each image in the prompt, the ViT produces $N$ patch tokens. The Perceiver resampler has $K$ fixed learnable latents (Flamingo uses $K=64$). Each resampler block is two sub-steps:
 
-1. Cross-attention: the K latents attend over the N patch tokens (Q from latents, K/V from patches).
+1. Cross-attention: the $K$ latents attend over the $N$ patch tokens (Q from latents, K/V from patches).
 2. Self-attention + FFN within the latents.
 
-After 6 resampler blocks, the output is K=64 visual tokens of dim 1024, regardless of how many patches the ViT produced. A 224x224 image (196 patches) and a 480x480 image (900 patches) both exit as 64 resampler tokens.
+After 6 resampler blocks, the output is $K=64$ visual tokens of dim 1024, regardless of how many patches the ViT produced. A 224x224 image (196 patches) and a 480x480 image (900 patches) both exit as 64 resampler tokens.
 
-For video, the resampler is applied temporally: each frame's patches produce 64 latents, and a temporal positional encoding lets the model distinguish t=0 from t=N. The full video becomes T * 64 visual tokens.
+For video, the resampler is applied temporally: each frame's patches produce 64 latents, and a temporal positional encoding lets the model distinguish $t=0$ from $t=N$. The full video becomes $T \cdot 64$ visual tokens.
 
 ### Gated cross-attention
 
-Between every M layers of the frozen LLM (Flamingo uses M=4), insert a new gated cross-attention block:
+Between every $M$ layers of the frozen LLM (Flamingo uses $M=4$), insert a new gated cross-attention block:
 
 ```
 x_after_llm_block = llm_block(x_before)
@@ -59,7 +59,7 @@ This is the single most important design choice in Flamingo: visual conditioning
 
 ### Masked cross-attention for interleaved inputs
 
-In a prompt like "<image A> caption A <image B> caption B <image C> ?", each text token should only see images that came before it in the sequence. The cross-attention mask enforces: text token at position `t` attends only to image resampler tokens whose image index `i < i_t` where `i_t` is the most recent image before position `t`. "Sees only the last preceding image" or "sees all preceding images" are both valid choices; Flamingo chose the former.
+In a prompt like "<image A> caption A <image B> caption B <image C> ?", each text token should only see images that came before it in the sequence. The cross-attention mask enforces: text token at position `t` attends only to the resampler tokens of image `i_t`, where `i_t` is the most recent image before position `t`; tokens from every other image are masked. "Sees only the last preceding image" or "sees all preceding images" are both valid choices; Flamingo chose the former.
 
 ### In-context few-shot learning
 
@@ -76,7 +76,7 @@ The model sees the completion pattern and outputs "bird" (or whatever image3 sho
 Flamingo trained on three datasets:
 
 1. MultiModal MassiveWeb (M3W): 43M web pages with interleaved images and text, reconstructing reading order.
-2. Image-Text Pairs (ALIGN + LTIP): 4.4B pairs.
+2. Image-Text Pairs: ALIGN (1.8B pairs) plus LTIP (312M pairs), about 2.1B pairs in total.
 3. Video-Text Pairs (VTP): 27M short video clips.
 
 OBELICS (2023) is an open reproduction of the interleaved web corpus, which Idefics, Idefics2, and most open "Flamingo-like" models train on.
@@ -102,7 +102,7 @@ Otter (2023) builds on OpenFlamingo with instruction tuning on MIMIC-IT (a datas
 | Frozen LLM | Yes | Yes |
 | Few-shot in-context | Weak | Strong — the paper's centerpiece |
 | Interleaved inputs | No native support | Yes, the design target |
-| Training data | 130M pairs | 1.3B pairs + 43M interleaved pages |
+| Training data | 130M pairs | ~2.1B pairs + 27M video clips + 43M interleaved pages |
 | Parameter count | 188M trained | ~10B trained (cross-attn layers) |
 | Compute | Days on 8 A100s | Weeks on thousands of TPUv4 |
 
@@ -148,7 +148,7 @@ This lesson produces `outputs/skill-gated-bridge-diagnostic.md`. Given an open V
 | OBELICS | "Interleaved web corpus" | Open dataset of 141M web pages with images and text in reading order |
 | Chinchilla | "70B frozen base" | Flamingo's frozen text LLM, from DeepMind's Chinchilla paper |
 | Gate schedule | "How alpha moves" | The rate at which the cross-attention gate opens during training |
-| Cross-attn frequency | "Every M layers" | How often a gated cross-attention block is inserted; Flamingo uses M=4 |
+| Cross-attn frequency | "Every M layers" | How often a gated cross-attention block is inserted; Flamingo uses $M=4$ |
 | OpenFlamingo | "Open reproduction" | MosaicML/LAION open checkpoint at 3-9B; architecture-identical to Flamingo |
 
 ## Further Reading

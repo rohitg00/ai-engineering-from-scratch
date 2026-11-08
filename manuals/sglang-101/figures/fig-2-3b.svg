@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 252" role="img" aria-labelledby="fig-2-3b-title fig-2-3b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-3b-title">The new token ratio over 600 decode steps</title>
+  <desc id="fig-2-3b-desc">A line starts at a ratio of 0.7 at decode step 0 and falls in a straight line to 0.098 at step 600, then stays flat. At step 700 a retraction resets it to 0.714, the value in the log line of issue 8463, and the line starts to fall again.</desc>
+  <line x1="70" y1="200" x2="610" y2="200" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="30" x2="70" y2="200" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="200" x2="70" y2="205" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="218" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="205" y1="200" x2="205" y2="205" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="205" y="218" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="340" y1="200" x2="340" y2="205" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="340" y="218" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">400</text>
+  <line x1="475" y1="200" x2="475" y2="205" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="475" y="218" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">600</text>
+  <line x1="610" y1="200" x2="610" y2="205" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="610" y="218" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">800</text>
+  <text x="70" y="240" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">DECODE STEPS</text>
+  <text x="64" y="43.98" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.7</text>
+  <text x="64" y="181.6" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.098</text>
+  <line x1="70" y1="177.6" x2="475" y2="177.6" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="1.5 3.5"/>
+  <path d="M70 39.98000000000002 L475 177.5972 L542.5 177.5972 L542.5 36.779600000000016 L610 59.71580000000003" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <line x1="542.5" y1="30" x2="542.5" y2="200" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="542.5" y="22" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">retraction</text>
+  <text x="530.5" y="110" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.098 to 0.714</text>
+  <text x="272.5" y="100.56" font-size="11" class="m-serif" fill="var(--m-amber-ink, #85590c)">admission grows bolder</text>
+</svg>

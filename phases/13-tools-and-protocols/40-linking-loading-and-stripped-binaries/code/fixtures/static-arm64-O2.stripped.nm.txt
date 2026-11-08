@@ -1,0 +1,5 @@
+                 U ___stack_chk_fail
+                 U ___stack_chk_guard
+                 U _printf
+                 U _puts
+0000000100000000 T __mh_execute_header

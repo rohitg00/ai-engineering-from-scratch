@@ -1,0 +1,16 @@
+title: the export and push steps of the docker-container build
+source: manuals/docker-sandboxes-101/capture/out/28-buildx.txt
+lines: 29-38
+lang: console
+note: Count the manifests that the exporter wrote.
+---
+#13 exporting to image
+#13 exporting layers done
+#13 exporting manifest sha256:<digest> done
+#13 exporting config sha256:<digest> done
+#13 exporting attestation manifest sha256:<digest> done
+#13 exporting manifest list sha256:<digest> done
+#13 pushing manifest for m101-registry:5000/m101/hello-kit:v1@sha256:<digest> done
+#13 DONE <dur>
+View build details: <url>
+[exit 0]

@@ -49,7 +49,7 @@ flowchart TD
   C2 --> G
   C3 --> G
   G -->|No| X[Reject]
-  G -->|Yes| S[Compare evidence per effort and risk]
+  G -->|Yes| S[Compare each candidate slice: evidence gained per unit of effort and risk]
   S --> B[Build one slice]
 ```
 

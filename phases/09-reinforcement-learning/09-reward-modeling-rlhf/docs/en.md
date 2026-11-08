@@ -21,31 +21,31 @@ In 2026 the PPO step is mostly replaced by DPO (Phase 10 · 08) because it is ch
 
 ![Three-stage RLHF: SFT, RM training on pairwise prefs, PPO with KL penalty](../assets/rlhf.svg)
 
-**Stage 1: Supervised Fine-Tuning (SFT).** Start from a pretrained base model. Fine-tune on human-written demonstrations of the target behavior (instruction-following responses, helpful replies, etc.). Result: a model `π_SFT` that is *biased toward good behavior* but still has an unbounded action space.
+**Stage 1: Supervised Fine-Tuning (SFT).** Start from a pretrained base model. Fine-tune on human-written demonstrations of the target behavior (instruction-following responses, helpful replies, etc.). Result: a model $\pi_{\text{SFT}}$ that is *biased toward good behavior* but still has an unbounded action space.
 
 **Stage 2: Reward Model training.**
 
-- Collect pairs of responses `(y_+, y_-)` to prompts `x`, labeled by humans as "y_+ is preferred over y_-."
-- Train a reward model `R_φ(x, y)` to assign higher scores to `y_+`.
+- Collect pairs of responses $(y_+, y_-)$ to prompts $x$, labeled by humans as "y_+ is preferred over y_-."
+- Train a reward model $R_\phi(x, y)$ to assign higher scores to $y_+$.
 - Loss: the **Bradley-Terry pairwise logistic**:
 
-  `L(φ) = -E[ log σ(R_φ(x, y_+) - R_φ(x, y_-)) ]`
+  $L(\phi) = -\mathbb{E}[ \log \sigma(R_\phi(x, y_+) - R_\phi(x, y_-)) ]$
 
-  σ is the sigmoid. The difference in reward implies a log-odds of preference. BT has been the standard since 1952 (Bradley-Terry) and is the dominant choice in modern RLHF.
+  $\sigma$ is the sigmoid. The difference in reward implies a log-odds of preference. BT has been the standard since 1952 (Bradley-Terry) and is the dominant choice in modern RLHF.
 
-- `R_φ` is usually initialized from the SFT model with a scalar head on top. Same transformer backbone; a single linear layer outputs the reward.
+- $R_\phi$ is usually initialized from the SFT model with a scalar head on top. Same transformer backbone; a single linear layer outputs the reward.
 
 **Stage 3: PPO against the RM with KL penalty.**
 
-- Initialize the trainable policy `π_θ` from `π_SFT`. Keep a frozen *reference* `π_ref = π_SFT`.
-- Reward at the end of a response `y`:
+- Initialize the trainable policy $\pi_\theta$ from $\pi_{\text{SFT}}$. Keep a frozen *reference* $\pi_{\text{ref}} = \pi_{\text{SFT}}$.
+- Reward at the end of a response $y$:
 
-  `r_total(x, y) = R_φ(x, y) - β · KL(π_θ(·|x) || π_ref(·|x))`
+  $r_{\text{total}}(x, y) = R_\phi(x, y) - \beta \cdot \mathrm{KL}(\pi_\theta(\cdot \mid x) \Vert \pi_{\text{ref}}(\cdot \mid x))$
 
-  The KL penalty prevents `π_θ` from drifting arbitrarily from `π_SFT` — it is a *regularizer*, not a hard trust region. `β` typically `0.01`-`0.05`.
+  The KL penalty prevents $\pi_\theta$ from drifting arbitrarily from $\pi_{\text{SFT}}$ — it is a *regularizer*, not a hard trust region. $\beta$ typically 0.01-0.05.
 - Run PPO (Lesson 08) with this reward. Advantages are computed on the token-level trajectory, but the RM scores only the full response.
 
-**Why the KL?** Without it, PPO will happily find reward-hacking strategies — the RM was only trained on in-distribution completions. An out-of-distribution response might score higher than any human-written one. The KL keeps `π_θ` near the manifold where the RM was trained. It is the single most important knob in RLHF.
+**Why the KL?** Without it, PPO will happily find reward-hacking strategies — the RM was only trained on in-distribution completions. An out-of-distribution response might score higher than any human-written one. The KL keeps $\pi_\theta$ near the manifold where the RM was trained. It is the single most important knob in RLHF.
 
 **2026 status:**
 
@@ -97,7 +97,7 @@ After a few hundred updates, `w` assigns positive weights to good-word tokens an
 
 ### Step 3: PPO-like policy on top of RM
 
-Our toy policy produces a single token from a vocabulary. We score the token under the RM, compute `log π_θ(token | prompt)`, add a KL-to-reference penalty, and apply the clipped PPO surrogate.
+Our toy policy produces a single token from a vocabulary. We score the token under the RM, compute $\log \pi_\theta(\text{token} \mid \text{prompt})$, add a KL-to-reference penalty, and apply the clipped PPO surrogate.
 
 ```python
 def rlhf_step(theta, ref, w, prompt, rng, eps=0.2, beta=0.1, lr=0.05):
@@ -113,7 +113,7 @@ def rlhf_step(theta, ref, w, prompt, rng, eps=0.2, beta=0.1, lr=0.05):
 
 ### Step 4: monitor the KL
 
-Track mean `KL(π_θ || π_ref)` every update. If it creeps past `~5-10` the policy has drifted far from `π_SFT` — lower `β` is rising or reward hacking is starting. This is the top diagnostic in real RLHF.
+Track mean $\mathrm{KL}(\pi_\theta \Vert \pi_{\text{ref}})$ every update. If it creeps past `~5-10` (per-response KL in nats, summed over tokens, the unit TRL logs) the policy has drifted far from $\pi_{\text{SFT}}$: either $\beta$ is too low (raise it to pull the policy back) or reward hacking is starting. This is the top diagnostic in real RLHF.
 
 ### Step 5: the production recipe with TRL
 
@@ -163,7 +163,7 @@ Three things the library does for you. `adap_kl_ctrl=True` implements the adapti
 
 ## Pitfalls
 
-- **Over-optimization / reward hacking.** The RM is imperfect; `π_θ` finds adversarial completions that score high but are bad. Symptoms: reward climbs indefinitely while human eval score plateaus or drops. Fix: stop early, raise `β`, broaden RM training data.
+- **Over-optimization / reward hacking.** The RM is imperfect; $\pi_\theta$ finds adversarial completions that score high but are bad. Symptoms: reward climbs indefinitely while human eval score plateaus or drops. Fix: stop early, raise $\beta$, broaden RM training data.
 - **Length hacking.** RMs trained on helpful responses often implicitly reward length. The policy learns to pad responses. Remediation: length-normalized reward, or RLAIF with a length-aware RM.
 - **Too-small RM.** The RM needs to be at least as large as the policy. A tiny RM cannot faithfully score the policy's outputs.
 - **KL tuning.** Too low β → drift and reward hacking. Too high β → policy barely changes. The standard trick is an *adaptive* β that targets a fixed KL per step.
@@ -213,7 +213,7 @@ Refuse to ship RLHF-PPO without a KL monitor. Refuse to use an RM smaller than t
 ## Exercises
 
 1. **Easy.** Train the Bradley-Terry reward model in `code/main.py` on 500 synthetic preference pairs. Measure pairwise accuracy on a held-out 100 pairs. Should exceed 90%.
-2. **Medium.** Run the toy PPO-RLHF loop with `β ∈ {0.0, 0.1, 1.0}`. For each, plot RM score vs KL-to-reference over updates. Which runs reward-hack?
+2. **Medium.** Run the toy PPO-RLHF loop with $\beta \in \lbrace 0.0, 0.1, 1.0 \rbrace$. For each, plot RM score vs KL-to-reference over updates. Which runs reward-hack?
 3. **Hard.** Implement DPO (closed-form preference-likelihood loss) on the same preference data and compare to the RLHF-PPO pipeline in compute used and final RM score achieved.
 
 ## Key Terms
@@ -222,8 +222,8 @@ Refuse to ship RLHF-PPO without a KL monitor. Refuse to use an RM smaller than t
 |------|-----------------|-----------------------|
 | RLHF | "Alignment RL" | Three-stage SFT + RM + PPO pipeline (Christiano 2017, Ouyang 2022). |
 | Reward Model (RM) | "The scoring net" | Learned scalar function fit to pairwise preferences via Bradley-Terry. |
-| Bradley-Terry | "Pairwise logistic loss" | `P(y_+ ≻ y_-) = σ(R(y_+) - R(y_-))`; the standard RM objective. |
-| KL penalty | "Stay near the reference" | `β · KL(π_θ \|\| π_ref)` in the reward; the anti-reward-hacking regularizer. |
+| Bradley-Terry | "Pairwise logistic loss" | $P(y_+ \succ y_-) = \sigma(R(y_+) - R(y_-))$; the standard RM objective. |
+| KL penalty | "Stay near the reference" | $\beta \cdot \mathrm{KL}(\pi_\theta \Vert \pi_{\text{ref}})$ in the reward; the anti-reward-hacking regularizer. |
 | Reward hacking | "Goodhart's law" | Policy exploits RM flaws; symptoms: reward up, human eval flat. |
 | RLAIF | "AI-labeled preferences" | RLHF where labels come from another LM instead of humans. |
 | PRM | "Process Reward Model" | Scores partial reasoning steps; used in reasoning pipelines. |

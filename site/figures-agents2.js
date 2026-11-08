@@ -280,10 +280,10 @@
     var updates = [
       { key: 'query', val: '"how to deploy"' },
       { key: 'docs', val: '[d1, d2, d3]' },
-      { key: 'draft', val: '"run iii ..."' },
+      { key: 'draft', val: '"run locally ..."' },
       { key: 'grade', val: 'fail (off-topic)' },
-      { key: 'query', val: '"deploy iii engine"' },
-      { key: 'draft', val: '"iii cloud deploy"' },
+      { key: 'query', val: '"deploy a container"' },
+      { key: 'draft', val: '"push image, deploy service"' },
       { key: 'grade', val: 'pass' }
     ];
     state._render = function () {

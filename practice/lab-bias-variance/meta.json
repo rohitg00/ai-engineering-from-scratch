@@ -1,0 +1,22 @@
+{
+  "id": "lab-bias-variance",
+  "title": "Measure bias and variance",
+  "kind": "lab",
+  "summary": "Fit polynomials of degree 1 to 12 on resampled training sets and measure bias squared, variance and test error at each degree.",
+  "difficulty": "medium",
+  "tags": ["bias-variance", "overfitting", "model-selection"],
+  "lesson": "phases/02-ml-fundamentals/10-bias-variance",
+  "cheatsheet": "classical-ml",
+  "minutes": 30,
+  "entry": ["decompose", "expected_test_error", "sweep_degrees", "best_degree", "crossover_degree", "answers"],
+  "collections": ["experiment-labs", "classical-ml"],
+  "time_limit_s": 10,
+  "mutants": {
+    "no_noise_term": "Leaves the noise variance out of the test error.",
+    "same_seed_each_round": "Uses the same seed in every round, so every training set is the same and the variance is 0.",
+    "square_of_mean_bias": "Squares the mean error over the test points, not the mean of the squared errors.",
+    "strict_crossover": "Uses a strict greater than, so a degree with equal bias and variance is not the crossover.",
+    "ties_pick_higher": "Visits the degrees from high to low, so a tie picks the higher degree.",
+    "variance_ddof_1": "Divides the variance by B minus 1, so the error no longer equals bias plus variance plus noise."
+  }
+}

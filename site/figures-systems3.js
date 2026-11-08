@@ -263,7 +263,7 @@
   // ── a2a-task-lifecycle: agent sends a Task, states advance, artifact returns ─
   function a2aLifecycle(host) {
     var svg = newSvg(240);
-    var states = ['submitted', 'working', 'input-required', 'completed'];
+    var states = ['SUBMITTED', 'WORKING', 'INPUT_REQUIRED', 'COMPLETED'];
     var sx = 150, dx = 92, sy = 70;
     // client and remote agent boxes
     svg.appendChild(svgEl('rect', { x: 20, y: 30, width: 90, height: 36, rx: 4, fill: BP, 'fill-opacity': '0.16', stroke: BP, 'stroke-width': '1.5' }));
@@ -271,21 +271,22 @@
     svg.appendChild(svgEl('rect', { x: 410, y: 30, width: 90, height: 36, rx: 4, fill: WARN, 'fill-opacity': '0.16', stroke: WARN, 'stroke-width': '1.5' }));
     svg.appendChild(txt(455, 52, 'remote agent', 10, INK, 'middle'));
     // task message flying client → remote
-    var task = svgEl('rect', { x: -16, y: -8, width: 32, height: 16, rx: 3, fill: BP });
+    var task = svgEl('rect', { x: -30, y: -8, width: 60, height: 16, rx: 3, fill: BP });
     task.appendChild(svgEl('animateMotion', { dur: '8s', repeatCount: 'indefinite', path: 'M 110 48 L 410 48', keyTimes: '0;0.12;1', keyPoints: '0;1;1', calcMode: 'linear' }));
     task.appendChild(anim('opacity', '0;1;1;0;0', '8s', { keyTimes: '0;0.02;0.1;0.14;1' }));
     svg.appendChild(task);
-    svg.appendChild(svgEl('text', { x: 0, y: 4, 'font-size': 8, 'font-family': 'monospace', fill: 'var(--bg,#fff)', 'text-anchor': 'middle' }, [document.createTextNode('Task'),
+    svg.appendChild(svgEl('text', { x: 0, y: 4, 'font-size': 8, 'font-family': 'monospace', fill: 'var(--bg,#fff)', 'text-anchor': 'middle' }, [document.createTextNode('SendMessage'),
       svgEl('animateMotion', { dur: '8s', repeatCount: 'indefinite', path: 'M 110 48 L 410 48', keyTimes: '0;0.12;1', keyPoints: '0;1;1', calcMode: 'linear' }),
       anim('opacity', '0;1;1;0;0', '8s', { keyTimes: '0;0.02;0.1;0.14;1' })]));
     // state pills lighting up in sequence
     states.forEach(function (st, i) {
       var x = sx + i * dx;
-      svg.appendChild(svgEl('rect', { x: x - 42, y: 120, width: 84, height: 26, rx: 13, fill: 'var(--bg-surface,#eee)', stroke: SOFT, 'stroke-width': '1' }));
-      svg.appendChild(svgEl('rect', { x: x - 42, y: 120, width: 84, height: 26, rx: 13, fill: BP, 'fill-opacity': '0' }, [
+      svg.appendChild(svgEl('rect', { x: x - 42, y: 118, width: 84, height: 30, rx: 13, fill: 'var(--bg-surface,#eee)', stroke: SOFT, 'stroke-width': '1' }));
+      svg.appendChild(svgEl('rect', { x: x - 42, y: 118, width: 84, height: 30, rx: 13, fill: BP, 'fill-opacity': '0' }, [
         anim('fill-opacity', '0;0.85;0.85;0', '8s', { keyTimes: '0;' + (0.15 + i * 0.2).toFixed(2) + ';' + (0.32 + i * 0.2).toFixed(2) + ';1' })
       ]));
-      svg.appendChild(txt(x, 137, st, 9, INK, 'middle'));
+      svg.appendChild(txt(x, 129, 'TASK_STATE_', 6.5, INK, 'middle'));
+      svg.appendChild(txt(x, 141, st, 8.5, INK, 'middle'));
       if (i < states.length - 1) {
         svg.appendChild(svgEl('line', { x1: x + 42, y1: 133, x2: x + dx - 42, y2: 133, stroke: SOFT, 'stroke-width': '1' }));
       }
@@ -297,8 +298,8 @@
     svg.appendChild(art);
     svg.appendChild(txt(260, 215, 'artifact', 9, WARN, 'middle'));
     svg.appendChild(txt(260, 100, 'task lifecycle (state stays opaque to caller)', 10, MUTE, 'middle'));
-    shell(host, 'A2A TASK LIFECYCLE', 'submitted → working → completed', svg,
-      'One agent sends a Task to another and watches only the state transitions: submitted, working, sometimes input-required, then completed. The remote agent\'s internal reasoning stays opaque — the caller sees state changes and, at the end, an artifact returned as the output.');
+    shell(host, 'A2A TASK LIFECYCLE', 'SendMessage → TASK_STATE_* → artifact', svg,
+      'One agent sends a message with SendMessage, and the remote agent opens a Task. The caller watches only its status.state values: TASK_STATE_SUBMITTED, TASK_STATE_WORKING, sometimes TASK_STATE_INPUT_REQUIRED, then TASK_STATE_COMPLETED. The remote agent\'s internal reasoning stays opaque — the caller sees state changes and, at the end, an artifact returned as the output.');
   }
 
   // ── rvq-codec-cascade: residual vector quantization, semantic vs acoustic ──

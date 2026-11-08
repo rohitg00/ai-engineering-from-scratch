@@ -1,0 +1,7 @@
+{
+  "name": "ledger-desk",
+  "version": "1.0.0",
+  "description": "A small desktop ledger viewer, written for the Reverse Engineering 101 capture kit",
+  "main": "main.js",
+  "private": true
+}

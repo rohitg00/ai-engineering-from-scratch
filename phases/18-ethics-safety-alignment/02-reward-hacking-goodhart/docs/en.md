@@ -26,14 +26,16 @@ Gao, Schulman, Hilton (2023) measured this directly. Train a "gold" reward model
 
 Goodhart's original formulation: "When a measure becomes a target, it ceases to be a good measure." Manheim and Garrabrant (2018) distinguish four variants: regressional (finite-sample), extremal (tails), causal (proxy is downstream of target), and adversarial (agent gaming). For RLHF, extremal + adversarial are the dominant modes.
 
-Gao et al. give a functional form. Let `d = sqrt(KL(pi || pi_init))`. Let `R_proxy(d)` be mean proxy reward and `R_gold(d)` mean gold reward. Empirically:
+Gao et al. give a functional form for the gold reward. Let `d = sqrt(KL(pi || pi_init))` and let `R_gold(d)` be mean gold reward. Empirically:
 
-```
-R_proxy(d) = alpha * d - beta_proxy * d^2
-R_gold(d)  = alpha * d - beta_gold  * d^2
+```math
+\begin{aligned}
+R_{\text{gold}}^{\text{BoN}}(d) &= d\,(\alpha_{\text{BoN}} - \beta_{\text{BoN}}\, d) \\
+R_{\text{gold}}^{\text{RL}}(d) &= d\,(\alpha_{\text{RL}} - \beta_{\text{RL}} \log d)
+\end{aligned}
 ```
 
-with `beta_gold > beta_proxy`. Both rise from zero KL, both peak, the gold peak is closer to the origin. At large `d`, gold falls below baseline even while proxy keeps climbing. The proxy-gold gap has the same signature across BoN sampling, PPO, and SFT-to-best.
+Both forms rise from zero KL, peak, and then fall. The proxy score has no clean fit in the paper; it keeps climbing, roughly linearly in `d` at large KL. So at large `d`, gold falls below baseline even while proxy keeps climbing. The proxy-gold gap has the same signature for best-of-n sampling and for RL.
 
 This is the "over-optimization curve." It is not a bug in a specific reward model. It is the shape of the problem.
 
@@ -87,7 +89,7 @@ This lesson produces `outputs/skill-reward-hack-auditor.md`. Given a trained RLH
 
 2. Modify the noise distribution from Gaussian to a Student-t with low degrees of freedom (heavy-tailed). Keep the proxy RM training setup unchanged. What changes about the peak location and post-peak collapse?
 
-3. Read Gao et al. Figure 1 (ICML 2023). The paper proposes a functional form for the proxy-gold gap. Fit it to your simulated curves from Exercise 1 and compare parameters.
+3. Read Gao et al. Figure 1 (ICML 2023). The paper proposes a functional form for the gold reward as a function of `d`. Fit it to your simulated curves from Exercise 1 and compare parameters.
 
 4. Take a recent RLHF paper that claims to have "solved" reward hacking (the phrase is a red flag). Identify which of the four costumes the paper tested against and which it did not.
 

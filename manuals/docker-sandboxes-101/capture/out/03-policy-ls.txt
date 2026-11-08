@@ -1,0 +1,4 @@
+$ sbx policy ls
+POLICY         SOURCE   APPLIES TO   SUMMARY
+local-policy   local    all          network: 194 allow; filesystem read: 1 allow; filesystem write: 1 allow
+[exit 0]

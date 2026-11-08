@@ -1,0 +1,22 @@
+{
+  "id": "kmeans-step",
+  "title": "K-means assignment and update",
+  "kind": "implement",
+  "summary": "The k-means assignment and update steps with a tie rule and an empty cluster rule, and a full run until the assignments stop changing.",
+  "difficulty": "medium",
+  "tags": ["clustering", "k-means", "unsupervised-learning", "vectorization"],
+  "lesson": "phases/02-ml-fundamentals/07-unsupervised-learning",
+  "cheatsheet": "unsupervised-anomaly",
+  "minutes": 25,
+  "entry": ["assign", "update", "kmeans"],
+  "collections": ["classical-ml"],
+  "time_limit_s": 10,
+  "mutants": {
+    "empty_cluster_nan": "Takes the mean of an empty cluster, so its centroid becomes NaN.",
+    "empty_cluster_zero": "Starts the new centroids from zeros, so an empty cluster moves to the origin.",
+    "manhattan_distance": "Assigns by the sum of absolute differences and not by the squared Euclidean distance.",
+    "one_iteration_too_many": "Returns one more than the number of update steps.",
+    "tie_highest_index": "Sends a tied point to the highest index and not the lowest.",
+    "update_writes_input": "Writes the new centroids into the caller's centroid array."
+  }
+}

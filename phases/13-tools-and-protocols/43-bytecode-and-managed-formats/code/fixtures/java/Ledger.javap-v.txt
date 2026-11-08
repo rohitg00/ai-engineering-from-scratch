@@ -1,0 +1,301 @@
+Classfile /private/tmp/aiefs-re/phases/13-tools-and-protocols/43-bytecode-and-managed-formats/code/fixtures/java/Ledger.class
+  Last modified Oct 14, 2026; size 1581 bytes
+  SHA-256 checksum d771f37c06149b94fcd3731283ea3742acf10eeefd2eeca371fc8f6cf951d1e9
+  Compiled from "Ledger.java"
+public class Ledger
+  minor version: 0
+  major version: 65
+  flags: (0x0021) ACC_PUBLIC, ACC_SUPER
+  this_class: #8                          // Ledger
+  super_class: #2                         // java/lang/Object
+  interfaces: 0, fields: 1, methods: 7, attributes: 3
+Constant pool:
+   #1 = Methodref          #2.#3          // java/lang/Object."<init>":()V
+   #2 = Class              #4             // java/lang/Object
+   #3 = NameAndType        #5:#6          // "<init>":()V
+   #4 = Utf8               java/lang/Object
+   #5 = Utf8               <init>
+   #6 = Utf8               ()V
+   #7 = Fieldref           #8.#9          // Ledger.LABELS:[Ljava/lang/String;
+   #8 = Class              #10            // Ledger
+   #9 = NameAndType        #11:#12        // LABELS:[Ljava/lang/String;
+  #10 = Utf8               Ledger
+  #11 = Utf8               LABELS
+  #12 = Utf8               [Ljava/lang/String;
+  #13 = Methodref          #8.#14         // Ledger.grade:(I)I
+  #14 = NameAndType        #15:#16        // grade:(I)I
+  #15 = Utf8               grade
+  #16 = Utf8               (I)I
+  #17 = Fieldref           #18.#19        // java/lang/System.out:Ljava/io/PrintStream;
+  #18 = Class              #20            // java/lang/System
+  #19 = NameAndType        #21:#22        // out:Ljava/io/PrintStream;
+  #20 = Utf8               java/lang/System
+  #21 = Utf8               out
+  #22 = Utf8               Ljava/io/PrintStream;
+  #23 = Methodref          #8.#24         // Ledger.percentChange:(II)I
+  #24 = NameAndType        #25:#26        // percentChange:(II)I
+  #25 = Utf8               percentChange
+  #26 = Utf8               (II)I
+  #27 = Methodref          #8.#28         // Ledger.total:([I)I
+  #28 = NameAndType        #29:#30        // total:([I)I
+  #29 = Utf8               total
+  #30 = Utf8               ([I)I
+  #31 = Methodref          #8.#32         // Ledger.gradeLabel:(I)Ljava/lang/String;
+  #32 = NameAndType        #33:#34        // gradeLabel:(I)Ljava/lang/String;
+  #33 = Utf8               gradeLabel
+  #34 = Utf8               (I)Ljava/lang/String;
+  #35 = InvokeDynamic      #0:#36         // #0:makeConcatWithConstants:(IILjava/lang/String;)Ljava/lang/String;
+  #36 = NameAndType        #37:#38        // makeConcatWithConstants:(IILjava/lang/String;)Ljava/lang/String;
+  #37 = Utf8               makeConcatWithConstants
+  #38 = Utf8               (IILjava/lang/String;)Ljava/lang/String;
+  #39 = Methodref          #40.#41        // java/io/PrintStream.println:(Ljava/lang/String;)V
+  #40 = Class              #42            // java/io/PrintStream
+  #41 = NameAndType        #43:#44        // println:(Ljava/lang/String;)V
+  #42 = Utf8               java/io/PrintStream
+  #43 = Utf8               println
+  #44 = Utf8               (Ljava/lang/String;)V
+  #45 = Class              #46            // java/lang/String
+  #46 = Utf8               java/lang/String
+  #47 = String             #48            // F
+  #48 = Utf8               F
+  #49 = String             #50            // D
+  #50 = Utf8               D
+  #51 = String             #52            // C
+  #52 = Utf8               C
+  #53 = String             #54            // B
+  #54 = Utf8               B
+  #55 = String             #56            // A
+  #56 = Utf8               A
+  #57 = Utf8               Code
+  #58 = Utf8               LineNumberTable
+  #59 = Utf8               StackMapTable
+  #60 = Class              #61            // "[I"
+  #61 = Utf8               [I
+  #62 = Utf8               main
+  #63 = Utf8               ([Ljava/lang/String;)V
+  #64 = Utf8               <clinit>
+  #65 = Utf8               SourceFile
+  #66 = Utf8               Ledger.java
+  #67 = Utf8               BootstrapMethods
+  #68 = String             #69            // \u0001 \u0001 \u0001
+  #69 = Utf8               \u0001 \u0001 \u0001
+  #70 = MethodHandle       6:#71          // REF_invokeStatic java/lang/invoke/StringConcatFactory.makeConcatWithConstants:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+  #71 = Methodref          #72.#73        // java/lang/invoke/StringConcatFactory.makeConcatWithConstants:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+  #72 = Class              #74            // java/lang/invoke/StringConcatFactory
+  #73 = NameAndType        #37:#75        // makeConcatWithConstants:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+  #74 = Utf8               java/lang/invoke/StringConcatFactory
+  #75 = Utf8               (Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+  #76 = Utf8               InnerClasses
+  #77 = Class              #78            // java/lang/invoke/MethodHandles$Lookup
+  #78 = Utf8               java/lang/invoke/MethodHandles$Lookup
+  #79 = Class              #80            // java/lang/invoke/MethodHandles
+  #80 = Utf8               java/lang/invoke/MethodHandles
+  #81 = Utf8               Lookup
+{
+  static final java.lang.String[] LABELS;
+    descriptor: [Ljava/lang/String;
+    flags: (0x0018) ACC_STATIC, ACC_FINAL
+
+  public Ledger();
+    descriptor: ()V
+    flags: (0x0001) ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 1: 0
+
+  static int percentChange(int, int);
+    descriptor: (II)I
+    flags: (0x0008) ACC_STATIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: iload_0
+         1: ifne          6
+         4: iconst_0
+         5: ireturn
+         6: iload_1
+         7: iload_0
+         8: isub
+         9: bipush        100
+        11: imul
+        12: iload_0
+        13: idiv
+        14: ireturn
+      LineNumberTable:
+        line 5: 0
+        line 6: 6
+      StackMapTable: number_of_entries = 1
+        frame_type = 6 /* same */
+
+  static int grade(int);
+    descriptor: (I)I
+    flags: (0x0008) ACC_STATIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: iload_0
+         1: bipush        10
+         3: idiv
+         4: tableswitch   { // 6 to 10
+                       6: 46
+                       7: 44
+                       8: 42
+                       9: 40
+                      10: 40
+                 default: 48
+            }
+        40: iconst_4
+        41: ireturn
+        42: iconst_3
+        43: ireturn
+        44: iconst_2
+        45: ireturn
+        46: iconst_1
+        47: ireturn
+        48: iconst_0
+        49: ireturn
+      LineNumberTable:
+        line 10: 0
+        line 12: 40
+        line 13: 42
+        line 14: 44
+        line 15: 46
+        line 16: 48
+      StackMapTable: number_of_entries = 5
+        frame_type = 40 /* same */
+        frame_type = 1 /* same */
+        frame_type = 1 /* same */
+        frame_type = 1 /* same */
+        frame_type = 1 /* same */
+
+  static int total(int[]);
+    descriptor: ([I)I
+    flags: (0x0008) ACC_STATIC
+    Code:
+      stack=2, locals=6, args_size=1
+         0: iconst_0
+         1: istore_1
+         2: aload_0
+         3: astore_2
+         4: aload_2
+         5: arraylength
+         6: istore_3
+         7: iconst_0
+         8: istore        4
+        10: iload         4
+        12: iload_3
+        13: if_icmpge     33
+        16: aload_2
+        17: iload         4
+        19: iaload
+        20: istore        5
+        22: iload_1
+        23: iload         5
+        25: iadd
+        26: istore_1
+        27: iinc          4, 1
+        30: goto          10
+        33: iload_1
+        34: ireturn
+      LineNumberTable:
+        line 21: 0
+        line 22: 2
+        line 23: 33
+      StackMapTable: number_of_entries = 2
+        frame_type = 255 /* full_frame */
+          offset_delta = 10
+          locals = [ class "[I", int, class "[I", int, int ]
+          stack = []
+        frame_type = 248 /* chop */
+          offset_delta = 22
+
+  static java.lang.String gradeLabel(int);
+    descriptor: (I)Ljava/lang/String;
+    flags: (0x0008) ACC_STATIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: getstatic     #7                  // Field LABELS:[Ljava/lang/String;
+         3: iload_0
+         4: invokestatic  #13                 // Method grade:(I)I
+         7: aaload
+         8: areturn
+      LineNumberTable:
+        line 27: 0
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: (0x0009) ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=4, locals=2, args_size=1
+         0: iconst_3
+         1: newarray       int
+         3: dup
+         4: iconst_0
+         5: bipush        95
+         7: iastore
+         8: dup
+         9: iconst_1
+        10: bipush        82
+        12: iastore
+        13: dup
+        14: iconst_2
+        15: bipush        61
+        17: iastore
+        18: astore_1
+        19: getstatic     #17                 // Field java/lang/System.out:Ljava/io/PrintStream;
+        22: bipush        100
+        24: bipush        125
+        26: invokestatic  #23                 // Method percentChange:(II)I
+        29: aload_1
+        30: invokestatic  #27                 // Method total:([I)I
+        33: bipush        95
+        35: invokestatic  #31                 // Method gradeLabel:(I)Ljava/lang/String;
+        38: invokedynamic #35,  0             // InvokeDynamic #0:makeConcatWithConstants:(IILjava/lang/String;)Ljava/lang/String;
+        43: invokevirtual #39                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        46: return
+      LineNumberTable:
+        line 31: 0
+        line 32: 19
+        line 33: 46
+
+  static {};
+    descriptor: ()V
+    flags: (0x0008) ACC_STATIC
+    Code:
+      stack=4, locals=0, args_size=0
+         0: iconst_5
+         1: anewarray     #45                 // class java/lang/String
+         4: dup
+         5: iconst_0
+         6: ldc           #47                 // String F
+         8: aastore
+         9: dup
+        10: iconst_1
+        11: ldc           #49                 // String D
+        13: aastore
+        14: dup
+        15: iconst_2
+        16: ldc           #51                 // String C
+        18: aastore
+        19: dup
+        20: iconst_3
+        21: ldc           #53                 // String B
+        23: aastore
+        24: dup
+        25: iconst_4
+        26: ldc           #55                 // String A
+        28: aastore
+        29: putstatic     #7                  // Field LABELS:[Ljava/lang/String;
+        32: return
+      LineNumberTable:
+        line 2: 0
+}
+SourceFile: "Ledger.java"
+BootstrapMethods:
+  0: #70 REF_invokeStatic java/lang/invoke/StringConcatFactory.makeConcatWithConstants:(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/invoke/CallSite;
+    Method arguments:
+      #68 \u0001 \u0001 \u0001
+InnerClasses:
+  public static final #81= #77 of #79;    // Lookup=class java/lang/invoke/MethodHandles$Lookup of class java/lang/invoke/MethodHandles

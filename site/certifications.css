@@ -27,7 +27,7 @@
   right: -0.02em;
   bottom: -0.22em;
   font-family: var(--font-display);
-  font-size: clamp(7rem, 22vw, 17rem);
+  font-size: clamp(min(7rem, 35vw), 22vw, 17rem);
   line-height: 1;
   color: var(--blueprint);
   opacity: 0.045;
@@ -238,6 +238,15 @@
   gap: 16px;
 }
 
+.cert-assessment-head > :last-child {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.cert-question-head > :first-child {
+  overflow-wrap: anywhere;
+}
+
 .cert-card-code {
   color: var(--blueprint);
   font-size: 0.72rem;
@@ -263,7 +272,7 @@
 
 .cert-track-card h3 {
   margin: 0;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-size: clamp(min(1.6rem, 8vw), 3vw, 2.2rem);
   text-wrap: balance;
 }
 
@@ -376,6 +385,7 @@
 
 .cert-breadcrumb {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 18px;
   font-family: var(--font-mono);
@@ -519,6 +529,7 @@
   display: grid;
   grid-template-columns: 90px minmax(180px, 0.8fr) minmax(260px, 1.6fr);
   gap: 20px;
+  overflow-wrap: break-word;
   padding: 20px;
   border: 1px solid var(--rule-soft);
   background: var(--bg-surface);
@@ -669,7 +680,7 @@
 
 .assessment-hero h1 {
   margin: 12px 0 12px;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(min(2rem, 10vw), 5vw, 3.5rem);
 }
 
 .assessment-hero p {
@@ -712,6 +723,8 @@
 }
 
 .cert-question {
+  min-inline-size: 0;
+  overflow-wrap: break-word;
   margin: 0;
   padding: 24px;
   border: 1px solid var(--rule-soft);
@@ -818,7 +831,7 @@
 
 .cert-results-score {
   font-family: var(--font-display);
-  font-size: clamp(4rem, 10vw, 7rem);
+  font-size: clamp(min(4rem, 20vw), 10vw, 7rem);
   line-height: 0.9;
   color: var(--blueprint);
 }
@@ -953,12 +966,17 @@
   .cert-section-heading,
   .cert-domain-row,
   .cert-access-notice {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .cert-source-links {
     justify-content: flex-start;
     max-width: none;
+  }
+
+  .cert-source-links a {
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .cert-track-grid,
@@ -1021,12 +1039,12 @@
   .cert-assessment-grid,
   .cert-domain-score-grid,
   .cert-remediation-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .cert-plan-grid.cert-two-card-grid,
   .cert-assessment-grid.cert-two-card-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .cert-card-facts {

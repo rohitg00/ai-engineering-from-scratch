@@ -1,0 +1,264 @@
+[
+  {
+    "exchange": 1,
+    "title": "SendStreamingMessage: the full suite",
+    "events": [
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "task": {
+            "id": "25239d4c-798b-4754-be06-d1f94d0645b1",
+            "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+            "status": {
+              "state": "TASK_STATE_SUBMITTED",
+              "timestamp": "2026-10-06T09:00:04.000Z"
+            },
+            "history": [
+              {
+                "messageId": "c15521b1-b3dc-450a-9daa-37e51b591d75",
+                "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+                "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+                "role": "ROLE_USER",
+                "parts": [
+                  {
+                    "text": "Run the full suite for payments-api at commit 9f3c2e1"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "statusUpdate": {
+            "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+            "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+            "status": {
+              "state": "TASK_STATE_WORKING",
+              "message": {
+                "messageId": "47206245-9085-4c5c-9899-3f2b41a7a980",
+                "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+                "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+                "role": "ROLE_AGENT",
+                "parts": [
+                  {
+                    "text": "Checking out 9f3c2e1 and starting the suite"
+                  }
+                ]
+              },
+              "timestamp": "2026-10-06T09:00:04.250Z"
+            }
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+            "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+            "artifact": {
+              "artifactId": "test-log",
+              "name": "test-log.txt",
+              "parts": [
+                {
+                  "text": "tests/test_suite_01.py ........\n"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+            "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+            "artifact": {
+              "artifactId": "test-log",
+              "parts": [
+                {
+                  "text": "tests/test_suite_02.py ........\n"
+                }
+              ]
+            },
+            "append": true
+          }
+        }
+      }
+    ]
+  },
+  {
+    "exchange": 2,
+    "title": "SubscribeToTask: pick the stream back up",
+    "events": [
+      {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "task": {
+            "id": "25239d4c-798b-4754-be06-d1f94d0645b1",
+            "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+            "status": {
+              "state": "TASK_STATE_WORKING",
+              "message": {
+                "messageId": "47206245-9085-4c5c-9899-3f2b41a7a980",
+                "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+                "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+                "role": "ROLE_AGENT",
+                "parts": [
+                  {
+                    "text": "Checking out 9f3c2e1 and starting the suite"
+                  }
+                ]
+              },
+              "timestamp": "2026-10-06T09:00:04.250Z"
+            },
+            "history": [
+              {
+                "messageId": "c15521b1-b3dc-450a-9daa-37e51b591d75",
+                "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+                "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+                "role": "ROLE_USER",
+                "parts": [
+                  {
+                    "text": "Run the full suite for payments-api at commit 9f3c2e1"
+                  }
+                ]
+              }
+            ],
+            "artifacts": [
+              {
+                "artifactId": "test-log",
+                "name": "test-log.txt",
+                "parts": [
+                  {
+                    "text": "tests/test_suite_01.py ........\n"
+                  },
+                  {
+                    "text": "tests/test_suite_02.py ........\n"
+                  },
+                  {
+                    "text": "tests/test_suite_03.py ........\n"
+                  },
+                  {
+                    "text": "tests/test_suite_04.py ........\n"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+            "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+            "artifact": {
+              "artifactId": "test-log",
+              "parts": [
+                {
+                  "text": "tests/test_suite_05.py ........\n"
+                }
+              ]
+            },
+            "append": true
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+            "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+            "artifact": {
+              "artifactId": "test-log",
+              "parts": [
+                {
+                  "text": "tests/test_suite_06.py ........\n"
+                }
+              ]
+            },
+            "append": true
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+            "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+            "artifact": {
+              "artifactId": "test-log",
+              "parts": [
+                {
+                  "text": "tests/test_suite_07.py ........\n"
+                }
+              ]
+            },
+            "append": true
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "artifactUpdate": {
+            "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+            "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+            "artifact": {
+              "artifactId": "test-log",
+              "parts": [
+                {
+                  "text": "tests/test_suite_08.py ........\n"
+                }
+              ]
+            },
+            "append": true,
+            "lastChunk": true
+          }
+        }
+      },
+      {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "result": {
+          "statusUpdate": {
+            "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+            "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+            "status": {
+              "state": "TASK_STATE_COMPLETED",
+              "message": {
+                "messageId": "b9264586-875b-4914-992a-7a26235a16ba",
+                "contextId": "ed92749e-5686-4e20-a1cf-d3b2aee3b1da",
+                "taskId": "25239d4c-798b-4754-be06-d1f94d0645b1",
+                "role": "ROLE_AGENT",
+                "parts": [
+                  {
+                    "text": "96 passed"
+                  }
+                ]
+              },
+              "timestamp": "2026-10-06T09:00:04.500Z"
+            }
+          }
+        }
+      }
+    ]
+  }
+]

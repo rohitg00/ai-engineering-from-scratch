@@ -1,6 +1,6 @@
 # Capstone 07 — End-to-End Fine-Tuning Pipeline (Data to SFT to DPO to Serve)
 
-> An 8B model trained on your own data, DPO-aligned on your own preferences, quantized, speculative-decoded, and served at measurable $/1M tokens. The 2026 open stack is Axolotl v0.8, TRL 0.15, Unsloth for iteration, GPTQ/AWQ/GGUF for quantization, vLLM 0.7 with EAGLE-3 for serving. The capstone is to run the whole pipeline reproducibly — YAML in, served endpoint out — and publish a model card under the 2026 Model Openness Framework.
+> An 8B-class model trained on your own data, DPO-aligned on your own preferences, quantized, speculative-decoded, and served at measurable $/1M tokens. The 2026 open stack is Axolotl v0.8, TRL 0.15, Unsloth for iteration, GPTQ/AWQ/GGUF for quantization, vLLM 0.7 with EAGLE-3 for serving. The capstone is to run the whole pipeline reproducibly (YAML in, served endpoint out) and publish a model card under the 2026 Model Openness Framework.
 
 **Type:** Capstone
 **Languages:** Python (pipeline), YAML (configs), Bash (scripts)
@@ -12,7 +12,7 @@
 
 Every serious AI team in 2026 keeps a fine-tuning pipeline on tap. Not because they ship a frontier base model, but because downstream adaptation — domain SFT, DPO against labeled preferences, distilled drafts for speculative decoding, serving with EAGLE-3 — is where the measurable wins live. Axolotl v0.8 handles multi-GPU SFT configs. TRL 0.15 handles DPO and GRPO. Unsloth gets you fast single-GPU iteration. vLLM 0.7 with EAGLE-3 pushes decode throughput 2-3x without quality loss. The tooling works; the craft is in the YAMLs, the data hygiene, and the eval discipline.
 
-You will run an 8B base (Llama 3.3, Qwen3, or Gemma 3) through SFT then DPO on task-specific data, quantize for serving, and measure gains against lm-evaluation-harness, RewardBench-2, MT-Bench-v2, and MMLU-Pro. You will produce a model card under the 2026 Model Openness Framework. The point is reproducibility — one command reruns the whole pipeline end to end.
+You will run an 8B to 14B base (Llama 3.1 8B, Qwen3 14B, or Gemma 3 12B) through SFT then DPO on task-specific data, quantize for serving, and measure gains against lm-evaluation-harness, RewardBench-2, MT-Bench-v2, and MMLU-Pro. You will produce a model card under the 2026 Model Openness Framework. The point is reproducibility: one command reruns the whole pipeline end to end.
 
 ## Concept
 
@@ -56,7 +56,7 @@ model card (2026 MOF) + safety eval (Llama Guard 4)
 ## Stack
 
 - Data: Datatrove for dedup, Nemotron-CC classifier for quality, Presidio for PII
-- Base: Llama 3.3 8B, Qwen3 14B, or Gemma 3 12B
+- Base: Llama 3.1 8B, Qwen3 14B, or Gemma 3 12B
 - SFT: Axolotl v0.8 with ZeRO-3, Flash Attention 3, packed sequences
 - Preference tuning: TRL 0.15 for DPO or GRPO; Unsloth for single-GPU iteration
 - Quantization: GPTQ (Marlin), AWQ, GGUF via llama.cpp
@@ -120,7 +120,7 @@ $ ./pipeline.sh config/llama3.3-8b-domainX.yaml
 
 1. Run SFT-only vs SFT+DPO vs SFT+GRPO on the same task-specific benchmark. Report which preference method wins and by how much.
 
-2. Swap Llama 3.3 8B for Qwen3 14B. Measure the $/1M tokens at matched quality.
+2. Swap Llama 3.1 8B for Qwen3 14B. Measure the $/1M tokens at matched quality.
 
 3. Measure EAGLE-3 acceptance rate on domain data vs generic ShareGPT. Report the delta and what it means for latency budgets.
 
@@ -148,5 +148,5 @@ $ ./pipeline.sh config/llama3.3-8b-domainX.yaml
 - [DeepSeek R1 paper (arXiv:2501.12948)](https://arxiv.org/abs/2501.12948) — GRPO methodology
 - [vLLM + EAGLE-3 documentation](https://docs.vllm.ai) — reference serving stack
 - [SGLang SpecForge](https://github.com/sgl-project/SpecForge) — alternate speculative-decoding trainer
-- [Model Openness Framework 2026](https://isocpp.org/) — the open-release grading standard
+- [Model Openness Framework (arXiv:2403.13784)](https://arxiv.org/abs/2403.13784): the open-release grading standard
 - [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) — canonical eval runner

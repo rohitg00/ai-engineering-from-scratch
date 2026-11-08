@@ -1,0 +1,19 @@
+# custom-rm-noenv: --custom-rm-path my_rewards.custom_rm without -e PYTHONPATH=/root/lab
+# run started 2026-10-23T00:19:01Z, container stopped by hand 2026-10-23T02:17Z
+# lines with 503 Service Unavailable: 44
+# lines with rollout N metrics: 0
+# step lines: 0
+(RolloutExecutor pid=2515) [2026-10-23 00:21:09.569 rollout_executor] inference_rollout_train.py:143 - [rollout] Task raised exception: ModuleNotFoundError("No module named 'my_rewards'")
+(RolloutExecutor pid=2515) ModuleNotFoundError: No module named 'my_rewards'
+2026-10-23T02:17:28Z miles-custom-rm-noenv: the run ended
+
+# raw evidence
+first timestamped line: 2026-10-23 00:19:02
+last timestamped line: 2026-10-23 02:17:06
+total log lines: 183248
+503 lines by minute (all from the RolloutExecutor):
+     40 2026-10-23 00:24
+      4 2026-10-23 00:25
+queue log:
+2026-10-23T00:19:01Z LC684 RUN custom-rm-noenv
+2026-10-23T02:17:10Z LC684 RC 124 custom-rm-noenv steps=0

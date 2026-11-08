@@ -103,6 +103,24 @@ test('domain route totals match their canonical manifests', () => {
   assert.match(sectionSource('coding-agents'), /16-lesson path · 900 minutes/);
 });
 
+test('agent-assisted route teaches the declared workbench prerequisites first', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'learning-paths', 'using-coding-agents.json'), 'utf8'));
+  const indices = new Map(manifest.lessons.map((entry, index) => [Number(path.basename(entry.path).slice(0, 2)), index]));
+  for (const entry of manifest.lessons) {
+    const number = Number(path.basename(entry.path).slice(0, 2));
+    const docs = fs.readFileSync(path.join(root, entry.path, 'docs', 'en.md'), 'utf8');
+    const prerequisites = docs.split('\n').find(line => line.startsWith('**Prerequisites:**'));
+    assert.ok(prerequisites, `${entry.path} must declare prerequisites`);
+    const declared = Array.from(prerequisites.matchAll(/(?:·\s*|lessons?\s+|and\s+|to\s+)(\d{1,2})\b/g), match => Number(match[1]));
+    for (const prerequisite of declared) {
+      if (indices.has(prerequisite)) {
+        assert.ok(indices.get(prerequisite) < indices.get(number), `${number} appears before its declared prerequisite ${prerequisite}`);
+      }
+    }
+  }
+  assert.equal(manifest.lessons.reduce((sum, entry) => sum + entry.minutes, 0), manifest.estimatedMinutes);
+});
+
 test('every child node resolves to a real local lesson', () => {
   const hrefs = Array.from(learningPaths.matchAll(/<a class="skills-node" href="lesson\?path=([^&"]+)&amp;learningPath=([^"]+)"/g));
   assert.equal(hrefs.length, 27);
@@ -256,9 +274,72 @@ test('career chooser hash navigation reveals and focuses a guide', () => {
 
 test('learning paths shares the site theme preference', () => {
   assert.match(learningPaths, /<script src="learning-paths\.js\?v=20260830a"><\/script>/);
-  assert.match(learningPaths, /<link rel="stylesheet" href="learning-paths\.css\?v=20260829d">/);
+  assert.match(learningPaths, /<link rel="stylesheet" href="learning-paths\.css\?v=20261015a">/);
   assert.match(learningPathsJs, /localStorage\.getItem\('theme'\)/);
   assert.match(learningPathsJs, /localStorage\.setItem\('theme', theme\)/);
   assert.match(learningPathsJs, /prefers-color-scheme: dark/);
   assert.match(learningPathsJs, /addEventListener\('storage'/);
+});
+
+function loadCareerPage(initialHash) {
+  const vm = require('node:vm');
+  const listeners = { document: {}, window: {} };
+  const attrs = el => ({
+    setAttribute(name, value) { el.attributes[name] = String(value); },
+    getAttribute(name) { return name in el.attributes ? el.attributes[name] : null; },
+    removeAttribute(name) { delete el.attributes[name]; },
+  });
+  const link = { attributes: { href: '#career-route-ai-data-engineer' }, addEventListener() {} };
+  Object.assign(link, attrs(link));
+  const guide = {
+    id: 'career-route-ai-data-engineer',
+    open: false,
+    listeners: {},
+    matches: selector => selector === 'details.career-guide',
+    addEventListener(type, fn) { this.listeners[type] = fn; },
+    querySelector: () => null,
+    scrollIntoView() {},
+  };
+  const location = { pathname: '/learning-paths.html', search: '', hash: initialHash };
+  const history = { state: null, length: 1, calls: [], replaceState(state, title, url) { this.calls.push(url); location.hash = url.includes('#') ? url.slice(url.indexOf('#')) : ''; } };
+  const documentElement = { attributes: {} };
+  Object.assign(documentElement, attrs(documentElement));
+  const document = {
+    documentElement,
+    addEventListener: (type, fn) => { listeners.document[type] = fn; },
+    getElementById: id => (id === guide.id ? guide : null),
+    querySelectorAll: selector => (selector === '[data-career-choice]' ? [link] : selector === 'details.career-guide' ? [guide] : []),
+  };
+  const window = {
+    location,
+    history,
+    matchMedia: () => ({ matches: false }),
+    requestAnimationFrame: () => 0,
+    addEventListener: (type, fn) => { listeners.window[type] = fn; },
+  };
+  vm.runInContext(learningPathsJs, vm.createContext({ window, document, localStorage: { getItem: () => null, setItem() {} } }));
+  listeners.document.DOMContentLoaded();
+  return { guide, link, location, history };
+}
+
+test('opening and closing a career guide keeps the hash and chooser state in step without new history entries', () => {
+  const page = loadCareerPage('');
+  page.guide.open = true;
+  page.guide.listeners.toggle();
+  assert.equal(page.link.getAttribute('aria-current'), 'location');
+  assert.equal(page.location.hash, '#career-route-ai-data-engineer');
+  page.guide.open = false;
+  page.guide.listeners.toggle();
+  assert.equal(page.link.getAttribute('aria-current'), null);
+  assert.equal(page.location.hash, '');
+  assert.deepEqual(page.history.calls, ['/learning-paths.html#career-route-ai-data-engineer', '/learning-paths.html']);
+  assert.equal(page.history.length, 1);
+});
+
+test('closing a guide that is not the current hash leaves the hash alone', () => {
+  const page = loadCareerPage('#overview');
+  page.guide.open = false;
+  page.guide.listeners.toggle();
+  assert.equal(page.location.hash, '#overview');
+  assert.deepEqual(page.history.calls, []);
 });

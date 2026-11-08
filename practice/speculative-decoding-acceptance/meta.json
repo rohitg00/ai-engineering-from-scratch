@@ -1,0 +1,24 @@
+{
+  "id": "speculative-decoding-acceptance",
+  "title": "Speculative decoding: accept, reject and resample",
+  "kind": "research",
+  "summary": "The min(1, p/q) acceptance rule and the residual distribution that keep speculative decoding exactly equal to the target model.",
+  "difficulty": "hard",
+  "tags": ["speculative-decoding", "sampling", "inference", "probability"],
+  "lesson": "phases/07-transformers-deep-dive/16-speculative-decoding",
+  "cheatsheet": "speculative-decoding",
+  "minutes": 35,
+  "entry": ["acceptance_rate", "residual_distribution", "speculative_step", "expected_tokens"],
+  "collections": ["papers-to-code", "llm-inference"],
+  "time_limit_s": 10,
+  "method": "speculative-decoding",
+  "paper": {"title": "Fast Inference from Transformers via Speculative Decoding", "authors": "Leviathan et al.", "year": 2023, "url": "https://arxiv.org/abs/2211.17192"},
+  "mutants": {
+    "accept_ratio_inverted": "Accepts with probability min(1, q / p), the draft over the target.",
+    "alpha_unweighted": "Computes alpha as the mean over the vocabulary of min(1, p / q), not the sum of min(p, q).",
+    "expected_tokens_off_by_one": "Uses alpha to the power gamma, not gamma + 1, so it forgets the bonus token.",
+    "no_bonus_token": "Returns after full acceptance without the bonus token from the last target row.",
+    "residual_from_target": "Samples from the target distribution after a rejection, not from the residual.",
+    "residual_not_clipped": "Normalizes the absolute value of p - q in place of max(0, p - q)."
+  }
+}

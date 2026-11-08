@@ -1,0 +1,369 @@
+{
+  "request": {
+    "jsonrpc": "2.0",
+    "id": 21,
+    "method": "tools/call",
+    "params": {
+      "name": "compare_functions",
+      "arguments": {
+        "left": {
+          "evidence_id": "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+          "record": "<cut by run.py: the complete analyze_function record, see 10-mcp-11-analyze-function-total-O1.json>"
+        },
+        "right": {
+          "evidence_id": "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8",
+          "record": "<cut by run.py: the complete analyze_function record, see 10-mcp-18-analyze-function-total-O2.json>"
+        }
+      }
+    }
+  },
+  "response": {
+    "result": {
+      "_meta": {
+        "provenance": {
+          "untrusted_content": true,
+          "source": "analysis_target"
+        }
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "<cut by run.py: the text copy of structuredContent, 17106 bytes>"
+        }
+      ],
+      "structuredContent": {
+        "evidence_id": "ev_40ba96d8ce66a46fdd84d1d344f17dc50e0d49d333936cc6eb54320234655393",
+        "subject": null,
+        "provider": {
+          "id": "rea-function-comparison",
+          "name": "REA function comparison",
+          "version": "1"
+        },
+        "analysis_profile": null,
+        "predicate_type": "rea.function-comparison",
+        "operation": "compare_functions",
+        "parameters": {
+          "left_evidence_id": "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+          "right_evidence_id": "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+        },
+        "raw_result": null,
+        "normalized_result": {
+          "status": "changed",
+          "function_match": {
+            "status": "matched",
+            "method": "symbol",
+            "left_name": "_total",
+            "right_name": "_total"
+          },
+          "left_subject_sha256": "01b5d08b08fb94678be5919d0e753d44b505a53107c95b94634f0e5d41c9e375",
+          "right_subject_sha256": "8bbbaa5866c3fc9f6f598943350b55b5c11669dd1d5e41005efdfe44241915b3",
+          "summary": {
+            "unchanged": 3,
+            "changed": 5,
+            "unknown": 0
+          },
+          "dimensions": [
+            {
+              "dimension": "identity",
+              "left_count": null,
+              "right_count": null,
+              "evidence_links": [
+                "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+              ],
+              "limitations": [],
+              "status": "unchanged",
+              "left_digest": "64dcad9ce77d71694deb811ab444db89297ebbb812b88feefe88615213761ea3",
+              "right_digest": "64dcad9ce77d71694deb811ab444db89297ebbb812b88feefe88615213761ea3",
+              "text_delta": null,
+              "conclusion_kind": "derived_relationship"
+            },
+            {
+              "dimension": "pseudocode",
+              "left_count": 300,
+              "right_count": 2904,
+              "evidence_links": [
+                "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+              ],
+              "limitations": [
+                "Exact provider text is compared without address or generated-name normalization; layout-only differences do not establish a behavior change."
+              ],
+              "status": "changed",
+              "left_digest": "2790348596ff9631598fa4c3d24a159dbddc18bedd1947ca720b4487cd443077",
+              "right_digest": "5557354d75d8afbfc23eaee1f198c6f46998d5bafa3e6638d322b77a81f09090",
+              "text_delta": {
+                "added_lines": 109,
+                "removed_lines": 11,
+                "hunks": 11
+              },
+              "conclusion_kind": "derived_relationship"
+            },
+            {
+              "dimension": "assembly",
+              "left_count": 336,
+              "right_count": 1866,
+              "evidence_links": [
+                "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+              ],
+              "limitations": [
+                "Exact provider text is compared without address or generated-name normalization; layout-only differences do not establish a behavior change.",
+                "Assembly is opaque provider text; relocation normalization is unavailable."
+              ],
+              "status": "changed",
+              "left_digest": "40e2d441a90f4ea0d2cbde965a97d454ee787ce4557c684e5d6fd32c7963a63a",
+              "right_digest": "e1140153c0701ef2ba6e716883403a68807951b0805205c62cc59717d81017b4",
+              "text_delta": {
+                "added_lines": 61,
+                "removed_lines": 12,
+                "hunks": 2
+              },
+              "conclusion_kind": "derived_relationship"
+            },
+            {
+              "dimension": "comments",
+              "left_count": 0,
+              "right_count": 0,
+              "evidence_links": [
+                "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+              ],
+              "limitations": [],
+              "status": "unchanged",
+              "left_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "right_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "text_delta": null,
+              "conclusion_kind": "derived_relationship"
+            },
+            {
+              "dimension": "calls",
+              "left_count": 1,
+              "right_count": 1,
+              "evidence_links": [
+                "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+              ],
+              "limitations": [
+                "Left: Only resolved Ghidra call references are returned; unresolved computed or indirect calls remain unknown, while function classifications distinguish thunks and externals.",
+                "Right: Only resolved Ghidra call references are returned; unresolved computed or indirect calls remain unknown, while function classifications distinguish thunks and externals."
+              ],
+              "status": "unchanged",
+              "left_digest": "23babb4dc7f36a55cdf3d697a4e2525b13eca24673f9fdd6f917690d2f729005",
+              "right_digest": "23babb4dc7f36a55cdf3d697a4e2525b13eca24673f9fdd6f917690d2f729005",
+              "text_delta": null,
+              "conclusion_kind": "derived_relationship"
+            },
+            {
+              "dimension": "references",
+              "left_count": 4,
+              "right_count": 13,
+              "evidence_links": [
+                "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+              ],
+              "limitations": [
+                "Reference endpoints differ independently of provider reference-kind metadata."
+              ],
+              "status": "changed",
+              "left_digest": "9309c17737f3bf9558b308cb732580521f5f58514cd54e30bd5f4e3a57515652",
+              "right_digest": "131a3f22a88c9e6c79e0f39481f3fbf0973e33c8c036385c5043c9f2f9f8366f",
+              "text_delta": null,
+              "conclusion_kind": "derived_relationship"
+            },
+            {
+              "dimension": "strings_names",
+              "left_count": 2,
+              "right_count": 11,
+              "evidence_links": [
+                "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+              ],
+              "limitations": [],
+              "status": "changed",
+              "left_digest": "e07a657018b02774769b44125bae5a597532f2ce52d2a7eb18e1c6db56373ab5",
+              "right_digest": "89016c5d25f5fb770db2616be4382486e1fe0785bbcd8a4b591d3f6d3644ec06",
+              "text_delta": null,
+              "conclusion_kind": "derived_relationship"
+            },
+            {
+              "dimension": "cfg",
+              "left_count": 5,
+              "right_count": 16,
+              "evidence_links": [
+                "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+              ],
+              "limitations": [],
+              "status": "changed",
+              "left_digest": "9f2626b5dfc0309226684d9f5be151090e790c1500d425cdc6f84a3105be3ea9",
+              "right_digest": "ee53fb9adf22fa990f8ee51c3e686dedbe9542d79fe4856450aed19461191ef6",
+              "text_delta": null,
+              "conclusion_kind": "derived_relationship"
+            }
+          ],
+          "changes": [
+            {
+              "dimension": "pseudocode",
+              "left_count": 300,
+              "right_count": 2904,
+              "evidence_links": [
+                "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+              ],
+              "limitations": [
+                "Exact provider text is compared without address or generated-name normalization; layout-only differences do not establish a behavior change."
+              ],
+              "status": "changed",
+              "left_digest": "2790348596ff9631598fa4c3d24a159dbddc18bedd1947ca720b4487cd443077",
+              "right_digest": "5557354d75d8afbfc23eaee1f198c6f46998d5bafa3e6638d322b77a81f09090",
+              "text_delta": {
+                "added_lines": 109,
+                "removed_lines": 11,
+                "hunks": 11
+              },
+              "conclusion_kind": "derived_relationship"
+            },
+            {
+              "dimension": "assembly",
+              "left_count": 336,
+              "right_count": 1866,
+              "evidence_links": [
+                "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+              ],
+              "limitations": [
+                "Exact provider text is compared without address or generated-name normalization; layout-only differences do not establish a behavior change.",
+                "Assembly is opaque provider text; relocation normalization is unavailable."
+              ],
+              "status": "changed",
+              "left_digest": "40e2d441a90f4ea0d2cbde965a97d454ee787ce4557c684e5d6fd32c7963a63a",
+              "right_digest": "e1140153c0701ef2ba6e716883403a68807951b0805205c62cc59717d81017b4",
+              "text_delta": {
+                "added_lines": 61,
+                "removed_lines": 12,
+                "hunks": 2
+              },
+              "conclusion_kind": "derived_relationship"
+            },
+            {
+              "dimension": "references",
+              "left_count": 4,
+              "right_count": 13,
+              "evidence_links": [
+                "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+              ],
+              "limitations": [
+                "Reference endpoints differ independently of provider reference-kind metadata."
+              ],
+              "status": "changed",
+              "left_digest": "9309c17737f3bf9558b308cb732580521f5f58514cd54e30bd5f4e3a57515652",
+              "right_digest": "131a3f22a88c9e6c79e0f39481f3fbf0973e33c8c036385c5043c9f2f9f8366f",
+              "text_delta": null,
+              "conclusion_kind": "derived_relationship"
+            },
+            {
+              "dimension": "strings_names",
+              "left_count": 2,
+              "right_count": 11,
+              "evidence_links": [
+                "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+              ],
+              "limitations": [],
+              "status": "changed",
+              "left_digest": "e07a657018b02774769b44125bae5a597532f2ce52d2a7eb18e1c6db56373ab5",
+              "right_digest": "89016c5d25f5fb770db2616be4382486e1fe0785bbcd8a4b591d3f6d3644ec06",
+              "text_delta": null,
+              "conclusion_kind": "derived_relationship"
+            },
+            {
+              "dimension": "cfg",
+              "left_count": 5,
+              "right_count": 16,
+              "evidence_links": [
+                "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+                "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+              ],
+              "limitations": [],
+              "status": "changed",
+              "left_digest": "9f2626b5dfc0309226684d9f5be151090e790c1500d425cdc6f84a3105be3ea9",
+              "right_digest": "ee53fb9adf22fa990f8ee51c3e686dedbe9542d79fe4856450aed19461191ef6",
+              "text_delta": null,
+              "conclusion_kind": "derived_relationship"
+            }
+          ],
+          "limitations": [
+            "Left: Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+            "Left: Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+            "Left: Pseudocode and assembly are Ghidra-specific representations, not original source or Hopper-equivalent text.",
+            "Left: References cover the complete Ghidra function-body AddressSet and exact entry. Dossier incoming edges omit sources owned by that function; procedure_references also retains those internal edges.",
+            "Left: Resolved reference metadata identifies computed, indirect, external, call, jump, and data edges; unresolved targetless flows remain unknown, and function classifications distinguish thunks and externals.",
+            "Left: Synthetic Ghidra entry-point references without actionable memory sources are omitted.",
+            "Left: The Java bridge serializes one function request per Program and lets each decompilation run until it completes or the caller cancels.",
+            "Left: The dossier combines Ghidra FunctionManager, Listing, ReferenceManager, BasicBlockModel, and decompiler observations; provider-specific pseudocode and assembly are not cross-provider text invariants.",
+            "Left: The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+            "Left: The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+            "Left: Thunk and external classifications are Ghidra FunctionManager observations; they do not resolve targetless calls.",
+            "Left: Unresolved computed or indirect flows without target addresses are not represented as reference edges.",
+            "Left: macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.",
+            "Right: Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+            "Right: Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+            "Right: Pseudocode and assembly are Ghidra-specific representations, not original source or Hopper-equivalent text.",
+            "Right: References cover the complete Ghidra function-body AddressSet and exact entry. Dossier incoming edges omit sources owned by that function; procedure_references also retains those internal edges.",
+            "Right: Resolved reference metadata identifies computed, indirect, external, call, jump, and data edges; unresolved targetless flows remain unknown, and function classifications distinguish thunks and externals.",
+            "Right: Synthetic Ghidra entry-point references without actionable memory sources are omitted.",
+            "Right: The Java bridge serializes one function request per Program and lets each decompilation run until it completes or the caller cancels.",
+            "Right: The dossier combines Ghidra FunctionManager, Listing, ReferenceManager, BasicBlockModel, and decompiler observations; provider-specific pseudocode and assembly are not cross-provider text invariants.",
+            "Right: The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+            "Right: The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+            "Right: Thunk and external classifications are Ghidra FunctionManager observations; they do not resolve targetless calls.",
+            "Right: Unresolved computed or indirect flows without target addresses are not represented as reference edges.",
+            "Right: macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state."
+          ]
+        },
+        "confidence": "derived",
+        "authority": "analyst-inference",
+        "environment": null,
+        "limitations": [
+          "Artifact identity is unavailable for this observation.",
+          "Left: Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+          "Left: Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+          "Left: Pseudocode and assembly are Ghidra-specific representations, not original source or Hopper-equivalent text.",
+          "Left: References cover the complete Ghidra function-body AddressSet and exact entry. Dossier incoming edges omit sources owned by that function; procedure_references also retains those internal edges.",
+          "Left: Resolved reference metadata identifies computed, indirect, external, call, jump, and data edges; unresolved targetless flows remain unknown, and function classifications distinguish thunks and externals.",
+          "Left: Synthetic Ghidra entry-point references without actionable memory sources are omitted.",
+          "Left: The Java bridge serializes one function request per Program and lets each decompilation run until it completes or the caller cancels.",
+          "Left: The dossier combines Ghidra FunctionManager, Listing, ReferenceManager, BasicBlockModel, and decompiler observations; provider-specific pseudocode and assembly are not cross-provider text invariants.",
+          "Left: The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+          "Left: The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+          "Left: Thunk and external classifications are Ghidra FunctionManager observations; they do not resolve targetless calls.",
+          "Left: Unresolved computed or indirect flows without target addresses are not represented as reference edges.",
+          "Left: macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state.",
+          "Right: Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+          "Right: Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+          "Right: Pseudocode and assembly are Ghidra-specific representations, not original source or Hopper-equivalent text.",
+          "Right: References cover the complete Ghidra function-body AddressSet and exact entry. Dossier incoming edges omit sources owned by that function; procedure_references also retains those internal edges.",
+          "Right: Resolved reference metadata identifies computed, indirect, external, call, jump, and data edges; unresolved targetless flows remain unknown, and function classifications distinguish thunks and externals.",
+          "Right: Synthetic Ghidra entry-point references without actionable memory sources are omitted.",
+          "Right: The Java bridge serializes one function request per Program and lets each decompilation run until it completes or the caller cancels.",
+          "Right: The dossier combines Ghidra FunctionManager, Listing, ReferenceManager, BasicBlockModel, and decompiler observations; provider-specific pseudocode and assembly are not cross-provider text invariants.",
+          "Right: The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+          "Right: The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+          "Right: Thunk and external classifications are Ghidra FunctionManager observations; they do not resolve targetless calls.",
+          "Right: Unresolved computed or indirect flows without target addresses are not represented as reference edges.",
+          "Right: macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state."
+        ],
+        "relationship_coverage": null,
+        "locations": [],
+        "evidence_links": [
+          "ev_a1fe53ff3596b1ba02c39f7b9e00bf06049dd1637d448b510157fbd81cbe21ec",
+          "ev_bfe3275bb0574d9b018464f2f0221fbb3ba91d1e38c8c36c984b38a47f0e0fd8"
+        ]
+      }
+    },
+    "jsonrpc": "2.0",
+    "id": 21
+  }
+}

@@ -1,0 +1,28 @@
+$ docker-agent run --sandbox --exec --working-dir fixtures/repo-sandbox fixtures/agents/files-sandbox.yaml 'List the files in the working directory and count the lines of README.md.'  (--config-dir, --data-dir, --cache-dir under fixtures/repo-sandbox/.m101, inside the workspace)
+Models gateway: none configured
+Models catalog: allowlisting models.dev in the sandbox proxy
+User sandbox allowlist: allowlisting 1 host(s) from `docker agent sandbox allow`:
+  - localhost:12434
+
+sandbox    docker-agent-<hash>
+agent      docker-agent
+workspace  $CAPTURE/fixtures/repo-sandbox (rw)
+           $CAPTURE/fixtures/agents (ro)
+           $CAPTURE/fixtures/repo-sandbox/.m101/cache/sandbox-kits/<hash> (ro)
+           $CAPTURE/fixtures/repo-sandbox/.m101/cfg (ro)
+image      docker/docker-agent-sbx-templates:latest
+cpu        10
+memory     32 GiB
+
+Pulling image
+  <layers>
+✓ Image ready
+✓ Created sandbox docker-agent-<hash>
+
+To connect to this sandbox, run:
+  sbx run --name docker-agent-<hash>
+<ts> WARN Self-update skipped; continuing with current binary error="current version \"main\" is not a release version: invalid semantic version"
+docker-agent: self-update failed (current version "main" is not a release version: invalid semantic version); continuing with current version
+Error: creating session store: migration failed even after database reset: failed to create migrations table: attempt to write a readonly database (1032)
+Error: 
+[exit 1]

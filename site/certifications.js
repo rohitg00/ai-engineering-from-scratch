@@ -3,6 +3,8 @@
 
   var root = document.documentElement;
   var assessmentTimer = null;
+  var assessmentView = null;
+  var assessmentWatching = false;
   var GITHUB_BLOB_BASE = 'https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/';
 
   function esc(value) {
@@ -12,7 +14,19 @@
   }
 
   function attr(value) {
-    return esc(value).replace(/`/g, '&#96;');
+    return esc(value).replace(/"/g, '&quot;').replace(/`/g, '&#96;');
+  }
+
+  function formatCount(value) {
+    return (Number(value) || 0).toLocaleString('en');
+  }
+
+  function countLabel(value, singular, plural) {
+    return formatCount(value) + ' ' + (Number(value) === 1 ? singular : plural);
+  }
+
+  function factText(fact) {
+    return fact.label === 'Validity' && typeof fact.value === 'number' ? countLabel(fact.value, 'month', 'months') : fact.value;
   }
 
   function data() {
@@ -193,7 +207,7 @@
 
   function price(track) {
     var value = examValue(track, ['price', 'fee', 'priceUsd', 'feeUsd'], 'See official provider');
-    if (typeof value === 'number') return '$' + value;
+    if (typeof value === 'number') return '$' + formatCount(value);
     return value;
   }
 
@@ -243,9 +257,7 @@
 
   function renderCardFacts(track, limit) {
     return examFacts(track).filter(function (fact) { return !fact.unpublished; }).slice(0, limit || 3).map(function (fact) {
-      var value = fact.value;
-      if (fact.label === 'Validity' && typeof value === 'number') value += ' months';
-      return '<div class="cert-card-fact"><strong>' + esc(value) + '</strong><span class="cert-fact-label">' + esc(fact.label) + '</span></div>';
+      return '<div class="cert-card-fact"><strong>' + esc(factText(fact)) + '</strong><span class="cert-fact-label">' + esc(fact.label) + '</span></div>';
     }).join('');
   }
 
@@ -327,7 +339,7 @@
       '<div class="cert-card-identity' + (badge ? ' has-badge' : '') + '"><h3>' + esc(track.credential || track.title || track.shortName || track.id) + '</h3>' + badge + '</div>' +
       '<p>' + esc(track.summary || track.audience || 'A practical route through this certification blueprint.') + '</p>' +
       '<div class="cert-card-facts">' + renderCardFacts(track, 3) + '</div>' +
-      '<div class="cert-card-footer"><span>' + lessonCount + ' lessons · ' + domains + ' domains</span><span>Open path →</span></div>' +
+      '<div class="cert-card-footer"><span>' + countLabel(lessonCount, 'lesson', 'lessons') + ' · ' + countLabel(domains, 'domain', 'domains') + '</span><span>Open path →</span></div>' +
     '</a>';
   }
 
@@ -352,8 +364,8 @@
     if (meta) {
       var verified = latestVerified(available);
       meta.innerHTML = metaChip(labels + ' available now') +
-        metaChip(tracks().length + ' role-based tracks') +
-        metaChip(Object.keys(certs.lessonsByPath || {}).length + ' certification lessons') +
+        metaChip(countLabel(tracks().length, 'role-based track', 'role-based tracks')) +
+        metaChip(countLabel(Object.keys(certs.lessonsByPath || {}).length, 'certification lesson', 'certification lessons')) +
         metaChip(verified ? 'Verified ' + formatDate(verified) : 'Versioned source material');
     }
     var notice = document.getElementById('certProgramNotice');
@@ -477,9 +489,7 @@
       '<h1>' + esc(track.credential || track.title || track.shortName || track.id) + '</h1>' +
       '<p class="cert-track-summary">' + esc(track.summary || track.audience || '') + '</p>' +
       '<div class="cert-meta-row">' + examFacts(track).map(function (fact) {
-        var value = fact.value;
-        if (fact.label === 'Validity' && typeof value === 'number') value += ' months';
-        return metaChip(fact.label + ': ' + value);
+        return metaChip(fact.label + ': ' + factText(fact));
       }).join('') + '</div>' +
       '<div class="cert-track-hero-actions">' +
         (firstPath ? '<a class="cert-action" href="lesson?path=' + encodeURIComponent(firstPath) + '&track=' + encodeURIComponent(track.id) + '">' + (complete ? 'Continue path' : 'Start learning') + '</a>' : '') +
@@ -504,7 +514,10 @@
       });
     }
     if (window.AIFSCertProgress) {
-      window.AIFSCertProgress.onChange(function () { renderAssessments(track); });
+      window.AIFSCertProgress.onChange(function () {
+        renderTrackProgress(track);
+        renderAssessments(track);
+      });
     }
   }
 
@@ -518,7 +531,7 @@
     var attempted = assessments.filter(function (meta) { return assessmentBest(meta.id); }).length;
     mount.innerHTML = '<div class="cert-progress-head"><div><div class="cert-eyebrow">LOCAL PROGRESS</div><h2 id="progressTitle">Your progress</h2></div><div class="cert-progress-number">' + percent + '%</div></div>' +
       '<div class="cert-progress-bar" role="progressbar" aria-labelledby="progressTitle" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + percent + '"><div class="cert-progress-fill" style="--cert-progress:' + (percent / 100) + '"></div></div>' +
-      '<div class="cert-progress-detail"><span>' + complete + ' of ' + total + ' lessons complete</span><span>' + attempted + ' of ' + assessments.length + ' assessments attempted</span><span>' + (progressIsPersistent() ? 'Stored only in this browser' : 'Browser storage unavailable; progress is temporary') + '</span></div>';
+      '<div class="cert-progress-detail"><span>' + formatCount(complete) + ' of ' + countLabel(total, 'lesson', 'lessons') + ' complete</span><span>' + formatCount(attempted) + ' of ' + countLabel(assessments.length, 'assessment', 'assessments') + ' attempted</span><span>' + (progressIsPersistent() ? 'Stored only in this browser' : 'Browser storage unavailable; progress is temporary') + '</span></div>';
   }
 
   function renderDomains(track) {
@@ -588,7 +601,7 @@
       var latest = attempts[0] || null;
       var count = assessment.questionCount || meta.questionCount || (Array.isArray(assessment.questions) ? assessment.questions.length : 0);
       var limit = assessment.timeLimitMinutes || meta.timeLimitMinutes || 0;
-      return '<article class="cert-assessment-card"><div class="cert-assessment-head"><span class="cert-assessment-kind">' + esc(assessment.kind || 'Practice') + '</span><span class="cert-card-code">' + count + ' questions' + (limit ? ' · ' + limit + ' min' : '') + '</span></div><h3>' + esc(assessment.title || meta.title || 'Practice assessment') + '</h3><p>' + esc(assessment.summary || assessment.description || 'Original scenario practice with feedback after submission.') + '</p><div class="cert-assessment-best">' + (best ? 'Best practice score: ' + best.percent + '%' : 'Not attempted on this device') + '</div><div class="cert-track-hero-actions"><a class="cert-action" href="assessment.html?id=' + encodeURIComponent(meta.id) + '">' + (latest ? 'Try again' : 'Start practice') + '</a>' + (latest ? '<a class="cert-action secondary" href="assessment.html?id=' + encodeURIComponent(meta.id) + '&result=latest">Review latest result</a>' : '') + '</div></article>';
+      return '<article class="cert-assessment-card"><div class="cert-assessment-head"><span class="cert-assessment-kind">' + esc(assessment.kind || 'Practice') + '</span><span class="cert-card-code">' + countLabel(count, 'question', 'questions') + (limit ? ' · ' + limit + ' min' : '') + '</span></div><h3>' + esc(assessment.title || meta.title || 'Practice assessment') + '</h3><p>' + esc(assessment.summary || assessment.description || 'Original scenario practice with feedback after submission.') + '</p><div class="cert-assessment-best">' + (best ? 'Best practice score: ' + best.percent + '%' : 'Not attempted on this device') + '</div><div class="cert-track-hero-actions"><a class="cert-action" href="assessment.html?id=' + encodeURIComponent(meta.id) + '">' + (latest ? 'Try again' : 'Start practice') + '</a>' + (latest ? '<a class="cert-action secondary" href="assessment.html?id=' + encodeURIComponent(meta.id) + '&result=latest">Review latest result</a>' : '') + '</div></article>';
     }).join('') : '<div class="cert-empty">Practice assessments are being prepared for this track.</div>';
   }
 
@@ -731,7 +744,62 @@
     mount.innerHTML = '<div class="cert-error"><h1>Assessment not found</h1><p>This practice set is not available in the generated certification data.</p><a class="cert-action" href="certifications.html">All certifications</a></div>';
   }
 
+  function hasAnswers(draft) {
+    var answers = isRecord(draft && draft.answers) ? draft.answers : {};
+    return Object.keys(answers).some(function (id) {
+      return Array.isArray(answers[id]) && answers[id].length > 0;
+    });
+  }
+
+  function sittingStarted(draft) {
+    return hasAnswers(draft) || (isRecord(draft) && draft.touched === true);
+  }
+
+  function stopAssessmentTimer() {
+    if (!assessmentTimer) return;
+    clearInterval(assessmentTimer);
+    assessmentTimer = null;
+  }
+
+  function sittingConflict(assessment, version, draft) {
+    var progress = window.AIFSCertProgress;
+    if (!progress) return null;
+    var submitted = draft.startedAt ? assessmentAttempts(assessment.id, version).find(function (attempt) {
+      return attempt.startedAt === draft.startedAt;
+    }) : null;
+    if (submitted) return { attempt: submitted };
+    var stored = null;
+    try {
+      stored = typeof progress.getDraft === 'function' ? progress.getDraft(assessment.id, version) : null;
+    } catch (_) {}
+    if (isRecord(stored) && stored.startedAt !== draft.startedAt && String(stored.version) === String(version) && sittingStarted(stored)) return { draft: stored };
+    return null;
+  }
+
+  function resolveSittingConflict(mount, assessment, track, questions, conflict) {
+    stopAssessmentTimer();
+    assessmentView = null;
+    if (conflict.attempt) {
+      renderAssessmentResults(mount, assessment, track, questions, conflict.attempt);
+      updateAssessmentResultUrl(assessment.id, true);
+      return;
+    }
+    renderAssessmentLoaded(mount, assessment, track, true);
+  }
+
+  function watchAssessmentProgress() {
+    if (assessmentWatching || !window.AIFSCertProgress || typeof window.AIFSCertProgress.onChange !== 'function') return;
+    assessmentWatching = true;
+    window.AIFSCertProgress.onChange(function () {
+      var view = assessmentView;
+      if (!view) return;
+      var conflict = sittingConflict(view.assessment, view.version, view.draft);
+      if (conflict) resolveSittingConflict(view.mount, view.assessment, view.track, view.questions, conflict);
+    });
+  }
+
   function renderAssessmentLoaded(mount, assessment, track, forceForm) {
+    assessmentView = null;
     renderProgramNotice('assessmentProgramNotice', programForTrack(track), 'Independent practice');
     var questions = (assessment.questions || []).map(normalizeQuestion);
     if (!questions.length) {
@@ -749,19 +817,16 @@
 
     var limit = Number(assessment.timeLimitMinutes || 0);
     var draft = window.AIFSCertProgress && window.AIFSCertProgress.getDraft(assessment.id, version);
-    if (draft && !validDraftForAssessment(draft, version, questions, limit)) {
+    var abandoned = draft && !sittingStarted(draft);
+    if (draft && (abandoned || !validDraftForAssessment(draft, version, questions, limit))) {
       if (window.AIFSCertProgress) window.AIFSCertProgress.clearDraft(assessment.id, version);
       draft = null;
     }
-    if (!draft) {
-      var now = Date.now();
-      draft = { answers: {}, startedAt: now, deadlineAt: limit ? now + limit * 60000 : 0, version: version };
-      if (window.AIFSCertProgress) window.AIFSCertProgress.saveDraft(assessment.id, version, draft);
-    }
+    if (!draft) draft = { answers: {}, startedAt: 0, deadlineAt: 0, version: version };
 
-    mount.innerHTML = '<div class="assessment-shell"><div class="cert-breadcrumb"><a href="certifications.html">Certifications</a><span>/</span>' + (track ? '<a href="certification?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Practice</span></div><section class="assessment-hero"><div class="cert-eyebrow">' + esc(assessment.kind || 'PRACTICE') + '</div><h1>' + esc(title) + '</h1><p>' + esc(assessment.summary || assessment.description || 'Work through the original scenarios, then submit to reveal explanations and domain feedback.') + '</p><p class="assessment-scoring-note">Submit whenever you are ready. Unanswered questions count as incorrect.</p><div class="cert-meta-row">' + metaChip(questions.length + ' original questions') + metaChip(limit ? limit + ' minute limit' : 'Untimed') + metaChip(progressIsPersistent() ? 'Saved locally' : 'Progress lasts for this page only') + '</div></section>' +
+    mount.innerHTML = '<div class="assessment-shell"><div class="cert-breadcrumb"><a href="certifications.html">Certifications</a><span>/</span>' + (track ? '<a href="certification?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Practice</span></div><section class="assessment-hero"><div class="cert-eyebrow">' + esc(assessment.kind || 'PRACTICE') + '</div><h1>' + esc(title) + '</h1><p>' + esc(assessment.summary || assessment.description || 'Work through the original scenarios, then submit to reveal explanations and domain feedback.') + '</p><p class="assessment-scoring-note">Submit whenever you are ready. Unanswered questions count as incorrect.</p><div class="cert-meta-row">' + metaChip(countLabel(questions.length, 'original question', 'original questions')) + metaChip(limit ? limit + ' minute limit' : 'Untimed') + metaChip(progressIsPersistent() ? 'Saved locally' : 'Progress lasts for this page only') + '</div></section>' +
       '<div class="cert-notice"><strong>Practice score only</strong><p>Your result is a percentage created by this open-source course. It is not an official scaled exam score, credential decision, or guarantee of passing.</p></div>' +
-      (limit ? '<div class="cert-timer" id="assessmentTimer" role="timer" aria-live="off" aria-label="Time remaining"><span>Time remaining</span><strong id="assessmentTimerValue">' + formatRemaining(draft.deadlineAt - Date.now()) + '</strong></div>' : '') +
+      (limit ? '<div class="cert-timer" id="assessmentTimer" role="timer" aria-live="off" aria-label="Time remaining"><span>Time remaining</span><strong id="assessmentTimerValue">' + formatRemaining(draft.startedAt ? draft.deadlineAt - Date.now() : limit * 60000) + '</strong></div>' : '') +
       '<form class="assessment-form" id="assessmentForm" tabindex="-1" aria-label="Assessment questions">' + questions.map(function (question, index) { return renderQuestion(question, index, draft.answers[question.id] || []); }).join('') + '<div class="cert-submit-row"><p>You can submit a partial attempt. Unanswered questions count as incorrect, and explanations appear after submission.</p><button class="cert-action" type="submit">Submit practice</button></div></form></div>';
 
     var form = document.getElementById('assessmentForm');
@@ -771,6 +836,17 @@
       var qid = input.getAttribute('data-question');
       var question = questions.find(function (item) { return item.id === qid; });
       if (!question) return;
+      var conflict = sittingConflict(assessment, version, draft);
+      if (conflict) {
+        resolveSittingConflict(mount, assessment, track, questions, conflict);
+        return;
+      }
+      var starting = !draft.startedAt;
+      if (starting) {
+        draft.startedAt = Date.now();
+        draft.deadlineAt = limit ? draft.startedAt + limit * 60000 : 0;
+      }
+      draft.touched = true;
       if (question.type === 'multiple') {
         draft.answers[qid] = Array.from(form.querySelectorAll('input[data-question="' + cssEscape(qid) + '"]:checked')).map(function (node) { return Number(node.value); });
       } else {
@@ -781,11 +857,14 @@
         if (option) option.classList.toggle('is-selected', node.checked);
       });
       if (window.AIFSCertProgress) window.AIFSCertProgress.saveDraft(assessment.id, version, draft);
+      if (starting) startTimer(mount, assessment, track, questions, draft);
     });
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       submitAssessment(mount, assessment, track, questions, draft, false);
     });
+    assessmentView = { mount: mount, assessment: assessment, track: track, questions: questions, draft: draft, version: version };
+    watchAssessmentProgress();
     startTimer(mount, assessment, track, questions, draft);
   }
 
@@ -832,10 +911,21 @@
   }
 
   function submitAssessment(mount, assessment, track, questions, draft, timedOut) {
-    if (assessmentTimer) {
-      clearInterval(assessmentTimer);
-      assessmentTimer = null;
+    stopAssessmentTimer();
+    var version = assessmentVersion(assessment);
+    var progress = window.AIFSCertProgress;
+    var conflict = sittingConflict(assessment, version, draft);
+    if (conflict) {
+      resolveSittingConflict(mount, assessment, track, questions, conflict);
+      return;
     }
+    assessmentView = null;
+    if (timedOut && !sittingStarted(draft)) {
+      if (progress) progress.clearDraft(assessment.id, version);
+      renderAssessmentLoaded(mount, assessment, track, true);
+      return;
+    }
+    if (!draft.startedAt) draft.startedAt = Date.now();
     var score = scoreAssessmentAnswers(questions, draft.answers);
     var submittedAt = Date.now();
     var attempt = {
@@ -848,11 +938,16 @@
       submittedAt: submittedAt,
       durationMs: submittedAt - draft.startedAt,
       timedOut: !!timedOut,
-      version: assessmentVersion(assessment),
+      version: version,
     };
-    if (window.AIFSCertProgress) window.AIFSCertProgress.recordAttempt(assessment.id, assessmentVersion(assessment), attempt);
-    renderAssessmentResults(mount, assessment, track, questions, attempt);
-    updateAssessmentResultUrl(assessment.id, true);
+    var recorded = false;
+    if (progress) {
+      try {
+        recorded = progress.recordAttempt(assessment.id, version, attempt) === true;
+      } catch (_) {}
+    }
+    renderAssessmentResults(mount, assessment, track, questions, attempt, !recorded);
+    updateAssessmentResultUrl(assessment.id, recorded);
     scrollToPageTop();
     focusWithoutScrolling(document.getElementById('assessmentResultsSummary'));
   }
@@ -900,7 +995,8 @@
     return '<section class="cert-remediation" aria-labelledby="remediationTitle"><div class="cert-eyebrow">TARGETED REMEDIATION</div><h2 id="remediationTitle">Study the decisions you missed</h2><p>Every lesson below comes from an internal reference on a question you missed. Revisit the decision, then start a fresh attempt.</p><div class="cert-remediation-grid">' + cards + '</div></section>';
   }
 
-  function renderAssessmentResults(mount, assessment, track, questions, attempt) {
+  function renderAssessmentResults(mount, assessment, track, questions, attempt, unsaved) {
+    assessmentView = null;
     var attemptAnswers = isRecord(attempt.answers) ? attempt.answers : {};
     var scoreSummary = scoreAssessmentAnswers(questions, attemptAnswers);
     var domainHtml = Object.keys(scoreSummary.domains).map(function (id) {
@@ -911,7 +1007,9 @@
     }).join('');
     var remediationHtml = renderRemediation(track, questions, attempt);
     var latestResultHref = 'assessment.html?id=' + encodeURIComponent(assessment.id) + '&result=latest';
-    mount.innerHTML = '<div class="assessment-shell cert-results"><div class="cert-breadcrumb"><a href="certifications.html">Certifications</a><span>/</span>' + (track ? '<a href="certification?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Results</span></div><section class="cert-results-summary" id="assessmentResultsSummary" tabindex="-1" aria-label="Assessment result"><div class="cert-results-head"><div><div class="cert-eyebrow">PRACTICE RESULT</div><div class="cert-results-score">' + scoreSummary.percent + '%</div></div><div><strong>' + scoreSummary.correct + ' of ' + scoreSummary.total + ' exact answers</strong><p>' + (attempt.timedOut ? 'Submitted when the timer expired.' : 'Submitted in ' + formatDuration(attempt.durationMs)) + '</p></div></div><div class="cert-domain-score-grid">' + domainHtml + '</div><div class="cert-notice"><strong>Not an official scaled score</strong><p>This percentage measures this original practice set only. It cannot predict or guarantee the provider\'s scaled certification result.</p></div><div class="cert-track-hero-actions"><button class="cert-action" type="button" id="assessmentRetake">Start a fresh attempt</button><a class="cert-action secondary" href="' + attr(latestResultHref) + '">Revisit latest result</a>' + (track ? '<a class="cert-action secondary" href="certification?id=' + encodeURIComponent(track.id) + '">Return to track</a>' : '') + '</div></section>' + remediationHtml + '<section aria-labelledby="reviewTitle"><div class="cert-section-heading"><div><div class="cert-eyebrow">REVIEW</div><h2 id="reviewTitle">Decisions and explanations</h2></div><p>Use every miss to identify the domain and decision rule you need to revisit.</p></div>' + questions.map(function (question, index) { return renderReview(question, index, attemptAnswers[question.id] || [], track); }).join('') + '</section></div>';
+    var unsavedHtml = unsaved ? '<div class="cert-notice" role="alert"><strong>Result not saved</strong><p>This browser could not store this attempt. Leaving or reloading this page loses the result.</p></div>' : '';
+    var revisitHtml = unsaved ? '' : '<a class="cert-action secondary" href="' + attr(latestResultHref) + '">Revisit latest result</a>';
+    mount.innerHTML = '<div class="assessment-shell cert-results"><div class="cert-breadcrumb"><a href="certifications.html">Certifications</a><span>/</span>' + (track ? '<a href="certification?id=' + encodeURIComponent(track.id) + '">' + esc(track.examCode || track.shortName || track.id) + '</a><span>/</span>' : '') + '<span>Results</span></div><section class="cert-results-summary" id="assessmentResultsSummary" tabindex="-1" aria-label="Assessment result"><div class="cert-results-head"><div><div class="cert-eyebrow">PRACTICE RESULT</div><div class="cert-results-score">' + scoreSummary.percent + '%</div></div><div><strong>' + scoreSummary.correct + ' of ' + scoreSummary.total + ' exact answers</strong><p>' + (attempt.timedOut ? 'Submitted when the timer expired.' : 'Submitted in ' + formatDuration(attempt.durationMs)) + '</p></div></div><div class="cert-domain-score-grid">' + domainHtml + '</div><div class="cert-notice"><strong>Not an official scaled score</strong><p>This percentage measures this original practice set only. It cannot predict or guarantee the provider\'s scaled certification result.</p></div>' + unsavedHtml + '<div class="cert-track-hero-actions"><button class="cert-action" type="button" id="assessmentRetake">Start a fresh attempt</button>' + revisitHtml + (track ? '<a class="cert-action secondary" href="certification?id=' + encodeURIComponent(track.id) + '">Return to track</a>' : '') + '</div></section>' + remediationHtml + '<section aria-labelledby="reviewTitle"><div class="cert-section-heading"><div><div class="cert-eyebrow">REVIEW</div><h2 id="reviewTitle">Decisions and explanations</h2></div><p>Use every miss to identify the domain and decision rule you need to revisit.</p></div>' + questions.map(function (question, index) { return renderReview(question, index, attemptAnswers[question.id] || [], track); }).join('') + '</section></div>';
     var retake = document.getElementById('assessmentRetake');
     if (retake) retake.addEventListener('click', function () {
       if (window.AIFSCertProgress) window.AIFSCertProgress.clearDraft(assessment.id, assessmentVersion(assessment));

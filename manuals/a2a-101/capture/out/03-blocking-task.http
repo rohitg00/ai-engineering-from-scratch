@@ -1,0 +1,117 @@
+### 1 · SendMessage: run the tests
+POST /a2a/jsonrpc HTTP/1.1
+Host: localhost:41241
+Content-Type: application/json
+A2A-Version: 1.0
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "SendMessage",
+  "params": {
+    "message": {
+      "messageId": "21636369-8b52-4b4a-97b7-50923ceb3ffd",
+      "role": "ROLE_USER",
+      "parts": [
+        {
+          "text": "Run the unit tests for payments-api at commit 9f3c2e1"
+        }
+      ]
+    }
+  }
+}
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "task": {
+      "id": "3d8f7801-f421-4e4e-aa2d-8b6da17d9281",
+      "contextId": "ac3830af-198c-422c-97e6-7ae3928f1c3a",
+      "status": {
+        "state": "TASK_STATE_COMPLETED",
+        "message": {
+          "messageId": "3b253a01-7c88-40f4-9796-8b778ec9b5c0",
+          "contextId": "ac3830af-198c-422c-97e6-7ae3928f1c3a",
+          "taskId": "3d8f7801-f421-4e4e-aa2d-8b6da17d9281",
+          "role": "ROLE_AGENT",
+          "parts": [
+            {
+              "text": "1 failed, 11 passed"
+            }
+          ]
+        },
+        "timestamp": "2026-10-06T09:00:00.750Z"
+      },
+      "history": [
+        {
+          "messageId": "21636369-8b52-4b4a-97b7-50923ceb3ffd",
+          "contextId": "ac3830af-198c-422c-97e6-7ae3928f1c3a",
+          "taskId": "3d8f7801-f421-4e4e-aa2d-8b6da17d9281",
+          "role": "ROLE_USER",
+          "parts": [
+            {
+              "text": "Run the unit tests for payments-api at commit 9f3c2e1"
+            }
+          ]
+        },
+        {
+          "messageId": "10cc3c92-4625-4206-b65c-79f3c20d22a0",
+          "contextId": "ac3830af-198c-422c-97e6-7ae3928f1c3a",
+          "taskId": "3d8f7801-f421-4e4e-aa2d-8b6da17d9281",
+          "role": "ROLE_AGENT",
+          "parts": [
+            {
+              "text": "Checking out 9f3c2e1 and starting the suite"
+            }
+          ]
+        }
+      ],
+      "artifacts": [
+        {
+          "artifactId": "test-log",
+          "name": "test-log.txt",
+          "parts": [
+            {
+              "text": "collected 12 items\n"
+            },
+            {
+              "text": "tests/test_charges.py ........  [ 66%]\n"
+            },
+            {
+              "text": "tests/test_refunds.py ..F.  [100%]\n"
+            },
+            {
+              "text": "FAILED tests/test_refunds.py::test_partial_refund - AssertionError: 450 != 500\n"
+            },
+            {
+              "text": "1 failed, 11 passed in 4.21s\n"
+            }
+          ]
+        },
+        {
+          "artifactId": "summary",
+          "name": "summary.json",
+          "parts": [
+            {
+              "data": {
+                "passed": 11,
+                "failed": 1,
+                "failures": [
+                  {
+                    "test": "tests/test_refunds.py::test_partial_refund",
+                    "error": "AssertionError: 450 != 500"
+                  }
+                ]
+              },
+              "mediaType": "application/json"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

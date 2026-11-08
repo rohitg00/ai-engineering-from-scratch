@@ -9,7 +9,7 @@
 
 ## Learning Objectives
 
-- Compute numerical and analytical derivatives for common ML functions (x^2, sigmoid, cross-entropy)
+- Compute numerical and analytical derivatives for common ML functions ($x^2$, sigmoid, cross-entropy)
 - Implement gradient descent from scratch to minimize a loss function in 1D and 2D
 - Derive the gradient of a linear regression model and train it via manual weight updates
 - Explain the Hessian matrix, Taylor series approximations, and their connection to optimization methods
@@ -24,59 +24,58 @@ Without calculus, training a neural network would mean trying random changes and
 
 ### What is a derivative?
 
-A derivative measures the rate of change. For a function y = f(x), the derivative f'(x) tells you: if you nudge x by a tiny amount, how much does y change?
+A derivative measures the rate of change. For a function $y = f(x)$, the derivative $f'(x)$ tells you: if you nudge $x$ by a tiny amount, how much does $y$ change?
 
 Geometrically, the derivative is the slope of the tangent line at a point.
 
-**f(x) = x^2:**
+**$f(x) = x^2$:**
 
-| x | f(x) | f'(x) (slope) |
+| $x$ | $f(x)$ | $f'(x)$ (slope) |
 |---|------|---------------|
 | 0 | 0    | 0 (flat, at the bottom) |
 | 1 | 1    | 2 |
 | 2 | 4    | 4 (tangent line slope at this point) |
 | 3 | 9    | 6 |
 
-At x=2, the slope is 4. If you move x a tiny bit to the right, y increases by about 4 times that amount. At x=0, the slope is 0. You are at the bottom of the bowl.
+At $x=2$, the slope is 4. If you move $x$ a tiny bit to the right, $y$ increases by about 4 times that amount. At $x=0$, the slope is 0. You are at the bottom of the bowl.
 
 The formal definition:
 
-```
-f'(x) = lim   f(x + h) - f(x)
-        h->0  -----------------
-                     h
+```math
+f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}
 ```
 
-In code, you skip the limit and just use a very small h. That is the numerical derivative.
+In code, you skip the limit and just use a very small $h$. That is the numerical derivative.
 
 ### Partial derivatives: one variable at a time
 
 Real functions have many inputs. A neural network loss depends on thousands of weights. A partial derivative holds all variables constant except one, then takes the derivative with respect to that one.
 
-```
-f(x, y) = x^2 + 3xy + y^2
-
-df/dx = 2x + 3y     (treat y as a constant)
-df/dy = 3x + 2y     (treat x as a constant)
+```math
+\begin{aligned}
+f(x, y) &= x^2 + 3xy + y^2 \\[4pt]
+\frac{\partial f}{\partial x} &= 2x + 3y \quad \text{(treat } y \text{ as a constant)} \\
+\frac{\partial f}{\partial y} &= 3x + 2y \quad \text{(treat } x \text{ as a constant)}
+\end{aligned}
 ```
 
 Each partial derivative answers: if I nudge just this one weight, how does the loss change?
 
 ### The gradient: vector of all partial derivatives
 
-The gradient collects every partial derivative into one vector. For a function f(x, y, z), the gradient is:
+The gradient collects every partial derivative into one vector. For a function $f(x, y, z)$, the gradient is:
 
-```
-grad f = [ df/dx, df/dy, df/dz ]
+```math
+\nabla f = \left[ \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z} \right]
 ```
 
 The gradient points in the direction of steepest ascent. To minimize a function, go in the opposite direction.
 
-**Contour plot of f(x,y) = x^2 + y^2:**
+**Contour plot of $f(x,y) = x^2 + y^2$:**
 
 The function forms a bowl shape with concentric circles as contour lines. The minimum is at (0, 0).
 
-| Point | grad f | -grad f (descent direction) |
+| Point | $\nabla f$ | $-\nabla f$ (descent direction) |
 |-------|--------|----------------------------|
 | (1, 1) | [2, 2] (points uphill, away from minimum) | [-2, -2] (points downhill, toward minimum) |
 | (0, 0) | [0, 0] (flat, at the minimum) | [0, 0] |
@@ -85,7 +84,7 @@ This is gradient descent in a picture. Compute the gradient, negate it, take a s
 
 ### The connection to optimization
 
-Training a neural network is optimization. You have a loss function L(w1, w2, ..., wn) that measures how wrong the model is. You want to minimize it.
+Training a neural network is optimization. You have a loss function $L(w_1, w_2, \ldots, w_n)$ that measures how wrong the model is. You want to minimize it.
 
 ```
 Gradient descent update rule:
@@ -102,7 +101,7 @@ The learning rate controls step size. Too big and you overshoot. Too small and y
 
 **Loss landscape (1D slice):**
 
-The loss function L(w) forms a curve with peaks and valleys as the weight w varies.
+The loss function $L(w)$ forms a curve with peaks and valleys as the weight $w$ varies.
 
 | Feature | Description |
 |---------|-------------|
@@ -116,9 +115,9 @@ Gradient descent follows the slope downhill. It can get stuck in local minima, b
 
 There are two ways to compute a derivative.
 
-Analytical: apply calculus rules by hand. For f(x) = x^2, the derivative is f'(x) = 2x. Exact. Fast.
+Analytical: apply calculus rules by hand. For $f(x) = x^2$, the derivative is $f'(x) = 2x$. Exact. Fast.
 
-Numerical: approximate using the definition. Compute f(x+h) and f(x-h) for a tiny h, then use the difference.
+Numerical: approximate using the definition. Compute $f(x+h)$ and $f(x-h)$ for a tiny $h$, then use the difference.
 
 ```
 Numerical (central difference):
@@ -148,7 +147,7 @@ f(x) = ln(x)   f'(x) = 1/x     Cross-entropy loss
 f(x) = 1/(1+e^-x)  f'(x) = f(x)(1-f(x))   Sigmoid activation
 ```
 
-For f(x) = x^2:
+For $f(x) = x^2$:
 
 ```
 f(x) = x^2    f'(x) = 2x
@@ -161,7 +160,7 @@ f(x) = x^2    f'(x) = 2x
    2    4       4      slope tilts right (increasing)
 ```
 
-For f(w) = wx + b with x=3, b=1:
+For $f(w) = wx + b$ with $x=3$, $b=1$:
 
 ```
 f(w) = 3w + 1    f'(w) = 3
@@ -189,17 +188,16 @@ Neural networks are chains of functions: input -> linear -> activation -> linear
 
 The gradient tells you the slope. The Hessian tells you the curvature.
 
-The Hessian is the matrix of second-order partial derivatives. For a function f(x1, x2, ..., xn), entry (i, j) of the Hessian is:
+The Hessian is the matrix of second-order partial derivatives. For a function $f(x_1, x_2, \ldots, x_n)$, entry $(i, j)$ of the Hessian is:
 
-```
-H[i][j] = d^2f / (dx_i * dx_j)
+```math
+H_{ij} = \frac{\partial^2 f}{\partial x_i \, \partial x_j}
 ```
 
-For a 2-variable function f(x, y):
+For a 2-variable function $f(x, y)$:
 
-```
-H = | d^2f/dx^2    d^2f/dxdy |
-    | d^2f/dydx    d^2f/dy^2 |
+```math
+H = \begin{bmatrix} \dfrac{\partial^2 f}{\partial x^2} & \dfrac{\partial^2 f}{\partial x \, \partial y} \\[8pt] \dfrac{\partial^2 f}{\partial y \, \partial x} & \dfrac{\partial^2 f}{\partial y^2} \end{bmatrix}
 ```
 
 **What the Hessian tells you at a critical point (where gradient = 0):**
@@ -210,7 +208,7 @@ H = | d^2f/dx^2    d^2f/dxdy |
 | Negative definite (all eigenvalues < 0) | Local maximum | Bowl pointing down |
 | Indefinite (mixed eigenvalues) | Saddle point | Horse saddle shape |
 
-**Example:** f(x, y) = x^2 - y^2 (a saddle function)
+**Example:** $f(x, y) = x^2 - y^2$ (a saddle function)
 
 ```
 df/dx = 2x       df/dy = -2y
@@ -223,7 +221,7 @@ Eigenvalues: 2 and -2 (one positive, one negative)
 --> Saddle point at (0, 0)
 ```
 
-Compare with f(x, y) = x^2 + y^2 (a bowl):
+Compare with $f(x, y) = x^2 + y^2$ (a bowl):
 
 ```
 H = | 2  0 |
@@ -237,22 +235,24 @@ Eigenvalues: 2 and 2 (both positive)
 
 Newton's method uses the Hessian to take better optimization steps than gradient descent. Instead of just following the slope, it accounts for curvature:
 
-```
-Newton's update:    w_new = w_old - H^(-1) * gradient
-Gradient descent:   w_new = w_old - lr * gradient
+```math
+\begin{aligned}
+\text{Newton's update:} \quad & w_{\text{new}} = w_{\text{old}} - H^{-1} \cdot \text{gradient} \\
+\text{Gradient descent:} \quad & w_{\text{new}} = w_{\text{old}} - \text{lr} \cdot \text{gradient}
+\end{aligned}
 ```
 
 Newton's method converges faster because the Hessian "rescales" the gradient -- steep directions get smaller steps, flat directions get larger steps.
 
-The catch: for a neural network with N parameters, the Hessian is N x N. A model with 1 million parameters would need a 1 trillion-entry matrix. That is why we use approximations.
+The catch: for a neural network with $N$ parameters, the Hessian is $N \times N$. A model with 1 million parameters would need a 1 trillion-entry matrix. That is why we use approximations.
 
 | Method | What it uses | Cost | Convergence |
 |--------|-------------|------|-------------|
-| Gradient descent | First derivatives only | O(N) per step | Slow (linear) |
-| Newton's method | Full Hessian | O(N^3) per step | Fast (quadratic) |
-| L-BFGS | Approximate Hessian from gradient history | O(N) per step | Medium (superlinear) |
-| Adam | Per-parameter adaptive rates (diagonal Hessian approx) | O(N) per step | Medium |
-| Natural gradient | Fisher information matrix (statistical Hessian) | O(N^2) per step | Fast |
+| Gradient descent | First derivatives only | $O(N)$ per step | Slow (linear) |
+| Newton's method | Full Hessian | $O(N^3)$ per step | Fast (quadratic) |
+| L-BFGS | Approximate Hessian from gradient history | $O(N)$ per step | Medium (superlinear) |
+| Adam | Per-parameter adaptive rates (diagonal Hessian approx) | $O(N)$ per step | Medium |
+| Natural gradient | Fisher information matrix (statistical Hessian) | $O(N^2)$ per step | Fast |
 
 In practice, Adam is the default optimizer for deep learning. It approximates second-order information cheaply by tracking the running mean and variance of gradients per parameter.
 
@@ -260,17 +260,17 @@ In practice, Adam is the default optimizer for deep learning. It approximates se
 
 Any smooth function can be approximated locally by a polynomial:
 
-```
-f(x + h) = f(x) + f'(x)*h + (1/2)*f''(x)*h^2 + (1/6)*f'''(x)*h^3 + ...
+```math
+f(x + h) = f(x) + f'(x)\,h + \frac{1}{2} f''(x)\,h^2 + \frac{1}{6} f'''(x)\,h^3 + \cdots
 ```
 
-The more terms you include, the better the approximation -- but only near the point x.
+The more terms you include, the better the approximation -- but only near the point $x$.
 
 **Why Taylor series matter for ML:**
 
-- **First-order Taylor = gradient descent.** When you use f(x + h) ~ f(x) + f'(x)*h, you are making a linear approximation. Gradient descent minimizes this linear model to choose h = -lr * f'(x).
+- **First-order Taylor = gradient descent.** When you use $f(x + h) \approx f(x) + f'(x) h$, you are making a linear approximation. Gradient descent minimizes this linear model to choose $h = -\text{lr} \cdot f'(x)$.
 
-- **Second-order Taylor = Newton's method.** Using f(x + h) ~ f(x) + f'(x)*h + (1/2)*f''(x)*h^2, you get a quadratic model. Minimizing it gives h = -f'(x)/f''(x) -- Newton's step.
+- **Second-order Taylor = Newton's method.** Using $f(x + h) \approx f(x) + f'(x) h + \frac{1}{2} f''(x) h^2$, you get a quadratic model. Minimizing it gives $h = -f'(x)/f''(x)$ -- Newton's step.
 
 - **Loss function design.** MSE and cross-entropy are smooth, which means their Taylor expansions are well-behaved. This is not an accident. Smooth losses make optimization predictable.
 
@@ -291,28 +291,36 @@ Derivatives tell you rates of change. Integrals compute accumulations -- area un
 
 In ML, you rarely compute integrals by hand, but the concept is everywhere:
 
-**Probability.** For a continuous random variable with density p(x):
+**Probability.** For a continuous random variable with density $p(x)$:
+
+```math
+P(a < X < b) = \int_a^b p(x) \, dx
 ```
-P(a < X < b) = integral from a to b of p(x) dx
-```
-The area under the probability density curve between a and b is the probability of landing in that range.
+
+The area under the probability density curve between $a$ and $b$ is the probability of landing in that range.
 
 **Expected value.** The average outcome weighted by probability:
+
+```math
+\mathbb{E}[f(X)] = \int f(x) \, p(x) \, dx
 ```
-E[f(X)] = integral of f(x) * p(x) dx
-```
+
 The expected loss over a data distribution is an integral. Training minimizes an empirical approximation of this.
 
 **KL divergence.** Measures how different two distributions are:
+
+```math
+\mathrm{KL}(p \,\|\, q) = \int p(x) \log \frac{p(x)}{q(x)} \, dx
 ```
-KL(p || q) = integral of p(x) * log(p(x) / q(x)) dx
-```
+
 Used in VAEs, knowledge distillation, and Bayesian inference.
 
 **Normalization constants.** In Bayesian inference:
+
+```math
+p(w \mid \text{data}) = \frac{p(\text{data} \mid w) \, p(w)}{\int p(\text{data} \mid w) \, p(w) \, dw}
 ```
-p(w | data) = p(data | w) * p(w) / integral of p(data | w) * p(w) dw
-```
+
 The denominator is an integral over all possible parameter values. It is often intractable, which is why we use approximations like MCMC and variational inference.
 
 | Integral concept | Where it appears in ML |
@@ -353,16 +361,16 @@ This is all backpropagation is: the chain rule applied systematically through a 
 
 When a function maps a vector to a vector (like a neural network layer), its derivative is a matrix. The Jacobian contains every partial derivative of every output with respect to every input.
 
-For f: R^n -> R^m, the Jacobian J is an m x n matrix:
+For $f: \mathbb{R}^n \to \mathbb{R}^m$, the Jacobian $J$ is an $m \times n$ matrix:
 
-| | x1 | x2 | ... | xn |
+| | $x_1$ | $x_2$ | ... | $x_n$ |
 |---|---|---|---|---|
-| f1 | df1/dx1 | df1/dx2 | ... | df1/dxn |
-| f2 | df2/dx1 | df2/dx2 | ... | df2/dxn |
+| $f_1$ | $\partial f_1/\partial x_1$ | $\partial f_1/\partial x_2$ | ... | $\partial f_1/\partial x_n$ |
+| $f_2$ | $\partial f_2/\partial x_1$ | $\partial f_2/\partial x_2$ | ... | $\partial f_2/\partial x_n$ |
 | ... | ... | ... | ... | ... |
-| fm | dfm/dx1 | dfm/dx2 | ... | dfm/dxn |
+| $f_m$ | $\partial f_m/\partial x_1$ | $\partial f_m/\partial x_2$ | ... | $\partial f_m/\partial x_n$ |
 
-You will not compute Jacobians by hand for neural networks. PyTorch handles it. But knowing it exists helps you understand shapes in backpropagation: if a layer maps R^n to R^m, its Jacobian is m x n. The gradient flows backward through the transpose of this matrix.
+You will not compute Jacobians by hand for neural networks. PyTorch handles it. But knowing it exists helps you understand shapes in backpropagation: if a layer maps $\mathbb{R}^n$ to $\mathbb{R}^m$, its Jacobian is $m \times n$. The gradient flows backward through the transpose of this matrix.
 
 ### Why this matters for neural networks
 
@@ -445,7 +453,7 @@ for step in range(20):
     print(f"step {step:2d}  x={x:8.4f}  f(x)={x**2:10.6f}")
 ```
 
-Starting at x=5, each step moves closer to x=0 (the minimum).
+Starting at $x=5$, each step moves closer to $x=0$ (the minimum).
 
 ### Step 4: Gradient descent on a 2D function
 
@@ -531,7 +539,7 @@ for h in [0.1, 0.5, 1.0, 2.0]:
     print(f"h={h:.1f}  sin(h)={true_val:.4f}  order1={t1:.4f}  order2={t2:.4f}")
 ```
 
-Near x0=0, sin(x) ~ x (first-order Taylor). The approximation is excellent for small h but breaks down for large h. This is why gradient descent works best with small learning rates -- each step assumes the linear approximation is accurate.
+Near $x_0=0$, $\sin(x) \approx x$ (first-order Taylor). The approximation is excellent for small $h$ but breaks down for large $h$. This is why gradient descent works best with small learning rates -- each step assumes the linear approximation is accurate.
 
 ### Step 8: Why this matters for a neural network
 
@@ -600,9 +608,17 @@ You just built gradient descent from scratch. PyTorch automates the gradient com
 
 ## Exercises
 
-1. Implement `numerical_second_derivative(f, x)` using `numerical_derivative` called twice. Verify that the second derivative of x^3 at x=2 is 12.
-2. Use gradient descent to find the minimum of f(x, y) = (x - 3)^2 + (y + 1)^2. Start from (0, 0). The answer should converge to (3, -1).
-3. Add momentum to the gradient descent loop: maintain a velocity vector that accumulates past gradients. Compare convergence speed with and without momentum on f(x) = x^4 - 3x^2.
+1. Implement `numerical_second_derivative(f, x)` using `numerical_derivative` called twice. Verify that the second derivative of $x^3$ at $x=2$ is 12.
+2. Use gradient descent to find the minimum of $f(x, y) = (x - 3)^2 + (y + 1)^2$. Start from $(0, 0)$. The answer should converge to $(3, -1)$.
+3. Add momentum to the gradient descent loop: maintain a velocity vector that accumulates past gradients. Compare convergence speed with and without momentum on $f(x) = x^4 - 3x^2$.
+
+### Hints
+
+**Exercise 1.** Define a helper that returns `numerical_derivative(f, x)` and pass that helper to `numerical_derivative` again. If the result is noisy, use a larger step such as `h=1e-4` for both calls; the value at $x=2$ must be close to 12.
+
+**Exercise 2.** Write the gradient $(2(x - 3), 2(y + 1))$ or use `numerical_gradient`, and call `gradient_descent_nd` from $(0, 0)$. Print the point every 10 steps; it must move toward $(3, -1)$ and the loss must fall to near 0.
+
+**Exercise 3.** Keep a velocity `v`, update it as `v = momentum * v - lr * grad`, then add `v` to `x`. Count the steps each method needs to reach a gradient near 0; the minimum is at $x = \pm\sqrt{1.5} \approx \pm 1.225$.
 
 ## Key Terms
 
@@ -613,12 +629,12 @@ You just built gradient descent from scratch. PyTorch automates the gradient com
 | Gradient | "Direction of steepest ascent" | A vector of all partial derivatives. Points in the direction that increases the function fastest. |
 | Gradient descent | "Go downhill" | Subtract the gradient (times a learning rate) from the parameters to reduce the loss. The core of neural network training. |
 | Learning rate | "Step size" | A scalar that controls how big each gradient descent step is. Too large: diverge. Too small: converge slowly. |
-| Chain rule | "Multiply the derivatives" | The rule for differentiating composed functions: df/dx = df/dg * dg/dx. The mathematical basis of backpropagation. |
+| Chain rule | "Multiply the derivatives" | The rule for differentiating composed functions: $\frac{df}{dx} = \frac{df}{dg} \cdot \frac{dg}{dx}$. The mathematical basis of backpropagation. |
 | Jacobian | "Matrix of derivatives" | When a function maps vectors to vectors, the Jacobian is the matrix of all partial derivatives of outputs with respect to inputs. |
 | Numerical derivative | "Finite differences" | Approximating a derivative by evaluating the function at two nearby points and computing the slope between them. |
 | Backpropagation | "Reverse-mode autodiff" | Computing gradients layer by layer from output to input using the chain rule. How neural networks learn. |
 | Hessian | "Matrix of second derivatives" | The matrix of all second-order partial derivatives. Describes the curvature of a function. Positive definite Hessian at a critical point means local minimum. |
-| Taylor series | "Polynomial approximation" | Approximating a function near a point using its derivatives: f(x+h) ~ f(x) + f'(x)h + (1/2)f''(x)h^2 + ... The basis for understanding why gradient descent and Newton's method work. |
+| Taylor series | "Polynomial approximation" | Approximating a function near a point using its derivatives: $f(x+h) \approx f(x) + f'(x)h + \frac{1}{2}f''(x)h^2 + \cdots$ The basis for understanding why gradient descent and Newton's method work. |
 | Integral | "Area under the curve" | The accumulation of a quantity over a range. In ML, integrals define probabilities, expected values, and KL divergence. |
 
 ## Further Reading

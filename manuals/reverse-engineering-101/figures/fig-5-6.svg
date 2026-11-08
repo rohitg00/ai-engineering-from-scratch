@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-5-6-title fig-5-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-6-title">compare_functions on two functions across the -O1 and -O2 builds</title>
+  <desc id="fig-5-6-desc">Two tables of the eight comparison dimensions. Left, _percent_change: identity, pseudocode 272 to 272 code points, assembly 161 to 161, comments 0 to 0, calls 1 to 1, strings_names 1 to 1 and cfg 3 to 3 are unchanged, and references, 3 to 3, is unknown because an unnamed reference endpoint has no stable identity across two different artifacts, so the status is unknown. Right, _total: identity, comments and calls are unchanged, while pseudocode grows from 300 to 2904 code points, assembly from 336 to 1866, references from 4 to 13, strings_names from 2 to 11 and cfg from 5 to 16 basic blocks, so five dimensions are changed and the status is changed. A note says why the references row is unknown.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A · _PERCENT_CHANGE, -O1 AGAINST -O2</text>
+  <rect x="20" y="26" width="290" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="30" y="42.45" font-size="11.5" font-weight="700">status unknown: 7 unchanged, 1 unknown</text>
+  <rect x="20" y="52" width="290" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="68" font-size="11">identity</text>
+  <text x="140" y="68" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">digests equal</text>
+  <text x="235" y="68" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">unchanged</text>
+  <rect x="20" y="76" width="290" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="92" font-size="11">pseudocode</text>
+  <text x="140" y="92" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">272 to 272</text>
+  <text x="235" y="92" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">unchanged</text>
+  <rect x="20" y="100" width="290" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="116" font-size="11">assembly</text>
+  <text x="140" y="116" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">161 to 161</text>
+  <text x="235" y="116" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">unchanged</text>
+  <rect x="20" y="124" width="290" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="140" font-size="11">comments</text>
+  <text x="140" y="140" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">0 to 0</text>
+  <text x="235" y="140" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">unchanged</text>
+  <rect x="20" y="148" width="290" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="164" font-size="11">calls</text>
+  <text x="140" y="164" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">1 to 1</text>
+  <text x="235" y="164" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">unchanged</text>
+  <rect x="20" y="172" width="290" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="5 4"/>
+  <text x="30" y="188" font-size="11">references</text>
+  <text x="140" y="188" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">3 to 3</text>
+  <text x="235" y="188" font-size="11" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">unknown</text>
+  <rect x="20" y="196" width="290" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="212" font-size="11">strings_names</text>
+  <text x="140" y="212" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">1 to 1</text>
+  <text x="235" y="212" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">unchanged</text>
+  <rect x="20" y="220" width="290" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="30" y="236" font-size="11">cfg</text>
+  <text x="140" y="236" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">3 to 3</text>
+  <text x="235" y="236" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">unchanged</text>
+  <text x="330" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">B · _TOTAL, -O1 AGAINST -O2</text>
+  <rect x="330" y="26" width="290" height="26" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="340" y="42.45" font-size="11.5" font-weight="700">status changed, 5 of 8 dimensions</text>
+  <rect x="330" y="52" width="290" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="340" y="68" font-size="11">identity</text>
+  <text x="450" y="68" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">digests equal</text>
+  <text x="545" y="68" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">unchanged</text>
+  <rect x="330" y="76" width="290" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="340" y="92" font-size="11">pseudocode</text>
+  <text x="450" y="92" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">300 to 2904</text>
+  <text x="545" y="92" font-size="11" font-weight="700" fill="var(--m-amber-ink, #85590c)">changed</text>
+  <rect x="330" y="100" width="290" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="340" y="116" font-size="11">assembly</text>
+  <text x="450" y="116" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">336 to 1866</text>
+  <text x="545" y="116" font-size="11" font-weight="700" fill="var(--m-amber-ink, #85590c)">changed</text>
+  <rect x="330" y="124" width="290" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="340" y="140" font-size="11">comments</text>
+  <text x="450" y="140" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">0 to 0</text>
+  <text x="545" y="140" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">unchanged</text>
+  <rect x="330" y="148" width="290" height="24" fill="var(--m-paper, #fafaf5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="340" y="164" font-size="11">calls</text>
+  <text x="450" y="164" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">1 to 1</text>
+  <text x="545" y="164" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">unchanged</text>
+  <rect x="330" y="172" width="290" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="340" y="188" font-size="11">references</text>
+  <text x="450" y="188" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">4 to 13</text>
+  <text x="545" y="188" font-size="11" font-weight="700" fill="var(--m-amber-ink, #85590c)">changed</text>
+  <rect x="330" y="196" width="290" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="340" y="212" font-size="11">strings_names</text>
+  <text x="450" y="212" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">2 to 11</text>
+  <text x="545" y="212" font-size="11" font-weight="700" fill="var(--m-amber-ink, #85590c)">changed</text>
+  <rect x="330" y="220" width="290" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="340" y="236" font-size="11">cfg</text>
+  <text x="450" y="236" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">5 to 16</text>
+  <text x="545" y="236" font-size="11" font-weight="700" fill="var(--m-amber-ink, #85590c)">changed</text>
+  <text x="20" y="268" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Counts are code points for the two text dimensions and items for the others.</text>
+  <text x="20" y="284" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The dashed row is unknown: unnamed reference endpoints have no identity across two artifacts.</text>
+</svg>

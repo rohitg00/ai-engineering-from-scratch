@@ -1,0 +1,29 @@
+[2KWARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+WARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+[ts]
+__sigset_t
+__div_t
+__siginfo_t
+_fd_set
+timeval
+lconv
+sigaction
+std__type_info
+__ldiv_t
+__lldiv_t
+tm
+__imaxdiv_t
+sockaddr
+timespec
+[afvd in bump]
+arg arg2 =   : rsi : 0x00000000
+arg arg1 =   : rdi : 0x00000000
+[pdf of bump]
+            ;-- section..text:
+┌ sym.bump(int64_t arg1, int64_t arg2);
+│           ; arg int64_t arg1 @ rdi
+│           ; arg int64_t arg2 @ rsi
+│           0x08000040      mov   eax, esi                             ; arg2 ; [02] -r-x section size 392 named .text
+│           0x08000042      add   eax, dword [rdi+0x04]                ; arg1
+│           0x08000045      mov   dword [rdi+0x04], eax                ; arg1
+└           0x08000048      ret

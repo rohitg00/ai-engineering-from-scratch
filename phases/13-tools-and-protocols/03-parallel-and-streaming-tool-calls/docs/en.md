@@ -66,7 +66,7 @@ Every call the model emits has an `id`. Every result the host returns must inclu
 
 The host runs each call's executor on its own thread, coroutine, or remote worker. The simplest harness uses a thread pool; production uses asyncio with `asyncio.gather` or structured concurrency. Order of completion is unpredictable — the id is the identifier.
 
-One common bug: reply with results in call-list order instead of completion order. This usually works because the model only cares about `tool_call_id`, but if a result is dropped or duplicated, out-of-order submission makes debugging harder. Prefer to reply in completion order with explicit ids.
+One common bug: reply with results in call-list order instead of completion order. This usually works because the model only cares about `tool_call_id`, but if a result is dropped or duplicated, a reply list that is reordered away from the order the results arrived in makes the gap harder to find in logs. Prefer to reply in completion order with explicit ids.
 
 ### Streaming tool calls
 

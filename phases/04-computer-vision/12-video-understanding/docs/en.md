@@ -67,7 +67,7 @@ Pros:
 - I3D inflation gives free transfer learning.
 
 Cons:
-- T/8 more FLOPs than the 2D counterpart (for temporal kernel of 3 stacked 3 times).
+- About 3x the FLOPs of the 2D network run frame by frame, because each 3x3 kernel becomes 3x3x3.
 - Temporal kernels are small; long-range motion needs a pyramid or dual-stream approach.
 
 When to use: action recognition where motion is the signal (Something-Something V2, Kinetics with motion-heavy classes).

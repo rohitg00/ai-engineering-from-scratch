@@ -43,7 +43,7 @@ Five dimensions, each scored 0 to 2.
 | Verification quality | Does the acceptance command actually prove the goal, or did it prove a weaker version? |
 | Handoff readiness | Could the next session pick up cleanly from the current state? |
 
-Total out of 10. A run below 7 is a soft fail; a run below 5 is a hard fail.
+Total out of 10. A run below 7 is a soft fail; a run below 5, or any dimension at 0, is a hard fail.
 
 ### The reviewer is a separate role, not a separate model
 

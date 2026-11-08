@@ -1,0 +1,19 @@
+$ sbx exec m101-secret sh -c 'env | grep -E '"'"'^M101_|^SBX_CRED|proxy-managed'"'"' | sort'
+ANTHROPIC_API_KEY=proxy-managed
+GOOGLE_API_KEY=proxy-managed
+M101_RECV_KEY=sbx-cs-<rand>
+MCP_SENTINEL_TOKEN_NAME=proxy-managed
+MISTRAL_API_KEY=proxy-managed
+NEBIUS_API_KEY=proxy-managed
+OPENAI_API_KEY=proxy-managed
+OPENROUTER_API_KEY=proxy-managed
+SBX_CRED_ANTHROPIC_MODE=none
+SBX_CRED_GITHUB_MODE=none
+SBX_CRED_GOOGLE_MODE=none
+SBX_CRED_MISTRAL_MODE=none
+SBX_CRED_NEBIUS_MODE=none
+SBX_CRED_OPENAI_MODE=none
+SBX_CRED_OPENROUTER_MODE=none
+SBX_CRED_XAI_MODE=none
+XAI_API_KEY=proxy-managed
+[exit 0]

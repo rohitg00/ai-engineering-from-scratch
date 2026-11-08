@@ -1,0 +1,31 @@
+{
+  "id": "beam-search",
+  "title": "Beam search with EOS and length normalization",
+  "kind": "implement",
+  "summary": "Keep the best beam_width partial sequences over a step function, finish beams at EOS, and rank them with a length penalty.",
+  "difficulty": "hard",
+  "tags": [
+    "beam-search",
+    "decoding",
+    "seq2seq",
+    "llm-inference"
+  ],
+  "lesson": "phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence",
+  "cheatsheet": "rnns-seq2seq",
+  "minutes": 45,
+  "entry": [
+    "beam_search"
+  ],
+  "collections": [
+    "llm-inference"
+  ],
+  "time_limit_s": 10,
+  "mutants": {
+    "drop_unfinished": "Forgets the alive hypotheses when the loop reaches max_len, so sequences without EOS are lost.",
+    "eos_stays_alive": "Never moves EOS candidates to the finished list, so the search extends sequences past EOS.",
+    "length_counts_bos": "Counts BOS in the length of the length penalty.",
+    "prune_per_beam": "Keeps the best beam_width tokens of each beam and never prunes over all candidates.",
+    "ties_high_id": "Sorts with reverse=True on (score, tokens), so equal scores put the higher token ids first.",
+    "unfinished_not_normalized": "Adds the alive hypotheses at max_len with their raw scores, so the length penalty skips them."
+  }
+}

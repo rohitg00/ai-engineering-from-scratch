@@ -1,0 +1,29 @@
+Three benchmark clients against one server (backlog B-14)
+Date: 2026-10-23
+Machine: NVIDIA L4, the second GPU of the node (GPU1), shared with its owner. The clock was throttled but steady at 420 to 495 MHz for every run.
+Server: one vLLM 0.31.0 server with Qwen/Qwen3-0.6B.
+Clients: the SGLang 0.5.22 client with --backend vllm and the random-ids dataset, vllm bench serve with the random dataset, and vllm bench serve with VLLM_USE_RUST_BENCH=1.
+All runs: 512 tokens in and 128 out, ignore EOS, seed 1, prefix cache flushed before every run, 2 rounds interleaved by client.
+
+Median TTFT in ms, two rounds per cell:
+
+users   temperature   SGLang client    vllm bench       vllm bench, Rust
+1       0             154, 164         149, 150         144, 144
+1       0.7           165, 165         149, 150         150, 150
+16      0             1,077, 1,045     1,033, 1,027     1,088, 1,038
+16      0.7           1,212, 1,089     1,027, 1,038     1,066, 1,042
+64      0             1,688, 1,838     1,624, 1,667     1,674, 1,789
+64      0.7           1,765, 1,726     1,705, 1,675     1,687, 1,879
+
+Output throughput in tok/s, two rounds per cell:
+
+users   temperature   SGLang client    vllm bench       vllm bench, Rust
+1       0             39.9, 31.0       32.0, 31.9       32.2, 31.8
+16      0             218, 216         222, 222         223, 223
+64      0             359, 348         379, 377         371, 365
+64      0.7           331, 343         360, 363         356, 353
+
+The two vllm bench clients agree within noise.
+The SGLang client reads 3 to 10 percent higher TTFT than vllm bench. At 16 and 64 users it reads 2 to 8 percent lower throughput. At 1 user, one SGLang round read 39.9 tok/s against about 32 for every other round, so the throughput gap does not hold there. One outlier round reached 18 percent at 16 users and temperature 0.7.
+The clients use different prompt token sets (random-ids against random), which is a confound for small gaps.
+Temperature 0.7 against 0: TPOT about 10 to 13 percent higher at 1 user (34 ms at 0.7 against 30 ms at 0), and 3 to 6 percent higher at 16 and 64 users. Throughput 3 to 10 percent lower.

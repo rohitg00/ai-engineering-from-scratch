@@ -12,7 +12,7 @@
  *
  * Citations:
  *   - OpenAI Batch API: platform.openai.com/docs/guides/batch
- *   - Anthropic Message Batches: docs.anthropic.com/en/docs/build-with-claude/batch-processing
+ *   - Anthropic Message Batches: platform.claude.com/docs/en/build-with-claude/batch-processing
  *   - Vertex AI Batch Prediction: cloud.google.com/vertex-ai/generative-ai/docs/model-reference/batch-prediction
  *
  * Runs on Node 20+ stdlib. No npm deps.

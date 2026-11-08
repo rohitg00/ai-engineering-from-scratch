@@ -68,7 +68,7 @@ emb[p, 2k]     = sin(angle)
 emb[p, 2k + 1] = cos(angle)
 ```
 
-The function has no parameters. Every position has a unique vector. The wavelength varies geometrically across feature dimensions, so the lower dimensions encode coarse position and the higher dimensions encode fine position.
+The function has no parameters. Every position has a unique vector. The wavelength varies geometrically across feature dimensions. The lower dimensions have the shortest wavelengths and encode fine position. The higher dimensions have the longest wavelengths and encode coarse position.
 
 The property that follows from the choice of `sin` and `cos` together is that the vector at position `p + k` is a linear function of the vector at position `p`. That gives the attention layer an easy path to learning relative-position offsets. The model does not need a separate parameter to express "look five tokens back."
 

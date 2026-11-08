@@ -1,0 +1,1606 @@
+# Coverage map for the cheat sheet posters.
+# Every lesson in phases/, every manual and every project is a source of at least one topic.
+# node site/build-cheatsheets.js --check fails when one is missing.
+
+- id: a2a
+  title: A2A Protocol
+  kind: manual
+  sources:
+    - manuals/a2a-101
+
+- id: agent-harness
+  title: Agent Harness Engineering
+  kind: concept
+  sources:
+    - phases/14-agent-engineering/01-the-agent-loop
+    - phases/14-agent-engineering/31-agent-workbench-why-models-fail
+    - phases/14-agent-engineering/32-minimal-agent-workbench
+    - phases/14-agent-engineering/33-instructions-as-executable-constraints
+    - phases/14-agent-engineering/36-scope-contracts
+    - phases/14-agent-engineering/37-runtime-feedback-loops
+    - phases/14-agent-engineering/38-verification-gates
+    - phases/14-agent-engineering/40-multi-session-handoff
+    - phases/14-agent-engineering/42-agent-workbench-capstone
+    - phases/15-autonomous-systems/10-claude-code-permission-modes
+    - phases/19-capstone-projects/20-agent-harness-loop-contract
+    - phases/19-capstone-projects/21-tool-registry-schema-validation
+    - phases/19-capstone-projects/23-function-call-dispatcher
+    - phases/19-capstone-projects/25-verification-gates-observation-budget
+    - phases/19-capstone-projects/26-sandbox-runner-denylist
+    - phases/19-capstone-projects/27-eval-harness-fixture-tasks
+    - phases/19-capstone-projects/28-observability-otel-traces
+    - phases/19-capstone-projects/29-end-to-end-coding-task-demo
+
+- id: ai-safety
+  title: AI Safety and Red Teaming
+  kind: debugging
+  sources:
+    - phases/19-capstone-projects/15-constitutional-safety-harness
+    - phases/19-capstone-projects/82-jailbreak-taxonomy
+    - phases/19-capstone-projects/83-prompt-injection-detector
+    - phases/19-capstone-projects/84-refusal-evaluation
+    - phases/19-capstone-projects/85-content-classifier-integration
+    - phases/19-capstone-projects/86-constitutional-rules-engine
+    - phases/19-capstone-projects/87-end-to-end-safety-gate
+    - phases/18-ethics-safety-alignment/02-reward-hacking-goodhart
+    - phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification
+    - phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif
+    - phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception
+    - phases/18-ethics-safety-alignment/09-alignment-faking
+    - phases/18-ethics-safety-alignment/10-ai-control-subversion
+    - phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong
+    - phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks
+    - phases/18-ethics-safety-alignment/13-many-shot-jailbreaking
+    - phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks
+    - phases/18-ethics-safety-alignment/15-indirect-prompt-injection
+    - phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit
+    - phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard
+
+- id: autonomous-agents
+  title: Autonomous Agents and Permissions
+  kind: concept
+  sources:
+    - phases/15-autonomous-systems/01-long-horizon-agents
+    - phases/15-autonomous-systems/08-bounded-self-improvement
+    - phases/15-autonomous-systems/10-claude-code-permission-modes
+    - phases/15-autonomous-systems/12-durable-execution
+    - phases/15-autonomous-systems/13-cost-governors
+    - phases/15-autonomous-systems/14-kill-switches-canaries
+    - phases/15-autonomous-systems/15-propose-then-commit
+    - phases/15-autonomous-systems/16-checkpoints-rollback
+
+- id: classical-ml
+  title: Classical Machine Learning
+  kind: concept
+  sources:
+    - phases/02-ml-fundamentals/02-linear-regression
+    - phases/02-ml-fundamentals/03-logistic-regression
+    - phases/02-ml-fundamentals/04-decision-trees
+    - phases/02-ml-fundamentals/05-support-vector-machines
+    - phases/02-ml-fundamentals/06-knn-and-distances
+    - phases/02-ml-fundamentals/07-unsupervised-learning
+    - phases/02-ml-fundamentals/08-feature-engineering
+    - phases/02-ml-fundamentals/09-model-evaluation
+    - phases/02-ml-fundamentals/10-bias-variance
+    - phases/02-ml-fundamentals/11-ensemble-methods
+    - phases/02-ml-fundamentals/12-hyperparameter-tuning
+    - phases/02-ml-fundamentals/13-ml-pipelines
+    - phases/02-ml-fundamentals/14-naive-bayes
+    - phases/02-ml-fundamentals/17-imbalanced-data
+    - phases/02-ml-fundamentals/18-feature-selection
+
+- id: computer-vision
+  title: Computer Vision
+  kind: concept
+  sources:
+    - phases/04-computer-vision/01-image-fundamentals
+    - phases/04-computer-vision/02-convolutions-from-scratch
+    - phases/04-computer-vision/03-cnns-lenet-to-resnet
+    - phases/04-computer-vision/04-image-classification
+    - phases/04-computer-vision/05-transfer-learning
+    - phases/04-computer-vision/06-object-detection-yolo
+    - phases/04-computer-vision/07-semantic-segmentation-unet
+    - phases/04-computer-vision/08-instance-segmentation-mask-rcnn
+    - phases/04-computer-vision/14-vision-transformers
+
+- id: deep-learning-training
+  title: Training Neural Networks
+  kind: debugging
+  sources:
+    - phases/03-deep-learning-core/03-backpropagation
+    - phases/03-deep-learning-core/04-activation-functions
+    - phases/03-deep-learning-core/06-optimizers
+    - phases/03-deep-learning-core/07-regularization
+    - phases/03-deep-learning-core/08-weight-initialization
+    - phases/03-deep-learning-core/09-learning-rate-schedules
+    - phases/03-deep-learning-core/13-debugging-neural-networks
+
+- id: diffusion-models
+  title: Diffusion and Generative Models
+  kind: concept
+  sources:
+    - phases/08-generative-ai/02-autoencoders-vae
+    - phases/08-generative-ai/03-gans-generator-discriminator
+    - phases/08-generative-ai/06-diffusion-ddpm-from-scratch
+    - phases/08-generative-ai/07-latent-diffusion-stable-diffusion
+    - phases/08-generative-ai/08-controlnet-lora-conditioning
+    - phases/08-generative-ai/13-flow-matching-rectified-flows
+    - phases/08-generative-ai/14-evaluation-fid-clip-score
+
+- id: docker-sandboxes
+  title: Docker Sandboxes for Agents
+  kind: manual
+  sources:
+    - manuals/docker-sandboxes-101
+
+- id: embeddings-vector-search
+  title: Embeddings and Vector Search
+  kind: commands
+  sources:
+    - phases/11-llm-engineering/04-embeddings
+    - phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive
+    - phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec
+    - phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword
+    - phases/05-nlp-foundations-to-advanced/14-information-retrieval-search
+    - phases/01-math-foundations/14-norms-and-distances
+    - phases/02-ml-fundamentals/06-knn-and-distances
+    - phases/04-computer-vision/20-image-retrieval-metric
+    - phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense
+
+- id: inference-optimization
+  title: "Inference Optimization: KV Cache, Quantization, Batching"
+  kind: concept
+  sources:
+    - phases/07-transformers-deep-dive/12-kv-cache-flash-attention
+    - phases/10-llms-from-scratch/11-quantization
+    - phases/10-llms-from-scratch/12-inference-optimization
+    - phases/17-infrastructure-and-production/04-vllm-serving-internals
+    - phases/17-infrastructure-and-production/05-eagle3-speculative-decoding
+    - phases/17-infrastructure-and-production/08-inference-metrics-goodput
+    - phases/17-infrastructure-and-production/09-production-quantization
+
+- id: llm-evaluation
+  title: Evaluating LLMs
+  kind: commands
+  sources:
+    - phases/10-llms-from-scratch/10-evaluation
+    - phases/11-llm-engineering/10-evaluation
+    - phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks
+    - phases/05-nlp-foundations-to-advanced/28-long-context-evaluation
+    - phases/19-capstone-projects/27-eval-harness-fixture-tasks
+    - phases/19-capstone-projects/41-eval-pipeline
+    - phases/19-capstone-projects/49-lm-eval-harness
+    - phases/19-capstone-projects/70-task-spec-format
+    - phases/19-capstone-projects/71-classical-metrics
+    - phases/19-capstone-projects/72-code-exec-metric
+    - phases/19-capstone-projects/73-perplexity-calibration
+    - phases/19-capstone-projects/74-leaderboard-aggregation
+    - phases/19-capstone-projects/75-end-to-end-eval-runner
+
+- id: lora-fine-tuning
+  title: Fine-Tuning with LoRA
+  kind: commands
+  sources:
+    - phases/11-llm-engineering/08-fine-tuning-lora
+    - phases/10-llms-from-scratch/06-instruction-tuning-sft
+    - phases/19-capstone-projects/38-classifier-finetuning
+    - phases/19-capstone-projects/39-instruction-tuning-sft
+
+- id: math-for-ml
+  title: Math for Machine Learning
+  kind: concept
+  sources:
+    - phases/01-math-foundations/02-vectors-matrices-operations
+    - phases/01-math-foundations/04-calculus-for-ml
+    - phases/01-math-foundations/05-chain-rule-and-autodiff
+    - phases/01-math-foundations/06-probability-and-distributions
+    - phases/01-math-foundations/07-bayes-theorem
+    - phases/01-math-foundations/08-optimization
+    - phases/01-math-foundations/09-information-theory
+    - phases/01-math-foundations/10-dimensionality-reduction
+    - phases/01-math-foundations/11-singular-value-decomposition
+    - phases/01-math-foundations/12-tensor-operations
+    - phases/01-math-foundations/13-numerical-stability
+    - phases/01-math-foundations/14-norms-and-distances
+    - phases/01-math-foundations/16-sampling-methods
+    - phases/01-math-foundations/17-linear-systems
+
+- id: mcp
+  title: Model Context Protocol (MCP)
+  kind: commands
+  sources:
+    - phases/13-tools-and-protocols/06-mcp-fundamentals
+    - phases/13-tools-and-protocols/07-building-an-mcp-server
+    - phases/13-tools-and-protocols/08-building-an-mcp-client
+    - phases/13-tools-and-protocols/09-mcp-transports
+    - phases/13-tools-and-protocols/12-mcp-roots-and-elicitation
+    - phases/13-tools-and-protocols/16-mcp-security-oauth-2-1
+    - phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control
+
+- id: multi-agent
+  title: Multi-Agent Systems
+  kind: concept
+  sources:
+    - phases/16-multi-agent-and-swarms/01-why-multi-agent
+    - phases/16-multi-agent-and-swarms/04-primitive-model
+    - phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern
+    - phases/16-multi-agent-and-swarms/06-hierarchical-architecture
+    - phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection
+    - phases/16-multi-agent-and-swarms/11-handoffs-and-routines
+    - phases/16-multi-agent-and-swarms/13-shared-memory-blackboard
+    - phases/16-multi-agent-and-swarms/14-consensus-and-bft
+    - phases/16-multi-agent-and-swarms/15-voting-debate-topology
+    - phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints
+    - phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink
+    - phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks
+
+- id: prompt-engineering
+  title: Prompt Engineering
+  kind: concept
+  sources:
+    - phases/11-llm-engineering/01-prompt-engineering
+    - phases/11-llm-engineering/02-few-shot-cot
+    - phases/11-llm-engineering/05-context-engineering
+    - phases/11-llm-engineering/15-prompt-caching
+
+- id: pytorch-essentials
+  title: PyTorch Essentials
+  kind: commands
+  sources:
+    - phases/03-deep-learning-core/11-intro-to-pytorch
+    - phases/03-deep-learning-core/13-debugging-neural-networks
+    - phases/00-setup-and-tooling/03-gpu-setup-and-cloud
+    - phases/00-setup-and-tooling/12-debugging-and-profiling
+
+- id: rag
+  title: Retrieval-Augmented Generation (RAG)
+  kind: commands
+  sources:
+    - phases/11-llm-engineering/06-rag
+    - phases/11-llm-engineering/07-advanced-rag
+    - phases/05-nlp-foundations-to-advanced/13-question-answering
+    - phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag
+    - phases/19-capstone-projects/64-chunking-strategies-advanced
+    - phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense
+    - phases/19-capstone-projects/66-reranker-cross-encoder
+    - phases/19-capstone-projects/67-query-rewriting-hyde
+    - phases/19-capstone-projects/68-rag-eval-precision-recall
+    - phases/19-capstone-projects/69-end-to-end-rag-system
+
+- id: reinforcement-learning
+  title: Reinforcement Learning
+  kind: concept
+  sources:
+    - phases/09-reinforcement-learning/01-mdps-states-actions-rewards
+    - phases/09-reinforcement-learning/02-dynamic-programming
+    - phases/09-reinforcement-learning/03-monte-carlo-methods
+    - phases/09-reinforcement-learning/04-q-learning-sarsa
+    - phases/09-reinforcement-learning/05-dqn
+    - phases/09-reinforcement-learning/06-policy-gradients-reinforce
+    - phases/09-reinforcement-learning/07-actor-critic-a2c-a3c
+    - phases/09-reinforcement-learning/08-ppo
+    - phases/09-reinforcement-learning/09-reward-modeling-rlhf
+    - phases/09-reinforcement-learning/12-rl-for-games
+
+- id: reverse-engineering
+  title: Reverse Engineering with rea
+  kind: manual
+  explainer: inside-a-decompiler.html
+  sources:
+    - manuals/reverse-engineering-101
+    - phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
+    - phases/13-tools-and-protocols/33-disassembly-and-control-flow
+    - phases/13-tools-and-protocols/34-lifting-to-pseudocode
+    - phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
+    - phases/13-tools-and-protocols/36-rebuild-and-prove-equal
+    - phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
+    - phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
+    - phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
+    - phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
+    - phases/13-tools-and-protocols/41-recovering-data-and-types
+    - phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
+    - phases/13-tools-and-protocols/43-bytecode-and-managed-formats
+    - phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution
+    - phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
+
+- id: sglang-serving
+  title: LLM Serving with SGLang
+  kind: manual
+  explainer: inside-an-llm-serving-gpu.html
+  sources:
+    - manuals/sglang-101
+
+- id: miles-rl
+  title: RL Post-Training with Miles
+  kind: manual
+  sources:
+    - manuals/miles-101
+- id: vllm-serving
+  title: LLM Serving with vLLM
+  kind: manual
+  sources:
+    - manuals/vllm-101
+
+- id: tokenization
+  title: Tokenization and BPE
+  kind: commands
+  sources:
+    - phases/05-nlp-foundations-to-advanced/19-subword-tokenization
+    - phases/10-llms-from-scratch/01-tokenizers
+    - phases/10-llms-from-scratch/02-building-a-tokenizer
+    - phases/19-capstone-projects/30-bpe-tokenizer-from-scratch
+    - phases/19-capstone-projects/31-tokenized-dataset-sliding-window
+
+- id: tool-calling
+  title: Tool Calling and Structured Outputs
+  kind: commands
+  sources:
+    - phases/11-llm-engineering/03-structured-outputs
+    - phases/11-llm-engineering/09-function-calling
+    - phases/13-tools-and-protocols/01-the-tool-interface
+    - phases/13-tools-and-protocols/02-function-calling-deep-dive
+    - phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls
+    - phases/13-tools-and-protocols/04-structured-output
+    - phases/13-tools-and-protocols/05-tool-schema-design
+    - phases/19-capstone-projects/21-tool-registry-schema-validation
+    - phases/19-capstone-projects/23-function-call-dispatcher
+
+- id: transformers-attention
+  title: Transformers and Attention
+  kind: concept
+  sources:
+    - phases/07-transformers-deep-dive/02-self-attention-from-scratch
+    - phases/07-transformers-deep-dive/03-multi-head-attention
+    - phases/07-transformers-deep-dive/04-positional-encoding
+    - phases/07-transformers-deep-dive/05-full-transformer
+    - phases/07-transformers-deep-dive/07-gpt-causal-language-modeling
+    - phases/07-transformers-deep-dive/12-kv-cache-flash-attention
+    - phases/07-transformers-deep-dive/13-scaling-laws
+    - phases/07-transformers-deep-dive/14-build-a-transformer-capstone
+    - phases/05-nlp-foundations-to-advanced/10-attention-mechanism
+    - phases/19-capstone-projects/32-token-positional-embeddings
+    - phases/19-capstone-projects/33-multihead-self-attention
+    - phases/19-capstone-projects/34-transformer-block
+    - phases/19-capstone-projects/35-gpt-model-assembly
+    - phases/10-llms-from-scratch/04-pre-training-mini-gpt
+
+- id: python-dev-environment
+  title: Python Dev Environment for AI
+  kind: commands
+  sources:
+    - phases/00-setup-and-tooling/01-dev-environment
+    - phases/00-setup-and-tooling/06-python-environments
+    - phases/00-setup-and-tooling/08-editor-setup
+    - phases/00-setup-and-tooling/13-python-for-ai-engineering
+
+- id: git-shell-linux
+  title: Git, Shell and Linux for AI Work
+  kind: commands
+  sources:
+    - phases/00-setup-and-tooling/02-git-and-collaboration
+    - phases/00-setup-and-tooling/10-terminal-and-shell
+    - phases/00-setup-and-tooling/11-linux-for-ai
+
+- id: gpu-cloud-docker-keys
+  title: GPUs, Cloud, Docker and API Keys
+  kind: commands
+  sources:
+    - phases/00-setup-and-tooling/03-gpu-setup-and-cloud
+    - phases/00-setup-and-tooling/04-apis-and-keys
+    - phases/00-setup-and-tooling/07-docker-for-ai
+
+- id: notebooks-data-profiling
+  title: Notebooks, Data Files and Profiling
+  kind: commands
+  sources:
+    - phases/00-setup-and-tooling/05-jupyter-notebooks
+    - phases/00-setup-and-tooling/09-data-management
+    - phases/00-setup-and-tooling/12-debugging-and-profiling
+
+- id: linear-algebra
+  title: Linear Algebra for ML
+  kind: concept
+  sources:
+    - phases/01-math-foundations/01-linear-algebra-intuition
+    - phases/01-math-foundations/02-vectors-matrices-operations
+    - phases/01-math-foundations/03-matrix-transformations
+    - phases/01-math-foundations/11-singular-value-decomposition
+    - phases/01-math-foundations/17-linear-systems
+
+- id: probability-statistics
+  title: Probability and Statistics for ML
+  kind: concept
+  sources:
+    - phases/01-math-foundations/06-probability-and-distributions
+    - phases/01-math-foundations/07-bayes-theorem
+    - phases/01-math-foundations/15-statistics-for-ml
+    - phases/01-math-foundations/16-sampling-methods
+    - phases/01-math-foundations/22-stochastic-processes
+
+- id: calculus-optimization
+  title: Calculus, Gradients and Convex Optimization
+  kind: concept
+  sources:
+    - phases/01-math-foundations/04-calculus-for-ml
+    - phases/01-math-foundations/05-chain-rule-and-autodiff
+    - phases/01-math-foundations/08-optimization
+    - phases/01-math-foundations/18-convex-optimization
+
+- id: signals-fourier
+  title: Complex Numbers, Fourier and Signals
+  kind: concept
+  sources:
+    - phases/01-math-foundations/19-complex-numbers
+    - phases/01-math-foundations/20-fourier-transform
+    - phases/06-speech-and-audio/01-audio-fundamentals
+    - phases/06-speech-and-audio/02-spectrograms-mel-features
+
+- id: information-numerics
+  title: Information Theory and Numerical Stability
+  kind: concept
+  sources:
+    - phases/01-math-foundations/09-information-theory
+    - phases/01-math-foundations/10-dimensionality-reduction
+    - phases/01-math-foundations/13-numerical-stability
+    - phases/01-math-foundations/14-norms-and-distances
+
+- id: graphs-knowledge-graphs
+  title: Graphs and Knowledge Graphs
+  kind: concept
+  sources:
+    - phases/01-math-foundations/21-graph-theory
+    - phases/05-nlp-foundations-to-advanced/25-entity-linking
+    - phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg
+    - phases/14-agent-engineering/09-hybrid-memory-mem0
+
+- id: ml-model-comparison
+  title: Classical Models Compared
+  kind: comparison
+  sources:
+    - phases/02-ml-fundamentals/02-linear-regression
+    - phases/02-ml-fundamentals/03-logistic-regression
+    - phases/02-ml-fundamentals/04-decision-trees
+    - phases/02-ml-fundamentals/05-support-vector-machines
+    - phases/02-ml-fundamentals/06-knn-and-distances
+    - phases/02-ml-fundamentals/14-naive-bayes
+
+- id: ml-evaluation-metrics
+  title: Model Evaluation, Bias-Variance and Tuning
+  kind: concept
+  sources:
+    - phases/02-ml-fundamentals/09-model-evaluation
+    - phases/02-ml-fundamentals/10-bias-variance
+    - phases/02-ml-fundamentals/12-hyperparameter-tuning
+    - phases/02-ml-fundamentals/17-imbalanced-data
+
+- id: feature-engineering
+  title: Feature Engineering and Pipelines
+  kind: commands
+  sources:
+    - phases/02-ml-fundamentals/08-feature-engineering
+    - phases/02-ml-fundamentals/11-ensemble-methods
+    - phases/02-ml-fundamentals/13-ml-pipelines
+    - phases/02-ml-fundamentals/18-feature-selection
+
+- id: unsupervised-anomaly
+  title: Clustering, Dimensionality Reduction and Anomalies
+  kind: concept
+  sources:
+    - phases/02-ml-fundamentals/07-unsupervised-learning
+    - phases/02-ml-fundamentals/16-anomaly-detection
+    - phases/01-math-foundations/10-dimensionality-reduction
+
+- id: time-series
+  title: Time Series Fundamentals
+  kind: concept
+  sources:
+    - phases/02-ml-fundamentals/15-time-series
+    - phases/01-math-foundations/22-stochastic-processes
+    - phases/02-ml-fundamentals/16-anomaly-detection
+
+- id: ml-system-design
+  title: ML System Design, Drift and Feature Stores
+  kind: concept
+  sources:
+    - phases/02-ml-fundamentals/01-what-is-machine-learning
+    - phases/02-ml-fundamentals/19-ml-system-design
+    - phases/02-ml-fundamentals/20-model-monitoring-and-drift
+    - phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew
+
+- id: neural-net-basics
+  title: Neural Network Basics
+  kind: concept
+  sources:
+    - phases/03-deep-learning-core/01-the-perceptron
+    - phases/03-deep-learning-core/02-multi-layer-networks
+    - phases/03-deep-learning-core/03-backpropagation
+    - phases/03-deep-learning-core/05-loss-functions
+    - phases/03-deep-learning-core/10-mini-framework
+
+- id: optimizers-schedules
+  title: Optimizers and Learning Rate Schedules
+  kind: comparison
+  sources:
+    - phases/03-deep-learning-core/06-optimizers
+    - phases/03-deep-learning-core/09-learning-rate-schedules
+    - phases/19-capstone-projects/44-cosine-lr-warmup
+    - phases/19-capstone-projects/45-gradient-clipping-amp
+    - phases/19-capstone-projects/46-gradient-accumulation
+
+- id: jax-vs-pytorch
+  title: JAX against PyTorch
+  kind: comparison
+  sources:
+    - phases/03-deep-learning-core/10-mini-framework
+    - phases/03-deep-learning-core/11-intro-to-pytorch
+    - phases/03-deep-learning-core/12-intro-to-jax
+
+- id: nn-debugging
+  title: Debugging Neural Network Training
+  kind: debugging
+  sources:
+    - phases/03-deep-learning-core/08-weight-initialization
+    - phases/03-deep-learning-core/13-debugging-neural-networks
+    - phases/00-setup-and-tooling/12-debugging-and-profiling
+    - phases/19-capstone-projects/45-gradient-clipping-amp
+
+- id: cnn-architectures
+  title: CNN Architectures and Transfer Learning
+  kind: concept
+  sources:
+    - phases/04-computer-vision/02-convolutions-from-scratch
+    - phases/04-computer-vision/03-cnns-lenet-to-resnet
+    - phases/04-computer-vision/04-image-classification
+    - phases/04-computer-vision/05-transfer-learning
+
+- id: detection-segmentation
+  title: Detection and Segmentation Compared
+  kind: comparison
+  sources:
+    - phases/04-computer-vision/06-object-detection-yolo
+    - phases/04-computer-vision/07-semantic-segmentation-unet
+    - phases/04-computer-vision/08-instance-segmentation-mask-rcnn
+    - phases/04-computer-vision/21-keypoint-pose
+    - phases/04-computer-vision/24-sam3-open-vocab-segmentation
+
+- id: self-supervised-clip
+  title: Self-Supervised Vision, CLIP and Retrieval
+  kind: concept
+  sources:
+    - phases/04-computer-vision/17-self-supervised-vision
+    - phases/04-computer-vision/18-open-vocab-clip
+    - phases/04-computer-vision/20-image-retrieval-metric
+    - phases/12-multimodal-ai/02-clip-contrastive-pretraining
+
+- id: video-3d-vision
+  title: Video, Depth and 3D Vision
+  kind: concept
+  sources:
+    - phases/04-computer-vision/12-video-understanding
+    - phases/04-computer-vision/13-3d-vision-nerf
+    - phases/04-computer-vision/22-3d-gaussian-splatting
+    - phases/04-computer-vision/26-monocular-depth
+    - phases/04-computer-vision/27-multi-object-tracking
+    - phases/04-computer-vision/28-world-models-video-diffusion
+
+- id: vision-edge-deployment
+  title: Vision Pipelines and Edge Deployment
+  kind: commands
+  sources:
+    - phases/04-computer-vision/15-real-time-edge
+    - phases/04-computer-vision/16-vision-pipeline-capstone
+    - phases/17-infrastructure-and-production/12-edge-inference
+
+- id: ocr-documents
+  title: OCR and Document Understanding
+  kind: commands
+  sources:
+    - phases/04-computer-vision/19-ocr-document-understanding
+    - phases/12-multimodal-ai/22-document-diagram-understanding
+    - phases/12-multimodal-ai/23-colpali-vision-native-rag
+    - phases/19-capstone-projects/04-multimodal-document-qa
+    - projects/document-extraction-desk
+
+- id: image-generation-compared
+  title: GANs, Diffusion and Flow Compared
+  kind: comparison
+  sources:
+    - phases/04-computer-vision/09-image-generation-gans
+    - phases/04-computer-vision/10-image-generation-diffusion
+    - phases/04-computer-vision/11-stable-diffusion
+    - phases/04-computer-vision/23-diffusion-transformers-rectified-flow
+    - phases/08-generative-ai/13-flow-matching-rectified-flows
+    - phases/08-generative-ai/19-visual-autoregressive-var
+
+- id: vision-transformers
+  title: Vision Transformers and Patch Tokens
+  kind: concept
+  sources:
+    - phases/04-computer-vision/14-vision-transformers
+    - phases/07-transformers-deep-dive/09-vision-transformers
+    - phases/12-multimodal-ai/01-vision-transformer-patch-tokens
+    - phases/12-multimodal-ai/06-any-resolution-patch-n-pack
+    - phases/19-capstone-projects/58-vision-encoder-patches
+    - phases/19-capstone-projects/59-vit-transformer
+
+- id: vlm-architectures
+  title: Vision-Language Model Architectures
+  kind: concept
+  sources:
+    - phases/04-computer-vision/25-vision-language-models
+    - phases/12-multimodal-ai/03-blip2-qformer-bridge
+    - phases/12-multimodal-ai/04-flamingo-gated-cross-attention
+    - phases/12-multimodal-ai/05-llava-visual-instruction-tuning
+    - phases/12-multimodal-ai/07-open-weight-vlm-recipes
+    - phases/19-capstone-projects/60-projection-layer-modality-align
+    - phases/19-capstone-projects/61-cross-attention-fusion
+
+- id: text-processing-classic
+  title: Classic Text Processing and TF-IDF
+  kind: commands
+  sources:
+    - phases/05-nlp-foundations-to-advanced/01-text-processing
+    - phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf
+    - phases/05-nlp-foundations-to-advanced/05-sentiment-analysis
+    - phases/05-nlp-foundations-to-advanced/15-topic-modeling
+
+- id: sequence-labeling
+  title: NER, POS Tagging and Coreference
+  kind: concept
+  sources:
+    - phases/05-nlp-foundations-to-advanced/06-named-entity-recognition
+    - phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing
+    - phases/05-nlp-foundations-to-advanced/24-coreference-resolution
+    - phases/05-nlp-foundations-to-advanced/25-entity-linking
+
+- id: rnns-seq2seq
+  title: RNNs, Seq2Seq and N-gram Models
+  kind: concept
+  sources:
+    - phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text
+    - phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence
+    - phases/05-nlp-foundations-to-advanced/11-machine-translation
+    - phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer
+    - phases/07-transformers-deep-dive/01-why-transformers
+
+- id: summarization-qa-nli
+  title: Summarization, QA, NLI and Multilingual NLP
+  kind: concept
+  sources:
+    - phases/05-nlp-foundations-to-advanced/12-text-summarization
+    - phases/05-nlp-foundations-to-advanced/13-question-answering
+    - phases/05-nlp-foundations-to-advanced/18-multilingual-nlp
+    - phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment
+
+- id: dialogue-systems
+  title: Chatbots and Dialogue State Tracking
+  kind: concept
+  sources:
+    - phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural
+    - phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking
+    - phases/11-llm-engineering/05-context-engineering
+
+- id: word-embeddings
+  title: Word2Vec, GloVe and FastText
+  kind: concept
+  sources:
+    - phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf
+    - phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec
+    - phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword
+
+- id: structured-outputs
+  title: Structured Outputs and Constrained Decoding
+  kind: commands
+  sources:
+    - phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding
+    - phases/11-llm-engineering/03-structured-outputs
+    - phases/13-tools-and-protocols/04-structured-output
+    - projects/json-schema-output-guard
+
+- id: audio-features
+  title: Audio Features, Classification and Metrics
+  kind: concept
+  sources:
+    - phases/06-speech-and-audio/01-audio-fundamentals
+    - phases/06-speech-and-audio/02-spectrograms-mel-features
+    - phases/06-speech-and-audio/03-audio-classification
+    - phases/06-speech-and-audio/17-audio-evaluation-metrics
+
+- id: asr-whisper
+  title: Speech Recognition and Whisper
+  kind: commands
+  sources:
+    - phases/06-speech-and-audio/04-speech-recognition-asr
+    - phases/06-speech-and-audio/05-whisper-architecture-finetuning
+    - phases/07-transformers-deep-dive/10-audio-transformers-whisper
+    - phases/06-speech-and-audio/14-voice-activity-detection-turn-taking
+    - projects/voice-note-transcriber-pipeline
+
+- id: tts-voice-cloning
+  title: Text-to-Speech, Voice Cloning and Codecs
+  kind: concept
+  sources:
+    - phases/06-speech-and-audio/07-text-to-speech
+    - phases/06-speech-and-audio/08-voice-cloning-conversion
+    - phases/06-speech-and-audio/13-neural-audio-codecs
+
+- id: voice-security
+  title: Speaker Verification, Spoofing and Watermarks
+  kind: concept
+  sources:
+    - phases/06-speech-and-audio/06-speaker-recognition-verification
+    - phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking
+    - phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa
+
+- id: voice-assistants-realtime
+  title: Real-Time Voice Assistants
+  kind: concept
+  sources:
+    - phases/06-speech-and-audio/11-real-time-audio-processing
+    - phases/06-speech-and-audio/12-voice-assistant-pipeline
+    - phases/06-speech-and-audio/14-voice-activity-detection-turn-taking
+    - phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki
+    - phases/14-agent-engineering/22-voice-agents-pipecat-livekit
+    - phases/19-capstone-projects/03-realtime-voice-assistant
+
+- id: audio-generation-alms
+  title: Music Generation and Audio-Language Models
+  kind: concept
+  sources:
+    - phases/06-speech-and-audio/09-music-generation
+    - phases/06-speech-and-audio/10-audio-language-models
+    - phases/08-generative-ai/11-audio-generation
+    - phases/12-multimodal-ai/19-audio-language-whisper-to-af3
+    - phases/12-multimodal-ai/20-omni-models-thinker-talker
+
+- id: positional-encoding
+  title: "Positional Encoding: Sinusoidal, RoPE, ALiBi"
+  kind: comparison
+  sources:
+    - phases/07-transformers-deep-dive/04-positional-encoding
+    - phases/19-capstone-projects/32-token-positional-embeddings
+    - phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs
+
+- id: attention-variants
+  title: Attention Variants Compared
+  kind: comparison
+  sources:
+    - phases/07-transformers-deep-dive/12-kv-cache-flash-attention
+    - phases/07-transformers-deep-dive/15-attention-variants
+    - phases/10-llms-from-scratch/16-differential-attention-v2
+    - phases/10-llms-from-scratch/17-native-sparse-attention
+
+- id: bert-gpt-t5
+  title: BERT, GPT and T5 Compared
+  kind: comparison
+  sources:
+    - phases/07-transformers-deep-dive/05-full-transformer
+    - phases/07-transformers-deep-dive/06-bert-masked-language-modeling
+    - phases/07-transformers-deep-dive/07-gpt-causal-language-modeling
+    - phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder
+
+- id: moe-hybrid-architectures
+  title: Mixture of Experts and Hybrid Architectures
+  kind: concept
+  sources:
+    - phases/07-transformers-deep-dive/11-mixture-of-experts
+    - phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs
+    - phases/10-llms-from-scratch/20-deepseek-v3-walkthrough
+    - phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer
+
+- id: speculative-decoding
+  title: "Speculative Decoding: Draft, EAGLE, MTP"
+  kind: comparison
+  sources:
+    - phases/07-transformers-deep-dive/16-speculative-decoding
+    - phases/10-llms-from-scratch/15-speculative-decoding-eagle3
+    - phases/10-llms-from-scratch/18-multi-token-prediction
+    - phases/10-llms-from-scratch/25-speculative-decoding
+    - phases/17-infrastructure-and-production/05-eagle3-speculative-decoding
+    - phases/19-capstone-projects/14-speculative-decoding-server
+
+- id: scaling-laws-pretraining
+  title: Scaling Laws and Pre-Training
+  kind: concept
+  sources:
+    - phases/07-transformers-deep-dive/13-scaling-laws
+    - phases/10-llms-from-scratch/03-data-pipelines
+    - phases/10-llms-from-scratch/04-pre-training-mini-gpt
+
+- id: gans
+  title: GANs from DCGAN to StyleGAN
+  kind: concept
+  sources:
+    - phases/08-generative-ai/01-generative-models-taxonomy-history
+    - phases/08-generative-ai/03-gans-generator-discriminator
+    - phases/08-generative-ai/04-conditional-gans-pix2pix
+    - phases/08-generative-ai/05-stylegan
+    - phases/04-computer-vision/09-image-generation-gans
+
+- id: image-editing-control
+  title: ControlNet, Inpainting and Image Editing
+  kind: commands
+  sources:
+    - phases/08-generative-ai/08-controlnet-lora-conditioning
+    - phases/08-generative-ai/09-inpainting-outpainting-editing
+    - phases/04-computer-vision/11-stable-diffusion
+
+- id: video-3d-generation
+  title: Video and 3D Generation
+  kind: concept
+  sources:
+    - phases/08-generative-ai/10-video-generation
+    - phases/08-generative-ai/12-3d-generation
+    - phases/04-computer-vision/22-3d-gaussian-splatting
+    - phases/04-computer-vision/28-world-models-video-diffusion
+
+- id: generative-evaluation
+  title: Evaluating Generative Models
+  kind: commands
+  sources:
+    - phases/08-generative-ai/14-evaluation-fid-clip-score
+    - phases/06-speech-and-audio/17-audio-evaluation-metrics
+    - phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified
+
+- id: unified-multimodal
+  title: Unified Multimodal Models
+  kind: comparison
+  sources:
+    - phases/08-generative-ai/19-visual-autoregressive-var
+    - phases/12-multimodal-ai/11-chameleon-early-fusion-tokens
+    - phases/12-multimodal-ai/12-emu3-next-token-for-generation
+    - phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion
+    - phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified
+    - phases/12-multimodal-ai/15-janus-pro-decoupled-encoders
+    - phases/12-multimodal-ai/16-mio-any-to-any-streaming
+
+- id: value-vs-policy-rl
+  title: Value Methods against Policy Methods
+  kind: comparison
+  sources:
+    - phases/09-reinforcement-learning/04-q-learning-sarsa
+    - phases/09-reinforcement-learning/05-dqn
+    - phases/09-reinforcement-learning/06-policy-gradients-reinforce
+    - phases/09-reinforcement-learning/07-actor-critic-a2c-a3c
+    - phases/09-reinforcement-learning/08-ppo
+
+- id: rlhf-dpo
+  title: RLHF, DPO and Preference Tuning
+  kind: comparison
+  sources:
+    - phases/09-reinforcement-learning/09-reward-modeling-rlhf
+    - phases/10-llms-from-scratch/07-rlhf
+    - phases/10-llms-from-scratch/08-dpo
+    - phases/18-ethics-safety-alignment/03-direct-preference-optimization-family
+    - phases/19-capstone-projects/40-dpo-from-scratch
+
+- id: marl-sim-to-real
+  title: Multi-Agent RL and Sim-to-Real
+  kind: concept
+  sources:
+    - phases/09-reinforcement-learning/10-multi-agent-rl
+    - phases/09-reinforcement-learning/11-sim-to-real-transfer
+    - phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo
+    - phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot
+
+- id: pretraining-data
+  title: Pre-Training Data Pipelines
+  kind: commands
+  sources:
+    - phases/10-llms-from-scratch/03-data-pipelines
+    - phases/19-capstone-projects/31-tokenized-dataset-sliding-window
+    - phases/19-capstone-projects/42-large-corpus-downloader
+    - phases/19-capstone-projects/43-hdf5-tokenized-corpus
+
+- id: distributed-training
+  title: DDP, FSDP, ZeRO and Pipeline Parallel
+  kind: comparison
+  sources:
+    - phases/10-llms-from-scratch/05-scaling-distributed
+    - phases/10-llms-from-scratch/19-dualpipe-parallelism
+    - phases/19-capstone-projects/48-distributed-fsdp-ddp
+    - phases/19-capstone-projects/76-collective-ops-from-scratch
+    - phases/19-capstone-projects/77-data-parallel-ddp
+    - phases/19-capstone-projects/78-zero-parameter-sharding
+    - phases/19-capstone-projects/79-pipeline-parallel
+
+- id: training-memory-checkpoints
+  title: Training Memory, Accumulation and Checkpoints
+  kind: debugging
+  sources:
+    - phases/10-llms-from-scratch/34-gradient-checkpointing
+    - phases/19-capstone-projects/45-gradient-clipping-amp
+    - phases/19-capstone-projects/46-gradient-accumulation
+    - phases/19-capstone-projects/47-checkpoint-save-resume
+    - phases/19-capstone-projects/80-checkpoint-sharded-resume
+    - phases/19-capstone-projects/81-end-to-end-distributed-train
+
+- id: gpt-from-scratch-training
+  title: Train and Load a GPT from Scratch
+  kind: commands
+  sources:
+    - phases/19-capstone-projects/35-gpt-model-assembly
+    - phases/19-capstone-projects/36-training-loop-eval
+    - phases/19-capstone-projects/37-loading-pretrained-weights
+    - phases/19-capstone-projects/44-cosine-lr-warmup
+    - phases/10-llms-from-scratch/13-building-complete-llm-pipeline
+
+- id: quantization
+  title: Quantization Formats Compared
+  kind: comparison
+  sources:
+    - phases/10-llms-from-scratch/11-quantization
+    - phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell
+    - phases/17-infrastructure-and-production/09-production-quantization
+    - phases/11-llm-engineering/08-fine-tuning-lora
+
+- id: async-disaggregated-inference
+  title: Async, Hogwild and Disaggregated Inference
+  kind: concept
+  sources:
+    - phases/10-llms-from-scratch/22-async-hogwild-inference
+    - phases/17-infrastructure-and-production/11-multi-region-kv-locality
+    - phases/17-infrastructure-and-production/17-disaggregated-prefill-decode
+    - phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache
+
+- id: self-improving-reasoning
+  title: Self-Taught Reasoning and Self-Improvement
+  kind: concept
+  sources:
+    - phases/10-llms-from-scratch/09-constitutional-ai-self-improvement
+    - phases/15-autonomous-systems/02-star-family-reasoning
+    - phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding
+    - phases/15-autonomous-systems/04-darwin-godel-machine
+    - phases/15-autonomous-systems/07-recursive-self-improvement
+
+- id: llm-pipeline-capstone
+  title: End-to-End LLM and Fine-Tuning Pipeline
+  kind: commands
+  sources:
+    - phases/10-llms-from-scratch/13-building-complete-llm-pipeline
+    - phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline
+    - phases/19-capstone-projects/38-classifier-finetuning
+    - phases/19-capstone-projects/39-instruction-tuning-sft
+    - phases/19-capstone-projects/40-dpo-from-scratch
+
+- id: llm-cost-caching
+  title: LLM Cost, Caching and Batch APIs
+  kind: commands
+  sources:
+    - phases/11-llm-engineering/11-caching-cost
+    - phases/11-llm-engineering/15-prompt-caching
+    - phases/17-infrastructure-and-production/14-prompt-semantic-caching
+    - phases/17-infrastructure-and-production/15-batch-apis
+    - phases/17-infrastructure-and-production/27-finops-llms
+    - projects/token-counter-and-cost-meter
+    - projects/agent-budget-planner
+
+- id: guardrails-moderation
+  title: Guardrails, Moderation and Redaction
+  kind: commands
+  sources:
+    - phases/11-llm-engineering/12-guardrails
+    - phases/15-autonomous-systems/18-llama-guard
+    - phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard
+    - phases/19-capstone-projects/85-content-classifier-integration
+    - projects/sensitive-text-redaction-gate
+    - projects/tool-call-firewall
+
+- id: production-llm-app
+  title: Shipping a Production LLM App
+  kind: commands
+  sources:
+    - phases/11-llm-engineering/13-production-app
+    - phases/17-infrastructure-and-production/29-model-demo-interfaces
+    - projects/streaming-answer-recovery
+    - projects/llm-gateway-with-fallbacks
+
+- id: agent-state-graphs
+  title: Agent State Machines and Durable Graphs
+  kind: concept
+  sources:
+    - phases/11-llm-engineering/16-langgraph-state-machines
+    - phases/14-agent-engineering/13-langgraph-stateful-graphs
+    - projects/durable-agent-jobs
+
+- id: agent-frameworks-compared
+  title: Agent Frameworks Compared
+  kind: comparison
+  sources:
+    - phases/11-llm-engineering/17-agent-framework-tradeoffs
+    - phases/14-agent-engineering/14-autogen-actor-model
+    - phases/14-agent-engineering/15-crewai-role-based-crews
+    - phases/14-agent-engineering/16-openai-agents-sdk
+    - phases/14-agent-engineering/17-claude-agent-sdk
+    - phases/14-agent-engineering/18-agno-and-mastra-runtimes
+    - projects/typed-workflow-agent-with-mastra
+    - projects/support-agent-with-google-adk
+
+- id: context-engineering
+  title: Context Engineering and Agent Memory
+  kind: concept
+  sources:
+    - phases/11-llm-engineering/05-context-engineering
+    - phases/14-agent-engineering/07-memory-virtual-context-memgpt
+    - phases/14-agent-engineering/08-memory-blocks-sleep-time-compute
+    - phases/14-agent-engineering/09-hybrid-memory-mem0
+    - phases/14-agent-engineering/34-repo-memory-and-state
+    - projects/memory-server
+
+- id: vlm-model-families
+  title: "Open VLM Families: LLaVA, Qwen-VL, InternVL"
+  kind: comparison
+  sources:
+    - phases/12-multimodal-ai/05-llava-visual-instruction-tuning
+    - phases/12-multimodal-ai/06-any-resolution-patch-n-pack
+    - phases/12-multimodal-ai/08-llava-onevision-single-multi-video
+    - phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps
+    - phases/12-multimodal-ai/10-internvl3-native-multimodal
+
+- id: video-language
+  title: Video-Language Models and Long Video
+  kind: concept
+  sources:
+    - phases/12-multimodal-ai/17-video-language-temporal-grounding
+    - phases/12-multimodal-ai/18-long-video-million-token
+    - phases/04-computer-vision/12-video-understanding
+    - phases/19-capstone-projects/12-video-understanding-pipeline
+
+- id: multimodal-rag
+  title: Multimodal and Vision-Native RAG
+  kind: commands
+  sources:
+    - phases/12-multimodal-ai/23-colpali-vision-native-rag
+    - phases/12-multimodal-ai/24-multimodal-rag-cross-modal
+    - phases/19-capstone-projects/04-multimodal-document-qa
+    - projects/visual-evidence-library
+
+- id: embodied-computer-use
+  title: Embodied VLAs and Computer-Use Agents
+  kind: concept
+  sources:
+    - phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot
+    - phases/12-multimodal-ai/25-multimodal-agents-computer-use
+    - phases/14-agent-engineering/21-computer-use-agents
+    - phases/15-autonomous-systems/11-browser-agents
+    - projects/browser-agent
+    - projects/desktop-control
+
+- id: mcp-server-build
+  title: Building an MCP Server
+  kind: commands
+  sources:
+    - phases/13-tools-and-protocols/07-building-an-mcp-server
+    - phases/13-tools-and-protocols/10-mcp-resources-and-prompts
+    - phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content
+    - phases/19-capstone-projects/13-mcp-server-with-registry
+    - projects/memory-server
+
+- id: mcp-client-transports
+  title: MCP Clients and Transports
+  kind: commands
+  sources:
+    - phases/11-llm-engineering/14-model-context-protocol
+    - phases/13-tools-and-protocols/08-building-an-mcp-client
+    - phases/13-tools-and-protocols/09-mcp-transports
+    - phases/13-tools-and-protocols/11-mcp-sampling
+    - phases/19-capstone-projects/22-jsonrpc-stdio-transport
+    - projects/mcp-at-scale
+
+- id: mcp-tasks-elicitation-apps
+  title: MCP Tasks, Elicitation and Apps
+  kind: concept
+  sources:
+    - phases/13-tools-and-protocols/12-mcp-roots-and-elicitation
+    - phases/13-tools-and-protocols/13-mcp-async-tasks
+    - phases/13-tools-and-protocols/14-mcp-apps
+    - phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control
+
+- id: mcp-security-auth
+  title: MCP Security and Authorization
+  kind: debugging
+  sources:
+    - phases/13-tools-and-protocols/15-mcp-security-tool-poisoning
+    - phases/13-tools-and-protocols/16-mcp-security-oauth-2-1
+    - phases/13-tools-and-protocols/18-mcp-auth-production
+    - phases/14-agent-engineering/27-prompt-injection-defense
+
+- id: mcp-gateways-operations
+  title: MCP Gateways, Registries and Conformance
+  kind: commands
+  sources:
+    - phases/13-tools-and-protocols/17-mcp-gateways-and-registries
+    - phases/13-tools-and-protocols/23-capstone-tool-ecosystem
+    - phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
+    - phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
+
+- id: agent-skills
+  title: "Agent Skills: Discovery, Invocation, Routing"
+  kind: commands
+  sources:
+    - phases/13-tools-and-protocols/22-skills-and-agent-sdks
+    - phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure
+    - phases/13-tools-and-protocols/25-skill-invocation-and-routing
+    - projects/skill-router
+    - projects/skill-installer
+    - projects/skill-validator
+
+- id: skill-trust-evals
+  title: Skill Permissions, Evals and Supply Chain
+  kind: debugging
+  sources:
+    - phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust
+    - phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability
+    - phases/14-agent-engineering/10-skill-libraries-voyager
+    - projects/skill-scanner
+    - projects/self-improving-skill-loop
+
+- id: genai-observability
+  title: OpenTelemetry GenAI and Agent Observability
+  kind: commands
+  sources:
+    - phases/13-tools-and-protocols/20-opentelemetry-genai
+    - phases/14-agent-engineering/23-otel-genai-conventions
+    - phases/14-agent-engineering/24-agent-observability-platforms
+    - phases/17-infrastructure-and-production/13-llm-observability
+    - phases/19-capstone-projects/11-llm-observability-dashboard
+    - phases/19-capstone-projects/28-observability-otel-traces
+    - projects/agent-trace-debugger
+
+- id: llm-routing-gateways
+  title: LLM Routing and AI Gateways Compared
+  kind: comparison
+  sources:
+    - phases/13-tools-and-protocols/21-llm-routing-layer
+    - phases/17-infrastructure-and-production/16-model-routing
+    - phases/17-infrastructure-and-production/19-ai-gateways
+    - projects/hedged-request-lab
+
+- id: a2a-and-agent-messaging
+  title: A2A and Agent Communication Protocols
+  kind: comparison
+  sources:
+    - phases/13-tools-and-protocols/19-a2a-protocol
+    - phases/16-multi-agent-and-swarms/02-fipa-acl-heritage
+    - phases/16-multi-agent-and-swarms/03-communication-protocols
+    - phases/16-multi-agent-and-swarms/12-a2a-protocol
+
+- id: re-from-scratch-tools
+  title: Binary Analysis Tools from Scratch
+  kind: commands
+  sources:
+    - phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
+    - phases/13-tools-and-protocols/33-disassembly-and-control-flow
+    - phases/13-tools-and-protocols/34-lifting-to-pseudocode
+    - projects/binary-inspector
+    - projects/mini-decompiler
+
+- id: agent-reasoning-patterns
+  title: ReAct, ReWOO, Reflexion and Tree of Thoughts
+  kind: comparison
+  sources:
+    - phases/14-agent-engineering/01-the-agent-loop
+    - phases/14-agent-engineering/02-rewoo-plan-and-execute
+    - phases/14-agent-engineering/03-reflexion-verbal-rl
+    - phases/14-agent-engineering/04-tree-of-thoughts-lats
+    - phases/14-agent-engineering/05-self-refine-and-critic
+    - phases/11-llm-engineering/02-few-shot-cot
+
+- id: agent-planning
+  title: "Agent Planning: Workflows, HTN, Plan-Execute"
+  kind: concept
+  sources:
+    - phases/14-agent-engineering/11-planning-htn-and-evolutionary
+    - phases/14-agent-engineering/12-anthropic-workflow-patterns
+    - phases/19-capstone-projects/24-plan-execute-control-flow
+    - phases/14-agent-engineering/44-plan-from-evidence
+
+- id: agent-tool-use-skills
+  title: Agent Tool Use and Skill Libraries
+  kind: concept
+  sources:
+    - phases/14-agent-engineering/06-tool-use-and-function-calling
+    - phases/14-agent-engineering/10-skill-libraries-voyager
+    - phases/11-llm-engineering/09-function-calling
+
+- id: agent-benchmarks
+  title: "Agent Benchmarks: SWE-bench to OSWorld"
+  kind: comparison
+  sources:
+    - phases/14-agent-engineering/19-benchmarks-swebench-gaia
+    - phases/14-agent-engineering/20-benchmarks-webarena-osworld
+    - phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks
+    - projects/harness-bench
+
+- id: agent-failure-modes
+  title: Why Agents Fail
+  kind: debugging
+  sources:
+    - phases/14-agent-engineering/25-multi-agent-debate
+    - phases/14-agent-engineering/26-failure-modes-agentic
+    - phases/14-agent-engineering/27-prompt-injection-defense
+    - phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink
+    - projects/agent-trace-debugger
+
+- id: orchestration-patterns
+  title: Orchestration Patterns Compared
+  kind: comparison
+  sources:
+    - phases/14-agent-engineering/28-orchestration-patterns
+    - phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern
+    - phases/16-multi-agent-and-swarms/06-hierarchical-architecture
+    - phases/16-multi-agent-and-swarms/09-parallel-swarm-networks
+    - phases/14-agent-engineering/12-anthropic-workflow-patterns
+
+- id: production-agent-runtimes
+  title: Production Agent Runtimes and Queues
+  kind: commands
+  sources:
+    - phases/14-agent-engineering/29-production-runtimes
+    - phases/15-autonomous-systems/12-durable-execution
+    - phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints
+    - projects/durable-agent-jobs
+    - projects/cloud-agent-with-aws-strands
+
+- id: eval-driven-agents
+  title: Eval-Driven Agent Development
+  kind: commands
+  sources:
+    - phases/14-agent-engineering/30-eval-driven-agent-development
+    - phases/14-agent-engineering/38-verification-gates
+    - phases/14-agent-engineering/39-reviewer-agent
+    - projects/prompt-regression-tester
+    - projects/report-judge
+
+- id: agent-workbench-ops
+  title: Repo Memory, Init Scripts and Handoffs
+  kind: commands
+  sources:
+    - phases/14-agent-engineering/34-repo-memory-and-state
+    - phases/14-agent-engineering/35-initialization-scripts
+    - phases/14-agent-engineering/40-multi-session-handoff
+    - phases/14-agent-engineering/41-workbench-for-real-repos
+    - phases/14-agent-engineering/43-frame-the-task-before-code
+
+- id: delegation-feedback
+  title: Delegation, Isolation and Feedback Ratchets
+  kind: concept
+  sources:
+    - phases/14-agent-engineering/44-plan-from-evidence
+    - phases/14-agent-engineering/45-delegate-with-isolation
+    - phases/14-agent-engineering/46-turn-feedback-into-system
+    - phases/14-agent-engineering/54-build-the-feedback-ratchet
+    - projects/workflow-hooks
+
+- id: product-discovery
+  title: Outcomes, Workflows, Risks and Specs
+  kind: concept
+  sources:
+    - phases/14-agent-engineering/47-outcomes-before-output
+    - phases/14-agent-engineering/48-discover-the-real-workflow
+    - phases/14-agent-engineering/49-map-assumptions-and-risk
+    - phases/14-agent-engineering/50-choose-the-smallest-testable-slice
+    - phases/14-agent-engineering/51-write-specifications-that-preserve-judgment
+    - phases/14-agent-engineering/52-design-success-metrics
+    - phases/14-agent-engineering/53-prototype-pilot-or-production
+
+- id: autonomous-research
+  title: Self-Improving and Research Agents
+  kind: concept
+  sources:
+    - phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding
+    - phases/15-autonomous-systems/04-darwin-godel-machine
+    - phases/15-autonomous-systems/05-ai-scientist-v2
+    - phases/15-autonomous-systems/06-automated-alignment-research
+    - phases/15-autonomous-systems/07-recursive-self-improvement
+    - phases/19-capstone-projects/05-autonomous-research-agent
+
+- id: coding-agents
+  title: "Coding Agents: Landscape and Capstones"
+  kind: comparison
+  sources:
+    - phases/15-autonomous-systems/09-coding-agent-landscape
+    - phases/19-capstone-projects/01-terminal-native-coding-agent
+    - phases/19-capstone-projects/09-code-migration-agent
+    - phases/19-capstone-projects/16-github-issue-to-pr-agent
+    - phases/19-capstone-projects/29-end-to-end-coding-task-demo
+    - projects/tiny-coding-agent
+    - projects/rust-agent-shell
+    - projects/pr-review-reporter
+
+- id: frontier-safety-frameworks
+  title: Frontier Safety Frameworks and External Evals
+  kind: comparison
+  sources:
+    - phases/15-autonomous-systems/19-anthropic-rsp
+    - phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf
+    - phases/15-autonomous-systems/21-metr-external-evaluation
+    - phases/15-autonomous-systems/22-cais-caisi-societal-risk
+    - phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation
+    - phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf
+    - phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear
+
+- id: constitutional-classifiers
+  title: Constitutional AI and Input/Output Classifiers
+  kind: concept
+  sources:
+    - phases/15-autonomous-systems/17-constitutional-ai
+    - phases/15-autonomous-systems/18-llama-guard
+    - phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif
+    - phases/19-capstone-projects/86-constitutional-rules-engine
+
+- id: debate-and-roles
+  title: Debate, Roles and Review Panels
+  kind: concept
+  sources:
+    - phases/16-multi-agent-and-swarms/07-society-of-mind-debate
+    - phases/16-multi-agent-and-swarms/08-role-specialization
+    - phases/14-agent-engineering/25-multi-agent-debate
+    - phases/19-capstone-projects/10-multi-agent-software-team
+    - projects/multi-agent-code-review-panel
+
+- id: emergent-agent-societies
+  title: Negotiation, Simulation and Agent Economies
+  kind: concept
+  sources:
+    - phases/16-multi-agent-and-swarms/16-negotiation-bargaining
+    - phases/16-multi-agent-and-swarms/17-generative-agents-simulation
+    - phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination
+    - phases/16-multi-agent-and-swarms/21-agent-economies
+
+- id: swarm-optimization
+  title: Swarm Optimization and MARL for Agents
+  kind: comparison
+  sources:
+    - phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco
+    - phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo
+    - phases/16-multi-agent-and-swarms/09-parallel-swarm-networks
+    - phases/09-reinforcement-learning/10-multi-agent-rl
+
+- id: multi-agent-case-studies
+  title: Multi-Agent Case Studies and Eval Farms
+  kind: concept
+  sources:
+    - phases/16-multi-agent-and-swarms/25-case-studies-2026-sota
+    - phases/19-capstone-projects/10-multi-agent-software-team
+    - projects/distributed-eval-farm
+
+- id: managed-llm-platforms
+  title: Managed Platforms and Self-Hosting Compared
+  kind: comparison
+  sources:
+    - phases/17-infrastructure-and-production/01-managed-llm-platforms
+    - phases/17-infrastructure-and-production/02-inference-platform-economics
+    - phases/17-infrastructure-and-production/10-cold-start-mitigation
+    - phases/17-infrastructure-and-production/28-self-hosted-serving-selection
+
+- id: gpu-kubernetes
+  title: GPU Autoscaling on Kubernetes
+  kind: commands
+  sources:
+    - phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes
+    - phases/17-infrastructure-and-production/10-cold-start-mitigation
+    - phases/17-infrastructure-and-production/11-multi-region-kv-locality
+    - projects/kubernetes-event-storyboard
+
+- id: serving-engines-compared
+  title: Serving Engines Compared
+  kind: comparison
+  sources:
+    - phases/17-infrastructure-and-production/04-vllm-serving-internals
+    - phases/17-infrastructure-and-production/06-sglang-radixattention
+    - phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell
+    - phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache
+    - phases/17-infrastructure-and-production/28-self-hosted-serving-selection
+
+- id: inference-load-testing
+  title: Inference Metrics and Load Testing
+  kind: debugging
+  sources:
+    - phases/17-infrastructure-and-production/08-inference-metrics-goodput
+    - phases/17-infrastructure-and-production/22-load-testing-llm-apis
+    - projects/retry-storm-lab
+    - projects/hedged-request-lab
+
+- id: progressive-delivery
+  title: Shadow, Canary and A/B Tests for LLMs
+  kind: commands
+  sources:
+    - phases/17-infrastructure-and-production/20-shadow-canary-progressive
+    - phases/17-infrastructure-and-production/21-ab-testing-llm-features
+    - phases/17-infrastructure-and-production/24-chaos-engineering-llm
+    - projects/configuration-drift-explainer
+
+- id: sre-for-ai
+  title: SRE, Incidents and Postmortems for AI
+  kind: debugging
+  sources:
+    - phases/17-infrastructure-and-production/23-sre-for-ai
+    - phases/17-infrastructure-and-production/24-chaos-engineering-llm
+    - phases/19-capstone-projects/06-devops-troubleshooting-agent
+    - projects/postmortem-writer
+    - projects/log-volume-reduction-lab
+
+- id: security-compliance
+  title: Secrets, Audit Logs and Compliance
+  kind: commands
+  sources:
+    - phases/17-infrastructure-and-production/25-security-secrets-audit
+    - phases/17-infrastructure-and-production/26-compliance-frameworks
+    - phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea
+    - projects/signed-webhook-inbox
+
+- id: edge-inference
+  title: Edge Inference Targets
+  kind: comparison
+  sources:
+    - phases/17-infrastructure-and-production/12-edge-inference
+    - phases/04-computer-vision/15-real-time-edge
+    - phases/10-llms-from-scratch/11-quantization
+
+- id: alignment-training
+  title: "Alignment Training: Instructions, DPO Family, RLAIF"
+  kind: comparison
+  sources:
+    - phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal
+    - phases/18-ethics-safety-alignment/03-direct-preference-optimization-family
+    - phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif
+    - phases/10-llms-from-scratch/07-rlhf
+    - phases/10-llms-from-scratch/08-dpo
+
+- id: deceptive-alignment
+  title: Mesa-Optimizers, Scheming and AI Control
+  kind: concept
+  sources:
+    - phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment
+    - phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception
+    - phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models
+    - phases/18-ethics-safety-alignment/09-alignment-faking
+    - phases/18-ethics-safety-alignment/10-ai-control-subversion
+
+- id: fairness-privacy
+  title: Bias, Fairness and Differential Privacy
+  kind: concept
+  sources:
+    - phases/18-ethics-safety-alignment/20-bias-representational-harm
+    - phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual
+    - phases/18-ethics-safety-alignment/22-differential-privacy-for-llms
+
+- id: ai-governance
+  title: Cards, Provenance, Regulation and Welfare
+  kind: concept
+  sources:
+    - phases/18-ethics-safety-alignment/19-model-welfare-research
+    - phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea
+    - phases/18-ethics-safety-alignment/26-model-system-dataset-cards
+    - phases/18-ethics-safety-alignment/27-data-provenance-training-governance
+    - phases/18-ethics-safety-alignment/28-alignment-research-ecosystem
+
+- id: ai-security-incidents
+  title: Prompt Injection Incidents and AI CVEs
+  kind: debugging
+  sources:
+    - phases/18-ethics-safety-alignment/15-indirect-prompt-injection
+    - phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai
+    - phases/14-agent-engineering/27-prompt-injection-defense
+    - phases/19-capstone-projects/83-prompt-injection-detector
+    - projects/tool-call-firewall
+
+- id: research-agent-pipeline
+  title: Research Agent Pipeline from Scratch
+  kind: commands
+  sources:
+    - phases/19-capstone-projects/05-autonomous-research-agent
+    - phases/19-capstone-projects/50-hypothesis-generator
+    - phases/19-capstone-projects/51-literature-retrieval
+    - phases/19-capstone-projects/52-experiment-runner
+    - phases/19-capstone-projects/53-result-evaluator
+    - projects/research-report-agent
+
+- id: research-agent-writing
+  title: Paper Writer, Critic and Iteration
+  kind: commands
+  sources:
+    - phases/19-capstone-projects/54-paper-writer
+    - phases/19-capstone-projects/55-critic-loop
+    - phases/19-capstone-projects/56-iteration-scheduler
+    - phases/19-capstone-projects/57-end-to-end-research-demo
+
+- id: vlm-from-scratch
+  title: Build a VLM from Scratch
+  kind: commands
+  sources:
+    - phases/19-capstone-projects/58-vision-encoder-patches
+    - phases/19-capstone-projects/59-vit-transformer
+    - phases/19-capstone-projects/60-projection-layer-modality-align
+    - phases/19-capstone-projects/61-cross-attention-fusion
+    - phases/19-capstone-projects/62-vision-language-pretraining
+    - phases/19-capstone-projects/63-multimodal-eval
+
+- id: rag-production
+  title: Production RAG Chatbots and Freshness
+  kind: commands
+  sources:
+    - phases/19-capstone-projects/02-rag-over-codebase
+    - phases/19-capstone-projects/08-production-rag-chatbot
+    - projects/doc-qa-with-citations
+    - projects/rag-freshness-pipeline
+    - projects/semantic-notes-search
+    - projects/retrieval-evaluation-lab
+
+- id: ai-tutor-learning-tools
+  title: AI Tutors and Learning Tools
+  kind: project
+  sources:
+    - phases/19-capstone-projects/17-personal-ai-tutor
+    - projects/source-grounded-study-coach
+    - projects/community-learning-path-finder
+    - projects/vocabulary-autocomplete-pad
+    - projects/workshop-materials-planner
+
+- id: data-quality-workbenches
+  title: Data Quality and Dataset Gates
+  kind: project
+  sources:
+    - phases/00-setup-and-tooling/09-data-management
+    - projects/csv-repair-workbench
+    - projects/csv-sql-question-workbench
+    - projects/dataset-contract-gate
+    - projects/dataset-split-auditor
+    - projects/database-migration-rehearsal
+
+- id: text-workflow-desks
+  title: Text Workflow Desks
+  kind: project
+  sources:
+    - projects/inbox-triage-desk
+    - projects/meeting-notes-to-actions
+    - projects/plain-language-rewrite-desk
+    - projects/feedback-theme-board
+    - projects/changelog-writer-from-git
+
+- id: localization-workbenches
+  title: Localization and Glossary Tools
+  kind: project
+  sources:
+    - phases/05-nlp-foundations-to-advanced/18-multilingual-nlp
+    - projects/subtitle-localization-desk
+    - projects/ui-string-localization-workbench
+    - projects/glossary-hovercard-publisher
+
+- id: personal-organizer-agents
+  title: Personal Organizer Agents
+  kind: project
+  sources:
+    - projects/bookmark-path-organizer
+    - projects/calendar-focus-planner
+    - projects/download-folder-sort-desk
+    - projects/field-notes-map-builder
+    - projects/catalog-record-linker
+
+- id: visual-explainers
+  title: Diagram, Chart and Infrastructure Explainers
+  kind: project
+  sources:
+    - projects/chart-storyboard-builder
+    - projects/diagram-reading-companion
+    - projects/infrastructure-plan-explainer
+    - projects/service-ownership-navigator
+
+- id: decision-briefing-tools
+  title: Decision, Change and Tutorial Tools
+  kind: project
+  sources:
+    - projects/decision-tradeoff-explorer
+    - projects/web-change-brief
+    - projects/api-tutorial-runner
+    - projects/local-model-eval-harness
+
+- id: sandbox-policy
+  title: Sandbox Policy Ladder
+  kind: project
+  sources:
+    - phases/19-capstone-projects/26-sandbox-runner-denylist
+    - projects/sandbox-ladder
+    - manuals/docker-sandboxes-101
+

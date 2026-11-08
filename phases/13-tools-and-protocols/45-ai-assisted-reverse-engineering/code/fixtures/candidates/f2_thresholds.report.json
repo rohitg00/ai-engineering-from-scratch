@@ -1,0 +1,27 @@
+{
+  "candidate": "f2_thresholds",
+  "label": "hand-written test candidate for lesson 45, not the output of any model",
+  "kind": "plausible but wrong",
+  "tool": "hand-written",
+  "target": {
+    "object": "ledger-x86_64-O1-renamed.o",
+    "sha256": "3561e8175748e19d631552d52869fe235a82471137528ac2e5ef6b6145967d0c",
+    "function": "f2"
+  },
+  "source": "f2_thresholds.c",
+  "claims": {
+    "name": "grade_points",
+    "return_type": "int",
+    "parameters": [
+      {"name": "score", "type": "int"}
+    ],
+    "summary": "Maps a score to points: 4 at 90 and above, 3 at 80 and above, 2 at 70 and above, 1 at 60 and above, and 0 below 60. The bounds check at 0x2c admits five bands."
+  },
+  "citations": {
+    "addresses": ["0x10", "0x2c", "0x3a"],
+    "callees": [],
+    "strings": [],
+    "immediates": [-6, 4]
+  },
+  "cost": {"tokens": null, "seconds": null}
+}

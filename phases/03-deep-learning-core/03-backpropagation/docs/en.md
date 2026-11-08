@@ -26,7 +26,7 @@ Backpropagation solves this. One forward pass, one backward pass, all gradients 
 
 ### The Chain Rule, Applied to Networks
 
-You saw the chain rule in Phase 01, Lesson 05. Quick recap: if y = f(g(x)), then dy/dx = f'(g(x)) * g'(x). You multiply derivatives along the chain.
+You saw the chain rule in Phase 01, Lesson 05. Quick recap: if $y = f(g(x))$, then $\frac{dy}{dx} = f'(g(x)) \cdot g'(x)$. You multiply derivatives along the chain.
 
 In a neural network, the "chain" is the sequence of operations from input to loss. Each layer applies weights, adds biases, passes through an activation. The loss function compares the final output to the target. Backpropagation traces this chain backward, computing how each operation contributed to the error.
 
@@ -45,9 +45,9 @@ graph LR
     y["target"] --> loss
 ```
 
-Forward pass: values flow left to right. x and w produce z1 = w*x. Add b to get z2. Sigmoid gives activation a. Compare a to target y using the loss function.
+Forward pass: values flow left to right. $x$ and $w$ produce $z_1 = w x$. Add $b$ to get $z_2$. Sigmoid gives activation $a$. Compare $a$ to target $y$ using the loss function.
 
-Backward pass: gradients flow right to left. Start with dL/da (how loss changes with the activation). Multiply by da/dz2 (sigmoid derivative). That gives dL/dz2. Split into dL/db (which equals dL/dz2, since z2 = z1 + b) and dL/dz1. Then dL/dw = dL/dz1 * x and dL/dx = dL/dz1 * w.
+Backward pass: gradients flow right to left. Start with $\partial L/\partial a$ (how loss changes with the activation). Multiply by $\partial a/\partial z_2$ (sigmoid derivative). That gives $\partial L/\partial z_2$. Split into $\partial L/\partial b$ (which equals $\partial L/\partial z_2$, since $z_2 = z_1 + b$) and $\partial L/\partial z_1$. Then $\partial L/\partial w = \partial L/\partial z_1 \cdot x$ and $\partial L/\partial x = \partial L/\partial z_1 \cdot w$.
 
 Every node in the graph has one job during the backward pass: take the gradient coming from above, multiply by its local derivative, and pass it down.
 
@@ -84,7 +84,7 @@ graph RL
     L1 -- "dL/dz1 = dL/da1 * sigmoid'(z1)" --> I["Input"]
 ```
 
-At each layer, the gradient gets multiplied by the sigmoid derivative. The sigmoid derivative is a * (1 - a), which maxes out at 0.25 (when a = 0.5). Three layers deep, the gradient has been multiplied by at most 0.25^3 = 0.0156. Ten layers deep: 0.25^10 = 0.000001.
+At each layer, the gradient gets multiplied by the sigmoid derivative. The sigmoid derivative is $a(1 - a)$, which maxes out at 0.25 (when $a = 0.5$). Three layers deep, the gradient has been multiplied by at most $0.25^3 = 0.0156$. Ten layers deep: $0.25^{10} = 0.000001$.
 
 ### Vanishing Gradients
 
@@ -102,32 +102,35 @@ This is why deep sigmoid networks are nearly impossible to train. The fix -- ReL
 
 ### Deriving Gradients for a 2-Layer Network
 
-Concrete math for a network with input x, hidden layer with sigmoid, output layer with sigmoid, and MSE loss.
+Concrete math for a network with input $x$, hidden layer with sigmoid, output layer with sigmoid, and MSE loss.
 
 Forward pass:
-```
-z1 = W1 * x + b1
-a1 = sigmoid(z1)
-z2 = W2 * a1 + b2
-a2 = sigmoid(z2)
-L = (a2 - y)^2
+
+```math
+\begin{aligned}
+z_1 &= W_1 x + b_1 \\
+a_1 &= \text{sigmoid}(z_1) \\
+z_2 &= W_2 a_1 + b_2 \\
+a_2 &= \text{sigmoid}(z_2) \\
+L &= (a_2 - y)^2
+\end{aligned}
 ```
 
 Backward pass (applying chain rule step by step):
-```
-dL/da2 = 2(a2 - y)
-da2/dz2 = a2 * (1 - a2)
-dL/dz2 = dL/da2 * da2/dz2 = 2(a2 - y) * a2 * (1 - a2)
 
-dL/dW2 = dL/dz2 * a1
-dL/db2 = dL/dz2
-
-dL/da1 = dL/dz2 * W2
-da1/dz1 = a1 * (1 - a1)
-dL/dz1 = dL/da1 * da1/dz1
-
-dL/dW1 = dL/dz1 * x
-dL/db1 = dL/dz1
+```math
+\begin{aligned}
+\frac{\partial L}{\partial a_2} &= 2(a_2 - y) \\
+\frac{\partial a_2}{\partial z_2} &= a_2 (1 - a_2) \\
+\frac{\partial L}{\partial z_2} &= \frac{\partial L}{\partial a_2} \cdot \frac{\partial a_2}{\partial z_2} = 2(a_2 - y) \cdot a_2 (1 - a_2) \\[6pt]
+\frac{\partial L}{\partial W_2} &= \frac{\partial L}{\partial z_2} \cdot a_1 \\
+\frac{\partial L}{\partial b_2} &= \frac{\partial L}{\partial z_2} \\[6pt]
+\frac{\partial L}{\partial a_1} &= \frac{\partial L}{\partial z_2} \cdot W_2 \\
+\frac{\partial a_1}{\partial z_1} &= a_1 (1 - a_1) \\
+\frac{\partial L}{\partial z_1} &= \frac{\partial L}{\partial a_1} \cdot \frac{\partial a_1}{\partial z_1} \\[6pt]
+\frac{\partial L}{\partial W_1} &= \frac{\partial L}{\partial z_1} \cdot x \\
+\frac{\partial L}{\partial b_1} &= \frac{\partial L}{\partial z_1}
+\end{aligned}
 ```
 
 Every gradient is a product of local derivatives traced back from the loss. That's all backpropagation is.
@@ -185,9 +188,9 @@ def __mul__(self, other):
     return out
 ```
 
-For addition: d(a+b)/da = 1, d(a+b)/db = 1. So both inputs get the output's gradient directly.
+For addition: $\partial(a+b)/\partial a = 1$, $\partial(a+b)/\partial b = 1$. So both inputs get the output's gradient directly.
 
-For multiplication: d(a*b)/da = b, d(a*b)/db = a. Each input gets the other's value times the output gradient.
+For multiplication: $\partial(ab)/\partial a = b$, $\partial(ab)/\partial b = a$. Each input gets the other's value times the output gradient.
 
 The `+=` is critical. A Value might be used in multiple operations. Its gradient is the sum of gradients from all paths.
 
@@ -209,7 +212,7 @@ def sigmoid(self):
     return out
 ```
 
-Sigmoid derivative: sigmoid(x) * (1 - sigmoid(x)). We computed sigmoid(x) = s during the forward pass. Reuse it. No extra work.
+Sigmoid derivative: $\text{sigmoid}(x) \cdot (1 - \text{sigmoid}(x))$. We computed $\text{sigmoid}(x) = s$ during the forward pass. Reuse it. No extra work.
 
 ```python
 def mse_loss(predicted, target):
@@ -217,7 +220,7 @@ def mse_loss(predicted, target):
     return diff * diff
 ```
 
-MSE for a single output: (predicted - target)^2. We express subtraction as addition with a negated Value.
+MSE for a single output: $(\text{predicted} - \text{target})^2$. We express subtraction as addition with a negated Value.
 
 ### Step 4: Backward Pass
 
@@ -241,7 +244,7 @@ def backward(self):
         v._backward()
 ```
 
-Start at the loss (gradient = 1.0, since dL/dL = 1). Walk backward through the sorted graph. Each node's `_backward` pushes gradients to its children.
+Start at the loss (gradient = 1.0, since $dL/dL = 1$). Walk backward through the sorted graph. Each node's `_backward` pushes gradients to its children.
 
 ### Step 5: Layer and Network
 
@@ -301,7 +304,7 @@ class Network:
             p.grad = 0.0
 ```
 
-A Neuron takes inputs, computes weighted sum + bias, and applies sigmoid. Weight initialization scales by sqrt(2/n_inputs) to prevent sigmoid saturation in deeper networks. A Layer is a list of Neurons. A Network is a list of Layers. The `parameters()` method collects all learnable Values so we can update them.
+A Neuron takes inputs, computes weighted sum + bias, and applies sigmoid. Weight initialization scales by $\sqrt{2/n_{\text{inputs}}}$ to prevent sigmoid saturation in deeper networks. A Layer is a list of Neurons. A Network is a list of Layers. The `parameters()` method collects all learnable Values so we can update them.
 
 ### Step 6: Train on XOR
 
@@ -439,9 +442,9 @@ This lesson produces:
 
 ## Exercises
 
-1. Add a `__sub__` method to the Value class (a - b = a + (-1 * b)). Then implement a `__neg__` method. Verify that the gradients are correct by comparing with manual calculation for a simple expression like (a - b)^2.
+1. Add a `__sub__` method to the Value class $(a - b = a + (-1 \cdot b))$. Then implement a `__neg__` method. Verify that the gradients are correct by comparing with manual calculation for a simple expression like $(a - b)^2$.
 
-2. Add a `relu` method to Value (output max(0, x), derivative is 1 if x > 0, else 0). Replace sigmoid with relu in the hidden layers and train on XOR again. Compare convergence speed. You should see faster training -- this previews Lesson 04.
+2. Add a `relu` method to Value (output $\max(0, x)$, derivative is 1 if $x \gt 0$, else 0). Replace sigmoid with relu in the hidden layers and train on XOR again. Compare convergence speed. You should see faster training -- this previews Lesson 04.
 
 3. Implement a `__pow__` method on Value for integer powers. Use it to replace `mse_loss` with a proper `(predicted - target) ** 2` expression. Verify gradients match the original implementation.
 
@@ -453,14 +456,14 @@ This lesson produces:
 
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
-| Backpropagation | "The network learns" | An algorithm that computes dL/dw for every weight by applying the chain rule backward through the computational graph |
+| Backpropagation | "The network learns" | An algorithm that computes $\partial L/\partial w$ for every weight by applying the chain rule backward through the computational graph |
 | Computational graph | "The network structure" | A directed acyclic graph where nodes are operations and edges carry values (forward) and gradients (backward) |
-| Chain rule | "Multiply the derivatives" | If y = f(g(x)), then dy/dx = f'(g(x)) * g'(x) -- the mathematical foundation of backpropagation |
+| Chain rule | "Multiply the derivatives" | If $y = f(g(x))$, then $\frac{dy}{dx} = f'(g(x)) \cdot g'(x)$ -- the mathematical foundation of backpropagation |
 | Gradient | "The direction of steepest ascent" | The partial derivative of the loss with respect to a parameter -- tells you how to change that parameter to reduce the loss |
 | Vanishing gradient | "Deep networks don't learn" | Gradients shrink exponentially as they propagate through layers with saturating activations like sigmoid |
 | Forward pass | "Running the network" | Computing the output from inputs by sequentially applying each layer's operations and storing intermediate values |
 | Backward pass | "Computing gradients" | Traversing the computational graph in reverse, accumulating gradients at each node using the chain rule |
-| Learning rate | "How fast it learns" | A scalar that controls the step size when updating weights: w_new = w_old - lr * gradient |
+| Learning rate | "How fast it learns" | A scalar that controls the step size when updating weights: $w_{\text{new}} = w_{\text{old}} - \text{lr} \cdot \text{gradient}$ |
 | Topological sort | "The right order" | An ordering of graph nodes where each node appears after all nodes it depends on -- ensures gradients are fully accumulated before propagation |
 | Autograd | "Automatic differentiation" | A system that builds computational graphs during forward computation and automatically computes gradients -- what PyTorch's engine does |
 

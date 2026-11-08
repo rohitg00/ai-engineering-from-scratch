@@ -1,0 +1,303 @@
+{
+  "original": {
+    "path": "fixtures/ledger-x86_64-O1.o",
+    "sha256": "9a4a8082ba5e285a732552981a6935e0c5255725664f380e37c44ebfb04d803f",
+    "functions": {
+      "percent_change": {
+        "section": ".text",
+        "start": 0,
+        "size": 16,
+        "bytes": "85ff740929fe6bc66499f7ffc331c0c3",
+        "relocations": []
+      },
+      "grade": {
+        "section": ".text",
+        "start": 16,
+        "size": 46,
+        "bytes": "4863c74869c0676666664889c148c1f92248c1e83f01c183c1fa31c083f904770c89c8488d0d000000008b0481c3",
+        "relocations": [
+          {
+            "offset": 38,
+            "type": "R_X86_64_PC32",
+            "symbol": ".rodata",
+            "addend": 16
+          }
+        ]
+      },
+      "total": {
+        "section": ".text",
+        "start": 64,
+        "size": 31,
+        "bytes": "85f67e1889f131d231c0660f1f44000003049748ffc24839d175f5c331c0c3",
+        "relocations": []
+      },
+      "grade_label": {
+        "section": ".text",
+        "start": 96,
+        "size": 63,
+        "bytes": "4863c74869c0676666664889c148c1f92248c1e83f01c883c0fa83f804770f89c0488d0d00000000488b04c1eb0231c0488d0d00000000486304814801c8c3",
+        "relocations": [
+          {
+            "offset": 36,
+            "type": "R_X86_64_PC32",
+            "symbol": ".rodata",
+            "addend": 36
+          },
+          {
+            "offset": 51,
+            "type": "R_X86_64_PC32",
+            "symbol": ".rodata",
+            "addend": -4
+          }
+        ]
+      }
+    }
+  },
+  "build": "clang -target x86_64-unknown-linux-gnu -O1 -fno-asynchronous-unwind-tables -c",
+  "candidates": [
+    {
+      "function": "percent_change",
+      "candidate": "percent_change_mul_first",
+      "source": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/percent_change_mul_first.c",
+      "original_size": 16,
+      "candidate_size": 16,
+      "masked_equal": true,
+      "differing_offsets": [],
+      "masked_ranges": [],
+      "relocations_match": true,
+      "relocations": [],
+      "original_table": null,
+      "candidate_table": null,
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "function": "percent_change",
+      "candidate": "percent_change_split",
+      "source": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/percent_change_split.c",
+      "original_size": 16,
+      "candidate_size": 16,
+      "masked_equal": true,
+      "differing_offsets": [],
+      "masked_ranges": [],
+      "relocations_match": true,
+      "relocations": [],
+      "original_table": null,
+      "candidate_table": null,
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "function": "percent_change",
+      "candidate": "percent_change_wide",
+      "source": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/percent_change_wide.c",
+      "original_size": 16,
+      "candidate_size": 26,
+      "masked_equal": false,
+      "differing_offsets": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "masked_ranges": [],
+      "relocations_match": true,
+      "relocations": [],
+      "original_table": null,
+      "candidate_table": null,
+      "status": "fail",
+      "reasons": [
+        "size 16 vs 26 bytes"
+      ]
+    },
+    {
+      "function": "percent_change",
+      "candidate": "percent_change_div_first",
+      "source": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/percent_change_div_first.c",
+      "original_size": 16,
+      "candidate_size": 18,
+      "masked_equal": false,
+      "differing_offsets": [
+        3,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "masked_ranges": [],
+      "relocations_match": true,
+      "relocations": [],
+      "original_table": null,
+      "candidate_table": null,
+      "status": "fail",
+      "reasons": [
+        "size 16 vs 18 bytes"
+      ]
+    },
+    {
+      "function": "grade",
+      "candidate": "grade_switch",
+      "source": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/grade_switch.c",
+      "original_size": 46,
+      "candidate_size": 46,
+      "masked_equal": true,
+      "differing_offsets": [],
+      "masked_ranges": [
+        [
+          38,
+          4
+        ]
+      ],
+      "relocations_match": true,
+      "relocations": [
+        {
+          "offset": 38,
+          "type": "R_X86_64_PC32",
+          "original_target": ".rodata+0x10",
+          "candidate_target": ".rodata-0x4",
+          "same_shape": true
+        }
+      ],
+      "original_table": [
+        1,
+        2,
+        3,
+        4,
+        4
+      ],
+      "candidate_table": [
+        1,
+        2,
+        3,
+        4,
+        4
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "function": "grade",
+      "candidate": "grade_table",
+      "source": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/grade_table.c",
+      "original_size": 46,
+      "candidate_size": 46,
+      "masked_equal": true,
+      "differing_offsets": [],
+      "masked_ranges": [
+        [
+          38,
+          4
+        ]
+      ],
+      "relocations_match": true,
+      "relocations": [
+        {
+          "offset": 38,
+          "type": "R_X86_64_PC32",
+          "original_target": ".rodata+0x10",
+          "candidate_target": ".rodata-0x4",
+          "same_shape": true
+        }
+      ],
+      "original_table": [
+        1,
+        2,
+        3,
+        4,
+        4
+      ],
+      "candidate_table": [
+        1,
+        2,
+        3,
+        4,
+        4
+      ],
+      "status": "pass",
+      "reasons": []
+    },
+    {
+      "function": "grade",
+      "candidate": "grade_thresholds",
+      "source": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/grade_thresholds.c",
+      "original_size": 46,
+      "candidate_size": 39,
+      "masked_equal": false,
+      "differing_offsets": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "masked_ranges": [
+        [
+          38,
+          4
+        ]
+      ],
+      "relocations_match": false,
+      "relocations": [],
+      "original_table": null,
+      "candidate_table": null,
+      "status": "fail",
+      "reasons": [
+        "size 46 vs 39 bytes",
+        "relocation records differ in count, offset, type, or target section"
+      ]
+    },
+    {
+      "function": "grade",
+      "candidate": "grade_case10_wrong",
+      "source": "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/code/fixtures/candidates/grade_case10_wrong.c",
+      "original_size": 46,
+      "candidate_size": 46,
+      "masked_equal": true,
+      "differing_offsets": [],
+      "masked_ranges": [
+        [
+          38,
+          4
+        ]
+      ],
+      "relocations_match": true,
+      "relocations": [
+        {
+          "offset": 38,
+          "type": "R_X86_64_PC32",
+          "original_target": ".rodata+0x10",
+          "candidate_target": ".rodata-0x4",
+          "same_shape": true
+        }
+      ],
+      "original_table": [
+        1,
+        2,
+        3,
+        4,
+        4
+      ],
+      "candidate_table": [
+        1,
+        2,
+        3,
+        4,
+        3
+      ],
+      "status": "fail",
+      "reasons": [
+        "referenced constants differ: [1, 2, 3, 4, 4] vs [1, 2, 3, 4, 3]"
+      ]
+    }
+  ]
+}

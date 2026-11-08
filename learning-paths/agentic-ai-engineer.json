@@ -38,6 +38,7 @@
       "Runtime traces with stop, retry, and escalation evidence"
     ]
   },
+  "projects": ["tiny-coding-agent", "skill-router", "agent-trace-debugger", "memory-server", "tool-call-firewall", "durable-agent-jobs", "browser-agent"],
   "readinessCriteria": [
     "Can separate tool capability from agent decision policy.",
     "Can explain what enters context, what persists, and what expires.",

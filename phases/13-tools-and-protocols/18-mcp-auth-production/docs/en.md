@@ -354,7 +354,7 @@ This lesson produces `outputs/skill-mcp-auth.md`. Given an MCP server config and
 
 ## Exercises
 
-1. Run `code/main.py`. Trace the flow. Note how the IdP rotates a key in step 6, the scheduled `refresh_jwks` re-pulls the published set, and both the old token (overlap window) and a fresh token validate without restart.
+1. Run `code/main.py`. Trace the flow. Note how the IdP rotates a key in step 6 of the script output (step 7 of the flow above), the scheduled `refresh_jwks` re-pulls the published set, and both the old token (overlap window) and a fresh token validate without restart.
 
 2. Add a new IdP to the protected-resource metadata's `authorization_servers` list. Issue a token signed by the new IdP and confirm the validator accepts it. Issue a token signed by an unlisted IdP and confirm the validator rejects with `WWW-Authenticate: Bearer error="invalid_token", error_description="iss not allowed"`.
 

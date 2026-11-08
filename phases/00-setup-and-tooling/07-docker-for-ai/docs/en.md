@@ -375,6 +375,16 @@ Remove the `--gpus all` flag and the NVIDIA deploy block. The container still wo
 3. Add `flask` to the Dockerfile, rebuild, and run a simple API server on port 5000. Map the port with `-p 5000:5000`
 4. Measure the image size with `docker images`. Try switching the base image from `devel` to `runtime` and compare sizes
 
+### Hints
+
+**Exercise 1.** Build with the `docker build -t ai-dev -f phases/00-setup-and-tooling/07-docker-for-ai/code/Dockerfile .` command from the lesson, then run the import inside `docker run --rm ai-dev`. On a Mac, leave out `--gpus all`, as the lesson explains. The container must print a version that starts with `2.6.0`.
+
+**Exercise 2.** Run `docker compose up -d` in the `code/` folder, then open a shell in the `ai-dev` service with `docker compose exec ai-dev bash`. Inside it, run `curl http://qdrant:6333/collections`; a JSON reply means the service name resolves on the compose network.
+
+**Exercise 3.** Add a `RUN pip install flask` line to the Dockerfile, rebuild, and start the server with `host="0.0.0.0"`, because a server bound to localhost inside the container is not reachable from outside. Open `http://localhost:5000` on your machine to confirm that the port mapping works.
+
+**Exercise 4.** Run `docker images ai-dev` and write down the SIZE column. Change `devel` to `runtime` in the `FROM` line, build with a new tag, and compare the two sizes; the runtime image leaves out the compilers and headers.
+
 ## Key Terms
 
 | Term | What people say | What it actually means |

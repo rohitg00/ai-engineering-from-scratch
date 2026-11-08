@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-1-2-title fig-1-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-2-title">A dead engine does not stop the job</title>
+  <desc id="fig-1-2-desc">Two runs on one time axis. Without a watchdog, the engine stopped at start, and the rollout loop then logged 200,533 HTTP 503 errors over 63 minutes while the GPU did nothing, until we stopped the container. With watchdog.sh, a test container that logged the same error without a break stopped after 183 seconds, when six checks in a row found more than 100 errors. A healthy 16-answer run logged bursts of this error of up to 60 seconds, two of them 45 seconds apart. A replay of that run stopped it in more than half of the cases with six checks and in none with ten, so we run the watchdog with ten.</desc>
+  <defs><marker id="fig-1-2-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <text x="20" y="28" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">MINUTES AFTER THE ENGINE STOPPED</text>
+  <line x1="150" y1="232" x2="150" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="150" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="258.46" y1="232" x2="258.46" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="258.46" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">15</text>
+  <line x1="366.92" y1="232" x2="366.92" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="366.92" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">30</text>
+  <line x1="475.38" y1="232" x2="475.38" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="475.38" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">45</text>
+  <line x1="583.85" y1="232" x2="583.85" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="583.85" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">60</text>
+  <text x="20" y="82" font-size="12" font-weight="700">no watchdog</text>
+  <text x="20" y="100" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the job keeps going</text>
+  <rect x="150" y="62" width="455.54" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="377.77" y="82" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">200,533 lines of HTTP 503 from /generate</text>
+  <text x="377.77" y="98" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">GPU idle, no failure reported</text>
+  <text x="605.54" y="124" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">we stopped it at 63 min</text>
+  <text x="20" y="172" font-size="12" font-weight="700">watchdog.sh test</text>
+  <text x="20" y="190" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">needs 6 bad checks</text>
+  <rect x="150" y="152" width="22.05" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <line x1="174.05" y1="174" x2="215.08" y2="174" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-2-head-amber)"/>
+  <text x="217.08" y="214" font-size="11" class="m-serif" fill="var(--m-amber-ink, #85590c)">the watchdog stops the container</text>
+  <rect x="217.08" y="152" width="250" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="342.08" y="169.25" font-size="12.5" text-anchor="middle" font-weight="700">exit 1 after 183 s</text>
+  <text x="342.08" y="186.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">more than 100 errors in six checks</text>
+  <text x="20" y="290" font-size="12" class="m-serif">Start every unattended run with a watchdog. The job alone never fails.</text>
+  <text x="20" y="312" font-size="12" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Healthy bursts came 45 s apart, so six checks are too few. Run it with ten.</text>
+</svg>

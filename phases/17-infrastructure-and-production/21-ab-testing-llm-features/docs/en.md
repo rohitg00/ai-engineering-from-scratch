@@ -108,7 +108,7 @@ This lesson produces `outputs/skill-ab-plan.md`. Given feature change, workload,
 2. Pick Statsig or GrowthBook for a healthcare-regulated on-prem customer.
 3. Design an A/B that tests GPT-4 vs GPT-3.5 on cost-per-resolved-ticket. What's the primary metric, guardrail metric, secondary?
 4. Your canary passes but A/B shows -1.2% conversion. Do you ship? Write the escalation criteria.
-5. Apply CUPED to a pre-period with 60% of the variance of post. Compute the effective-sample-size boost.
+5. Apply CUPED with a pre-period covariate that explains 60% of the post-period variance (squared correlation 0.6). Compute the effective-sample-size boost.
 
 ## Key Terms
 

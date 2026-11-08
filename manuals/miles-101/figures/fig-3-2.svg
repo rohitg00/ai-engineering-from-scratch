@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-3-2-title fig-3-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-2-title">The filter costs one or two extra batches of prompts</title>
+  <desc id="fig-3-2-desc">Rollout seconds per step with the heat-guard pause time taken out, for 12 steps with seed 1. Without the filter the median was 58.0 s. With the filter and 48 prompts per batch, steps that dropped 16 groups or fewer needed one batch and took a median of 88.7 s. Steps that dropped more needed a second batch and took 164.4 s.</desc>
+  <line x1="60" y1="256" x2="620" y2="256" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="260" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="60" y1="156" x2="620" y2="156" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="160" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="60" y1="56" x2="620" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="60" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="60" y1="256" x2="620" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="56" x2="60" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="256" x2="60" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="212.73" y1="256" x2="212.73" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="212.73" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="365.45" y1="256" x2="365.45" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="365.45" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="518.18" y1="256" x2="518.18" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="518.18" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">9</text>
+  <line x1="620" y1="256" x2="620" y2="260" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="620" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">11</text>
+  <text x="340" y="290" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">step</text>
+  <text x="60" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rollout seconds, pause time taken out</text>
+  <path d="M60.0 187.4 L110.9 199.3 L161.8 192.3 L212.7 189.6 L263.6 200.2 L314.5 197.8 L365.5 195.9 L416.4 194.4 L467.3 198.2 L518.2 201.1 L569.1 199.7 L620.0 202.8" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="60" cy="187.4" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="110.91" cy="199.3" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="161.82" cy="192.32" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="212.73" cy="189.57" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="263.64" cy="200.21" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="314.55" cy="197.76" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="365.45" cy="195.93" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="416.36" cy="194.41" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="467.27" cy="198.22" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="518.18" cy="201.15" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="569.09" cy="199.68" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="620" cy="202.82" r="2.8" fill="var(--m-grey-ink, #5e5e59)"/>
+  <path d="M60.0 68.5 L110.9 162.5 L161.8 91.6 L212.7 93.2 L263.6 99.4 L314.5 73.7 L365.5 78.0 L416.4 170.1 L467.3 167.3 L518.2 91.3 L569.1 97.7 L620.0 96.9" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="60" cy="68.54" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="110.91" cy="162.51" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="161.82" cy="91.59" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="212.73" cy="93.17" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="263.64" cy="99.4" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="314.55" cy="73.71" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="365.45" cy="78" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="416.36" cy="170.08" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="467.27" cy="167.26" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="518.18" cy="91.29" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="569.09" cy="97.69" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="620" cy="96.94" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="110.91" y="180.51" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">one batch</text>
+  <text x="441.82" y="188.08" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">one batch</text>
+  <path d="M60 18 H78" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="84" y="22" font-size="11" fill="var(--m-grey-ink, #5e5e59)">no filter</text>
+  <path d="M161.4 18 H179.4" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="185.4" y="22" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">DAPO filter, batches of 48 prompts</text>
+  <text x="60" y="326" font-size="12" class="m-serif">Median 58 s without the filter, 89 s with one batch, 164 s with two.</text>
+</svg>

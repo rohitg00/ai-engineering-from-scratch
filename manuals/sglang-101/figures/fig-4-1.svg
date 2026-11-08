@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="fig-4-1-title fig-4-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-1-title">One decode step, launched and replayed</title>
+  <desc id="fig-4-1-desc">Two columns. On the left, eager decode: for each kernel of one transformer layer, the Python model runner sends one launch, and the step repeats this for every layer. On the right, graph replay: the decode CUDA graph runner sends one replay call for a captured batch size, and the GPU runs the recorded kernels of all layers in order.</desc>
+  <defs><marker id="fig-4-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A · EAGER DECODE</text>
+  <text x="336" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">B · GRAPH REPLAY</text>
+  <line x1="320" y1="8" x2="320" y2="392" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="30" width="84" height="34" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="62" y="50.45" font-size="11.5" text-anchor="middle" font-weight="700">launch</text>
+  <line x1="104" y1="47" x2="144" y2="47" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
+  <rect x="145" y="30" width="160" height="34" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="225" y="50.45" font-size="11.5" text-anchor="middle" font-weight="700">rms_norm</text>
+  <rect x="20" y="76" width="84" height="34" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="62" y="96.45" font-size="11.5" text-anchor="middle" font-weight="700">launch</text>
+  <line x1="104" y1="93" x2="144" y2="93" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
+  <rect x="145" y="76" width="160" height="34" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="225" y="96.45" font-size="11.5" text-anchor="middle" font-weight="700">qkv_proj GEMM</text>
+  <rect x="20" y="122" width="84" height="34" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="62" y="142.45" font-size="11.5" text-anchor="middle" font-weight="700">launch</text>
+  <line x1="104" y1="139" x2="144" y2="139" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
+  <rect x="145" y="122" width="160" height="34" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="225" y="142.45" font-size="11.5" text-anchor="middle" font-weight="700">attention decode</text>
+  <rect x="20" y="168" width="84" height="34" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="62" y="188.45" font-size="11.5" text-anchor="middle" font-weight="700">launch</text>
+  <line x1="104" y1="185" x2="144" y2="185" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
+  <rect x="145" y="168" width="160" height="34" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="225" y="188.45" font-size="11.5" text-anchor="middle" font-weight="700">o_proj GEMM</text>
+  <rect x="20" y="214" width="84" height="34" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="62" y="234.45" font-size="11.5" text-anchor="middle" font-weight="700">launch</text>
+  <line x1="104" y1="231" x2="144" y2="231" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
+  <rect x="145" y="214" width="160" height="34" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="225" y="234.45" font-size="11.5" text-anchor="middle" font-weight="700">gate_up_proj GEMM</text>
+  <rect x="20" y="260" width="84" height="34" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="62" y="280.45" font-size="11.5" text-anchor="middle" font-weight="700">launch</text>
+  <line x1="104" y1="277" x2="144" y2="277" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
+  <rect x="145" y="260" width="160" height="34" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="225" y="280.45" font-size="11.5" text-anchor="middle" font-weight="700">silu_and_mul</text>
+  <rect x="20" y="306" width="84" height="34" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="62" y="326.45" font-size="11.5" text-anchor="middle" font-weight="700">launch</text>
+  <line x1="104" y1="323" x2="144" y2="323" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
+  <rect x="145" y="306" width="160" height="34" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="225" y="326.45" font-size="11.5" text-anchor="middle" font-weight="700">down_proj GEMM</text>
+  <text x="20" y="366" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one CPU launch for each kernel,</text>
+  <text x="20" y="382" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">repeated for every layer of the model</text>
+  <rect x="336" y="30" width="284" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="478" y="51.25" font-size="12.5" text-anchor="middle" font-weight="700">replay(bs=16)</text>
+  <text x="478" y="68.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one CPU call for the whole step</text>
+  <rect x="336" y="124" width="284" height="160" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="478" y="176.75" font-size="12.5" text-anchor="middle" font-weight="700">captured decode graph, bs=16</text>
+  <text x="478" y="194.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">every layer, every kernel</text>
+  <text x="478" y="209.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">same order as column A</text>
+  <text x="478" y="224.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">fixed shapes and addresses</text>
+  <text x="478" y="239.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">recorded once at startup</text>
+  <line x1="478" y1="82" x2="478" y2="124" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
+  <rect class="m-knock" x="483" y="92.03" width="61.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="486" y="103" font-size="11.5">one call</text>
+  <text x="336" y="312" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a batch of 13 pads to 16 and replays</text>
+  <text x="336" y="328" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a batch above max_bs cannot replay</text>
+  <text x="336" y="344" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">and runs as column A</text>
+</svg>

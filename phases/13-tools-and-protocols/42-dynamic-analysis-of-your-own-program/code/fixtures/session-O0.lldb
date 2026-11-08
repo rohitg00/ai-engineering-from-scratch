@@ -1,0 +1,29 @@
+breakpoint set -n bump
+breakpoint set -n classify
+breakpoint set -n sum_balances
+breakpoint set -a 0x100000504 -s account-O0
+breakpoint set -a 0x1000004f4 -s account-O0
+breakpoint set -a 0x100000524 -s account-O0
+breakpoint set -a 0x100000514 -s account-O0
+target stop-hook add -o "register read x0 x1 pc" -o "memory read -s4 -fx -c24 $x0" -o "frame variable -P 1"
+run
+watchpoint set variable a->balance
+watchpoint list
+continue
+continue
+continue
+continue
+continue
+continue
+continue
+continue
+continue
+continue
+continue
+continue
+continue
+continue
+continue
+continue
+breakpoint list
+watchpoint list -v

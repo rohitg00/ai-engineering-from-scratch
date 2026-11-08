@@ -57,7 +57,8 @@ def main() -> int:
             {"timestamp": time.time(), "probes": [{"name": n, "status": s, "detail": d} for n, s, d in probes]},
             indent=2,
         )
-        + "\n"
+        + "\n",
+        encoding="utf-8",
     )
     width = max(len(n) for n, _, _ in probes)
     for name, status, detail in probes:

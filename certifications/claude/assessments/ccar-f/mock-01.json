@@ -473,7 +473,7 @@
       "explanation": "The narrowest true scope reduces context bloat and conflicting instructions while preserving team review. Private configuration cannot serve as reproducible project policy.",
       "references": [
         "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
-        "https://docs.anthropic.com/en/docs/claude-code/memory"
+        "https://code.claude.com/docs/en/memory"
       ]
     },
     {
@@ -516,7 +516,7 @@
       "explanation": "A Skill supports progressive disclosure of a reusable method and its assets. It should define inputs and outputs but does not itself grant tool permissions or authorization.",
       "references": [
         "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
-        "https://docs.anthropic.com/en/docs/claude-code/memory"
+        "https://code.claude.com/docs/en/memory"
       ]
     },
     {
@@ -559,7 +559,7 @@
       "explanation": "Fresh state and stable finding schemas make CI reproducible and permit remediation checks. Write authority and hidden local state undermine reviewer independence and auditability.",
       "references": [
         "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
-        "https://docs.anthropic.com/en/docs/claude-code/sdk/sdk-headless"
+        "https://code.claude.com/docs/en/headless"
       ]
     },
     {
@@ -815,7 +815,7 @@
       "explanation": "A Skill provides reusable guidance and progressive disclosure while remaining versioned for the team. Hidden side effects and secrets are not workflow instructions.",
       "references": [
         "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
-        "https://docs.anthropic.com/en/docs/claude-code/memory"
+        "https://code.claude.com/docs/en/memory"
       ]
     },
     {
@@ -1093,7 +1093,7 @@
       "explanation": "Team and CI behavior must come from reviewable project state. User memory is appropriate for personal preferences, not required shared policy or reproducible gates.",
       "references": [
         "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
-        "https://docs.anthropic.com/en/docs/claude-code/memory"
+        "https://code.claude.com/docs/en/memory"
       ]
     },
     {
@@ -1179,7 +1179,7 @@
       "explanation": "Declared versions and execution bounds make runs comparable and constrain failure. Interactive sessions and hidden commands introduce untracked state that other runs cannot reproduce.",
       "references": [
         "certifications/claude/lessons/19-claude-code-memory-rules-skills-and-ci",
-        "https://docs.anthropic.com/en/docs/claude-code/sdk/sdk-headless"
+        "https://code.claude.com/docs/en/headless"
       ]
     },
     {

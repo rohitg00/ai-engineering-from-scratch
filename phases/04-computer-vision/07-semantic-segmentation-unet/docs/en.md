@@ -87,10 +87,10 @@ Both appear in the wild. For a first U-Net, bilinear is safer.
 
 ### Cross-entropy on a pixel grid
 
-For semantic segmentation with C classes, the model output is `(N, C, H, W)`. The target is `(N, H, W)` with integer class IDs. Cross-entropy is identical to the classification case, just applied at every spatial position:
+For semantic segmentation with $C$ classes, the model output is `(N, C, H, W)`. The target is `(N, H, W)` with integer class IDs. Cross-entropy is identical to the classification case, just applied at every spatial position:
 
-```
-Loss = mean over (n, h, w) of -log( softmax(logits[n, :, h, w])[target[n, h, w]] )
+```math
+\text{Loss} = \mathop{\mathrm{mean}}\limits_{(n, h, w)} \left[ -\log\left( \mathop{\mathrm{softmax}}(\text{logits}[n, :, h, w])[\text{target}[n, h, w]] \right) \right]
 ```
 
 `F.cross_entropy` in PyTorch handles this shape natively. No reshape needed.
@@ -101,17 +101,19 @@ Cross-entropy treats every pixel equally. That is wrong when one class dominates
 
 Dice loss solves this by directly optimising the overlap between predicted and true mask:
 
-```
-Dice(p, y) = 2 * sum(p * y) / (sum(p) + sum(y) + epsilon)
-Dice_loss = 1 - Dice
+```math
+\begin{aligned}
+\mathop{\mathrm{Dice}}(p, y) &= \frac{2 \sum (p \cdot y)}{\sum p + \sum y + \epsilon} \\
+\text{Dice}_{\text{loss}} &= 1 - \text{Dice}
+\end{aligned}
 ```
 
 where `p` is the sigmoid/softmax probability map for a class and `y` is the binary ground-truth mask. The loss is zero only when the overlap is perfect. Because it is ratio-based, class imbalance is irrelevant.
 
 In practice, use the **combined loss**:
 
-```
-L = L_cross_entropy + lambda * L_dice       (lambda ~ 1)
+```math
+L = L_{\text{cross\_entropy}} + \lambda \cdot L_{\text{dice}} \qquad (\lambda \approx 1)
 ```
 
 Cross-entropy gives stable gradients early in training; Dice focuses the tail of training on actually matching the mask shape. This combination is the medical-imaging default and hard to beat on any class-imbalanced dataset.
@@ -120,14 +122,14 @@ Cross-entropy gives stable gradients early in training; Dice focuses the tail of
 
 - **Pixel accuracy** — percent of pixels predicted correctly. Cheap. Broken on imbalanced data for the same reason as accuracy in classification.
 - **IoU per class** — intersection over union for each class's mask; average across classes = mIoU.
-- **Dice (F1 on pixels)** — similar to IoU; `Dice = 2 * IoU / (1 + IoU)`. Medical imaging prefers Dice, driving community prefers IoU; they are monotonically related.
+- **Dice (F1 on pixels)** — similar to IoU; $\text{Dice} = 2 \cdot \text{IoU} / (1 + \text{IoU})$. Medical imaging prefers Dice, driving community prefers IoU; they are monotonically related.
 - **Boundary F1** — measures how close predicted boundaries are to ground-truth boundaries, penalising even small shifts. Important for high-precision tasks like semiconductor inspection.
 
 Report IoU per class, not just mIoU. Mean IoU hides a class at 15% when nine others are at 85%.
 
 ### Input resolution trade-off
 
-U-Net's encoder halves resolution four times, so the input must be divisible by 16. Medical images are often 512x512 or 1024x1024. Autonomous-driving crops are 2048x1024. The memory cost of U-Net scales with `H * W * C_max`, and at 1024x1024 with 1024 bottleneck channels the forward pass already uses gigabytes of VRAM.
+U-Net's encoder halves resolution four times, so the skip connections line up exactly only when the input is divisible by 16. Other sizes need padding or the resize in the up block (Step 2). Medical images are often 512x512 or 1024x1024. Autonomous-driving crops are 2048x1024. The memory cost of U-Net scales with `H * W * C_max`, and at 1024x1024 with 1024 bottleneck channels the forward pass already uses gigabytes of VRAM.
 
 Two standard workarounds:
 1. Tile the input — process 256x256 tiles with overlap and stitch.

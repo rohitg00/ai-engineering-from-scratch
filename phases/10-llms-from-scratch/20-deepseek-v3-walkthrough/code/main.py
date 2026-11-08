@@ -251,13 +251,13 @@ def main() -> None:
 
     print()
     print("=" * 70)
-    print("HEADLINE: total 671B published, this calculator hits ~476B-490B")
+    print("HEADLINE: 671B total / 37B active published, this calculator hits")
+    print("          ~664B total / ~30B active")
     print("-" * 70)
-    print("  The delta comes from additional structural parameters the report")
-    print("  itemizes in Section 2 appendix: expert-specific biases, shared")
-    print("  expert scaling, MoE-shaped MTP module, and sub-components this")
-    print("  simplified calculator groups together. Order of magnitude and")
-    print("  ratios (e.g. 5-6% active/total) match the paper exactly.")
+    print("  The delta comes from simplifications: MLA here skips the decoupled")
+    print("  RoPE dimensions, the untied output head is not counted, and the MTP")
+    print("  module is a dense stand-in (the published one is 14B and sits")
+    print("  outside the 671B). The active/total ratio lands near the paper's.")
 
 
 if __name__ == "__main__":

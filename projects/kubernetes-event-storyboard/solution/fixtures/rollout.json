@@ -1,0 +1,87 @@
+{
+  "observedAt": "2026-01-01T12:05:00Z",
+  "events": {
+    "items": [
+      {
+        "metadata": {
+          "uid": "event-fail"
+        },
+        "involvedObject": {
+          "uid": "pod-old",
+          "name": "gallery-7-a",
+          "namespace": "exhibit",
+          "kind": "Pod",
+          "resourceVersion": "44"
+        },
+        "reason": "Failed",
+        "type": "Warning",
+        "message": "secret fixture credential must not be exported",
+        "count": 4,
+        "firstTimestamp": "2026-01-01T12:00:00Z",
+        "lastTimestamp": "2026-01-01T12:03:00Z"
+      },
+      {
+        "metadata": {
+          "uid": "event-ready"
+        },
+        "involvedObject": {
+          "uid": "pod-new",
+          "name": "gallery-8-b",
+          "namespace": "exhibit",
+          "kind": "Pod",
+          "resourceVersion": "51"
+        },
+        "reason": "Started",
+        "type": "Normal",
+        "count": 1,
+        "eventTime": "2026-01-01T12:04:00Z"
+      }
+    ]
+  },
+  "workloads": {
+    "items": [
+      {
+        "kind": "Pod",
+        "metadata": {
+          "uid": "pod-old",
+          "name": "gallery-7-a",
+          "ownerReferences": [
+            {
+              "uid": "rs-7"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "ReplicaSet",
+        "metadata": {
+          "uid": "rs-7",
+          "annotations": {
+            "deployment.kubernetes.io/revision": "7"
+          }
+        }
+      },
+      {
+        "kind": "Pod",
+        "metadata": {
+          "uid": "pod-new",
+          "name": "gallery-8-b",
+          "ownerReferences": [
+            {
+              "uid": "rs-8"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "ReplicaSet",
+        "metadata": {
+          "uid": "rs-8",
+          "annotations": {
+            "deployment.kubernetes.io/revision": "8"
+          }
+        }
+      }
+    ]
+  }
+}

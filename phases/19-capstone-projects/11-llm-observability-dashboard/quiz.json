@@ -52,7 +52,7 @@
     },
     {
       "stage": "check",
-      "question": "What is the deliverable's MTTR target on an injected PII-leak regression?",
+      "question": "What is the deliverable's time-to-detect (MTTD) target on an injected PII-leak regression?",
       "options": [
         "Under 1 hour",
         "Within 24 hours",

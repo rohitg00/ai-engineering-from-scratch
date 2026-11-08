@@ -1,0 +1,21 @@
+$ sbx exec -u root m101-demo sh -c 'touch /opt/marker-from-demo; ls -l /opt/marker-from-demo'
+-rw-r--r-- 1 root root 0 <date> /opt/marker-from-demo
+[exit 0]
+
+$ sbx template save m101-demo m101-tpl:v1 --output $CAPTURE/work/m101-tpl.tar
+Sandbox m101-demo is running and must be stopped before saving. Stop it now? (y/N): error: cannot save a running sandbox; stop it first with:
+  try: sbx stop m101-demo
+[exit 1]
+
+$ sbx stop m101-demo
+Sandbox 'm101-demo' stopped; state preserved. Restart with: sbx run --name m101-demo
+[exit 0]
+
+$ sbx template save m101-demo m101-tpl:v1 --output $CAPTURE/work/m101-tpl.tar
+Snapshotting image in sandbox ...
+Exporting image to $CAPTURE/work/m101-tpl.tar ...
+Exported to $CAPTURE/work/m101-tpl.tar
+
+Save complete. To use the image as a template:
+    sbx run --pull never -t docker.io/library/m101-tpl:v1 AGENT [WORKSPACE]
+[exit 0]

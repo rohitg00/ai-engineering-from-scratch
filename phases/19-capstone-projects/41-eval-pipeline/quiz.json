@@ -19,11 +19,11 @@
       "question": "The perplexity eval sums per-token negative log-likelihood over non-pad positions and divides by the total non-pad token count. Why not average per-batch perplexities instead?",
       "options": [
         "Perplexity is undefined for batched data.",
-        "Averaging per-batch perplexities is mathematically equivalent.",
+        "Averaging per-batch perplexities gives every batch equal weight, so each token in a short batch counts more than a token in a long batch, and the aggregate is biased.",
         "Batches contain padded tokens that must always be averaged.",
-        "Averaging per-batch perplexities under-weights short sequences (their per-batch ppl carries more variance) and produces a biased aggregate."
+        "Averaging per-batch perplexities is mathematically equivalent."
       ],
-      "correct": 3,
+      "correct": 1,
       "explanation": "Per-token aggregation is the textbook definition and avoids batch-size and length biases. Per-batch averaging is a common bug; on a fixture with varying sequence lengths it produces a different number from the correct one."
     },
     {

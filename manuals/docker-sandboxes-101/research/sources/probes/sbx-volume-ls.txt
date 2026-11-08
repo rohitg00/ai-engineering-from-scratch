@@ -1,0 +1,4 @@
+$ sbx volume ls   # 2026-10-08T06:57Z
+error: volume commands require --cloud; volumes are a cloud-only feature
+  try: sbx --cloud volume --help
+[exit 1]

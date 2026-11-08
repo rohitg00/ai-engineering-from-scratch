@@ -1,0 +1,89 @@
+
+extra-x86_64-O0.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <fifths>:
+       0: 55                           	pushq	%rbp
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 89 7d fc                     	movl	%edi, -0x4(%rbp)
+       7: 8b 45 fc                     	movl	-0x4(%rbp), %eax
+       a: b9 05 00 00 00               	movl	$0x5, %ecx
+       f: 99                           	cltd
+      10: f7 f9                        	idivl	%ecx
+      12: 83 e8 02                     	subl	$0x2, %eax
+      15: 5d                           	popq	%rbp
+      16: c3                           	retq
+      17: 66 0f 1f 84 00 00 00 00 00   	nopw	(%rax,%rax)
+
+0000000000000020 <quarter_band>:
+      20: 55                           	pushq	%rbp
+      21: 48 89 e5                     	movq	%rsp, %rbp
+      24: 89 7d f8                     	movl	%edi, -0x8(%rbp)
+      27: 8b 45 f8                     	movl	-0x8(%rbp), %eax
+      2a: 48 89 45 f0                  	movq	%rax, -0x10(%rbp)
+      2e: 48 83 e8 04                  	subq	$0x4, %rax
+      32: 77 41                        	ja	0x75 <quarter_band+0x55>
+      34: 48 8b 45 f0                  	movq	-0x10(%rbp), %rax
+      38: 48 8d 0d 00 00 00 00         	leaq	(%rip), %rcx            # 0x3f <quarter_band+0x1f>
+		000000000000003b:  R_X86_64_PC32	.rodata-0x4
+      3f: 48 63 04 81                  	movslq	(%rcx,%rax,4), %rax
+      43: 48 01 c8                     	addq	%rcx, %rax
+      46: ff e0                        	jmpq	*%rax
+      48: c7 45 fc 03 00 00 00         	movl	$0x3, -0x4(%rbp)
+      4f: eb 2b                        	jmp	0x7c <quarter_band+0x5c>
+      51: c7 45 fc 01 00 00 00         	movl	$0x1, -0x4(%rbp)
+      58: eb 22                        	jmp	0x7c <quarter_band+0x5c>
+      5a: c7 45 fc 04 00 00 00         	movl	$0x4, -0x4(%rbp)
+      61: eb 19                        	jmp	0x7c <quarter_band+0x5c>
+      63: c7 45 fc 01 00 00 00         	movl	$0x1, -0x4(%rbp)
+      6a: eb 10                        	jmp	0x7c <quarter_band+0x5c>
+      6c: c7 45 fc 05 00 00 00         	movl	$0x5, -0x4(%rbp)
+      73: eb 07                        	jmp	0x7c <quarter_band+0x5c>
+      75: c7 45 fc 00 00 00 00         	movl	$0x0, -0x4(%rbp)
+      7c: 8b 45 fc                     	movl	-0x4(%rbp), %eax
+      7f: 5d                           	popq	%rbp
+      80: c3                           	retq
+      81: 66 66 66 66 66 66 2e 0f 1f 84 00 00 00 00 00 	nopw	%cs:(%rax,%rax)
+
+0000000000000090 <weighted>:
+      90: 55                           	pushq	%rbp
+      91: 48 89 e5                     	movq	%rsp, %rbp
+      94: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+      98: 89 75 f4                     	movl	%esi, -0xc(%rbp)
+      9b: c7 45 f0 00 00 00 00         	movl	$0x0, -0x10(%rbp)
+      a2: c7 45 ec 00 00 00 00         	movl	$0x0, -0x14(%rbp)
+      a9: 8b 45 ec                     	movl	-0x14(%rbp), %eax
+      ac: 3b 45 f4                     	cmpl	-0xc(%rbp), %eax
+      af: 7d 1f                        	jge	0xd0 <weighted+0x40>
+      b1: 8b 45 f0                     	movl	-0x10(%rbp), %eax
+      b4: 48 8b 4d f8                  	movq	-0x8(%rbp), %rcx
+      b8: 48 63 55 ec                  	movslq	-0x14(%rbp), %rdx
+      bc: 6b 0c 91 03                  	imull	$0x3, (%rcx,%rdx,4), %ecx
+      c0: 01 c8                        	addl	%ecx, %eax
+      c2: 89 45 f0                     	movl	%eax, -0x10(%rbp)
+      c5: 8b 45 ec                     	movl	-0x14(%rbp), %eax
+      c8: 83 c0 01                     	addl	$0x1, %eax
+      cb: 89 45 ec                     	movl	%eax, -0x14(%rbp)
+      ce: eb d9                        	jmp	0xa9 <weighted+0x19>
+      d0: 8b 45 f0                     	movl	-0x10(%rbp), %eax
+      d3: 5d                           	popq	%rbp
+      d4: c3                           	retq
+      d5: 66 66 2e 0f 1f 84 00 00 00 00 00     	nopw	%cs:(%rax,%rax)
+
+00000000000000e0 <span_end>:
+      e0: 55                           	pushq	%rbp
+      e1: 48 89 e5                     	movq	%rsp, %rbp
+      e4: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+      e8: 89 75 f4                     	movl	%esi, -0xc(%rbp)
+      eb: 48 8b 45 f8                  	movq	-0x8(%rbp), %rax
+      ef: 8b 48 04                     	movl	0x4(%rax), %ecx
+      f2: 03 4d f4                     	addl	-0xc(%rbp), %ecx
+      f5: 48 8b 45 f8                  	movq	-0x8(%rbp), %rax
+      f9: 89 48 04                     	movl	%ecx, 0x4(%rax)
+      fc: 48 8b 45 f8                  	movq	-0x8(%rbp), %rax
+     100: 8b 00                        	movl	(%rax), %eax
+     102: 48 8b 4d f8                  	movq	-0x8(%rbp), %rcx
+     106: 03 41 04                     	addl	0x4(%rcx), %eax
+     109: 5d                           	popq	%rbp
+     10a: c3                           	retq

@@ -1,0 +1,807 @@
+{
+  "request": {
+    "jsonrpc": "2.0",
+    "id": 8,
+    "method": "tools/call",
+    "params": {
+      "name": "list_strings",
+      "arguments": {}
+    }
+  },
+  "response": {
+    "result": {
+      "_meta": {
+        "provenance": {
+          "untrusted_content": true,
+          "source": "analysis_target"
+        }
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "<cut by run.py: the text copy of structuredContent, 14009 bytes>"
+        }
+      ],
+      "structuredContent": {
+        "evidence_id": "ev_ad37f574a03f9f609fc1d9fb85a4661bc8679331d05fc50a47f8017aba715134",
+        "subject": {
+          "name": "ledger-arm64-O1",
+          "digest": {
+            "sha256": "01b5d08b08fb94678be5919d0e753d44b505a53107c95b94634f0e5d41c9e375"
+          },
+          "local_path": "$CAPTURE/fixtures/ledger-arm64-O1",
+          "format": "mach-o",
+          "architecture": "arm64"
+        },
+        "provider": {
+          "id": "ghidra",
+          "name": "Ghidra",
+          "version": "12.1.4"
+        },
+        "analysis_profile": {
+          "provider": {
+            "id": "ghidra",
+            "name": "Ghidra",
+            "version": "12.1.4"
+          },
+          "parameters": {
+            "target_kind": "executable",
+            "target_format": "mach-o",
+            "architecture": "arm64",
+            "available_architectures": [
+              "arm64"
+            ],
+            "import_mode": "ephemeral-source-immutable",
+            "annotation_policy": "atomic-function-entry-metadata-v1",
+            "load_image_observations": "source-mappings-entry-context-v2",
+            "function_body_evidence": "complete-inclusive-ranges-v1",
+            "function_references": "complete-body-and-entry-reference-manager-v2",
+            "call_relationship_coverage": "function-body-call-coverage-v5",
+            "function_dossier_coverage": "observed-facets-and-call-relationships-v1",
+            "string_inventory_evidence": "defined-data-coverage-v1",
+            "location_resolution": "explicit-address-exact-entry-symbol-first-v3",
+            "procedure_file_offset_resolution": "address-first-unique-target-source-mapping-v2",
+            "instruction_flow_evidence": "decoded-return-pcode-v1",
+            "instruction_references": "exact-address-incoming-without-synthetic-entry-v2",
+            "function_boundary_observations": "ghidra-function-boundary-limitations-v4",
+            "no_return_repair": "returning-imports-decoded-return-v2",
+            "process_launch": "inspected-jvm-launch-support-v1",
+            "jump_table_evidence": "typed-case-default-blocks-v1",
+            "decompiler_jump_loads": true,
+            "loader": "auto-from-header",
+            "language_id": "auto-from-header",
+            "compiler_spec_id": "auto-default",
+            "analyzer_preset": "ghidra-default"
+          },
+          "digest": "3fc72c9b4b78498fb992b938f8f3389dc670244a293c1d40abf5e1d10162ed3b"
+        },
+        "predicate_type": "rea.analysis",
+        "operation": "list_strings",
+        "parameters": {},
+        "raw_result": [
+          {
+            "address": "0x100000404",
+            "value": "/usr/lib/dyld",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 20
+            }
+          },
+          {
+            "address": "0x100000490",
+            "value": "/usr/lib/libSystem.B.dylib",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 32
+            }
+          },
+          {
+            "address": "0x100000770",
+            "value": "F",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 2
+            }
+          },
+          {
+            "address": "0x100000772",
+            "value": "D",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 2
+            }
+          },
+          {
+            "address": "0x100000774",
+            "value": "C",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 2
+            }
+          },
+          {
+            "address": "0x100000776",
+            "value": "B",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 2
+            }
+          },
+          {
+            "address": "0x100000778",
+            "value": "A",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 2
+            }
+          },
+          {
+            "address": "0x10000077a",
+            "value": "usage: ledger <before> <after> [score...]\n",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 43
+            }
+          },
+          {
+            "address": "0x1000007a5",
+            "value": "change %d%%\n",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 13
+            }
+          },
+          {
+            "address": "0x1000007b2",
+            "value": "total %d\n",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 10
+            }
+          },
+          {
+            "address": "0x1000007bc",
+            "value": "score %d grade %s\n",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 19
+            }
+          },
+          {
+            "address": "0x1000007cf",
+            "value": "",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 1
+            }
+          },
+          {
+            "address": "0x100008069",
+            "value": "___stack_chk_fail",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 18
+            }
+          },
+          {
+            "address": "0x10000807b",
+            "value": "___stack_chk_guard",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 19
+            }
+          },
+          {
+            "address": "0x10000808e",
+            "value": "___stderrp",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 11
+            }
+          },
+          {
+            "address": "0x100008099",
+            "value": "_atoi",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 6
+            }
+          },
+          {
+            "address": "0x10000809f",
+            "value": "_fwrite",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 8
+            }
+          },
+          {
+            "address": "0x1000080a7",
+            "value": "_printf",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 8
+            }
+          },
+          {
+            "address": "0x1000080b2",
+            "value": "_",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 2
+            }
+          },
+          {
+            "address": "0x1000080c7",
+            "value": "_label",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 7
+            }
+          },
+          {
+            "address": "0x1000080e0",
+            "value": "_mh_execute_header",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 19
+            }
+          },
+          {
+            "address": "0x1000080f4",
+            "value": "grade",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 6
+            }
+          },
+          {
+            "address": "0x1000080fb",
+            "value": "main",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 5
+            }
+          },
+          {
+            "address": "0x100008101",
+            "value": "percent_change",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 15
+            }
+          },
+          {
+            "address": "0x100008111",
+            "value": "total",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 6
+            }
+          },
+          {
+            "address": "0x10000821a",
+            "value": "__mh_execute_header",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 20
+            }
+          },
+          {
+            "address": "0x10000822e",
+            "value": "_grade",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 7
+            }
+          },
+          {
+            "address": "0x100008235",
+            "value": "_grade_label",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 13
+            }
+          },
+          {
+            "address": "0x100008242",
+            "value": "_main",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 6
+            }
+          },
+          {
+            "address": "0x100008248",
+            "value": "_percent_change",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 16
+            }
+          },
+          {
+            "address": "0x100008258",
+            "value": "_total",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 7
+            }
+          },
+          {
+            "address": "0x10000825f",
+            "value": "___stack_chk_fail",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 18
+            }
+          },
+          {
+            "address": "0x100008271",
+            "value": "___stack_chk_guard",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 19
+            }
+          },
+          {
+            "address": "0x100008284",
+            "value": "___stderrp",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 11
+            }
+          },
+          {
+            "address": "0x10000828f",
+            "value": "_atoi",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 6
+            }
+          },
+          {
+            "address": "0x100008295",
+            "value": "_fwrite",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 8
+            }
+          },
+          {
+            "address": "0x10000829d",
+            "value": "_printf",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 8
+            }
+          },
+          {
+            "address": "0x1000082a5",
+            "value": "_labels",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 8
+            }
+          },
+          {
+            "address": "0x10000831c",
+            "value": "ledger-arm64-O1",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 16
+            }
+          }
+        ],
+        "normalized_result": [
+          {
+            "address": "0x100000404",
+            "value": "/usr/lib/dyld",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 20
+            }
+          },
+          {
+            "address": "0x100000490",
+            "value": "/usr/lib/libSystem.B.dylib",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 32
+            }
+          },
+          {
+            "address": "0x100000770",
+            "value": "F",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 2
+            }
+          },
+          {
+            "address": "0x100000772",
+            "value": "D",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 2
+            }
+          },
+          {
+            "address": "0x100000774",
+            "value": "C",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 2
+            }
+          },
+          {
+            "address": "0x100000776",
+            "value": "B",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 2
+            }
+          },
+          {
+            "address": "0x100000778",
+            "value": "A",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 2
+            }
+          },
+          {
+            "address": "0x10000077a",
+            "value": "usage: ledger <before> <after> [score...]\n",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 43
+            }
+          },
+          {
+            "address": "0x1000007a5",
+            "value": "change %d%%\n",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 13
+            }
+          },
+          {
+            "address": "0x1000007b2",
+            "value": "total %d\n",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 10
+            }
+          },
+          {
+            "address": "0x1000007bc",
+            "value": "score %d grade %s\n",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 19
+            }
+          },
+          {
+            "address": "0x1000007cf",
+            "value": "",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 1
+            }
+          },
+          {
+            "address": "0x100008069",
+            "value": "___stack_chk_fail",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 18
+            }
+          },
+          {
+            "address": "0x10000807b",
+            "value": "___stack_chk_guard",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 19
+            }
+          },
+          {
+            "address": "0x10000808e",
+            "value": "___stderrp",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 11
+            }
+          },
+          {
+            "address": "0x100008099",
+            "value": "_atoi",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 6
+            }
+          },
+          {
+            "address": "0x10000809f",
+            "value": "_fwrite",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 8
+            }
+          },
+          {
+            "address": "0x1000080a7",
+            "value": "_printf",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 8
+            }
+          },
+          {
+            "address": "0x1000080b2",
+            "value": "_",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 2
+            }
+          },
+          {
+            "address": "0x1000080c7",
+            "value": "_label",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 7
+            }
+          },
+          {
+            "address": "0x1000080e0",
+            "value": "_mh_execute_header",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 19
+            }
+          },
+          {
+            "address": "0x1000080f4",
+            "value": "grade",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 6
+            }
+          },
+          {
+            "address": "0x1000080fb",
+            "value": "main",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 5
+            }
+          },
+          {
+            "address": "0x100008101",
+            "value": "percent_change",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 15
+            }
+          },
+          {
+            "address": "0x100008111",
+            "value": "total",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 6
+            }
+          },
+          {
+            "address": "0x10000821a",
+            "value": "__mh_execute_header",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 20
+            }
+          },
+          {
+            "address": "0x10000822e",
+            "value": "_grade",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 7
+            }
+          },
+          {
+            "address": "0x100008235",
+            "value": "_grade_label",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 13
+            }
+          },
+          {
+            "address": "0x100008242",
+            "value": "_main",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 6
+            }
+          },
+          {
+            "address": "0x100008248",
+            "value": "_percent_change",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 16
+            }
+          },
+          {
+            "address": "0x100008258",
+            "value": "_total",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 7
+            }
+          },
+          {
+            "address": "0x10000825f",
+            "value": "___stack_chk_fail",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 18
+            }
+          },
+          {
+            "address": "0x100008271",
+            "value": "___stack_chk_guard",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 19
+            }
+          },
+          {
+            "address": "0x100008284",
+            "value": "___stderrp",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 11
+            }
+          },
+          {
+            "address": "0x10000828f",
+            "value": "_atoi",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 6
+            }
+          },
+          {
+            "address": "0x100008295",
+            "value": "_fwrite",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 8
+            }
+          },
+          {
+            "address": "0x10000829d",
+            "value": "_printf",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 8
+            }
+          },
+          {
+            "address": "0x1000082a5",
+            "value": "_labels",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 8
+            }
+          },
+          {
+            "address": "0x10000831c",
+            "value": "ledger-arm64-O1",
+            "string": {
+              "encoding": "US-ASCII",
+              "termination": "present_or_not_required",
+              "byte_length": 16
+            }
+          }
+        ],
+        "confidence": "observed",
+        "authority": "shipped-artifact",
+        "environment": null,
+        "limitations": [
+          "The session serves operations only after Ghidra reports default auto-analysis complete; incomplete analysis does not expose partial results.",
+          "The imported Program and temporary project are ephemeral and deleted on close. Annotation operations edit session database metadata; original executable bytes are never written.",
+          "Cancelling an active Ghidra request terminates its ephemeral database and discards session annotations. The selected target remains open; the next provider query imports the original artifact again.",
+          "Default-space addresses use lowercase 0x-prefixed hexadecimal; other address spaces use <percent-encoded-space>:0x<hex>.",
+          "Only Ghidra-defined string Data is observed; packed or undefined string bytes may be absent. Completeness applies to that inventory, and an empty search does not establish that text is absent from the artifact. If an address is known, use read_bytes and xrefs to inspect bytes and references.",
+          "Charset is reported, while a non-missing terminator cannot distinguish a present terminator from a fixed or Pascal layout.",
+          "macOS sessions require a matching executable Ghidra native decompiler; REA checks for it but does not build native components or change Gatekeeper quarantine state."
+        ],
+        "relationship_coverage": null,
+        "locations": [],
+        "evidence_links": []
+      }
+    },
+    "jsonrpc": "2.0",
+    "id": 8
+  }
+}

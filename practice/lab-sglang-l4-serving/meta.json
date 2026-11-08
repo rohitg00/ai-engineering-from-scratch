@@ -1,0 +1,22 @@
+{
+  "id": "lab-sglang-l4-serving",
+  "title": "Read an SGLang sweep on an L4",
+  "kind": "lab",
+  "summary": "Use real SGLang runs on an NVIDIA L4 to find the saturation point, the SLO limit, the FP8 gain and the effect of a smaller prefill chunk.",
+  "difficulty": "medium",
+  "tags": ["inference", "serving", "goodput", "benchmarking"],
+  "lesson": "phases/17-infrastructure-and-production/08-inference-metrics-goodput",
+  "cheatsheet": "sglang-serving",
+  "minutes": 30,
+  "entry": ["gains", "saturation_point", "largest_within", "pct_change", "ranges_overlap", "answers"],
+  "collections": ["experiment-labs", "llm-inference"],
+  "time_limit_s": 10,
+  "mutants": {
+    "absolute_gain": "Compares the absolute difference of throughput with min_gain, not the relative gain.",
+    "median_ttft_for_slo": "Tests the SLO against the median TTFT, not the p99 TTFT.",
+    "pct_over_new": "Divides the change by the new value, not by the old value.",
+    "returns_next_level": "Returns the level after the low gain step, not the level before it.",
+    "strict_limit": "Uses a strict less than, so a value equal to the limit fails the SLO.",
+    "strict_overlap": "Uses strict comparisons, so ranges that touch at one point do not overlap."
+  }
+}

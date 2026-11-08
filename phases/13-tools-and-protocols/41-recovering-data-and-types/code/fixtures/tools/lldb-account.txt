@@ -1,0 +1,16 @@
+(lldb) target create "account-x86_64-O0-g.o"
+Current executable set to '/private/tmp/aiefs-re/phases/13-tools-and-protocols/41-recovering-data-and-types/code/fixtures/account-x86_64-O0-g.o' (x86_64).
+(lldb) image lookup -t account
+1 match found in /private/tmp/aiefs-re/phases/13-tools-and-protocols/41-recovering-data-and-types/code/fixtures/account-x86_64-O0-g.o:
+id = {0x00000195}, name = "account", byte-size = 32, decl = account.c:3, compiler_type = "struct account {
+    char kind;
+    int balance;
+    short code;
+    double rate;
+    const char *label;
+}"
+
+(lldb) image lookup -n bump
+1 match found in /private/tmp/aiefs-re/phases/13-tools-and-protocols/41-recovering-data-and-types/code/fixtures/account-x86_64-O0-g.o:
+        Address: account-x86_64-O0-g.o[0x0000000000000000] (account-x86_64-O0-g.o..text + 0)
+        Summary: account-x86_64-O0-g.o`bump at account.c:11

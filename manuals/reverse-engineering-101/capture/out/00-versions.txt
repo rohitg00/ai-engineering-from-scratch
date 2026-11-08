@@ -1,0 +1,69 @@
+$ rea --version
+6.7.0
+[exit 0]
+
+$ $HOME/.local/bin/node --version
+v22.22.0
+[exit 0]
+
+$ clang --version
+Apple clang version 17.0.0 (clang-1700.6.3.2)
+Target: arm64-apple-darwin25.2.0
+Thread model: posix
+InstalledDir: /Library/Developer/CommandLineTools/usr/bin
+[exit 0]
+
+$ /Library/Developer/CommandLineTools/usr/bin/llvm-objdump --version
+Apple LLVM version 17.0.0
+  Optimized build.
+
+
+  Registered Targets:
+    aarch64    - AArch64 (little endian)
+    aarch64_32 - AArch64 (little endian ILP32)
+    aarch64_be - AArch64 (big endian)
+    arm        - ARM
+    arm64      - ARM64 (little endian)
+    arm64_32   - ARM64 (little endian ILP32)
+    armeb      - ARM (big endian)
+    thumb      - Thumb
+    thumbeb    - Thumb (big endian)
+    x86        - 32-bit X86: Pentium-Pro and above
+    x86-64     - 64-bit X86: EM64T and AMD64
+[exit 0]
+
+$ sw_vers
+ProductName:		macOS
+ProductVersion:		26.2
+BuildVersion:		25C56
+[exit 0]
+
+$ uname -m
+arm64
+[exit 0]
+
+GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec
+application.build.date=2026-Sep-21 2017 GMT
+application.version=12.1.4
+application.release.name=PUBLIC
+
+JAVA_HOME=/opt/homebrew/opt/openjdk@21
+$ /opt/homebrew/opt/openjdk@21/bin/java -version
+openjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment Homebrew (build 21.0.12.1)
+OpenJDK 64-Bit Server VM Homebrew (build 21.0.12.1, mixed mode, sharing)
+[exit 0]
+
+REA_WABT_BIN_DIRECTORY=/opt/homebrew/bin
+$ /opt/homebrew/bin/wasm-validate --version
+1.0.42
+[exit 0]
+$ /opt/homebrew/bin/wasm-objdump --version
+1.0.42
+[exit 0]
+$ /opt/homebrew/bin/wasm2wat --version
+1.0.42
+[exit 0]
+$ /opt/homebrew/bin/wat2wasm --version
+1.0.42
+[exit 0]

@@ -91,8 +91,8 @@ A time series is stationary if its statistical properties (mean, variance, autoc
 
 **How to fix:** Differencing. Instead of modeling the raw values, model the change between consecutive values:
 
-```
-diff[t] = value[t] - value[t-1]
+```math
+\text{diff}[t] = \text{value}[t] - \text{value}[t-1]
 ```
 
 If one round of differencing does not make the series stationary, apply it again (second-order differencing). Most real-world series need at most two rounds.
@@ -109,7 +109,7 @@ The original series had a quadratic trend. First differencing turned it into a l
 
 ### Autocorrelation
 
-Autocorrelation measures how much a value at time t correlates with the value at time t-k (k steps in the past). The autocorrelation function (ACF) plots this correlation for each lag k.
+Autocorrelation measures how much a value at time $t$ correlates with the value at time $t-k$ ($k$ steps in the past). The autocorrelation function (ACF) plots this correlation for each lag $k$.
 
 **ACF tells you:**
 - How far back the series remembers. If ACF drops to zero after lag 5, values more than 5 steps ago are irrelevant.
@@ -142,7 +142,7 @@ Additional features you can engineer:
 
 **How many lags?** Use the autocorrelation function. If ACF is significant up to lag 10, use at least 10 lags. If there is weekly seasonality, include lag 7 (and possibly 14). More lags give the model more history but also more features to fit, increasing the risk of overfitting.
 
-**The target alignment trap.** When creating lag features, the target must be the value at time t, and all features must use values at time t-1 or earlier. If you accidentally include the value at time t as a feature, you have a perfect predictor -- and a completely useless model. This is the most common bug in time series feature engineering.
+**The target alignment trap.** When creating lag features, the target must be the value at time $t$, and all features must use values at time $t-1$ or earlier. If you accidentally include the value at time $t$ as a feature, you have a perfect predictor -- and a completely useless model. This is the most common bug in time series feature engineering.
 
 ### Walk-Forward Validation
 
@@ -178,8 +178,8 @@ flowchart TD
 ```
 
 Walk-forward validation:
-1. Train on data up to time t
-2. Predict at time t+1 (or t+1 to t+k for multi-step)
+1. Train on data up to time $t$
+2. Predict at time $t+1$ (or $t+1$ to $t+k$ for multi-step)
 3. Slide the window forward
 4. Repeat
 
@@ -191,11 +191,11 @@ Each test fold only contains data that comes after all training data. No future 
 
 ARIMA is the classical time series model. It has three components:
 
-- **AR (Autoregressive):** Predict from past values. AR(p) uses the last p values.
-- **I (Integrated):** Differencing to achieve stationarity. I(d) applies d rounds of differencing.
-- **MA (Moving Average):** Predict from past forecast errors. MA(q) uses the last q errors.
+- **AR (Autoregressive):** Predict from past values. AR(p) uses the last $p$ values.
+- **I (Integrated):** Differencing to achieve stationarity. I(d) applies $d$ rounds of differencing.
+- **MA (Moving Average):** Predict from past forecast errors. MA(q) uses the last $q$ errors.
 
-ARIMA(p, d, q) combines all three. You choose p, d, q based on ACF/PACF analysis or automated search (auto-ARIMA).
+ARIMA(p, d, q) combines all three. You choose $p$, $d$, $q$ based on ACF/PACF analysis or automated search (auto-ARIMA).
 
 We will not implement ARIMA from scratch -- it requires numerical optimization that is beyond the scope of this lesson. The key insight is understanding what each component does so you can interpret ARIMA results and know when to use it.
 
@@ -217,7 +217,7 @@ Single-step forecasting predicts one time step ahead. Multi-step forecasting pre
 
 **Recursive (iterated):** Predict one step ahead, use the prediction as input for the next step. Simple but errors accumulate -- each prediction uses the previous prediction, so mistakes compound.
 
-**Direct:** Train a separate model for each horizon. Model-1 predicts t+1, Model-5 predicts t+5. No error accumulation, but each model has fewer training samples and they do not share information.
+**Direct:** Train a separate model for each horizon. Model-1 predicts $t+1$, Model-5 predicts $t+5$. No error accumulation, but each model has fewer training samples and they do not share information.
 
 **Multi-output:** Train one model that outputs all horizons simultaneously. Shares information across horizons but requires a model that supports multiple outputs (or a custom loss function).
 
@@ -228,7 +228,7 @@ For most practical problems, start with recursive for short horizons (1-5 steps)
 | Mistake | Why it happens | How to fix |
 |---------|---------------|-----------|
 | Random train/test split | Habit from standard ML | Use walk-forward or temporal split |
-| Using future features | Feature at time t included by mistake | Audit every feature for temporal alignment |
+| Using future features | Feature at time $t$ included by mistake | Audit every feature for temporal alignment |
 | Overfitting to seasonality | Model memorizes calendar patterns | Hold out a full seasonal cycle in the test set |
 | Ignoring scale changes | Revenue doubles but patterns stay | Model percentage change instead of absolute |
 | Too many lag features | "More history is better" | Use ACF to determine relevant lags |
@@ -386,7 +386,7 @@ print(f"Mean score: {scores.mean():.4f} +/- {scores.std():.4f}")
 
 Time series forecasting uses regression metrics, but with time-aware context:
 
-- **MAE (Mean Absolute Error):** Average of |y_true - y_pred|. Easy to interpret in original units. "On average, predictions are off by 3.2 degrees."
+- **MAE (Mean Absolute Error):** Average of $\lvert y_{\text{true}} - y_{\text{pred}} \rvert$. Easy to interpret in original units. "On average, predictions are off by 3.2 degrees."
 - **RMSE (Root Mean Squared Error):** Square root of mean squared error. Penalizes large errors more than MAE. Use when big errors are worse than many small errors.
 - **MAPE (Mean Absolute Percentage Error):** Average of |error / true_value| * 100. Scale-independent, useful for comparing across different series. But undefined when true values are zero.
 - **Naive baseline comparison:** Always compare against simple baselines. The seasonal naive baseline predicts the value from one period ago (yesterday, last week). If your model cannot beat naive, something is wrong.
@@ -417,7 +417,7 @@ If your fancy ML model loses to the seasonal naive baseline, you have a bug. Mos
 
 1. **Start with plotting.** Before any modeling, plot the raw series. Look for trends, seasonality, outliers, structural breaks (sudden changes in behavior). A 30-second visual inspection often tells you more than an hour of automated analysis.
 
-2. **Difference first, model second.** If the series has a clear trend, difference it before creating lag features. Tree-based models can handle trends, but linear models cannot, and differencing never hurts.
+2. **Difference first, model second.** If the series has a clear trend, difference it before creating lag features. Tree-based models can handle trends, but linear models without an explicit trend term cannot. Stop once the series is stationary: each extra round of differencing adds noise and throws away level information.
 
 3. **Hold out at least one full seasonal cycle.** If you have weekly seasonality, your test set needs at least one full week. If monthly, at least one full month. Otherwise you cannot evaluate whether the model captured the seasonal pattern.
 
@@ -444,10 +444,10 @@ If your fancy ML model loses to the seasonal naive baseline, you have a bug. Mos
 | Term | What people say | What it actually means |
 |------|----------------|----------------------|
 | Stationarity | "The stats don't change over time" | A series whose mean, variance, and autocorrelation structure are constant over time |
-| Differencing | "Subtract consecutive values" | Computing y[t] - y[t-1] to remove trends and achieve stationarity |
+| Differencing | "Subtract consecutive values" | Computing $y[t] - y[t-1]$ to remove trends and achieve stationarity |
 | Autocorrelation (ACF) | "How a series correlates with itself" | The correlation between a time series and a lagged copy of itself, as a function of the lag |
-| Partial autocorrelation (PACF) | "Direct correlation only" | Autocorrelation at lag k after removing the effect of all shorter lags |
-| Lag features | "Past values as inputs" | Using y[t-1], y[t-2], ..., y[t-k] as features to predict y[t] |
+| Partial autocorrelation (PACF) | "Direct correlation only" | Autocorrelation at lag $k$ after removing the effect of all shorter lags |
+| Lag features | "Past values as inputs" | Using $y[t-1], y[t-2], \ldots, y[t-k]$ as features to predict $y[t]$ |
 | Walk-forward validation | "Time-respecting cross-validation" | Evaluation where training data always precedes test data chronologically |
 | ARIMA | "The classic time series model" | AutoRegressive Integrated Moving Average: combines past values (AR), differencing (I), and past errors (MA) |
 | Seasonality | "Repeating calendar patterns" | Regular, predictable cycles in a time series tied to calendar periods (daily, weekly, yearly) |

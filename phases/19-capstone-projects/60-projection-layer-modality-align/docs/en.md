@@ -118,7 +118,7 @@ python3 -m unittest code/test_main.py
 
 4. Add a small L2 penalty on the projector weights and watch how it interacts with cosine alignment (cosine is scale-invariant, so the penalty mostly shrinks unused directions).
 
-5. Persist projector weights, then reload and run inference without the vision encoder backward pass to verify that only the projector is needed at deploy time.
+5. Persist projector weights, then reload them next to the frozen vision encoder and run inference with no backward pass. Verify that the projector is the only new artifact you ship; the encoder still runs its forward pass at deploy time.
 
 ## Key Terms
 

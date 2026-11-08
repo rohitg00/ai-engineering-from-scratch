@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 430" role="img" aria-labelledby="fig-guarantees-title fig-guarantees-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-guarantees-title">What A2A guarantees and what the host builds</title>
+  <desc id="fig-guarantees-desc">Two columns of six rows. Left, what the A2A specification guarantees: a card at a known path, declared security schemes with credentials in HTTP headers, task ids and states where a finished task never changes, ordered events per stream with at least one attempt per webhook, tasks readable with GetTask while the server keeps them, and four kinds of part with media types. Right, in grey, what the host builds: which agents to trust, issuing credentials, what an approval allows, exactly-once effects, its own task records and retention, and what content to believe.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A · THE PROTOCOL GUARANTEES</text>
+  <text x="336" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">B · THE HOST BUILDS</text>
+  <line x1="320" y1="8" x2="320" y2="422" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="30" width="284" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="162" y="50.25" font-size="12.5" text-anchor="middle" font-weight="700">a card at a known path</text>
+  <text x="162" y="67.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/.well-known/agent-card.json</text>
+  <rect x="336" y="30" width="284" height="50" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="478" y="50.25" font-size="12.5" text-anchor="middle" font-weight="700">which agents to trust</text>
+  <text x="478" y="67.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">registries, allowlists, signing keys</text>
+  <line x1="304" y1="55" x2="336" y2="55" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="96" width="284" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="162" y="116.25" font-size="12.5" text-anchor="middle" font-weight="700">declared security schemes</text>
+  <text x="162" y="133.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">credentials travel in HTTP headers</text>
+  <rect x="336" y="96" width="284" height="50" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="478" y="116.25" font-size="12.5" text-anchor="middle" font-weight="700">issuing the credentials</text>
+  <text x="478" y="133.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">tokens, OAuth, an operator channel</text>
+  <line x1="304" y1="121" x2="336" y2="121" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="162" width="284" height="50" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="162" y="182.25" font-size="12.5" text-anchor="middle" font-weight="700">task ids and states</text>
+  <text x="162" y="199.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a finished task never changes</text>
+  <rect x="336" y="162" width="284" height="50" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="478" y="182.25" font-size="12.5" text-anchor="middle" font-weight="700">what an approval allows</text>
+  <text x="478" y="199.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">authorization policy and audit</text>
+  <line x1="304" y1="187" x2="336" y2="187" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="228" width="284" height="50" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="162" y="248.25" font-size="12.5" text-anchor="middle" font-weight="700">ordered events per stream</text>
+  <text x="162" y="265.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">at least one attempt per webhook</text>
+  <rect x="336" y="228" width="284" height="50" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="478" y="248.25" font-size="12.5" text-anchor="middle" font-weight="700">exactly-once effects</text>
+  <text x="478" y="265.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dedupe and idempotent handlers</text>
+  <line x1="304" y1="253" x2="336" y2="253" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="294" width="284" height="50" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="162" y="314.25" font-size="12.5" text-anchor="middle" font-weight="700">GetTask while it is kept</text>
+  <text x="162" y="331.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no retention period is set</text>
+  <rect x="336" y="294" width="284" height="50" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="478" y="314.25" font-size="12.5" text-anchor="middle" font-weight="700">your own task records</text>
+  <text x="478" y="331.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">retention, history, purge</text>
+  <line x1="304" y1="319" x2="336" y2="319" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="360" width="284" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="162" y="380.25" font-size="12.5" text-anchor="middle" font-weight="700">four kinds of part</text>
+  <text x="162" y="397.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">each with a media type</text>
+  <rect x="336" y="360" width="284" height="50" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="478" y="380.25" font-size="12.5" text-anchor="middle" font-weight="700">what to believe</text>
+  <text x="478" y="397.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">validation, injection checks</text>
+  <line x1="304" y1="385" x2="336" y2="385" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  </g>
+</svg>

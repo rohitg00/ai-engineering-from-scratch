@@ -1,0 +1,27 @@
+
+canary-x86_64-ssp-O2.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <with_canary>:
+       0: 48 83 ec 48                  	subq	$0x48, %rsp
+       4: 48 89 fe                     	movq	%rdi, %rsi
+       7: 64 48 8b 04 25 28 00 00 00   	movq	%fs:0x28, %rax
+      10: 48 89 44 24 40               	movq	%rax, 0x40(%rsp)
+      15: 48 89 e7                     	movq	%rsp, %rdi
+      18: ba 3f 00 00 00               	movl	$0x3f, %edx
+      1d: e8 00 00 00 00               	callq	0x22 <with_canary+0x22>
+		000000000000001e:  R_X86_64_PLT32	strncpy-0x4
+      22: 0f be 04 24                  	movsbl	(%rsp), %eax
+      26: 64 48 8b 0c 25 28 00 00 00   	movq	%fs:0x28, %rcx
+      2f: 48 3b 4c 24 40               	cmpq	0x40(%rsp), %rcx
+      34: 75 05                        	jne	0x3b <with_canary+0x3b>
+      36: 48 83 c4 48                  	addq	$0x48, %rsp
+      3a: c3                           	retq
+      3b: e8 00 00 00 00               	callq	0x40 <plain_leaf>
+		000000000000003c:  R_X86_64_PLT32	__stack_chk_fail-0x4
+
+0000000000000040 <plain_leaf>:
+      40: 0f af fe                     	imull	%esi, %edi
+      43: 8d 47 01                     	leal	0x1(%rdi), %eax
+      46: c3                           	retq

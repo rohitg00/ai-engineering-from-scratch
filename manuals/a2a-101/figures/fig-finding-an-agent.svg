@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 462" role="img" aria-labelledby="fig-finding-an-agent-title fig-finding-an-agent-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-finding-an-agent-title">From a host to a checked call</title>
+  <desc id="fig-finding-an-agent-desc">Three stages, top to bottom, drawn step by step. First, the planner finds the code-reviewer card: direct configuration gives it the host, and a GET of /.well-known/agent-card.json returns the card, while a registry is a third route the kit does not use. Second, the planner takes interface 0, JSON-RPC 1.0 at /a2a/jsonrpc, and skips interface 1, HTTP+JSON. Third, it reads the capability flags: streaming is true and pushNotifications is absent, and a CreateTaskPushNotificationConfig call that ignores the absent flag fails with error -32003.</desc>
+  <defs><marker id="fig-finding-an-agent-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-finding-an-agent-head-grey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-grey-ink, #5e5e59)"/></marker><marker id="fig-finding-an-agent-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">1 · FIND THE CARD</text>
+  <text x="20" y="176" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">2 · TAKE THE FIRST INTERFACE YOU SPEAK</text>
+  <text x="20" y="284" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">3 · CHECK THE FLAG BEFORE AN OPTIONAL CALL</text>
+  <rect x="20" y="35" width="180" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="110" y="53.1" font-size="12" text-anchor="middle" font-weight="700">direct configuration</text>
+  <text x="110" y="70.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ports 41241, 41242, 41243</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="245" y="28" width="150" height="60" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="320" y="45.6" font-size="12" text-anchor="middle" font-weight="700">well-known URI</text>
+  <text x="320" y="62.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">GET /.well-known/</text>
+  <text x="320" y="77.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">agent-card.json</text>
+  <line x1="200" y1="58" x2="244" y2="58" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-finding-an-agent-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M200 58 L244 58" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="208.65" y="41.03" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="222" y="52" font-size="11.5" text-anchor="middle">GET</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="460" y="35" width="160" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="540" y="53.1" font-size="12" text-anchor="middle" font-weight="700">code-reviewer</text>
+  <text x="540" y="70.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">agent card</text>
+  <line x1="395" y1="58" x2="459" y2="58" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-finding-an-agent-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M395 58 L459 58" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="403.3" y="41.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="427" y="52" font-size="11.5" text-anchor="middle">200 OK</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="100" width="180" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="110" y="118.1" font-size="12" text-anchor="middle" font-weight="700">registry or catalog</text>
+  <text x="110" y="135.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no standard query API</text>
+  <path d="M200 123 H430 V72 H459" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-finding-an-agent-head-grey)"/>
+  <rect class="m-knock" x="255.57" y="116.42" width="118.86" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="127" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">or a registry query</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <line x1="540" y1="81" x2="540" y2="188" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="188" width="600" height="30" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="32" y="207" font-size="11">[0] JSONRPC, &quot;1.0&quot;, http://localhost:41242/a2a/jsonrpc</text>
+  <text x="610" y="207" font-size="11" text-anchor="end" font-weight="700" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">chosen</text>
+  <rect x="20" y="224" width="600" height="30" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="5 4"/>
+  <text x="32" y="243" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">[1] HTTP+JSON, &quot;1.0&quot;, http://localhost:41242/a2a/rest</text>
+  <text x="610" y="243" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">skipped: not JSON-RPC</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="294" width="290" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="165" y="312.1" font-size="12" text-anchor="middle" font-weight="700">streaming: true</text>
+  <text x="165" y="329.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">SendStreamingMessage, SubscribeToTask</text>
+  <rect x="330" y="294" width="290" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-dasharray="5 4"/>
+  <text x="475" y="312.1" font-size="12" text-anchor="middle" font-weight="700">pushNotifications: absent</text>
+  <text x="475" y="329.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the four push config operations fail</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="368" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">exchange 6 of 11-errors.http calls one anyway:</text>
+  <rect x="20" y="380" width="110" height="72" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="75" y="411.1" font-size="12" text-anchor="middle" font-weight="700">planner</text>
+  <text x="75" y="428.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">client</text>
+  <rect x="490" y="380" width="130" height="72" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="555" y="411.1" font-size="12" text-anchor="middle" font-weight="700">code-reviewer</text>
+  <text x="555" y="428.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/a2a/jsonrpc</text>
+  <line x1="130" y1="400" x2="489" y2="400" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-finding-an-agent-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M130 400 L489 400" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="196.1" y="383.03" width="226.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="309.5" y="394" font-size="11.5" text-anchor="middle">CreateTaskPushNotificationConfig</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <line x1="490" y1="436" x2="131" y2="436" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-finding-an-agent-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M490 436 L131 436" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="176.4" y="419.03" width="268.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="310.5" y="430" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">-32003 PUSH_NOTIFICATION_NOT_SUPPORTED</text>
+  </g>
+</svg>

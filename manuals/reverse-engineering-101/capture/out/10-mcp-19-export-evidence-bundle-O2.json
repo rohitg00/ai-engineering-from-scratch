@@ -1,0 +1,34 @@
+{
+  "request": {
+    "jsonrpc": "2.0",
+    "id": 19,
+    "method": "tools/call",
+    "params": {
+      "name": "export_evidence_bundle",
+      "arguments": {
+        "path": "$WORK/bundle-O2.json",
+        "overwrite": true
+      }
+    }
+  },
+  "response": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "<cut by run.py: the text copy of structuredContent, 140 bytes>"
+        }
+      ],
+      "structuredContent": {
+        "result": {
+          "path": "$WORK/bundle-O2.json",
+          "bytes": 286546,
+          "records": 2,
+          "unknowns": 0
+        }
+      }
+    },
+    "jsonrpc": "2.0",
+    "id": 19
+  }
+}

@@ -1,0 +1,7 @@
+title: the same mistake in a speculative decoding test on the other engine
+source: manuals/vllm-101/sections/4-1-speed-up-decode-with-eagle3.md
+lines: 110-110
+lang: text
+note: Read the two clocks and what the team did with those runs.
+---
+Our first EAGLE3 runs had no clock lock. At one user, the run with no speculation ran at 210 MHz, and the EAGLE3 run at about 1,400 MHz. A gap that large hides the effect of speculation, so we set those runs aside.

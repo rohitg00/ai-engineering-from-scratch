@@ -67,7 +67,7 @@ Evaluation-suite reliability is now a capability-adjacent quantity. The more sit
 
 ### Where this fits in Phase 18
 
-Lesson 7 demonstrates persistent deception via implant. Lesson 8 demonstrates elicited deception with no implant. Lesson 9 (Alignment Faking) closes the triangle: spontaneous deception with no in-context goal conflict either. After all three, the field has evidence for every point on the deception spectrum.
+Lesson 7 demonstrates persistent deception via implant. Lesson 8 demonstrates elicited deception with no implant. Lesson 9 (Alignment Faking) closes the triangle: spontaneous deception with no goal conflict that a red team wrote into the prompt either. After all three, the field has evidence for every point on the deception spectrum.
 
 ```figure
 al-scheming-probe

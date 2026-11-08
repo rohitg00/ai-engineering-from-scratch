@@ -63,7 +63,7 @@ The two ranking schemes serve different goals.
 
 Mean score is the average of per-task scores for one model. It is the headline number leaderboards report. It is sensitive to outliers and to task imbalance.
 
-Win-rate counts how often a model beats every other model on the same task. For each task, the model with the highest score wins (ties split). Win rate equals wins divided by the number of tasks where the model has a score. It is less sensitive to outliers and to scale differences but loses information.
+Win-rate counts how often a model beats every other model on the same task. For each task, the model with the highest score wins (a tie gives a full win to every tied model). Win rate equals wins divided by the number of tasks where the model has a score. It is less sensitive to outliers and to scale differences but loses information.
 
 ```python
 def win_rate(model_id, runs_by_task, all_models):
@@ -131,4 +131,4 @@ Read `main.py` top to bottom. The data shape (EvalRun, LeaderboardRow) comes fir
 
 ## Going further
 
-The natural next step is paired-task significance instead of unpaired bootstrap. If model A and B both ran the same hundred tasks, the appropriate test is the paired bootstrap on task-by-task differences, which we implement. Beyond that, you want a hierarchical bootstrap that respects task families (math problems are not independent from each other; an arithmetic error pattern affects ten of them). That is a follow-up. The point of this lesson is to get the floor right so the eval reports a number you can defend.
+The per-model intervals are unpaired, but model comparisons should be paired. If model A and B both ran the same hundred tasks, the appropriate test is the paired bootstrap on task-by-task differences, which `bootstrap_pairwise_diff` already implements. Beyond that, you want a hierarchical bootstrap that respects task families (math problems are not independent from each other; an arithmetic error pattern affects ten of them). That is a follow-up. The point of this lesson is to get the floor right so the eval reports a number you can defend.

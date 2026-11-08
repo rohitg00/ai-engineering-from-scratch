@@ -1,0 +1,148 @@
+name: Cheat sheets generate
+
+on:
+  schedule:
+    - cron: '17 4 * * 1'
+  workflow_dispatch:
+    inputs:
+      topics:
+        description: 'Topic ids to write, separated by spaces. Leave empty to write the missing and stale topics.'
+        required: false
+        default: ''
+      model:
+        description: 'Model for the draft. Haiku escalates a failing topic to sonnet once. Opus is only for a manual run.'
+        required: false
+        default: 'haiku'
+        type: choice
+        options:
+          - haiku
+          - sonnet
+          - opus
+      max_topics:
+        description: 'Largest number of topics in one run'
+        required: false
+        default: '5'
+      token_budget:
+        description: 'Largest number of tokens for the whole run'
+        required: false
+        default: '600000'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: cheatsheets-generate
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Check for the API key
+        id: key
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::notice title=Cheat sheets::ANTHROPIC_API_KEY is not set. Add it as a repository secret to turn on cheat sheet generation. Nothing to do."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        if: steps.key.outputs.ready == 'true'
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        if: steps.key.outputs.ready == 'true'
+        with:
+          node-version: '24'
+      - name: Pick the topics, the model and the limits
+        id: plan
+        if: steps.key.outputs.ready == 'true'
+        env:
+          EVENT: ${{ github.event_name }}
+          GH_TOKEN: ${{ github.token }}
+          TOPICS: ${{ inputs.topics }}
+          MODEL_INPUT: ${{ inputs.model }}
+          MAX_TOPICS: ${{ inputs.max_topics }}
+          TOKEN_BUDGET: ${{ inputs.token_budget }}
+        run: |
+          set -euo pipefail
+          model=haiku
+          if [ "$EVENT" = "workflow_dispatch" ] && [ -n "$MODEL_INPUT" ]; then model="$MODEL_INPUT"; fi
+          case "$model" in haiku|sonnet|opus) ;; *) echo "unknown model: $model"; exit 1 ;; esac
+          limit="${MAX_TOPICS:-5}"
+          budget="${TOKEN_BUDGET:-600000}"
+          [[ "$limit" =~ ^[0-9]+$ ]] || { echo "max_topics must be a number"; exit 1; }
+          [[ "$budget" =~ ^[0-9]+$ ]] || { echo "token_budget must be a number"; exit 1; }
+          node site/build-cheatsheets.js --status > "$RUNNER_TEMP/status.json"
+          open="$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --limit 100 --json headRefName --jq '[.[] | select(.headRefName | startswith("cheatsheets/"))] | length')"
+          if [ "$EVENT" != "workflow_dispatch" ] && [ "$open" != "0" ]; then
+            echo "::notice title=Cheat sheets::A cheat sheet pull request is already open. Merge or close it before the next run. Nothing to do."
+            { echo "ids="; echo "model=$model"; echo "limit=$limit"; echo "budget=$budget"; } >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$EVENT" = "workflow_dispatch" ] && [ -n "$TOPICS" ]; then
+            ids="$TOPICS"
+          else
+            ids="$(node -e 'const s=require(process.argv[1]);console.log([...s.missing,...s.stale].join(" "))' "$RUNNER_TEMP/status.json")"
+          fi
+          ids="$(echo $ids | tr ' ' '\n' | { grep -E '^[a-z0-9-]+$' || true; } | tr '\n' ' ')"
+          {
+            echo "ids=$ids"
+            echo "model=$model"
+            echo "limit=$limit"
+            echo "budget=$budget"
+          } >> "$GITHUB_OUTPUT"
+          if [ -z "$ids" ]; then echo "::notice title=Cheat sheets::Every topic has a current sheet. Nothing to do."; fi
+      - name: Install the writer tools outside the repository
+        if: steps.key.outputs.ready == 'true' && steps.plan.outputs.ids != ''
+        run: npm install --no-save --no-package-lock --prefix "$RUNNER_TEMP/gen" @anthropic-ai/sdk@0.134.0
+      - name: Write the sheets
+        if: steps.key.outputs.ready == 'true' && steps.plan.outputs.ids != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NODE_PATH: ${{ runner.temp }}/gen/node_modules
+          IDS: ${{ steps.plan.outputs.ids }}
+          MODEL: ${{ steps.plan.outputs.model }}
+          LIMIT: ${{ steps.plan.outputs.limit }}
+          BUDGET: ${{ steps.plan.outputs.budget }}
+        run: |
+          set -uo pipefail
+          node scripts/cheatsheets/generate.js $IDS --model "$MODEL" --escalate sonnet --limit "$LIMIT" --token-budget "$BUDGET" --summary "$RUNNER_TEMP/summary.json" || true
+          test -s "$RUNNER_TEMP/summary.json"
+      - name: Report the run in the job summary
+        if: steps.key.outputs.ready == 'true' && steps.plan.outputs.ids != ''
+        run: node scripts/cheatsheets/report.js "$RUNNER_TEMP/summary.json" >> "$GITHUB_STEP_SUMMARY"
+      - name: Run the cheat sheet gates
+        if: steps.key.outputs.ready == 'true' && steps.plan.outputs.ids != ''
+        run: |
+          set -euo pipefail
+          node --test site/test_cheatsheets.js site/test_cheatsheet_topics.js scripts/cheatsheets/test_generate.js
+          node site/build-cheatsheets.js --check
+          node site/build-cheatsheets.js --check-quality > /dev/null
+          git checkout -- site/data.js 2>/dev/null || true
+      - name: Open a pull request for review
+        if: steps.key.outputs.ready == 'true' && steps.plan.outputs.ids != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain -- cheatsheets)" ]; then
+            echo "::notice title=Cheat sheets::No sheet changed."
+            exit 0
+          fi
+          branch="cheatsheets/auto-${GITHUB_RUN_ID}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add cheatsheets
+          node scripts/cheatsheets/report.js "$RUNNER_TEMP/summary.json" --pr > "$RUNNER_TEMP/body.md"
+          node scripts/cheatsheets/report.js "$RUNNER_TEMP/summary.json" --commit > "$RUNNER_TEMP/commit.txt"
+          git commit -q -F "$RUNNER_TEMP/commit.txt"
+          git push -q origin "$branch"
+          gh pr create --base main --head "$branch" --title "chore(cheatsheets): new and updated sheets" --body-file "$RUNNER_TEMP/body.md"

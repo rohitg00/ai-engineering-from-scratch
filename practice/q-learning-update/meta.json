@@ -1,0 +1,22 @@
+{
+  "id": "q-learning-update",
+  "title": "Q-learning and SARSA updates",
+  "kind": "implement",
+  "summary": "One tabular Q-learning or SARSA update with no bootstrap at a terminal step, and epsilon-greedy actions from a seeded rng with lowest-index ties.",
+  "difficulty": "easy",
+  "tags": ["reinforcement-learning", "q-learning", "sarsa", "exploration"],
+  "lesson": "phases/09-reinforcement-learning/04-q-learning-sarsa",
+  "cheatsheet": "reinforcement-learning",
+  "minutes": 15,
+  "entry": ["q_learning_update", "sarsa_update", "epsilon_greedy"],
+  "collections": ["rl-basics"],
+  "time_limit_s": 10,
+  "mutants": {
+    "draws_action_first": "Draws the random action before the coin on every call, so the rng gives a different sequence.",
+    "q_bootstraps_terminal": "Adds gamma times the max of the next row also when done is True.",
+    "q_in_place": "Uses np.asarray in Q-learning, so the update writes into the caller's table.",
+    "sarsa_uses_max": "Uses the max over the next actions in SARSA, not the given next action.",
+    "td_error_flipped": "Uses Q[s, a] minus the target in Q-learning, so the value moves away from the target.",
+    "tie_goes_last": "Returns the highest index of the largest Q value on a tie."
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "flash-attention-online-softmax",
+  "title": "Tiled attention with an online softmax",
+  "kind": "research",
+  "summary": "FlashAttention in numpy: a running max and a running sum over key blocks give exact attention for any block size.",
+  "difficulty": "hard",
+  "tags": ["attention", "flash-attention", "softmax", "numerical-stability"],
+  "lesson": "phases/07-transformers-deep-dive/12-kv-cache-flash-attention",
+  "cheatsheet": "inference-optimization",
+  "minutes": 40,
+  "entry": ["online_softmax_step", "flash_attention"],
+  "collections": ["papers-to-code", "transformers-from-scratch"],
+  "time_limit_s": 10,
+  "method": "flash-attention",
+  "paper": {"title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness", "authors": "Dao et al.", "year": 2022, "url": "https://arxiv.org/abs/2205.14135"},
+  "mutants": {
+    "block_max_only": "Sets the running max to the max of the current block only, so scores far apart in two blocks overflow.",
+    "causal_blocks_diagonal": "Blocks key j when j >= i, so each query also blocks itself and the first row has no allowed key.",
+    "no_neginf_guard": "Uses a running max of minus infinity inside the exponentials, so a fully masked block gives NaN.",
+    "no_rescale_acc": "Forgets to scale the old accumulator by exp(old max minus new max).",
+    "no_rescale_sum": "Forgets to scale the old running sum by exp(old max minus new max).",
+    "partial_block_dropped": "Stops the loop before a last block that is shorter than block_size."
+  }
+}

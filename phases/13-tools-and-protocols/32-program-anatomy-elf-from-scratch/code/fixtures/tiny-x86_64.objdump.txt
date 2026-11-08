@@ -1,0 +1,23 @@
+
+tiny-x86_64:	file format elf64-x86-64
+
+Program Header:
+    LOAD off    0x0000000000000000 vaddr 0x0000000000400000 paddr 0x0000000000400000 align 2**12
+         filesz 0x00000000000002e0 memsz 0x00000000000002e0 flags r-x
+   STACK off    0x0000000000000000 vaddr 0x0000000000000000 paddr 0x0000000000000000 align 2**4
+         filesz 0x0000000000000000 memsz 0x0000000000000000 flags rw-
+
+Dynamic Section:
+
+Sections:
+Idx Name          Size     VMA              Type
+  0               00000000 0000000000000000 
+  1 .text         00000024 00000000004000b0 TEXT
+  2 .rodata       00000003 00000000004000d4 DATA
+  3 .symtab       00000048 0000000000000000 
+  4 .strtab       00000010 0000000000000000 
+  5 .shstrtab     00000029 0000000000000000 
+
+SYMBOL TABLE:
+00000000004000d4 l     O .rodata	0000000000000003 message
+00000000004000b0 g     F .text	0000000000000024 _start

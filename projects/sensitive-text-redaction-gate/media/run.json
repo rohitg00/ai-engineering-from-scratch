@@ -1,0 +1,52 @@
+{
+  "title": "Sensitive Text Redaction Gate | initialize and grade",
+  "recordedAt": "2026-10-09T14:39:29Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "sensitive-text-redaction-gate",
+        "--init",
+        "./.project-validation/sensitive-text-redaction-gate/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/sensitive-text-redaction-gate/recording-starter\n  kept     cli.py\n  kept     main.py\n  kept     samples/input.jsonl\n  kept     samples/literals.json\n  kept     stage-2.md\n  kept     stage-3.md\n  kept     stage-4.md\nnext: python3 scripts/project_test.py sensitive-text-redaction-gate --stage 1 --path ./.project-validation/sensitive-text-redaction-gate/recording-starter\n",
+      "durationMs": 40
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "sensitive-text-redaction-gate",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/sensitive-text-redaction-gate/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Sensitive Text Redaction Gate: grading learner\n  FAIL stage 1: Detect bounded sensitive spans (10 tests)\n       not implemented yet: Stage 1: implement detect\n",
+      "durationMs": 136
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "sensitive-text-redaction-gate",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/sensitive-text-redaction-gate/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Sensitive Text Redaction Gate: grading solution\n  PASS stage 1: Detect bounded sensitive spans (10 tests)\n  PASS stage 2: Merge complete overlap unions (7 tests)\n  PASS stage 3: Replace spans without leaking source values (6 tests)\n  PASS stage 4: Export redacted records and bounded evidence (7 tests)\nreport: ./.project-validation/sensitive-text-redaction-gate/solution-final.json\n",
+      "durationMs": 470
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

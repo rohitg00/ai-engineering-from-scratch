@@ -1,0 +1,69 @@
+[2KWARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+WARNING: Skip adding map 'fmap..rela.text' to boundaries, because it is not readable.
+[ts]
+__sigset_t
+__div_t
+__siginfo_t
+_fd_set
+timeval
+account
+lconv
+sigaction
+std__type_info
+__ldiv_t
+__lldiv_t
+tm
+__imaxdiv_t
+sockaddr
+timespec
+[tsc account]
+struct account {
+	char kind;
+	int balance;
+	short code;
+	double rate;
+	const char *label;
+};
+[afvd in bump]
+var var_10h = 0xfffffffffffffff8 = (*0xffffffffffffffff)
+var var_14h = - offset -   0 0
+0x00000008 ff .
+0x00000009 ff .
+0x0000000a ff .
+0x0000000b ff .
+0x0000000c ff .
+0x0000000d ff .
+0x0000000e ff .
+0x0000000f ff .
+arg a =   : rdi : 0x00000000
+arg by = - offset -   0 0
+0x00000008                      -1  .
+0x00000009       72057594037927935  .
+0x0000000a         281474976710655  .
+0x0000000b           1099511627775  .
+0x0000000c              4294967295  .
+0x0000000d                16777215  .
+0x0000000e                   65535  .
+0x0000000f                     255  .
+[pdf of bump]
+            ; CALL XREF from sym.main @ 0x80001d4
+            ;-- section..text:
+            ;-- bump:
+            ;-- .text:
+┌ int sym.bump(struct account *a, int by);
+│           ; arg struct account *a @ rdi
+│           ; arg int by @ rsi
+│           ; var int var_14h @ stack - 0x14
+│           ; var struct account *var_10h @ stack - 0x10
+│           0x08000040      push  rbp                                  ; RELOC TARGET 64 .text @ 0x08000040 ; [02] -r-x section size 511 named .text
+│           0x08000041      mov   rbp, rsp
+│           0x08000044      mov   qword [var_10h], rdi                 ; a
+│           0x08000048      mov   dword [var_14h], esi                 ; by
+│           0x0800004b      mov   ecx, dword [var_14h]
+│           0x0800004e      mov   rax, qword [var_10h]
+│           0x08000052      add   ecx, dword [rax+0x04]
+│           0x08000055      mov   dword [rax+0x04], ecx
+│           0x08000058      mov   rax, qword [var_10h]
+│           0x0800005c      mov   eax, dword [rax+0x04]
+│           0x0800005f      pop   rbp
+└           0x08000060      ret

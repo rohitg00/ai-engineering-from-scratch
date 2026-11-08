@@ -1,0 +1,191 @@
+
+shapes-x86_64-O0-g.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <_Z8describeRK5Shapei>:
+       0: 55                           	pushq	%rbp
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 48 83 ec 10                  	subq	$0x10, %rsp
+       8: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+       c: 89 75 f4                     	movl	%esi, -0xc(%rbp)
+       f: 48 8b 7d f8                  	movq	-0x8(%rbp), %rdi
+      13: 48 8b 07                     	movq	(%rdi), %rax
+      16: ff 50 10                     	callq	*0x10(%rax)
+      19: 0f af 45 f4                  	imull	-0xc(%rbp), %eax
+      1d: 48 83 c4 10                  	addq	$0x10, %rsp
+      21: 5d                           	popq	%rbp
+      22: c3                           	retq
+      23: 66 66 66 66 2e 0f 1f 84 00 00 00 00 00       	nopw	%cs:(%rax,%rax)
+
+0000000000000030 <main>:
+      30: 55                           	pushq	%rbp
+      31: 48 89 e5                     	movq	%rsp, %rbp
+      34: 48 83 ec 40                  	subq	$0x40, %rsp
+      38: c7 45 fc 00 00 00 00         	movl	$0x0, -0x4(%rbp)
+      3f: 48 8d 7d e8                  	leaq	-0x18(%rbp), %rdi
+      43: 48 89 7d c8                  	movq	%rdi, -0x38(%rbp)
+      47: be 03 00 00 00               	movl	$0x3, %esi
+      4c: ba 04 00 00 00               	movl	$0x4, %edx
+      51: e8 00 00 00 00               	callq	0x56 <main+0x26>
+		0000000000000052:  R_X86_64_PLT32	_ZN4RectC2Eii-0x4
+      56: 48 8b 7d c8                  	movq	-0x38(%rbp), %rdi
+      5a: e8 00 00 00 00               	callq	0x5f <main+0x2f>
+		000000000000005b:  R_X86_64_PLT32	_ZNK4Rect4nameEv-0x4
+      5f: 48 89 45 d0                  	movq	%rax, -0x30(%rbp)
+      63: eb 00                        	jmp	0x65 <main+0x35>
+      65: 48 8d 7d e8                  	leaq	-0x18(%rbp), %rdi
+      69: be 02 00 00 00               	movl	$0x2, %esi
+      6e: e8 00 00 00 00               	callq	0x73 <main+0x43>
+		000000000000006f:  R_X86_64_PLT32	_Z8describeRK5Shapei-0x4
+      73: 89 45 c4                     	movl	%eax, -0x3c(%rbp)
+      76: eb 00                        	jmp	0x78 <main+0x48>
+      78: 8b 55 c4                     	movl	-0x3c(%rbp), %edx
+      7b: 48 8b 75 d0                  	movq	-0x30(%rbp), %rsi
+      7f: 48 8d 3d 00 00 00 00         	leaq	(%rip), %rdi            # 0x86 <main+0x56>
+		0000000000000082:  R_X86_64_PC32	.L.str-0x4
+      86: 31 c0                        	xorl	%eax, %eax
+      88: e8 00 00 00 00               	callq	0x8d <main+0x5d>
+		0000000000000089:  R_X86_64_PLT32	printf-0x4
+      8d: eb 00                        	jmp	0x8f <main+0x5f>
+      8f: c7 45 fc 00 00 00 00         	movl	$0x0, -0x4(%rbp)
+      96: 48 8d 7d e8                  	leaq	-0x18(%rbp), %rdi
+      9a: e8 00 00 00 00               	callq	0x9f <main+0x6f>
+		000000000000009b:  R_X86_64_PLT32	_ZN4RectD2Ev-0x4
+      9f: 8b 45 fc                     	movl	-0x4(%rbp), %eax
+      a2: 48 83 c4 40                  	addq	$0x40, %rsp
+      a6: 5d                           	popq	%rbp
+      a7: c3                           	retq
+      a8: 48 89 c1                     	movq	%rax, %rcx
+      ab: 89 d0                        	movl	%edx, %eax
+      ad: 48 89 4d e0                  	movq	%rcx, -0x20(%rbp)
+      b1: 89 45 dc                     	movl	%eax, -0x24(%rbp)
+      b4: 48 8d 7d e8                  	leaq	-0x18(%rbp), %rdi
+      b8: e8 00 00 00 00               	callq	0xbd <main+0x8d>
+		00000000000000b9:  R_X86_64_PLT32	_ZN4RectD2Ev-0x4
+      bd: 48 8b 7d e0                  	movq	-0x20(%rbp), %rdi
+      c1: e8 00 00 00 00               	callq	0xc6 <main+0x96>
+		00000000000000c2:  R_X86_64_PLT32	_Unwind_Resume-0x4
+
+Disassembly of section .text._ZN4RectC2Eii:
+
+0000000000000000 <_ZN4RectC2Eii>:
+       0: 55                           	pushq	%rbp
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 48 83 ec 20                  	subq	$0x20, %rsp
+       8: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+       c: 89 75 f4                     	movl	%esi, -0xc(%rbp)
+       f: 89 55 f0                     	movl	%edx, -0x10(%rbp)
+      12: 48 8b 7d f8                  	movq	-0x8(%rbp), %rdi
+      16: 48 89 7d e8                  	movq	%rdi, -0x18(%rbp)
+      1a: e8 00 00 00 00               	callq	0x1f <_ZN4RectC2Eii+0x1f>
+		000000000000001b:  R_X86_64_PLT32	_ZN5ShapeC2Ev-0x4
+      1f: 48 8b 45 e8                  	movq	-0x18(%rbp), %rax
+      23: 48 8d 0d 00 00 00 00         	leaq	(%rip), %rcx            # 0x2a <_ZN4RectC2Eii+0x2a>
+		0000000000000026:  R_X86_64_PC32	_ZTV4Rect-0x4
+      2a: 48 83 c1 10                  	addq	$0x10, %rcx
+      2e: 48 89 08                     	movq	%rcx, (%rax)
+      31: 8b 4d f4                     	movl	-0xc(%rbp), %ecx
+      34: 89 48 08                     	movl	%ecx, 0x8(%rax)
+      37: 8b 4d f0                     	movl	-0x10(%rbp), %ecx
+      3a: 89 48 0c                     	movl	%ecx, 0xc(%rax)
+      3d: 48 83 c4 20                  	addq	$0x20, %rsp
+      41: 5d                           	popq	%rbp
+      42: c3                           	retq
+
+Disassembly of section .text._ZNK4Rect4nameEv:
+
+0000000000000000 <_ZNK4Rect4nameEv>:
+       0: 55                           	pushq	%rbp
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+       8: 48 8d 05 00 00 00 00         	leaq	(%rip), %rax            # 0xf <_ZNK4Rect4nameEv+0xf>
+		000000000000000b:  R_X86_64_PC32	.L.str.2-0x4
+       f: 5d                           	popq	%rbp
+      10: c3                           	retq
+
+Disassembly of section .text._ZN4RectD2Ev:
+
+0000000000000000 <_ZN4RectD2Ev>:
+       0: 55                           	pushq	%rbp
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 48 83 ec 10                  	subq	$0x10, %rsp
+       8: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+       c: 48 8b 7d f8                  	movq	-0x8(%rbp), %rdi
+      10: e8 00 00 00 00               	callq	0x15 <_ZN4RectD2Ev+0x15>
+		0000000000000011:  R_X86_64_PLT32	_ZN5ShapeD2Ev-0x4
+      15: 48 83 c4 10                  	addq	$0x10, %rsp
+      19: 5d                           	popq	%rbp
+      1a: c3                           	retq
+
+Disassembly of section .text._ZN5ShapeC2Ev:
+
+0000000000000000 <_ZN5ShapeC2Ev>:
+       0: 55                           	pushq	%rbp
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+       8: 48 8b 45 f8                  	movq	-0x8(%rbp), %rax
+       c: 48 8d 0d 00 00 00 00         	leaq	(%rip), %rcx            # 0x13 <_ZN5ShapeC2Ev+0x13>
+		000000000000000f:  R_X86_64_PC32	_ZTV5Shape-0x4
+      13: 48 83 c1 10                  	addq	$0x10, %rcx
+      17: 48 89 08                     	movq	%rcx, (%rax)
+      1a: 5d                           	popq	%rbp
+      1b: c3                           	retq
+
+Disassembly of section .text._ZN4RectD0Ev:
+
+0000000000000000 <_ZN4RectD0Ev>:
+       0: 55                           	pushq	%rbp
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 48 83 ec 10                  	subq	$0x10, %rsp
+       8: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+       c: 48 8b 7d f8                  	movq	-0x8(%rbp), %rdi
+      10: 48 89 7d f0                  	movq	%rdi, -0x10(%rbp)
+      14: e8 00 00 00 00               	callq	0x19 <_ZN4RectD0Ev+0x19>
+		0000000000000015:  R_X86_64_PLT32	_ZN4RectD2Ev-0x4
+      19: 48 8b 7d f0                  	movq	-0x10(%rbp), %rdi
+      1d: e8 00 00 00 00               	callq	0x22 <_ZN4RectD0Ev+0x22>
+		000000000000001e:  R_X86_64_PLT32	_ZdlPv-0x4
+      22: 48 83 c4 10                  	addq	$0x10, %rsp
+      26: 5d                           	popq	%rbp
+      27: c3                           	retq
+
+Disassembly of section .text._ZNK4Rect4areaEv:
+
+0000000000000000 <_ZNK4Rect4areaEv>:
+       0: 55                           	pushq	%rbp
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+       8: 48 8b 4d f8                  	movq	-0x8(%rbp), %rcx
+       c: 8b 41 08                     	movl	0x8(%rcx), %eax
+       f: 0f af 41 0c                  	imull	0xc(%rcx), %eax
+      13: 5d                           	popq	%rbp
+      14: c3                           	retq
+
+Disassembly of section .text._ZN5ShapeD2Ev:
+
+0000000000000000 <_ZN5ShapeD2Ev>:
+       0: 55                           	pushq	%rbp
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+       8: 5d                           	popq	%rbp
+       9: c3                           	retq
+
+Disassembly of section .text._ZN5ShapeD0Ev:
+
+0000000000000000 <_ZN5ShapeD0Ev>:
+       0: 55                           	pushq	%rbp
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+       8: 0f 0b                        	ud2
+
+Disassembly of section .text._ZNK5Shape4nameEv:
+
+0000000000000000 <_ZNK5Shape4nameEv>:
+       0: 55                           	pushq	%rbp
+       1: 48 89 e5                     	movq	%rsp, %rbp
+       4: 48 89 7d f8                  	movq	%rdi, -0x8(%rbp)
+       8: 48 8d 05 00 00 00 00         	leaq	(%rip), %rax            # 0xf <_ZNK5Shape4nameEv+0xf>
+		000000000000000b:  R_X86_64_PC32	.L.str.1-0x4
+       f: 5d                           	popq	%rbp
+      10: c3                           	retq

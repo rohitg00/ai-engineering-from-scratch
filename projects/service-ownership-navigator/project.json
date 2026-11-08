@@ -1,0 +1,104 @@
+{
+  "id": "service-ownership-navigator",
+  "title": "Service Ownership Navigator",
+  "tagline": "Find a service's owner and runbook with evidence for every answer.",
+  "summary": "Combine an authored service catalog, repository ownership rules and runbook links into a local directory. Resolve ownership at the requested path, surface conflicts and missing runbooks, and answer handoff questions with file-level evidence. Export a static site and JSON lookup interface without sending notifications.",
+  "level": 2,
+  "languages": [
+    "TypeScript"
+  ],
+  "source": "core",
+  "prerequisiteProjects": [
+    "semantic-notes-search",
+    "doc-qa-with-citations"
+  ],
+  "status": "ready",
+  "hours": 8,
+  "youWillBuild": "Static service directory and source-backed ownership lookup JSON",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "languageWhy": {
+    "TypeScript": "Typed local transformations and portable browser interfaces run with Node standard libraries."
+  },
+  "figures": true,
+  "overviewFigure": "pj-service-ownership-navigator-1",
+  "demo": {
+    "command": [
+      "node",
+      "cli.ts",
+      "sample.json",
+      "output"
+    ],
+    "cwd": "solution"
+  },
+  "stages": [
+    {
+      "id": "01-load-evidence",
+      "title": "Load service metadata and ownership rules",
+      "summary": "parseOwnershipRules(text:string,source?:string):Rule[]; loadCatalog(value:unknown):Catalog",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-service-ownership-navigator-1",
+      "concepts": [
+        "Load service metadata and ownership rules"
+      ]
+    },
+    {
+      "id": "02-resolve-paths",
+      "title": "Resolve paths and conflicting ownership evidence",
+      "summary": "matchesRule(pattern:string,path:string):boolean; resolveOwnership(catalog:Catalog,path:string):Ownership",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-service-ownership-navigator-2",
+      "concepts": [
+        "Resolve paths and conflicting ownership evidence"
+      ]
+    },
+    {
+      "id": "03-check-runbooks",
+      "title": "Check local runbook references",
+      "summary": "checkRunbook(catalog:Catalog,service:Service):{path,exists,headings,links,issues}",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-service-ownership-navigator-3",
+      "concepts": [
+        "Check local runbook references"
+      ]
+    },
+    {
+      "id": "04-export-handoff",
+      "title": "Export a searchable directory and cited handoff packet",
+      "summary": "handoffPacket(catalog:Catalog,path:string):{schemaVersion:1,ownership,runbook,dependencies}; renderDirectory(catalog,packet):string",
+      "hours": 2,
+      "difficulty": "stretch",
+      "language": "typescript",
+      "timeout": 60,
+      "figure": "pj-service-ownership-navigator-4",
+      "concepts": [
+        "Export a searchable directory and cited handoff packet"
+      ]
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by every reference stage passing."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect actual output",
+      "caption": "Recorded interaction with the generated local interface. Run the documented command to inspect your own output."
+    }
+  ]
+}

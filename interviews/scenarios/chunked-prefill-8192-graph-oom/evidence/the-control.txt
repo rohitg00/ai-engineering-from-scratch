@@ -1,0 +1,7 @@
+title: the same server with the default chunk
+source: manuals/sglang-101/capture/gpu/incidents/l4-chunk-8192-prefill-graph-oom.txt
+lines: 10-10
+lang: text
+note: One sentence from the incident record.
+---
+With the default chunk of 4096, the same server on the same card started and served every run.

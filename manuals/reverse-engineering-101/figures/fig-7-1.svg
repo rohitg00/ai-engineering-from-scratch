@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 392" role="img" aria-labelledby="fig-7-1-title fig-7-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-1-title">Four claims over two comparison records</title>
+  <desc id="fig-7-1-desc">A tree. The verification record ev_ccbaea4b at the top has status fail with two passed and two failed claims. Its left column holds the two percent_change claims, pseudocode and assembly, both pass with observed_status unchanged, pointing at the comparison record ev_2161e17a whose left side is ev_b492c85e from ledger-arm64-O1 and right side ev_142cc943 from ledger-arm64-O2. That comparison is unknown on references, and its residual unknown names only overall and references, so neither claim lists it. The right column holds the two total claims, both fail with observed_status changed, pointing at the comparison record ev_40ba96d8 with sides ev_a1fe53ff and ev_bfe3275b, which recorded the residual unknown unk_823f4184, Function comparison is changed.</desc>
+  <defs><marker id="fig-7-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-7-1-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <rect x="150" y="14" width="340" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="320" y="33.25" font-size="12.5" text-anchor="middle" font-weight="700">verify_reconstruction ev_ccbaea4b</text>
+  <text x="320" y="50.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">status fail: 2 passed, 2 failed, 0 unknown</text>
+  <line x1="320" y1="62" x2="165" y2="99" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect x="20" y="100" width="290" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="165" y="117.1" font-size="12" text-anchor="middle" font-weight="700">percent-change-pseudocode</text>
+  <text x="165" y="134.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">status pass, observed_status unchanged</text>
+  <rect x="20" y="152" width="290" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="165" y="169.1" font-size="12" text-anchor="middle" font-weight="700">percent-change-assembly</text>
+  <text x="165" y="186.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">status pass, observed_status unchanged</text>
+  <line x1="165" y1="196" x2="165" y2="235" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect class="m-knock" x="170" y="204.53" width="157.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="173" y="215.5" font-size="11.5">comparison_evidence_id</text>
+  <rect x="20" y="236" width="290" height="62" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="165" y="254.6" font-size="12" text-anchor="middle" font-weight="700">compare_functions ev_2161e17a</text>
+  <text x="165" y="271.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">left ev_b492c85e (ledger-arm64-O1)</text>
+  <text x="165" y="286.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">right ev_142cc943 (ledger-arm64-O2)</text>
+  <line x1="165" y1="298" x2="165" y2="333" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect class="m-knock" x="170" y="304.53" width="123.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="173" y="315.5" font-size="11.5">unknown_ids empty</text>
+  <rect x="20" y="334" width="290" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="165" y="351.1" font-size="12" text-anchor="middle" font-weight="700">no unknown in the claim scope</text>
+  <text x="165" y="368.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">its unknown names overall and references</text>
+  <line x1="320" y1="62" x2="475" y2="99" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect x="330" y="100" width="290" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="475" y="117.1" font-size="12" text-anchor="middle" font-weight="700">total-pseudocode</text>
+  <text x="475" y="134.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">status fail, observed_status changed</text>
+  <rect x="330" y="152" width="290" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="475" y="169.1" font-size="12" text-anchor="middle" font-weight="700">total-assembly</text>
+  <text x="475" y="186.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">status fail, observed_status changed</text>
+  <line x1="475" y1="196" x2="475" y2="235" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect class="m-knock" x="480" y="204.53" width="157.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="483" y="215.5" font-size="11.5">comparison_evidence_id</text>
+  <rect x="330" y="236" width="290" height="62" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="475" y="254.6" font-size="12" text-anchor="middle" font-weight="700">compare_functions ev_40ba96d8</text>
+  <text x="475" y="271.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">left ev_a1fe53ff (ledger-arm64-O1)</text>
+  <text x="475" y="286.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">right ev_bfe3275b (ledger-arm64-O2)</text>
+  <line x1="475" y1="298" x2="475" y2="333" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-1-head-rose)"/>
+  <rect class="m-knock" x="480" y="304.53" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="483" y="315.5" font-size="11.5" fill="var(--m-rose-ink, #b0344d)">unknown_ids</text>
+  <rect x="330" y="334" width="290" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="475" y="351.1" font-size="12" text-anchor="middle" font-weight="700">unk_823f4184</text>
+  <text x="475" y="368.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Function comparison is changed (medium)</text>
+</svg>

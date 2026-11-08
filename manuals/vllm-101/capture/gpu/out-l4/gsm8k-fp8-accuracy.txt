@@ -1,0 +1,20 @@
+GSM8K accuracy with FP8 weights and an FP8 KV cache (backlog B-02)
+Date: 2026-10-23
+Machine: NVIDIA L4, GPU0 of the node, clock lock 900 MHz (a ceiling). The card ran hot, and the median SM clock was 330 to 480 MHz. Accuracy does not depend on the clock.
+Engines: SGLang 0.5.22 and vLLM 0.31.0. Models: Qwen/Qwen3-8B (BF16) and Qwen/Qwen3-8B-FP8.
+Eval: the first 500 GSM8K test questions, 8-shot, greedy, one run per config. The prefix cache was flushed before each run.
+Neither checkpoint carries KV scales, so the FP8 KV runs used a scale of 1.0.
+vLLM FP8 KV runs used --attention-backend TRITON_ATTN, because the FlashInfer FP8 prefill kernel does not build on this host.
+
+engine   config                     correct   accuracy   Wilson 95% interval
+SGLang   BF16                       458/500   91.6%      88.8 to 93.7
+SGLang   FP8 weights                456/500   91.2%      88.4 to 93.4
+SGLang   FP8 KV cache               458/500   91.6%      88.8 to 93.7
+SGLang   FP8 weights + FP8 KV       460/500   92.0%      89.3 to 94.1
+vLLM     BF16                       459/500   91.8%      89.1 to 93.9
+vLLM     FP8 weights                453/500   90.6%      87.7 to 92.9
+vLLM     FP8 KV cache               454/500   90.8%      87.9 to 93.0
+vLLM     FP8 weights + FP8 KV       453/500   90.6%      87.7 to 92.9
+
+Every interval overlaps every other interval, so this run did not show a difference between the configs. With 500 questions, it cannot rule out a loss of a few points.
+Per-run summaries (correct count, Wilson interval, median SM clock, flush result): gsm8k-500-summaries.json in this folder. The per-question outputs stay on the L4 node.

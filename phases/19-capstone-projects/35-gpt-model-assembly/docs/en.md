@@ -81,7 +81,7 @@ cc-gpt-assembly
 - `class GPTModel` with token embedding, position embedding, embedding dropout, twelve `TransformerBlock`s, final LayerNorm, and an `lm_head` that ties to the token embedding when the flag is set.
 - A `count_parameters` helper that returns the unique parameter count (so weight tying is honored in the count).
 - A `generate` function that does temperature, top-k, multinomial, and sliding window context.
-- A demo that builds the model, prints the parameter count next to the reference 124M, and generates a short sequence from a fixed prompt to show the pipeline ends to end.
+- A demo that builds the model, prints the parameter count next to the reference 124M, and generates a short sequence from a fixed prompt to show the pipeline end to end.
 
 Run it:
 
@@ -89,7 +89,7 @@ Run it:
 python3 code/main.py
 ```
 
-Output: parameter count alongside the 124M reference, generated token ids from a random prompt, and a confirmation that the LM head and token embedding share storage when tying is on.
+Output: parameter count alongside the 124M reference, generated token ids from a fixed prompt, and a confirmation that the LM head and token embedding share storage when tying is on.
 
 To keep the demo fast, the script also runs a tiny config (`d_model=64`, `num_layers=2`) end to end and prints the generated token sequence inline. The 124M config is built but only its parameter count and one forward pass are exercised.
 

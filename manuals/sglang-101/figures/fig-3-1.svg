@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 250" role="img" aria-labelledby="fig-3-1-title fig-3-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-1-title">What one token costs in Qwen3-0.6B</title>
+  <desc id="fig-3-1-desc">Five factors from the Qwen3-0.6B config multiply to 114,688 bytes per token: 2 for key and value, 28 layers, 8 KV heads, a head dimension of 128, and 2 bytes for bfloat16. The startup log prints the same number as bytes_per_slot, and 181,574 slots of that size make a pool of 20.82 GB, which is 19.39 GiB.</desc>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONE TOKEN, FIVE FACTORS</text>
+  <rect x="20" y="34" width="80" height="56" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="60" y="58.3" font-size="16" text-anchor="middle" font-weight="700">2</text>
+  <text x="60" y="76.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">K and V</text>
+  <text x="107" y="68" font-size="14" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">×</text>
+  <rect x="114" y="34" width="80" height="56" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="154" y="58.3" font-size="16" text-anchor="middle" font-weight="700">28</text>
+  <text x="154" y="76.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">layers</text>
+  <text x="201" y="68" font-size="14" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">×</text>
+  <rect x="208" y="34" width="80" height="56" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="248" y="58.3" font-size="16" text-anchor="middle" font-weight="700">8</text>
+  <text x="248" y="76.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">KV heads</text>
+  <text x="295" y="68" font-size="14" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">×</text>
+  <rect x="302" y="34" width="80" height="56" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="342" y="58.3" font-size="16" text-anchor="middle" font-weight="700">128</text>
+  <text x="342" y="76.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">head dim</text>
+  <text x="389" y="68" font-size="14" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">×</text>
+  <rect x="396" y="34" width="80" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="436" y="58.3" font-size="16" text-anchor="middle" font-weight="700">2 B</text>
+  <text x="436" y="76.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">bfloat16</text>
+  <text x="484" y="68" font-size="16" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">=</text>
+  <rect x="500" y="34" width="120" height="56" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="560" y="57.4" font-size="13" text-anchor="middle" font-weight="700">114,688 B</text>
+  <text x="560" y="74.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">112 KiB</text>
+  <text x="20" y="124" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE SAME NUMBER IN THE STARTUP LOG</text>
+  <rect x="20" y="134" width="600" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="151.25" font-size="12.5" font-weight="700">Auto-sized attention KV pool</text>
+  <text x="32" y="168.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kv_budget=19.39 GB · bytes_per_slot=114688 · pool_size=181574</text>
+  <text x="20" y="206" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">POOL SIZE</text>
+  <text x="20" y="228" font-size="12" class="m-serif">181,574 slots × 114,688 bytes = 20.82 GB, or 19.39 GiB, of KV</text>
+</svg>

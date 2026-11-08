@@ -1,0 +1,22 @@
+{
+  "id": "int8-quantization",
+  "title": "Symmetric int8 quantization",
+  "kind": "implement",
+  "summary": "Absmax int8 quantization with one scale per tensor and one scale per row, with dequantization and a zero-row rule.",
+  "difficulty": "medium",
+  "tags": ["quantization", "int8", "inference"],
+  "lesson": "phases/10-llms-from-scratch/11-quantization",
+  "cheatsheet": "quantization",
+  "minutes": 20,
+  "entry": ["quantize_symmetric", "dequantize_symmetric", "quantize_per_channel", "dequantize_per_channel"],
+  "collections": ["llm-inference"],
+  "time_limit_s": 10,
+  "mutants": {
+    "columns_not_rows": "Takes the maximum over axis 0, so it gives one scale for each column, not for each row.",
+    "max_not_absmax": "Uses the maximum of the values, not of their magnitudes, for the per-tensor scale.",
+    "round_half_up": "Rounds with floor(x + 0.5), so values that are exactly halfway round up and not to the even integer.",
+    "scale_by_128": "Divides the maximum by 128, not by 127.",
+    "truncate_per_row": "Casts the per-row values to int8 without a round and without a clip, so the fraction is cut off.",
+    "zero_row_divides": "Has no rule for a row of zeros, so 0 / 0 gives NaN."
+  }
+}

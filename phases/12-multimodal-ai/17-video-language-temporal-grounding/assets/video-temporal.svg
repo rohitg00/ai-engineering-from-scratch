@@ -44,7 +44,7 @@
   <text x="770" y="110" text-anchor="middle" class="step">Qwen2.5-VL (2025)</text>
   <text x="770" y="128" text-anchor="middle" class="small">TMRoPE + dynamic FPS</text>
   <text x="770" y="144" text-anchor="middle" class="small">arbitrary duration</text>
-  <text x="770" y="160" text-anchor="middle" class="small">absolute time tokens</text>
+  <text x="770" y="160" text-anchor="middle" class="small">absolute-time M-RoPE</text>
   <text x="770" y="184" text-anchor="middle" class="step">strength: event grounding</text>
   <text x="770" y="204" text-anchor="middle" class="small">JSON output format</text>
   <text x="770" y="220" text-anchor="middle" class="small">open SOTA 2026</text>

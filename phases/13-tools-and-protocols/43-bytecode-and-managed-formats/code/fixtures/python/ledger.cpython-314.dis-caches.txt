@@ -1,0 +1,174 @@
+  0          0       RESUME                   0
+
+  1          2       LOAD_CONST               6 (('F', 'D', 'C', 'B', 'A'))
+             4       STORE_NAME               0 (LABELS)
+
+  4          6       LOAD_CONST               1 (<code object percent_change at 0x107c91570, file "ledger.py", line 4>)
+             8       MAKE_FUNCTION
+            10       STORE_NAME               1 (percent_change)
+
+ 10         12       LOAD_CONST               2 (<code object grade at 0x107d3e170, file "ledger.py", line 10>)
+            14       MAKE_FUNCTION
+            16       STORE_NAME               2 (grade)
+
+ 23         18       LOAD_CONST               3 (<code object total at 0x107c8e130, file "ledger.py", line 23>)
+            20       MAKE_FUNCTION
+            22       STORE_NAME               3 (total)
+
+ 30         24       LOAD_CONST               4 (<code object grade_label at 0x107c8e030, file "ledger.py", line 30>)
+            26       MAKE_FUNCTION
+            28       STORE_NAME               4 (grade_label)
+            30       LOAD_CONST               5 (None)
+            32       RETURN_VALUE
+
+Disassembly of <code object percent_change at 0x107c91570, file "ledger.py", line 4>:
+  4          0       RESUME                   0
+
+  5          2       LOAD_FAST_BORROW         0 (before)
+             4       LOAD_SMALL_INT           0
+             6       COMPARE_OP              88 (bool(==))
+             8       CACHE                    0 (counter: 0)
+            10       POP_JUMP_IF_FALSE        3 (to L1)
+            12       CACHE                    0 (counter: 0)
+            14       NOT_TAKEN
+
+  6         16       LOAD_SMALL_INT           0
+            18       RETURN_VALUE
+
+  7   L1:   20       LOAD_FAST_BORROW_LOAD_FAST_BORROW 16 (after, before)
+            22       BINARY_OP               10 (-)
+            24       CACHE                    0 (counter: 0)
+            26       CACHE                    0 (descr: 0)
+            28       CACHE                    0
+            30       CACHE                    0
+            32       CACHE                    0
+            34       LOAD_SMALL_INT         100
+            36       BINARY_OP                5 (*)
+            38       CACHE                    0 (counter: 0)
+            40       CACHE                    0 (descr: 0)
+            42       CACHE                    0
+            44       CACHE                    0
+            46       CACHE                    0
+            48       LOAD_FAST_BORROW         0 (before)
+            50       BINARY_OP                2 (//)
+            52       CACHE                    0 (counter: 0)
+            54       CACHE                    0 (descr: 0)
+            56       CACHE                    0
+            58       CACHE                    0
+            60       CACHE                    0
+            62       RETURN_VALUE
+
+Disassembly of <code object grade at 0x107d3e170, file "ledger.py", line 10>:
+ 10          0       RESUME                   0
+
+ 11          2       LOAD_FAST_BORROW         0 (score)
+             4       LOAD_SMALL_INT          10
+             6       BINARY_OP                2 (//)
+             8       CACHE                    0 (counter: 0)
+            10       CACHE                    0 (descr: 0)
+            12       CACHE                    0
+            14       CACHE                    0
+            16       CACHE                    0
+            18       STORE_FAST               1 (bucket)
+
+ 12         20       LOAD_FAST_BORROW         1 (bucket)
+            22       LOAD_SMALL_INT           9
+            24       COMPARE_OP             188 (bool(>=))
+            26       CACHE                    0 (counter: 0)
+            28       POP_JUMP_IF_FALSE        3 (to L1)
+            30       CACHE                    0 (counter: 0)
+            32       NOT_TAKEN
+
+ 13         34       LOAD_SMALL_INT           4
+            36       RETURN_VALUE
+
+ 14   L1:   38       LOAD_FAST_BORROW         1 (bucket)
+            40       LOAD_SMALL_INT           8
+            42       COMPARE_OP              88 (bool(==))
+            44       CACHE                    0 (counter: 0)
+            46       POP_JUMP_IF_FALSE        3 (to L2)
+            48       CACHE                    0 (counter: 0)
+            50       NOT_TAKEN
+
+ 15         52       LOAD_SMALL_INT           3
+            54       RETURN_VALUE
+
+ 16   L2:   56       LOAD_FAST_BORROW         1 (bucket)
+            58       LOAD_SMALL_INT           7
+            60       COMPARE_OP              88 (bool(==))
+            62       CACHE                    0 (counter: 0)
+            64       POP_JUMP_IF_FALSE        3 (to L3)
+            66       CACHE                    0 (counter: 0)
+            68       NOT_TAKEN
+
+ 17         70       LOAD_SMALL_INT           2
+            72       RETURN_VALUE
+
+ 18   L3:   74       LOAD_FAST_BORROW         1 (bucket)
+            76       LOAD_SMALL_INT           6
+            78       COMPARE_OP              88 (bool(==))
+            80       CACHE                    0 (counter: 0)
+            82       POP_JUMP_IF_FALSE        3 (to L4)
+            84       CACHE                    0 (counter: 0)
+            86       NOT_TAKEN
+
+ 19         88       LOAD_SMALL_INT           1
+            90       RETURN_VALUE
+
+ 20   L4:   92       LOAD_SMALL_INT           0
+            94       RETURN_VALUE
+
+Disassembly of <code object total at 0x107c8e130, file "ledger.py", line 23>:
+ 23          0       RESUME                   0
+
+ 24          2       LOAD_SMALL_INT           0
+             4       STORE_FAST               1 (s)
+
+ 25          6       LOAD_FAST_BORROW         0 (values)
+             8       GET_ITER
+      L1:   10       FOR_ITER                11 (to L2)
+            12       CACHE                    0 (counter: 0)
+            14       STORE_FAST               2 (v)
+
+ 26         16       LOAD_FAST_BORROW_LOAD_FAST_BORROW 18 (s, v)
+            18       BINARY_OP               13 (+=)
+            20       CACHE                    0 (counter: 0)
+            22       CACHE                    0 (descr: 0)
+            24       CACHE                    0
+            26       CACHE                    0
+            28       CACHE                    0
+            30       STORE_FAST               1 (s)
+            32       JUMP_BACKWARD           13 (to L1)
+            34       CACHE                    0 (counter: 0)
+
+ 25   L2:   36       END_FOR
+            38       POP_ITER
+
+ 27         40       LOAD_FAST_BORROW         1 (s)
+            42       RETURN_VALUE
+
+Disassembly of <code object grade_label at 0x107c8e030, file "ledger.py", line 30>:
+ 30          0       RESUME                   0
+
+ 31          2       LOAD_GLOBAL              0 (LABELS)
+             4       CACHE                    0 (counter: 0)
+             6       CACHE                    0 (index: 0)
+             8       CACHE                    0 (module_keys_version: 0)
+            10       CACHE                    0 (builtin_keys_version: 0)
+            12       LOAD_GLOBAL              3 (grade + NULL)
+            14       CACHE                    0 (counter: 0)
+            16       CACHE                    0 (index: 0)
+            18       CACHE                    0 (module_keys_version: 0)
+            20       CACHE                    0 (builtin_keys_version: 0)
+            22       LOAD_FAST_BORROW         0 (score)
+            24       CALL                     1
+            26       CACHE                    0 (counter: 0)
+            28       CACHE                    0 (func_version: 0)
+            30       CACHE                    0
+            32       BINARY_OP               26 ([])
+            34       CACHE                    0 (counter: 0)
+            36       CACHE                    0 (descr: 0)
+            38       CACHE                    0
+            40       CACHE                    0
+            42       CACHE                    0
+            44       RETURN_VALUE

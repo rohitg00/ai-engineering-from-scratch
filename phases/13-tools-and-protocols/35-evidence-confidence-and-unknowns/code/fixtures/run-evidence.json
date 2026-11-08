@@ -1,0 +1,908 @@
+{
+  "artifacts": [
+    {
+      "architecture": "arm64",
+      "digest": {
+        "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+      },
+      "format": "mach-o"
+    },
+    {
+      "architecture": null,
+      "digest": {
+        "sha256": "4564c3e7e39fe4d10530bb6489722924ad3f34ffd78d8fa203a5e1fe832fdacb"
+      },
+      "format": "c-source"
+    }
+  ],
+  "captures": [],
+  "environments": [
+    {
+      "architecture": "arm64",
+      "id": "host-process",
+      "isolation": "process",
+      "platform": "darwin"
+    }
+  ],
+  "providers": [
+    {
+      "id": "course-harness",
+      "name": "host compiler build of harness.c",
+      "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+    },
+    {
+      "id": "course-source-reader",
+      "name": "lesson 35 source reader",
+      "version": "1"
+    }
+  ],
+  "records": [
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_0894b936cb22c63b7d826e88ea31e0c587fda0e8228239cef963fb7b60742af6",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 6,
+        "stdout": "6\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          1,
+          2,
+          3
+        ],
+        "function": "total"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_1bcaff6e4774a5e129306a5fdd2764c4ef883224ab2dea7ab6a14e67e7993ac0",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": -50,
+        "stdout": "-50\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          100,
+          50
+        ],
+        "function": "percent_change"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "shipped-artifact",
+      "confidence": "observed",
+      "environment": null,
+      "evidence_id": "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec",
+      "evidence_links": [],
+      "limitations": [
+        "The source is the file we wrote. It is not proof of what any compiled object does."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "bytes": 568,
+        "functions": [
+          "percent_change",
+          "grade",
+          "total"
+        ],
+        "labels": [
+          "F",
+          "D",
+          "C",
+          "B",
+          "A"
+        ]
+      },
+      "operation": "read_source",
+      "parameters": {},
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-source-reader",
+        "name": "lesson 35 source reader",
+        "version": "1"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": null,
+        "digest": {
+          "sha256": "4564c3e7e39fe4d10530bb6489722924ad3f34ffd78d8fa203a5e1fe832fdacb"
+        },
+        "format": "c-source",
+        "local_path": "/private/tmp/aiefs-re/phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/code/fixtures/ledger.c",
+        "name": "ledger.c"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_4b1c810301887d4fe9e67b7d48c56c28816687ab2b552944a15147b3f643dac4",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": -142,
+        "stdout": "-142\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          -7,
+          3
+        ],
+        "function": "percent_change"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_4c4fc5eef98faa45262b37006fff588bf72bed6ccd58537cb60cac82990a240e",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 1,
+        "stdout": "1\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          69
+        ],
+        "function": "grade"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_4df1403805aa017ed7d7aa9784e92df49dad5ab7c114db2f4227bde552cb5e5a",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 0,
+        "stdout": "0\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          -5
+        ],
+        "function": "grade"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_59b98937d08f77968e30622c1e619b8c20206714923286074be8e52fbe224f95",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 1,
+        "stdout": "1\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          60
+        ],
+        "function": "grade"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_5db8c27c96fa3d0083dc2ec170ddaab374c72b51ed0e67ef0ae19a96544fc279",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 2,
+        "stdout": "2\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          70
+        ],
+        "function": "grade"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_7372c4f8330bdd8ef8246ddcb5bd8347dd71f4e416c635d5dcacabb16448d55a",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 4,
+        "stdout": "4\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          100
+        ],
+        "function": "grade"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_76dcd981338c5514112e27ac97752f51580ddb52eee506274fbff52eed87a701",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 4,
+        "stdout": "4\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          105
+        ],
+        "function": "grade"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_77d58708332d6895fb7757f61a85d555fc0a4c6f7dd9ff50636730d0fc6ab4ed",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 0,
+        "stdout": "0\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          0,
+          5
+        ],
+        "function": "percent_change"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_7be90c0c1403272f28f4f3b839307371548c4cfdd7dff2416bb52e088cf59462",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 0,
+        "stdout": "0\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          55
+        ],
+        "function": "grade"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_7eb6b4589c40278645428875c62c202667343df133f83dc765d9f20a4b1b826a",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 25,
+        "stdout": "25\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          12400,
+          15500
+        ],
+        "function": "percent_change"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_8a01daa878bd1a38fa91f04f7b615d240de0bd35e34e1037361b2eceae3abdc4",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 0,
+        "stdout": "0\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [],
+        "function": "total"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_ca1d66a61294da0b9058380bb23ebc80820192825acd93f542f0d51105ff6117",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 0,
+        "stdout": "0\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          110
+        ],
+        "function": "grade"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_cad6362e48b3a543ed853e7e187bc08a58e6a416bf91b20c57cb015c4d16e43d",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 3,
+        "stdout": "3\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          85
+        ],
+        "function": "grade"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_d8ba3463d1cda3a54e6f6c808478aa0393fabb73e1c802bacccacefb582ef547",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": "B",
+        "stdout": "B\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          85
+        ],
+        "function": "grade_label"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    },
+    {
+      "analysis_profile": null,
+      "authority": "controlled-replay",
+      "confidence": "observed",
+      "environment": {
+        "architecture": "arm64",
+        "id": "host-process",
+        "isolation": "process",
+        "platform": "darwin"
+      },
+      "evidence_id": "ev_f4ffbe8f922ec7fe9b2b260593635e70163f20942a895d500832a27f0d4c992f",
+      "evidence_links": [
+        "ev_2f1e6d251543d017a16f7c5e69502feaf2cb9e2232962f3535c93ea393f842ec"
+      ],
+      "limitations": [
+        "The run executed a host build of ledger.c, not the x86-64 object. The claim about the object rests on the shared source and on the compiler.",
+        "One run observes one input. It proves nothing about other inputs."
+      ],
+      "locations": [],
+      "normalized_result": {
+        "exit_code": 0,
+        "result": 4,
+        "stdout": "4\n"
+      },
+      "operation": "execute_function",
+      "parameters": {
+        "args": [
+          95
+        ],
+        "function": "grade"
+      },
+      "predicate_type": "rea.analysis",
+      "provider": {
+        "id": "course-harness",
+        "name": "host compiler build of harness.c",
+        "version": "Apple clang version 17.0.0 (clang-1700.6.3.2)"
+      },
+      "raw_result": null,
+      "subject": {
+        "architecture": "arm64",
+        "digest": {
+          "sha256": "3e6a29121078ab278c24eb7526d16fdc9d80f81394c7ef76b649edeee84e1b45"
+        },
+        "format": "mach-o",
+        "local_path": "/tmp/claude-501/tmp1fwagaig/harness",
+        "name": "harness"
+      }
+    }
+  ],
+  "scenarios": [],
+  "unknowns": []
+}

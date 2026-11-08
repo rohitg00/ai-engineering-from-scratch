@@ -205,7 +205,7 @@ cd phases/13-tools-and-protocols/23-capstone-tool-ecosystem
 python3 code/main.py
 ```
 
-Inspect five things:
+Inspect six things:
 
 1. `server/discover` advertises revision `2026-07-28` and the Tasks extension.
 2. Alice can read and generate a report, while Bob's write-scoped call is denied.

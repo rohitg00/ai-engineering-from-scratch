@@ -1,0 +1,33 @@
+Greedy output against the prefix cache, the batch, and the dtype (backlog B-04 and B-09)
+Date: 2026-10-22 and 2026-10-23
+Machine: NVIDIA L4, the second GPU of the node (GPU1). This GPU is shared with its owner and has no clock lock. Clocks change speed, not greedy tokens, but read the counts as one session on one GPU.
+Engines: SGLang 0.5.22 and vLLM 0.31.0.
+Prompts: ShareGPT questions after the same system prompt of about 170 tokens. Greedy, 128 output tokens, thinking off.
+Each number is how many outputs differ. The number in brackets is the median position of the first output token that differs.
+
+Concurrency 1, 32 prompts, Qwen3-0.6B:
+
+comparison                     SGLang 0.6B   vLLM 0.6B
+flushed repeat against fresh   0 of 32       0 of 32
+cache off against cache off    0 of 32       0 of 32
+fresh against warm cache       21 of 32 (45) 11 of 32 (57)
+cache on against cache off     25 of 32 (26) 21 of 32 (48)
+
+Concurrency 64, 64 prompts sent at once:
+
+engine, model    fresh vs fresh restart   fresh vs warm   warm vs warm   cache on vs off   off vs off
+SGLang 0.6B      52                       35              32             54                27
+vLLM 0.6B        49                       45              12             48                50
+SGLang 8B-FP8    59                       38              1              63                6
+vLLM 8B-FP8      14                       31              21             34                34
+
+At concurrency 64 the batch changes greedy output even with the cache off, so the cache effect cannot be separated at this load.
+
+BF16 against FP16 (B-09): 64 ShareGPT questions, greedy, 256 tokens, concurrency 1, prefix cache off.
+A repeat in the same dtype gave 0 of 64 different outputs on every engine and model.
+
+engine, model   BF16 against FP16
+SGLang 0.6B     51 of 64 (41)
+SGLang 1.7B     57 of 64 (54)
+vLLM 0.6B       48 of 64 (51)
+vLLM 1.7B       56 of 64 (56)

@@ -1,0 +1,6 @@
+$ sed "s/\x1b\[[0-9;]*m//g" e4-4b.log | grep -m1 "launcher\] common.py:290 - EXEC" | cut -c1-110
+[2026-10-22 05:58:05.178 launcher] common.py:290 - EXEC: mkdir -p /root/lab/models /root/lab/datasets
+$ sed "s/\x1b\[[0-9;]*m//g" e4-4b.log | grep -m1 " - rollout 0: " | cut -c1-170
+(FSDPTrainRayActor pid=2657) [2026-10-22 06:04:07.877 actor_cell00000_rank00000] log_utils.py:125 - rollout 0: {'rollout/response_lengths': 256.0, 'rollout/rewards': 0.0,
+$ sed "s/\x1b\[[0-9;]*m//g" e4-4b.log | grep -m1 "ft op=execute phase=fail"
+(TrainerController pid=2656) [2026-10-22 06:13:27.030 trainer_controller_actor] cell.py:251 - ft op=execute phase=fail cell=trainer-engine-actor-00000 fn=train elapsed_s=629.7

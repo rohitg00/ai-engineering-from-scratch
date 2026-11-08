@@ -1,0 +1,10 @@
+captured 2026-10-14T11:07:38Z on Darwin arm64
+Python 3.11.14
+Python 3.12.12
+Python 3.13.12
+Python 3.14.6
+javac 21.0.12.1
+javac 25.0.2
+wabt 1.0.42
+dotnet sdk 8.0.205
+radare2 6.2.4 +0 abi:152 @ darwin-arm_64

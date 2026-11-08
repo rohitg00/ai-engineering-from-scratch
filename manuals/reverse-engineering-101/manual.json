@@ -1,0 +1,353 @@
+{
+  "id": "reverse-engineering-101",
+  "title": "Reverse Engineering 101",
+  "subtitle": "Reading a compiled program you built, from file bytes to evidence-backed pseudocode, with rea and Ghidra",
+  "summary": "How to read a compiled program without its source and prove what you found. Every listing comes from a recorded run of rea 6.7.0 and Ghidra 12.1.4 on programs written for this manual.",
+  "audience": "You are an engineer who writes C, Python, or JavaScript and uses a coding agent. You have never read machine code with a decompiler. You want to understand what a compiled program does and to check what an agent tells you about it.",
+  "edition": "2026.10",
+  "status": "ready",
+  "pin": {
+    "subject": "rea (rea-agents) with the Ghidra provider",
+    "version": "rea-agents 6.7.0, Ghidra 12.1.4",
+    "source": "https://github.com/morluto/rea",
+    "commit": "27dc42d10249f0410904a75c0997842eb03b931c",
+    "date": "2026-10-18",
+    "verified": "2026-10-18"
+  },
+  "outcomes": [
+    "Read the file header, sections, symbols, and relocations of a compiled program, and map an address to a file offset.",
+    "Run rea with the Ghidra provider on a program you built, and read its Evidence record: confidence, authority, limitations, and unknowns.",
+    "Find a function, read its assembly and pseudocode, follow its references, and say where the decompiler output is incomplete.",
+    "Prove a rebuilt function equal to the original by running both over an input grid and by comparing bytes after masking relocations.",
+    "Drive rea from an agent over MCP, and keep an evidence ledger that separates what was observed from what was inferred."
+  ],
+  "palette": [
+    {
+      "hue": "blue",
+      "meaning": "rea: the CLI, the MCP server, and its domain layer"
+    },
+    {
+      "hue": "violet",
+      "meaning": "the Ghidra provider: analyzeHeadless, the bridge, and the decompiler"
+    },
+    {
+      "hue": "green",
+      "meaning": "the artifact: the fixture files, their bytes, sections, and symbols"
+    },
+    {
+      "hue": "plum",
+      "meaning": "the agent and its model calls"
+    },
+    {
+      "hue": "olive",
+      "meaning": "scripted and managed code: the JavaScript app and the WASM module"
+    },
+    {
+      "hue": "indigo",
+      "meaning": "MCP messages and sessions"
+    },
+    {
+      "hue": "amber",
+      "meaning": "lifecycle: sessions, analysis phases, and claim states"
+    },
+    {
+      "hue": "teal",
+      "meaning": "durable records: Evidence bundles and snapshots"
+    },
+    {
+      "hue": "rose",
+      "meaning": "failure: error envelopes, refused claims, and wrong output"
+    },
+    {
+      "hue": "grey",
+      "meaning": "outside rea: the host, the compiler, and the reader"
+    }
+  ],
+  "sources": [
+    {
+      "name": "rea source at the release tag",
+      "path": "rea-agents-6.7.0 (27dc42d)",
+      "usedFor": "every claim about how rea works; files listed in each Sources line"
+    },
+    {
+      "name": "rea documentation at the release tag",
+      "path": "docs/ and DISCLAIMER.md at 27dc42d",
+      "usedFor": "documented behaviour, limits, and the responsible use rules"
+    },
+    {
+      "name": "Captured runs",
+      "path": "capture/out/ (rea 6.7.0, Ghidra 12.1.4, macOS 26.2 arm64)",
+      "usedFor": "every listing and every number in a figure"
+    },
+    {
+      "name": "Format and architecture specifications",
+      "path": "ELF gABI, Mach-O headers, Intel SDM, Arm ARM",
+      "usedFor": "ELF, Mach-O, x86-64 and AArch64 encoding, and calling conventions"
+    },
+    {
+      "name": "Papers on program analysis",
+      "path": "papers named in each Sources line",
+      "usedFor": "disassembly, control-flow structuring, SSA, type recovery, and decompiler evaluation"
+    },
+    {
+      "name": "Statutes and court decisions",
+      "path": "17 U.S.C. 1201, Directive 2009/24/EC, CJEU and US decisions",
+      "usedFor": "the law of analysis and interoperability"
+    },
+    {
+      "name": "Tool release notes",
+      "path": "vendor release notes named in each Sources line",
+      "usedFor": "Ghidra and other tool versions and features"
+    }
+  ],
+  "quoteSources": {
+    "readme": null,
+    "cli": null,
+    "mcp": null,
+    "ghidra": null,
+    "native": null,
+    "install": null,
+    "readiness": null,
+    "ledgers": null,
+    "jsgraph": null,
+    "design": null,
+    "law": null,
+    "spec": null,
+    "paper": null
+  },
+  "capture": {
+    "run": [
+      "python3",
+      "capture/run.py"
+    ],
+    "check": [
+      "python3",
+      "capture/run.py",
+      "--check"
+    ],
+    "timeoutSeconds": 900
+  },
+  "front": "front.md",
+  "plate": {
+    "figure": "plate-rea-investigation",
+    "title": "One function, four views",
+    "caption": "The C you wrote, the six instructions clang made, the pseudocode Ghidra returned, and the Evidence record rea wrote for them, from capture/out/06-function-percent-change.json."
+  },
+  "parts": [
+    {
+      "number": 1,
+      "title": "rea on One Page",
+      "thesis": "rea asks an analysis engine about a program and returns each answer as an Evidence record that says how it knows.",
+      "summary": "What rea standardizes, what it leaves to Ghidra, and one complete investigation of a function.",
+      "accent": "blue",
+      "sections": [
+        {
+          "id": "1.1",
+          "file": "sections/1-1-rea-providers-and-evidence.md"
+        },
+        {
+          "id": "1.2",
+          "file": "sections/1-2-rea-function-end-to-end.md"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Authority and Setup",
+      "thesis": "You analyze a program only when you have the right to, and only after rea doctor reports the provider healthy.",
+      "summary": "The law and rea's responsible use rules, the Ghidra provider install, and the capabilities each command declares.",
+      "accent": "grey",
+      "sections": [
+        {
+          "id": "2.1",
+          "file": "sections/2-1-the-readme-use-rule-and-the-law.md"
+        },
+        {
+          "id": "2.2",
+          "file": "sections/2-2-rea-doctor-and-the-ghidra-provider.md"
+        },
+        {
+          "id": "2.3",
+          "file": "sections/2-3-rea-capabilities.md"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "The Artifact",
+      "thesis": "Before any engine runs, rea reads the file itself: its format, its load image, and where each address lives on disk.",
+      "summary": "inspect-artifact, the binary layout and Mach-O load image, address-to-file-offset, and the analyze overview.",
+      "accent": "green",
+      "sections": [
+        {
+          "id": "3.1",
+          "file": "sections/3-1-inspect-artifact.md"
+        },
+        {
+          "id": "3.2",
+          "file": "sections/3-2-inspect-binary-layout-and-the-load-image.md"
+        },
+        {
+          "id": "3.3",
+          "file": "sections/3-3-address-to-file-offset.md"
+        },
+        {
+          "id": "3.4",
+          "file": "sections/3-4-analyze-overview.md"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "The Ghidra Provider",
+      "thesis": "Each question rea asks Ghidra becomes one bridge call into a fresh headless project, and the answer carries the limits of that engine.",
+      "summary": "open_binary and the bridge, procedures, assembly, references and the jump table, strings, and pseudocode.",
+      "accent": "violet",
+      "sections": [
+        {
+          "id": "4.1",
+          "file": "sections/4-1-open-binary-and-the-headless-bridge.md"
+        },
+        {
+          "id": "4.2",
+          "file": "sections/4-2-list-procedures-and-function-bodies.md"
+        },
+        {
+          "id": "4.3",
+          "file": "sections/4-3-procedure-assembly.md"
+        },
+        {
+          "id": "4.4",
+          "file": "sections/4-4-xrefs-and-the-jump-table.md"
+        },
+        {
+          "id": "4.5",
+          "file": "sections/4-5-list-strings.md"
+        },
+        {
+          "id": "4.6",
+          "file": "sections/4-6-analyze-function-and-pseudocode.md"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Evidence",
+      "thesis": "An Evidence record names its subject, its engine, its confidence, and its limits, and its id changes when any of them changes.",
+      "summary": "The Evidence record, residual unknowns, snapshots, bundles, and comparing two builds.",
+      "accent": "teal",
+      "sections": [
+        {
+          "id": "5.1",
+          "file": "sections/5-1-the-evidence-record.md"
+        },
+        {
+          "id": "5.2",
+          "file": "sections/5-2-residual-unknowns-and-coverage.md"
+        },
+        {
+          "id": "5.3",
+          "file": "sections/5-3-snapshots-and-the-answer-cache.md"
+        },
+        {
+          "id": "5.4",
+          "file": "sections/5-4-evidence-bundles-export-and-import.md"
+        },
+        {
+          "id": "5.5",
+          "file": "sections/5-5-compare-and-compare-functions.md"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Scripted and Managed Code",
+      "thesis": "For JavaScript, rea reads the files without running them and returns a graph of modules and their relationships.",
+      "summary": "analyze-javascript-application and the application graph, and inspect-wasm-artifact with the WABT provider.",
+      "accent": "olive",
+      "sections": [
+        {
+          "id": "6.1",
+          "file": "sections/6-1-analyze-javascript-application.md"
+        },
+        {
+          "id": "6.2",
+          "file": "sections/6-2-inspect-wasm-artifact.md"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Rebuild and Prove",
+      "thesis": "rea records whether declared claims passed, so the proof that a rebuilt function is equal must come from your own tests.",
+      "summary": "verify_reconstruction and its limits, and a harness that proves a rebuild equal by execution and by bytes.",
+      "accent": "rose",
+      "sections": [
+        {
+          "id": "7.1",
+          "file": "sections/7-1-verify-reconstruction.md"
+        },
+        {
+          "id": "7.2",
+          "file": "sections/7-2-a-proof-harness-outside-rea.md"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Agents over MCP",
+      "thesis": "An agent reaches rea through one MCP server with 207 tools, and its findings are only as good as the evidence it keeps.",
+      "summary": "The MCP server, its tools and deadlines, and one agent investigation from question to evidence.",
+      "accent": "indigo",
+      "sections": [
+        {
+          "id": "8.1",
+          "file": "sections/8-1-the-rea-mcp-server.md"
+        },
+        {
+          "id": "8.2",
+          "file": "sections/8-2-an-agent-investigation.md"
+        }
+      ]
+    }
+  ],
+  "reference": {
+    "title": "Reference",
+    "accent": "grey",
+    "thesis": "Lookup tables for every rea name in the manual.",
+    "summary": "Commands and MCP tools, Evidence fields, errors seen in the captures, a glossary, the sources, and the figure index.",
+    "sections": [
+      {
+        "id": "R.1",
+        "file": "sections/r-1-commands-and-tools.md"
+      },
+      {
+        "id": "R.2",
+        "file": "sections/r-2-evidence-fields.md"
+      },
+      {
+        "id": "R.3",
+        "file": "sections/r-3-errors.md"
+      },
+      {
+        "id": "R.4",
+        "file": "sections/r-4-glossary.md"
+      },
+      {
+        "id": "R.5",
+        "file": "sections/r-5-sources.md"
+      },
+      {
+        "id": "R.6",
+        "file": "sections/r-6-figure-index.md"
+      }
+    ]
+  },
+  "related": [
+    "phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch",
+    "phases/13-tools-and-protocols/33-disassembly-and-control-flow",
+    "phases/13-tools-and-protocols/34-lifting-to-pseudocode",
+    "phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns",
+    "phases/13-tools-and-protocols/36-rebuild-and-prove-equal"
+  ]
+}

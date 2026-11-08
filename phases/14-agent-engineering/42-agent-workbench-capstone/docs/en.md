@@ -13,6 +13,7 @@
 - Pin the schemas, scripts, and templates so a new repo gets a known-good baseline.
 - Add a single installer script that lays down the pack idempotently.
 - Decide what stays in the pack and what stays out, defending the cut for each.
+- Demonstrate one agent-assisted repository change with evidence a reviewer can reproduce.
 
 ## The Problem
 
@@ -132,6 +133,78 @@ The pack is the recipe. Each install is a serving.
 3. Add a `bin/uninstall.sh` that safely removes the pack and refuses if state files have non-trivial history. What counts as non-trivial?
 4. Add a `lint_pack.py` that fails when the pack drifts from `VERSION`. Wire it into CI for the pack's own repo.
 5. Author the migration runbook from a hand-rolled workbench to this pack. What is the order of operations that minimizes downtime?
+
+## Career Practice: Prove One Repository Change
+
+The packaging demo proves that the assembler runs and produces files. It does not prove that your agent can complete a new task, that the generated checks prove that task, or that a deployed system works. Keep those claims separate.
+
+Choose a small real task in a repository you own or have permission to change. Use one coding agent you already have access to. A bug fix, a bounded feature, or an operational improvement is enough; installing several agents is not part of the exercise.
+
+Budget a separate working session beyond the packaging lab. Copy the evidence template linked below into your own `learning-artifacts/` directory. Preserve the checked-in template and pack as reference material.
+
+### 1. Frame the task and choose the autonomy
+
+Use the task frame from lesson 43 and the evidence plan from lesson 44. Record the starting revision, observable goal, non-goals, allowed paths, and acceptance evidence. Identify the real user or operator who needs the behavior.
+
+Choose a working mode: guided steps, checkpointed implementation, or a bounded autonomous run. Explain why the uncertainty, consequences, and reversibility justify it. A small local refactor may need fewer checkpoints than a change to access control.
+
+Set a wall-time budget and a token or cost limit if the agent exposes one. Record unavailable measurements honestly. Define a stop condition for repeated failure, new permissions, budget exhaustion, or an unresolved contract decision; name who can resolve it.
+
+### 2. Prepare the smallest useful environment
+
+Retrieve the relevant implementation, caller, test, and local instructions. Record why each source belongs in context and which current evidence would override a stale note. Do not load the whole repository by default.
+
+Make one explicit choice for each relevant extension: a skill supplies a repeatable procedure; an MCP tool supplies access; a hook runs a deterministic check; a plugin packages capabilities. Keep an extension only when the task needs it, with the least permissions that let it work.
+
+Record the context or maintenance cost of one proposed addition you reject. Recheck one stale memory or instruction, then retire or replace it in your learner-owned setup when the evidence supports that decision. Rerun the affected check to confirm the removal did not lose a needed constraint.
+
+### 3. Capture the baseline and implement
+
+Before editing, run the closest existing check and demonstrate the requested behavior's current state. Keep the command, revision, result, and evidence location. A feature that does not exist yet still has a baseline: record the observed response or unsupported operation.
+
+Let the agent implement inside the contract. Keep an intervention log with the reason for each correction, permission change, or plan revision. Delegation is optional; if useful, apply lesson 45's ownership and integration contract before adding another worker.
+
+### 4. Challenge the evidence
+
+Choose proof that observes the changed surface. For a UI, rebuild and inspect the served journey at relevant widths. For an API, inspect the request and serialized response. For a CLI, run the built command and check its exit code and output. Select the checks your task needs and explain their limits.
+
+Write an expected result from the task contract independently of the agent's implementation. In a disposable copy, introduce one specific incorrect result, such as accepting an invalid value or dropping a required response field. Run the same acceptance check: it must fail for that reason.
+
+If it stays green, strengthen the assertion or observation before trusting it. Restore the correct implementation and rerun successfully. Keep both receipts. A syntax error or broken test setup does not count as detecting the regression.
+
+Review the final diff, including changed tests, against the original goal and allowed paths. Ask a peer or a separate reviewer session to challenge the weakest proof without editing the implementation. You still own the final judgment; another agent's agreement is not execution evidence.
+
+### 5. Rehearse operation and recovery
+
+Run the changed artifact in a disposable local or staging environment. Label every observation `local`, `staging`, or `live`, with the exact revision or artifact identity. A local rehearsal supports a local claim; production deployment is not required for this exercise.
+
+Choose one failure signal related to the task, a threshold, an observation window, and an owner. Explain the response when that threshold is crossed. Trigger the signal safely in the rehearsal and retain the observed log, metric, or response.
+
+Rehearse rollback to a known-good artifact and check that the previous behavior is restored. Account for persistent data when applicable; replacing a binary alone may not reverse a data change. Record any recovery step you could not verify.
+
+### 6. Improve the next run and hand it off
+
+Compare the result with the baseline, including elapsed time, available usage data, and human interventions. One task shows what happened on that task; it does not establish that an agent is generally faster or more reliable.
+
+Promote one observed correction into a test, a smaller permission boundary, an automation, or a clearer example using lesson 46. Rerun the affected check. Remove temporary mutations and leave the final branch, changed files, open risks, and next action explicit for the next session.
+
+### Manual review rubric
+
+Have the reviewer inspect the evidence files and reproduce at least the weakest acceptance check. Use `demonstrated`, `needs revision`, or `unverified` for each row, with an evidence pointer and a reason. Filled fields and passing packaging scripts are not substitutes for these observations.
+
+| Dimension | Evidence the reviewer should challenge |
+|---|---|
+| Task and autonomy | Starting behavior, bounded goal, justified permissions, budget, and a usable stop rule |
+| Context and environment | Relevant sources, justified tool access, and a rechecked retirement decision |
+| Verification | Actual before/after behavior and a deliberate incorrect result that the same check rejects |
+| Review and operation | Inspected diff, independent challenge, labeled runtime observation, and rehearsed recovery |
+| Iteration and handoff | One verified improvement, honest limits, clean final state, and a reproducible next action |
+
+Resolve `needs revision` findings before claiming the task complete. Leave unavailable evidence `unverified` and narrow the claim accordingly. The portfolio demonstrates your engineering judgment on a bounded task; it is not a hiring or deployment guarantee.
+
+## Shipped Artifact
+
+Keep the reusable pack and your completed copy of [career-agent-evidence.md](https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/phases/14-agent-engineering/42-agent-workbench-capstone/outputs/career-agent-evidence.md). The template connects the task frame, execution plan, runtime receipts, review, recovery rehearsal, and handoff into one reviewable case study.
 
 ## Key Terms
 

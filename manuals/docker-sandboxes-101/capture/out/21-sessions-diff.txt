@@ -1,0 +1,22 @@
+$ docker-agent sessions diff -1 -2
+Error: unknown shorthand flag: '1' in -1
+[exit 1]
+
+$ docker-agent sessions diff -- -1 -2
+Comparing -1 (5 turns) against -2 (5 turns)
+
+✅ Identical behaviour across all 5 turns.
+[exit 0]
+
+$ docker-agent sessions diff --fail-on-divergence -- -1 -3
+Comparing -1 (5 turns) against -3 (6 turns)
+
+❌ First divergence at turn 0 (after 0 matching turn(s)).
+   -1 called:
+     list_directory({"path": "."})
+   -3 called:
+     shell({"cmd": "echo m101-ok"})
+
+Everything after this point is downstream of the divergence and is not compared.
+Error: sessions diverged
+[exit 1]

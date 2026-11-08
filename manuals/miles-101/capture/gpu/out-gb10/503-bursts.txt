@@ -1,0 +1,101 @@
+$ cd ~/miles-lab/runs && for f in *.log; do printf "%s %s %s
+" "$f" "$(grep -c "503 Service Unavailable" "$f")" "$(stat -c %s "$f")"; done
+e11-topp-topk.log 0 1224067
+e1-rbs16.log 0 129485
+e2b-dapo-filter.log 0 1974258
+e2-n16.log 22357 21371656
+e2-n4.log 0 1394469
+e3b-offload-kv.log 0 1198472
+e3c-no-offload-rollout.log 0 1177152
+e3d-no-offload-train.log 0 1195063
+e3e-base-frac025.log 0 1216645
+e3f-no-offload-rollout-frac025.log 0 1184495
+e4-0.6b.log 0 421829
+e4-1.7b.log 0 484739
+e4-4b.log 0 231336
+e4-4b-lowmem.log 0 229979
+e6a-base.log 0 1203723
+e6b-det-triton.log 0 1214711
+e6c-det-flashinfer.log 0 1205266
+e6d-det-triton-repeat.log 0 1205074
+plain-48.log 0 4522004
+plain-48-s2-killed-2.log 0 322757
+plain-48-s2-killed-3.log 0 331776
+plain-48-s2-killed-by-reboot.log 0 436248
+plain-48-s2.log 0 4545635
+plain-48-s3.log 0 4539010
+plain.log 0 1195822
+telemetry-crash-0911.log 0 3929
+telemetry.log 0 1181904
+thermostat.log 0 80542
+true-on-policy-fa3.log 200533 147160656
+true-on-policy.log 0 40802
+$ grep -o "sglang_router.launch_router.*--port [0-9]*" true-on-policy-fa3.log e2-n16.log
+true-on-policy-fa3.log:sglang_router.launch_router --log-level warn --prometheus-port 20036 --request-timeout-secs 14400 --host 172.17.0.3 --port 20035
+e2-n16.log:sglang_router.launch_router --log-level warn --prometheus-port 20036 --request-timeout-secs 14400 --host 172.17.0.3 --port 20035
+$ grep "503 Service Unavailable" true-on-policy-fa3.log | grep -o "20[0-9][0-9]-[0-9-]* [0-9][0-9]:[0-9][0-9]" | sort | uniq -c | sort -n | sed -n "1,3p;\$p"
+   1838 2026-10-17 21:03
+   2281 2026-10-17 22:06
+   2669 2026-10-17 21:58
+   3719 2026-10-17 21:11
+$ grep "503 Service Unavailable" e2-n16.log | grep -o "20[0-9][0-9]-[0-9-]* [0-9][0-9]:[0-9][0-9]" | sort | uniq -c
+    286 2026-10-22 07:16
+    271 2026-10-22 07:17
+    686 2026-10-22 07:28
+    882 2026-10-22 07:29
+     18 2026-10-22 07:30
+     61 2026-10-22 07:38
+    192 2026-10-22 07:39
+     67 2026-10-22 07:40
+   1124 2026-10-22 07:51
+     84 2026-10-22 07:52
+     90 2026-10-22 07:53
+   1044 2026-10-22 08:04
+    134 2026-10-22 08:14
+    572 2026-10-22 08:15
+    842 2026-10-22 08:25
+    399 2026-10-22 08:36
+    209 2026-10-22 08:37
+     33 2026-10-22 08:46
+    379 2026-10-22 08:47
+     84 2026-10-22 08:48
+   1699 2026-10-22 08:57
+   1525 2026-10-22 08:58
+    663 2026-10-22 09:07
+    323 2026-10-22 09:08
+    207 2026-10-22 09:18
+    106 2026-10-22 09:19
+    139 2026-10-22 09:28
+    945 2026-10-22 09:29
+      3 2026-10-22 09:30
+    141 2026-10-22 09:39
+    364 2026-10-22 09:40
+    542 2026-10-22 09:49
+    122 2026-10-22 09:50
+    119 2026-10-22 09:59
+    693 2026-10-22 10:00
+      2 2026-10-22 10:01
+    109 2026-10-22 10:08
+    439 2026-10-22 10:09
+    160 2026-10-22 10:18
+    419 2026-10-22 10:19
+     18 2026-10-22 10:20
+    432 2026-10-22 10:29
+    344 2026-10-22 10:39
+    197 2026-10-22 10:40
+    451 2026-10-22 10:49
+    154 2026-10-22 10:50
+    252 2026-10-22 10:51
+     19 2026-10-22 10:59
+    190 2026-10-22 11:00
+   2209 2026-10-22 11:10
+    773 2026-10-22 11:11
+    351 2026-10-22 11:16
+    790 2026-10-22 11:17
+$ grep "503 Service Unavailable" e2-n16.log | grep -o "\[20[0-9-]* [0-9:]*" | tr -d "[" | uniq -c > e2-n16-503-per-second.txt
+$ python3 watchdog_replay.py out-gb10/e2-n16-503-per-second.txt
+healthy run: 22357 errors from 2026-10-22 07:16:29, checks every 30 s over the last 60 s, limit 100
+checks  healthy offsets stopped  most checks in a row  dead engine stopped after
+     6  17 of 30                    6                     153 to 182 s
+     8   0 of 30                    6                     213 to 242 s
+    10   0 of 30                    6                     273 to 302 s

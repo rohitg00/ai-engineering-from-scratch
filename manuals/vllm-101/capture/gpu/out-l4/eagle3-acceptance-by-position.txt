@@ -1,0 +1,19 @@
+EAGLE3 acceptance against output position (backlog B-21)
+Date: 2026-10-23
+Machine: NVIDIA L4, the second GPU of the node (GPU1), shared with its owner, no clock lock, about 15 GB in use. Speed does not change acceptance, but the 4,096-token limit comes from the memory we could use.
+Model and draft: Qwen/Qwen3-8B-FP8 with the Tengyunw/qwen3_8b_eagle3 draft.
+Prompts: 8 prompts with thinking on (6 ShareGPT, 1 proof, 1 design doc). Greedy, concurrency 1, prefix cache off, at most 4,096 output tokens.
+SGLang 0.5.22: 3 steps, top-k 1, 4 draft tokens. Acceptance length per segment = tokens in the segment / change in spec_verify_ct.
+vLLM 0.31.0: eagle3 with 3 speculative tokens. Acceptance length = 1 + accepted / drafts, from /metrics deltas of vllm:spec_decode_num_accepted_tokens_total and vllm:spec_decode_num_drafts_total, as /metrics exports them. num_drafts counts draft steps, one per verify step, not draft tokens. This is the mean_acceptance_length formula in vllm/v1/spec_decode/metrics.py.
+
+Mean acceptance length per segment, range across prompts that reached the segment (n prompts):
+
+segment of the output   SGLang                 vLLM
+0 to 256                2.05 to 2.64 (8)       2.14 to 2.51 (8)
+256 to 512              1.95 to 2.64 (8)       2.09 to 2.55 (8)
+512 to 1,024            2.11 to 2.77 (8)       2.12 to 2.79 (8)
+1,024 to 2,048          2.09 to 2.47 (5)       1.72 to 2.66 (5)
+2,048 to 4,096          2.33 and 2.48 (2)      2.35 and 2.60 (2)
+
+No steady decay up to 4,096 output tokens on either engine.
+Only 2 of 8 prompts ran past 2,048 tokens before the end token, so the last segment rests on 2 samples.

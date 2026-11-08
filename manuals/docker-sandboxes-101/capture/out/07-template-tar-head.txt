@@ -1,0 +1,10 @@
+$ tar listing of work/m101-tpl.tar
+size <n> bytes, 24 entries, first 8 sorted:
+blobs
+blobs/sha256
+blobs/sha256/<sha256>
+blobs/sha256/<sha256>
+blobs/sha256/<sha256>
+blobs/sha256/<sha256>
+blobs/sha256/<sha256>
+blobs/sha256/<sha256>

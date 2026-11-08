@@ -1,0 +1,73 @@
+{
+  "criteria": [
+    {
+      "id": "access",
+      "label": "Accessibility",
+      "weight": 0.5,
+      "direction": "benefit",
+      "min": 0,
+      "max": 10,
+      "limit": 4
+    },
+    {
+      "id": "setup",
+      "label": "Setup hours",
+      "weight": 0.3,
+      "direction": "cost",
+      "min": 0,
+      "max": 10
+    },
+    {
+      "id": "flow",
+      "label": "Visitor flow",
+      "weight": 0.2,
+      "direction": "benefit",
+      "min": 0,
+      "max": 10
+    }
+  ],
+  "options": [
+    {
+      "id": "open",
+      "label": "Open gallery",
+      "values": {
+        "access": 9,
+        "setup": 8,
+        "flow": 8
+      },
+      "notes": {
+        "access": "Authored access audit, 9/10",
+        "setup": "Authored staffing estimate, 8 hours",
+        "flow": "Authored layout walkthrough, 8/10"
+      }
+    },
+    {
+      "id": "pods",
+      "label": "Exhibition pods",
+      "values": {
+        "access": 6,
+        "setup": 2,
+        "flow": 7
+      },
+      "notes": {
+        "access": "Authored access audit, 6/10",
+        "setup": "Authored staffing estimate, 2 hours",
+        "flow": "Authored layout walkthrough, 7/10"
+      }
+    },
+    {
+      "id": "archive",
+      "label": "Archive layout",
+      "values": {
+        "access": 5,
+        "setup": 6,
+        "flow": null
+      },
+      "notes": {
+        "access": "Authored access audit, 5/10",
+        "setup": "Authored staffing estimate, 6 hours",
+        "flow": "Flow has not been measured"
+      }
+    }
+  ]
+}

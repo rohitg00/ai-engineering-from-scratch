@@ -9,7 +9,7 @@
 
 ## Learning Objectives
 
-- Implement filter methods (variance threshold, mutual information, chi-squared) and wrapper methods (RFE, forward selection) from scratch
+- Implement filter methods (variance threshold, mutual information), a wrapper method (RFE), and embedded methods (L1, tree importance) from scratch, then add forward selection in the exercises
 - Explain why mutual information captures nonlinear feature-target relationships that correlation misses
 - Compare L1 regularization (embedded selection) with RFE (wrapper selection) and evaluate their computational tradeoffs
 - Build a feature selection pipeline that combines multiple methods and demonstrate improved generalization on held-out data
@@ -62,8 +62,8 @@ The simplest filter. If a feature barely varies across samples, it carries almos
 
 Consider a feature that is 0.0 for 999 out of 1000 samples. Its variance is near zero. No model can use it to distinguish between classes. Remove it.
 
-```
-variance(x) = mean((x - mean(x))^2)
+```math
+\text{variance}(x) = \text{mean}\bigl((x - \text{mean}(x))^2\bigr)
 ```
 
 Set a threshold (e.g., 0.01). Drop every feature with variance below it. This removes constant or near-constant features without looking at the target variable at all.
@@ -74,17 +74,17 @@ Limitation: a feature can have high variance and still be pure noise. Variance t
 
 ### Mutual Information
 
-Mutual information measures how much knowing the value of feature X reduces uncertainty about target Y.
+Mutual information measures how much knowing the value of feature $X$ reduces uncertainty about target $Y$.
 
-```
-I(X; Y) = sum_x sum_y p(x, y) * log(p(x, y) / (p(x) * p(y)))
+```math
+I(X; Y) = \sum_x \sum_y p(x, y) \cdot \log \frac{p(x, y)}{p(x) \cdot p(y)}
 ```
 
-If X and Y are independent, p(x, y) = p(x) * p(y), so the log term is zero and I(X; Y) = 0. The more X tells you about Y, the higher the mutual information.
+If $X$ and $Y$ are independent, $p(x, y) = p(x) \cdot p(y)$, so the log term is zero and $I(X; Y) = 0$. The more $X$ tells you about $Y$, the higher the mutual information.
 
 Key advantage over correlation: mutual information captures nonlinear relationships. A feature might have zero correlation with the target but high mutual information because the relationship is quadratic or periodic.
 
-For continuous features, discretize into bins first (histogram-based estimation). The number of bins affects the estimate -- too few bins lose information, too many bins add noise. A common choice: sqrt(n) bins or Sturges' rule (1 + log2(n)).
+For continuous features, discretize into bins first (histogram-based estimation). The number of bins affects the estimate -- too few bins lose information, too many bins add noise. A common choice: $\sqrt{n}$ bins or Sturges' rule ($1 + \log_2 n$).
 
 ```mermaid
 flowchart LR
@@ -116,14 +116,14 @@ flowchart TD
 
 RFE considers feature interactions because the model sees all remaining features together. Removing one feature changes the importance of others. This makes it more thorough than filter methods.
 
-The cost: you train the model N - target times. With 500 features and a target of 10, that is 490 training runs. For expensive models, this is slow. You can speed it up by removing multiple features per step (e.g., remove the bottom 10% each round).
+The cost: you train the model $N - \text{target}$ times. With 500 features and a target of 10, that is 490 training runs. For expensive models, this is slow. You can speed it up by removing multiple features per step (e.g., remove the bottom 10% each round).
 
 ### L1 (Lasso) Regularization
 
 L1 regularization adds the absolute value of weights to the loss function:
 
-```
-loss = prediction_error + alpha * sum(|w_i|)
+```math
+\text{loss} = \text{prediction\_error} + \alpha \cdot \sum \lvert w_i \rvert
 ```
 
 The alpha parameter controls how aggressively features are pruned. Higher alpha means more weights go to exactly zero.
@@ -140,12 +140,10 @@ Limitation: only works for linear models. Cannot capture nonlinear feature impor
 
 Decision trees and their ensembles (random forests, gradient boosting) naturally rank features. Every split reduces impurity (Gini or entropy for classification, variance for regression). Features that produce larger impurity reductions are more important.
 
-For a random forest with T trees:
+For a random forest with $T$ trees:
 
-```
-importance(feature_j) = (1/T) * sum over all trees of
-    sum over all nodes splitting on feature_j of
-        (n_samples * impurity_decrease)
+```math
+\text{importance}(\text{feature}_j) = \frac{1}{T} \sum_{\text{all trees}} \; \sum_{\text{all nodes splitting on } \text{feature}_j} (\text{n\_samples} \cdot \text{impurity\_decrease})
 ```
 
 This gives a normalized importance score for each feature. It handles nonlinear relationships and feature interactions automatically.
@@ -524,7 +522,7 @@ This lesson produces:
 | Filter method | "Score features independently" | A feature selection approach that ranks features using a statistical measure without training a model, evaluating each feature in isolation |
 | Wrapper method | "Use the model to pick features" | A feature selection approach that evaluates feature subsets by training a model and using its performance as the selection criterion |
 | Embedded method | "The model selects features during training" | Feature selection that happens as part of model fitting, such as L1 regularization driving weights to zero |
-| Mutual information | "How much one variable tells you about another" | A measure of the reduction in uncertainty about Y given knowledge of X, capturing both linear and nonlinear dependencies |
+| Mutual information | "How much one variable tells you about another" | A measure of the reduction in uncertainty about $Y$ given knowledge of $X$, capturing both linear and nonlinear dependencies |
 | Recursive Feature Elimination | "Train, rank, prune, repeat" | An iterative wrapper method that trains a model, removes the least important feature(s), and repeats until a target count is reached |
 | L1 / Lasso regularization | "Penalty that kills features" | Adding the sum of absolute weight values to the loss function, which drives unimportant feature weights to exactly zero |
 | Variance threshold | "Remove constant features" | Dropping features whose variance across samples falls below a specified threshold, filtering out features that carry no information |

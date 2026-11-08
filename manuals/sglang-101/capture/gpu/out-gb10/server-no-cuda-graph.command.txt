@@ -1,0 +1,1 @@
+sglang serve --model-path Qwen/Qwen3-30B-A3B-Instruct-2507 --host 127.0.0.1 --port 30000 --enable-cache-report --enable-metrics --mem-fraction-static 0.7 --cuda-graph-backend-decode disabled --cuda-graph-backend-prefill disabled

@@ -10,7 +10,9 @@
   var CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
   var NARROW_HEADER_QUERY = '(max-width: 820px)';
   var NARRATION_VERSION = '20260829a';
-  var UI_I18N_VERSION = '20260923a';
+  var UI_I18N_VERSION = '20261010a';
+  var STAR_NUDGE_VERSION = '20261013a';
+  var THEME_MENU_VERSION = '20261029a';
   var navId = 0;
 
   function isStaticPreview(locationValue) {
@@ -24,7 +26,7 @@
   }
 
   function adaptRouteHref(href, locationValue) {
-    if (typeof href !== 'string' || !isStaticPreview(locationValue)) return href;
+    if (typeof href !== 'string') return href;
     if (/^[a-z][a-z\d+.-]*:/i.test(href) || href.indexOf('//') === 0) {
       try {
         var resolved = new URL(href, (locationValue || window.location).href);
@@ -33,7 +35,16 @@
         return href;
       }
     }
-    return href.replace(/(^|\/)(lesson|certification)(?=[?#]|$)/, '$1$2.html');
+    var boundary = href.search(/[?#]/);
+    var pathname = boundary < 0 ? href : href.slice(0, boundary);
+    var suffix = boundary < 0 ? '' : href.slice(boundary);
+    var pages = '(index|about|catalog|glossary|roadmap|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|certification|assessment|lesson|blogs|manuals|manual-[a-z0-9-]+|inside-an-ai-agent|inside-a-decompiler|inside-an-llm-serving-gpu|skills|how-to-learn|highlights)';
+    if (isStaticPreview(locationValue)) {
+      return pathname.replace(new RegExp('(^|/)' + pages + '$'), '$1$2.html') + suffix;
+    }
+    return pathname.replace(new RegExp('(^|/)' + pages + '\\.html$'), function (_, prefix, page) {
+      return page === 'index' ? (prefix || './') : prefix + page;
+    }) + suffix;
   }
 
   function adaptRouteLink(link) {
@@ -58,8 +69,6 @@
       adaptLink: adaptRouteLink,
       adaptTree: adaptRouteTree
     };
-    if (!isStaticPreview()) return;
-
     adaptRouteTree(document);
     document.addEventListener('click', function (event) {
       var target = event.target;
@@ -170,6 +179,24 @@
     document.head.appendChild(script);
   }
 
+  function ensureStarNudge() {
+    if (window.AIFSStarNudge || document.querySelector('script[data-aifs-star-nudge]')) return;
+    var script = document.createElement('script');
+    script.src = 'star-nudge.js?v=' + STAR_NUDGE_VERSION;
+    script.async = true;
+    script.setAttribute('data-aifs-star-nudge', STAR_NUDGE_VERSION);
+    document.head.appendChild(script);
+  }
+
+  function ensureThemeMenu() {
+    if (window.AIFSThemeMenu || document.querySelector('script[data-aifs-theme-menu]')) return;
+    var script = document.createElement('script');
+    script.src = 'theme-menu.js?v=' + THEME_MENU_VERSION;
+    script.async = true;
+    script.setAttribute('data-aifs-theme-menu', THEME_MENU_VERSION);
+    document.head.appendChild(script);
+  }
+
   function ensureNewsletter() {
     if (document.querySelector('script[data-aifs-newsletter]')) return;
     var stylesheet = document.createElement('link');
@@ -177,7 +204,7 @@
     stylesheet.href = 'newsletter.css?v=20260926b';
     document.head.appendChild(stylesheet);
     var script = document.createElement('script');
-    script.src = 'newsletter.js?v=20260926b';
+    script.src = 'newsletter.js?v=20261015a';
     script.async = true;
     script.setAttribute('data-aifs-newsletter', 'true');
     document.head.appendChild(script);
@@ -211,8 +238,14 @@
     }
 
     var target = current;
-    if (current === 'certification.html' || current === 'assessment.html') {
+    if (current === 'project.html') {
+      target = 'projects.html';
+    } else if (current === 'certification.html' || current === 'assessment.html') {
       target = 'certifications.html';
+    } else if (/^\/interviews(?:\/|$)/.test(location.pathname)) {
+      target = 'interviews.html';
+    } else if (/^manual-[a-z0-9-]+\.html$/.test(current)) {
+      target = 'manuals.html';
     } else if (current === 'lesson.html') {
       try {
         var params = new URLSearchParams(location.search);
@@ -233,8 +266,9 @@
 
   function ensureNavigationLink(nav, filename, label, className) {
     var links = nav.querySelectorAll('a');
+    var target = pageFile(filename);
     for (var i = 0; i < links.length; i++) {
-      if (pageFile(links[i].href) === filename) return;
+      if (pageFile(links[i].href) === target) return;
     }
 
     var link = document.createElement('a');
@@ -247,7 +281,15 @@
 
   function addNavigationLinks(nav) {
     ensureNavigationLink(nav, 'learning-paths.html', 'Learning Paths', '');
+    ensureNavigationLink(nav, 'how-to-learn.html', 'How to Learn', '');
     ensureNavigationLink(nav, 'projects.html', 'Projects', '');
+    ensureNavigationLink(nav, 'manuals.html', 'Manuals', '');
+    ensureNavigationLink(nav, '/cheatsheets', 'Cheat Sheets', '');
+    ensureNavigationLink(nav, '/practice', 'Practice', '');
+    ensureNavigationLink(nav, '/interviews', 'Interviews', '');
+    ensureNavigationLink(nav, 'skills.html', 'Skills', '');
+    ensureNavigationLink(nav, 'highlights.html', 'My Highlights', '');
+    ensureNavigationLink(nav, '/blogs', 'Blogs & Guides', '');
     ensureNavigationLink(nav, 'certifications.html', 'Certifications', 'header-mobile-only');
     ensureNavigationLink(nav, 'sponsors.html', 'Sponsor us', 'header-mobile-only');
   }
@@ -357,6 +399,7 @@
     }
 
     function syncLayout() {
+      if (window.AIFSThemeMenu && typeof window.AIFSThemeMenu.close === 'function') window.AIFSThemeMenu.close();
       var isNarrow = narrow ? narrow.matches : false;
       var menuHadFocus = nav.contains(document.activeElement);
       var priorityHadFocus = priorityNav.contains(document.activeElement);
@@ -381,10 +424,13 @@
       if (open && !header.contains(event.target)) setOpen(false, false);
     });
     document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && open && !event.defaultPrevented) {
+      if (event.key === 'Escape' && open && !event.defaultPrevented && !document.querySelector('.lang-panel:not([hidden]), #aifsThemeMenu:not([hidden])')) {
         event.preventDefault();
         setOpen(false, true);
       }
+    });
+    document.addEventListener('aifs:overlayopen', function (event) {
+      if (open && event.detail && event.detail.source === 'palette') setOpen(false, false);
     });
 
     if (narrow) {
@@ -406,15 +452,109 @@
     syncLayout();
   }
 
+  var BANNER_KEY = 'aifs:banner:dismissed';
+  var BANNER_ID = 'manuals-20261023';
+  var BANNER_HTML = '<div class="site-banner-inner">'
+    + '<span class="site-banner-tag">New</span>'
+    + '<p class="site-banner-text">'
+    + '<span class="site-banner-long">Detailed manuals for vLLM, Miles, SGLang, A2A, Docker Sandboxes and Reverse Engineering. </span>'
+    + '<span class="site-banner-short">Detailed manuals. </span>'
+    + '<a class="site-banner-link" href="manuals.html">Read the manuals<span aria-hidden="true"> →</span></a>'
+    + '</p>'
+    + '<button type="button" class="site-banner-close" aria-label="Dismiss the manuals announcement">'
+    + '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false">'
+    + '<path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" fill="none"/></svg>'
+    + '</button></div>';
+
+  function bannerDismissed() {
+    try {
+      return localStorage.getItem(BANNER_KEY) === BANNER_ID;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function rememberBannerDismissed() {
+    try {
+      localStorage.setItem(BANNER_KEY, BANNER_ID);
+    } catch (_) {}
+  }
+
+  function setupBanner() {
+    var header = document.querySelector('.site-header');
+    if (!header || !header.parentNode || document.documentElement.hasAttribute('data-poster') || document.querySelector('.site-banner') || bannerDismissed()) return;
+
+    var root = document.documentElement;
+    var banner = document.createElement('aside');
+    banner.className = 'site-banner';
+    banner.setAttribute('aria-label', 'Announcement');
+    banner.innerHTML = BANNER_HTML;
+    adaptRouteTree(banner);
+    header.parentNode.insertBefore(banner, header);
+    root.classList.add('has-site-banner');
+
+    var height = 0;
+    var frame = 0;
+
+    function syncOffset() {
+      frame = 0;
+      var offset = Math.max(0, height - (window.pageYOffset || root.scrollTop || 0));
+      root.style.setProperty('--site-banner-offset', offset + 'px');
+    }
+
+    function requestSync() {
+      if (!frame) frame = window.requestAnimationFrame(syncOffset);
+    }
+
+    function measure() {
+      height = banner.offsetHeight;
+      root.style.setProperty('--site-banner-h', height + 'px');
+      syncOffset();
+    }
+
+    var resizeObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null;
+    if (resizeObserver) resizeObserver.observe(banner);
+    window.addEventListener('resize', measure);
+    window.addEventListener('scroll', requestSync, { passive: true });
+    measure();
+
+    banner.querySelector('.site-banner-close').addEventListener('click', function () {
+      rememberBannerDismissed();
+      if (resizeObserver) resizeObserver.disconnect();
+      window.removeEventListener('resize', measure);
+      window.removeEventListener('scroll', requestSync);
+      if (frame) window.cancelAnimationFrame(frame);
+      var scrollY = window.pageYOffset || root.scrollTop || 0;
+      banner.parentNode.removeChild(banner);
+      root.classList.remove('has-site-banner');
+      root.style.removeProperty('--site-banner-h');
+      root.style.removeProperty('--site-banner-offset');
+      if (scrollY > 0) window.scrollTo({ top: Math.max(0, scrollY - height), behavior: 'instant' });
+      var logo = header.querySelector('.logo');
+      if (logo) logo.focus();
+    });
+  }
+
   function load() {
+    setupBanner();
     var headers = document.querySelectorAll('.site-header');
     for (var i = 0; i < headers.length; i++) setupNavigation(headers[i]);
+    var footers = document.querySelectorAll('.footer-links');
+    for (var j = 0; j < footers.length; j++) {
+      ensureNavigationLink(footers[j], '/blogs', 'Blogs & Guides', '');
+      ensureNavigationLink(footers[j], 'skills.html', 'Skills', '');
+      ensureNavigationLink(footers[j], '/practice', 'Practice', '');
+      ensureNavigationLink(footers[j], '/interviews', 'Interviews', '');
+      ensureNavigationLink(footers[j], 'highlights.html', 'My Highlights', '');
+    }
     loadStars();
+    ensureThemeMenu();
     ensureNarration();
     // Fork: i18n.js is the only translator. ui-i18n.js reads the same `lang`
     // key and ?lang=zh, then applies upstream's Simplified zh/ui.json over the
     // zh-Hant dictionary and resets <html lang>.
     ensureNewsletter();
+    ensureStarNudge();
   }
 
   setupRouteLinks();

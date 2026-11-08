@@ -1,0 +1,15 @@
+ledger_main [arm64]:
+    -fixups:
+        segment         section          address             type   target
+        __DATA_CONST    __got            0x100004000           bind  libledger/_grade
+        __DATA_CONST    __got            0x100004008           bind  libledger/_grade_label
+        __DATA_CONST    __got            0x100004010           bind  libledger/_percent_change
+        __DATA_CONST    __got            0x100004018           bind  libledger/_total
+        __DATA_CONST    __got            0x100004020           bind  libSystem/___stack_chk_fail
+        __DATA_CONST    __got            0x100004028           bind  libSystem/___stack_chk_guard
+        __DATA_CONST    __got            0x100004030           bind  libSystem/_printf
+        __DATA_CONST    __got            0x100004038           bind  libSystem/_puts
+        __DATA_CONST    __const          0x100004040           bind  libledger/_grade
+        __DATA_CONST    __const          0x100004048           bind  libledger/_grade
+        __DATA_CONST    __const          0x100004050         rebase  0x1000006D6
+        __DATA_CONST    __const          0x100004058         rebase  0x1000006DB

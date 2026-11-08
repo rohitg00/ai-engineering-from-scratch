@@ -9,7 +9,7 @@
 
 ## The Problem
 
-A 70B LLM sampling one token takes ~30 ms on an H100. A 3B draft model takes ~3 ms. If we let the 3B draft 5 tokens ahead, then run the 70B *once* to verify all 5, the total is `5×3 + 30 = 45 ms` for up to 5 accepted tokens — versus `5×30 = 150 ms` for straight-line generation. That is the full speculative-decoding pitch: trade a small amount of extra GPU memory (draft model) for 2–4× lower decode latency.
+A 70B LLM sampling one token takes ~30 ms on an H100. A 3B draft model takes ~3 ms. If we let the 3B draft 5 tokens ahead, then run the 70B *once* to verify all 5, the total is $5 \times 3 + 30 = 45$ ms for up to 5 accepted tokens — versus `5×30 = 150 ms` for straight-line generation. That is the full speculative-decoding pitch: trade a small amount of extra GPU memory (draft model) for 2–4× lower decode latency.
 
 The trick has to preserve the distribution. Speculative sampling, introduced by Leviathan et al. (2023) and by Chen et al. concurrently, guarantees that the output sequence is **identically distributed** to what the big model would have produced on its own. No quality tradeoff. Just faster.
 
@@ -26,30 +26,30 @@ Every production inference stack in 2026 ships speculative decoding by default. 
 
 ### The core algorithm
 
-Given a verifier `M_q` and a cheaper draft `M_p`:
+Given a verifier $M_q$ and a cheaper draft $M_p$:
 
-1. Let `x_1..x_k` be the prefix already decoded.
-2. **Draft**: use `M_p` to autoregressively propose `d_{k+1}, d_{k+2}, ..., d_{k+N}` with draft probabilities `p_1..p_N`.
-3. **Verify in parallel**: run `M_q` once on `x_1..x_k, d_{k+1}, ..., d_{k+N}`, getting verifier probabilities `q_1..q_{N+1}` for positions `k+1..k+N+1`.
-4. **Accept/reject each draft token left to right**: for each `i`, accept with probability `min(1, q_i(d_i) / p_i(d_i))`.
-5. On first rejection at position `j`: sample `t_j` from the "residual" distribution `(q_j - p_j)_+` normalized. All drafts after `j` are discarded.
-6. On accepting all `N`: sample one extra token `t_{N+1}` from `q_{N+1}` (the free bonus token).
+1. Let $x_1 \ldots x_k$ be the prefix already decoded.
+2. **Draft**: use $M_p$ to autoregressively propose $d_{k+1}, d_{k+2}, \ldots, d_{k+N}$ with draft probabilities $p_1 \ldots p_N$.
+3. **Verify in parallel**: run $M_q$ once on $x_1 \ldots x_k, d_{k+1}, \ldots, d_{k+N}$, getting verifier probabilities $q_1 \ldots q_{N+1}$ for positions $k+1 \ldots k+N+1$.
+4. **Accept/reject each draft token left to right**: for each $i$, accept with probability $\min(1, q_i(d_i) / p_i(d_i))$.
+5. On first rejection at position $j$: sample $t_j$ from the "residual" distribution $(q_j - p_j)_+$ normalized. All drafts after $j$ are discarded.
+6. On accepting all $N$: sample one extra token $t_{N+1}$ from $q_{N+1}$ (the free bonus token).
 
-The residual distribution trick is the mathematical insight that keeps the output distributed exactly as if `M_q` had sampled from scratch.
+The residual distribution trick is the mathematical insight that keeps the output distributed exactly as if $M_q$ had sampled from scratch.
 
 ### What determines speedup
 
-Let `α` = expected acceptance rate per draft token. Let `c` = draft-to-verifier cost ratio. Per step:
+Let $\alpha$ = expected acceptance rate per draft token. Let $c$ = draft-to-verifier cost ratio. Per step:
 
 - Naive generation makes 1 big-model call per token.
-- Speculative makes 1 big-model call per `(1 - α^{N+1}) / (1 - α) ≈ 1/(1-α)` tokens when `α` is high.
+- Speculative makes 1 big-model call per $(1 - \alpha^{N+1}) / (1 - \alpha) \approx 1/(1-\alpha)$ tokens when $\alpha$ is high.
 
-Typical rule of thumb at `α = 0.75` and `N = 5`: 3× fewer big-model calls. Draft cost is 5× cheap. Total wall-clock drops ~2.5×.
+Typical rule of thumb at $\alpha = 0.75$ and $N = 5$: 3× fewer big-model calls. Draft cost is 5× cheap. Total wall-clock drops ~2.5×.
 
-**α depends on:**
+**$\alpha$ depends on:**
 
-- How well the draft approximates the verifier. Same family / same training data boosts α significantly.
-- Decoding strategy. Greedy draft against greedy verifier: high α. Temperature sampling: harder to match; acceptance drops.
+- How well the draft approximates the verifier. Same family / same training data boosts $\alpha$ significantly.
+- Decoding strategy. Greedy draft against greedy verifier: high $\alpha$. Temperature sampling: harder to match; acceptance drops.
 - Task type. Code and structured output accept more (predictable); free-form creative writing accepts less.
 
 ### Medusa — drafts without a draft model
@@ -70,13 +70,13 @@ Pros: no second model. Cons: adds trainable parameters; needs a supervised fine-
 
 ### EAGLE — better draft by reusing hidden states
 
-EAGLE-1/2/3 (Li et al., 2024–2025) makes the draft model a tiny transformer (typically 1 layer) that ingests the verifier's last-layer hidden states. Because the draft sees the verifier's feature representation, its predictions correlate strongly with the verifier's output distribution. Acceptance rates climb from ~0.6 (vanilla) to 0.85+.
+EAGLE-1/2/3 (Li et al., 2024–2025) makes the draft model a tiny transformer (typically 1 layer) that ingests the verifier's last-layer hidden states. Because the draft sees the verifier's feature representation, its predictions correlate strongly with the verifier's output distribution. Acceptance rates climb from ~0.6 (vanilla) to 0.85+. These are per-token rates on chat benchmarks, with a draft trained on matching chat data. On mixed production traffic, Phase 17 · 05 plans with 0.6 to 0.8 for EAGLE-3, and domain traffic can be lower.
 
 EAGLE-3 (2025) added tree search over candidate continuations. vLLM and SGLang ship EAGLE-2/3 as the default spec pathway for Llama 3/4 and Qwen 3.
 
 ### The KV cache dance
 
-Verification feeds `N` draft tokens into the verifier in one forward pass. This extends the verifier's KV cache by `N` entries. If some drafts are rejected, you must roll the cache back to the accepted prefix length.
+Verification feeds $N$ draft tokens into the verifier in one forward pass. This extends the verifier's KV cache by $N$ entries. If some drafts are rejected, you must roll the cache back to the accepted prefix length.
 
 Production implementations (vLLM's `--speculative-config`, TensorRT-LLM's LookaheadDecoder) handle this with scratch KV buffers. Write first, commit on acceptance. It's not conceptually hard, but it is fiddly.
 
@@ -181,7 +181,7 @@ TensorRT-LLM has the fastest Medusa path as of mid-2026. `faster-whisper` wraps 
 **When NOT to spec-decode:**
 
 - Single-sequence generation of 1–5 tokens. Overhead dominates.
-- Wildly creative / high-temperature sampling (α drops).
+- Wildly creative / high-temperature sampling ($\alpha$ drops).
 - Memory-constrained deployments (draft model adds VRAM).
 
 ## Ship It
@@ -191,7 +191,7 @@ See `outputs/skill-spec-decode-picker.md`. The skill picks a speculative decodin
 ## Exercises
 
 1. **Easy.** Run `code/main.py`. Confirm the speculative token distribution matches the verifier's direct-sample distribution on 50,000 tokens within chi-square p > 0.05.
-2. **Medium.** Plot speedup (tokens per big-model forward) as a function of `N` for `α = 0.5, 0.7, 0.85`. Identify the optimal `N` for each α. (Hint: expected tokens per verify call = `(1 - α^{N+1}) / (1 - α)`.)
+2. **Medium.** Plot speedup (tokens per big-model forward) as a function of $N$ for $\alpha = 0.5, 0.7, 0.85$. Identify the optimal $N$ for each $\alpha$. (Hint: expected tokens per verify call = $(1 - \alpha^{N+1}) / (1 - \alpha)$.)
 3. **Hard.** Implement a tiny Medusa: take the capstone GPT from Lesson 14, add 3 extra LM heads that predict positions t+2, t+3, t+4. Train on tinyshakespeare with a joint multi-head loss. Compare acceptance rates vs a vanilla draft made by truncating the same model.
 4. **Hard.** Implement rollback: start with a 10-token prefix KV cache, feed 5 draft tokens, simulate a rejection at position 3. Verify your cache reads correctly match "prefix + first 2 accepted drafts" at the next iteration.
 
@@ -201,7 +201,7 @@ See `outputs/skill-spec-decode-picker.md`. The skill picks a speculative decodin
 |------|-----------------|-----------------------|
 | Draft model | "The cheap one" | A smaller model that proposes candidate tokens; usually 10–50× cheaper than the verifier. |
 | Verifier | "The big one" | The target model whose distribution we preserve; runs once per speculative step. |
-| Acceptance rate (α) | "How often the draft is right" | Per-token probability that the verifier accepts the draft. 0.7–0.9 typical. |
+| Acceptance rate ($\alpha$) | "How often the draft is right" | Per-token probability that the verifier accepts the draft. 0.7–0.9 typical. |
 | Residual distribution | "The rejection fallback" | `(q - p)_+` normalized; sampling from this on rejection preserves the verifier's distribution. |
 | Bonus token | "The free one" | When all N drafts accepted, sample one more from the verifier's next-step distribution. |
 | Medusa | "Draft-less speculative" | Multiple LM heads on the verifier predict positions t+1..t+k in parallel. |

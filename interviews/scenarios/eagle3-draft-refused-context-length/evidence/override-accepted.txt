@@ -1,0 +1,9 @@
+title: the same check with the override set
+source: manuals/sglang-101/capture/gpu/out-gb10/server-eagle3.log
+lines: 19-21
+lang: text
+note: The warning stays, and the next line says what the override changed.
+---
+[2026-10-17 15:20:18] Load weight end. elapsed=312.38 s, type=Qwen3MoeForCausalLM, avail mem=55.96 GB, mem usage=57.49 GB.
+[2026-10-17 15:20:19] Warning: Target model's context_length (262144) is greater than the derived context_length (2048). This may lead to incorrect model outputs or CUDA errors. Note that the derived context_length may differ from max_position_embeddings in the model's config.
+[2026-10-17 15:20:19] Overriding the draft model's max_position_embeddings to 262144.

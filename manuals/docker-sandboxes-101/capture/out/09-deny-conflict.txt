@@ -1,0 +1,3 @@
+$ sbx policy deny network --sandbox m101-policy example.com
+error: deny network rule: deny:   "example.com" conflicts with existing allow rule "<uuid>" (name "<uuid>") for tcp
+[exit 1]

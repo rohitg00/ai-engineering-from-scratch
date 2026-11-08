@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="fig-7-1-title fig-7-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-1-title">Start from what you see</title>
+  <desc id="fig-7-1-desc">Five symptoms from our runs, each with the first check and the fix. An idle GPU with a growing log means a dead engine. A FlashAttention 3 error means a GPU that is not Hopper, because the FA3 build in the image is for Hopper only. A Ray out-of-memory error means the node was full. Step times that differ mean heat pauses. A rejected trainer attention name means a name that the installed transformers library does not accept.</desc>
+  <defs><marker id="fig-7-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="28" font-size="11" letter-spacing="1.2" fill="var(--m-rose-ink, #b0344d)">SYMPTOM</text>
+  <text x="240" y="28" font-size="11" letter-spacing="1.2" fill="var(--m-amber-ink, #85590c)">FIRST CHECK</text>
+  <text x="440" y="28" font-size="11" letter-spacing="1.2" fill="var(--m-green-ink, #336b40)">FIX</text>
+  <rect x="20" y="42" width="190" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="115" y="67.45" font-size="11.5" text-anchor="middle" font-weight="700">GPU idle, log grows</text>
+  <rect x="240" y="42" width="166" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="323" y="67.45" font-size="11.5" text-anchor="middle" font-weight="400">count 503 lines</text>
+  <rect x="440" y="42" width="180" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="530" y="67.45" font-size="11.5" text-anchor="middle" font-weight="400">read the first error</text>
+  <line x1="210" y1="64" x2="239" y2="64" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <line x1="406" y1="64" x2="439" y2="64" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect x="20" y="100" width="190" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="115" y="125.45" font-size="11.5" text-anchor="middle" font-weight="700">FlashAttention 3 error</text>
+  <rect x="240" y="100" width="166" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="323" y="125.45" font-size="11.5" text-anchor="middle" font-weight="400">compute capability</text>
+  <rect x="440" y="100" width="180" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="530" y="125.45" font-size="11.5" text-anchor="middle" font-weight="400">not Hopper: no FA3</text>
+  <line x1="210" y1="122" x2="239" y2="122" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <line x1="406" y1="122" x2="439" y2="122" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect x="20" y="158" width="190" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="115" y="183.45" font-size="11.5" text-anchor="middle" font-weight="700">Ray OutOfMemoryError</text>
+  <rect x="240" y="158" width="166" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="323" y="183.45" font-size="11.5" text-anchor="middle" font-weight="400">memory at the kill</text>
+  <rect x="440" y="158" width="180" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="530" y="183.45" font-size="11.5" text-anchor="middle" font-weight="400">use a smaller model</text>
+  <line x1="210" y1="180" x2="239" y2="180" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <line x1="406" y1="180" x2="439" y2="180" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect x="20" y="216" width="190" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="115" y="241.45" font-size="11.5" text-anchor="middle" font-weight="700">step times differ</text>
+  <rect x="240" y="216" width="166" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="323" y="241.45" font-size="11.5" text-anchor="middle" font-weight="400">heat pauses</text>
+  <rect x="440" y="216" width="180" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="530" y="241.45" font-size="11.5" text-anchor="middle" font-weight="400">compare clean steps</text>
+  <line x1="210" y1="238" x2="239" y2="238" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <line x1="406" y1="238" x2="439" y2="238" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect x="20" y="274" width="190" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="115" y="299.45" font-size="11.5" text-anchor="middle" font-weight="700">attention name rejected</text>
+  <rect x="240" y="274" width="166" height="44" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="323" y="299.45" font-size="11.5" text-anchor="middle" font-weight="400">the ValueError list</text>
+  <rect x="440" y="274" width="180" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="530" y="299.45" font-size="11.5" text-anchor="middle" font-weight="400">pick a listed name</text>
+  <line x1="210" y1="296" x2="239" y2="296" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <line x1="406" y1="296" x2="439" y2="296" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <text x="20" y="342" font-size="12" class="m-serif">Section 7.1 has every symptom we hit, and six more from issue reports.</text>
+</svg>

@@ -94,8 +94,9 @@
     });
     // the cold→warm replica on the far right
     svg.appendChild(box(450, 90, 60, 50, BG, SOFT));
-    var lamp = svgEl('circle', { cx: 480, cy: 115, r: 9, fill: SOFT });
-    lamp.appendChild(anim('fill', SOFT + ';' + SOFT + ';' + BP + ';' + BP, '5s'));
+    svg.appendChild(svgEl('circle', { cx: 480, cy: 115, r: 9, fill: SOFT }));
+    var lamp = svgEl('circle', { cx: 480, cy: 115, r: 9, fill: BP, opacity: 0 });
+    lamp.appendChild(anim('opacity', '0;0;1;1', '5s'));
     svg.appendChild(lamp);
     var lampTxt = txt(480, 160, 'cold', 8, MUTE);
     svg.appendChild(lampTxt);

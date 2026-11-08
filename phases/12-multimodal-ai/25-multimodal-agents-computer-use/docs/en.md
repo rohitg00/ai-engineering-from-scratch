@@ -128,7 +128,7 @@ mm-agent-loop
 
 `code/main.py` is the capstone scaffold:
 
-- Action schema JSON definition (10 actions).
+- Action schema JSON definition (10 actions: the nine listed above plus `screenshot_region`, a crop + zoom tool).
 - Mock browser state as dict.
 - Agent loop skeleton: receive state, emit action, apply, loop.
 - 10-task mini-benchmark (synthetic pages) to measure end-to-end success rate.
@@ -140,7 +140,7 @@ This lesson produces `outputs/skill-multimodal-agent-designer.md`. Given a compu
 
 ## Exercises
 
-1. Extend the action schema with a `screenshot_region` tool (crop + zoom). What tasks benefit?
+1. The code's schema adds a `screenshot_region` tool (crop + zoom) to the nine core actions. What tasks benefit?
 
 2. Read AgentVista (arXiv:2602.23166). Describe the hardest task category and why frontier models still fail.
 

@@ -1,0 +1,6 @@
+# Live check 2026-10-23 on the DGX Spark, image radixark/miles@sha256:c64fa344, Qwen3-0.6B.
+## torch_dist conversion (tools/convert_hf_to_torch_dist.py, qwen3-0.6B)
+successfully saved checkpoint from iteration       1 to /root/lab/models/Qwen3-0.6B_torch_dist 
+latest_checkpointed_iteration.txt: release
+## FSDP to Hugging Face (tools/convert_fsdp_to_hf.py, iter_0000002)
+config.json generation_config.json LICENSE merges.txt model.safetensors README.md tokenizer_config.json tokenizer.json vocab.json 

@@ -1,0 +1,21 @@
+{
+  "id": "cosine-top-k",
+  "title": "Cosine similarity top-k search",
+  "kind": "implement",
+  "summary": "Normalize embedding rows, score queries against documents with cosine similarity, and return the top k documents with a fixed tie rule.",
+  "difficulty": "easy",
+  "tags": ["embeddings", "cosine-similarity", "vector-search", "retrieval"],
+  "lesson": "phases/11-llm-engineering/04-embeddings",
+  "cheatsheet": "embeddings-vector-search",
+  "minutes": 15,
+  "entry": ["normalize_rows", "cosine_similarity_matrix", "top_k"],
+  "collections": ["rag-building-blocks"],
+  "time_limit_s": 10,
+  "mutants": {
+    "column_norm": "Takes the norm over axis 0, so it normalizes columns and not rows.",
+    "in_place_normalize": "Divides the input array in place, so the caller's vectors change.",
+    "no_zero_guard": "Divides by a zero norm, so a zero vector gives NaN and not 0.",
+    "reversed_ties": "Sorts ascending and reverses the order, so equal scores put the higher index first.",
+    "skip_first": "Drops the best match and returns ranks 2 to k + 1, as if it removed a self match."
+  }
+}

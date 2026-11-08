@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 656" role="img" aria-labelledby="fig-server-parts-title fig-server-parts-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-server-parts-title">The parts of a server, in the order a request meets them</title>
+  <desc id="fig-server-parts-desc">One SendStreamingMessage request enters the kit server at Handler.jsonrpc or Handler.rest. It passes authenticate, which answers HTTP 401 for a bad token, check_version, which answers VersionNotSupportedError -32009, and the capability check on the card, which answers UnsupportedOperationError -32004. Agent.send then validates the message and stores a task in Agent.tasks as TASK_STATE_SUBMITTED. Agent.work runs the behavior, the agent logic, in a thread. Agent.apply writes each event to the task record and Agent.broadcast copies it to every subscriber queue, which Handler.pump writes as SSE data frames, and to Agent.deliver, which POSTs it to each webhook URL.</desc>
+  <defs><marker id="fig-server-parts-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-server-parts-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker><marker id="fig-server-parts-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-server-parts-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE REQUEST, TOP TO BOTTOM</text>
+  <text x="350" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT A FAILED CHECK RETURNS</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="30" width="300" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="170" y="48.1" font-size="12" text-anchor="middle" font-weight="700">SendStreamingMessage request</text>
+  <text x="170" y="65.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">POST /a2a/jsonrpc, A2A-Version: 1.0</text>
+  <rect x="20" y="100" width="300" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="170" y="118.1" font-size="12" text-anchor="middle" font-weight="700">Handler.jsonrpc, Handler.rest</text>
+  <text x="170" y="135.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one method per binding, same checks</text>
+  <line x1="170" y1="76" x2="170" y2="99" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-server-parts-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M170 76 L170 99" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="170" width="300" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="170" y="188.1" font-size="12" text-anchor="middle" font-weight="700">authenticate</text>
+  <text x="170" y="205.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">bearer token, deployer only</text>
+  <line x1="170" y1="146" x2="170" y2="169" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-server-parts-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M170 146 L170 169" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="350" y="170" width="270" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="485" y="188.1" font-size="12" text-anchor="middle" font-weight="700">HTTP 401</text>
+  <text x="485" y="205.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">WWW-Authenticate: Bearer</text>
+  <line x1="320" y1="193" x2="349" y2="193" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-server-parts-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M320 193 L349 193" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="240" width="300" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="170" y="258.1" font-size="12" text-anchor="middle" font-weight="700">check_version</text>
+  <text x="170" y="275.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A2A-Version must be 1.0</text>
+  <line x1="170" y1="216" x2="170" y2="239" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-server-parts-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M170 216 L170 239" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="350" y="240" width="270" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="485" y="258.1" font-size="12" text-anchor="middle" font-weight="700">VersionNotSupportedError</text>
+  <text x="485" y="275.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">-32009, FAILED_PRECONDITION</text>
+  <line x1="320" y1="263" x2="349" y2="263" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-server-parts-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M320 263 L349 263" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="310" width="300" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="170" y="328.1" font-size="12" text-anchor="middle" font-weight="700">card[&quot;capabilities&quot;]</text>
+  <text x="170" y="345.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">streaming, pushNotifications</text>
+  <line x1="170" y1="286" x2="170" y2="309" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-server-parts-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M170 286 L170 309" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="350" y="310" width="270" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="485" y="328.1" font-size="12" text-anchor="middle" font-weight="700">UnsupportedOperationError</text>
+  <text x="485" y="345.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">-32004, or -32003 for push</text>
+  <line x1="320" y1="333" x2="349" y2="333" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-server-parts-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M320 333 L349 333" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="380" width="300" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="170" y="398.1" font-size="12" text-anchor="middle" font-weight="700">Agent.send</text>
+  <text x="170" y="415.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">validate_message, then one task</text>
+  <line x1="170" y1="356" x2="170" y2="379" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-server-parts-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M170 356 L170 379" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect x="350" y="380" width="270" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="485" y="398.1" font-size="12" text-anchor="middle" font-weight="700">Agent.tasks</text>
+  <text x="485" y="415.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the task record, TASK_STATE_SUBMITTED</text>
+  <line x1="320" y1="403" x2="349" y2="403" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-server-parts-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M320 403 L349 403" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="450" width="300" height="46" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="170" y="468.1" font-size="12" text-anchor="middle" font-weight="700">Agent.work, behavior</text>
+  <text x="170" y="485.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the agent logic, in its own thread</text>
+  <line x1="170" y1="426" x2="170" y2="449" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-server-parts-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M170 426 L170 449" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="175" y="426.53" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="178" y="437.5" font-size="11.5">a thread per request</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="520" width="300" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="170" y="538.1" font-size="12" text-anchor="middle" font-weight="700">Agent.apply, Agent.broadcast</text>
+  <text x="170" y="555.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the record, then every subscriber</text>
+  <line x1="170" y1="496" x2="170" y2="519" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-server-parts-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M170 496 L170 519" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="175" y="496.53" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="178" y="507.5" font-size="11.5">yields events</text>
+  <path d="M320 543 H335 V413 H349" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-server-parts-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M320 543 H335 V413 H349" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="343" y="526.42" width="95.1" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="346" y="537" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">writes the task</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="590" width="300" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="170" y="608.1" font-size="12" text-anchor="middle" font-weight="700">Handler.pump</text>
+  <text x="170" y="625.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">data: frames on each SSE stream</text>
+  <rect x="350" y="590" width="270" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="485" y="608.1" font-size="12" text-anchor="middle" font-weight="700">Agent.deliver</text>
+  <text x="485" y="625.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">POST to each webhook URL</text>
+  <line x1="170" y1="566" x2="170" y2="589" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-server-parts-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M170 566 L170 589" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="175" y="566.53" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="178" y="577.5" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">each event</text>
+  <path d="M270 566 V578 H485 V589" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#fig-server-parts-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M270 566 V578 H485 V589" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="382" y="563.03" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="385" y="574" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">each event</text>
+  </g>
+</svg>

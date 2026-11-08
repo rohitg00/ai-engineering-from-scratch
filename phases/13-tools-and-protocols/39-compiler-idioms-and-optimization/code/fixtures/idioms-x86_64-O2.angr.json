@@ -1,0 +1,135 @@
+{
+  "tool": "angr",
+  "versions": {
+    "angr": "10.0.3",
+    "pyvex": "10.0.3",
+    "cle": "10.0.3",
+    "archinfo": "10.0.3"
+  },
+  "fixture": "idioms-x86_64-O2.o",
+  "command": "venv/bin/python capture_angr.py FIXTURE.o OUT.json",
+  "analysis": "angr.Project(path, auto_load_libs=False); project.analyses.CFGFast(normalize=True, data_references=True); project.analyses.Decompiler(function, cfg=cfg.model)",
+  "arch": "AMD64",
+  "functions": [
+    {
+      "name": "div10u",
+      "addr": 4194304,
+      "blocks": 1,
+      "decompiled": "long long div10u(unsigned int a0)\n{\n    return a0 / 10;\n}\n"
+    },
+    {
+      "name": "div10s",
+      "addr": 4194320,
+      "blocks": 1,
+      "decompiled": "int div10s(int a0)\n{\n    unsigned long long v1;  // rax\n\n    v1 = a0 * 1717986919;\n    return ((long long)(v1) >> 0x22) + (v1 >> 63);\n}\n"
+    },
+    {
+      "name": "div7u",
+      "addr": 4194352,
+      "blocks": 1,
+      "decompiled": "int div7u(unsigned int a0)\n{\n    return (a0 / 7 + ((a0 * 6 / 7 & 0xffffffff) >> 1 & 0xffffffff) & 0xffffffff) >> 2;\n}\n"
+    },
+    {
+      "name": "mod10s",
+      "addr": 4194416,
+      "blocks": 1,
+      "decompiled": "int mod10s(int a0)\n{\n    unsigned long long v1;  // rcx\n\n    v1 = a0 * 1717986919;\n    return a0 - ((unsigned int)((long long)(v1) >> 0x22) + (unsigned int)(v1 >> 63)) * 2 * 5;\n}\n"
+    },
+    {
+      "name": "mod8s",
+      "addr": 4194448,
+      "blocks": 1,
+      "decompiled": "long long mod8s(unsigned int a0)\n{\n    unsigned int v1;  // ecx\n\n    if ((int)a0 >= 0)\n        v1 = a0;\n    else\n        v1 = a0 + 7;\n    return a0 - (v1 & 0xfffffff8);\n}\n"
+    },
+    {
+      "name": "mul9",
+      "addr": 4194464,
+      "blocks": 1,
+      "decompiled": "int mul9(unsigned int a0)\n{\n    return a0 * 9;\n}\n"
+    },
+    {
+      "name": "linear_switch",
+      "addr": 4194480,
+      "blocks": 1,
+      "decompiled": "unsigned long long linear_switch(unsigned int a0)\n{\n    return (a0 < 7 ? a0 * 10 + 10 : 0xffffffff);\n}\n"
+    },
+    {
+      "name": "table_switch",
+      "addr": 4194512,
+      "blocks": 3,
+      "decompiled": "unsigned int table_switch(unsigned int a0)\n{\n    unsigned int v1;  // eax\n\n    v1 = 0xffffffff;\n    if (a0 <= 6)\n        v1 = *(int *)(4 * a0 + 4195400);\n    return v1;\n}\n"
+    },
+    {
+      "name": "sparse_switch",
+      "addr": 4194592,
+      "blocks": 12,
+      "decompiled": "unsigned long long sparse_switch(unsigned int a0)\n{\n    unsigned long long v1;  // rax\n\n    v1 = a0;\n    if ((int)a0 > 9999)\n    {\n        if ((unsigned int)v1 == 10000)\n        {\n            return 3;\n        }\n        else if ((unsigned int)v1 == 1000000)\n        {\n            return 4;\n        }\n        else if ((unsigned int)v1 == 100000000)\n        {\n            return 5;\n        }\n    }\n    else\n    {\n        if ((unsigned int)v1 == 1)\n        {\n            return v1;\n        }\n        else if ((unsigned int)v1 == 100)\n        {\n            return 2;\n        }\n    }\n    return 0;\n}\n"
+    },
+    {
+      "name": "two_cases",
+      "addr": 4194672,
+      "blocks": 1,
+      "decompiled": "unsigned int two_cases(unsigned int a0)\n{\n    return (a0 != 3 ? (a0 == 4) * 9 : 7);\n}\n"
+    },
+    {
+      "name": "clamp_max",
+      "addr": 4194704,
+      "blocks": 1,
+      "decompiled": "long long clamp_max(unsigned int a0, unsigned int a1)\n{\n    return ((int)a1 < (int)a0 ? a0 : a1);\n}\n"
+    },
+    {
+      "name": "abs_int",
+      "addr": 4194720,
+      "blocks": 1,
+      "decompiled": "long long abs_int(unsigned int a0)\n{\n    return ((int)-a0 < 0 ? a0 : -a0);\n}\n"
+    },
+    {
+      "name": "is_pos",
+      "addr": 4194736,
+      "blocks": 1,
+      "decompiled": "int is_pos(int a0)\n{\n    return a0 > 0;\n}\n"
+    },
+    {
+      "name": "tail_caller",
+      "addr": 4194752,
+      "blocks": 1,
+      "decompiled": "void tail_caller(unsigned long a0)\n{\n    tail_target();\n    return;\n}\n"
+    },
+    {
+      "name": "twice_sum",
+      "addr": 4194784,
+      "blocks": 1,
+      "decompiled": "unsigned int twice_sum(unsigned int a0, unsigned int a1)\n{\n    return (a0 + a1) * 2;\n}\n"
+    },
+    {
+      "name": "sum_n",
+      "addr": 4194800,
+      "blocks": 10,
+      "decompiled": "double sum_n(uint128_t *a0, unsigned int a1)\n{\n    unsigned long j;  // rcx\n    unsigned long v2;  // rdx\n    __m128i v3;  // xmm0\n    unsigned long long i;  // rsi\n    __m128i v5;  // xmm1\n    unsigned long v6;  // xmm0lq\n    unsigned long v7;  // xmm0lq\n\n    if ((int)a1 <= 0)\n        return v7;\n    j = a1;\n    if (a1 <= 7)\n    {\n        v2 = 0;\n    }\n    else\n    {\n        v2 = (unsigned int)j & 0x7ffffff8;\n        v3 = _mm_setzero_si128();\n        i = 0;\n        v5 = _mm_setzero_si128();\n        do\n        {\n            v3 = _mm_add_epi32(v3, *(int128_t *)((char *)a0 + i));\n            v5 = _mm_add_epi32(v5, *(int128_t *)((char *)a0 + i + 16));\n            i += 32;\n        } while (((unsigned int)((j & 0xffffffff) >> 3) & 0xfffffff) * 32 != i);\n        if ((unsigned int)v2 == (unsigned int)j)\n            return _mm_cvtsi128_si64(_mm_add_epi32(_mm_shuffle_epi32(_mm_add_epi32(v5, v3), 0xee), _mm_add_epi32(v5, v3)));\n    }\n    do\n    {\n        v2 += 1;\n    } while (j != v2);\n    return v6;\n}\n"
+    },
+    {
+      "name": "sum4",
+      "addr": 4194944,
+      "blocks": 1,
+      "decompiled": "int sum4(uint128_t *a0)\n{\n    __m128i v1;  // xmm0\n    unsigned long long v2;  // xmm1lq\n\n    v1 = *a0;\n    v2 = _mm_cvtsi128_si64(_mm_add_epi32(_mm_shuffle_epi32(v1, 0xee), v1));\n    return (unsigned int)(v2 >> 32) + (unsigned int)v2;\n}\n"
+    },
+    {
+      "name": "fill",
+      "addr": 4195056,
+      "blocks": 3,
+      "decompiled": "void* fill(void* a0, unsigned int a1)\n{\n    void* v1;  // rax\n\n    if ((int)a1 <= 0)\n        return v1;\n    return memset(a0, 0, a1);\n}\n"
+    },
+    {
+      "name": "copy16",
+      "addr": 4195088,
+      "blocks": 1,
+      "decompiled": "double copy16(uint128_t *a0, uint128_t *a1)\n{\n    uint128_t v1;  // xmm0\n\n    v1 = *a1;\n    *a0 = v1;\n    return (unsigned long long)v1;\n}\n"
+    },
+    {
+      "name": "digest",
+      "addr": 4195104,
+      "blocks": 15,
+      "decompiled": "extern unsigned int g_400434[4];\n\nunsigned long long digest(void* a0, unsigned int a1)\n{\n    int v1;  // eax\n    unsigned long j;  // rdx\n    unsigned long idx;  // rsi\n    __m128i v4;  // xmm0\n    unsigned long long i;  // r8\n    __m128i v6;  // xmm1\n    unsigned long long v7;  // xmm0lq\n    unsigned long long v8;  // rdx\n    unsigned int v9;  // edx\n\n    v1 = 0;\n    if ((int)a1 > 0)\n    {\n        j = a1;\n        if (a1 <= 7)\n        {\n            idx = 0;\n            v1 = 0;\n        }\n        else\n        {\n            idx = (unsigned int)j & 0x7ffffff8;\n            v4 = _mm_setzero_si128();\n            i = 0;\n            v6 = _mm_setzero_si128();\n            do\n            {\n                v4 = _mm_add_epi32(v4, *(int128_t *)((char *)a0 + i));\n                v6 = _mm_add_epi32(v6, *(int128_t *)((char *)a0 + i + 16));\n                i += 32;\n            } while (((unsigned int)((j & 0xffffffff) >> 3) & 0xfffffff) * 32 != i);\n            v7 = _mm_cvtsi128_si64(_mm_add_epi32(_mm_shuffle_epi32(_mm_add_epi32(v6, v4), 0xee), _mm_add_epi32(v6, v4)));\n            v1 = (unsigned int)(v7 >> 32) + (unsigned int)v7;\n            if ((unsigned int)idx == (unsigned int)j)\n                goto LABEL_4003ab;\n        }\n        do\n        {\n            v1 += *(int *)((char *)a0 + 4 * idx);\n            idx += 1;\n        } while (j != idx);\nLABEL_4003ab:\n        v8 = v1 * 1717986919;\n        if ((unsigned int)(v8 >> 63) + (unsigned int)((long long)(v8) >> 0x22) - 6 <= 4)\n            goto *((void *)((long long)(*(int *)((char *)&g_400434[(v8 >> 63) + ((long long)(v8) >> 0x22)] - 24) + (char *)&g_400434[0])));\n    }\n    v9 = v1 - ((unsigned int)((long long)(v1 * 1717986919) >> 0x22) + (unsigned int)(v1 * 1717986919 >> 63)) * 10;\n    return ((int)v9 < 5 ? v9 : 5);\n}\n"
+    }
+  ]
+}

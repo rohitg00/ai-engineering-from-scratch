@@ -1,0 +1,31 @@
+{
+  "tutorial": "# Borrow a field guide\n\nCreate a loan, then inspect its title. These request blocks are executable examples.\n\n```request\n{\"id\":\"create-loan\",\"method\":\"POST\",\"path\":\"/loans\",\"body\":{\"title\":\"Neighborhood Trees\"},\"status\":201,\"capture\":{\"loanId\":{\"path\":\"id\",\"type\":\"number\"}}}\n```\n\nRead the borrowed book name. This authored example deliberately uses an outdated field.\n\n```request\n{\"id\":\"read-loan\",\"method\":\"GET\",\"path\":\"/loans/{{loanId}}\",\"status\":200,\"assert\":{\"bookName\":\"Neighborhood Trees\"}}\n```\n\n```request\n{\"id\":\"return-loan\",\"method\":\"DELETE\",\"path\":\"/loans/{{loanId}}\",\"status\":200,\"assert\":{\"returned\":true}}\n```\n",
+  "fixture": [
+    {
+      "method": "POST",
+      "path": "/loans",
+      "status": 201,
+      "body": {
+        "id": 41,
+        "title": "Neighborhood Trees"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/loans/41",
+      "status": 200,
+      "body": {
+        "id": 41,
+        "title": "Neighborhood Trees"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/loans/41",
+      "status": 200,
+      "body": {
+        "returned": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "id": "binary-inspector",
+  "title": "Binary Inspector",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "A static inspector that reads ELF, PE/COFF, and Mach-O files you compiled and reports their layout, names, links, and function starts.",
+  "summary": "A static inspector for programs you compiled. Give it an ELF64 object, a COFF object, a PE32+ image, or a Mach-O 64 file. It reports the format, the architecture, and the sections and segments with permissions and entropy. It reports symbols with a small Itanium demangler, imports, exports, relocations, chained fixups, and strings with their section. It scores function starts against the unstripped build. It writes a JSON report, an HTML report with a byte map, and a diff between two builds.",
+  "hours": 10,
+  "languages": ["Python"],
+  "languageWhy": {
+    "Python": "The struct module reads fixed-layout records directly, so every field the inspector reports comes from an offset you can check by hand."
+  },
+  "status": "ready",
+  "source": "core",
+  "author": {
+    "name": "AI Engineering from Scratch",
+    "github": "rohitg00"
+  },
+  "skills": [
+    "Detect a binary format and parse its header",
+    "Map sections and segments with permissions and entropy",
+    "Read symbol tables and demangle C++ names",
+    "Follow imports, exports, relocations, and chained fixups",
+    "Recover function starts and score them against ground truth",
+    "Publish a JSON report, an HTML byte map, and a build diff"
+  ],
+  "prerequisites": [
+    "Python 3.10+ for the inspector and the grader",
+    "Phase 13 lessons 32, 40, and 41: ELF tables, linking and loading, and C++ names",
+    "Hexadecimal arithmetic, little-endian byte order, and the struct module"
+  ],
+  "youWillBuild": "A static inspector that reads ELF, PE/COFF, and Mach-O files you compiled and reports their layout, names, links, and function starts.",
+  "usefulFor": [
+    "Check the contents of a build before a release: which sections are writable and executable, which libraries it imports, and which names strip removed.",
+    "Compare two builds of your own program and see which sections grew, which symbols moved, and which strings changed."
+  ],
+  "figures": true,
+  "overviewFigure": "pj-binary-inspector-1",
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "inspect",
+      "fixtures/tally-arm64-O2.stripped",
+      "--truth",
+      "fixtures/tally-arm64-O2",
+      "--json",
+      "report.json",
+      "--html",
+      "report.html"
+    ]
+  },
+  "stages": [
+    {
+      "id": "01-headers",
+      "title": "Detect the format and parse the header",
+      "summary": "Read the magic bytes and identify ELF64, a COFF object, a PE32+ image, or Mach-O 64. Parse the file header of each into one shape: format, architecture, kind, entry point, and the raw fields. Read the Mach-O load commands in sequence. Refuse 32-bit, big-endian, universal, and truncated files with a FormatError that names the reason.",
+      "hours": 1.5,
+      "difficulty": "starter",
+      "language": "python",
+      "languageWhy": "struct.unpack_from with an explicit bounds check turns every header field into one checked read.",
+      "concepts": ["magic numbers", "ELF header", "COFF file header", "PE optional header", "Mach-O load commands"],
+      "timeout": 90,
+      "figure": "pj-binary-inspector-1"
+    },
+    {
+      "id": "02-layout",
+      "title": "Sections, segments, permissions, and entropy",
+      "summary": "List the sections of each format with name, address, file offset, size, and bytes in the file. Add an r/w/x permission string from the flags of the format. List ELF program headers and Mach-O segments. Compute Shannon entropy in bits per byte over the bytes each region holds in the file, so zero-fill regions report 0.",
+      "hours": 1.5,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "collections.Counter and math.log2 give the entropy formula in three lines that you can check against a hand count.",
+      "concepts": ["section headers", "program headers", "permission flags", "Shannon entropy"],
+      "timeout": 90,
+      "figure": "pj-binary-inspector-2"
+    },
+    {
+      "id": "03-symbols",
+      "title": "Symbols, string tables, and demangled names",
+      "summary": "Read ELF .symtab and .dynsym, COFF symbol records with their auxiliary entries, and Mach-O nlist_64 entries. Resolve each name through its string table with a bounds-checked C string read. Report value, size, kind, binding, and section. Demangle a documented subset of Itanium C++ names and return None for anything outside it.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "A small recursive-descent parser over a string shows the Itanium grammar and its substitution table without a library.",
+      "concepts": ["symbol tables", "string tables", "COFF auxiliary records", "nlist", "Itanium mangling"],
+      "timeout": 90,
+      "figure": "pj-binary-inspector-3"
+    },
+    {
+      "id": "04-linkage",
+      "title": "Imports, exports, relocations, and chained fixups",
+      "summary": "Read ELF RELA records, COFF relocation records, Mach-O relocation_info, and PE base relocations. Read the PE import and export directories. Decode Mach-O chained fixups word by word into binds and rebases, and read the exports trie with ULEB128 values. Every pointer is checked before it is followed, and a chain or trie that loops or leaves its page fails.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Integer shifts and masks decode packed 64-bit fixup words exactly as the loader does.",
+      "concepts": ["relocations", "import address table", "export directory", "chained fixups", "exports trie", "ULEB128"],
+      "timeout": 90,
+      "figure": "pj-binary-inspector-4"
+    },
+    {
+      "id": "05-discovery",
+      "title": "Strings with sections and recovered function starts",
+      "summary": "Extract ASCII and UTF-16LE strings and name the section and segment that hold each one. Find function starts with five methods: symbols, LC_FUNCTION_STARTS, a prologue scan, direct call targets, and the entry point. Score each method against the symbol table of the unstripped build with precision and recall.",
+      "hours": 1.5,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Sets make true positives, false positives, and misses one operation each.",
+      "concepts": ["string extraction", "function starts", "prologue patterns", "call targets", "precision and recall"],
+      "timeout": 120,
+      "figure": "pj-binary-inspector-5"
+    },
+    {
+      "id": "06-report",
+      "title": "JSON report, HTML byte map, and build diff",
+      "summary": "Compose every stage into one versioned JSON report and validate it. Render a standalone HTML report with a byte map. Each file slice takes its color from its region and its brightness from its entropy. Every string from the binary is escaped. Diff two reports to show section growth, moved and removed symbols, and changed imports, exports, and strings.",
+      "hours": 1.5,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "json and html from the standard library produce a report that a script and a reviewer can both read.",
+      "concepts": ["report schema", "byte map", "HTML escaping", "build diff"],
+      "timeout": 180,
+      "figure": "pj-binary-inspector-6"
+    }
+  ],
+  "demos": [
+    {
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "title": "Initialize and grade",
+      "caption": "Recorded starter failure followed by all reference-solution stages passing. Reference passes do not earn learner certificates."
+    },
+    {
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "title": "Inspect the output",
+      "caption": "Actual output from the demo command on the stripped arm64 build, scored against its unstripped twin, then a diff between the -O0 and -O2 builds."
+    }
+  ]
+}

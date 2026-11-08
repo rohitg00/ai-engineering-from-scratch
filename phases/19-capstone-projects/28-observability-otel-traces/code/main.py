@@ -212,7 +212,7 @@ class Counter:
 
 @dataclass
 class Histogram:
-    """A histogram with explicit buckets, in line with OTel's default ms set."""
+    """A histogram with explicit buckets, a trimmed version of OTel's default ms set."""
 
     name: str
     help: str = ""

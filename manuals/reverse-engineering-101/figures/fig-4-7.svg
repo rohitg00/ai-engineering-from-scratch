@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 276" role="img" aria-labelledby="fig-4-7-title fig-4-7-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-7-title">The 39 strings of ledger-arm64-O1 by load command</title>
+  <desc id="fig-4-7-desc">Six rows sorted by address. Two load command strings in the header, the dyld and libSystem paths. Ten strings in __TEXT,__cstring from 0x100000770, the labels, the format strings and one empty pad. Six import names in the chained fixups from 0x100008069. Seven edge labels of the exports trie from 0x1000080b2. Thirteen names in the LC_SYMTAB string table from 0x10000821a. One code signature identifier, ledger-arm64-O1, at 0x10000831c. The total is 39, the string_count of the overview.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHERE</text>
+  <text x="250" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ADDRESSES</text>
+  <text x="450" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">COUNT</text>
+  <text x="500" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">EXAMPLE</text>
+  <rect x="20" y="28" width="600" height="34" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="28" y="49" font-size="11" font-weight="700">header load commands</text>
+  <text x="250" y="49" font-size="11">0x100000404, 0x100000490</text>
+  <text x="450" y="49" font-size="11">2</text>
+  <text x="500" y="49" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/usr/lib/dyld</text>
+  <rect x="20" y="62" width="600" height="34" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="28" y="83" font-size="11" font-weight="700">__TEXT,__cstring</text>
+  <text x="250" y="83" font-size="11">0x100000770 to 0x1000007cf</text>
+  <text x="450" y="83" font-size="11">10</text>
+  <text x="500" y="83" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">score %d grade %s</text>
+  <rect x="20" y="96" width="600" height="34" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="28" y="117" font-size="11" font-weight="700">chained fixups imports</text>
+  <text x="250" y="117" font-size="11">0x100008069 to 0x1000080a7</text>
+  <text x="450" y="117" font-size="11">6</text>
+  <text x="500" y="117" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">___stack_chk_fail</text>
+  <rect x="20" y="130" width="600" height="34" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="28" y="151" font-size="11" font-weight="700">exports trie edges</text>
+  <text x="250" y="151" font-size="11">0x1000080b2 to 0x100008111</text>
+  <text x="450" y="151" font-size="11">7</text>
+  <text x="500" y="151" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">_label</text>
+  <rect x="20" y="164" width="600" height="34" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="28" y="185" font-size="11" font-weight="700">LC_SYMTAB string table</text>
+  <text x="250" y="185" font-size="11">0x10000821a to 0x1000082a5</text>
+  <text x="450" y="185" font-size="11">13</text>
+  <text x="500" y="185" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">_grade_label</text>
+  <rect x="20" y="198" width="600" height="34" fill="var(--m-paper, #fafaf5)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="28" y="219" font-size="11" font-weight="700">code signature</text>
+  <text x="250" y="219" font-size="11">0x10000831c</text>
+  <text x="450" y="219" font-size="11">1</text>
+  <text x="500" y="219" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ledger-arm64-O1</text>
+  <text x="20" y="262" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">string_count 39 · encoding US-ASCII on every item · 10 program strings, 29 names and paths</text>
+</svg>

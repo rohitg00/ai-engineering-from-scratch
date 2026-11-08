@@ -1,0 +1,12 @@
+$ docker compose -f fixtures/compose/compose.yaml down
+ Container m101-printer-1 Stopping
+ Container m101-printer-1 Stopped
+ Container m101-printer-1 Removing
+ Container m101-printer-1 Removed
+ Container m101-mcp-gateway-1 Stopping
+ Container m101-mcp-gateway-1 Stopped
+ Container m101-mcp-gateway-1 Removing
+ Container m101-mcp-gateway-1 Removed
+ Network m101_default Removing
+ Network m101_default Removed
+[exit 0]

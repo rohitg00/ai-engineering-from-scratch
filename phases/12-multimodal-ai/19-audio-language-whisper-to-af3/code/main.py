@@ -154,7 +154,7 @@ def main() -> None:
 
     print("\n2026 RECIPE")
     print("-" * 60)
-    print("  encoder : AF-Whisper + BEATs concat")
+    print("  encoder : AF-Whisper (Whisper-large-v3 based)")
     print("  bridge  : 64-query Q-former")
     print("  LLM     : Qwen2.5-7B with audio tokens")
     print("  training: AudioCaps + Clotho + MMAU-style instructions")

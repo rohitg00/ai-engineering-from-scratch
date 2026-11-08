@@ -30,8 +30,8 @@ You need to understand schedules because the defaults will not work for your pro
 
 The simplest approach. Pick a number, use it for every step.
 
-```
-lr(t) = lr_0
+```math
+\text{lr}(t) = \text{lr}_0
 ```
 
 Rarely optimal. It's either too high for the end of training (oscillation around the minimum) or too low for the beginning (wasted compute on tiny steps). Works fine for small models and debugging. A terrible choice for anything that trains for more than an hour.
@@ -40,11 +40,11 @@ Rarely optimal. It's either too high for the end of training (oscillation around
 
 The old-school approach from the ResNet era. Cut the learning rate by a factor (usually 10x) at fixed epochs.
 
-```
-lr(t) = lr_0 * gamma^(floor(epoch / step_size))
+```math
+\text{lr}(t) = \text{lr}_0 \cdot \gamma^{\lfloor \text{epoch} / \text{step\_size} \rfloor}
 ```
 
-Where gamma = 0.1 and step_size = 30 means: lr drops by 10x every 30 epochs. ResNet-50 used this -- lr=0.1, drop by 10x at epochs 30, 60, and 90.
+Where $\gamma = 0.1$ and step_size = 30 means: lr drops by 10x every 30 epochs. ResNet-50 used this -- lr=0.1, drop by 10x at epochs 30, 60, and 90.
 
 The problem: the optimal decay points depend on the dataset and architecture. Move to a different problem and you need to re-tune when to drop. The transitions are abrupt -- loss can spike when the rate suddenly changes.
 
@@ -52,24 +52,24 @@ The problem: the optimal decay points depend on the dataset and architecture. Mo
 
 Smooth decay from the maximum learning rate to a minimum, following a cosine curve:
 
+```math
+\text{lr}(t) = \text{lr}_{\min} + 0.5 \cdot (\text{lr}_{\max} - \text{lr}_{\min}) \cdot \left(1 + \cos\left(\frac{\pi t}{T}\right)\right)
 ```
-lr(t) = lr_min + 0.5 * (lr_max - lr_min) * (1 + cos(pi * t / T))
-```
 
-Where t is the current step and T is the total number of steps.
+Where $t$ is the current step and $T$ is the total number of steps.
 
-At t=0, the cosine term is 1, so lr = lr_max. At t=T, the cosine term is -1, so lr = lr_min. The decay is gentle at first, accelerates in the middle, and becomes gentle again near the end.
+At $t=0$, the cosine term is 1, so $\text{lr} = \text{lr} _{\max}$. At $t=T$, the cosine term is -1, so $\text{lr} = \text{lr} _{\min}$. The decay is gentle at first, accelerates in the middle, and becomes gentle again near the end.
 
-This is the default for most modern training runs. No hyperparameters to tune beyond lr_max and lr_min. The cosine shape matches the empirical observation that most learning happens in the middle of training -- you want reasonable step sizes during that critical period.
+This is the default for most modern training runs. No hyperparameters to tune beyond $\text{lr} _{\max}$ and $\text{lr} _{\min}$. The cosine shape matches the empirical observation that most learning happens in the middle of training -- you want reasonable step sizes during that critical period.
 
 ### Warmup: Why You Start Small
 
 Adam and other adaptive optimizers maintain running estimates of gradient mean and variance. At step 0, these estimates are initialized to zero. The first few gradient updates are based on garbage statistics. If your learning rate is large during this period, the model takes huge, poorly-directed steps.
 
-Warmup fixes this. Start with a tiny learning rate (often lr_max / warmup_steps or even zero) and linearly ramp up to lr_max over the first N steps. By the time you reach the full learning rate, Adam's statistics have stabilized.
+Warmup fixes this. Start with a tiny learning rate (often lr_max / warmup_steps or even zero) and linearly ramp up to $\text{lr}_{\max}$ over the first $N$ steps. By the time you reach the full learning rate, Adam's statistics have stabilized.
 
-```
-lr(t) = lr_max * (t / warmup_steps)     for t < warmup_steps
+```math
+\text{lr}(t) = \text{lr}_{\max} \cdot \frac{t}{\text{warmup\_steps}} \quad \text{for } t < \text{warmup\_steps}
 ```
 
 Typical warmup: 1-5% of total training steps. Llama 3 trained for ~1.8 trillion tokens and warmed up for 2000 steps. GPT-3 warmed up over 375 million tokens.
@@ -398,13 +398,13 @@ This lesson produces:
 
 ## Exercises
 
-1. Implement exponential decay: lr(t) = lr_0 * gamma^t where gamma = 0.999. Compare to cosine annealing on the circle dataset.
+1. Implement exponential decay: $\text{lr}(t) = \text{lr}_0 \cdot \gamma^t$ where $\gamma = 0.999$. Compare to cosine annealing on the circle dataset.
 
 2. Implement the learning rate range test (Leslie Smith): train for a few hundred steps while exponentially increasing the LR from 1e-7 to 1. Plot loss vs LR. The optimal max LR is just before the loss starts increasing.
 
 3. Train with warmup + cosine but vary the warmup length: 0%, 1%, 5%, 10%, 20% of total steps. Find the sweet spot where training is most stable.
 
-4. Implement cosine annealing with warm restarts (SGDR): reset the learning rate to lr_max every T steps and decay again. Compare to standard cosine on a longer training run.
+4. Implement cosine annealing with warm restarts (SGDR): reset the learning rate to $\text{lr}_{\max}$ every $T$ steps and decay again. Compare to standard cosine on a longer training run.
 
 5. Build a "schedule surgeon" that monitors training loss and automatically switches from warmup to cosine when the loss stabilizes, and reduces lr if the loss plateaus for too long.
 
@@ -414,12 +414,12 @@ This lesson produces:
 |------|----------------|----------------------|
 | Learning rate | "How fast the model learns" | The scalar that multiplies the gradient to determine the parameter update size |
 | Schedule | "Change the LR over time" | A function that maps training step to learning rate, designed to optimize convergence |
-| Warmup | "Start with a small LR" | Linearly ramping the LR from near-zero to the target value over the first N steps to stabilize optimizer statistics |
-| Cosine annealing | "Smooth LR decay" | Decreasing the LR following a cosine curve from lr_max to lr_min over training |
+| Warmup | "Start with a small LR" | Linearly ramping the LR from near-zero to the target value over the first $N$ steps to stabilize optimizer statistics |
+| Cosine annealing | "Smooth LR decay" | Decreasing the LR following a cosine curve from $\text{lr} _{\max}$ to $\text{lr} _{\min}$ over training |
 | Step decay | "Drop LR at milestones" | Multiplying the LR by a factor (usually 0.1) at fixed epoch intervals |
 | 1cycle policy | "Up then down" | Leslie Smith's method of ramping LR up then down in a single cycle for faster convergence |
 | LR range test | "Find the best learning rate" | Training briefly while increasing LR to find the value where loss starts diverging |
-| Cosine with warm restarts | "Reset and repeat" | Periodically resetting the LR to lr_max and decaying again (SGDR) |
+| Cosine with warm restarts | "Reset and repeat" | Periodically resetting the LR to $\text{lr} _{\max}$ and decaying again (SGDR) |
 | Eta min | "The floor for the LR" | The minimum learning rate that the schedule decays to |
 | Peak learning rate | "The maximum LR" | The highest LR reached during training, typically after warmup |
 

@@ -22,7 +22,7 @@ Agents pass demos. They fail in production in ways demos cannot predict. Benchma
 
 ### Three evaluation layers
 
-1. **Static benchmarks** — SWE-bench Verified for code (Lesson 19), WebArena/OSWorld for browsing / desktop (Lesson 20), GAIA for generalist (Lesson 19), BFCL V4 for tool use (Lesson 06). Use for cross-model comparison and regression gating. Contamination is real: SWE-bench+ found 32.67% solution leakage. Always report Verified / +-audited scores.
+1. **Static benchmarks** — SWE-bench Verified for code (Lesson 19), WebArena/OSWorld for browsing / desktop (Lesson 20), GAIA for generalist (Lesson 19), BFCL V4 for tool use (Lesson 06). Use for cross-model comparison and regression gating. Contamination is real: SWE-bench+ found 32.67% solution leakage. Always report scores on SWE-bench Verified or on a leakage-audited set such as SWE-bench+.
 
 2. **Custom offline evals** — your product's shape:
    - LLM-as-judge (Langfuse, Phoenix, Opik — Lesson 24).
@@ -54,7 +54,7 @@ This is Self-Refine (Lesson 05) generalized. Any agent flow you care about can w
 
 ### Tying Phase 14 together
 
-Every lesson in Phase 14 generates eval cases:
+Most lessons in Phase 14 generate eval cases. The table lists the lessons with the clearest one:
 
 | Lesson | Eval case it generates |
 |--------|------------------------|
@@ -77,7 +77,7 @@ Every lesson in Phase 14 generates eval cases:
 | 28 Orchestration | Supervisor routes to the right specialist |
 | 29 Runtime Shapes | DLQ handles N% failure |
 
-If your eval suite has cases for each, you have covered Phase 14.
+If your eval suite has a case for each row, you have covered the core of Phase 14.
 
 ### Where eval-driven development fails
 

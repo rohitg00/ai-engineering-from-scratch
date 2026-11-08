@@ -1,0 +1,17 @@
+Executable=/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account-O0
+Identifier=account-O0
+Format=Mach-O thin (arm64)
+CodeDirectory v=20400 size=387 flags=0x20002(adhoc,linker-signed) hashes=9+0 location=embedded
+Hash type=sha256 size=32
+CandidateCDHash sha256=6f6b200e3a57f650989bfde598e2dca88e950b82
+CandidateCDHashFull sha256=6f6b200e3a57f650989bfde598e2dca88e950b82a943fcd50fc508c9fec2279d
+Hash choices=sha256
+CMSDigest=6f6b200e3a57f650989bfde598e2dca88e950b82a943fcd50fc508c9fec2279d
+CMSDigestType=2
+CDHash=6f6b200e3a57f650989bfde598e2dca88e950b82
+Signature=adhoc
+Info.plist=not bound
+TeamIdentifier=not set
+Sealed Resources=none
+Internal requirements=none
+Executable=/private/tmp/aiefs-re/phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/code/fixtures/account-O0

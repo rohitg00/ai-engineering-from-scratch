@@ -1,0 +1,58 @@
+$ sbx exec m101-demo sh -c 'uname -a; echo; cat /etc/os-release; echo; id; getconf PAGESIZE; echo; docker version; echo; mount | grep -E '"'"'virtiofs|/run/sandbox|fixtures'"'"'; echo; df -h "$PWD" /; echo; cat /etc/hosts'
+Linux m101-demo 7.0.14 #1 SMP PREEMPT Mon Sep 21 06:45:23 UTC 2026 aarch64 GNU/Linux
+
+PRETTY_NAME="Ubuntu 26.04.1 LTS"
+NAME="Ubuntu"
+VERSION_ID="26.04"
+VERSION="26.04.1 LTS (Resolute Raccoon)"
+VERSION_CODENAME=resolute
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=resolute
+LOGO=ubuntu-logo
+
+uid=1000(agent) gid=1000(agent) groups=1000(agent),27(sudo),1001(docker)
+16384
+
+Client: Docker Engine - Community
+ Version:           29.8.1
+ API version:       1.56
+ Go version:        go1.26.8
+ Git commit:        4a63305
+ Built:             Tue Sep 15 16:25:19 2026
+ OS/Arch:           linux/arm64
+ Context:           default
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          29.8.1
+  API version:      1.56 (minimum version 1.40)
+  Go version:       go1.26.8
+  Git commit:       464cd50
+  Built:            Tue Sep 15 16:25:19 2026
+  OS/Arch:          linux/arm64
+  Experimental:     false
+ containerd:
+  Version:          v2.3.5
+  GitCommit:        1294c24a7da8e5a793ed378161673abe94118892
+ runc:
+  Version:          1.5.1
+  GitCommit:        v1.5.1-0-g8f2685a4
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+bind-<id> on /etc/resolv.conf type virtiofs (ro,relatime)
+host on $CAPTURE/fixtures/repo type virtiofs (rw,nosuid,nodev,relatime)
+
+Filesystem      Size  Used Avail Use% Mounted on
+host  <size>  <used>  <avail>  <use%> $CAPTURE/fixtures/repo
+overlay  <size>  <used>  <avail>  <use%> /
+
+127.0.0.1	localhost
+::1	localhost ip6-localhost ip6-loopback
+[exit 0]

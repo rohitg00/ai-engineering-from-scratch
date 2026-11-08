@@ -6,6 +6,15 @@ from torch.utils.data import Dataset, DataLoader
 from torch.optim import Adam
 
 
+def get_device():
+    """Pick the best available accelerator: CUDA, then Apple Silicon (MPS), then CPU."""
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
+    return torch.device("cpu")
+
+
 class DoubleConv(nn.Module):
     def __init__(self, in_c, out_c):
         super().__init__()
@@ -149,7 +158,7 @@ def main():
     train_loader = DataLoader(train_ds, batch_size=8, shuffle=True)
     val_loader = DataLoader(val_ds, batch_size=8, shuffle=False)
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = get_device()
     num_classes = 3
     model = UNet(in_channels=3, num_classes=num_classes, base=16).to(device)
     optimizer = Adam(model.parameters(), lr=1e-3)

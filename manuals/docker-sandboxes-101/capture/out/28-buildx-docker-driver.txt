@@ -1,0 +1,33 @@
+$ docker buildx build --progress=plain -f fixtures/kits/hello-kit/kit.yaml -t localhost:15000/m101/hello-kit:docker-driver --push fixtures/kits/hello-kit
+#0 building with "desktop-linux" instance using docker driver
+#1 [internal] load build definition from kit.yaml
+#1 DONE <dur>
+#2 resolve image config for docker-image://docker.io/docker/sandbox-kit:3
+#2 DONE <dur>
+#3 docker-image://docker.io/docker/sandbox-kit:3@sha256:<digest>
+#3 CACHED
+#4 [internal] load kit descriptor kit.yaml · sandbox-kit 3.0.0-m.8 (129be2ff)
+#4 DONE <dur>
+#5 [kit] inline build block
+#5 CACHED
+#6 [internal] load metadata for docker.io/docker/sandbox-templates:shell
+#6 DONE <dur>
+#7 [internal] load .dockerignore
+#7 DONE <dur>
+#8 [1/2] FROM docker.io/docker/sandbox-templates:shell
+#8 DONE <dur>
+#9 [internal] load build context
+#9 DONE <dur>
+#10 [2/2] COPY HELLO.md /home/agent/HELLO.md
+#10 CACHED
+#11 [kit] stage sources /usr/share/sandbox/kit/kit
+#11 CACHED
+#12 exporting to image
+#12 exporting layers done
+#12 writing image sha256:<digest> done
+#12 naming to localhost:15000/m101/hello-kit:docker-driver done
+#12 DONE <dur>
+#13 pushing localhost:15000/m101/hello-kit:docker-driver with docker
+#13 DONE <dur>
+View build details: <url>
+[exit 0]

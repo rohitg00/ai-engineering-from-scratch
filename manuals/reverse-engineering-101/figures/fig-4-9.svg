@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 356" role="img" aria-labelledby="fig-4-9-title fig-4-9-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-9-title">percent_change as written and as decompiled</title>
+  <desc id="fig-4-9-desc">Two blocks. The top block is the four-line C source of percent_change from ledger.c. The bottom block is the fourteen-line Ghidra pseudocode of _percent_change from the analyze_function record. Three lines are marked in rose: the ulong return type where the ABI returns four bytes, the second test of iVar2 that repeats a value tested once, and the return of param_1, the whole register, where the source returns an int.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">LEDGER.C · WHAT YOU WROTE</text>
+  <rect x="20" y="26" width="600" height="72" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="32" y="44" font-size="11">int percent_change(int before, int after) {</text>
+  <text x="32" y="58" font-size="11">    if (before == 0) return 0;</text>
+  <text x="32" y="72" font-size="11">    return (after - before) * 100 / before;</text>
+  <text x="32" y="86" font-size="11">}</text>
+  <text x="20" y="122" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">GHIDRA 12.1.4 PSEUDOCODE · _PERCENT_CHANGE</text>
+  <rect x="20" y="130" width="600" height="216" fill="var(--m-paper, #fafaf5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="32" y="148" font-size="11">ulong _percent_change(ulong param_1,int param_2)</text>
+  <text x="32" y="162" font-size="11">{</text>
+  <text x="32" y="176" font-size="11">  uint uVar1;</text>
+  <text x="32" y="190" font-size="11">  int iVar2;</text>
+  <text x="32" y="204" font-size="11">  iVar2 = (int)param_1;</text>
+  <text x="32" y="218" font-size="11">  if (iVar2 != 0) {</text>
+  <text x="32" y="232" font-size="11">    uVar1 = 0;</text>
+  <text x="32" y="246" font-size="11">    if (iVar2 != 0) {</text>
+  <text x="32" y="260" font-size="11">      uVar1 = ((param_2 - iVar2) * 100) / iVar2;</text>
+  <text x="32" y="274" font-size="11">    }</text>
+  <text x="32" y="288" font-size="11">    param_1 = (ulong)uVar1;</text>
+  <text x="32" y="302" font-size="11">  }</text>
+  <text x="32" y="316" font-size="11">  return param_1;</text>
+  <text x="32" y="330" font-size="11">}</text>
+  <line x1="360" y1="144" x2="384" y2="144" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="392" y="148" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">ulong return, the ABI says 4 bytes</text>
+  <line x1="360" y1="242" x2="384" y2="242" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="392" y="246" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">second test of a value tested once</text>
+  <line x1="360" y1="312" x2="384" y2="312" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="392" y="316" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">returns param_1, source returns int</text>
+</svg>

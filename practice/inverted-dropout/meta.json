@@ -1,0 +1,22 @@
+{
+  "id": "inverted-dropout",
+  "title": "Inverted dropout",
+  "kind": "implement",
+  "summary": "Inverted dropout with a given random generator: training forward with an exact mask, backward with the same mask, identity at inference.",
+  "difficulty": "easy",
+  "tags": ["dropout", "regularization", "gradients"],
+  "lesson": "phases/03-deep-learning-core/07-regularization",
+  "cheatsheet": "deep-learning-training",
+  "minutes": 15,
+  "entry": ["dropout_forward", "dropout_backward"],
+  "collections": ["deep-learning-core"],
+  "time_limit_s": 10,
+  "mutants": {
+    "backward_no_scale": "Multiplies the gradient by the mask but forgets to divide by 1 - p.",
+    "eval_draws_from_rng": "Draws from the generator in inference mode, so later random numbers change.",
+    "eval_scales_down": "Multiplies the input by 1 - p in inference mode, as the non-inverted form does.",
+    "keep_with_probability_p": "Keeps an entry when the random number is below p, so the mask is the complement.",
+    "no_scaling": "Applies the mask but does not divide the kept entries by 1 - p.",
+    "scale_by_p": "Divides the kept entries by p, not by 1 - p."
+  }
+}

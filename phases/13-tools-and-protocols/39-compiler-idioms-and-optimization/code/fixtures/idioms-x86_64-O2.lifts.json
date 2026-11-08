@@ -1,0 +1,285 @@
+{
+  "fixture": "idioms-x86_64-O2.o",
+  "capstone": {
+    "version": "5.0.7",
+    "cs_version": [
+      5,
+      0,
+      1280
+    ],
+    "functions": {
+      "div10s": [
+        {
+          "addr": 16,
+          "bytes": "48 63 c7",
+          "text": "movslq %edi, %rax",
+          "groups": [
+            "mode64"
+          ]
+        },
+        {
+          "addr": 19,
+          "bytes": "48 69 c0 67 66 66 66",
+          "text": "imulq $0x66666667, %rax, %rax",
+          "groups": []
+        },
+        {
+          "addr": 26,
+          "bytes": "48 89 c1",
+          "text": "movq %rax, %rcx",
+          "groups": []
+        },
+        {
+          "addr": 29,
+          "bytes": "48 c1 e9 3f",
+          "text": "shrq $0x3f, %rcx",
+          "groups": []
+        },
+        {
+          "addr": 33,
+          "bytes": "48 c1 f8 22",
+          "text": "sarq $0x22, %rax",
+          "groups": []
+        },
+        {
+          "addr": 37,
+          "bytes": "01 c8",
+          "text": "addl %ecx, %eax",
+          "groups": []
+        },
+        {
+          "addr": 39,
+          "bytes": "c3",
+          "text": "retq",
+          "groups": [
+            "ret",
+            "mode64"
+          ]
+        }
+      ],
+      "mod8s": [
+        {
+          "addr": 144,
+          "bytes": "89 f8",
+          "text": "movl %edi, %eax",
+          "groups": []
+        },
+        {
+          "addr": 146,
+          "bytes": "8d 48 07",
+          "text": "leal 7(%rax), %ecx",
+          "groups": [
+            "mode64"
+          ]
+        },
+        {
+          "addr": 149,
+          "bytes": "85 ff",
+          "text": "testl %edi, %edi",
+          "groups": []
+        },
+        {
+          "addr": 151,
+          "bytes": "0f 49 cf",
+          "text": "cmovnsl %edi, %ecx",
+          "groups": [
+            "cmov"
+          ]
+        },
+        {
+          "addr": 154,
+          "bytes": "83 e1 f8",
+          "text": "andl $0xfffffff8, %ecx",
+          "groups": []
+        },
+        {
+          "addr": 157,
+          "bytes": "29 c8",
+          "text": "subl %ecx, %eax",
+          "groups": []
+        },
+        {
+          "addr": 159,
+          "bytes": "c3",
+          "text": "retq",
+          "groups": [
+            "ret",
+            "mode64"
+          ]
+        }
+      ]
+    }
+  },
+  "pypcode": {
+    "version": "4.0.1",
+    "language": "x86:LE:64:default",
+    "functions": {
+      "div10s": [
+        "IMARK ram[10:3]",
+        "RAX = sext(EDI)",
+        "IMARK ram[13:7]",
+        "unique[95600:16] = sext(RAX)",
+        "unique[95700:16] = sext(0x66666667)",
+        "unique[95900:16] = unique[95600:16] * unique[95700:16]",
+        "unique[95a00:8] = sext(0x66666667)",
+        "RAX = RAX * unique[95a00:8]",
+        "unique[95d00:8] = SUBPIECE unique[95900:16], 0x8",
+        "unique[5a200:16] = sext(RAX)",
+        "CF = unique[5a200:16] != unique[95900:16]",
+        "OF = CF",
+        "IMARK ram[1a:3]",
+        "RCX = RAX",
+        "IMARK ram[1d:4]",
+        "unique[d1a00:4] = 0x3f & 0x3f",
+        "unique[d1b00:8] = RCX",
+        "RCX = RCX >> unique[d1a00:4]",
+        "unique[5be00:1] = unique[d1a00:4] == 0x0",
+        "unique[5bf00:4] = unique[d1a00:4] - 0x1",
+        "unique[5c000:8] = unique[d1b00:8] >> unique[5bf00:4]",
+        "unique[5c100:8] = unique[5c000:8] & 0x1",
+        "unique[5c200:1] = unique[5c100:8] != 0x0",
+        "unique[0:1] = unique[5be00:1]",
+        "unique[100:1] = unique[0:1] * CF",
+        "unique[200:1] = !unique[5be00:1]",
+        "unique[300:1] = unique[200:1]",
+        "unique[400:1] = unique[300:1] * unique[5c200:1]",
+        "CF = unique[100:1] | unique[400:1]",
+        "unique[5c300:1] = unique[d1a00:4] == 0x1",
+        "unique[5c400:1] = unique[d1b00:8] s< 0x0",
+        "unique[0:1] = unique[5c300:1]",
+        "unique[100:1] = unique[0:1] * 0x0",
+        "unique[200:1] = !unique[5c300:1]",
+        "unique[300:1] = unique[200:1]",
+        "unique[400:1] = unique[300:1] * unique[5c400:1]",
+        "OF = unique[100:1] | unique[400:1]",
+        "unique[58800:1] = unique[d1a00:4] != 0x0",
+        "unique[58a00:1] = RCX s< 0x0",
+        "unique[58b00:1] = !unique[58800:1]",
+        "unique[58c00:1] = unique[58b00:1] & SF",
+        "unique[58d00:1] = unique[58800:1] & unique[58a00:1]",
+        "SF = unique[58c00:1] | unique[58d00:1]",
+        "unique[59000:1] = RCX == 0x0",
+        "unique[59100:1] = !unique[58800:1]",
+        "unique[59200:1] = unique[59100:1] & ZF",
+        "unique[59300:1] = unique[58800:1] & unique[59000:1]",
+        "ZF = unique[59200:1] | unique[59300:1]",
+        "unique[59500:8] = RCX & 0xff",
+        "unique[59600:1] = popcount(unique[59500:8])",
+        "unique[59700:1] = unique[59600:1] & 0x1",
+        "unique[59900:1] = unique[59700:1] == 0x0",
+        "unique[59a00:1] = !unique[58800:1]",
+        "unique[59b00:1] = unique[59a00:1] & PF",
+        "unique[59c00:1] = unique[58800:1] & unique[59900:1]",
+        "PF = unique[59b00:1] | unique[59c00:1]",
+        "IMARK ram[21:4]",
+        "unique[c5c00:4] = 0x22 & 0x3f",
+        "unique[c5d00:8] = RAX",
+        "RAX = RAX s>> unique[c5c00:4]",
+        "unique[5b800:1] = unique[c5c00:4] == 0x0",
+        "unique[5b900:4] = unique[c5c00:4] - 0x1",
+        "unique[5ba00:8] = unique[c5d00:8] s>> unique[5b900:4]",
+        "unique[5bb00:8] = unique[5ba00:8] & 0x1",
+        "unique[5bc00:1] = unique[5bb00:8] != 0x0",
+        "unique[0:1] = unique[5b800:1]",
+        "unique[100:1] = unique[0:1] * CF",
+        "unique[200:1] = !unique[5b800:1]",
+        "unique[300:1] = unique[200:1]",
+        "unique[400:1] = unique[300:1] * unique[5bc00:1]",
+        "CF = unique[100:1] | unique[400:1]",
+        "unique[5bd00:1] = unique[c5c00:4] == 0x1",
+        "unique[0:1] = unique[5bd00:1]",
+        "unique[100:1] = unique[0:1] * 0x0",
+        "unique[200:1] = !unique[5bd00:1]",
+        "unique[300:1] = unique[200:1]",
+        "unique[400:1] = unique[300:1] * OF",
+        "OF = unique[100:1] | unique[400:1]",
+        "unique[58800:1] = unique[c5c00:4] != 0x0",
+        "unique[58a00:1] = RAX s< 0x0",
+        "unique[58b00:1] = !unique[58800:1]",
+        "unique[58c00:1] = unique[58b00:1] & SF",
+        "unique[58d00:1] = unique[58800:1] & unique[58a00:1]",
+        "SF = unique[58c00:1] | unique[58d00:1]",
+        "unique[59000:1] = RAX == 0x0",
+        "unique[59100:1] = !unique[58800:1]",
+        "unique[59200:1] = unique[59100:1] & ZF",
+        "unique[59300:1] = unique[58800:1] & unique[59000:1]",
+        "ZF = unique[59200:1] | unique[59300:1]",
+        "unique[59500:8] = RAX & 0xff",
+        "unique[59600:1] = popcount(unique[59500:8])",
+        "unique[59700:1] = unique[59600:1] & 0x1",
+        "unique[59900:1] = unique[59700:1] == 0x0",
+        "unique[59a00:1] = !unique[58800:1]",
+        "unique[59b00:1] = unique[59a00:1] & PF",
+        "unique[59c00:1] = unique[58800:1] & unique[59900:1]",
+        "PF = unique[59b00:1] | unique[59c00:1]",
+        "IMARK ram[25:2]",
+        "CF = carry(EAX, ECX)",
+        "OF = scarry(EAX, ECX)",
+        "EAX = EAX + ECX",
+        "RAX = zext(EAX)",
+        "SF = EAX s< 0x0",
+        "ZF = EAX == 0x0",
+        "unique[58300:4] = EAX & 0xff",
+        "unique[58400:1] = popcount(unique[58300:4])",
+        "unique[58500:1] = unique[58400:1] & 0x1",
+        "PF = unique[58500:1] == 0x0",
+        "IMARK ram[27:1]",
+        "RIP = *[ram]RSP",
+        "RSP = RSP + 0x8",
+        "return RIP"
+      ],
+      "mod8s": [
+        "IMARK ram[90:2]",
+        "EAX = EDI",
+        "RAX = zext(EAX)",
+        "IMARK ram[92:3]",
+        "unique[8e00:8] = RAX + 0x7",
+        "ECX = SUBPIECE unique[8e00:8], 0x0",
+        "RCX = zext(ECX)",
+        "IMARK ram[95:2]",
+        "CF = 0x0",
+        "OF = 0x0",
+        "unique[d5500:4] = EDI & EDI",
+        "SF = unique[d5500:4] s< 0x0",
+        "ZF = unique[d5500:4] == 0x0",
+        "unique[58300:4] = unique[d5500:4] & 0xff",
+        "unique[58400:1] = popcount(unique[58300:4])",
+        "unique[58500:1] = unique[58400:1] & 0x1",
+        "PF = unique[58500:1] == 0x0",
+        "IMARK ram[97:3]",
+        "unique[25600:1] = !SF",
+        "unique[77000:4] = EDI",
+        "RCX = zext(ECX)",
+        "unique[77100:1] = !unique[25600:1]",
+        "if (unique[77100:1]) goto ram[9a:8]",
+        "ECX = unique[77000:4]",
+        "IMARK ram[9a:3]",
+        "CF = 0x0",
+        "OF = 0x0",
+        "ECX = ECX & 0xfffffff8",
+        "RCX = zext(ECX)",
+        "SF = ECX s< 0x0",
+        "ZF = ECX == 0x0",
+        "unique[58300:4] = ECX & 0xff",
+        "unique[58400:1] = popcount(unique[58300:4])",
+        "unique[58500:1] = unique[58400:1] & 0x1",
+        "PF = unique[58500:1] == 0x0",
+        "IMARK ram[9d:2]",
+        "CF = EAX < ECX",
+        "OF = sborrow(EAX, ECX)",
+        "EAX = EAX - ECX",
+        "RAX = zext(EAX)",
+        "SF = EAX s< 0x0",
+        "ZF = EAX == 0x0",
+        "unique[58300:4] = EAX & 0xff",
+        "unique[58400:1] = popcount(unique[58300:4])",
+        "unique[58500:1] = unique[58400:1] & 0x1",
+        "PF = unique[58500:1] == 0x0",
+        "IMARK ram[9f:1]",
+        "RIP = *[ram]RSP",
+        "RSP = RSP + 0x8",
+        "return RIP"
+      ]
+    }
+  }
+}

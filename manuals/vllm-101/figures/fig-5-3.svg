@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-5-3-title fig-5-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-3-title">On the L4 the two engines wrote the same tokens per second up to 32 users</title>
+  <desc id="fig-5-3-desc">Output tokens per second against users at the same time on an NVIDIA L4 with Qwen3-8B, the same 24,096-token KV pool, three seeds per point. The two lines are within 3 percent up to 32 users. At 64 users SGLang wrote 256.6 and vLLM 241.4 tokens per second.</desc>
+  <line x1="66" y1="270" x2="606" y2="270" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="274" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="66" y1="200" x2="606" y2="200" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="204" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="66" y1="130" x2="606" y2="130" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="134" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="66" y1="60" x2="606" y2="60" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="64" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <line x1="66" y1="270" x2="606" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="60" x2="66" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="270" x2="66" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="66" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="156" y1="270" x2="156" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="156" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="246" y1="270" x2="246" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="246" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="336" y1="270" x2="336" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="336" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="426" y1="270" x2="426" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="426" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16</text>
+  <line x1="516" y1="270" x2="516" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="516" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">32</text>
+  <line x1="606" y1="270" x2="606" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="606" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">64</text>
+  <text x="336" y="304" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">users at the same time</text>
+  <text x="66" y="48" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">output tokens per second</text>
+  <path d="M66.0 260.5 L156.0 248.1 L246.0 226.7 L336.0 191.0 L426.0 129.2 L516.0 77.9 L606.0 97.5 L606.0 101.0 L516.0 78.3 L426.0 129.6 L336.0 191.1 L246.0 226.7 L156.0 248.1 L66.0 260.6 Z" fill="var(--m-blue-ink, #2f5d9a)" fill-opacity="0.14" stroke="none"/>
+  <path d="M66.0 260.5 L156.0 248.1 L246.0 226.7 L336.0 191.0 L426.0 129.4 L516.0 78.2 L606.0 101.0" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="66" cy="260.54" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="156" cy="248.12" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="246" cy="226.74" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="336" cy="191.05" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="426" cy="129.37" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="516" cy="78.25" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="606" cy="101.03" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <path d="M66.0 260.2 L156.0 248.2 L246.0 226.9 L336.0 191.2 L426.0 129.2 L516.0 79.5 L606.0 87.7 L606.0 91.0 L516.0 80.8 L426.0 129.2 L336.0 191.3 L246.0 226.9 L156.0 248.2 L66.0 260.4 Z" fill="var(--m-olive-ink, #515f26)" fill-opacity="0.14" stroke="none"/>
+  <path d="M66.0 260.3 L156.0 248.2 L246.0 226.9 L336.0 191.3 L426.0 129.2 L516.0 80.1 L606.0 90.4" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="66" cy="260.31" r="2.8" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="156" cy="248.16" r="2.8" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="246" cy="226.92" r="2.8" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="336" cy="191.28" r="2.8" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="426" cy="129.21" r="2.8" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="516" cy="80.1" r="2.8" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="606" cy="90.37" r="2.8" fill="var(--m-olive-ink, #515f26)"/>
+  <path d="M66 18 H84" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="90" y="22" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">vLLM 0.31.0</text>
+  <path d="M180.6 18 H198.6" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="204.6" y="22" font-size="11" fill="var(--m-olive-ink, #515f26)">SGLang 0.5.22</text>
+</svg>

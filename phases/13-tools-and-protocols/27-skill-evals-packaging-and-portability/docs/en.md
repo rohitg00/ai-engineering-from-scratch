@@ -137,10 +137,12 @@ Split cases into development and validation sets. Tune descriptions on developme
 
 For binary invocation:
 
-```text
-precision = true_positives / (true_positives + false_positives)
-recall = true_positives / (true_positives + false_negatives)
-f1 = 2 * precision * recall / (precision + recall)
+```math
+\begin{aligned}
+\text{precision} &= \frac{\text{true\_positives}}{\text{true\_positives} + \text{false\_positives}} \\[4pt]
+\text{recall} &= \frac{\text{true\_positives}}{\text{true\_positives} + \text{false\_negatives}} \\[4pt]
+\text{f1} &= \frac{2 \cdot \text{precision} \cdot \text{recall}}{\text{precision} + \text{recall}}
+\end{aligned}
 ```
 
 Report raw counts with the ratios. Ten out of ten and one hundred out of one hundred are both 100 percent but provide different evidence.

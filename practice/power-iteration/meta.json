@@ -1,0 +1,21 @@
+{
+  "id": "power-iteration",
+  "title": "Power iteration for the top eigenpair",
+  "kind": "implement",
+  "summary": "The top eigenvalue and eigenvector of a symmetric matrix by power iteration, with a tolerance, an iteration limit and a sign rule.",
+  "difficulty": "medium",
+  "tags": ["eigenvalues", "power-iteration", "linear-algebra", "svd"],
+  "lesson": "phases/01-math-foundations/11-singular-value-decomposition",
+  "cheatsheet": "linear-algebra",
+  "minutes": 25,
+  "entry": ["fix_sign", "power_iteration"],
+  "collections": ["math-foundations"],
+  "time_limit_s": 10,
+  "mutants": {
+    "argmax_without_abs": "Uses np.argmax(v) in the sign rule, so it ignores a large negative entry.",
+    "eigenvalue_from_norm": "Returns the norm of M v as the eigenvalue, so a negative eigenvalue becomes positive.",
+    "no_sign_fix": "Returns the final vector without the sign rule.",
+    "signed_convergence": "Tests the dot product without the absolute value, so a negative top eigenvalue never stops early.",
+    "v0_not_normalized": "Does not divide v0 by its norm, so the first stop test is wrong for a long start vector."
+  }
+}

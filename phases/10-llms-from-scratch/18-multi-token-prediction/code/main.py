@@ -141,20 +141,19 @@ def mtp_loss(backbone_hidden: List[List[float]], tokens: List[int],
 
     backbone_hidden[i] is h_i^(0), the main-model output at position i.
     modules[k-1] is the depth-k MTP module.
-    tokens[i] is t_i. We want to predict t_{i+1}, t_{i+2}, ..., t_{i+D} for
-    each i such that i + D is in range.
+    tokens[i] is t_i. The main model predicts t_{i+1}; module k predicts
+    t_{i+k+1}, for each i such that i + D + 1 is in range.
     """
     D = len(modules)
     per_depth = [0.0] * D
     n_valid = 0
-    for i in range(len(backbone_hidden) - D):
+    for i in range(len(backbone_hidden) - D - 1):
         h_prev = backbone_hidden[i]
         for k in range(1, D + 1):
-            logits = shared_head_logits(h_prev, E)
-            tgt = tokens[i + k]
-            per_depth[k - 1] += cross_entropy(logits, tgt)
             next_embed = E[tokens[i + k]]
             h_prev = mtp_forward(h_prev, next_embed, modules[k - 1])
+            logits = shared_head_logits(h_prev, E)
+            per_depth[k - 1] += cross_entropy(logits, tokens[i + k + 1])
         n_valid += 1
     per_depth = [loss / n_valid for loss in per_depth]
     total = (lam / D) * sum(per_depth)

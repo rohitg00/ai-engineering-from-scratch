@@ -1,0 +1,1822 @@
+{
+  "tool": "ghidra",
+  "version": "12.1.4",
+  "fixture": "ledger-x86_64-O0.o",
+  "language": "x86:LE:64:default",
+  "compilerSpec": "gcc",
+  "imageBase": 1048576,
+  "executableFormat": "Executable and Linking Format (ELF)",
+  "memoryBlocks": [
+    {
+      "name": ".text",
+      "start": 1048576,
+      "size": 295,
+      "execute": true
+    },
+    {
+      "name": ".rodata",
+      "start": 1048872,
+      "size": 20,
+      "execute": false
+    },
+    {
+      "name": ".data",
+      "start": 1048896,
+      "size": 40,
+      "execute": false
+    },
+    {
+      "name": ".rodata.str1.1",
+      "start": 1048936,
+      "size": 10,
+      "execute": false
+    },
+    {
+      "name": ".comment",
+      "start": 0,
+      "size": 47,
+      "execute": false
+    },
+    {
+      "name": ".llvm_addrsig",
+      "start": 0,
+      "size": 2,
+      "execute": false
+    },
+    {
+      "name": ".rela.data",
+      "start": 0,
+      "size": 120,
+      "execute": false
+    },
+    {
+      "name": ".rela.rodata",
+      "start": 0,
+      "size": 120,
+      "execute": false
+    },
+    {
+      "name": ".rela.text",
+      "start": 0,
+      "size": 72,
+      "execute": false
+    },
+    {
+      "name": ".strtab",
+      "start": 0,
+      "size": 161,
+      "execute": false
+    },
+    {
+      "name": ".symtab",
+      "start": 0,
+      "size": 264,
+      "execute": false
+    },
+    {
+      "name": "_elfHeader",
+      "start": 0,
+      "size": 64,
+      "execute": false
+    },
+    {
+      "name": "_elfSectionHeaders",
+      "start": 0,
+      "size": 832,
+      "execute": false
+    }
+  ],
+  "symbols": [
+    {
+      "name": "percent_change",
+      "addr": 1048576,
+      "type": "Function",
+      "source": "IMPORTED"
+    },
+    {
+      "name": "grade",
+      "addr": 1048624,
+      "type": "Function",
+      "source": "IMPORTED"
+    },
+    {
+      "name": "switchD",
+      "addr": 1048692,
+      "type": "Label",
+      "source": "ANALYSIS"
+    },
+    {
+      "name": "caseD_9",
+      "addr": 1048694,
+      "type": "Label",
+      "source": "ANALYSIS"
+    },
+    {
+      "name": "caseD_a",
+      "addr": 1048694,
+      "type": "Label",
+      "source": "ANALYSIS"
+    },
+    {
+      "name": "caseD_8",
+      "addr": 1048703,
+      "type": "Label",
+      "source": "ANALYSIS"
+    },
+    {
+      "name": "caseD_7",
+      "addr": 1048712,
+      "type": "Label",
+      "source": "ANALYSIS"
+    },
+    {
+      "name": "caseD_6",
+      "addr": 1048721,
+      "type": "Label",
+      "source": "ANALYSIS"
+    },
+    {
+      "name": "default",
+      "addr": 1048730,
+      "type": "Label",
+      "source": "ANALYSIS"
+    },
+    {
+      "name": "total",
+      "addr": 1048752,
+      "type": "Function",
+      "source": "IMPORTED"
+    },
+    {
+      "name": "grade_label",
+      "addr": 1048832,
+      "type": "Function",
+      "source": "IMPORTED"
+    },
+    {
+      "name": "switchdataD_00100128",
+      "addr": 1048872,
+      "type": "Label",
+      "source": "ANALYSIS"
+    },
+    {
+      "name": "labels",
+      "addr": 1048896,
+      "type": "Label",
+      "source": "IMPORTED"
+    },
+    {
+      "name": "ElfComment[0]",
+      "addr": 0,
+      "type": "Label",
+      "source": "IMPORTED"
+    },
+    {
+      "name": "ElfComment[1]",
+      "addr": 1,
+      "type": "Label",
+      "source": "IMPORTED"
+    }
+  ],
+  "functions": [
+    {
+      "name": "percent_change",
+      "entry": 1048576,
+      "bodySize": 46,
+      "bodyMin": 1048576,
+      "bodyMax": 1048621,
+      "symbolSource": "IMPORTED",
+      "instructions": [
+        {
+          "addr": 1048576,
+          "size": 1,
+          "bytes": "55",
+          "text": "PUSH RBP",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x4f900, 8) COPY (register, 0x28, 8)",
+            "(register, 0x20, 8) INT_SUB (register, 0x20, 8) , (const, 0x8, 8)",
+            " ---  STORE (const, 0x1b1, 8) , (register, 0x20, 8) , (unique, 0x4f900, 8)"
+          ]
+        },
+        {
+          "addr": 1048577,
+          "size": 3,
+          "bytes": "4889e5",
+          "text": "MOV RBP,RSP",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x28, 8) COPY (register, 0x20, 8)"
+          ]
+        },
+        {
+          "addr": 1048580,
+          "size": 3,
+          "bytes": "897df8",
+          "text": "MOV dword ptr [RBP + -0x8],EDI",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff8, 8)",
+            "(unique, 0xd300, 4) COPY (register, 0x38, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048583,
+          "size": 3,
+          "bytes": "8975f4",
+          "text": "MOV dword ptr [RBP + -0xc],ESI",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff4, 8)",
+            "(unique, 0xd300, 4) COPY (register, 0x30, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048586,
+          "size": 4,
+          "bytes": "837df800",
+          "text": "CMP dword ptr [RBP + -0x8],0x0",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff8, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(unique, 0x78b00, 4) COPY (unique, 0x23c00, 4)",
+            "(register, 0x200, 1) INT_LESS (unique, 0x78b00, 4) , (const, 0x0, 4)",
+            "(register, 0x20b, 1) INT_SBORROW (unique, 0x78b00, 4) , (const, 0x0, 4)",
+            "(unique, 0x78d00, 4) INT_SUB (unique, 0x78b00, 4) , (const, 0x0, 4)",
+            "(register, 0x207, 1) INT_SLESS (unique, 0x78d00, 4) , (const, 0x0, 4)",
+            "(register, 0x206, 1) INT_EQUAL (unique, 0x78d00, 4) , (const, 0x0, 4)",
+            "(unique, 0x58300, 4) INT_AND (unique, 0x78d00, 4) , (const, 0xff, 4)",
+            "(unique, 0x58400, 1) POPCOUNT (unique, 0x58300, 4)",
+            "(unique, 0x58500, 1) INT_AND (unique, 0x58400, 1) , (const, 0x1, 1)",
+            "(register, 0x202, 1) INT_EQUAL (unique, 0x58500, 1) , (const, 0x0, 1)"
+          ]
+        },
+        {
+          "addr": 1048590,
+          "size": 2,
+          "bytes": "7509",
+          "text": "JNZ 0x00100019",
+          "flowType": "CONDITIONAL_JUMP",
+          "pcode": [
+            "(unique, 0x24f00, 1) BOOL_NEGATE (register, 0x206, 1)",
+            " ---  CBRANCH (ram, 0x100019, 8) , (unique, 0x24f00, 1)"
+          ]
+        },
+        {
+          "addr": 1048592,
+          "size": 7,
+          "bytes": "c745fc00000000",
+          "text": "MOV dword ptr [RBP + -0x4],0x0",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffffc, 8)",
+            "(unique, 0xd300, 4) COPY (const, 0x0, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048599,
+          "size": 2,
+          "bytes": "eb10",
+          "text": "JMP 0x00100029",
+          "flowType": "UNCONDITIONAL_JUMP",
+          "pcode": [
+            " ---  BRANCH (ram, 0x100029, 8)"
+          ]
+        },
+        {
+          "addr": 1048601,
+          "size": 3,
+          "bytes": "8b45f4",
+          "text": "MOV EAX,dword ptr [RBP + -0xc]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff4, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x0, 4) COPY (unique, 0x23c00, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)"
+          ]
+        },
+        {
+          "addr": 1048604,
+          "size": 3,
+          "bytes": "2b45f8",
+          "text": "SUB EAX,dword ptr [RBP + -0x8]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff8, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x200, 1) INT_LESS (register, 0x0, 4) , (unique, 0x23c00, 4)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x20b, 1) INT_SBORROW (register, 0x0, 4) , (unique, 0x23c00, 4)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x0, 4) INT_SUB (register, 0x0, 4) , (unique, 0x23c00, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)",
+            "(register, 0x207, 1) INT_SLESS (register, 0x0, 4) , (const, 0x0, 4)",
+            "(register, 0x206, 1) INT_EQUAL (register, 0x0, 4) , (const, 0x0, 4)",
+            "(unique, 0x58300, 4) INT_AND (register, 0x0, 4) , (const, 0xff, 4)",
+            "(unique, 0x58400, 1) POPCOUNT (unique, 0x58300, 4)",
+            "(unique, 0x58500, 1) INT_AND (unique, 0x58400, 1) , (const, 0x1, 1)",
+            "(register, 0x202, 1) INT_EQUAL (unique, 0x58500, 1) , (const, 0x0, 1)"
+          ]
+        },
+        {
+          "addr": 1048607,
+          "size": 3,
+          "bytes": "6bc064",
+          "text": "IMUL EAX,EAX,0x64",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x93a00, 8) INT_SEXT (register, 0x0, 4)",
+            "(unique, 0x93b00, 8) INT_SEXT (const, 0x64, 4)",
+            "(unique, 0x93d00, 8) INT_MULT (unique, 0x93a00, 8) , (unique, 0x93b00, 8)",
+            "(register, 0x0, 4) SUBPIECE (unique, 0x93d00, 8) , (const, 0x0, 4)",
+            "(unique, 0x94000, 4) SUBPIECE (unique, 0x93d00, 8) , (const, 0x4, 4)",
+            "(unique, 0x5a200, 8) INT_SEXT (register, 0x0, 4)",
+            "(register, 0x200, 1) INT_NOTEQUAL (unique, 0x5a200, 8) , (unique, 0x93d00, 8)",
+            "(register, 0x20b, 1) COPY (register, 0x200, 1)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)"
+          ]
+        },
+        {
+          "addr": 1048610,
+          "size": 1,
+          "bytes": "99",
+          "text": "CDQ",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x76600, 8) INT_SEXT (register, 0x0, 4)",
+            "(register, 0x10, 4) SUBPIECE (unique, 0x76600, 8) , (const, 0x4, 4)",
+            "(register, 0x10, 8) INT_ZEXT (register, 0x10, 4)"
+          ]
+        },
+        {
+          "addr": 1048611,
+          "size": 3,
+          "bytes": "f77df8",
+          "text": "IDIV dword ptr [RBP + -0x8]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff8, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(unique, 0x8f000, 8) INT_SEXT (unique, 0x23c00, 4)",
+            "(unique, 0x8f100, 8) INT_ZEXT (register, 0x10, 4)",
+            "(unique, 0x8f200, 8) INT_LEFT (unique, 0x8f100, 8) , (const, 0x20, 4)",
+            "(unique, 0x8f300, 8) INT_ZEXT (register, 0x0, 4)",
+            "(unique, 0x8f500, 8) INT_OR (unique, 0x8f200, 8) , (unique, 0x8f300, 8)",
+            "(unique, 0x8f700, 8) INT_SDIV (unique, 0x8f500, 8) , (unique, 0x8f000, 8)",
+            "(register, 0x0, 4) SUBPIECE (unique, 0x8f700, 8) , (const, 0x0, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)",
+            "(unique, 0x8fa00, 8) INT_SREM (unique, 0x8f500, 8) , (unique, 0x8f000, 8)",
+            "(register, 0x10, 4) SUBPIECE (unique, 0x8fa00, 8) , (const, 0x0, 4)",
+            "(register, 0x10, 8) INT_ZEXT (register, 0x10, 4)"
+          ]
+        },
+        {
+          "addr": 1048614,
+          "size": 3,
+          "bytes": "8945fc",
+          "text": "MOV dword ptr [RBP + -0x4],EAX",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffffc, 8)",
+            "(unique, 0xd300, 4) COPY (register, 0x0, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048617,
+          "size": 3,
+          "bytes": "8b45fc",
+          "text": "MOV EAX,dword ptr [RBP + -0x4]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffffc, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x0, 4) COPY (unique, 0x23c00, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)"
+          ]
+        },
+        {
+          "addr": 1048620,
+          "size": 1,
+          "bytes": "5d",
+          "text": "POP RBP",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0xa9400, 8) COPY (const, 0x0, 8)",
+            "(unique, 0xa9400, 8) LOAD (const, 0x1b1, 8) , (register, 0x20, 8)",
+            "(register, 0x20, 8) INT_ADD (register, 0x20, 8) , (const, 0x8, 8)",
+            "(register, 0x28, 8) COPY (unique, 0xa9400, 8)"
+          ]
+        },
+        {
+          "addr": 1048621,
+          "size": 1,
+          "bytes": "c3",
+          "text": "RET",
+          "flowType": "TERMINATOR",
+          "pcode": [
+            "(register, 0x288, 8) LOAD (const, 0x1b1, 8) , (register, 0x20, 8)",
+            "(register, 0x20, 8) INT_ADD (register, 0x20, 8) , (const, 0x8, 8)",
+            " ---  RETURN (register, 0x288, 8)"
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "start": 1048576,
+          "size": 16,
+          "destinations": [
+            {
+              "to": 1048601,
+              "flow": "CONDITIONAL_JUMP"
+            },
+            {
+              "to": 1048592,
+              "flow": "FALL_THROUGH"
+            }
+          ]
+        },
+        {
+          "start": 1048592,
+          "size": 9,
+          "destinations": [
+            {
+              "to": 1048617,
+              "flow": "UNCONDITIONAL_JUMP"
+            }
+          ]
+        },
+        {
+          "start": 1048601,
+          "size": 16,
+          "destinations": [
+            {
+              "to": 1048617,
+              "flow": "FALL_THROUGH"
+            }
+          ]
+        },
+        {
+          "start": 1048617,
+          "size": 5,
+          "destinations": []
+        }
+      ],
+      "decompiled": "\nint percent_change(int param_1,int param_2)\n\n{\n  undefined4 local_c;\n  \n  if (param_1 \u003d\u003d 0) {\n    local_c \u003d 0;\n  }\n  else {\n    local_c \u003d ((param_2 - param_1) * 100) / param_1;\n  }\n  return local_c;\n}\n\n"
+    },
+    {
+      "name": "grade",
+      "entry": 1048624,
+      "bodySize": 118,
+      "bodyMin": 1048624,
+      "bodyMax": 1048741,
+      "symbolSource": "IMPORTED",
+      "instructions": [
+        {
+          "addr": 1048624,
+          "size": 1,
+          "bytes": "55",
+          "text": "PUSH RBP",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x4f900, 8) COPY (register, 0x28, 8)",
+            "(register, 0x20, 8) INT_SUB (register, 0x20, 8) , (const, 0x8, 8)",
+            " ---  STORE (const, 0x1b1, 8) , (register, 0x20, 8) , (unique, 0x4f900, 8)"
+          ]
+        },
+        {
+          "addr": 1048625,
+          "size": 3,
+          "bytes": "4889e5",
+          "text": "MOV RBP,RSP",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x28, 8) COPY (register, 0x20, 8)"
+          ]
+        },
+        {
+          "addr": 1048628,
+          "size": 3,
+          "bytes": "897df8",
+          "text": "MOV dword ptr [RBP + -0x8],EDI",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff8, 8)",
+            "(unique, 0xd300, 4) COPY (register, 0x38, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048631,
+          "size": 4,
+          "bytes": "486345f8",
+          "text": "MOVSXD RAX,dword ptr [RBP + -0x8]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff8, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x0, 8) INT_SEXT (unique, 0x23c00, 4)"
+          ]
+        },
+        {
+          "addr": 1048635,
+          "size": 7,
+          "bytes": "4869c067666666",
+          "text": "IMUL RAX,RAX,0x66666667",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x95600, 16) INT_SEXT (register, 0x0, 8)",
+            "(unique, 0x95700, 16) INT_SEXT (const, 0x66666667, 4)",
+            "(unique, 0x95900, 16) INT_MULT (unique, 0x95600, 16) , (unique, 0x95700, 16)",
+            "(unique, 0x95a00, 8) INT_SEXT (const, 0x66666667, 4)",
+            "(register, 0x0, 8) INT_MULT (register, 0x0, 8) , (unique, 0x95a00, 8)",
+            "(unique, 0x95d00, 8) SUBPIECE (unique, 0x95900, 16) , (const, 0x8, 4)",
+            "(unique, 0x5a200, 16) INT_SEXT (register, 0x0, 8)",
+            "(register, 0x200, 1) INT_NOTEQUAL (unique, 0x5a200, 16) , (unique, 0x95900, 16)",
+            "(register, 0x20b, 1) COPY (register, 0x200, 1)"
+          ]
+        },
+        {
+          "addr": 1048642,
+          "size": 3,
+          "bytes": "4889c1",
+          "text": "MOV RCX,RAX",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x8, 8) COPY (register, 0x0, 8)"
+          ]
+        },
+        {
+          "addr": 1048645,
+          "size": 4,
+          "bytes": "48c1f922",
+          "text": "SAR RCX,0x22",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0xc5c00, 4) INT_AND (const, 0x22, 4) , (const, 0x3f, 4)",
+            "(unique, 0xc5d00, 8) COPY (register, 0x8, 8)",
+            "(register, 0x8, 8) INT_SRIGHT (register, 0x8, 8) , (unique, 0xc5c00, 4)",
+            "(unique, 0x5b800, 1) INT_EQUAL (unique, 0xc5c00, 4) , (const, 0x0, 4)",
+            "(unique, 0x5b900, 4) INT_SUB (unique, 0xc5c00, 4) , (const, 0x1, 4)",
+            "(unique, 0x5ba00, 8) INT_SRIGHT (unique, 0xc5d00, 8) , (unique, 0x5b900, 4)",
+            "(unique, 0x5bb00, 8) INT_AND (unique, 0x5ba00, 8) , (const, 0x1, 8)",
+            "(unique, 0x5bc00, 1) INT_NOTEQUAL (unique, 0x5bb00, 8) , (const, 0x0, 8)",
+            "(unique, 0x0, 1) COPY (unique, 0x5b800, 1)",
+            "(unique, 0x100, 1) INT_MULT (unique, 0x0, 1) , (register, 0x200, 1)",
+            "(unique, 0x200, 1) BOOL_NEGATE (unique, 0x5b800, 1)",
+            "(unique, 0x300, 1) COPY (unique, 0x200, 1)",
+            "(unique, 0x400, 1) INT_MULT (unique, 0x300, 1) , (unique, 0x5bc00, 1)",
+            "(register, 0x200, 1) INT_OR (unique, 0x100, 1) , (unique, 0x400, 1)",
+            "(unique, 0x5bd00, 1) INT_EQUAL (unique, 0xc5c00, 4) , (const, 0x1, 4)",
+            "(unique, 0x0, 1) COPY (unique, 0x5bd00, 1)",
+            "(unique, 0x100, 1) INT_MULT (unique, 0x0, 1) , (const, 0x0, 1)",
+            "(unique, 0x200, 1) BOOL_NEGATE (unique, 0x5bd00, 1)",
+            "(unique, 0x300, 1) COPY (unique, 0x200, 1)",
+            "(unique, 0x400, 1) INT_MULT (unique, 0x300, 1) , (register, 0x20b, 1)",
+            "(register, 0x20b, 1) INT_OR (unique, 0x100, 1) , (unique, 0x400, 1)",
+            "(unique, 0x58800, 1) INT_NOTEQUAL (unique, 0xc5c00, 4) , (const, 0x0, 4)",
+            "(unique, 0x58a00, 1) INT_SLESS (register, 0x8, 8) , (const, 0x0, 8)",
+            "(unique, 0x58b00, 1) BOOL_NEGATE (unique, 0x58800, 1)",
+            "(unique, 0x58c00, 1) INT_AND (unique, 0x58b00, 1) , (register, 0x207, 1)",
+            "(unique, 0x58d00, 1) INT_AND (unique, 0x58800, 1) , (unique, 0x58a00, 1)",
+            "(register, 0x207, 1) INT_OR (unique, 0x58c00, 1) , (unique, 0x58d00, 1)",
+            "(unique, 0x59000, 1) INT_EQUAL (register, 0x8, 8) , (const, 0x0, 8)",
+            "(unique, 0x59100, 1) BOOL_NEGATE (unique, 0x58800, 1)",
+            "(unique, 0x59200, 1) INT_AND (unique, 0x59100, 1) , (register, 0x206, 1)",
+            "(unique, 0x59300, 1) INT_AND (unique, 0x58800, 1) , (unique, 0x59000, 1)",
+            "(register, 0x206, 1) INT_OR (unique, 0x59200, 1) , (unique, 0x59300, 1)",
+            "(unique, 0x59500, 8) INT_AND (register, 0x8, 8) , (const, 0xff, 8)",
+            "(unique, 0x59600, 1) POPCOUNT (unique, 0x59500, 8)",
+            "(unique, 0x59700, 1) INT_AND (unique, 0x59600, 1) , (const, 0x1, 1)",
+            "(unique, 0x59900, 1) INT_EQUAL (unique, 0x59700, 1) , (const, 0x0, 1)",
+            "(unique, 0x59a00, 1) BOOL_NEGATE (unique, 0x58800, 1)",
+            "(unique, 0x59b00, 1) INT_AND (unique, 0x59a00, 1) , (register, 0x202, 1)",
+            "(unique, 0x59c00, 1) INT_AND (unique, 0x58800, 1) , (unique, 0x59900, 1)",
+            "(register, 0x202, 1) INT_OR (unique, 0x59b00, 1) , (unique, 0x59c00, 1)"
+          ]
+        },
+        {
+          "addr": 1048649,
+          "size": 2,
+          "bytes": "89ca",
+          "text": "MOV EDX,ECX",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x10, 4) COPY (register, 0x8, 4)",
+            "(register, 0x10, 8) INT_ZEXT (register, 0x10, 4)"
+          ]
+        },
+        {
+          "addr": 1048651,
+          "size": 4,
+          "bytes": "48c1e83f",
+          "text": "SHR RAX,0x3f",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0xd1a00, 4) INT_AND (const, 0x3f, 4) , (const, 0x3f, 4)",
+            "(unique, 0xd1b00, 8) COPY (register, 0x0, 8)",
+            "(register, 0x0, 8) INT_RIGHT (register, 0x0, 8) , (unique, 0xd1a00, 4)",
+            "(unique, 0x5be00, 1) INT_EQUAL (unique, 0xd1a00, 4) , (const, 0x0, 4)",
+            "(unique, 0x5bf00, 4) INT_SUB (unique, 0xd1a00, 4) , (const, 0x1, 4)",
+            "(unique, 0x5c000, 8) INT_RIGHT (unique, 0xd1b00, 8) , (unique, 0x5bf00, 4)",
+            "(unique, 0x5c100, 8) INT_AND (unique, 0x5c000, 8) , (const, 0x1, 8)",
+            "(unique, 0x5c200, 1) INT_NOTEQUAL (unique, 0x5c100, 8) , (const, 0x0, 8)",
+            "(unique, 0x0, 1) COPY (unique, 0x5be00, 1)",
+            "(unique, 0x100, 1) INT_MULT (unique, 0x0, 1) , (register, 0x200, 1)",
+            "(unique, 0x200, 1) BOOL_NEGATE (unique, 0x5be00, 1)",
+            "(unique, 0x300, 1) COPY (unique, 0x200, 1)",
+            "(unique, 0x400, 1) INT_MULT (unique, 0x300, 1) , (unique, 0x5c200, 1)",
+            "(register, 0x200, 1) INT_OR (unique, 0x100, 1) , (unique, 0x400, 1)",
+            "(unique, 0x5c300, 1) INT_EQUAL (unique, 0xd1a00, 4) , (const, 0x1, 4)",
+            "(unique, 0x5c400, 1) INT_SLESS (unique, 0xd1b00, 8) , (const, 0x0, 8)",
+            "(unique, 0x0, 1) COPY (unique, 0x5c300, 1)",
+            "(unique, 0x100, 1) INT_MULT (unique, 0x0, 1) , (const, 0x0, 1)",
+            "(unique, 0x200, 1) BOOL_NEGATE (unique, 0x5c300, 1)",
+            "(unique, 0x300, 1) COPY (unique, 0x200, 1)",
+            "(unique, 0x400, 1) INT_MULT (unique, 0x300, 1) , (unique, 0x5c400, 1)",
+            "(register, 0x20b, 1) INT_OR (unique, 0x100, 1) , (unique, 0x400, 1)",
+            "(unique, 0x58800, 1) INT_NOTEQUAL (unique, 0xd1a00, 4) , (const, 0x0, 4)",
+            "(unique, 0x58a00, 1) INT_SLESS (register, 0x0, 8) , (const, 0x0, 8)",
+            "(unique, 0x58b00, 1) BOOL_NEGATE (unique, 0x58800, 1)",
+            "(unique, 0x58c00, 1) INT_AND (unique, 0x58b00, 1) , (register, 0x207, 1)",
+            "(unique, 0x58d00, 1) INT_AND (unique, 0x58800, 1) , (unique, 0x58a00, 1)",
+            "(register, 0x207, 1) INT_OR (unique, 0x58c00, 1) , (unique, 0x58d00, 1)",
+            "(unique, 0x59000, 1) INT_EQUAL (register, 0x0, 8) , (const, 0x0, 8)",
+            "(unique, 0x59100, 1) BOOL_NEGATE (unique, 0x58800, 1)",
+            "(unique, 0x59200, 1) INT_AND (unique, 0x59100, 1) , (register, 0x206, 1)",
+            "(unique, 0x59300, 1) INT_AND (unique, 0x58800, 1) , (unique, 0x59000, 1)",
+            "(register, 0x206, 1) INT_OR (unique, 0x59200, 1) , (unique, 0x59300, 1)",
+            "(unique, 0x59500, 8) INT_AND (register, 0x0, 8) , (const, 0xff, 8)",
+            "(unique, 0x59600, 1) POPCOUNT (unique, 0x59500, 8)",
+            "(unique, 0x59700, 1) INT_AND (unique, 0x59600, 1) , (const, 0x1, 1)",
+            "(unique, 0x59900, 1) INT_EQUAL (unique, 0x59700, 1) , (const, 0x0, 1)",
+            "(unique, 0x59a00, 1) BOOL_NEGATE (unique, 0x58800, 1)",
+            "(unique, 0x59b00, 1) INT_AND (unique, 0x59a00, 1) , (register, 0x202, 1)",
+            "(unique, 0x59c00, 1) INT_AND (unique, 0x58800, 1) , (unique, 0x59900, 1)",
+            "(register, 0x202, 1) INT_OR (unique, 0x59b00, 1) , (unique, 0x59c00, 1)"
+          ]
+        },
+        {
+          "addr": 1048655,
+          "size": 2,
+          "bytes": "89c1",
+          "text": "MOV ECX,EAX",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x8, 4) COPY (register, 0x0, 4)",
+            "(register, 0x8, 8) INT_ZEXT (register, 0x8, 4)"
+          ]
+        },
+        {
+          "addr": 1048657,
+          "size": 2,
+          "bytes": "89d0",
+          "text": "MOV EAX,EDX",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x0, 4) COPY (register, 0x10, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)"
+          ]
+        },
+        {
+          "addr": 1048659,
+          "size": 4,
+          "bytes": "8d4408fa",
+          "text": "LEA EAX,[RAX + RCX*0x1 + -0x6]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x9d00, 8) INT_ADD (const, 0xfffffffffffffffa, 8) , (register, 0x0, 8)",
+            "(unique, 0x9e00, 8) INT_MULT (register, 0x8, 8) , (const, 0x1, 8)",
+            "(unique, 0xa000, 8) INT_ADD (unique, 0x9d00, 8) , (unique, 0x9e00, 8)",
+            "(register, 0x0, 4) SUBPIECE (unique, 0xa000, 8) , (const, 0x0, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)"
+          ]
+        },
+        {
+          "addr": 1048663,
+          "size": 2,
+          "bytes": "89c1",
+          "text": "MOV ECX,EAX",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x8, 4) COPY (register, 0x0, 4)",
+            "(register, 0x8, 8) INT_ZEXT (register, 0x8, 4)"
+          ]
+        },
+        {
+          "addr": 1048665,
+          "size": 4,
+          "bytes": "48894df0",
+          "text": "MOV qword ptr [RBP + -0x10],RCX",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff0, 8)",
+            "(unique, 0xd400, 8) COPY (register, 0x8, 8)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd400, 8)"
+          ]
+        },
+        {
+          "addr": 1048669,
+          "size": 3,
+          "bytes": "83e804",
+          "text": "SUB EAX,0x4",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x200, 1) INT_LESS (register, 0x0, 4) , (const, 0x4, 4)",
+            "(register, 0x20b, 1) INT_SBORROW (register, 0x0, 4) , (const, 0x4, 4)",
+            "(register, 0x0, 4) INT_SUB (register, 0x0, 4) , (const, 0x4, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)",
+            "(register, 0x207, 1) INT_SLESS (register, 0x0, 4) , (const, 0x0, 4)",
+            "(register, 0x206, 1) INT_EQUAL (register, 0x0, 4) , (const, 0x0, 4)",
+            "(unique, 0x58300, 4) INT_AND (register, 0x0, 4) , (const, 0xff, 4)",
+            "(unique, 0x58400, 1) POPCOUNT (unique, 0x58300, 4)",
+            "(unique, 0x58500, 1) INT_AND (unique, 0x58400, 1) , (const, 0x1, 1)",
+            "(register, 0x202, 1) INT_EQUAL (unique, 0x58500, 1) , (const, 0x0, 1)"
+          ]
+        },
+        {
+          "addr": 1048672,
+          "size": 2,
+          "bytes": "7738",
+          "text": "JA 0x0010009a",
+          "flowType": "CONDITIONAL_JUMP",
+          "pcode": [
+            "(unique, 0x25200, 1) BOOL_OR (register, 0x200, 1) , (register, 0x206, 1)",
+            "(unique, 0x25400, 1) BOOL_NEGATE (unique, 0x25200, 1)",
+            " ---  CBRANCH (ram, 0x10009a, 8) , (unique, 0x25400, 1)"
+          ]
+        },
+        {
+          "addr": 1048674,
+          "size": 4,
+          "bytes": "488b45f0",
+          "text": "MOV RAX,qword ptr [RBP + -0x10]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff0, 8)",
+            "(unique, 0x23d00, 8) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x0, 8) COPY (unique, 0x23d00, 8)"
+          ]
+        },
+        {
+          "addr": 1048678,
+          "size": 7,
+          "bytes": "488d0dbb000000",
+          "text": "LEA RCX,[0x100128]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x8, 8) COPY (const, 0x100128, 8)"
+          ]
+        },
+        {
+          "addr": 1048685,
+          "size": 4,
+          "bytes": "48630481",
+          "text": "MOVSXD RAX,dword ptr [RCX + RAX*0x4]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x9200, 8) INT_MULT (register, 0x0, 8) , (const, 0x4, 8)",
+            "(unique, 0x9400, 8) INT_ADD (register, 0x8, 8) , (unique, 0x9200, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x9400, 8)",
+            "(register, 0x0, 8) INT_SEXT (unique, 0x23c00, 4)"
+          ]
+        },
+        {
+          "addr": 1048689,
+          "size": 3,
+          "bytes": "4801c8",
+          "text": "ADD RAX,RCX",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x200, 1) INT_CARRY (register, 0x0, 8) , (register, 0x8, 8)",
+            "(register, 0x20b, 1) INT_SCARRY (register, 0x0, 8) , (register, 0x8, 8)",
+            "(register, 0x0, 8) INT_ADD (register, 0x0, 8) , (register, 0x8, 8)",
+            "(register, 0x207, 1) INT_SLESS (register, 0x0, 8) , (const, 0x0, 8)",
+            "(register, 0x206, 1) INT_EQUAL (register, 0x0, 8) , (const, 0x0, 8)",
+            "(unique, 0x58300, 8) INT_AND (register, 0x0, 8) , (const, 0xff, 8)",
+            "(unique, 0x58400, 1) POPCOUNT (unique, 0x58300, 8)",
+            "(unique, 0x58500, 1) INT_AND (unique, 0x58400, 1) , (const, 0x1, 1)",
+            "(register, 0x202, 1) INT_EQUAL (unique, 0x58500, 1) , (const, 0x0, 1)"
+          ]
+        },
+        {
+          "addr": 1048692,
+          "size": 2,
+          "bytes": "ffe0",
+          "text": "JMP RAX",
+          "flowType": "COMPUTED_JUMP",
+          "pcode": [
+            " ---  BRANCHIND (register, 0x0, 8)"
+          ]
+        },
+        {
+          "addr": 1048694,
+          "size": 7,
+          "bytes": "c745fc04000000",
+          "text": "MOV dword ptr [RBP + -0x4],0x4",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffffc, 8)",
+            "(unique, 0xd300, 4) COPY (const, 0x4, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048701,
+          "size": 2,
+          "bytes": "eb22",
+          "text": "JMP 0x001000a1",
+          "flowType": "UNCONDITIONAL_JUMP",
+          "pcode": [
+            " ---  BRANCH (ram, 0x1000a1, 8)"
+          ]
+        },
+        {
+          "addr": 1048703,
+          "size": 7,
+          "bytes": "c745fc03000000",
+          "text": "MOV dword ptr [RBP + -0x4],0x3",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffffc, 8)",
+            "(unique, 0xd300, 4) COPY (const, 0x3, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048710,
+          "size": 2,
+          "bytes": "eb19",
+          "text": "JMP 0x001000a1",
+          "flowType": "UNCONDITIONAL_JUMP",
+          "pcode": [
+            " ---  BRANCH (ram, 0x1000a1, 8)"
+          ]
+        },
+        {
+          "addr": 1048712,
+          "size": 7,
+          "bytes": "c745fc02000000",
+          "text": "MOV dword ptr [RBP + -0x4],0x2",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffffc, 8)",
+            "(unique, 0xd300, 4) COPY (const, 0x2, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048719,
+          "size": 2,
+          "bytes": "eb10",
+          "text": "JMP 0x001000a1",
+          "flowType": "UNCONDITIONAL_JUMP",
+          "pcode": [
+            " ---  BRANCH (ram, 0x1000a1, 8)"
+          ]
+        },
+        {
+          "addr": 1048721,
+          "size": 7,
+          "bytes": "c745fc01000000",
+          "text": "MOV dword ptr [RBP + -0x4],0x1",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffffc, 8)",
+            "(unique, 0xd300, 4) COPY (const, 0x1, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048728,
+          "size": 2,
+          "bytes": "eb07",
+          "text": "JMP 0x001000a1",
+          "flowType": "UNCONDITIONAL_JUMP",
+          "pcode": [
+            " ---  BRANCH (ram, 0x1000a1, 8)"
+          ]
+        },
+        {
+          "addr": 1048730,
+          "size": 7,
+          "bytes": "c745fc00000000",
+          "text": "MOV dword ptr [RBP + -0x4],0x0",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffffc, 8)",
+            "(unique, 0xd300, 4) COPY (const, 0x0, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048737,
+          "size": 3,
+          "bytes": "8b45fc",
+          "text": "MOV EAX,dword ptr [RBP + -0x4]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffffc, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x0, 4) COPY (unique, 0x23c00, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)"
+          ]
+        },
+        {
+          "addr": 1048740,
+          "size": 1,
+          "bytes": "5d",
+          "text": "POP RBP",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0xa9400, 8) COPY (const, 0x0, 8)",
+            "(unique, 0xa9400, 8) LOAD (const, 0x1b1, 8) , (register, 0x20, 8)",
+            "(register, 0x20, 8) INT_ADD (register, 0x20, 8) , (const, 0x8, 8)",
+            "(register, 0x28, 8) COPY (unique, 0xa9400, 8)"
+          ]
+        },
+        {
+          "addr": 1048741,
+          "size": 1,
+          "bytes": "c3",
+          "text": "RET",
+          "flowType": "TERMINATOR",
+          "pcode": [
+            "(register, 0x288, 8) LOAD (const, 0x1b1, 8) , (register, 0x20, 8)",
+            "(register, 0x20, 8) INT_ADD (register, 0x20, 8) , (const, 0x8, 8)",
+            " ---  RETURN (register, 0x288, 8)"
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "start": 1048624,
+          "size": 50,
+          "destinations": [
+            {
+              "to": 1048730,
+              "flow": "CONDITIONAL_JUMP"
+            },
+            {
+              "to": 1048674,
+              "flow": "FALL_THROUGH"
+            }
+          ]
+        },
+        {
+          "start": 1048674,
+          "size": 18,
+          "destinations": [
+            {
+              "to": 1048692,
+              "flow": "FALL_THROUGH"
+            }
+          ]
+        },
+        {
+          "start": 1048692,
+          "size": 2,
+          "destinations": [
+            {
+              "to": 1048721,
+              "flow": "COMPUTED_JUMP"
+            },
+            {
+              "to": 1048712,
+              "flow": "COMPUTED_JUMP"
+            },
+            {
+              "to": 1048703,
+              "flow": "COMPUTED_JUMP"
+            },
+            {
+              "to": 1048694,
+              "flow": "COMPUTED_JUMP"
+            }
+          ]
+        },
+        {
+          "start": 1048694,
+          "size": 9,
+          "destinations": [
+            {
+              "to": 1048737,
+              "flow": "UNCONDITIONAL_JUMP"
+            }
+          ]
+        },
+        {
+          "start": 1048703,
+          "size": 9,
+          "destinations": [
+            {
+              "to": 1048737,
+              "flow": "UNCONDITIONAL_JUMP"
+            }
+          ]
+        },
+        {
+          "start": 1048712,
+          "size": 9,
+          "destinations": [
+            {
+              "to": 1048737,
+              "flow": "UNCONDITIONAL_JUMP"
+            }
+          ]
+        },
+        {
+          "start": 1048721,
+          "size": 9,
+          "destinations": [
+            {
+              "to": 1048737,
+              "flow": "UNCONDITIONAL_JUMP"
+            }
+          ]
+        },
+        {
+          "start": 1048730,
+          "size": 7,
+          "destinations": [
+            {
+              "to": 1048737,
+              "flow": "FALL_THROUGH"
+            }
+          ]
+        },
+        {
+          "start": 1048737,
+          "size": 5,
+          "destinations": []
+        }
+      ],
+      "decompiled": "\nundefined4 grade(int param_1)\n\n{\n  undefined4 local_c;\n  \n  switch(param_1 / 10) {\n  case 6:\n    local_c \u003d 1;\n    break;\n  case 7:\n    local_c \u003d 2;\n    break;\n  case 8:\n    local_c \u003d 3;\n    break;\n  case 9:\n  case 10:\n    local_c \u003d 4;\n    break;\n  default:\n    local_c \u003d 0;\n  }\n  return local_c;\n}\n\n"
+    },
+    {
+      "name": "total",
+      "entry": 1048752,
+      "bodySize": 66,
+      "bodyMin": 1048752,
+      "bodyMax": 1048817,
+      "symbolSource": "IMPORTED",
+      "instructions": [
+        {
+          "addr": 1048752,
+          "size": 1,
+          "bytes": "55",
+          "text": "PUSH RBP",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x4f900, 8) COPY (register, 0x28, 8)",
+            "(register, 0x20, 8) INT_SUB (register, 0x20, 8) , (const, 0x8, 8)",
+            " ---  STORE (const, 0x1b1, 8) , (register, 0x20, 8) , (unique, 0x4f900, 8)"
+          ]
+        },
+        {
+          "addr": 1048753,
+          "size": 3,
+          "bytes": "4889e5",
+          "text": "MOV RBP,RSP",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x28, 8) COPY (register, 0x20, 8)"
+          ]
+        },
+        {
+          "addr": 1048756,
+          "size": 4,
+          "bytes": "48897df8",
+          "text": "MOV qword ptr [RBP + -0x8],RDI",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff8, 8)",
+            "(unique, 0xd400, 8) COPY (register, 0x38, 8)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd400, 8)"
+          ]
+        },
+        {
+          "addr": 1048760,
+          "size": 3,
+          "bytes": "8975f4",
+          "text": "MOV dword ptr [RBP + -0xc],ESI",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff4, 8)",
+            "(unique, 0xd300, 4) COPY (register, 0x30, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048763,
+          "size": 7,
+          "bytes": "c745f000000000",
+          "text": "MOV dword ptr [RBP + -0x10],0x0",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff0, 8)",
+            "(unique, 0xd300, 4) COPY (const, 0x0, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048770,
+          "size": 7,
+          "bytes": "c745ec00000000",
+          "text": "MOV dword ptr [RBP + -0x14],0x0",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xffffffffffffffec, 8)",
+            "(unique, 0xd300, 4) COPY (const, 0x0, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048777,
+          "size": 3,
+          "bytes": "8b45ec",
+          "text": "MOV EAX,dword ptr [RBP + -0x14]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xffffffffffffffec, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x0, 4) COPY (unique, 0x23c00, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)"
+          ]
+        },
+        {
+          "addr": 1048780,
+          "size": 3,
+          "bytes": "3b45f4",
+          "text": "CMP EAX,dword ptr [RBP + -0xc]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff4, 8)",
+            "(unique, 0xd300, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(unique, 0x7a600, 4) COPY (unique, 0xd300, 4)",
+            "(register, 0x200, 1) INT_LESS (register, 0x0, 4) , (unique, 0x7a600, 4)",
+            "(register, 0x20b, 1) INT_SBORROW (register, 0x0, 4) , (unique, 0x7a600, 4)",
+            "(unique, 0x7a800, 4) INT_SUB (register, 0x0, 4) , (unique, 0x7a600, 4)",
+            "(register, 0x207, 1) INT_SLESS (unique, 0x7a800, 4) , (const, 0x0, 4)",
+            "(register, 0x206, 1) INT_EQUAL (unique, 0x7a800, 4) , (const, 0x0, 4)",
+            "(unique, 0x58300, 4) INT_AND (unique, 0x7a800, 4) , (const, 0xff, 4)",
+            "(unique, 0x58400, 1) POPCOUNT (unique, 0x58300, 4)",
+            "(unique, 0x58500, 1) INT_AND (unique, 0x58400, 1) , (const, 0x1, 1)",
+            "(register, 0x202, 1) INT_EQUAL (unique, 0x58500, 1) , (const, 0x0, 1)"
+          ]
+        },
+        {
+          "addr": 1048783,
+          "size": 2,
+          "bytes": "7d1c",
+          "text": "JGE 0x001000ed",
+          "flowType": "CONDITIONAL_JUMP",
+          "pcode": [
+            "(unique, 0x25c00, 1) INT_EQUAL (register, 0x20b, 1) , (register, 0x207, 1)",
+            " ---  CBRANCH (ram, 0x1000ed, 8) , (unique, 0x25c00, 1)"
+          ]
+        },
+        {
+          "addr": 1048785,
+          "size": 4,
+          "bytes": "488b45f8",
+          "text": "MOV RAX,qword ptr [RBP + -0x8]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff8, 8)",
+            "(unique, 0x23d00, 8) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x0, 8) COPY (unique, 0x23d00, 8)"
+          ]
+        },
+        {
+          "addr": 1048789,
+          "size": 4,
+          "bytes": "48634dec",
+          "text": "MOVSXD RCX,dword ptr [RBP + -0x14]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xffffffffffffffec, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x8, 8) INT_SEXT (unique, 0x23c00, 4)"
+          ]
+        },
+        {
+          "addr": 1048793,
+          "size": 3,
+          "bytes": "8b0488",
+          "text": "MOV EAX,dword ptr [RAX + RCX*0x4]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x9200, 8) INT_MULT (register, 0x8, 8) , (const, 0x4, 8)",
+            "(unique, 0x9400, 8) INT_ADD (register, 0x0, 8) , (unique, 0x9200, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x9400, 8)",
+            "(register, 0x0, 4) COPY (unique, 0x23c00, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)"
+          ]
+        },
+        {
+          "addr": 1048796,
+          "size": 3,
+          "bytes": "0345f0",
+          "text": "ADD EAX,dword ptr [RBP + -0x10]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff0, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x200, 1) INT_CARRY (register, 0x0, 4) , (unique, 0x23c00, 4)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x20b, 1) INT_SCARRY (register, 0x0, 4) , (unique, 0x23c00, 4)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x0, 4) INT_ADD (register, 0x0, 4) , (unique, 0x23c00, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)",
+            "(register, 0x207, 1) INT_SLESS (register, 0x0, 4) , (const, 0x0, 4)",
+            "(register, 0x206, 1) INT_EQUAL (register, 0x0, 4) , (const, 0x0, 4)",
+            "(unique, 0x58300, 4) INT_AND (register, 0x0, 4) , (const, 0xff, 4)",
+            "(unique, 0x58400, 1) POPCOUNT (unique, 0x58300, 4)",
+            "(unique, 0x58500, 1) INT_AND (unique, 0x58400, 1) , (const, 0x1, 1)",
+            "(register, 0x202, 1) INT_EQUAL (unique, 0x58500, 1) , (const, 0x0, 1)"
+          ]
+        },
+        {
+          "addr": 1048799,
+          "size": 3,
+          "bytes": "8945f0",
+          "text": "MOV dword ptr [RBP + -0x10],EAX",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff0, 8)",
+            "(unique, 0xd300, 4) COPY (register, 0x0, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048802,
+          "size": 3,
+          "bytes": "8b45ec",
+          "text": "MOV EAX,dword ptr [RBP + -0x14]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xffffffffffffffec, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x0, 4) COPY (unique, 0x23c00, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)"
+          ]
+        },
+        {
+          "addr": 1048805,
+          "size": 3,
+          "bytes": "83c001",
+          "text": "ADD EAX,0x1",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x200, 1) INT_CARRY (register, 0x0, 4) , (const, 0x1, 4)",
+            "(register, 0x20b, 1) INT_SCARRY (register, 0x0, 4) , (const, 0x1, 4)",
+            "(register, 0x0, 4) INT_ADD (register, 0x0, 4) , (const, 0x1, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)",
+            "(register, 0x207, 1) INT_SLESS (register, 0x0, 4) , (const, 0x0, 4)",
+            "(register, 0x206, 1) INT_EQUAL (register, 0x0, 4) , (const, 0x0, 4)",
+            "(unique, 0x58300, 4) INT_AND (register, 0x0, 4) , (const, 0xff, 4)",
+            "(unique, 0x58400, 1) POPCOUNT (unique, 0x58300, 4)",
+            "(unique, 0x58500, 1) INT_AND (unique, 0x58400, 1) , (const, 0x1, 1)",
+            "(register, 0x202, 1) INT_EQUAL (unique, 0x58500, 1) , (const, 0x0, 1)"
+          ]
+        },
+        {
+          "addr": 1048808,
+          "size": 3,
+          "bytes": "8945ec",
+          "text": "MOV dword ptr [RBP + -0x14],EAX",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xffffffffffffffec, 8)",
+            "(unique, 0xd300, 4) COPY (register, 0x0, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048811,
+          "size": 2,
+          "bytes": "ebdc",
+          "text": "JMP 0x001000c9",
+          "flowType": "UNCONDITIONAL_JUMP",
+          "pcode": [
+            " ---  BRANCH (ram, 0x1000c9, 8)"
+          ]
+        },
+        {
+          "addr": 1048813,
+          "size": 3,
+          "bytes": "8b45f0",
+          "text": "MOV EAX,dword ptr [RBP + -0x10]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffff0, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x0, 4) COPY (unique, 0x23c00, 4)",
+            "(register, 0x0, 8) INT_ZEXT (register, 0x0, 4)"
+          ]
+        },
+        {
+          "addr": 1048816,
+          "size": 1,
+          "bytes": "5d",
+          "text": "POP RBP",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0xa9400, 8) COPY (const, 0x0, 8)",
+            "(unique, 0xa9400, 8) LOAD (const, 0x1b1, 8) , (register, 0x20, 8)",
+            "(register, 0x20, 8) INT_ADD (register, 0x20, 8) , (const, 0x8, 8)",
+            "(register, 0x28, 8) COPY (unique, 0xa9400, 8)"
+          ]
+        },
+        {
+          "addr": 1048817,
+          "size": 1,
+          "bytes": "c3",
+          "text": "RET",
+          "flowType": "TERMINATOR",
+          "pcode": [
+            "(register, 0x288, 8) LOAD (const, 0x1b1, 8) , (register, 0x20, 8)",
+            "(register, 0x20, 8) INT_ADD (register, 0x20, 8) , (const, 0x8, 8)",
+            " ---  RETURN (register, 0x288, 8)"
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "start": 1048752,
+          "size": 25,
+          "destinations": [
+            {
+              "to": 1048777,
+              "flow": "FALL_THROUGH"
+            }
+          ]
+        },
+        {
+          "start": 1048777,
+          "size": 8,
+          "destinations": [
+            {
+              "to": 1048813,
+              "flow": "CONDITIONAL_JUMP"
+            },
+            {
+              "to": 1048785,
+              "flow": "FALL_THROUGH"
+            }
+          ]
+        },
+        {
+          "start": 1048785,
+          "size": 28,
+          "destinations": [
+            {
+              "to": 1048777,
+              "flow": "UNCONDITIONAL_JUMP"
+            }
+          ]
+        },
+        {
+          "start": 1048813,
+          "size": 5,
+          "destinations": []
+        }
+      ],
+      "decompiled": "\nint total(long param_1,int param_2)\n\n{\n  undefined4 local_1c;\n  undefined4 local_18;\n  \n  local_18 \u003d 0;\n  for (local_1c \u003d 0; local_1c \u003c param_2; local_1c \u003d local_1c + 1) {\n    local_18 \u003d *(int *)(param_1 + (long)local_1c * 4) + local_18;\n  }\n  return local_18;\n}\n\n"
+    },
+    {
+      "name": "grade_label",
+      "entry": 1048832,
+      "bodySize": 39,
+      "bodyMin": 1048832,
+      "bodyMax": 1048870,
+      "symbolSource": "IMPORTED",
+      "instructions": [
+        {
+          "addr": 1048832,
+          "size": 1,
+          "bytes": "55",
+          "text": "PUSH RBP",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x4f900, 8) COPY (register, 0x28, 8)",
+            "(register, 0x20, 8) INT_SUB (register, 0x20, 8) , (const, 0x8, 8)",
+            " ---  STORE (const, 0x1b1, 8) , (register, 0x20, 8) , (unique, 0x4f900, 8)"
+          ]
+        },
+        {
+          "addr": 1048833,
+          "size": 3,
+          "bytes": "4889e5",
+          "text": "MOV RBP,RSP",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x28, 8) COPY (register, 0x20, 8)"
+          ]
+        },
+        {
+          "addr": 1048836,
+          "size": 4,
+          "bytes": "4883ec10",
+          "text": "SUB RSP,0x10",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x200, 1) INT_LESS (register, 0x20, 8) , (const, 0x10, 8)",
+            "(register, 0x20b, 1) INT_SBORROW (register, 0x20, 8) , (const, 0x10, 8)",
+            "(register, 0x20, 8) INT_SUB (register, 0x20, 8) , (const, 0x10, 8)",
+            "(register, 0x207, 1) INT_SLESS (register, 0x20, 8) , (const, 0x0, 8)",
+            "(register, 0x206, 1) INT_EQUAL (register, 0x20, 8) , (const, 0x0, 8)",
+            "(unique, 0x58300, 8) INT_AND (register, 0x20, 8) , (const, 0xff, 8)",
+            "(unique, 0x58400, 1) POPCOUNT (unique, 0x58300, 8)",
+            "(unique, 0x58500, 1) INT_AND (unique, 0x58400, 1) , (const, 0x1, 1)",
+            "(register, 0x202, 1) INT_EQUAL (unique, 0x58500, 1) , (const, 0x0, 1)"
+          ]
+        },
+        {
+          "addr": 1048840,
+          "size": 3,
+          "bytes": "897dfc",
+          "text": "MOV dword ptr [RBP + -0x4],EDI",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffffc, 8)",
+            "(unique, 0xd300, 4) COPY (register, 0x38, 4)",
+            " ---  STORE (const, 0x1b1, 4) , (unique, 0x8e00, 8) , (unique, 0xd300, 4)"
+          ]
+        },
+        {
+          "addr": 1048843,
+          "size": 3,
+          "bytes": "8b7dfc",
+          "text": "MOV EDI,dword ptr [RBP + -0x4]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x8e00, 8) INT_ADD (register, 0x28, 8) , (const, 0xfffffffffffffffc, 8)",
+            "(unique, 0x23c00, 4) LOAD (const, 0x1b1, 4) , (unique, 0x8e00, 8)",
+            "(register, 0x38, 4) COPY (unique, 0x23c00, 4)",
+            "(register, 0x38, 8) INT_ZEXT (register, 0x38, 4)"
+          ]
+        },
+        {
+          "addr": 1048846,
+          "size": 5,
+          "bytes": "e81dffffff",
+          "text": "CALL 0x00100030",
+          "flowType": "UNCONDITIONAL_CALL",
+          "pcode": [
+            "(register, 0x20, 8) INT_SUB (register, 0x20, 8) , (const, 0x8, 8)",
+            " ---  STORE (const, 0x1b1, 8) , (register, 0x20, 8) , (const, 0x100113, 8)",
+            " ---  CALL (ram, 0x100030, 8)"
+          ]
+        },
+        {
+          "addr": 1048851,
+          "size": 3,
+          "bytes": "4863c8",
+          "text": "MOVSXD RCX,EAX",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x8, 8) INT_SEXT (register, 0x0, 4)"
+          ]
+        },
+        {
+          "addr": 1048854,
+          "size": 7,
+          "bytes": "488d0523000000",
+          "text": "LEA RAX,[0x100140]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x0, 8) COPY (const, 0x100140, 8)"
+          ]
+        },
+        {
+          "addr": 1048861,
+          "size": 4,
+          "bytes": "488b04c8",
+          "text": "MOV RAX,qword ptr [RAX + RCX*0x8]",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0x9200, 8) INT_MULT (register, 0x8, 8) , (const, 0x8, 8)",
+            "(unique, 0x9400, 8) INT_ADD (register, 0x0, 8) , (unique, 0x9200, 8)",
+            "(unique, 0x23d00, 8) LOAD (const, 0x1b1, 4) , (unique, 0x9400, 8)",
+            "(register, 0x0, 8) COPY (unique, 0x23d00, 8)"
+          ]
+        },
+        {
+          "addr": 1048865,
+          "size": 4,
+          "bytes": "4883c410",
+          "text": "ADD RSP,0x10",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(register, 0x200, 1) INT_CARRY (register, 0x20, 8) , (const, 0x10, 8)",
+            "(register, 0x20b, 1) INT_SCARRY (register, 0x20, 8) , (const, 0x10, 8)",
+            "(register, 0x20, 8) INT_ADD (register, 0x20, 8) , (const, 0x10, 8)",
+            "(register, 0x207, 1) INT_SLESS (register, 0x20, 8) , (const, 0x0, 8)",
+            "(register, 0x206, 1) INT_EQUAL (register, 0x20, 8) , (const, 0x0, 8)",
+            "(unique, 0x58300, 8) INT_AND (register, 0x20, 8) , (const, 0xff, 8)",
+            "(unique, 0x58400, 1) POPCOUNT (unique, 0x58300, 8)",
+            "(unique, 0x58500, 1) INT_AND (unique, 0x58400, 1) , (const, 0x1, 1)",
+            "(register, 0x202, 1) INT_EQUAL (unique, 0x58500, 1) , (const, 0x0, 1)"
+          ]
+        },
+        {
+          "addr": 1048869,
+          "size": 1,
+          "bytes": "5d",
+          "text": "POP RBP",
+          "flowType": "FALL_THROUGH",
+          "pcode": [
+            "(unique, 0xa9400, 8) COPY (const, 0x0, 8)",
+            "(unique, 0xa9400, 8) LOAD (const, 0x1b1, 8) , (register, 0x20, 8)",
+            "(register, 0x20, 8) INT_ADD (register, 0x20, 8) , (const, 0x8, 8)",
+            "(register, 0x28, 8) COPY (unique, 0xa9400, 8)"
+          ]
+        },
+        {
+          "addr": 1048870,
+          "size": 1,
+          "bytes": "c3",
+          "text": "RET",
+          "flowType": "TERMINATOR",
+          "pcode": [
+            "(register, 0x288, 8) LOAD (const, 0x1b1, 8) , (register, 0x20, 8)",
+            "(register, 0x20, 8) INT_ADD (register, 0x20, 8) , (const, 0x8, 8)",
+            " ---  RETURN (register, 0x288, 8)"
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "start": 1048832,
+          "size": 39,
+          "destinations": [
+            {
+              "to": 1048624,
+              "flow": "UNCONDITIONAL_CALL"
+            }
+          ]
+        }
+      ],
+      "decompiled": "\nundefined8 grade_label(undefined4 param_1)\n\n{\n  int iVar1;\n  \n  iVar1 \u003d grade(param_1);\n  return *(undefined8 *)(labels + (long)iVar1 * 8);\n}\n\n"
+    }
+  ],
+  "dataReferences": [
+    {
+      "from": 1048580,
+      "to": -16,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048583,
+      "to": -20,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048586,
+      "to": -16,
+      "type": "READ"
+    },
+    {
+      "from": 1048592,
+      "to": -12,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048601,
+      "to": -20,
+      "type": "READ"
+    },
+    {
+      "from": 1048604,
+      "to": -16,
+      "type": "READ"
+    },
+    {
+      "from": 1048611,
+      "to": -16,
+      "type": "READ"
+    },
+    {
+      "from": 1048614,
+      "to": -12,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048617,
+      "to": -12,
+      "type": "READ"
+    },
+    {
+      "from": 1048628,
+      "to": -16,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048631,
+      "to": -16,
+      "type": "READ"
+    },
+    {
+      "from": 1048665,
+      "to": -24,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048674,
+      "to": -24,
+      "type": "READ"
+    },
+    {
+      "from": 1048678,
+      "to": 1048872,
+      "type": "DATA"
+    },
+    {
+      "from": 1048685,
+      "to": 1048872,
+      "type": "DATA"
+    },
+    {
+      "from": 1048694,
+      "to": -12,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048703,
+      "to": -12,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048712,
+      "to": -12,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048721,
+      "to": -12,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048730,
+      "to": -12,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048737,
+      "to": -12,
+      "type": "READ"
+    },
+    {
+      "from": 1048756,
+      "to": -16,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048760,
+      "to": -20,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048763,
+      "to": -24,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048770,
+      "to": -28,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048777,
+      "to": -28,
+      "type": "READ"
+    },
+    {
+      "from": 1048780,
+      "to": -20,
+      "type": "READ"
+    },
+    {
+      "from": 1048785,
+      "to": -16,
+      "type": "READ"
+    },
+    {
+      "from": 1048789,
+      "to": -28,
+      "type": "READ"
+    },
+    {
+      "from": 1048796,
+      "to": -24,
+      "type": "READ"
+    },
+    {
+      "from": 1048799,
+      "to": -24,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048802,
+      "to": -28,
+      "type": "READ"
+    },
+    {
+      "from": 1048808,
+      "to": -28,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048813,
+      "to": -24,
+      "type": "READ"
+    },
+    {
+      "from": 1048840,
+      "to": -12,
+      "type": "WRITE"
+    },
+    {
+      "from": 1048843,
+      "to": -12,
+      "type": "READ"
+    },
+    {
+      "from": 1048854,
+      "to": 1048896,
+      "type": "DATA"
+    },
+    {
+      "from": 1048861,
+      "to": 1048896,
+      "type": "DATA"
+    },
+    {
+      "from": 40,
+      "to": 0,
+      "type": "DATA"
+    },
+    {
+      "from": 80,
+      "to": 0,
+      "type": "DATA"
+    },
+    {
+      "from": 144,
+      "to": 1048576,
+      "type": "DATA"
+    },
+    {
+      "from": 208,
+      "to": 0,
+      "type": "DATA"
+    },
+    {
+      "from": 272,
+      "to": 1048872,
+      "type": "DATA"
+    },
+    {
+      "from": 336,
+      "to": 0,
+      "type": "DATA"
+    },
+    {
+      "from": 400,
+      "to": 1048896,
+      "type": "DATA"
+    },
+    {
+      "from": 464,
+      "to": 0,
+      "type": "DATA"
+    },
+    {
+      "from": 528,
+      "to": 1048936,
+      "type": "DATA"
+    },
+    {
+      "from": 592,
+      "to": 0,
+      "type": "DATA"
+    },
+    {
+      "from": 720,
+      "to": 0,
+      "type": "DATA"
+    },
+    {
+      "from": 784,
+      "to": 0,
+      "type": "DATA"
+    }
+  ]
+}

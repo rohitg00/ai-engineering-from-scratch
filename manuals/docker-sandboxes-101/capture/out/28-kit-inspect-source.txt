@@ -1,0 +1,4 @@
+$ sbx kit inspect ./fixtures/kits/hello-kit --json
+   → build kit ./fixtures/kits/hello-kit (sbx-kit-src:kit-<id>)
+error: build kit ./fixtures/kits/hello-kit: exit status 1 ERROR: failed to build: OCI exporter is not supported for the docker driver. Switch to a different driver, or turn on the containerd image store, and try again. Learn more at https://docs.docker.com/go/build-exporters/
+[exit 1]

@@ -1,0 +1,102 @@
+{
+ "versions": {
+  "pyvex": "10.0.3",
+  "pypcode": "4.0.1",
+  "sleigh": "x86:LE:64:default",
+  "radare2": "radare2 6.2.4 +0 abi:152 @ darwin-arm_64",
+  "rizin": "rizin 0.9.1 @ darwin-arm-64"
+ },
+ "command": "venv/bin/python capture_ir.py OUT.json",
+ "calls": {
+  "vex": "pyvex.lift(code, 0x1000, archinfo.ArchAMD64()).statements",
+  "pcode": "pypcode.Context('x86:LE:64:default').translate(code, base_address=0x1000).ops"
+ },
+ "instructions": [
+  {
+   "name": "sub-rsp-16",
+   "hex": "4883ec10",
+   "intel": "sub rsp, 0x10",
+   "att": "subq $0x10, %rsp",
+   "vex": [
+    "------ IMark(0x1000, 4, 0) ------",
+    "t2 = GET:I64(offset=48)",
+    "t0 = Sub64(t2,0x0000000000000010)",
+    "PUT(offset=144) = 0x0000000000000008",
+    "PUT(offset=152) = t2",
+    "PUT(offset=160) = 0x0000000000000010",
+    "PUT(offset=168) = 0x0000000000000000",
+    "PUT(offset=48) = t0"
+   ],
+   "pcode": [
+    "IMARK ram[1000:4]",
+    "CF = RSP < 0x10",
+    "OF = sborrow(RSP, 0x10)",
+    "RSP = RSP - 0x10",
+    "SF = RSP s< 0x0",
+    "ZF = RSP == 0x0",
+    "unique[58300:8] = RSP & 0xff",
+    "unique[58400:1] = popcount(unique[58300:8])",
+    "unique[58500:1] = unique[58400:1] & 0x1",
+    "PF = unique[58500:1] == 0x0"
+   ],
+   "esil": "16,0x8000000000000000,-,!,16,rsp,-=,63,$o,^,of,:=,63,$s,sf,:=,$z,zf,:=,$p,pf,:=,64,$b,cf,:=,4,$b,af,:=",
+   "esilCommand": "r2 -a x86 -b 64 -e scr.color=0 -qc 'e asm.esil=true; wx 4883ec10; pd 1' -",
+   "rzil": "(seq (set op1 (var rsp)) (set op2 (bv 64 0x10)) (set sub (- (var op1) (var op2))) (set rsp (var sub)) (set _result (var sub)) (set pf (! (lsb (let _val (cast 8 false (var _result)) (let _c4 (^ (var _val) (>> (var _val) (bv 8 0x4) false)) (let _c2 (^ (var _c4) (>> (var _c4) (bv 8 0x2) false)) (^ (var _c2) (>> (var _c2) (bv 8 0x1) false)))))))) (set zf (is_zero (var _result))) (set sf (msb (var _result))) (set _result (var sub)) (set _x (var op1)) (set _y (var op2)) (set cf (|| (|| (&& (! (msb (var _x))) (msb (var _y))) (&& (msb (var _y)) (msb (var _result)))) (&& (msb (var _result)) (! (msb (var _x)))))) (set of (|| (&& (&& (! (msb (var _result))) (msb (var _x))) (! (msb (var _y)))) (&& (&& (msb (var _result)) (! (msb (var _x)))) (msb (var _y))))) (set af (|| (|| (&& (! (msb (cast 4 false (var _x)))) (msb (cast 4 false (var _y)))) (&& (msb (cast 4 false (var _y))) (msb (cast 4 false (var _result))))) (&& (msb (cast 4 false (var _result))) (! (msb (cast 4 false (var _x))))))))",
+   "rzilCommand": "rizin -a x86 -b 64 -e scr.color=0 -qc 'wx 4883ec10; aoi 1' malloc://16"
+  },
+  {
+   "name": "movsxd-rax-edi",
+   "hex": "4863c7",
+   "intel": "movsxd rax, edi",
+   "att": "movslq %edi, %rax",
+   "vex": [
+    "------ IMark(0x1000, 3, 0) ------",
+    "t2 = GET:I64(offset=72)",
+    "t1 = 64to32(t2)",
+    "t0 = 32Sto64(t1)",
+    "PUT(offset=16) = t0"
+   ],
+   "pcode": [
+    "IMARK ram[1000:3]",
+    "RAX = sext(EDI)"
+   ],
+   "esil": "32,edi,~,rax,=",
+   "esilCommand": "r2 -a x86 -b 64 -e scr.color=0 -qc 'e asm.esil=true; wx 4863c7; pd 1' -",
+   "rzil": "(set rax (cast 64 (msb (cast 32 false (var rdi))) (cast 32 false (var rdi))))",
+   "rzilCommand": "rizin -a x86 -b 64 -e scr.color=0 -qc 'wx 4863c7; aoi 1' malloc://16"
+  },
+  {
+   "name": "cmp-ecx-4",
+   "hex": "83f904",
+   "intel": "cmp ecx, 4",
+   "att": "cmpl $0x4, %ecx",
+   "vex": [
+    "------ IMark(0x1000, 3, 0) ------",
+    "t4 = GET:I64(offset=24)",
+    "t3 = 64to32(t4)",
+    "PUT(offset=144) = 0x0000000000000007",
+    "t5 = 32Uto64(t3)",
+    "PUT(offset=152) = t5",
+    "PUT(offset=160) = 0x0000000000000004",
+    "PUT(offset=168) = 0x0000000000000000"
+   ],
+   "pcode": [
+    "IMARK ram[1000:3]",
+    "unique[78b00:4] = ECX",
+    "CF = unique[78b00:4] < 0x4",
+    "OF = sborrow(unique[78b00:4], 0x4)",
+    "unique[78d00:4] = unique[78b00:4] - 0x4",
+    "SF = unique[78d00:4] s< 0x0",
+    "ZF = unique[78d00:4] == 0x0",
+    "unique[58300:4] = unique[78d00:4] & 0xff",
+    "unique[58400:1] = popcount(unique[58300:4])",
+    "unique[58500:1] = unique[58400:1] & 0x1",
+    "PF = unique[58500:1] == 0x0"
+   ],
+   "esil": "4,ecx,==,$z,zf,:=,32,$b,cf,:=,$p,pf,:=,31,$s,sf,:=,4,0x80000000,-,!,31,$o,^,of,:=,4,$b,af,:=",
+   "esilCommand": "r2 -a x86 -b 64 -e scr.color=0 -qc 'e asm.esil=true; wx 83f904; pd 1' -",
+   "rzil": "(seq (set op1 (cast 32 false (var rcx))) (set op2 (bv 32 0x4)) (set sub (- (var op1) (var op2))) (set _result (var sub)) (set _x (var op1)) (set _y (var op2)) (set cf (|| (|| (&& (! (msb (var _x))) (msb (var _y))) (&& (msb (var _y)) (msb (var _result)))) (&& (msb (var _result)) (! (msb (var _x)))))) (set of (|| (&& (&& (! (msb (var _result))) (msb (var _x))) (! (msb (var _y)))) (&& (&& (msb (var _result)) (! (msb (var _x)))) (msb (var _y))))) (set af (|| (|| (&& (! (msb (cast 4 false (var _x)))) (msb (cast 4 false (var _y)))) (&& (msb (cast 4 false (var _y))) (msb (cast 4 false (var _result))))) (&& (msb (cast 4 false (var _result))) (! (msb (cast 4 false (var _x))))))) (set _result (var sub)) (set pf (! (lsb (let _val (cast 8 false (var _result)) (let _c4 (^ (var _val) (>> (var _val) (bv 8 0x4) false)) (let _c2 (^ (var _c4) (>> (var _c4) (bv 8 0x2) false)) (^ (var _c2) (>> (var _c2) (bv 8 0x1) false)))))))) (set zf (is_zero (var _result))) (set sf (msb (var _result))))",
+   "rzilCommand": "rizin -a x86 -b 64 -e scr.color=0 -qc 'wx 83f904; aoi 1' malloc://16"
+  }
+ ]
+}

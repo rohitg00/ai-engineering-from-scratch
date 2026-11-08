@@ -1,0 +1,206 @@
+{
+  "evidence_id": "ev_e03d7470525c7f300f477d0cdd78a70eae4c613d594d46fba9a063cff2e61ffa",
+  "subject": {
+    "name": "js-app",
+    "digest": {
+      "sha256": "bb9f726c3aafe026e6cc871b8de16cd81db9f03b4c2bab05f494307f8ebb42a2"
+    },
+    "local_path": "$CAPTURE/fixtures/js-app",
+    "format": "directory",
+    "architecture": null
+  },
+  "provider": {
+    "id": "rea-analysis-view",
+    "name": "REA analysis view projection",
+    "version": "1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.analysis-view",
+  "operation": "inspect_analysis_view",
+  "parameters": {
+    "parent_evidence_id": "ev_14bd1d1e46ab803844822f975a9cbf59208285bb9afdd376fb3209539d2c8046",
+    "view": {
+      "kind": "page",
+      "collection": "modules",
+      "offset": 0,
+      "limit": 32
+    }
+  },
+  "raw_result": null,
+  "normalized_result": {
+    "kind": "page",
+    "view": {
+      "kind": "page",
+      "collection": "modules",
+      "offset": 0,
+      "limit": 32
+    },
+    "items": [
+      {
+        "node_id": "jag_node_0fc7e361d6bdb22e59520e1f47da91ccaacc6a1b5cec1f034337d4d97c795122",
+        "kind": "javascript-asset",
+        "path": "main.js"
+      },
+      {
+        "node_id": "jag_node_19e7e9011bef4165096bf3bd3871c679471b704b77b6f5e253c3e16fcd9de41f",
+        "kind": "javascript-module",
+        "path": "main.js"
+      },
+      {
+        "node_id": "jag_node_29436232263a6299c48487df0673cf55ec276dcc15dae09cda1a8d6f30a75d5a",
+        "kind": "javascript-module",
+        "path": "preload.js"
+      },
+      {
+        "node_id": "jag_node_49c33795875e0a12fa9791af055776275be548412b64aedc21212a5340af144f",
+        "kind": "javascript-module",
+        "path": "preload.js"
+      },
+      {
+        "node_id": "jag_node_5eccb1736b4595d1c85d82ce79871b85d4a819abfa05035d8e2de9a231dfdb8e",
+        "kind": "javascript-module",
+        "path": "main.js"
+      },
+      {
+        "node_id": "jag_node_608d3554634bc17673205a0b4aef8fdc6be7be1d4a4ed740d0374839e80e1fc2",
+        "kind": "javascript-module",
+        "path": "ledger.js"
+      },
+      {
+        "node_id": "jag_node_620622702e047aba1f81c7e9283cfe3dd27018e3658ca12737e7f75d14e6f08a",
+        "kind": "javascript-asset",
+        "path": "renderer.js"
+      },
+      {
+        "node_id": "jag_node_6917f2df050a6de9c46d40f2078253ce0bcc80c8f00528ad1c0bbc959f22b428",
+        "kind": "javascript-module",
+        "path": "preload.js"
+      },
+      {
+        "node_id": "jag_node_6dbe85d6f5e0bbdb53a3a4f5d656e3d31f7b12a46df65f76a72e5e7f89f8bca9",
+        "kind": "javascript-module",
+        "path": "ledger.js"
+      },
+      {
+        "node_id": "jag_node_729079e66616c0f6d2c2d75409b18072302a46a42c2063c34ac01b6ea6ef5694",
+        "kind": "javascript-module",
+        "path": "main.js"
+      },
+      {
+        "node_id": "jag_node_881d751c0513e454cdfa121f457fb215a092d1fc5077093773857fccb3fac5ff",
+        "kind": "javascript-asset",
+        "path": "ledger.js"
+      },
+      {
+        "node_id": "jag_node_98d2fd01825fa7323701355e727496bfd8daf3d6df9a9f4dcd43bc531a8ec22c",
+        "kind": "javascript-module",
+        "path": "main.js"
+      },
+      {
+        "node_id": "jag_node_9dd69067c18219b5ecce9be1068a696f3b6a3a31a4c20cc80fb043e6de454b6e",
+        "kind": "javascript-module",
+        "path": "main.js"
+      },
+      {
+        "node_id": "jag_node_c239425ed63dde96c66f79d62382815ec8d74e10226288382342d2692d575194",
+        "kind": "javascript-asset",
+        "path": "preload.js"
+      },
+      {
+        "node_id": "jag_node_e33a20ac89074f5381a7ee9ca42f004676d865d1336c659e00b23700405a68bc",
+        "kind": "javascript-module",
+        "path": "renderer.js"
+      }
+    ],
+    "parent_evidence_id": "ev_14bd1d1e46ab803844822f975a9cbf59208285bb9afdd376fb3209539d2c8046",
+    "parent_operation": "analyze_javascript_application",
+    "parent_digest": "14bd1d1e46ab803844822f975a9cbf59208285bb9afdd376fb3209539d2c8046",
+    "view_digest": "f8aebc68b4d4d2908cfe58e663b41d51846e5725fb689662d710a216832126f1",
+    "artifact": {
+      "path": "$CAPTURE/fixtures/js-app",
+      "sha256": "bb9f726c3aafe026e6cc871b8de16cd81db9f03b4c2bab05f494307f8ebb42a2"
+    },
+    "coverage": {
+      "status": "page",
+      "examined": 15,
+      "total": 15,
+      "next_offset": null,
+      "exhausted": true
+    },
+    "limitations": [
+      "Boundary extraction covers unshadowed JSON/global coercions plus parse and validation method candidates.",
+      "Child-process extraction covers asynchronous node:child_process creation, literal argv/env/stdio options, exit/error listeners, and kill signals.",
+      "CommonJS and ESM binding relationships were recovered from inert syntax and resolved only within the inventoried artifact container.",
+      "Configuration extraction covers process.env, process.argv, node:fs reads, and direct logical defaults.",
+      "Electron API identity follows proven lexical module aliases and structurally verified module-namespace interop. Other reassignments, dynamic selections, and visibly overwritten namespace members are unresolved; missing findings do not establish absence. Arbitrary call side effects and runtime registration are not evaluated.",
+      "Electron relationships are derived from inert syntax; runtime registration, reachability, defaults, and enforcement remain unproven.",
+      "Event extraction covers EventEmitter-style literal registrations, removals, and dispatch candidates; dynamic names remain unknown.",
+      "Function fingerprints are static candidates; equal digests can remain ambiguous and do not prove behavioral equivalence.",
+      "JavaScript and HTML were parsed as inert text; bundle bootstrap code was never executed.",
+      "Local data flow does not claim control-flow-sensitive reaching definitions or arbitrary dynamic property resolution.",
+      "Promise ownership covers explicit unshadowed Promise construction, static factories, aggregation, chaining, and await syntax only.",
+      "Request extraction covers fetch, WebSocket, node:http/node:https construction, direct option fields, and exact local response consumers.",
+      "Resource extraction covers built-in filesystem/network acquisition and exact local close/destroy/end handles.",
+      "Static imports, entrypoints, workers, endpoints, and storage relationships do not prove runtime execution.",
+      "Static paths and relationships may remain unresolved when expressions are dynamic or obfuscated.",
+      "The semantic graph contains static syntax observations and conservative relationship candidates; it does not claim runtime execution.",
+      "Timer extraction covers global or node:timers scheduling and exact local-handle cancellation.",
+      "Webpack/Rspack factories were recovered from AST literals; REA did not invoke push handlers or bundle bootstrap code."
+    ],
+    "unknowns": [
+      "118 semantic graph unknowns remain in the parent Evidence.",
+      "Boundary extraction covers unshadowed JSON/global coercions plus parse and validation method candidates.",
+      "Child-process extraction covers asynchronous node:child_process creation, literal argv/env/stdio options, exit/error listeners, and kill signals.",
+      "CommonJS and ESM binding relationships were recovered from inert syntax and resolved only within the inventoried artifact container.",
+      "Configuration extraction covers process.env, process.argv, node:fs reads, and direct logical defaults.",
+      "Electron API identity follows proven lexical module aliases and structurally verified module-namespace interop. Other reassignments, dynamic selections, and visibly overwritten namespace members are unresolved; missing findings do not establish absence. Arbitrary call side effects and runtime registration are not evaluated.",
+      "Electron relationships are derived from inert syntax; runtime registration, reachability, defaults, and enforcement remain unproven.",
+      "Event extraction covers EventEmitter-style literal registrations, removals, and dispatch candidates; dynamic names remain unknown.",
+      "Function fingerprints are static candidates; equal digests can remain ambiguous and do not prove behavioral equivalence.",
+      "JavaScript and HTML were parsed as inert text; bundle bootstrap code was never executed.",
+      "Local data flow does not claim control-flow-sensitive reaching definitions or arbitrary dynamic property resolution.",
+      "Promise ownership covers explicit unshadowed Promise construction, static factories, aggregation, chaining, and await syntax only.",
+      "Request extraction covers fetch, WebSocket, node:http/node:https construction, direct option fields, and exact local response consumers.",
+      "Resource extraction covers built-in filesystem/network acquisition and exact local close/destroy/end handles.",
+      "Static imports, entrypoints, workers, endpoints, and storage relationships do not prove runtime execution.",
+      "Static paths and relationships may remain unresolved when expressions are dynamic or obfuscated.",
+      "The semantic graph contains static syntax observations and conservative relationship candidates; it does not claim runtime execution.",
+      "Timer extraction covers global or node:timers scheduling and exact local-handle cancellation.",
+      "Webpack/Rspack factories were recovered from AST literals; REA did not invoke push handlers or bundle bootstrap code.",
+      "semantic_graph.coverage.status is unknown"
+    ]
+  },
+  "confidence": "derived",
+  "authority": "shipped-artifact",
+  "environment": null,
+  "limitations": [
+    "Boundary extraction covers unshadowed JSON/global coercions plus parse and validation method candidates.",
+    "Child-process extraction covers asynchronous node:child_process creation, literal argv/env/stdio options, exit/error listeners, and kill signals.",
+    "CommonJS and ESM binding relationships were recovered from inert syntax and resolved only within the inventoried artifact container.",
+    "Configuration extraction covers process.env, process.argv, node:fs reads, and direct logical defaults.",
+    "Electron API identity follows proven lexical module aliases and structurally verified module-namespace interop. Other reassignments, dynamic selections, and visibly overwritten namespace members are unresolved; missing findings do not establish absence. Arbitrary call side effects and runtime registration are not evaluated.",
+    "Electron relationships are derived from inert syntax; runtime registration, reachability, defaults, and enforcement remain unproven.",
+    "Event extraction covers EventEmitter-style literal registrations, removals, and dispatch candidates; dynamic names remain unknown.",
+    "Function fingerprints are static candidates; equal digests can remain ambiguous and do not prove behavioral equivalence.",
+    "JavaScript and HTML were parsed as inert text; bundle bootstrap code was never executed.",
+    "Local data flow does not claim control-flow-sensitive reaching definitions or arbitrary dynamic property resolution.",
+    "Promise ownership covers explicit unshadowed Promise construction, static factories, aggregation, chaining, and await syntax only.",
+    "Request extraction covers fetch, WebSocket, node:http/node:https construction, direct option fields, and exact local response consumers.",
+    "Resource extraction covers built-in filesystem/network acquisition and exact local close/destroy/end handles.",
+    "Static imports, entrypoints, workers, endpoints, and storage relationships do not prove runtime execution.",
+    "Static paths and relationships may remain unresolved when expressions are dynamic or obfuscated.",
+    "The semantic graph contains static syntax observations and conservative relationship candidates; it does not claim runtime execution.",
+    "Timer extraction covers global or node:timers scheduling and exact local-handle cancellation.",
+    "Webpack/Rspack factories were recovered from AST literals; REA did not invoke push handlers or bundle bootstrap code."
+  ],
+  "relationship_coverage": null,
+  "locations": [
+    {
+      "kind": "artifact-path",
+      "path": "$CAPTURE/fixtures/js-app"
+    }
+  ],
+  "evidence_links": [
+    "ev_14bd1d1e46ab803844822f975a9cbf59208285bb9afdd376fb3209539d2c8046"
+  ]
+}

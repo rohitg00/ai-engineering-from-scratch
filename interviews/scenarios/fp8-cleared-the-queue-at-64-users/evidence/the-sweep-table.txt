@@ -1,0 +1,14 @@
+title: throughput and first token from 1 to 64 users, both servers
+source: manuals/sglang-101/sections/4-3-quantization.md
+lines: 162-169
+lang: text
+note: Read the two rightmost columns at 32 and 64 users.
+---
+**We measured** a pool of 24,094 tokens for BF16 and 142,369 tokens for FP8, 5.91 times as many. Each request in the sweep had 512 input tokens and 128 output tokens. The BF16 pool held about 37 such requests.
+
+| Concurrency | BF16 output tok/s | FP8 output tok/s | BF16 median TTFT | FP8 median TTFT |
+|---|---|---|---|---|
+| 1 | 13.42 | 24.53 | 189.16 ms | 140.72 ms |
+| 16 | 201.09 | 313.92 | 211.78 ms | 147.52 ms |
+| 32 | 270.11 | 507.20 | 2,969.61 ms | 199.09 ms |
+| 64 | 250.85 | 735.91 | 18,348.57 ms | 296.42 ms |

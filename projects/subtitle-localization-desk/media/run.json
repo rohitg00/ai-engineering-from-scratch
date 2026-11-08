@@ -1,0 +1,52 @@
+{
+  "title": "Subtitle Localization Desk | initialize and grade",
+  "recordedAt": "2026-10-09T14:33:56Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "subtitle-localization-desk",
+        "--init",
+        "./.project-validation/subtitle-localization-desk/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/subtitle-localization-desk/recording-starter\n  kept     cli.py\n  kept     main.py\n  kept     presentation.py\n  kept     samples/input.json\n  kept     STAGE-2.md\n  kept     STAGE-3.md\n  kept     STAGE-4.md\nnext: python3 scripts/project_test.py subtitle-localization-desk --stage 1 --path ./.project-validation/subtitle-localization-desk/recording-starter\n",
+      "durationMs": 41
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "subtitle-localization-desk",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/subtitle-localization-desk/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Subtitle Localization Desk: grading learner\n  FAIL stage 1: Parse subtitle cues and preserve their timing (5 tests)\n       not implemented yet: Implement parse_vtt using API.md and the stage lesson\n",
+      "durationMs": 100
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "subtitle-localization-desk",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/subtitle-localization-desk/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Subtitle Localization Desk: grading solution\n  PASS stage 1: Parse subtitle cues and preserve their timing (5 tests)\n  PASS stage 2: Apply a glossary to translation proposals (6 tests)\n  PASS stage 3: Review cue length, terminology and meaning (5 tests)\n  PASS stage 4: Export localized captions and their review decisions (6 tests)\nreport: ./.project-validation/subtitle-localization-desk/solution-final.json\n",
+      "durationMs": 261
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

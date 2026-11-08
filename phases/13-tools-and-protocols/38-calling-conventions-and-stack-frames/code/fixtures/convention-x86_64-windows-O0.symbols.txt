@@ -1,0 +1,42 @@
+
+convention-x86_64-windows-O0.o:	file format coff-x86-64
+
+SYMBOL TABLE:
+[ 0](sec  1)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .text
+AUX scnlen 0x32d nreloc 10 nlnno 0 checksum 0x699fecdc assoc 1 comdat 0
+[ 2](sec  2)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .data
+AUX scnlen 0x0 nreloc 0 nlnno 0 checksum 0x0 assoc 2 comdat 0
+[ 4](sec  3)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .bss
+AUX scnlen 0x0 nreloc 0 nlnno 0 checksum 0x0 assoc 3 comdat 0
+[ 6](sec  4)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x8 nreloc 0 nlnno 0 checksum 0x76dc4190 assoc 4 comdat 2
+[ 8](sec  4)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 __real@4000000000000000
+[ 9](sec  5)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x4 nreloc 0 nlnno 0 checksum 0x4d5fd9db assoc 5 comdat 2
+[11](sec  5)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 __real@40800000
+[12](sec  6)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .rdata
+AUX scnlen 0x10 nreloc 0 nlnno 0 checksum 0xbc36d491 assoc 6 comdat 0
+[14](sec  7)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .llvm_addrsig
+AUX scnlen 0x6 nreloc 0 nlnno 0 checksum 0x89460cce assoc 7 comdat 0
+[16](sec -1)(fl 0x00)(ty   0)(scl   3) (nx 0) 0x00000000 @feat.00
+[17](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000000 leaf_add
+[18](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000020 eight_args
+[19](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000080 mixed
+[20](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x000000d0 by_value
+[21](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000110 big_ret
+[22](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000150 sum_varargs
+[23](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x000001c0 keeps
+[24](sec  0)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 ext
+[25](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000210 call8
+[26](sec  0)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 ext8
+[27](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000260 call_mixed
+[28](sec  0)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 extmixed
+[29](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000290 call_varargs
+[30](sec  0)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 extva
+[31](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x000002c0 call_pair
+[32](sec  0)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 extpair
+[33](sec  1)(fl 0x00)(ty  20)(scl   2) (nx 0) 0x00000310 call_big
+[34](sec  0)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 extbig
+[35](sec  0)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 _fltused
+[36](sec -2)(fl 0x00)(ty   0)(scl  67) (nx 1) 0x00000000 .file
+AUX convention.c

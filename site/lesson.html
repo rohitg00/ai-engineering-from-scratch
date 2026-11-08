@@ -3,26 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23fafaf5'/><rect x='2' y='2' width='28' height='28' fill='none' stroke='%233553ff' stroke-width='1.2'/><text x='6' y='22' font-size='14' font-family='monospace' fill='%233553ff'>AI</text></svg>">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <!-- AIFS:LESSON-SEO:START -->
   <title>Lesson - AI Engineering from Scratch</title>
-  <meta name="description" content="A lesson from the AI Engineering from Scratch curriculum. 523 lessons across 20 phases, four languages, every algorithm built from raw math.">
+  <meta name="description" content="A lesson from the AI Engineering from Scratch curriculum. 542 lessons across 20 phases, four languages, every algorithm built from raw math.">
   <link rel="canonical" href="https://aiengineeringfromscratch.com/lesson">
   <meta property="og:title" content="AI Engineering from Scratch · Lesson">
-  <meta property="og:description" content="523 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
-  <meta property="og:image" content="https://aiengineeringfromscratch.com/og-image.png?v=4">
+  <meta property="og:description" content="542 lessons. 20 phases. Write the backprop, the tokenizer, the attention mechanism, and the agent loop by hand.">
+  <meta property="og:image" content="https://aiengineeringfromscratch.com/og/page/home.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="AI Engineering from Scratch">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og/page/home.png">
+  <meta name="twitter:image:alt" content="AI Engineering from Scratch">
   <meta property="og:url" content="https://aiengineeringfromscratch.com/lesson">
   <meta property="og:type" content="article">
-  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AI Engineering from Scratch">
-  <meta name="twitter:description" content="523 lessons. 20 phases. Build it from raw math, by hand.">
-  <meta name="twitter:image" content="https://aiengineeringfromscratch.com/og-image.png?v=4">
+  <meta name="twitter:description" content="542 lessons. 20 phases. Build it from raw math, by hand.">
   <!-- AIFS:LESSON-SEO:END -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260824a">
+  <link rel="stylesheet" href="style.css?v=20261015a">
   <link rel="stylesheet" href="certifications.css?v=20260925a">
+  <link rel="stylesheet" href="highlights.css?v=20261023a">
+  <link rel="stylesheet" href="lesson-walkthrough.css?v=20261021b">
+  <link rel="stylesheet" href="code.css?v=20261103a">
   <style>
     .scroll-progress {
       position: fixed;
@@ -180,8 +189,49 @@
       min-width: 0;
       margin-left: 240px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       padding: 56px 32px 96px;
+    }
+
+    .lesson-hub-links {
+      width: 100%;
+      max-width: 720px;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--rule-soft);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      overflow-wrap: anywhere;
+    }
+
+    .lesson-hub-trail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2px 8px;
+      list-style: none;
+      text-transform: uppercase;
+    }
+
+    .lesson-hub-trail li + li::before {
+      content: "/";
+      margin-right: 8px;
+      color: var(--ink-mute);
+    }
+
+    .lesson-hub-terms {
+      margin-top: 10px;
+      font-family: var(--font-mono);
+      font-size: inherit;
+      color: inherit;
+    }
+
+    .lesson-hub-terms span {
+      color: var(--ink-mute);
+      text-transform: uppercase;
     }
 
     .lesson-content {
@@ -246,7 +296,7 @@
 
     .lesson-article h1 {
       font-family: var(--font-display);
-      font-size: clamp(2rem, 5vw, 3rem);
+      font-size: clamp(min(2rem, 10vw), 5vw, 3rem);
       font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 0.02em;
@@ -259,7 +309,7 @@
 
     .lesson-article h2 {
       font-family: var(--font-display);
-      font-size: clamp(1.5rem, 3vw, 1.9rem);
+      font-size: clamp(min(1.5rem, 7.5vw), 3vw, 1.9rem);
       font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 0.02em;
@@ -273,7 +323,8 @@
 
     .lesson-article h2.section-build,
     .lesson-article h2.section-use,
-    .lesson-article h2.section-ship {
+    .lesson-article h2.section-ship,
+    .lesson-article h2.section-summary {
       border-left: 3px solid var(--blueprint);
       padding-left: 16px;
     }
@@ -289,10 +340,56 @@
       margin-bottom: 12px;
     }
 
+    .lesson-article h4 {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      margin-top: 28px;
+      margin-bottom: 10px;
+    }
+
     .lesson-article h1,
     .lesson-article h2,
-    .lesson-article h3 {
+    .lesson-article h3,
+    .lesson-article h4 {
       scroll-margin-top: var(--header-offset, 92px);
+    }
+
+    .lesson-article p.lesson-section-guide {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+      color: var(--ink-soft);
+      margin: -4px 0 20px;
+    }
+
+    .lesson-article .lesson-section-guide a {
+      color: var(--blueprint);
+    }
+
+    .lesson-article details.lesson-hints {
+      margin: 28px 0;
+      border: 1px solid var(--rule-soft);
+      padding: 0 18px;
+    }
+
+    .lesson-article details.lesson-hints > summary {
+      cursor: pointer;
+      padding: 14px 0;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+    }
+
+    .lesson-article details.lesson-hints > summary:focus-visible {
+      outline: 2px solid var(--blueprint);
+      outline-offset: 2px;
     }
 
     .lesson-article p {
@@ -439,97 +536,42 @@
       color: var(--blueprint);
     }
 
-    .lesson-article pre {
-      position: relative;
-      margin: 20px 0;
-      padding-top: 44px;
-      overflow: hidden;
-      border: 1px solid var(--rule-soft);
-      background: var(--code-bg);
-    }
-
-    .lesson-article pre code {
-      display: block;
-      background: var(--code-bg);
+    .lesson-article .math-inline,
+    .lesson-article .math-display {
       color: var(--ink);
-      padding: 22px 24px;
-      font-size: 0.86rem;
-      line-height: 1.6;
-      overflow-x: auto;
-      border: none;
     }
 
-    .code-lang {
-      position: absolute;
-      top: 0;
-      left: 0;
-      max-width: calc(100% - 88px);
-      height: 44px;
-      display: inline-flex;
-      align-items: center;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .lesson-article .math-inline {
       white-space: nowrap;
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      padding: 0 12px;
-      background: var(--blueprint);
-      color: var(--bg);
-      z-index: 2;
     }
 
-    .lesson-article .code-block {
-      position: relative;
+    .lesson-article .math-display {
       margin: 20px 0;
+      padding: 4px 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      text-align: center;
+      white-space: pre-wrap;
     }
 
-    .lesson-article .code-block pre {
+    .lesson-article .math-display[data-math-rendered] {
+      white-space: normal;
+    }
+
+    .lesson-article .math-inline:not([data-math-rendered]),
+    .lesson-article .math-display:not([data-math-rendered]) {
+      font-family: var(--font-mono);
+      font-size: 0.92em;
+    }
+
+    .lesson-article .katex {
+      font-size: 1.08em;
+      color: inherit;
+    }
+
+    .lesson-article .katex-display {
       margin: 0;
     }
-
-    .code-copy {
-      position: absolute;
-      top: 0;
-      right: 0;
-      min-width: 88px;
-      min-height: 44px;
-      background: transparent;
-      border: 1px solid var(--rule-soft);
-      padding: 8px 12px;
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      cursor: pointer;
-      z-index: 2;
-      transition:
-        transform var(--motion-press) var(--ease-out),
-        color var(--motion-feedback) var(--ease-out),
-        border-color var(--motion-feedback) var(--ease-out);
-    }
-
-    .code-copy:hover {
-      color: var(--blueprint);
-      border-color: var(--blueprint);
-    }
-
-    .syn-keyword { color: var(--blueprint); font-weight: 500; }
-    .syn-string { color: var(--ink); }
-    .syn-number { color: var(--blueprint); }
-    .syn-comment { color: var(--ink-mute); font-style: italic; }
-    .syn-function { color: var(--ink); font-weight: 500; }
-    .syn-operator { color: var(--ink-soft); }
-
-    [data-theme="dark"] .syn-keyword { color: var(--blueprint); }
-    [data-theme="dark"] .syn-string { color: var(--ink); }
-    [data-theme="dark"] .syn-number { color: var(--blueprint); }
-    [data-theme="dark"] .syn-comment { color: var(--ink-mute); }
-    [data-theme="dark"] .syn-function { color: var(--ink); }
-    [data-theme="dark"] .syn-operator { color: var(--ink-soft); }
 
     .lesson-article .table-wrap {
       overflow-x: auto;
@@ -1325,7 +1367,6 @@
     .lesson-nav-btn:active,
     .output-btn:active,
     .code-card-btn:active,
-    .code-copy:active,
     .mermaid-btn:active {
       transform: scale(0.97);
     }
@@ -2146,6 +2187,7 @@
     .continue-links {
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
       gap: 6px;
     }
 
@@ -2245,7 +2287,6 @@
       .lesson-nav-btn:active,
       .output-btn:active,
       .code-card-btn:active,
-      .code-copy:active,
       .lesson-complete-btn:active,
       .lesson-unmark-btn:active,
       .mermaid-btn:active {
@@ -2316,6 +2357,11 @@
       font-size: 0.78rem;
     }
 
+    .toc-h4 .toc-link {
+      padding-left: 40px;
+      font-size: 0.74rem;
+    }
+
     .toc-link:hover {
       color: var(--ink);
       background: var(--blueprint-tint);
@@ -2356,11 +2402,15 @@
       .lesson-layout { padding-top: 56px; }
       .lesson-sidebar { transform: translateX(-100%); }
       .lesson-sidebar.open { transform: translateX(0); }
+      body {
+        --aifs-hl-launch-right: 16px;
+        --aifs-hl-launch-bottom: 72px;
+      }
       .lesson-sidebar-toggle {
         display: flex;
         top: auto;
-        right: 16px;
-        bottom: 18px;
+        right: calc(16px + env(safe-area-inset-right, 0px));
+        bottom: calc(18px + env(safe-area-inset-bottom, 0px));
         left: auto;
         width: auto;
         height: 44px;
@@ -2391,17 +2441,18 @@
       }
       .lesson-main {
         margin-left: 0;
-        justify-content: stretch;
+        align-items: stretch;
         padding: 44px 20px 80px;
       }
-      .lesson-content { max-width: none; }
+      .lesson-content,
+      .lesson-hub-links { max-width: none; }
     }
 
     @media (max-width: 768px) {
       .lesson-main { padding: 40px 16px 60px; }
       .lesson-article { max-width: 100%; }
       .lesson-article h1 {
-        font-size: clamp(2.05rem, 11vw, 3rem);
+        font-size: min(11vw, 3rem);
         line-height: 0.95;
         margin-bottom: 16px;
         padding-bottom: 14px;
@@ -2415,6 +2466,11 @@
         font-size: 0.84rem;
         line-height: 1.35;
       }
+      .lesson-article h4 {
+        margin-top: 22px;
+        font-size: 0.8rem;
+        line-height: 1.35;
+      }
       .lesson-article p,
       .lesson-article ul li,
       .lesson-article ol li { font-size: 1rem; line-height: 1.65; }
@@ -2424,7 +2480,7 @@
         -webkit-hyphens: none;
       }
       .lesson-article > p:first-of-type::first-letter { font-size: 3rem; }
-      .lesson-article pre code { font-size: 0.78rem; padding: 14px 14px; }
+      .lesson-article .cb pre { font-size: 0.78rem; padding: 12px; }
       .lesson-article table { font-size: 0.84rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
       .lesson-article table th,
       .lesson-article table td { padding: 8px 10px; white-space: nowrap; }
@@ -2524,16 +2580,20 @@
 
     @media (max-width: 480px) {
       .lesson-main { padding: 36px 12px 56px; }
+      body {
+        --aifs-hl-launch-right: 12px;
+        --aifs-hl-launch-bottom: 68px;
+      }
       .lesson-sidebar-toggle {
-        right: 12px;
-        bottom: 14px;
+        right: calc(12px + env(safe-area-inset-right, 0px));
+        bottom: calc(14px + env(safe-area-inset-bottom, 0px));
         height: 44px;
         padding: 0 12px;
       }
       .lesson-article p,
       .lesson-article ul li,
       .lesson-article ol li { font-size: 0.96rem; }
-      .lesson-article h1 { font-size: clamp(1.9rem, 12vw, 2.55rem); }
+      .lesson-article h1 { font-size: min(12vw, 2.55rem); }
       .lesson-article > p:first-of-type::first-letter { font-size: 2.6rem; }
       .lesson-article ul { padding-left: 18px; }
       .lesson-article ol { padding-left: 24px; }
@@ -2599,9 +2659,10 @@
       <nav class="header-nav">
         <a href="index.html#contents">Contents</a>
         <a href="catalog.html">Catalog</a>
-        <a href="prereqs.html">Roadmap</a>
+        <a href="roadmap.html">Roadmap</a>
         <a href="glossary.html">Glossary</a>
         <a href="about.html">About</a>
+        <a href="manuals.html">Manuals</a>
         <a href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" class="header-github">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <svg class="star-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
@@ -2651,6 +2712,8 @@
         </div>
         <!-- AIFS:LESSON-FALLBACK:END -->
       </div>
+      <!-- AIFS:LESSON-HUBS:START -->
+      <!-- AIFS:LESSON-HUBS:END -->
     </main>
     <aside class="toc-sidebar" id="tocSidebar" aria-hidden="true"></aside>
   </div>
@@ -2680,7 +2743,12 @@
     }());
   </script>
   <script src="content-source.js?v=20260821a"></script>
+  <script src="lesson-markdown.js?v=20261104a"></script>
   <script src="progress.js?v=20260822a"></script>
+  <script src="highlights-anchor.js?v=20261018a"></script>
+  <script src="highlights-store.js?v=20261018a"></script>
+  <script src="highlights.js?v=20261023a"></script>
+  <script src="lesson-walkthrough.js?v=20261021b"></script>
   <script id="learningPathProgressRuntime">
     (function (root) {
       'use strict';
@@ -2780,10 +2848,11 @@
       root.AIFSLearningPathProgress = createStore(root.localStorage);
     }(window));
   </script>
-  <script src="header.js?v=20260927a" defer></script>
-  <script src="cmdpalette.js?v=20260821a" defer></script>
+  <script src="header.js?v=20261103a" defer></script>
+  <script src="code-copy.js?v=20261103a" defer></script>
+  <script src="cmdpalette.js?v=20261103a" defer></script>
   <script src="lesson-figures.js?v=843871fd2942"></script>
-  <script src="figure-manifest.js?v=cfdf3895cff9"></script>
+  <script src="figure-manifest.js?v=46acdc251607"></script>
   <script>
     (function () {
       var root = document.documentElement;
@@ -2816,6 +2885,9 @@
           updateMermaidThemeAndRerender();
         });
       }
+      document.addEventListener('aifs:themechange', function () {
+        updateMermaidThemeAndRerender();
+      });
 
       var params = new URLSearchParams(window.location.search);
       var lessonPath = params.get('path');
@@ -2864,6 +2936,7 @@
       var SOURCE_OWNER = /^[A-Za-z0-9-]+$/.test(SOURCE_CONFIG.owner || '') ? SOURCE_CONFIG.owner : REPO_PARTS[0];
       var SOURCE_REPO = /^[A-Za-z0-9_.-]+$/.test(SOURCE_CONFIG.repo || '') ? SOURCE_CONFIG.repo : REPO_PARTS[1];
       var REPO_TREE = 'https://github.com/' + SOURCE_OWNER + '/' + SOURCE_REPO + '/tree/' + encodeURIComponent(ACTIVE_REF) + '/';
+      var embeddedLesson = readEmbeddedLesson();
       var certificationTrack = null;
       var certificationOriginTrack = null;
       var certificationLesson = null;
@@ -2938,16 +3011,6 @@
       function findLearningPath(id) {
         if (!id || typeof LEARNING_PATHS === 'undefined' || !Array.isArray(LEARNING_PATHS)) return null;
         return LEARNING_PATHS.find(function (path) { return path && path.id === id; }) || null;
-      }
-
-      function inferLearningPath(target) {
-        if (!target || typeof LEARNING_PATHS === 'undefined' || !Array.isArray(LEARNING_PATHS)) return null;
-        var preferredIds = ['agent-skills', 'model-context-protocol'];
-        for (var i = 0; i < preferredIds.length; i++) {
-          var preferred = findLearningPath(preferredIds[i]);
-          if (preferred && learningPathContains(preferred, target)) return preferred;
-        }
-        return LEARNING_PATHS.find(function (path) { return learningPathContains(path, target); }) || null;
       }
 
       function learningPathEntries(path, includeOptional) {
@@ -3275,10 +3338,9 @@
         certificationMode = !!(certificationTrack && certificationTrackContains(certificationTrack, lessonPath));
         certificationSupplementalMode = !!(certificationOriginTrack && !certificationMode);
         learningPath = !certificationMode && !certificationSupplementalMode
-          ? (requestedLearningPathId ? findLearningPath(requestedLearningPathId) : inferLearningPath(lessonPath))
+          ? findLearningPath(requestedLearningPathId)
           : null;
         learningPathMode = !!(learningPath && learningPathContains(learningPath, lessonPath));
-        if (learningPathMode && !incomingLearningPathId) replaceLearningPathInUrl(learningPath.id);
 
         syncCertificationQuizProgressVersion();
 
@@ -3447,7 +3509,8 @@
             pathReturnHref = 'learning-paths.html#career-route-' + encodeURIComponent(learningPath.id);
             pathReturnLabel = 'Back to career route';
           }
-          var pathHtml = '<div class="sidebar-phase-nav"><a href="' + pathReturnHref + '">&larr; ' + pathReturnLabel + '</a></div>';
+          var pathHtml = '<div class="sidebar-phase-nav"><a href="' + pathReturnHref + '">&larr; ' + pathReturnLabel + '</a>' +
+            '<a href="lesson?path=' + encodeURIComponent(lessonPath) + '">Phase view</a></div>';
           var requiredPathLessons = flatLessons.filter(function (item) { return item.required !== false; });
           var optionalPathLessons = flatLessons.filter(function (item) { return item.required === false; });
           pathHtml += '<div class="sidebar-phase-header">' + escapeHtml(learningPath.title || learningPath.id) + ' · ' + requiredPathLessons.length + ' lessons</div>';
@@ -3617,24 +3680,91 @@
         });
       }
 
+      function readEmbeddedLesson() {
+        var node = document.getElementById('lessonMarkdown');
+        if (!node) return null;
+        try {
+          var data = JSON.parse(node.textContent);
+          return data && typeof data.markdown === 'string' ? data : null;
+        } catch (_) {
+          return null;
+        }
+      }
+
+      function embeddedLessonMarkdown(path, lang) {
+        if (!embeddedLesson || embeddedLesson.path !== path || (embeddedLesson.lang || 'en') !== lang) return null;
+        if (lang === 'en' && ACTIVE_REF !== 'main') return null;
+        return embeddedLesson.markdown;
+      }
+
+      // Fork: a translation is docs/<code>.md in this repo, fetched from the
+      // same ref as en.md, not upstream's `translations` branch.
+      function fetchLessonDocument(lang, enPath, docPath) {
+        var lessonDocument = docPath === enPath
+          ? fetchRepositoryFile(enPath).then(function (response) {
+              return { response: response, lang: 'en' };
+            })
+          : fetchRepositoryFile(docPath).then(function (response) {
+              return { response: response, lang: lang };
+            }).catch(function () {
+              return fetchRepositoryFile(enPath).then(function (response) {
+                return { response: response, lang: 'en' };
+              });
+            });
+
+        return lessonDocument.then(function (documentResult) {
+          return documentResult.response.text().then(function (markdown) {
+            return { markdown: markdown, lang: documentResult.lang };
+          });
+        });
+      }
+
+      var lessonCodeRequests = Object.create(null);
+
+      function fetchLessonCode(path) {
+        if (!/^(?:phases\/[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9-]*|certifications\/[a-z0-9][a-z0-9-]*\/lessons\/[a-z0-9][a-z0-9-]*)$/.test(path || '')) {
+          return Promise.resolve(null);
+        }
+        if (!lessonCodeRequests[path]) {
+          lessonCodeRequests[path] = fetch('lesson-code/' + path + '.json').then(function (response) {
+            if (!response.ok) throw new Error('fetch-failed');
+            return response.json();
+          }).then(function (data) {
+            return data && data.blocks && typeof data.blocks === 'object' ? data.blocks : null;
+          }).catch(function () {
+            delete lessonCodeRequests[path];
+            return null;
+          });
+        }
+        return Promise.race([
+          lessonCodeRequests[path],
+          new Promise(function (resolve) { setTimeout(function () { resolve(null); }, 1500); })
+        ]);
+      }
+
       var lessonFetchSequence = 0;
 
       function fetchLesson(path, retried, requestSequence) {
         if (!retried || !requestSequence) requestSequence = ++lessonFetchSequence;
+        var codePromise = fetchLessonCode(path);
         if (certificationLesson && path === certificationLesson.path && typeof certificationLesson.markdown === 'string') {
           applyRenderedLanguage('en');
           lessonQuizPromise = Promise.resolve(certificationLesson.quiz || null);
-          try {
-            renderLesson(certificationLesson.markdown);
-          } catch (embeddedError) {
-            console.error('renderLesson failed', embeddedError);
-            showError('Render error', 'Loaded the certification lesson but failed to render it. Details are in the browser console.');
-            return;
-          }
-          lessonQuizPromise.then(function (embeddedQuiz) {
-            if (!embeddedQuiz || requestSequence !== lessonFetchSequence) return;
-            try { renderQuiz(embeddedQuiz); }
-            catch (quizError) { console.error('renderQuiz failed', quizError); }
+          var embeddedCertification = certificationLesson;
+          codePromise.then(function (blocks) {
+            if (requestSequence !== lessonFetchSequence) return;
+            try {
+              renderLesson(embeddedCertification.markdown, blocks);
+            } catch (embeddedError) {
+              console.error('renderLesson failed', embeddedError);
+              showError('Render error', 'Loaded the certification lesson but failed to render it. Details are in the browser console.');
+              return;
+            }
+            lessonQuizPromise.then(function (embeddedQuiz) {
+              if (!embeddedQuiz || requestSequence !== lessonFetchSequence) return;
+              try { renderQuiz(embeddedQuiz); }
+              catch (quizError) { console.error('renderQuiz failed', quizError); }
+            });
           });
           return;
         }
@@ -3677,45 +3807,26 @@
           return englishQuizPromise;
         }
 
+        var lang = docCode ? currentLang() : 'en';
+        var embeddedMarkdown = embeddedLessonMarkdown(path, lang);
+        var lessonDocument = embeddedMarkdown !== null
+          ? Promise.resolve({ markdown: embeddedMarkdown, lang: lang })
+          : fetchLessonDocument(lang, enPath, docPath);
+
         // Read alongside a translation to recover the English heading text the
         // anchors and section styling key on — see canonHeadings.
         var enDocPromise = (docPath === enPath)
-          ? null
+          ? Promise.resolve(null)
           : fetchRepositoryFile(enPath)
               .then(function (res) { return res.text(); })
               .catch(function () { return null; });
 
-        var lessonDocument = (docPath === enPath)
-          ? fetchRepositoryFile(enPath).then(function (response) {
-              return { response: response, lang: 'en' };
-            })
-          : fetchRepositoryFile(docPath).then(function (response) {
-              return { response: response, lang: currentLang() };
-            }).catch(function () {
-              return fetchRepositoryFile(enPath).then(function (response) {
-                return { response: response, lang: 'en' };
-              });
-            });
-
-        lessonDocument
-          .then(function (documentResult) {
-            return documentResult.response.text().then(function (markdown) {
-              return { markdown: markdown, lang: documentResult.lang };
-            });
-          })
-          .then(function (documentResult) {
-            return (enDocPromise || Promise.resolve(null)).then(function (enMd) {
-              return {
-                markdown: documentResult.markdown,
-                lang: documentResult.lang,
-                enMarkdown: enMd
-              };
-            });
-          })
-          .then(function (documentResult) {
+        Promise.all([lessonDocument, codePromise, enDocPromise])
+          .then(function (loaded) {
+            var documentResult = loaded[0];
             if (requestSequence !== lessonFetchSequence) return;
             var md = documentResult.markdown;
-            var enMd = documentResult.enMarkdown;
+            var enMd = documentResult.lang === 'en' ? null : loaded[2];
             var lang = documentResult.lang;
             if (enMd && enMd !== md && !headingsAlign(enMd, md)) {
               md = enMd;
@@ -3724,16 +3835,17 @@
             }
             applyRenderedLanguage(lang);
             try {
-              renderLesson(md, enMd);
+              renderLesson(md, loaded[1], enMd);
             } catch (err) {
               console.error('renderLesson failed', err);
               showError('Render error', 'Loaded the lesson markdown but failed to render it. Details in the browser console.');
               return;
             }
+            var referenceIds = enMd ? window.AIFSLessonMarkdown.sectionIds(enMd) : null;
             quizFor(lang)
               .then(function (data) {
                 if (!data || requestSequence !== lessonFetchSequence) return;
-                try { renderQuiz(data); }
+                try { renderQuiz(data, referenceIds); }
                 catch (err) { console.error('renderQuiz failed', err); }
               });
           })
@@ -3777,13 +3889,14 @@
         }
         return certificationLesson
           ? 'Independent, open-source certification preparation built around practical engineering decisions.'
-          : '523 lessons. 20 phases. Build it from raw math, by hand.';
+          : '542 lessons. 20 phases. Build it from raw math, by hand.';
       }
 
       function updateLessonSeo(title, md) {
         var ORIGIN = 'https://aiengineeringfromscratch.com';
         var path = new URLSearchParams(location.search).get('path') || '';
-        var url = ORIGIN + '/lesson?path=' + encodeURIComponent(path);
+        var alternate = document.querySelector('link[rel="alternate"][hreflang="' + (document.documentElement.lang || 'en') + '"]');
+        var url = alternate ? alternate.href : ORIGIN + '/lesson?path=' + encodeURIComponent(path);
         var contextTrack = certificationContextTrack();
         var desc = lessonDescription(md);
         var courseName = certificationLesson
@@ -3816,9 +3929,13 @@
           }
           breadcrumbs.push({ '@type': 'ListItem', position: breadcrumbs.length + 1, name: title, item: url });
         } else {
+          var hubLesson = phaseLessonForPath(path);
+          var hubPhase = hubLesson && hubLesson.phase.hub ? hubLesson.phase : null;
           breadcrumbs = [
             { '@type': 'ListItem', position: 1, name: 'Home', item: ORIGIN },
-            { '@type': 'ListItem', position: 2, name: 'Catalog', item: ORIGIN + '/catalog.html' },
+            hubPhase
+              ? { '@type': 'ListItem', position: 2, name: 'Phase ' + String(hubPhase.id).padStart(2, '0') + ': ' + hubPhase.name, item: ORIGIN + hubPhase.hub }
+              : { '@type': 'ListItem', position: 2, name: 'Catalog', item: ORIGIN + '/catalog.html' },
             { '@type': 'ListItem', position: 3, name: title, item: url }
           ];
         }
@@ -3853,27 +3970,21 @@
       var canonHeadings = null;
 
       function headingsByLevel(md) {
-        var byLevel = { 1: [], 2: [], 3: [] };
+        var byLevel = { 1: [], 2: [], 3: [], 4: [] };
         if (!md) return null;
         var lines = md.split(/\r?\n/);
         var inFence = false;
         for (var i = 0; i < lines.length; i++) {
           if (/^```/.test(lines[i])) { inFence = !inFence; continue; }
           if (inFence) continue;
-          var m = lines[i].match(/^(#{1,3}) (?!#)(.+)/);
+          var m = lines[i].match(/^(#{1,4}) (?!#)(.+)/);
           if (m) byLevel[m[1].length].push(m[2].trim());
         }
         return byLevel;
       }
 
-      // Index of the next heading to consume per level, advanced by parseMd.
-      var headingSeen = { 1: 0, 2: 0, 3: 0 };
-
-      function canonicalHeading(level, ownText) {
-        var idx = headingSeen[level]++;
-        var list = canonHeadings && canonHeadings[level];
-        return (list && list[idx]) || ownText;
-      }
+      // lesson-markdown.js parseMd consumes this map (options.canonHeadings),
+      // taking the nth English heading of a level for the nth translated one.
 
       // The ordinal map is only meaningful while the two files still have the
       // same heading shape. Once an upstream rewrite lands ahead of its
@@ -3884,7 +3995,7 @@
         var a = headingsByLevel(enMd);
         var b = headingsByLevel(md);
         if (!a || !b) return false;
-        for (var level = 1; level <= 3; level++) {
+        for (var level = 1; level <= 4; level++) {
           if (a[level].length !== b[level].length) return false;
         }
         return true;
@@ -3906,6 +4017,8 @@
       }
 
       function disposeRenderedLesson(root) {
+        if (window.AIFSHighlights) window.AIFSHighlights.unmount();
+        if (window.AIFSWalkthrough) window.AIFSWalkthrough.unmount();
         if (window.AIFSFigureRuntime && root) window.AIFSFigureRuntime.disposeRoot(root);
         disposeTocRuntime();
         mermaidRenderSeq++;
@@ -3929,11 +4042,11 @@
         });
       }
 
-      function renderLesson(md, enMd) {
+      function renderLesson(md, codeBlocks, enMd) {
         var el = document.getElementById('lessonContent');
         disposeRenderedLesson(el);
         canonHeadings = (enMd && enMd !== md) ? headingsByLevel(enMd) : null;
-        var html = parseMd(md);
+        var html = window.AIFSLessonMarkdown.parseMd(md, { renderCode: window.AIFSLessonMarkdown.prerenderedCode(codeBlocks), canonHeadings: canonHeadings });
         html += '<div class="ai-panels" id="aiPanels"></div>';
         html = addBottomNav(html);
         el.innerHTML = certificationDisclaimerHtml() + '<article class="lesson-article">' + html + '</article>';
@@ -3946,8 +4059,9 @@
 
         var article = el.querySelector('.lesson-article');
         renderLessonActionPanel(article);
-        initCodeCopy();
+        renderSectionGuides(article);
         renderMermaidBlocks(article);
+        renderMathBlocks(article);
         var assetPromise = window.AIFS_loadFigureProviders
           ? window.AIFS_loadFigureProviders(article)
           : Promise.resolve([]);
@@ -3957,7 +4071,15 @@
         });
         renderAIPanels();
         buildTOC();
+        if (window.AIFSHighlights) {
+          window.AIFSHighlights.mount(article, {
+            path: lessonPath,
+            lang: document.documentElement.lang || currentLang(),
+            title: extractTitle(md)
+          });
+        }
         restoreHeadingHash();
+        if (window.AIFSWalkthrough) window.AIFSWalkthrough.mount(article, { path: lessonPath });
 
         document.querySelectorAll('a[href^="#"]').forEach(function (link) {
           link.addEventListener('click', function (e) {
@@ -4168,7 +4290,7 @@
           return;
         }
 
-        var headings = article.querySelectorAll('h2, h3');
+        var headings = article.querySelectorAll('h2, h3, h4');
         if (!headings.length) {
           sidebar.innerHTML = '';
           sidebar.removeAttribute('aria-hidden');
@@ -4354,389 +4476,8 @@
         return m ? m[1] : 'Lesson';
       }
 
-      function parseMd(md) {
-        headingSeen = { 1: 0, 2: 0, 3: 0 };
-        var lines = md.split(/\r?\n/);
-        var out = '';
-        var inCodeBlock = false;
-        var codeLang = '';
-        var codeLines = [];
-        var inTable = false;
-        var tableRows = [];
-        var inList = false;
-        var listType = '';
-        var listItems = [];
-        var firstBlockquoteDone = false;
-        var firstParaAfterMottoDone = false;
-        var inBlockquote = false;
-        var blockquoteLines = [];
-        var mermaidBlocks = 0;
-        var inLabChallenge = false;
-
-        function flushLabChallenge() {
-          if (!inLabChallenge) return '';
-          inLabChallenge = false;
-          return '</div>';
-        }
-
-        function flushList() {
-          if (!inList) return '';
-          inList = false;
-          var tag = listType === 'ol' ? 'ol' : 'ul';
-          var h = '<' + tag + '>';
-          for (var li = 0; li < listItems.length; li++) {
-            h += '<li>' + inlineFormat(listItems[li]) + '</li>';
-          }
-          h += '</' + tag + '>';
-          listItems = [];
-          return h;
-        }
-
-        function flushTable() {
-          if (!inTable) return '';
-          inTable = false;
-          if (tableRows.length < 2) return '';
-          var headers = tableRows[0];
-          var isKeyTerms = false;
-          for (var th = 0; th < headers.length; th++) {
-            if (headers[th].toLowerCase().indexOf('what people say') >= 0 || headers[th].toLowerCase().indexOf('people say') >= 0) {
-              isKeyTerms = true;
-            }
-          }
-          var h = '<div class="table-wrap' + (isKeyTerms ? ' key-terms-table' : '') + '"><table><thead><tr>';
-          for (var ti = 0; ti < headers.length; ti++) {
-            h += '<th>' + inlineFormat(headers[ti].trim()) + '</th>';
-          }
-          h += '</tr></thead><tbody>';
-          for (var ri = 2; ri < tableRows.length; ri++) {
-            var cells = tableRows[ri];
-            h += '<tr>';
-            for (var ci = 0; ci < headers.length; ci++) {
-              var cls = '';
-              if (isKeyTerms) {
-                var headerLower = (headers[ci] || '').toLowerCase();
-                if (headerLower.indexOf('say') >= 0) cls = ' class="col-says"';
-              }
-              h += '<td' + cls + '>' + inlineFormat((cells[ci] || '').trim()) + '</td>';
-            }
-            h += '</tr>';
-          }
-          h += '</tbody></table></div>';
-          tableRows = [];
-          return h;
-        }
-
-        function flushBlockquote() {
-          if (!inBlockquote) return '';
-          inBlockquote = false;
-          var text = blockquoteLines.join(' ');
-          blockquoteLines = [];
-          if (!firstBlockquoteDone) {
-            firstBlockquoteDone = true;
-            return '<div class="motto">' + inlineFormat(text) + '</div>';
-          }
-          return '<blockquote><p>' + inlineFormat(text) + '</p></blockquote>';
-        }
-
-        for (var i = 0; i < lines.length; i++) {
-          var line = lines[i];
-
-          if (inCodeBlock) {
-            if (line.match(/^```\s*$/)) {
-              inCodeBlock = false;
-              var raw = codeLines.join('\n');
-              if (codeLang === 'figure') {
-                out += '<div class="lesson-figure" data-figure="' + escapeHtml(raw.trim()) + '"></div>';
-              } else if (codeLang === 'mermaid') {
-                mermaidBlocks++;
-                out += '<div class="mermaid-container">';
-                out += '<div class="mermaid-block" data-mermaid-index="' + mermaidBlocks + '">';
-                out += '<div class="mermaid-toolbar">';
-                out += '<button type="button" class="mermaid-btn mermaid-expand" data-mermaid-index="' + mermaidBlocks + '">Expand</button>';
-                out += '</div>';
-                out += '<pre class="mermaid mermaid-source" id="mermaid-' + mermaidBlocks + '">' + escapeHtml(raw) + '</pre>';
-                out += '<div class="mermaid-render" id="mermaid-render-' + mermaidBlocks + '"></div>';
-                out += '</div>';
-                out += '</div>';
-              } else {
-                out += renderCodeBlock(raw, codeLang);
-              }
-              codeLines = [];
-              codeLang = '';
-            } else {
-              codeLines.push(line);
-            }
-            continue;
-          }
-
-          var codeStart = line.match(/^```(\w*)/);
-          if (codeStart) {
-            out += flushList();
-            out += flushTable();
-            out += flushBlockquote();
-            inCodeBlock = true;
-            codeLang = codeStart[1] || '';
-            codeLines = [];
-            continue;
-          }
-
-          if (line.match(/^\s*\|.*\|\s*$/)) {
-            out += flushList();
-            out += flushBlockquote();
-            if (!inTable) inTable = true;
-            tableRows.push(splitTableRow(line));
-            continue;
-          } else if (inTable) {
-            out += flushTable();
-          }
-
-          if (line.match(/^>\s/)) {
-            out += flushList();
-            out += flushTable();
-            if (!inBlockquote) inBlockquote = true;
-            blockquoteLines.push(line.replace(/^>\s?/, ''));
-            continue;
-          } else if (inBlockquote) {
-            out += flushBlockquote();
-          }
-
-          var h1 = line.match(/^# (.+)/);
-          if (h1) {
-            out += flushList();
-            out += flushLabChallenge();
-            var slug = slugify(canonicalHeading(1, h1[1]));
-            out += '<h1 id="' + slug + '">' + inlineFormat(h1[1]) + '</h1>';
-            continue;
-          }
-
-          var h2 = line.match(/^## (.+)/);
-          if (h2) {
-            out += flushList();
-            var canon2 = canonicalHeading(2, h2[1]);
-            var slug2 = slugify(canon2);
-            var sectionClass = '';
-            var txt = canon2.toLowerCase();
-            if (txt.indexOf('build it') >= 0 || txt.indexOf('build ') === 0) sectionClass = ' section-build';
-            else if (txt.indexOf('use it') >= 0 || txt.indexOf('use ') === 0) sectionClass = ' section-use';
-            else if (txt.indexOf('ship it') >= 0 || txt.indexOf('ship ') === 0) sectionClass = ' section-ship';
-            if (txt.indexOf('learning objectives') >= 0) {
-              var objItems = [];
-              for (var lo = i + 1; lo < lines.length; lo++) {
-                var loLine = lines[lo];
-                if (loLine.match(/^[-*]\s+(.+)/)) {
-                  objItems.push(loLine.replace(/^[-*]\s+/, ''));
-                } else if (loLine.trim() === '') {
-                  continue;
-                } else {
-                  break;
-                }
-              }
-              out += '<div class="learning-objectives"><div class="learning-objectives-title">&#127919; Learning Objectives</div><ul>';
-              for (var oi = 0; oi < objItems.length; oi++) {
-                out += '<li>' + inlineFormat(objItems[oi]) + '</li>';
-              }
-              out += '</ul></div>';
-              i = lo - 1;
-              continue;
-            }
-            if (txt.indexOf('lab challenge') >= 0) {
-              out += flushLabChallenge();
-              inLabChallenge = true;
-              out += '<div class="lab-challenge">';
-              out += '<h2 id="' + slug2 + '">&#128171; Lab Challenge</h2>';
-              continue;
-            }
-            out += flushLabChallenge();
-            out += '<h2 id="' + slug2 + '" class="' + sectionClass + '">' + inlineFormat(h2[1]) + '</h2>';
-            continue;
-          }
-
-          var h3 = line.match(/^### (.+)/);
-          if (h3) {
-            out += flushList();
-            var slug3 = slugify(canonicalHeading(3, h3[1]));
-            out += '<h3 id="' + slug3 + '">' + inlineFormat(h3[1]) + '</h3>';
-            continue;
-          }
-
-          if (line.match(/^---+$/)) {
-            out += flushList();
-            out += '<hr>';
-            continue;
-          }
-
-          var ulMatch = line.match(/^[-*]\s+(.+)/);
-          if (ulMatch) {
-            out += flushTable();
-            out += flushBlockquote();
-            if (!inList || listType !== 'ul') {
-              out += flushList();
-              inList = true;
-              listType = 'ul';
-            }
-            listItems.push(ulMatch[1]);
-            continue;
-          }
-
-          var olMatch = line.match(/^\d+\.\s+(.+)/);
-          if (olMatch) {
-            out += flushTable();
-            out += flushBlockquote();
-            if (!inList || listType !== 'ol') {
-              out += flushList();
-              inList = true;
-              listType = 'ol';
-            }
-            listItems.push(olMatch[1]);
-            continue;
-          }
-
-          if (inList) {
-            out += flushList();
-          }
-
-          if (line.trim() === '') {
-            continue;
-          }
-
-          var paraClass = '';
-          if (firstBlockquoteDone && !firstParaAfterMottoDone) {
-            var isMetaLine = line.match(/^\*\*[^*]+\*\*\s*:/);
-            if (!isMetaLine) {
-              paraClass = ' class="drop-cap"';
-              firstParaAfterMottoDone = true;
-            }
-          }
-
-          var metaMatch = line.match(/^\*\*([^*]+)\*\*:\s*(.+)/);
-          if (metaMatch && !firstParaAfterMottoDone) {
-            out += '<div class="lesson-meta-tag"><strong>' + escapeHtml(metaMatch[1]) + ':</strong> ' + inlineFormat(metaMatch[2]) + '</div>';
-            continue;
-          }
-
-          out += '<p' + paraClass + '>' + inlineFormat(line) + '</p>';
-        }
-
-        out += flushList();
-        out += flushTable();
-        out += flushBlockquote();
-        out += flushLabChallenge();
-
-        return out;
-      }
-
-      function splitTableRow(line) {
-        // Split a markdown table row on cell delimiters while respecting
-        // escaped pipes (P(X\|Y)) and pipes inside inline-code spans (`a | b`).
-        var cells = [];
-        var cur = '';
-        var inCode = false;
-        for (var i = 0; i < line.length; i++) {
-          var ch = line.charAt(i);
-          if (ch === '\\' && line.charAt(i + 1) === '|') {
-            cur += '|';
-            i++;
-            continue;
-          }
-          if (ch === '`') {
-            inCode = !inCode;
-            cur += ch;
-            continue;
-          }
-          if (ch === '|' && !inCode) {
-            cells.push(cur);
-            cur = '';
-            continue;
-          }
-          cur += ch;
-        }
-        cells.push(cur);
-        if (cells.length && cells[0].trim() === '') cells.shift();
-        if (cells.length && cells[cells.length - 1].trim() === '') cells.pop();
-        return cells.map(function (c) { return c.trim(); });
-      }
-
-      function inlineFormat(text) {
-        text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-        text = text.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
-        text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-        text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
-        text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
-        text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function (m, label, href) {
-          if (/^https?:\/\/|^mailto:/i.test(href)) {
-            return '<a href="' + href + '" target="_blank" rel="noopener">' + label + '</a>';
-          }
-          return label;
-        });
-        return text;
-      }
-
       function slugify(text) {
-        return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-      }
-
-      function renderCodeBlock(code, lang) {
-        var highlighted = highlightSyntax(escapeHtml(code), lang);
-        var langLabel = lang ? '<span class="code-lang">' + escapeHtml(lang) + '</span>' : '';
-        // The copy button sits outside the <pre>: i18n.js rejects that subtree
-        // wholesale as non-prose, so a button nested in it could never be
-        // translated. .code-block is the positioning context it used to get
-        // from the <pre>, so the rendered result is unchanged.
-        return '<div class="code-block">' +
-          '<button class="code-copy" data-code="' + escapeAttr(code) + '">Copy</button>' +
-          '<pre>' + langLabel + '<code>' + highlighted + '</code></pre></div>';
-      }
-
-      function highlightSyntax(code, lang) {
-        var keywords, commentPattern;
-
-        if (lang === 'python' || lang === 'py') {
-          keywords = /\b(def|class|return|if|elif|else|for|while|in|import|from|as|with|try|except|finally|raise|yield|lambda|not|and|or|is|None|True|False|print|self|pass|break|continue|assert|global)\b/g;
-          commentPattern = /(#[^\n]*)/g;
-        } else if (lang === 'julia') {
-          keywords = /\b(function|end|if|elseif|else|for|while|in|using|import|return|struct|mutable|abstract|type|module|export|let|const|begin|do|try|catch|finally|throw|true|false|nothing|println)\b/g;
-          commentPattern = /(#[^\n]*)/g;
-        } else if (lang === 'javascript' || lang === 'js' || lang === 'typescript' || lang === 'ts') {
-          keywords = /\b(function|const|let|var|return|if|else|for|while|class|new|this|import|export|from|async|await|try|catch|throw|typeof|instanceof|true|false|null|undefined|console)\b/g;
-          commentPattern = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)/g;
-        } else if (lang === 'rust') {
-          keywords = /\b(fn|let|mut|struct|enum|impl|trait|pub|use|mod|self|super|crate|return|if|else|for|while|loop|match|async|await|true|false|None|Some|Ok|Err|println)\b/g;
-          commentPattern = /(\/\/[^\n]*)/g;
-        } else {
-          keywords = /\b(function|def|class|return|if|else|for|while|import|from|const|let|var|true|false|null|None|print|println)\b/g;
-          commentPattern = /(#[^\n]*|\/\/[^\n]*)/g;
-        }
-
-        var tokens = [];
-        function stash(match) {
-          var id = '\x00TOK' + tokens.length + '\x00';
-          tokens.push(match);
-          return id;
-        }
-
-        code = code.replace(commentPattern, function (m) { return stash('<span class="syn-comment">' + m + '</span>'); });
-        code = code.replace(/(&quot;(?:[^&]|&(?!quot;))*?&quot;|&#39;(?:[^&]|&(?!#39;))*?&#39;|&quot;&quot;&quot;[\s\S]*?&quot;&quot;&quot;)/g, function (m) { return stash('<span class="syn-string">' + m + '</span>'); });
-        code = code.replace(/"([^"]*?)"/g, function (m) { return stash('<span class="syn-string">' + m + '</span>'); });
-
-        code = code.replace(keywords, '<span class="syn-keyword">$1</span>');
-        code = code.replace(/\b(\d+\.?\d*)\b/g, '<span class="syn-number">$1</span>');
-
-        for (var ti = 0; ti < tokens.length; ti++) {
-          code = code.replace('\x00TOK' + ti + '\x00', tokens[ti]);
-        }
-        return code;
-      }
-
-      function initCodeCopy() {
-        document.querySelectorAll('.code-copy').forEach(function (btn) {
-          btn.addEventListener('click', function () {
-            var code = btn.getAttribute('data-code');
-            navigator.clipboard.writeText(code).then(function () {
-              btn.textContent = 'Copied!';
-              setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
-            });
-          });
-        });
+        return window.AIFSLessonMarkdown.slugify(text);
       }
 
       function initializeMermaid(mermaid) {
@@ -4762,6 +4503,105 @@
             });
         }
         return mermaidPromise;
+      }
+
+      var KATEX_BASE = 'https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/';
+      var KATEX_JS_SRI = 'sha384-CwjPRVHTvLiMBFjEoij+QZViMV5rhTOIp7CJzl24JEqpRDA1sJFHVXXLURktbYYp';
+      var KATEX_CSS_SRI = 'sha384-nH0MfJ44wi1dd7w6jinlyBgljjS8EJAh2JBoRad8a3VDw2K69vfaaqm4WnR+gXtA';
+      var katexPromise = null;
+
+      function loadKatex() {
+        if (window.katex) return Promise.resolve(window.katex);
+        if (!katexPromise) {
+          katexPromise = new Promise(function (resolve, reject) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = KATEX_BASE + 'katex.min.css';
+            link.integrity = KATEX_CSS_SRI;
+            link.crossOrigin = 'anonymous';
+            document.head.appendChild(link);
+            var script = document.createElement('script');
+            script.src = KATEX_BASE + 'katex.min.js';
+            script.integrity = KATEX_JS_SRI;
+            script.crossOrigin = 'anonymous';
+            script.onload = function () {
+              if (window.katex) {
+                resolve(window.katex);
+                return;
+              }
+              katexPromise = null;
+              reject(new Error('katex loaded without defining window.katex'));
+            };
+            script.onerror = function () {
+              katexPromise = null;
+              reject(new Error('katex failed to load'));
+            };
+            document.head.appendChild(script);
+          });
+        }
+        return katexPromise;
+      }
+
+      var LESSON_SECTION_GUIDES = {
+        'build-it': 'Type this code in your own file and run it after each step.',
+        'use-it': 'Install the library in a virtual environment, then compare its result with your Build It result.',
+        'ship-it': 'Open the file in this lesson\'s outputs/ folder and use it in your own work.',
+        exercises: 'Say the task again, predict a small case by hand, then write the smallest version that works.',
+        summary: 'Bookmark the key formulas and concepts here for quick review before exercises or projects.'
+      };
+
+      function renderSectionGuides(article) {
+        if (!article || currentLang() !== 'en') return;
+        Object.keys(LESSON_SECTION_GUIDES).forEach(function (id) {
+          var heading = article.querySelector('h2#' + id);
+          if (!heading) return;
+          var note = document.createElement('p');
+          note.className = 'lesson-section-guide';
+          note.appendChild(document.createTextNode(LESSON_SECTION_GUIDES[id] + ' '));
+          var link = document.createElement('a');
+          link.href = 'how-to-learn.html#' + id;
+          link.textContent = 'How to work this part';
+          note.appendChild(link);
+          heading.insertAdjacentElement('afterend', note);
+        });
+        var hints = article.querySelector('h3#hints');
+        if (!hints) return;
+        var details = document.createElement('details');
+        details.className = 'lesson-hints';
+        var summary = document.createElement('summary');
+        summary.textContent = 'Hints: open after you try the exercises';
+        details.appendChild(summary);
+        var node = hints.nextElementSibling;
+        while (node && !/^H[12]$/.test(node.tagName) && node.tagName !== 'NAV' && !node.classList.contains('ai-panels')) {
+          var next = node.nextElementSibling;
+          details.appendChild(node);
+          node = next;
+        }
+        details.id = hints.id;
+        hints.parentNode.replaceChild(details, hints);
+      }
+
+      function renderMathBlocks(root) {
+        var nodes = (root || document).querySelectorAll('.math-inline:not([data-math-rendered]), .math-display:not([data-math-rendered])');
+        if (!nodes.length) return Promise.resolve();
+        return loadKatex().then(function (katex) {
+          Array.prototype.forEach.call(nodes, function (node) {
+            if (!node.isConnected) return;
+            var tex = node.textContent;
+            try {
+              katex.render(tex, node, {
+                displayMode: node.classList.contains('math-display'),
+                throwOnError: true,
+                strict: 'ignore',
+                trust: false
+              });
+              node.setAttribute('data-math-rendered', '');
+            } catch (error) {
+              node.textContent = tex;
+              node.setAttribute('title', String(error && error.message || error));
+            }
+          });
+        }).catch(function () {});
       }
 
       function renderMermaidBlocks(root) {
@@ -5015,7 +4855,24 @@
         }
       }
 
-      function renderQuiz(data) {
+      function lessonSectionHeadings(article) {
+        return Array.prototype.slice.call(article.querySelectorAll('h2')).filter(function (h) {
+          return !h.closest('#aiPanels, #lessonActionPanel');
+        });
+      }
+
+      function insertQuizAt(article, headings, index, html) {
+        if (!html) return;
+        if (index < headings.length) {
+          headings[index].insertAdjacentHTML('beforebegin', html);
+          return;
+        }
+        var panels = article.querySelector('#aiPanels');
+        if (panels) panels.insertAdjacentHTML('beforebegin', html);
+        else article.insertAdjacentHTML('beforeend', html);
+      }
+
+      function renderQuiz(data, referenceIds) {
         var questions = data.questions || data;
         if (!questions || !questions.length) return;
         lessonQuizCorrectAnswers = Object.create(null);
@@ -5023,51 +4880,23 @@
         var article = document.querySelector('.lesson-article');
         if (!article) return;
 
-        var conceptH2 = article.querySelector('#the-concept, #concept');
-        var buildH2 = article.querySelector('#build-it, #build');
-        var keyTermsH2 = article.querySelector('#key-terms');
+        var headings = lessonSectionHeadings(article);
+        var place = window.AIFSLessonMarkdown.quizPlacement(headings.map(function (h) { return h.id; }), referenceIds);
 
         var preQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'pre'; }), 'pre', 'Pre-Lesson Check');
         var checkQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'check'; }), 'check', 'Mid-Lesson Check');
         var postQuizHtml = buildQuizHtml(questions.filter(function (q) { return q.stage === 'post'; }), 'post', 'Post-Lesson Quiz');
 
         if (!preQuizHtml && !checkQuizHtml && !postQuizHtml) {
-          var allHtml = buildQuizHtml(questions, 'all', 'Quiz');
-          if (allHtml && keyTermsH2) {
-            keyTermsH2.insertAdjacentHTML('beforebegin', allHtml);
-          } else if (allHtml) {
-            article.insertAdjacentHTML('beforeend', allHtml);
-          }
+          insertQuizAt(article, headings, place.post, buildQuizHtml(questions, 'all', 'Quiz'));
           restoreQuizAnswers();
           restoreHeadingHash();
           return;
         }
 
-        if (preQuizHtml && conceptH2) {
-          conceptH2.insertAdjacentHTML('beforebegin', preQuizHtml);
-        } else if (preQuizHtml && buildH2) {
-          buildH2.insertAdjacentHTML('beforebegin', preQuizHtml);
-        }
-
-        // Mid-lesson check: land between Build It and Use It if possible,
-        // otherwise fall back to before Use It / Ship It / Key Terms.
-        var useH2 = article.querySelector('#use-it, #use');
-        var shipH2 = article.querySelector('#ship-it, #ship');
-        if (checkQuizHtml && useH2) {
-          useH2.insertAdjacentHTML('beforebegin', checkQuizHtml);
-        } else if (checkQuizHtml && shipH2) {
-          shipH2.insertAdjacentHTML('beforebegin', checkQuizHtml);
-        } else if (checkQuizHtml && keyTermsH2) {
-          keyTermsH2.insertAdjacentHTML('beforebegin', checkQuizHtml);
-        } else if (checkQuizHtml) {
-          article.insertAdjacentHTML('beforeend', checkQuizHtml);
-        }
-
-        if (postQuizHtml && keyTermsH2) {
-          keyTermsH2.insertAdjacentHTML('beforebegin', postQuizHtml);
-        } else if (postQuizHtml) {
-          article.insertAdjacentHTML('beforeend', postQuizHtml);
-        }
+        insertQuizAt(article, headings, place.pre, preQuizHtml);
+        insertQuizAt(article, headings, place.check, checkQuizHtml);
+        insertQuizAt(article, headings, place.post, postQuizHtml);
 
         restoreQuizAnswers();
         restoreHeadingHash();
@@ -5627,11 +5456,13 @@
       }
 
       function getQuizQuestions() {
-        var pathLower = (lessonPath || '').toLowerCase();
-        var lessonName = '';
-        if (currentLessonIndex >= 0) lessonName = flatLessons[currentLessonIndex].lessonName;
+        var pathParts = (lessonPath || '').toLowerCase().split('/');
+        var phaseTokens = pathParts[0] === 'phases' && pathParts[1] ? pathParts[1].split('-') : [];
+        function phaseHas(words) {
+          return words.some(function (word) { return phaseTokens.indexOf(word) >= 0; });
+        }
 
-        if (pathLower.indexOf('math') >= 0 || pathLower.indexOf('linear-algebra') >= 0 || pathLower.indexOf('calculus') >= 0) {
+        if (phaseHas(['math', 'linear', 'algebra', 'calculus'])) {
           return [
             { q: 'What does a dot product measure between two vectors?', opts: ['Their sum', 'How aligned they are', 'Their cross product', 'The distance between them'], answer: 1, explain: 'The dot product measures the similarity or alignment between two vectors. When it is zero, the vectors are orthogonal.' },
             { q: 'What does the gradient of a function point toward?', opts: ['The minimum', 'The steepest ascent', 'The nearest saddle point', 'A random direction'], answer: 1, explain: 'The gradient always points in the direction of steepest increase. Gradient descent moves opposite to the gradient to find minima.' },
@@ -5639,7 +5470,7 @@
           ];
         }
 
-        if (pathLower.indexOf('ml') >= 0 || pathLower.indexOf('regression') >= 0 || pathLower.indexOf('classification') >= 0 || pathLower.indexOf('supervised') >= 0) {
+        if (phaseHas(['ml', 'regression', 'classification', 'supervised'])) {
           return [
             { q: 'What is the purpose of a loss function in machine learning?', opts: ['To generate data', 'To measure how wrong predictions are', 'To select features', 'To split data'], answer: 1, explain: 'A loss function quantifies the difference between predicted and actual values. The optimizer minimizes this value during training.' },
             { q: 'Why do we split data into train and test sets?', opts: ['To save memory', 'To evaluate generalization on unseen data', 'To make training faster', 'To reduce the dataset size'], answer: 1, explain: 'The test set acts as unseen data, revealing whether the model memorized training data or learned generalizable patterns.' },
@@ -5647,7 +5478,7 @@
           ];
         }
 
-        if (pathLower.indexOf('deep-learning') >= 0 || pathLower.indexOf('neural') >= 0 || pathLower.indexOf('backprop') >= 0 || pathLower.indexOf('activation') >= 0) {
+        if ((phaseHas(['deep']) && phaseHas(['learning'])) || phaseHas(['neural', 'backprop', 'activation', 'vision'])) {
           return [
             { q: 'What does backpropagation compute?', opts: ['Forward predictions', 'The gradient of the loss with respect to each weight', 'The learning rate', 'New training data'], answer: 1, explain: 'Backpropagation uses the chain rule to compute how much each weight contributed to the error, then adjusts weights accordingly.' },
             { q: 'Why do neural networks need non-linear activation functions?', opts: ['To speed up training', 'Without them, stacking layers is equivalent to a single linear layer', 'To reduce memory usage', 'To normalize outputs'], answer: 1, explain: 'Without non-linearities, any composition of linear layers collapses to a single linear transformation. Activations like ReLU let the network learn complex patterns.' },
@@ -5655,7 +5486,7 @@
           ];
         }
 
-        if (pathLower.indexOf('llm') >= 0 || pathLower.indexOf('transformer') >= 0 || pathLower.indexOf('attention') >= 0 || pathLower.indexOf('tokeniz') >= 0 || pathLower.indexOf('fine-tun') >= 0) {
+        if (phaseHas(['llm', 'llms', 'transformer', 'transformers', 'attention', 'nlp', 'tokenization'])) {
           return [
             { q: 'What does self-attention allow a transformer to do?', opts: ['Process tokens in order', 'Weight the importance of every token relative to every other token', 'Reduce vocabulary size', 'Compress the model'], answer: 1, explain: 'Self-attention computes pairwise relevance scores across all positions, allowing the model to relate distant tokens without recurrence.' },
             { q: 'Why do LLMs use tokenizers instead of raw characters?', opts: ['Characters are too large', 'Tokens compress frequent patterns into single units, reducing sequence length', 'Tokenizers are faster to train', 'Characters cannot be embedded'], answer: 1, explain: 'Subword tokenizers like BPE balance vocabulary size against sequence length, making common words single tokens while handling rare words as pieces.' },
@@ -5663,7 +5494,7 @@
           ];
         }
 
-        if (pathLower.indexOf('rag') >= 0 || pathLower.indexOf('retrieval') >= 0 || pathLower.indexOf('embed') >= 0 || pathLower.indexOf('vector') >= 0) {
+        if (phaseHas(['rag', 'retrieval', 'embeddings', 'vector'])) {
           return [
             { q: 'What is the core idea behind RAG?', opts: ['Training a larger model', 'Retrieving relevant context before generating a response', 'Using more GPUs', 'Reducing model size'], answer: 1, explain: 'RAG (Retrieval-Augmented Generation) grounds LLM responses in retrieved documents, reducing hallucination and enabling knowledge updates without retraining.' },
             { q: 'What do embedding models produce?', opts: ['Text summaries', 'Dense vector representations of text', 'Token counts', 'Grammar corrections'], answer: 1, explain: 'Embedding models map text into fixed-dimensional vectors where semantic similarity corresponds to geometric proximity.' },
@@ -5671,7 +5502,7 @@
           ];
         }
 
-        if (pathLower.indexOf('agent') >= 0 || pathLower.indexOf('tool') >= 0 || pathLower.indexOf('mcp') >= 0) {
+        if (phaseHas(['agent', 'agents', 'tool', 'tools', 'mcp', 'protocols', 'autonomous', 'swarms'])) {
           return [
             { q: 'What distinguishes an AI agent from a simple chatbot?', opts: ['Agents are faster', 'Agents can take actions and use tools autonomously', 'Agents use bigger models', 'There is no difference'], answer: 1, explain: 'Agents have a loop: observe, decide, act. They can call tools, read files, search the web, and chain multiple steps to complete complex tasks.' },
             { q: 'What is MCP (Model Context Protocol)?', opts: ['A model training format', 'A standardized protocol for connecting AI models to tools and data sources', 'A compression algorithm', 'A testing framework'], answer: 1, explain: 'MCP provides a universal interface between AI assistants and external tools/data, replacing one-off integrations with a standard protocol.' },
@@ -5679,7 +5510,7 @@
           ];
         }
 
-        if (pathLower.indexOf('eval') >= 0 || pathLower.indexOf('safety') >= 0 || pathLower.indexOf('alignment') >= 0 || pathLower.indexOf('deploy') >= 0) {
+        if (phaseHas(['eval', 'evals', 'safety', 'alignment', 'ethics', 'deploy', 'production'])) {
           return [
             { q: 'Why are evals critical for production AI systems?', opts: ['To save money', 'To measure performance objectively before and after changes', 'To make the model bigger', 'Evals are optional'], answer: 1, explain: 'Evals are the tests of AI engineering. Without them, you cannot know if a change improved or regressed quality. They should run on every code change.' },
             { q: 'What does "alignment" mean in AI safety?', opts: ['Aligning text on screen', 'Ensuring AI systems act according to human intentions and values', 'Making models faster', 'Using the same training data'], answer: 1, explain: 'Alignment ensures that as AI systems become more capable, they remain helpful, honest, and harmless, acting in accordance with human goals.' },
@@ -5690,21 +5521,8 @@
         return [
           { q: 'What does "from scratch" mean in this course?', opts: ['Using no computer', 'Building each concept by implementing it yourself, not just reading theory', 'Starting from assembly language', 'Only using pen and paper'], answer: 1, explain: 'This course follows a Build-Use-Ship methodology: first understand by building it, then apply it, then ship it as a real artifact.' },
           { q: 'Why does this course combine math, ML, and engineering?', opts: ['To make it longer', 'Because real AI engineering requires all three to build production systems', 'Math is just for fun', 'Engineering is optional'], answer: 1, explain: 'Production AI systems require mathematical foundations (for understanding), ML knowledge (for modeling), and engineering skills (for deployment and reliability).' },
-          { q: 'What is the "Ship" step in the Build-Use-Ship framework?', opts: ['Mailing physical goods', 'Creating a reusable artifact like a prompt, skill, or tool from what you learned', 'Publishing a paper', 'Deleting your code'], answer: 2, explain: 'The Ship step turns your learning into something tangible: a prompt, skill file, MCP tool, or CLI utility that others (or future you) can use immediately.' }
+          { q: 'What is the "Ship" step in the Build-Use-Ship framework?', opts: ['Mailing physical goods', 'Creating a reusable artifact like a prompt, skill, or tool from what you learned', 'Publishing a paper', 'Deleting your code'], answer: 1, explain: 'The Ship step turns your learning into something tangible: a prompt, skill file, MCP tool, or CLI utility that others (or future you) can use immediately.' }
         ];
-      }
-
-      function lessonQuizPanelQuestions(data) {
-        var source = data && (data.questions || data);
-        if (!Array.isArray(source)) return [];
-        var valid = source.filter(function (q) {
-          return q && q.question && Array.isArray(q.options) &&
-            typeof q.correct === 'number' && q.correct >= 0 && q.correct < q.options.length;
-        });
-        var post = valid.filter(function (q) { return q.stage === 'post'; });
-        return (post.length ? post : valid).slice(0, 3).map(function (q) {
-          return { q: q.question, opts: q.options, answer: q.correct, explain: q.explanation || '' };
-        });
       }
 
       function renderQuizPanel(container) {
@@ -5715,9 +5533,12 @@
 
         if (lessonQuizPromise) {
           lessonQuizPromise.then(function (data) {
-            var questions = lessonQuizPanelQuestions(data);
-            if (!questions.length) questions = getQuizQuestions();
-            fillQuizPanel(panel.querySelector('#quizContent'), questions);
+            var questions = window.AIFSLessonMarkdown.quizPanelQuestions(data);
+            if (questions && !questions.length) {
+              panel.remove();
+              return;
+            }
+            fillQuizPanel(panel.querySelector('#quizContent'), getQuizQuestions());
           });
         } else {
           fillQuizPanel(panel.querySelector('#quizContent'), getQuizQuestions());
@@ -6294,9 +6115,7 @@
 
         html += '<div class="continue-links">';
 
-        var phaseSlug = extractPhaseSlug(phase, phaseIdx);
-        var firstLesson = phase.lessons[0] ? extractLessonSlug(phase.lessons[0], 0) : '';
-        html += '<a class="continue-link" href="lesson?path=phases/' + phaseSlug + '/' + firstLesson + '">' + escapeHtml(tf('Browse all Phase {n} lessons', { n: String(phase.id).padStart(2, '0') })) + '</a>';
+        html += '<a class="continue-link" href="catalog.html?phase=' + encodeURIComponent(phase.id) + '">' + escapeHtml(tf('Browse all Phase {n} lessons', { n: String(phase.id).padStart(2, '0') })) + '</a>';
         html += '<a class="continue-link" href="catalog.html">Full course catalog</a>';
         html += '</div>';
 
@@ -6314,7 +6133,7 @@
       }
 
       function escapeAttr(str) {
-        return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return window.AIFSLessonMarkdown.escapeAttr(str);
       }
 
       // Start only after every module-level cache and promise has been

@@ -1,0 +1,150 @@
+
+convention-arm64-macos-O2.o:	file format mach-o arm64
+
+Disassembly of section __TEXT,__text:
+
+0000000000000000 <ltmp0>:
+       0: 0b000020     	add	w0, w1, w0
+       4: d65f03c0     	ret
+
+0000000000000008 <_eight_args>:
+       8: 8b000028     	add	x8, x1, x0
+       c: 8b030049     	add	x9, x2, x3
+      10: 8b090108     	add	x8, x8, x9
+      14: 8b050089     	add	x9, x4, x5
+      18: 8b060129     	add	x9, x9, x6
+      1c: 8b090108     	add	x8, x8, x9
+      20: 8b070100     	add	x0, x8, x7
+      24: d65f03c0     	ret
+
+0000000000000028 <_mixed>:
+      28: 1e620002     	scvtf	d2, w0
+      2c: 1e602840     	fadd	d0, d2, d0
+      30: 9e620022     	scvtf	d2, x1
+      34: 1e622800     	fadd	d0, d0, d2
+      38: 1e22c021     	fcvt	d1, s1
+      3c: 1e612800     	fadd	d0, d0, d1
+      40: d65f03c0     	ret
+
+0000000000000044 <_by_value>:
+      44: d1000421     	sub	x1, x1, #0x1
+      48: 91000400     	add	x0, x0, #0x1
+      4c: d65f03c0     	ret
+
+0000000000000050 <_big_ret>:
+      50: f9000100     	str	x0, [x8]
+      54: 4e080c00     	dup.2d	v0, x0
+      58: 90000009     	adrp	x9, 0x0 <ltmp0>
+		0000000000000058:  ARM64_RELOC_PAGE21	lCPI4_0
+      5c: 3dc00121     	ldr	q1, [x9]
+		000000000000005c:  ARM64_RELOC_PAGEOFF12	lCPI4_0
+      60: 4ee18400     	add.2d	v0, v0, v1
+      64: 3c808100     	stur	q0, [x8, #0x8]
+      68: 91000c09     	add	x9, x0, #0x3
+      6c: f9000d09     	str	x9, [x8, #0x18]
+      70: d65f03c0     	ret
+
+0000000000000074 <_sum_varargs>:
+      74: d10043ff     	sub	sp, sp, #0x10
+      78: 910043e8     	add	x8, sp, #0x10
+      7c: f90007e8     	str	x8, [sp, #0x8]
+      80: 7100041f     	cmp	w0, #0x1
+      84: 5400014b     	b.lt	0xac <_sum_varargs+0x38>
+      88: 52800008     	mov	w8, #0x0                ; =0
+      8c: f94007e9     	ldr	x9, [sp, #0x8]
+      90: 9100212a     	add	x10, x9, #0x8
+      94: f90007ea     	str	x10, [sp, #0x8]
+      98: b9400129     	ldr	w9, [x9]
+      9c: 0b080128     	add	w8, w9, w8
+      a0: 71000400     	subs	w0, w0, #0x1
+      a4: 54ffff41     	b.ne	0x8c <_sum_varargs+0x18>
+      a8: 14000002     	b	0xb0 <_sum_varargs+0x3c>
+      ac: 52800008     	mov	w8, #0x0                ; =0
+      b0: aa0803e0     	mov	x0, x8
+      b4: 910043ff     	add	sp, sp, #0x10
+      b8: d65f03c0     	ret
+
+00000000000000bc <_keeps>:
+      bc: a9bd57f6     	stp	x22, x21, [sp, #-0x30]!
+      c0: a9014ff4     	stp	x20, x19, [sp, #0x10]
+      c4: a9027bfd     	stp	x29, x30, [sp, #0x20]
+      c8: 910083fd     	add	x29, sp, #0x20
+      cc: 7100041f     	cmp	w0, #0x1
+      d0: 5400016b     	b.lt	0xfc <_keeps+0x40>
+      d4: aa0003f3     	mov	x19, x0
+      d8: 52800015     	mov	w21, #0x0               ; =0
+      dc: 52800014     	mov	w20, #0x0               ; =0
+      e0: aa1503e0     	mov	x0, x21
+      e4: 94000000     	bl	0xe4 <_keeps+0x28>
+		00000000000000e4:  ARM64_RELOC_BRANCH26	_ext
+      e8: 0b140014     	add	w20, w0, w20
+      ec: 110006b5     	add	w21, w21, #0x1
+      f0: 6b15027f     	cmp	w19, w21
+      f4: 54ffff61     	b.ne	0xe0 <_keeps+0x24>
+      f8: 14000002     	b	0x100 <_keeps+0x44>
+      fc: 52800014     	mov	w20, #0x0               ; =0
+     100: aa1403e0     	mov	x0, x20
+     104: a9427bfd     	ldp	x29, x30, [sp, #0x20]
+     108: a9414ff4     	ldp	x20, x19, [sp, #0x10]
+     10c: a8c357f6     	ldp	x22, x21, [sp], #0x30
+     110: d65f03c0     	ret
+
+0000000000000114 <_call8>:
+     114: 52800020     	mov	w0, #0x1                ; =1
+     118: 52800041     	mov	w1, #0x2                ; =2
+     11c: 52800062     	mov	w2, #0x3                ; =3
+     120: 52800083     	mov	w3, #0x4                ; =4
+     124: 528000a4     	mov	w4, #0x5                ; =5
+     128: 528000c5     	mov	w5, #0x6                ; =6
+     12c: 528000e6     	mov	w6, #0x7                ; =7
+     130: 52800107     	mov	w7, #0x8                ; =8
+     134: 14000000     	b	0x134 <_call8+0x20>
+		0000000000000134:  ARM64_RELOC_BRANCH26	_ext8
+
+0000000000000138 <_call_mixed>:
+     138: 1e601000     	fmov	d0, #2.00000000
+     13c: 1e221001     	fmov	s1, #4.00000000
+     140: 52800020     	mov	w0, #0x1                ; =1
+     144: 52800061     	mov	w1, #0x3                ; =3
+     148: 14000000     	b	0x148 <_call_mixed+0x10>
+		0000000000000148:  ARM64_RELOC_BRANCH26	_extmixed
+
+000000000000014c <_call_varargs>:
+     14c: d100c3ff     	sub	sp, sp, #0x30
+     150: a9027bfd     	stp	x29, x30, [sp, #0x20]
+     154: 910083fd     	add	x29, sp, #0x20
+     158: 528003c8     	mov	w8, #0x1e               ; =30
+     15c: f9000be8     	str	x8, [sp, #0x10]
+     160: 52800288     	mov	w8, #0x14               ; =20
+     164: 52800149     	mov	w9, #0xa                ; =10
+     168: a90023e9     	stp	x9, x8, [sp]
+     16c: 52800060     	mov	w0, #0x3                ; =3
+     170: 94000000     	bl	0x170 <_call_varargs+0x24>
+		0000000000000170:  ARM64_RELOC_BRANCH26	_extva
+     174: a9427bfd     	ldp	x29, x30, [sp, #0x20]
+     178: 9100c3ff     	add	sp, sp, #0x30
+     17c: d65f03c0     	ret
+
+0000000000000180 <_call_pair>:
+     180: a9bf7bfd     	stp	x29, x30, [sp, #-0x10]!
+     184: 910003fd     	mov	x29, sp
+     188: 528000a0     	mov	w0, #0x5                ; =5
+     18c: 528000c1     	mov	w1, #0x6                ; =6
+     190: 94000000     	bl	0x190 <_call_pair+0x10>
+		0000000000000190:  ARM64_RELOC_BRANCH26	_extpair
+     194: aa0103e0     	mov	x0, x1
+     198: a8c17bfd     	ldp	x29, x30, [sp], #0x10
+     19c: d65f03c0     	ret
+
+00000000000001a0 <_call_big>:
+     1a0: d100c3ff     	sub	sp, sp, #0x30
+     1a4: a9027bfd     	stp	x29, x30, [sp, #0x20]
+     1a8: 910083fd     	add	x29, sp, #0x20
+     1ac: 910003e8     	mov	x8, sp
+     1b0: 52800120     	mov	w0, #0x9                ; =9
+     1b4: 94000000     	bl	0x1b4 <_call_big+0x14>
+		00000000000001b4:  ARM64_RELOC_BRANCH26	_extbig
+     1b8: f9400be0     	ldr	x0, [sp, #0x10]
+     1bc: a9427bfd     	ldp	x29, x30, [sp, #0x20]
+     1c0: 9100c3ff     	add	sp, sp, #0x30
+     1c4: d65f03c0     	ret

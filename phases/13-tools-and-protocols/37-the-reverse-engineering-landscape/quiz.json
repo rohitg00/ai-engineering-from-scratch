@@ -1,0 +1,78 @@
+{
+  "lesson": "37-the-reverse-engineering-landscape",
+  "title": "The Reverse Engineering Landscape: History, Tool Families, and How a Decompiler Is Built",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "radare2, rizin, angr, and Ghidra all open ledger-x86_64-O1.o and report four functions, yet grade sits at 0x08000050, 0x400010, and 0x100010 in three of them. What explains the three addresses?",
+      "options": [
+        "The object was compiled three times and the compiler placed grade differently each time",
+        "Each tool chooses its own base address for a relocatable object, so the same function keeps its .text offset 0x10 under three different bases",
+        "The symbol table stores three alternative addresses and each tool picks one of them",
+        "Two of the tools disassembled the wrong section and the addresses belong to .rodata"
+      ],
+      "correct": 1,
+      "explanation": "A relocatable object has no load address. radare2 and rizin map the file at 0x08000000, angr at 0x400000, Ghidra at 0x100000. Subtracting the .text base gives the same offset 0x10 in every tool."
+    },
+    {
+      "stage": "check",
+      "question": "On ledger-x86_64-O0.o the harness reports 3 blocks for grade in radare2, 8 in rizin and angr, and 9 in Ghidra. Which statement matches the captured evidence?",
+      "options": [
+        "angr found more code than Ghidra because it decodes the alignment padding as case blocks",
+        "radare2 decoded the case blocks but merged them into one block because they share a target",
+        "Ghidra split the switch block at the jmp rax to place its switchD label, rizin resolved five cases as a switch_op, and radare2 stopped at the indirect jump with 36 bytes never reached",
+        "The four counts come from four different functions and the harness mixed them up"
+      ],
+      "correct": 2,
+      "explanation": "The counts come from the same bytes. The difference is how far each tool follows jmp rax: radare2 stops, rizin and Ghidra read the table through its relocations, angr keeps the case blocks but routes the jump to an unresolvable node."
+    },
+    {
+      "stage": "check",
+      "question": "pypcode lifts sub rsp, 0x10 into nine operations that write CF, OF, SF, ZF, and PF, and pyvex lifts it into seven statements with PUT(cc_op) = 0x8 and no flag at all. What does the difference mean?",
+      "options": [
+        "P-code and VEX disagree about the semantics of subtraction on x86-64",
+        "P-code writes every flag eagerly; VEX stores a condition-code thunk (operation and operands) and computes a flag only when a later instruction reads it",
+        "pyvex lost the flags and its lift is incomplete for this instruction",
+        "The two lifts used different operand sizes, 64-bit in P-code and 32-bit in VEX"
+      ],
+      "correct": 1,
+      "explanation": "Both lifts are complete. SLEIGH writes the flags at the instruction. VEX records cc_op, cc_dep1, cc_dep2, cc_ndep and evaluates a flag lazily at the branch that uses it."
+    },
+    {
+      "stage": "check",
+      "question": "On sweep-trap.o llvm-objdump lists 8 instruction starts inside lookup and radare2, rizin, and Ghidra list 6. Where do the two extra starts come from?",
+      "options": [
+        "llvm-objdump prints the relocation entries as instructions and the other tools hide them",
+        "The linear sweep decodes the four table bytes 31 c0 90 48 as xorl, nop, and a REX prefix that swallows the real addl, so it gains starts at 0x10, 0x12, and 0x13 and loses the start at 0x14",
+        "The sweep counts the padding nop after plus_one as part of lookup",
+        "radare2, rizin, and Ghidra skipped two legitimate instructions because they stop at the first jmp"
+      ],
+      "correct": 1,
+      "explanation": "The harness reports extra starts 0x10, 0x12, 0x13 and a missing start at 0x14 for the sweep. The three graph builders leave 0x10 to 0x14 unclaimed, and the harness names that range as data inside a function."
+    },
+    {
+      "stage": "post",
+      "question": "Ghidra decompiles grade at -O1 to param_1 / 10 - 6 and angr decompiles the same bytes to (a0 * 1717986919) >> 0x22. Which pipeline stage produced the difference?",
+      "options": [
+        "The disassembler, because the two tools decoded different instructions at 0x13",
+        "The loader, because angr applied the relocations and Ghidra did not",
+        "Term rewriting in the data-flow stage: Ghidra's Rule pool folds the multiply-and-shift idiom back into a division, angr's simplifier leaves the arithmetic as lifted",
+        "The emitter, because angr prints constants in decimal and Ghidra in hexadecimal"
+      ],
+      "correct": 2,
+      "explanation": "Both tools decode the same imul by 0x66666667 and sar by 34. Ghidra's simplification loop rewrites that idiom into a division; angr's AIL simplification does not, so the lifted arithmetic reaches the emitter."
+    },
+    {
+      "stage": "post",
+      "question": "A teammate proposes to trust whichever tool reports the most basic blocks, because more blocks means more code was found. Which captured result argues against that rule?",
+      "options": [
+        "radare2 reports 3 blocks for grade at -O0 and is the only tool that is right",
+        "Ghidra reports 9 blocks for grade at -O0 where rizin reports 8 for the same edges, and angr adds a block with no symbol at every padding gap, so block count measures block boundaries and heuristics rather than code found",
+        "Every tool reports the same block count on every fixture, so the rule cannot be tested",
+        "llvm-objdump reports the most blocks and is a linear sweep"
+      ],
+      "correct": 1,
+      "explanation": "Ghidra's extra block is a label split at jmp rax, and angr's extra functions are alignment bytes. Agreement on instruction starts, edges, and byte accounting is the evidence; a single count is not."
+    }
+  ]
+}

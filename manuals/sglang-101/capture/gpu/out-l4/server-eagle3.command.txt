@@ -1,0 +1,1 @@
+SGLANG_ALLOW_OVERWRITE_LONGER_CONTEXT_LEN=1 sglang serve --model-path Qwen/Qwen3-8B --host 127.0.0.1 --port 30000 --enable-cache-report --enable-metrics --mem-fraction-static 0.85 --speculative-algorithm EAGLE3 --speculative-draft-model-path Tengyunw/qwen3_8b_eagle3 --speculative-num-steps 3 --speculative-eagle-topk 1 --speculative-num-draft-tokens 4

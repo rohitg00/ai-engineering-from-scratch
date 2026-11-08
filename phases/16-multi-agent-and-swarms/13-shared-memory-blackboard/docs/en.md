@@ -68,7 +68,7 @@ The problem is not shared state per se — it is shared state **without provenan
 
 1. **Attribute provenance on every write.** Every entry in shared state records who wrote it, when, under what prompt, and (if applicable) what source the agent cited. Downstream agents read with skepticism keyed to provenance.
 2. **Version writes; treat them as append-only.** A correction is a new entry that supersedes the old, not an in-place update. The audit trail is preserved.
-3. **Keep at least one agent that cannot write to shared state.** A read-only verifier agent samples entries, re-fetches sources, and flags inconsistencies. Because it cannot write to the pool, it cannot be poisoned by the pool.
+3. **Keep at least one agent that cannot write to shared state.** A read-only verifier agent samples entries, re-fetches sources, and flags inconsistencies. It still reads the pool, so it can be fooled by a bad entry, but it checks each entry against the original source and cannot write, so its verdicts never feed a poisoned fact back into shared state.
 
 ### Blackboard precedent (Hayes-Roth, 1985)
 

@@ -26,13 +26,13 @@ You will also see: IS (inception score, largely retired), KID, CMMD, ImageReward
 Heusel et al. (2017). Steps:
 
 1. Extract Inception-v3 features (2048-D) for N real images and N generated.
-2. Fit a Gaussian to each pool: compute mean `μ_r, μ_g` and covariance `Σ_r, Σ_g`.
-3. FID = `||μ_r - μ_g||² + Tr(Σ_r + Σ_g - 2 · (Σ_r · Σ_g)^0.5)`.
+2. Fit a Gaussian to each pool: compute mean $\mu_r, \mu_g$ and covariance $\Sigma_r, \Sigma_g$.
+3. $\text{FID} = \lVert \mu_r - \mu_g \rVert^2 + \mathop{\mathrm{Tr}}\left(\Sigma_r + \Sigma_g - 2 \cdot (\Sigma_r \cdot \Sigma_g)^{0.5}\right)$.
 
 Interpretation: Fréchet distance between two multivariate Gaussians in feature space. Lower = more similar distributions.
 
 Failure modes:
-- **Biased on small N.** FID is mean-squared over the feature distribution — small N under-estimates covariance, gives falsely low FID. Always use N ≥ 10,000.
+- **Biased on small N.** FID is mean-squared over the feature distribution — small N under-estimates covariance, gives falsely low FID. Always use $N \ge 10{,}000$.
 - **Inception-dependent.** Inception-v3 was trained on ImageNet. Domains far from ImageNet (faces, art, text images) produce meaningless FID. Use a domain-specific feature extractor.
 - **Gaming.** Overfitting to the Inception prior gives low FID without visual quality improvement. Beat it with CMMD (below).
 

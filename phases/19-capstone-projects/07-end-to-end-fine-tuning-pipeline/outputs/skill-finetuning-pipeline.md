@@ -7,7 +7,7 @@ lesson: 07
 tags: [capstone, fine-tuning, axolotl, trl, dpo, grpo, vllm, eagle-3, mof]
 ---
 
-Given a base model (Llama 3.3 8B, Qwen3 14B, or Gemma 3 12B) and a task-specific dataset, build a single-command pipeline that produces a served endpoint and a reproducible model card.
+Given a base model (Llama 3.1 8B, Qwen3 14B, or Gemma 3 12B) and a task-specific dataset, build a single-command pipeline that produces a served endpoint and a reproducible model card.
 
 Build plan:
 
@@ -44,4 +44,4 @@ Refusal rules:
 - Refuse to fine-tune on data whose license forbids derivative models. MOF grades data licensing.
 - Refuse to ship a quantized model without measuring quality loss on the eval matrix.
 
-Output: a repo containing the pipeline orchestrator, the YAMLs for Llama 3.3 8B + one alternate base, the SFT and DPO W&B run logs, the quantized artifacts, the served endpoint, the three-benchmark eval matrix, the safety eval, the 2026 MOF model card, and a write-up on the three largest data-hygiene issues you caught and fixed.
+Output: a repo containing the pipeline orchestrator, the YAMLs for Llama 3.1 8B + one alternate base, the SFT and DPO W&B run logs, the quantized artifacts, the served endpoint, the three-benchmark eval matrix, the safety eval, the 2026 MOF model card, and a write-up on the three largest data-hygiene issues you caught and fixed.

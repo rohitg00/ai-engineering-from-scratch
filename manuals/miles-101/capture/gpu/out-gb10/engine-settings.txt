@@ -1,0 +1,9 @@
+Engine settings read from the server_args line of each run log on the DGX Spark, 2026-10-21.
+The top-p and top-k columns come from the run command. "not set" means the run did not pass the flag.
+
+run                    attention_backend  enable_deterministic_inference  sampling_backend  --rollout-top-p  --rollout-top-k
+e6a-base               flashinfer         False                           flashinfer        not set          not set
+e6b-det-triton         triton             True                            pytorch           not set          not set
+e6c-det-flashinfer     flashinfer         True                            pytorch           not set          not set
+e6d-det-triton-repeat  triton             True                            pytorch           not set          not set
+e11-topp-topk          flashinfer         False                           flashinfer        0.95             64

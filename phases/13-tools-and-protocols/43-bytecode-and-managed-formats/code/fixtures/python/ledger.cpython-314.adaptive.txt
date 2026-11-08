@@ -1,0 +1,66 @@
+ 10           RESUME_CHECK             0
+
+ 11           LOAD_FAST_BORROW         0 (score)
+              LOAD_SMALL_INT          10
+              BINARY_OP                2 (//)
+              STORE_FAST               1 (bucket)
+
+ 12           LOAD_FAST_BORROW         1 (bucket)
+              LOAD_SMALL_INT           9
+              COMPARE_OP_INT         188 (bool(>=))
+              POP_JUMP_IF_FALSE        3 (to L1)
+              NOT_TAKEN
+
+ 13           LOAD_SMALL_INT           4
+              RETURN_VALUE
+
+ 14   L1:     LOAD_FAST_BORROW         1 (bucket)
+              LOAD_SMALL_INT           8
+              COMPARE_OP_INT          88 (bool(==))
+              POP_JUMP_IF_FALSE        3 (to L2)
+              NOT_TAKEN
+
+ 15           LOAD_SMALL_INT           3
+              RETURN_VALUE
+
+ 16   L2:     LOAD_FAST_BORROW         1 (bucket)
+              LOAD_SMALL_INT           7
+              COMPARE_OP_INT          88 (bool(==))
+              POP_JUMP_IF_FALSE        3 (to L3)
+              NOT_TAKEN
+
+ 17           LOAD_SMALL_INT           2
+              RETURN_VALUE
+
+ 18   L3:     LOAD_FAST_BORROW         1 (bucket)
+              LOAD_SMALL_INT           6
+              COMPARE_OP_INT          88 (bool(==))
+              POP_JUMP_IF_FALSE        3 (to L4)
+              NOT_TAKEN
+
+ 19           LOAD_SMALL_INT           1
+              RETURN_VALUE
+
+ 20   L4:     LOAD_SMALL_INT           0
+              RETURN_VALUE
+
+ 23           RESUME_CHECK             0
+
+ 24           LOAD_SMALL_INT           0
+              STORE_FAST               1 (s)
+
+ 25           LOAD_FAST_BORROW         0 (values)
+              GET_ITER
+      L1:     FOR_ITER_LIST           11 (to L2)
+              STORE_FAST               2 (v)
+
+ 26           LOAD_FAST_BORROW_LOAD_FAST_BORROW 18 (s, v)
+              BINARY_OP_ADD_INT       13 (+=)
+              STORE_FAST               1 (s)
+              JUMP_BACKWARD_NO_JIT    13 (to L1)
+
+ 25   L2:     END_FOR
+              POP_ITER
+
+ 27           LOAD_FAST_BORROW         1 (s)
+              RETURN_VALUE

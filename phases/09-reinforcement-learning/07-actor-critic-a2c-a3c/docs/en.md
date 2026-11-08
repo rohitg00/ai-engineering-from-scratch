@@ -1,6 +1,6 @@
 # Actor-Critic — A2C and A3C
 
-> REINFORCE is noisy. Add a critic that learns `V̂(s)`, subtract it from the return, and you get an advantage that has the same expectation but far lower variance. That is actor-critic. A2C runs it synchronously; A3C runs it across threads. Both are the mental model for every modern deep-RL method.
+> REINFORCE is noisy. Add a critic that learns $\hat{V}(s)$, subtract it from the return, and you get an advantage that has the same expectation but far lower variance. That is actor-critic. A2C runs it synchronously; A3C runs it across threads. Both are the mental model for every modern deep-RL method.
 
 **Type:** Build
 **Languages:** Python
@@ -9,11 +9,13 @@
 
 ## The Problem
 
-Vanilla REINFORCE works, but its variance is terrible. Monte Carlo returns `G_t` can swing over a factor of 10 between episodes. Multiplying that noise by `∇ log π` and averaging produces a gradient estimator that takes thousands of episodes to move the policy the same distance you could move it with far fewer DQN updates.
+Vanilla REINFORCE works, but its variance is terrible. Monte Carlo returns $G_t$ can swing over a factor of 10 between episodes. Multiplying that noise by $\nabla \log \pi$ and averaging produces a gradient estimator that takes thousands of episodes to move the policy the same distance you could move it with far fewer DQN updates.
 
-The variance comes from using raw returns. If you subtract a baseline `b(s_t)` — any function of state, including a learned value — the expectation is unchanged and the variance drops. The best tractable baseline is `V̂(s_t)`. Now the quantity multiplying `∇ log π` is the *advantage*:
+The variance comes from using raw returns. If you subtract a baseline $b(s_t)$ — any function of state, including a learned value — the expectation is unchanged and the variance drops. The best tractable baseline is $\hat{V}(s_t)$. Now the quantity multiplying $\nabla \log \pi$ is the *advantage*:
 
-`A(s, a) = G - V̂(s)`
+```math
+A(s, a) = G - \hat{V}(s)
+```
 
 An action is good if it produced above-average return; bad if below. REINFORCE with a learned critic is *actor-critic*. The critic gives the actor a low-variance teacher. This is every deep-policy method after 2015 (A2C, A3C, PPO, SAC, IMPALA).
 
@@ -23,33 +25,39 @@ An action is good if it produced above-average return; bad if below. REINFORCE w
 
 **Two networks, one shared loss:**
 
-- **Actor** `π_θ(a | s)`: the policy. Sampled to act. Trained with policy gradient.
-- **Critic** `V_φ(s)`: estimates expected return from state. Trained to minimize `(V_φ(s) - target)²`.
+- **Actor** $\pi_\theta(a \mid s)$: the policy. Sampled to act. Trained with policy gradient.
+- **Critic** $V_\phi(s)$: estimates expected return from state. Trained to minimize $(V_\phi(s) - \text{target})^2$.
 
 **The advantage.** Two standard forms:
 
-- *MC advantage:* `A_t = G_t - V_φ(s_t)`. Unbiased, higher variance.
-- *TD advantage:* `A_t = r_{t+1} + γ V_φ(s_{t+1}) - V_φ(s_t)`. Biased (uses `V_φ`), far lower variance. Also called the *TD residual* `δ_t`.
+- *MC advantage:* $A_t = G_t - V_\phi(s_t)$. Unbiased, higher variance.
+- *TD advantage:* $A_t = r_{t+1} + \gamma V_\phi(s_{t+1}) - V_\phi(s_t)$. Biased (uses $V_\phi$), far lower variance. Also called the *TD residual* $\delta_t$.
 
 **n-step advantage.** Interpolate between the two:
 
-`A_t^{(n)} = r_{t+1} + γ r_{t+2} + … + γ^{n-1} r_{t+n} + γ^n V_φ(s_{t+n}) - V_φ(s_t)`
+```math
+A_t^{(n)} = r_{t+1} + \gamma r_{t+2} + \ldots + \gamma^{n-1} r_{t+n} + \gamma^n V_\phi(s_{t+n}) - V_\phi(s_t)
+```
 
-`n = 1` is pure TD. `n = ∞` is MC. Most implementations use `n = 5` for Atari, `n = 2048` for PPO on MuJoCo.
+$n = 1$ is pure TD. $n = \infty$ is MC. Most implementations use $n = 5$ for Atari, $n = 2048$ for PPO on MuJoCo.
 
 **Generalized Advantage Estimation (GAE).** Schulman et al. (2016) proposed an exponentially weighted average over all n-step advantages:
 
-`A_t^{GAE} = Σ_{l=0}^{∞} (γλ)^l δ_{t+l}`
+```math
+A_t^{\text{GAE}} = \sum_{l=0}^{\infty} (\gamma \lambda)^l \delta_{t+l}
+```
 
-with `λ ∈ [0, 1]`. `λ = 0` is TD (low variance, high bias). `λ = 1` is MC (high variance, unbiased). `λ = 0.95` is the 2026 default — tune until the bias/variance dial is where you want it.
+with $\lambda \in [0, 1]$. $\lambda = 0$ is TD (low variance, high bias). $\lambda = 1$ is MC (high variance, unbiased). $\lambda = 0.95$ is the 2026 default — tune until the bias/variance dial is where you want it.
 
-**A2C: synchronous advantage actor-critic.** Collect `T` steps across `N` parallel environments. Compute advantages for each step. Update actor and critic on the combined batch. Repeat. The simpler, more-scalable sibling of A3C.
+**A2C: synchronous advantage actor-critic.** Collect $T$ steps across $N$ parallel environments. Compute advantages for each step. Update actor and critic on the combined batch. Repeat. The simpler, more-scalable sibling of A3C.
 
-**A3C: asynchronous advantage actor-critic.** Mnih et al. (2016). Spawn `N` worker threads, each running an env. Each worker computes gradients locally on its own rollout, then asynchronously applies them to a shared parameter server. No replay buffer needed — workers decorrelate by running different trajectories. A3C proved you could train on CPUs at scale. In 2026, GPU-based A2C (batched parallel envs) dominates because GPUs want large batches.
+**A3C: asynchronous advantage actor-critic.** Mnih et al. (2016). Spawn $N$ worker threads, each running an env. Each worker computes gradients locally on its own rollout, then asynchronously applies them to a shared parameter server. No replay buffer needed — workers decorrelate by running different trajectories. A3C proved you could train on CPUs at scale. In 2026, GPU-based A2C (batched parallel envs) dominates because GPUs want large batches.
 
 **The combined loss.**
 
-`L(θ, φ) = -E[ A_t · log π_θ(a_t | s_t) ]  +  c_v · E[(V_φ(s_t) - G_t)²]  -  c_e · E[H(π_θ(·|s_t))]`
+```math
+L(\theta, \phi) = -\mathbb{E}[ A_t \cdot \log \pi_\theta(a_t \mid s_t) ] + c_v \cdot \mathbb{E}[(V_\phi(s_t) - G_t)^2] - c_e \cdot \mathbb{E}[H(\pi_\theta(\cdot \mid s_t))]
+```
 
 Three terms: policy-gradient loss, value regression, entropy bonus. `c_v ~ 0.5`, `c_e ~ 0.01` are canonical starting points.
 
@@ -61,7 +69,7 @@ actor-critic
 
 ### Step 1: a critic
 
-Linear critic `V_φ(s) = w · features(s)` updated with MSE:
+Linear critic $V_\phi(s) = w \cdot \text{features}(s)$ updated with MSE:
 
 ```python
 def critic_update(w, x, target, lr):
@@ -76,7 +84,7 @@ On a tabular env the critic converges in a few hundred episodes. On Atari, repla
 
 ### Step 2: n-step advantage
 
-Given a rollout of length `T` and a bootstrapped final `V(s_T)`:
+Given a rollout of length $T$ and a bootstrapped final $V(s_T)$:
 
 ```python
 def compute_advantages(rewards, values, gamma=0.99, lam=0.95, last_value=0.0):
@@ -91,7 +99,7 @@ def compute_advantages(rewards, values, gamma=0.99, lam=0.95, last_value=0.0):
     return advantages, returns
 ```
 
-`returns` is the critic target. `advantages` is what multiplies `∇ log π`.
+`returns` is the critic target. `advantages` is what multiplies $\nabla \log \pi$.
 
 ### Step 3: combined update
 
@@ -114,8 +122,8 @@ On-policy, one rollout per update, separate learning rates for actor and critic.
 
 ### Step 4: parallelization (A3C vs A2C)
 
-- **A3C:** spin up `N` threads. Each runs its own env and its own forward pass. Periodically push gradient updates to a shared master. No locks on the master — races are ok, they just add noise.
-- **A2C:** run `N` env instances in a single process, stack observations into a `[N, obs_dim]` batch, batched forward pass, batched backward pass. Higher GPU utilization, deterministic, easier to reason about. The default in 2026.
+- **A3C:** spin up $N$ threads. Each runs its own env and its own forward pass. Periodically push gradient updates to a shared master. No locks on the master — races are ok, they just add noise.
+- **A2C:** run $N$ env instances in a single process, stack observations into a `[N, obs_dim]` batch, batched forward pass, batched backward pass. Higher GPU utilization, deterministic, easier to reason about. The default in 2026.
 
 Our toy code is single-threaded for clarity; rewriting to batched A2C is three lines of numpy.
 
@@ -125,7 +133,7 @@ Our toy code is single-threaded for clarity; rewriting to batched A2C is three l
 - **Advantage normalization.** Normalize advantages to zero-mean/unit-std per batch. Stabilizes training massively at near-zero cost.
 - **Shared trunk.** Use a shared feature extractor for actor and critic on image inputs. Separate heads. The shared features free-ride on both losses.
 - **On-policy contract.** A2C reuses data for exactly one update. More and your gradient is biased (importance-sampling correction is what PPO adds).
-- **Entropy collapse.** Without `c_e > 0`, policy becomes near-deterministic in a few hundred updates and stops exploring.
+- **Entropy collapse.** Without $c_e > 0$, policy becomes near-deterministic in a few hundred updates and stops exploring.
 - **Reward scale.** Advantage magnitudes depend on reward scale. Normalize rewards (e.g., running-std dividing) for consistent gradient magnitudes across tasks.
 
 ## Use It
@@ -170,22 +178,22 @@ Refuse single-worker A2C on environments with horizon > 1000 (too on-policy, too
 
 ## Exercises
 
-1. **Easy.** Train actor-critic with MC advantage (`G_t - V(s_t)`) on 4×4 GridWorld. Compare sample efficiency to REINFORCE-with-running-mean-baseline from Lesson 06.
-2. **Medium.** Switch to TD-residual advantage (`r + γ V(s') - V(s)`). Measure variance of the advantage batches. By how much does it drop?
-3. **Hard.** Implement GAE(λ). Sweep `λ ∈ {0, 0.5, 0.9, 0.95, 1.0}`. Plot final return vs sample efficiency. Where is the bias/variance sweet spot for this task?
+1. **Easy.** Train actor-critic with MC advantage $(G_t - V(s_t))$ on 4×4 GridWorld. Compare sample efficiency to REINFORCE-with-running-mean-baseline from Lesson 06.
+2. **Medium.** Switch to TD-residual advantage $(r + \gamma V(s') - V(s))$. Measure variance of the advantage batches. By how much does it drop?
+3. **Hard.** Implement GAE(λ). Sweep $\lambda \in \lbrace 0, 0.5, 0.9, 0.95, 1.0 \rbrace$. Plot final return vs sample efficiency. Where is the bias/variance sweet spot for this task?
 
 ## Key Terms
 
 | Term | What people say | What it actually means |
 |------|-----------------|-----------------------|
-| Actor | "The policy net" | `π_θ(a\|s)`, updated by policy gradient. |
-| Critic | "The value net" | `V_φ(s)`, updated by MSE regression to returns / TD targets. |
-| Advantage | "How much better than average" | `A(s, a) = Q(s, a) - V(s)` or its estimators. Multiplier for `∇ log π`. |
-| TD residual | "δ" | `δ_t = r + γ V(s') - V(s)`; one-step advantage estimate. |
-| GAE | "The interpolation knob" | Exponentially weighted sum of n-step advantages, parameterized by `λ`. |
+| Actor | "The policy net" | $\pi_\theta(a \mid s)$, updated by policy gradient. |
+| Critic | "The value net" | $V_\phi(s)$, updated by MSE regression to returns / TD targets. |
+| Advantage | "How much better than average" | $A(s, a) = Q(s, a) - V(s)$ or its estimators. Multiplier for $\nabla \log \pi$. |
+| TD residual | "δ" | $\delta_t = r + \gamma V(s') - V(s)$; one-step advantage estimate. |
+| GAE | "The interpolation knob" | Exponentially weighted sum of n-step advantages, parameterized by $\lambda$. |
 | A2C | "Synchronous actor-critic" | Batched across envs; one gradient step per rollout. |
 | A3C | "Async actor-critic" | Worker threads push gradients to a shared param server. Original paper; less common in 2026. |
-| Bootstrap | "Use V at the horizon" | Truncate the rollout, add `γ^n V(s_{t+n})` to close the sum. |
+| Bootstrap | "Use V at the horizon" | Truncate the rollout, add $\gamma^n V(s_{t+n})$ to close the sum. |
 
 ## Further Reading
 

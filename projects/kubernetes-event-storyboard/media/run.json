@@ -1,0 +1,52 @@
+{
+  "title": "Kubernetes Event Storyboard | initialize and grade",
+  "recordedAt": "2026-10-09T14:35:21Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "kubernetes-event-storyboard",
+        "--init",
+        "./.project-validation/kubernetes-event-storyboard/recording-starter"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "workspace  ./.project-validation/kubernetes-event-storyboard/recording-starter\n  kept     cli.ts\n  kept     demo.py\n  kept     fixtures/rollout.json\n  kept     go.mod\n  kept     main.go\n  kept     main.ts\n  kept     STAGE-2.md\n  kept     STAGE-3.md\n  kept     STAGE-4.md\nnext: python3 scripts/project_test.py kubernetes-event-storyboard --stage 1 --path ./.project-validation/kubernetes-event-storyboard/recording-starter\n",
+      "durationMs": 37
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "kubernetes-event-storyboard",
+        "--stage",
+        "1",
+        "--path",
+        "./.project-validation/kubernetes-event-storyboard/recording-starter",
+        "--strict"
+      ],
+      "cwd": ".",
+      "exitCode": 1,
+      "output": "Kubernetes Event Storyboard: grading learner\n  FAIL stage 1: Parse event and workload snapshots (5 tests)\n       tests failed; rerun with --verbose\n",
+      "durationMs": 833
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "kubernetes-event-storyboard",
+        "--all",
+        "--solution",
+        "--strict",
+        "--report",
+        "./.project-validation/kubernetes-event-storyboard/solution-final.json"
+      ],
+      "cwd": ".",
+      "exitCode": 0,
+      "output": "Kubernetes Event Storyboard: grading solution\n  PASS stage 1: Parse event and workload snapshots (5 tests)\n  PASS stage 2: Group repetitions without losing timestamps (6 tests)\n  PASS stage 3: Connect evidence to workload revisions (5 tests)\n  PASS stage 4: Export a redacted assistant context pack (11 tests)\nreport: ./.project-validation/kubernetes-event-storyboard/solution-final.json\n",
+      "durationMs": 3220
+    }
+  ],
+  "pathNote": "Machine-specific repository and Python paths normalized; recorded results and timings preserved."
+}

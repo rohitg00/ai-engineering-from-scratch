@@ -1,0 +1,20 @@
+(lldb) target create "shapes-x86_64-O0-g.o"
+Current executable set to '/private/tmp/aiefs-re/phases/13-tools-and-protocols/41-recovering-data-and-types/code/fixtures/shapes-x86_64-O0-g.o' (x86_64).
+(lldb) image lookup -t Rect
+1 match found in /private/tmp/aiefs-re/phases/13-tools-and-protocols/41-recovering-data-and-types/code/fixtures/shapes-x86_64-O0-g.o:
+id = {0x000000bc}, name = "Rect", byte-size = 16, decl = shapes.cpp:9, compiler_type = "struct Rect : public Shape {
+    int w;
+    int h;
+    Rect(int, int);
+    virtual int area() const;
+    virtual const char *name() const;
+}"
+
+(lldb) image lookup -t Shape
+1 match found in /private/tmp/aiefs-re/phases/13-tools-and-protocols/41-recovering-data-and-types/code/fixtures/shapes-x86_64-O0-g.o:
+id = {0x00000131}, name = "Shape", byte-size = 8, decl = shapes.cpp:3, compiler_type = "struct Shape {
+    virtual ~Shape();
+    virtual int area() const;
+    virtual const char *name() const;
+}"
+

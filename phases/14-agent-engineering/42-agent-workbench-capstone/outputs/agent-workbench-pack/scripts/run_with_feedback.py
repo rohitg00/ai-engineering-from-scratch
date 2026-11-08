@@ -27,7 +27,7 @@ def run_with_feedback(command: list[str], agent_note: str = "", timeout_s: float
     started = time.time()
     record: dict[str, object] = {"command": command, "agent_note": agent_note, "started_at": started}
     try:
-        completed = subprocess.run(command, capture_output=True, text=True, timeout=timeout_s)
+        completed = subprocess.run(command, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout_s)
         out, cut_out = deterministic_tail(completed.stdout)
         err, cut_err = deterministic_tail(completed.stderr)
         record.update(
@@ -49,7 +49,7 @@ def run_with_feedback(command: list[str], agent_note: str = "", timeout_s: float
     except FileNotFoundError as exc:
         record.update(stdout_tail="", stderr_tail="", exit_code=None,
                       duration_ms=int((time.time() - started) * 1000), error=str(exc))
-    with RECORD.open("a") as fh:
+    with RECORD.open("a", encoding="utf-8") as fh:
         fh.write(json.dumps(record) + "\n")
     return record
 

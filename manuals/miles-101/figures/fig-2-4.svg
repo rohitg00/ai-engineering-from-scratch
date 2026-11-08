@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-2-4-title fig-2-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-4-title">A larger model costs more to offload than to update</title>
+  <desc id="fig-2-4-desc">Mean seconds of steps 2 and 3 of 4 short steps, after two warm-up steps. Weight update: 0.64 s for Qwen3-0.6B and 0.89 s for Qwen3-1.7B. Trainer offload: 1.14 and 2.92 s. Trainer onload: 0.81 and 1.44 s.</desc>
+  <line x1="60" y1="256" x2="620" y2="256" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="260" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="60" y1="156" x2="620" y2="156" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="160" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="60" y1="56" x2="620" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="60" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="60" y1="256" x2="620" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="56" x2="60" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds, mean of steps 2 and 3</text>
+  <rect x="80.67" y="223.77" width="52" height="32.23" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="106.67" y="217.77" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">0.64 s</text>
+  <text x="106.67" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">update 0.6B</text>
+  <rect x="174" y="211.5" width="52" height="44.5" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="200" y="205.5" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">0.89 s</text>
+  <text x="200" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">update 1.7B</text>
+  <rect x="267.33" y="198.96" width="52" height="57.04" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="293.33" y="192.96" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">1.14 s</text>
+  <text x="293.33" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">offload 0.6B</text>
+  <rect x="360.67" y="110.24" width="52" height="145.76" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="386.67" y="104.24" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">2.92 s</text>
+  <text x="386.67" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">offload 1.7B</text>
+  <rect x="454" y="215.34" width="52" height="40.66" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="480" y="209.34" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">0.81 s</text>
+  <text x="480" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">onload 0.6B</text>
+  <rect x="547.33" y="184.17" width="52" height="71.83" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="573.33" y="178.17" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">1.44 s</text>
+  <text x="573.33" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">onload 1.7B</text>
+  <path d="M60 18 H78" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="84" y="22" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">Qwen3-0.6B</text>
+  <path d="M168 18 H186" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="192" y="22" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">Qwen3-1.7B, 2.8 times the size</text>
+  <text x="60" y="314" font-size="12" class="m-serif">The update grew 1.4 times. Trainer offload and onload grew 2.6 and 1.8 times.</text>
+</svg>

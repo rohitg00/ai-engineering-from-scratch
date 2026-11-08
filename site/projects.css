@@ -58,7 +58,7 @@
   right: -0.02em;
   bottom: -0.22em;
   font-family: var(--font-display);
-  font-size: clamp(7rem, 22vw, 17rem);
+  font-size: clamp(min(7rem, 35vw), 22vw, 17rem);
   line-height: 1;
   color: var(--blueprint);
   opacity: 0.05;
@@ -343,6 +343,7 @@
 
 .pj-filter-group {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
 }
 
@@ -368,6 +369,45 @@
   gap: 8px;
   font-size: 0.7rem;
   color: var(--ink-soft);
+}
+
+.pj-role-pick {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.pj-role-pick select {
+  min-height: 36px;
+  max-width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--rule-soft);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.pj-role-pick select:focus-visible {
+  outline: 2px solid var(--blueprint);
+  outline-offset: 2px;
+}
+
+.pj-role-note {
+  margin: -6px 0 20px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.pj-role-note a {
+  color: var(--blueprint);
 }
 
 .pj-ladder {
@@ -542,6 +582,7 @@
   justify-content: center;
   gap: 14px;
   min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .pj-checklist {
@@ -564,6 +605,7 @@
 
 .pj-breadcrumb {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 16px;
   font-family: var(--font-mono);
@@ -596,12 +638,14 @@
 }
 
 .pj-skill {
+  min-width: 0;
   padding: 3px 9px;
   border: 1px solid var(--rule-soft);
   background: var(--bg);
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--ink-soft);
+  overflow-wrap: anywhere;
 }
 
 .pj-hero-side {
@@ -754,7 +798,7 @@
 
 .pj-doc h2 {
   margin: 36px 0 12px;
-  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-size: clamp(min(1.6rem, 8vw), 3vw, 2.1rem);
 }
 
 .pj-doc h3,

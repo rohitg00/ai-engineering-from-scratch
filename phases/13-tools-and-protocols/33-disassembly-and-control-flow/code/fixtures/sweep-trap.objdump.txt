@@ -1,0 +1,19 @@
+
+sweep-trap.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <lookup>:
+       0: 48 63 c7                     	movslq	%edi, %rax
+       3: 48 8d 0d 06 00 00 00         	leaq	0x6(%rip), %rcx         # 0x10 <lookup+0x10>
+       a: 0f b6 04 01                  	movzbl	(%rcx,%rax), %eax
+       e: eb 04                        	jmp	0x14 <lookup+0x14>
+      10: 31 c0                        	xorl	%eax, %eax
+      12: 90                           	nop
+      13: 48 83 c0 01                  	addq	$0x1, %rax
+      17: c3                           	retq
+      18: 0f 1f 84 00 00 00 00 00      	nopl	(%rax,%rax)
+
+0000000000000020 <plus_one>:
+      20: 8d 47 01                     	leal	0x1(%rdi), %eax
+      23: c3                           	retq

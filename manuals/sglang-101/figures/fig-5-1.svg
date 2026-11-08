@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 236" role="img" aria-labelledby="fig-5-1-title fig-5-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-1-title">Throughput stops at a cap of 8, latency does not</title>
+  <desc id="fig-5-1-desc">Two bar charts from the benchmark sweep. Left, output token throughput at caps 1, 8 and 32 is 175.15, 255.63 and 252.74 tokens per second. Right, median time to first token at the same caps is 162.98, 785.79 and 3917.54 milliseconds.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">OUTPUT TOK/S</text>
+  <text x="340" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">MEDIAN TTFT, MS</text>
+  <line x1="320" y1="8" x2="320" y2="228" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="56" font-size="11.5">cap 1</text>
+  <rect x="80" y="40" width="105.09" height="22" fill="var(--m-olive-ink, #515f26)"/>
+  <text x="191.09" y="56" font-size="11.5">175.15</text>
+  <text x="340" y="56" font-size="11.5">cap 1</text>
+  <rect x="400" y="40" width="6.93" height="22" fill="var(--m-olive-ink, #515f26)"/>
+  <text x="412.93" y="56" font-size="11.5">163</text>
+  <text x="20" y="112" font-size="11.5">cap 8</text>
+  <rect x="80" y="96" width="153.38" height="22" fill="var(--m-olive-ink, #515f26)"/>
+  <text x="239.38" y="112" font-size="11.5">255.63</text>
+  <text x="340" y="112" font-size="11.5">cap 8</text>
+  <rect x="400" y="96" width="33.4" height="22" fill="var(--m-olive-ink, #515f26)"/>
+  <text x="439.4" y="112" font-size="11.5">786</text>
+  <text x="20" y="168" font-size="11.5">cap 32</text>
+  <rect x="80" y="152" width="151.64" height="22" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="237.64" y="168" font-size="11.5">252.74</text>
+  <text x="340" y="168" font-size="11.5">cap 32</text>
+  <rect x="400" y="152" width="166.5" height="22" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="572.5" y="168" font-size="11.5">3918</text>
+  <text x="20" y="214" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">+46% from 1 to 8, -1% from 8 to 32</text>
+  <text x="340" y="214" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">x4.8 from 1 to 8, x5.0 from 8 to 32</text>
+</svg>

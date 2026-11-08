@@ -1,0 +1,7 @@
+static-arm64-O2.stripped [arm64]:
+    -function_starts:
+        0x100000500  
+        0x1000005F4  
+        0x10000060C  
+        0x100000648  
+        0x100000740  

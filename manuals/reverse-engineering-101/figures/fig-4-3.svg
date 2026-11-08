@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="fig-4-3-title fig-4-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-3-title">The thirteen procedures of ledger-arm64-O1</title>
+  <desc id="fig-4-3-desc">Thirteen rows sorted by address. Four external functions at EXTERNAL:0x1 to 0x4 from libSystem. Five internal functions in __text: _percent_change at 0x100000500 with 24 bytes, _grade at 0x100000518 with 60, _total at 0x100000554 with 52, _grade_label at 0x100000588 with 72, and entry at 0x1000005d0 with 368. Four thunks of 12 bytes each in __stubs from 0x100000740, each resolved to one external. The internal bodies add up to 576 bytes, the size of __text.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ADDRESS</text>
+  <text x="150" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">NAME</text>
+  <text x="330" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BODY</text>
+  <text x="410" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CLASSIFICATION</text>
+  <rect x="20" y="28" width="600" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="45" font-size="11">EXTERNAL:0x1</text>
+  <text x="150" y="45" font-size="11" font-weight="700">___stack_chk_fail</text>
+  <text x="410" y="45" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">external · libSystem.B.dylib</text>
+  <rect x="20" y="54" width="600" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="71" font-size="11">EXTERNAL:0x2</text>
+  <text x="150" y="71" font-size="11" font-weight="700">_atoi</text>
+  <text x="410" y="71" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">external · libSystem.B.dylib</text>
+  <rect x="20" y="80" width="600" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="97" font-size="11">EXTERNAL:0x3</text>
+  <text x="150" y="97" font-size="11" font-weight="700">_fwrite</text>
+  <text x="410" y="97" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">external · libSystem.B.dylib</text>
+  <rect x="20" y="106" width="600" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="123" font-size="11">EXTERNAL:0x4</text>
+  <text x="150" y="123" font-size="11" font-weight="700">_printf</text>
+  <text x="410" y="123" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">external · libSystem.B.dylib</text>
+  <rect x="20" y="132" width="600" height="26" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="149" font-size="11">0x100000500</text>
+  <text x="150" y="149" font-size="11" font-weight="700">_percent_change</text>
+  <text x="330" y="149" font-size="11">24 B</text>
+  <text x="410" y="149" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">body 0x500 to 0x517, ledger.c</text>
+  <rect x="20" y="158" width="600" height="26" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="175" font-size="11">0x100000518</text>
+  <text x="150" y="175" font-size="11" font-weight="700">_grade</text>
+  <text x="330" y="175" font-size="11">60 B</text>
+  <text x="410" y="175" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">body 0x518 to 0x553, ledger.c</text>
+  <rect x="20" y="184" width="600" height="26" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="201" font-size="11">0x100000554</text>
+  <text x="150" y="201" font-size="11" font-weight="700">_total</text>
+  <text x="330" y="201" font-size="11">52 B</text>
+  <text x="410" y="201" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">body 0x554 to 0x587, ledger.c</text>
+  <rect x="20" y="210" width="600" height="26" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="227" font-size="11">0x100000588</text>
+  <text x="150" y="227" font-size="11" font-weight="700">_grade_label</text>
+  <text x="330" y="227" font-size="11">72 B</text>
+  <text x="410" y="227" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">body 0x588 to 0x5cf, ledger.c</text>
+  <rect x="20" y="236" width="600" height="26" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="253" font-size="11">0x1000005d0</text>
+  <text x="150" y="253" font-size="11" font-weight="700">entry</text>
+  <text x="330" y="253" font-size="11">368 B</text>
+  <text x="410" y="253" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">body 0x5d0 to 0x73f · LC_MAIN</text>
+  <rect x="20" y="262" width="600" height="26" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="279" font-size="11">0x100000740</text>
+  <text x="150" y="279" font-size="11" font-weight="700">___stack_chk_fail</text>
+  <text x="330" y="279" font-size="11">12 B</text>
+  <text x="410" y="279" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">thunk to EXTERNAL:0x1 in __stubs</text>
+  <rect x="20" y="288" width="600" height="26" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="305" font-size="11">0x10000074c</text>
+  <text x="150" y="305" font-size="11" font-weight="700">_atoi</text>
+  <text x="330" y="305" font-size="11">12 B</text>
+  <text x="410" y="305" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">thunk to EXTERNAL:0x2 in __stubs</text>
+  <rect x="20" y="314" width="600" height="26" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="331" font-size="11">0x100000758</text>
+  <text x="150" y="331" font-size="11" font-weight="700">_fwrite</text>
+  <text x="330" y="331" font-size="11">12 B</text>
+  <text x="410" y="331" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">thunk to EXTERNAL:0x3 in __stubs</text>
+  <rect x="20" y="340" width="600" height="26" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-panel-edge, #e4e1d4)"/>
+  <text x="28" y="357" font-size="11">0x100000764</text>
+  <text x="150" y="357" font-size="11" font-weight="700">_printf</text>
+  <text x="330" y="357" font-size="11">12 B</text>
+  <text x="410" y="357" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">thunk to EXTERNAL:0x4 in __stubs</text>
+  <text x="20" y="390" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">internal bodies 24 + 60 + 52 + 72 + 368 = 576 bytes, the size of __text · stubs 4 × 12 = 48 bytes</text>
+</svg>

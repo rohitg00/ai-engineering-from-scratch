@@ -87,7 +87,7 @@ Output: three verdict reports, each saved next to the script.
 
 ## Production patterns in the wild
 
-Four patterns elevate the gate from "another lint job" to "the deciding edge."
+Five patterns elevate the gate from "another lint job" to "the deciding edge."
 
 **Defense-in-depth, not single gate.** Pre-commit hook → CI status check → pre-tool authz hook → pre-merge gate. Each layer is deterministic so a failure in one layer is caught by the next. microservices.io's March 2026 playbook is explicit: the pre-commit hook is non-bypassable because, unlike a model-side skill, it does not depend on the agent following instructions. The verification gate sits at the CI / pre-merge layer.
 

@@ -23,14 +23,13 @@ GPT-1 (2018), GPT-2 (2019), GPT-3 (2020), GPT-4 (2023), GPT-5 (2025), Claude, Ll
 
 ### The mask
 
-Given a sequence of length `N`, build an `N × N` matrix:
+Given a sequence of length $N$, build an $N \times N$ matrix:
 
-```
-M[i, j] = 0       if j <= i
-M[i, j] = -inf    if j > i
+```math
+M_{ij} = \begin{cases} 0 & \text{if } j \le i \\ -\infty & \text{if } j > i \end{cases}
 ```
 
-Add `M` to the raw attention scores before softmax. `exp(-inf) = 0`, so masked positions contribute zero weight. Each row of the attention matrix is a probability distribution over previous positions only.
+Add `M` to the raw attention scores before softmax. $\exp(-\infty) = 0$, so masked positions contribute zero weight. Each row of the attention matrix is a probability distribution over previous positions only.
 
 Implementation cost: one `torch.tril()` call. Time to compute: nanoseconds. Impact on the field: everything.
 
@@ -38,7 +37,7 @@ Implementation cost: one `torch.tril()` call. Time to compute: nanoseconds. Impa
 
 The mask is usually presented as a patch bolted onto attention. Run the derivation in the other direction and it stops being mysterious: attention is the third refinement of a prefix average, and the triangle is the loop bounds of that average, written as a matrix.
 
-**Stage 1 — prefix average.** The dumbest causal summary of a sequence: position `i` becomes the mean of positions `0…i`. As a loop, that is `out[i] = X[:i+1].mean(0)`. The same computation is one matrix multiply. Take a lower-triangular matrix of ones, divide each row by its count, multiply:
+**Stage 1 — prefix average.** The dumbest causal summary of a sequence: position $i$ becomes the mean of positions $0 \ldots i$. As a loop, that is `out[i] = X[:i+1].mean(0)`. The same computation is one matrix multiply. Take a lower-triangular matrix of ones, divide each row by its count, multiply:
 
 ```python
 import numpy as np
@@ -48,7 +47,7 @@ A = A / A.sum(axis=1, keepdims=True)
 out = A @ X
 ```
 
-Row `i` of `A` is `[1/(i+1), …, 1/(i+1), 0, …, 0]`. The zeros above the diagonal are the causality. Nothing about the future was masked out; the future was never in the sum.
+Row $i$ of $A$ is $[1/(i+1), \ldots, 1/(i+1), 0, \ldots, 0]$. The zeros above the diagonal are the causality. Nothing about the future was masked out; the future was never in the sum.
 
 **Stage 2 — learned weights.** A uniform average treats every past token as equally relevant. Replace the ones with a learned score matrix `S`. Now rows no longer sum to one by construction, so normalize each row with softmax instead of dividing by the count. Softmax never outputs an exact zero, which breaks causality — unless the future scores go in as `-inf`, because `exp(-inf) = 0`:
 
@@ -166,7 +165,7 @@ print(tok.decode(out[0]))
 
 Under the hood, `generate()` runs the forward pass, pulls the final-position logits, samples the next token, appends it, and repeats. Every production LLM inference stack (vLLM, TensorRT-LLM, llama.cpp, Ollama, MLX) implements the same loop with heavy optimization — batched prefill, continuous batching, KV cache paging, speculative decoding.
 
-**GPT vs BERT, one line each:** GPT predicts `P(x_t | x_{<t})`. BERT predicts `P(x_masked | x_unmasked)`. The loss determines whether the model can generate.
+**GPT vs BERT, one line each:** GPT predicts $P(x_t \mid x_{<t})$. BERT predicts $P(x_{\text{masked}} \mid x_{\text{unmasked}})$. The loss determines whether the model can generate.
 
 ## Ship It
 
@@ -186,8 +185,8 @@ See `outputs/skill-sampling-tuner.md`. The skill picks sampling parameters for a
 | Next-token prediction | "The loss" | Cross-entropy of the model's distribution against the true next token at every position. |
 | Autoregressive | "Generate one at a time" | Feed output back as input; parallelism only during training, not during generation. |
 | Logits | "Pre-softmax scores" | Raw output of the LM head before softmax; sampling happens on these. |
-| Temperature | "Creativity knob" | Divide logits by T; T→0 = greedy, T→∞ = uniform. |
-| Top-p | "Nucleus sampling" | Truncate distribution to smallest set summing to ≥p; sample from what remains. |
+| Temperature | "Creativity knob" | Divide logits by $T$; $T \to 0$ = greedy, $T \to \infty$ = uniform. |
+| Top-p | "Nucleus sampling" | Truncate distribution to smallest set summing to $\ge p$; sample from what remains. |
 | Min-p | "Better than top-p" | Keep tokens where `p ≥ min_p × max_p`; adapts cutoff to sharpness of distribution. |
 | Speculative decoding | "Draft + verify" | Cheap model proposes N tokens; big model verifies in parallel. |
 | Teacher forcing | "Training trick" | During training, feed the true previous token, not the model's prediction. Standard for every seq2seq LM. |

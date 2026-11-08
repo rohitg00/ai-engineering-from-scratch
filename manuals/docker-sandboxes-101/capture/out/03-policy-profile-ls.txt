@@ -1,0 +1,10 @@
+$ sbx policy profile ls
+No policy profiles found
+[exit 0]
+
+$ sbx policy profile ls --json
+{
+  "profiles": [],
+  "policy_rules_unavailable": false
+}
+[exit 0]

@@ -1,0 +1,2689 @@
+Usage: sglang serve <model-name-or-path> [additional-arguments]
+   or: sglang serve --model-path <model-name-or-path> [additional-arguments]
+
+The serving backend is detected from the model by default. Installed out-of-tree projects can add more backends.
+Optional override: --model-type {auto,llm,diffusion} (default: auto, fallback to LLM when no backend matches).
+Use `sglang serve --model-type BACKEND --help` for backend-specific help.
+
+--- Help for Standard Language Model Server ---
+usage: sglang serve [-h] --model-path MODEL_PATH
+                    [--tokenizer-path TOKENIZER_PATH]
+                    [--tokenizer-mode {auto,slow}]
+                    [--tokenizer-backend {huggingface,fastokens}]
+                    [--tokenizer-worker-num TOKENIZER_WORKER_NUM]
+                    [--detokenizer-worker-num DETOKENIZER_WORKER_NUM]
+                    [--skip-tokenizer-init]
+                    [--load-format {auto,pt,safetensors,instanttensor,npcache,dummy,sharded_state,presharded,gguf,expert_pack,bitsandbytes,mistral,layered,flash_rl,remote,remote_instance,fastsafetensors,private,runai_streamer}]
+                    [--model-loader-extra-config MODEL_LOADER_EXTRA_CONFIG]
+                    [--trust-remote-code] [--context-length CONTEXT_LENGTH]
+                    [--is-embedding] [--enable-multimodal]
+                    [--revision REVISION] [--model-impl MODEL_IMPL]
+                    [--model-config-parser MODEL_CONFIG_PARSER]
+                    [--json-model-override-args JSON_MODEL_OVERRIDE_ARGS]
+                    [--dtype {auto,half,float16,bfloat16,float,float32}]
+                    [--quantization {awq,fp8,mxfp8,gptq,gptq_marlin,awq_marlin,bitsandbytes,gguf,modelopt,modelopt_fp8,modelopt_fp4,nvfp4_online,modelopt_mixed,petit_nvfp4,w8a8_int8,w8a8_fp8,moe_wna16,w4afp8,mxfp4,auto-round,auto-round-int8,compressed-tensors,modelslim,mxfp_w4a8,quark,quark_int4fp8_moe,quark_mxfp4,mlx_q4,mlx_q8,unquant,humming}]
+                    [--quantization-param-path QUANTIZATION_PARAM_PATH]
+                    [--kv-cache-dtype {auto,fp8_e5m2,fp8_e4m3,mxfp8,bf16,bfloat16,nvfp4,fp4_mx_block16}]
+                    [--enable-fp32-lm-head] [--modelopt-quant MODELOPT_QUANT]
+                    [--modelopt-checkpoint-restore-path MODELOPT_CHECKPOINT_RESTORE_PATH]
+                    [--modelopt-checkpoint-save-path MODELOPT_CHECKPOINT_SAVE_PATH]
+                    [--modelopt-export-path MODELOPT_EXPORT_PATH]
+                    [--quantize-and-serve]
+                    [--rl-quant-profile RL_QUANT_PROFILE]
+                    [--enable-tf32-matmul]
+                    [--mem-fraction-static MEM_FRACTION_STATIC]
+                    [--max-running-requests MAX_RUNNING_REQUESTS]
+                    [--max-queued-requests MAX_QUEUED_REQUESTS]
+                    [--max-total-tokens MAX_TOTAL_TOKENS]
+                    [--chunked-prefill-size CHUNKED_PREFILL_SIZE]
+                    [--prefill-decode-interval PREFILL_DECODE_INTERVAL]
+                    [--enable-dynamic-chunking]
+                    [--max-prefill-tokens MAX_PREFILL_TOKENS]
+                    [--prefill-max-requests PREFILL_MAX_REQUESTS]
+                    [--schedule-policy {lpm,random,fcfs,dfs-weight,lof,priority,routing-key,hrrn,shortest-prefill-first}]
+                    [--enable-priority-scheduling]
+                    [--disable-priority-preemption]
+                    [--default-priority-value DEFAULT_PRIORITY_VALUE]
+                    [--abort-on-priority-when-disabled]
+                    [--schedule-low-priority-values-first]
+                    [--priority-scheduling-preemption-threshold PRIORITY_SCHEDULING_PREEMPTION_THRESHOLD]
+                    [--retraction-policy {length,priority}]
+                    [--schedule-conservativeness SCHEDULE_CONSERVATIVENESS]
+                    [--page-size PAGE_SIZE] [--c128-page-size C128_PAGE_SIZE]
+                    [--swa-full-tokens-ratio SWA_FULL_TOKENS_RATIO]
+                    [--disable-hybrid-swa-memory]
+                    [--radix-eviction-policy {lru,lfu,slru,priority,tlru}]
+                    [--radix-eviction-policy-config RADIX_EVICTION_POLICY_CONFIG]
+                    [--prefill-only-disable-kv-cache] [--disable-radix-cache]
+                    [--enable-page-major-kv-layout] [--enable-unified-memory]
+                    [--disable-chunked-prefix-cache]
+                    [--disable-overlap-schedule]
+                    [--num-continuous-decode-steps NUM_CONTINUOUS_DECODE_STEPS]
+                    [--scheduler-recv-interval SCHEDULER_RECV_INTERVAL]
+                    [--enable-mixed-chunk] [--nccl-port NCCL_PORT]
+                    [--dist-timeout DIST_TIMEOUT]
+                    [--dist-init-addr DIST_INIT_ADDR]
+                    [--gated-launch-port GATED_LAUNCH_PORT] [--nnodes NNODES]
+                    [--node-rank NODE_RANK] [--tp-size TP_SIZE]
+                    [--dcp-size DCP_SIZE] [--pp-size PP_SIZE]
+                    [--pp-max-micro-batch-size PP_MAX_MICRO_BATCH_SIZE]
+                    [--pp-async-batch-depth PP_ASYNC_BATCH_DEPTH]
+                    [--dp-size DP_SIZE] [--attn-dp-size ATTN_DP_SIZE]
+                    [--load-balance-method {auto,round_robin,follow_bootstrap_room,total_requests,total_tokens}]
+                    [--attn-cp-size ATTN_CP_SIZE] [--moe-dp-size MOE_DP_SIZE]
+                    [--dwdp-size DWDP_SIZE]
+                    [--dcp-comm-backend {ag_rs,a2a,fi_a2a}]
+                    [--dcp-replicate-q-proj | --no-dcp-replicate-q-proj]
+                    [--enable-prefill-cp] [--cp-strategy {zigzag,interleave}]
+                    [--enable-dsa-cache-layer-split]
+                    [--enable-cp-decode-attn-tp] [--enable-kv-cache-sharding]
+                    [--enable-dp-attention-local-control-broadcast]
+                    [--enable-dp-lm-head]
+                    [--enable-tp-lm-head-all-to-all | --no-enable-tp-lm-head-all-to-all]
+                    [--enable-attn-tp-input-scattered]
+                    [--enable-shared-experts-attn-tp]
+                    [--shared-experts-tp-size SHARED_EXPERTS_TP_SIZE]
+                    [--enable-dense-mlp-attn-tp] [--enable-layernorm-sp]
+                    [--disable-attn-tp-gather] [--enable-p2p-check]
+                    [--device DEVICE] [--base-gpu-id BASE_GPU_ID]
+                    [--gpu-id-step GPU_ID_STEP] [--random-seed RANDOM_SEED]
+                    [--mlx-enable-sampling]
+                    [--watchdog-timeout WATCHDOG_TIMEOUT]
+                    [--soft-watchdog-timeout SOFT_WATCHDOG_TIMEOUT]
+                    [--sleep-on-idle] [--use-ray]
+                    [--numa-node NUMA_NODE [NUMA_NODE ...]]
+                    [--gc-threshold GC_THRESHOLD [GC_THRESHOLD ...]]
+                    [--host HOST] [--port PORT]
+                    [--fastapi-root-path FASTAPI_ROOT_PATH] [--smg-grpc-mode]
+                    [--grpc-mode] [--grpc-port GRPC_PORT] [--sidecar SIDECAR]
+                    [--sidecar-args SIDECAR_ARGS] [--skip-server-warmup]
+                    [--warmups WARMUPS] [--enable-http2]
+                    [--http2-max-concurrent-streams HTTP2_MAX_CONCURRENT_STREAMS]
+                    [--http2-initial-connection-window-size HTTP2_INITIAL_CONNECTION_WINDOW_SIZE]
+                    [--ssl-keyfile SSL_KEYFILE] [--ssl-certfile SSL_CERTFILE]
+                    [--ssl-ca-certs SSL_CA_CERTS]
+                    [--ssl-keyfile-password SSL_KEYFILE_PASSWORD]
+                    [--enable-ssl-refresh] [--api-key API_KEY]
+                    [--admin-api-key ADMIN_API_KEY]
+                    [--served-model-name SERVED_MODEL_NAME]
+                    [--weight-version WEIGHT_VERSION]
+                    [--chat-template CHAT_TEMPLATE]
+                    [--trust-request-chat-template]
+                    [--hf-chat-template-name HF_CHAT_TEMPLATE_NAME]
+                    [--completion-template COMPLETION_TEMPLATE]
+                    [--file-storage-path FILE_STORAGE_PATH]
+                    [--enable-cache-report] [--return-input-ids]
+                    [--return-output-ids]
+                    [--default-chat-template-kwargs DEFAULT_CHAT_TEMPLATE_KWARGS]
+                    [--strip-thinking-cache] [--enable-strict-thinking]
+                    [--tool-server TOOL_SERVER]
+                    [--sampling-defaults {openai,model}]
+                    [--asr-max-buffer-seconds ASR_MAX_BUFFER_SECONDS]
+                    [--asr-max-concurrent-sessions ASR_MAX_CONCURRENT_SESSIONS]
+                    [--preferred-sampling-params PREFERRED_SAMPLING_PARAMS]
+                    [--allow-auto-truncate]
+                    [--stream-interval STREAM_INTERVAL]
+                    [--batch-notify-size BATCH_NOTIFY_SIZE]
+                    [--stream-response-default-include-usage]
+                    [--incremental-streaming-output]
+                    [--enable-streaming-session]
+                    [--enable-session-radix-cache] [--log-level LOG_LEVEL]
+                    [--log-level-http LOG_LEVEL_HTTP] [--log-requests]
+                    [--log-requests-level {0,1,2,3}]
+                    [--log-requests-format {text,json}]
+                    [--log-requests-target LOG_REQUESTS_TARGET [LOG_REQUESTS_TARGET ...]]
+                    [--uvicorn-access-log-exclude-prefixes [UVICORN_ACCESS_LOG_EXCLUDE_PREFIXES ...]]
+                    [--crash-dump-folder CRASH_DUMP_FOLDER] [--show-time-cost]
+                    [--enable-metrics]
+                    [--smg-http-sidecar-port SMG_HTTP_SIDECAR_PORT]
+                    [--enable-mfu-metrics]
+                    [--enable-metrics-for-all-schedulers]
+                    [--load-snapshot-publish-interval LOAD_SNAPSHOT_PUBLISH_INTERVAL]
+                    [--tokenizer-metrics-custom-labels-header TOKENIZER_METRICS_CUSTOM_LABELS_HEADER]
+                    [--tokenizer-metrics-allowed-custom-labels TOKENIZER_METRICS_ALLOWED_CUSTOM_LABELS [TOKENIZER_METRICS_ALLOWED_CUSTOM_LABELS ...]]
+                    [--extra-metric-labels EXTRA_METRIC_LABELS]
+                    [--bucket-time-to-first-token BUCKET_TIME_TO_FIRST_TOKEN [BUCKET_TIME_TO_FIRST_TOKEN ...]]
+                    [--bucket-inter-token-latency BUCKET_INTER_TOKEN_LATENCY [BUCKET_INTER_TOKEN_LATENCY ...]]
+                    [--bucket-e2e-request-latency BUCKET_E2E_REQUEST_LATENCY [BUCKET_E2E_REQUEST_LATENCY ...]]
+                    [--prompt-tokens-buckets PROMPT_TOKENS_BUCKETS [PROMPT_TOKENS_BUCKETS ...]]
+                    [--generation-tokens-buckets GENERATION_TOKENS_BUCKETS [GENERATION_TOKENS_BUCKETS ...]]
+                    [--gc-warning-threshold-secs GC_WARNING_THRESHOLD_SECS]
+                    [--decode-log-interval DECODE_LOG_INTERVAL]
+                    [--enable-request-time-stats-logging]
+                    [--kv-events-config KV_EVENTS_CONFIG]
+                    [--load-publish-endpoint LOAD_PUBLISH_ENDPOINT]
+                    [--enable-forward-pass-metrics] [--enable-trace]
+                    [--trace-modules TRACE_MODULES]
+                    [--otlp-traces-endpoint OTLP_TRACES_ENDPOINT]
+                    [--export-metrics-to-file]
+                    [--export-metrics-to-file-dir EXPORT_METRICS_TO_FILE_DIR]
+                    [--constrained-json-whitespace-pattern CONSTRAINED_JSON_WHITESPACE_PATTERN]
+                    [--constrained-json-disable-any-whitespace]
+                    [--constrained-json-max-whitespace-cnt CONSTRAINED_JSON_MAX_WHITESPACE_CNT]
+                    [--attention-backend {triton,torch_native,flex_attention,dsa,nsa,qsa,dsv4,compressed,fa3,fa4,flashinfer,llada2_cfg_flashinfer,flashmla,trtllm_mla,cutedsl_mla,tokenspeed_mla,trtllm_mha,hpc_ops,minicpm_flashattn,minicpm_flashinfer,aiter,wave,intel_amx,ascend,intel_xpu}]
+                    [--decode-attention-backend {triton,torch_native,flex_attention,dsa,nsa,qsa,dsv4,compressed,fa3,fa4,flashinfer,llada2_cfg_flashinfer,flashmla,trtllm_mla,cutedsl_mla,tokenspeed_mla,trtllm_mha,hpc_ops,minicpm_flashattn,minicpm_flashinfer,aiter,wave,intel_amx,ascend,intel_xpu}]
+                    [--enable-lean-attention]
+                    [--prefill-attention-backend {triton,torch_native,flex_attention,dsa,nsa,qsa,dsv4,compressed,fa3,fa4,flashinfer,llada2_cfg_flashinfer,flashmla,trtllm_mla,cutedsl_mla,tokenspeed_mla,trtllm_mha,hpc_ops,minicpm_flashattn,minicpm_flashinfer,aiter,wave,intel_amx,ascend,intel_xpu}]
+                    [--grammar-backend {xgrammar,outlines,llguidance,none}]
+                    [--radix-cache-backend RADIX_CACHE_BACKEND]
+                    [--mm-attention-backend {sdpa,fa3,fa4,triton_attn,ascend_attn,aiter_attn,flashinfer_cudnn,amx_attn,xpu_attn}]
+                    [--fp8-gemm-backend {auto,deep_gemm,flashinfer_trtllm,flashinfer_cutlass,flashinfer_deepgemm,flashinfer_cutedsl,cutlass,triton,aiter}]
+                    [--fp4-gemm-backend {auto,flashinfer_cudnn,flashinfer_cutedsl,flashinfer_cutlass,flashinfer_trtllm,marlin}]
+                    [--bf16-gemm-backend {auto,cutedsl,gemv,torch}]
+                    [--dsa-prefill-backend {flashmla_sparse,flashmla_sparse_q8,flashmla_kv,flashmla_auto,flashinfer_sparse_mla,triton_sparse_mla,fa3,tilelang,triton,aiter,trtllm,intel_xpu}]
+                    [--dsv4-prefill-backend {auto,flashmla_sparse,flashmla_sparse_q8}]
+                    [--dsa-decode-backend {flashmla_sparse,flashmla_sparse_q8,flashmla_kv,flashmla_auto,flashinfer_sparse_mla,fa3,tilelang,triton,aiter,trtllm,intel_xpu}]
+                    [--dsa-paged-mqa-logits-backend {auto,deepgemm,cutedsl,aiter}]
+                    [--dsa-topk-backend {sgl-kernel,torch,flashinfer}]
+                    [--disable-flashinfer-autotune]
+                    [--flashinfer-autotune-skip-ops FLASHINFER_AUTOTUNE_SKIP_OPS [FLASHINFER_AUTOTUNE_SKIP_OPS ...]]
+                    [--mamba-backend {triton,flashinfer}]
+                    [--cuda-graph-config CUDA_GRAPH_CONFIG]
+                    [--cuda-graph-backend-decode {full,breakable,disabled}]
+                    [--cuda-graph-backend-prefill {full,breakable,disabled}]
+                    [--cuda-graph-max-bs-decode CUDA_GRAPH_MAX_BS_DECODE]
+                    [--cuda-graph-max-bs-prefill CUDA_GRAPH_MAX_BS_PREFILL]
+                    [--cuda-graph-bs-decode CUDA_GRAPH_BS_DECODE [CUDA_GRAPH_BS_DECODE ...]]
+                    [--cuda-graph-bs-prefill CUDA_GRAPH_BS_PREFILL [CUDA_GRAPH_BS_PREFILL ...]]
+                    [--cuda-graph-prefill-max-context CUDA_GRAPH_PREFILL_MAX_CONTEXT]
+                    [--disable-prefill-cuda-graph]
+                    [--disable-decode-cuda-graph]
+                    [--disable-cuda-graph-padding]
+                    [--enable-profile-cuda-graph] [--enable-cudagraph-gc]
+                    [--debug-cuda-graph] [--enable-layerwise-nvtx-marker]
+                    [--enable-nccl-nvls] [--enable-symm-mem]
+                    [--triton-attention-reduce-in-fp32]
+                    [--triton-attention-num-kv-splits TRITON_ATTENTION_NUM_KV_SPLITS]
+                    [--triton-attention-split-tile-size TRITON_ATTENTION_SPLIT_TILE_SIZE]
+                    [--flashinfer-mla-disable-ragged]
+                    [--enable-fused-qk-norm-rope]
+                    [--enable-precise-embedding-interpolation]
+                    [--enable-fused-moe-sum-all-reduce]
+                    [--enable-deepseek-v4-fp4-indexer]
+                    [--disable-custom-all-reduce] [--enable-mscclpp]
+                    [--enable-torch-symm-mem] [--enable-scattered-sconv]
+                    [--pre-warm-nccl]
+                    [--boundary-reduction {auto,ar,rs,rsv,rs+rsv}]
+                    [--enable-quant-communications]
+                    [--enforce-disable-flashinfer-allreduce-fusion]
+                    [--flashinfer-allreduce-fusion-backend {auto,trtllm,mnnvl,cutedsl}]
+                    [--enable-aiter-allreduce-fusion] [--enable-torch-compile]
+                    [--enable-torch-compile-debug-mode]
+                    [--torch-compile-max-bs TORCH_COMPILE_MAX_BS]
+                    [--speculative-algorithm SPECULATIVE_ALGORITHM]
+                    [--uno-lora-path UNO_LORA_PATH]
+                    [--speculative-draft-model-path SPECULATIVE_DRAFT_MODEL_PATH]
+                    [--speculative-draft-model-revision SPECULATIVE_DRAFT_MODEL_REVISION]
+                    [--speculative-draft-load-format {auto,pt,safetensors,instanttensor,npcache,dummy,sharded_state,presharded,gguf,expert_pack,bitsandbytes,mistral,layered,flash_rl,remote,remote_instance,fastsafetensors,private,runai_streamer}]
+                    [--speculative-num-steps SPECULATIVE_NUM_STEPS]
+                    [--speculative-eagle-topk SPECULATIVE_EAGLE_TOPK]
+                    [--speculative-num-draft-tokens SPECULATIVE_NUM_DRAFT_TOKENS]
+                    [--speculative-dflash-block-size SPECULATIVE_DFLASH_BLOCK_SIZE]
+                    [--speculative-dspark-block-size SPECULATIVE_DSPARK_BLOCK_SIZE]
+                    [--speculative-dspark-sps-table-path SPECULATIVE_DSPARK_SPS_TABLE_PATH]
+                    [--speculative-dspark-confidence-sts-path SPECULATIVE_DSPARK_CONFIDENCE_STS_PATH]
+                    [--speculative-dspark-align-verify-tokens-to-graph-tier]
+                    [--speculative-accept-threshold-single SPECULATIVE_ACCEPT_THRESHOLD_SINGLE]
+                    [--speculative-accept-threshold-acc SPECULATIVE_ACCEPT_THRESHOLD_ACC]
+                    [--speculative-use-rejection-sampling]
+                    [--speculative-token-map SPECULATIVE_TOKEN_MAP]
+                    [--speculative-attention-mode {prefill,decode}]
+                    [--speculative-draft-attention-backend SPECULATIVE_DRAFT_ATTENTION_BACKEND]
+                    [--speculative-dsa-topk-backend {sgl-kernel,torch,flashinfer}]
+                    [--speculative-draft-kv-cache-dtype {auto,fp8_e5m2,fp8_e4m3,bf16,bfloat16}]
+                    [--speculative-draft-window-size SPECULATIVE_DRAFT_WINDOW_SIZE]
+                    [--speculative-moe-runner-backend {auto,deep_gemm,triton,triton_kernel,flashinfer_trtllm,experimental_sgl_trtllm,flashinfer_trtllm_routed,flashinfer_cutlass,flashinfer_mxfp4,flashinfer_cutedsl,flashinfer_megamoe,cutlass,aiter,marlin,humming,experimental_sgl_marlin,hpc_ops,megamoe,intel_xpu}]
+                    [--speculative-moe-a2a-backend {none,deepep,mooncake,nixl,mori,ascend_fuseep,flashinfer,megamoe,deepep_v2,pplx,ascend_tp}]
+                    [--speculative-enable-w4a4-mxfp4-megamoe | --no-speculative-enable-w4a4-mxfp4-megamoe]
+                    [--speculative-draft-model-quantization {awq,fp8,mxfp8,gptq,gptq_marlin,awq_marlin,bitsandbytes,gguf,modelopt,modelopt_fp8,modelopt_fp4,nvfp4_online,modelopt_mixed,petit_nvfp4,w8a8_int8,w8a8_fp8,moe_wna16,w4afp8,mxfp4,auto-round,auto-round-int8,compressed-tensors,modelslim,mxfp_w4a8,quark,quark_int4fp8_moe,quark_mxfp4,mlx_q4,mlx_q8,unquant,humming}]
+                    [--speculative-skip-dp-mlp-sync]
+                    [--enable-multi-layer-eagle] [--speculative-adaptive]
+                    [--speculative-adaptive-config SPECULATIVE_ADAPTIVE_CONFIG]
+                    [--decoupled-spec-bind-endpoint DECOUPLED_SPEC_BIND_ENDPOINT]
+                    [--decoupled-spec-connect-endpoints DECOUPLED_SPEC_CONNECT_ENDPOINTS]
+                    [--decoupled-spec-rank DECOUPLED_SPEC_RANK]
+                    [--decoupled-spec-role {null,verifier,drafter}]
+                    [--spec-trace-dir SPEC_TRACE_DIR]
+                    [--speculative-ngram-min-bfs-breadth SPECULATIVE_NGRAM_MIN_BFS_BREADTH]
+                    [--speculative-ngram-max-bfs-breadth SPECULATIVE_NGRAM_MAX_BFS_BREADTH]
+                    [--speculative-ngram-match-type {BFS,PROB}]
+                    [--speculative-ngram-max-trie-depth SPECULATIVE_NGRAM_MAX_TRIE_DEPTH]
+                    [--speculative-ngram-capacity SPECULATIVE_NGRAM_CAPACITY]
+                    [--speculative-ngram-external-corpus-path SPECULATIVE_NGRAM_EXTERNAL_CORPUS_PATH]
+                    [--speculative-ngram-external-sam-budget SPECULATIVE_NGRAM_EXTERNAL_SAM_BUDGET]
+                    [--speculative-ngram-external-corpus-max-tokens SPECULATIVE_NGRAM_EXTERNAL_CORPUS_MAX_TOKENS]
+                    [--ep-size EP_SIZE]
+                    [--moe-a2a-backend {none,deepep,mooncake,nixl,mori,ascend_fuseep,flashinfer,megamoe,deepep_v2,pplx,ascend_tp,flashinfer_megamoe}]
+                    [--enable-w4a4-mxfp4-megamoe]
+                    [--deepep-v2-mode {direct,hybrid}]
+                    [--moe-runner-backend {auto,deep_gemm,triton,triton_kernel,flashinfer_trtllm,experimental_sgl_trtllm,flashinfer_trtllm_routed,flashinfer_cutlass,flashinfer_mxfp4,flashinfer_cutedsl,flashinfer_megamoe,cutlass,aiter,marlin,humming,experimental_sgl_marlin,hpc_ops,megamoe,intel_xpu}]
+                    [--flashinfer-mxfp4-moe-precision {default,bf16,fp8}]
+                    [--deepep-mode {auto,normal,low_latency}]
+                    [--fuseep-mode {1,2}]
+                    [--deepep-dispatcher-output-dtype {auto,bf16,fp8,int8,nvfp4}]
+                    [--ep-num-redundant-experts EP_NUM_REDUNDANT_EXPERTS]
+                    [--ep-dispatch-algorithm {static,dynamic,fake,lp}]
+                    [--init-expert-location INIT_EXPERT_LOCATION]
+                    [--enable-eplb] [--eplb-algorithm EPLB_ALGORITHM]
+                    [--eplb-rebalance-num-iterations EPLB_REBALANCE_NUM_ITERATIONS]
+                    [--eplb-rebalance-layers-per-chunk EPLB_REBALANCE_LAYERS_PER_CHUNK]
+                    [--eplb-min-rebalancing-utilization-threshold EPLB_MIN_REBALANCING_UTILIZATION_THRESHOLD]
+                    [--expert-distribution-recorder-mode {stat,stat_approx,per_pass,per_token}]
+                    [--expert-distribution-recorder-buffer-size EXPERT_DISTRIBUTION_RECORDER_BUFFER_SIZE]
+                    [--expert-balancedness-report-mode {off,server_log,prometheus,both}]
+                    [--deepep-config DEEPEP_CONFIG]
+                    [--moe-dense-tp-size MOE_DENSE_TP_SIZE]
+                    [--elastic-ep-backend {none,mooncake,nixl}]
+                    [--enable-elastic-expert-backup]
+                    [--mooncake-ib-device MOONCAKE_IB_DEVICE]
+                    [--enable-waterfill]
+                    [--elastic-ep-join-mode {scale,recover}]
+                    [--elastic-ep-join-rank-offset EP_JOIN_RANK_OFFSET]
+                    [--elastic-ep-initial-size ELASTIC_EP_INITIAL_SIZE]
+                    [--max-ep-size MAX_EP_SIZE]
+                    [--elastic-ep-scale-timeout ELASTIC_EP_SCALE_TIMEOUT]
+                    [--disable-flashinfer-cutlass-moe-fp4-allgather]
+                    [--disable-shared-experts-fusion]
+                    [--enforce-shared-experts-fusion]
+                    [--max-mamba-cache-size MAX_MAMBA_CACHE_SIZE]
+                    [--mamba-ssm-dtype {float32,bfloat16,float16}]
+                    [--mamba-max-states-per-path MAMBA_MAX_STATES_PER_PATH]
+                    [--enable-mamba-cache-stochastic-rounding]
+                    [--mamba-cache-philox-rounds MAMBA_CACHE_PHILOX_ROUNDS]
+                    [--mamba-full-memory-ratio MAMBA_FULL_MEMORY_RATIO]
+                    [--mamba-radix-cache-strategy {auto,no_buffer,extra_buffer,extra_buffer_lazy}]
+                    [--mamba-track-interval MAMBA_TRACK_INTERVAL]
+                    [--enable-int8-mamba-checkpoint]
+                    [--int8-mamba-ckpt-size INT8_MAMBA_CKPT_SIZE]
+                    [--linear-attn-backend {triton,cutedsl,flashinfer,flashkda,nvidia_kda,ptx_kda,helion,intel_xpu}]
+                    [--linear-attn-decode-backend {triton,cutedsl,flashinfer,flashkda,nvidia_kda,ptx_kda,helion,intel_xpu}]
+                    [--linear-attn-prefill-backend {triton,cutedsl,flashinfer,flashkda,nvidia_kda,ptx_kda,helion,intel_xpu}]
+                    [--linear-attn-verify-backend {triton,cutedsl,flashinfer,flashkda,nvidia_kda,ptx_kda,helion,intel_xpu,nv_cutedsl}]
+                    [--enable-linear-replayssm]
+                    [--linear-replayssm-cache-len LINEAR_REPLAYSSM_CACHE_LEN]
+                    [--enable-linear-replayssm-spec]
+                    [--enable-hierarchical-cache]
+                    [--hicache-host-memory-mode {cache,buffer_only}]
+                    [--hicache-ratio HICACHE_RATIO]
+                    [--hicache-size HICACHE_SIZE]
+                    [--hicache-write-policy {write_back,write_through,write_through_selective}]
+                    [--hicache-io-backend {direct,kernel,kernel_ascend}]
+                    [--hicache-mem-layout {layer_first,page_first,page_first_direct,page_first_kv_split,page_head}]
+                    [--hicache-storage-backend {file,sim,mooncake,npu_memcache,hf3fs,nixl,aibrix,dynamic,eic,simm,mori,shm,tensorcast,seaweedfs}]
+                    [--hicache-storage-prefetch-policy {best_effort,wait_complete,timeout}]
+                    [--hicache-storage-backend-extra-config HICACHE_STORAGE_BACKEND_EXTRA_CONFIG]
+                    [--hicache-storage-prefetch-retry-poll-interval HICACHE_STORAGE_PREFETCH_RETRY_POLL_INTERVAL]
+                    [--hicache-storage-prefetch-retry-max-attempts HICACHE_STORAGE_PREFETCH_RETRY_MAX_ATTEMPTS]
+                    [--enable-unified-cache-external-linker]
+                    [--unified-cache-external-linker-backend {mooncake,mori}]
+                    [--enable-hisparse] [--hisparse-config HISPARSE_CONFIG]
+                    [--enable-broadcast-mm-inputs-process]
+                    [--enable-prefix-mm-cache] [--mm-enable-dp-encoder]
+                    [--mm-process-config MM_PROCESS_CONFIG]
+                    [--mm-processor-worker-num MM_PROCESSOR_WORKER_NUM]
+                    [--mm-io-worker-num MM_IO_WORKER_NUM]
+                    [--allowed-media-domains ALLOWED_MEDIA_DOMAINS [ALLOWED_MEDIA_DOMAINS ...]]
+                    [--media-url-max-file-size-mb MEDIA_URL_MAX_FILE_SIZE_MB]
+                    [--mm-preprocess-cache-size-mb MM_PREPROCESS_CACHE_SIZE_MB]
+                    [--trust-mm-content-hashes]
+                    [--limit-mm-data-per-request LIMIT_MM_DATA_PER_REQUEST]
+                    [--enable-mm-global-cache]
+                    [--image-processor-backend {auto,torchvision,pil}]
+                    [--mm-global-cache-backend {mooncake}]
+                    [--disable-fast-image-processor]
+                    [--mm-feature-transport {cpu,cuda_ipc,cuda_vmm}]
+                    [--enable-lora] [--enable-lora-overlap-loading]
+                    [--max-lora-rank MAX_LORA_RANK]
+                    [--lora-target-modules [{q_proj,k_proj,v_proj,o_proj,q_a_proj,kv_a_proj_with_mqa,q_b_proj,kv_b_proj,wq_b,wk,weights_proj,gate_proj,up_proj,down_proj,qkv_proj,gate_up_proj,embed_tokens,lm_head,qkvr,wo_ud,all} ...]]
+                    [--lora-paths [LORA_PATHS ...]]
+                    [--max-loaded-loras MAX_LOADED_LORAS]
+                    [--max-loras-per-batch MAX_LORAS_PER_BATCH]
+                    [--lora-eviction-policy {lru,fifo}]
+                    [--lora-backend {triton,csgmv,ascend,torch_native}]
+                    [--max-lora-chunk-size {16,32,64,128}]
+                    [--experts-shared-outer-loras | --no-experts-shared-outer-loras]
+                    [--lora-use-virtual-experts]
+                    [--lora-strict-loading | --no-lora-strict-loading]
+                    [--lora-drain-wait-threshold LORA_DRAIN_WAIT_THRESHOLD]
+                    [--enable-two-batch-overlap]
+                    [--enable-single-batch-overlap]
+                    [--tbo-token-distribution-threshold TBO_TOKEN_DISTRIBUTION_THRESHOLD]
+                    [--cpu-offload-gb CPU_OFFLOAD_GB]
+                    [--offload-group-size OFFLOAD_GROUP_SIZE]
+                    [--offload-num-in-group OFFLOAD_NUM_IN_GROUP]
+                    [--offload-prefetch-step OFFLOAD_PREFETCH_STEP]
+                    [--offload-mode OFFLOAD_MODE] [--enable-lmcache]
+                    [--lmcache-config-file LMCACHE_CONFIG_FILE]
+                    [--enable-flexkv]
+                    [--flexkv-config-file FLEXKV_CONFIG_FILE]
+                    [--kt-weight-path KT_WEIGHT_PATH] [--kt-method KT_METHOD]
+                    [--kt-cpuinfer KT_CPUINFER]
+                    [--kt-threadpool-count KT_THREADPOOL_COUNT]
+                    [--kt-num-gpu-experts KT_NUM_GPU_EXPERTS]
+                    [--kt-max-deferred-experts-per-token KT_MAX_DEFERRED_EXPERTS_PER_TOKEN]
+                    [--dllm-algorithm DLLM_ALGORITHM]
+                    [--dllm-algorithm-config DLLM_ALGORITHM_CONFIG]
+                    [--dllm-fdfo | --no-dllm-fdfo]
+                    [--disaggregation-mode {null,prefill,decode}]
+                    [--disaggregation-transfer-backend {mooncake,nixl,ascend,fake,mori,mooncake_tcp}]
+                    [--disaggregation-bootstrap-port DISAGGREGATION_BOOTSTRAP_PORT]
+                    [--disaggregation-ib-device DISAGGREGATION_IB_DEVICE]
+                    [--disaggregation-decode-enable-radix-cache]
+                    [--disaggregation-decode-enable-offload-kvcache]
+                    [--disaggregation-decode-retraction-backup {cpu_tensor,host_pool,none}]
+                    [--num-reserved-decode-tokens NUM_RESERVED_DECODE_TOKENS]
+                    [--disaggregation-decode-extra-slots DISAGGREGATION_DECODE_EXTRA_SLOTS]
+                    [--disaggregation-decode-polling-interval DISAGGREGATION_DECODE_POLLING_INTERVAL]
+                    [--optimistic-prefill-attempts OPTIMISTIC_PREFILL_ATTEMPTS]
+                    [--encoder-only] [--language-only] [--language-model-only]
+                    [--encoder-transfer-backend {auto,zmq_to_scheduler,zmq_to_tokenizer,mooncake}]
+                    [--encoder-urls ENCODER_URLS [ENCODER_URLS ...]]
+                    [--encoder-bootstrap-port ENCODER_BOOTSTRAP_PORT]
+                    [--encoder-register-urls ENCODER_REGISTER_URLS [ENCODER_REGISTER_URLS ...]]
+                    [--enable-adaptive-dispatch-to-encoder] [--enable-pdmux]
+                    [--pdmux-config-path PDMUX_CONFIG_PATH]
+                    [--sm-group-num SM_GROUP_NUM]
+                    [--startup-weight-load-mode {serial,overlap}]
+                    [--custom-weight-loader [CUSTOM_WEIGHT_LOADER ...]]
+                    [--weight-loader-disable-mmap]
+                    [--weight-loader-prefetch-checkpoints]
+                    [--weight-loader-prefetch-num-threads WEIGHT_LOADER_PREFETCH_NUM_THREADS]
+                    [--weight-loader-drop-cache-after-load]
+                    [--remote-instance-weight-loader-seed-instance-ip REMOTE_INSTANCE_WEIGHT_LOADER_SEED_INSTANCE_IP]
+                    [--remote-instance-weight-loader-seed-instance-service-port REMOTE_INSTANCE_WEIGHT_LOADER_SEED_INSTANCE_SERVICE_PORT]
+                    [--remote-instance-weight-loader-send-weights-group-ports REMOTE_INSTANCE_WEIGHT_LOADER_SEND_WEIGHTS_GROUP_PORTS]
+                    [--remote-instance-weight-loader-backend {transfer_engine,nccl,modelexpress}]
+                    [--remote-instance-weight-loader-start-seed-via-transfer-engine]
+                    [--engine-info-bootstrap-port ENGINE_INFO_BOOTSTRAP_PORT]
+                    [--modelexpress-config MODELEXPRESS_CONFIG]
+                    [--download-dir DOWNLOAD_DIR]
+                    [--model-checksum [MODEL_CHECKSUM]]
+                    [--delete-ckpt-after-loading]
+                    [--decrypted-config-file DECRYPTED_CONFIG_FILE]
+                    [--decrypted-draft-config-file DECRYPTED_DRAFT_CONFIG_FILE]
+                    [--checkpoint-engine-wait-weights-before-ready]
+                    [--enable-prefill-delayer]
+                    [--prefill-delayer-max-delay-passes PREFILL_DELAYER_MAX_DELAY_PASSES]
+                    [--prefill-delayer-token-usage-low-watermark PREFILL_DELAYER_TOKEN_USAGE_LOW_WATERMARK]
+                    [--prefill-delayer-forward-passes-buckets PREFILL_DELAYER_FORWARD_PASSES_BUCKETS [PREFILL_DELAYER_FORWARD_PASSES_BUCKETS ...]]
+                    [--prefill-delayer-wait-seconds-buckets PREFILL_DELAYER_WAIT_SECONDS_BUCKETS [PREFILL_DELAYER_WAIT_SECONDS_BUCKETS ...]]
+                    [--prefill-delayer-queue-min-ratio PREFILL_DELAYER_QUEUE_MIN_RATIO]
+                    [--prefill-delayer-max-delay-ms PREFILL_DELAYER_MAX_DELAY_MS]
+                    [--min-free-slots-delay MIN_FREE_SLOTS_DELAY]
+                    [--enable-deterministic-inference]
+                    [--rl-on-policy-target {fsdp}]
+                    [--kv-canary {none,log,raise}]
+                    [--kv-canary-sweep-interval KV_CANARY_SWEEP_INTERVAL]
+                    [--enable-dynamic-batch-tokenizer]
+                    [--dynamic-batch-tokenizer-batch-size DYNAMIC_BATCH_TOKENIZER_BATCH_SIZE]
+                    [--dynamic-batch-tokenizer-batch-timeout DYNAMIC_BATCH_TOKENIZER_BATCH_TIMEOUT]
+                    [--enable-tokenizer-batch-encode]
+                    [--disable-tokenizer-batch-decode]
+                    [--debug-tensor-dump-output-folder DEBUG_TENSOR_DUMP_OUTPUT_FOLDER]
+                    [--debug-tensor-dump-layers DEBUG_TENSOR_DUMP_LAYERS [DEBUG_TENSOR_DUMP_LAYERS ...]]
+                    [--debug-tensor-dump-input-file DEBUG_TENSOR_DUMP_INPUT_FILE]
+                    [--enable-memory-saver] [--enable-weights-cpu-backup]
+                    [--enable-draft-weights-cpu-backup]
+                    [--enable-custom-logit-processor]
+                    [--enable-return-hidden-states]
+                    [--return-hidden-states-mode {last,full}]
+                    [--enable-return-routed-experts]
+                    [--enable-return-indexer-topk]
+                    [--sampling-mask-max-tokens SAMPLING_MASK_MAX_TOKENS]
+                    [--disable-outlines-disk-cache] [--enable-mis]
+                    [--weight-cache-mode {off,daemon,client}]
+                    [--weight-cache-socket WEIGHT_CACHE_SOCKET]
+                    [--weight-cache-timeout WEIGHT_CACHE_TIMEOUT]
+                    [--forward-hooks FORWARD_HOOKS]
+                    [--msprobe-dump-config MSPROBE_DUMP_CONFIG]
+                    [--ple-offload-embedding | --no-ple-offload-embedding]
+                    [--ple-offload-backend {pinned,file}]
+                    [--ple-offload-dir PLE_OFFLOAD_DIR]
+                    [--disaggregation-enable-kv-checksum]
+                    [--enable-pd-role-switch]
+                    [--speculative-domino-candidate-pool-size SPECULATIVE_DOMINO_CANDIDATE_POOL_SIZE]
+                    [--flashinfer-a2a-dispatch-type {auto,bf16,nvfp4,mxfp8}]
+                    [--cuda-graph-max-seq-len-prefill CUDA_GRAPH_MAX_SEQ_LEN_PREFILL]
+                    [--prefill-kv-cache-dequant-dtype {auto,nvfp4,fp8_e4m3}]
+                    [--dsv4-attn-backend {auto,flashmla,trtllm}]
+                    [--otlp-service-name OTLP_SERVICE_NAME]
+                    [--hicache-host-memory-fraction HICACHE_HOST_MEMORY_FRACTION]
+                    [--enable-linker-mla-dedup]
+                    [--swa-prefix-tails SWA_PREFIX_TAILS]
+                    [--enable-encoder-swa-bounded-replay]
+                    [--enable-decoder-swa-bounded-replay]
+                    [--enable-response-store]
+                    [--disaggregation-decode-host-receive-threshold DISAGGREGATION_DECODE_HOST_RECEIVE_THRESHOLD]
+                    [--qsa-indexer-dtype {auto,bfloat16,fp8_e4m3}]
+                    [--disaggregation-decode-allocation-policy {early,prefill_complete}]
+                    [--speculative-use-block-verification]
+                    [--speculative-draft-sink-size SPECULATIVE_DRAFT_SINK_SIZE]
+                    [--disable-aiter-allreduce-fusion-in-prefill]
+                    [--disable-aiter-allreduce-fusion-in-decode]
+                    [--dsa-triton-union {0,2,4}]
+                    [--enable-dsa-fused-indexer | --no-enable-dsa-fused-indexer]
+                    [--enable-watermark] [--watermark-config WATERMARK_CONFIG]
+                    [--grpc-response-timeout-secs GRPC_RESPONSE_TIMEOUT_SECS]
+                    [--sampling-backend {flashinfer,intel_xpu,pytorch,ascend}]
+                    [--reasoning-parser {auto,apertus2509,deepseek-r1,deepseek-v3,deepseek-v4,deepseek-v41,dots,glm45,ling3,hunyuan,gpt-oss,k2_horizon,kimi,kimi_k2,kimi_k3,mimo,muse,poolside_v1,qwen3,qwen3-thinking,minimax,minimax-append-think,minimax-m3,nanbeige,step3,step3p5,mistral,nemotron_3,granite_thinking_parser,interns1,gemma4,inkling,iquest_q1,cohere_command4,gigachat35}]
+                    [--tool-call-parser {auto,apertus2509,cohere_command4,deepseekv3,deepseekv31,deepseekv32,deepseekv4,deepseekv41,dots,glm,glm45,glm47,gpt-oss,k2_horizon,kimi_k2,kimi_k3,lfm2,ling3,llama3,mimo,minicpm5,mistral,muse,poolside_v1,pythonic,qwen,qwen25,qwen3_coder,spark25,step3,step3p5,minimax-m2,minimax-m3,nanbeige,trinity,interns1,hermes,hunyuan,gigachat3,gigachat35,gemma4,inkling,iquest_q1}]
+                    [--kv-canary-real-data {none,partial,all}]
+                    [--config CONFIG] [--disable-cuda-graph]
+                    [--enable-dp-attention]
+                    [--enable-flashinfer-allreduce-fusion]
+
+options:
+  -h, --help            show this help message and exit
+  --model-path MODEL_PATH, --model MODEL_PATH
+                        The path of the model weights. This can be a local
+                        folder or a Hugging Face repo ID.
+  --tokenizer-path TOKENIZER_PATH
+                        The path of the tokenizer.
+  --tokenizer-mode {auto,slow}
+                        Tokenizer mode. 'auto' will use the fast tokenizer if
+                        available, and 'slow' will always use the slow
+                        tokenizer.
+  --tokenizer-backend {huggingface,fastokens}
+                        Tokenizer backend. 'huggingface' uses the default
+                        HuggingFace tokenizers library, and 'fastokens' uses
+                        the fastokens library for faster tokenization.
+                        Requires the fastokens package to be installed.
+  --tokenizer-worker-num TOKENIZER_WORKER_NUM
+                        The worker num of the tokenizer manager.
+  --detokenizer-worker-num DETOKENIZER_WORKER_NUM
+                        The worker num of the detokenizer manager.
+  --skip-tokenizer-init
+                        If set, skip init tokenizer and pass input_ids in
+                        generate request.
+  --load-format {auto,pt,safetensors,instanttensor,npcache,dummy,sharded_state,presharded,gguf,expert_pack,bitsandbytes,mistral,layered,flash_rl,remote,remote_instance,fastsafetensors,private,runai_streamer}
+                        The format of the model weights to load. "auto" will
+                        try to load the weights in the safetensors format and
+                        fall back to the pytorch bin format if safetensors
+                        format is not available. "pt" will load the weights in
+                        the pytorch bin format. "safetensors" will load the
+                        weights in the safetensors format. "instanttensor"
+                        will load Safetensors weights using InstantTensor's
+                        high-performance distributed loader. "npcache" will
+                        load the weights in pytorch format and store a numpy
+                        cache to speed up the loading. "dummy" will initialize
+                        the weights with random values, which is mainly for
+                        profiling."gguf" will load the weights in the gguf
+                        format. "expert_pack" is experimental and loads only
+                        the validated DeepSeek-V4-Flash-0731 MXFP4 or text-
+                        only Kimi-K3 Q2_K GGUF model with routed experts
+                        stored in an SSD expert pack. "bitsandbytes" will load
+                        the weights using bitsandbytes quantization."layered"
+                        loads weights layer by layer so that one can quantize
+                        a layer before loading another to make the peak memory
+                        envelope smaller."presharded" performs a normal first-
+                        time load (with quantization), then dumps a per-
+                        rank/per-tensor sharded checkpoint with content
+                        deduplication into
+                        <model_path>/presharded/<parallelism+quant
+                        subfolder>/. Subsequent runs with the same
+                        parallelism+quantization config load directly from
+                        this presharded checkpoint and skip re-quantization.
+                        The dump directory must be on a shared filesystem
+                        across all ranks/nodes. Optional
+                        model_loader_extra_config roots: presharded_path
+                        (target) and draft_presharded_path (speculative
+                        draft); each replaces <model_path>/presharded and
+                        still gets a config subfolder appended. Use a writable
+                        path when model_path is read-only (e.g. HF cache
+                        mounts).
+  --model-loader-extra-config MODEL_LOADER_EXTRA_CONFIG
+                        Extra config for model loader. This will be passed to
+                        the model loader corresponding to the chosen
+                        load_format. For load_format=presharded, JSON may
+                        include presharded_path (target cache root),
+                        draft_presharded_path (draft cache root),
+                        max_file_bytes, hash_num_threads, and verify_on_load.
+  --trust-remote-code   Whether or not to allow for custom models defined on
+                        the Hub in their own modeling files.
+  --context-length CONTEXT_LENGTH
+                        The model's maximum context length. Defaults to None
+                        (will use the value from the model's config.json
+                        instead). Supports standard SI suffixes (k, M, G, T)
+                        and IEC suffixes (Ki, Mi, Gi, Ti). Suffixes are case-
+                        sensitive. Decimals are allowed for SI suffixes only.
+                        Examples: '1k' -> 1000 '1M' -> 1000000 '25.6k' ->
+                        25600 '1Ki' -> 1024 '1Mi' -> 1048576
+  --is-embedding        Whether to use a CausalLM as an embedding model.
+  --enable-multimodal   Enable the multimodal functionality for the served
+                        model. If the model being served is not multimodal,
+                        nothing will happen
+  --revision REVISION   The specific model version to use. It can be a branch
+                        name, a tag name, or a commit id. If unspecified, will
+                        use the default version.
+  --model-impl MODEL_IMPL
+                        Which implementation of the model to use. * "auto"
+                        will try to use the SGLang implementation if it exists
+                        and fall back to the Transformers implementation if no
+                        SGLang implementation is available. * "sglang" will
+                        use the SGLang model implementation. * "transformers"
+                        will use the Transformers model * "mindspore" will use
+                        the MindSpore model implementation.
+  --model-config-parser MODEL_CONFIG_PARSER
+                        Which model-config parser to use. "auto" picks
+                        "mistral" via the is_mistral_model name heuristic,
+                        else "hf" (AutoConfig over config.json). Plugins can
+                        register additional parsers via
+                        @register_model_config_parser.
+  --json-model-override-args JSON_MODEL_OVERRIDE_ARGS
+                        A dictionary in JSON string format used to override
+                        default model configurations.
+  --dtype {auto,half,float16,bfloat16,float,float32}
+                        Data type for model weights and activations. * "auto"
+                        will use FP16 precision for FP32 and FP16 models, and
+                        BF16 precision for BF16 models. * "half" for FP16.
+                        Recommended for AWQ quantization. * "float16" is the
+                        same as "half". * "bfloat16" for a balance between
+                        precision and range. * "float" is shorthand for FP32
+                        precision. * "float32" for FP32 precision.
+  --quantization {awq,fp8,mxfp8,gptq,gptq_marlin,awq_marlin,bitsandbytes,gguf,modelopt,modelopt_fp8,modelopt_fp4,nvfp4_online,modelopt_mixed,petit_nvfp4,w8a8_int8,w8a8_fp8,moe_wna16,w4afp8,mxfp4,auto-round,auto-round-int8,compressed-tensors,modelslim,mxfp_w4a8,quark,quark_int4fp8_moe,quark_mxfp4,mlx_q4,mlx_q8,unquant,humming}
+                        The quantization method.
+  --quantization-param-path QUANTIZATION_PARAM_PATH
+                        Path to the JSON file containing the KV cache scaling
+                        factors. This should generally be supplied, when KV
+                        cache dtype is FP8. Otherwise, KV cache scaling
+                        factors default to 1.0, which may cause accuracy
+                        issues.
+  --kv-cache-dtype {auto,fp8_e5m2,fp8_e4m3,mxfp8,bf16,bfloat16,nvfp4,fp4_mx_block16}
+                        Data type for kv cache storage. "auto" will use model
+                        data type. "bf16" or "bfloat16" for BF16 KV cache.
+                        "fp8_e5m2" and "fp8_e4m3" are supported for CUDA
+                        11.8+. "mxfp8" is supported by the FA4 backend.
+                        "nvfp4" selects the NVFP4 FP4 E2M1 KV cache recipe;
+                        "fp4_mx_block16" selects the MX-style block-size-16
+                        FP4 E2M1 KV cache recipe. Both require CUDA 12.8+ and
+                        PyTorch 2.8.0+
+  --enable-fp32-lm-head
+                        If set, the LM head outputs (logits) are in FP32.
+  --modelopt-quant MODELOPT_QUANT
+                        The ModelOpt quantization configuration. Supported
+                        values: 'fp8', 'int4_awq', 'w4a8_awq', 'nvfp4',
+                        'nvfp4_awq'. This requires the NVIDIA Model Optimizer
+                        library to be installed: pip install nvidia-modelopt
+  --modelopt-checkpoint-restore-path MODELOPT_CHECKPOINT_RESTORE_PATH
+                        Path to restore a previously saved ModelOpt quantized
+                        checkpoint. If provided, the quantization process will
+                        be skipped and the model will be loaded from this
+                        checkpoint.
+  --modelopt-checkpoint-save-path MODELOPT_CHECKPOINT_SAVE_PATH
+                        Path to save the ModelOpt quantized checkpoint after
+                        quantization. This allows reusing the quantized model
+                        in future runs.
+  --modelopt-export-path MODELOPT_EXPORT_PATH
+                        Path to export the quantized model in HuggingFace
+                        format after ModelOpt quantization. The exported model
+                        can then be used directly with SGLang for inference.
+                        If not provided, the model will not be exported.
+  --quantize-and-serve  Quantize the model with ModelOpt and immediately serve
+                        it without exporting. This is useful for development
+                        and prototyping. For production, it's recommended to
+                        use separate quantization and deployment steps.
+  --rl-quant-profile RL_QUANT_PROFILE
+                        Path to the FlashRL quantization profile. Required
+                        when using --load-format flash_rl.
+  --enable-tf32-matmul  Enable float32 matmuls to use TensorFloat32 precision
+                        for better performance (via
+                        torch.set_float32_matmul_precision). CUDA only.
+  --mem-fraction-static MEM_FRACTION_STATIC
+                        The fraction of the memory used for static allocation
+                        (model weights and KV cache memory pool). Use a
+                        smaller value if you see out-of-memory errors.
+  --max-running-requests MAX_RUNNING_REQUESTS
+                        The maximum number of running requests.
+  --max-queued-requests MAX_QUEUED_REQUESTS
+                        The maximum number of queued requests. This option is
+                        ignored when using disaggregation-mode.
+  --max-total-tokens MAX_TOTAL_TOKENS
+                        The maximum number of tokens in the memory pool. If
+                        not specified, it will be automatically calculated
+                        based on the memory usage fraction. This option is
+                        typically used for development and debugging purposes.
+                        Supports standard SI suffixes (k, M, G, T) and IEC
+                        suffixes (Ki, Mi, Gi, Ti). Suffixes are case-
+                        sensitive. Decimals are allowed for SI suffixes only.
+                        Examples: '1k' -> 1000 '1M' -> 1000000 '25.6k' ->
+                        25600 '1Ki' -> 1024 '1Mi' -> 1048576
+  --chunked-prefill-size CHUNKED_PREFILL_SIZE
+                        The maximum number of tokens in a chunk for the
+                        chunked prefill. Setting this to -1 means disabling
+                        chunked prefill.
+  --prefill-decode-interval PREFILL_DECODE_INTERVAL
+                        The number of decode rounds to run after a prefill
+                        batch before scheduling the next prefill. By default,
+                        this is disabled except for profiled Qwen3-VL serving
+                        configurations on Hopper. In data-parallel attention
+                        mode, the interval is synchronized across all DP
+                        ranks. Set to 0 to disable.
+  --enable-dynamic-chunking
+                        Enable dynamic chunk size adjustment for pipeline
+                        parallelism. When enabled, chunk sizes are dynamically
+                        calculated based on fitted function to maintain
+                        consistent execution time across chunks.
+  --max-prefill-tokens MAX_PREFILL_TOKENS
+                        The maximum number of tokens in a prefill batch. The
+                        real bound will be the maximum of this value and the
+                        model's maximum context length. Supports standard SI
+                        suffixes (k, M, G, T) and IEC suffixes (Ki, Mi, Gi,
+                        Ti). Suffixes are case-sensitive. Decimals are allowed
+                        for SI suffixes only. Examples: '1k' -> 1000 '1M' ->
+                        1000000 '25.6k' -> 25600 '1Ki' -> 1024 '1Mi' ->
+                        1048576
+  --prefill-max-requests PREFILL_MAX_REQUESTS
+                        The maximum number of requests in a prefill batch. If
+                        not specified, there is no limit.
+  --schedule-policy {lpm,random,fcfs,dfs-weight,lof,priority,routing-key,hrrn,shortest-prefill-first}
+                        The scheduling policy of the requests.
+  --enable-priority-scheduling
+                        Enable priority scheduling. Requests with higher
+                        priority integer values will be scheduled first by
+                        default.
+  --disable-priority-preemption
+                        Disable priority scheduling preemption.
+  --default-priority-value DEFAULT_PRIORITY_VALUE
+                        Default priority for requests without explicit
+                        priority.
+  --abort-on-priority-when-disabled
+                        If set, abort requests that specify a priority when
+                        priority scheduling is disabled.
+  --schedule-low-priority-values-first
+                        If specified with --enable-priority-scheduling, the
+                        scheduler will schedule requests with lower priority
+                        integer values first.
+  --priority-scheduling-preemption-threshold PRIORITY_SCHEDULING_PREEMPTION_THRESHOLD
+                        Minimum difference in priorities for an incoming
+                        request to have to preempt running request(s).
+  --retraction-policy {length,priority}
+                        The decode retraction policy to use when the KV cache
+                        is full. 'length' preserves the existing behavior and
+                        retracts short-output, long-input requests first.
+                        'priority' retracts lower-priority requests first,
+                        using the same priority direction as priority
+                        scheduling.
+  --schedule-conservativeness SCHEDULE_CONSERVATIVENESS
+                        How conservative the schedule policy is. A larger
+                        value means more conservative scheduling. Use a larger
+                        value if you see requests being retracted frequently.
+  --page-size PAGE_SIZE
+                        The number of tokens in a page.
+  --c128-page-size C128_PAGE_SIZE
+                        The physical page size of the NPU DSV4 C128 KV cache.
+                        Must be a positive multiple of 16.
+  --swa-full-tokens-ratio SWA_FULL_TOKENS_RATIO
+                        The ratio of SWA layer KV tokens / full layer KV
+                        tokens, regardless of the number of swa:full layers.
+                        It should be between 0 and 1. E.g. 0.5 means if each
+                        swa layer has 50 tokens, then each full layer has 100
+                        tokens.
+  --disable-hybrid-swa-memory
+                        Disable the hybrid SWA memory pool.
+  --radix-eviction-policy {lru,lfu,slru,priority,tlru}
+                        The eviction policy of radix trees. 'lru' stands for
+                        Least Recently Used, 'lfu' stands for Least Frequently
+                        Used, 'slru' stands for Segmented Least Recently Used,
+                        'priority' evicts lower-priority requests first, and
+                        'tlru' stands for Tail-Optimized LRU
+                        (arXiv:2510.15152), which evicts the part of a
+                        conversation that cannot affect tail TTFT before
+                        falling back to LRU. See https://docs.sglang.io/docs/a
+                        dvanced_features/radix_eviction_policy for what each
+                        policy optimizes for.
+  --radix-eviction-policy-config RADIX_EVICTION_POLICY_CONFIG
+                        Tuning parameters for --radix-eviction-policy, as a
+                        json object passed to the policy as keyword arguments.
+                        'slru' takes protected_threshold (int, default 2),
+                        e.g. '{"protected_threshold": 4}'; 'tlru' takes
+                        threshold and next_prompt_estimate (ints, tokens),
+                        e.g. '{"threshold": 4096, "next_prompt_estimate":
+                        512}'. An unrecognized key fails at startup, naming
+                        the key and the policy. See https://docs.sglang.io/doc
+                        s/advanced_features/radix_eviction_policy#policy-
+                        parameters for the full parameter list.
+  --prefill-only-disable-kv-cache
+                        Skip the physical KV cache allocation for embedding-
+                        mode prefill-only workloads. Currently only valid with
+                        --is-embedding, --chunked-prefill-size=-1, --disable-
+                        radix-cache, an FA prefill backend, and non-FP4 KV
+                        cache so the fa_skip_kv_cache path is active (no layer
+                        reads or writes the cache). Other prefill-only
+                        workloads such as scoring/MIS may benefit from this
+                        later once their attention paths stop using paged KV.
+                        Scheduler admission accounting is unchanged; per-layer
+                        K/V tensors are sized to (page_size, head_num,
+                        head_dim) placeholders so GPU memory is not wasted.
+  --disable-radix-cache
+                        Disable RadixAttention for prefix caching.
+  --enable-page-major-kv-layout
+                        Store the Mamba state and full/SWA KV caches as one
+                        entry per token slot, holding every layer's state, in
+                        a single page-granular buffer instead of one buffer
+                        per layer. Implied by --enable-unified-memory, and
+                        currently supported only with it.
+  --enable-unified-memory
+                        Replace the statically-partitioned hybrid-model pools
+                        (full-attn KV + SWA/Mamba state) with one byte buffer
+                        split dynamically between sub-pools. Requires stride-
+                        aware attention, linear-attention and Mamba backends;
+                        the allowed backends and the supported PD-
+                        disaggregation and speculative-decoding configurations
+                        are validated at startup.
+  --disable-chunked-prefix-cache
+                        Disable chunked prefix cache feature for deepseek,
+                        which should save overhead for short sequences.
+  --disable-overlap-schedule
+                        Disable the overlap scheduler, which overlaps the CPU
+                        scheduler with GPU model worker.
+  --num-continuous-decode-steps NUM_CONTINUOUS_DECODE_STEPS
+                        Run multiple continuous decoding steps to reduce
+                        scheduling overhead. This can potentially increase
+                        throughput but may also increase time-to-first-token
+                        latency. The default value is 1, meaning only run one
+                        decoding step at a time.
+  --scheduler-recv-interval SCHEDULER_RECV_INTERVAL
+                        The interval to poll requests in scheduler. Can be set
+                        to >1 to reduce the overhead of this.
+  --enable-mixed-chunk  Enabling mixing prefill and decode in a batch when
+                        using chunked prefill.
+  --nccl-port NCCL_PORT
+                        The port for NCCL distributed environment setup.
+                        Defaults to a random port.
+  --dist-timeout DIST_TIMEOUT
+                        Set timeout for torch.distributed initialization.
+  --dist-init-addr DIST_INIT_ADDR, --nccl-init-addr DIST_INIT_ADDR
+                        The host address for initializing distributed backend
+                        (e.g., `192.168.0.2:25000`).
+  --gated-launch-port GATED_LAUNCH_PORT
+                        The port of the gated launch control server. When set,
+                        every rank blocks right after the distributed
+                        environment is initialized, before any sizable GPU
+                        allocation, until `POST /gate/activate` is sent to
+                        this port on the host of the first rank. This lets an
+                        external orchestrator defer the memory hungry part of
+                        startup to a safe window. Defaults to None, which
+                        disables the gate.
+  --nnodes NNODES       The number of nodes.
+  --node-rank NODE_RANK
+                        The node rank.
+  --tp-size TP_SIZE, --tensor-parallel-size TP_SIZE
+                        The tensor parallelism size.
+  --dcp-size DCP_SIZE, --decode-context-parallel-size DCP_SIZE
+                        The decode context parallelism size.
+  --pp-size PP_SIZE, --pipeline-parallel-size PP_SIZE
+                        The pipeline parallelism size.
+  --pp-max-micro-batch-size PP_MAX_MICRO_BATCH_SIZE
+                        The maximum micro batch size in pipeline parallelism.
+  --pp-async-batch-depth PP_ASYNC_BATCH_DEPTH
+                        The async batch depth of pipeline parallelism.
+  --dp-size DP_SIZE, --data-parallel-size DP_SIZE
+                        The number of data-parallel replicas of the model.
+  --attn-dp-size ATTN_DP_SIZE, --attention-data-parallel-size ATTN_DP_SIZE
+                        The attention data parallelism size: the number of
+                        data-parallel attention groups inside the TP group,
+                        one scheduler each, while the FFN stays tensor
+                        parallel.
+  --load-balance-method {auto,round_robin,follow_bootstrap_room,total_requests,total_tokens}
+                        The load balancing strategy for data parallelism.
+  --attn-cp-size ATTN_CP_SIZE, --attention-context-parallel-size ATTN_CP_SIZE
+                        The attention context parallelism size.
+  --moe-dp-size MOE_DP_SIZE, --moe-data-parallel-size MOE_DP_SIZE
+                        The moe data parallelism size.
+  --dwdp-size DWDP_SIZE
+                        DWDP (Distributed Weight Data Parallelism) group size.
+                        When > 1, MoE prefill uses weight prefetch instead of
+                        token all-to-all. Must equal tp_size. Only supported
+                        with --disaggregation-mode null or prefill.
+  --dcp-comm-backend {ag_rs,a2a,fi_a2a}
+                        Communication backend for the decode context-parallel
+                        (DCP) attention reduction: 'ag_rs' (AllGather +
+                        ReduceScatter), 'a2a' (one All-to-All exchange of
+                        output+LSE, then a local LSE combine), or 'fi_a2a'
+                        (FlashInfer MNNVL All-to-All kernel; requires
+                        Blackwell and a DCP group within one MNNVL domain).
+                        Unset resolves to 'fi_a2a' where supported, else 'a2a'
+                        on CUDA/ROCm/XPU, else 'ag_rs'.
+  --dcp-replicate-q-proj, --no-dcp-replicate-q-proj
+                        For MLA decode context parallelism with the a2a/fi_a2a
+                        backend: replicate the Q projection so each DCP rank
+                        computes the full-head query locally (redundant
+                        projection compute), eliminating the per-layer head-
+                        dim all-gather of Q. Trades a small amount of extra
+                        GEMM for one fewer collective per layer. Use --no-dcp-
+                        replicate-q-proj to disable the model-specific
+                        default.
+  --enable-prefill-cp   Enable context parallelism for the prefill phase.
+                        Select the layout with --cp-strategy.
+  --cp-strategy {zigzag,interleave}
+                        Sharding strategy for prefill CP. 'zigzag' assigns
+                        each rank one early and one late sequence block;
+                        'interleave' assigns token indices modulo the CP size.
+  --enable-dsa-cache-layer-split
+                        Split DSA (DeepSeek Sparse Attention) GPU KV/indexer
+                        cache layers across context-parallel ranks to reduce
+                        per-rank KV memory. Currently only supported with the
+                        mooncake transfer backend (mooncake / mooncake_tcp);
+                        mori/nixl support will be added later by the
+                        community.
+  --enable-cp-decode-attn-tp
+                        Enable attention tensor-parallel weight slicing during
+                        decode under context parallel (cp_size>1). Slices the
+                        replicated attention linears to the local CP
+                        partition, eliminating redundant decode GEMMs.
+  --enable-kv-cache-sharding
+                        Shard at-rest KV cache storage at page granularity
+                        across the group that currently replicates it
+                        (attention-CP ranks for GQA models under prefill CP;
+                        attention-TP ranks for MLA models), multiplying the
+                        group's unique KV capacity. Prefill workers of PD
+                        disaggregation only.
+  --enable-dp-attention-local-control-broadcast
+                        With DP-attention, send control messages to every DP
+                        group leader and broadcast within attn_tp_group
+                        instead of the full tp_group. Eliminates a costly all-
+                        ranks gloo sync on every scheduler iteration.
+  --enable-dp-lm-head   Enable vocabulary parallel across the attention TP
+                        group to avoid all-gather across DP groups, optimizing
+                        performance under DP attention.
+  --enable-tp-lm-head-all-to-all, --no-enable-tp-lm-head-all-to-all
+                        Use all-to-all instead of TP all-gather followed by DP
+                        scatter for the TP-sharded LM head under DP attention.
+                        By default this is enabled only on decode-only PD
+                        nodes with pure DP attention (tp_size == attn_dp_size
+                        > 1 and attn_cp_size == 1), and disabled on prefill-
+                        only and colocated nodes. Pass --no-enable-tp-lm-head-
+                        all-to-all to opt out. The path is incompatible with
+                        --enable-dp-lm-head; batches without an equal padded
+                        row count fall back to the existing all-gather path.
+  --enable-attn-tp-input-scattered
+                        Allow input of attention to be scattered when only
+                        using tensor parallelism, to reduce the computational
+                        load of operations such as qkv latent.
+  --enable-shared-experts-attn-tp
+                        Shard shared expert weights across the attention TP
+                        group when using an expert-parallel all-to-all
+                        backend.
+  --shared-experts-tp-size SHARED_EXPERTS_TP_SIZE
+                        Shared-expert TP size for Kimi-K3 with an expert-
+                        parallel all-to-all backend. Must divide attention TP
+                        size. Overrides --enable-shared-experts-attn-tp when
+                        set; 1 replicates the weights.
+  --enable-dense-mlp-attn-tp
+                        Shard dense MLP weights across the attention TP group
+                        under DP attention.
+  --enable-layernorm-sp
+                        Enable Megatron-style sequence parallelism
+                        (arXiv:2205.05198) for the LayerNorm/residual regions
+                        under pure tensor parallelism: the row-parallel all-
+                        reduce becomes reduce-scatter + all-gather, so
+                        LayerNorm runs on sequence-sharded activations with no
+                        extra communication volume. Prefill only; Qwen3 dense;
+                        requires tp_size > 1 and NVLink/NVSwitch.
+  --disable-attn-tp-gather
+                        Disable scheduler-side attn_tp_gather (the upstream SP
+                        path that pads num_tokens to attn_tp_size and pre-
+                        allocates a gathered buffer). Use for models that
+                        manage SP scatter/gather at the model level (e.g.,
+                        perform their own all_gather/reduce_scatter inside
+                        attention) and do not consume the upstream
+                        gathered_buffer. Without this, the cuda graph runner
+                        pads num_tokens to attn_tp_size, which can cause
+                        kernel autotuners to select wrong-sized variants at
+                        small batches.
+  --enable-p2p-check    Enable P2P check for GPU access, otherwise the p2p
+                        access is allowed by default.
+  --device DEVICE       The device to use ('cuda', 'xpu', 'hpu', 'npu', 'cpu',
+                        'musa'). Defaults to auto-detection if not specified.
+  --base-gpu-id BASE_GPU_ID
+                        The base GPU ID to start allocating GPUs from. Useful
+                        when running multiple instances on the same machine.
+  --gpu-id-step GPU_ID_STEP
+                        The delta between consecutive GPU IDs that are used.
+                        For example, setting it to 2 will use GPU 0,2,4,...
+  --random-seed RANDOM_SEED
+                        The random seed.
+  --mlx-enable-sampling
+                        MLX backend only: sample decode tokens (temperature /
+                        top-k / top-p / min-p) instead of greedy argmax.
+                        Sampling runs inside the lazy MLX graph, so it works
+                        with the overlap scheduler; first tokens from
+                        prefill/extend are sampled too. Greedy requests keep
+                        exact argmax behavior. Also enables on the MLX path:
+                        grammar vocab masks and custom logit processors (these
+                        break decode chaining per step; custom processors run
+                        on pure-decode steps only), logit_bias, output
+                        logprobs (sampled token / top-k / token_ids; prompt
+                        input logprobs are not computed), NaN sanitization
+                        (SGLANG_SANITIZE_NAN_LOGITS), and per-request
+                        sampling_seed under --enable-deterministic-inference
+                        (deterministic within MLX only). Penalties are not
+                        applied.
+  --watchdog-timeout WATCHDOG_TIMEOUT
+                        Set watchdog timeout in seconds. If a forward batch
+                        takes longer than this, the server will crash to
+                        prevent hanging.
+  --soft-watchdog-timeout SOFT_WATCHDOG_TIMEOUT
+                        Set soft watchdog timeout in seconds. If a forward
+                        batch takes longer than this, the server will dump
+                        information for debugging.
+  --sleep-on-idle       Reduce CPU usage when sglang is idle.
+  --use-ray             Use Ray actors for scheduler process management.
+  --numa-node NUMA_NODE [NUMA_NODE ...]
+                        Sets the numa node for the subprocesses. i-th element
+                        corresponds to i-th subprocess. If unset, will be
+                        automatically detected on NUMA systems.
+  --gc-threshold GC_THRESHOLD [GC_THRESHOLD ...]
+                        Set the garbage collection thresholds (the collection
+                        frequency). Accepts 1 to 3 integers.
+  --host HOST           The host of the HTTP server.
+  --port PORT           The port of the HTTP server.
+  --fastapi-root-path FASTAPI_ROOT_PATH
+                        App is behind a path based routing proxy.
+  --smg-grpc-mode       Use the legacy SMG gRPC server (smg-grpc-servicer)
+                        instead of the HTTP server. Replaces the deprecated
+                        --grpc-mode.
+  --grpc-mode           (Deprecated, use --smg-grpc-mode) Legacy SMG gRPC
+                        server selector.
+  --grpc-port GRPC_PORT
+                        Port for the native gRPC server, started alongside
+                        HTTP. Setting this (or SGLANG_GRPC_PORT) enables the
+                        native gRPC server; it is off by default. Follower
+                        nodes expose GetServerInfo only. In legacy --smg-grpc-
+                        mode this is the SMG server port and defaults to
+                        --port + 10000.
+  --sidecar SIDECAR     Start a locally managed sidecar against the native
+                        gRPC server. The selected module must expose
+                        main(argv) and read the resolved native gRPC endpoint
+                        from SGLANG_GRPC_ENDPOINT. Requires --grpc-port or
+                        SGLANG_GRPC_PORT.
+  --sidecar-args SIDECAR_ARGS
+                        JSON array passed to the selected sidecar module's
+                        main(argv) function. --sidecar-shutdown-timeout
+                        SECONDS is consumed by SGLang.
+  --skip-server-warmup  If set, skip warmup.
+  --warmups WARMUPS     Specify custom warmup functions (csv) to run before
+                        server starts eg. --warmups=warmup_name1,warmup_name2
+                        will run the functions `warmup_name1` and
+                        `warmup_name2` specified in warmup.py before the
+                        server starts listening for requests
+  --enable-http2        Use Granian instead of Uvicorn as the ASGI server,
+                        enabling HTTP/1.1 and HTTP/2 auto-negotiation. Clients
+                        may use h2c (cleartext HTTP/2) or plain HTTP/1.1.
+                        Requires 'pip install sglang[http2]'.
+  --http2-max-concurrent-streams HTTP2_MAX_CONCURRENT_STREAMS
+                        Maximum number of concurrent streams advertised on
+                        each HTTP/2 connection (1 to 2^32 - 1). Only applies
+                        with --enable-http2.
+  --http2-initial-connection-window-size HTTP2_INITIAL_CONNECTION_WINDOW_SIZE
+                        Initial connection-level HTTP/2 receive window in
+                        bytes (1024 to 2^31 - 1). Only applies with --enable-
+                        http2.
+  --ssl-keyfile SSL_KEYFILE
+                        The file path to the SSL key file.
+  --ssl-certfile SSL_CERTFILE
+                        The file path to the SSL certificate file.
+  --ssl-ca-certs SSL_CA_CERTS
+                        The CA certificates file.
+  --ssl-keyfile-password SSL_KEYFILE_PASSWORD
+                        The password to decrypt the SSL keyfile.
+  --enable-ssl-refresh  Enable automatic SSL certificate hot-reloading when
+                        cert/key files change on disk. Requires --ssl-certfile
+                        and --ssl-keyfile.
+  --api-key API_KEY     Set API key of the server. It is also used in the
+                        OpenAI API compatible server.
+  --admin-api-key ADMIN_API_KEY
+                        Set admin API key for sensitive management endpoints
+                        (e.g. /hicache/storage-backend/clear). When set, admin
+                        endpoints require this key and do NOT accept --api-
+                        key.
+  --served-model-name SERVED_MODEL_NAME
+                        Override the model name returned by the v1/models
+                        endpoint in OpenAI API server.
+  --weight-version WEIGHT_VERSION
+                        Version identifier for the model weights. Defaults to
+                        'default' if not specified.
+  --chat-template CHAT_TEMPLATE
+                        The buliltin chat template name or the path of the
+                        chat template file. This is only used for OpenAI-
+                        compatible API server.
+  --trust-request-chat-template
+                        Allow a request to override the server chat template
+                        via its chat_template_kwargs. Off by default for
+                        safety.
+  --hf-chat-template-name HF_CHAT_TEMPLATE_NAME
+                        When the HuggingFace tokenizer has multiple chat
+                        templates (e.g., 'default', 'tool_use', 'rag'),
+                        specify which named template to use. If not set, the
+                        first available template is used.
+  --completion-template COMPLETION_TEMPLATE
+                        The buliltin completion template name or the path of
+                        the completion template file. This is only used for
+                        OpenAI-compatible API server. only for code completion
+                        currently.
+  --file-storage-path FILE_STORAGE_PATH
+                        The path of the file storage in backend.
+  --enable-cache-report
+                        Return number of cached tokens in
+                        usage.prompt_tokens_details for each openai request.
+  --return-input-ids    Return prompt (input) token ids on the response-level
+                        sglext extension for every chat completion request, as
+                        if return_input_ids_in_sglext were set on the request.
+  --return-output-ids   Return sampled output token ids on the response-level
+                        sglext extension for every chat completion request, as
+                        if return_output_ids_in_sglext were set on the
+                        request.
+  --default-chat-template-kwargs DEFAULT_CHAT_TEMPLATE_KWARGS
+                        Default chat template kwargs applied to every request
+                        when not overridden per-request. Keys must match what
+                        the model's chat template expects (e.g.
+                        enable_thinking, thinking, reasoning_effort). Per-
+                        request chat_template_kwargs takes precedence.
+  --strip-thinking-cache
+                        Skip caching reasoning-model output (thinking +
+                        answer) in the radix tree on finish; keep only the
+                        prompt prefix. Opt-in: changes cache contents.
+  --enable-strict-thinking
+                        Enable strict token filtering during the thinking
+                        phase. Blocks model-specific excluded tokens (e.g.,
+                        tool call markers) during reasoning. Requires a
+                        grammar backend that supports token filtering.
+  --tool-server TOOL_SERVER
+                        Either 'demo' or a comma-separated list of tool server
+                        urls to use for the model. If not specified, no tool
+                        server will be used.
+  --sampling-defaults {openai,model}
+                        Where to get default sampling parameters. 'openai'
+                        uses SGLang/OpenAI defaults (temperature=1.0,
+                        top_p=1.0, etc.). 'model' uses the model's
+                        generation_config.json to get the recommended sampling
+                        parameters if available. Default is 'model'.
+  --asr-max-buffer-seconds ASR_MAX_BUFFER_SECONDS
+                        Maximum seconds of PCM audio the streaming ASR
+                        WebSocket handler will accumulate before closing the
+                        session with a buffer_overflow error. Guards against
+                        OOM when a client streams audio faster than inference
+                        can consume it. Default 60s.
+  --asr-max-concurrent-sessions ASR_MAX_CONCURRENT_SESSIONS
+                        Maximum number of concurrent realtime ASR WebSocket
+                        sessions served by /v1/realtime. New connections
+                        beyond this cap are accepted, sent an
+                        error{code:too_many_sessions} frame, and closed.
+                        Default 32.
+  --preferred-sampling-params PREFERRED_SAMPLING_PARAMS
+                        json-formatted sampling settings that will be returned
+                        in /get_model_info
+  --allow-auto-truncate
+                        Allow automatically truncating requests that exceed
+                        the maximum input length instead of returning an
+                        error.
+  --stream-interval STREAM_INTERVAL
+                        The interval (or buffer size) for streaming in terms
+                        of the token length. A smaller value makes streaming
+                        smoother, while a larger value makes the throughput
+                        higher
+  --batch-notify-size BATCH_NOTIFY_SIZE
+                        Number of streaming notifications to batch before
+                        yielding to the event loop. Reduces asyncio wakeup
+                        overhead under high concurrency.
+  --stream-response-default-include-usage
+                        Include usage in every streaming response (even when
+                        stream_options is not specified).
+  --incremental-streaming-output
+                        Whether to output as a sequence of disjoint segments.
+  --enable-streaming-session
+                        Enable streaming session mode and StreamingSession
+                        wrapper.
+  --enable-session-radix-cache
+                        Track per-session references on UnifiedRadixCache KV:
+                        eviction consumes unreferenced entries before
+                        referenced ones, and closing a session only
+                        dereferences its KV.
+  --log-level LOG_LEVEL
+                        The logging level of all loggers.
+  --log-level-http LOG_LEVEL_HTTP
+                        The logging level of HTTP server. If not set, reuse
+                        --log-level by default.
+  --log-requests        Log metadata, inputs, outputs of all requests. The
+                        verbosity is decided by --log-requests-level
+  --log-requests-level {0,1,2,3}
+                        0: Log metadata (no sampling parameters). 1: Log
+                        metadata and sampling parameters. 2: Log metadata,
+                        sampling parameters and partial input/output. 3: Log
+                        every input/output.
+  --log-requests-format {text,json}
+                        Format for request logging: 'text' (human-readable) or
+                        'json' (structured)
+  --log-requests-target LOG_REQUESTS_TARGET [LOG_REQUESTS_TARGET ...]
+                        Target(s) for request logging: 'stdout' and/or
+                        directory path(s) for file output. Can specify
+                        multiple targets, e.g., '--log-requests-target stdout
+                        /my/path'.
+  --uvicorn-access-log-exclude-prefixes [UVICORN_ACCESS_LOG_EXCLUDE_PREFIXES ...]
+                        Exclude uvicorn access logs whose request path starts
+                        with any of these prefixes. Defaults to empty
+                        (disabled). Example: --uvicorn-access-log-exclude-
+                        prefixes /metrics /health
+  --crash-dump-folder CRASH_DUMP_FOLDER
+                        Folder path to dump requests from the last 5 min
+                        before a crash (if any). If not specified, crash
+                        dumping is disabled.
+  --show-time-cost      Show time cost of custom marks.
+  --enable-metrics      Enable log prometheus metrics.
+  --smg-http-sidecar-port SMG_HTTP_SIDECAR_PORT, --grpc-http-sidecar-port SMG_HTTP_SIDECAR_PORT
+                        Port for the HTTP sidecar server in legacy SMG gRPC
+                        mode (--smg-grpc-mode). Serves Prometheus metrics and
+                        profiling endpoints. Defaults to --port + 1. Not used
+                        in HTTP mode.
+  --enable-mfu-metrics  Enable estimated MFU-related prometheus metrics.
+  --enable-metrics-for-all-schedulers
+                        Enable --enable-metrics-for-all-schedulers when you
+                        want schedulers on all TP ranks (not just TP 0) to
+                        record request metrics separately. This is especially
+                        useful when dp_attention is enabled, as otherwise all
+                        metrics appear to come from TP 0.
+  --load-snapshot-publish-interval LOAD_SNAPSHOT_PUBLISH_INTERVAL
+                        Publish load snapshot to shared memory every N decode
+                        iterations. Prefill and idle always publish
+                        immediately.
+  --tokenizer-metrics-custom-labels-header TOKENIZER_METRICS_CUSTOM_LABELS_HEADER
+                        Specify the HTTP header for passing custom labels for
+                        tokenizer metrics.
+  --tokenizer-metrics-allowed-custom-labels TOKENIZER_METRICS_ALLOWED_CUSTOM_LABELS [TOKENIZER_METRICS_ALLOWED_CUSTOM_LABELS ...]
+                        The custom labels allowed for tokenizer metrics. The
+                        labels are specified via a dict in '--tokenizer-
+                        metrics-custom-labels-header' field in HTTP requests,
+                        e.g., {'label1': 'value1', 'label2': 'value2'} is
+                        allowed if '--tokenizer-metrics-allowed-custom-labels
+                        label1 label2' is set.
+  --extra-metric-labels EXTRA_METRIC_LABELS
+                        The custom labels for metrics. e.g. '{"label1":
+                        "value1", "label2": "value2"}'
+  --bucket-time-to-first-token BUCKET_TIME_TO_FIRST_TOKEN [BUCKET_TIME_TO_FIRST_TOKEN ...]
+                        The buckets of time to first token, specified as a
+                        list of floats.
+  --bucket-inter-token-latency BUCKET_INTER_TOKEN_LATENCY [BUCKET_INTER_TOKEN_LATENCY ...]
+                        The buckets of inter-token latency, specified as a
+                        list of floats.
+  --bucket-e2e-request-latency BUCKET_E2E_REQUEST_LATENCY [BUCKET_E2E_REQUEST_LATENCY ...]
+                        The buckets of end-to-end request latency, specified
+                        as a list of floats.
+  --prompt-tokens-buckets PROMPT_TOKENS_BUCKETS [PROMPT_TOKENS_BUCKETS ...]
+                        The buckets rule of prompt tokens. Supports 3 rule
+                        types: 'default' uses predefined buckets; 'tse
+                        <middle> <base> <count>' generates two sides
+                        exponential distributed buckets (e.g., 'tse 1000 2 8'
+                        generates buckets [984.0, 992.0, 996.0, 998.0, 1000.0,
+                        1002.0, 1004.0, 1008.0, 1016.0]).); 'custom <value1>
+                        <value2> ...' uses custom bucket values (e.g., 'custom
+                        10 50 100 500').
+  --generation-tokens-buckets GENERATION_TOKENS_BUCKETS [GENERATION_TOKENS_BUCKETS ...]
+                        The buckets rule for generation tokens histogram.
+                        Supports 3 rule types: 'default' uses predefined
+                        buckets; 'tse <middle> <base> <count>' generates two
+                        sides exponential distributed buckets (e.g., 'tse 1000
+                        2 8' generates buckets [984.0, 992.0, 996.0, 998.0,
+                        1000.0, 1002.0, 1004.0, 1008.0, 1016.0]).); 'custom
+                        <value1> <value2> ...' uses custom bucket values
+                        (e.g., 'custom 10 50 100 500').
+  --gc-warning-threshold-secs GC_WARNING_THRESHOLD_SECS
+                        The threshold for long GC warning. If a GC takes
+                        longer than this, a warning will be logged. Set to 0
+                        to disable.
+  --decode-log-interval DECODE_LOG_INTERVAL
+                        The log and metrics reporting interval (in decode
+                        iterations) for decode batches.
+  --enable-request-time-stats-logging
+                        Enable per request time stats logging
+  --kv-events-config KV_EVENTS_CONFIG
+                        Config in json format for NVIDIA dynamo KV event
+                        publishing. Publishing will be enabled if this flag is
+                        used. Runtime-load publishing for load-aware routers
+                        is a separate opt-in; see --load-publish-endpoint. Set
+                        replay_endpoint (e.g. tcp://*:5558) to let routers re-
+                        fetch dropped batches; /server_info advertises its
+                        port.
+  --load-publish-endpoint LOAD_PUBLISH_ENDPOINT
+                        Opt in to the runtime-load PUB socket that load-aware
+                        routers subscribe to. Off by default (unset or 'off').
+                        Use 'auto' to reserve the dp_size ports packed after
+                        the --kv-events-config range, or a wildcard-host TCP
+                        address (e.g. tcp://*:6000) to place it explicitly;
+                        rank r binds port+r and /server_info advertises the
+                        base under the kv_events block. Requires --kv-events-
+                        config to describe a publisher (routers discover the
+                        base through /server_info); startup fails if this is
+                        set without one, is not bindable, or overlaps the KV
+                        range. Note: 'auto' reserves 2*dp_size ports from the
+                        KV base — space co-hosted engines accordingly. The
+                        router-facing update cadence follows --load-snapshot-
+                        publish-interval (shared to avoid double-collecting
+                        the snapshot), so a large value there also staleness-
+                        caps this feed.
+  --enable-forward-pass-metrics
+                        Enable per-iteration forward pass metrics via ZMQ IPC.
+                        External consumers (e.g. Dynamo planner) subscribe to
+                        the IPC endpoint exposed in
+                        server_args.forward_pass_metrics_ipc_name.
+  --enable-trace        Enable opentelemetry trace
+  --trace-modules TRACE_MODULES
+                        Select the components to trace. Available options are
+                        'request' and 'mooncake'. Format: <module1
+                        name>,<module2 name>,...
+  --otlp-traces-endpoint OTLP_TRACES_ENDPOINT
+                        Config opentelemetry collector endpoint if --enable-
+                        trace is set. format: <ip>:<port>
+  --export-metrics-to-file
+                        Export performance metrics for each request to local
+                        file (e.g. for forwarding to external systems).
+  --export-metrics-to-file-dir EXPORT_METRICS_TO_FILE_DIR
+                        Directory path for writing performance metrics files
+                        (required when --export-metrics-to-file is enabled).
+  --constrained-json-whitespace-pattern CONSTRAINED_JSON_WHITESPACE_PATTERN
+                        (outlines and llguidance backends only) Regex pattern
+                        for syntactic whitespaces allowed in JSON constrained
+                        output. For example, to allow the model generate
+                        consecutive whitespaces, set the pattern to [ ]*
+  --constrained-json-disable-any-whitespace
+                        (xgrammar and llguidance backends only) Enforce
+                        compact representation in JSON constrained output.
+  --constrained-json-max-whitespace-cnt CONSTRAINED_JSON_MAX_WHITESPACE_CNT
+                        (xgrammar backend only) Max consecutive whitespace
+                        chars allowed in JSON constrained output. None means
+                        unbounded.
+  --attention-backend {triton,torch_native,flex_attention,dsa,nsa,qsa,dsv4,compressed,fa3,fa4,flashinfer,llada2_cfg_flashinfer,flashmla,trtllm_mla,cutedsl_mla,tokenspeed_mla,trtllm_mha,hpc_ops,minicpm_flashattn,minicpm_flashinfer,aiter,wave,intel_amx,ascend,intel_xpu}
+                        Choose the kernels for attention layers.
+  --decode-attention-backend {triton,torch_native,flex_attention,dsa,nsa,qsa,dsv4,compressed,fa3,fa4,flashinfer,llada2_cfg_flashinfer,flashmla,trtllm_mla,cutedsl_mla,tokenspeed_mla,trtllm_mha,hpc_ops,minicpm_flashattn,minicpm_flashinfer,aiter,wave,intel_amx,ascend,intel_xpu}
+                        Choose the kernels for decode attention layers (have
+                        priority over --attention-backend).
+  --enable-lean-attention
+                        Enable Lean (Work-Centric) Attention decode kernel for
+                        long-context serving. When None (default), uses auto-
+                        gate that activates Lean for long contexts and falls
+                        back to standard kernel for short contexts. Set to
+                        True to force enable, False to force disable.
+  --prefill-attention-backend {triton,torch_native,flex_attention,dsa,nsa,qsa,dsv4,compressed,fa3,fa4,flashinfer,llada2_cfg_flashinfer,flashmla,trtllm_mla,cutedsl_mla,tokenspeed_mla,trtllm_mha,hpc_ops,minicpm_flashattn,minicpm_flashinfer,aiter,wave,intel_amx,ascend,intel_xpu}
+                        Choose the kernels for prefill attention layers (have
+                        priority over --attention-backend).
+  --grammar-backend {xgrammar,outlines,llguidance,none}
+                        Choose the backend for grammar-guided decoding.
+  --radix-cache-backend RADIX_CACHE_BACKEND
+                        Name of a radix-cache backend previously registered
+                        via register_radix_cache_backend. Omit this flag to
+                        use the built-in default cache selection chain.
+  --mm-attention-backend {sdpa,fa3,fa4,triton_attn,ascend_attn,aiter_attn,flashinfer_cudnn,amx_attn,xpu_attn}
+                        Set multimodal attention backend.
+  --fp8-gemm-backend {auto,deep_gemm,flashinfer_trtllm,flashinfer_cutlass,flashinfer_deepgemm,flashinfer_cutedsl,cutlass,triton,aiter}
+                        Choose the runner backend for Blockwise FP8 GEMM
+                        operations. Options: 'auto' (default, auto-selects
+                        based on hardware; MXFP8 dense picks
+                        flashinfer_cutedsl on SM100/SM103 and FlashInfer
+                        CUTLASS on other supported Blackwell GPUs),
+                        'deep_gemm' (JIT-compiled; enabled by default on
+                        NVIDIA Hopper (SM90) and Blackwell (SM100) when
+                        DeepGEMM is installed), 'flashinfer_trtllm' (optimal
+                        for Blackwell and low-latency), 'flashinfer_cutlass'
+                        (FlashInfer CUTLASS groupwise FP8 GEMM),
+                        'flashinfer_cutedsl' (FlashInfer CuTe DSL MXFP8 GEMM
+                        on SM100/SM103), 'flashinfer_deepgemm' (Hopper SM90
+                        only; uses swapAB optimization for small M dimensions
+                        in decoding), 'cutlass' (optimal for SM120 GPUs),
+                        'triton' (fallback, widely compatible), 'aiter' (ROCm
+                        only).
+  --fp4-gemm-backend {auto,flashinfer_cudnn,flashinfer_cutedsl,flashinfer_cutlass,flashinfer_trtllm,marlin}
+                        Choose the runner backend for NVFP4 GEMM operations.
+                        Options: 'auto' (default; selects flashinfer_cutedsl
+                        on SM100, marlin on SM80-SM90, flashinfer_cutlass
+                        otherwise (including SM120)), 'flashinfer_cutlass'
+                        (FlashInfer CUTLASS backend), 'flashinfer_cudnn'
+                        (FlashInfer cuDNN backend, optimal on CUDA 13+ with
+                        cuDNN 9.15+), 'flashinfer_cutedsl' (FlashInfer CuTe
+                        DSL backend), 'flashinfer_trtllm' (FlashInfer
+                        TensorRT-LLM backend, requires different weight
+                        preparation with shuffling), 'marlin' (weight-only
+                        W4A16 fallback for SM80+).
+  --bf16-gemm-backend {auto,cutedsl,gemv,torch}
+                        Choose the backend for unquantized BF16 GEMM
+                        operations. Options: 'auto' (default; selects
+                        'cutedsl' on SM10x GPUs, except deterministic
+                        inference selects 'torch'; otherwise uses cuBLAS via
+                        torch.nn.functional.linear), 'cutedsl' (SGLang JIT
+                        CuTe DSL TGV BF16 GEMM on SM10x; dispatches between
+                        the allowlisted low-M Split-K kernel, the CuTe DSL
+                        kernel, and cuBLAS; set
+                        SGLANG_ENABLE_BF16_SPLITK_GEMM=0 to disable Split-K),
+                        'gemv', 'torch' (always uses cuBLAS via
+                        torch.nn.functional.linear).
+  --dsa-prefill-backend {flashmla_sparse,flashmla_sparse_q8,flashmla_kv,flashmla_auto,flashinfer_sparse_mla,triton_sparse_mla,fa3,tilelang,triton,aiter,trtllm,intel_xpu}
+                        DSA (DeepSeek Sparse Attention) prefill backend. If
+                        not specified, auto-detects based on hardware and
+                        kv_cache_dtype.
+  --dsv4-prefill-backend {auto,flashmla_sparse,flashmla_sparse_q8}
+                        DeepSeek-V4 sparse prefill backend. 'auto' and
+                        'flashmla_sparse' use the existing BF16 sparse prefill
+                        path; 'flashmla_sparse_q8' enables the Q8KV8 sparse
+                        prefill path.
+  --dsa-decode-backend {flashmla_sparse,flashmla_sparse_q8,flashmla_kv,flashmla_auto,flashinfer_sparse_mla,fa3,tilelang,triton,aiter,trtllm,intel_xpu}
+                        DSA (DeepSeek Sparse Attention) decode backend. If not
+                        specified, auto-detects based on hardware and
+                        kv_cache_dtype.
+  --dsa-paged-mqa-logits-backend {auto,deepgemm,cutedsl,aiter}
+                        DSA indexer paged MQA logits kernel backend. Options:
+                        'auto' (default; DeepGEMM on CUDA, aiter on ROCm),
+                        'deepgemm', 'cutedsl' (CuTe DSL kernel, SM 100
+                        (Blackwell) only; wins at low batch size and long
+                        context), 'aiter' (ROCm only).
+  --dsa-topk-backend {sgl-kernel,torch,flashinfer}
+                        DSA indexer top-k backend for the target model.
+                        Options: 'sgl-kernel', 'torch', 'flashinfer'. The
+                        'torch' backend currently requires
+                        SGLANG_DSA_FUSE_TOPK=false.
+  --disable-flashinfer-autotune
+                        Disable FlashInfer autotuning.
+  --flashinfer-autotune-skip-ops FLASHINFER_AUTOTUNE_SKIP_OPS [FLASHINFER_AUTOTUNE_SKIP_OPS ...]
+                        FlashInfer custom-op identifiers to skip during
+                        autotuning. Skipped ops use FlashInfer's heuristic
+                        fallback. SGLang temporarily skips mxfp8_gemm by
+                        default due to an IMA.
+  --mamba-backend {triton,flashinfer}
+                        Choose the kernel backend for Mamba SSM operations.
+                        Default is 'triton'. Options: 'triton' (default),
+                        'flashinfer' (requires FlashInfer with Mamba support).
+  --cuda-graph-config CUDA_GRAPH_CONFIG
+                        Per-phase CUDA graph settings as JSON, e.g. '{"decode"
+                        :{"backend":"full","max_bs":256},"prefill":{"backend":
+                        "breakable"}}'. Allowed backends per phase: full,
+                        breakable, disabled. JSON wins over the per-phase
+                        --cuda-graph-* convenience flags and over legacy
+                        flags.
+  --cuda-graph-backend-decode {full,breakable,disabled}
+                        Backend for the decode phase. Folds into
+                        cuda_graph_config[decode].backend.
+  --cuda-graph-backend-prefill {full,breakable,disabled}
+                        Backend for the prefill phase. Folds into
+                        cuda_graph_config[prefill].backend.
+  --cuda-graph-max-bs-decode CUDA_GRAPH_MAX_BS_DECODE
+                        Maximum batch size captured for the decode cuda graph.
+  --cuda-graph-max-bs-prefill CUDA_GRAPH_MAX_BS_PREFILL
+                        Maximum batch size captured for the prefill cuda
+                        graph.
+  --cuda-graph-bs-decode CUDA_GRAPH_BS_DECODE [CUDA_GRAPH_BS_DECODE ...]
+                        Explicit list of batch sizes to capture for the decode
+                        cuda graph.
+  --cuda-graph-bs-prefill CUDA_GRAPH_BS_PREFILL [CUDA_GRAPH_BS_PREFILL ...]
+                        Explicit list of batch sizes to capture for the
+                        prefill cuda graph.
+  --cuda-graph-prefill-max-context CUDA_GRAPH_PREFILL_MAX_CONTEXT, --context-bucket CUDA_GRAPH_PREFILL_MAX_CONTEXT
+                        Maximum context length supported by DeepSeek-V4
+                        breakable/full prefill CUDA graphs. Context-shaped
+                        attention metadata and indexer logits are allocated at
+                        this fixed size instead of the model maximum. Larger
+                        live contexts fall back to eager. Supports standard SI
+                        suffixes (k, M, G, T) and IEC suffixes (Ki, Mi, Gi,
+                        Ti). Suffixes are case-sensitive. Decimals are allowed
+                        for SI suffixes only. Examples: '1k' -> 1000 '1M' ->
+                        1000000 '25.6k' -> 25600 '1Ki' -> 1024 '1Mi' ->
+                        1048576
+  --disable-prefill-cuda-graph
+                        Disable the prefill-phase CUDA graph. Convenience for
+                        --cuda-graph-backend-prefill=disabled.
+  --disable-decode-cuda-graph
+                        Disable the decode-phase CUDA graph. Convenience for
+                        --cuda-graph-backend-decode=disabled.
+  --disable-cuda-graph-padding
+                        Disable cuda graph when padding is needed. Still uses
+                        cuda graph when padding is not needed.
+  --enable-profile-cuda-graph
+                        Enable profiling of cuda graph capture.
+  --enable-cudagraph-gc
+                        Enable garbage collection during CUDA graph capture.
+                        If disabled (default), GC is frozen during capture to
+                        speed up the process.
+  --debug-cuda-graph    Enable debug/eager mode for CUDA graph using breakable
+                        CUDA graph. When enabled, graph breaks are inserted so
+                        every operation runs eagerly while still going through
+                        the CUDA graph capture / replay path. Useful for
+                        debugging CUDA graph capture / replay issues.
+  --enable-layerwise-nvtx-marker
+                        Enable layerwise NVTX profiling annotations for the
+                        model.
+  --enable-nccl-nvls    Enable NCCL NVLS for prefill heavy requests when
+                        available.
+  --enable-symm-mem     Enable NCCL symmetric memory for fast collectives.
+  --triton-attention-reduce-in-fp32
+                        Cast the intermediate attention results to fp32 to
+                        avoid possible crashes related to fp16.This only
+                        affects Triton attention kernels.
+  --triton-attention-num-kv-splits TRITON_ATTENTION_NUM_KV_SPLITS
+                        The number of KV splits in flash decoding Triton
+                        kernel. Larger value is better in longer context
+                        scenarios. The default value is 8.
+  --triton-attention-split-tile-size TRITON_ATTENTION_SPLIT_TILE_SIZE
+                        The size of split KV tile in flash decoding Triton
+                        kernel. Used for deterministic inference.
+  --flashinfer-mla-disable-ragged
+                        Not using ragged prefill wrapper when running
+                        flashinfer mla
+  --enable-fused-qk-norm-rope
+                        Enable fused qk normalization and rope rotary
+                        embedding.
+  --enable-precise-embedding-interpolation
+                        Enable corner alignment for resize of embeddings grid
+                        to ensure more accurate(but slower) evaluation of
+                        interpolated embedding values.
+  --enable-fused-moe-sum-all-reduce
+                        Enable fused moe triton and sum all reduce.
+  --enable-deepseek-v4-fp4-indexer
+                        Enable the experimental FP4 C4 indexer path for
+                        DeepSeek V4. Default keeps the existing indexer
+                        implementation.
+  --disable-custom-all-reduce
+                        Disable the custom all-reduce kernel and fall back to
+                        NCCL.
+  --enable-mscclpp      Enable MSCCL++ for tuned AllReduce and AllGather
+                        messages, with NCCL fallback.
+  --enable-torch-symm-mem
+                        Enable using torch symm mem for all-reduce kernel and
+                        fall back to NCCL. Only supports CUDA device SM90 and
+                        above. SM90 supports world size 4, 6, 8. SM100
+                        supports world size 6, 8.
+  --enable-scattered-sconv
+                        Inkling: replace the attention/MLP output all-reduce
+                        with a hidden-dimension reduce-scatter, run the
+                        channelwise output short convolution on the [T, H/P]
+                        shard, then all-gather before the residual add. This
+                        shards the convolution cache across tensor-parallel
+                        ranks without changing communication volume.
+  --pre-warm-nccl       Pre-warm NCCL/RCCL communicators during startup to
+                        reduce P99 TTFT cold-start latency. Default: enabled
+                        for AMD/HIP (RCCL), disabled for NVIDIA/CUDA (NCCL).
+  --boundary-reduction {auto,ar,rs,rsv,rs+rsv}
+                        Select FFN boundary reduction: ar uses all-reduce then
+                        token redistribution; rs and rsv permit fixed-size and
+                        variable-size reduce-scatter respectively; rs+rsv
+                        permits both (RSv first). Unsupported paths fall back
+                        to ar. The option applies to the FFN stages of
+                        decoders built with stage boundaries, where auto
+                        resolves the model default; other models ignore it.
+                        Required attention and MoE collectives and all-reduce
+                        fusion are unaffected.
+  --enable-quant-communications
+                        Enable INT8 quantization of TP communications (limited
+                        support).
+  --enforce-disable-flashinfer-allreduce-fusion
+                        Enforce disable FlashInfer allreduce fusion.
+  --flashinfer-allreduce-fusion-backend {auto,trtllm,mnnvl,cutedsl}
+                        Enable FlashInfer allreduce fusion and choose backend.
+                        Requires SM90 or SM10X NVIDIA GPUs. Defaults to auto.
+                        'auto': choose mnnvl on Blackwell (SM100/SM103)
+                        systems (single- and multi-node) and trtllm on SM90
+                        single-node systems. 'trtllm': available on single-
+                        node systems only. 'mnnvl': available on SM90 single-
+                        node systems and SM100/SM103 single-node or multi-node
+                        systems via MNNVL fabric. 'cutedsl': Blackwell-only
+                        bf16 MNNVL CuTe DSL backend; also fuses the MoE
+                        finalize and the shared-expert add into the collective
+                        when the MoE runner can defer them. Fuses allreduce
+                        with Residual + RMSNorm for supported MoE models.
+  --enable-aiter-allreduce-fusion
+                        Enable Aiter AllReduce Fusion.
+  --enable-torch-compile
+                        Optimize the model with torch.compile. Experimental
+                        feature.
+  --enable-torch-compile-debug-mode
+                        Enable debug mode for torch compile
+  --torch-compile-max-bs TORCH_COMPILE_MAX_BS
+                        Set the maximum batch size when using torch compile.
+  --speculative-algorithm SPECULATIVE_ALGORITHM
+                        Speculative algorithm. Builtins: EAGLE, EAGLE3, NEXTN,
+                        STANDALONE, NGRAM, DFLASH, DSPARK, UNO. Or any name
+                        registered via `SpeculativeAlgorithm.register`.
+  --uno-lora-path UNO_LORA_PATH
+                        Path to the UNO draft LoRA checkpoint.
+  --speculative-draft-model-path SPECULATIVE_DRAFT_MODEL_PATH, --speculative-draft-model SPECULATIVE_DRAFT_MODEL_PATH
+                        The path of the draft model weights. This can be a
+                        local folder or a Hugging Face repo ID.
+  --speculative-draft-model-revision SPECULATIVE_DRAFT_MODEL_REVISION
+                        The specific draft model version to use. It can be a
+                        branch name, a tag name, or a commit id. If
+                        unspecified, will use the default version.
+  --speculative-draft-load-format {auto,pt,safetensors,instanttensor,npcache,dummy,sharded_state,presharded,gguf,expert_pack,bitsandbytes,mistral,layered,flash_rl,remote,remote_instance,fastsafetensors,private,runai_streamer}
+                        The format of the draft model weights to load. If not
+                        specified, will use the same format as --load-format.
+                        Use 'dummy' to initialize draft model weights with
+                        random values for profiling.
+  --speculative-num-steps SPECULATIVE_NUM_STEPS
+                        The number of steps sampled from draft model in
+                        Speculative Decoding.
+  --speculative-eagle-topk SPECULATIVE_EAGLE_TOPK
+                        The number of tokens sampled from the draft model in
+                        eagle2 each step.
+  --speculative-num-draft-tokens SPECULATIVE_NUM_DRAFT_TOKENS
+                        The number of tokens sampled from the draft model in
+                        Speculative Decoding.
+  --speculative-dflash-block-size SPECULATIVE_DFLASH_BLOCK_SIZE
+                        DFLASH only. Block size (verify window length). Alias
+                        of --speculative-num-draft-tokens for DFLASH.
+  --speculative-dspark-block-size SPECULATIVE_DSPARK_BLOCK_SIZE
+                        DSPARK only. Draft block size gamma (number of
+                        proposed draft tokens). The verify window is gamma +
+                        1, so this sets --speculative-num-draft-tokens = gamma
+                        + 1. Omit to auto-infer gamma from the draft
+                        checkpoint block_size.
+  --speculative-dspark-sps-table-path SPECULATIVE_DSPARK_SPS_TABLE_PATH
+                        DSPARK only. Path to a pre-profiled SPS cost table
+                        (JSON) built offline with
+                        sglang.benchmark.dspark_sps_profiler, consumed by the
+                        ragged-verify scheduler (cap-accept / compact). Omit
+                        for an uninitialized flat constant-SPS table: the
+                        budget degenerates to verify-all (zero throughput gain
+                        by itself).
+  --speculative-dspark-confidence-sts-path SPECULATIVE_DSPARK_CONFIDENCE_STS_PATH
+                        DSPARK only. Optional path to a per-position STS
+                        (sequential temperature scaling) calibration JSON, fit
+                        offline with sglang.benchmark.dspark_sts_fit.
+                        Calibrates the confidence-head survival probabilities
+                        the ragged-verify scheduler consumes. Omit to use
+                        identity (no calibration); losslessness is unaffected
+                        either way.
+  --speculative-dspark-align-verify-tokens-to-graph-tier
+                        DSPARK compact ragged-verify only. Fill the per-
+                        request verify lengths so the total verify-token count
+                        reaches the cuda-graph tier the forward is already
+                        padded to: round the dp-max scheduled total up to the
+                        captured token bucket and let the top-k allocator
+                        admit that many real draft tokens (confidence-
+                        ordered). This recovers the padding the forward pays
+                        for anyway -- both the cuda-graph bucket round-up and
+                        the dp cross-rank max -- turning it into extra real
+                        verification at the same step time. Off by default;
+                        when off the schedule is byte-for-byte unchanged.
+  --speculative-accept-threshold-single SPECULATIVE_ACCEPT_THRESHOLD_SINGLE
+                        Accept a draft token if its probability in the target
+                        model is greater than this threshold.
+  --speculative-accept-threshold-acc SPECULATIVE_ACCEPT_THRESHOLD_ACC
+                        The accept probability of a draft token is raised from
+                        its target probability p to min(1, p / threshold_acc).
+  --speculative-use-rejection-sampling
+                        Use rejection sampling for speculative decoding
+                        (requires topk=1).
+  --speculative-token-map SPECULATIVE_TOKEN_MAP
+                        The path of the draft model's small vocab table.
+  --speculative-attention-mode {prefill,decode}
+                        Attention backend for speculative decoding operations
+                        (both target verify and draft extend). Can be one of
+                        'prefill' (default) or 'decode'.
+  --speculative-draft-attention-backend SPECULATIVE_DRAFT_ATTENTION_BACKEND
+                        Attention backend for speculative decoding drafting.
+  --speculative-dsa-topk-backend {sgl-kernel,torch,flashinfer}
+                        DSA indexer top-k backend for speculative draft
+                        workers. Options: 'sgl-kernel', 'torch', 'flashinfer'.
+                        The 'torch' backend currently requires
+                        SGLANG_DSA_FUSE_TOPK=false.
+  --speculative-draft-kv-cache-dtype {auto,fp8_e5m2,fp8_e4m3,bf16,bfloat16}
+                        KV cache dtype for the speculative draft model only.
+                        The draft pool is allocated with one slot per target
+                        token (draft and target share a slot index space), so
+                        for a small draft it can still rival the target pool:
+                        a 5-layer DFLASH draft costs 10240 bytes/token in
+                        bf16. Setting fp8_e4m3 halves the draft pool; the
+                        saving shows up as free device memory, so raise --mem-
+                        fraction-static to convert it into KV capacity.
+                        Default follows --kv-cache-dtype.
+  --speculative-draft-window-size SPECULATIVE_DRAFT_WINDOW_SIZE
+                        Sliding window size for the draft model. Honored by
+                        Llama EAGLE-3 (`LlamaForCausalLMEagle3`), DFLASH, and
+                        the built-in EAGLE/MTP draft-decode path on the Triton
+                        and FlashInfer draft backends; other EAGLE-3 backends
+                        (e.g. MLA-based drafters) silently ignore it. For
+                        Llama EAGLE-3, the drafter only attends to the most
+                        recent N keys (verifier hidden states + its own
+                        outputs); the verifier is unaffected. For DFLASH, the
+                        draft worker keeps a recent target-token window in its
+                        local KV cache (paged backends may retain up to one
+                        extra page on the left for alignment). For the built-
+                        in EAGLE/MTP draft, each draft-decode step attends to
+                        a --speculative-draft-sink-size sink plus the most
+                        recent N tokens, leaving the target verify pass
+                        unchanged; it is ignored (with a warning) if the draft
+                        model has a native sliding window of its own. Default
+                        is full attention/context.
+  --speculative-moe-runner-backend {auto,deep_gemm,triton,triton_kernel,flashinfer_trtllm,experimental_sgl_trtllm,flashinfer_trtllm_routed,flashinfer_cutlass,flashinfer_mxfp4,flashinfer_cutedsl,flashinfer_megamoe,cutlass,aiter,marlin,humming,experimental_sgl_marlin,hpc_ops,megamoe,intel_xpu}
+                        Choose the runner backend for MoE in speculative
+                        decoding. Defaults to --moe-runner-backend, except
+                        flashinfer_megamoe defaults the draft to
+                        flashinfer_trtllm (draft layers are typically
+                        unquantized, which flashinfer_megamoe's global-expert-
+                        id dispatch doesn't support).
+  --speculative-moe-a2a-backend {none,deepep,mooncake,nixl,mori,ascend_fuseep,flashinfer,megamoe,deepep_v2,pplx,ascend_tp}
+                        Choose the backend for MoE A2A in speculative
+                        decoding. Defaults to --moe-a2a-backend, except
+                        flashinfer_megamoe defaults the draft to none (draft
+                        layers are typically unquantized, which
+                        flashinfer_megamoe's global-expert-id dispatch doesn't
+                        support).
+  --speculative-enable-w4a4-mxfp4-megamoe, --no-speculative-enable-w4a4-mxfp4-megamoe
+                        Whether the draft model's MXFP4 MegaMoE layers use the
+                        W4A4 mxf4xmxf4 MMA type (see
+                        --enable-w4a4-mxfp4-megamoe). Pass --no-speculative-
+                        enable-w4a4-mxfp4-megamoe to keep the draft on fp8xfp4
+                        (W4A8) while the target runs W4A4. Same as
+                        --enable-w4a4-mxfp4-megamoe if unset. A draft that
+                        runs MXFP4 MegaMoE with a different MMA type from the
+                        target may allocate an additional MegaMoE symmetric
+                        buffer after the KV pool is sized; lower --mem-
+                        fraction-static if CUDA-graph capture runs out of
+                        memory.
+  --speculative-draft-model-quantization {awq,fp8,mxfp8,gptq,gptq_marlin,awq_marlin,bitsandbytes,gguf,modelopt,modelopt_fp8,modelopt_fp4,nvfp4_online,modelopt_mixed,petit_nvfp4,w8a8_int8,w8a8_fp8,moe_wna16,w4afp8,mxfp4,auto-round,auto-round-int8,compressed-tensors,modelslim,mxfp_w4a8,quark,quark_int4fp8_moe,quark_mxfp4,mlx_q4,mlx_q8,unquant,humming}
+                        The quantization method for speculative model.
+  --speculative-skip-dp-mlp-sync
+                        Skip the extra MLP sync that the scheduler performs
+                        before merging a new batch when speculative decoding +
+                        DP attention are both enabled.
+  --enable-multi-layer-eagle
+                        Enable multi-layer Eagle speculative decoding.
+  --speculative-adaptive
+                        Enable adaptive speculative decoding that dynamically
+                        adjusts num_steps based on acceptance rate.
+  --speculative-adaptive-config SPECULATIVE_ADAPTIVE_CONFIG
+                        Path to a JSON config file for adaptive speculative
+                        decoding tuning knobs.
+  --decoupled-spec-bind-endpoint DECOUPLED_SPEC_BIND_ENDPOINT
+                        ZMQ endpoint this engine binds for its inbound channel
+                        in decoupled speculative decoding (verifier: result
+                        PULL; drafter: control PULL).
+  --decoupled-spec-connect-endpoints DECOUPLED_SPEC_CONNECT_ENDPOINTS
+                        Peer inbound (bind) endpoints to connect to, ordered
+                        by peer rank, for decoupled speculative decoding.
+  --decoupled-spec-rank DECOUPLED_SPEC_RANK
+                        This engine's rank within its own role space
+                        (verifier-rank or drafter-rank) for decoupled
+                        speculative decoding.
+  --decoupled-spec-role {null,verifier,drafter}
+                        Role in decoupled speculative decoding: 'null'
+                        disables it, 'verifier' runs the target/verify half,
+                        'drafter' runs the draft half.
+  --spec-trace-dir SPEC_TRACE_DIR
+                        Directory to write decoupled speculative decoding
+                        trace files.
+  --speculative-ngram-min-bfs-breadth SPECULATIVE_NGRAM_MIN_BFS_BREADTH
+                        The minimum breadth for BFS (Breadth-First Search) in
+                        ngram speculative decoding.
+  --speculative-ngram-max-bfs-breadth SPECULATIVE_NGRAM_MAX_BFS_BREADTH
+                        The maximum breadth for BFS (Breadth-First Search) in
+                        ngram speculative decoding.
+  --speculative-ngram-match-type {BFS,PROB}
+                        The match type for cache tree.
+  --speculative-ngram-max-trie-depth SPECULATIVE_NGRAM_MAX_TRIE_DEPTH
+                        The max trie depth for ngram speculative decoding.
+  --speculative-ngram-capacity SPECULATIVE_NGRAM_CAPACITY
+                        The cache capacity for ngram speculative decoding.
+  --speculative-ngram-external-corpus-path SPECULATIVE_NGRAM_EXTERNAL_CORPUS_PATH
+                        Path to an external JSONL corpus to pre-load into SAM
+                        at startup. Additional corpora can be added at runtime
+                        via POST /add_external_corpus.
+  --speculative-ngram-external-sam-budget SPECULATIVE_NGRAM_EXTERNAL_SAM_BUDGET
+                        Number of draft nodes reserved for the external SAM
+                        subtree in ngram speculative decoding.
+  --speculative-ngram-external-corpus-max-tokens SPECULATIVE_NGRAM_EXTERNAL_CORPUS_MAX_TOKENS
+                        Fail startup if the tokenized external ngram corpus
+                        exceeds this many tokens. Tune this based on your CPU
+                        memory budget.
+  --ep-size EP_SIZE, --expert-parallel-size EP_SIZE, --ep EP_SIZE
+                        The expert parallelism size.
+  --moe-a2a-backend {none,deepep,mooncake,nixl,mori,ascend_fuseep,flashinfer,megamoe,deepep_v2,pplx,ascend_tp,flashinfer_megamoe}
+                        Choose the backend for MoE A2A.
+  --enable-w4a4-mxfp4-megamoe
+                        Enable the W4A4 MXFP4 MegaMoE path with DeepGEMM's
+                        mxf4xmxf4 MMA type. Use with --moe-a2a-backend
+                        megamoe.
+  --deepep-v2-mode {direct,hybrid}
+                        DeepEP v2 ElasticBuffer communication topology, fixed
+                        at server init: `direct` (single-node NVLink) or
+                        `hybrid` (multi-node scale-out). Layout/grouped-GEMM
+                        and the decode CUDA graph are chosen per batch by
+                        inference phase, independent of this knob; not
+                        equivalent to DeepEP v1 normal/low_latency.
+  --moe-runner-backend {auto,deep_gemm,triton,triton_kernel,flashinfer_trtllm,experimental_sgl_trtllm,flashinfer_trtllm_routed,flashinfer_cutlass,flashinfer_mxfp4,flashinfer_cutedsl,flashinfer_megamoe,cutlass,aiter,marlin,humming,experimental_sgl_marlin,hpc_ops,megamoe,intel_xpu}
+                        Choose the runner backend for MoE.
+  --flashinfer-mxfp4-moe-precision {default,bf16,fp8}
+                        Choose the computation precision of flashinfer mxfp4
+                        moe. On SM90, `fp8` selects the Humming-style
+                        MXFP4-weight x FP8-activation path introduced by
+                        FlashInfer #3738 and requires FlashInfer >= 0.6.18.
+  --deepep-mode {auto,normal,low_latency}
+                        Select the mode when enable DeepEP or MoriEP MoE,
+                        could be `normal`, `low_latency` or `auto`. Default is
+                        `auto`, which means `low_latency` for decode batch and
+                        `normal` for prefill batch.
+  --fuseep-mode {1,2}   Select the mode when enable Ascend FuseEP MoE, 1 ->
+                        dispatch_gmm_combine_decode is executed；2 ->
+                        dispatch_ffn_combine is executed (support hybrid
+                        deployment when 2).
+  --deepep-dispatcher-output-dtype {auto,bf16,fp8,int8,nvfp4}
+                        Select DeepEP dispatcher output dtype
+  --ep-num-redundant-experts EP_NUM_REDUNDANT_EXPERTS
+                        Allocate this number of redundant experts in expert
+                        parallel.
+  --ep-dispatch-algorithm {static,dynamic,fake,lp}
+                        The algorithm to choose ranks for redundant experts in
+                        expert parallel.
+  --init-expert-location INIT_EXPERT_LOCATION
+                        Initial location of EP experts.
+  --enable-eplb         Enable EPLB algorithm
+  --eplb-algorithm EPLB_ALGORITHM
+                        Chosen EPLB algorithm
+  --eplb-rebalance-num-iterations EPLB_REBALANCE_NUM_ITERATIONS
+                        Number of iterations to automatically trigger a EPLB
+                        re-balance.
+  --eplb-rebalance-layers-per-chunk EPLB_REBALANCE_LAYERS_PER_CHUNK
+                        Number of layers to rebalance per forward pass.
+  --eplb-min-rebalancing-utilization-threshold EPLB_MIN_REBALANCING_UTILIZATION_THRESHOLD
+                        Minimum threshold for GPU average utilization to
+                        trigger EPLB rebalancing. Must be in the range [0.0,
+                        1.0].
+  --expert-distribution-recorder-mode {stat,stat_approx,per_pass,per_token}
+                        Mode of expert distribution recorder.
+  --expert-distribution-recorder-buffer-size EXPERT_DISTRIBUTION_RECORDER_BUFFER_SIZE
+                        Circular buffer size of expert distribution recorder.
+                        Set to -1 to denote infinite buffer.
+  --expert-balancedness-report-mode {off,server_log,prometheus,both}
+                        Where to report expert balancedness. Options: off,
+                        server_log, prometheus, both.
+  --deepep-config DEEPEP_CONFIG
+                        Tuned DeepEP config suitable for your own cluster. It
+                        can be either a string with JSON content or a file
+                        path.
+  --moe-dense-tp-size MOE_DENSE_TP_SIZE
+                        TP size for MoE dense MLP layers. This flag is useful
+                        when, with large TP size, there are errors caused by
+                        weights in MLP layers having dimension smaller than
+                        the min dimension GEMM supports.
+  --elastic-ep-backend {none,mooncake,nixl}
+                        Specify the collective communication backend for
+                        elastic EP. Supports 'mooncake' and 'nixl'.
+  --enable-elastic-expert-backup
+                        Enable elastic expert backup feature.
+  --mooncake-ib-device MOONCAKE_IB_DEVICE
+                        The InfiniBand devices for Mooncake Backend transfer,
+                        accepts multiple comma-separated devices (e.g.,
+                        --mooncake-ib-device mlx5_0,mlx5_1). Default is None,
+                        which triggers automatic device detection when
+                        Mooncake Backend is enabled.
+  --enable-waterfill    Enable Waterfill: dispatch the fused shared expert as
+                        an extra routed expert slot to the least-loaded EP
+                        rank. Supports DeepEP and MegaMOE MoE A2A backends,
+                        implicitly enables shared-expert fusion, and supports
+                        --deepep-mode auto, normal, or low_latency when used
+                        with DeepEP. Use auto or low_latency for production
+                        DeepEP decode so CUDA graph remains enabled. Supported
+                        on DeepSeek-V3/R1 with EP >= 2.
+  --elastic-ep-join-mode {scale,recover}
+                        Join mode for elastic EP. 'recover' rejoins an
+                        existing slot after a fault. 'scale' joins as a new
+                        rank beyond the original group size and requires
+                        --node-rank 1.
+  --elastic-ep-join-rank-offset EP_JOIN_RANK_OFFSET
+                        Global rank offset of an elastic EP joining group.
+                        Scale joiners must set this to the current effective
+                        EP size.
+  --elastic-ep-initial-size ELASTIC_EP_INITIAL_SIZE
+                        EP size used to define the immutable per-rank expert
+                        storage layout. Scale joiners must use the primary
+                        deployment's launch-time EP size.
+  --max-ep-size MAX_EP_SIZE
+                        Maximum EP size the server can scale to at runtime.
+                        Pre-allocates active-rank state and backend buffers to
+                        this size. Defaults to the launch-time world size.
+  --elastic-ep-scale-timeout ELASTIC_EP_SCALE_TIMEOUT
+                        Timeout in seconds for a pending elastic EP scale
+                        operation.
+  --disable-flashinfer-cutlass-moe-fp4-allgather
+                        Disables quantize before all-gather for flashinfer
+                        cutlass moe.
+  --disable-shared-experts-fusion
+                        Disable the built-in shared experts fusion
+                        optimization for DeepSeek V3/R1. Note: Waterfill
+                        (--enable-waterfill) routes the shared expert as an
+                        extra MoE slot, so the shared expert is not separated
+                        from the MoE path when Waterfill is enabled.
+  --enforce-shared-experts-fusion
+                        Enforce shared experts fusion even when it would
+                        normally be disabled (e.g. under DeepEP). Mutually
+                        exclusive with --disable-shared-experts-fusion.
+  --max-mamba-cache-size MAX_MAMBA_CACHE_SIZE
+                        The maximum size of the mamba cache.
+  --mamba-ssm-dtype {float32,bfloat16,float16}
+                        The data type of the SSM states in mamba cache. If not
+                        set, will be read from model config (mamba_ssm_dtype).
+  --mamba-max-states-per-path MAMBA_MAX_STATES_PER_PATH
+                        Maximum number of cached Mamba states retained per
+                        root-to-tail path (-1 means unlimited). When enabled,
+                        after each insert the shallowest eligible interior
+                        states beyond the cap are removed while their full KV
+                        remains. Tail, fork, and locked nodes are preserved.
+                        Must be -1 or a positive integer.
+  --enable-mamba-cache-stochastic-rounding
+                        Enable stochastic rounding when writing FP16 Mamba SSM
+                        cache states. Requires --mamba-ssm-dtype float16 and
+                        CUDA. With --mamba-backend triton, requires SM100.
+  --mamba-cache-philox-rounds MAMBA_CACHE_PHILOX_ROUNDS
+                        Number of Philox rounds to use for stochastic rounding
+                        of FP16 Mamba SSM cache writes. Triton uses the Triton
+                        default when set to 0; FlashInfer uses 10 rounds when
+                        set to 0.
+  --mamba-full-memory-ratio MAMBA_FULL_MEMORY_RATIO
+                        The ratio of mamba state memory to full kv cache
+                        memory.
+  --mamba-radix-cache-strategy {auto,no_buffer,extra_buffer,extra_buffer_lazy}
+                        The strategy to use for mamba radix cache.
+  --mamba-track-interval MAMBA_TRACK_INTERVAL
+                        The interval to track the mamba state during decode.
+  --enable-int8-mamba-checkpoint
+                        Store radix-cached linear-attn (mamba) states in int8
+                        (separate checkpoint pool) for ~2x cached-prefix
+                        capacity at fixed memory.
+  --int8-mamba-ckpt-size INT8_MAMBA_CKPT_SIZE
+                        Number of int8 mamba checkpoint slots (default: 2x the
+                        active mamba pool size).
+  --linear-attn-backend {triton,cutedsl,flashinfer,flashkda,nvidia_kda,ptx_kda,helion,intel_xpu}
+                        The default kernel backend for linear attention
+                        (GDN/KDA). Can be overridden per-mode by --linear-
+                        attn-decode-backend and --linear-attn-prefill-backend.
+                        The Helion backend is KDA-only.
+  --linear-attn-decode-backend {triton,cutedsl,flashinfer,flashkda,nvidia_kda,ptx_kda,helion,intel_xpu}
+                        Override the kernel backend for linear attention
+                        decode. If not set, uses --linear-attn-backend.
+  --linear-attn-prefill-backend {triton,cutedsl,flashinfer,flashkda,nvidia_kda,ptx_kda,helion,intel_xpu}
+                        Override the kernel backend for linear attention
+                        prefill/extend. If not set, uses --linear-attn-
+                        backend; compatible SM100 GDN models may automatically
+                        select FlashInfer.
+  --linear-attn-verify-backend {triton,cutedsl,flashinfer,flashkda,nvidia_kda,ptx_kda,helion,intel_xpu,nv_cutedsl}
+                        Override the kernel backend for linear attention
+                        speculative target-verify. If not set, follows the
+                        decode backend (flashinfer decode -> flashinfer
+                        verify, otherwise triton). KDA supports triton,
+                        nv_cutedsl, and flashinfer verify backends.
+  --enable-linear-replayssm
+                        Enable the ReplaySSM buffered output-only linear-attn
+                        decode kernel. Primarily a GDN (scalar-gate) decode-
+                        bandwidth optimization (~1.2-1.5x at batch >= 64). KDA
+                        uses its selected Triton or Helion implementation, but
+                        its per-K gate ring is larger and ReplaySSM is
+                        typically slower than packed KDA decode; benchmark
+                        before enabling it. Requires the Triton linear-attn
+                        decode backend, or Helion for KDA, and --mamba-radix-
+                        cache-strategy no_buffer (the default).
+  --linear-replayssm-cache-len LINEAR_REPLAYSSM_CACHE_LEN
+                        Ring-buffer length L for ReplaySSM linear-attn decode.
+                        The full recurrent state is flushed to HBM every L
+                        decode steps.
+  --enable-linear-replayssm-spec
+                        Enable the ReplaySSM spec-verify: fold-every-commit --
+                        a per-slot raw-input window replaces the recurrent
+                        verify's per-draft full-state snapshots. GDN or KDA
+                        hybrid linear-attn models, linear-chain
+                        (--speculative-eagle-topk in {None, 1}) only.
+  --enable-hierarchical-cache
+                        Enable hierarchical cache
+  --hicache-host-memory-mode {cache,buffer_only}
+                        Whether host memory is a persistent HiCache tier
+                        (cache) or a transient staging buffer between GPU and
+                        the storage backend (buffer_only). buffer_only
+                        requires --hicache-storage-backend.
+  --hicache-ratio HICACHE_RATIO
+                        The ratio of the size of host KV cache memory pool to
+                        the size of device pool. Defaults to 2.0 in cache
+                        mode, 1.2 in buffer_only mode, or 0.2 for backup-only
+                        host-pool decode retraction.
+  --hicache-size HICACHE_SIZE
+                        The size of host KV cache memory pool in gigabytes.
+                        Overrides --hicache-ratio in either host memory mode.
+  --hicache-write-policy {write_back,write_through,write_through_selective}
+                        The write policy of hierarchical cache.
+  --hicache-io-backend {direct,kernel,kernel_ascend}
+                        The IO backend for KV cache transfer between CPU and
+                        GPU
+  --hicache-mem-layout {layer_first,page_first,page_first_direct,page_first_kv_split,page_head}
+                        The layout of host memory pool for hierarchical cache.
+  --hicache-storage-backend {file,sim,mooncake,npu_memcache,hf3fs,nixl,aibrix,dynamic,eic,simm,mori,shm,tensorcast,seaweedfs}
+                        The storage backend for hierarchical KV cache. Built-
+                        in backends: file, mooncake, npu_memcache, hf3fs,
+                        nixl, aibrix, tensorcast, seaweedfs. For dynamic
+                        backend, use --hicache-storage-backend-extra-config to
+                        specify: backend_name (custom name), module_path
+                        (Python module path), class_name (backend class name).
+  --hicache-storage-prefetch-policy {best_effort,wait_complete,timeout}
+                        Control when prefetching from the storage backend
+                        should stop.
+  --hicache-storage-backend-extra-config HICACHE_STORAGE_BACKEND_EXTRA_CONFIG
+                        A dictionary in JSON string format, or a string
+                        starting with a leading '@' and a config file in
+                        JSON/YAML/TOML format, containing extra configuration
+                        for the storage backend.
+  --hicache-storage-prefetch-retry-poll-interval HICACHE_STORAGE_PREFETCH_RETRY_POLL_INTERVAL
+                        Scheduling passes a queued request waits before its
+                        storage availability check is re-issued, when the
+                        prefetch found nothing and a backup may still be
+                        committing (under load the first check can run before
+                        it does). A re-issue that waits on staging or a moved
+                        match instead goes out on the next pass. Only passes
+                        that reach prefill scheduling count. 0 disables miss
+                        retries; known-hit deferrals are always re-issued.
+  --hicache-storage-prefetch-retry-max-attempts HICACHE_STORAGE_PREFETCH_RETRY_MAX_ATTEMPTS
+                        Storage availability re-issues a queued request may
+                        make, paced miss polls and immediate re-issues alike;
+                        past the cap it is admitted with whatever the device
+                        holds. 0 disables re-issues.
+  --enable-unified-cache-external-linker
+                        Link UnifiedRadixCache directly to an external KV
+                        store (direct L3), with no host cache tier.
+  --unified-cache-external-linker-backend {mooncake,mori}
+                        Storage backend for --enable-unified-cache-external-
+                        linker.
+  --enable-hisparse     Enable hierarchical sparse attention
+  --hisparse-config HISPARSE_CONFIG, --hierarchical-sparse-attention-extra-config HISPARSE_CONFIG
+                        A dictionary in JSON string format for hierarchical
+                        sparse attention configuration. Example: '{"top_k":
+                        2048, "device_buffer_size": 4096,
+                        "host_to_device_ratio": 2}'
+  --enable-broadcast-mm-inputs-process
+                        Enable broadcast mm-inputs process in scheduler.
+  --enable-prefix-mm-cache
+                        Enable prefix multimodal cache. Currently only
+                        supports mm-only.
+  --mm-enable-dp-encoder
+                        Enabling data parallelism for mm encoder. The dp size
+                        will be set to the tp size automatically.
+  --mm-process-config MM_PROCESS_CONFIG
+                        Multimodal preprocessing config, a json config
+                        contains keys: `image`, `video`, `audio`
+  --mm-processor-worker-num MM_PROCESSOR_WORKER_NUM
+                        Number of threads for multimodal processor calls. 0
+                        selects the model-specific default. Only processors
+                        with isolated-worker support can use more than one
+                        thread.
+  --mm-io-worker-num MM_IO_WORKER_NUM
+                        Number of threads for multimodal data loading and
+                        decoding. 0 selects the model-specific default.
+                        SGLANG_IO_WORKERS remains supported as an environment
+                        override when this argument is 0.
+  --allowed-media-domains ALLOWED_MEDIA_DOMAINS [ALLOWED_MEDIA_DOMAINS ...]
+                        Restrict client-supplied HTTP(S) image, video, and
+                        audio URLs to these exact hostnames. Redirect
+                        destinations are checked against the same allowlist.
+                        When unset, remote media from any domain is allowed.
+  --media-url-max-file-size-mb MEDIA_URL_MAX_FILE_SIZE_MB
+                        Maximum size in MiB for one client-supplied remote
+                        media download. The limit is enforced while streaming;
+                        set to 0 to disable it.
+  --mm-preprocess-cache-size-mb MM_PREPROCESS_CACHE_SIZE_MB
+                        CPU memory budget for content-addressed multimodal
+                        preprocessing artifacts. Unset selects a model-
+                        specific default (256 MiB for Kimi-K3); 0 disables the
+                        cache. The budget is divided across tokenizer workers
+                        and does not reserve GPU memory.
+  --trust-mm-content-hashes
+                        Trust caller-provided multimodal SHA-256 content
+                        hashes. This can skip reading media on a hot metadata-
+                        cache hit; only enable it when the caller guarantees
+                        that hashes identify immutable media bytes.
+  --limit-mm-data-per-request LIMIT_MM_DATA_PER_REQUEST
+                        Limit the number of multimodal inputs per request.
+                        e.g. '{"image": 1, "video": 1, "audio": 1}'
+  --enable-mm-global-cache
+                        Enable global multimodal embedding cache to skip
+                        redundant ViT inference.
+  --image-processor-backend {auto,torchvision,pil}
+                        Image processor backend. 'auto' lets Transformers
+                        select the best available backend.
+  --mm-global-cache-backend {mooncake}
+                        Storage backend for the multimodal global embedding
+                        cache. Used when --enable-mm-global-cache is set.
+  --disable-fast-image-processor
+                        Deprecated. Use --image-processor-backend=pil instead.
+  --mm-feature-transport {cpu,cuda_ipc,cuda_vmm}
+                        Transport multimodal features through CPU memory, a
+                        bounded CUDA IPC pool, or a bounded CUDA VMM pool.
+                        Unset uses cpu except for validated multi-node
+                        GB200/GB300 MNNVL models, which use cuda_vmm when an
+                        IMEX channel is available. Select cuda_ipc explicitly
+                        for single-node GPU transport. GPU transports reserve
+                        SGLANG_MM_FEATURE_CACHE_MB (default 1024 MiB) on the
+                        base GPU and fall back to CPU transport when the pool
+                        is full.
+  --enable-lora         Enable LoRA support for the model. This argument is
+                        automatically set to True if `--lora-paths` is
+                        provided for backward compatibility.
+  --enable-lora-overlap-loading
+                        Enable asynchronous LoRA weight loading in order to
+                        overlap H2D transfers with GPU compute. This should be
+                        enabled if you find that your LoRA workloads are
+                        bottlenecked by adapter weight loading, for example
+                        when frequently loading large LoRA adapters.
+  --max-lora-rank MAX_LORA_RANK
+                        The maximum rank of LoRA adapters. If not specified,
+                        it will be automatically inferred from the adapters
+                        provided in --lora-paths.
+  --lora-target-modules [{q_proj,k_proj,v_proj,o_proj,q_a_proj,kv_a_proj_with_mqa,q_b_proj,kv_b_proj,wq_b,wk,weights_proj,gate_proj,up_proj,down_proj,qkv_proj,gate_up_proj,embed_tokens,lm_head,qkvr,wo_ud,all} ...]
+                        The union set of all target modules where LoRA should
+                        be applied. If not specified, it will be automatically
+                        inferred from the adapters provided in --lora-paths.
+                        If 'all' is specified, all supported modules will be
+                        targeted.
+  --lora-paths [LORA_PATHS ...]
+                        The list of LoRA adapters to load. Each adapter must
+                        be specified in one of the following formats: <PATH> |
+                        <NAME>=<PATH> | JSON with schema
+                        {"lora_name":str,"lora_path":str,"pinned":bool}
+  --max-loaded-loras MAX_LOADED_LORAS
+                        If specified, it limits the maximum number of LoRA
+                        adapters loaded in CPU memory at a time. The value
+                        must be greater than or equal to `--max-loras-per-
+                        batch`.
+  --max-loras-per-batch MAX_LORAS_PER_BATCH
+                        Maximum number of adapters for a running batch,
+                        include base-only request.
+  --lora-eviction-policy {lru,fifo}
+                        LoRA adapter eviction policy when memory pool is full.
+                        'lru': Least Recently Used (default, better cache
+                        efficiency). 'fifo': First-In-First-Out.
+  --lora-backend {triton,csgmv,ascend,torch_native}
+                        Choose the kernel backend for multi-LoRA serving.
+  --max-lora-chunk-size {16,32,64,128}
+                        Maximum chunk size for the ChunkedSGMV LoRA backend.
+                        Only used when --lora-backend is 'csgmv'. Choosing a
+                        larger value might improve performance.
+  --experts-shared-outer-loras, --no-experts-shared-outer-loras
+                        Force shared outer LoRA mode for MoE models. When set,
+                        w1/w3 lora_A and w2 lora_B are shared across experts
+                        (expert_dim=1). Use --no-experts-shared-outer-loras to
+                        force disable. By default this is auto-detected from
+                        adapter weights.
+  --lora-use-virtual-experts
+                        Enable virtual expert computation for MoE models. When
+                        set, the model will use virtual expert computation.
+  --lora-strict-loading, --no-lora-strict-loading
+                        Enable strict loading for LoRA adapters. When set,
+                        mismatched or missing keys in the adapter weights will
+                        raise an error.
+  --lora-drain-wait-threshold LORA_DRAIN_WAIT_THRESHOLD
+                        When any LoRA adapter request waits longer than this
+                        threshold (in seconds), the scheduler will selectively
+                        drain one running adapter to make room. This mitigates
+                        extreme tail latency under high or skewed workloads by
+                        preventing a small set of adapters from monopolizing
+                        batch slots. Set to 0 to disable draining (default).
+  --enable-two-batch-overlap
+                        Enabling two micro batches to overlap.
+  --enable-single-batch-overlap
+                        Let computation and communication overlap within one
+                        micro batch.
+  --tbo-token-distribution-threshold TBO_TOKEN_DISTRIBUTION_THRESHOLD
+                        The threshold of token distribution between two
+                        batches in micro-batch-overlap, determines whether to
+                        two-batch-overlap or two-chunk-overlap. Set to 0
+                        denote disable two-chunk-overlap.
+  --cpu-offload-gb CPU_OFFLOAD_GB
+                        How many GBs of RAM to reserve for CPU offloading.
+  --offload-group-size OFFLOAD_GROUP_SIZE
+                        Number of layers per group in offloading.
+  --offload-num-in-group OFFLOAD_NUM_IN_GROUP
+                        Number of layers to be offloaded within a group.
+  --offload-prefetch-step OFFLOAD_PREFETCH_STEP
+                        Steps to prefetch in offloading.
+  --offload-mode OFFLOAD_MODE
+                        Mode of offloading.
+  --enable-lmcache      Using LMCache as an alternative hierarchical cache
+                        solution
+  --lmcache-config-file LMCACHE_CONFIG_FILE
+                        Path to the LMCache YAML configuration file
+  --enable-flexkv       Route the default RadixCache through FlexKV's
+                        KVManager for host-tier (CPU / SSD / Remote) KV cache
+                        offload. Equivalent to --radix-cache-backend=flexkv
+                        but also participates in the auto-selection chain
+                        alongside --enable-lmcache.
+  --flexkv-config-file FLEXKV_CONFIG_FILE
+                        Path to the FlexKV YAML / JSON configuration file.
+                        Equivalent to setting the FLEXKV_CONFIG_PATH
+                        environment variable.
+  --kt-weight-path KT_WEIGHT_PATH
+                        [ktransformers parameter] The path of the quantized
+                        expert weights for amx kernel. A local folder.
+  --kt-method KT_METHOD
+                        [ktransformers parameter] Quantization formats for CPU
+                        execution.
+  --kt-cpuinfer KT_CPUINFER
+                        [ktransformers parameter] The number of CPUInfer
+                        threads.
+  --kt-threadpool-count KT_THREADPOOL_COUNT
+                        [ktransformers parameter] One-to-one with the number
+                        of NUMA nodes (one thread pool per NUMA).
+  --kt-num-gpu-experts KT_NUM_GPU_EXPERTS
+                        [ktransformers parameter] The number of GPU experts.
+  --kt-max-deferred-experts-per-token KT_MAX_DEFERRED_EXPERTS_PER_TOKEN
+                        [ktransformers parameter] Maximum number of experts
+                        deferred to CPU per token. All MoE layers except the
+                        final one use this value; the final layer always uses
+                        0.
+  --dllm-algorithm DLLM_ALGORITHM
+                        The diffusion LLM algorithm, such as LowConfidence.
+  --dllm-algorithm-config DLLM_ALGORITHM_CONFIG
+                        The diffusion LLM algorithm configurations. Must be a
+                        YAML file.
+  --dllm-fdfo, --no-dllm-fdfo
+                        Enable First-Done-First-Out (FDFO) scheduling for
+                        diffusion LLM inference. Enabled by default; use --no-
+                        dllm-fdfo to fall back to synchronous block
+                        scheduling.
+  --disaggregation-mode {null,prefill,decode}
+                        Only used for PD disaggregation. "prefill" for
+                        prefill-only server, and "decode" for decode-only
+                        server. If not specified, it is not PD disaggregated
+  --disaggregation-transfer-backend {mooncake,nixl,ascend,fake,mori,mooncake_tcp}
+                        The backend for disaggregation transfer. Default is
+                        mooncake.
+  --disaggregation-bootstrap-port DISAGGREGATION_BOOTSTRAP_PORT
+                        Bootstrap server port on the prefill server. Default
+                        is 8998.
+  --disaggregation-ib-device DISAGGREGATION_IB_DEVICE
+                        The InfiniBand devices for disaggregation transfer.
+                        Supports a single device (e.g., --disaggregation-ib-
+                        device mlx5_0), a shared comma-separated list (e.g.,
+                        --disaggregation-ib-device mlx5_0,mlx5_1), a per-GPU
+                        JSON mapping (e.g., --disaggregation-ib-device '{"0":
+                        "mlx5_0,mlx5_1", "1": "mlx5_2"}'), or a path to a JSON
+                        file containing that mapping. Default is None, which
+                        triggers automatic device detection when mooncake
+                        backend is enabled.
+  --disaggregation-decode-enable-radix-cache
+                        Enable radix cache on decode server (PD mode). Caches
+                        KV prefixes to avoid redundant transfers. Incompatible
+                        with --enable-hisparse, speculative decoding, and
+                        --disaggregation-transfer-backend fake.
+  --disaggregation-decode-enable-offload-kvcache
+                        Enable async KV cache offloading on decode server (PD
+                        mode).
+  --disaggregation-decode-retraction-backup {cpu_tensor,host_pool,none}
+                        Storage backend for KV preserved across PD decode
+                        retraction. 'cpu_tensor' uses per-request CPU tensors.
+                        'host_pool' uses a reserved HiCache pool and does not
+                        fall back on exhaustion. 'none' keeps no backup: a
+                        retracted request is aborted with 503 for the client
+                        to retry. If omitted, the backend is inferred from the
+                        decode KV pool.
+  --num-reserved-decode-tokens NUM_RESERVED_DECODE_TOKENS
+                        Number of decode tokens that will have memory reserved
+                        when adding new request to the running batch.
+  --disaggregation-decode-extra-slots DISAGGREGATION_DECODE_EXTRA_SLOTS
+                        Number of extra decode req_to_token slots pre-
+                        allocated for in-transfer requests (PD mode). If
+                        unset, defaults to 0 (or 2x the per-worker running
+                        batch for small batches).
+  --disaggregation-decode-polling-interval DISAGGREGATION_DECODE_POLLING_INTERVAL
+                        The interval to poll requests in decode server. Can be
+                        set to >1 to reduce the overhead of this.
+  --optimistic-prefill-attempts OPTIMISTIC_PREFILL_ATTEMPTS
+                        Number of optimistic prefill forward passes that skip
+                        the bootstrap wait.
+  --encoder-only        For MLLM with an encoder, launch an encoder-only
+                        server
+  --language-only       For VLM, load weights for the language model only.
+  --language-model-only
+                        Skip the multimodal encoder entirely: its weights are
+                        never loaded and the tower is never built, freeing
+                        that GPU memory for KV cache. Multimodal requests are
+                        rejected. Unlike --language-only this is a standalone
+                        mode, not part of encoder/decoder disaggregation.
+  --encoder-transfer-backend {auto,zmq_to_scheduler,zmq_to_tokenizer,mooncake}
+                        The backend for encoder disaggregation transfer. Auto
+                        selects a model- and TP-aware backend.
+  --encoder-urls ENCODER_URLS [ENCODER_URLS ...]
+                        List of encoder server urls.
+  --encoder-bootstrap-port ENCODER_BOOTSTRAP_PORT
+                        Port for the EncoderBootstrapServer that runs in the
+                        language-only tokenizer manager process. Encoders
+                        register here, and language-only receivers fetch the
+                        current URL list from here.
+  --encoder-register-urls ENCODER_REGISTER_URLS [ENCODER_REGISTER_URLS ...]
+                        One or more EncoderBootstrapServer URLs to register
+                        this encoder with on startup, for dynamic encoder
+                        discovery. Example: --encoder-register-urls
+                        http://prefill0:8997 http://prefill1:8997. Used with
+                        --encoder-only servers.
+  --enable-adaptive-dispatch-to-encoder
+                        When enabled, adaptively dispatch: multi-image
+                        requests go to encoder in language_only epd mode,
+                        single-image requests are processed locally.
+  --enable-pdmux        Enable PD-Multiplexing, PD running on greenctx stream.
+  --pdmux-config-path PDMUX_CONFIG_PATH
+                        The path of the PD-Multiplexing config file.
+  --sm-group-num SM_GROUP_NUM
+                        Number of sm partition groups.
+  --startup-weight-load-mode {serial,overlap}
+                        Control startup weight loading relative to CUDA graph
+                        capture. 'serial' preserves the existing startup
+                        order; 'overlap' stages checkpoint files while CUDA
+                        graphs are captured and commits the real weights
+                        afterward.
+  --custom-weight-loader [CUSTOM_WEIGHT_LOADER ...]
+                        The custom dataloader which used to update the model.
+                        Should be set with a valid import path, such as
+                        my_package.weight_load_func
+  --weight-loader-disable-mmap
+                        Disable mmap while loading weight using safetensors.
+  --weight-loader-prefetch-checkpoints
+                        Prefetch checkpoint files into OS page cache before
+                        loading. Each rank prefetches a fraction of the
+                        shards, reducing total network I/O on shared
+                        filesystems (NFS/Lustre) from N*checkpoint to
+                        1*checkpoint. Recommended for models on network
+                        storage. When enabled, multi-threaded safetensors
+                        loading is disabled by default to avoid I/O
+                        oversubscription with the prefetch threads; set
+                        enable_multithread_load=true in --model-loader-extra-
+                        config to keep multi-threaded loading (e.g. on local
+                        NVMe where prefetch is a no-op).
+  --weight-loader-prefetch-num-threads WEIGHT_LOADER_PREFETCH_NUM_THREADS
+                        Number of threads per rank for checkpoint prefetching
+                        (default: 4).
+  --weight-loader-drop-cache-after-load
+                        Call posix_fadvise(DONTNEED) on each safetensors shard
+                        after loading it.
+  --remote-instance-weight-loader-seed-instance-ip REMOTE_INSTANCE_WEIGHT_LOADER_SEED_INSTANCE_IP
+                        The ip of the seed instance for loading weights from
+                        remote instance.
+  --remote-instance-weight-loader-seed-instance-service-port REMOTE_INSTANCE_WEIGHT_LOADER_SEED_INSTANCE_SERVICE_PORT
+                        The service port of the seed instance for loading
+                        weights from remote instance.
+  --remote-instance-weight-loader-send-weights-group-ports REMOTE_INSTANCE_WEIGHT_LOADER_SEND_WEIGHTS_GROUP_PORTS
+                        The communication group ports for loading weights from
+                        remote instance.
+  --remote-instance-weight-loader-backend {transfer_engine,nccl,modelexpress}
+                        The backend for loading weights from remote instance.
+                        Can be 'transfer_engine', 'nccl', or 'modelexpress'.
+                        Default is 'nccl'.
+  --remote-instance-weight-loader-start-seed-via-transfer-engine
+                        Start seed server via transfer engine backend for
+                        remote instance weight loader.
+  --engine-info-bootstrap-port ENGINE_INFO_BOOTSTRAP_PORT
+                        Port for the engine info bootstrap server. Default is
+                        6789. Must be set explicitly when running multiple
+                        instances on the same node.
+  --modelexpress-config MODELEXPRESS_CONFIG
+                        JSON config for ModelExpress P2P weight loading. Keys:
+                        "url" (optional gRPC host:port override), "transport"
+                        ("nixl" or "transfer_engine"). Example: '{"url":
+                        "localhost:8001", "transport": "nixl"}'
+  --download-dir DOWNLOAD_DIR
+                        Model download directory for huggingface.
+  --model-checksum [MODEL_CHECKSUM]
+                        Model file integrity verification. If provided without
+                        value, uses model-path as HF repo ID. Otherwise,
+                        provide checksums JSON file path or HuggingFace repo
+                        ID.
+  --delete-ckpt-after-loading
+                        Delete the model checkpoint after loading the model.
+  --decrypted-config-file DECRYPTED_CONFIG_FILE
+                        The path of the decrypted config file.
+  --decrypted-draft-config-file DECRYPTED_DRAFT_CONFIG_FILE
+                        The path of the decrypted draft config file.
+  --checkpoint-engine-wait-weights-before-ready
+                        If set, the server will wait for initial weights to be
+                        loaded via checkpoint-engine or other update methods
+                        before serving inference requests.
+  --enable-prefill-delayer
+                        Enable prefill delayer for DP attention to reduce idle
+                        time.
+  --prefill-delayer-max-delay-passes PREFILL_DELAYER_MAX_DELAY_PASSES
+                        Maximum forward passes to delay prefill.
+  --prefill-delayer-token-usage-low-watermark PREFILL_DELAYER_TOKEN_USAGE_LOW_WATERMARK
+                        Token usage low watermark for prefill delayer.
+  --prefill-delayer-forward-passes-buckets PREFILL_DELAYER_FORWARD_PASSES_BUCKETS [PREFILL_DELAYER_FORWARD_PASSES_BUCKETS ...]
+                        Custom buckets for prefill delayer forward passes
+                        histogram. 0 and max_delay_passes-1 will be auto-
+                        added.
+  --prefill-delayer-wait-seconds-buckets PREFILL_DELAYER_WAIT_SECONDS_BUCKETS [PREFILL_DELAYER_WAIT_SECONDS_BUCKETS ...]
+                        Custom buckets for prefill delayer wait seconds
+                        histogram. 0 will be auto-added.
+  --prefill-delayer-queue-min-ratio PREFILL_DELAYER_QUEUE_MIN_RATIO
+                        Opt-in to the adaptive queue-based delay trigger
+                        (independent of the slot-based one). Delays prefill
+                        until the waiting queue reaches min(running_req *
+                        ratio, prefill_max_requests), falling back to the
+                        observed max_prefill_bs when no request limit is set.
+                        Unset (default) keeps the original slot-only behavior.
+                        Typical: 0.1 ~ 0.5.
+  --prefill-delayer-max-delay-ms PREFILL_DELAYER_MAX_DELAY_MS
+                        Wall-clock cap (ms) on a single queue-trigger delay;
+                        once exceeded, prefill is force-released to bound
+                        worst-case TTFT. Only consulted when --prefill-
+                        delayer-queue-min-ratio is set. Typical: 1000 ~ 5000;
+                        defaults to 5000 if unset.
+  --min-free-slots-delay MIN_FREE_SLOTS_DELAY
+                        Hold new prefills until at least N running-request
+                        slots have freed up, so they are admitted in one batch
+                        instead of one at a time. Useful when each admission
+                        is disproportionately expensive, e.g. speculative
+                        decoding with a separate draft prefill pass. An
+                        explicit value always wins, capped by max-running-
+                        requests (1 disables). When unset, DFlash workloads
+                        auto-enable the formula; other workloads stay
+                        disabled. Not supported with pipeline parallelism.
+  --enable-deterministic-inference
+                        Enable deterministic inference mode with batch
+                        invariant ops.
+  --rl-on-policy-target {fsdp}
+                        The training system that SGLang needs to match for
+                        true on-policy.
+  --kv-canary {none,log,raise}
+                        KV cache canary mode. 'none' disables the canary
+                        (default). 'log' prints them while the server keeps
+                        running (production-safe). 'raise' fails the server on
+                        the first detected mismatch (CI lane).
+  --kv-canary-sweep-interval KV_CANARY_SWEEP_INTERVAL
+                        Every N forward steps, run a full-pool sweep.
+  --enable-dynamic-batch-tokenizer
+                        Enable async dynamic batch tokenizer for improved
+                        performance when multiple requests arrive
+                        concurrently.
+  --dynamic-batch-tokenizer-batch-size DYNAMIC_BATCH_TOKENIZER_BATCH_SIZE
+                        [Only used if --enable-dynamic-batch-tokenizer is set]
+                        Maximum batch size for dynamic batch tokenizer.
+  --dynamic-batch-tokenizer-batch-timeout DYNAMIC_BATCH_TOKENIZER_BATCH_TIMEOUT
+                        [Only used if --enable-dynamic-batch-tokenizer is set]
+                        Timeout in seconds for batching tokenization requests.
+  --enable-tokenizer-batch-encode
+                        Enable batch tokenization for improved performance
+                        when processing multiple text inputs. Do not use with
+                        image inputs, pre-tokenized input_ids, or
+                        input_embeds.
+  --disable-tokenizer-batch-decode
+                        Disable batch decoding when decoding multiple
+                        completions.
+  --debug-tensor-dump-output-folder DEBUG_TENSOR_DUMP_OUTPUT_FOLDER
+                        The output folder for dumping tensors. In Eagle mode,
+                        tensor outputs from draft and target models are stored
+                        in separate subdirectories ('draft' and 'target').
+  --debug-tensor-dump-layers DEBUG_TENSOR_DUMP_LAYERS [DEBUG_TENSOR_DUMP_LAYERS ...]
+                        The layer ids to dump. Dump all layers if not
+                        specified.
+  --debug-tensor-dump-input-file DEBUG_TENSOR_DUMP_INPUT_FILE
+                        The input filename for dumping tensors
+  --enable-memory-saver
+                        Allow saving memory using release_memory_occupation
+                        and resume_memory_occupation
+  --enable-weights-cpu-backup
+                        Save model weights (both main model and draft model,
+                        if any) to CPU memory during
+                        release_weights_occupation and
+                        resume_weights_occupation
+  --enable-draft-weights-cpu-backup
+                        Save draft model weights to CPU memory during
+                        release_weights_occupation and
+                        resume_weights_occupation
+  --enable-custom-logit-processor
+                        Enable users to pass custom logit processors to the
+                        server (disabled by default for security)
+  --enable-return-hidden-states
+                        Enable returning full hidden states with responses.
+                        Equivalent to `--return-hidden-states-mode full`.
+  --return-hidden-states-mode {last,full}
+                        Set the maximum hidden-state return mode supported by
+                        the server. `last` allows requests with
+                        return_hidden_states=False or `last`; `full` also
+                        allows return_hidden_states=True.
+  --enable-return-routed-experts
+                        Enable returning routed experts of each layer with
+                        responses.
+  --enable-return-indexer-topk
+                        Enable returning indexer topk indices of layers with
+                        indexer with responses.
+  --sampling-mask-max-tokens SAMPLING_MASK_MAX_TOKENS
+                        The maximum number of token IDs in a returned sampling
+                        mask. Requests are aborted if their realized sampling
+                        support exceeds this limit. Use the same value on
+                        disaggregated prefill and decode nodes; clients should
+                        set top_k below the limit to leave headroom for cutoff
+                        ties.
+  --disable-outlines-disk-cache
+                        Disable disk cache of outlines to avoid possible
+                        crashes related to file system or high concurrency.
+  --enable-mis          Enable Multi-Item Scoring optimization. Combines query
+                        and multiple items into a single sequence for
+                        efficient batch processing. Requires --attention-
+                        backend flashinfer; auto-disables CUDA graph, radix
+                        cache, and chunked prefill.
+  --weight-cache-mode {off,daemon,client}
+                        Weight cache mode. 'off': normal disk loading.
+                        'daemon': launch weight cache daemon (holds weights in
+                        GPU memory). Engine-spawned daemons are co-terminal
+                        with the engine and do NOT persist across restarts, so
+                        this alone does not speed up restart (the first start
+                        is slower). For fast recovery, run the standalone
+                        daemon (python -m sglang.srt.weight_cache.daemon) and
+                        connect with 'client'. 'client': connect to existing
+                        daemon and load via IPC.
+  --weight-cache-socket WEIGHT_CACHE_SOCKET
+                        Unix socket path for weight cache daemon (client
+                        mode).If not set, derives the path from
+                        SGLANG_WEIGHT_CACHE_SOCKET_TEMPLATE using the caller's
+                        physical GPU UUID.
+  --weight-cache-timeout WEIGHT_CACHE_TIMEOUT
+                        Timeout in seconds for weight cache daemon readiness
+                        (default: 1800).
+  --forward-hooks FORWARD_HOOKS
+                        JSON-formatted forward hook specifications to attach
+                        to the model.
+  --msprobe-dump-config MSPROBE_DUMP_CONFIG
+                        The path of the JSON configuration file for msProbe.
+                        If specified, enables msProbe dump.
+  --ple-offload-embedding, --no-ple-offload-embedding
+                        Offload Qwen4 PLE n-gram embedding weights to CPU
+                        pinned memory. Enabled by default for BF16 Qwen4-Exp
+                        on CUDA; use --no-ple-offload-embedding to disable.
+  --ple-offload-backend {pinned,file}
+                        Host storage for the offloaded Qwen4 PLE n-gram table.
+                        'pinned' (default) uses CPU pinned memory. 'file' maps
+                        a sparse file under --ple-offload-dir and lets the
+                        gather kernel read it directly; use it on unified-
+                        memory devices (e.g. GB10 / DGX Spark) where pinned
+                        host memory comes out of the same pool as the model
+                        weights. Requires a device that reports
+                        cudaDevAttrPageableMemoryAccessUsesHostPageTables.
+  --ple-offload-dir PLE_OFFLOAD_DIR
+                        Directory for the file-backed PLE table when --ple-
+                        offload-backend is 'file'. Defaults to
+                        $SGLANG_CACHE_DIR/ple/<model path>, one directory per
+                        checkpoint. The file is sparse and reused across
+                        restarts; put it on fast local storage (NVMe).
+  --disaggregation-enable-kv-checksum
+                        Compute an Adler-32 checksum over each request's KV
+                        pages on prefill and verify it on decode. Enable on
+                        both prefill and decode engines. A mismatch aborts the
+                        request, or raises in CI. Disabled by default.
+  --enable-pd-role-switch
+                        Allow runtime prefill<->decode role switch via
+                        /pd_role_switch (PD mode).
+  --speculative-domino-candidate-pool-size SPECULATIVE_DOMINO_CANDIDATE_POOL_SIZE
+                        Domino only. Size of the approximate block-shared
+                        base-logit candidate pool. Set to 0 to score the full
+                        vocabulary.
+  --flashinfer-a2a-dispatch-type {auto,bf16,nvfp4,mxfp8}
+                        Select FlashInfer A2A dispatcher activation dtype.
+  --cuda-graph-max-seq-len-prefill CUDA_GRAPH_MAX_SEQ_LEN_PREFILL
+                        Longest sequence a prefill cuda graph replay admits;
+                        longer batches run eager prefill. Folds into
+                        cuda_graph_config[prefill].max_seq_len.
+  --prefill-kv-cache-dequant-dtype {auto,nvfp4,fp8_e4m3}
+                        Online dequantization dtype used by prefill attention
+                        when --kv-cache-dtype=nvfp4. 'nvfp4' reads the packed
+                        cache directly without additional dequantization;
+                        'fp8_e4m3' dequantizes it into a temporary FP8
+                        workspace. This does not change the stored KV-cache
+                        dtype. 'auto' selects NVFP4 without additional
+                        dequantization on SM100 and FP8 E4M3 otherwise.
+  --dsv4-attn-backend {auto,flashmla,trtllm}
+                        DeepSeek V4 attention backend. 'auto' (default)
+                        resolves to 'flashmla'. 'trtllm' (opt-in, SM100/SM103
+                        with FP8 KV cache) switches the SWA/compressed KV
+                        pools to a uniform 512-dim FP8 layout and runs decode
+                        and sparse prefill through the flashinfer trtllm-gen
+                        sparse MLA kernel. The backend choice is shared by
+                        prefill and decode.
+  --otlp-service-name OTLP_SERVICE_NAME
+                        Service name for OTLP traces (displayed as
+                        'service.name' in trace backends). If unset, falls
+                        back to the OTEL_SERVICE_NAME env var, then to
+                        'sglang'.
+  --hicache-host-memory-fraction HICACHE_HOST_MEMORY_FRACTION
+                        Fraction of the available host memory, bounded by
+                        visible cgroup memory.max/memory.high or v1 memory
+                        limits (after a 10 GiB reserve) that the HiCache host
+                        pools of all ranks on this machine may use. Applies
+                        only when neither --hicache-ratio nor --hicache-size
+                        is set: the default ratio is then reduced until the
+                        pools fit. Lower it when several engines share a
+                        memory cgroup.
+  --enable-linker-mla-dedup
+                        Load replicated MLA KV on rank 0 and broadcast each
+                        layer with the Mooncake linker.
+  --swa-prefix-tails SWA_PREFIX_TAILS
+                        When the SWA KV pool is sized from the request cap
+                        (DeepSeek-V4 family), how many radix-cached prefix
+                        tails it keeps room for. Each tail is one sliding
+                        window plus one page. Default: 4 x
+                        max_running_requests per attention-DP rank, 0 when the
+                        radix cache is disabled.
+  --enable-encoder-swa-bounded-replay
+                        DeepSeek-V4.1 encoder SWA bounded replay: cache Main
+                        KV and Indexer keys only, rebuild request-owned SWA
+                        windows on prefix hits. Experimental; CUDA and gfx950.
+  --enable-decoder-swa-bounded-replay
+                        DeepSeek-V4.1 decoder SWA bounded replay: after the
+                        last kv_source layer, run the remaining layers over
+                        only the last window_size tokens of a prefill. Main
+                        and indexer KV stay exact; nothing is replayed.
+                        Deterministic for a fixed prompt and chunk size.
+  --enable-response-store
+                        Enable in-memory Responses storage for retrieval,
+                        chaining, and background requests. Disabled by
+                        default; unsupported with prefill-decode
+                        disaggregation. Storage has no TTL or size limit.
+  --disaggregation-decode-host-receive-threshold DISAGGREGATION_DECODE_HOST_RECEIVE_THRESHOLD
+                        Device token usage fraction at which incoming KV is
+                        received in the decode retraction host pool, excluding
+                        evictable cache pages. Range [0, 1]; 1 disables host
+                        receive (default), 0 always uses host receive. Size
+                        with --hicache-size or --hicache-ratio; requires dense
+                        NHD MHA buffers (including separate paged SWA pools)
+                        and a transfer backend that supports host
+                        destinations. No built-in backend currently supports
+                        this.
+  --qsa-indexer-dtype {auto,bfloat16,fp8_e4m3}
+                        Storage dtype of the compressed QSA indexer cache and
+                        index query (Qwen4-Exp). "fp8_e4m3" stores them as
+                        plain e4m3 and scores blocks with fp8 GEMMs (CUDA
+                        SM90+). The main KV cache is unaffected.
+  --disaggregation-decode-allocation-policy {early,prefill_complete}
+                        When to reserve per-request decode KV in disaggregated
+                        serving. prefill_complete retains KV on prefill until
+                        prefill finishes, then admits it on decode. Set the
+                        same policy on both roles. Default: early.
+  --speculative-use-block-verification
+                        Use block verification for EAGLE/EAGLE3/NEXTN
+                        (requires topk=1) or for sampled DFLASH/DSPARK drafts,
+                        on CUDA or ROCm.
+  --speculative-draft-sink-size SPECULATIVE_DRAFT_SINK_SIZE
+                        Number of leading 'attention sink' tokens the draft
+                        always attends to, in addition to the --speculative-
+                        draft-window-size recent window (StreamingLLM-style).
+                        Honored only by the built-in EAGLE/MTP draft-decode
+                        path on the Triton and FlashInfer draft backends; the
+                        Llama EAGLE-3 and DFLASH windows ignore it. 0/unset =>
+                        pure recent window. Requires --speculative-draft-
+                        window-size.
+  --disable-aiter-allreduce-fusion-in-prefill
+                        Disable Aiter AllReduce Fusion for prefill batches
+                        (EXTEND / MIXED / SPLIT_PREFILL) while keeping it for
+                        decode. Only meaningful with --enable-aiter-allreduce-
+                        fusion.
+  --disable-aiter-allreduce-fusion-in-decode
+                        Disable Aiter AllReduce Fusion for decode batches
+                        (DECODE / TARGET_VERIFY / draft-extend / IDLE) while
+                        keeping it for prefill. Only meaningful with --enable-
+                        aiter-allreduce-fusion.
+  --dsa-triton-union {0,2,4}
+                        Union group size for --dsa-prefill-backend
+                        triton_sparse_mla: 0 disables, 2 or 4 make G adjacent
+                        query tokens share one gathered index set
+                        (mathematically exact; an ownership mask restores each
+                        token's own softmax support).
+  --enable-dsa-fused-indexer, --no-enable-dsa-fused-indexer
+                        Use the four-kernel fused DSA indexer decode path in
+                        place of the 12-launch aiter/torch chain. By default
+                        this is enabled wherever it is supported -- gfx950
+                        (MI355X) with aiter preshuffle and an fp8 e4m3fn index
+                        cache -- and the runtime declines with a logged reason
+                        wherever any of that is missing. Pass --no-enable-dsa-
+                        fused-indexer to force the standard path.
+  --enable-watermark    Enable Aaronson-Gumbel text watermarking.
+  --watermark-config WATERMARK_CONFIG
+                        Watermark settings as a JSON file path or an inline
+                        JSON object with optional key, key_b, context_window,
+                        mixing_probability, max_probability, default_enabled,
+                        and enforce_all fields.
+  --grpc-response-timeout-secs GRPC_RESPONSE_TIMEOUT_SECS
+                        Timeout in seconds waiting for each native gRPC
+                        response chunk, including the first. Must be positive.
+                        Defaults to 300.
+  --sampling-backend {flashinfer,intel_xpu,pytorch,ascend}
+                        Choose the kernels for sampling layers.
+  --reasoning-parser {auto,apertus2509,deepseek-r1,deepseek-v3,deepseek-v4,deepseek-v41,dots,glm45,ling3,hunyuan,gpt-oss,k2_horizon,kimi,kimi_k2,kimi_k3,mimo,muse,poolside_v1,qwen3,qwen3-thinking,minimax,minimax-append-think,minimax-m3,nanbeige,step3,step3p5,mistral,nemotron_3,granite_thinking_parser,interns1,gemma4,inkling,iquest_q1,cohere_command4,gigachat35}
+                        Specify the parser for reasoning models. Use 'auto' to
+                        detect from chat template. Options include:
+                        ['apertus2509', 'deepseek-r1', 'deepseek-v3',
+                        'deepseek-v4', 'deepseek-v41', 'dots', 'glm45',
+                        'ling3', 'hunyuan', 'gpt-oss', 'k2_horizon', 'kimi',
+                        'kimi_k2', 'kimi_k3', 'mimo', 'muse', 'poolside_v1',
+                        'qwen3', 'qwen3-thinking', 'minimax', 'minimax-append-
+                        think', 'minimax-m3', 'nanbeige', 'step3', 'step3p5',
+                        'mistral', 'nemotron_3', 'granite_thinking_parser',
+                        'interns1', 'gemma4', 'inkling', 'iquest_q1',
+                        'cohere_command4', 'gigachat35'].
+  --tool-call-parser {auto,apertus2509,cohere_command4,deepseekv3,deepseekv31,deepseekv32,deepseekv4,deepseekv41,dots,glm,glm45,glm47,gpt-oss,k2_horizon,kimi_k2,kimi_k3,lfm2,ling3,llama3,mimo,minicpm5,mistral,muse,poolside_v1,pythonic,qwen,qwen25,qwen3_coder,spark25,step3,step3p5,minimax-m2,minimax-m3,nanbeige,trinity,interns1,hermes,hunyuan,gigachat3,gigachat35,gemma4,inkling,iquest_q1}
+                        Specify the parser for handling tool-call
+                        interactions. Use 'auto' to detect from chat template.
+                        Options include: ['apertus2509', 'cohere_command4',
+                        'deepseekv3', 'deepseekv31', 'deepseekv32',
+                        'deepseekv4', 'deepseekv41', 'dots', 'glm', 'glm45',
+                        'glm47', 'gpt-oss', 'k2_horizon', 'kimi_k2',
+                        'kimi_k3', 'lfm2', 'ling3', 'llama3', 'mimo',
+                        'minicpm5', 'mistral', 'muse', 'poolside_v1',
+                        'pythonic', 'qwen', 'qwen25', 'qwen3_coder',
+                        'spark25', 'step3', 'step3p5', 'minimax-m2',
+                        'minimax-m3', 'nanbeige', 'trinity', 'interns1',
+                        'hermes', 'hunyuan', 'gigachat3', 'gigachat35',
+                        'gemma4', 'inkling', 'iquest_q1'].
+  --kv-canary-real-data {none,partial,all}
+                        Check the real KV-cache in the canary. 'none'
+                        (default) disables the feature. 'partial' checks the
+                        first 16 bytes of each real-KV slot. 'all' checks the
+                        full real-KV slot.
+  --config CONFIG       Read CLI options from a config file. Must be a YAML
+                        file with configuration options.
+  --disable-cuda-graph  Deprecated. Use --cuda-graph-
+                        backend-{decode,prefill}=disabled instead.
+  --enable-dp-attention
+                        Deprecated. Use --attn-dp-size <dp-size> instead of
+                        --dp-size <dp-size> --enable-dp-attention.
+  --enable-flashinfer-allreduce-fusion
+                        (Deprecated: use --flashinfer-allreduce-fusion-
+                        backend=auto) Enable FlashInfer allreduce fusion with
+                        Residual RMSNorm.
+
+--- Help for Diffusion Model Server ---
+Diffusion model support is not available. Install with: pip install "sglang[diffusion]"
+
+Deploying a specific model? Its cookbook page at https://docs.sglang.io/cookbook carries the recommended command for it: GPU count, parallelism, quantization and the flags that matter for that model.

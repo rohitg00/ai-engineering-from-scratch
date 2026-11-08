@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 346" role="img" aria-labelledby="fig-3-5-title fig-3-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-5-title">The two overviews side by side</title>
+  <desc id="fig-3-5-desc">Two columns. Left, the arm64 Mach-O executable: Ghidra document target-01b5d08b08fb.bin with 12 memory blocks, 13 procedures and 39 strings, listing every block from __TEXT at 0x100000000 to the EXTERNAL block at 0x10000c000. Right, the x86-64 ELF relocatable object: document target-9a4a8082ba5e.o with 10 blocks, 4 procedures and 20 strings, from .text at 0x100000 to _elfSectionHeaders in its own address space. Both records come from the rea-workflow provider with confidence derived.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A · LEDGER-ARM64-O1 · MACH-O ARM64</text>
+  <text x="336" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">B · LEDGER-X86_64-O1.O · ELF X86_64</text>
+  <line x1="320" y1="8" x2="320" y2="338" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="28" width="284" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="162" y="46.25" font-size="12.5" text-anchor="middle" font-weight="700">target-01b5d08b08fb.bin</text>
+  <text x="162" y="63.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">12 segments · 13 procedures · 39 strings</text>
+  <rect x="336" y="28" width="284" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="478" y="46.25" font-size="12.5" text-anchor="middle" font-weight="700">target-9a4a8082ba5e.o</text>
+  <text x="478" y="63.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">10 segments · 4 procedures · 20 strings</text>
+  <text x="20" y="100" font-size="11">__TEXT 0x100000000 · 1280 B</text>
+  <text x="20" y="116" font-size="11">__text 0x100000500 · 576 B</text>
+  <text x="20" y="132" font-size="11">__stubs 0x100000740 · 48 B</text>
+  <text x="20" y="148" font-size="11">__cstring 0x100000770 · 96 B</text>
+  <text x="20" y="164" font-size="11">__const 0x1000007d0 · 64 B</text>
+  <text x="20" y="180" font-size="11">__unwind_info 0x100000810 · 14320 B</text>
+  <text x="20" y="196" font-size="11">__got 0x100004000 · 48 B</text>
+  <text x="20" y="212" font-size="11">__const 0x100004030 · 40 B</text>
+  <text x="20" y="228" font-size="11">__DATA_CONST 0x100004058 · 16296 B</text>
+  <text x="20" y="244" font-size="11">__LINKEDIT 0x100008000 · 1104 B</text>
+  <text x="20" y="260" font-size="11">__LINKEDIT 0x100008450 · 15280 B</text>
+  <text x="20" y="276" font-size="11">EXTERNAL 0x10000c000 · 512 B</text>
+  <text x="336" y="100" font-size="11">.text 0x100000 · 159 B</text>
+  <text x="336" y="116" font-size="11">.rodata 0x1000a0 · 80 B</text>
+  <text x="336" y="132" font-size="11">.rodata.str1.1 0x1000f0 · 10 B</text>
+  <text x="336" y="148" font-size="11">.comment:0x0 · 47 B</text>
+  <text x="336" y="164" font-size="11">.rela.rodata:0x0 · 120 B</text>
+  <text x="336" y="180" font-size="11">.rela.text:0x0 · 72 B</text>
+  <text x="336" y="196" font-size="11">.strtab:0x0 · 190 B</text>
+  <text x="336" y="212" font-size="11">.symtab:0x0 · 312 B</text>
+  <text x="336" y="228" font-size="11">_elfHeader:0x0 · 64 B</text>
+  <text x="336" y="244" font-size="11">_elfSectionHeaders:0x0 · 704 B</text>
+  <rect x="20" y="296" width="284" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="162" y="319.6" font-size="12" text-anchor="middle" font-weight="700">rea-workflow · confidence derived</text>
+  <rect x="336" y="296" width="284" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="478" y="319.6" font-size="12" text-anchor="middle" font-weight="700">rea-workflow · confidence derived</text>
+</svg>

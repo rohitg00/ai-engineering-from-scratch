@@ -1,0 +1,34 @@
+{
+  "catalog": {
+    "services": [
+      {
+        "id": "images",
+        "name": "Image resizing",
+        "root": "services/images",
+        "owners": [
+          "@fictional/media"
+        ],
+        "runbook": "runbooks/images.md",
+        "dependencies": [
+          "queue"
+        ]
+      },
+      {
+        "id": "queue",
+        "name": "Processing queue",
+        "root": "services/queue",
+        "owners": [
+          "@fictional/platform"
+        ],
+        "runbook": "runbooks/queue.md",
+        "dependencies": []
+      }
+    ],
+    "codeowners": "# Authored ownership evidence\n/services/ @fictional/platform\n/services/images/ @fictional/media\n/services/images/cache/** @fictional/cache\n",
+    "runbooks": {
+      "runbooks/images.md": "# Image resizing\n\n## Diagnose\nInspect the request identifier and the resize queue.\n\n[Queue guide](queue.md)\n[Rollback guide](rollback.md)\n",
+      "runbooks/queue.md": "# Processing queue\n\n## Recover\nCheck queue depth before resuming workers.\n"
+    }
+  },
+  "path": "services/images/cache/store.ts"
+}

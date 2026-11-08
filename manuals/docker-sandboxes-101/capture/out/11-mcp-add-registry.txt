@@ -1,0 +1,5 @@
+$ sbx mcp add m101-fetch --url https://registry.modelcontextprotocol.io/v0/servers/fetch-mcp/versions/latest
+Resolving MCP server "m101-fetch"...
+ERROR: mcpruntime: registry fetch failed
+error: server "m101-fetch": registry fetch failed: registry returned status 404
+[exit 1]

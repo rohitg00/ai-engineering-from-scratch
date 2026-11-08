@@ -81,11 +81,11 @@ What each one does:
 | Black Formatter | Auto-format on save, consistent style |
 | Ruff | Fast linting, catches common mistakes |
 
-The file `code/.vscode/extensions.json` in this lesson contains the full recommendations list. When you open the project folder, VS Code will prompt you to install them.
+The file `code/vscode/extensions.json` in this lesson contains the full recommendations list. Copy it to `.vscode/extensions.json` in your project folder, and VS Code prompts you to install them when you open that folder.
 
 ### Step 3: Configure Settings
 
-Copy the settings from `code/.vscode/settings.json` in this lesson, or apply them manually through `Settings > Open Settings (JSON)`.
+Copy the settings from `code/vscode/settings.json` in this lesson, or apply them manually through `Settings > Open Settings (JSON)`.
 
 The key settings for AI work:
 
@@ -200,6 +200,16 @@ With this setup, your daily workflow looks like:
 2. Copy the `settings.json` from this lesson into your VS Code config
 3. Open a Python file and verify that Pylance shows type hints and Black formats on save
 4. If you have access to a remote machine, set up Remote SSH and open a folder on it
+
+### Hints
+
+**Exercise 1.** Install the extensions from the table in Step 2, or install each ID in `code/vscode/extensions.json` with `code --install-extension <id>`. Run `code --list-extensions` and check each ID against the file.
+
+**Exercise 2.** Open Settings > Open Settings (JSON) and copy the content of `code/vscode/settings.json` into it. If the file already has settings, merge the keys and keep valid JSON; VS Code marks a broken file with a red line.
+
+**Exercise 3.** Write a function with a type annotation, then hover on a call to it; Pylance shows the inferred type. Add extra spaces in a line and save the file; Black must reformat the line on save.
+
+**Exercise 4.** Add the server to `~/.ssh/config` first and confirm that `ssh <host>` works in a terminal. Then use the Remote SSH command to connect; the status bar shows the host name when VS Code runs on the remote machine.
 
 ## Key Terms
 

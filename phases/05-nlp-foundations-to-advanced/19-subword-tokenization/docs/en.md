@@ -79,7 +79,7 @@ def encode_bpe(word, merges):
     return symbols
 ```
 
-Naive O(n·|merges|). Production implementations (tiktoken, HF Tokenizers) use merge-rank lookup with priority queues and run in near-linear time.
+Naive $O(n \cdot \lvert \text{merges} \rvert)$. Production implementations (tiktoken, HF Tokenizers) use merge-rank lookup with priority queues and run in near-linear time.
 
 ### Step 3: SentencePiece in practice
 

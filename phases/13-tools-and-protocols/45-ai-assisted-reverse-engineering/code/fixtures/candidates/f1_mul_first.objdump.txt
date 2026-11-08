@@ -1,0 +1,15 @@
+
+candidates/f1_mul_first.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <percent_change>:
+       0: 85 ff                        	testl	%edi, %edi
+       2: 74 09                        	je	0xd <percent_change+0xd>
+       4: 29 fe                        	subl	%edi, %esi
+       6: 6b c6 64                     	imull	$0x64, %esi, %eax
+       9: 99                           	cltd
+       a: f7 ff                        	idivl	%edi
+       c: c3                           	retq
+       d: 31 c0                        	xorl	%eax, %eax
+       f: c3                           	retq

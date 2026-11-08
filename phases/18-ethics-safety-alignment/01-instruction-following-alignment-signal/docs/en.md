@@ -32,8 +32,8 @@ What SFT gives you: the model now answers questions instead of continuing them. 
 
 For each prompt, sample K completions from the SFT model. A labeler ranks them. Train a reward model that scores any prompt-response pair so that, for pairs where `y_w` was preferred over `y_l`:
 
-```
-L_RM = -log sigmoid(r(x, y_w) - r(x, y_l))
+```math
+L_{\text{RM}} = -\log \sigma\big(r(x, y_w) - r(x, y_l)\big)
 ```
 
 This is the Bradley-Terry pairwise preference loss. The RM is usually initialized from the SFT model with the LM head replaced by a scalar head.
@@ -44,8 +44,8 @@ Reward models are small: 6B was enough for the 175B InstructGPT. They are also f
 
 Define the objective:
 
-```
-J(pi) = E_{x~D, y~pi(.|x)} [ r(x, y) ] - beta * KL(pi(.|x) || pi_SFT(.|x))
+```math
+J(\pi) = \mathbb{E}_{x \sim D,\, y \sim \pi(\cdot \mid x)} \big[ r(x, y) \big] - \beta \, \mathrm{KL}\big(\pi(\cdot \mid x) \,\|\, \pi_{\text{SFT}}(\cdot \mid x)\big)
 ```
 
 Maximize with PPO. The KL term keeps `pi` from drifting far from the SFT policy. Without it, the optimizer finds adversarial examples — strings that score high under the RM because the RM never saw them, not because humans actually prefer them.
@@ -56,8 +56,8 @@ The KL coefficient `beta` is the single most important RLHF hyperparameter. Too 
 
 After RLHF, the model is preferred by humans but regresses on standard benchmarks (SQuAD, HellaSwag, DROP). Ouyang et al. call this the alignment tax and fix it with PPO-ptx: mix pre-training gradients into the RL objective so the model does not forget how to do downstream tasks it was never rewarded for.
 
-```
-J_ptx(pi) = J(pi) + gamma * E_{x~D_pretrain} [ log pi(x) ]
+```math
+J_{\text{ptx}}(\pi) = J(\pi) + \gamma \, \mathbb{E}_{x \sim D_{\text{pretrain}}} \big[ \log \pi(x) \big]
 ```
 
 PPO-ptx became standard. Anthropic, DeepMind, and Meta all use some variant.
@@ -84,7 +84,7 @@ al-instruct-pipeline
 What to look at:
 
 - Reward trajectory with `beta = 0.1` vs `beta = 0.0`.
-- KL(pi || pi_SFT) over training steps.
+- $\mathrm{KL}(\pi \Vert \pi_{\text{SFT}})$ over training steps.
 - Final action distribution compared to labeler preference.
 
 ## Ship It
@@ -109,7 +109,7 @@ This lesson produces `outputs/skill-instructgpt-explainer.md`. Given an RLHF pip
 |------|-----------------|------------------------|
 | SFT | "instruction tuning" | Stage 1: cross-entropy fine-tune on prompt-response pairs |
 | Reward model | "the RM" | Scalar regressor over (prompt, response) trained with Bradley-Terry on pairwise labels |
-| Bradley-Terry | "pairwise preference loss" | -log sigmoid(r_w - r_l); reduces pairwise ranking to binary classification |
+| Bradley-Terry | "pairwise preference loss" | $-\log \sigma(r_w - r_l)$; reduces pairwise ranking to binary classification |
 | KL penalty | "the regularizer" | `beta * KL(pi \|\| pi_SFT)` — keeps the RL policy near the SFT anchor |
 | PPO-ptx | "PPO with pretraining mix" | Adds a fraction of pre-training log-likelihood to the PPO objective to offset the alignment tax |
 | Alignment tax | "the RLHF regression" | Post-RLHF drop on standard benchmarks that RLHF did not target |

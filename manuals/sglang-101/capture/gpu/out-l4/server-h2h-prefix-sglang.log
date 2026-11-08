@@ -1,0 +1,2 @@
+[2026-10-17 22:36:35] KV Cache is allocated. dtype: torch.bfloat16, #tokens: 24094, K size: 1.65 GB, V size: 1.65 GB
+[2026-10-17 23:36:23] Prefill batch, #new-seq: 3, #new-token: 406, #cached-token: 12952, token usage: 0.58, #running-req: 5, #queue-req: 0, #pending-token: 0, cuda graph: True, input throughput (token/s): 2248.69

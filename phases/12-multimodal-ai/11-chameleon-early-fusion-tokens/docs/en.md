@@ -39,7 +39,7 @@ The tokenizer is a vector-quantized variational autoencoder. The architecture:
 
 Training: VAE reconstruction loss + commitment loss + codebook loss. The codebook indices form a discrete alphabet for images.
 
-For Chameleon: one image becomes 32*32 = 1024 tokens drawn from a vocabulary of 8192. Concatenate with text tokens (from the LLM's BPE vocabulary, say 32000). Final vocabulary: 40192. The transformer sees one sequence, one loss.
+For Chameleon: one image becomes 32*32 = 1024 tokens drawn from a vocabulary of 8192. Put those image IDs in the same ID space as the text BPE tokens. Chameleon's single tokenizer has 65,536 entries, and that count already includes the 8192 image codes and the special tokens such as the image separators. The transformer sees one sequence, one loss.
 
 ### The shared vocabulary
 

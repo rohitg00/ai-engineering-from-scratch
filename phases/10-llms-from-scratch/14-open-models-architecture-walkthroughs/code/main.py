@@ -3,7 +3,12 @@
 Given a HuggingFace-style config dict, compute parameter counts by component,
 KV cache at max context, MLP ratio, and a verdict on the architecture. Ships
 with configs for Llama 3 8B, Mistral 7B, Mixtral 8x7B, DeepSeek V3, Qwen 2.5,
-and GPT-2 Small for direct comparison.
+Gemma 2 9B, Spark-X2.5 4B, and GPT-2 Small for direct comparison.
+
+Fields follow the HuggingFace config names where they exist: an explicit
+head_dim overrides hidden_size / num_attention_heads, tie_word_embeddings
+decides whether the LM head is counted separately, and layer_types plus
+sliding_window decide how many layers cache the full context.
 
 Stdlib only. No torch, no downloads. The point is to read configs, not weights.
 """
@@ -21,6 +26,7 @@ CONFIGS = {
         "max_position_embeddings": 1024,
         "activation": "gelu", "norm": "layernorm",
         "position": "learned", "moe": False,
+        "tie_word_embeddings": True,
     },
     "mistral-7b": {
         "hidden_size": 4096, "intermediate_size": 14336,
@@ -45,6 +51,29 @@ CONFIGS = {
         "max_position_embeddings": 131072,
         "activation": "swiglu", "norm": "rmsnorm",
         "position": "rope", "moe": False,
+    },
+    "gemma2-9b": {
+        "hidden_size": 3584, "intermediate_size": 14336,
+        "num_hidden_layers": 42, "num_attention_heads": 16,
+        "num_key_value_heads": 8, "head_dim": 256, "vocab_size": 256000,
+        "max_position_embeddings": 8192,
+        "activation": "geglu", "norm": "rmsnorm", "norms_per_layer": 4,
+        "position": "rope-sliding", "moe": False,
+        "tie_word_embeddings": True,
+        "layer_types": ["sliding_attention", "full_attention"] * 21,
+        "sliding_window": 4096,
+    },
+    "spark-x2.5-4b": {
+        "hidden_size": 2560, "intermediate_size": 10240,
+        "num_hidden_layers": 36, "num_attention_heads": 16,
+        "num_key_value_heads": 4, "head_dim": 256, "vocab_size": 131072,
+        "max_position_embeddings": 1048576,
+        "activation": "geglu", "norm": "rmsnorm",
+        "position": "rope-sliding", "moe": False,
+        "tie_word_embeddings": True,
+        "attn_output_gate": "headwise",
+        "layer_types": (["sliding_attention"] * 3 + ["full_attention"]) * 9,
+        "sliding_window": 512,
     },
     "mixtral-8x7b": {
         "hidden_size": 4096, "intermediate_size": 14336,
@@ -88,6 +117,8 @@ class Breakdown:
     attn_params_per_layer: int
     embedding_params: int
     kv_cache_bytes_bf16: int
+    kv_cache_all_full_bytes_bf16: int
+    full_attention_layers: int
     mlp_ratio: float
     attention_scheme: str
     verdict: str
@@ -105,22 +136,57 @@ def attention_scheme(config: dict) -> str:
     return f"GQA ({q_heads}/{kv_heads})"
 
 
+def head_dim(config: dict) -> int:
+    return config.get("head_dim", config["hidden_size"] // config["num_attention_heads"])
+
+
 def attention_params_per_layer(config: dict) -> int:
     h = config["hidden_size"]
     q_heads = config["num_attention_heads"]
     kv_heads = config["num_key_value_heads"]
-    head_dim = h // q_heads
+    hd = head_dim(config)
     if config.get("attention") == "mla":
         lora = config.get("kv_lora_rank", 512)
-        return h * h + 2 * (h * lora + lora * q_heads * head_dim) + h * h
-    q_proj = h * h
-    kv_proj = 2 * h * (kv_heads * head_dim)
-    out_proj = h * h
-    return q_proj + kv_proj + out_proj
+        return h * h + 2 * (h * lora + lora * q_heads * hd) + h * h
+    q_proj = h * (q_heads * hd)
+    kv_proj = 2 * h * (kv_heads * hd)
+    out_proj = (q_heads * hd) * h
+    gate = h * q_heads if config.get("attn_output_gate") == "headwise" else 0
+    return q_proj + kv_proj + out_proj + gate
+
+
+LAYER_TYPES = ("full_attention", "sliding_attention")
+
+
+def layer_types(config: dict) -> list[str]:
+    n_layers = config["num_hidden_layers"]
+    kinds = config.get("layer_types")
+    if kinds is None:
+        return ["full_attention"] * n_layers
+    # Same rule HuggingFace applies when it loads a config: one entry per layer.
+    if len(kinds) != n_layers:
+        raise ValueError(
+            f"layer_types has {len(kinds)} entries but num_hidden_layers is {n_layers}"
+        )
+    unknown = sorted(set(kinds) - set(LAYER_TYPES))
+    if unknown:
+        raise ValueError(f"unsupported layer_types: {', '.join(unknown)}")
+    if "sliding_attention" in kinds and not config.get("sliding_window"):
+        raise ValueError("layer_types has sliding_attention layers but no sliding_window")
+    return list(kinds)
+
+
+def cached_tokens_per_layer(config: dict) -> list[int]:
+    max_seq = config["max_position_embeddings"]
+    window = config.get("sliding_window")
+    return [
+        min(max_seq, window) if kind == "sliding_attention" and window else max_seq
+        for kind in layer_types(config)
+    ]
 
 
 def mlp_params(h: int, ff: int, activation: str) -> int:
-    if activation == "swiglu":
+    if activation in ("swiglu", "geglu"):
         gate_and_up = 2 * h * ff
         down = ff * h
         return gate_and_up + down
@@ -137,9 +203,10 @@ def mlp_params_per_layer(config: dict) -> int:
 
 def layer_norm_params_per_layer(config: dict) -> int:
     h = config["hidden_size"]
+    norms = config.get("norms_per_layer", 2)
     if config.get("norm") == "rmsnorm":
-        return 2 * h
-    return 4 * h
+        return norms * h
+    return norms * 2 * h
 
 
 def analyze(name: str, config: dict) -> Breakdown:
@@ -154,6 +221,7 @@ def analyze(name: str, config: dict) -> Breakdown:
     dense_mlp = mlp_params(h, dense_ff, activation)
     norm = layer_norm_params_per_layer(config)
     final_norm = h if config.get("norm") == "rmsnorm" else 2 * h
+    lm_head = 0 if config.get("tie_word_embeddings", False) else vocab * h
 
     if config.get("moe"):
         n_experts = config["num_experts"]
@@ -185,28 +253,31 @@ def analyze(name: str, config: dict) -> Breakdown:
             + first_dense * dense_block_params
             + n_moe_layers * moe_block_params
             + final_norm
+            + lm_head
         )
         active = (
             emb
             + first_dense * dense_block_params
             + n_moe_layers * active_moe_block
             + final_norm
+            + lm_head
         )
         mlp = expert_mlp
     else:
         dense_block_params = attn + dense_mlp + norm
-        total = emb + n_layers * dense_block_params + final_norm
+        total = emb + n_layers * dense_block_params + final_norm + lm_head
         active = total
         mlp = dense_mlp
 
-    head_dim = h // config["num_attention_heads"]
     max_seq = config["max_position_embeddings"]
+    cached = cached_tokens_per_layer(config)
+    full_layers = sum(1 for kind in layer_types(config) if kind == "full_attention")
     if config.get("attention") == "mla":
-        latent = config.get("kv_lora_rank", 512)
-        kv_cache_bytes = 2 * n_layers * latent * max_seq * 2
+        per_token_per_layer = config.get("kv_lora_rank", 512)
     else:
-        kv_heads = config["num_key_value_heads"]
-        kv_cache_bytes = 2 * n_layers * kv_heads * head_dim * max_seq * 2
+        per_token_per_layer = config["num_key_value_heads"] * head_dim(config)
+    kv_cache_bytes = 2 * per_token_per_layer * sum(cached) * 2
+    kv_cache_all_full = 2 * per_token_per_layer * n_layers * max_seq * 2
 
     if config.get("moe"):
         mlp_ratio = config.get("moe_intermediate_size", dense_ff) / h
@@ -219,6 +290,8 @@ def analyze(name: str, config: dict) -> Breakdown:
     flags.append(config.get("position", "learned").upper())
     scheme = attention_scheme(config)
     flags.append(scheme)
+    if full_layers < n_layers:
+        flags.append(f"{full_layers} full / {n_layers - full_layers} sliding")
     if config.get("moe"):
         flags.append(f"MoE {config['num_experts']}e/top-{config['experts_per_token']}")
     verdict = " · ".join(flags)
@@ -231,6 +304,8 @@ def analyze(name: str, config: dict) -> Breakdown:
         attn_params_per_layer=attn,
         embedding_params=emb,
         kv_cache_bytes_bf16=kv_cache_bytes,
+        kv_cache_all_full_bytes_bf16=kv_cache_all_full,
+        full_attention_layers=full_layers,
         mlp_ratio=mlp_ratio,
         attention_scheme=scheme,
         verdict=verdict,
@@ -246,10 +321,11 @@ def fmt_billions(x: int) -> str:
 
 
 def fmt_bytes(b: int) -> str:
+    # Decimal units, matching the GB figures in the lesson text.
     for unit in ["B", "KB", "MB", "GB", "TB"]:
-        if b < 1024:
+        if b < 1000:
             return f"{b:.1f}{unit}"
-        b /= 1024
+        b /= 1000
     return f"{b:.1f}PB"
 
 
@@ -265,6 +341,10 @@ def print_breakdown(b: Breakdown, config: dict) -> None:
           f"(ratio ff/h = {b.mlp_ratio:.2f})")
     print(f"  context length  : {config['max_position_embeddings']:,}")
     print(f"  KV cache BF16   : {fmt_bytes(b.kv_cache_bytes_bf16)}  (per sequence at max context)")
+    if b.kv_cache_bytes_bf16 < b.kv_cache_all_full_bytes_bf16:
+        print(f"  if all full     : {fmt_bytes(b.kv_cache_all_full_bytes_bf16)}  "
+              f"(sliding window {config['sliding_window']:,} on "
+              f"{config['num_hidden_layers'] - b.full_attention_layers} layers)")
 
 
 def main() -> None:

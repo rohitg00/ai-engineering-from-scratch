@@ -8,6 +8,15 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 from torchvision.models import resnet18, ResNet18_Weights
 
 
+def get_device():
+    """Pick the best available accelerator: CUDA, then Apple Silicon (MPS), then CPU."""
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
+    return torch.device("cpu")
+
+
 def synthetic_dataset(num_per_class=100, num_classes=10, size=224, seed=0):
     rng = np.random.default_rng(seed)
     X = np.empty((num_per_class * num_classes, size, size, 3), dtype=np.float32)
@@ -141,7 +150,7 @@ def main():
     train_loader = DataLoader(train_ds, batch_size=16, shuffle=True, num_workers=0)
     val_loader = DataLoader(val_ds, batch_size=32, shuffle=False, num_workers=0)
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = get_device()
     print(f"device: {device}")
 
     print("\n[feature extraction] freeze backbone, train head only")

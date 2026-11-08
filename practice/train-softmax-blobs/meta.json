@@ -1,0 +1,40 @@
+{
+  "id": "train-softmax-blobs",
+  "title": "Train softmax regression on four blobs",
+  "kind": "train",
+  "summary": "Train multinomial logistic regression with gradient descent to reach a held-out accuracy and log loss target on four Gaussian blobs.",
+  "difficulty": "easy",
+  "tags": [
+    "softmax",
+    "logistic-regression",
+    "gradient-descent",
+    "log-loss"
+  ],
+  "lesson": "phases/02-ml-fundamentals/03-logistic-regression",
+  "cheatsheet": "classical-ml",
+  "minutes": 25,
+  "entry": [
+    "train",
+    "predict_proba"
+  ],
+  "collections": [
+    "train-tiny-models",
+    "classical-ml"
+  ],
+  "time_limit_s": 15,
+  "budget": {
+    "steps": 500
+  },
+  "target": {
+    "metric": "held-out log loss",
+    "value": 0.11
+  },
+  "mutants": {
+    "grad_missing_onehot": "Uses the probabilities as the error and forgets to subtract the one-hot targets.",
+    "no_bias_update": "Never updates the biases, so each class keeps the same base score.",
+    "no_standardize": "Trains on the raw features without the mean and std scaling, so 500 steps are not enough.",
+    "no_max_shift": "Calls np.exp on the raw scores, so far points overflow and give NaN.",
+    "softmax_wrong_axis": "Normalizes the exponentials over the batch axis 0 and not over the classes.",
+    "standardizes_in_place": "Scales X in place with -= and /=, so the caller's array changes."
+  }
+}

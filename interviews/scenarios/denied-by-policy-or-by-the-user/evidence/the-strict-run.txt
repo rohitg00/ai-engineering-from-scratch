@@ -1,0 +1,17 @@
+title: the second and third commands under --safety strict
+source: manuals/docker-sandboxes-101/capture/out/20-strict.txt
+lines: 7-17
+lang: text
+note: Compare the wording of the two refusals, and read the metadata of the confirmation.
+---
+user: Run the shell command: pwd
+tool_call_confirmation: {"agent_name": "root", "tool_call": {"id": "<call-id>", "type": "function", "function": {"name": "shell", "arguments": "{\"cmd\": \"pwd\"}"}}, "metadata": {"blast_radius": "safe", "category": "fs-read", "reason": "Command matches safe read-only pattern: pwd", "safety_label": "safe"}}
+root <- tool_call_response Shell: The user rejected the tool call.
+root: pwd
+The user rejected the tool call.
+stream_stopped (stop, normal)
+user: Run the shell command: rm -rf work/m101-nothing
+root <- tool_call_response Shell: Tool 'shell' is denied by permissions configuration.
+root: rm -rf work/m101-nothing
+Tool 'shell' is denied by permissions configuration.
+stream_stopped (stop, normal)

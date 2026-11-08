@@ -1,0 +1,129 @@
+
+account-x86_64-O2-g.o:	file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000000000 <bump>:
+       0: 89 f0                        	movl	%esi, %eax
+       2: 03 47 04                     	addl	0x4(%rdi), %eax
+       5: 89 47 04                     	movl	%eax, 0x4(%rdi)
+       8: c3                           	retq
+       9: 0f 1f 80 00 00 00 00         	nopl	(%rax)
+
+0000000000000010 <sum_balances>:
+      10: 85 f6                        	testl	%esi, %esi
+      12: 7e 10                        	jle	0x24 <sum_balances+0x14>
+      14: 89 f1                        	movl	%esi, %ecx
+      16: 83 fe 08                     	cmpl	$0x8, %esi
+      19: 77 0c                        	ja	0x27 <sum_balances+0x17>
+      1b: 31 d2                        	xorl	%edx, %edx
+      1d: 31 c0                        	xorl	%eax, %eax
+      1f: e9 a2 00 00 00               	jmp	0xc6 <sum_balances+0xb6>
+      24: 31 c0                        	xorl	%eax, %eax
+      26: c3                           	retq
+      27: 89 c8                        	movl	%ecx, %eax
+      29: 83 e0 07                     	andl	$0x7, %eax
+      2c: be 08 00 00 00               	movl	$0x8, %esi
+      31: 48 0f 45 f0                  	cmovneq	%rax, %rsi
+      35: 48 89 ca                     	movq	%rcx, %rdx
+      38: 48 29 f2                     	subq	%rsi, %rdx
+      3b: 48 8d 87 e4 00 00 00         	leaq	0xe4(%rdi), %rax
+      42: 66 0f ef c0                  	pxor	%xmm0, %xmm0
+      46: 48 89 d6                     	movq	%rdx, %rsi
+      49: 66 0f ef c9                  	pxor	%xmm1, %xmm1
+      4d: 0f 1f 00                     	nopl	(%rax)
+      50: 66 0f 6e 50 80               	movd	-0x80(%rax), %xmm2
+      55: 66 0f 6e 98 60 ff ff ff      	movd	-0xa0(%rax), %xmm3
+      5d: 66 0f 62 da                  	punpckldq	%xmm2, %xmm3    # xmm3 = xmm3[0],xmm2[0],xmm3[1],xmm2[1]
+      61: 66 0f 6e 90 40 ff ff ff      	movd	-0xc0(%rax), %xmm2
+      69: 66 0f 6e a0 20 ff ff ff      	movd	-0xe0(%rax), %xmm4
+      71: 66 0f 62 e2                  	punpckldq	%xmm2, %xmm4    # xmm4 = xmm4[0],xmm2[0],xmm4[1],xmm2[1]
+      75: 66 0f 6c e3                  	punpcklqdq	%xmm3, %xmm4    # xmm4 = xmm4[0],xmm3[0]
+      79: 66 0f fe c4                  	paddd	%xmm4, %xmm0
+      7d: 66 0f 6e 10                  	movd	(%rax), %xmm2
+      81: 66 0f 6e 58 e0               	movd	-0x20(%rax), %xmm3
+      86: 66 0f 62 da                  	punpckldq	%xmm2, %xmm3    # xmm3 = xmm3[0],xmm2[0],xmm3[1],xmm2[1]
+      8a: 66 0f 6e 50 c0               	movd	-0x40(%rax), %xmm2
+      8f: 66 0f 6e 60 a0               	movd	-0x60(%rax), %xmm4
+      94: 66 0f 62 e2                  	punpckldq	%xmm2, %xmm4    # xmm4 = xmm4[0],xmm2[0],xmm4[1],xmm2[1]
+      98: 66 0f 6c e3                  	punpcklqdq	%xmm3, %xmm4    # xmm4 = xmm4[0],xmm3[0]
+      9c: 66 0f fe cc                  	paddd	%xmm4, %xmm1
+      a0: 48 05 00 01 00 00            	addq	$0x100, %rax            # imm = 0x100
+      a6: 48 83 c6 f8                  	addq	$-0x8, %rsi
+      aa: 75 a4                        	jne	0x50 <sum_balances+0x40>
+      ac: 66 0f fe c8                  	paddd	%xmm0, %xmm1
+      b0: 66 0f 70 c1 ee               	pshufd	$0xee, %xmm1, %xmm0     # xmm0 = xmm1[2,3,2,3]
+      b5: 66 0f fe c1                  	paddd	%xmm1, %xmm0
+      b9: 66 0f 70 c8 55               	pshufd	$0x55, %xmm0, %xmm1     # xmm1 = xmm0[1,1,1,1]
+      be: 66 0f fe c8                  	paddd	%xmm0, %xmm1
+      c2: 66 0f 7e c8                  	movd	%xmm1, %eax
+      c6: 48 29 d1                     	subq	%rdx, %rcx
+      c9: 48 c1 e2 05                  	shlq	$0x5, %rdx
+      cd: 48 01 fa                     	addq	%rdi, %rdx
+      d0: 48 83 c2 04                  	addq	$0x4, %rdx
+      d4: 66 66 66 2e 0f 1f 84 00 00 00 00 00  	nopw	%cs:(%rax,%rax)
+      e0: 03 02                        	addl	(%rdx), %eax
+      e2: 48 83 c2 20                  	addq	$0x20, %rdx
+      e6: 48 ff c9                     	decq	%rcx
+      e9: 75 f5                        	jne	0xe0 <sum_balances+0xd0>
+      eb: c3                           	retq
+      ec: 0f 1f 40 00                  	nopl	(%rax)
+
+00000000000000f0 <tag>:
+      f0: 0f bf 4f 08                  	movswl	0x8(%rdi), %ecx
+      f4: 89 c8                        	movl	%ecx, %eax
+      f6: f7 d8                        	negl	%eax
+      f8: 80 3f 6c                     	cmpb	$0x6c, (%rdi)
+      fb: 0f 45 c1                     	cmovnel	%ecx, %eax
+      fe: c3                           	retq
+      ff: 90                           	nop
+
+0000000000000100 <projected>:
+     100: f2 0f 2a 47 04               	cvtsi2sdl	0x4(%rdi), %xmm0
+     105: f2 0f 59 47 10               	mulsd	0x10(%rdi), %xmm0
+     10a: c3                           	retq
+     10b: 0f 1f 44 00 00               	nopl	(%rax,%rax)
+
+0000000000000110 <label_length>:
+     110: 48 8b 4f 18                  	movq	0x18(%rdi), %rcx
+     114: b8 ff ff ff ff               	movl	$0xffffffff, %eax       # imm = 0xFFFFFFFF
+     119: 0f 1f 80 00 00 00 00         	nopl	(%rax)
+     120: ff c0                        	incl	%eax
+     122: 80 39 00                     	cmpb	$0x0, (%rcx)
+     125: 48 8d 49 01                  	leaq	0x1(%rcx), %rcx
+     129: 75 f5                        	jne	0x120 <label_length+0x10>
+     12b: c3                           	retq
+     12c: 0f 1f 40 00                  	nopl	(%rax)
+
+0000000000000130 <main>:
+     130: 50                           	pushq	%rax
+     131: 48 8d 3d 00 00 00 00         	leaq	(%rip), %rdi            # 0x138 <main+0x8>
+		0000000000000134:  R_X86_64_PC32	.L.str.3-0x4
+     138: be 20 00 00 00               	movl	$0x20, %esi
+     13d: ba 08 00 00 00               	movl	$0x8, %edx
+     142: 31 c0                        	xorl	%eax, %eax
+     144: e8 00 00 00 00               	callq	0x149 <main+0x19>
+		0000000000000145:  R_X86_64_PLT32	printf-0x4
+     149: 48 8d 3d 00 00 00 00         	leaq	(%rip), %rdi            # 0x150 <main+0x20>
+		000000000000014c:  R_X86_64_PC32	.L.str.4-0x4
+     150: ba 04 00 00 00               	movl	$0x4, %edx
+     155: b9 08 00 00 00               	movl	$0x8, %ecx
+     15a: 41 b8 10 00 00 00            	movl	$0x10, %r8d
+     160: 41 b9 18 00 00 00            	movl	$0x18, %r9d
+     166: 31 f6                        	xorl	%esi, %esi
+     168: 31 c0                        	xorl	%eax, %eax
+     16a: e8 00 00 00 00               	callq	0x16f <main+0x3f>
+		000000000000016b:  R_X86_64_PLT32	printf-0x4
+     16f: 48 8d 3d 00 00 00 00         	leaq	(%rip), %rdi            # 0x176 <main+0x46>
+		0000000000000172:  R_X86_64_PC32	.L.str.5-0x4
+     176: f2 0f 10 05 00 00 00 00      	movsd	(%rip), %xmm0           # 0x17e <main+0x4e>
+		000000000000017a:  R_X86_64_PC32	.LCPI5_0-0x4
+     17e: be 3b 01 00 00               	movl	$0x13b, %esi            # imm = 0x13B
+     183: ba fd ff ff ff               	movl	$0xfffffffd, %edx       # imm = 0xFFFFFFFD
+     188: b9 07 00 00 00               	movl	$0x7, %ecx
+     18d: b0 01                        	movb	$0x1, %al
+     18f: e8 00 00 00 00               	callq	0x194 <main+0x64>
+		0000000000000190:  R_X86_64_PLT32	printf-0x4
+     194: 31 c0                        	xorl	%eax, %eax
+     196: 59                           	popq	%rcx
+     197: c3                           	retq

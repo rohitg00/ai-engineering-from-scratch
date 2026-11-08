@@ -117,7 +117,7 @@ Rules for production simulations:
 
 - **Memory is the database.** Pick a real store (vector DB, Postgres) at scale. In-memory stdlib is for prototypes.
 - **Log the retrieval trace.** For every action, log the top-k memories that drove it. This is your debug ability.
-- **Budget per-agent tokens.** Each agent's retrieve + reflect + plan per tick is O(k) LLM calls. N agents × T ticks × calls-per-tick can dwarf your budget.
+- **Budget per-agent tokens.** Each agent's retrieve + reflect + plan per tick is $O(k)$ LLM calls. N agents × T ticks × calls-per-tick can dwarf your budget.
 - **Compact memory periodically.** Summarize-and-prune low-importance entries. Retention policy is a design decision, not a detail.
 - **Detect spatial / social norm violations** explicitly. The architecture does not learn them.
 

@@ -1,0 +1,45 @@
+vLLM 101 live checks 16, 17, 23 and 35, plus two environment findings
+Date: 2026-10-23
+Machine: NVIDIA L4, the second GPU of the node (GPU1), shared with its owner and capped at about 17 GB. The GPU was thermally throttled, so no speed in this file counts.
+venv: a new venv, uv venv --python 3.12 --seed, then uv pip install vllm==0.31.0 bitsandbytes vllm-gguf-plugin (later vllm-bnb-plugin). Resolved: vllm 0.31.0, torch 2.13.0+cu130, bitsandbytes 0.50.2, vllm-gguf-plugin 0.0.5, gguf 0.19.0.
+Substitutions: --gpu-memory-utilization 0.65 in place of 0.9, Qwen/Qwen3-8B-FP8 in place of Qwen/Qwen3-8B, and Qwen3-0.6B or 1.7B where noted.
+
+Environment finding 1, host with a driver and no CUDA toolkit:
+every vllm serve failed at engine start, raised from flashinfer/jit/cpp_ext.py:
+RuntimeError: Could not find nvcc and default cuda_home='/usr/local/cuda' doesn't exist
+FlashInfer compiles kernels at the first start, so it needs nvcc.
+
+Environment finding 2, CUDA_HOME set to a host toolkit with nvcc 13.4:
+the FlashInfer sampler JIT failed with
+cuda_toolkit.h:41: error: "CUDA compiler and CUDA toolkit headers are incompatible"
+With VLLM_USE_FLASHINFER_SAMPLER=0, every check below started.
+
+check  section  command                                                                  result
+16     2.5      vllm serve Qwen/Qwen3-1.7B --quantization bitsandbytes, no plugin         fail: Value error, Unknown quantization method: bitsandbytes
+16     2.5      the same, after uv pip install vllm-bnb-plugin                            pass
+17     2.5      vllm serve unsloth/Qwen3-0.6B-GGUF:Q4_K_M --tokenizer Qwen/Qwen3-0.6B      pass
+23     3.7      vllm serve Qwen/Qwen3-0.6B --enable-lora with two adapters                pass
+35     5.1      the vllm bench serve loop as written, with Qwen/Qwen3-8B-FP8               pass
+
+Check 16, bitsandbytes on Qwen/Qwen3-1.7B with the plugin:
+Registered model loader ... vllm_bnb_plugin.bitsandbytes_loader.BitsAndBytesModelLoader
+load_format=bitsandbytes
+Model loading took 1.33 GiB, against 3.22 GiB for the same model in BF16 (41 percent). The embeddings and the output layer stay in 16-bit.
+KV pool: 108,512 tokens, against 92,960 in BF16.
+A chat request returned 200.
+
+Check 17, GGUF:
+Registered model loader ... vllm_gguf_plugin.loader.GGUFModelLoader
+load_format=gguf
+Model loading took 0.55 GiB
+/v1/models lists unsloth/Qwen3-0.6B-GGUF:Q4_K_M. A chat request returned 200.
+
+Check 23, LoRA:
+--lora-modules support=<dir> legal=<dir> --max-loras 4 --max-lora-rank 64
+support = phh/Qwen3-0.6B-TLDR-Lora (rank 8), legal = codelion/Qwen3-0.6B-accuracy-recovery-lora (rank 64), both in local PEFT folders.
+/v1/models lists ['Qwen/Qwen3-0.6B', 'support', 'legal']
+A chat request with "model": "support" returned 200, and with "model": "legal" returned 200.
+
+Check 35, vllm bench serve:
+each of c = 1, 2, 4, 8, 16, 32, 64 exited with 0 and wrote sweep-c$c.json.
+The GPU was throttled, and the model and the client differ from the page table, so the speeds are not recorded here.

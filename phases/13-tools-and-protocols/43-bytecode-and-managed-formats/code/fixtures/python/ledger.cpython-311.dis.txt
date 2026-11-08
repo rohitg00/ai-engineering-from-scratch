@@ -1,0 +1,116 @@
+  0           0 RESUME                   0
+
+  1           2 LOAD_CONST               0 (('F', 'D', 'C', 'B', 'A'))
+              4 STORE_NAME               0 (LABELS)
+
+  4           6 LOAD_CONST               1 (<code object percent_change at 0x103061fb0, file "ledger.py", line 4>)
+              8 MAKE_FUNCTION            0
+             10 STORE_NAME               1 (percent_change)
+
+ 10          12 LOAD_CONST               2 (<code object grade at 0x1030ba560, file "ledger.py", line 10>)
+             14 MAKE_FUNCTION            0
+             16 STORE_NAME               2 (grade)
+
+ 23          18 LOAD_CONST               3 (<code object total at 0x103134110, file "ledger.py", line 23>)
+             20 MAKE_FUNCTION            0
+             22 STORE_NAME               3 (total)
+
+ 30          24 LOAD_CONST               4 (<code object grade_label at 0x1030d5890, file "ledger.py", line 30>)
+             26 MAKE_FUNCTION            0
+             28 STORE_NAME               4 (grade_label)
+             30 LOAD_CONST               5 (None)
+             32 RETURN_VALUE
+
+Disassembly of <code object percent_change at 0x103061fb0, file "ledger.py", line 4>:
+  4           0 RESUME                   0
+
+  5           2 LOAD_FAST                0 (before)
+              4 LOAD_CONST               1 (0)
+              6 COMPARE_OP               2 (==)
+             12 POP_JUMP_FORWARD_IF_FALSE     2 (to 18)
+
+  6          14 LOAD_CONST               1 (0)
+             16 RETURN_VALUE
+
+  7     >>   18 LOAD_FAST                1 (after)
+             20 LOAD_FAST                0 (before)
+             22 BINARY_OP               10 (-)
+             26 LOAD_CONST               2 (100)
+             28 BINARY_OP                5 (*)
+             32 LOAD_FAST                0 (before)
+             34 BINARY_OP                2 (//)
+             38 RETURN_VALUE
+
+Disassembly of <code object grade at 0x1030ba560, file "ledger.py", line 10>:
+ 10           0 RESUME                   0
+
+ 11           2 LOAD_FAST                0 (score)
+              4 LOAD_CONST               1 (10)
+              6 BINARY_OP                2 (//)
+             10 STORE_FAST               1 (bucket)
+
+ 12          12 LOAD_FAST                1 (bucket)
+             14 LOAD_CONST               2 (9)
+             16 COMPARE_OP               5 (>=)
+             22 POP_JUMP_FORWARD_IF_FALSE     2 (to 28)
+
+ 13          24 LOAD_CONST               3 (4)
+             26 RETURN_VALUE
+
+ 14     >>   28 LOAD_FAST                1 (bucket)
+             30 LOAD_CONST               4 (8)
+             32 COMPARE_OP               2 (==)
+             38 POP_JUMP_FORWARD_IF_FALSE     2 (to 44)
+
+ 15          40 LOAD_CONST               5 (3)
+             42 RETURN_VALUE
+
+ 16     >>   44 LOAD_FAST                1 (bucket)
+             46 LOAD_CONST               6 (7)
+             48 COMPARE_OP               2 (==)
+             54 POP_JUMP_FORWARD_IF_FALSE     2 (to 60)
+
+ 17          56 LOAD_CONST               7 (2)
+             58 RETURN_VALUE
+
+ 18     >>   60 LOAD_FAST                1 (bucket)
+             62 LOAD_CONST               8 (6)
+             64 COMPARE_OP               2 (==)
+             70 POP_JUMP_FORWARD_IF_FALSE     2 (to 76)
+
+ 19          72 LOAD_CONST               9 (1)
+             74 RETURN_VALUE
+
+ 20     >>   76 LOAD_CONST              10 (0)
+             78 RETURN_VALUE
+
+Disassembly of <code object total at 0x103134110, file "ledger.py", line 23>:
+ 23           0 RESUME                   0
+
+ 24           2 LOAD_CONST               1 (0)
+              4 STORE_FAST               1 (s)
+
+ 25           6 LOAD_FAST                0 (values)
+              8 GET_ITER
+        >>   10 FOR_ITER                 7 (to 26)
+             12 STORE_FAST               2 (v)
+
+ 26          14 LOAD_FAST                1 (s)
+             16 LOAD_FAST                2 (v)
+             18 BINARY_OP               13 (+=)
+             22 STORE_FAST               1 (s)
+             24 JUMP_BACKWARD            8 (to 10)
+
+ 27     >>   26 LOAD_FAST                1 (s)
+             28 RETURN_VALUE
+
+Disassembly of <code object grade_label at 0x1030d5890, file "ledger.py", line 30>:
+ 30           0 RESUME                   0
+
+ 31           2 LOAD_GLOBAL              0 (LABELS)
+             14 LOAD_GLOBAL              3 (NULL + grade)
+             26 LOAD_FAST                0 (score)
+             28 PRECALL                  1
+             32 CALL                     1
+             42 BINARY_SUBSCR
+             52 RETURN_VALUE

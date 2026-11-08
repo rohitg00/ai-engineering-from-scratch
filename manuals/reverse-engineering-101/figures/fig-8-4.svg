@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 290" role="img" aria-labelledby="fig-8-4-title fig-8-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-4-title">What the session observed, and what stays unknown</title>
+  <desc id="fig-8-4-desc">Two columns. The left column lists five observed claims with their Evidence ids: _grade at 0x100000518 is 60 bytes in ev_41e8ca1c, the divide by 10 through 0x66666667 in ev_2c883c7b and ev_41e8ca1c, five 4-byte entries at 0x1000007d0 from cmp #0x4 and ldr UXTW #0x2, one DATA reference from 0x10000811a and no call edge in ev_41e8ca1c and ev_644b3495, and the strings F D C B A at 0x100000770 to 0x100000778 in ev_ad37f574. The right column lists four open rows with the call that would close each: the five table values need read_bytes at 0x1000007d0 with length 20, the five 8-byte entries at 0x1000007e8 need read_bytes there with length 40, the letter for a score of 95 needs both tables and then _labels at 0x100004030, and who passes a score to _grade_label needs analyze_function on entry.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-teal-ink, #18696a)">OBSERVED, WITH THE RECORD</text>
+  <text x="336" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-rose-ink, #b0344d)">OPEN, WITH THE CALL THAT CLOSES IT</text>
+  <line x1="320" y1="8" x2="320" y2="282" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="30" width="284" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="162" y="46.1" font-size="12" text-anchor="middle" font-weight="700">_grade at 0x100000518, 60 bytes</text>
+  <text x="162" y="63.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ev_41e8ca1c, procedure.body</text>
+  <rect x="20" y="80" width="284" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="162" y="96.1" font-size="12" text-anchor="middle" font-weight="700">divide by 10 via 0x66666667</text>
+  <text x="162" y="113.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ev_2c883c7b and ev_41e8ca1c, assembly</text>
+  <rect x="20" y="130" width="284" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="162" y="146.1" font-size="12" text-anchor="middle" font-weight="700">five 4-byte entries at 0x1000007d0</text>
+  <text x="162" y="163.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ev_41e8ca1c, cmp #0x4, ldr UXTW #0x2</text>
+  <rect x="20" y="180" width="284" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="162" y="196.1" font-size="12" text-anchor="middle" font-weight="700">one DATA reference, no call edge</text>
+  <text x="162" y="213.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ev_41e8ca1c and ev_644b3495, 0x10000811a</text>
+  <rect x="20" y="230" width="284" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="162" y="246.1" font-size="12" text-anchor="middle" font-weight="700">F D C B A at 0x100000770 to 778</text>
+  <text x="162" y="263.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ev_ad37f574, 39 strings</text>
+  <rect x="336" y="30" width="284" height="42" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="478" y="46.1" font-size="12" text-anchor="middle" font-weight="700">the five table values</text>
+  <text x="478" y="63.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">read_bytes 0x1000007d0, length 20</text>
+  <rect x="336" y="80" width="284" height="42" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="478" y="96.1" font-size="12" text-anchor="middle" font-weight="700">five 8-byte entries at 0x1000007e8</text>
+  <text x="478" y="113.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">read_bytes 0x1000007e8, length 40</text>
+  <rect x="336" y="130" width="284" height="42" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="478" y="146.1" font-size="12" text-anchor="middle" font-weight="700">the letter for a score of 95</text>
+  <text x="478" y="163.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">both tables, then _labels at 0x100004030</text>
+  <rect x="336" y="180" width="284" height="42" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="478" y="196.1" font-size="12" text-anchor="middle" font-weight="700">who passes a score to _grade_label</text>
+  <text x="478" y="213.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">analyze_function entry</text>
+</svg>
