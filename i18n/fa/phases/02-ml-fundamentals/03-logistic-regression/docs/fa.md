@@ -3,7 +3,7 @@
 > بازپسین لوژیستیک یک خط مستقیم را به یک منحنی S خم می کند تا به سوالات بله یا نه با احتمال پاسخ دهد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
 **Time:** ~90 minutes
 
@@ -503,6 +503,7 @@ print(f"\nClassification Report:\n{classification_report(y_te, y_pred)}")
 
 این درس نتیجه می دهد:
 - `code/logistic_regression.py`- بازپسین لوژستیک از نو با متریک
+- `code/main.rs`-همين کد رو در "رس" اجرا کن`rustc --edition 2021 code/main.rs && ./main`. .
 
 ## تمرینات
 

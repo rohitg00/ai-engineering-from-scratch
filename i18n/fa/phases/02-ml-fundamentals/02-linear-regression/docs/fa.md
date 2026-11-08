@@ -3,7 +3,7 @@
 > بازپسین خطی بهترین خط مستقیم را از طریق داده های شما می کشد. این "سلام دنیا" یادگیری ماشین است.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra, Calculus, Optimization), Phase 2 Lesson 1
 **Time:** ~90 minutes
 
