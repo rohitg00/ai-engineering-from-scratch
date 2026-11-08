@@ -86,7 +86,7 @@ EAGLE-1 的改動：
 
 EAGLE-2（2024）加上動態樹狀拓樸：草稿不確定的地方樹長得寬，有把握的地方保持窄。在不增加驗證成本的前提下拉高 `α_effective`。
 
-EAGLE-3（Li 等人，2025，"EAGLE-3: Scaling up Inference Acceleration of Large Language Models via Training-Time Test"）拿掉了對固定頂層特徵的依賴，並改用一種新的「測試時模擬」損失來訓練草稿 —— 草稿是在吻合驗證模型測試時分布的輸出上訓練的，而不是在 teacher-forced 的訓練分布上。接受率從 0.75（EAGLE-2）升到 0.82（EAGLE-3），每次驗證的平均詞元數從 3.0 升到 4.5。
+EAGLE-3（Li 等人，2025，"EAGLE-3: Scaling up Inference Acceleration of Large Language Models via Training-Time Test"）拿掉了對固定頂層特徵的依賴，並改用一種新的「測試時模擬」損失來訓練草稿 —— 草稿是在吻合驗證模型測試時分布的輸出上訓練的，而不是在 teacher-forced 的訓練分布上。接受率從 0.75（EAGLE-2）升到 0.82（EAGLE-3），每次驗證的平均詞元數從 3.0 升到 4.5。這些數字來自單一一組參考設定。接受率取決於模型配對、草稿樹與流量型態：階段 10 · 15 引用的是在聊天基準上每個被接受路徑詞元 0.88 到 0.92，而階段 17 · 05 則以生產環境一般聊天的 0.6 到 0.8 來做規劃。
 
 ### 樹狀注意力驗證
 
@@ -135,13 +135,13 @@ def speculative_step(p_target, q_draft, K, temperature=1.0):
     """One round of speculative decoding. Returns list of accepted tokens."""
     # 1. Draft K tokens
     draft_tokens = []
-    q_probs = []
+    q_dists = []
     state = draft_state_init()
     for _ in range(K):
         probs = softmax(q_draft(state) / temperature)
         t = np.random.choice(len(probs), p=probs)
         draft_tokens.append(t)
-        q_probs.append(probs[t])
+        q_dists.append(probs)
         state = draft_step(state, t)
 
     # 2. Target computes p at every drafted position + 1 extra
@@ -151,10 +151,10 @@ def speculative_step(p_target, q_draft, K, temperature=1.0):
     accepted = []
     for k, tok in enumerate(draft_tokens):
         r = np.random.uniform()
-        if r < p_probs_all[k][tok] / q_probs[k]:
+        if r < p_probs_all[k][tok] / q_dists[k][tok]:
             accepted.append(tok)
         else:
-            residual = np.maximum(p_probs_all[k] - q_probs[k], 0)
+            residual = np.maximum(p_probs_all[k] - q_dists[k], 0)
             residual /= residual.sum()
             accepted.append(np.random.choice(len(residual), p=residual))
             return accepted
@@ -178,7 +178,7 @@ def speculative_step(p_target, q_draft, K, temperature=1.0):
 
 1. 實作精確的拒絕規則並用實證驗證它。分別用 `speculative_decode` 與單純的驗證模型取樣各跑 10K 個樣本，計算兩個輸出分布之間的 TV 距離。應該小於 0.01。
 
-2. 算出加速公式。固定 `α` 與 `K`，畫出每次驗證前向傳播的期望詞元數。對 α ∈ {0.5, 0.7, 0.9} 找出最佳的 K。
+2. 算出加速公式。固定 `α` 與 `K`，畫出每次驗證前向傳播的期望詞元數。對 $\alpha \in \lbrace 0.5, 0.7, 0.9 \rbrace$ 找出最佳的 $K$。
 
 3. 訓練一個極小的草稿。拿 124M 的 GPT-2 當驗證模型，用 KL 損失在 100M 詞元上蒸餾出一個 30M 的 GPT-2 草稿。在留出文本上量測 `α`。預期：0.6 到 0.7。
 

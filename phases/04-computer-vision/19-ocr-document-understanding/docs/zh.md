@@ -71,7 +71,7 @@ CTC 就是 CRNN 在 2015 年跑得起來的原因，而到了 2026 年，它仍�
 
 ### 版面分析
 
-面對結構化文件，跑一個版面偵測器（LayoutLMv3、DocLayNet），它會替每個區域標上類別：標題、段落、圖、表格、註腳。閱讀順序於是變成「照版面順序逐一走過區域，接起來就好」。
+面對結構化文件，跑一個版面模型（LayoutLMv3，或在 DocLayNet 資料集上訓練的偵測器），它會替每個區域標上類別：標題、段落、圖、表格、註腳。閱讀順序於是變成「照版面順序逐一走過區域，接起來就好」。
 
 面對表單，用**鍵值對抽取**模型（視覺元素豐富的文件用 Donut，單純的掃描件用 LayoutLMv3）。它們吃進影像加上偵測到的文字與位置，預測出結構化的鍵值對。
 
@@ -160,18 +160,23 @@ class TinyCRNN(nn.Module):
 
 ### 步驟 3：合成 OCR 資料
 
-產生白底黑字的數字字串，做一次端到端的煙霧測試。
+產生白底黑字的字串，做一次端到端的煙霧測試。每個字元變成一欄六條橫槓，用二進位拼出它在詞彙表中的索引。影像必須帶有字元的身分：如果每個字元都是同一個空白方塊，模型就分不出 `a` 和 `x`，損失也會停滯不降。
 
 ```python
 import numpy as np
+
+GLYPHS = "0123456789abcdefghijklmnopqrstuvwxyz"
 
 def synthetic_line(text, height=32, char_width=16):
     W = char_width * len(text)
     img = np.ones((height, W), dtype=np.float32)
     for i, c in enumerate(text):
         x = i * char_width
-        shade = 0.0 if c.isalnum() else 0.5
-        img[6:height - 6, x + 2:x + char_width - 2] = shade
+        code = GLYPHS.find(c) + 1
+        for bit in range(6):
+            if code >> bit & 1:
+                y = 4 + 4 * bit
+                img[y:y + 3, x + 2:x + char_width - 2] = 0.0
     return img
 
 
@@ -202,7 +207,7 @@ print(f"images: {imgs.shape}   targets: {targets.shape}   lengths: {lengths.toli
 model = TinyCRNN(vocab_size=len(vocab))
 opt = torch.optim.Adam(model.parameters(), lr=1e-3)
 
-for step in range(200):
+for step in range(400):
     strings = ["abc" + str(step % 10)] * 4 + ["xyz" + str((step + 1) % 10)] * 4
     imgs, targets, target_lens = build_batch(strings, vocab)
     log_probs = model(imgs)  # (W', 8, vocab)
@@ -211,7 +216,7 @@ for step in range(200):
     opt.zero_grad(); loss.backward(); opt.step()
 ```
 
-在這種極簡合成資料上，損失應該在 200 步內從約 3 掉到約 0.2。
+在這種極簡合成資料上，損失應該在 400 步內從兩位數掉到約 0.3。`code/main.py` 用它自己的字串集合跑同樣的迴圈，接著解碼三個測試字串。
 
 ## 框架應用
 

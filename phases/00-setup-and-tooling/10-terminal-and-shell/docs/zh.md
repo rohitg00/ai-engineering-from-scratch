@@ -97,7 +97,7 @@ python train.py > output.log 2> errors.log
 python train.py > train_full.log 2>&1
 ```
 
-你需要的三種重導向：
+你需要的四種重導向與管線：
 
 | 符號 | 作用 |
 |--------|-------------|
@@ -335,6 +335,16 @@ env | grep -i torch
 2. 把 `code/shell_aliases.sh` 裡的別名加進你的 shell 設定檔，再用 `source ~/.zshrc`（或 `~/.bashrc`）重新載入。
 3. 用 `for i in $(seq 1 100); do echo "epoch $i loss: $(echo "scale=4; 1/$i" | bc)"; sleep 0.1; done > fake_train.log` 造一份假的訓練日誌，然後用 `grep`、`tail` 與 `awk` 只把 loss 數值抽出來。
 4. 為一台你有權限的伺服器設定一筆 SSH config（或者拿 `localhost` 來練語法）。
+
+### 提示
+
+**練習 1。** 先用 `tmux new -s practice` 開始，然後按前綴鍵 `Ctrl+B` 再接 `"` 與 `%` 分割窗格，用 `Ctrl+B` 加方向鍵在窗格間移動。按 `Ctrl+B` 再按 `d` 離開，執行 `tmux ls`，再用 `tmux attach -t practice` 重新接上；三個程式都必須仍在執行。
+
+**練習 2。** 把 `code/shell_aliases.sh` 裡的內容複製到 `~/.zshrc` 或 `~/.bashrc` 的結尾，然後對那個檔案執行 `source`。對其中一個新別名執行 `alias` 或 `type <name>`，確認 shell 已經認得它。
+
+**練習 3。** 先執行 `tail -5 fake_train.log` 看看每行的格式。接著用 `grep loss` 篩選，再用 `awk '{print $NF}'` 只印出最後一個欄位；輸出必須是 100 個逐漸變小的數字。
+
+**練習 4。** 把課程中的 `Host gpu` 區塊複製到 `~/.ssh/config`，並把 `HostName` 與 `User` 改成你的伺服器，或改成 `localhost` 與你的使用者名稱。執行 `ssh -G gpu` 印出 SSH 會使用的設定。如果你有一台連得到、且接受你金鑰的 SSH 伺服器，執行 `ssh gpu` 連上去。
 
 ## 關鍵術語
 

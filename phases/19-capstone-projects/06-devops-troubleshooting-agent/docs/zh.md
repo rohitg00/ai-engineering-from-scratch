@@ -141,7 +141,7 @@ webhook: alert.pagerduty.com -> checkout-api SLO breach, error rate 14%
 
 ## 延伸閱讀
 
-- [AWS DevOps Agent GA](https://aws.amazon.com/blogs/aws/aws-devops-agent-helps-you-accelerate-incident-response-and-improve-system-reliability-preview/) —— 2026 年那份經典參考
+- [AWS DevOps Agent GA](https://aws.amazon.com/blogs/mt/announcing-general-availability-of-aws-devops-agent/)：2026 年那份經典參考
 - [Resolve AI K8s troubleshooting](https://resolve.ai/blog/kubernetes-troubleshooting-in-resolve-ai) —— 競品的參考
 - [NeuBird semantic monitoring](https://www.neubird.ai) —— 語意圖的做法
 - [Metoro AI SRE](https://metoro.io) —— 以 SLO 為先的生產框架

@@ -35,25 +35,27 @@
 | 實際為正 | 0（TP） | 10（FN） |
 | 實際為負 | 0（FP） | 990（TN） |
 
-Accuracy = (0 + 990) / 1000 = 99.0%
+```math
+\text{Accuracy} = (0 + 990) / 1000 = 99.0\%
+```
 
 這個模型抓到零筆詐欺、零個病例、零個缺陷。但準確率說它有 99%。這就是準確率悖論，也是準確率對不平衡問題來說很危險的原因。
 
 ### 更好的指標
 
-**精確率（Precision）** = TP / (TP + FP)。在所有被標為正的東西裡，有多少真的是正的？精確率高代表誤報很少。
+**精確率（Precision）** = $\text{TP} / (\text{TP} + \text{FP})$。在所有被標為正的東西裡，有多少真的是正的？精確率高代表誤報很少。
 
-**召回率（Recall）** = TP / (TP + FN)。在所有實際為正的樣本裡，我們抓到了多少？召回率高代表漏掉的正例很少。
+**召回率（Recall）** = $\text{TP} / (\text{TP} + \text{FN})$。在所有實際為正的樣本裡，我們抓到了多少？召回率高代表漏掉的正例很少。
 
-**F1 分數** = 2 * precision * recall / (precision + recall)。調和平均。比算術平均更會懲罰精確率與召回率之間的極端失衡。
+**F1 分數** = $2 \cdot \text{precision} \cdot \text{recall} / (\text{precision} + \text{recall})$。調和平均。比算術平均更會懲罰精確率與召回率之間的極端失衡。
 
-**F-beta 分數** = (1 + beta^2) * precision * recall / (beta^2 * precision + recall)。beta > 1 時，召回率更重要；beta < 1 時，精確率更重要。F2 在詐欺偵測中很常見（漏掉詐欺比誤報一次更糟）。
+**F-beta 分數** = $(1 + \beta^2) \cdot \text{precision} \cdot \text{recall} / (\beta^2 \cdot \text{precision} + \text{recall})$。$\beta > 1$ 時，召回率更重要；$\beta < 1$ 時，精確率更重要。F2 在詐欺偵測中很常見（漏掉詐欺比誤報一次更糟）。
 
 **AUPRC**（PR 曲線下的面積）。類似 AUC-ROC，但對不平衡資料更有參考價值。隨機分類器的 AUPRC 等於正類別的比例（不像 ROC 是 0.5）。這讓改善的幅度更容易被看見。
 
-**Matthews 相關係數** = (TP * TN - FP * FN) / sqrt((TP+FP)(TP+FN)(TN+FP)(TN+FN))。範圍從 -1 到 +1。只有模型在兩個類別上都表現良好時才會給高分。即使兩個類別的樣本數差距很大，它依然平衡。
+**Matthews 相關係數** = $(\text{TP} \cdot \text{TN} - \text{FP} \cdot \text{FN}) / \sqrt{(\text{TP}+\text{FP})(\text{TP}+\text{FN})(\text{TN}+\text{FP})(\text{TN}+\text{FN})}$。範圍從 -1 到 +1。只有模型在兩個類別上都表現良好時才會給高分。即使兩個類別的樣本數差距很大，它依然平衡。
 
-以上面那個「永遠預測負例」的模型來說：precision = 0/0（未定義，通常設為 0），recall = 0/10 = 0，F1 = 0，MCC = 0。這些指標正確地判定這個模型毫無價值。
+以上面那個「永遠預測負例」的模型來說：$\text{precision} = 0/0$（未定義，通常設為 0），$\text{recall} = 0/10 = 0$，$\text{F1} = 0$，$\text{MCC} = 0$。這些指標正確地判定這個模型毫無價值。
 
 ### 不平衡資料的處理流程
 
@@ -79,9 +81,9 @@ flowchart TD
 
 SMOTE 產生的是新的少數類別合成樣本：看起來合理，但不是複製品。演算法如下：
 
-1. 對每個少數類別樣本 x，在其他少數類別樣本中找出它的 k 個最近鄰
+1. 對每個少數類別樣本 $x$，在其他少數類別樣本中找出它的 $k$ 個最近鄰
 2. 隨機挑一個鄰居
-3. 在 x 與那個鄰居之間的線段上產生一個新樣本
+3. 在 $x$ 與那個鄰居之間的線段上產生一個新樣本
 
 公式是：`new_sample = x + random(0, 1) * (neighbor - x)`
 
@@ -137,24 +139,24 @@ flowchart LR
 不改動資料，改的是模型怎麼看待錯誤。把少數類別分類錯誤的權重調高。
 
 以一個有 950 筆負例、50 筆正例的二元問題為例：
-- 負類別的權重 = n_samples / (2 * n_negative) = 1000 / (2 * 950) = 0.526
-- 正類別的權重 = n_samples / (2 * n_positive) = 1000 / (2 * 50) = 10.0
+- 負類別的權重 = $n_{\text{samples}} / (2 \cdot n_{\text{negative}}) = 1000 / (2 \cdot 950) = 0.526$
+- 正類別的權重 = $n_{\text{samples}} / (2 \cdot n_{\text{positive}}) = 1000 / (2 \cdot 50) = 10.0$
 
 正類別拿到 19 倍的權重。分錯一筆正例的代價，等於分錯 19 筆負例。模型被迫去關注少數類別。
 
 在邏輯迴歸裡，這件事會改寫損失函式：
 
-```
-weighted_loss = -sum(w_i * [y_i * log(p_i) + (1-y_i) * log(1-p_i)])
+```math
+\text{weighted\_loss} = -\sum \bigl( w_i \cdot [y_i \log(p_i) + (1-y_i) \log(1-p_i)] \bigr)
 ```
 
-其中 w_i 取決於樣本 i 屬於哪個類別。
+其中 $w_i$ 取決於樣本 $i$ 屬於哪個類別。
 
 在期望值上，類別權重與過取樣在數學上是等價的，但它不需要產生新的資料點。所以它更快，也避開了複製樣本帶來的過度擬合風險。
 
 ### 決策閾值調整
 
-大多數分類器輸出的是機率。預設的閾值是 0.5：如果 P(positive) >= 0.5，就預測為正。但 0.5 這個值是隨便定的。類別不平衡時，最佳的決策閾值通常低很多。
+大多數分類器輸出的是機率。預設的閾值是 0.5：如果 $P(\text{positive}) \ge 0.5$，就預測為正。但 0.5 這個值是隨便定的。類別不平衡時，最佳的決策閾值通常低很多。
 
 流程如下：
 1. 訓練一個模型
@@ -172,7 +174,7 @@ flowchart LR
     E --> F[Use in Production]
 ```
 
-模型對一筆詐欺交易可能輸出 P(fraud) = 0.15。在閾值 0.5 之下，它會被分類成不是詐欺；在閾值 0.10 之下，它就被正確抓到了。機率的校準沒有排序來得重要 —— 只要詐欺拿到的機率比非詐欺高，就一定存在一個閾值可以把兩者分開。
+模型對一筆詐欺交易可能輸出 $P(\text{fraud}) = 0.15$。在閾值 0.5 之下，它會被分類成不是詐欺；在閾值 0.10 之下，它就被正確抓到了。機率的校準沒有排序來得重要 —— 只要詐欺拿到的機率比非詐欺高，就一定存在一個閾值可以把兩者分開。
 
 ### 成本敏感學習
 
@@ -180,8 +182,8 @@ flowchart LR
 
 | | 預測為正 | 預測為負 |
 |--|---|---|
-| 實際為正 | 0（正確） | C_FN = 100 |
-| 實際為負 | C_FP = 1 | 0（正確） |
+| 實際為正 | 0（正確） | $C_{\text{FN}} = 100$ |
+| 實際為負 | $C_{\text{FP}} = 1$ | 0（正確） |
 
 漏掉一筆詐欺交易（FN）的代價，是誤報一次（FP）的 100 倍。模型最佳化的是總成本，而不是錯誤的總數。
 
@@ -453,8 +455,14 @@ w_cw, b_cw = logistic_regression_weighted(
 probs_cw = sigmoid(X_test @ w_cw + b_cw)
 preds_cw = (probs_cw >= 0.5).astype(int)
 
-# Threshold tuning (tune on held-out validation set, not test set)
-probs_val = sigmoid(X_val @ w_cw + b_cw)
+# Threshold tuning (tune on a validation slice of the training set, not the test set)
+val_split = int(0.75 * len(y_train))
+X_tr, X_val = X_train[:val_split], X_train[val_split:]
+y_tr, y_val = y_train[:val_split], y_train[val_split:]
+w_val, b_val = logistic_regression_weighted(
+    X_tr, y_tr, compute_class_weights(y_tr), lr=0.1, epochs=300
+)
+probs_val = sigmoid(X_val @ w_val + b_val)
 best_thresh, best_f1 = find_optimal_threshold(y_val, probs_val, metric="f1")
 preds_thresh = (probs_cw >= best_thresh).astype(int)
 ```

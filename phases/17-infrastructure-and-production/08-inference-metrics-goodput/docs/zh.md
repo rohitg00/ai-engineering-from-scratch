@@ -1,6 +1,6 @@
 # 推論指標 —— TTFT、TPOT、ITL、Goodput、P99
 
-> 有四個指標決定一次推論部署能不能用。TTFT 是預填加排隊加網路。TPOT（等價於 ITL）是記憶體受限的每詞元解碼成本。端到端延遲是 TTFT 加上 TPOT 乘以輸出長度。吞吐量是整個機隊加總的每秒詞元數。但對產品而言真正要緊的是 goodput —— 同時滿足每一項 SLO 的請求比例。高吞吐量配低 goodput，代表你在處理那些永遠來不及送到使用者手上的詞元。2026 年 Llama-3.1-8B-Instruct 在 TRT-LLM 上的參考數字：平均 TTFT 162 毫秒、平均 TPOT 7.33 毫秒、平均端到端 1,093 毫秒。永遠要報 P50、P90、P99 —— 絕不要只報平均。還要小心量測陷阱：GenAI-Perf 在計算 ITL 時排除 TTFT，LLMPerf 則納入它；兩套工具對同一趟執行的 TPOT 會給出不同答案。
+> 有五個指標決定一次推論部署能不能用。TTFT 是預填加排隊加網路。TPOT（常以 ITL 的名義回報，不過各工具對 ITL 是否計入第一個詞元看法不一）是記憶體受限的每詞元解碼成本。端到端延遲是 TTFT 加上 TPOT 乘以輸出長度。吞吐量是整個機隊加總的每秒詞元數。但對產品而言真正要緊的是 goodput —— 同時滿足每一項 SLO 的請求比例。高吞吐量配低 goodput，代表你在處理那些永遠來不及送到使用者手上的詞元。2026 年 Llama-3.1-8B-Instruct 在 TRT-LLM 上的參考數字：平均 TTFT 162 毫秒、平均 TPOT 7.33 毫秒、平均端到端 1,093 毫秒。永遠要報 P50、P90、P99 —— 絕不要只報平均。還要小心量測陷阱：GenAI-Perf 在計算 ITL 時排除 TTFT，LLMPerf 則納入它；兩套工具對同一趟執行的 TPOT 會給出不同答案。
 
 **類型：** 學習
 **程式語言：** Python (stdlib, toy percentile calculator and goodput reporter)
@@ -52,7 +52,7 @@
 
 `goodput = fraction of requests meeting (TTFT <= a) AND (TPOT <= b) AND (E2E <= c)`
 
-SLO 是一個多重限制。只有在每一項限制都成立時，一個請求才算「好」。Goodput 就是那個比例。高吞吐量配 60% goodput 是失敗。較低吞吐量配 99% goodput 才是目標。
+SLO 是一個多重限制。只有在每一項限制都成立時，一個請求才算「好」。Goodput 就是那個比例。有些論文和儀表板改把 goodput 回報成速率：每秒滿足所有 SLO 的請求數。把比例乘上請求速率即可換算。高吞吐量配 60% goodput 是失敗。較低吞吐量配 99% goodput 才是目標。
 
 2026 年，goodput 是 MLPerf Inference v6.0 提交中、以及 AI 平台供應商內部 SLA 追蹤所使用的指標。
 
@@ -107,6 +107,8 @@ throughput-latency
 ## 框架應用
 
 `code/main.py` 是一個玩具版的 goodput 計算器。產生一份合成延遲分布、套上一份 SLO，然後算出 goodput。它也在同一條軌跡上展示 GenAI-Perf 與 LLMPerf 的 TPOT 差異。
+
+[Inside an LLM Serving GPU](https://aiengineeringfromscratch.com/inside-an-llm-serving-gpu?users=1) 這台機器展示了在 NVIDIA L4 上每個輸出詞元的時間從何而來。一次解碼步驟要讀取 16.41 GB 的權重，以 300 GB/s 計算至少要 54.7 毫秒，而實測的步驟花了 60.16 毫秒。
 
 ## 產出交付
 

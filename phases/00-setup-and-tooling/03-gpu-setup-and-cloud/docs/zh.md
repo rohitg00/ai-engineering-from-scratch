@@ -55,7 +55,13 @@ s0-gpu-dispatch
 nvidia-smi
 ```
 
-安裝支援 CUDA 的 PyTorch：
+安裝支援 CUDA 的 PyTorch。在 Linux 上，預設的 wheel 就內建 CUDA。在 Windows 上，請從 pytorch.org 的選擇器複製 CUDA 版的指令。
+
+```bash
+pip install torch torchvision torchaudio
+```
+
+接著確認 PyTorch 能看到 GPU：
 
 ```python
 import torch
@@ -129,6 +135,14 @@ if torch.cuda.is_available():
 1. 執行上面的效能測試，比較 CPU 與 GPU 的時間
 2. 如果你沒有 GPU，就在 Google Colab 上跑，然後比較
 3. 查看你有多少顯示記憶體，估算最大能塞進多大的模型（經驗法則：fp16 每個參數 2 bytes）
+
+### 提示
+
+**練習 1。** 照原樣執行「動手實作」一節的程式碼，記下 CPU 時間、GPU 時間和加速倍數那一行。再跑第二次；第一次 GPU 執行包含啟動成本，所以要比較的是第二次的數字。
+
+**練習 2。** 在 Colab 中選擇 Runtime > Change runtime type > GPU，再把效能測試貼進一個儲存格。先在另一個儲存格執行 `!nvidia-smi`；它必須顯示 GPU 名稱，效能測試的結果才有意義。
+
+**練習 3。** 像 `code/gpu_check.py` 那樣，用 `torch.cuda.get_device_properties(0).total_memory / 1e9` 讀出總記憶體。把以位元組計的記憶體除以 2，得到 fp16 下的參數數量，然後保留一些餘裕，因為激活值和 CUDA context 也會佔用記憶體。
 
 ## 關鍵術語
 

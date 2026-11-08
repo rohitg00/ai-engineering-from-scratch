@@ -239,6 +239,14 @@ AI 工作裡常見的流程：
 2. 建立一個同時含 markdown 與程式碼儲存格的 notebook，讓它載入一個 CSV、顯示 dataframe，並畫出一張圖。接著執行 Kernel > Restart & Run All，確認它從頭跑到尾都沒問題
 3. 把 `code/notebook_tips.py` 的程式碼貼進 Colab notebook，用免費 GPU 跑一次
 
+### 提示
+
+**練習 1。** 用 `jupyter lab` 啟動 JupyterLab，然後把兩個版本各放在一個以 `%timeit` 開頭的儲存格裡。兩個儲存格都用同樣的 100,000 大小，這樣兩個時間量測的才是同一份工作。
+
+**練習 2。** 用 `pd.read_csv` 讀資料，把 dataframe 放在儲存格的最後一行來顯示，再用 `df.plot()` 或 matplotlib 畫圖。執行 Kernel > Restart & Run All 之後，每個儲存格的執行計數器都必須有數字，而且不能有任何儲存格出現錯誤。
+
+**練習 3。** 在 Colab 裡，貼上程式碼之前先選 Runtime > Change runtime type > GPU。正確的結果是：`code/notebook_tips.py` 裡的每個函式都印出自己的段落，而且在儲存格裡執行 `torch.cuda.is_available()` 會回傳 `True`。
+
 ## 關鍵術語
 
 | 術語 | 大家怎麼說 | 實際上是什麼 |

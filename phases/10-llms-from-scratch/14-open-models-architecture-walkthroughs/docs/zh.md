@@ -52,8 +52,8 @@
 
 LayerNorm 減去平均值、除以標準差、縮放、再平移。RMSNorm 只留下縮放這一步：
 
-```
-RMSNorm(x) = x / sqrt(mean(x^2) + eps) * gamma
+```math
+\mathop{\mathrm{RMSNorm}}(x) = \frac{x}{\sqrt{\mathop{\mathrm{mean}}(x^2) + \epsilon}} \cdot \gamma
 ```
 
 不減平均值。沒有偏置項。每個詞元少一次矩陣乘法。Zhang 與 Sennrich（2019）主張它在機器翻譯上與 LayerNorm 打平，卻快了 10%。每個現代開放模型都在跑它。
@@ -78,8 +78,8 @@ score = q_rotated . k_rotated
 
 GPT-2 的 MLP 是 `x -> gelu(xW1 + b1) -> (...)W2 + b2`。SwiGLU（Shazeer 2020）把激活函式換成一個帶閘門的乘積：
 
-```
-SwiGLU(x) = (xW1) * sigmoid(xW1) * xV
+```math
+\mathop{\mathrm{SwiGLU}}(x) = (xW_1) \cdot \mathop{\mathrm{sigmoid}}(xW_1) \cdot xV
 ```
 
 兩個平行的投影而不是一個，由 Swish 激活來控制閘門。在每參數的困惑度上，實證表現更強。Llama 2 採用了它，其他人跟進。MLP 的隱藏維度通常會設定成讓總參數量與原本的稠密 MLP 相當：如果 GPT-2 用的是 `ff_dim = 4 * hidden`，SwiGLU 就用 `ff_dim = (2/3) * 4 * hidden = 8/3 * hidden`。
@@ -90,7 +90,7 @@ GPT-2 使用 **多頭注意力（MHA）**：每個頭都有自己的 Q、K、V �
 
 **多查詢注意力（MQA，Shazeer 2019）** 讓所有頭共用一組 K 與一組 V。把 KV 快取縮小 num_heads 倍，在典型模型上是 12 到 32 倍的減量。在困難的評測上準確度會略降。
 
-**分組查詢注意力（GQA，Ainslie et al. 2023）** 是折衷方案：G 組 Q 頭共用一個 K 與一個 V。Llama 3 8B 使用 GQA，有 32 個 Q 頭與 8 個 KV 頭（G=8），所以 KV 快取比完整 MHA 縮小 4 倍。
+**分組查詢注意力（GQA，Ainslie et al. 2023）** 是折衷方案：$G$ 組 Q 頭共用一個 K 與一個 V。Llama 3 8B 使用 GQA，有 32 個 Q 頭與 8 個 KV 頭（$G=8$），所以 KV 快取比完整 MHA 縮小 4 倍。
 
 **多頭潛在注意力（MLA，DeepSeek 2024）** 把 K 與 V 壓縮成一個共用的低秩潛在表示，再逐頭投影回去。在保留每個頭表達力的同時進一步縮小 KV 快取。DeepSeek-V2 與 V3 的長上下文表現就靠這個。
 
@@ -154,6 +154,7 @@ graph LR
 | Qwen 2.5 72B | 2024 | 72B | 72B | RMSNorm | SwiGLU | RoPE (YaRN) | GQA (64/8) | 否 | 128k |
 | DeepSeek V2 236B | 2024 | 236B | 21B | RMSNorm | SwiGLU | RoPE | MLA | 是（160 個專家，top-6） | 128k |
 | DeepSeek V3 | 2024 | 671B | 37B | RMSNorm | SwiGLU | RoPE | MLA | 是（256 個專家，top-8） | 128k |
+| Spark-X2.5 4B | 2026 | 4.1B | 4.1B | RMSNorm | GeGLU | RoPE + 滑動視窗（3:1） | GQA（16/4），閘控輸出 | 否 | 1M |
 
 掃過這些欄位。RMSNorm 是通例。SwiGLU 或它的表親 GeGLU 是通例。RoPE 是通例。7B 以上 GQA 是通例，除非被 MLA 取代。MoE 則是頂端那一層的分水嶺。
 
@@ -176,6 +177,11 @@ Llama 3 8B 的 config：
 ```
 
 每個欄位都對應到你已經實作過的東西。
+較新的 config 會多出幾個會改變計算方式的欄位，所以計算機在它們存在時會讀取：
+
+- `head_dim`：當它不等於 `hidden_size / num_attention_heads` 時會明確設定。Gemma 2 9B 的 hidden 是 3584、有 16 個頭，但 `head_dim` 是 256，所以它的 Q 投影是 3584 x 4096，不是方陣。
+- `tie_word_embeddings`：LM 輸出頭是否重用嵌入矩陣。Llama 3 8B 沒有綁定，如果你只把嵌入算一次，就會漏掉 525M 個參數。
+- `layer_types` 與 `sliding_window`：哪些層注意完整上下文，哪些層只注意最近的 W 個詞元。
 
 - `hidden_size`：嵌入維度。
 - `intermediate_size`：MLP 隱藏維度（hidden 的 3.5 倍 —— SwiGLU 的算法）。
@@ -212,6 +218,15 @@ Llama 3 8B 在 128k 上下文、BF16、head_dim = hidden / num_heads = 128：
 
 8B 的權重在 BF16 下是 16 GB。單一條 128k 序列的 KV 快取比權重還大。這正是推動 GQA、MLA 與 KV 快取量化研究的記憶體壓力。
 
+這條公式假設每一層都快取整條序列。滑動視窗層永遠只需要最近的 W 個詞元，所以對混合模型來說，要逐層加總：
+
+```
+kv_cache = 2 * num_kv_heads * head_dim * bytes_per_element
+           * (full_layers * max_seq_len + sliding_layers * min(W, max_seq_len))
+```
+
+Spark-X2.5 4B 每一個全注意力層搭配三個滑動視窗層（$W = 512$）：36 層中有 9 層是完整的、27 層是滑動的。在它 1M 詞元的上下文下，BF16 每條序列約 38.7 GB（36 GiB）。如果 36 層全都快取完整上下文，會是 154.6 GB（144 GiB）。幾乎全部成本都落在完整層上，所以在長上下文模型上，完整層與滑動層的比例是第一個該看的數字。
+
 ### 各個模型什麼時候勝出
 
 - **單張 80GB GPU、不用 MoE**：Llama 3 8B、Mistral 7B、Gemma 2 9B。容易服務，工具生態完整。
@@ -219,6 +234,7 @@ Llama 3 8B 在 128k 上下文、BF16、head_dim = hidden / num_heads = 128：
 - **要最強的開放能力、能接受 MoE 的複雜度**：DeepSeek V3、Mixtral 8x22B。每個啟用 FLOP 換到的能力最好。
 - **長上下文需求**：Llama 3（搭配 RoPE 縮放可到 128k）、DeepSeek（MLA 的優勢）。
 - **低延遲服務**：Gemma 2 9B（滑動視窗降低了長上下文的運算量）。
+- **小記憶體預算下的長上下文**：像 Spark-X2.5 4B 這樣的混合滑動視窗模型，只有四分之一的層要為完整上下文付出代價。
 
 ```figure
 rmsnorm-vs-layernorm
@@ -237,13 +253,17 @@ config = {
 }
 ```
 
-這支腳本逐欄位走過整個架構，計算嵌入、注意力（含 GQA 的減量）、MLP（含 SwiGLU 的擴張）、layernorm 與輸出頭的參數量。接著它算出在指定上下文長度下的 KV 快取，並印出摘要。
+這支腳本逐欄位走過整個架構，計算嵌入、注意力（含 GQA 的減量，以及 config 有設定時的明確 `head_dim`）、MLP（含 SwiGLU 或 GeGLU 的擴張）、layernorm，以及未與嵌入綁定時的 LM 輸出頭的參數量。接著它在指定上下文長度下逐層算出 KV 快取，讓滑動視窗層以其視窗為上限，並印出摘要。
+
+對稠密模型來說，總數與官方公布的參數量完全吻合：Llama 3 8B 算出 8,030,261,248，Gemma 2 9B 是 9,241,705,984，Spark-X2.5 4B 是 4,112,079,360。Qwen 2.5 72B 差了 819,200，這就是練習 1。
 
 實作見 `code/main.py`。
 
 ## 框架應用
 
 拿腳本內建的 Llama 3 8B、Mistral 7B、Mixtral 8x7B 與 DeepSeek V3 設定跑這台計算機。比較各自的參數拆解。注意 MoE 模型的總參數量遠超稠密模型，但啟用參數量往往還更小。也注意 DeepSeek V3 的 KV 快取比 Llama 3 405B 更小，儘管總參數量更多 —— 這就是 MLA 的作用。
+
+接著比較 Gemma 2 9B 與 Spark-X2.5 4B。腳本會為兩者印出實際需要的 KV 快取，以及假設每一層都是全注意力時需要的 KV 快取。Gemma 2 在 8k 上下文下以 1:1 交替，所以省下的不多。Spark-X2.5 在 1M 上下文下以 3:1 搭配 512 詞元的視窗，所以省下 4 倍。
 
 接著填入你本機任何一個模型的 config，讀摘要，判斷它裝不裝得進你的 GPU。
 
@@ -275,7 +295,7 @@ config = {
 | MoE | 「稀疏專家」 | 專家混合：每個區塊有 N 個 MLP，路由器替每個詞元挑 top-k —— 總參數量巨大，啟用參數量很小 |
 | Top-k 路由 | 「每個詞元挑 k 個專家」 | 路由器替每個專家算一個分數，啟用分數最高的 k 個 —— 典型的 k 從 2（Mixtral）到 8（DeepSeek） |
 | YaRN | 「把 RoPE 拉長」 | Yet another RoPE extension —— 內插旋轉角度，在推論時把上下文從 8k 延展到 128k 以上 |
-| 滑動視窗注意力 | 「不要什麼都去注意」 | 每個詞元只注意最近的 W 個詞元 —— 把每詞元的注意力成本壓在 O(W)，Gemma 2 與早期 Mistral 都用 |
+| 滑動視窗注意力 | 「不要什麼都去注意」 | 每個詞元只注意最近的 $W$ 個詞元 —— 把每詞元的注意力成本壓在 $O(W)$，Gemma 2 與早期 Mistral 都用 |
 | 啟用參數量 | 「每個詞元真的跑到的部分」 | 對 MoE 模型而言，每個詞元會做前向傳播的參數量（遠小於總參數量）—— 決定每詞元的 FLOPs |
 
 ## 延伸閱讀

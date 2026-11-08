@@ -67,21 +67,21 @@ PATTERNS = [
 
 完整的玩具版抽取器見 `code/main.py`。Hearst 模式至今仍活在特定領域的管線裡，因為它們可以除錯。
 
-### 步驟 2：監督式關係分類
+### 步驟 2：監督式 seq2seq 關係抽取
 
 ```python
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 tok = AutoTokenizer.from_pretrained("Babelscape/rebel-large")
-model = AutoModelForSequenceClassification.from_pretrained("Babelscape/rebel-large")
+model = AutoModelForSeq2SeqLM.from_pretrained("Babelscape/rebel-large")
 
 text = "Tim Cook was born in Alabama. He later became CEO of Apple."
 encoded = tok(text, return_tensors="pt", truncation=True)
 output = model.generate(**encoded, max_length=200)
-triples = tok.batch_decode(output, skip_special_tokens=False)
+decoded = tok.batch_decode(output, skip_special_tokens=False)
 ```
 
-REBEL 是一個 seq2seq 的關係抽取器：文本進，三元組出，而且直接就是 Wikidata 的屬性 id。它是用遠距監督的資料微調出來的。開放權重的標準基線。
+REBEL 是一個以 BART 為基礎的 seq2seq 關係抽取器：它直接生成三元組，而不是對實體配對做分類。文本進，三元組出，關係名稱取自 Wikidata 的屬性。解碼出來的字串仍帶著 REBEL 的 `<triplet>`、`<subj>` 與 `<obj>` 標記，所以要依這些標記切開（就像模型卡裡的解析器那樣），才能得到 `(subject, relation, object)` 紀錄。它是用遠距監督的資料微調出來的。開放權重的標準基線。
 
 ### 步驟 3：帶錨定的 LLM 提示式抽取
 

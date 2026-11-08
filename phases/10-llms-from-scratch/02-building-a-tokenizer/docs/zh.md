@@ -210,10 +210,10 @@ def pre_tokenize(text):
 
 ```python
 print(pre_tokenize("Hello, world! Don't stop."))
-# [' Hello', ',', ' world', '!', " Don", "'t", ' stop', '.']
+# ['Hello', ',', ' world', '!', ' Don', "'t", ' stop', '.']
 ```
 
-前導空白留著跟單字黏在一起。縮寫在撇號處切開。標點自成一片。BPE 永遠不會跨越這些邊界合併詞元。
+前導空白留著跟後面那個單字黏在一起。第一個單字前面沒有空白，所以它那一片就是 `Hello`。縮寫在撇號處切開。標點自成一片。BPE 永遠不會跨越這些邊界合併詞元。
 
 ### 步驟 3：在位元組序列上跑 BPE
 

@@ -94,6 +94,8 @@ roofline
 
 `code/main.py` 實作一個玩具版基數樹 KV 快取，外加一個帶兩種政策的排程器：FCFS 與知快取。讓同一份工作負載跑過兩者，回報前綴快取命中率與吞吐量差距。接著再跑一份「順序被打亂」的工作負載，展示那 6.4 倍的塌陷。
 
+[Inside an LLM Serving GPU](https://aiengineeringfromscratch.com/inside-an-llm-serving-gpu?workload=shared&shared=4096) 這台機器在一次真實的 L4 執行上展示基數快取。四個群組各有自己的 4,096 詞元系統提示詞。群組的第一個請求會計算它的提示詞；只要那段提示詞還留在快取裡，同群組後續的請求就只需計算 128 詞元的問題。把基數快取關掉，就會看到首詞元延遲的中位數從 479 ms 變成 14,706 ms。
+
 ## 產出交付
 
 這一課產出 `outputs/skill-radix-scheduler-advisor.md`。給定一份工作負載描述（提示詞樣板形狀、檢索模式、併發租戶數），它會產出一份提示詞排序的處方，以及一個「要不要採用 SGLang」的判定。
