@@ -102,7 +102,18 @@ Work in this order:
 3. **House terms.** New headings need one agreed translation. So far: `### Hints` is `### 提示`,
    with entries labelled `**練習 N。**`; `## Summary` is `## 總結`.
 
-`--verify` checks structure only, so also read the diff for prose changes it can't see.
+`--verify` checks structure only, so it can't see prose changes. `zh_drift.py` can:
+
+```bash
+python3 scripts/zh_drift.py --kind content     # lessons whose English wording changed
+python3 scripts/zh_drift.py --diff <lesson>    # the English hunks to port
+python3 scripts/zh_terms.py --strict           # house terms and standard headings
+```
+
+Record the before and after counts in the sync log. Any commit that rewrites `zh.md` without
+porting the English (the mechanical pass in step 1, a terminology sweep) gets a `Zh-Sync: none`
+trailer in its message, or `zh_drift.py` treats it as a full sync and hides the drift behind it.
+The 2026-11 mechanical pass predates the trailer; `LEGACY_NO_SYNC` in the script lists it.
 
 **zh-Hant curriculum dictionary**
 

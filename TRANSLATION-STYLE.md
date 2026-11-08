@@ -9,10 +9,21 @@ below:
 
 Verify with `python3 scripts/i18n_status.py --verify` before committing.
 
-**Scope: lesson prose only.** `quiz.json` and `outputs/*.md` deliberately stay English for now. Both
-are user-facing — `lesson.html` fetches the quiz and renders the output artifacts — so translating
-them would also require a loader change, since neither has a language variant the way `docs/zh.md`
-does. Out of scope until that's wanted.
+**Scope: lesson prose and quizzes.** `docs/zh.md` and `quiz.zh.json` (same schema as `quiz.json`;
+translate `question`, `options` and `explanation` only, never `stage`, `correct` or the order).
+`outputs/*.md` stays English: those files are prompts for agents, and the site renders them as-is.
+
+Checks before committing, all from the repo root:
+
+```bash
+python3 scripts/i18n_status.py --verify               # structure parity with en.md
+python3 scripts/check_quiz_translations.py --lang zh  # quiz schema, no Simplified glyphs
+python3 scripts/zh_terms.py --strict                  # Taiwan terms, standard headings, type labels
+python3 scripts/zh_drift.py --diff <lesson-dir>       # English changes not yet ported
+```
+
+The `translate-zh` skill (`.claude/skills/translate-zh/`) runs this workflow end to end, and
+`docs/zh-translation.md` lists the current gaps.
 
 ## Mirror the English structure exactly
 
@@ -60,7 +71,13 @@ don't write one.
 | Exercises | 練習 |
 | Key Terms | 關鍵術語 |
 | Further Reading | 延伸閱讀 |
+| Pitfalls, Common Pitfalls | 常見陷阱 |
+| Summary | 總結 |
+| `### Hints` | `### 提示`, entries labelled `**練習 N。**` |
 | `Step N:` | `步驟 N：` |
+
+`scripts/zh_terms.py` enforces the `##` rows of this table and the `**類型：**` words above, and
+`--fix` applies them.
 
 Exercise labels: `**Easy.**`→`**簡單。**`, `**Medium.**`→`**中等。**`, `**Hard.**`→`**困難。**`
 
@@ -70,11 +87,12 @@ Exercise labels: `**Easy.**`→`**簡單。**`, `**Medium.**`→`**中等。**`,
 ## Terminology
 
 Taiwan usage, not Mainland: 程式碼 (not 代碼) · 資料 (not 數據) · 函式 (not 函數) · 演算法 (not 算法) ·
-推論 (inference, not 推理) · 網路 (not 網絡) · 記憶體 · 執行環境 · 函式庫 · 套件 · 驅動程式 ·
+推論 (inference; 推理 only for *reasoning*) · 網路 (not 網絡) · 記憶體 · 執行環境 · 函式庫 · 套件 · 驅動程式 ·
 儲存庫 (repository) · 終端機 · 虛擬環境 · 部署 · 搜尋 (not 搜索) · 篩選 · 快取 (cache).
 
 ML terms: 詞元 (token) · 嵌入 (embedding) · 微調 (fine-tuning) · 預訓練 · 損失函式 · 梯度 · 張量 ·
-最佳化器 (optimizer) · 注意力機制 · 自注意力 · 編碼器／解碼器 · 代理程式 (agent) · 提示詞 (prompt) ·
+最佳化器 (optimizer) · 注意力機制 · 自注意力 · 編碼器／解碼器 · 代理 (agent; 代理程式 when the text
+means the program itself) · 提示詞 (prompt) ·
 量化 · 分詞器 (tokenizer) · 正則化 · 過度擬合 (overfitting) · 單純貝氏 (naive Bayes, **not** the
 Mainland 樸素貝氏) · 過濾法／包裝法／嵌入法 (filter / wrapper / embedded methods).
 

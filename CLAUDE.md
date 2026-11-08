@@ -42,6 +42,10 @@ delete them to tidy an upstream diff):
 | `.gitignore` alias-stub block | leaves generated redirect stubs untracked-but-dirty |
 | `CLAUDE.md` | this file |
 | `docs/fork-sync.md` | the upstream-sync runbook and the per-sync log — read it before syncing, append to it after |
+| `docs/zh-translation.md` | the zh-Hant gap list and improvement backlog |
+| `TRANSLATION-STYLE.md` | the zh-Hant style guide every translation follows |
+| `scripts/zh_drift.py`, `scripts/zh_terms.py` (+ tests) | the drift report and the Taiwan-terminology CI gate in `fork-tooling.yml` |
+| `.claude/skills/translate-zh/` + its `.gitignore` exception | the agent workflow for translating, syncing and reviewing zh lessons |
 
 Upstream files that carry a fork edit. Expect them in sync conflicts and keep the fork's side:
 
@@ -210,7 +214,10 @@ alignment. Verify parity before committing — heading count, fence count, figur
 image paths should all match `en.md`.
 
 `docs/zh.md` is invisible to the rest of the toolchain: `audit_lessons.py` only checks `en.md`, and
-`build.js` extracts summaries and keywords from `en.md` only. Nothing regenerates or validates it.
+`build.js` extracts summaries and keywords from `en.md` only. Only the fork's own scripts read it:
+`i18n_status.py --verify` (structure), `zh_terms.py` (house terms), and `zh_drift.py` (English
+changes not yet ported, which `--verify` cannot see). Use the `translate-zh` skill, which follows
+`TRANSLATION-STYLE.md`.
 
 ### Site JS layout
 
