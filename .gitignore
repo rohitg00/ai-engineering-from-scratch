@@ -133,6 +133,9 @@ site/langs.js
 
 !.claude/skills/build-project/
 !.claude/skills/build-project/**
+# fork-only: zh-Hant translation workflow
+!.claude/skills/translate-zh/
+!.claude/skills/translate-zh/**
 site/projects-data.js
 site/project-content/
 
