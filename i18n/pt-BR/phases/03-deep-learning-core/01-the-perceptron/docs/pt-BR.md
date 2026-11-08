@@ -3,7 +3,7 @@
 > O perceptron é o átomo das redes neurais, se o abrirmos, encontramos pesos, preconceitos e uma decisão.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra Intuition)
 **Time:** ~60 minutes
 
