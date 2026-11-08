@@ -3,7 +3,7 @@
 > Sự lùi lại tuyến tính vẽ đường thẳng tốt nhất qua dữ liệu của bạn. Đó là "thế giới chào" của máy học.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 1 (Linear Algebra, Calculus, Optimization), Phase 2 Lesson 1
 **Time:** ~90 minutes
 

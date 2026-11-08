@@ -3,7 +3,7 @@
 > Sự lùi lại hậu cần cong một đường thẳng vào một đường cong S để trả lời câu hỏi có hay không với xác suất.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Julia, Rust
 **Prerequisites:** Phase 2 Lesson 1-2 (What Is ML, Linear Regression)
 **Time:** ~90 minutes
 
@@ -503,6 +503,7 @@ Việc thực hiện từ đầu của bạn tạo ra cùng ranh giới quyết 
 
 Bài học này mang lại:
 - `code/logistic_regression.py`- Lập ngược hậu cần từ đầu với các metrics
+- `code/main.rs`- cùng mã trong Rust, chỉ có STDlib.`rustc --edition 2021 code/main.rs && ./main`- Tôi không biết.
 
 ## Các bài tập
 
