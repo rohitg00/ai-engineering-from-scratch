@@ -3,7 +3,7 @@
 > التدريب متوازي ومتعلق بالفلوب، والإستعراض متسلسل ومتعلق بالذاكرة، عقدة زجاجة مختلفة، خدوش مختلفة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~75 minutes
 
@@ -128,7 +128,7 @@ flash-attention-memory
 iso-machine {"machine":"kv-cache"}
 ```
 
-انظر`code/main.py`نطبق:
+انظر`code/main.py`أو ميناء " رست "`code/main.rs`لتشغيل نسخة " الرست "`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`نطبق:
 
 1. سذاجة$O(N^2)$مُشفّر إضافي
 2. أ$O(N)$كيف-كاشة الكشيف الكشيف

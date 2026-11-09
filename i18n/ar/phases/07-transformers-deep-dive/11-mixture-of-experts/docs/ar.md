@@ -3,7 +3,7 @@
 > محول 70B كثيف ينشط كل معايير لكل رمز. 671B MoE ينشط 37B فقط لكل رمز ويضربه على كل مقياس.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
@@ -90,6 +90,13 @@ expert-routing
 - التوجيه العلوي k=2
 - أوزان المفاتيح المعتادة لـ softmax
 - التوازن الخالي من الخسائر المساعدة عبر التحيز لكل خبير
+
+`code/main.rs`هو منفذ Rust مع نفس الوظائف والإثباتات. يستخدم فقط المكتبة القياسية. الأرقام العشوائية تختلف عن Python، ولكن الاستنتاجات المطبوعة هي نفسها.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### الخطوة الأولى: جهاز التوجيه
 
