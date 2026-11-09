@@ -3,7 +3,7 @@
 > Kaplan 2020 makalesinde: daha büyük model, daha düşük kayıp. 2022 Hoffmann makalesinde: az eğitim aldığınızı söyledi. Hesaplama iki kova  parametreler ve jetonlara ayrılır  ve bölünme açık değildir.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > BERT her iki tarafı da görüyor. GPT sadece geçmişi görüyor. Üçgen maskası modern AI'de en önemli tek bir kod satırıdır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT)
 **Time:** ~75 minutes
 

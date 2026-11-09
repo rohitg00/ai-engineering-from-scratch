@@ -3,7 +3,7 @@
 > Bir resim bir yama şebekesi, bir cümle bir simge şebekesi, aynı transformatör her ikisini de yiyor.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 4 · 03 (CNNs), Phase 4 · 14 (Vision Transformers intro)
 **Time:** ~45 minutes
 

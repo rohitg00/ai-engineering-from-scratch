@@ -3,7 +3,7 @@
 > GPT bir sonraki kelimeyi tahmin ediyor. BERT bir eksik kelimeyi tahmin ediyor.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 5 · 02 (Text Representation)
 **Time:** ~45 minutes
 
