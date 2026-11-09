@@ -3,7 +3,7 @@
 > Sự tổng hợp rẻ nhất: mẫu N các đại lý độc lập, đa số phiếu. Wang et al. 2022 tự nhất quán đã làm điều này với một mô hình được lấy mẫu N lần.**heterogeneous**Các tác nhân để thoát khỏi monoculture  các mô hình khác nhau, các cúm thanh khác nhau, nhiệt độ khác nhau, bối cảnh khác nhau. Ngoài phiếu bầu đa số, tranh luận về vấn đề topology: MultiAgentBench (arXiv:2503.01935, ACL 2025) đánh giá sự phối hợp sao / chuỗi / cây / biểu đồ và tìm thấy **graph best for research**AgentVerse (ICLR 2024) ghi lại hai mô hình mới nổi  hành vi tình nguyện và hành vi tuân thủ  và sự tuân thủ là cả một tính năng (khám phá sự đồng thuận) và một rủi ro (thân trí nhóm, Bài 24). Bài học này lập bản đồ không gian topology, xây dựng mỗi biến thể, và đo lường thuế phối hợp.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 07 (Society of Mind and Debate), Phase 16 · 14 (Consensus and BFT)
 **Time:** ~75 minutes
 
@@ -116,6 +116,7 @@ sw-debate-topology
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả dự kiến: một bảng topology × N → (sự chính xác, token, độ trễ). Hình thắng ở N=3-5 trên các nhiệm vụ theo kiểu nghiên cứu; sao thắng trên các nhiệm vụ thực tế nhanh; biểu đồ ở N=7 cho thấy thuế phối hợp (sự trễ tăng nhanh hơn độ chính xác).

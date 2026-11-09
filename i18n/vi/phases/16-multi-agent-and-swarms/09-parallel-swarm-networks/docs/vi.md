@@ -3,7 +3,7 @@
 > Sự khác biệt với giám sát viên: không có người quyết định trung tâm. Các đại lý đọc một chuyến đi chung, bắt đầu công việc không đồng bộ, viết lại kết quả. LangGraph rõ ràng hỗ trợ "Swarm Architecture" cho môi trường phi tập trung, động. Matrix (arXiv:2511.21686) đại diện cho cả sự kiểm soát và lưu lượng dữ liệu như các tin nhắn được phân phối qua hàng phân tán để loại bỏ nút thắt của nhạc công. Sự thỏa hiệp là rõ ràng: quyết định và khả năng truy xuất để có thể mở rộng. Swarm phù hợp với các nhiệm vụ với nhiều phụ vấn độc lập; nó không phù hợp với các nhiệm vụ cần một kế hoạch nhất quán.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`, `queue`)
+**Languages:** Python (stdlib, `threading`, `queue`), TypeScript
 **Prerequisites:** Phase 16 · 05 (Supervisor Pattern), Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -86,6 +86,7 @@ Các cân nặng đống tự động tải lên; việc giao nhiệm kỳ cố 
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả cho thấy số lượng công việc cho mỗi người lao động (square phân phối không đồng đều nhưng tối ưu) và thời gian đồng hồ tường.

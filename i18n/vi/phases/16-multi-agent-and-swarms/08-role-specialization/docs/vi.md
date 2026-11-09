@@ -3,7 +3,7 @@
 > Sự phân hủy đa đại lý phổ biến nhất vào năm 2026: một đại lý lập kế hoạch, một thực hiện, một chỉ trích hoặc xác minh. MetaGPT (arXiv:2308.00352) chính thức hóa điều này như SOP được mã hóa thành lời nhắc vai trò  Giám đốc sản phẩm, kiến trúc sư, quản lý dự án, kỹ sư, kỹ sư QA  sau `Code = SOP(Team)`- Tôi không biết. ChatDev (arXiv:2307.07924) liên kết thiết kế, lập trình viên, nhà đánh giá, kiểm tra thông qua một "chỉa khóa trò chuyện" với "sự giải ảo thông tin" (chấp hành khách rõ ràng yêu cầu các chi tiết thiếu sót). Máy xác minh có thể chịu tải: Cemri et al. (MAST, arXiv:2503.13657) cho thấy mỗi sự thất bại đa đại lý có thể được theo dõi để xác minh bị mất hoặc bị hỏng. PwC báo cáo tăng độ chính xác 7x (10% → 70%) từ vòng xác thực cấu trúc trong CrewAI.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 05 (Supervisor)
 **Time:** ~60 minutes
 
@@ -88,6 +88,7 @@ Demo chạy hai lần: một lần khi người thực thi tạo ra mã chính x
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Sử dụng nó

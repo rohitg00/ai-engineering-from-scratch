@@ -3,7 +3,7 @@
 > Tích cực sinh học đang làm cho một LLM trở lại. **LMPSO**(arXiv:2504.09247) sử dụng PSO nơi tốc độ của mỗi hạt là một prompt và LLM tạo ra ứng cử viên tiếp theo; hoạt động tốt trên các kết quả theo trình cấu trúc (những biểu hiện toán học, các chương trình). **Model Swarms**(arXiv:2410.11163) đối xử với mỗi chuyên gia LLM như một hạt PSO trên một mô hình trọng lượng đa dạng và báo cáo **13.3% average gain**hơn 12 đường cơ sở trên 9 bộ dữ liệu với chỉ 200 trường hợp. **SwarmPrompt**(ICAART 2025) hợp chất PSO + Grey Wolf để tối ưu hóa nhanh chóng. **AMRO-S**(arXiv:2603.12933) là chuyên gia pheromone lấy cảm hứng từ ACO cho nhiều đại lý LLM định tuyến  **4.7x speedup**, bằng chứng định tuyến có thể diễn giải, cập nhật không đồng bộ với chất lượng được cổng để tách kết luận khỏi học tập. Bài học này thực hiện PSO trên không gian tham số nhanh và ACO trên định tuyến đại lý, đo lường tại sao các thuật toán cổ điển này phù hợp với thời đại LLM, và khi nào họ không.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 14 (Consensus and BFT)
 **Time:** ~75 minutes
 
@@ -107,6 +107,7 @@ swarm-stigmergy
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Tạo sản lượng dự kiến:

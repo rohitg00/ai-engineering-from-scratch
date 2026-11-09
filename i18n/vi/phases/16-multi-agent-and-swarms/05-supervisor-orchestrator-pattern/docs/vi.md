@@ -3,7 +3,7 @@
 > Một đại lý chính lập kế hoạch và đại diện; nhân viên chuyên môn thực hiện trong bối cảnh song song và báo cáo lại. Đây là mô hình đằng sau hệ thống nghiên cứu của Anthropic (Claude Opus 4 là chì, Sonnet 4 là chất phụ), được đo ở +90.2% so với Opus 4 đơn đại lý trên các đánh giá nghiên cứu nội bộ. Bài đăng kỹ thuật của Anthropic báo cáo rằng 80% sự khác biệt trên BrowseComp được giải thích bởi việc sử dụng mã chỉ riêng  đa đại lý thắng phần lớn bởi vì mỗi subagent nhận được một cửa sổ bối cảnh mới. Bài học này xây dựng mô hình giám sát từ nguyên thủy và bao gồm các bài học kỹ thuật năm 2026 từ triển khai sản xuất.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`)
+**Languages:** Python (stdlib, `threading`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -88,6 +88,7 @@ Cấu trúc chính:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả cho thấy kế hoạch, các công nhân song song theo dấu thời gian bắt đầu / kết thúc, và tổng hợp cuối cùng. Bạn có thể thấy đồng hồ tường thắng: ba công nhân 0,3 giây chạy trong ~ 0,35 giây, không phải 0,9.

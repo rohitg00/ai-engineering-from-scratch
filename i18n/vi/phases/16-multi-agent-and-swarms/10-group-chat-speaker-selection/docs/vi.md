@@ -3,7 +3,7 @@
 > Phong phối trò chuyện chia sẻ đặt N đại lý vào một cuộc trò chuyện; một chức năng chọn (LLM, round-robin, hoặc tùy chỉnh) chọn ai nói tiếp theo. Đây là kiểu nguyên mẫu của cuộc trò chuyện đa đại lý nổi lên  đại lý không biết vai trò của họ trong biểu đồ tĩnh, họ chỉ phản ứng với hồ bơi chung. AutoGen GroupChat và AG2 GroupChat là các thực hiện tham chiếu: ngữ nghĩa GroupChat của AutoGen v0.2 được bảo tồn trong ga AG2; AutoGen v0.4 viết lại nó như một mô hình diễn viên do sự kiện thúc đẩy. Microsoft đưa AutoGen vào chế độ bảo trì vào tháng 2 năm 2026 và sáp nhập nó với Semantic Kernel vào Microsoft Agent Framework (RC tháng 2 năm 2026). GroupChat nguyên thủy tồn tại trong cả AG2 và Microsoft Agent Framework  học nó một lần, sử dụng nó ở mọi nơi.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -104,6 +104,7 @@ Demo in bản ghi lại cuộc trò chuyện cộng với dấu vết quyết đ
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Sử dụng nó

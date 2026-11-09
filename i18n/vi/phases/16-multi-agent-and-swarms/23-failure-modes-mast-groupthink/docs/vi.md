@@ -3,7 +3,7 @@
 > Định dạng phân loại tham chiếu cho năm 2026 là **MAST**(Cemri et al., NeurIPS 2025, arXiv:2503.13657), được lấy từ 1642 dấu vết thực hiện trên 7 MAS mã nguồn mở hiện đại cho thấy **41–86.7% failure rate**. Ba loại gốc: **Specification Problems**(41,77%)  vai trò không rõ ràng, định nghĩa nhiệm vụ không rõ ràng; **Coordination Failures**(36,94%)  sự cố liên lạc, sự mất đồng bộ trạng thái; **Verification Gaps**(21.30%)  thiếu xác nhận, không có kiểm tra chất lượng.**Groupthink**gia đình (arXiv:2508.05687) thêm: sự sụp đổ của đơn văn hóa (những mô hình cơ bản tương tự → thất bại tương quan), sự thiên vị về sự phù hợp (những đại lý tăng cường các lỗi của nhau), lý thuyết suy nghĩ thiếu sót, động cơ hỗn hợp, thất bại độ tin cậy hàng loạt. Ví dụ: bão thử lại khi một lỗi thanh toán kích hoạt các lần thử lại đơn đặt hàng, gây ra các lần thử lại hàng tồn kho, khiến dịch vụ hàng tồn kho bị áp đảo (10 lần tải trong giây  cần máy cắt mạch). Mùi độc trí nhớ: ảo giác của một nhân vật vào bộ nhớ chia sẻ, nhân vật tiếp theo xử lý nó như là sự thật; độ chính xác dần suy giảm, làm cho chẩn đoán gốc rễ đau đớn.**STRATUS**(NeurIPS 2025) báo cáo cải thiện thành công giảm nhẹ 1,5 lần thông qua các đại lý phát hiện / chẩn đoán / xác thực chuyên dụng. Bài học này xử lý các chế độ thất bại như các mục tiêu kỹ thuật hạng nhất.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 13 (Shared Memory), Phase 16 · 14 (Consensus and BFT), Phase 16 · 15 (Voting and Debate Topology)
 **Time:** ~75 minutes
 
@@ -154,6 +154,7 @@ a5-retry-cascade
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Tạo sản lượng dự kiến:

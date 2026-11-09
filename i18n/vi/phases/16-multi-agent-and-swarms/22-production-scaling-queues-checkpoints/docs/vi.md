@@ -3,7 +3,7 @@
 > Tích thước các hệ thống đa đại lý đến hàng ngàn chạy đồng thời đòi hỏi **durable execution** xếp hàng làm việc cộng với các điểm kiểm soát, vì vậy bất kỳ công nhân nào có thể tiếp tục chạy sau bất kỳ tai nạn nào, miễn là xử lý thuê, tác dụng phụ không có khả năng và tái diễn xác định được thực hiện.`thread_id`(Từ khi bị trục xuất theo mặc định); công nhân bị tai nạn giải phóng hợp đồng thuê và một công nhân khác tiếp tục.**MegaAgent**(arXiv:2408.09955) chạy hàng nhà sản xuất-thành khách mỗi đại lý với ba trạng thái (Idle / Processing / Response) và phối hợp hai lớp (chát nội bộ nhóm + chat quản trị viên giữa nhóm). **Fiber/async**đánh đập thread-per-job cho LLM streaming: các thread ngồi idle 99% thời gian chờ đợi token, sợi hợp tác sản xuất trên I / O. Counterpoint: Ashpreet Bedi "Scaling Agentic Software" lập luận cho **FastAPI + Postgres + nothing else**cho đến khi tải chứng minh khác  kiến trúc đơn giản đi xa hơn dự kiến. Bài học này xây dựng một nhật ký kiểm soát lâu dài, hàng xếp hàng làm việc cho mỗi đại lý với chuyển đổi trạng thái, một bản demo async-vs-thread, và hạ cánh quy tắc thực tế "bắt đầu đơn giản".
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `asyncio`, `sqlite3`)
+**Languages:** Python (stdlib, `asyncio`, `sqlite3`), TypeScript
 **Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 13 (Shared Memory)
 **Time:** ~75 minutes
 
@@ -133,6 +133,7 @@ sw-checkpoint-replay
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Khả năng đầu ra dự kiến: Checkpoint resume thành công sau khi bị hỏng mô phỏng; phiên bản async xử lý 500 cuộc gọi đồng thời trong < 1s; phiên bản thread mất vài giây và sử dụng nhiều bộ nhớ hơn theo thứ tự trên mỗi đơn vị đồng thời.

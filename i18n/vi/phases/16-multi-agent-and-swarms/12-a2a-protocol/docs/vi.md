@@ -3,7 +3,7 @@
 > Google công bố A2A vào tháng 4 năm 2025; vào tháng 4 năm 2026 thông số kỹ thuật sẽ đạt đến https://a2a-protocol.org/latest/specification/và hơn 150 tổ chức ủng hộ nó. A2A là sự bổ sung ngang cho MCP (Dạy học 13): nơi MCP là dọc (hương cụ ), A2A là ngang (hương cụ ). Nó xác định các thẻ đại lý (khám phá), các nhiệm vụ với các đồ tạo tác (léc văn, dữ liệu có cấu trúc, video), chu kỳ cuộc sống nhiệm vụ không minh bạch và auth. Các hệ thống sản xuất ngày càng kết hợp MCP với A2A. Google Cloud đã đưa hỗ trợ A2A vào Vertex AI Agent Builder trong năm 2025-2026.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `http.server`, `json`)
+**Languages:** Python (stdlib, `http.server`, `json`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -154,6 +154,7 @@ Khách hàng:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Các kịch bản bắt đầu máy chủ trong một chuỗi nền, sau đó chạy khách hàng chống lại nó. Bạn thấy toàn bộ dòng chảy: khám phá, gửi, thăm dò, tạo vật.

@@ -3,7 +3,7 @@
 > OpenAI Swarm ( Tháng 10 năm 2024) đã chưng cất dàn nhạc đa đại lý cho hai nguyên thủy: **routines**(các hướng dẫn + công cụ như một lời nhắc hệ thống) và **handoffs**(một công cụ đưa một nhân viên khác về). Không có máy nhà nước, không có DSL nhánh  các tuyến LLM bằng cách gọi công cụ giao hàng đúng. OpenAI Agents SDK (March 2025) là kế thừa sản xuất. Swarm chính nó vẫn là tham chiếu khái niệm sạch nhất  toàn bộ nguồn của nó phù hợp với một vài trăm dòng. Mô hình này là viral bởi vì bề mặt API là "agent = prompt + tools; handoff = function returning agent".
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -94,6 +94,7 @@ Demo: một đại lý phân loại các tuyến đường để hoàn lại, b�
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Sử dụng nó

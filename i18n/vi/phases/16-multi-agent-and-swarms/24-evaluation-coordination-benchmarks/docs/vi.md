@@ -3,7 +3,7 @@
 > Năm tiêu chuẩn 2025-2026 bao gồm không gian đánh giá đa đại lý. **MultiAgentBench / MARBLE**(ACL 2025, arXiv:2503.01935) đánh giá các topology sao/ chuỗi/ cây/ biểu đồ với KPI thành tích; **graph is best for research**, lập kế hoạch nhận thức thêm ~ 3% thành tích miêu cột mốc. **COMMA**đánh giá phối hợp thông tin không đối xứng đa phương thức; các mô hình hiện đại bao gồm GPT-4o đấu tranh để vượt qua một đường cơ sở ngẫu nhiên. **MedAgentBoard**(arXiv:2505.12371) bao gồm bốn loại nhiệm vụ y tế và thường thấy đa tác nhân không thống trị một LLM. **AgentArch**(arXiv:2509.10769) đánh giá kiến trúc đại lý doanh nghiệp kết hợp sử dụng công cụ + bộ nhớ + dàn xếp. **SWE-bench Pro**([arXiv:2509.16941](https://arxiv.org/abs/2509.16941)(văn khoái) có 1865 vấn đề trên 41 repos bao gồm các ứng dụng kinh doanh, dịch vụ B2B và công cụ phát triển; các mô hình biên giới đạt điểm ~23% trên Pro vs 70% + trên Verified.**64.3%**về Pro với sự phối hợp rõ ràng giữa các nhóm đại lý (không có nguồn chính Anthropic được công bố chưa  xử lý như là sơ bộ); Verdent (chế trình đại lý) hits **76.1% pass@1**về Verified ([Verdent technical report](https://www.verdent.ai/blog/swe-bench-verified-technical-report) ).**AAAI 2026 Bridge Program WMAC**(https://multiagents.org/2026/Bài học này dựa trên các số liệu của MARBLE, chạy một cuộc quét topology-vs-metric, và pin quy tắc "chỉ qua SWE-bench Verified không bằng chứng về tổng quát".
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 15 (Voting and Debate Topology), Phase 16 · 23 (Failure Modes)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ a5-bench-gap
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả dự kiến: bảng điểm hệ thống với độ chính xác nguyên liệu, thành tựu thành công, chi phí cho mỗi nhiệm vụ, đối với delta đường cơ sở ngẫu nhiên, và một ghi chú kiểm tra ô nhiễm.

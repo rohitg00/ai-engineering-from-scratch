@@ -3,7 +3,7 @@
 > Các đại lý đàm phán tài nguyên, giá cả, phân bổ nhiệm vụ và các điều khoản. Mức chuẩn 2026 rõ ràng: NegotiationArena (arXiv:2402.05863) cho thấy LLM có thể cải thiện lợi nhuận ~ 20% thông qua thao túng cá nhân ("sự tuyệt vọng"); "Mắt khả năng đàm phán" (arXiv:2402.15813) cho thấy người mua khó hơn người bán và quy mô không giúp  họ **OG-Narrator**(tạo sản xuất đề nghị quyết định + người kể về LLM) đẩy tỷ lệ giao dịch từ 26,67% lên 88.88%; Cuộc thi đàm phán tự trị quy mô lớn (arXiv:2503.06416) đã tiến hành khoảng 180k đàm phán và phát hiện ra rằng**chain-of-thought-concealing**Bhattacharya et al. 2025 trên Harvard Negotiation Project metrics xếp hạng Llama-3 hiệu quả nhất, Claude-3 hung hăng nhất, GPT-4 công bằng nhất. Bài học này thực hiện Công ước Net Protocol (đạo của FIPA, Bài học 02), dây một người mua / bán theo kiểu LLM, chạy phân hủy theo kiểu OG-Narrator, và đo lường tỷ lệ giao dịch thay đổi như thế nào với mỗi lựa chọn cấu trúc.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 02 (FIPA-ACL Heritage), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -120,6 +120,7 @@ a5-og-narrator
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Tạo ra dự kiến: tỷ lệ giao dịch LLM ngây thơ ~ 65-75%; tỷ lệ giao dịch OG-Narrator ~ 85-95%; khoảng cách 15-25 điểm là lợi thế cấu trúc của việc phân hủy sản xuất đề xuất từ câu chuyện.

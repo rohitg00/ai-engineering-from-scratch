@@ -3,7 +3,7 @@
 > Li et al. (arXiv:2310.10701) cho thấy rằng các đại lý LLM trong một triển lãm trò chơi văn bản hợp tác **emergent high-order Theory of Mind**(ToM)  lý luận về những gì một đại lý khác tin về niềm tin của một đại lý thứ ba  nhưng thất bại trong lập kế hoạch chân trời dài do quản lý bối cảnh và ảo giác. Riedl (arXiv:2510.05174) đo lường sự hợp tác thứ tự cao hơn trên một quần thể và phát hiện ra rằng **only**Điều kiện ToM-prompt tạo ra sự phân biệt liên quan đến danh tính và sự bổ sung hướng đến mục tiêu; LLM có khả năng thấp chỉ cho thấy sự xuất hiện giả mạo. Đó là sự xuất hiện của sự phối hợp là điều kiện ngay lập tức và phụ thuộc vào mô hình, không phải miễn phí. Bài học này thực hiện một nhân viên biết đến ToM tối thiểu, thực hiện một nhiệm vụ hợp tác với và mà không có sự thúc đẩy ToM, và đo lường delta phối hợp so với giao thức Riedl 2025.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 07 (Society of Mind and Debate), Phase 16 · 17 (Generative Agents)
 **Time:** ~75 minutes
 
@@ -120,6 +120,7 @@ sw-theory-of-mind
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Tạo ra dự kiến: các đại lý thứ tự không lặp lại nỗ lực với tỷ lệ ~ 35% và hoàn thành ~ 60% các thử nghiệm trong 10 lượt.

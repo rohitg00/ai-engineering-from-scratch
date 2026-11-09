@@ -3,7 +3,7 @@
 > Các đại lý tự trị theo đường chân trời dài (nguyên tắc làm việc 1 giờ đến 8 giờ của METR) cần đại lý kinh tế.**5-layer stack**là: **DePIN**(phí-si-c tính) → **Identity**(W3C DID + vốn danh tiếng) → **Cognition**(RAG + MCP) → **Settlement**(trước ghi tài khoản) → **Governance**Các mạng lưới khuyến khích các đại lý sản xuất bao gồm:**Bittensor**(Các mạng phụ TAO thưởng cho các mô hình cụ thể về nhiệm vụ), **Fetch.ai / ASI Alliance**(ASI-1 Mini LLM + FET token), và **Gonka**(PoW dựa trên biến thể tái phân bổ máy tính cho các nhiệm vụ AI sản xuất). Công việc học thuật: AAMAS 2025 sử dụng LaMAS phi tập trung **Shapley-value credit attribution**để thưởng công bằng cho các đại lý đóng góp; Google Research đề xuất "Phục thiết kế cơ chế cho các mô hình ngôn ngữ lớn" **token auctions**Bài học này xây dựng một thị trường đại lý tối thiểu, áp dụng tính chất tín dụng Shapley cho một đường ống dẫn đa đại lý, và chạy một cuộc đấu giá mã thông báo giá thứ hai để máy móc lý thuyết trò chơi đổ bộ cụ thể.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 16 (Negotiation and Bargaining), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -110,6 +110,7 @@ swarm-auction
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Tạo ra dự kiến: Giá trị Shapley cho mỗi đại lý; kết quả đấu giá cho thấy sự cân bằng giá giá hợp lý; định tuyến có trọng lượng đại diện cho thấy 10-20% tăng chất lượng so với ngẫu nhiên sau khi nóng lên.

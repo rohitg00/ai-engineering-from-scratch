@@ -3,7 +3,7 @@
 > Trước khi MCP, trước khi A2A, có FIPA-ACL. Năm 2000, Quỹ cho các đại lý vật lý thông minh (FIPA, trở thành ủy ban tiêu chuẩn của IEEE Computer Society vào năm 2005) phê chuẩn một ngôn ngữ giao tiếp đại lý với hai mươi biểu diễn, hai ngôn ngữ nội dung và một bộ giao thức tương tác  hợp đồng net, đăng ký / thông báo, yêu cầu khi nào. Nó đã biến mất khỏi ngành công nghiệp vì chi phí trên của ontology quá nặng cho web, nhưng sự hồi sinh LLM của các hệ thống đa đại lý đang lặng lẽ triển khai lại những ý tưởng tương tự mà không có ngữ nghĩa chính thức: Hợp đồng JSON đứng vào chỗ các biểu hiện, ngôn ngữ tự nhiên đứng vào chỗ các ontology. Bài học này đọc nghiêm túc FIPA-ACL để bạn có thể thấy những quyết định giao thức 2026 là tái phát minh, những gì là sự mới mẻ, và nơi sóng hiện tại sẽ khám phá lại các vấn đề mà những năm 2000 đã giải quyết.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 01 (Why Multi-Agent)
 **Time:** ~60 minutes
 
@@ -160,6 +160,7 @@ sw-contract-net
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả là một dấu vết bên cạnh cho thấy mỗi tin nhắn hiện đại trong cả dạng JSON 2026 và dạng FIPA-ACL của nó, sau đó là một chuyến đi về của một lệnh hợp đồng-net.

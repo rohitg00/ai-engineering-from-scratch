@@ -3,7 +3,7 @@
 > Thuyết năm 1986 của Minsky  trí thông minh là một xã hội của các chuyên gia  được khám phá lại mỗi thập kỷ. Năm 2023, Du et al. đã biến nó thành một thuật toán cụ thể: nhiều trường hợp LLM đề xuất câu trả lời, đọc câu trả lời của nhau, chỉ trích và cập nhật. Trong suốt N vòng họ tụ tụ tập về một sự đồng thuận vượt qua CoT không bắn và suy nghĩ về sáu nhiệm vụ lý luận và thực tế. Hai phát hiện quan trọng: cả hai **multiple agents**và **multiple rounds**xã hội đánh bại một đơn độc lập; trao đổi đa vòng đánh bại một lần bỏ phiếu.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -73,6 +73,7 @@ Demo cho thấy hai hiệu ứng chính:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Sử dụng nó

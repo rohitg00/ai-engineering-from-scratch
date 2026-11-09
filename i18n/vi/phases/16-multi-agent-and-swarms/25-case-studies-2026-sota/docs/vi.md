@@ -3,7 +3,7 @@
 > Ba tham chiếu cấp sản xuất để nghiên cứu từ đầu đến cuối, mỗi mô tả một mảnh khác nhau của kỹ thuật đa đại lý. **Anthropic's Research system**(nhà nhạc công, 15x token, +90.2% so với đơn đại lý Opus 4, rainbow triển khai) là trường hợp giám sát giáo. **MetaGPT / ChatDev**(SOP mã hóa chuyên môn vai trò cho kỹ thuật phần mềm; "dehallucination truyền thông" của ChatDev; MacNet mở rộng đến > 1000 đại lý thông qua DAGs, arXiv:2406.07155) là trường hợp phân hủy vai trò theo luật. **OpenClaw / Moltbook**(trước đây là Clawdbot của Peter Steinberger, tháng 11 năm 2025; đổi tên hai lần; 247k sao GitHub vào tháng 3 năm 2026; các đại lý ReAct-loop địa phương; Moltbook như một mạng xã hội chỉ có đại lý với ~ 2.3M tài khoản đại lý trong vài ngày sau khi ra mắt, được Meta mua lại 2026-03-10) minh họa những gì xảy ra ở quy mô dân số: hoạt động kinh tế mới nổi, rủi ro tiêm nhanh, quy định cấp nhà nước (Trung Quốc hạn chế OpenClaw trên máy tính của chính phủ, tháng 3 năm 2026).**Framework landscape April 2026:**LangGraph và CrewAI dẫn đầu sản xuất; AG2 là sự tiếp tục của AutoGen cộng đồng; Microsoft AutoGen đang trong chế độ bảo trì (đã hợp nhất vào Microsoft Agent Framework, RC Feb 2026); OpenAI Agents SDK là người kế nhiệm sản xuất Swarm; Google ADK ( Tháng Tư 2025) là người tham gia A2A bản địa. Mỗi khung lớn hiện nay cung cấp hỗ trợ MCP; hầu hết tàu A2A. Bài học này đọc từng trường hợp từ đầu đến cuối và phân tích các mô hình phổ biến để bạn có thể chọn đúng tham chiếu cho hệ thống sản xuất tiếp theo của bạn.
 
 **Type:** Learn (capstone)
-**Languages:** —
+**Languages:** Python, TypeScript
 **Prerequisites:** all of Phase 16 (Lessons 01-24)
 **Time:** ~90 minutes
 

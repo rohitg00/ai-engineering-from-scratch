@@ -3,7 +3,7 @@
 > Bốn nguyên thủy, không có gì hơn  đại lý, giao hàng, trạng thái chia sẻ, nhạc cụ  trải dài một không gian thiết kế bốn chiều, và các khung đa đại lý lớn được vận chuyển vào năm 2026 (AutoGen, LangGraph, CrewAI, OpenAI Agents SDK, Microsoft Agent Framework) là điểm trong đó. Bài học này xây dựng chúng từ 0, chạy một hệ thống đồ chơi trên tất cả bốn, sau đó lập bản đồ tất cả các khung chính trên cùng một trục để bạn có thể đọc bất kỳ phát hành mới trong một đoạn.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 (Agent Engineering), Phase 16 · 01 (Why Multi-Agent)
 **Time:** ~60 minutes
 
@@ -132,6 +132,7 @@ Demos chạy cùng một đường ống ba đại lý (phát tích → viết �
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả dự kiến: ba lần chạy nhạc cụ, một lần mỗi mẫu. Mỗi lần in hồ sơ tin nhắn cuối cùng.

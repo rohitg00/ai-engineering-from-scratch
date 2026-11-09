@@ -3,7 +3,7 @@
 > Các nhà quản lý là những người quản lý, các nhân viên quản lý là những người quản lý.`Process.hierarchical`là phiên bản sách giáo khoa: a `manager_llm`Động lực phân bổ nhiệm vụ và xác nhận đầu ra.`create_supervisor(create_supervisor(...))`. Đây là mô hình tự nhiên khi công việc là một biểu đồ cơ cấu thực tế. Nó cũng là mô hình có nhiều khả năng sụp đổ vào vòng lặp quản lý.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 05 (Supervisor Pattern)
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ Demo tương phản happy path (tất cả mọi người đồng ý) với mộ
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả cho thấy cả hai con đường với một bên cạnh rõ ràng của "cái gì đã được yêu cầu" vs "cái gì đã được giao".

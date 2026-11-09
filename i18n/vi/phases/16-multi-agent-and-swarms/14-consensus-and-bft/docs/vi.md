@@ -3,7 +3,7 @@
 > Các hệ thống phân tán cổ điển BFT đáp ứng LLM stochastic. Trong năm 2025-2026 ba hướng nghiên cứu đã xuất hiện: **CP-WBFT**(arXiv:2511.10400) cân nhắc mỗi phiếu bằng một cuộc điều tra tin tưởng; **DecentLLMs**(arXiv:2507.14928) đi không có lãnh đạo với các đề xuất công nhân song song và tổng hợp hình học-đối trung; **WBFT**(arXiv:2505.05103) kết hợp bỏ phiếu cân nhắc với Cluster Structure Hierarchical để chia các nút Core và Edge. Kết quả thực tế thực nghiệm từ "Can AI Agents Agree?" (arXiv:2603.01213) là ngay cả thỏa thuận quy mô là mỏng manh ngày nay  một đại lý lừa đảo duy nhất có thể làm tổn hại một hỗn hợp các đại lý. BFT là cần thiết nhưng không đủ. Bài học này xây dựng một giao thức BFT tối thiểu, tiêm ba cuộc tấn công cụ thể của các đại lý (sự dối trá Byzantine, sự phù hợp sycophantic, đồng văn hóa lỗi liên quan), và đo lường cách mỗi biến thể đồng thuận đối phó như thế nào.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 07 (Society of Mind and Debate), Phase 16 · 13 (Shared Memory)
 **Time:** ~75 minutes
 
@@ -107,6 +107,7 @@ Các mô hình tấn công được thực hiện:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả dự kiến: một bảng của (việc tấn công, tổng hợp) -> câu trả lời cuối cùng, với câu trả lời chính xác được nhấn mạnh. Sự đa dạng thất bại trong trường hợp monoculture. Đánh nặng sự tin tưởng của CPWBFT giảm bớt sự đồng hóa. Đường trung gian hình học của DecentLLMs kéo về phía cụm trung thực khi monoculture ít hơn một nửa dân số.
