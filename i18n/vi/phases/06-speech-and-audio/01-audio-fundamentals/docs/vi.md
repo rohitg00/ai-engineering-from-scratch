@@ -3,7 +3,7 @@
 > Các dạng sóng là tín hiệu nguyên liệu. Các quang phổ là đại diện. Các tính năng Mel là dạng thân thiện với ML. Mỗi đường ống ASR và TTS hiện đại đi qua bậc thang này, và bước đầu tiên là hiểu lấy mẫu và Fourier.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Vectors & Matrices), Phase 1 · 14 (Probability Distributions)
 **Time:** ~45 minutes
 

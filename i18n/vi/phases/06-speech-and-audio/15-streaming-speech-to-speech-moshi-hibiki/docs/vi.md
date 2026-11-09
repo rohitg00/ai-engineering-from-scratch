@@ -3,7 +3,7 @@
 > 2024-2026 định nghĩa lại AI giọng nói. Moshi đưa ra một mô hình duy nhất nghe và nói đồng thời với độ trễ 200 ms. Hibiki thực hiện dịch thuật từ nói đến nói từng phần. Cả hai đều từ bỏ đường ống ASR → LLM → TTS để tạo ra kiến trúc tổng hợp đầy đủ duplex trên mã codec Mimi. Đây là thiết kế tham chiếu mới.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 13 (Neural Audio Codecs), Phase 6 · 11 (Real-Time Audio), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > Phân bản giọng nói đọc văn bản của bạn bằng giọng nói của người khác. Chuyển đổi giọng nói viết lại giọng nói của bạn vào tiếng nói của người khác trong khi vẫn giữ lại những gì bạn nói. Cả hai đều gắn liền với sự phân hủy tương tự: tách biệt danh tính loa khỏi nội dung.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 07 (TTS)
 **Time:** ~75 minutes
 

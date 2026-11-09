@@ -3,7 +3,7 @@
 > ASR hỏi "bọn họ nói gì?" nhận dạng loa hỏi "người nói nó?" toán học trông giống nhau  nhúng cộng với cosine  nhưng mọi quyết định sản xuất phụ thuộc vào một số EER duy nhất.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 22 (Embedding Models)
 **Time:** ~45 minutes
 

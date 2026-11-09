@@ -3,7 +3,7 @@
 > Mỗi đại lý giọng nói sống hoặc chết dựa trên hai quyết định: người dùng đang nói và họ đã hoàn thành chưa? VAD trả lời câu đầu tiên. Khám phá quay (VAD + âm thầm-hành động + mô hình điểm cuối ngữ nghĩa) trả lời câu thứ hai.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 11 (Real-Time Audio), Phase 6 · 12 (Voice Assistant)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Phân phối giọng nói được vận chuyển nhanh hơn phòng thủ. Hệ thống giọng nói sản xuất năm 2026 cần hai thứ: một bộ phát hiện (AASIST, RawNet2) phân loại giọng nói thực và giả, và một dấu nước (AudioSeal) tồn tại sau khi nén và chỉnh sửa.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 08 (Voice Cloning)
 **Time:** ~75 minutes
 

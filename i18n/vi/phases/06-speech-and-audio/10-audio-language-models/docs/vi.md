@@ -3,7 +3,7 @@
 > Các mô hình ngôn ngữ âm thanh 2026 suy luận về ngôn ngữ + âm thanh môi trường + âm nhạc. Qwen2.5-Omni-7B phù hợp với GPT-4o Audio trên MMAU-Pro. Audio Flamingo Next đánh bại Gemini 2.5 Pro trên LongAudioBench. Khoảng cách giữa mở và đóng về cơ bản là đóng  ngoại trừ các nhiệm vụ đa âm thanh, nơi mọi người gần như ngẫu nhiên.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 12 · 03 (Vision-Language Models), Phase 7 · 10 (Audio Transformers)
 **Time:** ~45 minutes
 

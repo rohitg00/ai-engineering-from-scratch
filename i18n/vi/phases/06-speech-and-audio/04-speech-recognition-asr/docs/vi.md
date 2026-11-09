@@ -3,7 +3,7 @@
 > Sự nhận dạng giọng nói là phân loại âm thanh tại mỗi bước thời gian, được gắn với nhau bởi một mô hình chuỗi biết tiếng Anh và im lặng. CTC, RNN-T và chú ý là ba cách để làm điều đó. Chọn một và hiểu tại sao.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 08 (CNNs & RNNs for Text), Phase 5 · 10 (Attention)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Thế hệ âm nhạc năm 2026: Suno v5 và Udio v4 thống trị thương mại; MusicGen, Stable Audio Open và ACE-Step dẫn đầu nguồn mở. Vấn đề kỹ thuật chủ yếu được giải quyết. Vấn đề pháp lý (Warner Music $ 500M giải quyết, UMG giải quyết) đã định hình lại lĩnh vực trong năm 2025-2026.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 4 · 10 (Diffusion Models)
 **Time:** ~75 minutes
 

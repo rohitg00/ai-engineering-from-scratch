@@ -3,7 +3,7 @@
 > 2026 audio generation gần như là tất cả các token. EnCodec, SNAC, Mimi và DAC biến hình dạng sóng liên tục thành chuỗi riêng biệt mà một biến thể có thể dự đoán.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 10 · 11 (Quantization), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

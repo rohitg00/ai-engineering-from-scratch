@@ -3,7 +3,7 @@
 > Whisper là một bộ mã hóa-tử toán biến đổi cửa sổ 30 giây, được đào tạo trên 680k giờ của các cặp âm thanh văn bản đa ngôn ngữ bị giám sát kém.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 5 · 10 (Attention), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

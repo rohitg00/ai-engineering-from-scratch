@@ -3,7 +3,7 @@
 > Bạn không thể gửi những gì bạn không thể đo lường. Bài học này nêu tên các số liệu 2026 cho mỗi nhiệm vụ âm thanh: ASR (WER, CER, RTFx), TTS (MOS, UTMOS, SECS, WER-on-ASR-round-trip), ngôn ngữ âm thanh (MMAU, LongAudioBench), âm nhạc (FAD, CLAP), và loa (EER).
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04, 06, 07, 09, 10; Phase 2 · 09 (Model Evaluation)
 **Time:** ~60 minutes
 

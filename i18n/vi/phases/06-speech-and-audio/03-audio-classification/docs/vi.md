@@ -3,7 +3,7 @@
 > Mọi thứ từ "dog barking vs siren" đến "thế ngữ này là gì" là phân loại âm thanh. Các tính năng là melt. Kiến trúc di chuyển mỗi thập kỷ. Thử nghiệm vẫn là AUC, F1, và nhớ mỗi lớp.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 3 · 06 (CNNs), Phase 5 · 08 (CNNs & RNNs for Text)
 **Time:** ~75 minutes
 

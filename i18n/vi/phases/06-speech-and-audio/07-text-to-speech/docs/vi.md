@@ -3,7 +3,7 @@
 > ASR đảo ngược giọng nói thành văn bản; TTS đảo ngược văn bản thành giọng nói. Dòng 2026 gồm ba phần: văn bản → token, token → mel, mel → dạng sóng. Mỗi phần có mô hình mặc định phù hợp với máy tính xách tay.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 09 (Seq2Seq), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

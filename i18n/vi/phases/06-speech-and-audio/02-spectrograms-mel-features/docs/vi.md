@@ -3,7 +3,7 @@
 > Các mạng thần kinh không tiêu thụ các dạng sóng nguyên liệu tốt. Chúng tiêu thụ quang phổ. Chúng tiêu thụ quang phổ mel thậm chí tốt hơn. Mỗi bộ phân loại âm thanh ASR, TTS và vào năm 2026 sống hoặc chết do lựa chọn xử lý trước này.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 01 (Audio Fundamentals)
 **Time:** ~45 minutes
 
