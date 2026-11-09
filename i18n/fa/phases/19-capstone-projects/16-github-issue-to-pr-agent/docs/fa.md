@@ -3,7 +3,7 @@
 > یک مسئله را برچسب بزنید، یک PR دریافت کنید  شکل محصول 2026 برای عوامل کدگذاری مستقل: یک عامل را در یک جعبه قمار ابر اجرا کنید، آزمون ها را تایید کنید و یک PR آماده بررسی را با استدلال ارسال کنید. آژانس های AWS SWE، آژانس های پس زمینه cursor، ابر OpenAI Codex و گوگل جولز همه آن را ارسال می کنند. بخش های سخت، بازتولید خودکار محیط ساخت repo، جلوگیری از دزدیدن اسناد، اجرای بودجه های هر repo، و اطمینان از اینکه عامل نمی تواند فشار زور. این سنگ پایانی نسخه خود میزبان را ایجاد می کند و آن را بر اساس هزینه و نرخ گذر با گزینه های میزبانی شده مقایسه می کند.
 
 **Type:** Capstone
-**Languages:** Python (agent), TypeScript (GitHub App), YAML (Actions)
+**Languages:** Python (agent), TypeScript (GitHub App, agent scaffold), YAML (Actions)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**P11 · P13 · P14 · P15 · P17
 **Time:** 30 hours

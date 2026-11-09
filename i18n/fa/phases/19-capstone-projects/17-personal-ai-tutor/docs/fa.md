@@ -3,7 +3,7 @@
 > خانمیگو (آکادمی خان) ، دوولینگو مکس، گوگل LearnLM / Gemini برای آموزش، Quizlet Q-Chat و Synthesis Tutor همه آموزش های چند مدل سازنده را در سال 2026 در مقیاس عرضه کردند. شکل مشترک یک سیاست سقراط (هیچ وقت فقط جواب را رها نکنید) ، یک مدل یادگیری است که پس از هر تعامل (طریقه ردیابی دانش بیزی) ، ورودی صدای + متن + عکس ریاضی، بازیافت گرافی برنامه درسی، برنامه ریزی تکرار با فاصله و فیلترهای ایمنی سخت برای محتوای مناسب به سن، به روز می شود. هدف این است که یک معلم خاص موضوع (جبر K-12 یا مقدمه Python) را ارسال کنید، یک مطالعه اثربخشی دو هفته ای را با 10 دانش آموز انجام دهید و یک حسابرسی ایمنی محتوا را پاس کنید.
 
 **Type:** Capstone
-**Languages:** Python (backend, learner model), TypeScript (web app), SQL (curriculum graph via Postgres + Neo4j)
+**Languages:** Python (backend, learner model), TypeScript (web app, learner model scaffold), SQL (curriculum graph via Postgres + Neo4j)
 **Prerequisites:** Phase 5 (NLP), Phase 6 (speech), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 14 (agents), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P5 · P6 · P11 · P12 · P14 · P17 · P18
 **Time:** 30 hours

@@ -3,7 +3,7 @@
 > هنيز عامل است مدل هم پردازنده است اين درس قرارداد حلقه اي را که مي توني هر مدل رو به داخل ببري منجمد ميکنه
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

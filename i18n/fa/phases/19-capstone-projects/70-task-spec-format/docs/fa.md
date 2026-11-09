@@ -3,7 +3,7 @@
 > یک استفاده از ارزیابی فقط به اندازه ای که قرارداد وظایف آن را انجام می دهد خوب است. قبل از نوشتن یک تابع امتیاز واحد، شکل JSONL و لغت متریک را منجمد کنید.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track B foundations
 **Time:** ~90 min
 

@@ -3,7 +3,7 @@
 > مرز 2026 سند-QA از OCR-پس متن و به سمت تعامل دیر بینایی حرکت کرد. ColPali، ColQwen2.5 و ColQwen3-omni هر صفحه PDF را به عنوان یک تصویر در نظر می گیرند، آن را با تعامل دیر چند ویکتور در نظر می گیرند و اجازه می دهند که سوال به طور مستقیم به پیچ ها پاسخ دهد. در 10K مالی، مقالات علمی و یادداشت های دست نوشته این الگوی اول OCR را با حاشیه بزرگی می پیشه. از آخر به آخر 10 هزار صفحه خط لوله بسازید و آن را کنار هم با OCR-then-text منتشر کنید.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (viewer UI)
+**Languages:** Python (pipeline), TypeScript (viewer UI, retrieval scaffold)
 **Prerequisites:** Phase 4 (computer vision), Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**P4 · P5 · P7 · P11 · P12 · P17
 **Time:** 30 hours

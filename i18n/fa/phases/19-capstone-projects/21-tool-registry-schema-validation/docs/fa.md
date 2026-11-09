@@ -3,7 +3,7 @@
 > ابزاری که عامل نمی تواند تأیید کند ابزاری است که عامل نمی تواند به آن تماس بگیرد. قبل از ساخت ابزارها، ثبت و چک کننده شیما را بسازید.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

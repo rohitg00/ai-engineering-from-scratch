@@ -3,7 +3,7 @@
 > دوازده آزمایشگاه تولید مارنگو + پیگاسوس کردند. ویدیو دی بی API CRUD-for-video رو ارسال کرد مولمو 2 AI2 بازيگاه هاي بازي VLM رو اعلام کرد دوقلوها ساعت ها ویدیو رو به صورت بومی کنترل می کنن TimeLens-100K زمین گذاری زمانی را در مقیاس تعریف کرد. خط لوله 2026 حل شده است: بخش بندی صحنه، عنوان هر صحنه + گنجانده شدن، خط خط نقل، شاخص چند متری، و یک سوال که با (ابتدا، پایان) زمان مهر و همچنین پیش نمایش قاب پاسخ می دهد. این سنگ آخر 100 ساعت مصرف می کند، به معیار های عمومی می رسد و توهم را در مورد سوالات شمارش و عمل اندازه گیری می کند.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (UI)
+**Languages:** Python (pipeline), TypeScript (UI, pipeline scaffold)
 **Prerequisites:** Phase 4 (CV), Phase 6 (speech), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**P4 · P6 · P7 · P11 · P12 · P17
 **Time:** 30 hours

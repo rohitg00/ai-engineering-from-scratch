@@ -3,7 +3,7 @@
 > سوالی که کاربر می نویسد، سوالی نیست که بازیافت کننده شما می خواهد. بازیافت شکاف را قبل از بازیافت می پوشاند، بنابراین شاخص چیزی را نزدیک تر به آنچه پاسخ به نظر می رسد می بیند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64 and 65
 **Time:** ~90 minutes
 
@@ -120,6 +120,7 @@ cd-hyde-vector
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 محصول یک رتبه بندی در هر استراتژی و خلاصه نهایی است. HyDE در سوال عبارت های نامتناسب برنده می شود. چند سوال در سوال فرز-فرز برنده می شود. تجزیه در سوال های چند موضوع برنده می شود. بازپسین (هیچ بازنویسنده) حداقل در یکی از سه سوال از دست می دهد.

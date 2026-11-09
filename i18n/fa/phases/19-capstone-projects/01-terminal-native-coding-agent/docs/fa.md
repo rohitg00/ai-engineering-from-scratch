@@ -3,7 +3,7 @@
 > تا سال 2026 شکل یک عامل کدگذاری مشخص شده است. یک خط TUI، یک طرح حالت، یک سطح ابزار با جعبه قمار، یک حلقه که برنامه ریزی می کند، عمل می کند، مشاهده می کند، بازیابی می کند. کلوید کد، کورسور 3 و اوپن کد از 50 فوت هم شبیه هم هستند این سنگ پایان از شما می خواهد تا یک پایان را به پایان  CLI در، کشیدن درخواست  و اندازه گیری آن در برابر mini-swe-agent و Live-SWE-agent در SWE-bench Pro. شما خواهید فهمید که چرا بخش سخت تر از همه، نه تماس مدل، بلکه حلقه ابزار، جعبه شن و سقف هزینه در یک 50 نوبت است.
 
 **Type:** Capstone
-**Languages:** TypeScript / Bun (harness), Python (eval scripts)
+**Languages:** TypeScript / Bun (harness, loop scaffold), Python (eval scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools and protocols), Phase 14 (agents), Phase 15 (autonomous systems), Phase 17 (infrastructure)
 **Phases exercised:**P0 · P5 · P7 · P10 · P11 · P13 · P14 · P15 · P17 · P18
 **Time:** 35 hours

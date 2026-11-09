@@ -3,7 +3,7 @@
 > "سکانا" AI-Scientist-v2 مقاله های کامل را منتشر کرد. مامور آزمایشگاه آزمایشات رو انجام داد آيل اينترنتي آثار رو به هم ميگه شکل 2026 برنامه ریزی-جایز-تحقق درخت جستجو در مورد آزمایشات، هزینه بودجه، اجرای کد sandboxed، یک دیدگاه-بازدید LaTeX نویسنده، و یک مجموعه خودکار NeurIPS سبک بازبینی. هدف اینه که یکی بسازیم، آن را در حدود ۳۰ دلار در هر کاغذ اجرا کنیم و از تیم قرمز فرار از جعبه شن که سکانا مستند کرده زنده بمانیم.
 
 **Type:** Capstone
-**Languages:** Python (agent + sandbox), LaTeX (output)
+**Languages:** Python (agent + sandbox), TypeScript, LaTeX (output)
 **Prerequisites:** Phase 2 (ML), Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 18 (safety)
 **Phases exercised:**P0 · P2 · P3 · P7 · P10 · P14 · P15 · P16 · P18
 **Time:** 40 hours

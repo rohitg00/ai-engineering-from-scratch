@@ -3,7 +3,7 @@
 > آژانس DevOps AWS به GA رفت، هوش مصنوعی حل کتاب های بازی K8s خود را منتشر کرد، NeuBird نظارت معنوی را نشان داد و Metoro AI SRE را به SLOs هر سرویس متصل کرد. شکل تولید تنظیم شده است: یک هشدار وب هوک آتش می زند، یک عامل از تلمتری می خواند، نمودار اشیاء K8s را می گذرد، فرضیه های علت ریشه را رتبه بندی می کند و یک خلاصه Slack را با دکمه های تایید ارسال می کند. فقط به طور پیش فرض قابل خواندن هر درماني که توسط يک انسان انجام ميده این سنگ پایین این عامل است که در 20 حادثه مصنوعی ارزیابی شده و در سه مورد مشترک با آژانس AWS مقایسه شده است.
 
 **Type:** Capstone
-**Languages:** Python (agent), TypeScript (Slack integration)
+**Languages:** Python (agent), TypeScript (Slack integration, agent scaffold)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools and MCP), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P11 · P13 · P14 · P15 · P17 · P18
 **Time:** 30 hours

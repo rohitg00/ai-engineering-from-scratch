@@ -3,7 +3,7 @@
 > يه مامور تحقيقي که دو بار سوال ي مشابه رو بپرسد توکن ها رو ضايع ميکنه
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

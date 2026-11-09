@@ -3,7 +3,7 @@
 > هاروی، گلین، مندهبل و لاماکلود در سال 2026 به شکل تولید یکسان کار می کنند. مصرف با docling یا Unstructured و ColPali برای تصاویر. جستجوی ترکیبی با "بج رينکر" "و2-جيمما" رتبه ي جديد رو بگيرم با کلاود سونت 4.7 با استفاده از حافظه پیشگیری سریع با 60 تا 80 درصد ضربه ها ترکیب کنید. نگهبان با نگهبان لاما 4 و نگهبان نيمو با لانگفوز و فینکس مراقب باشین با "راگاس" در سيتا سوال "گولدن سيت" نمره گرفتيم یکی را در یک دامنه تنظیم شده بسازید (قانونی، بالینی، بیمه) و سنگ پایانی از مجموعه طلایی، تیم قرمز و داشبورد حرکت عبور می کند.
 
 **Type:** Capstone
-**Languages:** Python (pipeline + API), TypeScript (chat UI)
+**Languages:** Python (pipeline + API), TypeScript (chat UI, pipeline scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P5 · P7 · P11 · P12 · P17 · P18
 **Time:** 30 hours

@@ -3,7 +3,7 @@
 > کنده شدن تصميم ميده که رترويور شما چه چيزي رو به سطح مياره.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG), 07 (advanced RAG); Phase 19 Track B foundations (lessons 20-29)
 **Time:** ~90 minutes
 
@@ -89,6 +89,7 @@ ci-chunk-boundaries
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 محصول یک جدول کوچک با یک ردیف در هر استراتژی و یک ستون در هر k است. جمله در مورد تنظیمات ساختار یافته از دست می دهد. نشان دادن ساختار بر روی تنظیمات نشان دادن برنده می شود. تکرارگر در مورد تنظیمات مخلوط خود را حفظ می کند زیرا تکرار سازگار می شود. گروه بندی معنوی در مورد تنظیمات پروزه برنده می شود که هیچ نشانه ساختاری مفید وجود ندارد.

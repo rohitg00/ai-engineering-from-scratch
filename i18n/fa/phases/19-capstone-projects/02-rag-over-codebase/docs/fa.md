@@ -3,7 +3,7 @@
 > هر سازمان مهندسی جدی در سال 2026 یک جستجوی داخلی کد انجام می دهد که معنی را درک می کند، نه فقط رشته ها. منبع گراف Amp، پاسخ های کد پایه Cursor، نمودار شرکت Augment، نقشه مجدد Aider، MCP داخلی Pinterest  شکل مشابه. خیلی از بازبینی ها رو مصرف کن، با درختنگر تجزیه کن، بخش های سطح عملکرد و کلاس را وارد کن، جستجوی هیبریدی، رتبه بندی مجدد، پاسخ با نقل قول ها. این سنگ پایان از شما می خواهد که یک را بسازید که 2 میلیون خط کد را در 10 repos اداره کند و در هر فشار Git دوباره به طور فزاینده ای به عنوان شاخص زنده بماند.
 
 **Type:** Capstone
-**Languages:** Python (ingestion), TypeScript (API + UI)
+**Languages:** Python (ingestion), TypeScript (API + UI, retrieval scaffold)
 **Prerequisites:** Phase 5 (NLP foundations), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 17 (infrastructure)
 **Phases exercised:**P5 · P7 · P11 · P13 · P17
 **Time:** 30 hours

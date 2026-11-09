@@ -3,7 +3,7 @@
 > اسکلت لاتکس یک قرارداد بین محقق و تایپتر است. اگر قرارداد شکسته شود، سند مرتب نمی شود و شکست بلند است. اسکلت را ابتدا بسازید، سپس آن را پر کنید.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

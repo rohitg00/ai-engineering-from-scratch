@@ -3,7 +3,7 @@
 > شکل 2026 یک تیم مهندسی چند عامل به هم پیوسته است: یک طراح برنامه ریزی می کند، N کدرها در درختان کار موازی کار می کنند، یک بازرس دروازه می کند، یک آزمایش کننده تأیید می کند. معماری کارخانه SWE-AF، انگیزه مبتنی بر نقش MetaGPT، نمودار بازیگر تایپ شده AutoGen 0.4، Devin Cognition و Droids Factory همه به طور مستقل روی آن فرود آمدند. درختان کار موازی، ساعت دیواری را به تولید تبدیل می کنند. پروتکل های مشترک و انتقال به صورت سطح شکست تبدیل می شوند. هدفش اينه که تيم رو بسازيم، بر روي صندلي س.و.ي. پرو ارزیابی کنيم و گزارش بدهيم که چه بازي هايي و چقدر مي شکند
 
 **Type:** Capstone
-**Languages:** Python / TypeScript (agents), Shell (worktree scripts)
+**Languages:** Python / TypeScript (agents, task board scaffold), Shell (worktree scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 17 (infrastructure)
 **Phases exercised:**P11 · P13 · P14 · P15 · P16 · P17
 **Time:** 40 hours

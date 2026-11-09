@@ -3,7 +3,7 @@
 > یک عامل کدگذاری فقط به اندازه مجموعه ای از وظایف که با آن اندازه گیری می کنید خوب است. این درس یک هارد ارزیابی را ایجاد می کند که یک پوشه از وظایف ثابت را می گیرد، هر یک را از طریق یک نماینده کاندید انجام می دهد، نمرات از طریق یک تأیید کننده تعیین کننده عبور می کنند یا شکست می خورند و نتایج را به pass@1, pass@k، متوسط تاخیر و متوسط هزینه جمع می کند. این آستین منبع حقیقت است که به شما اجازه می دهد یک بازپسین را از یک عامل تشخیص دهید.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox runner), Phase 14 · 30 (eval-driven agent development), Phase 14 · 19 (SWE-bench and GAIA benchmarks)
 **Time:** ~90 minutes
 
@@ -100,6 +100,7 @@ Pass@k در کنار pass@1 گزارش می شود زیرا pass@k در مورد
 ```bash
 cd phases/19-capstone-projects/27-eval-harness-fixture-tasks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

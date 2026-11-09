@@ -3,7 +3,7 @@
 > بائیت ها وارد، آیدی ها خارج، آیدی ها به همان بائیت ها برگردد. توکنایزر بسازید که هر مدل متن مدرن هنوز از آن شروع می کند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 04 lessons, Phase 07 transformer lessons
 **Time:** ~90 minutes
 

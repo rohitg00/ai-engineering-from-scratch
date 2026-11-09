@@ -3,7 +3,7 @@
 > یک مدل که در یک کار که نمی توانید تعریف کنید، خوب انجام می دهد، یک مدل است که به طور تصادفی خوب انجام می دهد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 42 to 45
 **Time:** ~90 minutes
 
@@ -135,6 +135,7 @@ eval-harness-matrix
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 اسکریپت در اولین اجرا، وسایل را تخم می دهد، با آداپتور اسباب بازی (که هر وسیله را درست می کند) آنها را نمره می دهد و می نویسد `outputs/leaderboard.json`. نمره کل 1.0 با آداپتور اسباب بازی`test_main.py`نشان می دهد که همان آرم 0.0 را تولید می کند وقتی آداپتور نمی تواند پاسخ دهد.

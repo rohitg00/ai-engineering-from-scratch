@@ -3,7 +3,7 @@
 > رمزگذاری حدس زده شده  یک طرح ارزان پیشنهاد توکن ها، مدل هدف آنها را در یک گذر تایید می کند  اکنون یک بهینه سازی آماده تولید است، نه یک ترفند تحقیقاتی. Eagle-3 در vLLM 0.7 کشتی 2.5-3x تولید در ترافیک واقعی. P-EAGLE (AWS 2026) حدس های موازی را حتی بیشتر تر کرد. SpecForge SGLang به عنوان سرپرست های حرفه ای آموزش داده است. مرکز اسپکلوترز Red Hat طرح های مرتب شده برای مدل های باز مشترک را منتشر کرد. TensorRT-LLM در NVIDIA اولین درجه کدگذاری را انجام داد. دسته تولید 2026 vLLM یا SGLang با طرح های خانواده EAGLE، FP8 یا INT4 کوانتاسیون و HPA در صف انتظار است. این سنگ پایانی دو مدل باز را با 2.5x+ تولید خط پایه با گزارش کامل تاخیر دم خدمت خواهد کرد.
 
 **Type:** Capstone
-**Languages:** Python (serving), C++ / CUDA (kernel inspection), YAML (configs)
+**Languages:** Python (serving), TypeScript, C++ / CUDA (kernel inspection), YAML (configs)
 **Prerequisites:** Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 17 (infrastructure)
 **Phases exercised:**P3 · P7 · P10 · P17
 **Time:** 30 hours

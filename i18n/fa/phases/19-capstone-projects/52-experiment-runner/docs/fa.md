@@ -3,7 +3,7 @@
 > حلقه فقط به اندازه اندازه گیری های آن صادق است. راه اندازی رانر که یک مشخصات می گیرد، آن را در یک فرعی عمل sandboxed اجرا می کند، و یک نقطه متریک json را که ارزیابی کننده می تواند اعتماد کند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > اگر نتوانید در همان زمان، پاسخ و بازخواهی خود را رتبه بندی کنید، نمی توانید سیستم را ارسال کنید. دو متریک یکسان نیستند و یک پیامک در محور های مختلف شکست می یابد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 06 (RAG), 10 (evaluation); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64, 65, 66, 67
 **Time:** ~90 minutes
 
@@ -121,6 +121,7 @@ ci-rag-metric-ladder
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 محصول نشان می دهد دقت@k، یادآوری@k، MRR، nDCG@k، وفاداری و ارتباط پاسخ برای هر نوع در یک جدول متریک واحد. ردیف بازیافت ترکیبی از خط پایه chunker در یادآوری می شود. ردیف بازرسانی از هیبرید در MRR می شود.

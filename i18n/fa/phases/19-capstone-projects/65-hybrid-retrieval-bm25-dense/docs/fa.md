@@ -3,7 +3,7 @@
 > بازیافت لکسایی و معنوی در توزیع های متقابل جستجو شکست می خورد. بازیافت ترکیبی با ترکیب رتبه متقابل مداخله نمی کند، رای می دهد - و رای در هر کلاس جستجو برنده می شود.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lesson 64 (chunking strategies)
 **Time:** ~90 minutes
 
@@ -81,6 +81,7 @@ rrf-fusion
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 جستجوگرهای واقعی در رتبه BM25، رتبه 1، رتبه 4، رتبه RRF قرار می گیرند. جستجوگرهای پارافرازی در رتبه BM25، رتبه 6، رتبه 1، رتبه RRF قرار می گیرند. جستجوگرهای مبهم در رتبه BM25، رتبه 3، رتبه 3، رتبه 3، رتبه RRF قرار می گیرند.

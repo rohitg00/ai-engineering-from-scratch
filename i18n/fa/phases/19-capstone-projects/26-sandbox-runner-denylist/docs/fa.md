@@ -3,7 +3,7 @@
 > دروازه تایید تصمیم می گیرد که آیا یک تماس ابزار باید اجرا شود. جعبه شنو تصمیم می گیرد که وقتی اتفاق می افتد چه اتفاقی می افتد. این درس یک فراینده فرعی را ارسال می کند که اجراگر های خطرناک را رد می کند، اشکال خطرناک آر جی وی را رد می کند، هر مسیر فایل را به ریشه پروژه زندانی می کند، تولیدات بزرگ را کوتاه می کند و فرآیندهای فرار را در یک زمان بندی دیوار می کشد. این دو لایه دوم است که بین مدل و سیستم عامل قرار دارند.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates and observation budget), Phase 14 · 33 (instructions as constraints), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -87,6 +87,7 @@ flowchart LR
 ```bash
 cd phases/19-capstone-projects/26-sandbox-runner-denylist
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

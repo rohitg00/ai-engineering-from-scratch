@@ -3,7 +3,7 @@
 > طبقه بندی کنندگان اساسی Anthropic، Llama Guard 4 Meta، ShieldGemma 2 Google، Nemotron 3 Content Safety NVIDIA و X-Guard برای پوشش چندزبانی، استیک طبقه بندی کننده ایمنی 2026 را تعریف کردند. گراک، پیریت، NVIDIA Aegis و promptfoo به ابزار ارزیابی معارضیت استاندارد تبدیل شدند. نيمو گارد ريلز v0.12 اونا رو به يه لوله توليدي متصل ميکنه این سنگ پایه همه چیز را به هم متصل می کند: یک خط ایمنی لایه ای در اطراف یک برنامه هدف، یک عامل مستقل تیم قرمز که 6 خانواده حمله را اداره می کند، و یک اجرای خود منتقد قانون اساسی که دلتای بی ضرر قابل اندازه گیری را تولید می کند.
 
 **Type:** Capstone
-**Languages:** Python (safety pipeline, red team), YAML (policy configs)
+**Languages:** Python (safety pipeline, red team), TypeScript, YAML (policy configs)
 **Prerequisites:** Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 18 (ethics, safety, alignment)
 **Phases exercised:**P10 · P11 · P13 · P14 · P18
 **Time:** 25 hours

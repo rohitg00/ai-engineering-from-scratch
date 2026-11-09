@@ -3,7 +3,7 @@
 > یک آرمینای مامور بدون لایه تاییدیه یک آرزوی در یک ژله خندق است. این درس زنجیره دروازه تعیین کننده ای را ایجاد می کند که تصمیم می گیرد آیا یک تماس ابزار مجاز به آتش زدن است، چه مقدار از خروجی که عامل مجاز به دیدن آن است و زمانی که حلقه باید متوقف شود زیرا عامل بیش از حد خوانده است. زنجیره یک تابع از درهای کوچک و نامگذاری شده به علاوه یک دفترچه مشاهده است که هر نشانه ای را که مدل نشان داده شده است ردیابی می کند.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 20-24 (Track A1: agent loop, tool registry, message store, prompt builder, model router), Phase 14 · 33 (instructions as constraints), Phase 14 · 36 (scope contracts), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -95,6 +95,7 @@ flowchart TD
 ```bash
 cd phases/19-capstone-projects/25-verification-gates-observation-budget
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

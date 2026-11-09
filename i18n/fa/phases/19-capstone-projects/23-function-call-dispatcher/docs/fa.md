@@ -3,7 +3,7 @@
 > در ديسپچر هست که هنيس براي هر وعده اي که طرح انجام داده ميده پرداخت ميکنه زمانبندي، دوباره تلاش، تخريب، نقشه برداری خطا همه چيز در يک خط
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

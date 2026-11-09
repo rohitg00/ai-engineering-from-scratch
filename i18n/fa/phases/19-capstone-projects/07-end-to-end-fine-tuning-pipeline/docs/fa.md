@@ -3,7 +3,7 @@
 > مدل کلاس 8B که بر اساس اطلاعات شما آموزش داده شده، DPO بر اساس ترجیحات شما هماهنگ شده، کوانتيز شده، مفروضات رمزنگاري شده و در توکن های قابل اندازه گیری $/1M خدمت شده است. دسته باز 2026 Axolotl v0.8، TRL 0.15، Unsloth برای تکرار، GPTQ / AWQ / GGUF برای کوانتایی، vLLM 0.7 با EAGLE-3 برای خدمت است. هدف این است که کل خط لوله را به صورت قابل بازیافت اجرا کند (YAML در، نقطه پایان خدمت شده) و یک کارت مدل را تحت چارچوب باز بودن مدل 2026 منتشر کند.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), YAML (configs), Bash (scripts)
+**Languages:** Python (pipeline), TypeScript, YAML (configs), Bash (scripts)
 **Prerequisites:** Phase 2 (ML), Phase 3 (DL), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P2 · P3 · P7 · P10 · P11 · P17 · P18
 **Time:** 35 hours

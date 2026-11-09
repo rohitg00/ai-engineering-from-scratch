@@ -3,7 +3,7 @@
 > مگراسیون بنچ آمازون (جاوا 8 تا 17) و مگراسیون Py2-to-Py3 موتور اپلیکیشن گوگل بار 2026 را تعیین می کنند. OpenRewrite Moderne در مقیاس AST تغییر نامه های تعیین کننده را انجام می دهد. Grit با DSL مدل کد مدل هم همین مشکل را هدف قرار می دهد. الگوی تولید هر دو را ترکیب می کند: یک زیربنای تعیین کننده برای بازنویسی های ایمن و یک لایه عامل برای موارد مبهم، یک جعبه قمار برای هر شاخه و یک هارم آزمون که قبل از باز شدن PR سبز می شود. هدف اينه که 50 تا بازخريد واقعي رو مهاجرت کنيم و نرخ گذر با تگزينومي شکست رو منتشر کنيم.
 
 **Type:** Capstone
-**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard)
+**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard, agent scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**P5 · P7 · P11 · P13 · P14 · P15 · P17
 **Time:** 30 hours

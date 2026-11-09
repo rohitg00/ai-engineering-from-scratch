@@ -3,7 +3,7 @@
 > یک منتقد که اولین بار "به نظر خوب" می رسد شکست خورده است. منتقد که همیشه "به کار نیاز دارد" را می دهد شکست خورده است. منتقد جالب همان است که به هم می پیوندد، و شما باید به هم می پیوندید.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

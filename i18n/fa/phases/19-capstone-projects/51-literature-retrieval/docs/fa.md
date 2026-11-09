@@ -3,7 +3,7 @@
 > فرضیه ای ارزان است. دانستن اینکه آیا کسی قبلاً آن را اثبات کرده است، بخش گران است. لایه بازیافت را بسازید که قبل از اینکه دوچرخه یک جعبه شن را به بالا ببرد، پاسخ به این سوال را بدهد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

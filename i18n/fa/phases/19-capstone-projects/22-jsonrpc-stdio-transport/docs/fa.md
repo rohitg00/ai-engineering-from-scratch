@@ -3,7 +3,7 @@
 > حمل و نقل بین یک مشتری مدل و یک سرور ابزار JSON-RPC از طریق stdio است. یک بار دستی آن را به شما می آموزد که هر لایه فریمینگ برای چه پرداخت می کند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

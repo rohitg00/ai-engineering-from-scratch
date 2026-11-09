@@ -3,7 +3,7 @@
 > یک آژان بدون قابل مشاهده یک جعبه سیاه است که هزینه دارد. این درس یک سازنده اسپان را دست به دست می کند که به توافق با کنوانسیون های معنایی OpenTelemetry GenAI، پرونده های JSON-Lines را یک اسپان در هر خط می نویسد و شمارشگرها و هیستوگرام ها را در قالب متن Prometeus نشان می دهد. کل چیز stdlib Python است و از اینترنت خارج می شود.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 13 · 20 (OpenTelemetry GenAI), Phase 14 · 23 (OTel GenAI conventions)
 **Time:** ~90 minutes
 
@@ -96,6 +96,7 @@ OTel Python SDK یک وابستگی واقعی است. همچنین چندین �
 ```bash
 cd phases/19-capstone-projects/28-observability-otel-traces
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 
