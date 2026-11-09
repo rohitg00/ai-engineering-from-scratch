@@ -3,7 +3,7 @@
 > Lời chỉ dẫn của Anthropic: "bắt đầu với các lời khuyên đơn giản, tối ưu hóa chúng bằng đánh giá toàn diện, và chỉ thêm nhiều hệ thống hành động khi cần thiết".
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** All of Phase 14.
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ ae-eval-three-layers
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: mỗi trường hợp vượt qua/không thành công, cờ quay lại, phán quyết CI gate.

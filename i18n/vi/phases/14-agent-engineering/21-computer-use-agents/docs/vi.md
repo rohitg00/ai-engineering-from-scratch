@@ -3,7 +3,7 @@
 > Ba mô hình sử dụng máy tính sản xuất vào năm 2026. Cả ba đều dựa trên tầm nhìn. Cả ba đều coi ảnh chụp màn hình, văn bản DOM và đầu ra công cụ như đầu vào không đáng tin cậy. Chỉ có hướng dẫn trực tiếp của người dùng được tính là quyền phép. Dịch vụ an toàn từng bước là tiêu chuẩn.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 20 (WebArena, OSWorld), Phase 14 · 27 (Prompt Injection)
 **Time:** ~60 minutes
 
@@ -92,6 +92,7 @@ computer-use-cursor
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả phát xuất cho thấy phân loại an toàn bắt được một chỉ thị tiêm trong văn bản DOM và chặn một mua hàng không xác nhận.

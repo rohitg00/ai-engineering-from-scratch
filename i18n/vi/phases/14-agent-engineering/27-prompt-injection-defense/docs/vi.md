@@ -3,7 +3,7 @@
 > Greshake et al. (AISec 2023) đã thiết lập việc tiêm trực tiếp như là vấn đề bảo mật của nhân viên xác định. Người tấn công đặt hướng dẫn trong dữ liệu mà nhân viên lấy lại; khi tiêu thụ, các hướng dẫn đó vượt qua lời nhắc của nhà phát triển.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 06 (Tool Use), Phase 14 · 21 (Computer Use)
 **Time:** ~75 minutes
 
@@ -81,6 +81,7 @@ injection-hijack
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: dấu vết cho mỗi cuộc gọi cho thấy phán quyết xác nhận và hành vi của người thực thi.

@@ -3,7 +3,7 @@
 > Việc vận chuyển đóng một vòng xây dựng và mở vòng học tập bằng chứng phải thay đổi hệ thống hoặc nó sẽ trở thành điện đo không ai sở hữu.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 46 and 53
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ Phòng thí nghiệm phân loại tín hiệu, tạo ra các hành động ratch
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

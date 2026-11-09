@@ -3,7 +3,7 @@
 > RL dựa trên gradient cần hàng ngàn thử nghiệm và một cluster GPU để sửa đổi chế độ thất bại. Reflection (Shinn et al., NeurIPS 2023) làm điều đó bằng ngôn ngữ tự nhiên: sau mỗi thử nghiệm thất bại, đại lý viết một phản xạ, lưu trữ nó trong bộ nhớ tập thể, và điều kiện thử nghiệm tiếp theo trên bộ nhớ đó. Đây là mô hình đằng sau tính toán thời gian ngủ của Letta, học tập của Claude Code về CLAUDE.md, và quy tắc học tập của Pro-workflow.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 02 (ReWOO)
 **Time:** ~60 minutes
 
@@ -94,6 +94,7 @@ Các thành phần:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Các dấu vết cho thấy ba thử nghiệm. thử nghiệm 1 thất bại, một phản xạ được lưu trữ, thử nghiệm 2 thấy phản xạ và cải thiện nhưng vẫn thất bại, thử nghiệm 3 thành công. So sánh với một chạy cơ bản (không phản xạ)  nó vẫn bị mắc kẹt trong câu trả lời thử nghiệm 1.

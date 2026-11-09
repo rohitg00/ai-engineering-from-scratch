@@ -3,7 +3,7 @@
 > Một đường đi chuỗi suy nghĩ duy nhất không có chỗ để quay trở lại. ToT (Yao et al., 2023) biến suy luận thành một cây với đánh giá tự trị trên mỗi nút. LATS (Zhou et al., 2024) thống nhất ToT với ReAct và Reflexion trong Monte Carlo Tree Search. Game of 24 tăng từ 4% (CoT) lên 74% (ToT); LATS đạt 92,7% pass@1 trên HumanEval.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~75 minutes
 
@@ -93,6 +93,7 @@ tree-of-thoughts
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Hướng dẫn cho thấy ToT mở rộng ba ứng cử viên cho mỗi nút với BFS, so với LATS hội tụ trên việc triển khai tốt nhất thông qua MCTS.

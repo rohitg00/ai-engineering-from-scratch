@@ -3,7 +3,7 @@
 > Các đại lý không thấy lệnh đầu ra thực sự đoán. Một người chạy phản hồi bắt được stdout, stderr, mã thoát và thời gian vào một bản ghi có cấu trúc mà lượt tiếp theo có thể đọc. Sau đó đại lý phản ứng với các sự kiện thay vì dự đoán của riêng mình về sự kiện.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 35 (Init Script)
 **Time:** ~50 minutes
 
@@ -72,6 +72,7 @@ wb-feedback-loop
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: ba hồ sơ phản hồi được thêm vào `feedback_record.jsonl`, cuối cùng của mỗi dòng inline in.

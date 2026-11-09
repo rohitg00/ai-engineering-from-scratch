@@ -3,7 +3,7 @@
 > Bộ phim kết thúc với một gói bạn bỏ vào bất kỳ repo. 11 bài học của bề mặt nén vào một thư mục bạn có thể`cp -r`Và có một đại lý làm việc đáng tin cậy vào sáng hôm sau.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phases 14 · 31 to 14 · 41
 **Time:** ~75 minutes
 
@@ -96,6 +96,7 @@ wb-pack-install
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Các kịch bản sao chép và pin các bề mặt, viết README, in cây gói, và thoát khỏi không.

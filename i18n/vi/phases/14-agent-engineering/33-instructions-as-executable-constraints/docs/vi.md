@@ -3,7 +3,7 @@
 > Các hướng dẫn được viết dưới dạng văn bản là những mong muốn. Các hướng dẫn được viết dưới dạng hạn chế là các bài kiểm tra. Bàn làm việc biến mỗi quy tắc thành thứ mà một đại lý có thể kiểm tra vào thời gian chạy và một nhà phê bình có thể xác minh sau sự kiện.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~50 minutes
 
@@ -96,6 +96,7 @@ wb-rule-checkoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: bộ quy tắc phân tích, chạy theo dõi, vượt qua/không thành công cho mỗi quy tắc, và một `rule_report.json`được lưu bên cạnh kịch bản.

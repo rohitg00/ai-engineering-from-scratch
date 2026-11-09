@@ -3,7 +3,7 @@
 > Một mô hình có khả năng không đủ. Các đại lý đáng tin cậy cần một bàn làm việc: hướng dẫn, trạng thái, phạm vi, phản hồi, xác minh, xem xét và giao.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 26 (Failure Modes)
 **Time:** ~45 minutes
 
@@ -148,6 +148,7 @@ Nhiệm vụ repo là nhỏ theo mục đích: thêm xác thực đầu vào và
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: một bản ghi bên cạnh hai lần chạy, một `failure_modes.json`tóm tắt cuộc chạy nhanh nhất, và một bản án đơn giản cho cuộc chạy bàn làm việc.

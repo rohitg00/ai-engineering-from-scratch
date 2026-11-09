@@ -3,7 +3,7 @@
 > Schluntz và Zhang (Anthropic, Dec 2024) phân biệt các dòng công việc (các con đường được xác định trước) với các đại lý (phương tiện sử dụng động lực). Năm mô hình dòng công việc bao gồm hầu hết các trường hợp. Bắt đầu với các cuộc gọi API trực tiếp. Chỉ thêm các đại lý khi không thể dự đoán các bước.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop)
 **Time:** ~60 minutes
 
@@ -77,6 +77,7 @@ workflow-chain
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Mỗi mô hình in dấu vết của nó. Tổng số các dòng mã cho mỗi mô hình là ~ 10-15; chi phí của một khung được đo bằng hàng ngàn.

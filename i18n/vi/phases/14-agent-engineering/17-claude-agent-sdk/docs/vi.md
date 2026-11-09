@@ -3,7 +3,7 @@
 > Một vòng xoáy bạn có thể nhập khẩu: công cụ tích hợp, các bộ phận phụ cho sự cô lập ngữ cảnh, móc, phổ biến dấu vết W3C, sự bền bỉ của phiên.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 10 (Skill Libraries)
 **Time:** ~75 minutes
 
@@ -95,6 +95,7 @@ ae-subagent-isolation
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Hướng dẫn cho thấy sự cô lập ngữ cảnh phụ (kích thước ngữ cảnh của nhạc sĩ vẫn bị giới hạn), thực thi nồi và sự bền bỉ của phiên.

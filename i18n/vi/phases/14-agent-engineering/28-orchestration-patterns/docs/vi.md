@@ -3,7 +3,7 @@
 > Bốn mô hình dàn xếp lặp lại trên các khung 2026: người giám sát, nhóm / đồng nghiệp, phân cấp, tranh luận. hướng dẫn của Anthropic: "Đó là về việc xây dựng hệ thống phù hợp với nhu cầu của bạn". Bắt đầu đơn giản; chỉ thêm topology khi một đại lý duy nhất cộng với năm mô hình luồng công việc là không đủ.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 25 (Multi-Agent Debate)
 **Time:** ~60 minutes
 
@@ -98,6 +98,7 @@ Mỗi mô hình xử lý cùng một nhiệm vụ ba ý định (trái tiền / 
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: theo dõi theo mô hình + số lượng op. Giám sát viên sạch nhất; đàn đông ngắn nhất; cấp bậc là sâu nhất; tranh luận đắt tiền nhất.

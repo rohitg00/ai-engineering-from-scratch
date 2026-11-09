@@ -3,7 +3,7 @@
 > ReAct kết hợp suy nghĩ và hành động trong một dòng chảy. ReWOO tách chúng ra: một kế hoạch lớn trước, sau đó thực hiện. 5 lần ít hơn các token, độ chính xác +4% trên HotpotQA, và bạn có thể chưng cất kế hoạch thành một mô hình 7B. Plan-and-Execute tổng quát nó; Plan-and-Act quy mô nó đến định hướng web.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop)
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ Phản ứng biểu diễn là "Thế số dân số của thủ đô Pháp là 
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Các dấu vết cho thấy toàn bộ kế hoạch trước, sau đó kết quả công nhân, sau đó thành phần giải pháp. So sánh số lượng mã thông báo (chúng tôi in một số chữ xấp xỉ) với một kiểu ReAct chạy được giao nhau  ReWOO thắng trên loại nhiệm vụ có cấu trúc này.

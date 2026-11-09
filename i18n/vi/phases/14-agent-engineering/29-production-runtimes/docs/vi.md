@@ -3,7 +3,7 @@
 > Các đại lý sản xuất chạy theo sáu hình dạng thời gian chạy: yêu cầu phản hồi, phát trực tuyến, thực hiện bền, nền dựa trên hàng, dựa trên sự kiện và lập lịch. Chọn hình dạng trước khi bạn chọn khung.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 13 (LangGraph), Phase 14 · 22 (Voice)
 **Time:** ~60 minutes
 
@@ -98,6 +98,7 @@ wb-runtime-shapes
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: năm dấu vết cho thấy hành vi của mỗi hình dạng trên cùng một nhiệm vụ. logic đại lý tương tự, các lớp vỏ bên ngoài khác nhau.

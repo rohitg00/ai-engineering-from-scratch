@@ -3,7 +3,7 @@
 > Ba điểm chuẩn đánh giá các đại lý neo vào năm 2026. SWE-bench kiểm tra mã patching. GAIA kiểm tra việc sử dụng công cụ tổng quát. AgentBench kiểm tra lý luận đa môi trường. Biết thành phần của chúng, lịch sử ô nhiễm của chúng và những gì chúng không đo.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 06 (Tool Use)
 **Time:** ~60 minutes
 
@@ -93,6 +93,7 @@ ae-swebench-gate
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả xuất hiện cho thấy tỷ lệ giải pháp cho mỗi nhiệm vụ + cho mỗi khó khăn và làm cho các quy tắc đánh giá cụ thể.

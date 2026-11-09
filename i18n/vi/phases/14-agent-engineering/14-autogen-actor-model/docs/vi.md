@@ -3,7 +3,7 @@
 > Các đại lý như các diễn viên: trao đổi tin nhắn không đồng bộ, xử lý các sự kiện, cách ly lỗi, đồng thời tự nhiên. AutoGen v0.4 (Microsoft Research, tháng 1 năm 2025) đã thiết kế lại dàn xếp đại lý xung quanh mô hình này; khung hiện đang trong chế độ bảo trì, với Microsoft Agent Framework (bước xem trước công cộng tháng 10 năm 2025) là người kế nhiệm sản xuất của nó.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
 **Time:** ~75 minutes
 
@@ -79,6 +79,7 @@ actor-mailbox
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Hướng dẫn cho thấy giao thông thông tin, một sự thất bại mô phỏng trong một diễn viên mà không gây ra sự sụp đổ của người khác, và sự hội tụ trên một phán quyết chung.

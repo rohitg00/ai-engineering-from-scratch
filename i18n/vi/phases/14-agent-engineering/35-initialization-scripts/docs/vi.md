@@ -3,7 +3,7 @@
 > Mỗi phiên bắt đầu lạnh trả thuế, đại lý đọc cùng một tập tin, thử lại cùng một quãng và phát hiện lại cùng một con đường, một bản thảo init trả thuế một lần và viết câu trả lời vào trạng thái.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 34 (Repo Memory)
 **Time:** ~45 minutes
 
@@ -72,6 +72,7 @@ wb-init-probes
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Bản kịch bản in bảng của các con thám, viết `init_report.json`, và thoát khỏi 0 trên đường hạnh phúc hoặc không bằng 0 với một danh sách các thăm dò thất bại.

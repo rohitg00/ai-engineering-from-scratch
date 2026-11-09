@@ -3,7 +3,7 @@
 > Một mươi một bài học của bề mặt bàn làm việc không có giá trị gì nếu chúng không tồn tại tiếp xúc với một cơ sở mã thực sự. Bài học này thực hiện nhiệm vụ tương tự hai lần trên một ứng dụng mẫu nhỏ: chỉ đơn giản so với bàn làm việc hướng dẫn. Số liệu làm cho lập luận.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phases 14 · 32 to 14 · 40
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ wb-ab-runs
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: một bảng kết quả của máy tính bảng cho mỗi đường ống, báo cáo dấu chấm lưu bên cạnh kịch bản, và JSON cho bất cứ ai muốn biểu đồ nó.

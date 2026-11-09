@@ -3,7 +3,7 @@
 > Các bộ nhớ chức năng khác nhau ngăn chặn mô hình có thể chỉnh sửa trực tiếp, và một đại lý thời gian ngủ hợp nhất bộ nhớ không đồng bộ trong khi đại lý chính là vô hiệu.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ memory-blocks
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Bản ghi cho thấy sự chia rẽ: các lượt đầu tiên nhanh và tạo ra các bài viết thô; con đường ngủ nhỏ gọn và làm sạch.

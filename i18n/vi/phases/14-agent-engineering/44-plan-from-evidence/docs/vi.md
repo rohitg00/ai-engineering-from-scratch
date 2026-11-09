@@ -3,7 +3,7 @@
 > Một kế hoạch không phải là một danh sách phải làm đẹp hơn. Nó là một biểu đồ phụ thuộc trong đó mỗi thay đổi có một lý do và mỗi nút cuối có bằng chứng.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 43
 **Time:** ~65 minutes
 
@@ -92,6 +92,7 @@ Năm kiểm tra đầu tiên là cơ khí, cuối cùng đòi hỏi sự phán x
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

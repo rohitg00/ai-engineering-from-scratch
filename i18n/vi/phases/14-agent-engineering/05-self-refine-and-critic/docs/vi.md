@@ -3,7 +3,7 @@
 > Self-Refine (Madaan et al., 2023) sử dụng một LLM trong ba vai trò  tạo, phản hồi, tinh chỉnh  trong vòng lặp. Lợi nhuận trung bình: +20 tuyệt đối trên 7 nhiệm vụ. CRITIC (Gou et al., 2023) làm cứng bước phản hồi bằng cách định tuyến xác minh thông qua các công cụ bên ngoài. Năm 2026, mô hình này được chuyển giao trong mọi khung như "đánh giá-tích cực" (Anthropic) hoặc vòng lặp guardrail (OpenAI Agents SDK).
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ Các thành phần:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 So sánh các tự tinh chỉnh so với CRITIC chạy. CRITIC bắt được một lỗi thực tế tự tinh chỉnh bị bỏ lỡ bởi vì kiểm tra bên ngoài đã đặt nền tự phê bình không.

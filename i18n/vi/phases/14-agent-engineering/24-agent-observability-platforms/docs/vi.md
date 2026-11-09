@@ -3,7 +3,7 @@
 > Ba nền tảng quan sát nhân vật tự lưu trữ thống trị năm 2026. Langfuse (MIT)  6M+ cài đặt / tháng, theo dõi + quản lý nhanh chóng + đánh giá + phiên bản lặp lại. Arize Phoenix (Elastic 2.0)  đánh giá chuyên sâu cụ thể đối với nhân vật, sự liên quan RAG, OpenInference tự động dụng cụ. Comet Opik (Apache 2.0)  tối ưu hóa nhanh chóng tự động, guardrails, phát hiện ảo giác của thẩm phán LLM.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 23 (OTel GenAI)
 **Time:** ~45 minutes
 
@@ -80,6 +80,7 @@ wb-trace-ingest
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: điểm đánh giá mỗi phiên và phân loại thất bại phù hợp với những gì Langfuse / Phoenix / Opik sẽ hiển thị.

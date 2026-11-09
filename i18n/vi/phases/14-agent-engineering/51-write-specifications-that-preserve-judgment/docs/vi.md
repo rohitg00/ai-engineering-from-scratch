@@ -3,7 +3,7 @@
 > Một đặc điểm hữu ích sửa đổi các biến động và bằng chứng trong khi để lại các lựa chọn thực hiện đảo ngược mở.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 50
 **Time:** ~75 minutes
 
@@ -74,6 +74,7 @@ Phòng thí nghiệm xác nhận mọi mặt hợp đồng, kiểm tra các ch�
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

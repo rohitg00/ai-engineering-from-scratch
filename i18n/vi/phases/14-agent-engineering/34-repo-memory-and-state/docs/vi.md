@@ -3,7 +3,7 @@
 > Lịch sử trò chuyện không ổn định, repo là lâu dài, đại lý của cửa hàng trên bàn làm việc được ghi trong các tệp phiên bản để phiên bản tiếp theo, đại lý tiếp theo và người xem tiếp theo đều đọc từ cùng một nguồn sự thật.
 
 **Type:** Build
-**Languages:** Python (stdlib + `jsonschema` optional)
+**Languages:** Python (stdlib + `jsonschema` optional), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~60 minutes
 
@@ -81,6 +81,7 @@ wb-state-persist
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Bản kịch bản viết `workdir/agent_state.json`và `workdir/task_board.json`, biến đổi chúng qua hai vòng, và in trạng thái xác nhận tại mỗi bước.

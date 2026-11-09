@@ -3,7 +3,7 @@
 > Mức đo nên trả lời một quyết định, không phải trang trí bảng điều khiển. Bắt đầu với mục tiêu, dẫn ra các câu hỏi, sau đó chọn các số liệu nhỏ nhất trả lời chúng.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 47 and 51
 **Time:** ~70 minutes
 
@@ -85,6 +85,7 @@ Phòng thí nghiệm xác nhận một kế hoạch đo lường, đánh giá c�
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

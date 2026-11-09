@@ -3,7 +3,7 @@
 > Việc làm không phải là việc làm, gói giao là một tác phẩm tạo ra "nhà nhân làm việc trong một giờ" thành "phát tiếp sẽ có hiệu quả ngay trong phút đầu tiên".
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 34 (Repo Memory), Phase 14 · 38 (Verification), Phase 14 · 39 (Reviewer)
 **Time:** ~50 minutes
 
@@ -91,6 +91,7 @@ wb-handoff-packet
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Khả năng phát ra: một bộ phận in, cộng với cả hai tập tin trên đĩa.

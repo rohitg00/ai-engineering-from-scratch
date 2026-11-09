@@ -3,7 +3,7 @@
 > Người viết mã không thể đánh giá nó. Người xem xét là một vòng lặp thứ hai với một lệnh hệ thống khác, một mục tiêu khác, và truy cập chỉ đọc vào mọi thứ mà nhà xây dựng tạo ra. Khoảng cách giữa nhà xây dựng và nhà đánh giá là nơi mà độ tin cậy lớn nhất sống.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 38 (Verification Gate)
 **Time:** ~55 minutes
 
@@ -74,6 +74,7 @@ wb-builder-marker
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: hai báo cáo đánh giá được viết lên đĩa và một bảng bảng điểm chiều của máy điều khiển.

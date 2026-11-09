@@ -3,7 +3,7 @@
 > OpenTelemetry's GenAI SIG (được ra mắt vào tháng 4 năm 2024) xác định các quy trình tiêu chuẩn cho điện toán đại lý. Tên của span, thuộc tính và các quy tắc nắm bắt nội dung hội tụ giữa các nhà cung cấp vì vậy dấu vết đại lý có nghĩa là cùng một điều trong Datadog, Grafana, Jaeger và Honeycomb.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 13 (LangGraph), Phase 14 · 24 (Observability Platforms)
 **Time:** ~60 minutes
 
@@ -88,6 +88,7 @@ ae-genai-span-tree
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: một cây span với tất cả các thuộc tính GenAI cần thiết, và một "bảo lưu bên ngoài" cho thấy các tham chiếu nội dung chọn vào.

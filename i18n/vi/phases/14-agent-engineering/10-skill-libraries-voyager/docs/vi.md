@@ -3,7 +3,7 @@
 > Voyager (Wang et al., TMLR 2024) coi mã thực thi như một kỹ năng. Kỹ năng được đặt tên, có thể lấy lại, hợp tác và tinh chỉnh bằng phản hồi môi trường. Đây là kiến trúc tham chiếu cho kỹ năng SDK của Claude Agent, bộ kỹ năng và mô hình thư viện kỹ năng 2026.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ voyager-skills
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Hình ảnh cho thấy thư viện viết, tìm kiếm, sáng tác, một sự thực hiện thất bại, và một v2 tinh chỉnh vòng lặp cuối cùng của Voyager.

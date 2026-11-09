@@ -3,7 +3,7 @@
 > Bàn làm việc hữu ích nhỏ nhất là ba tập tin: một bộ định tuyến hướng dẫn gốc, một tập tin trạng thái và một bảng tác vụ. Mọi thứ khác được xếp lớp trên. Nếu một repo không thể mang được ba tập tin này, không có mô hình nào sẽ lưu nó.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 31 (Why Capable Models Still Fail)
 **Time:** ~45 minutes
 
@@ -77,6 +77,7 @@ wb-three-files
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Bản kịch bản tạo ra`workdir/`bên cạnh chính nó, đặt xuống ba tập tin, chạy một lượt, và in sự khác biệt. chạy lại nó để xem như thế nào lượt thứ hai bắt đầu nơi mà lượt đầu tiên đã dừng lại.

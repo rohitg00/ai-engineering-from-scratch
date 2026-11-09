@@ -3,7 +3,7 @@
 > WebArena kiểm tra khả năng đại lý web trên bốn ứng dụng tự lưu trữ. OSWorld kiểm tra khả năng đại lý máy tính để bàn trên Ubuntu, Windows, macOS. Khi phát hành (20232024) cả hai đều cho thấy khoảng cách lớn giữa các đại lý tốt nhất trong lớp và con người.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 19 (SWE-bench, GAIA)
 **Time:** ~60 minutes
 
@@ -78,6 +78,7 @@ ae-agent-human-gap
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: tỷ lệ thành công và hiệu quả đường mòn mỗi nhiệm vụ, phản ánh phương pháp của OSWorld-Human.

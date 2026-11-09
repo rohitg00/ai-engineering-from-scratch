@@ -3,7 +3,7 @@
 > Kế hoạch biểu tượng xử lý các trường hợp khi kế hoạch có thể chứng minh là chính xác. Tìm kiếm mã tiến hóa xử lý các trường hợp khi chức năng thể dục có thể kiểm tra bằng máy. ChatHTN (2025) và AlphaEvolve (2025) cho thấy mỗi khóa mở khi kết hợp với LLM.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 02 (ReWOO and Plan-and-Execute)
 **Time:** ~75 minutes
 
@@ -102,6 +102,7 @@ htn-tree-expand
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Hướng dẫn cho thấy người lập kế hoạch HTN phân hủy một nhiệm vụ hợp chất (với một sự suy giảm LLM giữa kế hoạch) và vòng lặp tiến hóa hội tụ trên một biểu thức mục tiêu.

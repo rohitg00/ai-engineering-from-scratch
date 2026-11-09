@@ -3,7 +3,7 @@
 > Các đại lý song song chỉ tiết kiệm thời gian tường khi công việc độc lập. Nếu không họ chuyển đổi một nhiệm vụ rõ ràng thành một vấn đề phối hợp với tỷ lệ thất bại nhanh hơn.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 39 and 44
 **Time:** ~70 minutes
 
@@ -86,6 +86,7 @@ Phòng thí nghiệm kiểm tra đường dẫn chồng chéo, xác nhận sự 
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

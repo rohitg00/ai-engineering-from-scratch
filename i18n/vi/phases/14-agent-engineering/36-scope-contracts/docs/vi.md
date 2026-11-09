@@ -3,7 +3,7 @@
 > Mô hình không biết công việc kết thúc ở đâu. Hợp đồng phạm vi là một tệp mỗi nhiệm vụ cho biết công việc bắt đầu ở đâu, kết thúc ở đâu, và làm thế nào để quay lại nếu nó đổ. Hợp đồng biến "đứng trong phạm vi" từ một mong muốn thành một kiểm tra.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 33 (Rules as Constraints)
 **Time:** ~50 minutes
 
@@ -107,6 +107,7 @@ wb-scope-bounce
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: hợp đồng, hai lần chạy, phán quyết mỗi lần chạy, và một lần cứu `scope_report.json`- Tôi không biết.

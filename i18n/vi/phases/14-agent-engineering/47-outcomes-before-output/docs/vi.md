@@ -3,7 +3,7 @@
 > Việc thực hiện nhanh sẽ làm tăng hình phạt cho việc chọn sai vấn đề.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** None
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ Phòng thí nghiệm xác nhận`OutcomeFrame`và viết `outputs/outcome-frame.
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

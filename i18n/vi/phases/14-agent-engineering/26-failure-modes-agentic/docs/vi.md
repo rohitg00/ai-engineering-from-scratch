@@ -3,7 +3,7 @@
 > MASFT (Berkeley, 2025) liệt kê 14 chế độ thất bại đa đại lý trong 3 loại. Taxonomy của Microsoft ghi lại cách các lỗi AI hiện có tăng cường trong cài đặt đại lý. Dữ liệu lĩnh vực công nghiệp hội tụ về năm chế độ lặp lại: hành động ảo giác, trượt phạm vi, sai lầm hàng loạt, mất ngữ cảnh, lạm dụng công cụ.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 05 (Self-Refine and CRITIC), Phase 14 · 24 (Observability)
 **Time:** ~60 minutes
 
@@ -89,6 +89,7 @@ failure-cascade
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả: nhãn theo dõi + phân phối tổng thể, tái tạo giá rẻ của những gì bề mặt tập hợp dấu vết của Phoenix.

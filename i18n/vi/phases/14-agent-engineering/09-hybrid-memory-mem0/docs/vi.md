@@ -3,7 +3,7 @@
 > Bộ nhớ lai chạy ba cửa hàng song song  vector cho sự tương đồng ngữ nghĩa, KV cho tìm kiếm thực tế nhanh, biểu đồ cho lý luận mối quan hệ thực thể  với một lớp điểm số kết hợp chúng khi lấy lại. Đây là một mô hình sản xuất được sử dụng rộng rãi cho bộ nhớ bên ngoài; Mem0 (Chhikara et al., 2025) là một thực hiện tham chiếu.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -106,6 +106,7 @@ ae-memory-fusion
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả phát xuất cho thấy ba đường gọi riêng biệt cộng với top-k hợp nhất. Chuyển các trọng lượng ghi điểm ở đầu của `main()`và xem xếp hạng thay đổi.

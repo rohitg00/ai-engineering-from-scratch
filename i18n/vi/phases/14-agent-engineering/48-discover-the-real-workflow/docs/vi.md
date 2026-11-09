@@ -3,7 +3,7 @@
 > Các yêu cầu không phải chờ đợi trong một cuộc họp để được thu thập.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 47
 **Time:** ~70 minutes
 
@@ -82,6 +82,7 @@ Phòng thí nghiệm lưu trữ bằng chứng về từng bước của dòng c
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

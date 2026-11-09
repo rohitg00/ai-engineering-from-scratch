@@ -3,7 +3,7 @@
 > OpenAI Agents SDK là framework đa đại lý nhẹ được xây dựng dựa trên API Responses. Năm nguyên thủy: Agent, Handoff, Guardrail, Session, Tracing. Handoffs là các công cụ có tên `transfer_to_<agent>`- Đường dây bảo vệ bị hỏng khi nhập hoặc ra.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -84,6 +84,7 @@ ae-agent-handoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Hình ảnh cho thấy hai lần giao hàng thành công, một chuyến đi vào đường dây bảo vệ và một cây tròn phản ánh những gì SDK thực sự phát ra.

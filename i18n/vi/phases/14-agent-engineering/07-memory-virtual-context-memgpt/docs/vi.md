@@ -3,7 +3,7 @@
 > Các cửa sổ ngữ cảnh là hữu hạn. Các cuộc trò chuyện, tài liệu và dấu vết công cụ không có. Giải pháp là bộ nhớ ảo của hệ điều hành được tái lập.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ context-budget
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Hướng dẫn cho thấy đại lý viết ba sự kiện, điền vào ngữ cảnh chính để nạp (phục xuất việc trục xuất), sau đó trả lời một câu hỏi tiếp theo bằng cách lấy từ hồ sơ  tái tạo dòng làm việc MemGPT mà không có LLM thực sự.

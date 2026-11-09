@@ -3,7 +3,7 @@
 > Một nhân viên lập trình có thể thực hiện một nhiệm vụ rõ ràng nhanh chóng. Nó cũng có thể thực hiện một nhiệm vụ không rõ ràng nhanh chóng. Tốc độ giống nhau. Chi phí không phải.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 31 and 36
 **Time:** ~60 minutes
 
@@ -93,6 +93,7 @@ Phòng thí nghiệm tạo ra một`TaskFrame`, xác nhận ranh giới và bằ
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

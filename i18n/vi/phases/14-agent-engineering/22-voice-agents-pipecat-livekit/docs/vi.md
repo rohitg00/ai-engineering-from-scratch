@@ -3,7 +3,7 @@
 > Các đại lý thoại là một loại sản xuất hạng nhất vào năm 2026. Pipecat cung cấp cho bạn một đường ống dựa trên khung Python (VAD → STT → LLM → TTS → vận chuyển). LiveKit Agents nối các mô hình AI với người dùng qua WebRTC. Mục tiêu độ trễ sản xuất hạ cánh ở 450600ms từ đầu đến cuối cho các đống cao cấp.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
 **Time:** ~60 minutes
 
@@ -89,6 +89,7 @@ voice-pipeline
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Hình ảnh cho thấy dòng chảy bình thường và một sự hủy bỏ của tàu bay đã ngăn chặn TTS giữa phát âm.
