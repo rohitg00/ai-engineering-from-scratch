@@ -3,7 +3,7 @@
 > स्वयं सुधार की सबसे छोटी लूप तर्क के भीतर है। एक मॉडल विचार की एक श्रृंखला उत्पन्न करता है, सही उत्तरों पर उतरने वाले को रखता है, और उन पर बारीक-बारी से ट्यून करता है। यह स्टार है। वी-एसटीएआर एक सत्यापनकर्ता जोड़ता है इसलिए निष्कर्ष समय चयन बेहतर है। Quiet-STaR तर्क को हर टोकन तक धकेलता है। तीनों काम करते हैं। उनमें से कोई भी जादू नहीं है लूप किसी भी शॉर्टकट को संरक्षित करता है जो सही उत्तर तक पहुंचने के लिए हुआ।
 
 **Type:** Learn
-**Languages:** Python (stdlib, bootstrap-loop simulator)
+**Languages:** Python, TypeScript (stdlib, bootstrap-loop simulator)
 **Prerequisites:** Phase 13 · 01-03 (Reasoning and CoT), Phase 15 · 01 (long-horizon framing)
 **Time:** ~60 minutes
 
