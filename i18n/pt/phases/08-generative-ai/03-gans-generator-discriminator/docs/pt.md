@@ -3,7 +3,7 @@
 > O truque de Goodfellow em 2014 foi ignorar a densidade inteiramente. Duas redes. Uma faz falsas. Uma as apanha. Eles lutam até que as falsas sejam indistinguíveis do real. Não deveria funcionar. Muitas vezes não funciona. Quando acontece, as amostras ainda são as mais nítidas na literatura para domínios estreitos.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 08 (Optimizers), Phase 8 · 02 (VAE)
 **Time:** ~75 minutes
 

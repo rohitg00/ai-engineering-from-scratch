@@ -3,7 +3,7 @@
 > Os modelos de difusão tomam 20-50 passos de amostragem porque percorrem um caminho curvo do ruído para os dados. A combinação de fluxo (Lipman et al., 2023) e fluxo retificado (Liu et al., 2022) treinaram caminhos retos. Os caminhos mais retos significam menos passos significam inferência mais rápida.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 06 (DDPM), Phase 1 · Calculus
 **Time:** ~45 minutes
 

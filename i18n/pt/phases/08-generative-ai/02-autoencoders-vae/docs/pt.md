@@ -3,7 +3,7 @@
 > Um autoencoder simples comprime e reconstrui. Ele memorizou. Não gera. Adicione um truque  forçar o código para parecer Gaussian  e você obtém um amostragem. Esse truque único, a reparameterization de $z = \mu + \sigma \cdot \epsilon$, é por isso que cada modelo de imagem de difusão latente e de correspondência de fluxo que você usa em 2026 tem um VAE na entrada.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
 **Time:** ~75 minutes
 

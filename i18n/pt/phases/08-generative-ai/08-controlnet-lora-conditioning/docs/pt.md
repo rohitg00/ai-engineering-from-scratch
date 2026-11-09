@@ -3,7 +3,7 @@
 > O texto sozinho é um sinal de controle desajeitado. ControlNet permite que você clone um modelo de difusão pré-treinado e guiá-lo com um mapa de profundidade, esqueleto de pose, rabisco ou imagem de borda. LoRA permite que você ajuste um modelo de parâmetro 2B treinando 10 milhões de parâmetros. Juntos eles transformaram a Diffusão estável de um brinquedo no pipeline de imagem 2026 que é enviado para todas as agências.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 10 (LLMs from Scratch — for LoRA foundation)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > A primeira grande desbloqueio de 2014-2017 foi controlar o que um GAN faz. Anexe um rótulo, ou uma imagem, ou uma frase. Pix2Pix fez a versão de imagem e ainda vence todos os modelos genéricos de texto para imagem em tarefas estreitas de imagem para imagem.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 06 (U-Net), Phase 3 · 07 (CNNs)
 **Time:** ~75 minutes
 

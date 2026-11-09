@@ -3,7 +3,7 @@
 > Cada modelo de imagem, modelo de texto, modelo de vídeo e modelo 3D cabe em um dos cinco baldes. Escolha o balde errado e você lutará com a matemática por semanas. Escolha o certo e os últimos 12 anos de progresso do campo se acumula limpo em sua cabeça.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 (ML Fundamentals), Phase 3 (Deep Learning Core), Phase 7 · 14 (Transformers)
 **Time:** ~45 minutes
 

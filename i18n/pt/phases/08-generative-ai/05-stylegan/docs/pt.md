@@ -3,7 +3,7 @@
 > A maioria dos geradores agita .$z$O StyleGAN divide-o: primeiro mapa$z$para um intermediário $w$, depois * injectar * $w$Essa única mudança desenroou o espaço latente e fez com que os rostos fotorrealistas fossem um problema resolvido durante sete anos consecutivos.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 
