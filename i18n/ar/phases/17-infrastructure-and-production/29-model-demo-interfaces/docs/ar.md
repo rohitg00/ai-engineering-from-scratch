@@ -3,7 +3,7 @@
 > نموذج التجربة لديه عقد واحد: مدخل، دعوة نموذج، ومخرج. ضع حدًا على كل جزء قبل مشاركة الرابط.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 13 (Building a Production LLM Application), Phase 17 · 08 (Inference Metrics), Phase 17 · 19 (AI Gateways)
 **Time:** ~90 minutes
 
@@ -207,12 +207,14 @@ demo-token-bucket
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 يختبر الاختبار الذاتي المصادق والسلة الوهمية ومصيغة التدفق، وجولة ذهاب وإياب HTTP واحدة حقيقية. يبدأ الخادم على منفذ مجاني، يرسل ثلاثة طلبات، ويقف الخادم، ويقوم بالخروج. يبدأ الخادم لمصفح فقط عندما تحتاج إليه:
 
 ```bash
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 افتح`http://127.0.0.1:8000`في متصفح. اضغط على Ctrl + C لإيقاف الخادم.
@@ -478,6 +480,7 @@ curl -N -X POST http://127.0.0.1:8000/api/stream \
 export DEMO_ACCESS_TOKEN="$(python3 -c 'import secrets; print(secrets.token_urlsafe(24))')"
 echo "$DEMO_ACCESS_TOKEN"
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 اجري الاختبارات:

@@ -3,7 +3,7 @@
 > تعامل مخزن KV كمواد ذات مستوى أولى قابلة للاستعمال المخزنة في شجرة الجذور ، وتغييرات في الجدول مع ذلك: بدلاً من FCFS (أول من يأتي ، أول من يخدم) كجدولات vLLM ، يقوم مخطط ذا أهمية المخزن بتحديد الأولوية لطلبات مع مخططات مشتركة أطول  بشكل فعال عبر الجذور الأول عمقًا حتى تبقى الفرع الساخنة مقيمًا في HBM. (سجلانغ) هو المحرك الذي بنيت حول هذه الفكرة. على Llama 3.1 8B مع إشارات 1K مثل ShareGPT، SGLang يصل ~ 16,200 tok / s إلى ~ 12,500 vLLM، حافة ~ 29٪. على عبء عمل RAG الثقيل من المواصلات، تصل الميزة إلى 6.4x. على حمولات العمل على شكل نسخ الصوتية، تمت إزالة معدل إضافة الكاش 86٪ تم نشرها على 400،000+ GPU في 2026 عبر xAI، LinkedIn، Cursor، Oracle، GCP، Azure، AWS. المشكلة هي أن الرقم 6.4x يتبخر عندما يكون التنظيم المسبق غير متسق
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy radix-tree cache + cache-aware scheduler)
+**Languages:** Python, TypeScript (stdlib, toy radix-tree cache + cache-aware scheduler)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 14 (Agentic RAG)
 **Time:** ~75 minutes
 

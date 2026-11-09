@@ -3,7 +3,7 @@
 > لم يتم تصميم اختبارات الحمل التقليدية لاستجابات البث ، وطول الخروج المتغير ، أو مقاييس مستوى الرمز ، أو شبع GPU. اثنين من الفخاخ يضرب معظم الفرق. فخ GIL: قياس مستوى الشعارات Locust يدير الوهم تحت Python GIL، والذي يتنافس مع توليد الطلبات تحت التزامن الثقيل؛ التوهم الخلفي ثم يضخم التأخير بين الشعارات  عميلك هو عقد الزجاجة، وليس الخادم. فخّ التوحيد التوقيت: التوقيتات المماثلة في حلقة اختبار نقطة واحدة على توزيع الرمز؛ حركة المرور الحقيقية لديها طول متغير ومطابقات المواعيد المسبقة المتنوعة. " إل أم فيرف " تصحيح هذا`--mean-input-tokens`+ `--stddev-input-tokens`. خريطة أدوات في عام 2026: تخصص في مجال الدرجة العليا (GenAI-Perf، LLMPerf، LLM-Locust، guidellm) لتحقيق دقة على مستوى الرمز؛ **k6 v2026.1.0**+ **k6 Operator 1.0 GA (Sept 2025)** إدراك التدفق، Kubernetes-أصل توزيع عبر TestRun / PrivateLoadZone CRDs، أفضل لبوابات CI / CD؛ Vegeta for Go سكر ثابت؛ Locust 2.43.3 فقط مع LLM-Locust تمديد للتدفق. أنماط الحمل: ثابتة الحالة، الرامب، النص (اختبار التدفق الذاتي) ، الغذاء (السرعات الذاكرة).
 
 **Type:** Build
-**Languages:** Python (stdlib, toy realistic-prompt generator + latency collector)
+**Languages:** Python, TypeScript (stdlib, toy realistic-prompt generator + latency collector)
 **Prerequisites:** Phase 17 · 08 (Inference Metrics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~75 minutes
 

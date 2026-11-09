@@ -3,7 +3,7 @@
 > ثلاث طبقات، وليس واحدة. كربنتر إمدادات العقد الديناميكية (أقل من دقيقة واحدة، 40٪ أسرع من Cluster Autoscaler). يقوم KAI Scheduler بتنظيم المجموعات، وعلم التوبولوجيا، والصفوف الهرمية  يمنع فخ التخصيص الجزئي 7 من 8 حيث تنتظر سبعة عقدات وتحرق على GPU واحدة مفقودة. مقياسات ذاتية على مستوى التطبيق (NVIDIA Dynamo Planner ، llm-d Workload Variant Autoscaler) على إشارات محددة للإستنتاج  عمق الصف ، استخدام cache KV  ليس دورة عمل CPU / DCGM. فخ الكلاسيكي من " HPA " هو ذلك`DCGM_FI_DEV_GPU_UTIL`هو قياس دورة العمل: يمكن أن يكون 100% 10 طلبات أو 100. vLLM يخصص مسبقا ذاكرة cache KV ، لذلك لا يسبب الذاكرة أبداً التنظيم. هذه الدروس تعلمك لتكوين الطبقات الثلاث وتجنب Karpenter الافتراضي `WhenEmptyOrUnderutilized`سياسة التي تنهي تشغيل وظائف الجيبو في منتصف الإستثناء
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy queue-depth autoscaler simulator)
+**Languages:** Python, TypeScript (stdlib, toy queue-depth autoscaler simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > لم يعد سوق استنتاج 2026 استئجار وقت GPU. يختلف إلى سليكون مخصص (Groq ، Cerebras ، SambaNova) ، منصات GPU (Baseten ، Together ، Fireworks ، Modal) ، وأسواق API-أول (Replicate ، DeepInfra). ارتفعت أسعار الألعاب النارية $1/hr per GPU on May 1, 2026, and $تقييم 4B على 10T+ رموز/يوم يخبرك عن العملات النموذج القيادة على الحجم.$300M Series E at $5B في يناير 2026. قاعدة وضع المنافسة بسيطة: الألعاب النارية تحسن التأخير، معًا تحسن عرض الكتالوج، باستن تحسن تشوية المؤسسة، مودال تحسن Python-أصل DX، النسخ تحسن الوصول متعدد الوسائل، أي مقياس تحسن Python الموزع. هذا الدروس يمنحك ماتريكس يمكنك تسليم مؤسس.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy per-call economics comparator)
+**Languages:** Python, TypeScript (stdlib, toy per-call economics comparator)
 **Prerequisites:** Phase 17 · 01 (Managed LLM Platforms), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > القيود الأساسية للقاعدة هي عرض النطاق الترددي للذاكرة، وليس الحساب. يجلس DRAM المحمول في 50-90 جيجابايت/ ثانية؛ مركز البيانات HBM3 يزيل 2-3 تي بي/ ثانية  فجوة 30-50x. فك الرمز يرتبط بالذاكرة لذا الفجوة حاسمة في عام 2026، تُقسم المناظر الطبيعية إلى أربعة أجزاء. محرك Apple M4 / A18 Neural Engine يصل إلى 38 TOPS مع ذاكرة موحدة (لا نسخة من CPUNPU). كوالكوم ستانابدراغون إكس النخبة / 8 جنرال 4 هيكساجون يصل إلى 45 TOPS. ويب جي بي يو + ويب إل إل إم تعمل على إلاما 3.1 8 بي (ق 4) عند ~ 41 توك / ثانية على M3 ماكس (حوالي 70-80٪ من الأصليين) ؛ 17.6k نجوم غيت هوب ، API متوافقة مع OpenAI ، ~ 70-75% تغطية المحمول. NVIDIA Jetson Orin Nano Super (8GB) يتناسب مع Llama 3.2 3B / Phi-3; AGX Orin يعمل gpt-oss-20b عبر vLLM عند ~ 40 tok / s. تدعم TensorRT Edge-LLM EAGLE-3 ، NVFP4 ، prefill prefill  المجزأة التي عرضت في CES 2026 من قبل Bosch ، ThunderSoft ، MediaTek.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy bandwidth-bound decode simulator)
+**Languages:** Python, TypeScript (stdlib, toy bandwidth-bound decode simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 09 (Production Quantization)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > اختيار المحرك هو وظيفة من الأجهزة والقياس والنظام البيئي  ليس قراءة لوحة الدرجة. أربعة محركات تهيمن على الاستنتاج المضيف الذاتي في عام 2026: llama.cpp، Ollama، vLLM، SGLang، مع TGI تتراجع في وضع الصيانة. **llama.cpp**هو أسرع على CPU  أوسع دعم النموذج، والسيطرة الكاملة على الكمية والخيوط. **Ollama**هو التثبيت من جهاز تحميل الكمبيوتر المحمول واحد القيادة، ~ 15-30٪ أبطأ من llama.cpp (Go + CGo + HTTP التسلسل) ، 3x فجوة التوصيل تحت مثل الحمل. **TGI entered maintenance mode December 11, 2025** فقط تحديات الحذاء، ~ 10% بطيئة التوصيل الخام من vLLM ولكن تاريخيا أعلى قابلية للملاحظة وتكامل HF-النظام البيئي. وهذا الوضع الصيانة تجعل من الرهان المخاطر على المدى الطويل  SGLang أو vLLM هي الافتراضات الأمانية للمشاريع الجديدة. **vLLM**هو افتراض الإنتاج العام  v0.15.1 (فبراير 2026) يضيف PyTorch 2.10, RTX Blackwell SM120, تحسين H200. **SGLang**هو المتخصص الوكلي متعدد التحولات / المواصلات الثقيلة  400,000+ GPU في الإنتاج (xAI ، LinkedIn ، Cursor ، Oracle ، GCP ، Azure ، AWS). القيود على الأجهزة: CPU-first → llama.cpp. AMD / غير NVIDIA → vLLM هو الطريق الأكثر دعماً (TRT-LLM مغلق من NVIDIA). نمط خط أنابيب 2026: dev = Ollama، staging = llama.cpp، prod = vLLM أو SGLang. المحركات تأخذ أشكال وزن مختلفة  GGUF لعائلة llama.cpp، HF safetensors لمحركات GPU  بحيث يمكن أن يكون تحويل النمط بين المراحل.
 
 **Type:** Learn
-**Languages:** Python (stdlib, engine-decision tree walker)
+**Languages:** Python, TypeScript (stdlib, engine-decision tree walker)
 **Prerequisites:** All Phase 17 lessons covering engines (04, 06, 07, 09, 18)
 **Time:** ~45 minutes
 

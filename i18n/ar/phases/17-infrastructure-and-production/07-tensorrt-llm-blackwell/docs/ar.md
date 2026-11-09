@@ -3,7 +3,7 @@
 > تجارة تجميع استنتاجات المتخصصة في الأجهزة التنقل للعبث، و TensorRT-LLM  NVIDIA فقط، المنسقة لبلكويل  هو مثال واضح على التجارة تسفر الثمن. على GB200 NVL72 مع ترقية دينامو، قياس SemiAnalysis InferenceX $0.012 per million tokens on a 120B model in Q1-Q2 2026, against $0.09 / M على H100 + vLLM  فجوة اقتصادية 7x. يجمع كومة المكونات تنسيقين من نقاط العبور مع تقنيتين خدمة: FP8 يبقى حاسمًا لخزن KV و نواة الاهتمام لأنه يمتلك النطاق الديناميكي الذي يحتاجونه ؛ NVFP4 (4 بيتات من التوسع الضئيل) يتعامل مع الوزن والتنشيط ؛ تنبؤ متعدد الشكلتين (MTP) والإعداد المزدوج / التفكيك المزدوج يضيفون 2-3x آخر على القمة. تحميل أدوات الدعم اليوم 0 أوزان FP4 مباشرة دون تحويل بعد التدريب. الصيد لفرق الهندسة 2026: TRT-LLM مفتوح المصدر ولكن NVIDIA-specific  CUDA- و Blackwell-specialized  لذلك تبنيه تجارة المحمولة للعبور. إجر الرياضيات على مزيجك من النماذج والجهاز قبل الالتزام.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy FP8/NVFP4 memory and cost calculator)
+**Languages:** Python, TypeScript (stdlib, toy FP8/NVFP4 memory and cost calculator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 13 (Quantization)
 **Time:** ~75 minutes
 

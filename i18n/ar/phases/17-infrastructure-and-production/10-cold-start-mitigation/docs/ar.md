@@ -3,7 +3,7 @@
 > يستغرق نموذج كبير دقائق للذهاب من البرد إلى الخدمة: نموذج 70B على عقدة جديدة تحتاج إلى ما يقرب من 3-8 دقيقة قبل الرمز الأول. في عالم حقيقي بدون خادم، هذا ليس إثارة، إنه انقطاع. تعمل التخفيفات في خمس طبقات: صور العقد المسبقة (Bottlerocket على AWS ، قوس حجم مزدوج) ، وتدفق النموذج (NVIDIA Run:ai Model Streamer ، الأصلي في vLLM) ، صور سريعة في ذاكرة GPU (مواقع التفتيش المودالية ، تغيير تشغيل أسرع بنحو 10 مرات) ، ومجمعات دافئة (`min_workers=1`), تحميل مستوي (أنابيب NVMe→DRAM→HBM من ServerlessLLM ، خفض التأخير 10-200x) ، بالإضافة إلى نمط إضافي سادس ، الهجرة الحية التي تحرك رموز المدخل (KB) بدلاً من كاش KV (GB). ينشر Modal 2-4s البرد بدء كطابق ؛ الباسيطان 5-10s افتراضي ، فرعي ثانية مع التدفئة المسبقة. هذه الدروس تعلمك قياس ، ميزانية ، وتجميع الطبقات الخمسة.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cold-start path simulator)
+**Languages:** Python, TypeScript (stdlib, toy cold-start path simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~60 minutes
 

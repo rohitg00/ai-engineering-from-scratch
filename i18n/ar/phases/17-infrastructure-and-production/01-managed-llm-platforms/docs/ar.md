@@ -3,7 +3,7 @@
 > ثلاثة متفرجين، ثلاثة استراتيجيات مختلفة. AWS Bedrock هو سوق نموذج  كلود، لامة، تيتان، الاستقرار، التماسك وراء API واحدة. أزور أوبن آي آي هي شراكة أوبن آي حصرية بالإضافة إلى وحدات النتائج المقدمة (PTU) للقدرة المخصصة. (فيرتكس إيه إيه) هي (جيميني) الأولى بأفضل قصة طويلة الأصل والمتعددة الطرق. في عام 2026 ، يقياس التحليل الاصطناعي Azure OpenAI عند ~ 50 ms في المتوسط و Bedrock عند ~ 75 ms على Llama 3.1 405B المكافئ  PTUs تفسير الفجوة لأن القدرة المخصصة تغلب على المشاركة على الطلب. قاعدة القرار ليست "أي هو أسرع" ولكن "أي نموذج الكتالوج و FinOps سطح مطابقة منتج بلدي". هذا الدروس يعلمك للاختيار مع التعادلات مكتوبة، وليس الاهتزازات.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cost-and-latency comparator)
+**Languages:** Python, TypeScript (stdlib, toy cost-and-latency comparator)
 **Prerequisites:** Phase 11 (LLM Engineering), Phase 13 (Tools & Protocols)
 **Time:** ~60 minutes
 

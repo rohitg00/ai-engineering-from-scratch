@@ -3,7 +3,7 @@
 > الملف مقدم محاسبة محمولة، فك الرمز محمولة ذاكرة. تشغيل كلتا على نفس المعاملة البيانية يضيع مصدر واحد. تقسم التقسيمها إلى مجموعات منفصلة وتحويل cache KV بينها عبر NIXL (RDMA / InfiniBand أو TCP fallback). نفيديا دينامو (GTC 2025 الإعلان، 1.0 GA) تقع فوق vLLM/SGLang/TRT-LLM  خططها الموضح + خطط SLA التطابق السريعة السريعة التميز: تعريف النسب لتلبية SLOs. نشرت NVIDIA مكاسب في التشغيل في هذا الملاعب  developer.nvidia.com (2025-06) يظهر تحسنًا ~6x لـ DeepSeek-R1 MoE على GB200 NVL72 + Dynamo في نظام التأخير المتوسط ، ويقوم صفحة منتج Dynamo (developer.nvidia.com ، غير محددة) بالإعلانات إلى 50x MoE على GB300 NVL72 + Dynamo vs Hopper. الرقم "30x" هو مجموع المجتمع عبر تقارير بلاكويل + دينامو + ديب سيك-ر 1 كاملة؛ لم نجد مصدرًا أساسيًا واحدًا يذكر بالضبط 30x ، لذلك تعامل مع ذلك كطالبة اتجاهية. llm-d (Red Hat + AWS) هو Kubernetes-أصلي: prefill / decode / router كخدمات مستقلة مع HPA لكل دور. إضافة llm-d 0.5 التخفيض الهيروقي KV، الالتوجيه الوعي لورا، شبكة UCCL، نطاق إلى الصفر. الاقتصاد: الإفصاح الداخلي عن العديد من الإفصاحات عن العملاء يوحي بتوفير 3040% على $2M-class inference spend (i.e., $600-800K/سنة) عند الانتقال من حصة مقيمة إلى مفصلة مع دينامو عند SLA ثابتة؛$2M→$الرقم 600-800K هو مركب داخلي ، وليس دراسة حالة واحدة نشرت استخدامه كمركز من ترتيب الكبيرة ، وليس إشارة مرجعية. لا تبرير الطلبات القصيرة (<512 رمزا ، خروج قصيرة) تكلفة النقل.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy disaggregated-vs-colocated simulator)
+**Languages:** Python, TypeScript (stdlib, toy disaggregated-vs-colocated simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 08 (Inference Metrics)
 **Time:** ~75 minutes
 
