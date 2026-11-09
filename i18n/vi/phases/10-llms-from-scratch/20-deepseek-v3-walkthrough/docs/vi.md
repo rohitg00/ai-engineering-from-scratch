@@ -3,7 +3,7 @@
 > Giai đoạn 10 · Bài học 14 đặt tên cho sáu nút kiến trúc mỗi khi mô hình mở quay. DeepSeek-V3 (Từ tháng 12 năm 2024, tổng số tham số 671B, hoạt động 37B) biến tất cả sáu và thêm bốn: Multi-Head Latent Attention, cân bằng tải trọng hỗ trợ không mất, Dự đoán Multi-Token và đào tạo DualPipe. Bài học này đọc kiến trúc của DeepSeek-V3 từ trên xuống dưới và lấy mọi số parameter từ cấu hình được xuất bản. Đến cuối, bạn có thể giải thích tại sao tỷ lệ 671B/37B là cược đúng và tại sao MLA + MoE cùng nhau đánh bại một mình ở biên giới.
 
 **Type:** Learn
-**Languages:** Python (stdlib, parameter calculator)
+**Languages:** Python (stdlib, parameter calculator), Rust
 **Prerequisites:** Phase 10 · 14 (open-model walkthroughs), Phase 10 · 17 (NSA), Phase 10 · 18 (MTP), Phase 10 · 19 (DualPipe)
 **Time:** ~75 minutes
 

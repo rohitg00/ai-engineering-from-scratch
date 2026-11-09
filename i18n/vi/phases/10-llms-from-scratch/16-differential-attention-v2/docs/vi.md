@@ -3,7 +3,7 @@
 > Sự chú ý Softmax phân tán một số lượng nhỏ xác suất trên mỗi token không phù hợp. Hơn 100k token mà tiếng ồn cộng lên và nhấn chìm tín hiệu. Differential Transformer (Ye et al., ICLR 2025) sửa chữa nó bằng cách tính toán sự chú ý như là sự khác biệt của hai softmax, trừ được sàn tiếng ồn chung. DIFF V2 (Microsoft, tháng 1 năm 2026) là bản viết lại sản xuất: phù hợp với độ trễ giải mã với Transformer dòng cơ sở, không có lõi tùy chỉnh, tương thích với FlashAttention. Bài học này là từ đầu đến cuối V1, với một trò chơi thực hiện của hoạt động khác biệt bạn có thể chạy trong stdlib Python.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 02 (self-attention), Phase 7 · 15 (attention variants), Phase 10 · 14 (architecture walkthrough)
 **Time:** ~60 minutes
 

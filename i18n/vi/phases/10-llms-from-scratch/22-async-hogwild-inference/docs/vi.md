@@ -3,7 +3,7 @@
 > Việc giải mã giả định (Phase 10 · 15) song song các token trong một chuỗi. Các khung đa đại lý song song trên toàn bộ chuỗi nhưng buộc sự phối hợp rõ ràng (đánh phiếu, phân chia các nhiệm vụ phụ). Hogwild! Inference (Rodionov et al., arXiv:2504.06261) làm một điều khác: chạy N trường hợp của cùng một LLM song song với một cache giá trị khóa SHARED. Mỗi công nhân nhìn thấy các mã thông báo được tạo ra bởi mỗi công nhân khác ngay lập tức. Các mô hình lý luận hiện đại  QwQ, DeepSeek-R1  có thể tự phối hợp thông qua bộ nhớ cache được chia sẻ mà không cần điều chỉnh. Cách tiếp cận là thử nghiệm nhưng nó mở ra một trục hoàn toàn mới của sự song song suy luận nằm ngang với việc giải mã spec. Bài học này thực hiện Hogwild hai người lao động! mô phỏng trong stdlib Python và giải thích tại sao sự hợp tác lưu trữ chung xuất hiện từ khả năng lý luận của mô hình hiện có.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10 · 12 (inference optimization), Phase 10 · 15 (speculative decoding)
 **Time:** ~60 minutes
 

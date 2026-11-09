@@ -3,7 +3,7 @@
 > Mọi thứ từ bài học 01 đến 12 là một giai đoạn của một đường ống dẫn. Bài học này là một cái bàn phẳng biến những giai đoạn đó thành một cuộc chạy từ đầu đến cuối: token, pre-train, scale, SFT, align, evaluate, quantize, serve. Bạn sẽ không huấn luyện một mô hình 70B trên một máy tính xách tay. Bạn sẽ tạo ra lớp dàn xếp, biểu đồ, cổng đánh giá, và kế hoạch quay lại mà một nhóm biên giới 2026 sử dụng để quyết định những gì được vận chuyển. Đây là đá cuối.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** All Phase 10 lessons 01-12
 **Time:** ~120 minutes
 
@@ -216,10 +216,16 @@ Nhìn xem`code/main.py`Các phần chính:
 
 Phòng làm việc theo quy tắc có ba lệnh.
 
-```
+```bash
 python code/main.py plan    # validate manifest, compute cost estimate, print DAG
 python code/main.py run     # execute stages, writing to manifest.out.yaml
 python code/main.py gate    # read manifest.out.yaml, apply eval gates, ship-or-hold
+```
+
+Cổng Rust cũng như vậy.`plan`bước:
+
+```bash
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson plan
 ```
 
 Đi chạy`plan`hầu hết các lỗi đường ống xuất hiện đúng thời gian kế hoạch - các ngưỡng cổng bị thiếu, hash lỗi thời, ngân sách vượt quá.`plan`- Không, chạy.`run`tiết kiệm tiền bằng cách bắt bọ trên mặt rẻ.

@@ -3,7 +3,7 @@
 > Anh đã xây dựng một GPT-2 nhỏ từ đầu trong bài học 04. Các mô hình mở biên giới vào năm 2026 là cùng một gia đình với năm hoặc sáu thay đổi cụ thể. RMSNorm thay vì LayerNorm. SwiGLU thay vì GELU. RoPE thay vì các vị trí học tập. GQA hoặc MLA thay vì MHA đầy đủ. Một sự pha trộn của các chuyên gia trên quy mô. Các toán học mà bạn đã biết bao gồm 95% trong số chúng. Bài học này đọc Llama 3, DeepSeek-V3, Mixtral, Qwen và Gemma cạnh nhau và đặt tên đúng đường mà mỗi kiến trúc khác nhau.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10, Lessons 04, 05, 12 (Pre-training, Scaling, Inference)
 **Time:** ~45 minutes
 

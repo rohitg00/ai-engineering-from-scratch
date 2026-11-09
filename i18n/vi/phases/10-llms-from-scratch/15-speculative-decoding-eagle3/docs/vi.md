@@ -3,7 +3,7 @@
 > Giai đoạn 7 · Bài học 16 chứng minh toán học: quy tắc từ chối Leviathan bảo tồn phân phối xác minh chính xác. Bài học này là quan điểm tập hợp đào tạo về việc giải mã đầu cơ sản xuất năm 2026. EAGLE-3 biến mô hình dự thảo từ một ước tính rẻ thành một mạng lưới nhỏ được xây dựng riêng được đào tạo trên các trạng thái ẩn của người xác minh, sau đó thêm một vòng kiểm tra thời gian đào tạo phù hợp với phân phối tàu và suy luận của nó. Kết quả: tăng tốc từ 3x đến 6.5x, chấp nhận tỷ lệ trên 0,9 trên mỗi token trên chat, không có sự thỏa hiệp phân phối. Mỗi đống suy luận sản xuất vào năm 2026 đều gửi theo mặc định.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 16 (speculative decoding math), Phase 10 · 12 (inference optimization)
 **Time:** ~75 minutes
 

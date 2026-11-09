@@ -3,7 +3,7 @@
 > Mỗi LLM tự do từ GPT-2 đến Llama 3 đều có một lỗ mỗi vị trí: dự đoán token tiếp theo. DeepSeek-V3 đã thêm một lỗ thứ hai cho mỗi vị trí: dự đoán token sau đó. Các tham số 14B bổ sung (tại một mô hình 671B) được chưng cất trở lại mô hình chính thông qua dòng chảy gradient, và các đầu MTP được đào tạo được sử dụng lại khi suy luận như các trình soạn thảo giải mã phỏng đoán với chấp nhận 80% +. Tiền suất 1,8x thế hệ được miễn phí. Bài học này xây dựng mô-đun MTP theo trình tự từ báo cáo kỹ thuật DeepSeek, tính toán tổn thất và bố cục tham số đầu chia sẻ, và giải thích tại sao MTP giữ chuỗi nguyên nhân trong khi MTP song song ban đầu của Gloeckle et al. đã phá vỡ nó.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10 · 04 (pre-training a mini GPT), Phase 10 · 15 (speculative decoding)
 **Time:** ~60 minutes
 

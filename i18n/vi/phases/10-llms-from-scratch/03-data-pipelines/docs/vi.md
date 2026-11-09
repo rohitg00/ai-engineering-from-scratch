@@ -3,7 +3,7 @@
 > Mô hình là một tấm gương phản ánh bất cứ dữ liệu nào bạn đưa vào nó.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 10, Lessons 01-02 (Tokenizers, Building a Tokenizer)
 **Time:** ~90 minutes
 

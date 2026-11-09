@@ -3,7 +3,7 @@
 > Với 64k token, sự chú ý tiêu thụ 70-80% thời gian trễ giải mã. Mỗi phòng thí nghiệm mở có kế hoạch sửa chữa nó. NSA của DeepSeek (ACL 2025 bài báo tốt nhất) là một trong những gì bị mắc kẹt: ba chi nhánh chú ý song song  token hạt thô bị nén, token hạt mỏng được giữ lại một cách chọn lọc, và cửa sổ trượt cho bối cảnh địa phương  kết hợp thông qua một cổng học. Nó được sắp xếp theo phần cứng (tương tự với lõi), có thể đào tạo bản địa (công việc trong đào tạo trước, không được khóa vào khi suy luận), và trên 64k decodes nó chạy nhanh hơn FlashAttention trong khi phù hợp hoặc đánh bại chất lượng chú ý đầy đủ. Bài học này xây dựng ba nhánh đầu đến cuối và cho thấy tại sao sự ít có thể phân biệt được đầu đến cuối.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 12 (KV cache, flash-attention), Phase 7 · 15 (attention variants), Phase 10 · 16 (differential attention)
 **Time:** ~60 minutes
 

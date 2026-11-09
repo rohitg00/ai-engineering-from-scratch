@@ -3,7 +3,7 @@
 > DeepSeek-V3 được đào tạo trên 2.048 GPU H800 với các chuyên gia MoE phân tán trên các nút. Chuyên gia giao tiếp toàn cầu qua nút chi phí 1 giờ giao tiếp GPU cho mỗi giờ tính toán GPU. GPU đã không hoạt động một nửa thời gian. DualPipe (DeepSeek, Dec 2024) là một đường ống hai chiều mà chồng chéo về phía trước và ngược với các giao tiếp tất cả mọi thứ mà họ kích hoạt. Sự giảm bong bóng, tăng thông suất, và giữ hai bản sao mô hình-pharameter (những "những đôi" cho tên gọi) là rẻ khi Expert Parallelism đã phân tán các chuyên gia trên các hàng không bất cứ cách nào. Bài học này là một bài học về những gì DualPipe thực sự làm và tại sao tinh chỉnh DualPipeV của Sea AI Lab làm giảm chi phí tham số 2x với chi phí của bong bóng chặt chẽ hơn.
 
 **Type:** Learn
-**Languages:** Python (stdlib, schedule simulator)
+**Languages:** Python (stdlib, schedule simulator), Rust
 **Prerequisites:** Phase 10 · 05 (distributed training, FSDP, DeepSpeed), Phase 10 · 14 (open-model architectures and MoE)
 **Time:** ~60 minutes
 

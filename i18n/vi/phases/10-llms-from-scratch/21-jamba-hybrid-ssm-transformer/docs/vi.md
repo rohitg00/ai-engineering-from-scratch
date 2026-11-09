@@ -3,7 +3,7 @@
 > Các mô hình không gian nhà nước (SSM) và các bộ biến đổi muốn những thứ khác nhau. Các máy biến đổi mua chất lượng thông qua sự chú ý với chi phí bình phương. SSM mua suy luận thời gian tuyến tính và bộ nhớ liên tục thông qua sự tái phát nhưng chất lượng chậm. Jamba (March 2024) và Jamba 1.5 (Tháng 8 2024) của AI21 đặt chúng trong cùng một mô hình: 1 lớp biến thể cho mỗi 7 lớp Mamba, MoE trên mỗi khối khác, và một cửa sổ bối cảnh 256k phù hợp với một GPU 80GB duy nhất. Mamba-3 (ICLR 2026) thắt chặt phía SSM bằng không gian trạng thái có giá trị phức tạp và dự đoán MIMO. Bài học này đọc cả hai kiến trúc cuối cùng và giải thích tại sao công thức lai đã sống sót ba năm quy mô khi Pure-SSM và Pure-Transformer cố gắng ngữ cảnh dài không.
 
 **Type:** Learn
-**Languages:** Python (stdlib, layer-mix calculator)
+**Languages:** Python (stdlib, layer-mix calculator), Rust
 **Prerequisites:** Phase 10 · 14 (open-model architectures), Phase 10 · 17 (native sparse attention)
 **Time:** ~60 minutes
 
