@@ -3,7 +3,7 @@
 > Gözetmen ile karşılaştırıldığında, merkezi karar verme yetkisi yoktur. Ajanlar ortak etkinlik otobüsünü okuyor, işleri asinkron olarak alıyor, sonuçları yazıyor. LangGraph, merkezi olmayan, dinamik ortamlar için açıkça "Swarm Architecture" i destekler. Matrix (arXiv:2511.21686) hem kontrol hem de veri akışını, orkestratör botluğunun ortadan kaldırılması için dağıtılmış kuyruklar üzerinden geçen serileşmiş mesajlar olarak temsil eder. Bu anlaşma açıkça belirlenmiştir: ölçeklendirme için belirleme ve izlenebilirlik. Swarm birçok bağımsız alt sorunlu görevlere uyum sağlar; tek tutarlı bir plana ihtiyaç duyan görevlere uyum sağlamır.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`, `queue`)
+**Languages:** Python (stdlib, `threading`, `queue`), TypeScript
 **Prerequisites:** Phase 16 · 05 (Supervisor Pattern), Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -86,6 +86,7 @@ Swarm balances otomatik olarak yüklenir; sabit görevler verilen görev yavaş 
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktılık, çalışan başına görev sayısını (sürük eşitsiz ama optimal bir şekilde dağıtılır) ve duvar saatini gösterir.

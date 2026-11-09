@@ -3,7 +3,7 @@
 > Dört primitif, daha fazlası  ajan, teslimat, paylaşılan durum, orkestratör  dört boyutlu bir tasarım alanını kapsar ve 2026'da gönderilen büyük çoklu ajan çerçeveleri (AutoGen, LangGraph, CrewAI, OpenAI Agents SDK, Microsoft Agent Framework) noktalardır. Bu ders onları sıfırdan inşa eder, dörtte bir oyuncak sistemi çalışır, sonra her ana çerçeveyi aynı ekselere haritası yapar böylece yeni bir versiyonu bir paragraf içinde okuyabilirsiniz.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 (Agent Engineering), Phase 16 · 01 (Why Multi-Agent)
 **Time:** ~60 minutes
 
@@ -132,6 +132,7 @@ Demo, üç orkestratör türü boyunca aynı üç ajan borusunu ( araştırma �
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Beklenen çıkış: üç orkestratör çalışması, bir örneğe göre. Her biri son mesaj havuzunu basar. Yükümle yönlendirilmiş çalışmalar araştırmacı erken yapılması karar verirse daha az ajanlara ulaşır.

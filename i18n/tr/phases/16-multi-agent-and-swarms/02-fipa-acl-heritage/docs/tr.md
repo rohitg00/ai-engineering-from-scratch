@@ -3,7 +3,7 @@
 > MCP'den önce, A2A'dan önce, FIPA-ACL vardı. 2000 yılında Akıllı Fiziksel Ajanlar Vakfı (FIPA, 2005 yılında IEEE Bilgisayar Topluluğu standart komitesi haline geldi) yirmi performatif, iki içerik dili ve bir dizi etkileşim protokolü ile bir ajan iletişim dili onayladı  sözleşme net, abonelik / bildirim, talep-ne zaman. Endüstriye düştü çünkü ontoloji genel masrafları web için çok ağırydı, ancak çoklu ajan sistemlerinin LLM canlanımı resmi semantik olmadan sessizce aynı fikirleri yeniden uyguluyor: JSON sözleşmeleri performatifler için, doğal dil ontolojiler için yer almaktadır. Bu ders, FIPA-ACL'yi ciddiye alır, böylece 2026 protokolü kararlarının hangi yenilikleri yeniden icat ettiğini ve bugünkü dalgaların 2000'lerde çözülen sorunları yeniden keşfetmeye çalıştığını görebilirsiniz.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 01 (Why Multi-Agent)
 **Time:** ~60 minutes
 
@@ -160,6 +160,7 @@ sw-contract-net
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı, her modern mesajı hem 2026 JSON formunda hem de FIPA-ACL formunda, ardından bir sözleşme ağ teklifinin bir geri dönüş yolu gösterir. Aynı protokol ilkesi geri dönüş yolu hayatta kalır; sadece sentezi farklıdır.

@@ -3,7 +3,7 @@
 > Li et al. (arXiv:2310.10701) ortak bir metin oyun sergisinde LLM ajanlarının **emergent high-order Theory of Mind**(ToM)  bir üçüncü ajanın inançları hakkında başka bir ajanın ne düşündüğünü düşünmek  ancak bağlam yönetimi ve halüsinasyon nedeniyle uzun vadede planlamayı başarısız etmek. Riedl (arXiv:2510.05174) bir popülasyonda daha yüksek sıralama sinerjisi ölçtü ve buldu ki **only**ToM-prompt koşulı kimlik bağlantılı farklılık ve hedef odaklı tamamlayıcılık üretir; düşük kapasiteli LLM'ler sadece sahte ortaya çıkış gösterir. Yani, koordinasyon ortaya çıkışı, serbest değil, derhal koşullu ve model bağımlıdır. Bu ders, minimal bir ToM-a karşı bilinçli ajan uyguluyor, ToM'nin teşvik edilmesiyle ve olmadan işbirliği görevini yürütüyor ve Riedl 2025 protokolüne karşı koordinasyon delta ölçüyor.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 07 (Society of Mind and Debate), Phase 16 · 17 (Generative Agents)
 **Time:** ~75 minutes
 
@@ -120,6 +120,7 @@ sw-theory-of-mind
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Beklenen çıkış: sıfır sıra ajanları %35 oranında çabaları ikiye katlar ve 10 dönüşte denemelerin %60'ını tamamlar.

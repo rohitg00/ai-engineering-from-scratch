@@ -3,7 +3,7 @@
 > Paylaşılan konuşma orkestrasyonu, bir konuşmaya N ajanları yerleştirir; bir seçme fonksiyonu (LLM, yuvarlak-robin veya özel) sonraki konuşmayı seçer. Bu gelişen çoklu ajan konuşmasının arşetipi. Ajanlar statik bir grafikte rollerini bilmiyorlar, sadece paylaşılmış havuza tepki veriyorlar. AutoGen GroupChat ve AG2 GroupChat referans uygulamalardır: AutoGen v0.2'nin GroupChat semantikası AG2 çatalında korunmuştur; AutoGen v0.4 olay yönlendirici bir oyuncu modeli olarak yeniden yazdı. Microsoft, AutoGen'i 2026 Şubat'ta bakım moduna koydu ve Semantic Kernel ile Microsoft Agent Framework'e (RC Şubat 2026) birleştirdi. GroupChat primitif hem AG2 hem de Microsoft Agent Framework'ta hayatta kalır  bir kez öğrenin, her yerde kullanın.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -104,6 +104,7 @@ Demo, iki varians için konuşma transkripti ve seçicinin karar izini basar.
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Kullan

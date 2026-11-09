@@ -3,7 +3,7 @@
 > 2026'da en yaygın çok ajanlı parçalanma: bir ajan planlar, bir yönetir, bir eleştirir veya doğruluyor. MetaGPT (arXiv:2308.00352) bunu rol isteklerine kodlanmış SOP'ler olarak resmileştirir  Ürün Yöneticisi, Mimar, Proje Yöneticisi, Mühendis, Sorucu Mühendis  aşağıdaki `Code = SOP(Team)`- Evet . ChatDev (arXiv:2307.07924) dizayner, programcı, yorumcu, testçi dizaynını "çap zinciri" ile "kommunikatif halüsinasyon" ile zincirler (ajanlar açıkça eksik detayları talep eder). Verifiyeci yük taşıyıcıdır: Cemri et al. (MAST, arXiv:2503.13657) gösterir her multi-ajan başarısızlığı kayıp veya kırık doğrulama izlenebilir. PwC, CrewAI'de yapılandırılmış onay döngüslerinden 7× doğruluk artışı (% 10 → 70%) rapor etti.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 05 (Supervisor)
 **Time:** ~60 minutes
 
@@ -88,6 +88,7 @@ Demo iki kez çalışır: bir kez uygulayıcı doğru kod üretirken (kritik + d
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Kullan

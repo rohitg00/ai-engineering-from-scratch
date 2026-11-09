@@ -3,7 +3,7 @@
 > En ucuz birleştirme: örnek N bağımsız ajanlar, çoğunluk oyları. Wang et al. 2022 kendi kendine tutarlılık bunu bir model örnek N kez yaptı. Multi-agent onu genişletiyor **heterogeneous**Monoculture'den kaçmak için farklı modeller, farklı uyarılar, farklı sıcaklıklar, farklı bağlamlar. Çoğunluk oyundan öte, topoloji meseleleri tartışılır: MultiAgentBench (arXiv:2503.01935, ACL 2025) yıldız / zincir / ağaç / grafik koordinasyonu değerlendirdi ve buldu **graph best for research**AgentVerse (ICLR 2024) iki yenilikçi örneği belgelendirir  gönüllü davranışlar ve uyum davranışları  ve uyum hem bir özellik (tümleşme bulmak) hem de bir risk (grup düşüncesi, Ders 24). Bu ders topoloji alanını haritalar, her variansı inşa eder ve koordinasyon vergisini ölçer.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 07 (Society of Mind and Debate), Phase 16 · 14 (Consensus and BFT)
 **Time:** ~75 minutes
 
@@ -116,6 +116,7 @@ sw-debate-topology
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Beklenen çıkış: topoloji bir tablo × N → (doğrulık, tokenler, gecikme). Araştırma tarzı görevlerde grafik N=3-5'te kazanır; hızlı gerçeklik görevlerinde yıldız kazanır; N=7'deki grafik koordinasyon vergisini gösterir (gecikme doğruluğundan daha hızlı şişer).

@@ -3,7 +3,7 @@
 > Park et al. 2023 (UIST '23, arXiv:2304.03442) nüfuslu **Smallville**, 25 ajanlı bir kum kutusu, üç bölümlü bir mimari ile:**memory stream**(doğal dil kayıtları),**reflection**(Ajantin kendi akışında ürettiği yüksek düzeyde sentezler) ve**plan**(gündüz düzeyinde davranış, sonra alt planlar). Önemli sonuç Sevgililer Günü partisi ortaya çıktı: bir ajan daha fazla senaryo yazmadan "sevgililer Günü partisi vermek istiyor" ile tohumlandı, nüfus arasında yayılmış davetiye üretti, koordinasyon tarihleri ve parti 24 ajanın bilgisi olmadan başlattığı bir parti oldu. Ablationlar, inançlılık için üç bileşenin de gerekli olduğunu göstermektedir. Belgelemiş hatalar, yer norm hataları (kapalı mağazalara girmek, tek kişilik banyo paylaşmak) dir. Bu, 2026'da ajan simülasyonları ve çoklu ajan sosyal değerlendirme için referans mimarisi.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 13 (Shared Memory)
 **Time:** ~75 minutes
 
@@ -103,6 +103,7 @@ a5-memory-reflection
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Beklenen çıkış: tik-tik iz. Son tik'e kadar, 5 ajanın en az 3'ü partiyi planlarında gösterir ve parti konumunda bir araya gelirler. Tek tohum hiçbir orkestrasyoncu olmadan koordine edilmiş bir gelişi üretir.

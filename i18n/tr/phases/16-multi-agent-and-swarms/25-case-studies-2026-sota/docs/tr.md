@@ -3,7 +3,7 @@
 > Üç üretim derecesi referansları, her biri farklı bir parça multi-agent mühendisliği gösterir. **Anthropic's Research system**(Orkestratör-işçi, 15x token, +90.2% tek ajan Opus 4 gökkuşağı dağıtımları) kanonik gözetmenlik vakaıdır. **MetaGPT / ChatDev**(SOP kodlanmış bir rol uzmanlığı yazılım mühendisliği için; ChatDev'in "kommunikatif halüsinasyon"u; DAGs üzerinden > 1000 ajanlara MacNet uzantısı, arXiv:2406.07155) kanonik rol parçalanma vakaıdır. **OpenClaw / Moltbook**(aslen Peter Steinberger tarafından Clawdbot, Kasım 2025; iki kez yeniden adlandırıldı; Mart 2026'a kadar 247k GitHub yıldızları; yerel ReAct-loop ajanları; Moltbook, başlatılmasından birkaç gün sonra ~2.3M ajan hesapları olan bir sosyal ağ olarak Meta 2026-03-10 tarafından satın alınmıştır) nüfus ölçeğinde olanları gösterir: gelişen ekonomik aktivite, hızlı enjeksiyon riskleri, devlet düzeyinde düzenleme (Çin, OpenClaw'ı hükümet bilgisayarlarında kısıtladı, Mart 2026).**Framework landscape April 2026:**LangGraph ve CrewAI lider üretimi; AG2 topluluk AutoGen devamıdır; Microsoft AutoGen bakım modunda (Microsoft Agent Framework, RC Feb 2026); OpenAI Agents SDK üretim Swarm'in halefi; Google ADK (Epril 2025) A2A-native girişimcidir. Her büyük çerçeve şimdi MCP desteği gönderir; çoğu A2A gemisi. Bu ders her durumu sonundan sona okuyor ve ortak desenleri distilliyor böylece bir sonraki üretim sisteminiz için doğru referans seçebilirsiniz.
 
 **Type:** Learn (capstone)
-**Languages:** —
+**Languages:** Python, TypeScript
 **Prerequisites:** all of Phase 16 (Lessons 01-24)
 **Time:** ~90 minutes
 

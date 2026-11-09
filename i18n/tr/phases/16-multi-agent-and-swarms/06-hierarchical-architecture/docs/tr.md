@@ -3,7 +3,7 @@
 > Yerarşik, yöneticilerden yöneticilerden yöneticilerden çalışanlardan daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla yöneticilerden daha fazla`Process.hierarchical`ders kitabı versiyonu: a `manager_llm`LangGraph eşdeğeri `create_supervisor(create_supervisor(...))`Bu, iş gerçek bir org çizelgesinde olduğu zaman doğal bir kalıptır. Aynı zamanda yönetimsel döngüye düşeceği en olası kalıptır.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 05 (Supervisor Pattern)
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ Demo mutlu yolla karşıtlık gösterir (herkes aynı fikirde)**perturbed path**
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktım, her iki yolun da açık bir yan yana "ne istendi" vs. "ne teslim edildi" gösterir.

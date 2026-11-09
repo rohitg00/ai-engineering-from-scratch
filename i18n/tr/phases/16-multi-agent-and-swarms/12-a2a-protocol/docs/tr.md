@@ -3,7 +3,7 @@
 > Google, A2A'yı Nisan 2025'te duyurdu. Nisan 2026'a kadar özellikleri https://a2a-protocol.org/latest/specification/ve 150'den fazla kuruluş bunu destekliyor. A2A, MCP'nin yatay tamamlayıcıdır (Deneyim 13): MCP dikey (ajan  araçlar), A2A ise eşeğen (ajan  ajan). Agent Kartları (kaşif), eserlerle (metin, yapılandırılmış veriler, video), açık olmayan görev yaşam döngüleri ve ot. Üretim sistemleri giderek daha fazla MCP ile A2A eşleştirir. Google Cloud, 2025-2026 yılları boyunca Vertex AI Ajan Oluşturucu'na A2A desteğini ekledi.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `http.server`, `json`)
+**Languages:** Python (stdlib, `http.server`, `json`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -154,6 +154,7 @@ Müşteri:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Skenar, sunucuyu arka plan bir ipçeye başlatır, sonra da istemciyi ona karşı çalışır.

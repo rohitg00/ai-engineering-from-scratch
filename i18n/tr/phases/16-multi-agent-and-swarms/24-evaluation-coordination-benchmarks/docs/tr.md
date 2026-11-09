@@ -3,7 +3,7 @@
 > Beş 2025-2026 referans noktası, çoklu ajan değerlendirme alanını kapsar. **MultiAgentBench / MARBLE**(ACL 2025, arXiv:2503.01935) yıldız/ zincir/ ağaç/graf topolojilerini, önemli nokta KPI'leri ile değerlendirir. **graph is best for research**, bilişsel planlama %3'lik bir dönüm noktası elde eder. **COMMA**GPT-4o'nun rastgele bir başlangıç çizgisini yenmek için mücadeleyi içeren en son modeller;**MedAgentBoard**(arXiv:2505.12371) dört tıbbi görev kategorisini kapsar ve genellikle çoklu ajanın tek LLM'de baskın olmadığını bulur. **AgentArch**(arXiv:2509.10769) araç kullanımı + bellek + orkestrasyonu birleştiren kurumsal ajan mimarlıklarını referanslandırır. **SWE-bench Pro**([arXiv:2509.16941](https://arxiv.org/abs/2509.16941)) iş uygulamaları, B2B hizmetleri ve geliştiriciler aracılığıyla 41 repo'da 1865 sorun yaşanıyor; sınır modelleri Pro'da %23 oranında %70'e karşı verified'de %70'e karşı  kirliliğin gerçeklik kontrolü. Claude Opus 4.7 (Epril 2026)**64.3%**Pro'da açık bir ajan-eşikler koordinasyonu ile (Antropik ilk kaynak henüz yayınlanmamış  ön raporu olarak ele alınmıştır); Verdent (ajan asfalt) vurgular **76.1% pass@1**Verified ([Verdent technical report](https://www.verdent.ai/blog/swe-bench-verified-technical-report) ).**AAAI 2026 Bridge Program WMAC**(https://multiagents.org/2026/Bu ders MARBLE'nin ölçümlerine dayanıyor, topoloji karşı ölçüm tarama yapılıyor ve "SWE-benç Verified'in sadece geçmesi genelleşmenin kanıtı değildir" kuralını sıkıştırıyor.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 15 (Voting and Debate Topology), Phase 16 · 23 (Failure Modes)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ a5-bench-gap
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Beklenen çıkış: çürük doğrulukla sistem puan kartı, ana nokta başarısı, görev başına maliyet, rastgele başlangıç çizgisi delta ile kirlilik kontrol notu.

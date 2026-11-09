@@ -3,7 +3,7 @@
 > Bir lider ajan planlar ve delegeler; uzman işçiler paralel bağlamlarda yürütür ve rapor verir. Bu, Anthropic'in Araştırma sisteminin arkasındaki bir örnektir (Claude Opus 4 öncülük olarak, Sonnet 4 subagent olarak), iç araştırma değerlendirmelerinde tek ajan Opus 4'e göre +90.2% olarak ölçülmüştür. Anthropic'in mühendislik yazısı, BrowseComp'deki farklılığın %80'inin sadece token kullanımı ile açıklandığını bildirir. Bu ders, ilklerden denetleme örneğini oluşturur ve 2026'da üretim dağıtımlarından mühendislik derslerini kapsar.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`)
+**Languages:** Python (stdlib, `threading`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -88,6 +88,7 @@ Ana yapı:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktılık planı, paralel işçi izlerini başlangıç/sonluk zaman damgaları ve son sentezi gösterir. Duvar saati kazanır: 0.3 saniyelik üç işçi 0.35 saniye içinde koştu, 0.9 değil.

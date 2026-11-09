@@ -3,7 +3,7 @@
 > 2026'da çoklu ajan sistemlerinde iki yaklaşım bir arada var:**message pool**(Herkes herkesin mesajlarını görür, AutoGen GroupChat veya MetaGPT gibi) ve **blackboard with subscription**(Ajanslar Kontext-Aware MCP veya Matrix çerçevesinde olduğu gibi ilgili olaylara abone olurlar). Her ikisi de çoklu ajanlı bir sistemin tek durumlu parçası  yani ikisi de ilginç hataların yaşadığı yerdir. İpucu hata modusu **memory poisoning**Bu ders, her iki yapıyı stdlib'den inşa eder, zehirleme saldırısı enjekte eder ve üretimde gerçekten çalışan üç hafiflemeyi gösterir.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`)
+**Languages:** Python (stdlib, `threading`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -119,6 +119,7 @@ swarm-blackboard
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Beklenen üretim:

@@ -3,7 +3,7 @@
 > Bio-İnspire Optimizasyon, LLM'nin geri dönüşünü yapıyor. **LMPSO**(arXiv:2504.09247) her parçacığın hızının bir istek olduğu ve LLM'nin bir sonraki adayı oluşturduğu PSO kullanır; yapılandırılmış sıralama çıkışlarında (matematik ifadeler, programlar) iyi çalışır. **Model Swarms**(arXiv:2410.11163) her LLM uzmanını model ağırlığıyla bir çeşitlilik üzerinde bir PSO parçacığı olarak değerlendirir ve raporlar **13.3% average gain**Sadece 200 örnekle 9 veri kümesi üzerinde 12 temel çizgi. **SwarmPrompt**(ICAART 2025) hızlı optimizasyon için PSO + Grey Wolf hibridleştirir. **AMRO-S**(arXiv:2603.12933) çoklu ajan LLM yönlendirme için ACO-İnspire feromon uzmanları  **4.7x speedup**Bu ders, akıllıca parametre alanında PSO'yu ve ajan yönlendirme üzerinde ACO'yu uyguluyor, bu klasik algoritmaların LLM çağına neden ve ne zaman uymadığını ölçüyor.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 14 (Consensus and BFT)
 **Time:** ~75 minutes
 
@@ -107,6 +107,7 @@ swarm-stigmergy
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Beklenen üretim:

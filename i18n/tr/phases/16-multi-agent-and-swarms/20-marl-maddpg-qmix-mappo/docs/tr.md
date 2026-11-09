@@ -3,7 +3,7 @@
 > 2026'da hala LLM-agent sistemlerini bilgilendiren çoklu ajan koordinasyonunun güçlendirme-öğrenme mirası. **MADDPG**(Lowe et al., NeurIPS 2017, arXiv:1706.02275) Merkezi Eğitim, Merkezi İşlem (CTDE) başlattı: her eleştirmen eğitim sırasında tüm ajanların durumlarını ve eylemlerini görür; test zamanında sadece yerel aktörler çalışır. İşbirliği, rekabetçi ve karışık ortamlar için çalışır. **QMIX**(Rashid et al., ICML 2018, arXiv:1803.11485) bir monotonik karıştırma ağı ile değer-karıştırma; ajan başına Qs birleşik Q'lar böylece `argmax` StarCraft Multi-Agent Challenge (SMAC) üzerinde baskın bir şekilde dağıtılır. **MAPPO**(Yu et al., NeurIPS 2022, arXiv:2103.01955) merkezi bir değer fonksiyonu olan PPO'dur; parçacık dünyasında, SMAC, Google Araştırma Futbolu, Hanabi'de en az ayarlama ile "içik etkili".**default 2026 cooperative-MARL baseline**Bu ders, küçük bir çubuğuz dünyası oyuncağından her birini inşa eder ve üç fikri kas hafızasına yerleştirir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, small NumPy-free implementations)
+**Languages:** Python (stdlib, small NumPy-free implementations), TypeScript
 **Prerequisites:** Phase 09 (Reinforcement Learning), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~90 minutes
 
@@ -117,6 +117,7 @@ Dörtü de aynı bölümleri yürütür ve ortalama adımlar ile hedefe rapor ed
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Beklenen çıkış: bağımsız ajanlar ortalama ~ 6 adım atarlar; CTDE varyantları ~ 3.5 adımlara doğru birleşti (optimal 4x4 şebekesi için 3'dir).

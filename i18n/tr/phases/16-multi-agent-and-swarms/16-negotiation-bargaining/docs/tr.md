@@ -3,7 +3,7 @@
 > Agentler kaynakları, fiyatları, görev tahsislerini ve şartları müzakere eder. 2026 referans göstergesi açık: müzakere alanı (arXiv:2402.05863) LLM'lerin kişi manipülasyonu ("ümitsizlik" yoluyla ödemeyi %20'lik bir artış sağlayabileceğini gösterir; "Bordaj yeteneklerini ölçmek" (arXiv:2402.15813) alıcıyı satandan daha zor olduğunu ve ölçekleri  onlara yardımcı olmadığını gösterir.**OG-Narrator**(deterministik teklif üreticisi + LLM anlatıcısı) anlaşma oranını 26.67%'den 88.88%'ye yükseltti; Büyük ölçekli özerk müzakere yarışması (arXiv:2503.06416) yaklaşık 180k müzakere gerçekleştirdi ve buldu ki**chain-of-thought-concealing**Bhattacharya et al. 2025 Harvard müzakere projesi ölçümleri üzerinde Llama-3 en etkili, Claude-3 agresif, GPT-4 en adil sıralanmış. Bu ders Sözleşme Net Protokolü (FIPA ataları, Ders 02), LLM tarzı bir alıcı / satıcı tel, OG-Narrator tarzı bir parçalanma yürütür ve her yapısal seçimle nasıl anlaşma oranı değişir ölçüyor.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 02 (FIPA-ACL Heritage), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -120,6 +120,7 @@ a5-og-narrator
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Beklenen çıkış: naif-LLM anlaşma oranı ~65-75%; OG-Narrator anlaşma oranı ~85-95%; 15-25 puan farkı anlatmadan teklif neslini parçalanmanın yapısal avantajıdır.

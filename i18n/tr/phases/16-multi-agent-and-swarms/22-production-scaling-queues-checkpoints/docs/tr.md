@@ -3,7 +3,7 @@
 > Çoklu ajan sistemlerini binlerce eşzamanlı çalışmaya ölçeklendirmek gerektirir **durable execution** iş kuyrukları ve kontrol noktaları, böylece herhangi bir işçi herhangi bir kaza sonrası herhangi bir koşuyu yeniden başlayabilir, eğer kiralama işlemleri, idempotent yan etkileri ve belirlenmiş tekrarlamalar yerinde varsa. LangGraph'in çalışma zamanı referans örneğidir: her süper adımın ardından bir kontrol noktası yazar.`thread_id`(Önlüğe bağlı olarak son derece yüksek; çalışan kazalar kiralık bir anlaşma serbest bırakır ve başka bir işçi yeniden başlar.**MegaAgent**(arXiv:2408.09955) üç durum (İdle / İşleme / Cevap) ve iki katlı koordinasyon (grup içi sohbet + gruplararası admin sohbet) ile bir ajan başına bir üreticiler- tüketici kuyruk yürütmüştür. **Fiber/async**LLM akışı için her iş için iplikten geçiyor: ipler token bekleyen zamanın %99'unda hareketsiz kalıyor, lifler işbirliği içinde I/O'da üretmektedir.**FastAPI + Postgres + nothing else**Bu ders, dayanıklı bir kontrol noktası günlüğü, devlet geçişleri ile bir ajan iş kuyrukunu, async vs. thread demo'yu oluşturur ve pragmatik "sadece başlat" kuralını yerleştirir.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `asyncio`, `sqlite3`)
+**Languages:** Python (stdlib, `asyncio`, `sqlite3`), TypeScript
 **Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 13 (Shared Memory)
 **Time:** ~75 minutes
 
@@ -133,6 +133,7 @@ sw-checkpoint-replay
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Beklenen çıkış: kontrol noktası devamı simülasyonu çöküşten sonra başarılıdır; async sürümü 500 eşzamanlı çağrıyı < 1s'de ele alır; thread sürümü birkaç saniye sürer ve eşzamanlı birim başına büyüklük sıralamaları daha fazla bellek kullanır.

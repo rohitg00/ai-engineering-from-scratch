@@ -3,7 +3,7 @@
 > 2026 için referans taksonomisi **MAST**(Cemri et al., NeurIPS 2025, arXiv:2503.13657), 7 en son açık kaynaklı MAS'ın gösterdiği 1642 yürütme izinden elde edilmiştir.**41–86.7% failure rate**. Üç kök kategorisi: **Specification Problems**(41.77%)  rol belirsizliği, belirsiz görev tanımları; **Coordination Failures**(36.94%)  iletişim bozuklukları, durum sinkronsuzluğu; **Verification Gaps**(%21,30),  geçerliliğin eksikliği, kalite kontrollerinin eksikliği.**Groupthink**aile (arXiv:2508.05687) ekler: monoculture çöküşü (eşit temel model → ilişkili başarısızlıklar), uyum önyargısı (ajanlar birbirlerinin hatalarını güçlendirir), eksik zihin teorisi, karışık motive dinamikleri, kaskadaki güvenilirlik başarısızlıkları. Kaskadal örnek: bir ödeme başarısızlığı, stok servisini (10 saniyelik yük 10x  devrim kesicilerine ihtiyaç duyan stok servisini zorlayan stok tekrar denemelerini tetikleyen yeniden deneme fırtınaları). Hatıra zehirlenmesi: Bir ajanın halüsinasyonu ortak hafıza içine girer, aşağıdaki ajanlar bunu gerçek olarak ele alır; doğruluk yavaş yavaş bozulur, kök neden teşhisini ağrılı hale getirir.**STRATUS**(NeurIPS 2025) uzman teşhis / teşhis / doğrulama ajanları aracılığıyla hafifleme-başarılığın 1,5 katı iyileştirilmesini bildirir. Bu ders başarısızlık modlarını birinci sınıf mühendislik hedefleri olarak ele alır.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 13 (Shared Memory), Phase 16 · 14 (Consensus and BFT), Phase 16 · 15 (Voting and Debate Topology)
 **Time:** ~75 minutes
 
@@ -154,6 +154,7 @@ a5-retry-cascade
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Beklenen üretim:

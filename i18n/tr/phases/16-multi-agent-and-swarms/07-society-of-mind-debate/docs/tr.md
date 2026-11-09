@@ -3,7 +3,7 @@
 > Minsky'nin 1986'daki önemi  zeka uzmanların bir toplumu  her on yılda yeniden keşfedilmektedir. 2023'te Du et al. onu bir somut algoritma haline getirdi: birden fazla LLM örneği cevaplar önerir, birbirlerinin cevaplarını okuyor, eleştirir ve güncelleir. N tur boyunca sıfır çekim CoT'yi yenen bir fikir birliği üzerine toplanır ve altı akıl ve gerçeklik görevleri üzerinde düşünme. İki bulgu önemlidir: her ikisi de **multiple agents**ve **multiple rounds**Toplum tek ajanlı bir monologtan, çok yönlü bir değişim tek atışla oy kullanmaktan daha iyidir.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -73,6 +73,7 @@ Demo iki önemli etkeni gösteriyor:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Kullan

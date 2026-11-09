@@ -3,7 +3,7 @@
 > OpenAI'nin Swarm (Oktyabr 2024) iki primitif'e çoklu ajan orkestrasyonu destil etti: **routines**(elçiye talimatlar + araçlar sistem uyarısı olarak) ve **handoffs**(Bir diğer ajanı geri getiren bir araç). Devlet makinesi yok, DSL'yi branş etmeyin. OpenAI Ajanlar SDK (Mart 2025) üretim varisi. Swarm kendisi en temiz kavramsal referans olarak kalır  tüm kaynağı birkaç yüz satırda yer alır. Şekil viral çünkü API yüzeyi yaklaşık olarak "agent = prompt + tools; handoff = function returning agent".
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -94,6 +94,7 @@ Demo: bir triage ajanı geri ödeme, satış veya destek uzmanları için yollar
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Kullan

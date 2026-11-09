@@ -3,7 +3,7 @@
 > Uzun vadede otonom ajanlar (METR'nin 1 ila 8 saatlik çalışma eğri) ekonomik ajanlığa ihtiyaç duyar.**5-layer stack**Bu:**DePIN**(fiziksel hesaplama) → **Identity**(W3C DID + itibar sermayesi) → **Cognition**(RAG + MCP) → **Settlement**(Hesaba çekimi) → **Governance**Üretim ajanları teşvik eden ağlar **Bittensor**(TAO alt ağları görev-sözlü modelleri ödüllendirir), **Fetch.ai / ASI Alliance**(ASI-1 Mini LLM + FET token) ve **Gonka**Akademik çalışma: AAMAS 2025'in merkezi olmayan LaMAS kullanımları **Shapley-value credit attribution**Google Research "Büyük dil modelleri için mekanizma tasarımı" önerisini yapar.**token auctions**Bu ders, minimal bir ajan pazarı oluşturur, bir çok ajan boru hattına Shapley değerli kredi atributunu uyguluyor ve ikinci fiyatlı bir token müzayedesi yürütüyor. Böylece oyun teorisi makinesi somut bir şekilde yer alır.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 16 (Negotiation and Bargaining), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -110,6 +110,7 @@ swarm-auction
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Beklenen çıkış: Her ajan için Shapley değerleri; açıklama sonucu doğru teklif dengesini gösterir; tekrar ağırlanan yönlendirme, ısınmadan sonra rastgele karşı 10-20% kalite kazancı gösterir.
