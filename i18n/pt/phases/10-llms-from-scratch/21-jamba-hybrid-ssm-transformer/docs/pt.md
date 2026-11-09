@@ -3,7 +3,7 @@
 > Os modelos espaciais de estado (SSM) e transformadores querem coisas diferentes. Os transformadores compram qualidade através da atenção a um custo quadrático. Os SSM compram inferência de tempo linear e memória constante através de uma recorrência mas qualidade de atraso. Jamba (março de 2024) e Jamba 1.5 (agosto de 2024) da AI21 colocam-nos no mesmo modelo: 1 camada transformadora por cada 7 camadas de Mamba, MoE em cada outro bloco, e uma janela de contexto de 256k que cabem em uma única GPU de 80 GB. Mamba-3 (ICLR 2026) aperta o lado SSM com espaços de estado de valor complexo e projeções MIMO. Esta lição lê ambas as arquiteturas de ponta a ponta e explica por que a receita híbrida sobreviveu a três anos de escalação quando as tentativas de longo contexto de pure-SSM e pure-Transformer não o fizeram.
 
 **Type:** Learn
-**Languages:** Python (stdlib, layer-mix calculator)
+**Languages:** Python (stdlib, layer-mix calculator), Rust
 **Prerequisites:** Phase 10 · 14 (open-model architectures), Phase 10 · 17 (native sparse attention)
 **Time:** ~60 minutes
 

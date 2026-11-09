@@ -3,7 +3,7 @@
 > Fase 7 · Lição 16 provou a matemática: a regra de rejeição Leviatã preserva a distribuição do verificador exatamente. Esta lição é a visão de formação-pilha da descodificação especulativa de produção de 2026. A EAGLE-3 transformou o modelo de projeto de uma aproximação barata em uma rede pequena construída para fins treinados nos próprios estados ocultos do verificador, depois adicionou um ciclo de teste de treinamento que alinha suas distribuições de trem e inferência. Resultado: 3x a 6,5x end-to-end speedup, taxas aceitas por token acima de 0,9 no chat, sem compensação distributiva. Todas as inferências de produção em 2026 enviam-na por padrão.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 16 (speculative decoding math), Phase 10 · 12 (inference optimization)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > Cada LLM autoregressivo do GPT-2 para o Llama 3 entra em uma perda por posição: prevê o próximo token. DeepSeek-V3 adicionou uma segunda perda por posição: prevê o token depois disso. Os parâmetros extras 14B (em um modelo 671B) foram destilados de volta para o modelo principal através do fluxo de gradiente, e as cabeças MTP treinadas foram reutilizados na inferência como desenhadores de decodificação especulativa com aceitação de 80%+. A geração de 1,8x veio de graça. Esta lição constrói o módulo MTP sequencial do relatório técnico do DeepSeek, calcula a perda e o layout de parâmetros de cabeçalho compartilhado, e explica por que o MTP mantém a cadeia causal enquanto o MTP paralelo original do Gloeckle et al. o quebrou.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10 · 04 (pre-training a mini GPT), Phase 10 · 15 (speculative decoding)
 **Time:** ~60 minutes
 

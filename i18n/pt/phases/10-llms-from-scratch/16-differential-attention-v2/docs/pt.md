@@ -3,7 +3,7 @@
 > A atenção Softmax espalha uma pequena quantidade de probabilidade sobre cada token não correspondente. Mais de 100 mil tokens que somam o ruído e afogam o sinal. O Transformador Diferencial (Ye et al., ICLR 2025) corrige-o computação de atenção como a diferença de dois softmaxes, subtraindo o piso de ruído compartilhado. DIFF V2 (Microsoft, janeiro 2026) é a reescritura de produção: correspondência de latência de decodificação com o Transformer de linha de base, sem kernels personalizados, compatível com FlashAttention. Esta lição é de V1 a V2 de ponta a ponta, com uma implementação de brinquedo de trabalho da operação de diferença que você pode executar em stdlib Python.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 02 (self-attention), Phase 7 · 15 (attention variants), Phase 10 · 14 (architecture walkthrough)
 **Time:** ~60 minutes
 

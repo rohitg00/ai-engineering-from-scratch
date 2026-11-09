@@ -3,7 +3,7 @@
 > Tudo, das lições 01 a 12, é uma fase de um pipeline. Esta lição é o andaime que transforma esses estágios em uma única corrida de ponta a ponta: tokenize, pre-trein, escala, SFT, alinhar, avaliar, quantizar, servir. Não treinarás um modelo 70B num laptop. Você vai produzir a camada de orquestração, o manifesto, o portal de avaliação e o plano de regresso que uma equipe de fronteira 2026 usa para decidir o que será enviado. Esta é a pedra angular.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** All Phase 10 lessons 01-12
 **Time:** ~120 minutes
 
@@ -216,10 +216,16 @@ O gasoduto em `main.py`O sistema de teste de teste de teste de teste de teste de
 
 O fluxo de trabalho canônico tem três comandos.
 
-```
+```bash
 python code/main.py plan    # validate manifest, compute cost estimate, print DAG
 python code/main.py run     # execute stages, writing to manifest.out.yaml
 python code/main.py gate    # read manifest.out.yaml, apply eval gates, ship-or-hold
+```
+
+O porto de Rust funciona da mesma forma .`plan`Passo:
+
+```bash
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson plan
 ```
 
 Corra .`plan`A maioria dos bugs de pipeline aparecem no tempo planeado - limiares de entrada faltantes, hashes obsoletos, ultrapassamentos de orçamento.`plan`É livre, correndo.`run`Poupar dinheiro capturando percevejos no lado barato.
