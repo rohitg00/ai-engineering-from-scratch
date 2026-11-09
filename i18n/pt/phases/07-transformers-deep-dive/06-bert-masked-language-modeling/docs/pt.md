@@ -3,7 +3,7 @@
 > O GPT prevê a próxima palavra, o BERT prevê uma palavra que falta, uma frase de diferença e meia década de tudo em forma de inserção.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 5 · 02 (Text Representation)
 **Time:** ~45 minutes
 

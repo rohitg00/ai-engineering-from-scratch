@@ -3,7 +3,7 @@
 > Uma imagem é uma grade de parches, uma frase é uma grade de tokens, o mesmo transformador come as duas coisas.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 4 · 03 (CNNs), Phase 4 · 14 (Vision Transformers intro)
 **Time:** ~45 minutes
 
