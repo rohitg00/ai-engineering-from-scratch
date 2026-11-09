@@ -3,7 +3,7 @@
 > Tốc độ học tập là một siêu tham số quan trọng nhất. Không phải kiến trúc, không phải kích thước tập dữ liệu, không phải chức năng kích hoạt, tốc độ học tập. Nếu bạn không điều chỉnh gì khác, điều chỉnh này.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers), Lesson 03.08 (Weight Initialization)
 **Time:** ~90 minutes
 

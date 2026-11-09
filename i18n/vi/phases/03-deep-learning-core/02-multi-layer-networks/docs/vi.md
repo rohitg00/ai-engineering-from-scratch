@@ -3,7 +3,7 @@
 > Một tế bào thần kinh vẽ một đường, xếp chúng lên, và bạn có thể vẽ bất cứ thứ gì.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 01 (Math Foundations), Lesson 03.01 (The Perceptron)
 **Time:** ~90 minutes
 

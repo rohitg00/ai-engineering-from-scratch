@@ -3,7 +3,7 @@
 > Mô hình của bạn có 99% trên dữ liệu đào tạo và 60% trên dữ liệu thử nghiệm. Nó ghi nhớ thay vì học tập.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers)
 **Time:** ~75 minutes
 

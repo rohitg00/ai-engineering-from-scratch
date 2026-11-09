@@ -3,7 +3,7 @@
 > Bắt đầu sai và đào tạo không bao giờ bắt đầu. Bắt đầu đúng và 50 lớp đào tạo như một cách trơn tru như 3.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.04 (Activation Functions), Lesson 03.07 (Regularization)
 **Time:** ~90 minutes
 

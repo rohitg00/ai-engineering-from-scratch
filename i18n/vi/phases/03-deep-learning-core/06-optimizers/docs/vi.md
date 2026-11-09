@@ -3,7 +3,7 @@
 > Điểm giảm độ cho bạn biết phải di chuyển theo hướng nào, không nói gì về xa và tốc độ. SGD là một buso. Adam là GPS với dữ liệu giao thông.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.05 (Loss Functions)
 **Time:** ~75 minutes
 

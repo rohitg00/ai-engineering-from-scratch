@@ -3,7 +3,7 @@
 > Bạn đã xây dựng các tế bào thần kinh, các lớp, mạng lưới, backprop, kích hoạt, hàm mất mát, tối ưu hóa, quy định, khởi tạo, và lịch LR. tất cả như các mảnh riêng biệt. Bây giờ dây chúng cùng nhau vào một khung. không PyTorch. không TensorFlow. của bạn.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** All of Phase 03 (Lessons 01-09)
 **Time:** ~120 minutes
 
