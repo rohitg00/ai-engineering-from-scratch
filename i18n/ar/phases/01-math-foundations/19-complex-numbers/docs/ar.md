@@ -3,7 +3,7 @@
 > الجذر التربيعي من -1 ليس خيالي. إنه مفتاح التناوبات، والترددات، ونصف معالجة الإشارات.
 
 **Type:** Learn
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04 (linear algebra, calculus)
 **Time:** ~60 minutes
 
@@ -426,7 +426,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 ## أرسله
 
-أركض`code/complex_numbers.py`لإنتاج`outputs/skill-complex-arithmetic.md`. . .
+أركض`code/complex_numbers.py`أو`npx tsx code/complex_numbers.ts`لإنتاج`outputs/skill-complex-arithmetic.md`. . .
 
 ## التمارين
 
