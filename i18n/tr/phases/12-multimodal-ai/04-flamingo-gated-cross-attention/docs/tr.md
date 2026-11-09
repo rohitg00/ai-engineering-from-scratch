@@ -3,7 +3,7 @@
 > DeepMind's Flamingo (2022) herkesten önce iki şey yaptı. Tek bir modelin, resimlerin, videoların ve metinlerin kendiliğinden birbirine karışmış dizilerini işleyebileceğini gösterdi. Ve VLM'lerin bağlamda öğrendiğini gösterdi  üç örnek (resim, başlık) çiftle birkaç çekim sorgulaması vererek ve model herhangi bir gradient adım olmadan yeni bir resim başlıklı. Mekanizm: donmuş LLM'nin mevcut katmanları arasında yerleştirilen kapalı çapraz dikkat katmanları, sıfırdan başlayan öğrenilmiş bir tanh kapısı ile LLM'nin metin yeteneği başlangıçta korunmaktadır. Bu ders Flamingo'nun Perceiver resampler ve kapalı çapraz dikkat mimarisini izler. Gemini'nin birbirine karışmış girişlerinin ve Idefics2'nin görsel jetonlarının ataları.
 
 **Type:** Learn
-**Languages:** Python (stdlib, gated cross-attention + Perceiver resampler demo)
+**Languages:** Python, TypeScript (stdlib, gated cross-attention + Perceiver resampler demo)
 **Prerequisites:** Phase 12 · 03 (BLIP-2 Q-Former)
 **Time:** ~120 minutes
 

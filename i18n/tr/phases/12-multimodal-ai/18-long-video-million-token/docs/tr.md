@@ -3,7 +3,7 @@
 > 24 FPS'de 1 saatlik 4K video, çişilmiş ve gömülü 60 milyon token üretir. 2 saatlik podcast bölümünün transkripsi 30.000 token. Blu-ray'de tam bir film, agresif bir gruplama ile sıkıştırılmış bile olsa, yüz binlerce token. Google'ın Gemini 1.5 (Mart 2024) bu çağı 10 milyon token bağlamıyla açtı. Bir saatlik videolar boyunca güvenilir bir iğne-haystack hatırlatması yaptı. LWM (Liu et al., Şubat 2024) halka dikkatinin ölçeklenme yolunu gösterdi. LongVILA ve Video- XL alımını daha da arttırdı. VideoAgent, çürük bağlamı ajantik çekim için değiştirdi. Her yaklaşım, hesaplama, hatırlama ve mühendislik karmaşıklığı konusunda farklı bir ödeme. Bu ders onları yan yana okuyor.
 
 **Type:** Build
-**Languages:** Python (stdlib, needle-in-haystack simulator + agentic-retrieval router)
+**Languages:** Python (stdlib, needle-in-haystack simulator + agentic-retrieval router), TypeScript
 **Prerequisites:** Phase 12 · 17 (video temporal tokens)
 **Time:** ~180 minutes
 

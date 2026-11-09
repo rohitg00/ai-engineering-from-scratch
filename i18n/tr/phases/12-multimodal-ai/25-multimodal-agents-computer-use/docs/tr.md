@@ -3,7 +3,7 @@
 > 2026 sınır ürünü ekran görüntüleri okuyan, düğmeler üzerinde tıklayan, web UI'lerini gezinen, formları dolduran ve iş akışlarını sonundan sonuna tamamlayan bir multimodal ajan. SeeClick ve CogAgent (2024) GUI-burunlama ilkelerini kanıtladı. Ferret-UI'ye mobil eklendi. ChartAgent, grafikler için görsel araç kullanımı tanıttı. VisualWebArena ve AgentVista (2026) sınır kovalamaları  ve hatta Gemini 3 Pro ve Claude Opus'un zor görevlerinde %30'luk puanı var. Bu kapı taşı 12 aşamasının her ipini bir araya getiriyor: algılama (yüksek çözünürlüklü VLM), mantıklama (cilt kullanımı ile LLM), yerleştirme (koordinat çıkışı), uzun ufukta hafıza ve değerlendirme.
 
 **Type:** Capstone
-**Languages:** Python (stdlib, action schema + agent loop skeleton)
+**Languages:** Python (stdlib, action schema + agent loop skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 09 (Qwen-VL JSON), Phase 14 (Agent Engineering)
 **Time:** ~240 minutes
 

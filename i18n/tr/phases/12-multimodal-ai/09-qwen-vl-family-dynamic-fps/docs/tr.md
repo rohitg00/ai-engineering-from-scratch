@@ -3,7 +3,7 @@
 > Qwen-VL ailesi  Qwen-VL (2023), Qwen2-VL (2024), Qwen2.5-VL (2025), Qwen3-VL (2025)  2026'da en etkili açık görüş dil model soyundadır. Her nesil, açık ekosistemin geri kalanının on iki ay içinde kopyaladığı tek bir kararlı mimari bahis yaptı: M-RoPE üzerinden yerel dinamik çözünürlük, mutlak zaman ayarıyla dinamik-FPS örnekleme, ViT'deki pencerelerin dikkatini ve yapılandırılmış ajan çıkış biçimlerini. Qwen3-VL tarafından, reçete istikrarlı hale geldi: 2D-RoPE-ViT kodlayıcı, yerel açı oranı girişleri, büyük bir Qwen3 dil tabanına bir MLP projeksiyonu ve birinci sınıf hedefler olarak OCR, yerleştirme ve ajan davranışını vurgulayan eğitim aşamaları. Bu ders aileyi kronolojik olarak okuyor, böylece her düğmenin neden olduğu yeri anlayabiliyorsun.
 
 **Type:** Learn
-**Languages:** Python (stdlib, M-RoPE encoder + dynamic-FPS sampler)
+**Languages:** Python, TypeScript (stdlib, M-RoPE encoder + dynamic-FPS sampler)
 **Prerequisites:** Phase 12 · 06 (patch-n'-pack)
 **Time:** ~120 minutes
 

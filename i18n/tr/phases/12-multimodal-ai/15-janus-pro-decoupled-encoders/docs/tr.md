@@ -3,7 +3,7 @@
 > Birleştirilmiş multimodal modeller kaçınılmaz bir gerginliğe sahiptir. Anlamak anlamlı özellikler ister  SigLIP veya DINOv2 konsept düzeyde bilgi zengin çıkış vektörleri. Genre yeniden inşa etmek için dostu kodlar istiyor. VQ tokenleri, tekrar net piksellere dönüştürülür. İki hedef tek bir kodlama ile uyumlu değil. Janus (DeepSeek, Ekim 2024) ve Janus-Pro (DeepSeek, Ocak 2025) çözümün denemeyi bırakmak olduğunu iddia ediyor: iki kodlayıcıyı kopartma. Transformer vücudu görevler arasında paylaşın, ancak SigLIP ile yol anlayışı ve VQ tokenizer aracılığıyla üretim. 7B'de, Janus-Pro, GenEval'de DALL-E 3'ü yenerken MMMU'da LLaVA'ya eşleşir. Bu ders, iki kodlamanın neden birinde başarısız olduğu konusunda açıklıyor.
 
 **Type:** Build
-**Languages:** Python (stdlib, dual-encoder routing + shared-body signal)
+**Languages:** Python, TypeScript (stdlib, dual-encoder routing + shared-body signal)
 **Prerequisites:** Phase 12 · 13 (Transfusion), Phase 12 · 14 (Show-o)
 **Time:** ~120 minutes
 

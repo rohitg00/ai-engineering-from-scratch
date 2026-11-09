@@ -3,7 +3,7 @@
 > Transfüzyon sürekli ve ayrı temsilleri karıştırır. Show-o (Xie et al., Ağustos 2024) diğer tarafa gider: metin tokenleri sebepçi bir sonraki token tahminini kullanır, görüntü tokenleri MaskGIT ruhunda maskeli ayrı yayımı kullanır. İkisi de hibrit bir dikkat maskesine sahip bir transformatörün içinde oturuyor. Sonuç, bir omurgan, modalite başına bir tokenizer, bir kayıp formülasyonu (maskeli tahminlere uzanan bir sonraki token) üzerinde VQA, metin-resim, boyalama ve karışık modalite jenerasyonunu birleştirir. Bu ders, Show-o tasarımını  neden maskeli ayrı yayılma paralel, birkaç adımlı bir görüntü jeneratörü  ve Transfusion ve Emu3 ile karşıtlık gösterir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, masked-discrete-diffusion sampler)
+**Languages:** Python, TypeScript (stdlib, masked-discrete-diffusion sampler)
 **Prerequisites:** Phase 12 · 13 (Transfusion)
 **Time:** ~120 minutes
 

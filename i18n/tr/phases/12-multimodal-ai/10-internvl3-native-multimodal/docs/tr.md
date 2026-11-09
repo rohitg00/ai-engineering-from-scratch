@@ -3,7 +3,7 @@
 > InternVL3'den önceki her açık VLM aynı üç adımlı tarifi izledi: trilyonlarca metin tokeni üzerinde eğitilmiş bir metin LLM alın, bir görme kodleyicisine bağlanın, sonra dikişleri ince ayarlayın. Bu işlevsel ama uyum borcudur  metin LLM tüm eğitim öncesi bütçesini saf metin için harcadı ve görsel tokenleri doğuştan anlamıyor. Görüş sonrası eklediğinizde, LLM'nin metni unutmadan görsel girişleri metin mantıklarına nasıl bağlayacağını yeniden öğrenmesi gerekir. InternVL3 (Zhu et al., Nisan 2025) post-hoc yaklaşımını reddediyor: bir antrenman öncesi koşusu, bir adımdan beri birbirine karışan metin ve multimodal. Sonuç, MMMU-Pro'da Gemini 2.5 Pro'yla 78B param açık. Bu ders, yerli önceden eğitim için olan durum ve bunu yaptığınızda neler değiştiğini anlatır.
 
 **Type:** Learn
-**Languages:** Python (stdlib, training-corpus mixer)
+**Languages:** Python, TypeScript (stdlib, training-corpus mixer)
 **Prerequisites:** Phase 12 · 05, Phase 12 · 07 (recipes)
 **Time:** ~120 minutes
 

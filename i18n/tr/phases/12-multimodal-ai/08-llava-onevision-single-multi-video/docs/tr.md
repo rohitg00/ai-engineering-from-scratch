@@ -1,9 +1,9 @@
 # LLaVA-OneVision: Tek Resim, Çok Resim, Tek Modeldeki Video
 
-> LLaVA-OneVision'dan önce (Li et al., Ağustos 2024) açık VLM dünyası ayrı soylara sahipti: Tek görüntüler için LLaVA-1.5, Mantis ve VILA gibi çok görüntü modeli, Video-LLaVA ve Video-LLaMA gibi video modeller. Her biri kendi referansını kazandı ve diğerlerinde başarısız oldu. LLaVA-OneVision, tek bir ders programının üç senaryoda da egemenlik gösterebilecek bir model yetiştirebileceğini ve ortaya çıkan görev transfer etkilerinin (tek görüntü becerileri videoya ihraç edilir, çok görüntü mantıklamaları tek görüntüye ihraç edilir) uzmanların toplamını yendiğini savundu. Reçet yanıltıcı bir şekilde basit: senaryolar arasında dengelenen görsel bir belirti bütçesi, ek olarak tek görüntüden OneVision (çok görüntü) videoya giden açık bir ders planı. Bu ders bütçeyi, ders programını ve ortaya çıkan davranışları okur.
+> LLaVA-OneVision'dan önce (Li et al., Ağustos 2024) açık VLM dünyası ayrı soylara sahipti: Tek görüntüler için LLaVA-1.5, Mantis ve VILA gibi çok görüntü modeli, Video-LLaVA ve Video-LLaMA gibi video modeller. Her biri kendi referansını kazandı ve diğerlerinde başarısız oldu. LLaVA-OneVision, tek bir ders programının üç senaryoda da egemenlik gösterebilecek bir model yetiştirebileceğini ve ortaya çıkan görev transfer etkilerinin (tek görüntü becerileri videoya ihraç edilir, çok görüntü mantıklamaları tek görüntüye ihraç edilir) uzmanların toplamını yendiğini savundu. Reçet yanıltıcı bir şekilde basit: senaryolar arasında dengelenen görsel bir belirti bütçesi, ek olarak tek görüntüden OneVision (çok görüntü) videoya giden açık bir ders programı. Bu ders bütçeyi, ders programını ve ortaya çıkan davranışları okur.
 
 **Type:** Build
-**Languages:** Python (stdlib, token budget solver + curriculum planner)
+**Languages:** Python, TypeScript (stdlib, token budget solver + curriculum planner)
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 06 (any-resolution)
 **Time:** ~180 minutes
 

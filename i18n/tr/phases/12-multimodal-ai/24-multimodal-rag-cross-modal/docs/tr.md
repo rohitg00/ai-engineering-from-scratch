@@ -3,7 +3,7 @@
 > Görüş-doğal belge RAG bir parça. Üretim multimodal RAG daha geniş bir alanı açar. Bu süreçte seyahat planlaması ("doğal ışıkla sakin bir vegan brunch bul") gibi iş akımları için metin, görüntü, ses ve video alınır. Üç 2025 anketleri  Abootorabi et al., Mei et al., Zhao et al.  alt sorunları kodlaştırdı: çapraz modal geri alım, geri alım birleşimi, üretim yerleştirme, multimodal değerlendirme. Bu ders, anketleri okur ve üretim borusunu tasarlar.
 
 **Type:** Build
-**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator)
+**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator), TypeScript
 **Prerequisites:** Phase 12 · 23 (ColPali), Phase 11 (RAG basics)
 **Time:** ~180 minutes
 

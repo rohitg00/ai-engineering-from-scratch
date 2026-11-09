@@ -3,7 +3,7 @@
 > BAAI'nin Emu3 (Wang et al., Eylül 2024) yayılma karşı-autoregressive tartışmayı bitirecek olan 2024 sonucu. Tek bir Llama tarzı dekoder-tek dönüştürücü, sadece bir sonraki belirti-bunu tahmin amacıyla eğitilmiş, tek bir kelime birikimi üzerinden metin + VQ görüntü belirtiler + 3D VQ video belirtiler, görüntü üretimi SDXL ve algılama LLaVA-1.6 yener. Klip kaybı yok. Yayılma programı yok. Kalite için sonuca çıkarma için sınıflandırıcı dışı rehberlik kullanılır, ancak temel eğitim amacı öğretmen zorlama ile bir sonraki belirti tahminidir. Nature dergisinde yayınlandı. Bu ders Emu3 tezini okuyor  neden daha iyi bir tokenizer artı ölçek tüm ihtiyacınız  ve difüzyon yaklaşımlarıyla karşıt.
 
 **Type:** Learn
-**Languages:** Python (stdlib, 3D video tokenizer math + autoregressive sampler skeleton)
+**Languages:** Python, TypeScript (stdlib, 3D video tokenizer math + autoregressive sampler skeleton)
 **Prerequisites:** Phase 12 · 11 (Chameleon)
 **Time:** ~120 minutes
 

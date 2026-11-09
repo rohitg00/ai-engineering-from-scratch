@@ -3,7 +3,7 @@
 > 2024-2026 açık ağırlıklı VLM literatürü, bir orman olarak kalır. Apple'ın MM1'i 13 görüntü kodlayıcı, bağlantı ve veri karışımı kombinasyonunu test etti. Allen AI'nin Molmo'su, detaylı insan başlıklarını GPT-4V destillasyonunu yendiğini kanıtladı. Cambrian-1 20+ kodlayıcı karşılaştırmasını yaptı. Idefics2 beş eksel tasarım alanını resmileştirdi. Prismatic VLM'ler kontrol edilen bir referans değerinde 27 eğitim tarifini karşılaştırdı. Tüm bu gürültüden, küçük bir dizi sonuç kağıt üzerinde geçerlidir: görüntü kodlayıcı bağlantı mimarisinden daha önemlidir, veri karışımı ikisinden de daha önemlidir ve ayrıntılı insan başlıkları destil edilmiş sentetik verileri yener. Bu ders bu tabloları okuyor, bu yüzden okumak zorunda değilsin.
 
 **Type:** Learn + lab
-**Languages:** Python (stdlib, ablation table parser + recipe picker)
+**Languages:** Python, TypeScript (stdlib, ablation table parser + recipe picker)
 **Prerequisites:** Phase 12 · 05 (LLaVA baseline)
 **Time:** ~180 minutes
 

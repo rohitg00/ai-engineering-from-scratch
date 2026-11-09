@@ -3,7 +3,7 @@
 > OpenAI'nin CLIP (2021) projesi, önümüzdeki beş yıl boyunca güç sağlayacak kadar büyük bir fikir olduğunu kanıtladı: Sadece gürültülü web görüntü başlık çiftlerini kullanarak bir görüntü kodleyicisi ve bir metin kodleyicisini aynı vektör alanına doğru birleştirmek ve kontrast kaybı. - Null denetim etiketi. 400 milyon çift. Sonuçta yerleştirme alanı sıfır çekim sınıflandırma, görüntü metni kurtarma ve görme kule olarak her 2026 VLM'ye bağlanır. SigLIP 2 (2025) softmax' ı sigmoid ile değiştirdi ve daha düşük maliyetle CLIP' i geçti. Bu ders, InfoNCE'den sigmoid çiftlik kaybına kadar matematik yürür ve stdlib Python'da eğitim adımını inşa eder.
 
 **Type:** Build
-**Languages:** Python (stdlib, InfoNCE + sigmoid loss implementations)
+**Languages:** Python, TypeScript (stdlib, InfoNCE + sigmoid loss implementations)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 7 (Transformers)
 **Time:** ~180 minutes
 

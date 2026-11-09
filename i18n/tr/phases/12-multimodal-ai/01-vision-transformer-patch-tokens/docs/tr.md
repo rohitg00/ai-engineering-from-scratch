@@ -3,7 +3,7 @@
 > Bir görüntü, bir transformatörün yiyebileceği bir simge sırası haline gelmeden önce multimodal bir şey olmalıdır. 2020 ViT makalesi 16x16 piksel yamaları, bir çizgi projeksiyonu ve bir pozisyon yerleştirme ile buna cevap verdi. Beş yıl sonra her 2026 sınır modeli (Claude Opus 4.7 2576px doğuştan, Gemini 3.1 Pro, Qwen3.5-Omni) hala bu şekilde başlar  kodlayıcı ViT'den DINOv2'ye SigLIP 2'ye değiştirildi, kayıt simgelerinin eklendiği, konumsal şema 2D-RoPE oldu, ancak ilkel tutuldu. Bu ders, patch-token borusunu sonuna kadar okuyor ve stdlib Python'da inşa ediyor. Böylece 12'nin geri kalanında "görsel tokenler" için bir zihinsel model var.
 
 **Type:** Learn
-**Languages:** Python (stdlib, patch tokenizer + geometry calculator)
+**Languages:** Python, TypeScript (stdlib, patch tokenizer + geometry calculator)
 **Prerequisites:** Phase 7 (Transformers), Phase 4 (Computer Vision)
 **Time:** ~120 minutes
 

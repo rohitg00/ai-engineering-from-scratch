@@ -3,7 +3,7 @@
 > Bir model ilk kez bir web sitesinden bir tarif okudu ve mutfak robotu ile uyguladı RT-2 (Google DeepMind, Temmuz 2023). RT-2, metin işaretleri olarak eylemleri ayırt etti, web verileri ve robot eylem verileri üzerine bir VLM'yi birlikte ayarladı ve web ölçeğinde görme dil bilgisinin robot kontrolüne aktarıldığını kanıtladı. OpenVLA (Haziran 2024) açık 7B referansını gönderdi. Fiziksel Zeka'nın π0 serisi (2024-2025) akış eşleşme eylem uzmanlarını ekledi. NVIDIA'nın GR00T N1 (Mart 2025) ikili sistemli (Sistem 1 / Sistem 2) kontrolü, insanüstü robotlar için ölçekte sağladı. VLA ilkel  görme dili-hareket, gören, okuyan ve hareket eden tek bir model  bu aşamada anlama modelleri ile 15. aşamada otonom sistemler arasındaki köprüdür.
 
 **Type:** Learn
-**Languages:** Python (stdlib, action tokenizer + VLA inference skeleton)
+**Languages:** Python (stdlib, action tokenizer + VLA inference skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 15 (Autonomous Systems, referenced)
 **Time:** ~180 minutes
 

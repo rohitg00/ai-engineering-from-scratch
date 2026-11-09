@@ -3,7 +3,7 @@
 > GPT-4o'nun Mayıs 2024'te yapılan ürün gösterisi altta yatan modelden dolayı değil, ürün şekli nedeniyle  konuştuklarınızda sesli bir arayüzün olması, modelin kamerada gördüğünü gördüğü ve 250 ms'den kısa bir süre içinde tekrar konuşması nedeniyle bozulmuştu. Açık ekosistem, 2024 ve 2025 yıllarının geri kalanını bu ürün yüzeyine ulaşmak için yarışarak geçirdi. Qwen2.5-Omni (Mart 2025) referans açık tasarımdır: bir Thinker (büyük metin üreten transformatör) ek olarak bir Talker (paralel konuşma üreten transformatör), akış konuşma jetonları ile bağlantılıdır. Mini-Omni basitleştirdi, Moshi gecikme süresine eşleşti, GLM-4-Voice Çin'e uzattı. Bu ders, akılcı-sözcü mimarisini ve akış gerçek zamanlı diyalogunu çalıştırmak için gecikme bütçesini okuyor.
 
 **Type:** Build
-**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop)
+**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop), TypeScript
 **Prerequisites:** Phase 12 · 19 (audio-LLMs), Phase 12 · 16 (any-to-any)
 **Time:** ~180 minutes
 

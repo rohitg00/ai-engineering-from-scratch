@@ -3,7 +3,7 @@
 > Belgeler fotoğraf değil. PDF, bilimsel makale, fatura veya el yazılı bir form, basit bir görüntü anlayışının yakalayamayacağı bir düzen, tablolar, şkaflar, ayaknotlar, başlıklar ve anlamlı bir yapıya sahiptir. VLM öncesi yığın bir boru hattıydı: Tesseract OCR + LayoutLMv3 + masa çıkarma heuristikleri. VLM dalgası, doğrudan yapılandırılmış işaretleme yaydığı OCR-sizdir modelleri  Donut (2022), Nougat (2023), DocLLM (2023)  ile değiştirdi. 2026 yılına kadar sınır sadece "sayfa görüntüsünü Claude Opus 4.7'e 2576px doğal olarak besle" ve yapılandırılmış işaretleme çıkışı ücretsiz olarak gelir. Bu ders, belgeler AI'nin üç çağlı yayını okuyor.
 
 **Type:** Build
-**Languages:** Python (stdlib, layout-aware document parser skeleton)
+**Languages:** Python (stdlib, layout-aware document parser skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 5 (NLP)
 **Time:** ~180 minutes
 

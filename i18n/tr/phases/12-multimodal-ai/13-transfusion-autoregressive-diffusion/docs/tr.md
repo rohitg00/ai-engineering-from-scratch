@@ -3,7 +3,7 @@
 > Chameleon ve Emu3 her şeyi ayrı tokenlere bahse girdiler. Çalışırlar, ancak kuantitasyon boğazı görünür  Sürekli uzay yayılma modelleri altında görüntü kalitesi platoları. Transfüzyon (Meta, Zhou ve diğerleri, Ağustos 2024) tam ters bahis yapar: görüntüleri sürekli tutun, VQ-VAE'yi tamamen düşürün ve iki kayıpla bir transformatörü eğitiniz. Metin tokenleri bir sonraki token tahminini alır. Görüntü patchleri akış eşleşimi / difüzyon kaybı elde eder. Her iki hedef de aynı ağırlıkları optimize eder. Stable Diffusion 3 (MMDiT) altında yatan mimarlık yakın bir kuzenidir. Bu ders Transfusion tezini okuyor, oyuncak iki kaybı eğitimi yapan bir oyuncak inşa ediyor ve bir transformatörün her iki işi de yapmasına izin veren dikkat maskesini izliyor.
 
 **Type:** Build
-**Languages:** Python (stdlib, two-loss trainer on MNIST-scale toy)
+**Languages:** Python, TypeScript (stdlib, two-loss trainer on MNIST-scale toy)
 **Prerequisites:** Phase 12 · 11 (Chameleon), Phase 8 (Generative AI)
 **Time:** ~180 minutes
 

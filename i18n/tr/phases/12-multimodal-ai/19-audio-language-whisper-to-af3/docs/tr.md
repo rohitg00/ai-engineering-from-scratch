@@ -3,7 +3,7 @@
 > Whisper (Radford et al., Aralık 2022) konuşma tanıma  680k saat zayıf denetimli çok dilli konuşma, basit bir kodlayıcı-dekoder dönüştürücü, sonraki her ASR yayınını alıntı yapan bir referans değerini ayarladı. Ama tanınmak mantık değildir. "Bu kayıtta hangi aletler var?" ya da "sonucu ne duygu ifade ediyor?" ya da "üçüncü dakikada ne oldu?" sormak, ses anlayışını gerektirir, metinleri değil. Qwen-Audio, SALMONN, LTU ve NVIDIA'nın Audio Flamingo 3 (AF3, Temmuz 2025) bu yığınını aşamalı bir şekilde inşa etti: Whisper sınıfı kodlayıcıları tutun, Q-formörleri üzerine kurşun, ses metni talimat verileri üzerinde eğitim verin, düşünce zinciri mantıklılığı ekleyin. Bu ders, bir süreliğine ilerliyor.
 
 **Type:** Build
-**Languages:** Python (stdlib, log-Mel spectrogram + audio Q-former skeleton)
+**Languages:** Python (stdlib, log-Mel spectrogram + audio Q-former skeleton), TypeScript
 **Prerequisites:** Phase 6 (Speech and Audio), Phase 12 · 03 (Q-Former)
 **Time:** ~180 minutes
 

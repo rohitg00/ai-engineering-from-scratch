@@ -3,7 +3,7 @@
 > Gerçek görüntüler 224x224 kare değil. Bir makbuz 1: 3, bir tablo 16: 9, bir tıbbi tarama 4096x4096, bir mobil ekran görüntüsü 9:19.5. 2024'ten önceki VLM cevabı  her şeyi sabit bir kareye boyutlandır  OCR, belge anlayışı ve yüksek çözünürlüklü sahne analizini yapan sinyali atıyor. NaViT (Google, 2023) değişken çözünürlüklü yamaları blok diyagonal maske ile tek bir transformatör partiye paketleyebileceğinizi gösterdi. Qwen2-VL'nin M-RoPE (2024) mutlak pozisyon tablolarını tamamen düşürdü. LLaVA-NeXT'in AnyRes yüksek çözünürlüklü görüntülerini bir taban + alt görüntülere kaydırdı. SigLIP 2'nin NaFlex variansı (2025) artık her yön oranına hizmet vermek için tek bir kontrol noktası isteyen açık VLM'ler için varsayılan kodlayıcıdır. Bu ders, bir parça parça yaptırır.
 
 **Type:** Build
-**Languages:** Python (stdlib, patch packer + block-diagonal mask)
+**Languages:** Python, TypeScript (stdlib, patch packer + block-diagonal mask)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 12 · 05 (LLaVA)
 **Time:** ~120 minutes
 

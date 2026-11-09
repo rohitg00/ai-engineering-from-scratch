@@ -3,7 +3,7 @@
 > GPT-4o, çoğu açık modelin kopyalayamadığı bir ürünü gönderir: Ses işiten, video gören ve gerçek zamanlı olarak konuşan bir ajan. Açık ekosistemle ilgili cevap 2024'ün sonuna kadar MIO (Wang et al., Eylül 2024) idi. MIO metin, görüntü, konuşma ve müziği simgelendirir, birbirine karışmış sekanslar üzerinde bir sebep transformatörü eğitir ve herhangi bir modaliteyi herhangi bir modaliteye üretir. AnyGPT (Zhan et al., Şubat 2024) kavramın kanıtıydı; MIO ölçeklendirme; Unified-IO 2 (Allen AI, Aralık 2023) vizyon + eylem yerleşimi olan kuzendi. Bu ders herhangi bir şekilde  dört tokenizör, bir transformatör, akış dostu dekodlama.
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-modality token allocator + streaming decode loop)
+**Languages:** Python, TypeScript (stdlib, four-modality token allocator + streaming decode loop)
 **Prerequisites:** Phase 12 · 11 (Chameleon), Phase 6 (Speech and Audio)
 **Time:** ~120 minutes
 

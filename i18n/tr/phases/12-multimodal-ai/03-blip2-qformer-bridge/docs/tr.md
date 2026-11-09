@@ -3,7 +3,7 @@
 > CLIP, resim ve metni bir arada tutar, ancak başlıkları oluşturamaz, soruları cevaplayamaz veya bir sohbet yapamaz. BLIP-2 (Salesforce, 2023) bunu küçük bir eğitimli köprü ile çözdü: 32 öğrenilebilir sorgu vektörü, dondurulmuş bir ViT'nin özelliklerini çapraz dikkat yoluyla takip ederek, sonra dondurulmuş bir LLM'nin giriş akışına doğrudan yerleştirir. 188M köprü parametresi bir ViT-g/14'i 11B Flan-T5-XXL kadar büyük dondurulmuş LLM'lere bağladı. 2026 yılına kadar her adaptör tabanlı VLM  MiniGPT-4, InstructBLIP, LLaVA'nın kuzenleri  bir soylu. Bu ders, Q-Former'ın mimarisini okuyor, iki aşamalı eğitimini açıklıyor ve donmuş bir metin dekodere görsel jetonları besleyen bir oyuncak versiyonu oluşturur.
 
 **Type:** Build
-**Languages:** Python (stdlib, cross-attention + learnable-query demo)
+**Languages:** Python, TypeScript (stdlib, cross-attention + learnable-query demo)
 **Prerequisites:** Phase 12 · 02 (CLIP), Phase 7 (Transformers)
 **Time:** ~180 minutes
 

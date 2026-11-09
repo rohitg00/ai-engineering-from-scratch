@@ -3,7 +3,7 @@
 > Video bir sürü fotoğraf değil. 5 saniyelik bir klip, bir görüntü modeli temsil edemeyeceği sebepçi sırayla, eylem fiillerine ve olay zamanlamasına sahiptir. Video-LLaMA (Zhang et al., Haziran 2023) ilk açık video-LLM'yi ses-görsel yerleştirme ile gönderdi. VideoChat ve Video-LLaVA bu örneği genişletti. 2025 yılına kadar Qwen2.5 VL'nin zaman uyumlu M-RoPE, sınır özel modelleri ile arasındaki boşluğu kapattı. Her sistem zamanlı tokenleri farklı olarak çözdü. Klip başına Q-former, çerçeve başına concat-pool, zamanlı olarak uzlaştırılmış M-RoPE, token başına. Bu ders, kalıpları okuyor, bir benzerlik karşı dinamik çerçeve örneği oluşturur ve zamanlı yerleştirme görevlerini değerlendirir.
 
 **Type:** Build
-**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator)
+**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator), TypeScript
 **Prerequisites:** Phase 12 · 08 (LLaVA-OneVision)
 **Time:** ~180 minutes
 

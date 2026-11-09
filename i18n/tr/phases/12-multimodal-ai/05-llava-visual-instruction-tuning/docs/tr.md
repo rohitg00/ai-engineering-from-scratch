@@ -3,7 +3,7 @@
 > LLaVA (April 2023) gezegenin en çok kopyalanan multimodal mimarisidir. BLIP-2'nin Q-Former'ini 2 katlı MLP ile değiştirdi, Flamingo'nun kapalı çapraz dikkatini naif bir simge zinciriyle değiştirdi ve GPT-4 tarafından yalnızca metin başlıklarından üretilen 158k görsel talimat dönüşlerinde eğitildi. 2023 ile 2026 yılları arasında bir VLM inşa eden herhangi bir uygulayıcı LLaVA'nın bir çeşitini inşa etti. LLaVA-1.5 bir MLP projeksiyoncu ve 336px kodlayıcı ile değiştirildi. LLaVA-NeXT yüksek çözünürlüklü giriş için AnyRes kapak ekledi. LLaVA-OneVision tek bir tarifle birleşik görüntü, çoklu görüntü ve video. Bu ders, reçeti okuyor, projeksiyonu uyguluyor ve neden "simpler kazanmış" olduğunu açıklıyor.
 
 **Type:** Build
-**Languages:** Python (stdlib, projector + instruction-template builder)
+**Languages:** Python, TypeScript (stdlib, projector + instruction-template builder)
 **Prerequisites:** Phase 12 · 02 (CLIP), Phase 11 (LLM Engineering — instruction tuning)
 **Time:** ~180 minutes
 
