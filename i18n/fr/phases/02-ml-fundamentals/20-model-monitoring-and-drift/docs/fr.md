@@ -3,7 +3,7 @@
 > Un modèle déployé échoue sans message d'erreur. Il continue de retourner des scores alors que le monde s'éloigne de ses données de formation, et seule la surveillance montre l'écart.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation), 16 (Anomaly Detection), and 19 (ML System Design)
 **Time:** ~110 minutes
 
@@ -261,6 +261,7 @@ Le modèle est un seuil de `amount`Les étiquettes arrivent 500 événements en 
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console

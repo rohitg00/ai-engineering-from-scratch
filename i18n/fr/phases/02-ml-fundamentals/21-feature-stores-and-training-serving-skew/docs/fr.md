@@ -3,7 +3,7 @@
 > Une fonctionnalité a une définition et deux lecteurs. La formation lit son histoire à partir de chaque étiquette, et le service lit sa dernière valeur. Lorsque les deux lecteurs ne sont pas d'accord, le modèle voit des entrées sur lesquelles il n'a jamais été formé.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 08 (Feature Engineering), 13 (ML Pipelines), 15 (Time Series), and 19 (ML System Design)
 **Time:** ~100 minutes
 
@@ -275,6 +275,7 @@ Le démo logs les demandes sur les jours 141 à 150 et effectue les trois compar
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console
