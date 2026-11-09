@@ -3,7 +3,7 @@
 > Hầu hết các mã trong khóa học này sử dụng cùng một bộ nhỏ của ngôn ngữ Python. Hãy học tập tập tập đó ở đây, trước khi các bài học toán và mô hình phụ thuộc vào nó.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Dev Environment, Python Environments
 **Time:** ~120 minutes
 
@@ -821,6 +821,7 @@ Một phân loại trung tâm gần nhất lưu trữ đường dẫn tính ch�
 
 ```bash
 python3 phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.py
+npx tsx phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.ts
 ```
 
 ```text
