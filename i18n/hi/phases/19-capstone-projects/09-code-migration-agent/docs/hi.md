@@ -3,7 +3,7 @@
 > अमेज़ॅन के माइग्रेशनबेंच (जावा 8 से 17) और गूगल के ऐप इंजन Py2-to-Py3 माइग्रेटर ने 2026 बार सेट किया। मॉडर्न के ओपन रीराइट पैमाने पर निर्धारक एएसटी रीराइट करता है। ग्रिट को कोडमोड-शैली डीएसएल के साथ एक ही समस्या का लक्ष्य है। उत्पादन पैटर्न दोनों को जोड़ता हैः सुरक्षित रीस्क्रिप्ट के लिए एक निर्धारक सब्सट्रेट प्लस अस्पष्ट मामलों के लिए एक एजेंट परत, प्रति शाखा निर्माण के लिए एक रेत बॉक्स, और एक परीक्षण हर्नर जो पीआर खोलने से पहले हरा हो जाता है। मुख्य लक्ष्य 50 वास्तविक रिपो को स्थानांतरित करना है और विफलता वर्गीकरण के साथ पास दर प्रकाशित करना है।
 
 **Type:** Capstone
-**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard)
+**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard, agent scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**P5 · P7 · P11 · P13 · P14 · P15 · P17
 **Time:** 30 hours

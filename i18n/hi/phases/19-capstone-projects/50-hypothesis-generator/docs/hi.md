@@ -3,7 +3,7 @@
 > एक शोध एजेंट जो एक ही प्रश्न दो बार पूछता है वह टोकन बर्बाद कर रहा है। ट्रिक प्रत्येक ड्राफ्ट को किसी नए स्थान पर लैंड करने के लिए मजबूर करना है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

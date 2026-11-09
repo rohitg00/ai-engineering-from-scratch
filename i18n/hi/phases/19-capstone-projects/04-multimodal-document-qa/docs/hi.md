@@ -3,7 +3,7 @@
 > 2026 के दस्तावेज़-QA सीमा OCR-तो-पाठ से दूर हो गया और दृष्टि-पहले देर से बातचीत की ओर। ColPali, ColQwen2.5 और ColQwen3-omni प्रत्येक पीडीएफ पृष्ठ को एक छवि के रूप में व्यवहार करते हैं, इसे बहु-वेक्टर देर से बातचीत के साथ एम्बेड करते हैं, और क्वेरी को सीधे पैचों में शामिल होने देते हैं। वित्तीय 10Ks, वैज्ञानिक पत्रों और हस्तलिखित नोटों पर यह पैटर्न OCR-पहले से बड़े मार्जिन से हराता है। 10 हजार पृष्ठों पर पाइपलाइन को अंत से अंत तक बनाएं और ओसीआर-तो-पाठ के खिलाफ साइड-बाय-साइड प्रकाशित करें।
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (viewer UI)
+**Languages:** Python (pipeline), TypeScript (viewer UI, retrieval scaffold)
 **Prerequisites:** Phase 4 (computer vision), Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**P4 · P5 · P7 · P11 · P12 · P17
 **Time:** 30 hours

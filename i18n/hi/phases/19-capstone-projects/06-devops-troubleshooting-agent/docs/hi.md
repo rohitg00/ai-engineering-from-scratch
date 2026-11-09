@@ -3,7 +3,7 @@
 > AWS के डेवओप्स एजेंट GA चला गया, रेसोलव एआई ने अपने K8s प्लेबुक प्रकाशित किए, न्यूबर्ड ने अर्थवादी निगरानी का प्रदर्शन किया, और मेटोरो ने एआई एसआरई को प्रति-सेवा एसएलओ से जोड़ा। उत्पादन आकार तय हैः एक अलर्ट वेबहुक फायर, एक एजेंट टेलीमेट्री पढ़ता है, K8s वस्तुओं का ग्राफ चलता है, मूल कारण परिकल्पनाओं को रैंक करता है, और स्वीकृति बटन के साथ एक स्लैक संक्षिप्त पोस्ट करता है। डिफ़ॉल्ट रूप से केवल पढ़ने के लिए। एक मानव द्वारा बंद किया गया हर उपचार. यह कस्टस्टोन उस एजेंट है, 20 सिंथेटिक घटनाओं पर मूल्यांकन किया और तीन साझा मामलों पर AWS के एजेंट की तुलना में तुलना की।
 
 **Type:** Capstone
-**Languages:** Python (agent), TypeScript (Slack integration)
+**Languages:** Python (agent), TypeScript (Slack integration, agent scaffold)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools and MCP), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P11 · P13 · P14 · P15 · P17 · P18
 **Time:** 30 hours

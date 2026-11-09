@@ -3,7 +3,7 @@
 > डिस्पैचर है जहां हर्नस हर वादा के लिए भुगतान करता है योजना बनाया गया समय, पुनः प्रयास, dedupe, त्रुटि मैपिंग. सभी एक सीम पर.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

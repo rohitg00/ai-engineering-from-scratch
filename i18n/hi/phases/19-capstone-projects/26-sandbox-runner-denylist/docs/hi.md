@@ -3,7 +3,7 @@
 > सत्यापन गेट तय करता है कि क्या एक उपकरण कॉल चलाना चाहिए। जब यह होता है तो सैंडबॉक्स तय करता है कि क्या होता है। यह सबक एक उपप्रक्रिया रनर जहाज जो खतरनाक निष्पादन करने से इनकार करता है, खतरनाक argv आकारों से इनकार करता है, परियोजना की जड़ के लिए प्रत्येक फ़ाइल पथ को बंद करता है, ओवरसाइज आउटपुट को छोटा करता है, और एक दीवार घड़ी समय पर भागने वाले प्रक्रियाओं को मारता है। यह दो परतों में से दूसरी है जो मॉडल और ऑपरेटिंग सिस्टम के बीच बैठती है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates and observation budget), Phase 14 · 33 (instructions as constraints), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -87,6 +87,7 @@ flowchart LR
 ```bash
 cd phases/19-capstone-projects/26-sandbox-runner-denylist
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

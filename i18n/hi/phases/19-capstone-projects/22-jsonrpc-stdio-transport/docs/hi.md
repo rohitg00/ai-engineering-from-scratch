@@ -3,7 +3,7 @@
 > एक मॉडल क्लाइंट और एक टूल सर्वर के बीच परिवहन स्टूडियो पर JSON-RPC है। इसे एक बार हाथ से रोल करने से आपको पता चलता है कि प्रत्येक फ्रेमिंग परत क्या भुगतान कर रही है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

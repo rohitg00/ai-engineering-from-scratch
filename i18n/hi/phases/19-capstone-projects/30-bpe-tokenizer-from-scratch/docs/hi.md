@@ -3,7 +3,7 @@
 > बाइट्स में, आईडी बाहर, आईडी वापस एक ही बाइट्स में. टोकन बनाने के लिए कि हर आधुनिक पाठ मॉडल अभी भी शुरू होता है.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 04 lessons, Phase 07 transformer lessons
 **Time:** ~90 minutes
 

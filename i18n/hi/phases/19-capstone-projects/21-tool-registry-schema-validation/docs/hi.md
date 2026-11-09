@@ -3,7 +3,7 @@
 > एक उपकरण एजेंट सत्यापित नहीं कर सकता है एक उपकरण एजेंट कॉल नहीं कर सकते हैं. आप उपकरण बनाने से पहले रजिस्ट्री और स्कीमा चेकर का निर्माण करें.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

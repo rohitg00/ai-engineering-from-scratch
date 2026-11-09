@@ -3,7 +3,7 @@
 > अनुमानित डिकोडिंग  एक सस्ता ड्राफ्ट टोकन का प्रस्ताव देता है, लक्ष्य मॉडल उन्हें एक पास में सत्यापित करता है  अब उत्पादन के लिए तैयार अनुकूलन है, एक शोध चाल नहीं है। vLLM 0.7 जहाजों में ईगल-3 वास्तविक यातायात पर 2.5-3x पारगमन। पी-एगल (एडब्ल्यूएस 2026) ने समानांतर अटकलों को और आगे बढ़ाया। एसजीएलएंग के स्पेकफोर्ज ने बड़े पैमाने पर प्रशिक्षित सैनिक प्रमुखों को प्रशिक्षित किया। रेड हैट के स्पेक्लूटर्स हब ने आम खुले मॉडल के लिए संरेखित मसौदा प्रकाशित किया। TensorRT-LLM ने NVIDIA पर प्रथम श्रेणी का अनुमानित डिकोडिंग किया। 2026 उत्पादन सेवा स्टैक vLLM या SGLang है जिसमें EAGLE-परिवार ड्राफ्ट, FP8 या INT4 क्वांटिज़ेशन और कतार-उत्तरा पर HPA है। यह कपाट दो खुले मॉडल को 2.5x+ बेसलाइन थ्रूपुट पर पूरी तरह से टेल-लैटेंसी रिपोर्ट के साथ सेवा देने वाला है।
 
 **Type:** Capstone
-**Languages:** Python (serving), C++ / CUDA (kernel inspection), YAML (configs)
+**Languages:** Python (serving), TypeScript, C++ / CUDA (kernel inspection), YAML (configs)
 **Prerequisites:** Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 17 (infrastructure)
 **Phases exercised:**P3 · P7 · P10 · P17
 **Time:** 30 hours

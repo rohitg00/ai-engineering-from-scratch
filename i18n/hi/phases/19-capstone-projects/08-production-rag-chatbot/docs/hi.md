@@ -3,7 +3,7 @@
 > हार्वे, ग्लेन, मेन्डेबल और लामाक्लाउड सभी 2026 में एक ही उत्पादन आकार चलाते हैं। दृश्यों के लिए डॉक्लिंग या अनस्ट्रक्चर और कोलपाली के साथ सेवन करें। हाइब्रिड खोज. Bge-Renanker-v2-gemma के साथ पुनः रैंक. 60-80% हिट दर पर शीघ्र कैशिंग का उपयोग करके क्लाउड सोनट 4.7 के साथ संश्लेषण करें। लामा गार्ड 4 और नेमो गार्डरेल्स के साथ गार्ड। Langfuse और फीनिक्स के साथ देखो. 200 प्रश्नों के स्वर्ण सेट पर RAGAS के साथ ग्रेड। एक विनियमित डोमेन (कानूनी, नैदानिक, बीमा) में एक का निर्माण करें, और टॉपस्टोन स्वर्ण सेट, लाल टीम, और ड्रेफ डैशबोर्ड को पार कर रहा है।
 
 **Type:** Capstone
-**Languages:** Python (pipeline + API), TypeScript (chat UI)
+**Languages:** Python (pipeline + API), TypeScript (chat UI, pipeline scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P5 · P7 · P11 · P12 · P17 · P18
 **Time:** 30 hours

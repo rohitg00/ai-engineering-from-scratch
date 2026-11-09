@@ -3,7 +3,7 @@
 > खानमीगो (खान अकादमी), डुओलिंगो मैक्स, शिक्षा के लिए गूगल लर्नएलएम / मिथुन, क्विज़लेट क्यू-चैट और सिंथेसिस ट्यूटोर सभी ने 2026 में पैमाने पर अनुकूलनशील मल्टीमोडल ट्यूटोरियल शिप किया। सामान्य रूप एक सॉक्रेटिक नीति है (कभी भी बस उत्तर को छोड़ दें), एक छात्र मॉडल जो प्रत्येक बातचीत के बाद अपडेट होता है (बेयिसियन ज्ञान ट्रैकिंग शैली), आवाज + पाठ + फोटो-गणित इनपुट, पाठ्यक्रम ग्राफ पुनर्प्राप्त करना, अंतराल-पुनरावृत्ति अनुसूची, और उम्र के अनुरूप सामग्री के लिए हार्ड सुरक्षा फ़िल्टर। मुख्य लक्ष्य विषय-विशिष्ट ट्यूटर (के-12 बीजगणित या परिचय पायथन) भेजना है, 10 शिक्षार्थियों के साथ दो सप्ताह का प्रभावकारिता अध्ययन चलाएं, और सामग्री सुरक्षा ऑडिट पास करें।
 
 **Type:** Capstone
-**Languages:** Python (backend, learner model), TypeScript (web app), SQL (curriculum graph via Postgres + Neo4j)
+**Languages:** Python (backend, learner model), TypeScript (web app, learner model scaffold), SQL (curriculum graph via Postgres + Neo4j)
 **Prerequisites:** Phase 5 (NLP), Phase 6 (speech), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 14 (agents), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P5 · P6 · P11 · P12 · P14 · P17 · P18
 **Time:** 30 hours

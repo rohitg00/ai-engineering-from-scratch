@@ -3,7 +3,7 @@
 > सत्यापन परत के बिना एक एजेंट हर्नस एक गड्ढे में इच्छा है। यह पाठ निर्धारक गेट चेन का निर्माण करता है जो तय करता है कि क्या एक उपकरण कॉल को फायर करने की अनुमति है, इसके आउटपुट का कितना एजेंट को देखने की अनुमति है, और जब लूप को रोकना है क्योंकि एजेंट ने बहुत अधिक पढ़ा है। श्रृंखला छोटे, नामित गेटों का एक कार्य है और एक अवलोकन पुस्तिका है जो मॉडल दिखाए गए प्रत्येक टोकन को ट्रैक करती है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 20-24 (Track A1: agent loop, tool registry, message store, prompt builder, model router), Phase 14 · 33 (instructions as constraints), Phase 14 · 36 (scope contracts), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -95,6 +95,7 @@ flowchart TD
 ```bash
 cd phases/19-capstone-projects/25-verification-gates-observation-budget
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

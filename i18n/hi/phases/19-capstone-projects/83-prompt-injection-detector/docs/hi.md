@@ -3,7 +3,7 @@
 > एक डिटेक्टर एक कार्य है शीघ्र से लेकर विश्वास और श्रेणी तक।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -57,7 +57,7 @@ injection-gate
 
 ## इसका प्रयोग करें
 
-दौड़ें`python3 main.py`डेमो टैक्सोनोमी लोड करता है, प्रत्येक फिचर्स पर डिटेक्टर चलाता है, इसे एक सौम्य-प्रोम्प्ट corpus में बेक किया जाता है`benign.py`, और प्रति श्रेणी माप प्रिंट करता है।`outputs/detector_report.json`फ़ाइल वह कलाकृतियाँ हैं जो पाठ 87 में सुरक्षा गेट का उपयोग करती हैं।
+दौड़ें`python3 main.py`या `npx tsx main.ts`डेमो टैक्सोनोमी लोड करता है, प्रत्येक फिचर्स पर डिटेक्टर चलाता है, इसे एक सौम्य-प्रोम्प्ट corpus में बेक किया जाता है`benign.py`, और प्रति श्रेणी माप प्रिंट करता है।`outputs/detector_report.json`फ़ाइल वह कलाकृतियाँ हैं जो पाठ 87 में सुरक्षा गेट का उपयोग करती हैं।
 
 ## इसे भेजें
 

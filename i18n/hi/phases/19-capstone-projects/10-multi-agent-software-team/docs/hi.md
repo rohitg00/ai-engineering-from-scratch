@@ -3,7 +3,7 @@
 > 2026 में एक बहु-एजेंट इंजीनियरिंग टीम का आकार एक साथ आया हैः एक वास्तुकार योजनाएं, N कोडर समानांतर कार्यवृक्षों में काम करते हैं, एक समीक्षा गेट, एक परीक्षक सत्यापित करता है। SWE-AF के कारखाने वास्तुकला, MetaGPT के भूमिका आधारित प्रलोभन, ऑटोजेन 0.4 के टाइप किए गए अभिनेता ग्राफ, कॉग्निशन के डेविन और कारखाने के ड्रोइड सभी स्वतंत्र रूप से इस पर उतरे। समानांतर कार्यवृक्ष दीवार-घड़ी को आउटपुट में परिवर्तित करते हैं। साझा राज्य और हस्तांतरण प्रोटोकॉल विफलता सतह बन जाते हैं। मुख्य बात टीम का निर्माण करना है, एसवीई-बेंच प्रो पर मूल्यांकन करना है, और रिपोर्ट करना है कि कौन से हाथ टूटते हैं और कितनी बार।
 
 **Type:** Capstone
-**Languages:** Python / TypeScript (agents), Shell (worktree scripts)
+**Languages:** Python / TypeScript (agents, task board scaffold), Shell (worktree scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 17 (infrastructure)
 **Phases exercised:**P11 · P13 · P14 · P15 · P16 · P17
 **Time:** 40 hours

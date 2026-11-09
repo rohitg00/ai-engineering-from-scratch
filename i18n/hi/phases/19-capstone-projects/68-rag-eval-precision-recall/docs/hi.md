@@ -3,7 +3,7 @@
 > यदि आप एक ही समय में अपने रिट्रीवर और अपने उत्तर को ग्रेड नहीं कर सकते हैं, तो आप सिस्टम को भेज नहीं सकते। दोनों एक ही मीट्रिक नहीं हैं और एक ही प्रॉम्प्ट अलग-अलग अक्षों पर विफलता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 06 (RAG), 10 (evaluation); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64, 65, 66, 67
 **Time:** ~90 minutes
 
@@ -121,6 +121,7 @@ ci-rag-metric-ladder
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुट एक एकल मीट्रिक तालिका में प्रत्येक संस्करण के लिए सटीकता@k, recall@k, MRR, nDCG@k, वफादारी और उत्तर प्रासंगिकता दिखाता है। हाइब्रिड रिकवरी पंक्ति रिकॉल पर चंकर बेसलाइन से बेहतर है; रीरैंक पंक्ति MRR पर हाइब्रिड से बेहतर है।

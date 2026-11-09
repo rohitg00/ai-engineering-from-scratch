@@ -3,7 +3,7 @@
 > ट्रैक ए का भुगतान। यह पाठ गेट चेन, सैंडबॉक्स, eval हर्नस को सिलाई करता है, और OTel एक काम कर रहे कोडिंग एजेंट में फैलता है जो बहु-फ़ाइल पायथन प्रोजेक्ट में एक वास्तविक (छोटी, फिक्स्चर-स्केल) बग को ठीक करता है। एजेंट एक निर्धारक नीति है, LLM नहीं; प्रतिस्थापन पाठ को पुनः प्रस्तुत करने योग्य बनाता है और दिखाता है कि हार्नेस हमेशा दिलचस्प हिस्सा था। अनुबंध समान हैः एक वास्तविक मॉडल नीति सीम में प्लग करता है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 19 · 28 (observability), Phase 14 · 38 (verification gates), Phase 14 · 41 (workbench for real repos), Phase 14 · 42 (agent workbench capstone)
 **Time:** ~90 minutes
 
@@ -113,6 +113,7 @@ flowchart TD
 ```bash
 cd phases/19-capstone-projects/29-end-to-end-coding-task-demo
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

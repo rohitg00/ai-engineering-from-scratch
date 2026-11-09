@@ -3,7 +3,7 @@
 > एक मुद्दे को लेबल करें, स्वायत्त कोडिंग एजेंटों के लिए 2026 उत्पाद के आकार के लिए एक PR प्राप्त करेंः एक एजेंट को क्लाउड सैंडबॉक्स में चलाएं, परीक्षण पास करें, और तर्कसंगत समीक्षा के लिए तैयार PR पोस्ट करें। AWS रिमोट SWE एजेंट, कर्सर पृष्ठभूमि एजेंट, ओपनएआई कोडेक्स क्लाउड, और Google जूल्स सभी इसे भेजते हैं। कठिन भागों रेपो के निर्माण वातावरण को स्वचालित रूप से पुनः पेश कर रहे हैं, क्रेडेंशियल लीक को रोकने, प्रति रेपो बजट को लागू करने, और यह सुनिश्चित करने के लिए कि एजेंट बल-पीश नहीं कर सकता है। यह कैपस्टोन स्वयं होस्ट किए गए संस्करण का निर्माण करता है और इसे होस्ट किए गए विकल्पों के लिए लागत और पास दर पर तुलना करता है।
 
 **Type:** Capstone
-**Languages:** Python (agent), TypeScript (GitHub App), YAML (Actions)
+**Languages:** Python (agent), TypeScript (GitHub App, agent scaffold), YAML (Actions)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**P11 · P13 · P14 · P15 · P17
 **Time:** 30 hours

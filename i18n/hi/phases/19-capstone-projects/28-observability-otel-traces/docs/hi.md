@@ -3,7 +3,7 @@
 > एक एजेंट हर्नस बिना अवलोकन के एक काला बॉक्स है जो पैसे खर्च करता है। यह पाठ एक स्पैन बिल्डर को हाथ से रोल करता है जो ओपनटेलीमेट्री जेएनएआई सेमैंटिक सम्मेलनों के अनुरूप रिकॉर्ड जारी करता है, उन्हें एक JSON-Lines फ़ाइल में लिखता है, प्रति पंक्ति एक स्पैन, और प्रोमेथियस पाठ प्रारूप में काउंटर और हिस्टोग्राम को उजागर करता है। पूरी बात stdlib पायथन है और ऑफ़लाइन चलती है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 13 · 20 (OpenTelemetry GenAI), Phase 14 · 23 (OTel GenAI conventions)
 **Time:** ~90 minutes
 
@@ -96,6 +96,7 @@ GenAI सम्मेलनों को अभी भी विनिर्द�
 ```bash
 cd phases/19-capstone-projects/28-observability-otel-traces
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

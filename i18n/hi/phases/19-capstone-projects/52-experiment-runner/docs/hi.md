@@ -3,7 +3,7 @@
 > लूप केवल अपने माप के रूप में ईमानदार है। एक रनर का निर्माण जो एक विनिर्देश लेता है, इसे एक सैंडबॉक्स में निष्पादित करता है, और एक json मीट्रिक ब्लाब जारी करता है जो मूल्यांकनकर्ता भरोसा कर सकता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

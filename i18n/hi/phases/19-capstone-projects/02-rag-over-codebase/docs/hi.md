@@ -3,7 +3,7 @@
 > 2026 में हर गंभीर इंजीनियरिंग संगठन एक आंतरिक कोड खोज चलाता है जो अर्थ को समझता है, न कि सिर्फ स्ट्रिंग्स। स्रोत ग्राफ एम्प, पाठ्यक्रम के कोडबेस उत्तर, Augment के उद्यम ग्राफ, Aider के repomap, Pinterest के आंतरिक MCP  एक ही आकार. कई repos को खाएं, पेड़-सिटर के साथ विश्लेषण करें, फंक्शन-और वर्ग स्तर के टुकड़े एम्बेड करें, हाइब्रिड-खोजें, पुनः रैंक करें, उद्धरणों के साथ उत्तर दें। यह capstone आप एक बनाने के लिए कहता है कि 10 repos पर 2M लाइनों कोड को संभालने और प्रत्येक git धक्का पर वृद्धिशील पुनः सूचकांक जीवित रहता है।
 
 **Type:** Capstone
-**Languages:** Python (ingestion), TypeScript (API + UI)
+**Languages:** Python (ingestion), TypeScript (API + UI, retrieval scaffold)
 **Prerequisites:** Phase 5 (NLP foundations), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 17 (infrastructure)
 **Phases exercised:**P5 · P7 · P11 · P13 · P17
 **Time:** 30 hours

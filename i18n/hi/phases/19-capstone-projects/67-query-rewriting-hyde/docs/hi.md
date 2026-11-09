@@ -3,7 +3,7 @@
 > उपयोगकर्ता द्वारा टाइप किया गया क्वेरी आपके रिट्रीवर की इच्छा का क्वेरी नहीं है। पुनर्लेखन रिट्रीवर से पहले अंतर को पुल करता है, इसलिए सूचकांक कुछ ऐसा देखता है जो उत्तर के करीब है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64 and 65
 **Time:** ~90 minutes
 
@@ -120,6 +120,7 @@ cd-hyde-vector
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुट प्रति रणनीति रैंकिंग और एक अंतिम सारांश है। HyDE वाक्यांश-असंगत क्वेरी पर जीतता है। बहु-क्वेरी पैराफ्रेज-वैरिएंस क्वेरी पर जीतता है। विघटन बहु-विषयक क्वेरी पर जीतता है। फॉलबैक (कोई रीराइटर) कम से कम तीन में से एक पर हारता है।

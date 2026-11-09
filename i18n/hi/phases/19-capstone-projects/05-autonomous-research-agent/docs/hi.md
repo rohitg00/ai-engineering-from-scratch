@@ -3,7 +3,7 @@
 > साकाना के एआई-साइंटिस्ट-वी 2 ने पूर्ण पेपर प्रकाशित किए। एजेंट प्रयोगशाला प्रयोगों चलाया. एलेन एआई ने निशान साझा किए। 2026 आकार प्रयोगों पर योजना-कार्य-सत्यापन पेड़ खोज, बजट लागत, सैंडबॉक्स कोड निष्पादन, एक दृष्टि-वापसी LaTeX लेखक, और एक स्वचालित NeurIPS शैली समीक्षक समूह है। मुख्य लक्ष्य एक बनाना है, इसे प्रति पेपर $30 के भीतर अंत से अंत तक चलाएं, और सैंडबॉक्स-एस्केप रेड टीम को जीवित रखें जिसे साकान ने दस्तावेज किया है।
 
 **Type:** Capstone
-**Languages:** Python (agent + sandbox), LaTeX (output)
+**Languages:** Python (agent + sandbox), TypeScript, LaTeX (output)
 **Prerequisites:** Phase 2 (ML), Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 18 (safety)
 **Phases exercised:**P0 · P2 · P3 · P7 · P10 · P14 · P15 · P16 · P18
 **Time:** 40 hours

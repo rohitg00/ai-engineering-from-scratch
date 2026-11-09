@@ -3,7 +3,7 @@
 > हर्नस एजेंट है, मॉडल एक सहसंसादक है, यह सबक लूप अनुबंध को फ्रीज करता है आप किसी भी मॉडल में तार कर सकते हैं.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

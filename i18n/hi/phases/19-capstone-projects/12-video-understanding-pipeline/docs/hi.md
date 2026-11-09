@@ -3,7 +3,7 @@
 > 12 लैब्स ने मार्ेंगो + पेगासस का उत्पादन किया। वीडियोडीबी ने CRUD-for-video एपीआई भेजा। AI2 के Molmo 2 ने खुला VLM चेकपोस्ट प्रकाशित किया। जुड़वां लंबे संदर्भ वीडियो के घंटे को मूल रूप से संभालता है। टाइम लेंस-100K ने पैमाने पर समय पर जमीनीकरण को परिभाषित किया। 2026 पाइपलाइन तय की गई हैः दृश्य विभाजन, प्रति दृश्य कैप्शन + एम्बेडिंग, ट्रांसक्रिप्ट संरेखण, बहु-वेक्टर सूचकांक, और एक क्वेरी जो (शुरू, अंत) समय टिकट और फ्रेम पूर्वावलोकन के साथ उत्तर देती है। अंत पत्थर 100 घंटे का सेवन कर रहा है, सार्वजनिक बेंचमार्क पर पहुंच रहा है, और गिनती और कार्रवाई के प्रश्नों पर भ्रम को माप रहा है।
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (UI)
+**Languages:** Python (pipeline), TypeScript (UI, pipeline scaffold)
 **Prerequisites:** Phase 4 (CV), Phase 6 (speech), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**P4 · P6 · P7 · P11 · P12 · P17
 **Time:** 30 hours

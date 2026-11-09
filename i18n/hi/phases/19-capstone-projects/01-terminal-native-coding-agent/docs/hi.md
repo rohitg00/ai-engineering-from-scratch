@@ -3,7 +3,7 @@
 > 2026 तक एक कोडिंग एजेंट का आकार तय हो जाएगा। एक TUI हर्न, एक राज्यपूर्ण योजना, एक सैंडबॉक्स उपकरण सतह, एक लूप जो योजना, कार्य करता है, देखता है, पुनर्प्राप्त करता है। क्लाउड कोड, cursor 3, और ओपनकोड सभी 50 फीट से एक ही दिखते हैं। यह capstone आप में एक अंत के लिए एक अंत बनाने के लिए कहता है  CLI में, अनुरोध खींचें  और इसे मापने के लिए के खिलाफ मिनी-स्वे एजेंट और लाइव-स्वे एजेंट पर SWE-बेंच प्रो. आप सीखेंगे कि मुश्किल हिस्सा मॉडल कॉल नहीं है बल्कि उपकरण लूप, रेत बॉक्स और 50 वक्र रन पर लागत की सीमा है।
 
 **Type:** Capstone
-**Languages:** TypeScript / Bun (harness), Python (eval scripts)
+**Languages:** TypeScript / Bun (harness, loop scaffold), Python (eval scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools and protocols), Phase 14 (agents), Phase 15 (autonomous systems), Phase 17 (infrastructure)
 **Phases exercised:**P0 · P5 · P7 · P10 · P11 · P13 · P14 · P15 · P17 · P18
 **Time:** 35 hours

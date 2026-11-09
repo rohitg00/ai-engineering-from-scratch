@@ -3,7 +3,7 @@
 > एक मूल्यांकन हर्नस केवल उतना ही अच्छा है जितना अनुबंध उसके कार्यों का सम्मान करता है। एक एकल स्कोरिंग फ़ंक्शन लिखने से पहले JSONL आकार और मीट्रिक शब्दावली को फ्रीज करें।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track B foundations
 **Time:** ~90 min
 

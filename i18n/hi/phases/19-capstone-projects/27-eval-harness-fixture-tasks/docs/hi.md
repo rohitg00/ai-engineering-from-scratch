@@ -3,7 +3,7 @@
 > एक कोडिंग एजेंट केवल उतना ही अच्छा है जितना आप इसे मापने वाले कार्यों का सेट करते हैं। यह पाठ एक मूल्यांकन हर्नस बनाता है जो फिक्स्चर कार्यों का एक फ़ोल्डर लेता है, प्रत्येक उम्मीदवार एजेंट के माध्यम से चलाता है, स्कोर एक निर्धारक सत्यापनकर्ता के माध्यम से गुजरता है या विफल रहता है, और परिणामों को पास@1, पास@के, औसत विलंबता और औसत लागत में एकत्र करता है। हर्नस सत्य का स्रोत है जो आपको एक रिफैक्टर से एक प्रतिगमन को बताने की अनुमति देता है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox runner), Phase 14 · 30 (eval-driven agent development), Phase 14 · 19 (SWE-bench and GAIA benchmarks)
 **Time:** ~90 minutes
 
@@ -100,6 +100,7 @@ flowchart TD
 ```bash
 cd phases/19-capstone-projects/27-eval-harness-fixture-tasks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

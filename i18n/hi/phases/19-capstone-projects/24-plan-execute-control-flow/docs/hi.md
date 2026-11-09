@@ -3,7 +3,7 @@
 > एक योजना जो विफलता से नहीं बच सकती एक स्क्रिप्ट है एक स्क्रिप्ट जो पुनर्व्यवस्थित कर सकती है एक एजेंट है। पहले पुनर्व्यवस्थितकर्ता का निर्माण करें।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

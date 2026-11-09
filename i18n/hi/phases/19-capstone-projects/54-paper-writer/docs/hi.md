@@ -3,7 +3,7 @@
 > एक LaTeX कंकाल एक अनुबंध है जो शोधकर्ता और टाइपसेटर के बीच होता है। यदि अनुबंध टूट जाता है तो दस्तावेज़ संकलित नहीं होता है, और विफलता जोर से होती है। पहले कंकाल बनाएं, फिर इसे भरें।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

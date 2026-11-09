@@ -3,7 +3,7 @@
 > एक 8B वर्ग मॉडल आपके अपने डेटा पर प्रशिक्षित, DPO-अनुसूचित आपकी अपनी प्राथमिकताओं पर, क्वांटिज़ेड, अनुमानात्मक-डिकोड, और मापने योग्य $ / 1M टोकन पर सेवा दी। 2026 खुला स्टैक एक्सोलोटल v0.8, TRL 0.15, पुनरावृत्ति के लिए Unsloth, क्वांटिज़ेशन के लिए GPTQ/AWQ/GGUF, सेवा के लिए EAGLE-3 के साथ vLLM 0.7 है। मुख्य लक्ष्य पूरी पाइपलाइन को पुनः प्रयोज्य रूप से चलाना है (YAML में, सेवा समाप्ति बिंदु बाहर) और 2026 मॉडल ओपननेस फ्रेमवर्क के तहत एक मॉडल कार्ड प्रकाशित करना है।
 
 **Type:** Capstone
-**Languages:** Python (pipeline), YAML (configs), Bash (scripts)
+**Languages:** Python (pipeline), TypeScript, YAML (configs), Bash (scripts)
 **Prerequisites:** Phase 2 (ML), Phase 3 (DL), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P2 · P3 · P7 · P10 · P11 · P17 · P18
 **Time:** 35 hours

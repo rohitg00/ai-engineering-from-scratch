@@ -3,7 +3,7 @@
 > बहुभाषी कवरेज के लिए एंथ्रोपिक के संवैधानिक वर्गीकरण, मेटा के लामा गार्ड 4, गूगल के शील्डगेम्मा-2, एनवीडीआईए के नेमोट्रॉन 3 सामग्री सुरक्षा और एक्स-गार्ड ने 2026 सुरक्षा-वर्गीकरण स्टैक को परिभाषित किया। गाराक, पायरिट, एनवीआईडीआईए एजीस और प्रॉम्प्टफू मानक विरोधी मूल्यांकन उपकरण बन गए। NeMo Guardrails v0.12 उन्हें एक उत्पादन पाइपलाइन में जोड़ता है। यह कैपस्टोन इसे एक साथ जोड़ता हैः एक लक्षित ऐप के चारों ओर एक परत सुरक्षा हर्नल, एक स्वायत्त रेड-टीम एजेंट जो 6 से अधिक हमले परिवारों को चलाता है, और एक संवैधानिक आत्म-आलोचना रन जो एक मापनीय हानिरहितता डेल्टा पैदा करता है।
 
 **Type:** Capstone
-**Languages:** Python (safety pipeline, red team), YAML (policy configs)
+**Languages:** Python (safety pipeline, red team), TypeScript, YAML (policy configs)
 **Prerequisites:** Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 18 (ethics, safety, alignment)
 **Phases exercised:**P10 · P11 · P13 · P14 · P18
 **Time:** 25 hours
