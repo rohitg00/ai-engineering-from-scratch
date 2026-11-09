@@ -3,7 +3,7 @@
 > Les réseaux neuraux ne consomment pas bien les formes d'onde brutes. Ils consomment des spectrogrammes. Ils consomment encore mieux les spectrogrammes mel. Chaque classifiateur ASR, TTS et audio en 2026 vit ou meurt par ce seul choix de préprocessage.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 01 (Audio Fundamentals)
 **Time:** ~45 minutes
 

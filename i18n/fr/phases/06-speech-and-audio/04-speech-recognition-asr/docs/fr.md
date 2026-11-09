@@ -3,7 +3,7 @@
 > La reconnaissance de la parole est une classification audio à chaque étape, collée par un modèle de séquence qui connaît l'anglais et le silence. CTC, RNN-T et l'attention sont les trois façons de le faire. Choisissez une et comprenez pourquoi.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 08 (CNNs & RNNs for Text), Phase 5 · 10 (Attention)
 **Time:** ~45 minutes
 

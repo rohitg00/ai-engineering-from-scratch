@@ -3,7 +3,7 @@
 > L'ASR demande "qu'ont-ils dit?" La reconnaissance du haut-parleur demande "qui l'a dit?" Les mathématiques sont les mêmes  embeddings plus cosine  mais chaque décision de production dépend d'un seul numéro EER.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 22 (Embedding Models)
 **Time:** ~45 minutes
 

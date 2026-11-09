@@ -3,7 +3,7 @@
 > La clonage vocale lit votre texte dans la voix d'autrui. La conversion vocale réécrit votre voix dans celle d'autrui tout en préservant ce que vous avez dit. Les deux dépendent de la même décomposition: une identité séparée de l'orateur du contenu.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 07 (TTS)
 **Time:** ~75 minutes
 

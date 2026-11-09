@@ -3,7 +3,7 @@
 > La génération audio 2026 est presque tous des jetons. EnCodec, SNAC, Mimi et DAC transforment les formes d'onde continues en séquences discrètes que un transformateur peut prédire.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 10 · 11 (Quantization), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

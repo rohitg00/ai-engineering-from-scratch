@@ -3,7 +3,7 @@
 > Chaque agent vocal vit ou meurt sur deux décisions: l'utilisateur parle maintenant, et sont-ils terminés? VAD répond au premier. Détection de virage (VAD + silence-hangover + modèle de point d'extrémité sémantique) répond au second.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 11 (Real-Time Audio), Phase 6 · 12 (Voice Assistant)
 **Time:** ~45 minutes
 

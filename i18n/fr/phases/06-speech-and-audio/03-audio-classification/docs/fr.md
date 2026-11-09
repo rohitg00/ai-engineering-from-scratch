@@ -3,7 +3,7 @@
 > Tout, de " chien aboyer contre la sirène " à " quel langage est ce " est la classification audio. Les caractéristiques sont des mels. L'architecture se déplace chaque décennie. L'évaluation reste AUC, F1, et par classe rappel.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 3 · 06 (CNNs), Phase 5 · 08 (CNNs & RNNs for Text)
 **Time:** ~75 minutes
 

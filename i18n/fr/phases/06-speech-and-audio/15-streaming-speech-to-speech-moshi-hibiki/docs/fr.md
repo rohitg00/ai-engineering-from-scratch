@@ -3,7 +3,7 @@
 > En 2024, il a redéfini l'IA vocale. Moshi envoie un modèle unique qui écoute et parle simultanément à 200 ms de latence. Hibiki fait la traduction de la parole à la parole pièce par pièce. Les deux abandonnent le pipeline ASR → LLM → TTS pour une architecture unifiée à double double double sur les jetons de codec Mimi.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 13 (Neural Audio Codecs), Phase 6 · 11 (Real-Time Audio), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

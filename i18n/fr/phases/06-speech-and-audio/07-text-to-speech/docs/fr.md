@@ -3,7 +3,7 @@
 > L'ASR inverse la parole vers le texte; TTS inverse le texte vers la parole. La pile 2026 est composée de trois parties: texte → jetons, jetons → mel, mel → forme d'onde. Chaque partie a un modèle par défaut qui s'inscrit dans un ordinateur portable.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 09 (Seq2Seq), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

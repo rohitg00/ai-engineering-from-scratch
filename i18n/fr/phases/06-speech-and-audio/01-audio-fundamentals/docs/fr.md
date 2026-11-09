@@ -3,7 +3,7 @@
 > Les formes d'onde sont le signal brut. Les spectrogrammes sont la représentation. Les caractéristiques Mel sont la forme ML-friendly. Chaque pipeline moderne ASR et TTS marche cette échelle, et le premier pas est la compréhension de l'échantillonnage et Fourier.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Vectors & Matrices), Phase 1 · 14 (Probability Distributions)
 **Time:** ~45 minutes
 
