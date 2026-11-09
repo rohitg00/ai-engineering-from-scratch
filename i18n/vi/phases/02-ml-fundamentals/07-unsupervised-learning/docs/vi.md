@@ -3,7 +3,7 @@
 > Không có nhãn, không có giáo viên.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Norms & Distances, Probability & Distributions), Phase 2 Lessons 1-6
 **Time:** ~90 minutes
 

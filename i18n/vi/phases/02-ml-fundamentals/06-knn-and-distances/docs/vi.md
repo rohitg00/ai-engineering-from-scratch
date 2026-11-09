@@ -3,7 +3,7 @@
 > Hãy lưu trữ mọi thứ, dự đoán bằng cách nhìn vào hàng xóm, thuật toán đơn giản nhất mà thực sự hoạt động.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lesson 14 Norms and Distances)
 **Time:** ~90 minutes
 
@@ -298,7 +298,7 @@ class KDTree:
         ...
 ```
 
-Nhìn xem`code/knn.py`cho việc thực hiện đầy đủ với tất cả các phương pháp hỗ trợ và demo.
+Nhìn xem`code/knn.py`cho việc thực hiện đầy đủ với tất cả các phương pháp hỗ trợ và demo. `code/knn.ts`là một cổng TypeScript với các chức năng và demo tương tự.`npx tsx code/knn.ts`- Tôi không biết.
 
 ### Bước 4: Tích thước tính năng
 
