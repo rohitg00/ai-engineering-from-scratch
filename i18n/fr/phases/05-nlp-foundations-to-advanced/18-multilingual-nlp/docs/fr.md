@@ -3,7 +3,7 @@
 > Un modèle, plus de 100 langues, zéro données de formation pour la plupart d'entre elles. Le transfert interlinguiste est le miracle pratique des années 2020.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 04 (GloVe, FastText, Subword), Phase 5 · 11 (Machine Translation)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > La plupart de ce que vous devez savoir sur la classification classique du texte apparaît ici.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 2 · 14 (Naive Bayes)
 **Time:** ~75 minutes
 

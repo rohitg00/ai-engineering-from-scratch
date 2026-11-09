@@ -3,7 +3,7 @@
 > Deux RNN prétendant être traducteurs, le goulot d'étranglement qu'ils ont rencontré est la raison de l'attention.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 08 (CNNs + RNNs for Text), Phase 3 · 11 (PyTorch Intro)
 **Time:** ~75 minutes
 

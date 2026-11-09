@@ -3,7 +3,7 @@
 > La grammaire était hors mode pendant un moment, puis chaque pipeline de LLM devait valider l'extraction structurée, et elle est revenue.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > NER a trouvé "Paris". L'entité reliant décide: Paris, France? Paris Hilton? Paris, Texas? Paris (le prince de Troie)?
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 24 (Coreference Resolution)
 **Time:** ~60 minutes
 

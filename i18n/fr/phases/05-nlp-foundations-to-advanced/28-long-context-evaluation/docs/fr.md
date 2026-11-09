@@ -3,7 +3,7 @@
 > Gemini 3 Pro annonce 10 millions de jetons de contexte. À 1 million de jetons, le MRCR à 8 aiguilles tombe à 26,3%.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 23 (Chunking Strategies)
 **Time:** ~60 minutes
 

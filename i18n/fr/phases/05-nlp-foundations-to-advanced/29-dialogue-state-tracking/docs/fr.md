@@ -3,7 +3,7 @@
 > "Je veux un restaurant bon marché dans le nord... en fait, faire modérer... et ajouter l'italien". Trois tours, trois mises à jour de l'état.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 20 (Structured Outputs)
 **Time:** ~75 minutes
 

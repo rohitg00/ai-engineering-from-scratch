@@ -3,7 +3,7 @@
 > L'équivalence sémantique est absente. L'examen humain n'est pas à l'échelle. LLM-as-judge est la réponse de production  avec suffisamment d'étalonnage pour faire confiance au nombre.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

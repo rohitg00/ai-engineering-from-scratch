@@ -3,7 +3,7 @@
 > Si un mot est surprenant, le modèle est mauvais. La perplexité fait une surprise. Le doucement le maintient fini.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

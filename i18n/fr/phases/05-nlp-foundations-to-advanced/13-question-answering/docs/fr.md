@@ -3,7 +3,7 @@
 > Trois systèmes ont façonné l'AQ moderne. Extractive trouvé des spans. récupération augmentée les a mis à terre dans les documents. Génératif produit des réponses. chaque assistant d'IA moderne est un mélange des trois.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 11 (Machine Translation), Phase 5 · 10 (Attention Mechanism)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > Ça semble facile jusqu'à ce que vous ayez affaire à des limites ambiguës, à des entités nichées et au jargon de domaine.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word Embeddings)
 **Time:** ~75 minutes
 

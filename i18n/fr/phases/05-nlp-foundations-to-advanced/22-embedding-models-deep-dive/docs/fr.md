@@ -3,7 +3,7 @@
 > Word2Vec vous donne un vecteur par mot. Les modèles modernes d'intégration vous donnent un vecteur par passage, translinguiste, avec des vues rares, denses et multi-vectorielles, dimensionnées pour correspondre à votre index. Choisissez mal et votre RAG récupère la mauvaise chose.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec), Phase 5 · 14 (Information Retrieval)
 **Time:** ~60 minutes
 

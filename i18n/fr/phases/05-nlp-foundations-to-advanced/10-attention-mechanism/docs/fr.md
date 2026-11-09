@@ -3,7 +3,7 @@
 > Le décodeur arrête de cligner des yeux sur un résumé comprimé et commence à regarder l'ensemble de la source.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 09 (Sequence-to-Sequence Models)
 **Time:** ~45 minutes
 

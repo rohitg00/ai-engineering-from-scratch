@@ -3,7 +3,7 @@
 > Le langage est continu, les modèles sont discrets, le prétraitement est le pont.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Les convolutions apprennent n-grammes, les récurrents se souviennent, les deux sont remplacés par l'attention, les deux sont encore importants sur un matériel restreint.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 11 (PyTorch Intro), Phase 5 · 03 (Word Embeddings), Phase 4 · 02 (Convolutions from Scratch)
 **Time:** ~75 minutes
 

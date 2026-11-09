@@ -3,7 +3,7 @@
 > L'extraction de relation trouve les bords entre eux. Un graphique de connaissance est la somme des nœuds, des bords et de leur provenance.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 25 (Entity Linking)
 **Time:** ~60 minutes
 

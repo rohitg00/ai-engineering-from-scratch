@@ -3,7 +3,7 @@
 > LDA: les documents sont des mélanges de sujets, les sujets sont des distributions sur des mots. BERTopic: les documents sont un cluster dans un espace intégré, les clusters sont des sujets. Le même objectif, des décompositions différentes.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word2Vec)
 **Time:** ~45 minutes
 

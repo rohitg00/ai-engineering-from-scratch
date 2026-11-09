@@ -3,7 +3,7 @@
 > ELIZA répond avec des correspondances de motifs. DialogFlow carte des intentions. GPT répond à partir de poids. Claude exécute des outils et vérifie. Chaque ère a résolu le pire échec de l'autre.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

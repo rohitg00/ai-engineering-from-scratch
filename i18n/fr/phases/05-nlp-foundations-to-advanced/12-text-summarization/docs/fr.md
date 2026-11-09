@@ -3,7 +3,7 @@
 > Les systèmes extractifs vous disent ce que le document dit, les systèmes abstraits vous disent ce que l'auteur voulait dire, différentes tâches, différents pièges.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 11 (Machine Translation)
 **Time:** ~75 minutes
 

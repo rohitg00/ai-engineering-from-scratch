@@ -3,7 +3,7 @@
 > Demandez à un LLM pour JSON. Obtenez JSON la plupart du temps. Dans la production, "la plupart" est le problème. Le décoding restreint se transforme en "la plupart" en "tous les temps" en éditant les logits avant le prélèvement.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

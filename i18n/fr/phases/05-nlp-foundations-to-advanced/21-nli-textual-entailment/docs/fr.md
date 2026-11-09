@@ -3,7 +3,7 @@
 > "t implique h" signifie qu'une lecture humaine t conclurait h est vrai. NLI est la tâche de prédire l'implication / contradiction / neutre.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment Analysis), Phase 5 · 13 (Question Answering)
 **Time:** ~60 minutes
 

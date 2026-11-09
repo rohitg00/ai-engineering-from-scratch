@@ -3,7 +3,7 @@
 > "Elle l'a appelé, il n'a pas répondu, le médecin était au déjeuner". Trois références à deux personnes et personne n'est nommé.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 

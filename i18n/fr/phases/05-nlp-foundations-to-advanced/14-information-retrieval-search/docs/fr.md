@@ -3,7 +3,7 @@
 > BM25 est précis mais fragile. Dense lance un large filet mais manque de mots clés. Hybrid est le modèle par défaut de 2026.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 
