@@ -3,7 +3,7 @@
 > 模型客户端和工具服务器之间的运输是通过工作室进行JSON-RPC. 一旦手动滚动它,你会学到每个框架层都为什么付费.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

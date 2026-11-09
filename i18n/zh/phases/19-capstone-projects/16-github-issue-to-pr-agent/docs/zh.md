@@ -3,7 +3,7 @@
 > 标签一个问题,获得一个PR  2026自主编码代理产品形状:运行一个代理在云沙箱,验证测试通过,并发布一个准备备好审查的PR, 它们都在运输中,包括 AWS 远程SWE 代理,Cursor 背景代理,OpenAI Codex 云和Google Jules. 硬部分是自动复制 repo 的构建环境, 防止凭证泄露, 执行每次 repo 预算, 这块顶石构建了自主托管版本,并将其比较在成本和通过率上与托管的替代品.
 
 **Type:** Capstone
-**Languages:** Python (agent), TypeScript (GitHub App), YAML (Actions)
+**Languages:** Python (agent), TypeScript (GitHub App, agent scaffold), YAML (Actions)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子
 **Time:** 30 hours

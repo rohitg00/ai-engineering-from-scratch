@@ -3,7 +3,7 @@
 > 十二个实验室生产了马伦戈+佩加索. 视频DB发送了CRUD为视频API. 艾尔2的Molmo2公布了开放的VLM检查站. 双胞胎长文本处理数小时的视频. 时间镜头-100K定义了时间定位. 2026年管道已经解决了:场景分区,每场景标题+嵌入,转录对齐,多向量索引,以及一个用 (开始,结束) 时间标签和框架预览来回答的问题. 终点石正在摄入100小时, 达到公共标准,
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (UI)
+**Languages:** Python (pipeline), TypeScript (UI, pipeline scaffold)
 **Prerequisites:** Phase 4 (CV), Phase 6 (speech), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子
 **Time:** 30 hours

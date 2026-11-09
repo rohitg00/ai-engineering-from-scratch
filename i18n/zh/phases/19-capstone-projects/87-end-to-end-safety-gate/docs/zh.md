@@ -3,7 +3,7 @@
 > 预代,期间代,后代,三个检查站,一个判决,每次请求一个审计轨迹.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -59,7 +59,7 @@ safety-checkpoints
 
 ## 用它
 
-`python3 main.py`演示程序将全部内容加载,从端到端运行,打印总结表,并写出后续的文物.出口代码为零.演示程序在字面上是自杀式:每个请求都运行到完成或提前终止,门将转移到下一个.
+`python3 main.py`或`npx tsx main.ts`演示程序将全部内容加载,从端到端运行,打印总结表,并写出后续的文物.出口代码为零.演示程序在字面上是自杀式:每个请求都运行到完成或提前终止,门将转移到下一个.
 
 ## 运送它
 

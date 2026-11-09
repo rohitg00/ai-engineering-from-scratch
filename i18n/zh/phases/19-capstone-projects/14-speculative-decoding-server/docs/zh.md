@@ -3,7 +3,7 @@
 > 投机解码 一个廉价的草案提出代币,目标模型在一个通行中验证它们 现在是一个准备生产的优化,而不是一个研究技巧. -3在vLLM 0.7 船舶 2.5-3x 吞吐量在实际交通. 鱼 (AWS 2026) 进一步推动了平行投机. 格兰特种培训了规模的征兵负责人. 红帽的投机中心发布了对普通开放模型的调整草案. 讯RT-LLM在NVIDIA上做了先进的测量解码. 2026年生产服务堆是vLLM或SGLang,EagLE家族草案,FP8或INT4量化,HPA在排队等待. 总结石头将为2.5倍以上的基线吞吐量提供两个开放型号,并提供完整的尾延迟报告.
 
 **Type:** Capstone
-**Languages:** Python (serving), C++ / CUDA (kernel inspection), YAML (configs)
+**Languages:** Python (serving), TypeScript, C++ / CUDA (kernel inspection), YAML (configs)
 **Prerequisites:** Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 17 (infrastructure)
 **Phases exercised:**子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子
 **Time:** 30 hours

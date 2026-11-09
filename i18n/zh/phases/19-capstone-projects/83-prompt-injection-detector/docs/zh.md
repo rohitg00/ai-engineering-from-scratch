@@ -3,7 +3,7 @@
 > 检测器是从提示到信任和类别的功能.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -57,7 +57,7 @@ injection-gate
 
 ## 用它
 
-跑步`python3 main.py`演示器将分类列表加载,每个装置上运行检测器,`benign.py`按类别的指标打印.`outputs/detector_report.json`文件是第87课中的安全门所消耗的文物.
+跑步`python3 main.py`或`npx tsx main.ts`演示器将分类列表加载,每个装置上运行检测器,`benign.py`按类别的指标打印.`outputs/detector_report.json`文件是第87课中的安全门所消耗的文物.
 
 ## 运送它
 

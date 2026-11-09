@@ -3,7 +3,7 @@
 > 假设是便宜的.知道有人是否已经证明了它是昂贵的部分. 在跑步者把沙盒翻到上面之前,建立一个回收层来回答这个问题.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

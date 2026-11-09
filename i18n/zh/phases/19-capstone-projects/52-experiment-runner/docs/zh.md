@@ -3,7 +3,7 @@
 > 循环只像它的测量一样诚实. 构建运行器,它采用规格,在一个沙盒子子中执行它,
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

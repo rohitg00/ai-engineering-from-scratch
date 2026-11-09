@@ -3,7 +3,7 @@
 > 每一个认真的工程机构在2026年都会进行内部代码搜索, 源图扩展器,Cursor的代码基础答案, Augment的企业图,Aider的重绘图,Pinterest的内部MCP 相同的形状. 取许多回复,用树分析,嵌入函数和类级分类,混合搜索,重新排名,回答引用. 这块顶石要求你构建一个处理2万行代码的代码,
 
 **Type:** Capstone
-**Languages:** Python (ingestion), TypeScript (API + UI)
+**Languages:** Python (ingestion), TypeScript (API + UI, retrieval scaffold)
 **Prerequisites:** Phase 5 (NLP foundations), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 17 (infrastructure)
 **Phases exercised:**五·七·十一·十三·十七
 **Time:** 30 hours

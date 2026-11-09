@@ -3,7 +3,7 @@
 > 一个无法生存的计划是脚本,一个能够重建的脚本是代理.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > 查询用户输入的查询不是查询器想要的查询. 重写将在查询之前的差距弥合,因此索引会看到更接近答案的东西.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64 and 65
 **Time:** ~90 minutes
 
@@ -120,6 +120,7 @@ cd-hyde-vector
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出是每个策略排名和最终总结.HyDE在短语不匹配的查询中获胜.多次查询在语法变异查询中获胜.分解在多主题查询中获胜.倒退 (没有重写器) 在三个中至少输掉一个.

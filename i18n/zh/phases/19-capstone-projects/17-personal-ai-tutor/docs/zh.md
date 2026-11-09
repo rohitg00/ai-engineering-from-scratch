@@ -3,7 +3,7 @@
 > 米戈 (汗学院),杜林戈马克斯,教育谷歌学习LM/双胞胎,奇威letQ-聊天,和合成导师都在2026年提供了适应性多模式导师. 常见的形式是苏格拉底政策 (永远不要只是抛弃答案),学习者模型每次交互后都会更新 (贝叶斯知识追踪风格),语音+文字+照片数学输入,课程图图检索,间隔重复计划和适合年龄的安全过器. 终点是向专科的导师 (K-12代数或Python引入),与10名学习者进行两周的有效性研究,并通过内容安全审计.
 
 **Type:** Capstone
-**Languages:** Python (backend, learner model), TypeScript (web app), SQL (curriculum graph via Postgres + Neo4j)
+**Languages:** Python (backend, learner model), TypeScript (web app, learner model scaffold), SQL (curriculum graph via Postgres + Neo4j)
 **Prerequisites:** Phase 5 (NLP), Phase 6 (speech), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 14 (agents), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**五·六·十一·十二·十四·十七·十八
 **Time:** 30 hours

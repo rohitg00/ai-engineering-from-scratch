@@ -3,7 +3,7 @@
 > 萨卡纳的AI科学家-v2发表了完整的论文. 实验室经营了实验. 艾尔恩分享了痕迹. 2026 形状是计划执行验证实验的树搜索,预算成本,沙盒代码执行,视觉反的LateX编写器,以及一个自动 NeurIPS 风格的评论员组. 终点是建造一个,每张纸每期运行在30美元内,
 
 **Type:** Capstone
-**Languages:** Python (agent + sandbox), LaTeX (output)
+**Languages:** Python (agent + sandbox), TypeScript, LaTeX (output)
 **Prerequisites:** Phase 2 (ML), Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 18 (safety)
 **Phases exercised:**子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子
 **Time:** 40 hours

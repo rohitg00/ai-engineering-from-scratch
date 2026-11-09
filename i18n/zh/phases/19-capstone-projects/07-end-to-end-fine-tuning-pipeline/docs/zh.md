@@ -3,7 +3,7 @@
 > 根据你的数据训练的8B类模型,根据你的偏好进行了DPO排列,量化,投机式解码, 2026 开放堆是Axolotl v0.8,TRL 0.15,代的Unsloth,量化的GPTQ/AWQ/GGUF,配送的VLLM 0.7和EAGLE-3. 终点是可重复运行整个管道 (YAML中,服务端点外) 并根据2026年模型开放框架发布模型卡.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), YAML (configs), Bash (scripts)
+**Languages:** Python (pipeline), TypeScript, YAML (configs), Bash (scripts)
 **Prerequisites:** Phase 2 (ML), Phase 3 (DL), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子
 **Time:** 35 hours

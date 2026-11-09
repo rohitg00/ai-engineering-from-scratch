@@ -3,7 +3,7 @@
 > 编码代理只能像你测量它的任务一样好. 这一课构建了一个评估链,它采用了一个固定任务文件,通过候选代理运行每个任务,通过确定性验证器通过分数或失败,并将结果汇集成pass@1,pass@k,平均延迟和平均成本. 连接是真理的来源,让你能从一个反因子中辨别回归.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox runner), Phase 14 · 30 (eval-driven agent development), Phase 14 · 19 (SWE-bench and GAIA benchmarks)
 **Time:** ~90 minutes
 
@@ -100,6 +100,7 @@ flowchart TD
 ```bash
 cd phases/19-capstone-projects/27-eval-harness-fixture-tasks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

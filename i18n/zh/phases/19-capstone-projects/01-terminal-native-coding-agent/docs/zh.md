@@ -3,7 +3,7 @@
 > 到2026年,编码器的形状已经确定. 图伊带,一个状态的计划,一个沙盒的工具表面,一个循环,计划,行动,观察,恢复. 克劳德代码,课程3和开码从50英尺处看起来都是一样的. 这块顶石要求你构建一个端到一个端,  CLI,  拉出请求, 你会了解为什么最难的是不是模型调用,而是工具循环,沙盒和50转运费用上限.
 
 **Type:** Capstone
-**Languages:** TypeScript / Bun (harness), Python (eval scripts)
+**Languages:** TypeScript / Bun (harness, loop scaffold), Python (eval scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools and protocols), Phase 14 (agents), Phase 15 (autonomous systems), Phase 17 (infrastructure)
 **Phases exercised:**子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子,子
 **Time:** 35 hours

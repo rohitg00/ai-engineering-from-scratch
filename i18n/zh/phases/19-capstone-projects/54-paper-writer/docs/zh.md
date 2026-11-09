@@ -3,7 +3,7 @@
 > 拉特克斯骨格是研究人员和打字符符符之间的合同.如果合同被打破,文档不会编译,故障很大.先构建骨格,然后填写它.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

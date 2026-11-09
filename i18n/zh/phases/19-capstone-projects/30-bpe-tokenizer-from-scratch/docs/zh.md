@@ -3,7 +3,7 @@
 > 构建每个现代文本模型仍然从哪里开始的代币.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 04 lessons, Phase 07 transformer lessons
 **Time:** ~90 minutes
 

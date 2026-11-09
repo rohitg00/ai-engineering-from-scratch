@@ -3,7 +3,7 @@
 > 导弹是代理,模型是共处理器,这个课程结了任何模型的循环合约.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

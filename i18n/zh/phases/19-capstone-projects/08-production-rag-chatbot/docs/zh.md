@@ -3,7 +3,7 @@
 > 哈维,格林,孟达布尔和拉马云都在2026年运行相同的生产形式. 摄入与 docling 或 Unstructured 和 ColPali 视觉. 混合搜索. 换级别,换级别,换级别,换级别,换级别,换级别,换级别,换级别,换级别,换级别,换级别,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级,换级. 通过快速缓存使用Clode Sonnet 4.7进行合成,以60至80%的击率. 警卫用拉马警卫4和NeMo警卫轨. 警兰格斯和城. 通过RAGAS进行200个问题金色测试. 建立一个受监管的领域 (法律,临床,保险), 终点是通过金色的组,红色的团队,
 
 **Type:** Capstone
-**Languages:** Python (pipeline + API), TypeScript (chat UI)
+**Languages:** Python (pipeline + API), TypeScript (chat UI, pipeline scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**五·七·十一·十二·十七·十八
 **Time:** 30 hours

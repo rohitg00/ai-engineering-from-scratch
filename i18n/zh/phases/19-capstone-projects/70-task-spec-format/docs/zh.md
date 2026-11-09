@@ -3,7 +3,7 @@
 > 评估工具只能像合同任务一样有效. 在写一个分数函数之前,冷JSONL形状和计量词汇.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track B foundations
 **Time:** ~90 min
 

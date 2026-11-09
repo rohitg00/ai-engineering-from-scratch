@@ -3,7 +3,7 @@
 > 听到声音的代理人可以使用800ms以下的端到端延迟,知道你何时停止说话,处理入, 雷特尔,瓦皮,莱维基特代理和皮皮卡特都在2026年进入这个酒吧. 它们用相同的形式进行: 流媒体ASR,转变检测器,流媒体LLM, 建立一个,测量WER和MOS和错误切断率,然后运行在输入输入下.
 
 **Type:** Capstone
-**Languages:** Python (agent + pipeline), TypeScript (web client)
+**Languages:** Python (agent + pipeline), TypeScript (web client, scheduler scaffold)
 **Prerequisites:** Phase 6 (speech and audio), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 17 (infrastructure)
 **Phases exercised:**子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子
 **Time:** 30 hours

@@ -3,7 +3,7 @@
 > 复式检索与相互排列融合的混合检索不交叉,它投票 - 投票赢得每个查询类.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lesson 64 (chunking strategies)
 **Time:** ~90 minutes
 
@@ -81,6 +81,7 @@ rrf-fusion
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 阅读示范输出一边.字面标识查询到BM25排名1,密集排名4,RRF排名1. 抛词查询到BM25排名6,密集排名1,RRF排名1. 模糊查询到BM25排名3,密集排名3,RRF排名1. 融合不是打破;它是每一个查询类中赢得的系统.

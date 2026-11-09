@@ -3,7 +3,7 @@
 > 许多代理工程团队的2026年形状已经融合:一个建筑师的计划,N编码器在平行工作树中工作,一个审查员的门,一个测试员验证. 斯威-阿夫的工厂架构,MetaGPT的角色驱动,AutoGen 0.4的打字演员图,Cognition的Devin和工厂的Droids都独立地登陆了它. 并行工作树将墙钟转换为吞吐量. 共同状态和传递协议成为失败表面. 目标是建立团队,在SWE-bench Pro上评估,
 
 **Type:** Capstone
-**Languages:** Python / TypeScript (agents), Shell (worktree scripts)
+**Languages:** Python / TypeScript (agents, task board scaffold), Shell (worktree scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 17 (infrastructure)
 **Phases exercised:**子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子
 **Time:** 40 hours

@@ -3,7 +3,7 @@
 > 一个评论家回来"看起来很好"的第一次被打破了. 一个评论家总是回来"需要工作"的评论家被打破了. 有趣的评论家是那些融合,你必须设计融合.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > 调查代理问同一问题两次,就是浪费代币. 技巧是迫使每一个项目到一个新的地方.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

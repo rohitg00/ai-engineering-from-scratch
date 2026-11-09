@@ -3,7 +3,7 @@
 > 没有什么可能的模型是一个不确定性的模型, 运用一个简短的形式, 换成一个.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 42 to 45
 **Time:** ~90 minutes
 
@@ -135,6 +135,7 @@ eval-harness-matrix
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 脚本在第一次运行时种植装置,用玩具适配器 (它将每个装置都得到正确的),然后写`outputs/leaderboard.json`玩具适配器的总分为1.0, 玩具适配器的试验在`test_main.py`适配器不能回复时,相同的带产生0.0.

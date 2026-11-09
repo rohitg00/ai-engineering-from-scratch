@@ -3,7 +3,7 @@
 > 追踪A的回报. 这一课将门链,沙盒, eval 带,和OTel 扩展到一个工作编码代理, 代理是一个确定性政策,而不是一个 LLM; 替代使课程可复制, 合同是相同的:一个真正的模型插入了政策接.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 19 · 28 (observability), Phase 14 · 38 (verification gates), Phase 14 · 41 (workbench for real repos), Phase 14 · 42 (agent workbench capstone)
 **Time:** ~90 minutes
 
@@ -113,6 +113,7 @@ flowchart TD
 ```bash
 cd phases/19-capstone-projects/29-end-to-end-coding-task-demo
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

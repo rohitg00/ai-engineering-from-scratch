@@ -3,7 +3,7 @@
 > 2026年,文件-QA界限从OCR转移到视觉-第一的后期互动.  ColPali, ColQwen2.5 和 ColQwen3-omni将每个 PDF 页面视为图像,将其嵌入多向量迟交互, 在金融10K,科学论文和手写的笔记上, 建立一个终端的管道,在10万页,并将其发布一边对抗OCR-then-text.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (viewer UI)
+**Languages:** Python (pipeline), TypeScript (viewer UI, retrieval scaffold)
 **Prerequisites:** Phase 4 (computer vision), Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子
 **Time:** 30 hours

@@ -3,7 +3,7 @@
 > 验证门决定是否应运行工具调用. 沙盒决定什么会发生. 这一课将运行一个子进程运行器,拒绝危险的执行器,拒绝危险的Argv形状,将每个文件路径关在项目根, 它是模型和操作系统之间坐落的两个层中的第二层.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates and observation budget), Phase 14 · 33 (instructions as constraints), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -87,6 +87,7 @@ flowchart LR
 ```bash
 cd phases/19-capstone-projects/26-sandbox-runner-denylist
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

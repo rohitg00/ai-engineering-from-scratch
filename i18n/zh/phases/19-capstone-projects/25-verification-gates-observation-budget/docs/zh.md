@@ -3,7 +3,7 @@
 > 没有验证层的代理带是一个在子里的愿望. 这一课构建了确定性门链,决定工具调用是否允许开火,代理被允许看到多少输出,以及该循环必须停止什么时候,因为代理读了太多. 链接是小门的函数,加上一个观察账本,
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 20-24 (Track A1: agent loop, tool registry, message store, prompt builder, model router), Phase 14 · 33 (instructions as constraints), Phase 14 · 36 (scope contracts), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -95,6 +95,7 @@ flowchart TD
 ```bash
 cd phases/19-capstone-projects/25-verification-gates-observation-budget
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

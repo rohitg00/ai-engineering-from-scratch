@@ -3,7 +3,7 @@
 > 碎决定你的回升器能出现什么, 错误地划界限, 没有嵌入模型, 没有重排器, 没有LLM可以修复下游的损坏.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG), 07 (advanced RAG); Phase 19 Track B foundations (lessons 20-29)
 **Time:** ~90 minutes
 
@@ -89,6 +89,7 @@ ci-chunk-boundaries
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出表是一个小表,每个策略有一个行,每个k一个列.句子在结构式固定上输掉.结构性划分在划分固定上获胜.回复性保持在混合固定上,因为回复性适应.在没有有用的结构线索的情况下,语义聚合在散文固定上获胜.

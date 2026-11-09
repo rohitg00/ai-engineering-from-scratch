@@ -3,7 +3,7 @@
 > 工具不能验证的工具是代理不能调用的工具. 在构建工具之前,建立注册表和方案检查器.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > 对于多语言覆盖,Anthropic的宪法分类器,Meta的Llama Guard4,谷歌的ShieldGemma-2,NVIDIA的Nemotron 3内容安全,以及X-Guard定义了2026年安全分类器堆. 格拉克,Pyrit,NVIDIA Aegis和 promptfoo成为标准的对抗评估工具. 尼莫防护车的0.12将它们连接到生产管道. 这块顶石将所有这些东西结合在一起:一个围绕目标应用程序的层次安全带,一个自主的红团队代理运行6多个攻击家庭,
 
 **Type:** Capstone
-**Languages:** Python (safety pipeline, red team), YAML (policy configs)
+**Languages:** Python (safety pipeline, red team), TypeScript, YAML (policy configs)
 **Prerequisites:** Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 18 (ethics, safety, alignment)
 **Phases exercised:**子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子
 **Time:** 25 hours

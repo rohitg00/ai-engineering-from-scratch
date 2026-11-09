@@ -3,7 +3,7 @@
 > 亚马逊的迁移 (Java 8至17),谷歌的应用引擎Py2至Py3迁移器设定了2026年. 现代的OpenRewrite在尺度上进行了确定性AST重写. 格里特对代码模式式DSL的解决方案也是如此. 生产模式结合了两种:安全重写的确定性基板,以及模糊的案例的代理层,每分支构建的沙盒,以及在公交开幕前变绿的测试带. 终点是迁移50个真实存储器,并发布一个失败类别的通过率.
 
 **Type:** Capstone
-**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard)
+**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard, agent scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子子
 **Time:** 30 hours

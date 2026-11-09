@@ -3,7 +3,7 @@
 > 发射器是指,带支付了每一个计划所做的承诺,时间,重试,减值,错误映射.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

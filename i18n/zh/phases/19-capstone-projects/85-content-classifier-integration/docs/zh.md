@@ -3,7 +3,7 @@
 > 输出侧的分类器回答了不同的问题,而不是输入侧的规则.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -56,7 +56,7 @@ cd-output-router
 
 ## 用它
 
-跑步`python3 main.py`演示程序将每次测试输出的动词打印出来,写道`outputs/classifier_report.json`延迟是人工零的,因为所有分类器都是基于规则的;对于一个具有神经分类器的真实模型,每分类器延迟增加后,同样的管道应用.
+跑步`python3 main.py`或`npx tsx main.ts`演示程序将每次测试输出的动词打印出来,写道`outputs/classifier_report.json`延迟是人工零的,因为所有分类器都是基于规则的;对于一个具有神经分类器的真实模型,每分类器延迟增加后,同样的管道应用.
 
 ## 运送它
 
