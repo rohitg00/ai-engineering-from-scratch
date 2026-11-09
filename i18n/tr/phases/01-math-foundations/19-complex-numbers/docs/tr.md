@@ -3,7 +3,7 @@
 > -1'in kare kökü hayal edici değil. Dönüşümlerin, frekansların ve sinyal işleme yarısının anahtarıdır.
 
 **Type:** Learn
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04 (linear algebra, calculus)
 **Time:** ~60 minutes
 
@@ -426,7 +426,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 ## Gönder
 
-Çık .`code/complex_numbers.py`üretmek için`outputs/skill-complex-arithmetic.md`- Evet .
+Çık .`code/complex_numbers.py`veya `npx tsx code/complex_numbers.ts`üretmek için`outputs/skill-complex-arithmetic.md`- Evet .
 
 ## Egzersizler
 
