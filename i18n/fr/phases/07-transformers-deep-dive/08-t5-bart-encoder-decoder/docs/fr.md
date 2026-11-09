@@ -3,7 +3,7 @@
 > Les encoders comprennent. Les décoders génèrent. Rassemblez-les et vous obtenez un modèle construit pour les tâches d'entrée → sortie: traduire, résumer, réécrire, transcrire.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 

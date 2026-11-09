@@ -3,7 +3,7 @@
 > GPT prédit le mot suivant. BERT prédit un mot manquant. Une phrase de différence  et une demi-décennie de tout en forme d'embedding.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 5 · 02 (Text Representation)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Le papier de Kaplan 2020 disait: plus grand modèle, moins de perte. Le papier de Hoffmann 2022 disait: vous étiez sous-entraînés.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
