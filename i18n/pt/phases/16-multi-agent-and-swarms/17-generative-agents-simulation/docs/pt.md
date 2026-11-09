@@ -3,7 +3,7 @@
 > Park et al. 2023 (UIST '23, arXiv:2304.03442) povoado **Smallville**, uma caixa de areia de 25 agentes, com uma arquitetura de três partes: **memory stream**(registro de linguagem natural), **reflection**(sínteses de nível superior que o agente gera sobre o seu próprio fluxo), e **plan**(comportamento de nível diário, depois sub-plans). O resultado histórico foi o surgimento da festa do Dia dos Namorados: um agente sementeou com "quer organizar uma festa do Dia dos Namorados", sem mais roteiro, produziu convites espalhados pela população, datas coordenadas, e a festa aconteceu  de 24 agentes que começaram sem saber disso. As ablações mostram que os três componentes são necessários para a credibilidade. Os falhas documentadas são erros de norma espacial (entrada em lojas fechadas, partilha de banheiros para uma pessoa). Esta é a arquitetura de referência para simulações de agentes e avaliação social multi-agente em 2026.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 13 (Shared Memory)
 **Time:** ~75 minutes
 
@@ -103,6 +103,7 @@ a5-memory-reflection
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A produção esperada: rastreamento de tique por tique. No tique final, pelo menos 3 dos 5 agentes mostram o partido em seu plano, e convergem no local do partido. A única semente produziu a chegada coordenada sem nenhum orquestrador.

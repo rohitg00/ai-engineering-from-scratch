@@ -3,7 +3,7 @@
 > A mais barata agregação: amostra N agentes independentes, maioria-voto. Wang et al. 2022 autoconsistência fez isso com um modelo amostrado N vezes. Multi-agente amplia com **heterogeneous**Agentes para escapar da monocultura  diferentes modelos, diferentes indicações, diferentes temperaturas, diferentes contextos. Além da maioria dos votos, debate topologia questões: MultiAgentBench (arXiv:2503.01935, ACL 2025) avaliou a coordenação estrela / cadeia / árvore / gráfico e encontrou **graph best for research**O AgentVerse (ICLR 2024) documenta dois padrões emergentes  comportamentos voluntários e comportamentos de conformidade  e a conformidade é tanto uma característica (encontrando consenso) quanto um risco (pensamento em grupo, lição 24). Esta lição mapeia o espaço topológico, constrói cada variante e mede o imposto de coordenação.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 07 (Society of Mind and Debate), Phase 16 · 14 (Consensus and BFT)
 **Time:** ~75 minutes
 
@@ -116,6 +116,7 @@ sw-debate-topology
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultados esperados: uma tabela de topologia × N → (acurateza, tokens, latência). Grafico ganha em N=3-5 nas tarefas de estilo de pesquisa; estrela ganha nas tarefas de fatos rápidos; grafico em N=7 mostra o imposto de coordenação (latencia infla mais rápido do que precisão).

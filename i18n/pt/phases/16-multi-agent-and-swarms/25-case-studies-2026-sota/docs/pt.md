@@ -3,7 +3,7 @@
 > Três referências de nível de produção para o estudo de ponta a ponta, cada uma ilustrando uma fatia diferente da engenharia multi-agente. **Anthropic's Research system**(orquestra-trabalhador, tokens 15x, +90,2% sobre o single-agent Opus 4, rainbow deployments) é o caso de supervisor canônico. **MetaGPT / ChatDev**(SOP codificada especialização de papel para engenharia de software; ChatDev "dehallucinação comunicativa"; extensão MacNet para >1000 agentes através DAGs, arXiv:2406.07155) é o caso canônico de decomposição de papel. **OpenClaw / Moltbook**(originalmente Clawdbot por Peter Steinberger, novembro de 2025; renomeado duas vezes; 247k estrelas GitHub em março de 2026; agentes locais ReAct-loop; Moltbook como uma rede social apenas de agente com ~2,3 milhões de contas de agentes dentro de dias do lançamento, adquirido pela Meta 2026-03-10) ilustra o que acontece na escala populacional: atividade econômica emergente, riscos de injeção rápida, regulação a nível estatal (China restringido OpenClaw em computadores governamentais, março de 2026).**Framework landscape April 2026:**LangGraph e CrewAI lideram a produção; AG2 é a continuação da comunidade AutoGen; Microsoft AutoGen está em modo de manutenção (mergido no Microsoft Agent Framework, RC Feb 2026); OpenAI Agents SDK é o sucessor da produção Swarm; Google ADK (abril 2025) é o participante nativo do A2A. Todos os principais frameworks agora enviam suporte MCP; a maioria nave A2A. Esta lição lê cada caso de ponta a ponta e destila os padrões comuns para que você possa escolher a referência certa para o seu próximo sistema de produção.
 
 **Type:** Learn (capstone)
-**Languages:** —
+**Languages:** Python, TypeScript
 **Prerequisites:** all of Phase 16 (Lessons 01-24)
 **Time:** ~90 minutes
 

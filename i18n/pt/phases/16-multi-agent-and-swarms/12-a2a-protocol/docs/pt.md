@@ -3,7 +3,7 @@
 > O Google anunciou A2A em abril de 2025; em abril de 2026 a especificação está em https://a2a-protocol.org/latest/specification/e 150 organizações apoiam-na. A2A é o complemento horizontal do MCP (Lessão 13): onde o MCP é vertical (agente  ferramentas), A2A é peer-to-peer (agente  agente). Ele define os Cartões de Agente (descoberta), tarefas com artefatos (texto, dados estruturados, vídeo), ciclos de vida de tarefas opacos e auth. Os sistemas de produção combinam cada vez mais o MCP com o A2A. O Google Cloud lançou o suporte A2A no Vertex AI Agent Builder durante 2025-2026.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `http.server`, `json`)
+**Languages:** Python (stdlib, `http.server`, `json`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -154,6 +154,7 @@ O cliente:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 O script inicia o servidor em um fio de fundo, e depois corre o cliente contra ele.

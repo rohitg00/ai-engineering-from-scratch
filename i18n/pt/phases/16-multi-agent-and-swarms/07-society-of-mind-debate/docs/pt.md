@@ -3,7 +3,7 @@
 > A premissa de Minsky de 1986  inteligência é uma sociedade de especialistas  é redescoberta a cada década. Em 2023 Du et al. transformou-a em um algoritmo concreto: múltiplas instâncias de LLM propõem respostas, lêem as respostas umas das outras, criticam e atualizam.**multiple agents**E ...**multiple rounds**A sociedade supera o monólogo de um único agente; a troca de várias rondas supera a votação de um só disparo.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -73,6 +73,7 @@ A demonstração mostra dois efeitos-chave:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Usá-lo

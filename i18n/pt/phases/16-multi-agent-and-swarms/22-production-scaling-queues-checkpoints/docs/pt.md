@@ -3,7 +3,7 @@
 > Escalada de sistemas multi-agentes para milhares de corridas simultâneas requer **durable execution** filas de trabalho mais pontos de verificação, para que qualquer trabalhador possa retomar qualquer corrida após qualquer acidente, desde que o tratamento do arrendamento, efeitos colaterais idempotentes e repetição determinista estejam em vigor.`thread_id`(Pós-grados por defeito); um trabalhador que se encontra em acidente libera um contrato de locação e outro trabalhador retoma.**MegaAgent**(arXiv:2408.09955) executou uma fila produtor-consumidor por agente com três estados (Idle / Processamento / Resposta) e coordenação de duas camadas (chat intra-grupo + chat administrador intergrupo). **Fiber/async**Bates thread-per-job para streaming LLM: os fios ficam inativos 99% do tempo à espera de tokens, fibras produzem cooperativamente em I/O.**FastAPI + Postgres + nothing else**Até que a carga provem o contrário  arquiteturas simples vão mais longe do que o esperado. Esta lição constrói um log de checkpoint durável, uma fila de trabalho por agente com transições de estado, uma demonstração de async versus thread e faz a regra pragmática "start simple".
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `asyncio`, `sqlite3`)
+**Languages:** Python (stdlib, `asyncio`, `sqlite3`), TypeScript
 **Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 13 (Shared Memory)
 **Time:** ~75 minutes
 
@@ -133,6 +133,7 @@ sw-checkpoint-replay
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A saída esperada: o ponto de verificação resume-se com sucesso após o crash simulado; versão async lida com 500 chamadas simultâneas em < 1s; versão de thread leva vários segundos e usa ordens de magnitude mais memória por unidade simultânea.

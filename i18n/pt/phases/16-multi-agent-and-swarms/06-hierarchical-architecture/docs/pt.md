@@ -3,7 +3,7 @@
 > A hierarquia é a de supervisores, de gerentes, de subgerentes, de trabalhadores.`Process.hierarchical`é a versão do livro de texto: a `manager_llm`O equivalente de LangGraph é `create_supervisor(create_supervisor(...))`É o padrão natural quando a tarefa é um gráfico de órgãos real. É também o padrão mais provável de colapso em circuitos gerenciais.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 05 (Supervisor Pattern)
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ Demo contrasta caminho feliz (todos concordam) contra um **perturbed path**Quand
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A saída mostra ambos os caminhos com um lado claro do lado de "o que foi pedido" versus "o que foi entregue".
