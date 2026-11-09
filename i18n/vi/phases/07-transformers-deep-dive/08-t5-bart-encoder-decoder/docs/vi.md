@@ -3,7 +3,7 @@
 > Các mã hóa hiểu. Các mã hóa tạo ra. Hãy đặt chúng lại với nhau và bạn sẽ có một mô hình được xây dựng cho các nhiệm vụ đầu vào → đầu ra: dịch, tóm tắt, viết lại, sao chép.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 

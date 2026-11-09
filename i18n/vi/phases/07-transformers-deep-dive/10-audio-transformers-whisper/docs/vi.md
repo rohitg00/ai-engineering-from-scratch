@@ -3,7 +3,7 @@
 > Âm thanh là hình ảnh tần số theo thời gian. Whisper là một ViT ăn nhiều quang phổ và nói lại.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 08 (Encoder-Decoder), Phase 7 · 09 (ViT)
 **Time:** ~45 minutes
 

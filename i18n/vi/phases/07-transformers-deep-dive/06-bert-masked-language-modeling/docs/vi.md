@@ -3,7 +3,7 @@
 > GPT dự đoán từ tiếp theo. BERT dự đoán một từ bị mất. Một câu khác biệt  và nửa thập kỷ của mọi thứ hình dạng nhúng.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 5 · 02 (Text Representation)
 **Time:** ~45 minutes
 

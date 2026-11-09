@@ -3,7 +3,7 @@
 > BERT nhìn cả hai bên. GPT chỉ nhìn thấy quá khứ. Mặt nạ tam giác là dòng mã đơn nhất trong AI hiện đại.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT)
 **Time:** ~75 minutes
 

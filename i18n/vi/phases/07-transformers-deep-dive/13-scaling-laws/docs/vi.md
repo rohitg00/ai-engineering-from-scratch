@@ -3,7 +3,7 @@
 > Bài báo Kaplan năm 2020 nói: mô hình lớn hơn, tổn thất thấp hơn. Bài báo Hoffmann năm 2022 nói: bạn đang được đào tạo thấp.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
