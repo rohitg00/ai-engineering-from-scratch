@@ -3,7 +3,7 @@
 > Ba lớp, không phải một lớp. Các dự án Karpenter nối động (dưới một phút, 40% nhanh hơn Cluster Autoscaler). KAI Scheduler xử lý lập trình nhóm, nhận thức về topology và hàng ngũ bậc thang  nó ngăn chặn bẫy phân bổ phần 7 trong 8 nơi bảy nút chờ và đốt cháy trên một GPU bị mất. Các bộ tự động cấp ứng dụng (NVIDIA Dynamo Planner, llm-d Workload Variant Autoscaler) đo lường trên các tín hiệu cụ thể suy luận  độ sâu hàng, sử dụng bộ nhớ cache KV  không phải chu kỳ hoạt động của CPU / DCGM. Cái bẫy HPA cổ điển là`DCGM_FI_DEV_GPU_UTIL`là một phép đo chu kỳ nhiệm vụ: 100% có thể là 10 yêu cầu hoặc 100. vLLM phân bổ trước bộ nhớ cache KV, vì vậy bộ nhớ không bao giờ kích hoạt quy mô xuống. Bài học này dạy bạn cách soạn ba lớp và tránh mặc định Karpenter `WhenEmptyOrUnderutilized`Chính sách chấm dứt việc chạy các công việc GPU giữa thời gian.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy queue-depth autoscaler simulator)
+**Languages:** Python, TypeScript (stdlib, toy queue-depth autoscaler simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 

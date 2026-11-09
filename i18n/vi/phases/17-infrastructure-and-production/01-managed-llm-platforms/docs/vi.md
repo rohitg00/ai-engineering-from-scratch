@@ -3,7 +3,7 @@
 > Ba siêu quy mô, ba chiến lược khác nhau. AWS Bedrock là một thị trường mô hình  Claude, Llama, Titan, ổn định, Cohere đằng sau một API. Azure OpenAI là một quan hệ đối tác OpenAI độc quyền cộng với các đơn vị thông qua được cung cấp (PTU) cho công suất chuyên dụng. Vertex AI là Gemini đầu tiên với câu chuyện dài và đa phương tiện tốt nhất. Năm 2026, Phân tích nhân tạo đo Azure OpenAI ở ~ 50 ms trung bình và Bedrock ở ~ 75 ms trên tương đương Llama 3.1 405B  PTU giải thích khoảng cách bởi vì năng lượng chuyên dụng đánh bại chia sẻ theo yêu cầu. Quy tắc quyết định không phải là "các mô hình nào nhanh nhất" mà là "mô hình nào và bề mặt FinOps phù hợp với sản phẩm của tôi". Bài học này dạy bạn chọn với các sự thỏa hiệp được ghi lại, không phải là xung.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cost-and-latency comparator)
+**Languages:** Python, TypeScript (stdlib, toy cost-and-latency comparator)
 **Prerequisites:** Phase 11 (LLM Engineering), Phase 13 (Tools & Protocols)
 **Time:** ~60 minutes
 

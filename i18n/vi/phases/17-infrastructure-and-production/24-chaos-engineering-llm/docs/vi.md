@@ -3,7 +3,7 @@
 > Kỹ thuật hỗn loạn cho LLM là ngành riêng của nó vào năm 2026. Các điều kiện tiên quyết trước khi chạy các thí nghiệm trong sản xuất: SLI/SLO xác định, khả năng quan sát trace+metric+log, rollback tự động, runbook, on call. Kiến trúc có bốn tầng: điều khiển (chế hoạch hóa thí nghiệm), mục tiêu (công vụ, hạ tầng, kho dữ liệu), an toàn (các vệ sĩ + hủy bỏ + bộ lọc giao thông), khả năng quan sát (thường đo + dấu vết + nhật ký), phản hồi (trong các điều chỉnh SLO). Các đường dây bảo vệ là bắt buộc: báo cáo tỷ lệ đốt tạm dừng các thí nghiệm nếu dự kiến đốt cháy ngân sách lỗi hàng ngày > 2 lần; cửa sổ nén + mối tương quan theo dõi-ID giảm tiếng ồn báo động. Thời gian: đánh giá hàng tuần về loài cá thể nhỏ + SLO; ngày chơi hàng tháng + sau khi chết; kiểm tra khả năng phục hồi giữa các nhóm hàng quý + bản đồ phụ thuộc. Các thí nghiệm cụ thể của LLM: quá tải bộ nhớ, lỗi mạng, gián đoạn nhà cung cấp, các lời nhắc sai, bão sơ tán cache KV. Công cụ: Harness Chaos Engineering (sự khuyến nghị bắt nguồn từ LLM, giảm độ phóng xạ, tích hợp công cụ MCP); LitmusChaos (CNCF); Chaos Mesh (CNCF Kubernetes bản địa).
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy chaos experiment runner)
+**Languages:** Python, TypeScript (stdlib, toy chaos experiment runner)
 **Prerequisites:** Phase 17 · 23 (SRE for AI), Phase 17 · 13 (Observability)
 **Time:** ~60 minutes
 

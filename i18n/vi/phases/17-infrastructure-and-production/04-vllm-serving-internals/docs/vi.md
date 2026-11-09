@@ -3,7 +3,7 @@
 > Công cụ phục vụ hiện đại dựa trên ba sự cố định hợp nhất, không phải một thủ thuật duy nhất. PagedAttention luôn bật. Các lần phát tập liên tục cho phép các yêu cầu mới vào các lần phát tập hoạt động giữa các lần lặp mã hóa. Các mảnh prefill slic dài để giải mã token không bao giờ chết đói. Động tất cả ba và một Llama 3.3 70B FP8 trên một H100 SXM5 đẩy 2.200-2.400 tok / s ở 128 đồng thời  khoảng 25% trên vLLM tự mặc định và 3-4x một vòng PyTorch ngây thơ. Bài học này đọc lập trình và hạt nhân chú ý của vLLM  động cơ tham chiếu cho cả ba kỹ thuật  ở một mức độ bạn có thể vẽ, và kết thúc với một bộ đúc đồ chơi liên tục trong `code/main.py`những lịch trình prefill và decode như vLLM làm.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy continuous batching scheduler)
+**Languages:** Python, TypeScript (stdlib, toy continuous batching scheduler)
 **Prerequisites:** Phase 17 · 01 (Model Serving), Phase 11 (LLM Engineering)
 **Time:** ~75 minutes
 

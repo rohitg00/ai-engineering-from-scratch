@@ -3,7 +3,7 @@
 > Một mô hình lớn mất vài phút để đi từ lạnh đến phục vụ: một mô hình 70B trên một nút tươi cần khoảng 3-8 phút trước khi token đầu tiên. Trong một thế giới không có máy chủ thực sự, đó không phải là một sự nóng lên  đó là một sự gián đoạn. Các giảm hoạt động ở năm lớp: hình ảnh nút được gieo trước (Bottlerocket trên AWS, vòm hai khối), dòng dòng dòng (NVIDIA Run:ai Model Streamer, bản địa trong vLLM), chụp ảnh chụp trong bộ nhớ GPU (Mô-định kiểm tra, khởi động lại nhanh hơn 10 lần), hồ bơi ấm (`min_workers=1`), tải cấp (ServerlessLLM NVMe→DRAM→HBM đường ống dẫn, giảm độ trễ 10-200x), cộng với mô hình thứ sáu bổ sung, di chuyển trực tiếp di chuyển các token đầu vào (KB) thay vì bộ nhớ cache KV (GB). Modal xuất bản 2-4s bắt đầu lạnh như một tầng; Baseten 5-10s mặc định, dưới giây với trước khi nóng lên. Bài học này dạy bạn đo, ngân sách và xếp chồng năm tầng.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cold-start path simulator)
+**Languages:** Python, TypeScript (stdlib, toy cold-start path simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > Các máy kiểm tra tải trọng truyền thống không được thiết kế cho các phản ứng phát trực tuyến, độ dài đầu ra biến, số liệu cấp token hoặc độ bão hòa GPU. Hai cái bẫy đâm hầu hết đội. Trạm GIL: Đo lường cấp token của Locust chạy token hóa dưới Python GIL, cạnh tranh với việc tạo yêu cầu trong sự đồng thời nặng; backlog token hóa sau đó làm tăng độ trễ giữa các token được báo cáo. Trạm đồng nhất định nhanh: các lệnh đồng nhất trong vòng lặp kiểm tra một điểm trên phân phối token; lưu lượng thực có chiều dài thay đổi và sự phù hợp của tiền tố khác nhau. LLMPerf sửa chữa điều này với `--mean-input-tokens`+ `--stddev-input-tokens`. Định hướng công cụ vào năm 2026: chuyên ngành LLM (GenAI-Perf, LLMPerf, LLM-Locust, guidellm) cho độ chính xác ở mức token; **k6 v2026.1.0**+ **k6 Operator 1.0 GA (Sept 2025)** lưu trữ thông tin, Kubernetes bản địa phân phối thông qua các CRD TestRun / PrivateLoadZone, tốt nhất cho cổng CI / CD; Vegeta for Go saturation rate không đổi; Locust 2.43.3 chỉ với mở rộng LLM-Locust cho lưu trữ.
 
 **Type:** Build
-**Languages:** Python (stdlib, toy realistic-prompt generator + latency collector)
+**Languages:** Python, TypeScript (stdlib, toy realistic-prompt generator + latency collector)
 **Prerequisites:** Phase 17 · 08 (Inference Metrics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~75 minutes
 

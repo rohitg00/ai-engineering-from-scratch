@@ -3,7 +3,7 @@
 > Một sản xuất phục vụ bộ định tuyến, động cơ và khả năng quan sát trong một triển khai Kubernetes và xử lý bộ nhớ cache KV như một nguồn tài nguyên có thể rời khỏi GPU. KV khi tải xuống lấy bộ nhớ cache KV ra khỏi bộ nhớ GPU và sử dụng lại trên các truy vấn và động cơ (CPU DRAM, sau đó đĩa / Ceph). Vàn sản xuất vLLM là sự triển khai tham chiếu; LMCache là lớp thả. VLLM 0.11.0 KV Offloading Connector (từ tháng 1 năm 2026) làm cho nó không đồng bộ và có thể cắm thông qua Connector API (v0.9.0+). Đường tải xuống thường được ẩn khỏi đường yêu cầu, mặc dù cache bị bỏ lỡ và các khuyến mãi có thể thêm độ trễ cuối đến cuối. LMCache có giá trị ngay cả khi không có tiền đề được chia sẻ khi GPU hết các khe KV, các yêu cầu trước có thể được khôi phục từ CPU thay vì tính lại prefill. Các điểm chuẩn được công bố trên 16x H100 (80GB HBM) trên 4 a3-highgpu-4g: khi cache KV vượt quá HBM, cả CPU gốc và LMCache cải thiện đáng kể thông qua; ở dấu chân KV thấp, tất cả các cấu hình phù hợp với đường cơ sở với chi phí trên nhỏ.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy KV-spill simulator)
+**Languages:** Python, TypeScript (stdlib, toy KV-spill simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 06 (SGLang/RadixAttention)
 **Time:** ~60 minutes
 

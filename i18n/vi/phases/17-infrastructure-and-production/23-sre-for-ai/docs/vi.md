@@ -3,7 +3,7 @@
 > AI SRE sử dụng LLM dựa trên dữ liệu cơ sở hạ tầng (logbock, runbook, topology dịch vụ) thông qua RAG để tự động hóa các giai đoạn điều tra, tài liệu và phối hợp. Mô hình kiến trúc năm 2026 là tổ chức đa đại lý  các đại lý chuyên môn (logbo, métrics, runbook) được phối hợp bởi một giám sát viên; AI đề xuất giả thuyết và câu hỏi, con người chấp thuận các cuộc gọi phán xét. Datadog Bits AI và Azure SRE Agent vận chuyển này như các sản phẩm được quản lý. Các sổ chạy đang phát triển: NeuBird Hawkeye sử dụng đánh giá đối kháng ( hai mô hình phân tích cùng một sự cố; sự đồng thuận = sự tin tưởng, bất đồng = không chắc chắn); trí nhớ hoạt động tồn tại trong các thay đổi nhóm. Tự trị tự động vẫn thận trọng: AI đề nghị, con người chấp thuận. Hành động tự trị hoàn toàn là hẹp (tái khởi động pod, rollback cụ thể triển khai) với các rào chắn chặt chẽ  bất cứ ai bán "đặt nó và quên nó" là bán quá mức. Biên giới mới nổi: dự đoán trước sự cố. Nghiên cứu của MIT báo cáo một LLM được đào tạo về các nhật ký lịch sử + thời gian GPU + mô hình lỗi API dự đoán 89% các vụ gián đoạn 10-15 phút sớm hơn. Dự báo: 95% LLM doanh nghiệp đã tự động chuyển giao thất bại vào cuối năm 2026.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy multi-agent incident triage simulator)
+**Languages:** Python, TypeScript (stdlib, toy multi-agent incident triage simulator)
 **Prerequisites:** Phase 17 · 13 (Observability), Phase 17 · 24 (Chaos Engineering)
 **Time:** ~60 minutes
 

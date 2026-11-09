@@ -3,7 +3,7 @@
 > Một bản demo mô hình có một hợp đồng: một đầu vào, một cuộc gọi mô hình và một đầu ra. Đặt một giới hạn cho mỗi phần trước khi bạn chia sẻ liên kết.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 13 (Building a Production LLM Application), Phase 17 · 08 (Inference Metrics), Phase 17 · 19 (AI Gateways)
 **Time:** ~90 minutes
 
@@ -207,12 +207,14 @@ Mã chỉ là một tập tin.`code/main.py`, không có phụ thuộc ngoài th
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Self-test kiểm tra xác thực, hộp token, định dạng dòng chảy và một chuyến đi HTTP thực sự. Nó khởi động máy chủ trên một cổng miễn phí, gửi ba yêu cầu, dừng máy chủ và thoát. khởi động máy chủ cho trình duyệt chỉ khi bạn cần nó:
 
 ```bash
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 Mở ra`http://127.0.0.1:8000`trong trình duyệt. Nhấn Ctrl + C để dừng máy chủ.
@@ -478,6 +480,7 @@ curl -N -X POST http://127.0.0.1:8000/api/stream \
 export DEMO_ACCESS_TOKEN="$(python3 -c 'import secrets; print(secrets.token_urlsafe(24))')"
 echo "$DEMO_ACCESS_TOKEN"
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 Thực hiện các xét nghiệm:

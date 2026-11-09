@@ -3,7 +3,7 @@
 > Sự lựa chọn động cơ là một chức năng của phần cứng, quy mô và hệ sinh thái không phải là một bài đọc bảng xếp hạng. Bốn động cơ thống trị suy luận tự lưu trữ vào năm 2026: llama.cpp, Ollama, vLLM, SGLang, với TGI bị bỏ lại trong chế độ bảo trì.**llama.cpp**là nhanh nhất trên CPU  hỗ trợ mô hình rộng nhất, kiểm soát đầy đủ về định lượng và threading. **Ollama**là cài đặt một lệnh dev-laptop, ~ 15-30% chậm hơn llama.cpp (Go + CGo + HTTP serialization), khoảng cách thông qua 3x dưới tải giống như prod. **TGI entered maintenance mode December 11, 2025** chỉ sửa lỗi, ~ 10% thông qua nguyên liệu chậm hơn vLLM nhưng lịch sử có khả năng quan sát cao nhất và tích hợp hệ sinh thái HF. Tình trạng bảo trì đó làm cho nó trở thành một cược dài hạn có rủi ro  SGLang hoặc vLLM là các mặc định an toàn hơn cho các dự án mới. **vLLM**là mặc định sản xuất mục đích chung  v0.15.1 (tháng 2 năm 2026) thêm PyTorch 2.10, RTX Blackwell SM120, tối ưu hóa H200. **SGLang**là chuyên gia đa xoay / tiền tố nặng của các máy tính GPU (xAI, LinkedIn, Cursor, Oracle, GCP, Azure, AWS) 400.000 + trong sản xuất. Khác suất phần cứng: CPU-first → llama.cpp. AMD / không phải NVIDIA → vLLM là con đường được hỗ trợ mạnh nhất (TRT-LLM bị khóa bởi NVIDIA). 2026 mô hình đường ống: dev = Ollama, giai đoạn = llama.cpp, prod = vLLM hoặc SGLang. Các động cơ có định dạng trọng lượng khác nhau  GGUF cho gia đình llama.cpp, HF safetensors cho động cơ GPU  do đó chuyển đổi định dạng có thể nằm giữa các giai đoạn.
 
 **Type:** Learn
-**Languages:** Python (stdlib, engine-decision tree walker)
+**Languages:** Python, TypeScript (stdlib, engine-decision tree walker)
 **Prerequisites:** All Phase 17 lessons covering engines (04, 06, 07, 09, 18)
 **Time:** ~45 minutes
 

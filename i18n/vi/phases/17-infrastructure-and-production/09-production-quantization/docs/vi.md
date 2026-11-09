@@ -3,7 +3,7 @@
 > Phương thức định lượng không phải là một lựa chọn phổ quát  nó là một chức năng của phần cứng, máy phục vụ và tải trọng công việc. GGUF Q4_K_M hoặc Q5_K_M sở hữu CPU và cạnh, được cung cấp thông qua llama.cpp và Ollama. GPTQ thắng trong vLLM khi bạn cần nhiều LoRA trên cùng một cơ sở. AWQ với hạt nhân Marlin-AWQ cung cấp ~ 741 tok/s trên một mô hình lớp 7B với Pass@1 tốt nhất tại INT4  mặc định 2026 cho sản xuất trung tâm dữ liệu. FP8 vẫn là trung tâm trên Hopper, Ada và Blackwell  gần như không mất mát và được hỗ trợ rộng rãi. NVFP4 và MXFP4 (Blackwell microscaling) là tích cực và yêu cầu xác thực mỗi khối. Hai nhóm cắn bẫy: bộ dữ liệu hiệu chuẩn phải phù hợp với miền triển khai, và bộ nhớ cache KV tách biệt với định lượng trọng lượng  bài học AWQ "chương tự của tôi bây giờ là 4 GB" quên bộ nhớ cache KV 10-30 GB ở kích thước loạt sản xuất.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy memory and throughput comparison across formats)
+**Languages:** Python, TypeScript (stdlib, toy memory and throughput comparison across formats)
 **Prerequisites:** Phase 10 · 13 (Quantization foundations), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 

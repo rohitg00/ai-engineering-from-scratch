@@ -3,7 +3,7 @@
 > Việc kiểm tra A/B truyền thống không được xây dựng cho LLM không xác định. Sự phân biệt quan trọng: các đánh giá trả lời "có thể mô hình làm công việc này không?" Các thử nghiệm A / B trả lời "có người dùng quan tâm không?" Cả hai đều cần thiết; vận chuyển trên kiểm tra vibe đã kết thúc. Những gì phải thử nghiệm vào năm 2026: kỹ thuật nhanh chóng (lập luận), lựa chọn mô hình (GPT-4 vs GPT-3.5 vs OSS; độ chính xác vs chi phí vs thời gian trễ), các tham số sản xuất (giới nhiệt, top-p). Các trường hợp thực tế: một biến thể mô hình thưởng chatbot cung cấp +70% chiều dài cuộc trò chuyện và +30% lưu giữ; Các thí nghiệm dòng chủ đề AI Nextdoor cung cấp +1% CTR sau khi tinh chỉnh chức năng thưởng; Khan Academy Khanmigo lặp lại trên trục độ trễ so với độ chính xác toán học. Phân chia nền tảng: **Statsig**(được mua lại bởi OpenAI với giá 1,1 tỷ đô la vào tháng 9 năm 2025)  kiểm tra theo trình tự, CUPED, tất cả trong một. **GrowthBook** mã nguồn mở, nhà kho, Bayesian + Frequentist + động cơ theo trình tự, CUPED, kiểm tra SRM, Benjamini-Hochberg + Bonferroni sửa chữa. Bạn chọn dựa trên sở thích nhà kho-SQL và liệu "được mua bởi OpenAI" có quan trọng với tổ chức của bạn hay không.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy sequential test simulator)
+**Languages:** Python, TypeScript (stdlib, toy sequential test simulator)
 **Prerequisites:** Phase 17 · 13 (Observability), Phase 17 · 20 (Progressive Deployment)
 **Time:** ~60 minutes
 

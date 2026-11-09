@@ -3,7 +3,7 @@
 > Sự cân bằng tải trọng vòng tròn là tích cực gây hại cho suy luận LLM được lưu trữ trong cache. Một yêu cầu không đáp xuống nút giữ tiền đề của nó trả phí hoàn toàn prefill  khoảng 800 ms tại P50 trên một prompt dài so với ~ 80 ms với một cache hit. Năm 2026, mô hình sản xuất là một router có ý thức cache (vLLM Router in Rust, llm-d router) tiêu thụ các sự kiện cache KV và các tuyến đường trên prefix-hash match. Nghiên cứu gần đây (GORGO) làm cho độ trễ mạng xuyên khu vực là một thuật ngữ rõ ràng trong mục tiêu định tuyến. Các dịch vụ "chỉ số thu thập giá xuyên khu vực" thương mại (chỉ số thu thập giá xuyên khu vực Bedrock, cửa ngõ đa cụm GKE) xử lý suy luận như không minh bạch  họ xử lý tính sẵn có, không phải TTFT. JPMorgan và Mayo Clinic đã tiến hành vụ thất bại của chúng ta ở phía đông-1 vào tháng 11 năm 2024 với khoảng 22 phút. Thực tế DR: 32% thất bại LLM DR là vì các nhóm sao lưu trọng lượng nhưng quên các tệp token hoặc cấu hình định lượng.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy prefix-cache-aware router simulator)
+**Languages:** Python, TypeScript (stdlib, toy prefix-cache-aware router simulator)
 **Prerequisites:** Phase 17 · 04 (vLLM Serving), Phase 17 · 06 (SGLang RadixAttention)
 **Time:** ~60 minutes
 

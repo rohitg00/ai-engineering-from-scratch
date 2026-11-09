@@ -3,7 +3,7 @@
 > Bộ máy tính chuyên dụng thu thập kết luận giao dịch khả năng di động cho thông suất, và TensorRT-LLM  NVIDIA-chỉ, điều chỉnh cho Blackwell  là ví dụ rõ ràng nhất về việc giao dịch trả tiền.$0.012 per million tokens on a 120B model in Q1-Q2 2026, against $0.09/M trên H100 + vLLM  khoảng cách kinh tế 7 lần. Các tập hợp hai định dạng điểm nổi với hai kỹ thuật phục vụ: FP8 vẫn quan trọng cho kho lưu trữ KV và hạt nhân chú ý vì nó có phạm vi động năng cần thiết; NVFP4 (4 bit vi mô) xử lý trọng lượng và kích hoạt; dự đoán đa token (MTP) và phân chia prefill / decode thêm thêm 2-3x trên cùng. Day-0 hỗ trợ mô hình tải trọng FP4 trực tiếp mà không cần chuyển đổi sau đào tạo. Sự bắt giữ cho các nhóm kỹ thuật năm 2026: TRT-LLM là nguồn mở nhưng đặc biệt cho NVIDIA  CUDA- và Blackwell chuyên dụng  vì vậy việc áp dụng nó thương mại khả năng di động cho thông suất. Hãy thử toán toán cho các mô hình và phần cứng trước khi bắt đầu.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy FP8/NVFP4 memory and cost calculator)
+**Languages:** Python, TypeScript (stdlib, toy FP8/NVFP4 memory and cost calculator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 13 (Quantization)
 **Time:** ~75 minutes
 

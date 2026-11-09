@@ -3,7 +3,7 @@
 > Hạn chế cạnh cốt lõi là băng thông bộ nhớ, không phải tính toán. Mobile DRAM ở mức 50-90 GB/s; trung tâm dữ liệu HBM3 xóa 2-3 TB/s  khoảng cách 30-50x. Việc giải mã được gắn với bộ nhớ nên khoảng cách là quyết định. Năm 2026, cảnh quan được chia thành bốn phần. Apple M4/A18 Neural Engine đạt 38 TOPS với bộ nhớ thống nhất (không có bản sao CPUNPU). Qualcomm Snapdragon X Elite / 8 Gen 4 Hexagon đạt 45 TOPS. WebGPU + WebLLM chạy Llama 3.1 8B (Q4) với ~ 41 tok / s trên M3 Max (khoảng 70-80% bản địa); 17,6k sao GitHub, API tương thích với OpenAI, ~ 70-75% bảo hiểm di động. NVIDIA Jetson Orin Nano Super (8GB) phù hợp với Llama 3.2 3B / Phi-3; AGX Orin chạy gpt-oss-20b thông qua vLLM với ~ 40 tok / s; Jetson T4000 (JetPack 7.1) là 2x AGX Orin. TensorRT Edge-LLM hỗ trợ EAGLE-3, NVFP4, prefill  được trình bày tại CES 2026 bởi Bosch, ThunderSoft, MediaTek.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy bandwidth-bound decode simulator)
+**Languages:** Python, TypeScript (stdlib, toy bandwidth-bound decode simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 09 (Production Quantization)
 **Time:** ~60 minutes
 

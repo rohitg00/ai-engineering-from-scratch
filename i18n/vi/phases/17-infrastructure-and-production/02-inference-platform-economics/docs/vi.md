@@ -3,7 +3,7 @@
 > Thị trường suy luận năm 2026 không còn là thuê thời gian GPU nữa. Nó phân chia thành silic tùy chỉnh (Groq, Cerebras, SambaNova), nền tảng GPU (Baseten, Together, Fireworks, Modal), và thị trường đầu tiên của API (Replicate, DeepInfra).$1/hr per GPU on May 1, 2026, and $Giá trị 4B trên 10T + token/ngày cho bạn biết mô hình vận hành dựa trên khối lượng.$300M Series E at $Quy tắc định vị trí cạnh tranh là đơn giản: pháo hoa tối ưu hóa độ trễ, cùng nhau tối ưu hóa chiều rộng danh mục, Baseten tối ưu hóa tinh hoa doanh nghiệp, Modal tối ưu hóa Python-native DX, Tái tạo tối ưu hóa đa phương tiện tiếp cận, Anyscale tối ưu hóa phân phối Python. Bài học này cung cấp cho bạn một matrix bạn có thể trao cho một người sáng lập.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy per-call economics comparator)
+**Languages:** Python, TypeScript (stdlib, toy per-call economics comparator)
 **Prerequisites:** Phase 17 · 01 (Managed LLM Platforms), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~60 minutes
 

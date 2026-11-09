@@ -3,7 +3,7 @@
 > Việc giải mã giả định kết hợp mô hình dự thảo nhanh với mô hình mục tiêu. Dự thảo đề xuất các token K; mục tiêu xác minh bằng một forward duy nhất; các token được chấp nhận là miễn phí. Năm 2026, EAGLE-3 là biến thể cấp sản xuất  nó đào tạo một đầu dự thảo trên các trạng thái ẩn của mô hình mục tiêu thay vì trên mã thông báo thô, đẩy tỷ lệ chấp nhận alpha vào băng thông 0.6-0.8 trên trò chuyện chung. Câu hỏi đúng không phải là "mặt hước nhanh như thế nào" mà là " alpha là gì trên lưu lượng truy cập của tôi?" Nếu alpha giảm xuống dưới ~ 0.55, việc giải mã giả định là âm tính tại đồng thời cao bởi vì mỗi dự thảo bị từ chối chi phí một mục tiêu tiếp theo thứ hai. Bài học này dạy bạn phải đo alpha trước và xoay cờ sau.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy acceptance-rate simulator)
+**Languages:** Python, TypeScript (stdlib, toy acceptance-rate simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 18 (Multi-Token Prediction)
 **Time:** ~60 minutes
 

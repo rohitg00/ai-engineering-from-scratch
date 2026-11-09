@@ -3,7 +3,7 @@
 > Năm số liệu quyết định liệu việc triển khai suy luận có hiệu quả hay không. TTFT là prefill cộng với queue cộng với mạng. TPOT (thường được báo cáo là ITL, mặc dù các công cụ không đồng ý về việc ITL có tính toán token đầu tiên hay không) là chi phí giải mã gắn với bộ nhớ cho mỗi token. Thời gian trễ cuối đến cuối là TTFT cộng với TPOT lần chiều dài đầu ra. Tạo thông là các token mỗi giây được tổng hợp trên toàn bộ hạm đội. Nhưng điều quan trọng đối với sản phẩm là goodput  phần nhỏ của các yêu cầu đáp ứng tất cả SLO cùng một lúc. Tăng suất cao với goodput thấp có nghĩa là bạn đang xử lý token mà không bao giờ đạt đến người dùng đúng giờ. Số tham chiếu cho Llama-3.1-8B-Instruct trên TRT-LLM vào năm 2026: trung bình TTFT 162 ms, trung bình TPOT 7,33 ms, trung bình E2E 1,093 ms. Luôn báo cáo P50, P90, P99  không bao giờ chỉ là xấu. Và xem cái bẫy đo: GenAI-Perf loại trừ TTFT khỏi tính toán ITL, LLMPerf bao gồm nó; hai công cụ không đồng ý về TPOT cho cùng một chạy.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy percentile calculator and goodput reporter)
+**Languages:** Python, TypeScript (stdlib, toy percentile calculator and goodput reporter)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~60 minutes
 
