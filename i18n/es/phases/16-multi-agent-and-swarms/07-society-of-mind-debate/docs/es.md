@@ -3,7 +3,7 @@
 > La premisa de Minsky de 1986  inteligencia es una sociedad de especialistas  se redescubre cada década. En 2023 Du et al. la convirtieron en un algoritmo concreto: múltiples instancias de LLM proponen respuestas, leen las respuestas de cada uno, critican y actualizan. Durante N rondas convergen en un consenso que supera la CoT de tiro cero y la reflexión sobre seis tareas de razonamiento y factualidad. Dos hallazgos importan: ambos **multiple agents**y **multiple rounds**La sociedad supera el monólogo de un solo agente; el intercambio de múltiples rondas supera el voto de una sola vez.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -73,6 +73,7 @@ La demostración muestra dos efectos clave:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Usalo

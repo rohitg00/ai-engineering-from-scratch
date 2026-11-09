@@ -3,7 +3,7 @@
 > Cuatro primitivas, nada más  el agente, la entrega, el estado compartido, el orquestrador  abarcan un espacio de diseño en cuatro dimensiones, y los principales marcos multi-agentes que se enviarán en 2026 (AutoGen, LangGraph, CrewAI, OpenAI Agents SDK, Microsoft Agent Framework) son puntos en él. Esta lección los construye desde cero, ejecuta un sistema de juguetes en los cuatro, luego mapea cada marco principal en los mismos ejes para que pueda leer cualquier nueva versión en un párrafo.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 (Agent Engineering), Phase 16 · 01 (Why Multi-Agent)
 **Time:** ~60 minutes
 
@@ -132,6 +132,7 @@ La demostración ejecuta la misma línea de tres agentes (investigación → esc
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La ejecución dirigida por la entrega llega a menos agentes si el investigador decide que se hace temprano  que es el tradeoff de enrutamiento LLM en miniatura.

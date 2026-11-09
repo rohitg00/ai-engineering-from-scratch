@@ -3,7 +3,7 @@
 > OpenAI's Swarm (octubre 2024) destilado multi-agente orquestación a dos primitivos: **routines**(instrucciones + herramientas como un mensaje de sistema) y **handoffs**(una herramienta que devuelve a otro agente). No hay máquina estatal, no hay ramas de DSL  las rutas de LLM llamando a la herramienta de entrega correcta. El SDK OpenAI Agents (marzo 2025) es el sucesor de producción. El mismo cúmulo sigue siendo la referencia conceptual más limpia  su fuente entera encaja en unos cientos de líneas. El patrón es viral porque la superficie de la API es aproximadamente "agente = prompt + herramientas; entrega = agente de devolución de funciones". Limitación: sin estado, por lo que la memoria es el problema del llamador.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -94,6 +94,7 @@ Demo: un agente de triaje viaja para reembolsar, ventas o especialistas de sopor
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Usalo

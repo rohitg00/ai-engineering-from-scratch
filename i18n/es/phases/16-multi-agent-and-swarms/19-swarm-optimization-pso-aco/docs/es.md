@@ -3,7 +3,7 @@
 > La optimización bio-inspirada está haciendo un regreso de LLM. **LMPSO**(arXiv:2504.09247) utiliza PSO donde la velocidad de cada partícula es un prompt y el LLM genera el siguiente candidato; funciona bien en las salidas de secuencias estructuradas (expresiones matemáticas, programas). **Model Swarms**(arXiv:2410.11163) trata a cada experto en LLM como una partícula de PSO en un colectivo de modelos y informes **13.3% average gain**más de 12 líneas de base en 9 conjuntos de datos con sólo 200 instancias. **SwarmPrompt**(ICAART 2025) hibrida PSO + Grey Wolf para una optimización rápida. **AMRO-S**(arXiv:2603.12933) es un especialista en feromonas inspirado en ACO para el enrutamiento de LLM multiagente  **4.7x speedup**Esta lección implementa PSO en el espacio de parámetros rápidos y ACO en el enrutamiento de agentes, mide por qué estos algoritmos clásicos se ajustan a la era LLM y cuándo no.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 14 (Consensus and BFT)
 **Time:** ~75 minutes
 
@@ -107,6 +107,7 @@ swarm-stigmergy
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Producción esperada:

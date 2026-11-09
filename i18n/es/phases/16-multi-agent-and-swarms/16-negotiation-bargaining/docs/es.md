@@ -3,7 +3,7 @@
 > Los agentes negocian recursos, precios, asignaciones de tareas y términos. El conjunto de puntos de referencia 2026 es claro: NegotiationArena (arXiv:2402.05863) muestra que los LLM pueden mejorar los beneficios ~20% a través de la manipulación de persona ("desesperación"); "Medición de las habilidades de negociación" (arXiv:2402.15813) muestra que el comprador es más difícil que el vendedor y la escala no ayuda  su **OG-Narrator**(generador de ofertas deterministas + narrador de LLM) empujó la tasa de transacciones del 26,67% al 88.88%; la Competencia de Negociación Autónoma a Gran escala (arXiv:2503.06416) llevó a cabo cerca de 180 mil negociaciones y encontró que**chain-of-thought-concealing**Bhattacharya et al. 2025 en Harvard Negotiation Project metrics clasificó a Llama-3 como más eficaz, Claude-3 agresivo, GPT-4 más justo. Esta lección implementa el Protocolo de Contratación Net (el antepasado de FIPA, Lección 02), conecta un comprador/vendedor de estilo LLM, ejecuta una descomposición de estilo OG-Narrador y mide cómo cambia la tasa de transacción con cada elección estructural.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 02 (FIPA-ACL Heritage), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -120,6 +120,7 @@ a5-og-narrator
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado esperado: tasa de negocio de LLM ingenuo ~65-75%; tasa de negocio de OG-Narrador ~85-95%; la brecha de 15-25 puntos es la ventaja estructural de descomponer la generación de ofertas de la narración.

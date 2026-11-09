@@ -3,7 +3,7 @@
 > Escalado de los sistemas multi-agentes a miles de ejecuciones simultáneas requiere **durable execution** colas de trabajo más puntos de control, por lo que cualquier trabajador puede reanudar cualquier carrera después de cualquier accidente, siempre que se manejen los contratos de arrendamiento, los efectos secundarios idempotentes y la reproducción determinista.`thread_id`(Pósgrados por defecto); los trabajadores que se estrelen liberan un contrato de arrendamiento y otro trabajador reanuda.**MegaAgent**(arXiv:2408.09955) ejecutó una cola de productores y consumidores por agente con tres estados (Idle / Processing / Response) y coordinación de dos capas (chat intragrupo + chat administrador intergrupo). **Fiber/async**Los filos permanecen inactivos 99% del tiempo esperando a tokens, las fibras producen cooperativamente en I/O. Contrapunto: "Scaling Agentic Software" de Ashpreet Bedi sostiene que **FastAPI + Postgres + nothing else**Hasta que la carga demuestre lo contrario  las arquitecturas simples van más allá de lo esperado. Esta lección construye un registro duradero de puntos de control, una cola de trabajo por agente con transiciones de estado, una demostración asíncrona contra hilo y aterriza la regla pragmática "iniciar simple".
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `asyncio`, `sqlite3`)
+**Languages:** Python (stdlib, `asyncio`, `sqlite3`), TypeScript
 **Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 13 (Shared Memory)
 **Time:** ~75 minutes
 
@@ -133,6 +133,7 @@ sw-checkpoint-replay
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado esperado: el punto de control reanuda después de un accidente simulado; la versión asíncrona maneja 500 llamadas simultáneas en < 1s; la versión de hilo tarda varios segundos y utiliza órdenes de magnitud más de memoria por unidad simultánea.

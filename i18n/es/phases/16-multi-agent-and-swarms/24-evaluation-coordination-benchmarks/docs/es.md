@@ -3,7 +3,7 @@
 > Cinco puntos de referencia 2025-2026 abarcan el espacio de evaluación multiagente. **MultiAgentBench / MARBLE**(ACL 2025, arXiv:2503.01935) evalúa las topologías de estrellas/cadena/árbol/gráfico con indicadores clave; **graph is best for research**, la planificación cognitiva añade ~3% de logros históricos. **COMMA**evalúa la coordinación multimodal de información asimétrica; los modelos de vanguardia, incluida la lucha de GPT-4o para superar una línea de base aleatoria. **MedAgentBoard**(arXiv:2505.12371) cubre cuatro categorías de tareas médicas y a menudo encuentra que el multi-agente no domina el LLM único. **AgentArch**(arXiv:2509.10769) se basan en arquitecturas de agentes empresariales que combinan uso de herramientas + memoria + orquestación. **SWE-bench Pro**(El artículo[arXiv:2509.16941](https://arxiv.org/abs/2509.16941)El modelo fronterizo tiene un puntaje de ~23% en Pro vs. 70% + en Verified  una verificación de realidad sobre la contaminación. Claude Opus 4.7 (abril 2026) se informa en **64.3%**En Pro con coordinación explícita de agentes-équipos (no se ha publicado ninguna fuente primaria de Anthropic todavía  tratar como preliminar); Verdent (establo de agentes) golpes **76.1% pass@1**sobre Verificado ([Verdent technical report](https://www.verdent.ai/blog/swe-bench-verified-technical-report)¿ Qué es esto ?**AAAI 2026 Bridge Program WMAC**(El artículohttps://multiagents.org/2026/Esta lección se basa en las métricas de MARBLE, realiza un barrido topológico-metrico y pone la regla "simplemente pasar por el banco SWE Verificado no es evidencia de generalización".
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 15 (Voting and Debate Topology), Phase 16 · 23 (Failure Modes)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ a5-bench-gap
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultados esperados: tarjeta de puntuación del sistema con precisión en bruto, logro de hitos, costo por tarea, delta de referencia frente al al azar, y nota de verificación de contaminación.

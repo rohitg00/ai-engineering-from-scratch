@@ -3,7 +3,7 @@
 > Antes de MCP, antes de A2A, había FIPA-ACL. En el año 2000 la Fundación para Agentes Físicos Inteligentes (FIPA, que se convirtió en un comité de normas de la Sociedad de Computación IEEE en 2005) ratificó un lenguaje de comunicación de agentes con veinte performativos, dos lenguajes de contenido y un conjunto de protocolos de interacción  contrato net, suscripción/notificación, solicitud-cuando. Se desvaneció de la industria porque la carga general de ontología era demasiado pesada para la web, pero el revival de LLM de sistemas multiagentes está reimplementando silenciosamente las mismas ideas sin la semántica formal: los contratos JSON representan los performativos, el lenguaje natural representa las ontologías. Esta lección lee en serio la FIPA-ACL para que pueda ver qué decisiones del protocolo 2026 son reinvenciones, qué son novedades, y dónde la ola actual va a redescubrir los problemas que ya resolvieron los años 2000.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 01 (Why Multi-Agent)
 **Time:** ~60 minutes
 
@@ -160,6 +160,7 @@ sw-contract-net
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La salida es una pista lado a lado que muestra cada mensaje moderno tanto en su forma JSON 2026 como en su forma FIPA-ACL, luego una vuelta de una oferta de red de contrato. Los mismos protocolos primitivos sobreviven a la vuelta de viaje; solo la sintaxis difiere.

@@ -3,7 +3,7 @@
 > La jerarquía es supervisor anidado, agentes gerentes sobre subgerentes sobre trabajadores.`Process.hierarchical`es la versión del libro de texto: a `manager_llm`La función de la función de evaluación de las variables de trabajo es la de la función de evaluación de las variables de trabajo.`create_supervisor(create_supervisor(...))`. Es el patrón natural cuando la tarea es un organograma real. También es el patrón más probable que se desplome en un bucle de gestión.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 05 (Supervisor Pattern)
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ Demo contrasta camino feliz (todos están de acuerdo) con un **perturbed path**d
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La salida muestra ambos caminos con un lado a lado claro de "lo que se pidió" vs "lo que se entregó".

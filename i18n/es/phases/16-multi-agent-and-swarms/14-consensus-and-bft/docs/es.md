@@ -3,7 +3,7 @@
 > Los sistemas distribuidos clásicos BFT se encuentran en el marco de los LLM estocásticos.**CP-WBFT**(arXiv:2511.10400) sopesa cada voto por una investigación de confianza; **DecentLLMs**(arXiv:2507.14928) se queda sin líder con propuestas paralelas de trabajadores y agregación geométrica-mediana; **WBFT**(arXiv:2505.05103) combina votación ponderada con Clustering de estructura jerárquica para dividir los nodos Core y Edge. El resultado empírico honesto de "¿Pueden Agentes de IA estar de acuerdo?" (arXiv:2603.01213) es que incluso el acuerdo escalar es frágil hoy en día  un solo agente engañoso puede comprometer una mezcla de Agentes. La BFT es necesaria, pero no suficiente. Esta lección construye un protocolo BFT mínimo, inyecta tres ataques específicos de agentes (mentir bizantino, conformidad sicófante, monocultura de errores correlacionados) y mide cómo se enfrenta cada variante de consenso.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 07 (Society of Mind and Debate), Phase 16 · 13 (Shared Memory)
 **Time:** ~75 minutes
 
@@ -107,6 +107,7 @@ Modelos de ataque implementados:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La mayoría de los casos de monocultura no se cumplen con el caso de la monocultura. La ponderación de confianza de CPWBFT mitigará la sícofancia. La mediana geométrica de los decentes LLM se dirige hacia el cúmulo honesto cuando la monocultura es menos de la mitad de la población.

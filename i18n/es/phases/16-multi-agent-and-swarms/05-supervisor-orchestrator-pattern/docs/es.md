@@ -3,7 +3,7 @@
 > Un agente principal planea y delega; los trabajadores especializados ejecutan en contextos paralelos y informan. Este es el patrón detrás del sistema de investigación de Anthropic (Claude Opus 4 como plomo, Sonnet 4 como subagentes), medido en +90.2% sobre el Opus 4 de un solo agente en evaluaciones internas de investigación. El post de ingeniería de Anthropic informa que el 80% de la variación en BrowseComp se explica por el uso de tokens solo  multi-agente gana en gran medida porque cada subagente obtiene una nueva ventana de contexto. Esta lección construye el patrón de supervisor desde los primitivos y cubre las lecciones de ingeniería de 2026 de las implementaciones de producción.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`)
+**Languages:** Python (stdlib, `threading`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -88,6 +88,7 @@ La estructura clave:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La salida muestra el plan, los rastros de trabajadores paralelos con sellos de tiempo de inicio/finales y la síntesis final.

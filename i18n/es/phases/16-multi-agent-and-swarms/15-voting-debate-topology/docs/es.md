@@ -3,7 +3,7 @@
 > La agregación más barata: muestra N de agentes independientes, mayoría-voto. Wang et al. 2022 autoconsistencia hizo esto con un modelo muestrado N veces.**heterogeneous**Los agentes para escapar de la monocultura  diferentes modelos, diferentes indicaciones, diferentes temperaturas, diferentes contextos. Más allá de la mayoría de votos, el debate sobre la topología es importante: MultiAgentBench (arXiv:2503.01935, ACL 2025) evaluó la coordinación estrella / cadena / árbol / gráfico y se encontró **graph best for research**AgentVerse (ICLR 2024) documenta dos patrones emergentes  comportamientos voluntarios y comportamientos de conformidad  y la conformidad es tanto una característica (encontrar consenso) como un riesgo (pensamiento grupal, Lección 24).
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 07 (Society of Mind and Debate), Phase 16 · 14 (Consensus and BFT)
 **Time:** ~75 minutes
 
@@ -116,6 +116,7 @@ sw-debate-topology
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado esperado: una tabla de topología × N → (acurateza, tokens, latencia). El gráfico gana en N=3-5 en las tareas de estilo de investigación; la estrella gana en las tareas de hecho rápido; el gráfico en N=7 muestra el impuesto de coordinación (la latencia se infla más rápido que la precisión).

@@ -3,7 +3,7 @@
 > La taxonomía de referencia para 2026 es **MAST**(Cemri et al., NeurIPS 2025, arXiv:2503.13657), derivado de 1642 rastros de ejecución en 7 MAS de código abierto de última generación que muestran **41–86.7% failure rate**. Tres categorías raíces: **Specification Problems**(41,77%)  ambigüedad de rol, definiciones poco claras de tareas; **Coordination Failures**(36,94%)  fallos de comunicación, dessincronización de estado; **Verification Gaps**(21,30%)  falta de validación, falta de controles de calidad.**Groupthink**La familia (arXiv:2508.05687) añade: colapso de la monocultura (el mismo modelo base → fallos correlacionados), sesgo de conformidad (los agentes refuerzan los errores de los demás), teoría de la mente deficiente, dinámica de motivos mixtos, fallos de fiabilidad en cascada. Ejemplo en cascada: tormentas de retoma en las que un fallo de pago desencadena retomas de pedidos, que desencadena retomas de inventario, que abruman el servicio de inventario (10 veces la carga en segundos  necesita interruptores de circuito). Envenenamiento de la memoria: la alucinación de un agente entra en la memoria compartida, los agentes aguas abajo la tratan como un hecho; la precisión se descompone gradualmente, haciendo doloroso el diagnóstico de la causa raíz.**STRATUS**(NeurIPS 2025) informa una mejora de 1.5 veces en la mitigación y el éxito a través de agentes especializados de detección / diagnóstico / validación.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 13 (Shared Memory), Phase 16 · 14 (Consensus and BFT), Phase 16 · 15 (Voting and Debate Topology)
 **Time:** ~75 minutes
 
@@ -154,6 +154,7 @@ a5-retry-cascade
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Producción esperada:

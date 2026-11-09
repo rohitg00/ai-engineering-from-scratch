@@ -3,7 +3,7 @@
 > Contraste con el supervisor: no hay un factor central de decisión. Los agentes leen un bus de eventos compartidos, recogen el trabajo sincrónicamente, escriben los resultados. LangGraph admite explícitamente "Arquitectura de la Enredada" para entornos dinámicos y descentralizados. Matrix (arXiv:2511.21686) representa tanto el control como el flujo de datos como mensajes serializados que pasan a través de colas distribuidas para eliminar el cuello de botella del orquestrador. La compensación es explícita: determinismo y trazabilidad para la escalabilidad. El conjunto se adapta a las tareas con muchos subproblemas independientes; no se adapta a las tareas que requieren un solo plan coherente.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`, `queue`)
+**Languages:** Python (stdlib, `threading`, `queue`), TypeScript
 **Prerequisites:** Phase 16 · 05 (Supervisor Pattern), Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -86,6 +86,7 @@ Las balanzas de un montón se cargan automáticamente; la asignación fija deja 
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La salida muestra el número de tareas por trabajador (el grupo se distribuye de manera desigual pero óptima) y los tiempos del reloj de pared.
