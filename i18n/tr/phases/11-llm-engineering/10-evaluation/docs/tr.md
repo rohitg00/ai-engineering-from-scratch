@@ -3,7 +3,7 @@
 > Test olmadan hiçbir web uygulamasını uygulamaya koyamazsın. Bir geri dönüş planı olmadan bir veritabanı göçünü asla göndermezsin. Ama şu anda, çoğu ekip 10 çıkış okuyarak ve "Evet, iyi görünüyor" diyerek LLM başvurularını gönderir. Bu değerlendirme değil. Bu umut. Umut bir mühendislik uygulaması değil. Her hızlı değişiklik, her model değişimi, her sıcaklık ayarı, bir avuç örneği okuyarak tahmin edemeyeceğiniz şekilde çıkış dağılımınızı değiştirir. Başvurunuzla sessiz bozulma arasında tek şey değerlendirme.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lesson 01 (Prompt Engineering), Lesson 09 (Function Calling)
 **Time:** ~45 minutes
 **Related:**5 · 27 aşaması (LLM Değerlendirme  RAGAS, DeepEval, G-Eval) çerçeve düzeyde kavramları kapsar (NLI tabanlı sadakat, yargıç kalibrasyonu, RAG dört). 5 · 28 aşaması (Uzun bağlam değerlendirme) bağlam uzunluğu gerileme için NIAH / RULER / LongBench / MRCR kapsar. Bu ders LLM mühendisliği spesifik olanlara odaklanır: CI / CD entegrasyonu, maliyetli değerlendirme çalışmalar, gerileme tabloları.

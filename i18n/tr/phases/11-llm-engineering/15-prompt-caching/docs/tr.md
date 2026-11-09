@@ -3,7 +3,7 @@
 > Sistem istekiniz 4.000 simge. RAG bağlamınız 20.000 simge. Her istekle her ikisini de gönderiyorsunuz. Her seferinde ikisini de ödersiniz. Anlık önbelleği sağlayıcıya bu önbellekleri yanlarında sıcak tutmalarını ve tekrar kullanma normal oranın% 10'unu ödemelerini sağlar. Doğru kullanıldığında, sonuçlama maliyetini % 50  90% ve ilk simge gecikmesini % 40  85% azaltır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 01 (Prompt Engineering), Phase 11 · 05 (Context Engineering), Phase 11 · 11 (Caching and Cost)
 **Time:** ~60 minutes
 

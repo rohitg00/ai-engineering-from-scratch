@@ -3,7 +3,7 @@
 > MCP, bir AI sunucusuna araçları, kaynakları ve istekleri keşfetmek ve çağrıştırmak için bir protokol verir. 2026-07-28 baskısı bu protokolü devletsiz hale getirir: yetenek ve sürüm bağlamı her taleple seyahat eder, bağlantı bağlı bir el sıkışmasında değil.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 03 (Structured Outputs)
 **Time:** ~75 minutes
 
@@ -215,6 +215,7 @@ Dersleri dizininden çalıştır:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 cd code
 python3 -m unittest discover tests -v
 ```

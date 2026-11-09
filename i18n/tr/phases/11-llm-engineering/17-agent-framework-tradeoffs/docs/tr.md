@@ -3,7 +3,7 @@
 > Her çerçeve aynı demoyu satar ( Araştırma ajanı bir rapor oluşturur) ve aynı hataları saklar (devlet şeması orkestrasyon katmanı ile savaşır).
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 16 (LangGraph)
 **Time:** ~45 minutes
 

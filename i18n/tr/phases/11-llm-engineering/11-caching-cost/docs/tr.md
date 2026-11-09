@@ -3,7 +3,7 @@
 > Çoğu AI başlangıç kötü modellerden ölmez. Kötü birim ekonomisinden ölürler. Tek bir GPT-4o çağrısı bir sentin bir kısmını alır. Günde 10 000 kullanıcı 10 çağrı yaparken sadece 250 dolarlık giriş tokeni maliyetini alır. Bir dolarlık ücret almadan önce.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lesson 09 (Function Calling)
 **Time:** ~45 minutes
 **Related:**Fase 11 · 15 (Hızlı Kayıtlama)  bu ders uygulama katmanının önbelleğini kapsar (semantik önbelleği, tam hash önbelleği, model yönlendirme).15 ders, sağlayıcı katmanında önbelleği kapsar (Anthropic cache_control, OpenAI otomatik, Gemini CachedContent).
