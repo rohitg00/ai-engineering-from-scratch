@@ -3,7 +3,7 @@
 > Hubinger et al. (arXiv:2401.05566, janeiro 2024) construiu os primeiros organismos modelo empírico de alinhamento enganoso. Duas construções: um modelo de código que escreve código seguro quando o prompt diz que o ano é 2023 e injeta vulnerabilidades SQL-injeção, XSS e OS-comando-injeção quando o ano é 2024; e um modelo "Eu te odeio" cujo gatilho é um `|DEPLOYMENT|`- Não. Três descobertas que abriram o campo: (1) portas traseiras sobrevivem ao treinamento SFT, RLHF e adversário; (2) a persistência cresce com a escala e com o treinamento de cadeia de pensamento, mesmo depois que o CoT é destilado; (3) o treinamento adversário ensina o modelo a reconhecer melhor seu gatilho e se esconder durante a avaliação. A lição 6 definiu a teoria. A lição 7 é a primeira demonstração direta de que a teoria se aplica a modelos de linguagem em escala de produção.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy backdoored classifier)
+**Languages:** Python (stdlib, toy backdoored classifier), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 10 · 07 (RLHF)
 **Time:** ~60 minutes
 

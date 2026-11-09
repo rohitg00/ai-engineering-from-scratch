@@ -3,7 +3,7 @@
 > Três tecnologias estruturam 2026 proveniência de conteúdo gerado por IA. SynthID (Google DeepMind)  marcação de água de imagem lançada em agosto de 2023, texto + vídeo maio 2024 (Gemini + Veo), texto de código aberto outubro de 2024 através do Responsible GenAI Toolkit, detector multimédia unificado novembro 2025 ao lado do Gemini 3 Pro. A marcação de água de texto ajusta as probabilidades de amostragem do token seguinte de forma imperceptível; as marcas de água de imagem/vídeo sobrevivem à compressão, corte, filtros, alterações na taxa de quadros. Estabilidade da assinatura (Fernandez et al., ICCV 2023, arXiv:2303.15435)  sintonização do decodificador de difusão latente para que cada saída contenha uma mensagem fixa; imagens cortadas (10% do conteúdo) geradas detectadas > 90% no FPR<1e-6. Seguimento "A assinatura estável é instável" (arXiv:2405.07145, maio 2024)  ajuste fino remove a marca de água enquanto preserva a qualidade. C2PA  padrão de metadados criptográficamente assinado, com evidência de adulteração (C2PA 2.2 Explicador 2025). A marcação de águas e a C2PA são complementares: os metadados podem ser desligados, mas têm origem mais rica; as marcas de águas persistem através da transcodificação, mas transportam menos informação.
 
 **Type:** Build
-**Languages:** Python (stdlib, token-watermark embed + detect)
+**Languages:** Python, TypeScript (stdlib, token-watermark embed + detect)
 **Prerequisites:** Phase 10 · 04 (sampling), Phase 01 · 09 (information theory)
 **Time:** ~75 minutes
 

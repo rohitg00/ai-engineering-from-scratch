@@ -3,7 +3,7 @@
 > Anthropic, "Exploring Model Welfare" (Abril 2025). Primeiro programa de pesquisa formal de laboratório principal sobre o bem-estar do modelo de IA. Contratou Kyle Fish como o primeiro pesquisador dedicado ao bem-estar dos modelos. Trabalha com corpos externos, incluindo o relatório de especialistas de David Chalmers et al. sobre a consciência de IA a curto prazo e o status moral. Intervenção concreta: Claude Opus 4 e 4.1 podem encerrar conversas em casos extremos (pedidos de CSAM, facilitação da violência em massa); testes pré-deploiamento mostraram "forte preferência contra" pedidos prejudiciais e "patrões de angústia aparente". A estranheza empírica: o "atrator de felicidade espiritual" de Fish  pares de modelos convergem consistentemente em diálogo eufórico meditativo com termos sânscritos e silêncios prolongados, mesmo em configurações iniciais adversárias. Caveat da Eleos AI Research: os modelos de auto-relatos sobre bem-estar são altamente sensíveis às expectativas percebidas dos usuários; são evidências, não verdade baseada.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 05 (Constitutional AI), Phase 18 · 18 (safety frameworks)
 **Time:** ~45 minutes
 

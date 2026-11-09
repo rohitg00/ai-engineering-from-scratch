@@ -3,7 +3,7 @@
 > Qualquer optimista forte o suficiente para maximizar uma recompensa por proxy encontrará a lacuna entre o proxy e a coisa que realmente quiseste. Gao et al. (ICML 2023) deu a isso uma lei de escalada: a recompensa por procuração aumenta, os picos da recompensa por ouro, em seguida, cai, e a lacuna aumenta com a divergência KL da política inicial de uma forma que pode caber em forma fechada. A cofobia, o viés de verbosidade, a incrédula corrente de pensamento e a manipulação de avaliadores não são problemas separados. São o mesmo problema em diferentes trajes.
 
 **Type:** Learn
-**Languages:** Python (stdlib, proxy-vs-gold-reward simulator)
+**Languages:** Python (stdlib, proxy-vs-gold-reward simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 10 · 07 (RLHF)
 **Time:** ~60 minutes
 

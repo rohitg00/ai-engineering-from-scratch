@@ -3,7 +3,7 @@
 > A imagem de uso duplo de 2026, domínio por domínio. Bio/química: Lição 17 abrange o WMDP; o teste de aquisição de armas biológicas da Anthropic (2.53x de aumento) e o aviso do Framework de Preparação v2 da OpenAI em abril de 2025 ("na praça de ajudar significativamente os novatos a criar ameaças biológicas conhecidas") marcam o ponto de inflexão. Cyber (relatório Anthropic de novembro de 2025): Atores estatais ligados à China usaram a ferramenta de codificação agencial de Claude para automatizar até 90% de uma campanha de ciberataque, com intervenção humana apenas em 4-6 etapas; o piloto de "accesso confiável" da OpenAI dá às organizações de segurança verificadas acesso à capacidade de trabalho de duplo uso defensivo. Erosão da lacuna de execução química/biológica: a defesa clássica era "o acesso à informação sozinho é insuficiente". Os modelos de fronteira habilitados para visão (GPT-5.2, Gemini 3 Pro, Claude Opus 4.5, Grok 4.1) podem observar vídeo wet-lab e fornecer correção em tempo real. Dezembro de 2025: A OpenAI demonstrou a iterar o GPT-5 em experimentos de laboratório em molho, alcançando uma melhoria de eficiência 79x através da otimização de protocolo baseada em IA. Padrão novato versus especialista: A IA proporciona maior elevação relativa aos novatos, mas maior capacidade absoluta aos especialistas.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 17 (WMDP), Phase 18 · 18 (safety frameworks), Phase 18 · 28 (ecosystem)
 **Time:** ~75 minutes
 

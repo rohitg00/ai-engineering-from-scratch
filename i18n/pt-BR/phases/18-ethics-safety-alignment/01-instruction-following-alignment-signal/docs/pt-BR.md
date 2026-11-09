@@ -3,7 +3,7 @@
 > Todas as críticas posteriores à RLHF argumentam contra este gasoduto. Antes de estudar como a pressão de otimização distorce um proxy, tem de ver o proxy. A instruçãoGPT (Ouyang et al., 2022) definiu a arquitetura de referência: ajuste supervisionado em pares de instrução-resposta, um modelo de recompensa treinado em rankings de preferência em pares e o PPO contra o modelo de recompensa com uma penalidade KL para a política SFT. Um GPT InstructGPT 1.3B foi preferido a um GPT-3 175B. Esse único resultado é a razão pela qual cada laboratório de fronteira em 2026 ainda envia um pipeline de pós-treino em forma de RLHF.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy three-stage pipeline)
+**Languages:** Python (stdlib, toy three-stage pipeline), TypeScript
 **Prerequisites:** Phase 10 · 06 (SFT), Phase 10 · 07 (RLHF), Phase 10 · 08 (DPO)
 **Time:** ~45 minutes
 

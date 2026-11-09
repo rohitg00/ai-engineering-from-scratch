@@ -3,7 +3,7 @@
 > Greenblatt, Shlegeris, Sachan, Roger (Redwood Research, arXiv:2312.06942, ICML 2024). O controlo reformula a questão da segurança: dado um modelo U não confiável e forte que pode estar a optimizar adversamente contra você, que protocolos permitem extrair trabalho útil ao mesmo tempo que limita a probabilidade de um resultado inaceitável? Os recursos são um modelo mais fraco de confiança T, um orçamento de trabalho humano confiável H, e a capacidade de editar as saídas de U. Dentro deste quadro, a Edição Confiável Pareto domina o Monitoramento Não Confiável em tarefas de código de porta traseira. O quadro herda as piores suposições da engenharia de segurança: segurança é a probabilidade de que um U escolhido adversamente não possa causar um resultado concreto inaceitável, medido sob pressão da equipe vermelha que representa U.
 
 **Type:** Learn
-**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task)
+**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task), TypeScript
 **Prerequisites:** Phase 18 · 07 (sleeper agents), Phase 18 · 08 (scheming), Phase 18 · 09 (alignment faking)
 **Time:** ~75 minutes
 

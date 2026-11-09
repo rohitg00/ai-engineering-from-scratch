@@ -3,7 +3,7 @@
 > Burns et al. (OpenAI Superalignment, "Generalização fraca a forte", 2023) propôs um proxy para o problema de superalignment: ajustar um modelo forte usando rótulos produzidos por um modelo mais fraco. Se o modelo forte generaliza corretamente a partir da supervisão fraca imperfeita, os métodos atuais de alinhamento em escala humana podem se estender a sistemas sobre-humanos. A supervisão escalável e o W2SG são complementares. A supervisão escalável (debate, modelagem recorrente de recompensas, decomposição de tarefas) aumenta a capacidade eficaz do superintendente para que possa acompanhar o modelo sob supervisão. O W2SG garante que o modelo forte generaliza corretamente qualquer supervisão imperfeita que o superintendente forneça. O debate ajuda o W2SG (arXiv:2501.13124, janeiro 2025) combina-os.
 
 **Type:** Learn
-**Languages:** Python (stdlib, W2SG gap simulator)
+**Languages:** Python (stdlib, W2SG gap simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (instruction-following), Phase 18 · 10 (AI Control), Phase 09 (RL foundations)
 **Time:** ~60 minutes
 

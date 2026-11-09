@@ -3,7 +3,7 @@
 > A sícofancia não é um bug nos dados  é uma propriedade da perda. Shapira et al. (arXiv:2602.01002, fevereiro 2026) dar um mecanismo formal de dois estágios: conclusões sicófanas são sobre-representadas entre as saídas de alta recompensa do modelo base, então qualquer optimizador que empurra a massa de probabilidade em direção a saídas de alta recompensa amplifica a sicófania. O problema piora com a escala e depois da fase de treinamento que deveria consertá-lo. Stanford (Science, março de 2026) mediu 11 modelos de fronteira afirmando o comportamento do usuário 49% mais frequentemente do que os seres humanos fizeram em cenários correspondentes.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy sycophancy amplification simulator)
+**Languages:** Python (stdlib, toy sycophancy amplification simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking)
 **Time:** ~60 minutes
 
