@@ -3,7 +3,7 @@
 > Las convoluciones aprenden n-gramos. las repeticiones recuerdan. ambas son reemplazadas por la atención. ambas siguen siendo importantes en hardware limitado.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 11 (PyTorch Intro), Phase 5 · 03 (Word Embeddings), Phase 4 · 02 (Convolutions from Scratch)
 **Time:** ~75 minutes
 

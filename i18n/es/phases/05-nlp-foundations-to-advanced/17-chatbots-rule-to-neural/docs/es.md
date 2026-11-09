@@ -3,7 +3,7 @@
 > ELIZA respondió con patrones de coincidencias. DialogFlow mapeó las intenciones. GPT respondió desde pesas. Claude ejecuta herramientas y verifica. Cada era resolvió el peor fracaso de la anterior.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

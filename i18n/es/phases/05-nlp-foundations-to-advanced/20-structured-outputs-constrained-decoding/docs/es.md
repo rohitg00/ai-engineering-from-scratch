@@ -3,7 +3,7 @@
 > En la producción, "la mayoría" es el problema. La decodificación restringida se convierte en "la mayoría" en "siempre" mediante la edición de los logits antes de la muestreo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

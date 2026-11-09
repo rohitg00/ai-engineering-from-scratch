@@ -3,7 +3,7 @@
 > "Le llamó, no contestó, el médico estaba al almuerzo". Tres referencias a dos personas y nadie es nombrado.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 

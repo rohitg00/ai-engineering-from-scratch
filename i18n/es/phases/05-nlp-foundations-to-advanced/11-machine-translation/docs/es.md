@@ -3,7 +3,7 @@
 > La traducción es la tarea que pagó la investigación de PNL durante treinta años y sigue pagando ahora.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 10 (Attention Mechanism), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 

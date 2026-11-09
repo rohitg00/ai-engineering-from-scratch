@@ -3,7 +3,7 @@
 > Los sistemas extractivos te dicen lo que dice el documento, los sistemas abstractos te dicen lo que el autor quería decir, diferentes tareas, diferentes trampas.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 11 (Machine Translation)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > Un modelo, más de 100 idiomas, cero datos de capacitación para la mayoría de ellos. La transferencia translingüística es el milagro práctico de la década de 2020.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 04 (GloVe, FastText, Subword), Phase 5 · 11 (Machine Translation)
 **Time:** ~45 minutes
 

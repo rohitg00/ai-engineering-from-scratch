@@ -3,7 +3,7 @@
 > Dos RNNs que pretenden ser traductores, el cuello de botella que se encuentran es la razón por la que existe la atención.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 08 (CNNs + RNNs for Text), Phase 3 · 11 (PyTorch Intro)
 **Time:** ~75 minutes
 

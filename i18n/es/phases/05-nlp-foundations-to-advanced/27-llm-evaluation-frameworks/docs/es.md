@@ -3,7 +3,7 @@
 > La comparación exacta y la F1 no tienen equivalencia semántica. La revisión humana no escala. LLM-as-judge es la respuesta de producción  con suficiente calibración para confiar en el número.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

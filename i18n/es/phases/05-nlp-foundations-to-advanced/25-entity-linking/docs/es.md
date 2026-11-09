@@ -3,7 +3,7 @@
 > NER encontró "Paris". La entidad que vincula decide: París, Francia? Paris Hilton? Paris, Texas? Paris (el príncipe troyano)?
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 24 (Coreference Resolution)
 **Time:** ~60 minutes
 

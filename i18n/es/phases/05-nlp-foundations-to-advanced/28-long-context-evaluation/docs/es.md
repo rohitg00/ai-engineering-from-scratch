@@ -3,7 +3,7 @@
 > Gemini 3 Pro anuncia 10M tokens de contexto. En 1M tokens, el MRCR de 8 agujas cae a 26.3%. Publicado ≠ utilizable.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 23 (Chunking Strategies)
 **Time:** ~60 minutes
 

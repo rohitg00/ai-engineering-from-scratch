@@ -3,7 +3,7 @@
 > Word2Vec entrenó una incorporación por palabra. GloVe factorizó la matriz de cooccurrencia. FastText incorporó las piezas. BPE se conectó a transformadores.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec from Scratch)
 **Time:** ~45 minutes
 

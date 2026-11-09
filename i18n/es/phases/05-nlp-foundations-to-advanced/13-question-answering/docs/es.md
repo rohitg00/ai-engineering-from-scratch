@@ -3,7 +3,7 @@
 > Tres sistemas formaron la inteligencia artificial moderna. Extractiva encontró extensiones. Recuperar aumentó la tierra en documentos. Generativo produjo respuestas. Cada asistente de IA moderno es una mezcla de los tres.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 11 (Machine Translation), Phase 5 · 10 (Attention Mechanism)
 **Time:** ~75 minutes
 

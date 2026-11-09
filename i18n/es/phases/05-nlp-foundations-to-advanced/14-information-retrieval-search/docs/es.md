@@ -3,7 +3,7 @@
 > BM25 es preciso pero frágil. Denso lanza una red amplia pero se pierden palabras clave. Hybrid es el estándar de 2026. Todo lo demás está sintonizado.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 

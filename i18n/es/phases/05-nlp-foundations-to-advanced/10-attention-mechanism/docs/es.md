@@ -3,7 +3,7 @@
 > El decodificador deja de mirar a un resumen comprimido y comienza a mirar toda la fuente.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 09 (Sequence-to-Sequence Models)
 **Time:** ~45 minutes
 

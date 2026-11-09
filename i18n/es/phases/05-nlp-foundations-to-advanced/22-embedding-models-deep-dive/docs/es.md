@@ -3,7 +3,7 @@
 > Word2Vec le dio un vector por palabra. Modelos de incorporación modernos le dan un vector por pasaje, translingual, con vistas escasas, densas y multi-vector, tamaño para adaptarse a su índice. Elige mal y su RAG recupera la cosa equivocada.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec), Phase 5 · 14 (Information Retrieval)
 **Time:** ~60 minutes
 
