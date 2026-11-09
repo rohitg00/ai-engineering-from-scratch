@@ -3,7 +3,7 @@
 > Una escalera de permiso  niveles graduados de autonomía de revisión-cada acción a aprobar-todo  es cómo un arnés gobierna lo que un agente autónomo puede hacer sin preguntar. Claude Code, el ejemplo de trabajo de esta lección, expone seis de estos modos: "plan" pregunta antes de cada acción, "default" (etiquetado "Manual" en la interfaz de usuario) solo pide para los riesgos, "acceptEdits" autoaprueba archivos escribe pero todavía confirma la ejecución de shell, y "bypassPermissions" aprueba todo. Modo automático  el `auto`El modo de permiso  sustituye la aprobación por acción por un modelo de clasificador separado que revisa cada acción antes de ejecutarla y bloquea cualquier cosa que exceda lo solicitado por la solicitud.`max_turns`y `max_budget_usd`. Disponibilidad de `auto`depende del plan, la habilitación de org, el modelo y el proveedor  y Anthropic es explícito que el clasificador no es suficiente solo.
 
 **Type:** Learn
-**Languages:** Python (stdlib, two-stage classifier simulator)
+**Languages:** Python (stdlib, two-stage classifier simulator), TypeScript
 **Prerequisites:** Phase 15 · 01 (Long-horizon agents), Phase 15 · 09 (Coding-agent landscape)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > La Constitución de Claude de Anthropic 22 de enero de 2026 tiene 79 páginas y es CC0. Se pasa de la alineación basada en reglas a la racionalidad y establece una jerarquía de prioridades de cuatro niveles: (1) seguridad y apoyo a la supervisión humana, (2) ética, (3) directrices antropológicas, (4) utilidad. Los comportamientos se dividen en prohibiciones codificadas en forma dura (elevación de las armas biológicas, CSAM) que los operadores y usuarios no pueden anular y las imposiciones codificadas en forma suave que los operadores pueden ajustar dentro de límites definidos. El original de 2022 (Bai et al.) entrenó la inocuidad a través de la autocrítica y el RLAIF contra una constitución. La advertencia honesta: la alineación basada en la razón se basa en el modelo que generaliza los principios a situaciones inesperadas. El propio experimento participativo de 2023 de Anthropic mostró ~50% de divergencia entre los principios de origen público y corporativo; la versión de 2026 no incorporó esos hallazgos.
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-tier priority resolver)
+**Languages:** Python (stdlib, four-tier priority resolver), TypeScript
 **Prerequisites:** Phase 15 · 06 (Automated alignment research), Phase 15 · 10 (Permission modes)
 **Time:** ~60 minutes
 

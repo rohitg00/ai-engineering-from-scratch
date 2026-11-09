@@ -3,7 +3,7 @@
 > El consenso de 2026 sobre HITL es específico. No es "el agente pregunta, el usuario hace clic en Aprobar". Es proponer-entonces-comprometer: la acción propuesta se persiste a una tienda duradera con una clave de idempotencia; aparece ante un revisor con intención, linaje de datos, permisos tocados, radio de explosión y un plan de retroceso; se comete solo después de un reconocimiento positivo; verificado después de la ejecución para confirmar que el efecto secundario realmente ocurrió. El de LangGraph `interrupt()`Además de la verificación PostgreSQL, el marco de Microsoft Agent `RequestInfoEvent`, y Cloudflare's `waitForApproval()`El modo de falla canónica es la aprobación de sello de goma: "Aplicar?" se hace clic sin revisión. La mitigación documentada es el reto y la respuesta con una lista de verificación explícita.
 
 **Type:** Learn
-**Languages:** Python (stdlib, propose-then-commit state machine with idempotency)
+**Languages:** Python (stdlib, propose-then-commit state machine with idempotency), TypeScript
 **Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 14 (Tripwires)
 **Time:** ~60 minutes
 

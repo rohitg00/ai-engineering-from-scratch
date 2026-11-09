@@ -3,7 +3,7 @@
 > El coste mensual de un agente de comercio electrónico de tamaño medio se ha disparado de $1,200 to $El equipo de Microsoft habilitó la habilidad de "tracking de pedidos". Eso no es un error de precios. Es un agente que encontró un nuevo bucle y mantuvo el gasto dentro de él.`max_tokens`, tokens por tarea y presupuestos en dólares, límites diarios / mes, límites de iteración, enrutamiento de modelos en niveles, caché de instantes, ventanas de contexto, puntos de control HITL en acciones costosas, interruptores de muerte en violación de presupuesto.
 
 **Type:** Learn
-**Languages:** Python (stdlib, layered cost-governor simulator)
+**Languages:** Python (stdlib, layered cost-governor simulator), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 12 (Durable execution)
 **Time:** ~60 minutes
 

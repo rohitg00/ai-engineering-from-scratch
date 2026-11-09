@@ -3,7 +3,7 @@
 > El más pequeño bucle de auto-mejora posible se encuentra dentro de la lógica. Un modelo genera una cadena de pensamientos, mantiene los que aterrizan en las respuestas correctas, y los ajusta a la perfección. Eso es STAR. V-STaR añade un verificador para que la selección de tiempo de inferencia sea mejor. Quiet-STaR empuja la razón a cada token. Los tres trabajan. Ninguno de ellos es mágico. El bucle conserva cualquier atajo que sucedió para llegar a la respuesta correcta.
 
 **Type:** Learn
-**Languages:** Python (stdlib, bootstrap-loop simulator)
+**Languages:** Python, TypeScript (stdlib, bootstrap-loop simulator)
 **Prerequisites:** Phase 13 · 01-03 (Reasoning and CoT), Phase 15 · 01 (long-horizon framing)
 **Time:** ~60 minutes
 

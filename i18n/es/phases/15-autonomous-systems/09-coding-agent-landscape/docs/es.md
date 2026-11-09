@@ -3,7 +3,7 @@
 > El banco SWE-Verified pasó del 4% al 80,9% en menos de tres años. El mismo Claude Sonnet 4.5 obtuvo un puntaje del 43,2% en SWE-agent v1 y el 59,8% en Cline autonomo  el andamio alrededor del modelo ahora importa tanto como el propio modelo. OpenHands (anteriormente OpenDevin) es la plataforma más activa con licencia MIT y su bucle CodeAct ejecuta acciones Python directamente en una caja de arena en lugar de llamadas de herramientas JSON. Los números de encabezado ocultan un problema metodológico: 161 de las 500 tareas verificadas de SWE-bench requieren solo un cambio de línea de 12, y SWE-bench Pro (10 tareas de línea superior) se sitúa en 2359% para los mismos modelos fronterizos.
 
 **Type:** Learn
-**Languages:** Python (stdlib, CodeAct vs JSON tool-call comparison)
+**Languages:** Python, TypeScript (stdlib, CodeAct vs JSON tool-call comparison)
 **Prerequisites:** Phase 14 · 07 (Tool use), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~45 minutes
 

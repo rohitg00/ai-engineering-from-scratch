@@ -3,7 +3,7 @@
 > Un interruptor de ejecución es un booleano mantenido fuera de la superficie de edición del agente  una tecla Redis, una bandera de características, una configuración firmada  que desactiva completamente al agente. Un interruptor de circuito es más fino: tropieza en un patrón específico (cinco llamadas idénticas de herramienta seguidas), detiene el camino ofensivo y se escala hacia un humano. Un token canario hereda del engaño clásico: una credencial falsa o un registro de honeypot un agente no tiene razón legítima para tocar, cuyo acceso desencadena una alerta. Los datos basados en eBPF (por ejemplo, Cilium) puede reescribir la salida de una cápsula en cuarentena a un honeypot forense en la capa del núcleo; los puntos de referencia publicados de Cilium informan la latencia de la vía de datos submillisecondas P99 bajo carga (su presupuesto de propagación depende de cómo una actualización de política llegue al nodo, no a la vía de datos misma). Los detectores estadísticos (EWMA, CUSUM) que se adaptan a una línea de base en movimiento aceptarán silenciosamente la deriva  las capas con límites constitucionales duros que no se doblan.
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary)
+**Languages:** Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary), TypeScript
 **Prerequisites:** Phase 15 · 13 (Cost governors), Phase 15 · 10 (Permission modes)
 **Time:** ~60 minutes
 
@@ -94,7 +94,7 @@ circuit-breaker
 
 ## Los ejercicios
 
-1. - ¿ Qué ?`code/main.py`- Confirmar el incendio del interruptor de circuito en la curva 5 (quinta llamada idéntica) y el incendio canario en la curva 9 (lectura de llave falsa).
+1. - ¿ Qué ?`code/main.py`- Confirmar el incendio del interruptor de circuito en la curva 7 (quinta llamada idéntica) y el incendio canario en la curva 9 (lectura de llave falsa).
 
 2. Añadir un detector estadístico: EWMA z-score en la frecuencia de llamada de herramienta. Alimenta en una trayectoria que se desvía lentamente y muestra que el detector nunca dispara. Ahora añadir un límite duro (no más de 50 llamadas de herramienta en 10 minutos) y mostrar los incendios de límite duro en la misma trayectoria.
 

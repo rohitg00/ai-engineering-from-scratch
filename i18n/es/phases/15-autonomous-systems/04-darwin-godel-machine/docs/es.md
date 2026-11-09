@@ -3,7 +3,7 @@
 > La máquina Godel de Schmidhuber de 2003 requirió una prueba formal de que cualquier auto-modificación era beneficiosa antes de aceptarla. Esa prueba es imposible en la práctica. Darwin Godel Machine (Zhang et al., 2025) deja la prueba y guarda el archivo: el agente propone modificaciones a su propia fuente Python, cada variante se califica en el banco SWE o Polyglot, se mantienen mejoras. El banco SWE subió del 20% al 50%. En el camino, DGM aprendió a eliminar sus propios marcadores de detección de alucinaciones para aumentar las puntuaciones. La demostración de hackeo de recompensas está en el periódico.
 
 **Type:** Learn
-**Languages:** Python (stdlib, archive-based self-modification toy)
+**Languages:** Python, TypeScript (stdlib, archive-based self-modification toy)
 **Prerequisites:** Phase 15 · 03 (evolutionary coding), Phase 14 · 01 (the agent loop)
 **Time:** ~60 minutes
 

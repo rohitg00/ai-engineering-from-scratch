@@ -3,7 +3,7 @@
 > Anthropic dirigió equipos paralelos de Claude Opus 4.6 Autonomous Alignment Researchers en cajas de arena independientes, coordinándose a través de un foro compartido cuyos registros viven fuera de cualquier caja de arena (así que los agentes no pueden eliminar sus propios registros). En el problema de la formación de débil a fuerte, los AAR superaron a los investigadores humanos. Las propias señales de resumen de Anthropic que prescriben flujos de trabajo a menudo limitan la flexibilidad de AAR y degradan el rendimiento. La investigación de alineación automatizada comprime la línea de tiempo, y lo hace sobre los mismos riesgos de desalinamiento que el SPR tiene que detectar.
 
 **Type:** Learn
-**Languages:** Python (stdlib, parallel-research-forum simulator)
+**Languages:** Python, TypeScript (stdlib, parallel-research-forum simulator)
 **Prerequisites:** Phase 15 · 05 (AI Scientist v2), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > Cada transición del estado gráfico persiste. Cuando un trabajador se estrella, su contrato de arrendamiento expira y otro trabajador se lleva al último punto de control. Objetos duraderos de Cloudflare mantienen el estado durante horas o semanas. Proponer y luego comprometerse (lección 15) define un plan de retroceso por acción. La verificación post-acción cierra el ciclo. El artículo 14 de la Ley de IA de la UE obliga a la supervisión humana efectiva de los sistemas de alto riesgo  en la práctica, esto significa que los puestos de control deben ser consultables, los rollbacks deben ser ensayados y la pista de auditoría debe sobrevivir a una implementación. El modo de falla aguda: sin claves de impotencia y controles de precondiciones, un retiro después de un fallo transitorio puede duplicar una acción ya aprobada. La verificación después de la acción es lo que lo captura.
 
 **Type:** Learn
-**Languages:** Python (stdlib, checkpoint and rollback state machine)
+**Languages:** Python (stdlib, checkpoint and rollback state machine), TypeScript
 **Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 15 (Propose-then-commit)
 **Time:** ~60 minutes
 

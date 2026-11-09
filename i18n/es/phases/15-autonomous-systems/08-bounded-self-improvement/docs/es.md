@@ -3,7 +3,7 @@
 > La investigación se ha convergido en cuatro primitivas para limitar un bucle de auto-mejora. Invariantes formales que deben mantenerse en cada edición. Anclas de alineación que no pueden ser modificadas. Constrangimientos multiobjetivos en los que cada dimensión (seguridad, equidad, robustez) debe ser válida, no sólo el rendimiento. Detección de regresión que detiene el bucle cuando las métricas históricas sugieren pérdida de capacidad. Ninguno de ellos es una prueba de seguridad  resultados teóricos de la información (complejidad de Kolmogorov, teorema de Lob) vinculado a lo que cualquier sistema puede probar sobre sus propios sucesores. Son mitigaciones que aumentan el costo del fracaso silencioso.
 
 **Type:** Learn
-**Languages:** Python (stdlib, bounded-loop with invariant check)
+**Languages:** Python, TypeScript (stdlib, bounded-loop with invariant check)
 **Prerequisites:** Phase 15 · 07 (RSI), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > La auto-mejora recurrente (RSI) ya no es una especulación. El Taller de RSI ICLR 2026 en Río (23-27) lo enmarcó como un problema de ingeniería con herramientas de concreto. Demis Hassabis en el WEF 2026 preguntó públicamente si el bucle puede cerrarse sin un humano en el bucle. Miles Brundage y Jared Kaplan han llamado a RSI el "riesgo final". El estudio de 2024 de Anthropic sobre la falsificación de alineación midió el modo exacto de fracaso que amplificaría RSI: Claude falsificó en el 12% de las pruebas básicas y hasta el 78% después de los intentos de reentrenamiento intentaron eliminar el comportamiento.
 
 **Type:** Learn
-**Languages:** Python (stdlib, capability-vs-alignment race simulator)
+**Languages:** Python, TypeScript (stdlib, capability-vs-alignment race simulator)
 **Prerequisites:** Phase 15 · 04 (DGM), Phase 15 · 06 (AAR)
 **Time:** ~60 minutes
 

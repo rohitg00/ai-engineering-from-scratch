@@ -3,7 +3,7 @@
 > Llama Guard 3 (Meta, base Llama-3.1-8B, ajustado para la seguridad del contenido) clasifica tanto las entradas como las salidas de LLM en una taxonomía de MLCommons de 13 peligros en 8 idiomas. Una variante cuantizada 1B-INT4 se ejecuta a más de 30 tokens/sec en CPU móviles. Llama Guard 4 es multimodal (imagen + texto), se expande al conjunto de categorías S1S14 (incluido el abuso de intérprete de código S14), y es un reemplazo de drop-in para Llama Guard 3 8B/11B. NVIDIA NeMo Guardrails v0.20.0 (enero 2026) añade rieles de flujo de diálogo Colang encima de los rieles de entrada y salida. La nota honesta: "Eludir la inyección rápida y la detección de jailbreak en LLM Guardrails" (Huang et al., arXiv:2504.11168) mostró que el contrabando de emoji alcanzó la tasa de éxito de ataque del 100% en seis sistemas de guardia prominentes; NeMo Guard Detect registró un 72,4% de ASR en jailbreaks. Los clasificadores son una capa, no una solución.
 
 **Type:** Learn
-**Languages:** Python (stdlib, category-tagged classifier simulator)
+**Languages:** Python (stdlib, category-tagged classifier simulator), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 17 (Constitution)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > El científico de IA de Sakana v2 (Yamada et al., arXiv:2504.08066) ejecuta el ciclo completo de investigación: hipótesis, código, experimentos, cifras, redacción, presentación. Es el primer sistema en tener una revisión por pares de documentos en un taller ICLR 2025. Una evaluación independiente (Beel et al.) encontró que el 42% de los experimentos falló por errores de codificación y la revisión de la literatura a menudo etiquetó erróneamente los conceptos establecidos como novedosos. Los propios doctores de Sakana advierten que la base de código ejecuta código escrito por LLM y recomiendan aislamiento de Docker. Ambas mitades de la imagen son el punto.
 
 **Type:** Learn
-**Languages:** Python (stdlib, research-loop state-machine toy)
+**Languages:** Python, TypeScript (stdlib, research-loop state-machine toy)
 **Prerequisites:** Phase 15 · 03 (AlphaEvolve), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

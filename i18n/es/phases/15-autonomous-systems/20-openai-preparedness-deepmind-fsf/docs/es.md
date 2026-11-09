@@ -3,7 +3,7 @@
 > OpenAI Preparedness Framework v2 (abril 2025) introduce categorías de investigación  Autonomía de largo alcance, Sandbagging, Replicación y Adaptación Autónoma, Minando las salvaguardas  distintas de las categorías rastreadas. Las categorías seguidas generan informes de capacidades más informes de salvaguardias revisados por el grupo asesor de seguridad. FSF v3 de DeepMind (septiembre 2025, con niveles de capacidad seguidas añadidos el 17 de abril de 2026) dobla la autonomía en dominios de I+D y Ciber (nivel de autonomía de I+D de I+D = automatizar completamente la tubería de I+D de IA a un costo competitivo frente a las herramientas de I+D de humanos). La FSF v3 aborda explícitamente la alineación engañosa mediante un monitoreo automatizado de un uso indebido de la razón instrumental. La nota honesta: Las categorías de investigación en PF v2 (incluida la autonomía de largo alcance) no desencadenan automáticamente las mitigaciones; el lenguaje de política es "potencial".
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-framework decision-table diff tool)
+**Languages:** Python (stdlib, three-framework decision-table diff tool), TypeScript
 **Prerequisites:** Phase 15 · 19 (Anthropic RSP)
 **Time:** ~45 minutes
 

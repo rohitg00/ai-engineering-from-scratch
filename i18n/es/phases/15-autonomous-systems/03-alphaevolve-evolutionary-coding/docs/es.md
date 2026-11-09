@@ -3,7 +3,7 @@
 > Enpare un modelo de codificación fronteriza con un bucle evolutivo y un evaluador verificable por máquina. Deja que el bucle siga funcionando lo suficiente. Descubre un procedimiento de multiplicación de matriz compleja 4x4 que utiliza 48 multiplicaciones escalares  la primera mejora sobre Strassen en 56 años. También encuentra una heurística de programación Borg a nivel de Google que recupera ~ 0,7% del computación de cluster en producción. La arquitectura es aburrida a propósito. Las victorias provienen del rigor del evaluador.
 
 **Type:** Learn
-**Languages:** Python (stdlib, evolutionary-loop toy)
+**Languages:** Python, TypeScript (stdlib, evolutionary-loop toy)
 **Prerequisites:** Phase 15 · 01 (long-horizon framing), Phase 15 · 02 (self-taught reasoning)
 **Time:** ~60 minutes
 
