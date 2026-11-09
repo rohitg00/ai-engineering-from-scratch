@@ -3,7 +3,7 @@
 > A2C jette chaque déploiement après une mise à jour. PPO enveloppe le gradient de politique dans un ratio d'importance réduit afin que vous puissiez faire 10+ époques sur les mêmes données sans que la politique explose. Schulman et al. (2017).
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~75 minutes
 

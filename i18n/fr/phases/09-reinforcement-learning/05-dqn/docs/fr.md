@@ -3,7 +3,7 @@
 > 2013: Mnih entraîne un réseau d'apprentissage Q sur des pixels bruts, bat tous les agents RL classiques sur sept jeux Atari. 2015: étendu à 49 jeux, publié dans Nature, déclenche l'ère de la profondeur RL. DQN est Q-apprentissage plus trois astuces qui rendent l'approximation de fonction stable.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 04 (Q-learning, SARSA)
 **Time:** ~75 minutes
 

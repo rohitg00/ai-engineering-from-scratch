@@ -3,7 +3,7 @@
 > La programmation dynamique est RL avec tricherie. Vous connaissez déjà les fonctions de transition et de récompense; vous faites simplement l'équation Bellman jusqu'à ce que$V$ou $\pi$Il s'agit de la référence à laquelle chaque méthode basée sur l'échantillonnage tente de s'approcher.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs)
 **Time:** ~75 minutes
 

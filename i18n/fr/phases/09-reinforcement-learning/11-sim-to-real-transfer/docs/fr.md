@@ -3,7 +3,7 @@
 > Une politique formée dans un simulateur qui échoue sur le matériel est une politique qui mémorise le simulateur.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 08 (PPO), Phase 2 · 10 (Bias/Variance)
 **Time:** ~45 minutes
 

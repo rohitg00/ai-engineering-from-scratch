@@ -3,7 +3,7 @@
 > Arrêtez d'estimer la valeur. Paramétrez directement la politique, calculez le gradient du rendement attendu, faites des pas en haut. Williams (1992) l'a écrit dans un théorème. C'est pourquoi PPO, GRPO et chaque boucle LLM RL existent.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 03 (Monte Carlo), Phase 9 · 04 (TD Learning)
 **Time:** ~75 minutes
 

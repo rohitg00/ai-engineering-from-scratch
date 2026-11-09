@@ -3,7 +3,7 @@
 > La force est bruyante, ajoutez un critique qui apprend.$\hat{V}(s)$A2C le fait en synchronisation, A3C le fait en travers de fils. Les deux sont le modèle mental de chaque méthode moderne de RL profonde.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (TD Learning), Phase 9 · 06 (REINFORCE)
 **Time:** ~75 minutes
 

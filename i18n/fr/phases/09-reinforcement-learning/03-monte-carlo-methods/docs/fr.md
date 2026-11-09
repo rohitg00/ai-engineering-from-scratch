@@ -3,7 +3,7 @@
 > La programmation dynamique a besoin d'un modèle. Monte Carlo n'a besoin que d'épisodes. Exécutez la politique, regardez les rendements, les moyenniez. L'idée la plus simple dans RL  et celle qui déverrouille tout en aval.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming)
 **Time:** ~75 minutes
 

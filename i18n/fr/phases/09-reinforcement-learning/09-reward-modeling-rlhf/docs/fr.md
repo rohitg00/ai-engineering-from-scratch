@@ -3,7 +3,7 @@
 > Les humains ne peuvent pas écrire une fonction de récompense pour " bonne réponse assistante ", mais ils peuvent comparer deux réponses et choisir la meilleure. Ajustez un modèle de récompense à ces comparaisons, puis RL le modèle de langue contre lui. Christiano 2017. InstructGPT 2022. La recette qui a transformé GPT-3 en ChatGPT. En 2026 il est principalement remplacé par DPO  mais le modèle mental reste.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment), Phase 9 · 08 (PPO)
 **Time:** ~45 minutes
 

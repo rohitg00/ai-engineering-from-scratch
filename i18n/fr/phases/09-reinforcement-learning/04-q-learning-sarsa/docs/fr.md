@@ -3,7 +3,7 @@
 > Monte Carlo attend la fin de l'épisode. TD met à jour après chaque étape en démarrant la prochaine estimation de valeur. Q-learning est hors politique et optimiste; SARSA est sur politique et prudent. Les deux sont une ligne de code. Les deux sont à la base de chaque méthode de RL profonde dans cette phase.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming), Phase 9 · 03 (Monte Carlo)
 **Time:** ~75 minutes
 

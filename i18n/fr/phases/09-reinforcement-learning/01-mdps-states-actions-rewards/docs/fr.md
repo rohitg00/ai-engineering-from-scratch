@@ -3,7 +3,7 @@
 > Un processus de décision Markov est composé de cinq choses: états, actions, transitions, récompenses, réduction. Tout dans RL  Q-learning, PPO, DPO, GRPO  optimiser sur cette forme. Apprenez-le une fois, lire le reste de l'apprentissage de renforcement gratuitement.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Probability & Distributions), Phase 2 · 01 (ML Taxonomy)
 **Time:** ~45 minutes
 
