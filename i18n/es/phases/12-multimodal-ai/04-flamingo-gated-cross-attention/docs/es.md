@@ -3,7 +3,7 @@
 > DeepMind's Flamingo (2022) hizo dos cosas antes que nadie. Mostró que un solo modelo podía procesar secuencias arbitrariamente entrelazadas de imágenes, videos y texto. Y mostró que los VLM podrían aprender en contexto  dar un prompt de algunas tomas con tres pares de ejemplos (imagen, leyenda) y el modelo subtítulos una nueva imagen sin ningún paso de gradiente. El mecanismo: capas de atención cruzada cerradas, insertadas entre las capas existentes del LLM congelado, con una puerta tanh aprendida que comienza a cero para que la capacidad de texto del LLM se preserve en la inicialización. Esta lección recorre el nuevo modelo Perceptor de Flamingo y la arquitectura de atención cruzada cerrada, el ancestro de las entradas entrelazadas de Gemini y los tokens visuales de Idefics2.
 
 **Type:** Learn
-**Languages:** Python (stdlib, gated cross-attention + Perceiver resampler demo)
+**Languages:** Python, TypeScript (stdlib, gated cross-attention + Perceiver resampler demo)
 **Prerequisites:** Phase 12 · 03 (BLIP-2 Q-Former)
 **Time:** ~120 minutes
 

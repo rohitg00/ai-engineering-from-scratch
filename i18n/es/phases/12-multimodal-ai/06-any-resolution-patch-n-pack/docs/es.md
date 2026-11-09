@@ -3,7 +3,7 @@
 > Las imágenes reales no son 224x224 cuadrados. Un recibo es 1:3, un gráfico es 16:9, un escaneo médico puede ser 4096x4096, una captura de pantalla móvil es 9:19.5. La respuesta VLM pre-2024  redimensionar todo a un cuadrado fijo  arrojó la señal que hace que OCR, comprensión de documentos y análisis de escena de alta resolución trabajen. NaViT (Google, 2023) mostró que se pueden empacar parches de resolución variable en un solo lote de transformador con enmascaramiento de diagonal de bloque. El M-RoPE (2024) de Qwen2-VL dejó caer por completo las tablas de posiciones absolutas. AnyRes de LLaVA-NeXT ha convertido imágenes de alta resolución en una base + subimágenes. La variante NaFlex de SigLIP 2 (2025) es ahora el codificador predeterminado para VLM abiertos que quieren un solo punto de control para servir a cada relación de aspecto. Esta lección implementa el parche de un paquete de extremo a extremo.
 
 **Type:** Build
-**Languages:** Python (stdlib, patch packer + block-diagonal mask)
+**Languages:** Python, TypeScript (stdlib, patch packer + block-diagonal mask)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 12 · 05 (LLaVA)
 **Time:** ~120 minutes
 

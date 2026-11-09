@@ -3,7 +3,7 @@
 > La literatura VLM de peso abierto 2024-2026 es un bosque de tablas de ablación. El MM1 de Apple probó 13 combinaciones de codificador de imágenes, conector y mezcla de datos. El Molmo de Allen AI demostró que los títulos humanos detallados superan la destilación GPT-4V. Cambrian-1 ejecutó 20+ comparaciones de codificadores. Idefics2 formalizó el espacio de diseño de cinco ejes. Los VLM prismáticos compararon 27 recetas de entrenamiento en un índice de referencia controlado. De todo ese ruido, un pequeño conjunto de resultados se mantiene en el papel: el codificador de imágenes importa más que la arquitectura del conector, la mezcla de datos importa más que ambas, y los títulos humanos detallados superan a los datos sintéticos destilados. Esta lección lee esas tablas para que no tengas que hacerlo.
 
 **Type:** Learn + lab
-**Languages:** Python (stdlib, ablation table parser + recipe picker)
+**Languages:** Python, TypeScript (stdlib, ablation table parser + recipe picker)
 **Prerequisites:** Phase 12 · 05 (LLaVA baseline)
 **Time:** ~180 minutes
 

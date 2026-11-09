@@ -3,7 +3,7 @@
 > Whisper (Radford et al., diciembre 2022) estableció el reconocimiento del habla  680k horas de habla multilingüe supervisionada de forma débil, un simple transformador de codificador-decodificador, un punto de referencia que hizo que cada lanzamiento posterior de ASR lo citara. Pero reconocer no es razonar. Para preguntar "qué instrumentos hay en esta grabación" o "qué emoción expresa el orador" o "qué pasó en el minuto 3" se requiere un entendimiento de audio, no una transcripción. Qwen-Audio, SALMONN, LTU y Audio Flamingo 3 de NVIDIA (AF3, julio 2025) construyeron progresivamente esa pila: mantener los codificadores de la clase Whisper, conectar los formadores Q, entrenar en datos de instrucción de audio-texto, agregar el razonamiento de cadena de pensamiento. Esta lección va por el arco.
 
 **Type:** Build
-**Languages:** Python (stdlib, log-Mel spectrogram + audio Q-former skeleton)
+**Languages:** Python (stdlib, log-Mel spectrogram + audio Q-former skeleton), TypeScript
 **Prerequisites:** Phase 6 (Speech and Audio), Phase 12 · 03 (Q-Former)
 **Time:** ~180 minutes
 

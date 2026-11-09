@@ -3,7 +3,7 @@
 > Los modelos multimodal unificados tienen una tensión inevitable. La comprensión necesita características semánticas  SigLIP o DINOv2 vectores de salida ricos en información de nivel de concepto. La generación quiere códigos amigables con la reconstrucción. Tokens VQ que componen de nuevo en píxeles nítidos. Los dos objetivos no son compatibles en un solo codificador. Janus (DeepSeek, octubre 2024) y Janus-Pro (DeepSeek, enero 2025) argumentan que la solución es dejar de intentar: desacoplar los dos codificadores. Comparte el cuerpo del transformador entre las tareas, pero la comprensión de ruta a través de SigLIP y generación a través de un tokenizer VQ. En 7B, Janus-Pro vence a DALL-E 3 en GenEval mientras que coincide con LLaVA en MMMU. Esta lección explica por qué dos codificadores funcionan cuando uno falla.
 
 **Type:** Build
-**Languages:** Python (stdlib, dual-encoder routing + shared-body signal)
+**Languages:** Python, TypeScript (stdlib, dual-encoder routing + shared-body signal)
 **Prerequisites:** Phase 12 · 13 (Transfusion), Phase 12 · 14 (Show-o)
 **Time:** ~120 minutes
 

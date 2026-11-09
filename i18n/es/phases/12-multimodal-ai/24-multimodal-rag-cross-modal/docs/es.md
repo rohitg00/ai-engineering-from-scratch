@@ -3,7 +3,7 @@
 > El documento RAG de visión nativa es una sola rebanada. La producción multimodal RAG se expande  la recuperación de texto, imágenes, audio y video para flujos de trabajo como la planificación de viajes ("encontradme un brunch vegano tranquilo con luz natural"), triaje médico ("qué lesión coincide con esta foto + estas notas"), comercio electrónico ("trajes similares a este selfie, en mi tamaño") y servicio de campo ("diagnóstico este sonido del motor más foto de la parte"). Tres encuestas de 2025  Abootorabi et al., Mei et al., Zhao et al.  codificó los subproblemas: recuperación transmodal, fusión de recuperación, generación de tierra, evaluación multimodal. Esta lección lee las encuestas y diseña una línea de producción.
 
 **Type:** Build
-**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator)
+**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator), TypeScript
 **Prerequisites:** Phase 12 · 23 (ColPali), Phase 11 (RAG basics)
 **Time:** ~180 minutes
 

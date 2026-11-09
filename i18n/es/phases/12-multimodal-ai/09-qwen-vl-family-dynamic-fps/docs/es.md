@@ -3,7 +3,7 @@
 > La familia Qwen-VL  Qwen-VL (2023), Qwen2-VL (2024), Qwen2.5-VL (2025), Qwen3-VL (2025)  es el linaje de modelos de lenguaje de visión abierta más influyente en 2026. Cada generación hizo una apuesta arquitectónica única decisiva que el resto del ecosistema abierto copió en doce meses: resolución dinámica nativa a través de M-RoPE, muestreo dinámico-FPS con alineación de tiempo absoluta, atención de ventana en el ViT y formatos de salida de agente estructurados. Por Qwen3-VL, la receta se había estabilizado: un codificador 2D-RoPE-ViT con entradas nativas de relación de aspecto, un proyector MLP en una gran base de lenguaje Qwen3, y etapas de entrenamiento que enfatizaron el comportamiento de OCR, la tierra y el agente como objetivos de primera clase. Esta lección lee la familia cronológicamente para que entiendas por qué cada botón está donde está.
 
 **Type:** Learn
-**Languages:** Python (stdlib, M-RoPE encoder + dynamic-FPS sampler)
+**Languages:** Python, TypeScript (stdlib, M-RoPE encoder + dynamic-FPS sampler)
 **Prerequisites:** Phase 12 · 06 (patch-n'-pack)
 **Time:** ~120 minutes
 

@@ -3,7 +3,7 @@
 > El producto fronterizo 2026 es un agente multimodal que lee capturas de pantalla, hace clic en botones, navega por las interfaces web, llena formularios y completa flujos de trabajo de extremo a extremo. SeeClick y CogAgent (2024) demostraron que la primera era la de la conexión a tierra. Ferret-UI añadió móvil. ChartAgent introdujo el uso de herramientas visuales para los gráficos. VisualWebArena y AgentVista (2026) son los puntos de referencia de las persecuciones fronterizas  e incluso Gemini 3 Pro y Claude Opus 4.7 puntaje ~30% en las tareas difíciles de AgentVista. Esta piedra angular reúne todos los hilos de la Fase 12: percepción (VLM de alta resolución), razonamiento (LLM con uso de herramientas), conexión a tierra (salida de coordenadas), memoria de horizonte largo y evaluación.
 
 **Type:** Capstone
-**Languages:** Python (stdlib, action schema + agent loop skeleton)
+**Languages:** Python (stdlib, action schema + agent loop skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 09 (Qwen-VL JSON), Phase 14 (Agent Engineering)
 **Time:** ~240 minutes
 

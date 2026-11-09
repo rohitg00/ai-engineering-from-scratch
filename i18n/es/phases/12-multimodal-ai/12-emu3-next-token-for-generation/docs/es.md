@@ -3,7 +3,7 @@
 > El Emu3 de BAAI (Wang et al., septiembre 2024) es el resultado de 2024 que debería haber terminado el debate difusión-versus-autorregressiva. Un único transformador de decodificación solo de estilo Llama, entrenado solo en el objetivo de predicción de tokens siguientes, a través de un vocabulario unificado de tokens de texto + VQ de imagen + 3D VQ de vídeo, supera a SDXL en generación de imágenes y LLaVA-1.6 en percepción. No hay pérdida de CLIP. No hay horario de difusión. La orientación sin clasificador se utiliza para inferir la calidad, pero el objetivo principal de la formación es la predicción de la próxima señal con la fuerza del profesor. Publicado en Nature. Esta lección lee la tesis Emu3  por qué un mejor tokenizer más escala es todo lo que necesita  y contrasta con los enfoques de difusión.
 
 **Type:** Learn
-**Languages:** Python (stdlib, 3D video tokenizer math + autoregressive sampler skeleton)
+**Languages:** Python, TypeScript (stdlib, 3D video tokenizer math + autoregressive sampler skeleton)
 **Prerequisites:** Phase 12 · 11 (Chameleon)
 **Time:** ~120 minutes
 

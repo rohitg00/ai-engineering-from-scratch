@@ -3,7 +3,7 @@
 > CLIP alinea imágenes y texto, pero no puede generar captulos, responder preguntas o mantener una conversación. BLIP-2 (Salesforce, 2023) resolvió que con un pequeño puente entrenable: 32 vectores de consulta aprendizables asisten a las características de un ViT congelado a través de la atención cruzada, luego se inserten directamente en el flujo de entrada de un LLM congelado. 188 millones de parámetros de puente conectaron un ViT-g/14 a LLMs congeladas de tamaño igual al 11B Flan-T5-XXL. Cada VLM basado en un adaptador hasta 2026  MiniGPT-4, InstructBLIP, primos de LLaVA  es un descendiente. Esta lección lee la arquitectura del Q-Former, explica su entrenamiento en dos etapas y construye una versión de juguete que alimenta tokens visuales en un decodificador de texto congelado.
 
 **Type:** Build
-**Languages:** Python (stdlib, cross-attention + learnable-query demo)
+**Languages:** Python, TypeScript (stdlib, cross-attention + learnable-query demo)
 **Prerequisites:** Phase 12 · 02 (CLIP), Phase 7 (Transformers)
 **Time:** ~180 minutes
 

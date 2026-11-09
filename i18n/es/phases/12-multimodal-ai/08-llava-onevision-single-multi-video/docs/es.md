@@ -3,7 +3,7 @@
 > Antes de LLaVA-OneVision (Li et al., agosto 2024) el mundo de VLM abierto tenía linajes separados: LLaVA-1.5 para imágenes individuales, modelos de imágenes múltiples como Mantis y VILA, modelos de video como Video-LLaVA y Video-LLaMA. Cada uno ganó su punto de referencia y falló en los otros. LLaVA-OneVision argumentó que un solo plan de estudios podría capacitar a un modelo para dominar los tres escenarios, y que los efectos emergentes de transferencia de tareas (habilidades de imagen única exportadas al video, razonamiento de imágenes múltiples exportados a imagen única) superan a la suma de especialistas. La receta es engañosamente simple: un presupuesto de fichaje visual equilibrado entre escenarios, más un plan de estudios explícito que pasa de una sola imagen a OneVision (multi-imagen) a video. Esta lección lee el presupuesto, el programa de estudios y los comportamientos emergentes.
 
 **Type:** Build
-**Languages:** Python (stdlib, token budget solver + curriculum planner)
+**Languages:** Python, TypeScript (stdlib, token budget solver + curriculum planner)
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 06 (any-resolution)
 **Time:** ~180 minutes
 

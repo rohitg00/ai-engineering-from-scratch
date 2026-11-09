@@ -3,7 +3,7 @@
 > La LAVA (abril 2023) es la arquitectura multimodal más copiada del planeta. Remplazó el Q-Former de BLIP-2 con un MLP de 2 capas, reemplazó la atención cruzada cerrada de Flamingo con una concatenation token ingenua y entrenó en 158k giros de instrucción visual generados por GPT-4 a partir de títulos de texto. Cualquier practicante que construyó un VLM entre 2023 y 2026 construyó alguna variante de LLaVA. LLaVA-1.5 cambió en un proyector MLP y un codificador de 336px. LLaVA-NeXT añadió un revestimiento AnyRes para la entrada de alta resolución. LLaVA-OneVision imagen unificada, multi-imagen y video en una sola receta. Esta lección lee la receta, aplica el proyector y explica por qué "el más simple ganó".
 
 **Type:** Build
-**Languages:** Python (stdlib, projector + instruction-template builder)
+**Languages:** Python, TypeScript (stdlib, projector + instruction-template builder)
 **Prerequisites:** Phase 12 · 02 (CLIP), Phase 11 (LLM Engineering — instruction tuning)
 **Time:** ~180 minutes
 

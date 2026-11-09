@@ -3,7 +3,7 @@
 > GPT-4o envía un producto que los modelos más abiertos no pueden replicar: un agente que escucha voz, ve video y habla en tiempo real. La respuesta del ecosistema abierto para finales de 2024 fue MIO (Wang et al., septiembre 2024). MIO tokeniza texto, imagen, habla y música, entrena a un transformador causal sobre las secuencias entrelazadas y genera cualquier modalidad a cualquier modalidad. AnyGPT (Zhan et al., febrero 2024) fue la prueba del concepto; MIO es la escalada; Unified-IO 2 (Allen AI, diciembre 2023) es el primo con visión + acción de tierra. Esta lección lee el patrón de cualquier a cualquier  cuatro tokenizers, un transformador, decodificación amigable para streaming.
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-modality token allocator + streaming decode loop)
+**Languages:** Python, TypeScript (stdlib, four-modality token allocator + streaming decode loop)
 **Prerequisites:** Phase 12 · 11 (Chameleon), Phase 6 (Speech and Audio)
 **Time:** ~120 minutes
 

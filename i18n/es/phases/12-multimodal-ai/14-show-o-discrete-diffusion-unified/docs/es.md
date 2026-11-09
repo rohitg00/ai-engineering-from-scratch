@@ -3,7 +3,7 @@
 > La transfusión mezcla representaciones continuas y discretas. Show-o (Xie et al., agosto 2024) va en el otro sentido: los tokens de texto utilizan la predicción causal del siguiente token, los tokens de imagen utilizan la difusión discreta enmascarada en el espíritu de MaskGIT. Ambos se sientan dentro de un transformador con una máscara híbrida de atención. El resultado unifica VQA, texto a imagen, inpainting y generación de modalidad mixta en una columna vertebral, un tokenizer por modalidad, una formulación de pérdida (se extiende el siguiente token a la predicción enmascarada). Esta lección recorre el diseño Show-o  por qué la difusión discreta enmascarada es un generador de imágenes paralelo y de pocos pasos  y contrasta con Transfusión y Emu3.
 
 **Type:** Learn
-**Languages:** Python (stdlib, masked-discrete-diffusion sampler)
+**Languages:** Python, TypeScript (stdlib, masked-discrete-diffusion sampler)
 **Prerequisites:** Phase 12 · 13 (Transfusion)
 **Time:** ~120 minutes
 

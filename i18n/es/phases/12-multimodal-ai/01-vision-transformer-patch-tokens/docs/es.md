@@ -3,7 +3,7 @@
 > Antes de cualquier cosa multimodal, una imagen tiene que convertirse en una secuencia de tokens que un transformador puede comer. El documento ViT 2020 respondió a esto con parches de 16x16 píxeles, una proyección lineal y una inserción de posición. Cinco años después cada modelo fronterizo de 2026 (Claude Opus 4.7 en 2576px nativo, Gemini 3.1 Pro, Qwen3.5-Omni) todavía comienza de esta manera  el codificador cambió de ViT a DINOv2 a SigLIP 2, se agregaron fichas de registro, el esquema posicional se convirtió en 2D-RoPE, pero el primitivo se mantuvo. Esta lección lee la línea de tokens de parches de extremo a extremo y lo construye en stdlib Python para que el resto de la Fase 12 tenga un modelo mental concreto para "tokens visuales".
 
 **Type:** Learn
-**Languages:** Python (stdlib, patch tokenizer + geometry calculator)
+**Languages:** Python, TypeScript (stdlib, patch tokenizer + geometry calculator)
 **Prerequisites:** Phase 7 (Transformers), Phase 4 (Computer Vision)
 **Time:** ~120 minutes
 
