@@ -3,7 +3,7 @@
 > O modelo pode editar diretamente e um agente de tempo de sono que consolida a memória de forma assíncrona enquanto o agente primário está ocioso.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ memory-blocks
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A transcrição mostra a divisão: as viradas primárias são rápidas e produzem escritos crus; o passe de sono compacta e limpa.

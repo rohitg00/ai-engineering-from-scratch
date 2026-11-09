@@ -3,7 +3,7 @@
 > Schluntz e Zhang (Anthropic, Dec 2024) distinguem fluxos de trabalho (pistas predefinidas) de agentes (uso dinâmico de ferramentas). Cinco padrões de fluxo de trabalho cobrem a maioria dos casos. Comece com chamadas diretas de API. Adicione agentes apenas quando as etapas não podem ser previstas.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop)
 **Time:** ~60 minutes
 
@@ -77,6 +77,7 @@ workflow-chain
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Cada padrão imprime seu rastro. O total de linhas de código por padrão é de ~10-15; o custo de uma estrutura é medido em milhares.

@@ -3,7 +3,7 @@
 > O modelo não sabe onde o trabalho termina. Um contrato de alcance é um arquivo por tarefa que diz onde o trabalho começa, onde termina e como voltar para trás se derramar. O contrato se transforma de um desejo em um cheque.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 33 (Rules as Constraints)
 **Time:** ~50 minutes
 
@@ -107,6 +107,7 @@ wb-scope-bounce
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: o contrato, as duas corridas, os veredictos por corrida e um salvo `scope_report.json`- Não .

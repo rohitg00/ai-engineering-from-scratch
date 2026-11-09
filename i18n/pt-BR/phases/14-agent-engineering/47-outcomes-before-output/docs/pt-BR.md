@@ -3,7 +3,7 @@
 > A implementação rápida aumenta a penalidade por escolher o problema errado.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** None
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ O laboratório valida um`OutcomeFrame`E escreve.`outputs/outcome-frame.json`- N�
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

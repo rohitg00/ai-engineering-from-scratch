@@ -3,7 +3,7 @@
 > O OpenAI Agents SDK é o framework multi-agente leve construído sobre a API Responses. Cinco primitivos: Agente, Handoff, Guardrail, Sessão, Tracing.`transfer_to_<agent>`Os guardrails desligam-se na entrada ou saída.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -84,6 +84,7 @@ ae-agent-handoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 O rastro mostra duas entregas bem sucedidas, uma viagem de entrada e uma árvore espalhando o que o SDK real emite.

@@ -3,7 +3,7 @@
 > Instruções escritas como prosa são desejos. Instruções escritas como restrições são testes. O banco de trabalho transforma cada regra em algo que um agente pode verificar no tempo de execução e um revisor pode verificar depois do fato.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~50 minutes
 
@@ -96,6 +96,7 @@ wb-rule-checkoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: conjunto de regras analisadas, rastreamento de execução, pass/fail por regra, e um `rule_report.json`Salvou-se ao lado do roteiro.

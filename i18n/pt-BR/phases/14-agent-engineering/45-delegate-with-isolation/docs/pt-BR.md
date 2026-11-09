@@ -3,7 +3,7 @@
 > Os agentes paralelos economizam tempo de parede apenas quando o trabalho é independente.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 39 and 44
 **Time:** ~70 minutes
 
@@ -86,6 +86,7 @@ O laboratório verifica a sobreposição dos caminhos, valida dependências, cal
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

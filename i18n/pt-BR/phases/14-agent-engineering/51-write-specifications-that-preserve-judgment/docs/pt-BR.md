@@ -3,7 +3,7 @@
 > Uma especificação útil fixa invariantes e evidências, deixando as opções de implementação reversíveis abertas.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 50
 **Time:** ~75 minutes
 
@@ -74,6 +74,7 @@ O laboratório valida todas as superfícies do contrato, verifica os modos de de
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Um agente de codificação pode implementar uma tarefa clara rapidamente. Também pode implementar uma tarefa não clara rapidamente. A velocidade é a mesma. O custo não é.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 31 and 36
 **Time:** ~60 minutes
 
@@ -93,6 +93,7 @@ Correr a partir deste diretório de lições:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

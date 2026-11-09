@@ -3,7 +3,7 @@
 > As janelas de contexto são finitas. Conversas, documentos e traços de ferramentas não são. A correção é a memória virtual do sistema operacional re-estabelecida.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ context-budget
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 O rastro mostra o agente escrevendo três fatos, preenchendo o contexto principal do limite (despejo forçado), e depois respondendo a uma pergunta de acompanhamento, retirando do arquivo  reproduzindo o fluxo de trabalho MemGPT sem qualquer LLM real.

@@ -3,7 +3,7 @@
 > Uma única trajetória de cadeia de pensamento não tem espaço para retroceder. ToT (Yao et al., 2023) transforma o raciocínio em uma árvore com auto-avaliação em cada nó. LATS (Zhou et al., 2024) unifica ToT com ReAct e Reflexion sob a Pesquisa de Árvore de Monte Carlo.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~75 minutes
 
@@ -93,6 +93,7 @@ tree-of-thoughts
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 O rastro mostra o ToT expandindo três candidatos por nó com BFS, em comparação com o LATS convergindo no melhor lançamento através do MCTS.
