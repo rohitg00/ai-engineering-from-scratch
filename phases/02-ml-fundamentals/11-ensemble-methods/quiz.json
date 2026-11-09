@@ -46,7 +46,7 @@
       "After enough trees, variance reduction plateaus and adding more trees provides diminishing returns without increasing overfitting",
       "500 trees is the maximum allowed by the scikit-learn implementation's hard tree-count limit",
       "The trees are all identical so adding more has no effect, because bagging never changes what the trees learn",
-      "The random forest has exhausted the unique split thresholds in the data, so every extra tree is pruned down to a stump that repeats an existing vote and changes nothing"
+      "The random forest has exhausted the unique split thresholds in the data, so every extra tree is pruned down to a stump that repeats an existing vote"
     ],
     "correct": 0,
     "explanation": "Random forests do not overfit with more trees (unlike boosting). However, variance reduction plateaus once enough diverse trees have been averaged. More trees just add compute cost without improving accuracy."
