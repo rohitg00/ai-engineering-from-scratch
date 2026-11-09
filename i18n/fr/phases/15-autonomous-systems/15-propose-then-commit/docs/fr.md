@@ -3,7 +3,7 @@
 > Le consensus de 2026 sur le HITL est spécifique. Il ne s'agit pas de "l'agent demande, l'utilisateur clique sur Approuver". Il s'agit de proposer-et-engager: l'action proposée est maintenue dans un magasin durable avec une clé d'idempotence; apparaît à un examinateur avec intention, lignée de données, autorisations touchées, rayon d'explosion et plan de rétroaction; n'est engagée qu'après une reconnaissance positive; vérifiée après exécution pour confirmer l'effet secondaire qui s'est effectivement produit. Le LangGraph `interrupt()`Plus le point de contrôle PostgreSQL, le Microsoft Agent Framework `RequestInfoEvent`, et Cloudflare's `waitForApproval()`La méthode de défaillance canonique est l'approbation du timbre en caoutchouc: "Approuver?" est cliqué sans examen.
 
 **Type:** Learn
-**Languages:** Python (stdlib, propose-then-commit state machine with idempotency)
+**Languages:** Python (stdlib, propose-then-commit state machine with idempotency), TypeScript
 **Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 14 (Tripwires)
 **Time:** ~60 minutes
 

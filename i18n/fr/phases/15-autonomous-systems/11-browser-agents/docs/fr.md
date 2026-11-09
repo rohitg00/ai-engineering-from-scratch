@@ -3,7 +3,7 @@
 > L'agent ChatGPT (juillet 2025) a fusionné l'opérateur et les recherches approfondies en un seul agent navigateur/terminal et a fixé le niveau de BrowseComp SOTA à 68,9%. OpenAI a fermé Operator le 31 août 2025  consolidation à la couche produit. L'acquisition de Vercept par Anthropic a fait passer Claude Sonnet sur OSWorld de moins de 15% à 72,5%. WebArena-Verified (ServiceNow, ICLR 2026) a fixé le taux de faux négatif de ~11.3% dans le WebArena original et a expédié le sous-ensemble Hard de 258 tâches. Les chiffres sont réels. La surface d'attaque est également la même: le chef de la préparation d'OpenAI a déclaré publiquement que l'injection indirecte de prompt dans les agents de navigateur " n'est pas un bug qui peut être complètement corrigé. " Attaques documentées 20252026: Memories tainted (Atlas CSRF), HashJack (Cato Networks), et détournements en un clic dans Perplexity Comet.
 
 **Type:** Learn
-**Languages:** Python (stdlib, indirect prompt-injection attack surface model)
+**Languages:** Python (stdlib, indirect prompt-injection attack surface model), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > RSP v3.0 est entré en vigueur le 24 février 2026, remplaçant la politique de 2023. L'atténuation à deux niveaux: ce que fera unilatéralement Anthropic par rapport à ce qui est formulé comme une recommandation à l'échelle de l'industrie (y compris les normes de sécurité RAND SL-4). Ajout de feuilles de route de sécurité frontalière et de rapports de risque en tant que documents permanents plutôt que de livrables ponctuels. Il abandonne l'engagement de la pause de 2023. Introduit le seuil de R&D-4 de l'IA: une fois franchi, Anthropic doit publier un cas affirmatif identifiant les risques et les atténuations de désalignement. Claude Opus 4.6 ne le traverse pas. Anthropic déclare dans l'annonce de la version 3.0 que " exclure avec confiance cela devient difficile. " SaferAI a classé le RSP 2023 à 2,2; ils ont rebaptisé la version 3.0 à 1,9, plaçant Anthropic dans la catégorie RSP " faible " aux côtés d'OpenAI et DeepMind. Les seuils qualitatifs ont remplacé les engagements quantitatifs de 2023; la suppression de la clause de pause est la régression la plus marquée.
 
 **Type:** Learn
-**Languages:** Python (stdlib, RSP threshold decision engine)
+**Languages:** Python (stdlib, RSP threshold decision engine), TypeScript
 **Prerequisites:** Phase 15 · 06 (AAR), Phase 15 · 07 (RSI)
 **Time:** ~45 minutes
 

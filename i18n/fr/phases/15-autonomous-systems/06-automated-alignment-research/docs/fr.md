@@ -3,7 +3,7 @@
 > Anthropic a dirigé des équipes parallèles de chercheurs d'alignement autonome Claude Opus 4.6 dans des boîtes de sable indépendantes, se coordonnant via un forum partagé dont les journaux vivent en dehors de n'importe quelle boîte de sable (donc les agents ne peuvent pas supprimer leurs propres enregistrements). Sur le problème de la formation faible à forte, les AAR ont dépassé les chercheurs humains. Les propres drapeaux de synthèse d'Anthropic qui prescrivaient des flux de travail limitent souvent la flexibilité de l'AAR et dégradent les performances. La recherche automatisée sur l'alignement comprime la chronologie et le fait sur les mêmes risques de désalignement que le SPR est destiné à détecter.
 
 **Type:** Learn
-**Languages:** Python (stdlib, parallel-research-forum simulator)
+**Languages:** Python, TypeScript (stdlib, parallel-research-forum simulator)
 **Prerequisites:** Phase 15 · 05 (AI Scientist v2), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

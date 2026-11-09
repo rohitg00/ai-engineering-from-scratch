@@ -3,7 +3,7 @@
 > Associer un modèle de codage frontalier avec une boucle évolutionnaire et un évaluateur vérifiable par machine. Laissez la boucle fonctionner assez longtemps. Il découvre une procédure de multiplication de matrice complexe 4x4 qui utilise 48 multiplication escalare  la première amélioration sur Strassen en 56 ans. Il trouve également une heuristique de planification Borg à l'échelle de Google qui récupère ~ 0,7% du calcul de cluster en production. L'architecture est ennuyeuse à dessein. Les gains viennent de la rigueur de l'évaluateur.
 
 **Type:** Learn
-**Languages:** Python (stdlib, evolutionary-loop toy)
+**Languages:** Python, TypeScript (stdlib, evolutionary-loop toy)
 **Prerequisites:** Phase 15 · 01 (long-horizon framing), Phase 15 · 02 (self-taught reasoning)
 **Time:** ~60 minutes
 

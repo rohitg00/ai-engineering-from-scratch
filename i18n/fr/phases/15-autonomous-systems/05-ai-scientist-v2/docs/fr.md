@@ -3,7 +3,7 @@
 > L'AI Scientist de Sakana v2 (Yamada et coll., arXiv:2504.08066) gère la boucle de recherche complète: hypothèse, code, expériences, chiffres, écriture, soumission. Il s'agit du premier système à avoir une revue par les pairs de la réussite papier générée lors d'un atelier ICLR 2025. Une évaluation indépendante (Beel et coll.) a révélé que 42% des expériences avaient échoué à cause d'erreurs de codage et que l'examen de la littérature étiquetage souvent mal les concepts établis comme nouveaux. Les docteurs de Sakana ont mis en garde que la base de code exécute le code écrit par LLM et recommandent l'isolement de Docker. Les deux parties de cette image sont le point.
 
 **Type:** Learn
-**Languages:** Python (stdlib, research-loop state-machine toy)
+**Languages:** Python, TypeScript (stdlib, research-loop state-machine toy)
 **Prerequisites:** Phase 15 · 03 (AlphaEvolve), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

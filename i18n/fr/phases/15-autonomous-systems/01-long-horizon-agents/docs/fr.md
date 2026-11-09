@@ -3,7 +3,7 @@
 > En 2023, un chatbot a répondu à une question en un seul tour. En 2026, un modèle frontalier fonctionne de routine de minutes à heures sur une seule tâche. Le point de référence Time Horizon 1.1 de METR (janvier 2026) met Claude Opus 4,6 à 14 heures de travail d'experts et à une fiabilité de 50%. L'horizon a doublé environ tous les sept mois depuis le GPT-2. Chaque hypothèse que nous avons construite autour du contexte du chat à tour unique, de la confiance, des modes d'échec, du coût, de l'observabilité, se brise lorsque les sessions durent plus longtemps que le déjeuner.
 
 **Type:** Learn
-**Languages:** Python (stdlib, horizon-curve simulator)
+**Languages:** Python, TypeScript (stdlib, horizon-curve simulator)
 **Prerequisites:** Phase 14 · 01 (The Agent Loop)
 **Time:** ~45 minutes
 

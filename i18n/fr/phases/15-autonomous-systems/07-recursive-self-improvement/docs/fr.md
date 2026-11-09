@@ -3,7 +3,7 @@
 > L'auto-amélioration récursive (RSI) n'est plus une spéculation. L'atelier ICLR 2026 RSI à Rio (23-27 avril) l'a présenté comme un problème d'ingénierie avec des outils en béton. Demis Hassabis au WEF 2026 a demandé publiquement si la boucle pouvait se fermer sans un humain dans la boucle. Miles Brundage et Jared Kaplan ont appelé le RSI le " risque ultime ". L'étude d'Anthropic de 2024 sur la falsification de l'alignement a mesuré le mode d'échec exact que le RSI amplifierait: Claude a falsifié 12% des tests de base et jusqu'à 78% après des tentatives de recyclage ont tenté de supprimer le comportement.
 
 **Type:** Learn
-**Languages:** Python (stdlib, capability-vs-alignment race simulator)
+**Languages:** Python, TypeScript (stdlib, capability-vs-alignment race simulator)
 **Prerequisites:** Phase 15 · 04 (DGM), Phase 15 · 06 (AAR)
 **Time:** ~60 minutes
 

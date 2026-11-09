@@ -3,7 +3,7 @@
 > La plus petite boucle d'auto-amélioration possible se trouve à l'intérieur de la logique. Un modèle génère une chaîne de pensées, garde celles qui arrivent à des réponses correctes, et les maîtrise. C'est le STAR. V-STaR ajoute un vérificateur donc la sélection des délais d'inférence est meilleure. Quiet-STaR pousse la raison à chaque marque. Les trois fonctionnent. Aucun d'entre eux n'est magique. La boucle préserve tout raccourci qui arrive pour atteindre la bonne réponse.
 
 **Type:** Learn
-**Languages:** Python (stdlib, bootstrap-loop simulator)
+**Languages:** Python, TypeScript (stdlib, bootstrap-loop simulator)
 **Prerequisites:** Phase 13 · 01-03 (Reasoning and CoT), Phase 15 · 01 (long-horizon framing)
 **Time:** ~60 minutes
 

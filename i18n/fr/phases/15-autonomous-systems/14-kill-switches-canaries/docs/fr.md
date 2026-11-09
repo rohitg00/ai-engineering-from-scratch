@@ -3,7 +3,7 @@
 > Un commutateur de commande est un booléen détenu en dehors de la surface de modification de l'agent  une clé Redis, un drapeau de fonctionnalité, une configuration signée  qui désactive complètement l'agent. Un disjoncteur est plus fin: il trébuche sur un modèle spécifique (cinq appels identiques d'outils consécutifs), arrête le chemin qui l'offend et monte vers un humain. Un jeton canarien hérite d'une tromperie classique: une fausse carte d'identité ou un enregistrement de honeypot un agent n'a pas de raison légitime de toucher, dont l'accès déclenche une alerte. Les données basées sur le eBPF (par exemple: Cilium) peut réécrire l'exit d'une capsule en quarantaine vers un honeyypot médico-légale à la couche du noyau; les benchmarks Cilium publiés rapportent la latence de la piste de données sous charge P99 sous millisecondes (votre budget de propagation dépend de la façon dont une mise à jour de politique atteint le nœud, pas la piste de données elle-même). Les détecteurs statistiques (EWMA, CUSUM) qui s'adaptent à une ligne de base en mouvement les accueillent tranquillement avec des couches de dérive avec des limites constitutionnelles strictes qui ne se plient pas.
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary)
+**Languages:** Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary), TypeScript
 **Prerequisites:** Phase 15 · 13 (Cost governors), Phase 15 · 10 (Permission modes)
 **Time:** ~60 minutes
 
@@ -94,7 +94,7 @@ circuit-breaker
 
 ## Exercices
 
-1. On court .`code/main.py`- Confirmer les incendies de disjoncteurs au virage 5 (cinquième appel identique) et les incendies de canaries au virage 9 (lecture de fausse clé).
+1. On court .`code/main.py`- Confirmer les incendies de disjoncteurs au tour 7 (cinquième appel identique) et les incendies de canaries au tour 9 (lecture de fausse clé).
 
 2. Ajouter un détecteur statistique: EWMA z-score sur le taux d'appel à l'outil. Donner une trajectoire qui dérive lentement et montrer que le détecteur ne tire jamais. Maintenant ajouter une limite d'intensité (pas plus de 50 appels à l'outil en 10 minutes) et montrer les feux de limite d'intensité sur la même trajectoire.
 

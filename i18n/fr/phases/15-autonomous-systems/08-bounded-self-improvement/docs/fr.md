@@ -3,7 +3,7 @@
 > La recherche s'est convergue sur quatre primitives pour délimiter une boucle d'amélioration de soi. Des invariants formels qui doivent être conservés à chaque édition. Anchures d'alignement qui ne peuvent être modifiées. Les contraintes multi-objectives dans lesquelles chaque dimension (sécurité, équité, robustesse) doit être maintenue, pas seulement la performance. Détection de régression qui arrête la boucle lorsque les métriques historiques suggèrent une perte de capacité. Aucun d'entre eux n'est une preuve de sécurité  résultats théoriques de l'information (complexité Kolmogorov, théorème de Lob) lié à ce que tout système peut prouver sur ses propres successeurs. Ce sont des atténuations qui augmentent le coût de l'échec silencieux.
 
 **Type:** Learn
-**Languages:** Python (stdlib, bounded-loop with invariant check)
+**Languages:** Python, TypeScript (stdlib, bounded-loop with invariant check)
 **Prerequisites:** Phase 15 · 07 (RSI), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

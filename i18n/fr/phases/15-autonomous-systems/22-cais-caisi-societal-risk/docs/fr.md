@@ -3,7 +3,7 @@
 > Le Centre de sécurité de l'IA (CAIS, San Francisco, fondé en 2022 par Hendrycks et Zhang) publie le cadre à quatre risques  utilisation malveillante, courses d'IA, risques organisationnels, IA malhonnêtes  et la déclaration de mai 2023 sur le risque d'extinction signée par des centaines de professeurs et de dirigeants d'entreprises. 2026: tableau de bord de l'IA pour l'évaluation des modèles frontaliers, Index du travail à distance (avec l'IA à l'échelle), document de stratégie de super-intelligence, newsletter de l'IA Frontiers. Une entité distincte: NIST Center for AI Standards and Innovation (CAISI)  Accords volontaires face au gouvernement américain et évaluations non classées de capacité axées sur les risques liés aux cyber-armes, à la bio et aux armes chimiques. Le CAIS définit le risque organisationnel comme l'un des quatre risques de haut niveau: la culture de la sécurité, les audits rigoureux, les défenses à plusieurs couches et la sécurité de l'information sont fondamentaux, mais sont systématiquement échangés contre la vitesse de déploiement. Le projet de loi de la Californie SB-53, si signé, serait le premier règlement américain sur les risques catastrophiques au niveau de l'État.
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-risk inventory and mitigation matcher)
+**Languages:** Python (stdlib, four-risk inventory and mitigation matcher), TypeScript
 **Prerequisites:** Phase 15 · 19 (RSP), Phase 15 · 20 (PF + FSF)
 **Time:** ~45 minutes
 

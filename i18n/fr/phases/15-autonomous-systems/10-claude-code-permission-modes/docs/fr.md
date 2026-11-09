@@ -3,7 +3,7 @@
 > Une échelle de permissions  niveaux gradués d'autonomie de l'examen-chaque action à l'approbation-tout  est la façon dont un harnais régit ce qu'un agent autonome peut faire sans demander. Claude Code, l'exemple de travail de cette leçon, expose six de ces modes: "plan" demande avant chaque action, "défaut" (étiqueté "Manuel" dans l'interface utilisateur) demande uniquement pour les risques, "acceptEdits" approuve automatiquement les écrits de fichiers mais confirme toujours l'exécution de la coque, et "bypassPermissions" approuve tout. Mode automatique  le `auto`Le mode autorisation  remplace l'approbation par action par un modèle de classification séparé qui examine chaque action avant son exécution et bloque tout ce qui dépasse ce que la demande demande.`max_turns`et `max_budget_usd`. Disponibilité de `auto`dépend du plan, de l'activation de l'org, du modèle et du fournisseur  et Anthropic explique explicitement que le classifiant ne suffit pas à lui seul.
 
 **Type:** Learn
-**Languages:** Python (stdlib, two-stage classifier simulator)
+**Languages:** Python (stdlib, two-stage classifier simulator), TypeScript
 **Prerequisites:** Phase 15 · 01 (Long-horizon agents), Phase 15 · 09 (Coding-agent landscape)
 **Time:** ~45 minutes
 

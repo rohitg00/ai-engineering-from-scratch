@@ -3,7 +3,7 @@
 > Chaque transition de l'état graphique persiste. Quand un travailleur se blesse, son contrat de location expire et un autre travailleur prend la voiture au dernier point de contrôle. Les objets durables Cloudflare conservent l'état pendant des heures ou des semaines. Propose-then-commit (leçon 15) définit un plan de réaction par action. La vérification post-action ferme la boucle. L'article 14 de la Loi sur l'IA de l'UE impose une surveillance humaine efficace pour les systèmes à haut risque  en pratique, cela signifie que les points de contrôle doivent être vérifiables, que les retours doivent être répétés et que le parcours d'audit doit survivre à un déploiement. Le mode défaillance aiguë: sans clés d'idempotence et vérifications des préconditions, une nouvelle tentative après une défaillance transitoire peut dupliquer une action déjà approuvée. La vérification après l'action est ce qui le prend.
 
 **Type:** Learn
-**Languages:** Python (stdlib, checkpoint and rollback state machine)
+**Languages:** Python (stdlib, checkpoint and rollback state machine), TypeScript
 **Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 15 (Propose-then-commit)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > Le 22 janvier 2026, Claude Constitution de Anthropic a 79 pages et est CC0. Il passe de l'alignement fondé sur les règles à l'alignement fondé sur la raison et établit une hiérarchie prioritaire de quatre niveaux: (1) sécurité et soutien à la surveillance humaine, (2) éthique, (3) lignes directrices anthropologiques, (4) utilité. Les comportements sont divisés en interdictions codées durement (lifting bioweapons, CSAM) que les opérateurs et les utilisateurs ne peuvent pas annuler et les défauts codés doucement que les opérateurs peuvent ajuster dans des limites définies. L'original de 2022 (Bai et coll.) a entraîné l'innocuité par l'intermédiaire de l'autocritique et de la RLAIF contre une constitution. L'avertissement honnête: l'alignement fondé sur la raison repose sur le modèle généralisant les principes pour les situations imprévues. L'expérience participative de 2023 d'Anthropic a montré une divergence de ~50% entre les principes publics et les principes des entreprises; la version 2026 n'incorporait pas ces résultats.
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-tier priority resolver)
+**Languages:** Python (stdlib, four-tier priority resolver), TypeScript
 **Prerequisites:** Phase 15 · 06 (Automated alignment research), Phase 15 · 10 (Permission modes)
 **Time:** ~60 minutes
 

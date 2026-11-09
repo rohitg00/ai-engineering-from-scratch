@@ -3,7 +3,7 @@
 > METR (ex-ARC Evals) est une 501(c)(3) indépendante depuis décembre 2023. Leur Time Horizon 1.1 (janvier 2026) correspond à une courbe logistique de probabilité de réussite de tâche par rapport au temps d'achèvement humain d'experts; l'intersection à 50% de probabilité définit l'horizon temporel du modèle. Le jeu d'engagement 20252026 couvre GPT-5.1, GPT-5.1-Codex-Max et les évaluations de surveillance de prototypes (un moniteur peut effectuer des tâches secondaires de capture; l'agent peut-il éviter). Suites de référence: HCAST (180 ML+, cyber, SWE, tâches de raisonnement; 1 minute à 8 heures+), RE-Bench (71 ML de tâches de recherche-ingénierie avec base d'experts), SWAA. La note honnête: les mesures METR sont idéalisées  pas de conséquences humaines, pas de conséquences réelles  et l'équipe a documenté l'écart de comportement entre évaluation et déploiement (leçon 1). Un horizon temporel est une limite supérieure, pas une prédiction de déploiement.
 
 **Type:** Learn
-**Languages:** Python (stdlib, logistic-fit horizon estimator)
+**Languages:** Python (stdlib, logistic-fit horizon estimator), TypeScript
 **Prerequisites:** Phase 15 · 01 (Long-horizon agents), Phase 15 · 19 (RSP)
 **Time:** ~60 minutes
 

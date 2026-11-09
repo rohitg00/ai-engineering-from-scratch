@@ -3,7 +3,7 @@
 > OpenAI Preparedness Framework v2 (avril 2025) introduit les catégories de recherche  Autonomie à longue portée, sandbagging, réplique autonome et adaptation, soustraction des garanties  distinctes des catégories suivantes. Les catégories suivantes déclenchent des rapports sur les capacités ainsi que des rapports sur les garanties examinés par le groupe consultatif sur la sécurité. La FSF v3 de DeepMind (septembre 2025, avec des niveaux de capacité de suivi ajoutés le 17 avril 2026) replie l'autonomie dans les domaines de R&D et de cyber-médias (niveau d'autonomie de R&D de ML 1 = automatiser complètement le pipeline de R&D de l'IA à un coût compétitif par rapport aux outils humains + AI). La FSF v3 aborde explicitement l'alignement trompeur par la surveillance automatisée des abus de raisonnement par instrument. La note honnête: Les catégories de recherche dans PF v2 (y compris l'autonomie à longue portée) ne déclenchent pas automatiquement des atténuations; le langage de politique est "potentiel". DeepMind lui-même dit que la surveillance automatisée "ne restera pas suffisante à long terme" si le raisonnement instrumental se renforce.
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-framework decision-table diff tool)
+**Languages:** Python (stdlib, three-framework decision-table diff tool), TypeScript
 **Prerequisites:** Phase 15 · 19 (Anthropic RSP)
 **Time:** ~45 minutes
 
