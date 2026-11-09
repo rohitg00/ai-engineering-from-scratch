@@ -3,7 +3,7 @@
 > Bir eval harness, sadece sözleşmenin görevlerini yerine getirmesi kadar iyidir. Tek bir puanlama işlevi yazmadan önce JSONL şeklini ve metrik kelime birikmesini dondur.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track B foundations
 **Time:** ~90 min
 

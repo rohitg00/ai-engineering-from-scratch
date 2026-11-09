@@ -3,7 +3,7 @@
 > Bir detektör, bir işlevdir, güven ve kategoriye kadar.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -57,7 +57,7 @@ Metrikler koşucusu, kategoriler başına hassaslık, hatırlama, F1 ve ham say�
 
 ## Kullan
 
-Çık .`python3 main.py`Demosu taksonomiyi yükler, her cihazda detektörü çalışır, içine pişirilmiş iyi bir acillik korpusunda çalışır.`benign.py`, ve kategoriler için ölçümleri basar.`outputs/detector_report.json`Dosya, ders 87'deki güvenlik kapısının tükettiği esrarıdır.
+Çık .`python3 main.py`veya `npx tsx main.ts`Demosu taksonomiyi yükler, her cihazda detektörü çalışır, içine pişirilmiş iyi bir acillik korpusunda çalışır.`benign.py`, ve kategoriler için ölçümleri basar.`outputs/detector_report.json`Dosya, ders 87'deki güvenlik kapısının tükettiği esrarıdır.
 
 ## Gönder
 

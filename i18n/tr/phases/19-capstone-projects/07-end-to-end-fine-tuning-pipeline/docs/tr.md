@@ -3,7 +3,7 @@
 > Kendi verilerinizle eğitilmiş, kendi tercihlerinizle DPO-ağırlaştırılmış, kuantistik, spekülasyonsal olarak çözülmüş ve ölçülebilir $ / 1M tokenlerde servis edilmiş bir 8B sınıf modeli. 2026 açık yığın Axolotl v0.8, TRL 0.15, İterasyon için Unsloth, Kvantizasyon için GPTQ/AWQ/GGUF, servis için EAGLE-3 ile vLLM 0.7'dir. Son taş, tüm boru hattını tekrarlanabilir şekilde çalıştırmak (YAML içinde, servis sonu nokta dışında) ve 2026 Model Açıklık Çerçeği kapsamında bir model kart yayınlamak.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), YAML (configs), Bash (scripts)
+**Languages:** Python (pipeline), TypeScript, YAML (configs), Bash (scripts)
 **Prerequisites:** Phase 2 (ML), Phase 3 (DL), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P2 · P3 · P7 · P10 · P11 · P17 · P18
 **Time:** 35 hours

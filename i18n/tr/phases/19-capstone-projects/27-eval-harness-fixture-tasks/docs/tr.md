@@ -3,7 +3,7 @@
 > Bir kodlama ajanı, onu ölçtüğünüz görevler topluluğuyla aynı derecede iyidir. Bu ders, sabitleme görevlerinin bir klasörünü alan, her birini bir aday ajansı üzerinden çalıştıran, puanların bir deterministik doğrulayıcı üzerinden geçmesi veya başarısız olması ve sonuçları pass@1, pass@k, ortalama gecikme ve ortalama maliyet olarak toplayan bir değerlendirme harnesini oluşturur. Harness, bir reaktörden bir gerilemeyi anlamanıza izin veren gerçeğin kaynağıdır.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox runner), Phase 14 · 30 (eval-driven agent development), Phase 14 · 19 (SWE-bench and GAIA benchmarks)
 **Time:** ~90 minutes
 
@@ -100,6 +100,7 @@ Ders 25 kapı zinciri, Ders 26 kum kutusu üretti.`shell_exit_zero`Verifier. Der
 ```bash
 cd phases/19-capstone-projects/27-eval-harness-fixture-tasks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

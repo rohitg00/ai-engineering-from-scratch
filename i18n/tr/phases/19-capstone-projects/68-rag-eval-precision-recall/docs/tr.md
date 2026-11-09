@@ -3,7 +3,7 @@
 > Eğer aynı anda arama ve cevapları sıralayamazsanız, sistem gönderilemez.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 06 (RAG), 10 (evaluation); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64, 65, 66, 67
 **Time:** ~90 minutes
 
@@ -121,6 +121,7 @@ ci-rag-metric-ladder
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı sonuçlar, bir metrik tablosundaki her varians için precision@k, recall@k, MRR, nDCG@k, sadakat ve cevap bağlamını gösterir.

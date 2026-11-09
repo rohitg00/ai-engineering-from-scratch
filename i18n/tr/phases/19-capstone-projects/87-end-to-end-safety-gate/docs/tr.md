@@ -3,7 +3,7 @@
 > Üç kontrol noktası, bir hüküm, talep başına bir denetim izleri.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -59,7 +59,7 @@ Demo, tüm 50 taksonomik ayar ve 10 iyi huylu ipucu içerir. İzleme özet rapor
 
 ## Kullan
 
-`python3 main.py`Demo her şeyi yükler, sonundan sonuna kadar çalışır, özetleme tablosunu yazdırır ve izleme eserini yazar. Çıkış kodu sıfırdır. Demo kelimenin anlamında kendi kendini bitirir: her talep tamamlanmaya veya erken bitmeye çalışır ve kapı bir sonrakiye taşınır.
+`python3 main.py`veya `npx tsx main.ts`Demo her şeyi yükler, sonundan sonuna kadar çalışır, özetleme tablosunu yazdırır ve izleme eserini yazar. Çıkış kodu sıfırdır. Demo kelimenin anlamında kendi kendini bitirir: her talep tamamlanmaya veya erken bitmeye çalışır ve kapı bir sonrakiye taşınır.
 
 ## Gönder
 

@@ -3,7 +3,7 @@
 > Harvey, Glean, Mendable ve LlamaCloud, 2026'da aynı üretim şeklini kullanıyor. Görüntüler için docling veya Unstructured ve ColPali ile içebilirsiniz. Hibrit arama. Bge-Renker-v2-gemma ile yeniden sıralama. 60 ila 80% hit oranıyla hızlı önbelleğe girerek Claude Sonnet 4.7 ile sentezle. Llama Gardiyası 4 ve NeMo Gardiyası. Langfuse ve Phoenix'e dikkat edin. 200 sorunun altın setiyle RAGAS'la puan al. Yasal, klinik, sigorta alanında bir tane yapın ve son taş altın set, kırmızı takım ve sürükleme desti geçiyor.
 
 **Type:** Capstone
-**Languages:** Python (pipeline + API), TypeScript (chat UI)
+**Languages:** Python (pipeline + API), TypeScript (chat UI, pipeline scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P5 · P7 · P11 · P12 · P17 · P18
 **Time:** 30 hours

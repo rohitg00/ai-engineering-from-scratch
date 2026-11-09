@@ -3,7 +3,7 @@
 > Bir hipotez ucuz. Birinin bunu kanıtladığını bilmek pahalı bir şeydir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > Doğru hisseden bir ses ajansı, 800 ms'in altındaki son-son gecikme süresine sahiptir, konuşmayı ne zaman bıraktığınızı bilir, barge-in'i ele alır ve bir araçta durmadan arama yapabilir. Retell, Vapi, LiveKit Ajanları ve Pipecat hepsi 2026'da bu barı yakaladı. Aynı şekle yapıyorlar: akış ASR, dönüş algılayıcı, akış LLM ve akış TTS, hepsi WebRTC üzerinden kablolu ve her atışta agresif gecikme bütçeleri ile. Bir tane oluşturun, WER ve MOS ölçün ve yanlış kesim oranını, ve paket kaybı altında çalıştırın.
 
 **Type:** Capstone
-**Languages:** Python (agent + pipeline), TypeScript (web client)
+**Languages:** Python (agent + pipeline), TypeScript (web client, scheduler scaffold)
 **Prerequisites:** Phase 6 (speech and audio), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 17 (infrastructure)
 **Phases exercised:**P6 · P7 · P11 · P13 · P14 · P17
 **Time:** 30 hours

@@ -3,7 +3,7 @@
 > Anthropic'in Anayasa sınıflandırıcıları, Meta'nın Llama Guard 4, Google'ın ShieldGemma-2, NVIDIA'nın Nemotron 3 İçerik Güvenliği ve çok dilli kapsamlılık için X-Guard 2026 güvenlik sınıflandırıcı yığını tanımladı. Garak, PyRIT, NVIDIA Aegis ve promptfoo standart karşılaşma değerlendirme araçları haline geldi. NeMo Guardrails v0.12 onları bir üretim boru hattına bağlıyor. Bu baş taşı her şeyi bir araya getirir: hedef uygulamanın etrafında katmanlı bir güvenlik kemeri, 6'dan fazla saldırı ailesini yöneten özerk bir kırmızı ekip ajanı ve ölçülebilir bir zararsızlık delta üreten anayasal bir kendi eleştirisi çalışması.
 
 **Type:** Capstone
-**Languages:** Python (safety pipeline, red team), YAML (policy configs)
+**Languages:** Python (safety pipeline, red team), TypeScript, YAML (policy configs)
 **Prerequisites:** Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 18 (ethics, safety, alignment)
 **Phases exercised:**P10 · P11 · P13 · P14 · P18
 **Time:** 25 hours

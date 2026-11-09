@@ -3,7 +3,7 @@
 > Bir sorunu etiketleyin, bir PR alın  2026 otonom kodlama ajanları için ürün şekli: bir ajanı bulut kum kutusunda çalıştırın, testlerin geçmesini doğrulayın ve bir inceleme hazır PR'yi mantıklı bir şekilde yayınlayın. AWS Uzak SWE Ajanları, Cursor Arkaplan Ajanları, OpenAI Codex bulutları ve Google Jules hepsi onu gönderir. Zor kısımlar repo'nun oluşturma ortamını otomatik olarak yeniden oluşturmak, kredi kaynaklarının sızmasını önlemek, repo bütçelerini uygulamak ve ajanın zorla itmemesini sağlamak. Bu kap taşı kendi kendine barındırılan sürümü oluşturur ve maliyet ve geçiş oranı ile barındırılan alternatiflerle karşılaştırır.
 
 **Type:** Capstone
-**Languages:** Python (agent), TypeScript (GitHub App), YAML (Actions)
+**Languages:** Python (agent), TypeScript (GitHub App, agent scaffold), YAML (Actions)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**P11 · P13 · P14 · P15 · P17
 **Time:** 30 hours

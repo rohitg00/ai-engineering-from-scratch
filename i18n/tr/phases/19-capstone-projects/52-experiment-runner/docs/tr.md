@@ -3,7 +3,7 @@
 > Bu döngü ölçümleri kadar dürüstdür. Bir spesifikasyon alan, kum kutu alt işleminde uygulanıp değerlendiriciye güvenebilecek bir json metrik blob gönderir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

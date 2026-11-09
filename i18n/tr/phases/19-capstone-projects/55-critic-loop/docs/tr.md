@@ -3,7 +3,7 @@
 > İlk kez "iyi görünüyor" diyen eleştirmen kırılır. "İş ihtiyacı" diyen eleştirmen kırılır. İlginç eleştirmen, birbiriyle yakınlaşan bir eleştirmendir ve birbiriyle yakınlaşmayı tasarlamak zorundasınız.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

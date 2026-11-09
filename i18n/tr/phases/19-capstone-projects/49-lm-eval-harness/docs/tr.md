@@ -3,7 +3,7 @@
 > Bir görevde iyi bir performans gösteren bir model, tesadüfen iyi bir performans gösteren bir modeldir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 42 to 45
 **Time:** ~90 minutes
 
@@ -135,6 +135,7 @@ Her metrik birim testi ile küçük bir fonksiyondur. Dersin test kümesi normal
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Senaryo ilk atışta armatürleri topuyor, oyuncak adaptörü ile puanlar veriyor (her armatürü doğru tutuyor) ve yazıyor `outputs/leaderboard.json`Oyuncak adaptörü ile toplam puan 1.0 .`test_main.py`Adaptör cevap veremediğinde aynı kemer 0.0 üretir.

@@ -3,7 +3,7 @@
 > Leksik ve semantik geri alım ters sorgu dağılımlarında başarısız olur. karşılıklı sıra birleşimi ile hibrit geri alım interpolat etmez, oy verir - ve oy her sorgu sınıfında kazanır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lesson 64 (chunking strategies)
 **Time:** ~90 minutes
 
@@ -81,6 +81,7 @@ rrf-fusion
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Demos çıkışını yan yana okuyun. Sözcük tanımlayıcı sorusu BM25 sıra 1, yoğun sıra 4, RRF sıra 1. Parafrase sorusu BM25 sıra 6, yoğun sıra 1, RRF sıra 1. belirsiz sorgu BM25 sıra 3, yoğun sıra 3, RRF sıra 1. Füzyon bir eşleşme değildir; her sorgu sınıfında kazanan sistemdir.

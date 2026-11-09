@@ -3,7 +3,7 @@
 > Verifikasyon kapısı bir araç çağrısı çalıştırılmaya karar verir. Kum kutusu, ne zaman olursa ne olacağını belirler. Bu ders tehlikeli çalıştırılabilir araçları reddeden, tehlikeli argv şekilleri reddeden, proje kökü için her dosya yolunu hapse atmış, büyüklükteki çıkışları kısaltmış ve kaçak süreçleri duvar saatinin zamanlaması ile öldüren bir alt işlemciyi gönderir. Modelle ve işletim sistemi arasında yer alan iki katmandan ikinci.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates and observation budget), Phase 14 · 33 (instructions as constraints), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -87,6 +87,7 @@ Ders kum kutusu isim boşlukları, cgroups, seccomp, gVisor, Firecracker veya he
 ```bash
 cd phases/19-capstone-projects/26-sandbox-runner-denylist
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

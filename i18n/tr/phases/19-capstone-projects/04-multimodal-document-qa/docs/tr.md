@@ -3,7 +3,7 @@
 > 2026 belgesi-QA sınırı OCR-den sonra metinden uzaklaşıp görme-başlangıçta geç etkileşime doğru ilerledi. ColPali, ColQwen2.5 ve ColQwen3-omni her PDF sayfasını bir görüntü olarak ele alır, multi-vektor geç etkileşimi ile gömür ve sorguyu doğrudan yamalara katır. Finansal 10K'larda, bilimsel makalelerde ve el yazılı notlarda bu model OCR'yi büyük bir farkla yener. 10 bin sayfada bir boru hattı bitir ve OCR-den sonra metin ile birbiriyle yayınla.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (viewer UI)
+**Languages:** Python (pipeline), TypeScript (viewer UI, retrieval scaffold)
 **Prerequisites:** Phase 4 (computer vision), Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**P4 · P5 · P7 · P11 · P12 · P17
 **Time:** 30 hours

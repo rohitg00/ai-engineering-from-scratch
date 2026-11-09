@@ -3,7 +3,7 @@
 > Kullanıcılar tarafından yazılan sorgu, aramacı tarafından istediği sorgu değildir. yeniden yazmak arama öncesi boşluğu kapatır, bu nedenle indeks cevabın neye benzediğine daha yakın bir şey görür.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64 and 65
 **Time:** ~90 minutes
 
@@ -120,6 +120,7 @@ Retriever şekli ders 65'ten (hibrid BM25 + yoğun) yeniden kullanılır. Füzyo
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Gelişim, strateji sıralaması ve son bir özetdir. HyDE, ifade-birleştirici sorguda kazanır. Çoklu sorgu, parafrase-varians sorguda kazanır. Decomposition, çoklu konu sorgularında kazanır. Fallback (hayır yazıcı yoktur) üç sorgudan en az birini kaybeder.

@@ -3,7 +3,7 @@
 > Çıktı tarafındaki sınıflandırıcılar giriş tarafındaki kurallardan farklı bir soruya cevap verir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -56,7 +56,7 @@ cd-output-router
 
 ## Kullan
 
-Çık .`python3 main.py`. Demo her test çıkışı için eylem fiili basıyor, yazıyor `outputs/classifier_report.json`Bu, her bir ateşin en az bir katman üzerinde blok edildiğini, redakte edildiğini, uyarıldığını ve kaydedildiğini doğruluyor. Tüm sınıflandırıcılar kurallara dayandığı için gecikme yapay olarak sıfırdır; nöral sınıflandırıcılarla gerçek bir model için, sınıflandırıcı gecikme artışından sonra aynı tesisat geçerlidir.
+Çık .`python3 main.py`veya `npx tsx main.ts`. Demo her test çıkışı için eylem fiili basıyor, yazıyor `outputs/classifier_report.json`Bu, her bir ateşin en az bir katman üzerinde blok edildiğini, redakte edildiğini, uyarıldığını ve kaydedildiğini doğruluyor. Tüm sınıflandırıcılar kurallara dayandığı için gecikme yapay olarak sıfırdır; nöral sınıflandırıcılarla gerçek bir model için, sınıflandırıcı gecikme artışından sonra aynı tesisat geçerlidir.
 
 ## Gönder
 

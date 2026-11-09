@@ -3,7 +3,7 @@
 > Amazon'un MigrationBench (Java 8 ila 17) ve Google'ın App Engine Py2-to-Py3 göçörü 2026 barını belirledi. Modern'in OpenRewrite'i, belirleyici AST'lerin ölçekli olarak yeniden yazılmasını sağlar. Grit aynı sorunu kodemod tarzı DSL ile hedefliyor. Üretim örneği her ikisini birleştirir: güvenli yeniden yazılar için belirleyici bir altyapı eklemiş belirsiz durumlar için bir ajan katmanı, her dal için bir kum kutusu ve PR açılmadan önce yeşilye dönen bir test harnesini. Son taş 50 gerçek depoyu göç etmek ve başarısızlık taksonomisi ile geçiş oranını yayınlamak.
 
 **Type:** Capstone
-**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard)
+**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard, agent scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**P5 · P7 · P11 · P13 · P14 · P15 · P17
 **Time:** 30 hours

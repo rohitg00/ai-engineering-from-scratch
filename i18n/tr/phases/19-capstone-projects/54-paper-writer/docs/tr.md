@@ -3,7 +3,7 @@
 > Bir LaTeX iskeleti, araştırmacı ile yazıcı arasında yapılan bir sözleşmedir. Sözleşme bozulursa belge bir şekilde oluşturulmaz ve başarısızlık gürültülüdür.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

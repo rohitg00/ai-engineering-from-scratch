@@ -3,7 +3,7 @@
 > Çüklenme, geri dönüş cihazının neyi yüzeye çıkaracağını belirler.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG), 07 (advanced RAG); Phase 19 Track B foundations (lessons 20-29)
 **Time:** ~90 minutes
 
@@ -89,6 +89,7 @@ ci-chunk-boundaries
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıkış, strateji başına bir satır ve k başına bir sütun olan küçük bir tablo. Satıs yapılandırılmış ayar üzerinde kaybedir. Struktürel işaretleme, işaretleme ayarında kazanır. Rekürsif, karışık ayar üzerinde kendiliğinden tutar çünkü rekürsiyon uyarlanır.

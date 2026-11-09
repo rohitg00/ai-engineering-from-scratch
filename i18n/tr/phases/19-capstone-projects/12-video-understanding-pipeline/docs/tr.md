@@ -3,7 +3,7 @@
 > 12 Laboratuvar Marengo + Pegasus üretti. VideoDB CRUD-for-video API'si gönderdi. AI2'nin Molmo 2'si açık VLM kontrol noktalarını yayınladı. Gemini uzun bağlamlı saatlerce videoyu yerli olarak ele alıyor. TimeLens-100K, zamanlı yerleşimleri ölçekte tanımladı. 2026 boru hattı çözülmüştür: sahne segmentasyonu, sahne başına başlık + yerleştirme, transkript ayarlaması, çok vektörlü indeks ve (başlangıç, son) zaman damgaları ve çerçeve ön izleri ile cevap veren bir sorgu. Son taş 100 saatlik bir işlev alıyor, kamu standartlarına ulaşıyor ve sayım ve eylem sorularındaki halüsinasyonları ölçüyor.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (UI)
+**Languages:** Python (pipeline), TypeScript (UI, pipeline scaffold)
 **Prerequisites:** Phase 4 (CV), Phase 6 (speech), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**P4 · P6 · P7 · P11 · P12 · P17
 **Time:** 30 hours

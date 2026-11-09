@@ -3,7 +3,7 @@
 > Verifikasyon katmanı olmayan bir ajan harnası, bir trenchcoat'ta bir dileğidir. Bu ders, bir araç çağrısının ateşlenmesine izin verilmediğini, ajandanın çıkışının ne kadarını görmesine izin verildiğini ve ajandanın çok fazla okuduğu için sarmalın ne zaman durması gerektiğini belirleyen belirleyici kapı zincirini oluşturur. Zincir, küçük, isimli kapıların ve modelin gösterilen her simgesini izleyen bir gözlem defterinin bir fonksiyonudur.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 20-24 (Track A1: agent loop, tool registry, message store, prompt builder, model router), Phase 14 · 33 (instructions as constraints), Phase 14 · 36 (scope contracts), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -95,6 +95,7 @@ Bu yüzden, bu konuda bir çok şey yapmamalıyız. Bu yüzden, bu konuda bir ş
 ```bash
 cd phases/19-capstone-projects/25-verification-gates-observation-budget
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

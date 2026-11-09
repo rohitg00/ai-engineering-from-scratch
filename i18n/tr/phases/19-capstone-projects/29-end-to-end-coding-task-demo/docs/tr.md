@@ -3,7 +3,7 @@
 > A'nın ödeme. Bu ders, kapı zincirini, kum kutusu, eval harness'i ve OTel'i bir çok dosya Python projesinde gerçek (küçük, sabit ölçekli) bir hata düzeltmek için çalışan bir kodlama ajanına yayar. Ajan bir LLM değil, bir deterministik politika; takas, dersi yeniden üretilebilir hale getirir ve harness'in tüm zaman boyunca ilginç bir parçası olduğunu gösterir. Sözleşme aynıdır: politikaya gerçek bir model bağlanır.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 19 · 28 (observability), Phase 14 · 38 (verification gates), Phase 14 · 41 (workbench for real repos), Phase 14 · 42 (agent workbench capstone)
 **Time:** ~90 minutes
 
@@ -113,6 +113,7 @@ Bu ders entegrasyon. 25 ders kapı zinciri yazdı. 26 ders kum kutu yazdı. 27 d
 ```bash
 cd phases/19-capstone-projects/29-end-to-end-coding-task-demo
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

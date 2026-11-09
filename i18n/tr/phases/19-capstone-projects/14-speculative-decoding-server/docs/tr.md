@@ -3,7 +3,7 @@
 > Spekülatör dekodlama  ucuz bir taslak token önerir, hedef model onları bir geçitle doğruluyor  şimdi bir araştırma hilesi değil, üretim hazır bir optimizasyon. EAGLE-3 vLLM 0.7 gemiler gerçek trafikte 2.5-3x geçiş gücü. P-EAGLE (AWS 2026) paralel spekülasyonları daha da ileriye sürdü. SGLang'ın SpecForge'i, büyük ölçekte askerlik başkanları eğitmiştir. Red Hat'ın Spekülatörler merkezi ortak açık modeller için düzeltilmiş taslaklar yayınladı. TensorRT-LLM NVIDIA'da birinci sınıf spekülatör kodlama yaptı. 2026 üretim servis kümesi, EAGLE-aile taslakları, FP8 veya INT4 kuantizasyonu ve sıra bekleyen HPA ile vLLM veya SGLang'dır. Bu son taş, 2,5x+ temel üretim oranında iki açık model hizmet vermektedir ve tam bir kuyruğu gecikme raporu ile birlikte.
 
 **Type:** Capstone
-**Languages:** Python (serving), C++ / CUDA (kernel inspection), YAML (configs)
+**Languages:** Python (serving), TypeScript, C++ / CUDA (kernel inspection), YAML (configs)
 **Prerequisites:** Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 17 (infrastructure)
 **Phases exercised:**P3 · P7 · P10 · P17
 **Time:** 30 hours

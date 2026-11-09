@@ -3,7 +3,7 @@
 > Gözlem yapılmaz bir ajan harness, para harcayan bir kara kutu. Bu ders, OpenTelemetry GenAI semantik sözleşmelerine uygun kayıtlar yayınlayan bir uzantı yapımcısı ile elle oynatılır, onları bir satır başına bir uzantı olan JSON-Lines dosyasına yazar ve Prometheus metin biçiminde sayıcıları ve histogramları ortaya çıkarır. Tüm şey stdlib Python'dur ve çevrimdışı çalışır.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 13 · 20 (OpenTelemetry GenAI), Phase 14 · 23 (OTel GenAI conventions)
 **Time:** ~90 minutes
 
@@ -96,6 +96,7 @@ Ders 25 kapı zinciri üretti. Ders 26 kum kutusu üretti. Ders 27 değerlendirm
 ```bash
 cd phases/19-capstone-projects/28-observability-otel-traces
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

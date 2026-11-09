@@ -3,7 +3,7 @@
 > Sakana'nın AI-Scientist-v2'si tam makaleler yayınladı. Ajan Laboratuvar deneyleri yaptı. Allen AI izleri paylaştı. 2026 şekli plan-ürüten-gelen-tutar ağacı araştırması deneyler, bütçeli maliyet, kum kutu kod yürütme, bir görüntü geri bildirim LaTeX yazarı ve otomatik NeurIPS tarzı incelemeci ansambludur. Son taş, bir tane inşa etmek, her kağıda 30 dolarlık bir değer içinde çalıştırmak ve Sakana'nın belgelendiği kum kutudan kaçan kırmızı takımdan kurtulmaktır.
 
 **Type:** Capstone
-**Languages:** Python (agent + sandbox), LaTeX (output)
+**Languages:** Python (agent + sandbox), TypeScript, LaTeX (output)
 **Prerequisites:** Phase 2 (ML), Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 18 (safety)
 **Phases exercised:**P0 · P2 · P3 · P7 · P10 · P14 · P15 · P16 · P18
 **Time:** 40 hours

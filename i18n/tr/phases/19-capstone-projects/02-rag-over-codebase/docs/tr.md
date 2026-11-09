@@ -3,7 +3,7 @@
 > 2026'da her ciddi mühendislik kurumu sadece ipler değil, anlamı anlayan bir iç kod arama yürütüyor. Kaynak grafikleri Amp, Cursor'un kod tabanı yanıtları, Augment'ın işletme grafikleri, Aider'in yeniden haritası, Pinterest'in iç MCP  aynı şekil. Birçok repoyi yedik, ağaç bakıcısı ile analiz ettik, işlev ve sınıf seviyesindeki parçaları yerleştirdik, hibrid arama, yeniden sıralama, alıntılarla cevap. Bu son taş, 10 repo üzerinden 2 milyon satır kod ele alan ve her git itme ile artışlı yeniden indekslemeyi sağlayan bir tane oluşturmanızı ister.
 
 **Type:** Capstone
-**Languages:** Python (ingestion), TypeScript (API + UI)
+**Languages:** Python (ingestion), TypeScript (API + UI, retrieval scaffold)
 **Prerequisites:** Phase 5 (NLP foundations), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 17 (infrastructure)
 **Phases exercised:**P5 · P7 · P11 · P13 · P17
 **Time:** 30 hours

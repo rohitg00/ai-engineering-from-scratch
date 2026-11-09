@@ -3,7 +3,7 @@
 > 2026 yılına kadar kodlama ajanının şekli belirlenmiş olacak. Bir TUI harnası, bir durumlu plan, kum kutulu bir alet yüzeyi, planlayan, hareket eden, gözlemleyen, geri kazanan bir döngü. Claude Code, Cursor 3, ve OpenCode, 50 metrelik mesafede aynı görünüyor. Bu son taşı, bir sonun sonunu oluşturmanızı,  CLI'yi içeri almanı,  talebi çekmenizi ve SWE-bench Pro'da mini-swe-agent ve Live-SWE-agent ile karşılaştırmanıızı ister. Neden zor olan şey model çağrısı değil, araç döngüsü, kum kutu ve 50 dönüşte maliyet tavanı olduğunu öğreneceksiniz.
 
 **Type:** Capstone
-**Languages:** TypeScript / Bun (harness), Python (eval scripts)
+**Languages:** TypeScript / Bun (harness, loop scaffold), Python (eval scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools and protocols), Phase 14 (agents), Phase 15 (autonomous systems), Phase 17 (infrastructure)
 **Phases exercised:**P0 · P5 · P7 · P10 · P11 · P13 · P14 · P15 · P17 · P18
 **Time:** 35 hours

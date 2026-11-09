@@ -3,7 +3,7 @@
 > 2026'da bir çok ajan mühendislik ekibinin şekli birleşti: bir mimar planlar, N kodlayıcılar paralel çalışma ağaçlarında çalışır, bir incelemeci kapıları, bir denetçi doğruluyor. SWE-AF'ın fabrika mimarisi, MetaGPT'nin rol tabanlı uyarısı, AutoGen 0.4'in tipize edilmiş oyuncu grafikleri, Kognition'in Devin ve Factory's Droids hepsi bağımsız olarak yere düştü. Paralel çalışma ağaçları duvar saatini üretim kapasitesine dönüştürür. Paylaşılan durum ve teslimat protokolleri başarısızlık yüzeyi haline gelir. Son nokta takım oluşturmak, SWE-benç Pro'da değerlendirmek ve hangi teslimatların kırıldığını ve ne kadar sıklıkla rapor etmek.
 
 **Type:** Capstone
-**Languages:** Python / TypeScript (agents), Shell (worktree scripts)
+**Languages:** Python / TypeScript (agents, task board scaffold), Shell (worktree scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 17 (infrastructure)
 **Phases exercised:**P11 · P13 · P14 · P15 · P16 · P17
 **Time:** 40 hours
