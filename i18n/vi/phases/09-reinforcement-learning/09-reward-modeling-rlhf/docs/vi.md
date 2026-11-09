@@ -3,7 +3,7 @@
 > Con người không thể viết một chức năng phần thưởng cho "đáp ứng trợ lý tốt", nhưng họ có thể so sánh hai phản ứng và chọn một tốt hơn. Đáp lại mô hình phần thưởng cho những so sánh đó, sau đó RL mô hình ngôn ngữ chống lại nó. Christiano 2017. InstructGPT 2022.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment), Phase 9 · 08 (PPO)
 **Time:** ~45 minutes
 

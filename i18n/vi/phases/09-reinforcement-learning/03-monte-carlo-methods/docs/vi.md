@@ -3,7 +3,7 @@
 > Phương pháp lập trình năng động cần một mô hình. Monte Carlo chỉ cần các tập.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming)
 **Time:** ~75 minutes
 

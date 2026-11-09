@@ -3,7 +3,7 @@
 > 1992: TD-Gammon đánh bại các nhà vô địch người ở backgammon bằng TD tinh khiết. 2016: AlphaGo đánh bại Lee Sedol. 2017: AlphaZero thống trị cờ vua, shogi và Go từ đầu. 2025: DeepSeek-R1 chứng minh công thức tương tự, với GRPO thay thế PPO, hoạt động trên lý luận.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 05 (DQN), Phase 9 · 08 (PPO), Phase 9 · 09 (RLHF), Phase 9 · 10 (MARL)
 **Time:** ~120 minutes
 

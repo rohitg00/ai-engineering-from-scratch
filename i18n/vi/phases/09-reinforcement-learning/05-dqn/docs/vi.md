@@ -3,7 +3,7 @@
 > 2013: Mnih đào tạo một mạng học Q trên các pixel nguyên liệu, đánh bại mọi đại lý RL cổ điển trên bảy trò chơi Atari. 2015: mở rộng đến 49 trò chơi, được xuất bản trên Nature, đã kích hoạt thời đại RL sâu. DQN là học Q cộng với ba thủ thuật làm cho việc gần gũi chức năng ổn định.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 04 (Q-learning, SARSA)
 **Time:** ~75 minutes
 

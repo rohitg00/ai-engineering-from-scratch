@@ -3,7 +3,7 @@
 > Một Quá trình Quyết định Markov là năm thứ: trạng thái, hành động, chuyển đổi, phần thưởng, giảm giá. Mọi thứ trong RL  Q-learning, PPO, DPO, GRPO  tối ưu hóa trên hình dạng này. Học nó một lần, đọc phần còn lại của việc học tăng cường miễn phí.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Probability & Distributions), Phase 2 · 01 (ML Taxonomy)
 **Time:** ~45 minutes
 

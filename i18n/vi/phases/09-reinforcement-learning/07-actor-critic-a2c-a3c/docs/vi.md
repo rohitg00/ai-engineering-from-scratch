@@ -3,7 +3,7 @@
 > Đăng lực là tiếng ồn.$\hat{V}(s)$A2C chạy nó đồng bộ; A3C chạy nó qua các chuỗi. Cả hai đều là mô hình tâm lý cho mọi phương pháp RL sâu hiện đại.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (TD Learning), Phase 9 · 06 (REINFORCE)
 **Time:** ~75 minutes
 

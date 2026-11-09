@@ -3,7 +3,7 @@
 > Giữ các parameter chính sách trực tiếp, tính toán gradient của lợi nhuận dự kiến, bước lên. Williams (1992) đã viết nó trong một định lý. Đó là lý do tại sao PPO, GRPO và mỗi vòng LLM RL tồn tại.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 03 (Monte Carlo), Phase 9 · 04 (TD Learning)
 **Time:** ~75 minutes
 

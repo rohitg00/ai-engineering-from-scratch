@@ -3,7 +3,7 @@
 > Một chính sách được đào tạo trong một máy mô phỏng mà thất bại trên phần cứng là một chính sách ghi nhớ máy mô phỏng.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 08 (PPO), Phase 2 · 10 (Bias/Variance)
 **Time:** ~45 minutes
 

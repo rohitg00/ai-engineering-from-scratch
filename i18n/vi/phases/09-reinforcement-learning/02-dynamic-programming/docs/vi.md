@@ -3,7 +3,7 @@
 > Chương trình năng động là RL với gian lận. Bạn đã biết các chức năng chuyển đổi và phần thưởng; bạn chỉ cần lặp lại phương trình Bellman cho đến khi$V$hoặc $\pi$là chuẩn mực mà mọi phương pháp dựa trên lấy mẫu đều cố gắng tiếp cận.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs)
 **Time:** ~75 minutes
 

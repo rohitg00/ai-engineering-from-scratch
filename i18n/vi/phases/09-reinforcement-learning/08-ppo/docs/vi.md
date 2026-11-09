@@ -3,7 +3,7 @@
 > A2C ném đi mỗi rollout sau một bản cập nhật. PPO gói gradient chính sách trong một tỷ lệ quan trọng bị cắt giảm để bạn có thể làm 10+ thời đại trên cùng một dữ liệu mà không bị chính sách nổ. Schulman et al. (2017).
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~75 minutes
 

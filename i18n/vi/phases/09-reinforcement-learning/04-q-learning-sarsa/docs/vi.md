@@ -3,7 +3,7 @@
 > Monte Carlo chờ đợi cho đến khi tập phim kết thúc. TD cập nhật sau mỗi bước bằng cách khởi động ước tính giá trị tiếp theo. Q-learning là không chính sách và lạc quan; SARSA là chính sách và thận trọng. Cả hai đều là một dòng mã. Cả hai đều là nền tảng cho mọi phương pháp RL sâu trong giai đoạn này.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming), Phase 9 · 03 (Monte Carlo)
 **Time:** ~75 minutes
 

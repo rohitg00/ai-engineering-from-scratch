@@ -3,7 +3,7 @@
 > Một đại lý RL giả định môi trường không hoạt động. Đặt hai đại lý học tập trong cùng một thế giới và giả định đó phá vỡ: mỗi đại lý là một phần của môi trường của người khác, và cả hai đều thay đổi.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (Q-learning), Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~45 minutes
 
