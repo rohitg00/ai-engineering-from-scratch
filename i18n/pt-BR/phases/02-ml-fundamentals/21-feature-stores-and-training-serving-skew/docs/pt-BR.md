@@ -3,7 +3,7 @@
 > Um recurso tem uma definição e dois leitores. O treinamento lê sua história a partir de cada tempo de etiqueta, e servir lê seu valor mais recente. Quando os dois leitores discordam, o modelo vê entradas que nunca treinou.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 08 (Feature Engineering), 13 (ML Pipelines), 15 (Time Series), and 19 (ML System Design)
 **Time:** ~100 minutes
 
@@ -275,6 +275,7 @@ O registro de demonstração registra as solicitações nos dias 141 a 150 e rea
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console

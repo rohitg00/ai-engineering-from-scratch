@@ -3,7 +3,7 @@
 > Um modelo implantado falha sem uma mensagem de erro. Ele continua a devolver pontuações enquanto o mundo se afasta dos seus dados de treinamento, e apenas o monitoramento mostra a lacuna.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation), 16 (Anomaly Detection), and 19 (ML System Design)
 **Time:** ~110 minutes
 
@@ -261,6 +261,7 @@ O modelo é um limiar de `amount`Os Windows têm 500 eventos e se movem em 250.
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console

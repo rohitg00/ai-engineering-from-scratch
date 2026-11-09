@@ -3,7 +3,7 @@
 > Um modelo é uma parte de um sistema. O design decide o que o modelo prevê, quem age sobre ele, o que custa e o que acontece quando falha.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation) and 13 (ML Pipelines)
 **Time:** ~110 minutes
 
@@ -295,6 +295,7 @@ CheckItem("serving_fit", 1, False, "pick a serving mode that meets the staleness
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console
@@ -322,6 +323,7 @@ A revisão do documento de projeto imprime o documento fraco com seis itens de b
 
 ```bash
 python3 code/main.py my_design_doc.json
+npx tsx code/main.ts my_design_doc.json
 ```
 
 ## Usá-lo
