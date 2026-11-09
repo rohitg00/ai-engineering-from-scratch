@@ -3,7 +3,7 @@
 > الفشل في الاسترداد اللكسي والمعنى في توزيعات الاستفسارات المقابلة. لا يتداخل الاسترداد الهجري مع اندماج الترتيب المتبادل ، لكنه يصوت - والصوت يفوز في كل فئة استفسار.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lesson 64 (chunking strategies)
 **Time:** ~90 minutes
 
@@ -81,6 +81,7 @@ rrf-fusion
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 اقرأ إصدار التجربة جنبا إلى جنب. يصل استفسار المعرف حرفي إلى BM25 رتبة 1 ، رتبة كثيفة 4 ، رتبة RRF 1. يصل استفسار المفرد إلى BM25 رتبة 6 ، رتبة كثيفة 1 ، رتبة RRF 1. يصل الاستفسار الغامض إلى BM25 رتبة 3 ، رتبة كثيفة 3 ، رتبة RRF 1.

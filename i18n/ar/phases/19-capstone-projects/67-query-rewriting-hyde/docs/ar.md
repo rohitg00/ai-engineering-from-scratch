@@ -3,7 +3,7 @@
 > لا يُرجع البحث الذي يكتب به المستخدم البحث الذي يريده المستخدم. إعادة الكتابة تعطي الفجوة قبل الاستعراض، لذلك يرى المؤشر شيئاً أقرب إلى ما يبدو عليه الإجابة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64 and 65
 **Time:** ~90 minutes
 
@@ -120,6 +120,7 @@ cd-hyde-vector
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج هو ترتيب لكل استراتيجية وموجز نهائي. يفوز HyDE على استفسار التعبير غير المماثل. يفوز الاستفسار متعدد على استفسار التفردز. يفوز التفكيك على استفسار متعدد الموضوعات. يفقد الفشل (لا إعادة كتابة) على الأقل واحد من الثلاثة.

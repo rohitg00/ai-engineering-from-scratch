@@ -3,7 +3,7 @@
 > الحلقة هي فقط صادقة مثل قياساتها. بناء المتدرب الذي يأخذ تحديد، ويجري ذلك في عملية فرعية مربع الرمال، وإصدار مقياسات json بقعة يمكن للمقيّم الثقة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

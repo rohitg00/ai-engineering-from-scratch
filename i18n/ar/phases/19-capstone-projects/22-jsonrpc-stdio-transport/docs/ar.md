@@ -3,7 +3,7 @@
 > النقل بين العميل النموذجي وخادم الأدوات هو JSON-RPC عبر stdio. التدحرج يدويا مرة واحدة يعلمك ما كل طبقة الإطار يدفع.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

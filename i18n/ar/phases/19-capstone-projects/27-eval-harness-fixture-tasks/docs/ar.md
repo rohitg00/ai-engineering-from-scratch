@@ -3,7 +3,7 @@
 > وكيل التشفير جيد فقط بقدر مجموعة المهام التي تقيسها هذا الدروس يبني حزمة تقييم تأخذ مجلد من المهام الثابتة، ويعمل كل من خلال وكيل مرشح، والنقاط تمر أو تفشل من خلال مؤكد تحديد، ويتجمّع النتائج إلى pass@1, pass@k، متوسط التأخير، والتكلفة المتوسطة. الحزام هو مصدر الحقيقة الذي يسمح لك أن تعرف عكس من المعدل.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox runner), Phase 14 · 30 (eval-driven agent development), Phase 14 · 19 (SWE-bench and GAIA benchmarks)
 **Time:** ~90 minutes
 
@@ -100,6 +100,7 @@ flowchart TD
 ```bash
 cd phases/19-capstone-projects/27-eval-harness-fixture-tasks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

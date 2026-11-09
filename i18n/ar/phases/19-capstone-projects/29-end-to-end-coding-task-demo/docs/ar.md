@@ -3,7 +3,7 @@
 > ثمن المسار "أ". هذه الدروس تسحق سلسلة البوابة، صندوق الرمل، حزمة تقييم، وتمتد OTel إلى وكيل تشفير واحد يعمل الذي يصلح خطأ حقيقي (صغير، على نطاق ثابت) في مشروع Python متعدد الملفات. الوكيل هو سياسة تحديدية، وليس ماجستير في التدريبات، والبدل يجعل الدروس قابلة للتكرار ويظهر أن الحزام كان الجزء المثير للاهتمام طوال الوقت. العقد هو نفسه: نموذج حقيقي يضبط في سيل السياسة.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 19 · 28 (observability), Phase 14 · 38 (verification gates), Phase 14 · 41 (workbench for real repos), Phase 14 · 42 (agent workbench capstone)
 **Time:** ~90 minutes
 
@@ -113,6 +113,7 @@ flowchart TD
 ```bash
 cd phases/19-capstone-projects/29-end-to-end-coding-task-demo
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

@@ -3,7 +3,7 @@
 > تعتبر مجموعة العملاء دون قابلية للملاحظة مربع أسود يكلف المال. هذه الدروس تدور يدويًا على مبدع المدة التي تنشر سجلات تتوافق مع اتفاقيات OpenTelemetry GenAI التفصيلية ، وتكتبها في ملف JSON-Lines مدى واحد لكل سطر ، وتكشف العدادات والهستوجرامات في شكل نص Prometheus. كل شيء هو stdlib Python ويجري خارج الاتصال.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 13 · 20 (OpenTelemetry GenAI), Phase 14 · 23 (OTel GenAI conventions)
 **Time:** ~90 minutes
 
@@ -96,6 +96,7 @@ flowchart LR
 ```bash
 cd phases/19-capstone-projects/28-observability-otel-traces
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

@@ -3,7 +3,7 @@
 > البايتات داخل، والهوية خارج، والهوية مرة أخرى إلى نفس البايتات. بناء الوهم الذي كل نموذج نص الحديث لا يزال يبدأ من.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 04 lessons, Phase 07 transformer lessons
 **Time:** ~90 minutes
 

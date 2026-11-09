@@ -3,7 +3,7 @@
 > حددت المصفوفات الدستورية لشركة الأنثروبيك، و"ميتا لاما غارد 4"، و"جوجل شيلد جيما 2"، و"نيموترون 3" من شركة NVIDIA، و"إكس غارد" للتغطية متعددة اللغات، كومة تصنيفات السلامة لعام 2026. أصبحت Garak، PyRIT، NVIDIA Aegis، و promptfoo أدوات تقييم المعارضة القياسية. نيمو غاردريلز v0.12 يربطهم في خط إنتاج هذه الحجر الرئيسي يجمع كل شيء معاً: حزمة أمن طبقاتية حول تطبيق هدف، وكيل فريق أحمر مستقل يعمل على 6 أسرة هجوم، ومركز تقرير النفس الدستوري الذي ينتج دلتا الأضرار القاسية.
 
 **Type:** Capstone
-**Languages:** Python (safety pipeline, red team), YAML (policy configs)
+**Languages:** Python (safety pipeline, red team), TypeScript, YAML (policy configs)
 **Prerequisites:** Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 18 (ethics, safety, alignment)
 **Phases exercised:**P10 · P11 · P13 · P14 · P18
 **Time:** 25 hours

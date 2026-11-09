@@ -3,7 +3,7 @@
 > نشر "سانتيس" الذكاء الاصطناعي (Sakana) ورقائق كاملة. العميل مختبر أجرى التجارب. (ألين) المُتعلّق بمعرفة الذكاء شارك أثرًا شكل 2026 هو البحث عن الخطة- تنفيذ- التحقق من الأشجار على التجارب، التكلفة الميزانية، تنفيذ رمز مربع الرمال، كتاب الرؤية-ردود LaTeX، ومجموعة المراجعة الآلية في نمط NeurIPS. الحجر النهائي هو بناء واحد، تشغيله من نهاية إلى نهاية في غضون 30 دولار لكل ورقة، والبقاء على قيد الحياة من صندوق الرمال الهروب الفريق الأحمر الذي سكانا وثيق.
 
 **Type:** Capstone
-**Languages:** Python (agent + sandbox), LaTeX (output)
+**Languages:** Python (agent + sandbox), TypeScript, LaTeX (output)
 **Prerequisites:** Phase 2 (ML), Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 18 (safety)
 **Phases exercised:**P0 · P2 · P3 · P7 · P10 · P14 · P15 · P16 · P18
 **Time:** 40 hours

@@ -3,7 +3,7 @@
 > إذا لم تتمكن من تصنيف استردادك وجوابك في نفس الوقت، لا يمكنك شحن النظام. لا تكون المقاييسين نفسها وتفشل نفس الإشارة على محور مختلفة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 06 (RAG), 10 (evaluation); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64, 65, 66, 67
 **Time:** ~90 minutes
 
@@ -121,6 +121,7 @@ ci-rag-metric-ladder
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 تظهر الخروج precision@k، recall@k، MRR، nDCG@k، الولاء، والسوابية لكل فارقة في جدول واحد للمقاييس. صف الاسترداد الهجري يفوق خط الأساس في التذكر. صف تعديل الفئة يفوق الهجري على MRR.

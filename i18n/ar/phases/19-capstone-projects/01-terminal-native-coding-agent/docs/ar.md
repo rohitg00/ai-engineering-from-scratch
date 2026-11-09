@@ -3,7 +3,7 @@
 > بحلول عام 2026، سيتم تحديد شكل وكيل التشفير. حزمة TUI، خطة حالة، سطح أداة مربع رمال، حلقة التي تخطط، تعمل، تلاحظ، تعافى. كلود كود، كورسور 3، و "أوبن كود" تبدو متشابهة من 50 قدم. هذه الحجر النهائي يطلب منك أن تبني نهاية واحدة إلى نهاية  CLI في، سحب الطلب  وتقييمها ضد الوكيل الصغرى و Live-SWE-وكيل على SWE-bench Pro. سوف تتعلم لماذا الجزء الصعب ليس هو الموديل المكالمة ولكن حلقة الأدوات، مربع الرمال، والسقف التكلفة على 50 جولة.
 
 **Type:** Capstone
-**Languages:** TypeScript / Bun (harness), Python (eval scripts)
+**Languages:** TypeScript / Bun (harness, loop scaffold), Python (eval scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools and protocols), Phase 14 (agents), Phase 15 (autonomous systems), Phase 17 (infrastructure)
 **Phases exercised:**P0 · P5 · P7 · P10 · P11 · P13 · P14 · P15 · P17 · P18
 **Time:** 35 hours

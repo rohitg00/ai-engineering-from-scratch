@@ -3,7 +3,7 @@
 > جهاز الكشف هو وظيفة من الإستعلام إلى الثقة والفئة. أي شيء آخر هو الوهم.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -57,7 +57,7 @@ injection-gate
 
 ## استخدمها
 
-أركض`python3 main.py`الاكتشاف يحمل التشريعات، يستخدم الكاشف على كل جهاز، ويقوم بتشغيله على جسم من المواد الخفيفة المفروضة`benign.py`ويقوم بطبع المقاييس لكل فئة`outputs/detector_report.json`الملف هو الأثاث الذي يستهلكه البوابة الأمنية في الدروس 87
+أركض`python3 main.py`أو`npx tsx main.ts`الاكتشاف يحمل التشريعات، يستخدم الكاشف على كل جهاز، ويقوم بتشغيله على جسم من المواد الخفيفة المفروضة`benign.py`ويقوم بطبع المقاييس لكل فئة`outputs/detector_report.json`الملف هو الأثاث الذي يستهلكه البوابة الأمنية في الدروس 87
 
 ## أرسله
 

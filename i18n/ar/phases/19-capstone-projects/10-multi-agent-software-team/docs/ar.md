@@ -3,7 +3,7 @@
 > صيغة 2026 من فريق هندسي متعدد الوكلاء قد تجمع: خطط المهندس المعماري، N المبرمجين يعملون في أشجار العمل المتوازية، بوابات المراجعة، اختبار يصدق. بنية المصنع SWE-AF، التحفيز القائم على الأدوار MetaGPT، رسمية الممثل المكتوب من AutoGen 0.4، ديفين من Cognition، و درويد من المصنع جميعها هبطت على ذلك بشكل مستقل. الأشجار الموازية تعمل على تحويل الساعة الجدارية إلى انتاج. البروتوكولات المشتركة في الحالة والإرسال تصبح سطح الفشل الحجر النهائي هو بناء الفريق، تقييم على مقعد SWE-Pro، وتقرير أي التسليمات تقطع وكيفية.
 
 **Type:** Capstone
-**Languages:** Python / TypeScript (agents), Shell (worktree scripts)
+**Languages:** Python / TypeScript (agents, task board scaffold), Shell (worktree scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 17 (infrastructure)
 **Phases exercised:**P11 · P13 · P14 · P15 · P16 · P17
 **Time:** 40 hours

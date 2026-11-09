@@ -3,7 +3,7 @@
 > النقاد الذي يعود "يبدو جيدا" في المرة الأولى هو مكسور. النقاد الذي يعود دائما "حاجة إلى العمل" هو مكسور. النقاد المثير للاهتمام هو الذي يتقارب، ويجب عليك أن تصميم التقارب.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

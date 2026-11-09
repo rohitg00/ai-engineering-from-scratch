@@ -3,7 +3,7 @@
 > المُرسل هو المكان الذي يدفع فيه الحزام لكل وعدٍ قام به النظام التوقيت، التجربة، التخفيض، خريطة الخطأ، كلّه على خطّة واحدة
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

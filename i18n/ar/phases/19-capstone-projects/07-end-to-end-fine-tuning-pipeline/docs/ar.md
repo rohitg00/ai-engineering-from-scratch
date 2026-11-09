@@ -3,7 +3,7 @@
 > نموذج من فئة 8B تدرب على بياناتك الخاصة، DPO-موافق على تفضيلاتك الخاصة، كمية، تشفير المضاربة، وتخدم في القياس $ / مليون رموز. كومة مفتوحة 2026 هي Axolotl v0.8 ، TRL 0.15 ، Unsloth للتكرار ، GPTQ / AWQ / GGUF للتقييم الكمي ، vLLM 0.7 مع EAGLE-3 للخدمة. الحجر النهائي هو تشغيل خط الأنابيب بأكمله بشكل قابل للتكرار (YAML في، خدمة نقطة نهاية خارج) ونشر بطاقة نموذجية في إطار افتتاح نموذج 2026.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), YAML (configs), Bash (scripts)
+**Languages:** Python (pipeline), TypeScript, YAML (configs), Bash (scripts)
 **Prerequisites:** Phase 2 (ML), Phase 3 (DL), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P2 · P3 · P7 · P10 · P11 · P17 · P18
 **Time:** 35 hours

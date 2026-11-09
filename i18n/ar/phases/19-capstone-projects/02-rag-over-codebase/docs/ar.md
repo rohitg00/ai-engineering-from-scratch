@@ -3,7 +3,7 @@
 > كل منظمة هندسية خطيرة في عام 2026 تقوم بعمل بحث داخلي في الشفرة يفهم المعنى وليس مجرد أسطر مصدر الرسم البياني Amp، أجوبة قاعدة البرمجيات Cursor، الرسم البياني المؤسسة Augment، Aider repomap، Pinterest الداخلية MCP  نفس الشكل. تناول العديد من المشاركات، تحليل مع الحارس الشجرة، تضمين وظيفة ودرجة الطراز قطع، بحث هجين، إعادة تصنيف، الإجابة مع الاقتباسات. هذه الحجر النهائي يطلب منك أن تبني واحدة التي تتعامل مع 2M خطوط من الشفرة عبر 10 repos والتي تنجو إعادة إدراج التنويع التدريجي في كل دفع.
 
 **Type:** Capstone
-**Languages:** Python (ingestion), TypeScript (API + UI)
+**Languages:** Python (ingestion), TypeScript (API + UI, retrieval scaffold)
 **Prerequisites:** Phase 5 (NLP foundations), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 17 (infrastructure)
 **Phases exercised:**P5 · P7 · P11 · P13 · P17
 **Time:** 30 hours

@@ -3,7 +3,7 @@
 > حد الدقائق - QA لعام 2026 انتقل عن OCR-ثم-النص نحو التفاعل المتأخر من الرؤية أولاً. تعامل ColPali، ColQwen2.5، و ColQwen3-omni كل صفحة PDF كصورة، وتدمجها مع تفاعل متأخر متعدد المتجهات، وتسمح للسؤال بالاتصال بالصفات مباشرة. في 10K المالية، ورق علمية، وملاحظات مكتوبة يدويا هذا النمط يتغلب على OCR أولا بحجم كبير. بناء خط الأنابيب من نهايتها إلى نهايتها على 10 ألف صفحة ونشر الجانب إلى الجانب ضد OCR-then-text.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (viewer UI)
+**Languages:** Python (pipeline), TypeScript (viewer UI, retrieval scaffold)
 **Prerequisites:** Phase 4 (computer vision), Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**P4 · P5 · P7 · P11 · P12 · P17
 **Time:** 30 hours

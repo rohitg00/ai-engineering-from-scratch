@@ -3,7 +3,7 @@
 > بوابة التحقق تقرر ما إذا كان يجب تشغيل مكالمة أداة. الصندوق يقرر ما سيحدث عندما يفعل هذه الدروس ترسل مدربة فرعية العمليات التي ترفض الممارسات الخطرة، ترفض أشكال ARGV الخطرة، تسجن كل مسار الملف إلى جذور المشروع، تقصر الناتج المفرط، وتقتل العمليات الهربة في وقت مع وقف الساعة الحائطية. إنها الثانية من طبقتين تقع بين النموذج والنظام التشغيلي.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates and observation budget), Phase 14 · 33 (instructions as constraints), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -87,6 +87,7 @@ flowchart LR
 ```bash
 cd phases/19-capstone-projects/26-sandbox-runner-denylist
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

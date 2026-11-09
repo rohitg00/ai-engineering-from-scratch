@@ -3,7 +3,7 @@
 > فرضية رخيصة، معرفة ما إذا كان شخص ما قد أثبتها بالفعل هو الجزء الثمين، بناء طبقة الاسترداد التي تجيب على هذا السؤال قبل أن يدور الركاب فوق صندوق الرمال.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

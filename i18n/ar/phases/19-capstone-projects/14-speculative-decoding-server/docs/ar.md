@@ -3,7 +3,7 @@
 > فك التشخيص المضاربة  مشروع رخيص يقدم رموز، النموذج المستهدف يصدقهم في مرور واحد  هو الآن تحسين جاهز للإنتاج، وليس خدعة بحث. إيغل-3 في vLLM 0.7 سفن 2.5-3x التنقل على حركة المرور الحقيقية. "ب-إيغل" (AWS 2026) دفع التكهنات المتوازية إلى أبعد من ذلك. "مُدربة "سبيك فورج "في "سجلانغ" تدرب رؤساء الجندات على نطاق واسع مركز المتكهنين في ريد هات نشر مسودات متوافقة لنماذج مفتوحة مشتركة. (تنسورRT-LLM) جعلت عملية فك التشفير المضاربة من الدرجة الأولى على (NVIDIA). إن كومة الإنتاج 2026 هي vLLM أو SGLang مع مسودات عائلة EAGLE، FP8 أو INT4 الكميات، و HPA في انتظار الصف. هذه الحجر النهائي هو خدمة اثنين من النماذج المفتوحة عند 2.5x + التميز القياسي مع تقرير كامل التأخير الذيل.
 
 **Type:** Capstone
-**Languages:** Python (serving), C++ / CUDA (kernel inspection), YAML (configs)
+**Languages:** Python (serving), TypeScript, C++ / CUDA (kernel inspection), YAML (configs)
 **Prerequisites:** Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 17 (infrastructure)
 **Phases exercised:**P3 · P7 · P10 · P17
 **Time:** 30 hours

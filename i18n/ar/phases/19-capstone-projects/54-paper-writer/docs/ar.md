@@ -3,7 +3,7 @@
 > العظام اللاتكس هو عقد بين الباحث ومدفع النص. إذا تم كسر العقد ، فإن الوثيقة لا تجمع ، والفشل صاخب. قم ببناء العظام أولاً ، ثم املأه.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

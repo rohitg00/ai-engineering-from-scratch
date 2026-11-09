@@ -3,7 +3,7 @@
 > استخدام تقييم جيد فقط بقدر ما يُكرم العقد مهامه. تجميد شكل JSONL ومفرد المقياس قبل كتابة وظيفة تسجيل واحدة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track B foundations
 **Time:** ~90 min
 

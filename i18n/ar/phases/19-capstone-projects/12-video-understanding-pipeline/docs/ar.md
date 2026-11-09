@@ -3,7 +3,7 @@
 > 12 مختبرة أنتجت مارينغو + بيغاسوس. (فيديو دي بي) أرسلت (CRUD-for-video API) (مولمو 2) من (إي آي 2) أعلن عن فتح نقاط تفتيش (فيلم التوأم يتعامل مع ساعات الفيديو بشكل طبيعي تعريف TimeLens-100K التأريخ الزمني على نطاق واسع. تم تسوية خط الأنابيب لعام 2026: قسم المشهد، وصف لكل مشهد + إضافة، وتحديد النصوص، ومؤشر متعدد المتجهات، ومسألة تجيب مع (بدء، نهاية) طوابع زمنية بالإضافة إلى مشاهدات الإطار. الحجر النهائي يتناول 100 ساعة، يصل إلى المعايير العامة، ويقيس الهلوسة على الأسئلة العد والعمل.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (UI)
+**Languages:** Python (pipeline), TypeScript (UI, pipeline scaffold)
 **Prerequisites:** Phase 4 (CV), Phase 6 (speech), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**P4 · P6 · P7 · P11 · P12 · P17
 **Time:** 30 hours

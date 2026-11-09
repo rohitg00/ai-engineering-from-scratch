@@ -3,7 +3,7 @@
 > أمازون MigrationBench (Java 8 إلى 17) وGoogle App Engine Py2-to-Py3 المهاجرين وضع 2026 بار. OpenRewrite Moderne يقوم بإعادة كتابة AST المحددة على نطاق واسع. غريت تستهدف نفس المشكلة مع نظام التشغيل النمطي (DSL). يجمع نمط الإنتاج بين كلتا: أساس تحديدي لإعادة كتابة آمنة بالإضافة إلى طبقة عاملة للقضايا الغامضة، وصندوق رمل لكل فروع، وسلطة اختبارية تتحول إلى خضراء قبل فتح PR. الحجر النهائي هو الهجرة 50 مقبض حقيقي ونشر معدل الانتقال مع تصنيف الفشل.
 
 **Type:** Capstone
-**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard)
+**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard, agent scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**P5 · P7 · P11 · P13 · P14 · P15 · P17
 **Time:** 30 hours

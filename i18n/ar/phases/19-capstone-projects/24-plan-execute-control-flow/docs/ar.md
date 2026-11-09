@@ -3,7 +3,7 @@
 > خطة لا تستطيع البقاء على قيد الحياة في الفشل هي النص النص الذي يمكن إعادة التخطيط هو وكيل بناء إعادة التخطيط أولا
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > خانميغو (أكاديمية خان) ، دوولينغو ماكس ، جوجل تعلمLM / جيمين للتعليم ، كويزليت Q-Chat ، و Tutor Synthesis جميعهم أرسلوا التدريبات المتعددة الطرق التكيفية على نطاق واسع في عام 2026. الشكل الشائع هو سياسة سقراطية (لا تنزل الإجابة أبداً) ، ونموذج متعلم يقوم بتحديثها بعد كل تفاعل (نمط تعقب المعرفة البايسية) ، وإدخال الصوت + النص + الرسوم البصرية ، واسترداد الرسم البياني للمنهج الدراسي ، وتخطيط التكرار المتفاصيل ، ومصفحات السلامة الصلبة للمحتوى المناسب للسن. الحجر النهائي هو إرسال معلم محدد للموضوع (الجيبر K-12 أو مقدمة Python) ، وإجراء دراسة فعالية لمدة أسبوعين مع 10 متعلمين، والجائزة على مراجعة سلامة المحتوى.
 
 **Type:** Capstone
-**Languages:** Python (backend, learner model), TypeScript (web app), SQL (curriculum graph via Postgres + Neo4j)
+**Languages:** Python (backend, learner model), TypeScript (web app, learner model scaffold), SQL (curriculum graph via Postgres + Neo4j)
 **Prerequisites:** Phase 5 (NLP), Phase 6 (speech), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 14 (agents), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P5 · P6 · P11 · P12 · P14 · P17 · P18
 **Time:** 30 hours

@@ -3,7 +3,7 @@
 > حزمة عميلة بدون طبقة التحقق هي رغبة في سترة حفرة هذا الدروس يبني سلسلة البوابة التحديدية التي تقرر ما إذا كان يسمح لإطلاق مكالمة أداة، كم من خروجه يسمح للوكيل برؤيته، ومتى يجب أن يتوقف الحلقة لأن الوكيل قرأ الكثير. السلسلة هي وظيفة من البوابات الصغيرة، المسمى بالإضافة إلى دفتر الملاحظات التي تتبع كل رمز تم عرض النموذج.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 20-24 (Track A1: agent loop, tool registry, message store, prompt builder, model router), Phase 14 · 33 (instructions as constraints), Phase 14 · 36 (scope contracts), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -95,6 +95,7 @@ flowchart TD
 ```bash
 cd phases/19-capstone-projects/25-verification-gates-observation-budget
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

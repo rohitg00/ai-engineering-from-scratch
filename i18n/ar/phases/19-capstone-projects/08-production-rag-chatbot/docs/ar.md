@@ -3,7 +3,7 @@
 > هارفي، غلين، مينديبل، ولاماكلود جميعها تعمل نفس شكل الإنتاج في عام 2026. إحتساء مع docling أو Unstructured و ColPali للصور البصرية. البحث الهجري إعادة تصنيف مع Bge-Renanker-V2-gemma. قم بتجميعها مع كلود سونيت 4.7 باستخدام التخزين المحفوظ بسرعة 60-80% من النتائج. الحراس مع حرس لاما 4 و حرس نيمو انتبه لـ (لانغفوز) و (فينكس) تصنيف مع راجاس على مجموعة من الذهب من 200 سؤال. بناء واحد في مجال تنظيمي (قانونية، سريرية، تأمين) ، والحجر النهائي هو عبور مجموعة الذهبية، الفريق الأحمر، و لوحة التحكم التجريبي.
 
 **Type:** Capstone
-**Languages:** Python (pipeline + API), TypeScript (chat UI)
+**Languages:** Python (pipeline + API), TypeScript (chat UI, pipeline scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P5 · P7 · P11 · P12 · P17 · P18
 **Time:** 30 hours

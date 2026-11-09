@@ -3,7 +3,7 @@
 > وضع علامة على قضية، الحصول على PR  شكل المنتج 2026 للوكلاء التشفير المستقلين: تشغيل وكيل في صندوق الرمال السحابية، التحقق من اجتياز الاختبارات، ونشر PR جاهز للمراجعة مع المنطق. وكلاء AWS SWE عن بعد وكلاء خلفية كورسور OpenAI Codex سحابة، وجوجل جولز جميع شحنها. الأجزاء الصعبة هي إعادة إنتاج بيئة البناء من الاستثمار تلقائيًا ، ومنع تسرب المراجع ، وتطبيق ميزانيات لكل استثمار ، وتأكد من أن الوكيل لا يمكن الضغط القسري. هذه الحجر النهائي يبني النسخة المضيفة الذاتية ويقارنها على التكلفة وتجاوز مع البدائل المضيفة.
 
 **Type:** Capstone
-**Languages:** Python (agent), TypeScript (GitHub App), YAML (Actions)
+**Languages:** Python (agent), TypeScript (GitHub App, agent scaffold), YAML (Actions)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**P11 · P13 · P14 · P15 · P17
 **Time:** 30 hours

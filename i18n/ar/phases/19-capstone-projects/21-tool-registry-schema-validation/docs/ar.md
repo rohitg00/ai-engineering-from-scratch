@@ -3,7 +3,7 @@
 > أداة لا يستطيع الوكيل التحقق منها هي أداة لا يستطيع الوكيل الاتصال بها. قم ببناء السجل ومحقق النظام قبل بناء الأدوات.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 
