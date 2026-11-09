@@ -3,7 +3,7 @@
 > Ses, 16-48 kHz'de 1 boyutlu bir sinyaldir. Beş saniyelik bir klip 80-240k örneklerdir. Hiçbir transformatör bu sıraya doğrudan katılmaz. 2026'da her üretim ses modeli için çözüm aynıdır: bir sinir kodeksi (Encodec, SoundStream, DAC) sesini ayrı jetonlara 50-75 Hz'de sıkıştırır ve bir transformatör veya difüzyon modeli jetonları üretir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Audio Features), Phase 6 · 04 (ASR), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 

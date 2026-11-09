@@ -3,7 +3,7 @@
 > Bir otomatik kodlayıcı sıkıştırır, sonra yeniden oluşturur. Hatırlıyor. Yaratmaz. Bir numara ekleyin  kodu Gaussian görünmesi için zorlayın  ve bir örneklemeci elde edersiniz.$z = \mu + \sigma \cdot \epsilon$, bu yüzden 2026'da kullandığınız her gizli yayılma ve akış eşleşme görüntü modeli girişinde bir VAE'ye sahip.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
 **Time:** ~75 minutes
 

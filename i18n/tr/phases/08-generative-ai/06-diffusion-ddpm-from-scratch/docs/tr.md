@@ -3,7 +3,7 @@
 > Ho, Jain, Abbeel (2020) alanı durduramadığı bir tarif verdi. Bir bin küçük adım üzerinde gürültü ile verileri yok edin. Gürültüyü tahmin etmek için bir sinir ağı eğit. Süresini çıkarma esnasında tersine çevirin. Bugün her ana akım görüntü, video, 3D ve müzik modeli bu döngü üzerinde çalışır, muhtemelen akış eşleşmesi veya tutarlılık hilelerle üstü.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 8 · 02 (VAE)
 **Time:** ~75 minutes
 

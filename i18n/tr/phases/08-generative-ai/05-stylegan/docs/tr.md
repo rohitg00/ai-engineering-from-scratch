@@ -3,7 +3,7 @@
 > Çoğu jeneratör hareket eder .$z$StyleGAN onu bölüyor: ilk harita$z$Ortalama bir kişiye.$w$, sonra * enjekte * $w$AdaIN'den gelen bu tek değişim gizli alanı çözüp fotorealist yüzleri yedi yıl boyunca çözülmüş bir sorun haline getirdi.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 

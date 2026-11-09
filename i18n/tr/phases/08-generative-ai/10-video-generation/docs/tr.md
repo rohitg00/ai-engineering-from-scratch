@@ -3,7 +3,7 @@
 > Bir görüntü 2 boyutlu bir tensördür. Bir video 3 boyutlu bir tenzordur. Teorisi aynıdır; hesaplama 10-100 kat daha zordur. OpenAI'nin Sora (Feb 2024) bunun mümkün olduğunu kanıtladı. 2026 yılına kadar Veo 2, Kling 1.5, Runway Gen-3, Pika 2.0, ve WAN 2.2 gemisi üretim videoları 1080p 'de metin ve açık ağırlıklı yığın (CogVideoX, HunyuanVideo, Mochi-1, WAN 2.2) 12 ay geri.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 7 · 09 (ViT), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 

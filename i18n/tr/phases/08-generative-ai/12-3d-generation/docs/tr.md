@@ -3,7 +3,7 @@
 > 3D, 2D-den 3D'ye en güçlü kaldıraçın bulunduğu modalitedir. 2023'te 3D Gaussian Splating'in atılımını gerçekleştirdi. 2024-2026 generatif itme katmanları bir tek istek veya fotoğraftan nesneler ve sahneleri üretmek için üstte çok görüntü yayılması + 3D rekonstrüksiyon.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 4 (Vision), Phase 8 · 07 (Latent Diffusion)
 **Time:** ~45 minutes
 

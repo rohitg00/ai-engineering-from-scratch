@@ -3,7 +3,7 @@
 > Diffusion modelleri 20-50 örnekleme adımlarını alırlar çünkü gürültüden veriye eğri bir yol izlerler. Akış eşleşimi (Lipman ve diğerleri, 2023) ve düzeltilmiş akış (Liu ve diğerleri, 2022) düz yollar eğitilmiştir. Daha düz yollar daha az adım anlamına gelir daha hızlı sonuçlama anlamına gelir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 06 (DDPM), Phase 1 · Calculus
 **Time:** ~45 minutes
 

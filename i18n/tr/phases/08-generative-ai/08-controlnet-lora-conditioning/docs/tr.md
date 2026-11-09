@@ -3,7 +3,7 @@
 > Tekrar metin çilekli bir kontrol sinyali. ControlNet, önceden eğitilmiş bir difüzyon modelini klonlamanıza ve onu derinlik haritası, iskelet, kazık veya kenar görüntüsü ile yönlendirmenize olanak tanır. LoRA, 10 milyon parametreyi eğiterek 2B parametresi modeli ince ayarlamanıza olanak tanır. Birlikte, Stabil Diffusion'u bir oyuncaktan 2026 görüntü borusuna dönüştürdüler.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 10 (LLMs from Scratch — for LoRA foundation)
 **Time:** ~75 minutes
 

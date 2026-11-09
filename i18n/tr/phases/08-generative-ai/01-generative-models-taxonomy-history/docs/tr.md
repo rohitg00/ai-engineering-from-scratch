@@ -3,7 +3,7 @@
 > Her görüntü modeli, metin modeli, video modeli ve 3 boyutlu modeli beş kova içinden birine sığar. Yanlış kova seçin ve haftalarca matematikle mücadele edeceksiniz. Doğru olanı seçin ve alanın son on iki yıllık ilerlemesi kafanızda temiz bir şekilde toplanır.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 (ML Fundamentals), Phase 3 (Deep Learning Core), Phase 7 · 14 (Transformers)
 **Time:** ~45 minutes
 

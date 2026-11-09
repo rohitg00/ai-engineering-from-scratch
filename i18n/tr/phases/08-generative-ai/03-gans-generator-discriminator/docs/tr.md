@@ -3,7 +3,7 @@
 > Goodfellow'un 2014'te yaptığı numara yoğunluğu tamamen atlamak. İki ağ. Biri sahte yapıyor. Biri yakalıyor. Sahte gerçekten ayırt edilemez olana kadar dövüşüyorlar. Bu işe yaramaz.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 08 (Optimizers), Phase 8 · 02 (VAE)
 **Time:** ~75 minutes
 

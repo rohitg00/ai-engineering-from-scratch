@@ -3,7 +3,7 @@
 > Metin-yazar yeni şeyler yapar. Renkleme eski şeyleri düzeltir. Üretimde, fatura edilebilir görüntü işinin %70'i düzenleme yapmaktadır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 8 · 08 (ControlNet & LoRA)
 **Time:** ~75 minutes
 

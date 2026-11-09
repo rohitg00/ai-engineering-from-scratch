@@ -3,7 +3,7 @@
 > 2014-2017 yıllarındaki ilk büyük kilitleme, bir GAN'ın ne yaptığını kontrol etmekti. Bir etiket, ya da bir görüntü veya bir cümle ekleyin. Pix2Pix görüntü sürümünü yaptı ve hala dar bir görüntüden görüntüye görevlerde her genel metin-resim modeliyi yendi.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 06 (U-Net), Phase 3 · 07 (CNNs)
 **Time:** ~75 minutes
 

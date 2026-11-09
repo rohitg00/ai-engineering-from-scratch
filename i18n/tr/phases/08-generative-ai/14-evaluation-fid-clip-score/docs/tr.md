@@ -3,7 +3,7 @@
 > Her jeneratif model lider tablosu, insan tercih alanından FID, CLIP puanı ve kazanım oranını belirtir. Her sayı, belirlenmiş bir araştırmacı oynayabilecek bir başarısızlık moduna sahiptir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 01 (Taxonomy), Phase 2 · 04 (Evaluation Metrics)
 **Time:** ~45 minutes
 

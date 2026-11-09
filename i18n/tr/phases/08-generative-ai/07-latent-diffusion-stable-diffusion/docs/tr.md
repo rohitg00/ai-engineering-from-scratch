@@ -3,7 +3,7 @@
 > Rombach ve diğerleri (2022) bir görüntü oluşturmak için tüm 786k boyutlarına ihtiyacınız olmadığını fark etti.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 02 (VAE), Phase 8 · 06 (DDPM), Phase 7 · 09 (ViT)
 **Time:** ~75 minutes
 
