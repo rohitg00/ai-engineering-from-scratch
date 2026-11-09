@@ -3,7 +3,7 @@
 > 模型是系统的一部分. 设计决定模型预测什么,谁对它采取行动,成本多少,以及它失败时会发生什么.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation) and 13 (ML Pipelines)
 **Time:** ~110 minutes
 
@@ -295,6 +295,7 @@ CheckItem("serving_fit", 1, False, "pick a serving mode that meets the staleness
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console
@@ -322,6 +323,7 @@ feed ranking, 2-hour freshness
 
 ```bash
 python3 code/main.py my_design_doc.json
+npx tsx code/main.ts my_design_doc.json
 ```
 
 ## 用它

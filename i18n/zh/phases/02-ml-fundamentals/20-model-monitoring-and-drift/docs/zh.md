@@ -3,7 +3,7 @@
 > 部署的模型没有错误信息, 继续返回分数, 随着世界从训练数据中移动,
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation), 16 (Anomaly Detection), and 19 (ML System Design)
 **Time:** ~110 minutes
 
@@ -261,6 +261,7 @@ def level(self, metrics: dict[str, float]) -> str:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console

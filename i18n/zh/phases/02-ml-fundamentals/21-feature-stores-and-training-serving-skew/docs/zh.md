@@ -3,7 +3,7 @@
 > 训练读取其历史,每个标签时间,服务读取其最新值.当两个读者不同意时,模型会看到从未训练过的输入.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 08 (Feature Engineering), 13 (ML Pipelines), 15 (Time Series), and 19 (ML System Design)
 **Time:** ~100 minutes
 
@@ -275,6 +275,7 @@ def detect_skew(
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console
