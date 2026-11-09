@@ -3,7 +3,7 @@
 > تخزين كل شيء، توقع من خلال النظر إلى جيرانك أبسط خوارزمية تعمل فعلاً
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lesson 14 Norms and Distances)
 **Time:** ~90 minutes
 
@@ -298,7 +298,7 @@ class KDTree:
         ...
 ```
 
-انظر`code/knn.py`لتنفيذ كامل مع جميع أساليب المساعدة والإثباتات.
+انظر`code/knn.py`لتنفيذ كامل مع جميع أساليب المساعدة والإعراضات. `code/knn.ts`هو منفذ TypeScript مع نفس الوظائف والإثباتات.`npx tsx code/knn.ts`. . .
 
 ### الخطوة الرابعة: تحسين الميزات
 

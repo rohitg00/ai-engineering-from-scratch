@@ -3,7 +3,7 @@
 > شجرة القرار مجرد مخطط تدفق ولكن غابة منها هي واحدة من أقوى الأدوات في ML
 
 **Type:** Build
-**Language:**بايثون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lessons 09 Information Theory, 06 Probability)
 **Time:** ~90 minutes
 
@@ -412,7 +412,7 @@ class RandomForest:
         return predictions
 ```
 
-انظر`code/trees.py`لتنفيذ كامل مع جميع أساليب المساعدة.
+انظر`code/trees.py`لتنفيذ كامل مع جميع أساليب المساعدة. `code/trees.ts`هو منفذ TypeScript مع نفس الوظائف والإثباتات.`npx tsx code/trees.ts`. . .
 
 ## استخدمها
 
