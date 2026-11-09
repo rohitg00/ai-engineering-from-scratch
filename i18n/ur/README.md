@@ -19,7 +19,7 @@
 
 مفت، اوپن سورس، MIT لائسنس۔ ویب سائٹ پر، کوڈنگ ایجنٹ کے ساتھ یا مقامی کوڈ چلا کر سیکھیں۔
 
-> <span dir="rtl">542 اسباق. 20 مراحل.</span> <span dir="ltr">Python, TypeScript, Rust, Julia.</span>
+> <span dir="rtl">542 اسباق. 20 مراحل.</span> <span dir="ltr">Python, TypeScript, Rust, Julia, Go.</span>
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT لائسنس"></a>
@@ -374,19 +374,19 @@ flowchart TB
 | 07 | [بیز کا قضیہ اور شماریاتی سوچ](../../phases/01-math-foundations/07-bayes-theorem/) | بنائیں | Python, TypeScript |
 | 08 | [بہتر بنانا: گریڈینٹ ڈیسنٹ کے طریقے](../../phases/01-math-foundations/08-optimization/) | بنائیں | Python, Julia |
 | 09 | [نظریۂ معلومات: اینٹروپی اور KL انحراف](../../phases/01-math-foundations/09-information-theory/) | سیکھیں | Python, TypeScript |
-| 10 | [ابعاد میں کمی: PCA، t-SNE، UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | بنائیں | Python, TypeScript |
+| 10 | [ابعاد میں کمی: PCA، t-SNE، UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | بنائیں | Python, TypeScript, Julia |
 | 11 | [سنگولر ویلیو ڈی کمپوزیشن](../../phases/01-math-foundations/11-singular-value-decomposition/) | بنائیں | Python, Julia |
 | 12 | [ٹینسر کے عملیات](../../phases/01-math-foundations/12-tensor-operations/) | بنائیں | Python, TypeScript |
-| 13 | [عددی استحکام](../../phases/01-math-foundations/13-numerical-stability/) | بنائیں | Python, TypeScript |
+| 13 | [عددی استحکام](../../phases/01-math-foundations/13-numerical-stability/) | بنائیں | Python, TypeScript, Julia |
 | 14 | [نارم اور فاصلے](../../phases/01-math-foundations/14-norms-and-distances/) | بنائیں | Python, TypeScript |
 | 15 | [ML کے لیے شماریات](../../phases/01-math-foundations/15-statistics-for-ml/) | بنائیں | Python, TypeScript |
-| 16 | [نمونہ لینے کے طریقے](../../phases/01-math-foundations/16-sampling-methods/) | بنائیں | Python, TypeScript |
-| 17 | [خطی نظام](../../phases/01-math-foundations/17-linear-systems/) | بنائیں | Python, TypeScript |
-| 18 | [محدب آپٹیمائزیشن](../../phases/01-math-foundations/18-convex-optimization/) | بنائیں | Python, TypeScript |
+| 16 | [نمونہ لینے کے طریقے](../../phases/01-math-foundations/16-sampling-methods/) | بنائیں | Python, TypeScript, Julia |
+| 17 | [خطی نظام](../../phases/01-math-foundations/17-linear-systems/) | بنائیں | Python, TypeScript, Julia |
+| 18 | [محدب آپٹیمائزیشن](../../phases/01-math-foundations/18-convex-optimization/) | بنائیں | Python, TypeScript, Julia |
 | 19 | [AI کے لیے مختلط اعداد](../../phases/01-math-foundations/19-complex-numbers/) | سیکھیں | Python, TypeScript |
-| 20 | [فوریئر ٹرانسفارم](../../phases/01-math-foundations/20-fourier-transform/) | بنائیں | Python, TypeScript |
+| 20 | [فوریئر ٹرانسفارم](../../phases/01-math-foundations/20-fourier-transform/) | بنائیں | Python, TypeScript, Julia |
 | 21 | [ML کے لیے گراف تھیوری](../../phases/01-math-foundations/21-graph-theory/) | بنائیں | Python, TypeScript |
-| 22 | [تصادفی عمل](../../phases/01-math-foundations/22-stochastic-processes/) | سیکھیں | Python |
+| 22 | [تصادفی عمل](../../phases/01-math-foundations/22-stochastic-processes/) | سیکھیں | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ flowchart TB
 
 | # | سبق | قسم | زبان |
 |:---:|--------|:----:|------|
-| 01 | [پرسیپٹرون: جہاں سے آغاز ہوا](../../phases/03-deep-learning-core/01-the-perceptron/) | بنائیں | Python, Rust, Julia |
-| 02 | [کئی پرتوں کے نیٹ ورک اور فارورڈ پاس](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بنائیں | Python, TypeScript |
-| 03 | [شروع سے بیک پروپیگیشن](../../phases/03-deep-learning-core/03-backpropagation/) | بنائیں | Python, Rust, Julia |
-| 04 | [ایکٹیویشن فنکشن: ReLU، Sigmoid، GELU اور وجہ](../../phases/03-deep-learning-core/04-activation-functions/) | بنائیں | Python, Julia |
-| 05 | [لاس فنکشن: MSE، کراس اینٹروپی، تقابلی](../../phases/03-deep-learning-core/05-loss-functions/) | بنائیں | Python, Julia |
-| 06 | [آپٹیمائزر: SGD، Momentum، Adam، AdamW](../../phases/03-deep-learning-core/06-optimizers/) | بنائیں | Python, TypeScript |
-| 07 | [ریگولرائزیشن: Dropout، Weight Decay، BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بنائیں | Python, TypeScript |
-| 08 | [وزنوں کی ابتدائی ترتیب اور تربیت کا استحکام](../../phases/03-deep-learning-core/08-weight-initialization/) | بنائیں | Python, TypeScript |
-| 09 | [لرننگ ریٹ کے شیڈول اور وارم اپ](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | بنائیں | Python, TypeScript |
-| 10 | [اپنا چھوٹا فریم ورک بنائیں](../../phases/03-deep-learning-core/10-mini-framework/) | بنائیں | Python, TypeScript |
+| 01 | [پرسیپٹرون: جہاں سے آغاز ہوا](../../phases/03-deep-learning-core/01-the-perceptron/) | بنائیں | Python, TypeScript, Rust, Julia |
+| 02 | [کئی پرتوں کے نیٹ ورک اور فارورڈ پاس](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بنائیں | Python, TypeScript, Julia |
+| 03 | [شروع سے بیک پروپیگیشن](../../phases/03-deep-learning-core/03-backpropagation/) | بنائیں | Python, TypeScript, Rust, Julia |
+| 04 | [ایکٹیویشن فنکشن: ReLU، Sigmoid، GELU اور وجہ](../../phases/03-deep-learning-core/04-activation-functions/) | بنائیں | Python, TypeScript, Julia |
+| 05 | [لاس فنکشن: MSE، کراس اینٹروپی، تقابلی](../../phases/03-deep-learning-core/05-loss-functions/) | بنائیں | Python, TypeScript, Julia |
+| 06 | [آپٹیمائزر: SGD، Momentum، Adam، AdamW](../../phases/03-deep-learning-core/06-optimizers/) | بنائیں | Python, TypeScript, Julia |
+| 07 | [ریگولرائزیشن: Dropout، Weight Decay، BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بنائیں | Python, TypeScript, Julia |
+| 08 | [وزنوں کی ابتدائی ترتیب اور تربیت کا استحکام](../../phases/03-deep-learning-core/08-weight-initialization/) | بنائیں | Python, TypeScript, Julia |
+| 09 | [لرننگ ریٹ کے شیڈول اور وارم اپ](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | بنائیں | Python, TypeScript, Julia |
+| 10 | [اپنا چھوٹا فریم ورک بنائیں](../../phases/03-deep-learning-core/10-mini-framework/) | بنائیں | Python, TypeScript, Julia |
 | 11 | [PyTorch کا تعارف](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | بنائیں | Python |
 | 12 | [JAX کا تعارف](../../phases/03-deep-learning-core/12-intro-to-jax/) | بنائیں | Python |
 | 13 | [نیورل نیٹ ورک کی ڈیبگنگ](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | بنائیں | Python |
@@ -448,8 +448,8 @@ flowchart TB
 
 | # | سبق | قسم | زبان |
 |:---:|--------|:----:|------|
-| 01 | [تصویر کی بنیادیں: پکسل، چینل اور رنگ کی جگہ](../../phases/04-computer-vision/01-image-fundamentals/) | سیکھیں | Python |
-| 02 | [شروع سے کنوولیوشن](../../phases/04-computer-vision/02-convolutions-from-scratch/) | بنائیں | Python |
+| 01 | [تصویر کی بنیادیں: پکسل، چینل اور رنگ کی جگہ](../../phases/04-computer-vision/01-image-fundamentals/) | سیکھیں | Python, Julia |
+| 02 | [شروع سے کنوولیوشن](../../phases/04-computer-vision/02-convolutions-from-scratch/) | بنائیں | Python, Julia |
 | 03 | [CNN: LeNet سے ResNet تک](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | بنائیں | Python |
 | 04 | [تصویر کی درجہ بندی](../../phases/04-computer-vision/04-image-classification/) | بنائیں | Python |
 | 05 | [منتقلی سے سیکھنا اور فائن ٹیوننگ](../../phases/04-computer-vision/05-transfer-learning/) | بنائیں | Python |
@@ -474,7 +474,7 @@ flowchart TB
 | 24 | [SAM 3 اور کھلے ذخیرۂ الفاظ والی تقسیم](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | بنائیں | Python |
 | 25 | [بصارت و زبان کے ماڈل (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | بنائیں | Python |
 | 26 | [ایک کیمرے سے گہرائی اور جیومیٹری کا اندازہ](../../phases/04-computer-vision/26-monocular-depth/) | بنائیں | Python |
-| 27 | [متعدد اشیا کی پیروی اور ویڈیو میموری](../../phases/04-computer-vision/27-multi-object-tracking/) | بنائیں | Python |
+| 27 | [متعدد اشیا کی پیروی اور ویڈیو میموری](../../phases/04-computer-vision/27-multi-object-tracking/) | بنائیں | Python, Rust |
 | 28 | [دنیا کے ماڈل اور ویڈیو ڈفیوژن](../../phases/04-computer-vision/28-world-models-video-diffusion/) | بنائیں | Python |
 
 </details>
@@ -487,7 +487,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [متن کی پروسیسنگ: ٹوکن سازی، اسٹیمِنگ، لیماٹائزیشن](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | بنائیں | Python, TypeScript |
 | 02 | [Bag of Words، TF-IDF اور متن کی نمائندگی](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | بنائیں | Python, TypeScript |
-| 03 | [لفظی ایمبیڈنگ: شروع سے Word2Vec](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | بنائیں | Python |
+| 03 | [لفظی ایمبیڈنگ: شروع سے Word2Vec](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | بنائیں | Python, Julia |
 | 04 | [GloVe، FastText اور ذیلی لفظوں کی ایمبیڈنگ](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | بنائیں | Python, TypeScript |
 | 05 | [جذبات کا تجزیہ](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | بنائیں | Python, TypeScript |
 | 06 | [نام دار اکائیوں کی شناخت (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | بنائیں | Python, TypeScript |
@@ -498,13 +498,13 @@ flowchart TB
 | 11 | [مشینی ترجمہ](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | بنائیں | Python, TypeScript |
 | 12 | [متن کا خلاصہ](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | بنائیں | Python, TypeScript |
 | 13 | [سوال جواب کے نظام](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | بنائیں | Python, TypeScript |
-| 14 | [معلومات کی بازیافت اور تلاش](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | بنائیں | Python, TypeScript |
-| 15 | [موضوع کی ماڈلنگ: LDA، BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | بنائیں | Python, TypeScript |
+| 14 | [معلومات کی بازیافت اور تلاش](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | بنائیں | Python, TypeScript, Rust |
+| 15 | [موضوع کی ماڈلنگ: LDA، BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | بنائیں | Python, TypeScript, Julia |
 | 16 | [متن بنانا](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | بنائیں | Python, TypeScript |
 | 17 | [چیٹ بوٹ: قواعد سے نیورل ماڈل تک](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | بنائیں | Python, TypeScript |
 | 18 | [کثیر لسانی NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | بنائیں | Python, TypeScript |
-| 19 | [ذیلی لفظوں کی ٹوکن سازی: BPE، WordPiece، Unigram، SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | سیکھیں | Python, TypeScript |
-| 20 | [ساخت یافتہ نتائج اور محدود ڈی کوڈنگ](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | بنائیں | Python, TypeScript |
+| 19 | [ذیلی لفظوں کی ٹوکن سازی: BPE، WordPiece، Unigram، SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | سیکھیں | Python, TypeScript, Rust |
+| 20 | [ساخت یافتہ نتائج اور محدود ڈی کوڈنگ](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | بنائیں | Python, TypeScript, Rust |
 | 21 | [NLI اور متن سے منطقی نتیجہ](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | سیکھیں | Python, TypeScript |
 | 22 | [ایمبیڈنگ ماڈل کا گہرا مطالعہ](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | سیکھیں | Python, TypeScript |
 | 23 | [RAG کے لیے ٹکڑے بنانے کی حکمت عملی](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | بنائیں | Python, TypeScript |
@@ -523,8 +523,8 @@ flowchart TB
 
 | # | سبق | قسم | زبان |
 |:---:|--------|:----:|------|
-| 01 | [آڈیو کی بنیادیں: موج، سیمپلنگ، FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | سیکھیں | Python, TypeScript |
-| 02 | [اسپیکٹروگرام، Mel پیمانہ اور آڈیو فیچر](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | بنائیں | Python, TypeScript |
+| 01 | [آڈیو کی بنیادیں: موج، سیمپلنگ، FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | سیکھیں | Python, TypeScript, Julia |
+| 02 | [اسپیکٹروگرام، Mel پیمانہ اور آڈیو فیچر](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | بنائیں | Python, TypeScript, Julia |
 | 03 | [آڈیو کی درجہ بندی](../../phases/06-speech-and-audio/03-audio-classification) | بنائیں | Python, TypeScript |
 | 04 | [تقریر کی شناخت (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | بنائیں | Python, TypeScript |
 | 05 | [Whisper: ساخت اور فائن ٹیوننگ](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | بنائیں | Python, TypeScript |
@@ -536,7 +536,7 @@ flowchart TB
 | 11 | [فوری آڈیو پروسیسنگ](../../phases/06-speech-and-audio/11-real-time-audio-processing) | بنائیں | Python, Rust |
 | 12 | [صوتی معاون کی پائپ لائن بنائیں](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | بنائیں | Python, TypeScript |
 | 13 | [نیورل آڈیو کوڈیک: EnCodec، SNAC، Mimi، DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | سیکھیں | Python, TypeScript |
-| 14 | [آواز کی سرگرمی کی شناخت اور بولنے کی باری](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | بنائیں | Python, TypeScript |
+| 14 | [آواز کی سرگرمی کی شناخت اور بولنے کی باری](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | بنائیں | Python, TypeScript, Rust |
 | 15 | [تقریر سے تقریر کی اسٹریمنگ: Moshi، Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | سیکھیں | Python, TypeScript |
 | 16 | [جعلی آواز کی روک تھام اور آڈیو واٹرمارک](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | بنائیں | Python, TypeScript |
 | 17 | [آڈیو کی جانچ: WER، MOS، MMAU اور لیڈربورڈ](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | سیکھیں | Python, TypeScript |
@@ -586,9 +586,9 @@ flowchart TB
 | 10 | [ویڈیو بنانا](../../phases/08-generative-ai/10-video-generation/) | بنائیں | Python, TypeScript |
 | 11 | [آڈیو بنانا](../../phases/08-generative-ai/11-audio-generation/) | بنائیں | Python, TypeScript |
 | 12 | [3D بنانا](../../phases/08-generative-ai/12-3d-generation/) | بنائیں | Python, TypeScript |
-| 13 | [Flow Matching اور Rectified Flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | بنائیں | Python, TypeScript |
+| 13 | [Flow Matching اور Rectified Flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | بنائیں | Python, TypeScript, Julia |
 | 14 | [جانچ: FID اور CLIP اسکور](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | بنائیں | Python, TypeScript |
-| 19 | [بصری آٹو ریگریسو ماڈلنگ (VAR): اگلے پیمانے کی پیش گوئی](../../phases/08-generative-ai/19-visual-autoregressive-var/) | بنائیں | Python |
+| 19 | [بصری آٹو ریگریسو ماڈلنگ (VAR): اگلے پیمانے کی پیش گوئی](../../phases/08-generative-ai/19-visual-autoregressive-var/) | بنائیں | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ flowchart TB
 | # | سبق | قسم | زبان |
 |:---:|--------|:----:|------|
 | 01 | [ٹوکنائزر: BPE، WordPiece، SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | بنائیں | Python, Rust |
-| 02 | [شروع سے ٹوکنائزر بنانا](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | بنائیں | Python |
+| 02 | [شروع سے ٹوکنائزر بنانا](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | بنائیں | Python, TypeScript |
 | 03 | [پیشگی تربیت کی ڈیٹا پائپ لائن](../../phases/10-llms-from-scratch/03-data-pipelines/) | بنائیں | Python, Rust |
 | 04 | [چھوٹے GPT کی پیشگی تربیت (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | بنائیں | Python, Rust |
 | 05 | [تقسیم شدہ تربیت، FSDP، DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | بنائیں | Python |
@@ -665,7 +665,7 @@ flowchart TB
 | 11 | [کیشنگ، شرح کی حد اور خرچ](../../phases/11-llm-engineering/11-caching-cost/) | بنائیں | Python, TypeScript |
 | 12 | [حفاظتی حدود اور سلامتی](../../phases/11-llm-engineering/12-guardrails/) | بنائیں | Python, TypeScript |
 | 13 | [عملی استعمال کی LLM ایپ بنانا](../../phases/11-llm-engineering/13-production-app/) | بنائیں | Python, TypeScript |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | بنائیں | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | بنائیں | Python, TypeScript, Go |
 | 15 | [پرامپٹ اور سیاق کی کیشنگ](../../phases/11-llm-engineering/15-prompt-caching/) | بنائیں | Python, TypeScript |
 | 16 | [ایجنٹ کی اسٹیٹ مشین: گراف، نوڈ، چیک پوائنٹ](../../phases/11-llm-engineering/16-langgraph-state-machines/) | بنائیں | Python |
 | 17 | [ایجنٹ فریم ورک کے انتخاب میں فائدے اور سمجھوتے](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | سیکھیں | Python, TypeScript |
@@ -714,25 +714,25 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [ٹول کا انٹرفیس](../../phases/13-tools-and-protocols/01-the-tool-interface/) | سیکھیں | Python, TypeScript |
 | 02 | [فنکشن کال کا گہرا مطالعہ](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | بنائیں | Python, TypeScript |
-| 03 | [متوازی اور اسٹریمنگ ٹول کال](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | بنائیں | Python, TypeScript |
+| 03 | [متوازی اور اسٹریمنگ ٹول کال](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | بنائیں | Python, TypeScript, Go |
 | 04 | [ساخت یافتہ نتیجہ](../../phases/13-tools-and-protocols/04-structured-output/) | بنائیں | Python, TypeScript |
 | 05 | [ٹول اسکیما کا ڈیزائن](../../phases/13-tools-and-protocols/05-tool-schema-design/) | سیکھیں | Python, TypeScript |
 | 06 | [MCP کی بنیادیں: بے حالت درخواستیں اور JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | سیکھیں | Python, TypeScript |
-| 07 | [MCP سرور بنانا: بے حالت Python اور TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | بنائیں | Python, TypeScript |
+| 07 | [MCP سرور بنانا: بے حالت Python اور TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | بنائیں | Python, TypeScript, Go |
 | 08 | [MCP کلائنٹ بنانا: دریافت، روٹنگ اور دو ادوار کا متبادل](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | بنائیں | Python, TypeScript |
-| 09 | [MCP ٹرانسپورٹ: stdio اور بے حالت Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | سیکھیں | Python, TypeScript |
+| 09 | [MCP ٹرانسپورٹ: stdio اور بے حالت Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | سیکھیں | Python, TypeScript, Go |
 | 10 | [MCP وسائل اور پرامپٹ: بے حالت سرور کے لیے پتے والا سیاق](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | بنائیں | Python, TypeScript |
 | 11 | [MCP ماڈل کا ان پٹ: sampling کی منتقلی اور بے حالت MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | بنائیں | Python, TypeScript |
 | 12 | [واضح دائرہ اور بے حالت معلومات طلب کرنا](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | بنائیں | Python, TypeScript |
 | 13 | [MCP ٹاسک ایکسٹینشن: بے حالت بنیاد پر پائیدار کام](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | بنائیں | Python, TypeScript |
 | 14 | [بے حالت پروٹوکول پر MCP Apps](../../phases/13-tools-and-protocols/14-mcp-apps/) | بنائیں | Python, TypeScript |
 | 15 | [MCP سلامتی: آلودہ میٹاڈیٹا، روٹنگ اور MRTR کی حالت](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | سیکھیں | Python, TypeScript |
-| 16 | [MCP اجازت دہی: CIMD، جاری کنندہ سے بندھن، PKCE اور اضافی توثیق](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | بنائیں | Python, TypeScript |
-| 17 | [بے حالت MCP گیٹ وے اور رجسٹری میں داخلہ](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | سیکھیں | Python, TypeScript |
-| 18 | [عملی MCP توثیق: جاری کنندہ سے بندھی اندراج کاری اور ٹوکن](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | بنائیں | Python, TypeScript |
-| 19 | [A2A پروٹوکول](../../phases/13-tools-and-protocols/19-a2a-protocol/) | بنائیں | Python, TypeScript |
+| 16 | [MCP اجازت دہی: CIMD، جاری کنندہ سے بندھن، PKCE اور اضافی توثیق](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | بنائیں | Python, TypeScript, Go |
+| 17 | [بے حالت MCP گیٹ وے اور رجسٹری میں داخلہ](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | سیکھیں | Python, TypeScript, Go |
+| 18 | [عملی MCP توثیق: جاری کنندہ سے بندھی اندراج کاری اور ٹوکن](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | بنائیں | Python, TypeScript, Go |
+| 19 | [A2A پروٹوکول](../../phases/13-tools-and-protocols/19-a2a-protocol/) | بنائیں | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | بنائیں | Python, TypeScript |
-| 21 | [LLM روٹنگ کی پرت](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | سیکھیں | Python, TypeScript |
+| 21 | [LLM روٹنگ کی پرت](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | سیکھیں | Python, TypeScript, Go |
 | 22 | [Agent Skills: قابل نقل معاہدہ اور رن ٹائم کی حد](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | بنائیں | Python, TypeScript |
 | 23 | [آخری منصوبہ: بے حالت ٹولز کا نظام](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | بنائیں | Python, TypeScript |
 | 24 | [اسکل کی دریافت اور بتدریج انکشاف](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | بنائیں | Python, TypeScript |
@@ -743,19 +743,19 @@ flowchart TB
 | 29 | [MCP کی قابل اعتمادی، منسوخی اور بہاؤ کا کنٹرول](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | بنائیں | Python, TypeScript |
 | 30 | [MCP رجسٹری کی سپلائی چین: داخلہ، انحراف اور واپسی](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | بنائیں | Python, TypeScript |
 | 31 | [MCP مطابقت کی انجینئرنگ: ورژن، ثبوت اور عمل کاری](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | بنائیں | Python, TypeScript |
-| 32 | [پروگرام کی ساخت: شروع سے ELF پڑھنا](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | بنائیں | Python, TypeScript |
-| 33 | [ڈس اسمبلی اور کنٹرول فلو گراف](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | بنائیں | Python, TypeScript |
-| 34 | [مشین کوڈ کو سوڈوکوڈ میں ڈھالنا](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | بنائیں | Python |
+| 32 | [پروگرام کی ساخت: شروع سے ELF پڑھنا](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | بنائیں | Python, TypeScript, Rust |
+| 33 | [ڈس اسمبلی اور کنٹرول فلو گراف](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | بنائیں | Python, TypeScript, Rust |
+| 34 | [مشین کوڈ کو سوڈوکوڈ میں ڈھالنا](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | بنائیں | Python, TypeScript |
 | 35 | [بائنری تجزیے میں ثبوت، اعتماد اور نامعلوم](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | بنائیں | Python, TypeScript |
 | 36 | [دوبارہ بنائیں اور برابری ثابت کریں](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | بنائیں | Python, TypeScript |
 | 37 | [ریورس انجینئرنگ کا منظرنامہ](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | بنائیں | Python, TypeScript |
 | 38 | [کالنگ کنونشنز اور اسٹیک فریم](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | بنائیں | Python, TypeScript |
 | 39 | [کمپائلر کے محاورے اور اصلاح](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | بنائیں | Python, TypeScript |
-| 40 | [لنکنگ، لوڈنگ اور اسٹرپ شدہ بائنریز](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | بنائیں | Python, TypeScript |
+| 40 | [لنکنگ، لوڈنگ اور اسٹرپ شدہ بائنریز](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | بنائیں | Python, TypeScript, Rust |
 | 41 | [ڈیٹا اور ٹائپس کی بازیابی](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | بنائیں | Python, TypeScript |
 | 42 | [اپنے پروگرام کا متحرک تجزیہ](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | بنائیں | Python, TypeScript |
 | 43 | [بائٹ کوڈ اور منظم فارمیٹس](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | بنائیں | Python, TypeScript |
-| 44 | [بائنری موازنہ اور علامتی اجرا](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | بنائیں | Python |
+| 44 | [بائنری موازنہ اور علامتی اجرا](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | بنائیں | Python, TypeScript |
 | 45 | [AI کی مدد سے ریورس انجینئرنگ](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | بنائیں | Python, TypeScript |
 
 اسباق 06-18 اور 28-31 مخصوص [Model Context Protocol (MCP) راستہ](../../learning-paths/model-context-protocol.json) بناتے ہیں۔ مینی فیسٹ کی ترتیب 06، 07، 08، 09، 10، 11، 12، 13، 14، 15، 16، 18، 17، 28، 29، 30، 31 ہے۔ اوپر ہوسٹ کے مطابق `learn-mcp` بلانے سے شروع کریں۔ سبق 23 اس کا واحد اختیاری آخری منصوبہ ہے اور اسے اسباق 19 اور 20 بھی درکار ہیں۔
@@ -792,13 +792,13 @@ flowchart TB
 | 20 | [بینچ مارک: WebArena اور OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | سیکھیں | Python, TypeScript |
 | 21 | [کمپیوٹر کا استعمال: Claude، OpenAI CUA، Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | بنائیں | Python, TypeScript |
 | 22 | [صوتی ایجنٹ: Pipecat اور LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | بنائیں | Python, TypeScript |
-| 23 | [OpenTelemetry GenAI کے معنوی اصول](../../phases/14-agent-engineering/23-otel-genai-conventions/) | بنائیں | Python, TypeScript |
+| 23 | [OpenTelemetry GenAI کے معنوی اصول](../../phases/14-agent-engineering/23-otel-genai-conventions/) | بنائیں | Python, TypeScript, Go |
 | 24 | [ایجنٹ کی نگرانی: Langfuse، Phoenix، Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | سیکھیں | Python, TypeScript |
 | 25 | [متعدد ایجنٹس کی بحث اور تعاون](../../phases/14-agent-engineering/25-multi-agent-debate/) | بنائیں | Python, TypeScript |
 | 26 | [ناکامی کی صورتیں: ایجنٹ کیوں ٹوٹتے ہیں](../../phases/14-agent-engineering/26-failure-modes-agentic/) | بنائیں | Python, TypeScript |
 | 27 | [پرامپٹ انجیکشن اور PVE دفاع](../../phases/14-agent-engineering/27-prompt-injection-defense/) | بنائیں | Python, TypeScript |
 | 28 | [ترتیب کے نمونے: نگران، جھنڈ، درجہ بندی](../../phases/14-agent-engineering/28-orchestration-patterns/) | بنائیں | Python, TypeScript |
-| 29 | [عملی رن ٹائم: قطار، واقعہ، cron](../../phases/14-agent-engineering/29-production-runtimes/) | سیکھیں | Python, TypeScript |
+| 29 | [عملی رن ٹائم: قطار، واقعہ، cron](../../phases/14-agent-engineering/29-production-runtimes/) | سیکھیں | Python, TypeScript, Go |
 | 30 | [جانچ کی بنیاد پر ایجنٹ بنانا](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | بنائیں | Python, TypeScript |
 | 31 | [ایجنٹ ورک بینچ: قابل ماڈل بھی کیوں ناکام ہوتے ہیں](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | سیکھیں | Python, TypeScript |
 | 32 | [کم سے کم ایجنٹ ورک بینچ](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | بنائیں | Python, TypeScript |
@@ -848,7 +848,7 @@ flowchart TB
 | 09 | [خودمختار کوڈنگ ایجنٹس کا منظرنامہ (SWE-bench، CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | سیکھیں | Python, TypeScript |
 | 10 | [خودمختار ایجنٹ کے اجازت کے طریقے](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | سیکھیں | Python, TypeScript |
 | 11 | [براؤزر ایجنٹ اور بالواسطہ پرامپٹ انجیکشن](../../phases/15-autonomous-systems/11-browser-agents/) | سیکھیں | Python, TypeScript |
-| 12 | [طویل چلنے والے ایجنٹ کے لیے پائیدار اجرا](../../phases/15-autonomous-systems/12-durable-execution/) | سیکھیں | Python, TypeScript |
+| 12 | [طویل چلنے والے ایجنٹ کے لیے پائیدار اجرا](../../phases/15-autonomous-systems/12-durable-execution/) | سیکھیں | Python, TypeScript, Go |
 | 13 | [عمل کے بجٹ، تکرار کی حد اور خرچ کا کنٹرول](../../phases/15-autonomous-systems/13-cost-governors/) | سیکھیں | Python, TypeScript |
 | 14 | [بند کرنے کے سوئچ، سرکٹ بریکر اور کینری ٹوکن](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | سیکھیں | Python, TypeScript |
 | 15 | [HITL: پہلے تجویز، پھر نفاذ](../../phases/15-autonomous-systems/15-propose-then-commit/) | سیکھیں | Python, TypeScript |
@@ -857,7 +857,7 @@ flowchart TB
 | 18 | [Llama Guard اور ان پٹ/آؤٹ پٹ کی درجہ بندی](../../phases/15-autonomous-systems/18-llama-guard/) | سیکھیں | Python, TypeScript |
 | 19 | [Anthropic کی Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | سیکھیں | Python, TypeScript |
 | 20 | [OpenAI Preparedness Framework اور DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | سیکھیں | Python, TypeScript |
-| 21 | [METR کے زمانی افق اور بیرونی جانچ](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | سیکھیں | Python, TypeScript |
+| 21 | [METR کے زمانی افق اور بیرونی جانچ](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | سیکھیں | Python, TypeScript, Julia |
 | 22 | [CAIS، CAISI اور معاشرتی سطح کے خطرے](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | سیکھیں | Python, TypeScript |
 
 </details>
@@ -876,17 +876,17 @@ flowchart TB
 | 06 | [درجہ وار ساخت اور تقسیم میں انحراف](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | سیکھیں | Python, TypeScript |
 | 07 | [Society of Mind اور متعدد ایجنٹس کی بحث](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | بنائیں | Python, TypeScript |
 | 08 | [کردار کی تخصیص: منصوبہ ساز / ناقد / عامل / تصدیق کار](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | بنائیں | Python, TypeScript |
-| 09 | [متوازی جھنڈ اور نیٹ ورک کی ساخت](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | بنائیں | Python, TypeScript |
+| 09 | [متوازی جھنڈ اور نیٹ ورک کی ساخت](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | بنائیں | Python, TypeScript, Go |
 | 10 | [گروپ چیٹ اور بولنے والے کا انتخاب](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | بنائیں | Python, TypeScript |
 | 11 | [حوالگی اور معمولات (بے حالت انتظام)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | بنائیں | Python, TypeScript |
-| 12 | [A2A: ایجنٹ سے ایجنٹ کا پروٹوکول](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | بنائیں | Python, TypeScript |
+| 12 | [A2A: ایجنٹ سے ایجنٹ کا پروٹوکول](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | بنائیں | Python, TypeScript, Go |
 | 13 | [مشترک یادداشت اور بلیک بورڈ کے نمونے](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | بنائیں | Python, TypeScript |
 | 14 | [اتفاق رائے اور بازنطینی خرابی برداشت کرنا](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | بنائیں | Python, TypeScript |
 | 15 | [ووٹ، خود مطابقت اور بحث کی ساخت](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | بنائیں | Python, TypeScript |
 | 16 | [مذاکرات اور سودے بازی](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | بنائیں | Python, TypeScript |
 | 17 | [تخلیقی ایجنٹ اور ابھرتی ہوئی نقل](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | بنائیں | Python, TypeScript |
 | 18 | [نظریۂ ذہن اور ابھرتا تعاون](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | بنائیں | Python, TypeScript |
-| 19 | [جھنڈ کی بہتری (PSO، ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | بنائیں | Python, TypeScript |
+| 19 | [جھنڈ کی بہتری (PSO، ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | بنائیں | Python, TypeScript, Julia |
 | 20 | [MARL: MADDPG، QMIX، MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | سیکھیں | Python, TypeScript |
 | 21 | [ایجنٹ کی معیشت، ٹوکن ترغیب اور ساکھ](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | سیکھیں | Python, TypeScript |
 | 22 | [عملی پیمانہ بڑھانا: قطار، چیک پوائنٹ، پائیداری](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | بنائیں | Python, TypeScript |
@@ -905,9 +905,9 @@ flowchart TB
 | 01 | [منتظم شدہ LLM پلیٹ فارم: Bedrock، Azure OpenAI، Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | سیکھیں | Python, TypeScript |
 | 02 | [استنتاجی پلیٹ فارم کی معیشت: Fireworks، Together، Baseten، Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | سیکھیں | Python, TypeScript |
 | 03 | [Kubernetes پر GPU کی خودکار توسیع: Karpenter، KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | سیکھیں | Python, TypeScript |
-| 04 | [سروس انجن کے اندر: PagedAttention، مسلسل بیچنگ، ٹکڑوں میں prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | سیکھیں | Python, TypeScript |
+| 04 | [سروس انجن کے اندر: PagedAttention، مسلسل بیچنگ، ٹکڑوں میں prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | سیکھیں | Python, TypeScript, Rust |
 | 05 | [عملی استعمال میں EAGLE-3 قیاسی ڈی کوڈنگ](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | سیکھیں | Python, TypeScript |
-| 06 | [پریفکس کیش والی سروس: RadixAttention اور KV کا دوبارہ استعمال](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | سیکھیں | Python, TypeScript |
+| 06 | [پریفکس کیش والی سروس: RadixAttention اور KV کا دوبارہ استعمال](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | سیکھیں | Python, TypeScript, Rust |
 | 07 | [ہارڈویئر کے لیے مخصوص استنتاجی کمپائلیشن: Blackwell پر FP8 اور NVFP4](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | سیکھیں | Python, TypeScript |
 | 08 | [استنتاج کے پیمانے: TTFT، TPOT، ITL، Goodput، P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | سیکھیں | Python, TypeScript |
 | 09 | [عملی کوانٹائزیشن: AWQ، GPTQ، GGUF، FP8، NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | سیکھیں | Python, TypeScript |
@@ -922,7 +922,7 @@ flowchart TB
 | 18 | [عملی سروس کے ٹول: KV منتقل کرنا اور کیش سے باخبر روٹنگ](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | سیکھیں | Python, TypeScript |
 | 19 | [AI گیٹ وے: LiteLLM، Portkey، Kong، Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | سیکھیں | Python, TypeScript |
 | 20 | [شیڈو، کینری اور بتدریج تعیناتی](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | سیکھیں | Python, TypeScript |
-| 21 | [LLM خصوصیات کی A/B آزمائش: GrowthBook اور Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | سیکھیں | Python, TypeScript |
+| 21 | [LLM خصوصیات کی A/B آزمائش: GrowthBook اور Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | سیکھیں | Python, TypeScript, Julia |
 | 22 | [LLM API کی لوڈ آزمائش: k6، LLMPerf، GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | بنائیں | Python, TypeScript |
 | 23 | [AI کے لیے SRE: متعدد ایجنٹس سے واقعے کا جواب](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | سیکھیں | Python, TypeScript |
 | 24 | [عملی LLM کے لیے افراتفری کی انجینئرنگ](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | سیکھیں | Python, TypeScript |
@@ -961,7 +961,7 @@ flowchart TB
 | 19 | [ماڈل کی بہبود کی تحقیق](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | سیکھیں | Python, TypeScript |
 | 20 | [تعصب اور نمائندگی کا نقصان](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | بنائیں | Python, TypeScript |
 | 21 | [انصاف کے معیار: گروہ، فرد، خلاف واقعہ](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | سیکھیں | Python, TypeScript |
-| 22 | [LLM کے لیے تفریقی رازداری](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | بنائیں | Python, TypeScript |
+| 22 | [LLM کے لیے تفریقی رازداری](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | بنائیں | Python, TypeScript, Julia |
 | 23 | [واٹرمارک: SynthID، Stable Signature، C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | بنائیں | Python, TypeScript |
 | 24 | [ضابطے کے ڈھانچے: EU، US، UK، Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | سیکھیں | Python, TypeScript |
 | 25 | [AI کے لیے EchoLeak اور CVE](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | سیکھیں | Python, TypeScript |
@@ -989,9 +989,9 @@ flowchart TB
 | 08 | [عملی RAG چیٹ بوٹ (ضابطوں والا شعبہ)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [کوڈ کی منتقلی کا ایجنٹ (ریپوزٹری کی سطح کی بہتری)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [متعدد ایجنٹس کی سافٹ ویئر انجینئرنگ ٹیم](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [LLM نگرانی اور جانچ کا ڈیش بورڈ](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [LLM نگرانی اور جانچ کا ڈیش بورڈ](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [ویڈیو سمجھنے کی پائپ لائن (منظر → سوال جواب)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [رجسٹری اور انتظام کے ساتھ بے حالت MCP سرور](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [رجسٹری اور انتظام کے ساتھ بے حالت MCP سرور](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [قیاسی ڈی کوڈنگ والا استنتاجی سرور](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [آئینی سلامتی کا ڈھانچہ اور ریڈ ٹیم کا میدان](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [GitHub issue سے PR تک خودمختار ایجنٹ](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1011,7 +1011,7 @@ flowchart TB
 | 27 | [مقررہ نمونہ کاموں کے ساتھ جانچ کا ڈھانچہ](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python, TypeScript |
 | 28 | [OTel GenAI span اور Prometheus پیمانوں سے نگرانی](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python, TypeScript |
 | 29 | [اجرائی ڈھانچے پر مکمل کوڈنگ ایجنٹ](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python, TypeScript |
-| 30 | [شروع سے BPE ٹوکنائزر](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
+| 30 | [شروع سے BPE ٹوکنائزر](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript, Rust |
 | 31 | [سلائیڈنگ ونڈو کے ساتھ ٹوکن شدہ ڈیٹاسیٹ](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [ٹوکن اور مقام کی ایمبیڈنگ](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [ملٹی ہیڈ سیلف اٹینشن](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1023,7 +1023,7 @@ flowchart TB
 | 39 | [زیر نگرانی فائن ٹیوننگ سے ہدایات کی ٹیوننگ](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP LLM | Python |
 | 40 | [شروع سے ترجیح کی براہ راست بہتری](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP LLM | Python |
 | 41 | [مکمل جانچ کی پائپ لائن](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP LLM | Python |
-| 42 | [بڑے متنی ذخیرے کا ڈاؤنلوڈر](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. مکمل تربیت | Python |
+| 42 | [بڑے متنی ذخیرے کا ڈاؤنلوڈر](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. مکمل تربیت | Python, TypeScript |
 | 43 | [HDF5 ٹوکن شدہ متنی ذخیرہ](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. مکمل تربیت | Python |
 | 44 | [خطی وارم اپ کے ساتھ کوسائن لرننگ ریٹ](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. مکمل تربیت | Python |
 | 45 | [گریڈینٹ تراشنا اور ملی جلی درستگی](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. مکمل تربیت | Python |
@@ -1037,8 +1037,8 @@ flowchart TB
 | 53 | [نتیجہ جانچنے والا](../../phases/19-capstone-projects/53-result-evaluator/) | D. خودکار تحقیق | Python |
 | 54 | [مقالہ لکھنے والا](../../phases/19-capstone-projects/54-paper-writer/) | D. خودکار تحقیق | Python, TypeScript |
 | 55 | [تنقید کا چکر](../../phases/19-capstone-projects/55-critic-loop/) | D. خودکار تحقیق | Python, TypeScript |
-| 56 | [تکرار کا شیڈول بنانے والا](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. خودکار تحقیق | Python |
-| 57 | [شروع سے آخر تک تحقیق کی مثال](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. خودکار تحقیق | Python |
+| 56 | [تکرار کا شیڈول بنانے والا](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. خودکار تحقیق | Python, TypeScript |
+| 57 | [شروع سے آخر تک تحقیق کی مثال](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. خودکار تحقیق | Python, TypeScript |
 | 58 | [بصری انکوڈر کے پیچ](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. متعدد ذرائع والا VLM | Python |
 | 59 | [بصری ٹرانسفارمر انکوڈر](../../phases/19-capstone-projects/59-vit-transformer/) | E. متعدد ذرائع والا VLM | Python |
 | 60 | [ذرائع کی مطابقت کے لیے پروجیکشن پرت](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. متعدد ذرائع والا VLM | Python |
@@ -1052,11 +1052,11 @@ flowchart TB
 | 68 | [RAG کی جانچ: Precision، Recall، MRR، nDCG، وفاداری، جواب کی مناسبت](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. اعلیٰ RAG | Python, TypeScript |
 | 69 | [مکمل RAG نظام](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. اعلیٰ RAG | Python |
 | 70 | [کام کی تفصیلات کا فارمیٹ](../../phases/19-capstone-projects/70-task-spec-format/) | G. جانچ کا فریم ورک | Python, TypeScript |
-| 71 | [روایتی پیمانے](../../phases/19-capstone-projects/71-classical-metrics/) | G. جانچ کا فریم ورک | Python |
-| 72 | [کوڈ چلانے کا پیمانہ](../../phases/19-capstone-projects/72-code-exec-metric/) | G. جانچ کا فریم ورک | Python |
-| 73 | [پرپلیکسٹی اور کیلیبریشن](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. جانچ کا فریم ورک | Python |
-| 74 | [لیڈربورڈ کا مجموعہ](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. جانچ کا فریم ورک | Python |
-| 75 | [شروع سے آخر تک جانچ چلانے والا](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. جانچ کا فریم ورک | Python |
+| 71 | [روایتی پیمانے](../../phases/19-capstone-projects/71-classical-metrics/) | G. جانچ کا فریم ورک | Python, TypeScript |
+| 72 | [کوڈ چلانے کا پیمانہ](../../phases/19-capstone-projects/72-code-exec-metric/) | G. جانچ کا فریم ورک | Python, TypeScript |
+| 73 | [پرپلیکسٹی اور کیلیبریشن](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. جانچ کا فریم ورک | Python, TypeScript |
+| 74 | [لیڈربورڈ کا مجموعہ](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. جانچ کا فریم ورک | Python, TypeScript |
+| 75 | [شروع سے آخر تک جانچ چلانے والا](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. جانچ کا فریم ورک | Python, TypeScript |
 | 76 | [شروع سے اجتماعی عملیات](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. تقسیم شدہ تربیت | Python |
 | 77 | [شروع سے ڈیٹا پیرالل DDP](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. تقسیم شدہ تربیت | Python |
 | 78 | [ZeRO آپٹیمائزر کی حالت کی تقسیم](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. تقسیم شدہ تربیت | Python |
@@ -1129,7 +1129,7 @@ Claude Code، Codex، ChatGPT، Cursor یا دوسرے ایجنٹ کے ساتھ 
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      قابل اجرا نفاذ (Python, TypeScript, Rust, Julia)
+├── code/      قابل اجرا نفاذ (Python, TypeScript, Rust, Julia, Go)
 ├── docs/
 │   └── en.md  سبق کی وضاحت
 └── outputs/   اس سبق کے بنائے ہوئے پرامپٹ، اسکل، ایجنٹ یا MCP سرور

@@ -19,7 +19,7 @@
 
 বিনামূল্যে, ওপেন সোর্স, MIT লাইসেন্স। ওয়েবসাইটে, কোডিং এজেন্টের সঙ্গে বা স্থানীয় কোড চালিয়ে শিখুন।
 
-> 542 পাঠ. 20 ধাপ. Python, TypeScript, Rust, Julia.
+> 542 পাঠ. 20 ধাপ. Python, TypeScript, Rust, Julia, Go.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT লাইসেন্স"></a>
@@ -374,19 +374,19 @@ flowchart TB
 | 07 | [বেইজের উপপাদ্য ও পরিসংখ্যানগত চিন্তা](../../phases/01-math-foundations/07-bayes-theorem/) | তৈরি | Python, TypeScript |
 | 08 | [অপ্টিমাইজেশন: গ্রেডিয়েন্ট ডিসেন্ট পরিবার](../../phases/01-math-foundations/08-optimization/) | তৈরি | Python, Julia |
 | 09 | [তথ্যতত্ত্ব: এনট্রপি ও KL ডাইভার্জেন্স](../../phases/01-math-foundations/09-information-theory/) | শিখুন | Python, TypeScript |
-| 10 | [মাত্রা হ্রাস: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | তৈরি | Python, TypeScript |
+| 10 | [মাত্রা হ্রাস: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | তৈরি | Python, TypeScript, Julia |
 | 11 | [সিঙ্গুলার ভ্যালু ডিকম্পোজিশন](../../phases/01-math-foundations/11-singular-value-decomposition/) | তৈরি | Python, Julia |
 | 12 | [টেনসর অপারেশন](../../phases/01-math-foundations/12-tensor-operations/) | তৈরি | Python, TypeScript |
-| 13 | [সংখ্যাগত স্থিতিশীলতা](../../phases/01-math-foundations/13-numerical-stability/) | তৈরি | Python, TypeScript |
+| 13 | [সংখ্যাগত স্থিতিশীলতা](../../phases/01-math-foundations/13-numerical-stability/) | তৈরি | Python, TypeScript, Julia |
 | 14 | [নর্ম ও দূরত্ব](../../phases/01-math-foundations/14-norms-and-distances/) | তৈরি | Python, TypeScript |
 | 15 | [ML-এর জন্য পরিসংখ্যান](../../phases/01-math-foundations/15-statistics-for-ml/) | তৈরি | Python, TypeScript |
-| 16 | [নমুনা নেওয়ার পদ্ধতি](../../phases/01-math-foundations/16-sampling-methods/) | তৈরি | Python, TypeScript |
-| 17 | [রৈখিক সিস্টেম](../../phases/01-math-foundations/17-linear-systems/) | তৈরি | Python, TypeScript |
-| 18 | [কনভেক্স অপ্টিমাইজেশন](../../phases/01-math-foundations/18-convex-optimization/) | তৈরি | Python, TypeScript |
+| 16 | [নমুনা নেওয়ার পদ্ধতি](../../phases/01-math-foundations/16-sampling-methods/) | তৈরি | Python, TypeScript, Julia |
+| 17 | [রৈখিক সিস্টেম](../../phases/01-math-foundations/17-linear-systems/) | তৈরি | Python, TypeScript, Julia |
+| 18 | [কনভেক্স অপ্টিমাইজেশন](../../phases/01-math-foundations/18-convex-optimization/) | তৈরি | Python, TypeScript, Julia |
 | 19 | [AI-এর জন্য জটিল সংখ্যা](../../phases/01-math-foundations/19-complex-numbers/) | শিখুন | Python, TypeScript |
-| 20 | [ফুরিয়ে রূপান্তর](../../phases/01-math-foundations/20-fourier-transform/) | তৈরি | Python, TypeScript |
+| 20 | [ফুরিয়ে রূপান্তর](../../phases/01-math-foundations/20-fourier-transform/) | তৈরি | Python, TypeScript, Julia |
 | 21 | [ML-এর জন্য গ্রাফ তত্ত্ব](../../phases/01-math-foundations/21-graph-theory/) | তৈরি | Python, TypeScript |
-| 22 | [দৈব প্রক্রিয়া](../../phases/01-math-foundations/22-stochastic-processes/) | শিখুন | Python |
+| 22 | [দৈব প্রক্রিয়া](../../phases/01-math-foundations/22-stochastic-processes/) | শিখুন | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ flowchart TB
 
 | # | পাঠ | ধরন | ভাষা |
 |:---:|--------|:----:|------|
-| 01 | [পারসেপট্রন: সবকিছুর শুরু](../../phases/03-deep-learning-core/01-the-perceptron/) | তৈরি | Python, Rust, Julia |
-| 02 | [বহুস্তর নেটওয়ার্ক ও ফরোয়ার্ড পাস](../../phases/03-deep-learning-core/02-multi-layer-networks/) | তৈরি | Python, TypeScript |
-| 03 | [শুরু থেকে ব্যাকপ্রোপাগেশন](../../phases/03-deep-learning-core/03-backpropagation/) | তৈরি | Python, Rust, Julia |
-| 04 | [অ্যাক্টিভেশন ফাংশন: ReLU, Sigmoid, GELU ও ব্যবহারের কারণ](../../phases/03-deep-learning-core/04-activation-functions/) | তৈরি | Python, Julia |
-| 05 | [লস ফাংশন: MSE, ক্রস-এনট্রপি, কনট্রাস্টিভ](../../phases/03-deep-learning-core/05-loss-functions/) | তৈরি | Python, Julia |
-| 06 | [অপ্টিমাইজার: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | তৈরি | Python, TypeScript |
-| 07 | [রেগুলারাইজেশন: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | তৈরি | Python, TypeScript |
-| 08 | [ওয়েটের প্রাথমিক মান ও প্রশিক্ষণের স্থিতিশীলতা](../../phases/03-deep-learning-core/08-weight-initialization/) | তৈরি | Python, TypeScript |
-| 09 | [লার্নিং রেটের সময়সূচি ও ওয়ার্মআপ](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | তৈরি | Python, TypeScript |
-| 10 | [নিজের ছোট ফ্রেমওয়ার্ক তৈরি করুন](../../phases/03-deep-learning-core/10-mini-framework/) | তৈরি | Python, TypeScript |
+| 01 | [পারসেপট্রন: সবকিছুর শুরু](../../phases/03-deep-learning-core/01-the-perceptron/) | তৈরি | Python, TypeScript, Rust, Julia |
+| 02 | [বহুস্তর নেটওয়ার্ক ও ফরোয়ার্ড পাস](../../phases/03-deep-learning-core/02-multi-layer-networks/) | তৈরি | Python, TypeScript, Julia |
+| 03 | [শুরু থেকে ব্যাকপ্রোপাগেশন](../../phases/03-deep-learning-core/03-backpropagation/) | তৈরি | Python, TypeScript, Rust, Julia |
+| 04 | [অ্যাক্টিভেশন ফাংশন: ReLU, Sigmoid, GELU ও ব্যবহারের কারণ](../../phases/03-deep-learning-core/04-activation-functions/) | তৈরি | Python, TypeScript, Julia |
+| 05 | [লস ফাংশন: MSE, ক্রস-এনট্রপি, কনট্রাস্টিভ](../../phases/03-deep-learning-core/05-loss-functions/) | তৈরি | Python, TypeScript, Julia |
+| 06 | [অপ্টিমাইজার: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | তৈরি | Python, TypeScript, Julia |
+| 07 | [রেগুলারাইজেশন: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | তৈরি | Python, TypeScript, Julia |
+| 08 | [ওয়েটের প্রাথমিক মান ও প্রশিক্ষণের স্থিতিশীলতা](../../phases/03-deep-learning-core/08-weight-initialization/) | তৈরি | Python, TypeScript, Julia |
+| 09 | [লার্নিং রেটের সময়সূচি ও ওয়ার্মআপ](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | তৈরি | Python, TypeScript, Julia |
+| 10 | [নিজের ছোট ফ্রেমওয়ার্ক তৈরি করুন](../../phases/03-deep-learning-core/10-mini-framework/) | তৈরি | Python, TypeScript, Julia |
 | 11 | [PyTorch পরিচিতি](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | তৈরি | Python |
 | 12 | [JAX পরিচিতি](../../phases/03-deep-learning-core/12-intro-to-jax/) | তৈরি | Python |
 | 13 | [নিউরাল নেটওয়ার্ক ডিবাগ করা](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | তৈরি | Python |
@@ -448,8 +448,8 @@ flowchart TB
 
 | # | পাঠ | ধরন | ভাষা |
 |:---:|--------|:----:|------|
-| 01 | [ছবির ভিত্তি: পিক্সেল, চ্যানেল ও রঙের স্থান](../../phases/04-computer-vision/01-image-fundamentals/) | শিখুন | Python |
-| 02 | [শুরু থেকে কনভলিউশন](../../phases/04-computer-vision/02-convolutions-from-scratch/) | তৈরি | Python |
+| 01 | [ছবির ভিত্তি: পিক্সেল, চ্যানেল ও রঙের স্থান](../../phases/04-computer-vision/01-image-fundamentals/) | শিখুন | Python, Julia |
+| 02 | [শুরু থেকে কনভলিউশন](../../phases/04-computer-vision/02-convolutions-from-scratch/) | তৈরি | Python, Julia |
 | 03 | [CNN: LeNet থেকে ResNet](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | তৈরি | Python |
 | 04 | [ছবির শ্রেণিবিন্যাস](../../phases/04-computer-vision/04-image-classification/) | তৈরি | Python |
 | 05 | [ট্রান্সফার লার্নিং ও ফাইন-টিউনিং](../../phases/04-computer-vision/05-transfer-learning/) | তৈরি | Python |
@@ -474,7 +474,7 @@ flowchart TB
 | 24 | [SAM 3 ও উন্মুক্ত শব্দভান্ডারভিত্তিক সেগমেন্টেশন](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | তৈরি | Python |
 | 25 | [ভিশন-ল্যাঙ্গুয়েজ মডেল (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | তৈরি | Python |
 | 26 | [এক ক্যামেরা থেকে গভীরতা ও জ্যামিতি অনুমান](../../phases/04-computer-vision/26-monocular-depth/) | তৈরি | Python |
-| 27 | [একাধিক বস্তু অনুসরণ ও ভিডিও স্মৃতি](../../phases/04-computer-vision/27-multi-object-tracking/) | তৈরি | Python |
+| 27 | [একাধিক বস্তু অনুসরণ ও ভিডিও স্মৃতি](../../phases/04-computer-vision/27-multi-object-tracking/) | তৈরি | Python, Rust |
 | 28 | [বিশ্ব মডেল ও ভিডিও ডিফিউশন](../../phases/04-computer-vision/28-world-models-video-diffusion/) | তৈরি | Python |
 
 </details>
@@ -487,7 +487,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [টেক্সট প্রক্রিয়াকরণ: টোকেনাইজেশন, স্টেমিং, লেমাটাইজেশন](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | তৈরি | Python, TypeScript |
 | 02 | [Bag of Words, TF-IDF ও টেক্সট উপস্থাপন](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | তৈরি | Python, TypeScript |
-| 03 | [শব্দের এমবেডিং: শুরু থেকে Word2Vec](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | তৈরি | Python |
+| 03 | [শব্দের এমবেডিং: শুরু থেকে Word2Vec](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | তৈরি | Python, Julia |
 | 04 | [GloVe, FastText ও উপশব্দ এমবেডিং](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | তৈরি | Python, TypeScript |
 | 05 | [অনুভূতি বিশ্লেষণ](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | তৈরি | Python, TypeScript |
 | 06 | [নামযুক্ত সত্তা শনাক্তকরণ (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | তৈরি | Python, TypeScript |
@@ -498,13 +498,13 @@ flowchart TB
 | 11 | [যান্ত্রিক অনুবাদ](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | তৈরি | Python, TypeScript |
 | 12 | [টেক্সট সংক্ষেপণ](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | তৈরি | Python, TypeScript |
 | 13 | [প্রশ্নোত্তর ব্যবস্থা](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | তৈরি | Python, TypeScript |
-| 14 | [তথ্য উদ্ধার ও অনুসন্ধান](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | তৈরি | Python, TypeScript |
-| 15 | [বিষয় মডেলিং: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | তৈরি | Python, TypeScript |
+| 14 | [তথ্য উদ্ধার ও অনুসন্ধান](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | তৈরি | Python, TypeScript, Rust |
+| 15 | [বিষয় মডেলিং: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | তৈরি | Python, TypeScript, Julia |
 | 16 | [টেক্সট তৈরি](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | তৈরি | Python, TypeScript |
 | 17 | [চ্যাটবট: নিয়ম থেকে নিউরাল মডেল](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | তৈরি | Python, TypeScript |
 | 18 | [বহুভাষিক NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | তৈরি | Python, TypeScript |
-| 19 | [উপশব্দ টোকেনাইজেশন: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | শিখুন | Python, TypeScript |
-| 20 | [কাঠামোবদ্ধ আউটপুট ও সীমাবদ্ধ ডিকোডিং](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | তৈরি | Python, TypeScript |
+| 19 | [উপশব্দ টোকেনাইজেশন: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | শিখুন | Python, TypeScript, Rust |
+| 20 | [কাঠামোবদ্ধ আউটপুট ও সীমাবদ্ধ ডিকোডিং](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | তৈরি | Python, TypeScript, Rust |
 | 21 | [NLI ও টেক্সটের যৌক্তিক অনুসিদ্ধান্ত](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | শিখুন | Python, TypeScript |
 | 22 | [এমবেডিং মডেলের গভীরে](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | শিখুন | Python, TypeScript |
 | 23 | [RAG-এর জন্য ভাগ করার কৌশল](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | তৈরি | Python, TypeScript |
@@ -523,8 +523,8 @@ flowchart TB
 
 | # | পাঠ | ধরন | ভাষা |
 |:---:|--------|:----:|------|
-| 01 | [অডিওর ভিত্তি: তরঙ্গরূপ, স্যাম্পলিং, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | শিখুন | Python, TypeScript |
-| 02 | [স্পেকট্রোগ্রাম, Mel স্কেল ও অডিও ফিচার](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | তৈরি | Python, TypeScript |
+| 01 | [অডিওর ভিত্তি: তরঙ্গরূপ, স্যাম্পলিং, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | শিখুন | Python, TypeScript, Julia |
+| 02 | [স্পেকট্রোগ্রাম, Mel স্কেল ও অডিও ফিচার](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | তৈরি | Python, TypeScript, Julia |
 | 03 | [অডিও শ্রেণিবিন্যাস](../../phases/06-speech-and-audio/03-audio-classification) | তৈরি | Python, TypeScript |
 | 04 | [বাক্‌ শনাক্তকরণ (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | তৈরি | Python, TypeScript |
 | 05 | [Whisper: স্থাপত্য ও ফাইন-টিউনিং](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | তৈরি | Python, TypeScript |
@@ -536,7 +536,7 @@ flowchart TB
 | 11 | [তাৎক্ষণিক অডিও প্রক্রিয়াকরণ](../../phases/06-speech-and-audio/11-real-time-audio-processing) | তৈরি | Python, Rust |
 | 12 | [ভয়েস সহকারীর পাইপলাইন তৈরি করুন](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | তৈরি | Python, TypeScript |
 | 13 | [নিউরাল অডিও কোডেক: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | শিখুন | Python, TypeScript |
-| 14 | [কণ্ঠস্বরের সক্রিয়তা শনাক্ত ও কথা বলার পালা](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | তৈরি | Python, TypeScript |
+| 14 | [কণ্ঠস্বরের সক্রিয়তা শনাক্ত ও কথা বলার পালা](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | তৈরি | Python, TypeScript, Rust |
 | 15 | [স্ট্রিমিং স্পিচ-টু-স্পিচ: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | শিখুন | Python, TypeScript |
 | 16 | [ভুয়া কণ্ঠ প্রতিরোধ ও অডিও ওয়াটারমার্ক](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | তৈরি | Python, TypeScript |
 | 17 | [অডিও মূল্যায়ন: WER, MOS, MMAU ও লিডারবোর্ড](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | শিখুন | Python, TypeScript |
@@ -586,9 +586,9 @@ flowchart TB
 | 10 | [ভিডিও তৈরি](../../phases/08-generative-ai/10-video-generation/) | তৈরি | Python, TypeScript |
 | 11 | [অডিও তৈরি](../../phases/08-generative-ai/11-audio-generation/) | তৈরি | Python, TypeScript |
 | 12 | [3D তৈরি](../../phases/08-generative-ai/12-3d-generation/) | তৈরি | Python, TypeScript |
-| 13 | [Flow Matching ও Rectified Flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | তৈরি | Python, TypeScript |
+| 13 | [Flow Matching ও Rectified Flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | তৈরি | Python, TypeScript, Julia |
 | 14 | [মূল্যায়ন: FID ও CLIP স্কোর](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | তৈরি | Python, TypeScript |
-| 19 | [ভিজ্যুয়াল অটোরিগ্রেসিভ মডেলিং (VAR): পরের স্কেল অনুমান](../../phases/08-generative-ai/19-visual-autoregressive-var/) | তৈরি | Python |
+| 19 | [ভিজ্যুয়াল অটোরিগ্রেসিভ মডেলিং (VAR): পরের স্কেল অনুমান](../../phases/08-generative-ai/19-visual-autoregressive-var/) | তৈরি | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ flowchart TB
 | # | পাঠ | ধরন | ভাষা |
 |:---:|--------|:----:|------|
 | 01 | [টোকেনাইজার: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | তৈরি | Python, Rust |
-| 02 | [শুরু থেকে টোকেনাইজার তৈরি](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | তৈরি | Python |
+| 02 | [শুরু থেকে টোকেনাইজার তৈরি](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | তৈরি | Python, TypeScript |
 | 03 | [প্রাক্‌প্রশিক্ষণের ডেটা পাইপলাইন](../../phases/10-llms-from-scratch/03-data-pipelines/) | তৈরি | Python, Rust |
 | 04 | [ছোট GPT-এর প্রাক্‌প্রশিক্ষণ (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | তৈরি | Python, Rust |
 | 05 | [বণ্টিত প্রশিক্ষণ, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | তৈরি | Python |
@@ -665,7 +665,7 @@ flowchart TB
 | 11 | [ক্যাশিং, রেট সীমা ও খরচ](../../phases/11-llm-engineering/11-caching-cost/) | তৈরি | Python, TypeScript |
 | 12 | [সুরক্ষার সীমারেখা ও নিরাপত্তা](../../phases/11-llm-engineering/12-guardrails/) | তৈরি | Python, TypeScript |
 | 13 | [বাস্তব ব্যবহারের LLM অ্যাপ তৈরি](../../phases/11-llm-engineering/13-production-app/) | তৈরি | Python, TypeScript |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | তৈরি | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | তৈরি | Python, TypeScript, Go |
 | 15 | [প্রম্পট ও কনটেক্সট ক্যাশিং](../../phases/11-llm-engineering/15-prompt-caching/) | তৈরি | Python, TypeScript |
 | 16 | [এজেন্ট স্টেট মেশিন: গ্রাফ, নোড, চেকপয়েন্ট](../../phases/11-llm-engineering/16-langgraph-state-machines/) | তৈরি | Python |
 | 17 | [এজেন্ট ফ্রেমওয়ার্ক বাছাইয়ের সুবিধা ও আপস](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | শিখুন | Python, TypeScript |
@@ -714,25 +714,25 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [টুলের ইন্টারফেস](../../phases/13-tools-and-protocols/01-the-tool-interface/) | শিখুন | Python, TypeScript |
 | 02 | [ফাংশন কলের গভীরে](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | তৈরি | Python, TypeScript |
-| 03 | [সমান্তরাল ও স্ট্রিমিং টুল কল](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | তৈরি | Python, TypeScript |
+| 03 | [সমান্তরাল ও স্ট্রিমিং টুল কল](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | তৈরি | Python, TypeScript, Go |
 | 04 | [কাঠামোবদ্ধ ফলাফল](../../phases/13-tools-and-protocols/04-structured-output/) | তৈরি | Python, TypeScript |
 | 05 | [টুল স্কিমা নকশা](../../phases/13-tools-and-protocols/05-tool-schema-design/) | শিখুন | Python, TypeScript |
 | 06 | [MCP-এর ভিত্তি: অবস্থাহীন অনুরোধ ও JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | শিখুন | Python, TypeScript |
-| 07 | [MCP সার্ভার তৈরি: অবস্থাহীন Python ও TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | তৈরি | Python, TypeScript |
+| 07 | [MCP সার্ভার তৈরি: অবস্থাহীন Python ও TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | তৈরি | Python, TypeScript, Go |
 | 08 | [MCP ক্লায়েন্ট তৈরি: আবিষ্কার, রাউটিং ও দুই প্রজন্মের বিকল্প পথ](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | তৈরি | Python, TypeScript |
-| 09 | [MCP ট্রান্সপোর্ট: stdio ও অবস্থাহীন Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | শিখুন | Python, TypeScript |
+| 09 | [MCP ট্রান্সপোর্ট: stdio ও অবস্থাহীন Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | শিখুন | Python, TypeScript, Go |
 | 10 | [MCP রিসোর্স ও প্রম্পট: অবস্থাহীন সার্ভারের ঠিকানাযোগ্য কনটেক্সট](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | তৈরি | Python, TypeScript |
 | 11 | [MCP মডেলের ইনপুট: sampling স্থানান্তর ও অবস্থাহীন MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | তৈরি | Python, TypeScript |
 | 12 | [স্পষ্ট পরিসর ও অবস্থাহীন তথ্য সংগ্রহ](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | তৈরি | Python, TypeScript |
 | 13 | [MCP টাস্ক এক্সটেনশন: অবস্থাহীন ভিত্তিতে টেকসই কাজ](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | তৈরি | Python, TypeScript |
 | 14 | [অবস্থাহীন প্রোটোকলে MCP Apps](../../phases/13-tools-and-protocols/14-mcp-apps/) | তৈরি | Python, TypeScript |
 | 15 | [MCP সুরক্ষা: দূষিত মেটাডেটা, রাউটিং ও MRTR অবস্থা](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | শিখুন | Python, TypeScript |
-| 16 | [MCP অনুমোদন: CIMD, ইস্যুকারীর বাঁধন, PKCE ও উন্নীত যাচাই](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | তৈরি | Python, TypeScript |
-| 17 | [অবস্থাহীন MCP গেটওয়ে ও রেজিস্ট্রিতে ভর্তি](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | শিখুন | Python, TypeScript |
-| 18 | [বাস্তব ব্যবহারে MCP প্রমাণীকরণ: ইস্যুকারীর সঙ্গে বাঁধা নিবন্ধন ও টোকেন](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | তৈরি | Python, TypeScript |
-| 19 | [A2A প্রোটোকল](../../phases/13-tools-and-protocols/19-a2a-protocol/) | তৈরি | Python, TypeScript |
+| 16 | [MCP অনুমোদন: CIMD, ইস্যুকারীর বাঁধন, PKCE ও উন্নীত যাচাই](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | তৈরি | Python, TypeScript, Go |
+| 17 | [অবস্থাহীন MCP গেটওয়ে ও রেজিস্ট্রিতে ভর্তি](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | শিখুন | Python, TypeScript, Go |
+| 18 | [বাস্তব ব্যবহারে MCP প্রমাণীকরণ: ইস্যুকারীর সঙ্গে বাঁধা নিবন্ধন ও টোকেন](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | তৈরি | Python, TypeScript, Go |
+| 19 | [A2A প্রোটোকল](../../phases/13-tools-and-protocols/19-a2a-protocol/) | তৈরি | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | তৈরি | Python, TypeScript |
-| 21 | [LLM রাউটিং স্তর](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | শিখুন | Python, TypeScript |
+| 21 | [LLM রাউটিং স্তর](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | শিখুন | Python, TypeScript, Go |
 | 22 | [Agent Skills: বহনযোগ্য চুক্তি ও রানটাইমের সীমানা](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | তৈরি | Python, TypeScript |
 | 23 | [চূড়ান্ত প্রকল্প: অবস্থাহীন টুলের ব্যবস্থা](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | তৈরি | Python, TypeScript |
 | 24 | [স্কিল আবিষ্কার ও ধাপে ধাপে প্রকাশ](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | তৈরি | Python, TypeScript |
@@ -743,19 +743,19 @@ flowchart TB
 | 29 | [MCP নির্ভরযোগ্যতা, বাতিলকরণ ও প্রবাহ নিয়ন্ত্রণ](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | তৈরি | Python, TypeScript |
 | 30 | [MCP রেজিস্ট্রির সরবরাহশৃঙ্খল: ভর্তি, বিচ্যুতি ও ফিরিয়ে নেওয়া](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | তৈরি | Python, TypeScript |
 | 31 | [MCP সম্মতি ইঞ্জিনিয়ারিং: সংস্করণ, প্রমাণ ও পরিচালনা](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | তৈরি | Python, TypeScript |
-| 32 | [প্রোগ্রামের গঠন: শুরু থেকে ELF পড়া](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | তৈরি | Python, TypeScript |
-| 33 | [ডিসঅ্যাসেম্বলি ও কন্ট্রোল-ফ্লো গ্রাফ](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | তৈরি | Python, TypeScript |
-| 34 | [মেশিন কোড থেকে সিউডোকোডে উত্তোলন](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | তৈরি | Python |
+| 32 | [প্রোগ্রামের গঠন: শুরু থেকে ELF পড়া](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | তৈরি | Python, TypeScript, Rust |
+| 33 | [ডিসঅ্যাসেম্বলি ও কন্ট্রোল-ফ্লো গ্রাফ](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | তৈরি | Python, TypeScript, Rust |
+| 34 | [মেশিন কোড থেকে সিউডোকোডে উত্তোলন](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | তৈরি | Python, TypeScript |
 | 35 | [বাইনারি বিশ্লেষণে প্রমাণ, আস্থা ও অজানা](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | তৈরি | Python, TypeScript |
 | 36 | [আবার তৈরি করুন ও সমতা প্রমাণ করুন](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | তৈরি | Python, TypeScript |
 | 37 | [রিভার্স ইঞ্জিনিয়ারিংয়ের পরিসর](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | তৈরি | Python, TypeScript |
 | 38 | [কলিং কনভেনশন ও স্ট্যাক ফ্রেম](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | তৈরি | Python, TypeScript |
 | 39 | [কম্পাইলারের রীতি ও অপ্টিমাইজেশন](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | তৈরি | Python, TypeScript |
-| 40 | [লিংকিং, লোডিং ও স্ট্রিপ করা বাইনারি](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | তৈরি | Python, TypeScript |
+| 40 | [লিংকিং, লোডিং ও স্ট্রিপ করা বাইনারি](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | তৈরি | Python, TypeScript, Rust |
 | 41 | [ডেটা ও টাইপ পুনরুদ্ধার](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | তৈরি | Python, TypeScript |
 | 42 | [নিজের প্রোগ্রামের ডায়নামিক বিশ্লেষণ](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | তৈরি | Python, TypeScript |
 | 43 | [বাইটকোড ও ম্যানেজড ফরম্যাট](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | তৈরি | Python, TypeScript |
-| 44 | [বাইনারি তুলনা ও সিম্বলিক এক্সিকিউশন](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | তৈরি | Python |
+| 44 | [বাইনারি তুলনা ও সিম্বলিক এক্সিকিউশন](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | তৈরি | Python, TypeScript |
 | 45 | [AI-সহায়িত রিভার্স ইঞ্জিনিয়ারিং](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | তৈরি | Python, TypeScript |
 
 পাঠ 06-18 ও 28-31 মিলে বিশেষায়িত [Model Context Protocol (MCP) পথ](../../learning-paths/model-context-protocol.json)। ম্যানিফেস্টের ক্রম 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31। ওপরের হোস্টভিত্তিক `learn-mcp` আহ্বান দিয়ে শুরু করুন। পাঠ 23 একমাত্র ঐচ্ছিক চূড়ান্ত প্রকল্প; এর জন্য পাঠ 19 ও 20-ও লাগে।
@@ -792,13 +792,13 @@ flowchart TB
 | 20 | [বেঞ্চমার্ক: WebArena ও OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | শিখুন | Python, TypeScript |
 | 21 | [কম্পিউটার ব্যবহার: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | তৈরি | Python, TypeScript |
 | 22 | [ভয়েস এজেন্ট: Pipecat ও LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | তৈরি | Python, TypeScript |
-| 23 | [OpenTelemetry GenAI-এর অর্থগত রীতি](../../phases/14-agent-engineering/23-otel-genai-conventions/) | তৈরি | Python, TypeScript |
+| 23 | [OpenTelemetry GenAI-এর অর্থগত রীতি](../../phases/14-agent-engineering/23-otel-genai-conventions/) | তৈরি | Python, TypeScript, Go |
 | 24 | [এজেন্ট পর্যবেক্ষণ: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | শিখুন | Python, TypeScript |
 | 25 | [বহু এজেন্টের বিতর্ক ও সহযোগিতা](../../phases/14-agent-engineering/25-multi-agent-debate/) | তৈরি | Python, TypeScript |
 | 26 | [ব্যর্থতার ধরন: এজেন্ট কেন ভেঙে পড়ে](../../phases/14-agent-engineering/26-failure-modes-agentic/) | তৈরি | Python, TypeScript |
 | 27 | [প্রম্পট ইনজেকশন ও PVE প্রতিরক্ষা](../../phases/14-agent-engineering/27-prompt-injection-defense/) | তৈরি | Python, TypeScript |
 | 28 | [পরিচালনার প্যাটার্ন: তত্ত্বাবধায়ক, ঝাঁক, স্তরক্রম](../../phases/14-agent-engineering/28-orchestration-patterns/) | তৈরি | Python, TypeScript |
-| 29 | [বাস্তব ব্যবহারের রানটাইম: কিউ, ইভেন্ট, ক্রন](../../phases/14-agent-engineering/29-production-runtimes/) | শিখুন | Python, TypeScript |
+| 29 | [বাস্তব ব্যবহারের রানটাইম: কিউ, ইভেন্ট, ক্রন](../../phases/14-agent-engineering/29-production-runtimes/) | শিখুন | Python, TypeScript, Go |
 | 30 | [মূল্যায়ননির্ভর এজেন্ট তৈরি](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | তৈরি | Python, TypeScript |
 | 31 | [এজেন্ট ওয়ার্কবেঞ্চ: দক্ষ মডেলও কেন ব্যর্থ হয়](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | শিখুন | Python, TypeScript |
 | 32 | [ন্যূনতম এজেন্ট ওয়ার্কবেঞ্চ](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | তৈরি | Python, TypeScript |
@@ -848,7 +848,7 @@ flowchart TB
 | 09 | [স্বায়ত্তশাসিত কোডিং এজেন্টের চিত্র (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | শিখুন | Python, TypeScript |
 | 10 | [স্বায়ত্তশাসিত এজেন্টের অনুমতির ধরন](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | শিখুন | Python, TypeScript |
 | 11 | [ব্রাউজার এজেন্ট ও পরোক্ষ প্রম্পট ইনজেকশন](../../phases/15-autonomous-systems/11-browser-agents/) | শিখুন | Python, TypeScript |
-| 12 | [দীর্ঘ সময়ের এজেন্টের টেকসই নির্বাহ](../../phases/15-autonomous-systems/12-durable-execution/) | শিখুন | Python, TypeScript |
+| 12 | [দীর্ঘ সময়ের এজেন্টের টেকসই নির্বাহ](../../phases/15-autonomous-systems/12-durable-execution/) | শিখুন | Python, TypeScript, Go |
 | 13 | [পদক্ষেপের বাজেট, পুনরাবৃত্তির সীমা ও খরচ নিয়ন্ত্রণ](../../phases/15-autonomous-systems/13-cost-governors/) | শিখুন | Python, TypeScript |
 | 14 | [জরুরি বন্ধ, সার্কিট ব্রেকার ও ক্যানারি টোকেন](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | শিখুন | Python, TypeScript |
 | 15 | [HITL: আগে প্রস্তাব, তারপর প্রয়োগ](../../phases/15-autonomous-systems/15-propose-then-commit/) | শিখুন | Python, TypeScript |
@@ -857,7 +857,7 @@ flowchart TB
 | 18 | [Llama Guard ও ইনপুট/আউটপুট শ্রেণিবিন্যাস](../../phases/15-autonomous-systems/18-llama-guard/) | শিখুন | Python, TypeScript |
 | 19 | [Anthropic-এর Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | শিখুন | Python, TypeScript |
 | 20 | [OpenAI Preparedness Framework ও DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | শিখুন | Python, TypeScript |
-| 21 | [METR সময়সীমা ও বাইরের মূল্যায়ন](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | শিখুন | Python, TypeScript |
+| 21 | [METR সময়সীমা ও বাইরের মূল্যায়ন](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | শিখুন | Python, TypeScript, Julia |
 | 22 | [CAIS, CAISI ও সমাজব্যাপী ঝুঁকি](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | শিখুন | Python, TypeScript |
 
 </details>
@@ -876,17 +876,17 @@ flowchart TB
 | 06 | [স্তরক্রমিক স্থাপত্য ও ভাগ করার বিচ্যুতি](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | শিখুন | Python, TypeScript |
 | 07 | [Society of Mind ও বহু এজেন্টের বিতর্ক](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | তৈরি | Python, TypeScript |
 | 08 | [বিশেষায়িত ভূমিকা: পরিকল্পনাকারী / সমালোচক / নির্বাহক / যাচাইকারী](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | তৈরি | Python, TypeScript |
-| 09 | [সমান্তরাল ঝাঁক ও নেটওয়ার্কভিত্তিক স্থাপত্য](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | তৈরি | Python, TypeScript |
+| 09 | [সমান্তরাল ঝাঁক ও নেটওয়ার্কভিত্তিক স্থাপত্য](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | তৈরি | Python, TypeScript, Go |
 | 10 | [দলীয় চ্যাট ও বক্তা নির্বাচন](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | তৈরি | Python, TypeScript |
 | 11 | [হস্তান্তর ও রুটিন (অবস্থাহীন পরিচালনা)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | তৈরি | Python, TypeScript |
-| 12 | [A2A: এজেন্ট থেকে এজেন্ট প্রোটোকল](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | তৈরি | Python, TypeScript |
+| 12 | [A2A: এজেন্ট থেকে এজেন্ট প্রোটোকল](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | তৈরি | Python, TypeScript, Go |
 | 13 | [যৌথ স্মৃতি ও ব্ল্যাকবোর্ড প্যাটার্ন](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | তৈরি | Python, TypeScript |
 | 14 | [ঐকমত্য ও বাইজান্টাইন ত্রুটি সহনশীলতা](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | তৈরি | Python, TypeScript |
 | 15 | [ভোট, স্ব-সঙ্গতি ও বিতর্কের বিন্যাস](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | তৈরি | Python, TypeScript |
 | 16 | [আলোচনা ও দরকষাকষি](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | তৈরি | Python, TypeScript |
 | 17 | [জেনারেটিভ এজেন্ট ও উদ্ভূত সিমুলেশন](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | তৈরি | Python, TypeScript |
 | 18 | [মনের তত্ত্ব ও উদ্ভূত সমন্বয়](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | তৈরি | Python, TypeScript |
-| 19 | [ঝাঁক অপ্টিমাইজেশন (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | তৈরি | Python, TypeScript |
+| 19 | [ঝাঁক অপ্টিমাইজেশন (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | তৈরি | Python, TypeScript, Julia |
 | 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | শিখুন | Python, TypeScript |
 | 21 | [এজেন্ট অর্থনীতি, টোকেন প্রণোদনা ও সুনাম](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | শিখুন | Python, TypeScript |
 | 22 | [বাস্তব ব্যবহারে স্কেলিং: কিউ, চেকপয়েন্ট, স্থায়িত্ব](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | তৈরি | Python, TypeScript |
@@ -905,9 +905,9 @@ flowchart TB
 | 01 | [পরিচালিত LLM প্ল্যাটফর্ম: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | শিখুন | Python, TypeScript |
 | 02 | [ইনফারেন্স প্ল্যাটফর্মের অর্থনীতি: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | শিখুন | Python, TypeScript |
 | 03 | [Kubernetes-এ GPU স্বয়ংক্রিয় স্কেলিং: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | শিখুন | Python, TypeScript |
-| 04 | [সার্ভিং ইঞ্জিনের ভেতর: PagedAttention, অবিরাম ব্যাচিং, ভাগ করা prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | শিখুন | Python, TypeScript |
+| 04 | [সার্ভিং ইঞ্জিনের ভেতর: PagedAttention, অবিরাম ব্যাচিং, ভাগ করা prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | শিখুন | Python, TypeScript, Rust |
 | 05 | [বাস্তব ব্যবহারে EAGLE-3 অনুমানভিত্তিক ডিকোডিং](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | শিখুন | Python, TypeScript |
-| 06 | [প্রিফিক্স-ক্যাশ সার্ভিং: RadixAttention ও KV পুনর্ব্যবহার](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | শিখুন | Python, TypeScript |
+| 06 | [প্রিফিক্স-ক্যাশ সার্ভিং: RadixAttention ও KV পুনর্ব্যবহার](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | শিখুন | Python, TypeScript, Rust |
 | 07 | [হার্ডওয়্যারভিত্তিক ইনফারেন্স কম্পাইলেশন: Blackwell-এ FP8 ও NVFP4](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | শিখুন | Python, TypeScript |
 | 08 | [ইনফারেন্সের মাপকাঠি: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | শিখুন | Python, TypeScript |
 | 09 | [বাস্তব ব্যবহারে কোয়ান্টাইজেশন: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | শিখুন | Python, TypeScript |
@@ -922,7 +922,7 @@ flowchart TB
 | 18 | [বাস্তব সার্ভিং টুলসমষ্টি: KV সরিয়ে রাখা ও ক্যাশ-সচেতন রাউটিং](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | শিখুন | Python, TypeScript |
 | 19 | [AI গেটওয়ে: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | শিখুন | Python, TypeScript |
 | 20 | [শ্যাডো, ক্যানারি ও ধীরে ধীরে স্থাপন](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | শিখুন | Python, TypeScript |
-| 21 | [LLM ফিচারের A/B পরীক্ষা: GrowthBook ও Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | শিখুন | Python, TypeScript |
+| 21 | [LLM ফিচারের A/B পরীক্ষা: GrowthBook ও Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | শিখুন | Python, TypeScript, Julia |
 | 22 | [LLM API-এর লোড পরীক্ষা: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | তৈরি | Python, TypeScript |
 | 23 | [AI-এর জন্য SRE: বহু এজেন্টে ঘটনা মোকাবিলা](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | শিখুন | Python, TypeScript |
 | 24 | [বাস্তব LLM-এ বিশৃঙ্খলা পরীক্ষা](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | শিখুন | Python, TypeScript |
@@ -961,7 +961,7 @@ flowchart TB
 | 19 | [মডেলের কল্যাণ গবেষণা](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | শিখুন | Python, TypeScript |
 | 20 | [পক্ষপাত ও উপস্থাপনজনিত ক্ষতি](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | তৈরি | Python, TypeScript |
 | 21 | [ন্যায্যতার মানদণ্ড: দল, ব্যক্তি, বিকল্প পরিস্থিতি](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | শিখুন | Python, TypeScript |
-| 22 | [LLM-এর জন্য ডিফারেনশিয়াল গোপনীয়তা](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | তৈরি | Python, TypeScript |
+| 22 | [LLM-এর জন্য ডিফারেনশিয়াল গোপনীয়তা](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | তৈরি | Python, TypeScript, Julia |
 | 23 | [ওয়াটারমার্ক: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | তৈরি | Python, TypeScript |
 | 24 | [নিয়ন্ত্রক কাঠামো: EU, US, UK, Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | শিখুন | Python, TypeScript |
 | 25 | [AI-এর জন্য EchoLeak ও CVE](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | শিখুন | Python, TypeScript |
@@ -989,9 +989,9 @@ flowchart TB
 | 08 | [বাস্তব RAG চ্যাটবট (নিয়ন্ত্রিত ক্ষেত্র)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [কোড স্থানান্তর এজেন্ট (রিপোজিটরি-স্তরের উন্নীতকরণ)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [বহু এজেন্টের সফটওয়্যার ইঞ্জিনিয়ারিং দল](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [LLM পর্যবেক্ষণ ও মূল্যায়নের ড্যাশবোর্ড](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [LLM পর্যবেক্ষণ ও মূল্যায়নের ড্যাশবোর্ড](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [ভিডিও বোঝার পাইপলাইন (দৃশ্য → প্রশ্নোত্তর)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [রেজিস্ট্রি ও পরিচালনাসহ অবস্থাহীন MCP সার্ভার](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [রেজিস্ট্রি ও পরিচালনাসহ অবস্থাহীন MCP সার্ভার](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [অনুমানভিত্তিক ডিকোডিংয়ের ইনফারেন্স সার্ভার](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [সংবিধানভিত্তিক নিরাপত্তা কাঠামো ও রেড-টিম পরীক্ষাক্ষেত্র](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [GitHub issue থেকে PR পর্যন্ত স্বায়ত্তশাসিত এজেন্ট](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1011,7 +1011,7 @@ flowchart TB
 | 27 | [নির্দিষ্ট পরীক্ষাকাজসহ মূল্যায়ন কাঠামো](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. এজেন্ট নির্বাহ কাঠামো | Python, TypeScript |
 | 28 | [OTel GenAI span ও Prometheus মাপকাঠিতে পর্যবেক্ষণ](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. এজেন্ট নির্বাহ কাঠামো | Python, TypeScript |
 | 29 | [নির্বাহ কাঠামোয় সম্পূর্ণ কোডিং এজেন্ট](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. এজেন্ট নির্বাহ কাঠামো | Python, TypeScript |
-| 30 | [শুরু থেকে BPE টোকেনাইজার](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
+| 30 | [শুরু থেকে BPE টোকেনাইজার](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript, Rust |
 | 31 | [স্লাইডিং উইন্ডোসহ টোকেন করা ডেটাসেট](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [টোকেন ও অবস্থানের এমবেডিং](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [মাল্টি-হেড সেলফ-অ্যাটেনশন](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1023,7 +1023,7 @@ flowchart TB
 | 39 | [তত্ত্বাবধানযুক্ত ফাইন-টিউনিং দিয়ে নির্দেশনা টিউনিং](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP LLM | Python |
 | 40 | [শুরু থেকে সরাসরি পছন্দ অপ্টিমাইজেশন](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP LLM | Python |
 | 41 | [সম্পূর্ণ মূল্যায়ন পাইপলাইন](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP LLM | Python |
-| 42 | [বড় কর্পাস ডাউনলোডার](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. সম্পূর্ণ প্রশিক্ষণ | Python |
+| 42 | [বড় কর্পাস ডাউনলোডার](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. সম্পূর্ণ প্রশিক্ষণ | Python, TypeScript |
 | 43 | [HDF5 টোকেন করা কর্পাস](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. সম্পূর্ণ প্রশিক্ষণ | Python |
 | 44 | [রৈখিক ওয়ার্মআপসহ কোসাইন লার্নিং রেট](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. সম্পূর্ণ প্রশিক্ষণ | Python |
 | 45 | [গ্রেডিয়েন্ট ক্লিপিং ও মিশ্র নির্ভুলতা](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. সম্পূর্ণ প্রশিক্ষণ | Python |
@@ -1037,8 +1037,8 @@ flowchart TB
 | 53 | [ফল মূল্যায়নকারী](../../phases/19-capstone-projects/53-result-evaluator/) | D. স্বয়ংক্রিয় গবেষণা | Python |
 | 54 | [গবেষণাপত্র লেখক](../../phases/19-capstone-projects/54-paper-writer/) | D. স্বয়ংক্রিয় গবেষণা | Python, TypeScript |
 | 55 | [সমালোচনার চক্র](../../phases/19-capstone-projects/55-critic-loop/) | D. স্বয়ংক্রিয় গবেষণা | Python, TypeScript |
-| 56 | [পুনরাবৃত্তির সময়সূচি নির্ধারক](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. স্বয়ংক্রিয় গবেষণা | Python |
-| 57 | [শুরু থেকে শেষ পর্যন্ত গবেষণার নমুনা](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. স্বয়ংক্রিয় গবেষণা | Python |
+| 56 | [পুনরাবৃত্তির সময়সূচি নির্ধারক](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. স্বয়ংক্রিয় গবেষণা | Python, TypeScript |
+| 57 | [শুরু থেকে শেষ পর্যন্ত গবেষণার নমুনা](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. স্বয়ংক্রিয় গবেষণা | Python, TypeScript |
 | 58 | [ভিশন এনকোডারের প্যাচ](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. বহুমাত্রিক VLM | Python |
 | 59 | [ভিশন ট্রান্সফর্মার এনকোডার](../../phases/19-capstone-projects/59-vit-transformer/) | E. বহুমাত্রিক VLM | Python |
 | 60 | [মোডালিটি মেলানোর প্রজেকশন স্তর](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. বহুমাত্রিক VLM | Python |
@@ -1052,11 +1052,11 @@ flowchart TB
 | 68 | [RAG মূল্যায়ন: Precision, Recall, MRR, nDCG, বিশ্বস্ততা, উত্তরের প্রাসঙ্গিকতা](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. উন্নত RAG | Python, TypeScript |
 | 69 | [সম্পূর্ণ RAG সিস্টেম](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. উন্নত RAG | Python |
 | 70 | [কাজের স্পেসিফিকেশনের বিন্যাস](../../phases/19-capstone-projects/70-task-spec-format/) | G. মূল্যায়ন কাঠামো | Python, TypeScript |
-| 71 | [প্রচলিত মাপকাঠি](../../phases/19-capstone-projects/71-classical-metrics/) | G. মূল্যায়ন কাঠামো | Python |
-| 72 | [কোড চালানোর মাপকাঠি](../../phases/19-capstone-projects/72-code-exec-metric/) | G. মূল্যায়ন কাঠামো | Python |
-| 73 | [পারপ্লেক্সিটি ও ক্যালিব্রেশন](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. মূল্যায়ন কাঠামো | Python |
-| 74 | [লিডারবোর্ড একত্র করা](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. মূল্যায়ন কাঠামো | Python |
-| 75 | [শুরু থেকে শেষ পর্যন্ত মূল্যায়ন চালানো](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. মূল্যায়ন কাঠামো | Python |
+| 71 | [প্রচলিত মাপকাঠি](../../phases/19-capstone-projects/71-classical-metrics/) | G. মূল্যায়ন কাঠামো | Python, TypeScript |
+| 72 | [কোড চালানোর মাপকাঠি](../../phases/19-capstone-projects/72-code-exec-metric/) | G. মূল্যায়ন কাঠামো | Python, TypeScript |
+| 73 | [পারপ্লেক্সিটি ও ক্যালিব্রেশন](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. মূল্যায়ন কাঠামো | Python, TypeScript |
+| 74 | [লিডারবোর্ড একত্র করা](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. মূল্যায়ন কাঠামো | Python, TypeScript |
+| 75 | [শুরু থেকে শেষ পর্যন্ত মূল্যায়ন চালানো](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. মূল্যায়ন কাঠামো | Python, TypeScript |
 | 76 | [শুরু থেকে সমষ্টিগত অপারেশন](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. বণ্টিত প্রশিক্ষণ | Python |
 | 77 | [শুরু থেকে ডেটা-প্যারালাল DDP](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. বণ্টিত প্রশিক্ষণ | Python |
 | 78 | [ZeRO অপ্টিমাইজারের অবস্থা ভাগ করা](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. বণ্টিত প্রশিক্ষণ | Python |
@@ -1129,7 +1129,7 @@ Claude Code, Codex, ChatGPT, Cursor বা অন্য এজেন্টের
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      চালানো যায় এমন বাস্তবায়ন (Python, TypeScript, Rust, Julia)
+├── code/      চালানো যায় এমন বাস্তবায়ন (Python, TypeScript, Rust, Julia, Go)
 ├── docs/
 │   └── en.md  পাঠের ব্যাখ্যা
 └── outputs/   এই পাঠে তৈরি প্রম্পট, স্কিল, এজেন্ট বা MCP সার্ভার

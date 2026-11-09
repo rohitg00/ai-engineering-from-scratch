@@ -19,7 +19,7 @@
 
 निःशुल्क, ओपन सोर्स, MIT लाइसेंस। वेबसाइट पर, कोडिंग एजेंट के साथ या स्थानीय कोड चलाकर सीखें।
 
-> 542 पाठ. 20 चरण. Python, TypeScript, Rust, Julia.
+> 542 पाठ. 20 चरण. Python, TypeScript, Rust, Julia, Go.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="एमआईटी लाइसेंस"></a>
@@ -374,19 +374,19 @@ flowchart TB
 | 07 | [Bayes प्रमेय और सांख्यिकीय चिंतन](../../phases/01-math-foundations/07-bayes-theorem/) | बनाएँ | Python, TypeScript |
 | 08 | [अनुकूलन: ग्रेडिएंट डिसेंट के तरीके](../../phases/01-math-foundations/08-optimization/) | बनाएँ | Python, Julia |
 | 09 | [सूचना सिद्धांत: एंट्रॉपी और KL डाइवर्जेंस](../../phases/01-math-foundations/09-information-theory/) | सीखें | Python, TypeScript |
-| 10 | [आयाम घटाना: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | बनाएँ | Python, TypeScript |
+| 10 | [आयाम घटाना: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | बनाएँ | Python, TypeScript, Julia |
 | 11 | [सिंगुलर वैल्यू डीकंपोज़िशन (SVD)](../../phases/01-math-foundations/11-singular-value-decomposition/) | बनाएँ | Python, Julia |
 | 12 | [टेंसर संक्रियाएँ](../../phases/01-math-foundations/12-tensor-operations/) | बनाएँ | Python, TypeScript |
-| 13 | [संख्यात्मक स्थिरता](../../phases/01-math-foundations/13-numerical-stability/) | बनाएँ | Python, TypeScript |
+| 13 | [संख्यात्मक स्थिरता](../../phases/01-math-foundations/13-numerical-stability/) | बनाएँ | Python, TypeScript, Julia |
 | 14 | [वेक्टर नॉर्म और दूरियाँ](../../phases/01-math-foundations/14-norms-and-distances/) | बनाएँ | Python, TypeScript |
 | 15 | [ML के लिए सांख्यिकी](../../phases/01-math-foundations/15-statistics-for-ml/) | बनाएँ | Python, TypeScript |
-| 16 | [नमूना चुनने के तरीके](../../phases/01-math-foundations/16-sampling-methods/) | बनाएँ | Python, TypeScript |
-| 17 | [रैखिक समीकरण-तंत्र](../../phases/01-math-foundations/17-linear-systems/) | बनाएँ | Python, TypeScript |
-| 18 | [उत्तल अनुकूलन](../../phases/01-math-foundations/18-convex-optimization/) | बनाएँ | Python, TypeScript |
+| 16 | [नमूना चुनने के तरीके](../../phases/01-math-foundations/16-sampling-methods/) | बनाएँ | Python, TypeScript, Julia |
+| 17 | [रैखिक समीकरण-तंत्र](../../phases/01-math-foundations/17-linear-systems/) | बनाएँ | Python, TypeScript, Julia |
+| 18 | [उत्तल अनुकूलन](../../phases/01-math-foundations/18-convex-optimization/) | बनाएँ | Python, TypeScript, Julia |
 | 19 | [AI के लिए सम्मिश्र संख्याएँ](../../phases/01-math-foundations/19-complex-numbers/) | सीखें | Python, TypeScript |
-| 20 | [Fourier रूपांतरण](../../phases/01-math-foundations/20-fourier-transform/) | बनाएँ | Python, TypeScript |
+| 20 | [Fourier रूपांतरण](../../phases/01-math-foundations/20-fourier-transform/) | बनाएँ | Python, TypeScript, Julia |
 | 21 | [ML के लिए ग्राफ सिद्धांत](../../phases/01-math-foundations/21-graph-theory/) | बनाएँ | Python, TypeScript |
-| 22 | [स्टोकेस्टिक प्रक्रियाएँ](../../phases/01-math-foundations/22-stochastic-processes/) | सीखें | Python |
+| 22 | [स्टोकेस्टिक प्रक्रियाएँ](../../phases/01-math-foundations/22-stochastic-processes/) | सीखें | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ flowchart TB
 
 | # | पाठ | प्रकार | भाषा |
 |:---:|--------|:----:|------|
-| 01 | [Perceptron: शुरुआत यहीं से](../../phases/03-deep-learning-core/01-the-perceptron/) | बनाएँ | Python, Rust, Julia |
-| 02 | [बहु-स्तरीय नेटवर्क और अग्रिम प्रसार](../../phases/03-deep-learning-core/02-multi-layer-networks/) | बनाएँ | Python, TypeScript |
-| 03 | [शुरू से बैकप्रोपेगेशन](../../phases/03-deep-learning-core/03-backpropagation/) | बनाएँ | Python, Rust, Julia |
-| 04 | [सक्रियण फलन: ReLU, Sigmoid, GELU और इन्हें चुनने का कारण](../../phases/03-deep-learning-core/04-activation-functions/) | बनाएँ | Python, Julia |
-| 05 | [लॉस फलन: MSE, क्रॉस-एंट्रॉपी और कॉन्ट्रास्टिव लॉस](../../phases/03-deep-learning-core/05-loss-functions/) | बनाएँ | Python, Julia |
-| 06 | [अनुकूलक: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | बनाएँ | Python, TypeScript |
-| 07 | [नियमितीकरण: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | बनाएँ | Python, TypeScript |
-| 08 | [शुरुआती भार और प्रशिक्षण की स्थिरता](../../phases/03-deep-learning-core/08-weight-initialization/) | बनाएँ | Python, TypeScript |
-| 09 | [सीखने की दर की समय-सारणी और वार्मअप](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | बनाएँ | Python, TypeScript |
-| 10 | [अपना छोटा फ्रेमवर्क बनाएँ](../../phases/03-deep-learning-core/10-mini-framework/) | बनाएँ | Python, TypeScript |
+| 01 | [Perceptron: शुरुआत यहीं से](../../phases/03-deep-learning-core/01-the-perceptron/) | बनाएँ | Python, TypeScript, Rust, Julia |
+| 02 | [बहु-स्तरीय नेटवर्क और अग्रिम प्रसार](../../phases/03-deep-learning-core/02-multi-layer-networks/) | बनाएँ | Python, TypeScript, Julia |
+| 03 | [शुरू से बैकप्रोपेगेशन](../../phases/03-deep-learning-core/03-backpropagation/) | बनाएँ | Python, TypeScript, Rust, Julia |
+| 04 | [सक्रियण फलन: ReLU, Sigmoid, GELU और इन्हें चुनने का कारण](../../phases/03-deep-learning-core/04-activation-functions/) | बनाएँ | Python, TypeScript, Julia |
+| 05 | [लॉस फलन: MSE, क्रॉस-एंट्रॉपी और कॉन्ट्रास्टिव लॉस](../../phases/03-deep-learning-core/05-loss-functions/) | बनाएँ | Python, TypeScript, Julia |
+| 06 | [अनुकूलक: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | बनाएँ | Python, TypeScript, Julia |
+| 07 | [नियमितीकरण: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | बनाएँ | Python, TypeScript, Julia |
+| 08 | [शुरुआती भार और प्रशिक्षण की स्थिरता](../../phases/03-deep-learning-core/08-weight-initialization/) | बनाएँ | Python, TypeScript, Julia |
+| 09 | [सीखने की दर की समय-सारणी और वार्मअप](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | बनाएँ | Python, TypeScript, Julia |
+| 10 | [अपना छोटा फ्रेमवर्क बनाएँ](../../phases/03-deep-learning-core/10-mini-framework/) | बनाएँ | Python, TypeScript, Julia |
 | 11 | [PyTorch का परिचय](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | बनाएँ | Python |
 | 12 | [JAX का परिचय](../../phases/03-deep-learning-core/12-intro-to-jax/) | बनाएँ | Python |
 | 13 | [तंत्रिका-जालों में त्रुटि-खोज](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | बनाएँ | Python |
@@ -448,8 +448,8 @@ flowchart TB
 
 | # | पाठ | प्रकार | भाषा |
 |:---:|--------|:----:|------|
-| 01 | [चित्र की बुनियाद: पिक्सेल, चैनल और रंग-स्थान](../../phases/04-computer-vision/01-image-fundamentals/) | सीखें | Python |
-| 02 | [संवलन (convolution) की गणना शुरू से](../../phases/04-computer-vision/02-convolutions-from-scratch/) | बनाएँ | Python |
+| 01 | [चित्र की बुनियाद: पिक्सेल, चैनल और रंग-स्थान](../../phases/04-computer-vision/01-image-fundamentals/) | सीखें | Python, Julia |
+| 02 | [संवलन (convolution) की गणना शुरू से](../../phases/04-computer-vision/02-convolutions-from-scratch/) | बनाएँ | Python, Julia |
 | 03 | [CNN: LeNet से ResNet तक](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | बनाएँ | Python |
 | 04 | [चित्र वर्गीकरण](../../phases/04-computer-vision/04-image-classification/) | बनाएँ | Python |
 | 05 | [स्थानांतरण अधिगम और फाइन-ट्यूनिंग](../../phases/04-computer-vision/05-transfer-learning/) | बनाएँ | Python |
@@ -474,7 +474,7 @@ flowchart TB
 | 24 | [SAM 3 और खुली शब्दावली के आधार पर विभाजन](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | बनाएँ | Python |
 | 25 | [दृश्य-भाषा मॉडल (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | बनाएँ | Python |
 | 26 | [एक चित्र से गहराई और ज्यामिति का अनुमान](../../phases/04-computer-vision/26-monocular-depth/) | बनाएँ | Python |
-| 27 | [कई वस्तुओं पर नज़र रखना और वीडियो स्मृति](../../phases/04-computer-vision/27-multi-object-tracking/) | बनाएँ | Python |
+| 27 | [कई वस्तुओं पर नज़र रखना और वीडियो स्मृति](../../phases/04-computer-vision/27-multi-object-tracking/) | बनाएँ | Python, Rust |
 | 28 | [विश्व मॉडल और वीडियो प्रसार](../../phases/04-computer-vision/28-world-models-video-diffusion/) | बनाएँ | Python |
 
 </details>
@@ -487,7 +487,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [पाठ संसाधन: टोकनीकरण, मूल-रूप निष्कर्षण और लेम्मा निर्धारण](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | बनाएँ | Python, TypeScript |
 | 02 | [Bag of Words, TF-IDF और पाठ निरूपण](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | बनाएँ | Python, TypeScript |
-| 03 | [शब्द वेक्टर निरूपण: शुरू से Word2Vec](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | बनाएँ | Python |
+| 03 | [शब्द वेक्टर निरूपण: शुरू से Word2Vec](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | बनाएँ | Python, Julia |
 | 04 | [GloVe, FastText और उपशब्द एम्बेडिंग](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | बनाएँ | Python, TypeScript |
 | 05 | [भाव-विश्लेषण](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | बनाएँ | Python, TypeScript |
 | 06 | [नामित इकाई पहचान (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | बनाएँ | Python, TypeScript |
@@ -498,13 +498,13 @@ flowchart TB
 | 11 | [मशीन अनुवाद](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | बनाएँ | Python, TypeScript |
 | 12 | [पाठ का सारांश](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | बनाएँ | Python, TypeScript |
 | 13 | [प्रश्न-उत्तर प्रणालियाँ](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | बनाएँ | Python, TypeScript |
-| 14 | [सूचना पुनर्प्राप्ति और खोज](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | बनाएँ | Python, TypeScript |
-| 15 | [विषय मॉडलिंग: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | बनाएँ | Python, TypeScript |
+| 14 | [सूचना पुनर्प्राप्ति और खोज](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | बनाएँ | Python, TypeScript, Rust |
+| 15 | [विषय मॉडलिंग: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | बनाएँ | Python, TypeScript, Julia |
 | 16 | [पाठ निर्माण](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | बनाएँ | Python, TypeScript |
 | 17 | [चैटबॉट: नियम-आधारित से न्यूरल मॉडल तक](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | बनाएँ | Python, TypeScript |
 | 18 | [बहुभाषी NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | बनाएँ | Python, TypeScript |
-| 19 | [उपशब्द टोकनीकरण: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | सीखें | Python, TypeScript |
-| 20 | [संरचित आउटपुट और नियंत्रित डीकोडिंग](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | बनाएँ | Python, TypeScript |
+| 19 | [उपशब्द टोकनीकरण: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | सीखें | Python, TypeScript, Rust |
+| 20 | [संरचित आउटपुट और नियंत्रित डीकोडिंग](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | बनाएँ | Python, TypeScript, Rust |
 | 21 | [NLI: पाठ से तार्किक निष्कर्ष निकालना](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | सीखें | Python, TypeScript |
 | 22 | [एम्बेडिंग मॉडल की गहराई से पड़ताल](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | सीखें | Python, TypeScript |
 | 23 | [RAG में पाठ को खंडों में बाँटने की रणनीतियाँ](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | बनाएँ | Python, TypeScript |
@@ -523,8 +523,8 @@ flowchart TB
 
 | # | पाठ | प्रकार | भाषा |
 |:---:|--------|:----:|------|
-| 01 | [ऑडियो की बुनियाद: तरंगरूप, नमूनाकरण और FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | सीखें | Python, TypeScript |
-| 02 | [स्पेक्ट्रोग्राम, Mel पैमाना और ऑडियो की विशेषताएँ](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | बनाएँ | Python, TypeScript |
+| 01 | [ऑडियो की बुनियाद: तरंगरूप, नमूनाकरण और FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | सीखें | Python, TypeScript, Julia |
+| 02 | [स्पेक्ट्रोग्राम, Mel पैमाना और ऑडियो की विशेषताएँ](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | बनाएँ | Python, TypeScript, Julia |
 | 03 | [ऑडियो वर्गीकरण](../../phases/06-speech-and-audio/03-audio-classification) | बनाएँ | Python, TypeScript |
 | 04 | [वाक् पहचान (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | बनाएँ | Python, TypeScript |
 | 05 | [Whisper: संरचना और फाइन-ट्यूनिंग](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | बनाएँ | Python, TypeScript |
@@ -536,7 +536,7 @@ flowchart TB
 | 11 | [रीयल-टाइम ऑडियो संसाधन](../../phases/06-speech-and-audio/11-real-time-audio-processing) | बनाएँ | Python, Rust |
 | 12 | [वॉइस असिस्टेंट की पाइपलाइन बनाएँ](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | बनाएँ | Python, TypeScript |
 | 13 | [न्यूरल ऑडियो कोडेक: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | सीखें | Python, TypeScript |
-| 14 | [आवाज़ की सक्रियता और बोलने की बारी पहचानना](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | बनाएँ | Python, TypeScript |
+| 14 | [आवाज़ की सक्रियता और बोलने की बारी पहचानना](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | बनाएँ | Python, TypeScript, Rust |
 | 15 | [स्ट्रीमिंग वाक्-से-वाक्: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | सीखें | Python, TypeScript |
 | 16 | [आवाज़ की नकल-रोधी तकनीक और ऑडियो वॉटरमार्किंग](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | बनाएँ | Python, TypeScript |
 | 17 | [ऑडियो मूल्यांकन: WER, MOS, MMAU और रैंकिंग](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | सीखें | Python, TypeScript |
@@ -586,9 +586,9 @@ flowchart TB
 | 10 | [वीडियो निर्माण](../../phases/08-generative-ai/10-video-generation/) | बनाएँ | Python, TypeScript |
 | 11 | [ऑडियो निर्माण](../../phases/08-generative-ai/11-audio-generation/) | बनाएँ | Python, TypeScript |
 | 12 | [3D निर्माण](../../phases/08-generative-ai/12-3d-generation/) | बनाएँ | Python, TypeScript |
-| 13 | [फ़्लो मैचिंग और रेक्टिफ़ाइड फ़्लो](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | बनाएँ | Python, TypeScript |
+| 13 | [फ़्लो मैचिंग और रेक्टिफ़ाइड फ़्लो](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | बनाएँ | Python, TypeScript, Julia |
 | 14 | [मूल्यांकन: FID, CLIP Score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | बनाएँ | Python, TypeScript |
-| 19 | [दृश्य स्व-प्रतिगामी मॉडलिंग (VAR): अगले पैमाने की भविष्यवाणी](../../phases/08-generative-ai/19-visual-autoregressive-var/) | बनाएँ | Python |
+| 19 | [दृश्य स्व-प्रतिगामी मॉडलिंग (VAR): अगले पैमाने की भविष्यवाणी](../../phases/08-generative-ai/19-visual-autoregressive-var/) | बनाएँ | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ flowchart TB
 | # | पाठ | प्रकार | भाषा |
 |:---:|--------|:----:|------|
 | 01 | [टोकनाइज़र: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | बनाएँ | Python, Rust |
-| 02 | [शुरू से टोकनाइज़र बनाएँ](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | बनाएँ | Python |
+| 02 | [शुरू से टोकनाइज़र बनाएँ](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | बनाएँ | Python, TypeScript |
 | 03 | [पूर्व-प्रशिक्षण के लिए डेटा पाइपलाइनें](../../phases/10-llms-from-scratch/03-data-pipelines/) | बनाएँ | Python, Rust |
 | 04 | [Mini GPT का पूर्व-प्रशिक्षण (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | बनाएँ | Python, Rust |
 | 05 | [वितरित प्रशिक्षण: FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | बनाएँ | Python |
@@ -665,7 +665,7 @@ flowchart TB
 | 11 | [कैशिंग, अनुरोध-दर की सीमा और लागत](../../phases/11-llm-engineering/11-caching-cost/) | बनाएँ | Python, TypeScript |
 | 12 | [सुरक्षा-नियम और सुरक्षा](../../phases/11-llm-engineering/12-guardrails/) | बनाएँ | Python, TypeScript |
 | 13 | [उत्पादन LLM ऐप बनाएँ](../../phases/11-llm-engineering/13-production-app/) | बनाएँ | Python, TypeScript |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | बनाएँ | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | बनाएँ | Python, TypeScript, Go |
 | 15 | [प्रॉम्प्ट कैशिंग और संदर्भ कैशिंग](../../phases/11-llm-engineering/15-prompt-caching/) | बनाएँ | Python, TypeScript |
 | 16 | [एजेंट की अवस्था-मशीनें: ग्राफ, नोड और चेकपॉइंट](../../phases/11-llm-engineering/16-langgraph-state-machines/) | बनाएँ | Python |
 | 17 | [एजेंट ढाँचे के बीच चुनाव](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | सीखें | Python, TypeScript |
@@ -714,25 +714,25 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [औज़ार का अंतरफलक](../../phases/13-tools-and-protocols/01-the-tool-interface/) | सीखें | Python, TypeScript |
 | 02 | [फ़ंक्शन कॉलिंग की गहन पड़ताल](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | बनाएँ | Python, TypeScript |
-| 03 | [औज़ारों को समानांतर कॉल करना और प्रवाहमान प्रतिक्रियाएँ](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | बनाएँ | Python, TypeScript |
+| 03 | [औज़ारों को समानांतर कॉल करना और प्रवाहमान प्रतिक्रियाएँ](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | बनाएँ | Python, TypeScript, Go |
 | 04 | [संरचित आउटपुट](../../phases/13-tools-and-protocols/04-structured-output/) | बनाएँ | Python, TypeScript |
 | 05 | [औज़ारों के स्कीमा की रूपरेखा](../../phases/13-tools-and-protocols/05-tool-schema-design/) | सीखें | Python, TypeScript |
 | 06 | [MCP की बुनियाद: अवस्था-रहित अनुरोध और JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | सीखें | Python, TypeScript |
-| 07 | [अवस्था-रहित Python और TypeScript से MCP सर्वर बनाएँ](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | बनाएँ | Python, TypeScript |
+| 07 | [अवस्था-रहित Python और TypeScript से MCP सर्वर बनाएँ](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | बनाएँ | Python, TypeScript, Go |
 | 08 | [MCP क्लाइंट बनाएँ: खोज, मार्ग-निर्धारण और पुराने संस्करण से संगतता](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | बनाएँ | Python, TypeScript |
-| 09 | [MCP परिवहन: stdio और अवस्था-रहित Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | सीखें | Python, TypeScript |
+| 09 | [MCP परिवहन: stdio और अवस्था-रहित Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | सीखें | Python, TypeScript, Go |
 | 10 | [MCP संसाधन और प्रॉम्प्ट: अवस्था-रहित सर्वरों के लिए संबोधित करने योग्य संदर्भ](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | बनाएँ | Python, TypeScript |
 | 11 | [MCP में मॉडल इनपुट: नमूनाकरण का स्थानांतरण और अवस्था-रहित MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | बनाएँ | Python, TypeScript |
 | 12 | [स्पष्ट दायरा और अवस्था-रहित तरीके से उपयोगकर्ता से जानकारी माँगना](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | बनाएँ | Python, TypeScript |
 | 13 | [MCP Tasks विस्तार: अवस्था-रहित मूल प्रणाली पर टिकाऊ काम](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | बनाएँ | Python, TypeScript |
 | 14 | [अवस्था-रहित प्रोटोकॉल पर MCP Apps](../../phases/13-tools-and-protocols/14-mcp-apps/) | बनाएँ | Python, TypeScript |
 | 15 | [MCP सुरक्षा: दूषित मेटाडेटा, मार्ग-निर्धारण और MRTR स्थिति](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | सीखें | Python, TypeScript |
-| 16 | [MCP प्राधिकरण: CIMD, जारीकर्ता-बाइंडिंग, PKCE और अतिरिक्त सत्यापन](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | बनाएँ | Python, TypeScript |
-| 17 | [अवस्था-रहित MCP गेटवे और रजिस्ट्री में पंजीकरण](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | सीखें | Python, TypeScript |
-| 18 | [उत्पादन में MCP प्रमाणीकरण: जारीकर्ता-बद्ध नामांकन और टोकन](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | बनाएँ | Python, TypeScript |
-| 19 | [A2A प्रोटोकॉल](../../phases/13-tools-and-protocols/19-a2a-protocol/) | बनाएँ | Python, TypeScript |
+| 16 | [MCP प्राधिकरण: CIMD, जारीकर्ता-बाइंडिंग, PKCE और अतिरिक्त सत्यापन](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | बनाएँ | Python, TypeScript, Go |
+| 17 | [अवस्था-रहित MCP गेटवे और रजिस्ट्री में पंजीकरण](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | सीखें | Python, TypeScript, Go |
+| 18 | [उत्पादन में MCP प्रमाणीकरण: जारीकर्ता-बद्ध नामांकन और टोकन](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | बनाएँ | Python, TypeScript, Go |
+| 19 | [A2A प्रोटोकॉल](../../phases/13-tools-and-protocols/19-a2a-protocol/) | बनाएँ | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | बनाएँ | Python, TypeScript |
-| 21 | [LLM मार्ग-निर्धारण परत](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | सीखें | Python, TypeScript |
+| 21 | [LLM मार्ग-निर्धारण परत](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | सीखें | Python, TypeScript, Go |
 | 22 | [Agent Skills: पोर्टेबल अनुबंध और रनटाइम सीमा](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | बनाएँ | Python, TypeScript |
 | 23 | [समापन परियोजना: अवस्था-रहित औज़ार पारिस्थितिकी तंत्र](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | बनाएँ | Python, TypeScript |
 | 24 | [कौशल खोज और क्रमिक जानकारी-प्रकटीकरण](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | बनाएँ | Python, TypeScript |
@@ -743,19 +743,19 @@ flowchart TB
 | 29 | [MCP की विश्वसनीयता, रद्दीकरण और प्रवाह नियंत्रण](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | बनाएँ | Python, TypeScript |
 | 30 | [MCP रजिस्ट्री आपूर्ति-शृंखला: प्रवेश, विचलन और पूर्व स्थिति में वापसी](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | बनाएँ | Python, TypeScript |
 | 31 | [MCP अनुरूपता अभियांत्रिकी: संस्करण, साक्ष्य और संचालन](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | बनाएँ | Python, TypeScript |
-| 32 | [प्रोग्राम की संरचना: ELF को शुरू से पढ़ना](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | बनाएँ | Python, TypeScript |
-| 33 | [डिसअसेंबली और कंट्रोल-फ़्लो ग्राफ़](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | बनाएँ | Python, TypeScript |
-| 34 | [मशीन कोड को स्यूडोकोड में बदलना](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | बनाएँ | Python |
+| 32 | [प्रोग्राम की संरचना: ELF को शुरू से पढ़ना](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | बनाएँ | Python, TypeScript, Rust |
+| 33 | [डिसअसेंबली और कंट्रोल-फ़्लो ग्राफ़](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | बनाएँ | Python, TypeScript, Rust |
+| 34 | [मशीन कोड को स्यूडोकोड में बदलना](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | बनाएँ | Python, TypeScript |
 | 35 | [बाइनरी विश्लेषण में साक्ष्य, विश्वास-स्तर और अज्ञात बातें](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | बनाएँ | Python, TypeScript |
 | 36 | [दोबारा बनाएँ और समानता सिद्ध करें](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | बनाएँ | Python, TypeScript |
 | 37 | [रिवर्स इंजीनियरिंग का परिदृश्य](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | बनाएँ | Python, TypeScript |
 | 38 | [कॉलिंग कन्वेंशन और स्टैक फ़्रेम](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | बनाएँ | Python, TypeScript |
 | 39 | [कंपाइलर के मुहावरे और अनुकूलन](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | बनाएँ | Python, TypeScript |
-| 40 | [लिंकिंग, लोडिंग और स्ट्रिप की गई बाइनरी](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | बनाएँ | Python, TypeScript |
+| 40 | [लिंकिंग, लोडिंग और स्ट्रिप की गई बाइनरी](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | बनाएँ | Python, TypeScript, Rust |
 | 41 | [डेटा और टाइप की पुनर्प्राप्ति](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | बनाएँ | Python, TypeScript |
 | 42 | [अपने प्रोग्राम का गतिशील विश्लेषण](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | बनाएँ | Python, TypeScript |
 | 43 | [बाइटकोड और प्रबंधित फ़ॉर्मैट](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | बनाएँ | Python, TypeScript |
-| 44 | [बाइनरी तुलना और प्रतीकात्मक निष्पादन](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | बनाएँ | Python |
+| 44 | [बाइनरी तुलना और प्रतीकात्मक निष्पादन](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | बनाएँ | Python, TypeScript |
 | 45 | [AI की सहायता से रिवर्स इंजीनियरिंग](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | बनाएँ | Python, TypeScript |
 
 
@@ -791,13 +791,13 @@ flowchart TB
 | 20 | [बेंचमार्क: WebArena और OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | सीखें | Python, TypeScript |
 | 21 | [कंप्यूटर का उपयोग: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | बनाएँ | Python, TypeScript |
 | 22 | [वाक् एजेंट: Pipecat और LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | बनाएँ | Python, TypeScript |
-| 23 | [OpenTelemetry GenAI के अर्थगत प्रतिरूप](../../phases/14-agent-engineering/23-otel-genai-conventions/) | बनाएँ | Python, TypeScript |
+| 23 | [OpenTelemetry GenAI के अर्थगत प्रतिरूप](../../phases/14-agent-engineering/23-otel-genai-conventions/) | बनाएँ | Python, TypeScript, Go |
 | 24 | [एजेंटों की निगरानी-योग्यता: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | सीखें | Python, TypeScript |
 | 25 | [बहु-एजेंट बहस और सहयोग](../../phases/14-agent-engineering/25-multi-agent-debate/) | बनाएँ | Python, TypeScript |
 | 26 | [विफलता-स्थितियाँ: एजेंट क्यों टूटते हैं](../../phases/14-agent-engineering/26-failure-modes-agentic/) | बनाएँ | Python, TypeScript |
 | 27 | [प्रॉम्प्ट इंजेक्शन और PVE सुरक्षा](../../phases/14-agent-engineering/27-prompt-injection-defense/) | बनाएँ | Python, TypeScript |
 | 28 | [समन्वयन प्रतिरूप: पर्यवेक्षक, स्वार्म और पदानुक्रम](../../phases/14-agent-engineering/28-orchestration-patterns/) | बनाएँ | Python, TypeScript |
-| 29 | [उत्पादन रनटाइम: कतारें, घटनाएँ और क्रॉन](../../phases/14-agent-engineering/29-production-runtimes/) | सीखें | Python, TypeScript |
+| 29 | [उत्पादन रनटाइम: कतारें, घटनाएँ और क्रॉन](../../phases/14-agent-engineering/29-production-runtimes/) | सीखें | Python, TypeScript, Go |
 | 30 | [मूल्यांकन-आधारित एजेंट विकास](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | बनाएँ | Python, TypeScript |
 | 31 | [एजेंट कार्यक्षेत्र: सक्षम मॉडल भी क्यों चूकते हैं](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | सीखें | Python, TypeScript |
 | 32 | [एजेंट कार्यक्षेत्र का न्यूनतम रूप](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | बनाएँ | Python, TypeScript |
@@ -846,7 +846,7 @@ flowchart TB
 | 09 | [स्वायत्त कोडिंग एजेंटों का परिदृश्य (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | सीखें | Python, TypeScript |
 | 10 | [स्वायत्त एजेंट की अनुमति व्यवस्थाएँ](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | सीखें | Python, TypeScript |
 | 11 | [ब्राउज़र एजेंट और अप्रत्यक्ष प्रॉम्प्ट इंजेक्शन](../../phases/15-autonomous-systems/11-browser-agents/) | सीखें | Python, TypeScript |
-| 12 | [लंबे समय तक चलने वाले एजेंट के लिए टिकाऊ निष्पादन](../../phases/15-autonomous-systems/12-durable-execution/) | सीखें | Python, TypeScript |
+| 12 | [लंबे समय तक चलने वाले एजेंट के लिए टिकाऊ निष्पादन](../../phases/15-autonomous-systems/12-durable-execution/) | सीखें | Python, TypeScript, Go |
 | 13 | [कार्रवाई का बजट, पुनरावृत्ति की सीमा और लागत नियंत्रण](../../phases/15-autonomous-systems/13-cost-governors/) | सीखें | Python, TypeScript |
 | 14 | [आपातकालीन रोक, सर्किट ब्रेकर और कैनरी टोकन](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | सीखें | Python, TypeScript |
 | 15 | [HITL: पहले प्रस्ताव दें, फिर कार्रवाई पक्की करें](../../phases/15-autonomous-systems/15-propose-then-commit/) | सीखें | Python, TypeScript |
@@ -855,7 +855,7 @@ flowchart TB
 | 18 | [Llama Guard और इनपुट/आउटपुट वर्गीकरण](../../phases/15-autonomous-systems/18-llama-guard/) | सीखें | Python, TypeScript |
 | 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | सीखें | Python, TypeScript |
 | 20 | [OpenAI Preparedness Framework और DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | सीखें | Python, TypeScript |
-| 21 | [METR की कार्य-अवधियाँ और बाहरी मूल्यांकन](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | सीखें | Python, TypeScript |
+| 21 | [METR की कार्य-अवधियाँ और बाहरी मूल्यांकन](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | सीखें | Python, TypeScript, Julia |
 | 22 | [CAIS, CAISI और समाज-स्तर के जोखिम](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | सीखें | Python, TypeScript |
 
 </details>
@@ -874,17 +874,17 @@ flowchart TB
 | 06 | [पदानुक्रमित संरचना और कार्य-विभाजन में विचलन](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | सीखें | Python, TypeScript |
 | 07 | [मन का समाज और बहु-एजेंट बहस](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | बनाएँ | Python, TypeScript |
 | 08 | [भूमिका विशेषज्ञता: योजनाकार / आलोचक / निष्पादक / सत्यापक](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | बनाएँ | Python, TypeScript |
-| 09 | [समानांतर स्वार्म और नेटवर्क-आधारित वास्तुकलाएँ](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | बनाएँ | Python, TypeScript |
+| 09 | [समानांतर स्वार्म और नेटवर्क-आधारित वास्तुकलाएँ](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | बनाएँ | Python, TypeScript, Go |
 | 10 | [समूह संवाद और वक्ता का चयन](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | बनाएँ | Python, TypeScript |
 | 11 | [कार्य-हस्तांतरण और रूटीन (अवस्था-रहित समन्वय)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | बनाएँ | Python, TypeScript |
-| 12 | [A2A: एजेंट-से-एजेंट प्रोटोकॉल](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | बनाएँ | Python, TypeScript |
+| 12 | [A2A: एजेंट-से-एजेंट प्रोटोकॉल](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | बनाएँ | Python, TypeScript, Go |
 | 13 | [साझा स्मृति और ब्लैकबोर्ड पद्धति](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | बनाएँ | Python, TypeScript |
 | 14 | [सहमति और बाइज़ेन्टाइन विफलता-सहनशीलता](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | बनाएँ | Python, TypeScript |
 | 15 | [मतदान, स्व-संगति और बहस की संरचना](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | बनाएँ | Python, TypeScript |
 | 16 | [मोलभाव और बातचीत](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | बनाएँ | Python, TypeScript |
 | 17 | [जनरेटिव एजेंट और उभरते व्यवहार का अनुकरण](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | बनाएँ | Python, TypeScript |
 | 18 | [मन का सिद्धांत और उभरता समन्वय](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | बनाएँ | Python, TypeScript |
-| 19 | [समूह-आधारित अनुकूलन (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | बनाएँ | Python, TypeScript |
+| 19 | [समूह-आधारित अनुकूलन (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | बनाएँ | Python, TypeScript, Julia |
 | 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | सीखें | Python, TypeScript |
 | 21 | [एजेंट अर्थव्यवस्थाएँ, टोकन प्रोत्साहन और प्रतिष्ठा](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | सीखें | Python, TypeScript |
 | 22 | [उत्पादन में विस्तार: कतारें, चेकपॉइंट और टिकाऊपन](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | बनाएँ | Python, TypeScript |
@@ -903,9 +903,9 @@ flowchart TB
 | 01 | [प्रबंधित LLM प्लेटफ़ॉर्म: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | सीखें | Python, TypeScript |
 | 02 | [अनुमानन प्लेटफ़ॉर्म की अर्थव्यवस्था: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | सीखें | Python, TypeScript |
 | 03 | [Kubernetes पर GPU का स्वचालित विस्तार: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | सीखें | Python, TypeScript |
-| 04 | [अनुमानन इंजन की आंतरिक संरचना: PagedAttention, निरंतर बैचिंग और खंडित प्रीफ़िल](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | सीखें | Python, TypeScript |
+| 04 | [अनुमानन इंजन की आंतरिक संरचना: PagedAttention, निरंतर बैचिंग और खंडित प्रीफ़िल](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | सीखें | Python, TypeScript, Rust |
 | 05 | [उत्पादन में EAGLE-3 स्पेक्युलेटिव डिकोडिंग](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | सीखें | Python, TypeScript |
-| 06 | [प्रीफ़िक्स-कैश के साथ अनुमानन: RadixAttention और KV का पुनः उपयोग](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | सीखें | Python, TypeScript |
+| 06 | [प्रीफ़िक्स-कैश के साथ अनुमानन: RadixAttention और KV का पुनः उपयोग](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | सीखें | Python, TypeScript, Rust |
 | 07 | [हार्डवेयर के अनुसार अनुमानन संकलन: Blackwell पर FP8 और NVFP4](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | सीखें | Python, TypeScript |
 | 08 | [अनुमानन मापदंड: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | सीखें | Python, TypeScript |
 | 09 | [उत्पादन परिमाणीकरण: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | सीखें | Python, TypeScript |
@@ -920,7 +920,7 @@ flowchart TB
 | 18 | [उत्पादन सेवा-तंत्र: KV ऑफ़लोडिंग और कैश के अनुसार मार्ग-निर्धारण](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | सीखें | Python, TypeScript |
 | 19 | [AI गेटवे: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | सीखें | Python, TypeScript |
 | 20 | [Shadow, Canary और क्रमिक तैनाती](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | सीखें | Python, TypeScript |
-| 21 | [LLM सुविधाओं का A/B परीक्षण: GrowthBook और Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | सीखें | Python, TypeScript |
+| 21 | [LLM सुविधाओं का A/B परीक्षण: GrowthBook और Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | सीखें | Python, TypeScript, Julia |
 | 22 | [LLM API का भार-परीक्षण: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | बनाएँ | Python, TypeScript |
 | 23 | [AI के लिए SRE: बहु-एजेंट घटना-प्रतिक्रिया](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | सीखें | Python, TypeScript |
 | 24 | [उत्पादन LLM के लिए केऑस इंजीनियरिंग](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | सीखें | Python, TypeScript |
@@ -959,7 +959,7 @@ flowchart TB
 | 19 | [मॉडल के कल्याण पर शोध](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | सीखें | Python, TypeScript |
 | 20 | [पूर्वाग्रह और प्रतिनिधित्व से होने वाली हानि](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | बनाएँ | Python, TypeScript |
 | 21 | [निष्पक्षता के मानदंड: समूह, व्यक्ति और प्रतितथ्य](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | सीखें | Python, TypeScript |
-| 22 | [LLM के लिए डिफ़रेंशियल प्राइवेसी](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | बनाएँ | Python, TypeScript |
+| 22 | [LLM के लिए डिफ़रेंशियल प्राइवेसी](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | बनाएँ | Python, TypeScript, Julia |
 | 23 | [वॉटरमार्किंग: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | बनाएँ | Python, TypeScript |
 | 24 | [नियामक ढाँचे: EU, US, UK, Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | सीखें | Python, TypeScript |
 | 25 | [EchoLeak और AI से जुड़े CVEs](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | सीखें | Python, TypeScript |
@@ -987,9 +987,9 @@ flowchart TB
 | 08 | [विनियमित क्षेत्र के लिए उत्पादन RAG चैटबॉट](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [कोड स्थानांतरण एजेंट (पूरी रिपॉज़िटरी का उन्नयन)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [बहु-एजेंट सॉफ़्टवेयर इंजीनियरिंग टीम](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [LLM की निगरानी और मूल्यांकन का डैशबोर्ड](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [LLM की निगरानी और मूल्यांकन का डैशबोर्ड](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [वीडियो समझने की पाइपलाइन (दृश्य से प्रश्नोत्तर तक)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [अवस्था-रहित MCP सर्वर: रजिस्ट्री और शासन-व्यवस्था](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [अवस्था-रहित MCP सर्वर: रजिस्ट्री और शासन-व्यवस्था](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [स्पेक्युलेटिव डिकोडिंग वाला अनुमानन सर्वर](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [संवैधानिक सुरक्षा हार्नेस और रेड-टीम परीक्षण क्षेत्र](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [GitHub मुद्दे से PR बनाने वाला स्वायत्त एजेंट](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1009,7 +1009,7 @@ flowchart TB
 | 27 | [नियत परीक्षण-कार्य वाला मूल्यांकन हार्नेस](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. एजेंट कार्य-ढाँचा| Python, TypeScript |
 | 28 | [OTel GenAI स्पैन और Prometheus मापदंड से निगरानी](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. एजेंट कार्य-ढाँचा| Python, TypeScript |
 | 29 | [हार्नेस पर शुरू से अंत तक कोडिंग एजेंट](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. एजेंट कार्य-ढाँचा| Python, TypeScript |
-| 30 | [शुरू से BPE टोकनाइज़र](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP और LLM| Python, TypeScript |
+| 30 | [शुरू से BPE टोकनाइज़र](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP और LLM| Python, TypeScript, Rust |
 | 31 | [स्लाइडिंग विंडो वाला टोकनकृत डेटासेट](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP और LLM| Python |
 | 32 | [टोकन और स्थिति-एम्बेडिंग](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP और LLM| Python |
 | 33 | [मल्टी-हेड सेल्फ-अटेंशन](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP और LLM| Python |
@@ -1021,7 +1021,7 @@ flowchart TB
 | 39 | [पर्यवेक्षित फाइन-ट्यूनिंग से निर्देश-अनुकूलन](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP और LLM| Python |
 | 40 | [शुरू से प्रत्यक्ष वरीयता अनुकूलन](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP और LLM| Python |
 | 41 | [पूरी मूल्यांकन पाइपलाइन](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP और LLM| Python |
-| 42 | [बड़ा पाठ-संग्रह डाउनलोड करना](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. शुरू से अंत तक प्रशिक्षण| Python |
+| 42 | [बड़ा पाठ-संग्रह डाउनलोड करना](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. शुरू से अंत तक प्रशिक्षण| Python, TypeScript |
 | 43 | [HDF5 में टोकनकृत कॉर्पस](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. शुरू से अंत तक प्रशिक्षण| Python |
 | 44 | [रैखिक वार्मअप के साथ कोसाइन अधिगम-दर](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. शुरू से अंत तक प्रशिक्षण| Python |
 | 45 | [ग्रेडिएंट क्लिपिंग और मिश्रित परिशुद्धता](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. शुरू से अंत तक प्रशिक्षण| Python |
@@ -1035,8 +1035,8 @@ flowchart TB
 | 53 | [परिणाम मूल्यांकनकर्ता](../../phases/19-capstone-projects/53-result-evaluator/) | D. स्वचालित अनुसंधान| Python |
 | 54 | [शोधपत्र लेखक](../../phases/19-capstone-projects/54-paper-writer/) | D. स्वचालित अनुसंधान| Python, TypeScript |
 | 55 | [आलोचक लूप](../../phases/19-capstone-projects/55-critic-loop/) | D. स्वचालित अनुसंधान| Python, TypeScript |
-| 56 | [पुनरावृत्ति अनुसूचक](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. स्वचालित अनुसंधान| Python |
-| 57 | [शुरू से अंत तक अनुसंधान प्रदर्शन](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. स्वचालित अनुसंधान| Python |
+| 56 | [पुनरावृत्ति अनुसूचक](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. स्वचालित अनुसंधान| Python, TypeScript |
+| 57 | [शुरू से अंत तक अनुसंधान प्रदर्शन](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. स्वचालित अनुसंधान| Python, TypeScript |
 | 58 | [दृष्टि एन्कोडर के पैच](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. बहु-माध्यमी VLM| Python |
 | 59 | [Vision Transformer एन्कोडर](../../phases/19-capstone-projects/59-vit-transformer/) | E. बहु-माध्यमी VLM| Python |
 | 60 | [डेटा के अलग-अलग रूपों को जोड़ने वाली प्रोजेक्शन परत](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. बहु-माध्यमी VLM| Python |
@@ -1050,11 +1050,11 @@ flowchart TB
 | 68 | [RAG मूल्यांकन: प्रिसिज़न, रिकॉल, MRR, nDCG, स्रोत के प्रति निष्ठा और उत्तर की प्रासंगिकता](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. उन्नत RAG| Python, TypeScript |
 | 69 | [शुरू से अंत तक RAG प्रणाली](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. उन्नत RAG| Python |
 | 70 | [कार्य-विनिर्देश का प्रारूप](../../phases/19-capstone-projects/70-task-spec-format/) | G. मूल्यांकन ढाँचा| Python, TypeScript |
-| 71 | [शास्त्रीय मापदंड](../../phases/19-capstone-projects/71-classical-metrics/) | G. मूल्यांकन ढाँचा| Python |
-| 72 | [कोड निष्पादन मापदंड](../../phases/19-capstone-projects/72-code-exec-metric/) | G. मूल्यांकन ढाँचा| Python |
-| 73 | [परप्लेक्सिटी और अंशांकन](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. मूल्यांकन ढाँचा| Python |
-| 74 | [लीडरबोर्ड के परिणाम एकत्र करना](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. मूल्यांकन ढाँचा| Python |
-| 75 | [शुरू से अंत तक मूल्यांकन चलाने वाला औज़ार](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. मूल्यांकन ढाँचा| Python |
+| 71 | [शास्त्रीय मापदंड](../../phases/19-capstone-projects/71-classical-metrics/) | G. मूल्यांकन ढाँचा| Python, TypeScript |
+| 72 | [कोड निष्पादन मापदंड](../../phases/19-capstone-projects/72-code-exec-metric/) | G. मूल्यांकन ढाँचा| Python, TypeScript |
+| 73 | [परप्लेक्सिटी और अंशांकन](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. मूल्यांकन ढाँचा| Python, TypeScript |
+| 74 | [लीडरबोर्ड के परिणाम एकत्र करना](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. मूल्यांकन ढाँचा| Python, TypeScript |
+| 75 | [शुरू से अंत तक मूल्यांकन चलाने वाला औज़ार](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. मूल्यांकन ढाँचा| Python, TypeScript |
 | 76 | [शुरू से सामूहिक संक्रियाएँ](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. वितरित प्रशिक्षण| Python |
 | 77 | [शुरू से डेटा-समानांतर DDP](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. वितरित प्रशिक्षण| Python |
 | 78 | [ZeRO अनुकूलक स्थिति का खंड-विभाजन](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. वितरित प्रशिक्षण| Python |
@@ -1127,7 +1127,7 @@ flowchart TB
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      चलने योग्य कार्यान्वयन (Python, TypeScript, Rust, Julia)
+├── code/      चलने योग्य कार्यान्वयन (Python, TypeScript, Rust, Julia, Go)
 ├── docs/
 │   └── en.md  पाठ का विवरण
 └── outputs/   पाठ से बनने वाले प्रॉम्प्ट, कौशल, एजेंट या MCP सर्वर

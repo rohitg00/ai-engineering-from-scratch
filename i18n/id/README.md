@@ -19,7 +19,7 @@ Implementasikan mekanisme internal model, pipeline penelusuran, dan runtime agen
 
 Gratis, sumber terbuka, berlisensi MIT. Belajar melalui situs web, bersama agen pemrograman, atau dengan menjalankan kode lokal.
 
-> 542 pelajaran. 20 tahap. Python, TypeScript, Rust, Julia.
+> 542 pelajaran. 20 tahap. Python, TypeScript, Rust, Julia, Go.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Lisensi MIT"></a>
@@ -374,19 +374,19 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 07 | [Teorema Bayes dan penalaran statistik](../../phases/01-math-foundations/07-bayes-theorem/) | Bangun | Python, TypeScript |
 | 08 | [Optimisasi: keluarga penurunan gradien](../../phases/01-math-foundations/08-optimization/) | Bangun | Python, Julia |
 | 09 | [Teori informasi: entropi dan divergensi KL](../../phases/01-math-foundations/09-information-theory/) | Pelajari | Python, TypeScript |
-| 10 | [Reduksi dimensi: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Bangun | Python, TypeScript |
+| 10 | [Reduksi dimensi: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Bangun | Python, TypeScript, Julia |
 | 11 | [Dekomposisi nilai singular](../../phases/01-math-foundations/11-singular-value-decomposition/) | Bangun | Python, Julia |
 | 12 | [Operasi tensor](../../phases/01-math-foundations/12-tensor-operations/) | Bangun | Python, TypeScript |
-| 13 | [Stabilitas numerik](../../phases/01-math-foundations/13-numerical-stability/) | Bangun | Python, TypeScript |
+| 13 | [Stabilitas numerik](../../phases/01-math-foundations/13-numerical-stability/) | Bangun | Python, TypeScript, Julia |
 | 14 | [Norma dan jarak](../../phases/01-math-foundations/14-norms-and-distances/) | Bangun | Python, TypeScript |
 | 15 | [Statistika untuk ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Bangun | Python, TypeScript |
-| 16 | [Metode pengambilan sampel](../../phases/01-math-foundations/16-sampling-methods/) | Bangun | Python, TypeScript |
-| 17 | [Sistem linear](../../phases/01-math-foundations/17-linear-systems/) | Bangun | Python, TypeScript |
-| 18 | [Optimisasi konveks](../../phases/01-math-foundations/18-convex-optimization/) | Bangun | Python, TypeScript |
+| 16 | [Metode pengambilan sampel](../../phases/01-math-foundations/16-sampling-methods/) | Bangun | Python, TypeScript, Julia |
+| 17 | [Sistem linear](../../phases/01-math-foundations/17-linear-systems/) | Bangun | Python, TypeScript, Julia |
+| 18 | [Optimisasi konveks](../../phases/01-math-foundations/18-convex-optimization/) | Bangun | Python, TypeScript, Julia |
 | 19 | [Bilangan kompleks untuk AI](../../phases/01-math-foundations/19-complex-numbers/) | Pelajari | Python, TypeScript |
-| 20 | [Transformasi Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Bangun | Python, TypeScript |
+| 20 | [Transformasi Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Bangun | Python, TypeScript, Julia |
 | 21 | [Teori graf untuk ML](../../phases/01-math-foundations/21-graph-theory/) | Bangun | Python, TypeScript |
-| 22 | [Proses stokastik](../../phases/01-math-foundations/22-stochastic-processes/) | Pelajari | Python |
+| 22 | [Proses stokastik](../../phases/01-math-foundations/22-stochastic-processes/) | Pelajari | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 
 | # | Pelajaran | Jenis | Bahasa |
 |:---:|--------|:----:|------|
-| 01 | [Perceptron: awal mulanya](../../phases/03-deep-learning-core/01-the-perceptron/) | Bangun | Python, Rust, Julia |
-| 02 | [Jaringan multilapis dan propagasi maju](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Bangun | Python, TypeScript |
-| 03 | [Propagasi balik dari nol](../../phases/03-deep-learning-core/03-backpropagation/) | Bangun | Python, Rust, Julia |
-| 04 | [Fungsi aktivasi: ReLU, Sigmoid, GELU dan alasannya](../../phases/03-deep-learning-core/04-activation-functions/) | Bangun | Python, Julia |
-| 05 | [Fungsi kerugian: MSE, cross-entropy, kontrastif](../../phases/03-deep-learning-core/05-loss-functions/) | Bangun | Python, Julia |
-| 06 | [Pengoptimal: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Bangun | Python, TypeScript |
-| 07 | [Regularisasi: dropout, peluruhan bobot, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Bangun | Python, TypeScript |
-| 08 | [Inisialisasi bobot dan stabilitas pelatihan](../../phases/03-deep-learning-core/08-weight-initialization/) | Bangun | Python, TypeScript |
-| 09 | [Penjadwalan laju pembelajaran dan pemanasan](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Bangun | Python, TypeScript |
-| 10 | [Bangun kerangka kerja mini sendiri](../../phases/03-deep-learning-core/10-mini-framework/) | Bangun | Python, TypeScript |
+| 01 | [Perceptron: awal mulanya](../../phases/03-deep-learning-core/01-the-perceptron/) | Bangun | Python, TypeScript, Rust, Julia |
+| 02 | [Jaringan multilapis dan propagasi maju](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Bangun | Python, TypeScript, Julia |
+| 03 | [Propagasi balik dari nol](../../phases/03-deep-learning-core/03-backpropagation/) | Bangun | Python, TypeScript, Rust, Julia |
+| 04 | [Fungsi aktivasi: ReLU, Sigmoid, GELU dan alasannya](../../phases/03-deep-learning-core/04-activation-functions/) | Bangun | Python, TypeScript, Julia |
+| 05 | [Fungsi kerugian: MSE, cross-entropy, kontrastif](../../phases/03-deep-learning-core/05-loss-functions/) | Bangun | Python, TypeScript, Julia |
+| 06 | [Pengoptimal: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Bangun | Python, TypeScript, Julia |
+| 07 | [Regularisasi: dropout, peluruhan bobot, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Bangun | Python, TypeScript, Julia |
+| 08 | [Inisialisasi bobot dan stabilitas pelatihan](../../phases/03-deep-learning-core/08-weight-initialization/) | Bangun | Python, TypeScript, Julia |
+| 09 | [Penjadwalan laju pembelajaran dan pemanasan](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Bangun | Python, TypeScript, Julia |
+| 10 | [Bangun kerangka kerja mini sendiri](../../phases/03-deep-learning-core/10-mini-framework/) | Bangun | Python, TypeScript, Julia |
 | 11 | [Pengantar PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Bangun | Python |
 | 12 | [Pengantar JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Bangun | Python |
 | 13 | [Debugging jaringan saraf](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Bangun | Python |
@@ -448,8 +448,8 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 
 | # | Pelajaran | Jenis | Bahasa |
 |:---:|--------|:----:|------|
-| 01 | [Dasar citra: piksel, kanal, dan ruang warna](../../phases/04-computer-vision/01-image-fundamentals/) | Pelajari | Python |
-| 02 | [Konvolusi dari nol](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Bangun | Python |
+| 01 | [Dasar citra: piksel, kanal, dan ruang warna](../../phases/04-computer-vision/01-image-fundamentals/) | Pelajari | Python, Julia |
+| 02 | [Konvolusi dari nol](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Bangun | Python, Julia |
 | 03 | [CNN: dari LeNet ke ResNet](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | Bangun | Python |
 | 04 | [Klasifikasi citra](../../phases/04-computer-vision/04-image-classification/) | Bangun | Python |
 | 05 | [Pembelajaran transfer dan fine-tuning](../../phases/04-computer-vision/05-transfer-learning/) | Bangun | Python |
@@ -474,7 +474,7 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 24 | [SAM 3 dan segmentasi dengan kosakata terbuka](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | Bangun | Python |
 | 25 | [Model visi-bahasa (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | Bangun | Python |
 | 26 | [Estimasi kedalaman monokular dan geometri](../../phases/04-computer-vision/26-monocular-depth/) | Bangun | Python |
-| 27 | [Pelacakan banyak objek dan memori video](../../phases/04-computer-vision/27-multi-object-tracking/) | Bangun | Python |
+| 27 | [Pelacakan banyak objek dan memori video](../../phases/04-computer-vision/27-multi-object-tracking/) | Bangun | Python, Rust |
 | 28 | [Model dunia dan difusi video](../../phases/04-computer-vision/28-world-models-video-diffusion/) | Bangun | Python |
 
 </details>
@@ -487,7 +487,7 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 |:---:|--------|:----:|------|
 | 01 | [Pemrosesan teks: tokenisasi, stemming, lemmatisasi](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Bangun | Python, TypeScript |
 | 02 | [Bag of Words, TF-IDF, dan representasi teks](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Bangun | Python, TypeScript |
-| 03 | [Embedding kata: Word2Vec dari nol](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Bangun | Python |
+| 03 | [Embedding kata: Word2Vec dari nol](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Bangun | Python, Julia |
 | 04 | [GloVe, FastText, dan embedding subkata](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Bangun | Python, TypeScript |
 | 05 | [Analisis sentimen](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Bangun | Python, TypeScript |
 | 06 | [Pengenalan entitas bernama (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Bangun | Python, TypeScript |
@@ -498,13 +498,13 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 11 | [Penerjemahan mesin](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Bangun | Python, TypeScript |
 | 12 | [Peringkasan teks](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Bangun | Python, TypeScript |
 | 13 | [Sistem tanya jawab](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Bangun | Python, TypeScript |
-| 14 | [Temu kembali informasi dan pencarian](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Bangun | Python, TypeScript |
-| 15 | [Pemodelan topik: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Bangun | Python, TypeScript |
+| 14 | [Temu kembali informasi dan pencarian](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Bangun | Python, TypeScript, Rust |
+| 15 | [Pemodelan topik: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Bangun | Python, TypeScript, Julia |
 | 16 | [Pembuatan teks](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Bangun | Python, TypeScript |
 | 17 | [Chatbot: dari berbasis aturan hingga jaringan saraf](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Bangun | Python, TypeScript |
 | 18 | [NLP multibahasa](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Bangun | Python, TypeScript |
-| 19 | [Tokenisasi subkata: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Pelajari | Python, TypeScript |
-| 20 | [Keluaran terstruktur dan decoding terkendala](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Bangun | Python, TypeScript |
+| 19 | [Tokenisasi subkata: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Pelajari | Python, TypeScript, Rust |
+| 20 | [Keluaran terstruktur dan decoding terkendala](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Bangun | Python, TypeScript, Rust |
 | 21 | [NLI dan implikasi tekstual](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Pelajari | Python, TypeScript |
 | 22 | [Mendalami model embedding](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Pelajari | Python, TypeScript |
 | 23 | [Strategi pemotongan teks untuk RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Bangun | Python, TypeScript |
@@ -523,8 +523,8 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 
 | # | Pelajaran | Jenis | Bahasa |
 |:---:|--------|:----:|------|
-| 01 | [Dasar audio: bentuk gelombang, sampling, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Pelajari | Python, TypeScript |
-| 02 | [Spektrogram, skala Mel, dan fitur audio](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Bangun | Python, TypeScript |
+| 01 | [Dasar audio: bentuk gelombang, sampling, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Pelajari | Python, TypeScript, Julia |
+| 02 | [Spektrogram, skala Mel, dan fitur audio](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Bangun | Python, TypeScript, Julia |
 | 03 | [Klasifikasi audio](../../phases/06-speech-and-audio/03-audio-classification) | Bangun | Python, TypeScript |
 | 04 | [Pengenalan ucapan (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Bangun | Python, TypeScript |
 | 05 | [Whisper: arsitektur dan fine-tuning](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Bangun | Python, TypeScript |
@@ -536,7 +536,7 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 11 | [Pemrosesan audio waktu nyata](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Bangun | Python, Rust |
 | 12 | [Bangun pipeline asisten suara](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Bangun | Python, TypeScript |
 | 13 | [Codec audio neural: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Pelajari | Python, TypeScript |
-| 14 | [Deteksi aktivitas suara dan pergantian giliran](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Bangun | Python, TypeScript |
+| 14 | [Deteksi aktivitas suara dan pergantian giliran](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Bangun | Python, TypeScript, Rust |
 | 15 | [Streaming ucapan-ke-ucapan: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Pelajari | Python, TypeScript |
 | 16 | [Pencegahan pemalsuan suara dan watermark audio](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Bangun | Python, TypeScript |
 | 17 | [Evaluasi audio: WER, MOS, MMAU, papan peringkat](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Pelajari | Python, TypeScript |
@@ -586,9 +586,9 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 10 | [Pembuatan video](../../phases/08-generative-ai/10-video-generation/) | Bangun | Python, TypeScript |
 | 11 | [Pembuatan audio](../../phases/08-generative-ai/11-audio-generation/) | Bangun | Python, TypeScript |
 | 12 | [Pembuatan 3D](../../phases/08-generative-ai/12-3d-generation/) | Bangun | Python, TypeScript |
-| 13 | [Flow Matching dan Rectified Flow](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Bangun | Python, TypeScript |
+| 13 | [Flow Matching dan Rectified Flow](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Bangun | Python, TypeScript, Julia |
 | 14 | [Evaluasi: FID dan skor CLIP](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Bangun | Python, TypeScript |
-| 19 | [Pemodelan autoregresif visual (VAR): prediksi skala berikutnya](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Bangun | Python |
+| 19 | [Pemodelan autoregresif visual (VAR): prediksi skala berikutnya](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Bangun | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | # | Pelajaran | Jenis | Bahasa |
 |:---:|--------|:----:|------|
 | 01 | [Tokenizer: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Bangun | Python, Rust |
-| 02 | [Membangun tokenizer dari nol](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Bangun | Python |
+| 02 | [Membangun tokenizer dari nol](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Bangun | Python, TypeScript |
 | 03 | [Pipeline data untuk prapelatihan](../../phases/10-llms-from-scratch/03-data-pipelines/) | Bangun | Python, Rust |
 | 04 | [Prapelatihan Mini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Bangun | Python, Rust |
 | 05 | [Pelatihan terdistribusi, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Bangun | Python |
@@ -665,7 +665,7 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 11 | [Caching, pembatasan laju, dan biaya](../../phases/11-llm-engineering/11-caching-cost/) | Bangun | Python, TypeScript |
 | 12 | [Guardrail dan keselamatan](../../phases/11-llm-engineering/12-guardrails/) | Bangun | Python, TypeScript |
 | 13 | [Membangun aplikasi LLM untuk produksi](../../phases/11-llm-engineering/13-production-app/) | Bangun | Python, TypeScript |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Bangun | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Bangun | Python, TypeScript, Go |
 | 15 | [Caching prompt dan caching konteks](../../phases/11-llm-engineering/15-prompt-caching/) | Bangun | Python, TypeScript |
 | 16 | [Mesin keadaan agen: graf, simpul, checkpoint](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Bangun | Python |
 | 17 | [Kompromi dalam pemilihan kerangka kerja agen](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Pelajari | Python, TypeScript |
@@ -714,25 +714,25 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 |:---:|--------|:----:|------|
 | 01 | [Antarmuka alat](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Pelajari | Python, TypeScript |
 | 02 | [Mendalami pemanggilan fungsi](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Bangun | Python, TypeScript |
-| 03 | [Pemanggilan alat paralel dan streaming](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Bangun | Python, TypeScript |
+| 03 | [Pemanggilan alat paralel dan streaming](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Bangun | Python, TypeScript, Go |
 | 04 | [Keluaran terstruktur](../../phases/13-tools-and-protocols/04-structured-output/) | Bangun | Python, TypeScript |
 | 05 | [Desain skema alat](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Pelajari | Python, TypeScript |
 | 06 | [Dasar MCP: permintaan stateless dan JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Pelajari | Python, TypeScript |
-| 07 | [Membangun server MCP: Python dan TypeScript stateless](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Bangun | Python, TypeScript |
+| 07 | [Membangun server MCP: Python dan TypeScript stateless](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Bangun | Python, TypeScript, Go |
 | 08 | [Membangun klien MCP: penemuan, perutean, dan fallback dua era](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Bangun | Python, TypeScript |
-| 09 | [Transport MCP: stdio dan Streamable HTTP stateless](../../phases/13-tools-and-protocols/09-mcp-transports/) | Pelajari | Python, TypeScript |
+| 09 | [Transport MCP: stdio dan Streamable HTTP stateless](../../phases/13-tools-and-protocols/09-mcp-transports/) | Pelajari | Python, TypeScript, Go |
 | 10 | [Sumber daya dan prompt MCP: konteks beralamat untuk server stateless](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Bangun | Python, TypeScript |
 | 11 | [Masukan model MCP: migrasi sampling dan MRTR stateless](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Bangun | Python, TypeScript |
 | 12 | [Cakupan eksplisit dan elisitasi stateless](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Bangun | Python, TypeScript |
 | 13 | [Ekstensi MCP Tasks: pekerjaan persisten di atas inti stateless](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Bangun | Python, TypeScript |
 | 14 | [MCP Apps pada protokol stateless](../../phases/13-tools-and-protocols/14-mcp-apps/) | Bangun | Python, TypeScript |
 | 15 | [Keamanan MCP: metadata beracun, perutean, dan keadaan MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Pelajari | Python, TypeScript |
-| 16 | [Otorisasi MCP: CIMD, pengikatan penerbit, PKCE, dan peningkatan autentikasi](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Bangun | Python, TypeScript |
-| 17 | [Gateway MCP stateless dan penerimaan registri](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Pelajari | Python, TypeScript |
-| 18 | [Autentikasi MCP dalam produksi: pendaftaran dan token terikat penerbit](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Bangun | Python, TypeScript |
-| 19 | [Protokol A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Bangun | Python, TypeScript |
+| 16 | [Otorisasi MCP: CIMD, pengikatan penerbit, PKCE, dan peningkatan autentikasi](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Bangun | Python, TypeScript, Go |
+| 17 | [Gateway MCP stateless dan penerimaan registri](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Pelajari | Python, TypeScript, Go |
+| 18 | [Autentikasi MCP dalam produksi: pendaftaran dan token terikat penerbit](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Bangun | Python, TypeScript, Go |
+| 19 | [Protokol A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Bangun | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Bangun | Python, TypeScript |
-| 21 | [Lapisan perutean LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Pelajari | Python, TypeScript |
+| 21 | [Lapisan perutean LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Pelajari | Python, TypeScript, Go |
 | 22 | [Agent Skills: kontrak portabel dan batas runtime](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Bangun | Python, TypeScript |
 | 23 | [Proyek akhir: ekosistem alat stateless](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Bangun | Python, TypeScript |
 | 24 | [Penemuan skill dan pengungkapan bertahap](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Bangun | Python, TypeScript |
@@ -743,19 +743,19 @@ Dua puluh tahap. Klik tahap mana pun untuk membuka daftar pelajarannya.
 | 29 | [Keandalan, pembatalan, dan kendali aliran MCP](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Bangun | Python, TypeScript |
 | 30 | [Rantai pasok registri MCP: penerimaan, penyimpangan, dan rollback](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Bangun | Python, TypeScript |
 | 31 | [Rekayasa kepatuhan MCP: versi, bukti, dan operasi](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Bangun | Python, TypeScript |
-| 32 | [Anatomi program: membaca ELF dari nol](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Bangun | Python, TypeScript |
-| 33 | [Disassembly dan graf alur kendali](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Bangun | Python, TypeScript |
-| 34 | [Mengangkat kode mesin menjadi pseudocode](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Bangun | Python |
+| 32 | [Anatomi program: membaca ELF dari nol](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Bangun | Python, TypeScript, Rust |
+| 33 | [Disassembly dan graf alur kendali](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Bangun | Python, TypeScript, Rust |
+| 34 | [Mengangkat kode mesin menjadi pseudocode](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Bangun | Python, TypeScript |
 | 35 | [Bukti, tingkat keyakinan, dan hal yang belum diketahui dalam analisis biner](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Bangun | Python, TypeScript |
 | 36 | [Bangun ulang dan buktikan kesetaraan](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Bangun | Python, TypeScript |
 | 37 | [Lanskap rekayasa balik](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Bangun | Python, TypeScript |
 | 38 | [Konvensi pemanggilan dan stack frame](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Bangun | Python, TypeScript |
 | 39 | [Idiom kompiler dan optimasi](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Bangun | Python, TypeScript |
-| 40 | [Linking, loading, dan biner yang dilucuti](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Bangun | Python, TypeScript |
+| 40 | [Linking, loading, dan biner yang dilucuti](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Bangun | Python, TypeScript, Rust |
 | 41 | [Memulihkan data dan tipe](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Bangun | Python, TypeScript |
 | 42 | [Analisis dinamis program Anda sendiri](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Bangun | Python, TypeScript |
 | 43 | [Bytecode dan format terkelola](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Bangun | Python, TypeScript |
-| 44 | [Diffing biner dan eksekusi simbolik](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Bangun | Python |
+| 44 | [Diffing biner dan eksekusi simbolik](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Bangun | Python, TypeScript |
 | 45 | [Rekayasa balik berbantuan AI](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Bangun | Python, TypeScript |
 
 Pelajaran 06-18 dan 28-31 membentuk [jalur Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) khusus. Urutan dalam manifesnya adalah 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Mulai dengan pemanggilan `learn-mcp` khusus host di atas. Pelajaran 23 adalah satu-satunya proyek akhir opsional dan juga memerlukan Pelajaran 19 dan 20.
@@ -792,13 +792,13 @@ Pelajaran 22 dan 24-27 membentuk [jalur pembelajaran Agent Skills](../../learnin
 | 20 | [Benchmark: WebArena dan OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Pelajari | Python, TypeScript |
 | 21 | [Penggunaan komputer: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Bangun | Python, TypeScript |
 | 22 | [Agen suara: Pipecat dan LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Bangun | Python, TypeScript |
-| 23 | [Konvensi semantik OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Bangun | Python, TypeScript |
+| 23 | [Konvensi semantik OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Bangun | Python, TypeScript, Go |
 | 24 | [Observabilitas agen: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Pelajari | Python, TypeScript |
 | 25 | [Debat dan kolaborasi multiagen](../../phases/14-agent-engineering/25-multi-agent-debate/) | Bangun | Python, TypeScript |
 | 26 | [Mode kegagalan: mengapa agen bermasalah](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Bangun | Python, TypeScript |
 | 27 | [Injeksi prompt dan pertahanan PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Bangun | Python, TypeScript |
 | 28 | [Pola orkestrasi: supervisor, swarm, hierarki](../../phases/14-agent-engineering/28-orchestration-patterns/) | Bangun | Python, TypeScript |
-| 29 | [Runtime produksi: antrean, event, cron](../../phases/14-agent-engineering/29-production-runtimes/) | Pelajari | Python, TypeScript |
+| 29 | [Runtime produksi: antrean, event, cron](../../phases/14-agent-engineering/29-production-runtimes/) | Pelajari | Python, TypeScript, Go |
 | 30 | [Pengembangan agen berbasis evaluasi](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Bangun | Python, TypeScript |
 | 31 | [Meja kerja agen: mengapa model yang cakap tetap gagal](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Pelajari | Python, TypeScript |
 | 32 | [Meja kerja agen minimal](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Bangun | Python, TypeScript |
@@ -848,7 +848,7 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 09 | [Lanskap agen pemrograman otonom (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Pelajari | Python, TypeScript |
 | 10 | [Mode izin untuk agen otonom](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Pelajari | Python, TypeScript |
 | 11 | [Agen peramban dan injeksi prompt tidak langsung](../../phases/15-autonomous-systems/11-browser-agents/) | Pelajari | Python, TypeScript |
-| 12 | [Eksekusi persisten untuk agen yang berjalan lama](../../phases/15-autonomous-systems/12-durable-execution/) | Pelajari | Python, TypeScript |
+| 12 | [Eksekusi persisten untuk agen yang berjalan lama](../../phases/15-autonomous-systems/12-durable-execution/) | Pelajari | Python, TypeScript, Go |
 | 13 | [Anggaran tindakan, batas iterasi, pengendali biaya](../../phases/15-autonomous-systems/13-cost-governors/) | Pelajari | Python, TypeScript |
 | 14 | [Sakelar penghenti, pemutus sirkuit, token canary](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Pelajari | Python, TypeScript |
 | 15 | [HITL: usulkan dahulu, lalu terapkan](../../phases/15-autonomous-systems/15-propose-then-commit/) | Pelajari | Python, TypeScript |
@@ -857,7 +857,7 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 18 | [Llama Guard dan klasifikasi masukan/keluaran](../../phases/15-autonomous-systems/18-llama-guard/) | Pelajari | Python, TypeScript |
 | 19 | [Kebijakan Responsible Scaling Anthropic v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Pelajari | Python, TypeScript |
 | 20 | [Kerangka Preparedness OpenAI dan FSF DeepMind](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Pelajari | Python, TypeScript |
-| 21 | [Rentang waktu METR dan evaluasi eksternal](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Pelajari | Python, TypeScript |
+| 21 | [Rentang waktu METR dan evaluasi eksternal](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Pelajari | Python, TypeScript, Julia |
 | 22 | [CAIS, CAISI, dan risiko berskala masyarakat](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Pelajari | Python, TypeScript |
 
 </details>
@@ -876,17 +876,17 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 06 | [Arsitektur hierarkis dan penyimpangan dekomposisi](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Pelajari | Python, TypeScript |
 | 07 | [Society of Mind dan debat multiagen](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Bangun | Python, TypeScript |
 | 08 | [Spesialisasi peran: perencana / pengkritik / pelaksana / pemeriksa](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Bangun | Python, TypeScript |
-| 09 | [Swarm paralel dan arsitektur berjaringan](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Bangun | Python, TypeScript |
+| 09 | [Swarm paralel dan arsitektur berjaringan](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Bangun | Python, TypeScript, Go |
 | 10 | [Percakapan kelompok dan pemilihan pembicara](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Bangun | Python, TypeScript |
 | 11 | [Serah terima dan rutinitas (orkestrasi stateless)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Bangun | Python, TypeScript |
-| 12 | [A2A: protokol antaragen](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Bangun | Python, TypeScript |
+| 12 | [A2A: protokol antaragen](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Bangun | Python, TypeScript, Go |
 | 13 | [Memori bersama dan pola papan tulis](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Bangun | Python, TypeScript |
 | 14 | [Konsensus dan toleransi kesalahan Byzantine](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Bangun | Python, TypeScript |
 | 15 | [Pemungutan suara, konsistensi diri, dan topologi debat](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Bangun | Python, TypeScript |
 | 16 | [Negosiasi dan tawar-menawar](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Bangun | Python, TypeScript |
 | 17 | [Agen generatif dan simulasi dengan perilaku emergen](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Bangun | Python, TypeScript |
 | 18 | [Theory of Mind dan koordinasi emergen](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Bangun | Python, TypeScript |
-| 19 | [Optimisasi swarm (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Bangun | Python, TypeScript |
+| 19 | [Optimisasi swarm (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Bangun | Python, TypeScript, Julia |
 | 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Pelajari | Python, TypeScript |
 | 21 | [Ekonomi agen, insentif token, reputasi](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Pelajari | Python, TypeScript |
 | 22 | [Penskalaan produksi: antrean, checkpoint, persistensi](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Bangun | Python, TypeScript |
@@ -905,9 +905,9 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 01 | [Platform LLM terkelola: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Pelajari | Python, TypeScript |
 | 02 | [Ekonomi platform inferensi: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Pelajari | Python, TypeScript |
 | 03 | [Penskalaan GPU otomatis di Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Pelajari | Python, TypeScript |
-| 04 | [Bagian internal mesin penyajian: PagedAttention, continuous batching, chunked prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Pelajari | Python, TypeScript |
+| 04 | [Bagian internal mesin penyajian: PagedAttention, continuous batching, chunked prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Pelajari | Python, TypeScript, Rust |
 | 05 | [Decoding spekulatif EAGLE-3 dalam produksi](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Pelajari | Python, TypeScript |
-| 06 | [Penyajian dengan cache prefiks: RadixAttention dan penggunaan ulang KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Pelajari | Python, TypeScript |
+| 06 | [Penyajian dengan cache prefiks: RadixAttention dan penggunaan ulang KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Pelajari | Python, TypeScript, Rust |
 | 07 | [Kompilasi inferensi khusus perangkat keras: FP8 dan NVFP4 pada Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Pelajari | Python, TypeScript |
 | 08 | [Metrik inferensi: TTFT, TPOT, ITL, goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Pelajari | Python, TypeScript |
 | 09 | [Kuantisasi untuk produksi: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Pelajari | Python, TypeScript |
@@ -922,7 +922,7 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 18 | [Tumpukan penyajian produksi: pemindahan KV dan perutean sadar cache](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Pelajari | Python, TypeScript |
 | 19 | [Gateway AI: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Pelajari | Python, TypeScript |
 | 20 | [Deployment shadow, canary, dan bertahap](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Pelajari | Python, TypeScript |
-| 21 | [Pengujian A/B fitur LLM: GrowthBook dan Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Pelajari | Python, TypeScript |
+| 21 | [Pengujian A/B fitur LLM: GrowthBook dan Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Pelajari | Python, TypeScript, Julia |
 | 22 | [Pengujian beban API LLM: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Bangun | Python, TypeScript |
 | 23 | [SRE untuk AI: penanganan insiden multiagen](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Pelajari | Python, TypeScript |
 | 24 | [Chaos engineering untuk LLM dalam produksi](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Pelajari | Python, TypeScript |
@@ -961,7 +961,7 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 19 | [Riset kesejahteraan model](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Pelajari | Python, TypeScript |
 | 20 | [Bias dan kerugian representasional](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Bangun | Python, TypeScript |
 | 21 | [Kriteria keadilan: kelompok, individu, kontrafaktual](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Pelajari | Python, TypeScript |
-| 22 | [Privasi diferensial untuk LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Bangun | Python, TypeScript |
+| 22 | [Privasi diferensial untuk LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Bangun | Python, TypeScript, Julia |
 | 23 | [Watermark: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Bangun | Python, TypeScript |
 | 24 | [Kerangka regulasi: Uni Eropa, AS, Inggris, Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Pelajari | Python, TypeScript |
 | 25 | [EchoLeak dan CVE untuk AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Pelajari | Python, TypeScript |
@@ -989,9 +989,9 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 08 | [Chatbot RAG untuk produksi (sektor yang diregulasi)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [Agen migrasi kode (peningkatan tingkat repositori)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [Tim rekayasa perangkat lunak multiagen](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [Dasbor observabilitas dan evaluasi LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [Dasbor observabilitas dan evaluasi LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [Pipeline pemahaman video (adegan → tanya jawab)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [Server MCP stateless dengan registri dan tata kelola](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [Server MCP stateless dengan registri dan tata kelola](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [Server inferensi dengan decoding spekulatif](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [Harness keselamatan konstitusional + arena red team](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [Agen otonom dari GitHub Issue ke PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1011,7 +1011,7 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 27 | [Harness evaluasi dengan tugas fixture](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Kerangka kerja agen | Python, TypeScript |
 | 28 | [Observabilitas dengan span OTel GenAI dan metrik Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Kerangka kerja agen | Python, TypeScript |
 | 29 | [Agen pemrograman menyeluruh di atas harness](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Kerangka kerja agen | Python, TypeScript |
-| 30 | [Tokenizer BPE dari nol](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
+| 30 | [Tokenizer BPE dari nol](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript, Rust |
 | 31 | [Dataset bertoken dengan sliding window](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Embedding token dan posisi](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Self-attention multi-head](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1023,7 +1023,7 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 39 | [Penyetelan instruksi melalui fine-tuning terawasi](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP LLM | Python |
 | 40 | [Optimisasi preferensi langsung dari nol](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP LLM | Python |
 | 41 | [Pipeline evaluasi lengkap](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP LLM | Python |
-| 42 | [Pengunduh korpus besar](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Pelatihan menyeluruh | Python |
+| 42 | [Pengunduh korpus besar](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Pelatihan menyeluruh | Python, TypeScript |
 | 43 | [Korpus bertoken HDF5](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. Pelatihan menyeluruh | Python |
 | 44 | [Laju pembelajaran kosinus dengan pemanasan linear](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. Pelatihan menyeluruh | Python |
 | 45 | [Pemotongan gradien dan presisi campuran](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. Pelatihan menyeluruh | Python |
@@ -1037,8 +1037,8 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 53 | [Penilai hasil](../../phases/19-capstone-projects/53-result-evaluator/) | D. Riset otomatis | Python |
 | 54 | [Penulis makalah](../../phases/19-capstone-projects/54-paper-writer/) | D. Riset otomatis | Python, TypeScript |
 | 55 | [Perulangan kritik](../../phases/19-capstone-projects/55-critic-loop/) | D. Riset otomatis | Python, TypeScript |
-| 56 | [Penjadwal iterasi](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Riset otomatis | Python |
-| 57 | [Demo riset dari awal hingga akhir](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Riset otomatis | Python |
+| 56 | [Penjadwal iterasi](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Riset otomatis | Python, TypeScript |
+| 57 | [Demo riset dari awal hingga akhir](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Riset otomatis | Python, TypeScript |
 | 58 | [Patch encoder visi](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. VLM multimodal | Python |
 | 59 | [Encoder Vision Transformer](../../phases/19-capstone-projects/59-vit-transformer/) | E. VLM multimodal | Python |
 | 60 | [Lapisan proyeksi untuk penyelarasan modalitas](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. VLM multimodal | Python |
@@ -1052,11 +1052,11 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 68 | [Evaluasi RAG: precision, recall, MRR, nDCG, kesetiaan, relevansi jawaban](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG tingkat lanjut | Python, TypeScript |
 | 69 | [Sistem RAG dari awal hingga akhir](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. RAG tingkat lanjut | Python |
 | 70 | [Format spesifikasi tugas](../../phases/19-capstone-projects/70-task-spec-format/) | G. Kerangka evaluasi | Python, TypeScript |
-| 71 | [Metrik klasik](../../phases/19-capstone-projects/71-classical-metrics/) | G. Kerangka evaluasi | Python |
-| 72 | [Metrik eksekusi kode](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Kerangka evaluasi | Python |
-| 73 | [Perplexity dan kalibrasi](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Kerangka evaluasi | Python |
-| 74 | [Agregasi papan peringkat](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Kerangka evaluasi | Python |
-| 75 | [Pelaksana evaluasi menyeluruh](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Kerangka evaluasi | Python |
+| 71 | [Metrik klasik](../../phases/19-capstone-projects/71-classical-metrics/) | G. Kerangka evaluasi | Python, TypeScript |
+| 72 | [Metrik eksekusi kode](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Kerangka evaluasi | Python, TypeScript |
+| 73 | [Perplexity dan kalibrasi](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Kerangka evaluasi | Python, TypeScript |
+| 74 | [Agregasi papan peringkat](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Kerangka evaluasi | Python, TypeScript |
+| 75 | [Pelaksana evaluasi menyeluruh](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Kerangka evaluasi | Python, TypeScript |
 | 76 | [Operasi kolektif dari nol](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. Pelatihan terdistribusi | Python |
 | 77 | [DDP data parallel dari nol](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. Pelatihan terdistribusi | Python |
 | 78 | [Pembagian keadaan pengoptimal ZeRO](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. Pelatihan terdistribusi | Python |
@@ -1129,7 +1129,7 @@ Setiap pelajaran berada di foldernya sendiri, dengan struktur yang sama di selur
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      implementasi yang dapat dijalankan (Python, TypeScript, Rust, Julia)
+├── code/      implementasi yang dapat dijalankan (Python, TypeScript, Rust, Julia, Go)
 ├── docs/
 │   └── en.md  narasi pelajaran
 └── outputs/   prompt, skill, agen, atau server MCP yang dihasilkan pelajaran ini

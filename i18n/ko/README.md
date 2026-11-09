@@ -19,7 +19,7 @@
 
 무료이며 오픈 소스이고 MIT 라이선스로 제공됩니다. 웹사이트에서, 코딩 에이전트와 함께, 또는 로컬 코드를 실행하며 배우세요.
 
-> 542 수업. 20단계. Python, TypeScript, Rust, Julia.
+> 542 수업. 20단계. Python, TypeScript, Rust, Julia, Go.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT 라이선스"></a>
@@ -375,19 +375,19 @@ flowchart TB
 | 07 | [베이즈 정리와 통계적 사고](../../phases/01-math-foundations/07-bayes-theorem/) | 구현 | Python, TypeScript |
 | 08 | [최적화: 경사 하강법 계열](../../phases/01-math-foundations/08-optimization/) | 구현 | Python, Julia |
 | 09 | [정보 이론: 엔트로피와 KL 발산](../../phases/01-math-foundations/09-information-theory/) | 학습 | Python, TypeScript |
-| 10 | [차원 축소: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | 구현 | Python, TypeScript |
+| 10 | [차원 축소: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | 구현 | Python, TypeScript, Julia |
 | 11 | [특이값 분해](../../phases/01-math-foundations/11-singular-value-decomposition/) | 구현 | Python, Julia |
 | 12 | [텐서 연산](../../phases/01-math-foundations/12-tensor-operations/) | 구현 | Python, TypeScript |
-| 13 | [수치 안정성](../../phases/01-math-foundations/13-numerical-stability/) | 구현 | Python, TypeScript |
+| 13 | [수치 안정성](../../phases/01-math-foundations/13-numerical-stability/) | 구현 | Python, TypeScript, Julia |
 | 14 | [노름과 거리](../../phases/01-math-foundations/14-norms-and-distances/) | 구현 | Python, TypeScript |
 | 15 | [머신러닝을 위한 통계](../../phases/01-math-foundations/15-statistics-for-ml/) | 구현 | Python, TypeScript |
-| 16 | [샘플링 방법](../../phases/01-math-foundations/16-sampling-methods/) | 구현 | Python, TypeScript |
-| 17 | [선형 시스템](../../phases/01-math-foundations/17-linear-systems/) | 구현 | Python, TypeScript |
-| 18 | [볼록 최적화](../../phases/01-math-foundations/18-convex-optimization/) | 구현 | Python, TypeScript |
+| 16 | [샘플링 방법](../../phases/01-math-foundations/16-sampling-methods/) | 구현 | Python, TypeScript, Julia |
+| 17 | [선형 시스템](../../phases/01-math-foundations/17-linear-systems/) | 구현 | Python, TypeScript, Julia |
+| 18 | [볼록 최적화](../../phases/01-math-foundations/18-convex-optimization/) | 구현 | Python, TypeScript, Julia |
 | 19 | [AI를 위한 복소수](../../phases/01-math-foundations/19-complex-numbers/) | 학습 | Python, TypeScript |
-| 20 | [푸리에 변환](../../phases/01-math-foundations/20-fourier-transform/) | 구현 | Python, TypeScript |
+| 20 | [푸리에 변환](../../phases/01-math-foundations/20-fourier-transform/) | 구현 | Python, TypeScript, Julia |
 | 21 | [머신러닝을 위한 그래프 이론](../../phases/01-math-foundations/21-graph-theory/) | 구현 | Python, TypeScript |
-| 22 | [확률 과정](../../phases/01-math-foundations/22-stochastic-processes/) | 학습 | Python |
+| 22 | [확률 과정](../../phases/01-math-foundations/22-stochastic-processes/) | 학습 | Python, Julia |
 
 </details>
 
@@ -427,16 +427,16 @@ flowchart TB
 
 | # | 레슨 | 유형 | 언어 |
 |:---:|--------|:----:|------|
-| 01 | [퍼셉트론: 모든 것의 시작](../../phases/03-deep-learning-core/01-the-perceptron/) | 구현 | Python, Rust, Julia |
-| 02 | [다층 신경망과 순전파](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 구현 | Python, TypeScript |
-| 03 | [처음부터 구현하는 역전파](../../phases/03-deep-learning-core/03-backpropagation/) | 구현 | Python, Rust, Julia |
-| 04 | [활성화 함수: ReLU, Sigmoid, GELU와 그 역할](../../phases/03-deep-learning-core/04-activation-functions/) | 구현 | Python, Julia |
-| 05 | [손실 함수: MSE, 교차 엔트로피, 대조 손실](../../phases/03-deep-learning-core/05-loss-functions/) | 구현 | Python, Julia |
-| 06 | [최적화 알고리즘: SGD, 모멘텀, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 구현 | Python, TypeScript |
-| 07 | [정규화: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 구현 | Python, TypeScript |
-| 08 | [가중치 초기화와 학습 안정성](../../phases/03-deep-learning-core/08-weight-initialization/) | 구현 | Python, TypeScript |
-| 09 | [학습률 스케줄과 워밍업](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | 구현 | Python, TypeScript |
-| 10 | [나만의 미니 프레임워크 만들기](../../phases/03-deep-learning-core/10-mini-framework/) | 구현 | Python, TypeScript |
+| 01 | [퍼셉트론: 모든 것의 시작](../../phases/03-deep-learning-core/01-the-perceptron/) | 구현 | Python, TypeScript, Rust, Julia |
+| 02 | [다층 신경망과 순전파](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 구현 | Python, TypeScript, Julia |
+| 03 | [처음부터 구현하는 역전파](../../phases/03-deep-learning-core/03-backpropagation/) | 구현 | Python, TypeScript, Rust, Julia |
+| 04 | [활성화 함수: ReLU, Sigmoid, GELU와 그 역할](../../phases/03-deep-learning-core/04-activation-functions/) | 구현 | Python, TypeScript, Julia |
+| 05 | [손실 함수: MSE, 교차 엔트로피, 대조 손실](../../phases/03-deep-learning-core/05-loss-functions/) | 구현 | Python, TypeScript, Julia |
+| 06 | [최적화 알고리즘: SGD, 모멘텀, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 구현 | Python, TypeScript, Julia |
+| 07 | [정규화: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 구현 | Python, TypeScript, Julia |
+| 08 | [가중치 초기화와 학습 안정성](../../phases/03-deep-learning-core/08-weight-initialization/) | 구현 | Python, TypeScript, Julia |
+| 09 | [학습률 스케줄과 워밍업](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | 구현 | Python, TypeScript, Julia |
+| 10 | [나만의 미니 프레임워크 만들기](../../phases/03-deep-learning-core/10-mini-framework/) | 구현 | Python, TypeScript, Julia |
 | 11 | [PyTorch 입문](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | 구현 | Python |
 | 12 | [JAX 입문](../../phases/03-deep-learning-core/12-intro-to-jax/) | 구현 | Python |
 | 13 | [신경망 디버깅](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | 구현 | Python |
@@ -449,8 +449,8 @@ flowchart TB
 
 | # | 레슨 | 유형 | 언어 |
 |:---:|--------|:----:|------|
-| 01 | [이미지 기초: 픽셀, 채널, 색 공간](../../phases/04-computer-vision/01-image-fundamentals/) | 학습 | Python |
-| 02 | [처음부터 구현하는 합성곱](../../phases/04-computer-vision/02-convolutions-from-scratch/) | 구현 | Python |
+| 01 | [이미지 기초: 픽셀, 채널, 색 공간](../../phases/04-computer-vision/01-image-fundamentals/) | 학습 | Python, Julia |
+| 02 | [처음부터 구현하는 합성곱](../../phases/04-computer-vision/02-convolutions-from-scratch/) | 구현 | Python, Julia |
 | 03 | [CNN: LeNet부터 ResNet까지](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | 구현 | Python |
 | 04 | [이미지 분류](../../phases/04-computer-vision/04-image-classification/) | 구현 | Python |
 | 05 | [전이 학습과 파인튜닝](../../phases/04-computer-vision/05-transfer-learning/) | 구현 | Python |
@@ -475,7 +475,7 @@ flowchart TB
 | 24 | [SAM 3와 오픈 보캐뷸러리 분할](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | 구현 | Python |
 | 25 | [비전-언어 모델(ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | 구현 | Python |
 | 26 | [단안 깊이 및 기하 추정](../../phases/04-computer-vision/26-monocular-depth/) | 구현 | Python |
-| 27 | [다중 객체 추적과 동영상 메모리](../../phases/04-computer-vision/27-multi-object-tracking/) | 구현 | Python |
+| 27 | [다중 객체 추적과 동영상 메모리](../../phases/04-computer-vision/27-multi-object-tracking/) | 구현 | Python, Rust |
 | 28 | [월드 모델과 동영상 확산](../../phases/04-computer-vision/28-world-models-video-diffusion/) | 구현 | Python |
 
 </details>
@@ -488,7 +488,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [텍스트 처리: 토큰화, 어간 추출, 표제어 추출](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | 구현 | Python, TypeScript |
 | 02 | [Bag of Words, TF-IDF와 텍스트 표현](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | 구현 | Python, TypeScript |
-| 03 | [단어 임베딩: Word2Vec을 처음부터 구현](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | 구현 | Python |
+| 03 | [단어 임베딩: Word2Vec을 처음부터 구현](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | 구현 | Python, Julia |
 | 04 | [GloVe, FastText와 서브워드 임베딩](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | 구현 | Python, TypeScript |
 | 05 | [감성 분석](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | 구현 | Python, TypeScript |
 | 06 | [개체명 인식(NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | 구현 | Python, TypeScript |
@@ -499,13 +499,13 @@ flowchart TB
 | 11 | [기계 번역](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | 구현 | Python, TypeScript |
 | 12 | [텍스트 요약](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | 구현 | Python, TypeScript |
 | 13 | [질의응답 시스템](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | 구현 | Python, TypeScript |
-| 14 | [정보 검색](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | 구현 | Python, TypeScript |
-| 15 | [토픽 모델링: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | 구현 | Python, TypeScript |
+| 14 | [정보 검색](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | 구현 | Python, TypeScript, Rust |
+| 15 | [토픽 모델링: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | 구현 | Python, TypeScript, Julia |
 | 16 | [텍스트 생성](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | 구현 | Python, TypeScript |
 | 17 | [챗봇: 규칙 기반에서 신경망 기반으로](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | 구현 | Python, TypeScript |
 | 18 | [다국어 NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | 구현 | Python, TypeScript |
-| 19 | [서브워드 토큰화: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | 학습 | Python, TypeScript |
-| 20 | [구조화된 출력과 제약 디코딩](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | 구현 | Python, TypeScript |
+| 19 | [서브워드 토큰화: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | 학습 | Python, TypeScript, Rust |
+| 20 | [구조화된 출력과 제약 디코딩](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | 구현 | Python, TypeScript, Rust |
 | 21 | [자연어 추론(NLI)과 텍스트 함의](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | 학습 | Python, TypeScript |
 | 22 | [임베딩 모델 심층 분석](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | 학습 | Python, TypeScript |
 | 23 | [RAG 청킹 전략](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | 구현 | Python, TypeScript |
@@ -524,8 +524,8 @@ flowchart TB
 
 | # | 레슨 | 유형 | 언어 |
 |:---:|--------|:----:|------|
-| 01 | [오디오 기초: 파형, 샘플링, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | 학습 | Python, TypeScript |
-| 02 | [스펙트로그램, 멜 스케일과 오디오 특성](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | 구현 | Python, TypeScript |
+| 01 | [오디오 기초: 파형, 샘플링, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | 학습 | Python, TypeScript, Julia |
+| 02 | [스펙트로그램, 멜 스케일과 오디오 특성](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | 구현 | Python, TypeScript, Julia |
 | 03 | [오디오 분류](../../phases/06-speech-and-audio/03-audio-classification) | 구현 | Python, TypeScript |
 | 04 | [음성 인식(ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | 구현 | Python, TypeScript |
 | 05 | [Whisper: 아키텍처와 파인튜닝](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | 구현 | Python, TypeScript |
@@ -537,7 +537,7 @@ flowchart TB
 | 11 | [실시간 오디오 처리](../../phases/06-speech-and-audio/11-real-time-audio-processing) | 구현 | Python, Rust |
 | 12 | [음성 비서 파이프라인 구축](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | 구현 | Python, TypeScript |
 | 13 | [신경망 오디오 코덱: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | 학습 | Python, TypeScript |
-| 14 | [음성 활동 감지와 발화 차례 전환](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | 구현 | Python, TypeScript |
+| 14 | [음성 활동 감지와 발화 차례 전환](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | 구현 | Python, TypeScript, Rust |
 | 15 | [음성 간 스트리밍: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | 학습 | Python, TypeScript |
 | 16 | [음성 스푸핑 방지와 오디오 워터마킹](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | 구현 | Python, TypeScript |
 | 17 | [오디오 평가: WER, MOS, MMAU, 리더보드](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | 학습 | Python, TypeScript |
@@ -587,9 +587,9 @@ flowchart TB
 | 10 | [동영상 생성](../../phases/08-generative-ai/10-video-generation/) | 구현 | Python, TypeScript |
 | 11 | [오디오 생성](../../phases/08-generative-ai/11-audio-generation/) | 구현 | Python, TypeScript |
 | 12 | [3D 생성](../../phases/08-generative-ai/12-3d-generation/) | 구현 | Python, TypeScript |
-| 13 | [플로 매칭과 Rectified Flow](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | 구현 | Python, TypeScript |
+| 13 | [플로 매칭과 Rectified Flow](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | 구현 | Python, TypeScript, Julia |
 | 14 | [평가: FID, CLIP 점수](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | 구현 | Python, TypeScript |
-| 19 | [시각 자기회귀 모델링(VAR): 다음 스케일 예측](../../phases/08-generative-ai/19-visual-autoregressive-var/) | 구현 | Python |
+| 19 | [시각 자기회귀 모델링(VAR): 다음 스케일 예측](../../phases/08-generative-ai/19-visual-autoregressive-var/) | 구현 | Python, Julia |
 
 </details>
 
@@ -621,7 +621,7 @@ flowchart TB
 | # | 레슨 | 유형 | 언어 |
 |:---:|--------|:----:|------|
 | 01 | [토크나이저: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | 구현 | Python, Rust |
-| 02 | [토크나이저를 처음부터 만들기](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | 구현 | Python |
+| 02 | [토크나이저를 처음부터 만들기](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | 구현 | Python, TypeScript |
 | 03 | [사전 학습을 위한 데이터 파이프라인](../../phases/10-llms-from-scratch/03-data-pipelines/) | 구현 | Python, Rust |
 | 04 | [미니 GPT(1억 2,400만 매개변수) 사전 학습](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | 구현 | Python, Rust |
 | 05 | [분산 학습, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | 구현 | Python |
@@ -666,7 +666,7 @@ flowchart TB
 | 11 | [캐싱, 속도 제한과 비용](../../phases/11-llm-engineering/11-caching-cost/) | 구현 | Python, TypeScript |
 | 12 | [가드레일과 안전성](../../phases/11-llm-engineering/12-guardrails/) | 구현 | Python, TypeScript |
 | 13 | [프로덕션용 LLM 앱 구축](../../phases/11-llm-engineering/13-production-app/) | 구현 | Python, TypeScript |
-| 14 | [Model Context Protocol(MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | 구현 | Python, TypeScript |
+| 14 | [Model Context Protocol(MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | 구현 | Python, TypeScript, Go |
 | 15 | [프롬프트 캐싱과 컨텍스트 캐싱](../../phases/11-llm-engineering/15-prompt-caching/) | 구현 | Python, TypeScript |
 | 16 | [에이전트 상태 머신: 그래프, 노드, 체크포인트](../../phases/11-llm-engineering/16-langgraph-state-machines/) | 구현 | Python |
 | 17 | [에이전트 프레임워크의 장단점](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | 학습 | Python, TypeScript |
@@ -715,25 +715,25 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [도구 인터페이스](../../phases/13-tools-and-protocols/01-the-tool-interface/) | 학습 | Python, TypeScript |
 | 02 | [함수 호출 심층 분석](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | 구현 | Python, TypeScript |
-| 03 | [도구 호출 병렬화와 스트리밍](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | 구현 | Python, TypeScript |
+| 03 | [도구 호출 병렬화와 스트리밍](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | 구현 | Python, TypeScript, Go |
 | 04 | [구조화된 출력](../../phases/13-tools-and-protocols/04-structured-output/) | 구현 | Python, TypeScript |
 | 05 | [도구 스키마 설계](../../phases/13-tools-and-protocols/05-tool-schema-design/) | 학습 | Python, TypeScript |
 | 06 | [MCP 기초: 무상태 요청과 JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | 학습 | Python, TypeScript |
-| 07 | [MCP 서버 구축: Python과 TypeScript로 구현하는 무상태 방식](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | 구현 | Python, TypeScript |
+| 07 | [MCP 서버 구축: Python과 TypeScript로 구현하는 무상태 방식](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | 구현 | Python, TypeScript, Go |
 | 08 | [MCP 클라이언트 구축: 탐색, 라우팅, 두 세대 호환 폴백](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | 구현 | Python, TypeScript |
-| 09 | [MCP 전송 방식: stdio와 무상태 Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | 학습 | Python, TypeScript |
+| 09 | [MCP 전송 방식: stdio와 무상태 Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | 학습 | Python, TypeScript, Go |
 | 10 | [MCP 리소스와 프롬프트: 무상태 서버를 위한 주소 지정 가능한 컨텍스트](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | 구현 | Python, TypeScript |
 | 11 | [MCP 모델 입력: 샘플링 마이그레이션과 무상태 MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | 구현 | Python, TypeScript |
 | 12 | [명시적 범위 지정과 무상태 정보 요청](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | 구현 | Python, TypeScript |
 | 13 | [MCP Tasks 확장: 무상태 코어에서의 지속성 있는 작업](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | 구현 | Python, TypeScript |
 | 14 | [무상태 프로토콜 기반 MCP Apps](../../phases/13-tools-and-protocols/14-mcp-apps/) | 구현 | Python, TypeScript |
 | 15 | [MCP 보안: 오염된 메타데이터, 라우팅, MRTR 상태](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | 학습 | Python, TypeScript |
-| 16 | [MCP 권한 부여: CIMD, 발급자 바인딩, PKCE, 단계별 인증 강화](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | 구현 | Python, TypeScript |
-| 17 | [무상태 MCP 게이트웨이와 레지스트리 등록 심사](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | 학습 | Python, TypeScript |
-| 18 | [프로덕션 MCP 인증: 발급자에 연결된 등록과 토큰](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | 구현 | Python, TypeScript |
-| 19 | [A2A 프로토콜](../../phases/13-tools-and-protocols/19-a2a-protocol/) | 구현 | Python, TypeScript |
+| 16 | [MCP 권한 부여: CIMD, 발급자 바인딩, PKCE, 단계별 인증 강화](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | 구현 | Python, TypeScript, Go |
+| 17 | [무상태 MCP 게이트웨이와 레지스트리 등록 심사](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | 학습 | Python, TypeScript, Go |
+| 18 | [프로덕션 MCP 인증: 발급자에 연결된 등록과 토큰](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | 구현 | Python, TypeScript, Go |
+| 19 | [A2A 프로토콜](../../phases/13-tools-and-protocols/19-a2a-protocol/) | 구현 | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | 구현 | Python, TypeScript |
-| 21 | [LLM 라우팅 계층](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | 학습 | Python, TypeScript |
+| 21 | [LLM 라우팅 계층](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | 학습 | Python, TypeScript, Go |
 | 22 | [Agent Skills: 이식 가능한 계약과 런타임 경계](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | 구현 | Python, TypeScript |
 | 23 | [캡스톤: 무상태 도구 생태계](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | 구현 | Python, TypeScript |
 | 24 | [스킬 탐색과 점진적 공개](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | 구현 | Python, TypeScript |
@@ -744,19 +744,19 @@ flowchart TB
 | 29 | [MCP 신뢰성, 취소, 흐름 제어](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | 구현 | Python, TypeScript |
 | 30 | [MCP 레지스트리 공급망: 등록 심사, 드리프트, 롤백](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | 구현 | Python, TypeScript |
 | 31 | [MCP 적합성 엔지니어링: 버전 관리, 증거, 운영](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | 구현 | Python, TypeScript |
-| 32 | [프로그램 해부: ELF를 처음부터 읽기](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | 구현 | Python, TypeScript |
-| 33 | [디스어셈블리와 제어 흐름 그래프](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | 구현 | Python, TypeScript |
-| 34 | [기계어를 의사 코드로 리프팅하기](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | 구현 | Python |
+| 32 | [프로그램 해부: ELF를 처음부터 읽기](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | 구현 | Python, TypeScript, Rust |
+| 33 | [디스어셈블리와 제어 흐름 그래프](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | 구현 | Python, TypeScript, Rust |
+| 34 | [기계어를 의사 코드로 리프팅하기](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | 구현 | Python, TypeScript |
 | 35 | [바이너리 분석의 증거, 신뢰도, 미지 요소](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | 구현 | Python, TypeScript |
 | 36 | [다시 빌드하고 동일함 증명하기](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | 구현 | Python, TypeScript |
 | 37 | [리버스 엔지니어링의 전체 지형](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | 구현 | Python, TypeScript |
 | 38 | [호출 규약과 스택 프레임](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | 구현 | Python, TypeScript |
 | 39 | [컴파일러 관용 패턴과 최적화](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | 구현 | Python, TypeScript |
-| 40 | [링킹, 로딩, 스트립된 바이너리](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | 구현 | Python, TypeScript |
+| 40 | [링킹, 로딩, 스트립된 바이너리](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | 구현 | Python, TypeScript, Rust |
 | 41 | [데이터와 타입 복원](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | 구현 | Python, TypeScript |
 | 42 | [직접 만든 프로그램의 동적 분석](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | 구현 | Python, TypeScript |
 | 43 | [바이트코드와 관리형 형식](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | 구현 | Python, TypeScript |
-| 44 | [바이너리 비교와 기호 실행](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | 구현 | Python |
+| 44 | [바이너리 비교와 기호 실행](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | 구현 | Python, TypeScript |
 | 45 | [AI 지원 리버스 엔지니어링](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | 구현 | Python, TypeScript |
 
 레슨 06–18과 28–31은 [Model Context Protocol(MCP) 집중 학습 경로](../../learning-paths/model-context-protocol.json)를 이룹니다. 매니페스트 순서는 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31입니다. 위의 호스트별 호출 방법으로 `learn-mcp`를 시작하세요. 레슨 23은 유일한 선택형 캡스톤이며 레슨 19와 20도 필요합니다.
@@ -793,13 +793,13 @@ flowchart TB
 | 20 | [벤치마크: WebArena와 OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | 학습 | Python, TypeScript |
 | 21 | [컴퓨터 사용: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | 구현 | Python, TypeScript |
 | 22 | [음성 에이전트: Pipecat과 LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | 구현 | Python, TypeScript |
-| 23 | [OpenTelemetry GenAI 시맨틱 규약](../../phases/14-agent-engineering/23-otel-genai-conventions/) | 구현 | Python, TypeScript |
+| 23 | [OpenTelemetry GenAI 시맨틱 규약](../../phases/14-agent-engineering/23-otel-genai-conventions/) | 구현 | Python, TypeScript, Go |
 | 24 | [에이전트 관측 가능성: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | 학습 | Python, TypeScript |
 | 25 | [멀티 에이전트 토론과 협업](../../phases/14-agent-engineering/25-multi-agent-debate/) | 구현 | Python, TypeScript |
 | 26 | [실패 유형: 에이전트가 실패하는 이유](../../phases/14-agent-engineering/26-failure-modes-agentic/) | 구현 | Python, TypeScript |
 | 27 | [프롬프트 인젝션과 PVE 방어](../../phases/14-agent-engineering/27-prompt-injection-defense/) | 구현 | Python, TypeScript |
 | 28 | [오케스트레이션 패턴: 슈퍼바이저, 스웜, 계층형](../../phases/14-agent-engineering/28-orchestration-patterns/) | 구현 | Python, TypeScript |
-| 29 | [프로덕션 런타임: 큐, 이벤트, Cron](../../phases/14-agent-engineering/29-production-runtimes/) | 학습 | Python, TypeScript |
+| 29 | [프로덕션 런타임: 큐, 이벤트, Cron](../../phases/14-agent-engineering/29-production-runtimes/) | 학습 | Python, TypeScript, Go |
 | 30 | [평가 중심 에이전트 개발](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | 구현 | Python, TypeScript |
 | 31 | [에이전트 워크벤치: 유능한 모델도 실패하는 이유](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | 학습 | Python, TypeScript |
 | 32 | [최소 에이전트 워크벤치](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | 구현 | Python, TypeScript |
@@ -849,7 +849,7 @@ flowchart TB
 | 09 | [자율 코딩 에이전트 현황(SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | 학습 | Python, TypeScript |
 | 10 | [자율 에이전트 권한 모드](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | 학습 | Python, TypeScript |
 | 11 | [브라우저 에이전트와 간접 프롬프트 인젝션](../../phases/15-autonomous-systems/11-browser-agents/) | 학습 | Python, TypeScript |
-| 12 | [장시간 실행 에이전트의 지속성 있는 실행](../../phases/15-autonomous-systems/12-durable-execution/) | 학습 | Python, TypeScript |
+| 12 | [장시간 실행 에이전트의 지속성 있는 실행](../../phases/15-autonomous-systems/12-durable-execution/) | 학습 | Python, TypeScript, Go |
 | 13 | [동작 예산, 반복 횟수 제한, 비용 제어](../../phases/15-autonomous-systems/13-cost-governors/) | 학습 | Python, TypeScript |
 | 14 | [킬 스위치, 서킷 브레이커, 카나리아 토큰](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | 학습 | Python, TypeScript |
 | 15 | [HITL: 제안 후 커밋](../../phases/15-autonomous-systems/15-propose-then-commit/) | 학습 | Python, TypeScript |
@@ -858,7 +858,7 @@ flowchart TB
 | 18 | [Llama Guard와 입력/출력 분류](../../phases/15-autonomous-systems/18-llama-guard/) | 학습 | Python, TypeScript |
 | 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | 학습 | Python, TypeScript |
 | 20 | [OpenAI Preparedness Framework와 DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | 학습 | Python, TypeScript |
-| 21 | [METR 시간 범위와 외부 평가](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | 학습 | Python, TypeScript |
+| 21 | [METR 시간 범위와 외부 평가](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | 학습 | Python, TypeScript, Julia |
 | 22 | [CAIS, CAISI와 사회적 규모의 위험](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | 학습 | Python, TypeScript |
 
 </details>
@@ -877,17 +877,17 @@ flowchart TB
 | 06 | [계층형 아키텍처와 분해 드리프트](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | 학습 | Python, TypeScript |
 | 07 | [마음의 사회와 멀티 에이전트 토론](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | 구현 | Python, TypeScript |
 | 08 | [역할 전문화: 플래너 / 비평가 / 실행자 / 검증자](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | 구현 | Python, TypeScript |
-| 09 | [병렬 스웜과 네트워크형 아키텍처](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | 구현 | Python, TypeScript |
+| 09 | [병렬 스웜과 네트워크형 아키텍처](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | 구현 | Python, TypeScript, Go |
 | 10 | [그룹 채팅과 발화자 선택](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | 구현 | Python, TypeScript |
 | 11 | [핸드오프와 루틴(무상태 오케스트레이션)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | 구현 | Python, TypeScript |
-| 12 | [A2A: 에이전트 간 프로토콜](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | 구현 | Python, TypeScript |
+| 12 | [A2A: 에이전트 간 프로토콜](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | 구현 | Python, TypeScript, Go |
 | 13 | [공유 메모리와 블랙보드 패턴](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | 구현 | Python, TypeScript |
 | 14 | [합의와 비잔틴 장애 허용성](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | 구현 | Python, TypeScript |
 | 15 | [투표, 자기 일관성, 토론 토폴로지](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | 구현 | Python, TypeScript |
 | 16 | [협상과 흥정](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | 구현 | Python, TypeScript |
 | 17 | [생성형 에이전트와 창발 시뮬레이션](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | 구현 | Python, TypeScript |
 | 18 | [마음 이론과 창발적 협력](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | 구현 | Python, TypeScript |
-| 19 | [스웜 최적화(PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | 구현 | Python, TypeScript |
+| 19 | [스웜 최적화(PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | 구현 | Python, TypeScript, Julia |
 | 20 | [멀티 에이전트 강화학습: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | 학습 | Python, TypeScript |
 | 21 | [에이전트 경제, 토큰 인센티브, 평판](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | 학습 | Python, TypeScript |
 | 22 | [프로덕션 확장: 큐, 체크포인트, 지속성](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | 구현 | Python, TypeScript |
@@ -906,9 +906,9 @@ flowchart TB
 | 01 | [관리형 LLM 플랫폼: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | 학습 | Python, TypeScript |
 | 02 | [추론 플랫폼 경제성: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | 학습 | Python, TypeScript |
 | 03 | [Kubernetes GPU 자동 확장: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | 학습 | Python, TypeScript |
-| 04 | [서빙 엔진 내부: PagedAttention, 연속 배칭, 청크 프리필](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | 학습 | Python, TypeScript |
+| 04 | [서빙 엔진 내부: PagedAttention, 연속 배칭, 청크 프리필](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | 학습 | Python, TypeScript, Rust |
 | 05 | [프로덕션 환경의 EAGLE-3 추측 디코딩](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | 학습 | Python, TypeScript |
-| 06 | [프리픽스 캐시 서빙: RadixAttention과 KV 재사용](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | 학습 | Python, TypeScript |
+| 06 | [프리픽스 캐시 서빙: RadixAttention과 KV 재사용](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | 학습 | Python, TypeScript, Rust |
 | 07 | [하드웨어 특화 추론 컴파일: Blackwell의 FP8 및 NVFP4](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | 학습 | Python, TypeScript |
 | 08 | [추론 지표: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | 학습 | Python, TypeScript |
 | 09 | [프로덕션 양자화: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | 학습 | Python, TypeScript |
@@ -923,7 +923,7 @@ flowchart TB
 | 18 | [프로덕션 서빙 스택: KV 오프로딩과 캐시 인식 라우팅](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | 학습 | Python, TypeScript |
 | 19 | [AI 게이트웨이: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | 학습 | Python, TypeScript |
 | 20 | [섀도, 카나리, 점진적 배포](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | 학습 | Python, TypeScript |
-| 21 | [LLM 기능 A/B 테스트: GrowthBook과 Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | 학습 | Python, TypeScript |
+| 21 | [LLM 기능 A/B 테스트: GrowthBook과 Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | 학습 | Python, TypeScript, Julia |
 | 22 | [LLM API 부하 테스트: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | 구현 | Python, TypeScript |
 | 23 | [AI를 위한 SRE: 멀티 에이전트 사고 대응](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | 학습 | Python, TypeScript |
 | 24 | [프로덕션 LLM 카오스 엔지니어링](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | 학습 | Python, TypeScript |
@@ -962,7 +962,7 @@ flowchart TB
 | 19 | [모델 복지 연구](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | 학습 | Python, TypeScript |
 | 20 | [편향과 재현에 따른 피해](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | 구현 | Python, TypeScript |
 | 21 | [공정성 기준: 집단, 개인, 반사실](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | 학습 | Python, TypeScript |
-| 22 | [LLM을 위한 차등 프라이버시](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | 구현 | Python, TypeScript |
+| 22 | [LLM을 위한 차등 프라이버시](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | 구현 | Python, TypeScript, Julia |
 | 23 | [워터마킹: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | 구현 | Python, TypeScript |
 | 24 | [규제 체계: EU, 미국, 영국, 한국](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | 학습 | Python, TypeScript |
 | 25 | [EchoLeak과 AI 관련 CVE](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | 학습 | Python, TypeScript |
@@ -990,9 +990,9 @@ flowchart TB
 | 08 | [규제 산업용 프로덕션 RAG 챗봇](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [코드 마이그레이션 에이전트(저장소 단위 업그레이드)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [멀티 에이전트 소프트웨어 엔지니어링 팀](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [LLM 관측 가능성 및 평가 대시보드](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [LLM 관측 가능성 및 평가 대시보드](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [동영상 이해 파이프라인(장면 → QA)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [레지스트리와 거버넌스를 갖춘 무상태 MCP 서버](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [레지스트리와 거버넌스를 갖춘 무상태 MCP 서버](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [추측 디코딩 추론 서버](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [Constitutional AI 안전성 하네스와 레드팀 환경](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [GitHub 이슈에서 PR까지 처리하는 자율 에이전트](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1012,7 +1012,7 @@ flowchart TB
 | 27 | [픽스처 작업을 사용하는 평가 하네스](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. 에이전트 하네스 | Python, TypeScript |
 | 28 | [OTel GenAI 스팬과 Prometheus 메트릭을 활용한 관측 가능성](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. 에이전트 하네스 | Python, TypeScript |
 | 29 | [하네스 기반 엔드투엔드 코딩 에이전트](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. 에이전트 하네스 | Python, TypeScript |
-| 30 | [BPE 토크나이저를 처음부터 구현](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP·LLM | Python, TypeScript |
+| 30 | [BPE 토크나이저를 처음부터 구현](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP·LLM | Python, TypeScript, Rust |
 | 31 | [슬라이딩 윈도를 적용한 토큰화 데이터셋](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP·LLM | Python |
 | 32 | [토큰 임베딩과 위치 임베딩](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP·LLM | Python |
 | 33 | [멀티헤드 셀프 어텐션](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP·LLM | Python |
@@ -1024,7 +1024,7 @@ flowchart TB
 | 39 | [지도 파인튜닝을 통한 지시 튜닝](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP·LLM | Python |
 | 40 | [직접 선호 최적화를 처음부터 구현](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP·LLM | Python |
 | 41 | [전체 평가 파이프라인](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP·LLM | Python |
-| 42 | [대규모 코퍼스 다운로더](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. 엔드투엔드 학습 | Python |
+| 42 | [대규모 코퍼스 다운로더](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. 엔드투엔드 학습 | Python, TypeScript |
 | 43 | [HDF5 토큰화 코퍼스](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. 엔드투엔드 학습 | Python |
 | 44 | [선형 워밍업을 적용한 코사인 학습률](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. 엔드투엔드 학습 | Python |
 | 45 | [그래디언트 클리핑과 혼합 정밀도](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. 엔드투엔드 학습 | Python |
@@ -1038,8 +1038,8 @@ flowchart TB
 | 53 | [결과 평가기](../../phases/19-capstone-projects/53-result-evaluator/) | D. 자동화 연구 | Python |
 | 54 | [논문 작성기](../../phases/19-capstone-projects/54-paper-writer/) | D. 자동화 연구 | Python, TypeScript |
 | 55 | [비평 루프](../../phases/19-capstone-projects/55-critic-loop/) | D. 자동화 연구 | Python, TypeScript |
-| 56 | [반복 스케줄러](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. 자동화 연구 | Python |
-| 57 | [엔드투엔드 연구 데모](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. 자동화 연구 | Python |
+| 56 | [반복 스케줄러](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. 자동화 연구 | Python, TypeScript |
+| 57 | [엔드투엔드 연구 데모](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. 자동화 연구 | Python, TypeScript |
 | 58 | [비전 인코더 패치](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. 멀티모달 VLM | Python |
 | 59 | [비전 트랜스포머 인코더](../../phases/19-capstone-projects/59-vit-transformer/) | E. 멀티모달 VLM | Python |
 | 60 | [모달리티 정렬을 위한 투영 계층](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. 멀티모달 VLM | Python |
@@ -1053,11 +1053,11 @@ flowchart TB
 | 68 | [RAG 평가: 정밀도, 재현율, MRR, nDCG, 충실도, 답변 관련성](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. 고급 RAG | Python, TypeScript |
 | 69 | [엔드투엔드 RAG 시스템](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. 고급 RAG | Python |
 | 70 | [작업 명세 형식](../../phases/19-capstone-projects/70-task-spec-format/) | G. 평가 프레임워크 | Python, TypeScript |
-| 71 | [고전적 지표](../../phases/19-capstone-projects/71-classical-metrics/) | G. 평가 프레임워크 | Python |
-| 72 | [코드 실행 지표](../../phases/19-capstone-projects/72-code-exec-metric/) | G. 평가 프레임워크 | Python |
-| 73 | [퍼플렉서티와 보정](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. 평가 프레임워크 | Python |
-| 74 | [리더보드 집계](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. 평가 프레임워크 | Python |
-| 75 | [엔드투엔드 평가 실행기](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. 평가 프레임워크 | Python |
+| 71 | [고전적 지표](../../phases/19-capstone-projects/71-classical-metrics/) | G. 평가 프레임워크 | Python, TypeScript |
+| 72 | [코드 실행 지표](../../phases/19-capstone-projects/72-code-exec-metric/) | G. 평가 프레임워크 | Python, TypeScript |
+| 73 | [퍼플렉서티와 보정](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. 평가 프레임워크 | Python, TypeScript |
+| 74 | [리더보드 집계](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. 평가 프레임워크 | Python, TypeScript |
+| 75 | [엔드투엔드 평가 실행기](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. 평가 프레임워크 | Python, TypeScript |
 | 76 | [Collective Ops를 처음부터 구현](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. 분산 학습 | Python |
 | 77 | [데이터 병렬 DDP를 처음부터 구현](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. 분산 학습 | Python |
 | 78 | [ZeRO 옵티마이저 상태 샤딩](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. 분산 학습 | Python |
@@ -1130,7 +1130,7 @@ flowchart TB
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      실행 가능한 구현(Python, TypeScript, Rust, Julia)
+├── code/      실행 가능한 구현(Python, TypeScript, Rust, Julia, Go)
 ├── docs/
 │   └── en.md  레슨 설명
 └── outputs/   레슨에서 만드는 프롬프트, 스킬, 에이전트 또는 MCP 서버

@@ -30,6 +30,7 @@ CODE_BLOCK_RE = re.compile(r"```(?:[a-zA-Z0-9_]*)\n(.*?)```", re.DOTALL)
 DEFAULT_TIMEOUT_S = 3.0
 MAX_TIMEOUT_S = 30.0
 OUTPUT_CAP_BYTES = 256 * 1024
+STATUS_MARKER = "\n__EXEC_STATUS__"
 
 
 EXIT_PASS = "pass"
@@ -87,6 +88,9 @@ _os.system = _denied_system
 CODE = __PLACEHOLDER_CODE__
 ASSERTIONS = __PLACEHOLDER_ASSERTIONS__
 
+def _emit(status):
+    sys.stdout.write("\n__EXEC_STATUS__" + json.dumps(status))
+
 ns = {}
 status = {"exit_code": "pass", "results": [], "detail": ""}
 try:
@@ -94,12 +98,12 @@ try:
 except SyntaxError as exc:
     status["exit_code"] = "syntax_error"
     status["detail"] = "SyntaxError: %s" % exc
-    sys.stdout.write(json.dumps(status))
+    _emit(status)
     sys.exit(0)
 except Exception as exc:
     status["exit_code"] = "error"
     status["detail"] = "compile error: %r" % exc
-    sys.stdout.write(json.dumps(status))
+    _emit(status)
     sys.exit(0)
 
 try:
@@ -107,7 +111,7 @@ try:
 except Exception as exc:
     status["exit_code"] = "error"
     status["detail"] = "exec error: %s" % exc
-    sys.stdout.write(json.dumps(status))
+    _emit(status)
     sys.exit(0)
 
 passed = 0
@@ -128,7 +132,7 @@ if passed < len(ASSERTIONS):
 elif len(ASSERTIONS) > 0:
     status["exit_code"] = "pass"
 
-sys.stdout.write(json.dumps(status))
+_emit(status)
 """.strip()
 
 
@@ -224,7 +228,13 @@ def run_candidate(code: str, assertions: list[str], timeout_s: float = DEFAULT_T
         return ExecResult(0.0, EXIT_ERROR, 0, len(assertions),
                           detail=f"subprocess exit {proc.returncode}: {stderr_text[:200]}")
     try:
-        status = json.loads(stdout) if stdout else {}
+        marker = stdout.rfind(STATUS_MARKER)
+        if marker >= 0:
+            status = json.loads(stdout[marker + len(STATUS_MARKER):])
+        elif stdout:
+            raise json.JSONDecodeError("missing status marker", stdout, 0)
+        else:
+            status = {}
     except json.JSONDecodeError:
         return ExecResult(0.0, EXIT_ERROR, 0, len(assertions), detail="non-json output")
 

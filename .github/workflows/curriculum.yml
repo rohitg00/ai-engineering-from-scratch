@@ -279,6 +279,32 @@ jobs:
             timeout 120 "$RUNNER_TEMP/lesson" > /dev/null
             echo "::endgroup::"
           done
+      - uses: julia-actions/setup-julia@4c0cb0fce8556fdb04a90347310e5db8b1f98fb9  # v2
+        with:
+          version: "1"
+      - name: Julia lesson ports run
+        run: |
+          for file in $(git grep -l 'Julia port of .*Julia standard library only' -- 'phases/*/code/*.jl'); do
+            echo "::group::$file"
+            (cd "$RUNNER_TEMP" && timeout 300 julia --startup-file=no "$GITHUB_WORKSPACE/$file" > /dev/null)
+            echo "::endgroup::"
+          done
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff  # v5
+        with:
+          go-version: "1.24"
+          cache: false
+      - name: Go lesson ports format, vet and run
+        run: |
+          for file in $(git grep -l 'Go port of .*Go standard library only' -- 'phases/*/code/*.go'); do
+            echo "::group::$file"
+            test -z "$(gofmt -l "$file")"
+            go vet "$file"
+            (cd "$RUNNER_TEMP" && timeout 120 go run "$GITHUB_WORKSPACE/$file" < /dev/null > /dev/null)
+            echo "::endgroup::"
+          done
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4
+        with:
+          node-version: "22"
       - name: TypeScript lesson ports type-check and run
         run: |
           npm install --prefix "$RUNNER_TEMP/ts" --no-save --no-package-lock tsx@4.19.2 typescript@5.6.3 @types/node@22.10.2

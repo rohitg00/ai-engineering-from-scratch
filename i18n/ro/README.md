@@ -19,7 +19,7 @@ Implementează mecanismele interne ale modelelor, fluxurile de regăsire a infor
 
 Gratuit, cu sursă deschisă, licență MIT. Învață pe site, cu un agent de programare sau rulând cod local.
 
-> 542 de lecții. 20 de etape. Python, TypeScript, Rust, Julia.
+> 542 de lecții. 20 de etape. Python, TypeScript, Rust, Julia, Go.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licență MIT"></a>
@@ -374,19 +374,19 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 07 | [Teorema lui Bayes și gândirea statistică](../../phases/01-math-foundations/07-bayes-theorem/) | Construiește | Python, TypeScript |
 | 08 | [Optimizare: familia coborârii gradientului](../../phases/01-math-foundations/08-optimization/) | Construiește | Python, Julia |
 | 09 | [Teoria informației: entropie și divergență KL](../../phases/01-math-foundations/09-information-theory/) | Învață | Python, TypeScript |
-| 10 | [Reducerea dimensionalității: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Construiește | Python, TypeScript |
+| 10 | [Reducerea dimensionalității: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Construiește | Python, TypeScript, Julia |
 | 11 | [Descompunerea în valori singulare](../../phases/01-math-foundations/11-singular-value-decomposition/) | Construiește | Python, Julia |
 | 12 | [Operații cu tensori](../../phases/01-math-foundations/12-tensor-operations/) | Construiește | Python, TypeScript |
-| 13 | [Stabilitate numerică](../../phases/01-math-foundations/13-numerical-stability/) | Construiește | Python, TypeScript |
+| 13 | [Stabilitate numerică](../../phases/01-math-foundations/13-numerical-stability/) | Construiește | Python, TypeScript, Julia |
 | 14 | [Norme și distanțe](../../phases/01-math-foundations/14-norms-and-distances/) | Construiește | Python, TypeScript |
 | 15 | [Statistică pentru ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Construiește | Python, TypeScript |
-| 16 | [Metode de eșantionare](../../phases/01-math-foundations/16-sampling-methods/) | Construiește | Python, TypeScript |
-| 17 | [Sisteme liniare](../../phases/01-math-foundations/17-linear-systems/) | Construiește | Python, TypeScript |
-| 18 | [Optimizare convexă](../../phases/01-math-foundations/18-convex-optimization/) | Construiește | Python, TypeScript |
+| 16 | [Metode de eșantionare](../../phases/01-math-foundations/16-sampling-methods/) | Construiește | Python, TypeScript, Julia |
+| 17 | [Sisteme liniare](../../phases/01-math-foundations/17-linear-systems/) | Construiește | Python, TypeScript, Julia |
+| 18 | [Optimizare convexă](../../phases/01-math-foundations/18-convex-optimization/) | Construiește | Python, TypeScript, Julia |
 | 19 | [Numere complexe pentru AI](../../phases/01-math-foundations/19-complex-numbers/) | Învață | Python, TypeScript |
-| 20 | [Transformata Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Construiește | Python, TypeScript |
+| 20 | [Transformata Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Construiește | Python, TypeScript, Julia |
 | 21 | [Teoria grafurilor pentru ML](../../phases/01-math-foundations/21-graph-theory/) | Construiește | Python, TypeScript |
-| 22 | [Procese stocastice](../../phases/01-math-foundations/22-stochastic-processes/) | Învață | Python |
+| 22 | [Procese stocastice](../../phases/01-math-foundations/22-stochastic-processes/) | Învață | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 
 | # | Lecție | Tip | Limbaj |
 |:---:|--------|:----:|------|
-| 01 | [Perceptronul: începutul poveștii](../../phases/03-deep-learning-core/01-the-perceptron/) | Construiește | Python, Rust, Julia |
-| 02 | [Rețele multistrat și propagare înainte](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Construiește | Python, TypeScript |
-| 03 | [Propagarea înapoi de la zero](../../phases/03-deep-learning-core/03-backpropagation/) | Construiește | Python, Rust, Julia |
-| 04 | [Funcții de activare: ReLU, sigmoid, GELU și rolul lor](../../phases/03-deep-learning-core/04-activation-functions/) | Construiește | Python, Julia |
-| 05 | [Funcții de pierdere: MSE, entropie încrucișată și contrast](../../phases/03-deep-learning-core/05-loss-functions/) | Construiește | Python, Julia |
-| 06 | [Optimizatori: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Construiește | Python, TypeScript |
-| 07 | [Regularizare: dropout, reducerea ponderilor, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Construiește | Python, TypeScript |
-| 08 | [Inițializarea ponderilor și stabilitatea antrenării](../../phases/03-deep-learning-core/08-weight-initialization/) | Construiește | Python, TypeScript |
-| 09 | [Planificarea ratei de învățare și încălzirea](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Construiește | Python, TypeScript |
-| 10 | [Construiește propriul mini-framework](../../phases/03-deep-learning-core/10-mini-framework/) | Construiește | Python, TypeScript |
+| 01 | [Perceptronul: începutul poveștii](../../phases/03-deep-learning-core/01-the-perceptron/) | Construiește | Python, TypeScript, Rust, Julia |
+| 02 | [Rețele multistrat și propagare înainte](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Construiește | Python, TypeScript, Julia |
+| 03 | [Propagarea înapoi de la zero](../../phases/03-deep-learning-core/03-backpropagation/) | Construiește | Python, TypeScript, Rust, Julia |
+| 04 | [Funcții de activare: ReLU, sigmoid, GELU și rolul lor](../../phases/03-deep-learning-core/04-activation-functions/) | Construiește | Python, TypeScript, Julia |
+| 05 | [Funcții de pierdere: MSE, entropie încrucișată și contrast](../../phases/03-deep-learning-core/05-loss-functions/) | Construiește | Python, TypeScript, Julia |
+| 06 | [Optimizatori: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Construiește | Python, TypeScript, Julia |
+| 07 | [Regularizare: dropout, reducerea ponderilor, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Construiește | Python, TypeScript, Julia |
+| 08 | [Inițializarea ponderilor și stabilitatea antrenării](../../phases/03-deep-learning-core/08-weight-initialization/) | Construiește | Python, TypeScript, Julia |
+| 09 | [Planificarea ratei de învățare și încălzirea](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Construiește | Python, TypeScript, Julia |
+| 10 | [Construiește propriul mini-framework](../../phases/03-deep-learning-core/10-mini-framework/) | Construiește | Python, TypeScript, Julia |
 | 11 | [Introducere în PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Construiește | Python |
 | 12 | [Introducere în JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Construiește | Python |
 | 13 | [Depanarea rețelelor neuronale](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Construiește | Python |
@@ -448,8 +448,8 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 
 | # | Lecție | Tip | Limbaj |
 |:---:|--------|:----:|------|
-| 01 | [Bazele imaginilor: pixeli, canale și spații de culoare](../../phases/04-computer-vision/01-image-fundamentals/) | Învață | Python |
-| 02 | [Convoluții de la zero](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Construiește | Python |
+| 01 | [Bazele imaginilor: pixeli, canale și spații de culoare](../../phases/04-computer-vision/01-image-fundamentals/) | Învață | Python, Julia |
+| 02 | [Convoluții de la zero](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Construiește | Python, Julia |
 | 03 | [CNN: de la LeNet la ResNet](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | Construiește | Python |
 | 04 | [Clasificarea imaginilor](../../phases/04-computer-vision/04-image-classification/) | Construiește | Python |
 | 05 | [Transferul învățării și ajustarea fină](../../phases/04-computer-vision/05-transfer-learning/) | Construiește | Python |
@@ -474,7 +474,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 24 | [SAM 3 și segmentare cu vocabular deschis](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | Construiește | Python |
 | 25 | [Modele vizual-lingvistice (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | Construiește | Python |
 | 26 | [Estimarea monoculară a adâncimii și geometriei](../../phases/04-computer-vision/26-monocular-depth/) | Construiește | Python |
-| 27 | [Urmărirea mai multor obiecte și memoria video](../../phases/04-computer-vision/27-multi-object-tracking/) | Construiește | Python |
+| 27 | [Urmărirea mai multor obiecte și memoria video](../../phases/04-computer-vision/27-multi-object-tracking/) | Construiește | Python, Rust |
 | 28 | [Modele ale lumii și difuzie video](../../phases/04-computer-vision/28-world-models-video-diffusion/) | Construiește | Python |
 
 </details>
@@ -487,7 +487,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 |:---:|--------|:----:|------|
 | 01 | [Prelucrarea textului: tokenizare, reducere la rădăcină și lematizare](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Construiește | Python, TypeScript |
 | 02 | [Sac de cuvinte, TF-IDF și reprezentarea textului](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Construiește | Python, TypeScript |
-| 03 | [Reprezentări vectoriale ale cuvintelor: Word2Vec de la zero](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Construiește | Python |
+| 03 | [Reprezentări vectoriale ale cuvintelor: Word2Vec de la zero](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Construiește | Python, Julia |
 | 04 | [GloVe, FastText și reprezentări ale subcuvintelor](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Construiește | Python, TypeScript |
 | 05 | [Analiza sentimentelor](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Construiește | Python, TypeScript |
 | 06 | [Recunoașterea entităților numite (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Construiește | Python, TypeScript |
@@ -498,13 +498,13 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 11 | [Traducere automată](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Construiește | Python, TypeScript |
 | 12 | [Rezumarea textului](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Construiește | Python, TypeScript |
 | 13 | [Sisteme de răspuns la întrebări](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Construiește | Python, TypeScript |
-| 14 | [Regăsirea informațiilor și căutarea](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Construiește | Python, TypeScript |
-| 15 | [Modelarea subiectelor: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Construiește | Python, TypeScript |
+| 14 | [Regăsirea informațiilor și căutarea](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Construiește | Python, TypeScript, Rust |
+| 15 | [Modelarea subiectelor: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Construiește | Python, TypeScript, Julia |
 | 16 | [Generarea textului](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Construiește | Python, TypeScript |
 | 17 | [Chatboți: de la reguli la rețele neuronale](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Construiește | Python, TypeScript |
 | 18 | [NLP multilingv](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Construiește | Python, TypeScript |
-| 19 | [Tokenizarea subcuvintelor: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Învață | Python, TypeScript |
-| 20 | [Rezultate structurate și decodare constrânsă](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Construiește | Python, TypeScript |
+| 19 | [Tokenizarea subcuvintelor: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Învață | Python, TypeScript, Rust |
+| 20 | [Rezultate structurate și decodare constrânsă](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Construiește | Python, TypeScript, Rust |
 | 21 | [NLI și implicație textuală](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Învață | Python, TypeScript |
 | 22 | [Aprofundarea modelelor de reprezentări vectoriale](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Învață | Python, TypeScript |
 | 23 | [Strategii de fragmentare pentru RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Construiește | Python, TypeScript |
@@ -523,8 +523,8 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 
 | # | Lecție | Tip | Limbaj |
 |:---:|--------|:----:|------|
-| 01 | [Bazele sunetului: forme de undă, eșantionare și FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Învață | Python, TypeScript |
-| 02 | [Spectrograme, scara mel și caracteristici audio](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Construiește | Python, TypeScript |
+| 01 | [Bazele sunetului: forme de undă, eșantionare și FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Învață | Python, TypeScript, Julia |
+| 02 | [Spectrograme, scara mel și caracteristici audio](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Construiește | Python, TypeScript, Julia |
 | 03 | [Clasificarea sunetului](../../phases/06-speech-and-audio/03-audio-classification) | Construiește | Python, TypeScript |
 | 04 | [Recunoașterea vorbirii (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Construiește | Python, TypeScript |
 | 05 | [Whisper: arhitectură și ajustare fină](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Construiește | Python, TypeScript |
@@ -536,7 +536,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 11 | [Procesare audio în timp real](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Construiește | Python, Rust |
 | 12 | [Construiește fluxul unui asistent vocal](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Construiește | Python, TypeScript |
 | 13 | [Codecuri audio neuronale: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Învață | Python, TypeScript |
-| 14 | [Detectarea activității vocale și alternarea vorbitorilor](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Construiește | Python, TypeScript |
+| 14 | [Detectarea activității vocale și alternarea vorbitorilor](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Construiește | Python, TypeScript, Rust |
 | 15 | [Conversie vocală în flux: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Învață | Python, TypeScript |
 | 16 | [Protecție împotriva falsificării vocii și marcaje audio](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Construiește | Python, TypeScript |
 | 17 | [Evaluare audio: WER, MOS, MMAU și clasamente](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Învață | Python, TypeScript |
@@ -586,9 +586,9 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 10 | [Generare video](../../phases/08-generative-ai/10-video-generation/) | Construiește | Python, TypeScript |
 | 11 | [Generare audio](../../phases/08-generative-ai/11-audio-generation/) | Construiește | Python, TypeScript |
 | 12 | [Generare 3D](../../phases/08-generative-ai/12-3d-generation/) | Construiește | Python, TypeScript |
-| 13 | [Potrivirea fluxurilor și fluxuri rectificate](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Construiește | Python, TypeScript |
+| 13 | [Potrivirea fluxurilor și fluxuri rectificate](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Construiește | Python, TypeScript, Julia |
 | 14 | [Evaluare: FID și scor CLIP](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Construiește | Python, TypeScript |
-| 19 | [Modelare vizuală autoregresivă (VAR): predicția scării următoare](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Construiește | Python |
+| 19 | [Modelare vizuală autoregresivă (VAR): predicția scării următoare](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Construiește | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | # | Lecție | Tip | Limbaj |
 |:---:|--------|:----:|------|
 | 01 | [Tokenizatoare: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Construiește | Python, Rust |
-| 02 | [Construirea unui tokenizator de la zero](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Construiește | Python |
+| 02 | [Construirea unui tokenizator de la zero](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Construiește | Python, TypeScript |
 | 03 | [Fluxuri de date pentru preantrenare](../../phases/10-llms-from-scratch/03-data-pipelines/) | Construiește | Python, Rust |
 | 04 | [Preantrenarea unui mini-GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Construiește | Python, Rust |
 | 05 | [Antrenare distribuită, FSDP și DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Construiește | Python |
@@ -665,7 +665,7 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 11 | [Memorare în cache, limitarea ritmului și costuri](../../phases/11-llm-engineering/11-caching-cost/) | Construiește | Python, TypeScript |
 | 12 | [Limite de protecție și siguranță](../../phases/11-llm-engineering/12-guardrails/) | Construiește | Python, TypeScript |
 | 13 | [Construirea unei aplicații LLM de producție](../../phases/11-llm-engineering/13-production-app/) | Construiește | Python, TypeScript |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Construiește | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Construiește | Python, TypeScript, Go |
 | 15 | [Cache pentru prompturi și context](../../phases/11-llm-engineering/15-prompt-caching/) | Construiește | Python, TypeScript |
 | 16 | [Mașini de stare pentru agenți: grafuri, noduri și puncte de control](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Construiește | Python |
 | 17 | [Compromisuri între frameworkurile pentru agenți](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Învață | Python, TypeScript |
@@ -714,25 +714,25 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 |:---:|--------|:----:|------|
 | 01 | [Interfața instrumentelor](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Învață | Python, TypeScript |
 | 02 | [Aprofundarea apelării funcțiilor](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Construiește | Python, TypeScript |
-| 03 | [Apeluri paralele și în flux ale instrumentelor](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Construiește | Python, TypeScript |
+| 03 | [Apeluri paralele și în flux ale instrumentelor](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Construiește | Python, TypeScript, Go |
 | 04 | [Rezultat structurat](../../phases/13-tools-and-protocols/04-structured-output/) | Construiește | Python, TypeScript |
 | 05 | [Proiectarea schemelor instrumentelor](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Învață | Python, TypeScript |
 | 06 | [Bazele MCP: cereri fără stare și JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Învață | Python, TypeScript |
-| 07 | [Construirea unui server MCP: Python și TypeScript fără stare](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Construiește | Python, TypeScript |
+| 07 | [Construirea unui server MCP: Python și TypeScript fără stare](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Construiește | Python, TypeScript, Go |
 | 08 | [Construirea unui client MCP: descoperire, rutare și compatibilitate între generații](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Construiește | Python, TypeScript |
-| 09 | [Transporturi MCP: stdio și Streamable HTTP fără stare](../../phases/13-tools-and-protocols/09-mcp-transports/) | Învață | Python, TypeScript |
+| 09 | [Transporturi MCP: stdio și Streamable HTTP fără stare](../../phases/13-tools-and-protocols/09-mcp-transports/) | Învață | Python, TypeScript, Go |
 | 10 | [Resurse și prompturi MCP: context adresabil pentru servere fără stare](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Construiește | Python, TypeScript |
 | 11 | [Intrarea modelului MCP: migrarea samplingului și MRTR fără stare](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Construiește | Python, TypeScript |
 | 12 | [Domeniu explicit și solicitare de informații fără stare](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Construiește | Python, TypeScript |
 | 13 | [Extensia de sarcini MCP: muncă durabilă pe un nucleu fără stare](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Construiește | Python, TypeScript |
 | 14 | [MCP Apps pe protocolul fără stare](../../phases/13-tools-and-protocols/14-mcp-apps/) | Construiește | Python, TypeScript |
 | 15 | [Securitatea MCP: metadate otrăvite, rutare și stare MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Învață | Python, TypeScript |
-| 16 | [Autorizarea MCP: CIMD, legarea emitentului, PKCE și verificare suplimentară](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Construiește | Python, TypeScript |
-| 17 | [Gateway-uri MCP fără stare și admiterea în registru](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Învață | Python, TypeScript |
-| 18 | [Autorizare MCP în producție: înregistrare și tokenuri legate de emitent](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Construiește | Python, TypeScript |
-| 19 | [Protocolul A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Construiește | Python, TypeScript |
+| 16 | [Autorizarea MCP: CIMD, legarea emitentului, PKCE și verificare suplimentară](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Construiește | Python, TypeScript, Go |
+| 17 | [Gateway-uri MCP fără stare și admiterea în registru](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Învață | Python, TypeScript, Go |
+| 18 | [Autorizare MCP în producție: înregistrare și tokenuri legate de emitent](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Construiește | Python, TypeScript, Go |
+| 19 | [Protocolul A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Construiește | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Construiește | Python, TypeScript |
-| 21 | [Stratul de rutare LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Învață | Python, TypeScript |
+| 21 | [Stratul de rutare LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Învață | Python, TypeScript, Go |
 | 22 | [Agent Skills: contract portabil și limită de execuție](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Construiește | Python, TypeScript |
 | 23 | [Proiect final: ecosistem de instrumente fără stare](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Construiește | Python, TypeScript |
 | 24 | [Descoperirea abilităților și dezvăluirea progresivă](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Construiește | Python, TypeScript |
@@ -743,19 +743,19 @@ Douăzeci de etape. Apasă pe o etapă pentru a-i extinde lista de lecții.
 | 29 | [Fiabilitatea MCP, anularea și controlul fluxului](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Construiește | Python, TypeScript |
 | 30 | [Lanțul de aprovizionare al registrului MCP: admitere, abateri și revenire](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Construiește | Python, TypeScript |
 | 31 | [Conformitatea MCP: versiuni, dovezi și operațiuni](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Construiește | Python, TypeScript |
-| 32 | [Anatomia programului: citirea ELF de la zero](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Construiește | Python, TypeScript |
-| 33 | [Dezasamblare și grafuri de flux de control](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Construiește | Python, TypeScript |
-| 34 | [Ridicarea codului mașină la pseudocod](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Construiește | Python |
+| 32 | [Anatomia programului: citirea ELF de la zero](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Construiește | Python, TypeScript, Rust |
+| 33 | [Dezasamblare și grafuri de flux de control](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Construiește | Python, TypeScript, Rust |
+| 34 | [Ridicarea codului mașină la pseudocod](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Construiește | Python, TypeScript |
 | 35 | [Dovezi, încredere și necunoscute în analiza binară](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Construiește | Python, TypeScript |
 | 36 | [Reconstruiește și demonstrează echivalența](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Construiește | Python, TypeScript |
 | 37 | [Peisajul ingineriei inverse](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Construiește | Python, TypeScript |
 | 38 | [Convenții de apel și cadre de stivă](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Construiește | Python, TypeScript |
 | 39 | [Idiomuri ale compilatorului și optimizare](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Construiește | Python, TypeScript |
-| 40 | [Legare, încărcare și binare fără simboluri](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Construiește | Python, TypeScript |
+| 40 | [Legare, încărcare și binare fără simboluri](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Construiește | Python, TypeScript, Rust |
 | 41 | [Recuperarea datelor și a tipurilor](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Construiește | Python, TypeScript |
 | 42 | [Analiza dinamică a propriului program](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Construiește | Python, TypeScript |
 | 43 | [Bytecode și formate gestionate](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Construiește | Python, TypeScript |
-| 44 | [Compararea binarelor și execuție simbolică](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Construiește | Python |
+| 44 | [Compararea binarelor și execuție simbolică](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Construiește | Python, TypeScript |
 | 45 | [Inginerie inversă asistată de AI](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Construiește | Python, TypeScript |
 
 Lecțiile 06-18 și 28-31 formează [traseul Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json). Ordinea manifestului este 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Începe cu invocarea `learn-mcp` specifică gazdei de mai sus. Lecția 23 este singurul proiect final opțional și necesită și lecțiile 19 și 20.
@@ -792,13 +792,13 @@ Lecțiile 22 și 24-27 formează [traseul Agent Skills](../../learning-paths/age
 | 20 | [Benchmarkuri: WebArena și OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Învață | Python, TypeScript |
 | 21 | [Utilizarea computerului: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Construiește | Python, TypeScript |
 | 22 | [Agenți vocali: Pipecat și LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Construiește | Python, TypeScript |
-| 23 | [Convenții semantice OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Construiește | Python, TypeScript |
+| 23 | [Convenții semantice OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Construiește | Python, TypeScript, Go |
 | 24 | [Observabilitatea agenților: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Învață | Python, TypeScript |
 | 25 | [Dezbatere și colaborare între agenți](../../phases/14-agent-engineering/25-multi-agent-debate/) | Construiește | Python, TypeScript |
 | 26 | [Moduri de eșec: de ce agenții cedează](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Construiește | Python, TypeScript |
 | 27 | [Injectarea prompturilor și apărarea PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Construiește | Python, TypeScript |
 | 28 | [Tipare de orchestrare: supervizor, roi și ierarhie](../../phases/14-agent-engineering/28-orchestration-patterns/) | Construiește | Python, TypeScript |
-| 29 | [Medii de producție: cozi, evenimente și cron](../../phases/14-agent-engineering/29-production-runtimes/) | Învață | Python, TypeScript |
+| 29 | [Medii de producție: cozi, evenimente și cron](../../phases/14-agent-engineering/29-production-runtimes/) | Învață | Python, TypeScript, Go |
 | 30 | [Dezvoltarea agenților ghidată de evaluare](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Construiește | Python, TypeScript |
 | 31 | [Bancul de lucru al agentului: de ce modelele capabile încă eșuează](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Învață | Python, TypeScript |
 | 32 | [Bancul de lucru minim al agentului](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Construiește | Python, TypeScript |
@@ -848,7 +848,7 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 09 | [Peisajul agenților autonomi de programare (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Învață | Python, TypeScript |
 | 10 | [Moduri de permisiuni pentru agenți autonomi](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Învață | Python, TypeScript |
 | 11 | [Agenți de browser și injectarea indirectă a prompturilor](../../phases/15-autonomous-systems/11-browser-agents/) | Învață | Python, TypeScript |
-| 12 | [Execuție durabilă pentru agenți de lungă durată](../../phases/15-autonomous-systems/12-durable-execution/) | Învață | Python, TypeScript |
+| 12 | [Execuție durabilă pentru agenți de lungă durată](../../phases/15-autonomous-systems/12-durable-execution/) | Învață | Python, TypeScript, Go |
 | 13 | [Bugete de acțiuni, limite de iterații și controlul costurilor](../../phases/15-autonomous-systems/13-cost-governors/) | Învață | Python, TypeScript |
 | 14 | [Opriri de urgență, întrerupătoare și tokenuri de avertizare](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Învață | Python, TypeScript |
 | 15 | [Omul în buclă: propune înainte de a confirma](../../phases/15-autonomous-systems/15-propose-then-commit/) | Învață | Python, TypeScript |
@@ -857,7 +857,7 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 18 | [Llama Guard și clasificarea intrărilor și ieșirilor](../../phases/15-autonomous-systems/18-llama-guard/) | Învață | Python, TypeScript |
 | 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Învață | Python, TypeScript |
 | 20 | [OpenAI Preparedness Framework și DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Învață | Python, TypeScript |
-| 21 | [Orizonturi temporale METR și evaluare externă](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Învață | Python, TypeScript |
+| 21 | [Orizonturi temporale METR și evaluare externă](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Învață | Python, TypeScript, Julia |
 | 22 | [CAIS, CAISI și riscuri la scară societală](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Învață | Python, TypeScript |
 
 </details>
@@ -876,17 +876,17 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 06 | [Arhitectură ierarhică și abateri ale descompunerii](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Învață | Python, TypeScript |
 | 07 | [Society of Mind și dezbatere multiagent](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Construiește | Python, TypeScript |
 | 08 | [Specializarea rolurilor: planificator, critic, executant și verificator](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Construiește | Python, TypeScript |
-| 09 | [Roiuri paralele și arhitecturi în rețea](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Construiește | Python, TypeScript |
+| 09 | [Roiuri paralele și arhitecturi în rețea](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Construiește | Python, TypeScript, Go |
 | 10 | [Conversații de grup și selectarea vorbitorului](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Construiește | Python, TypeScript |
 | 11 | [Transferuri și rutine (orchestrare fără stare)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Construiește | Python, TypeScript |
-| 12 | [A2A: protocolul agent-la-agent](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Construiește | Python, TypeScript |
+| 12 | [A2A: protocolul agent-la-agent](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Construiește | Python, TypeScript, Go |
 | 13 | [Memorie comună și tipare de tablă](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Construiește | Python, TypeScript |
 | 14 | [Consens și toleranță la erori bizantine](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Construiește | Python, TypeScript |
 | 15 | [Vot, autoconsistență și topologia dezbaterii](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Construiește | Python, TypeScript |
 | 16 | [Negociere și târguială](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Construiește | Python, TypeScript |
 | 17 | [Agenți generativi și simulare emergentă](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Construiește | Python, TypeScript |
 | 18 | [Teoria minții și coordonare emergentă](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Construiește | Python, TypeScript |
-| 19 | [Optimizare prin roiuri (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Construiește | Python, TypeScript |
+| 19 | [Optimizare prin roiuri (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Construiește | Python, TypeScript, Julia |
 | 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Învață | Python, TypeScript |
 | 21 | [Economii ale agenților, stimulente prin tokenuri și reputație](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Învață | Python, TypeScript |
 | 22 | [Scalare în producție: cozi, puncte de control și durabilitate](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Construiește | Python, TypeScript |
@@ -905,9 +905,9 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 01 | [Platforme LLM administrate: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Învață | Python, TypeScript |
 | 02 | [Economia platformelor de inferență: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Învață | Python, TypeScript |
 | 03 | [Scalare automată GPU pe Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Învață | Python, TypeScript |
-| 04 | [Mecanismele motoarelor de inferență: PagedAttention, loturi continue și prefill fragmentat](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Învață | Python, TypeScript |
+| 04 | [Mecanismele motoarelor de inferență: PagedAttention, loturi continue și prefill fragmentat](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Învață | Python, TypeScript, Rust |
 | 05 | [Decodare speculativă EAGLE-3 în producție](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Învață | Python, TypeScript |
-| 06 | [Inferență cu cache de prefixe: RadixAttention și reutilizarea KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Învață | Python, TypeScript |
+| 06 | [Inferență cu cache de prefixe: RadixAttention și reutilizarea KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Învață | Python, TypeScript, Rust |
 | 07 | [Compilare specializată hardware: FP8 și NVFP4 pe Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Învață | Python, TypeScript |
 | 08 | [Metrici de inferență: TTFT, TPOT, ITL, goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Învață | Python, TypeScript |
 | 09 | [Cuantizare în producție: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Învață | Python, TypeScript |
@@ -922,7 +922,7 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 18 | [Stiva de inferență în producție: mutarea KV și rutarea conștientă de cache](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Învață | Python, TypeScript |
 | 19 | [Gateway-uri AI: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Învață | Python, TypeScript |
 | 20 | [Implementare în umbră, canar și progresivă](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Învață | Python, TypeScript |
-| 21 | [Testarea A/B a funcțiilor LLM: GrowthBook și Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Învață | Python, TypeScript |
+| 21 | [Testarea A/B a funcțiilor LLM: GrowthBook și Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Învață | Python, TypeScript, Julia |
 | 22 | [Teste de încărcare pentru API-uri LLM: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Construiește | Python, TypeScript |
 | 23 | [SRE pentru AI: răspuns multiagent la incidente](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Învață | Python, TypeScript |
 | 24 | [Ingineria haosului pentru LLM în producție](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Învață | Python, TypeScript |
@@ -961,7 +961,7 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 19 | [Cercetarea bunăstării modelelor](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Învață | Python, TypeScript |
 | 20 | [Părtinire și prejudicii de reprezentare](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Construiește | Python, TypeScript |
 | 21 | [Criterii de echitate: grup, individ și contrafactual](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Învață | Python, TypeScript |
-| 22 | [Confidențialitate diferențială pentru LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Construiește | Python, TypeScript |
+| 22 | [Confidențialitate diferențială pentru LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Construiește | Python, TypeScript, Julia |
 | 23 | [Marcaje: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Construiește | Python, TypeScript |
 | 24 | [Cadre de reglementare: UE, SUA, Regatul Unit și Coreea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Învață | Python, TypeScript |
 | 25 | [EchoLeak și CVE-uri pentru AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Învață | Python, TypeScript |
@@ -989,9 +989,9 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 08 | [Chatbot RAG de producție (domeniu reglementat)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [Agent de migrare a codului (actualizarea depozitului)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [Echipă multiagent de inginerie software](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [Panou de observabilitate și evaluare LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [Panou de observabilitate și evaluare LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [Flux de înțelegere video (scenă → întrebări și răspunsuri)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [Server MCP fără stare cu registru și guvernanță](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [Server MCP fără stare cu registru și guvernanță](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [Server de inferență cu decodare speculativă](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [Mediu constituțional de siguranță și poligon adversarial](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [Agent autonom de la problemă GitHub la PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1011,7 +1011,7 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 27 | [Mediu de evaluare cu sarcini de test fixe](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Mediu de execuție al agentului | Python, TypeScript |
 | 28 | [Observabilitate cu segmente OTel GenAI și metrici Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Mediu de execuție al agentului | Python, TypeScript |
 | 29 | [Agent complet de programare în mediul de execuție](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Mediu de execuție al agentului | Python, TypeScript |
-| 30 | [Tokenizator BPE de la zero](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
+| 30 | [Tokenizator BPE de la zero](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript, Rust |
 | 31 | [Set de date tokenizat cu fereastră glisantă](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Reprezentări ale tokenurilor și pozițiilor](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Autoatenție cu mai multe capete](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1023,7 +1023,7 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 39 | [Ajustare pe instrucțiuni prin antrenare supravegheată](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP LLM | Python |
 | 40 | [Optimizarea directă a preferințelor de la zero](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP LLM | Python |
 | 41 | [Flux complet de evaluare](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP LLM | Python |
-| 42 | [Descărcarea unui corpus mare](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Antrenare completă | Python |
+| 42 | [Descărcarea unui corpus mare](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Antrenare completă | Python, TypeScript |
 | 43 | [Corpus tokenizat HDF5](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. Antrenare completă | Python |
 | 44 | [Rată de învățare cosinusoidală cu încălzire liniară](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. Antrenare completă | Python |
 | 45 | [Limitarea gradienților și precizie mixtă](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. Antrenare completă | Python |
@@ -1037,8 +1037,8 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 53 | [Evaluator de rezultate](../../phases/19-capstone-projects/53-result-evaluator/) | D. Cercetare automată | Python |
 | 54 | [Redactarea articolelor științifice](../../phases/19-capstone-projects/54-paper-writer/) | D. Cercetare automată | Python, TypeScript |
 | 55 | [Bucla criticului](../../phases/19-capstone-projects/55-critic-loop/) | D. Cercetare automată | Python, TypeScript |
-| 56 | [Planificator de iterații](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Cercetare automată | Python |
-| 57 | [Demonstrație completă de cercetare](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Cercetare automată | Python |
+| 56 | [Planificator de iterații](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Cercetare automată | Python, TypeScript |
+| 57 | [Demonstrație completă de cercetare](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Cercetare automată | Python, TypeScript |
 | 58 | [Fragmentele codificatorului vizual](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. VLM multimodal | Python |
 | 59 | [Codificator transformator vizual](../../phases/19-capstone-projects/59-vit-transformer/) | E. VLM multimodal | Python |
 | 60 | [Strat de proiecție pentru alinierea modalităților](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. VLM multimodal | Python |
@@ -1052,11 +1052,11 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 68 | [Evaluarea RAG: precizie, acoperire, MRR, nDCG, fidelitate și relevanța răspunsului](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG avansat | Python, TypeScript |
 | 69 | [Sistem RAG complet](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. RAG avansat | Python |
 | 70 | [Formatul specificațiilor de sarcini](../../phases/19-capstone-projects/70-task-spec-format/) | G. Mediu de evaluare | Python, TypeScript |
-| 71 | [Metrici clasice](../../phases/19-capstone-projects/71-classical-metrics/) | G. Mediu de evaluare | Python |
-| 72 | [Metrica executării codului](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Mediu de evaluare | Python |
-| 73 | [Perplexitate și calibrare](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Mediu de evaluare | Python |
-| 74 | [Agregarea clasamentelor](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Mediu de evaluare | Python |
-| 75 | [Executant complet de evaluare](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Mediu de evaluare | Python |
+| 71 | [Metrici clasice](../../phases/19-capstone-projects/71-classical-metrics/) | G. Mediu de evaluare | Python, TypeScript |
+| 72 | [Metrica executării codului](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Mediu de evaluare | Python, TypeScript |
+| 73 | [Perplexitate și calibrare](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Mediu de evaluare | Python, TypeScript |
+| 74 | [Agregarea clasamentelor](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Mediu de evaluare | Python, TypeScript |
+| 75 | [Executant complet de evaluare](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Mediu de evaluare | Python, TypeScript |
 | 76 | [Operații colective de la zero](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. Antrenare distribuită | Python |
 | 77 | [DDP paralel pe date de la zero](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. Antrenare distribuită | Python |
 | 78 | [Fragmentarea stării optimizatorului ZeRO](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. Antrenare distribuită | Python |
@@ -1129,7 +1129,7 @@ Fiecare lecție are propriul director, cu aceeași structură în întregul prog
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      implementări executabile (Python, TypeScript, Rust, Julia)
+├── code/      implementări executabile (Python, TypeScript, Rust, Julia, Go)
 ├── docs/
 │   └── en.md  explicația lecției
 └── outputs/   prompturi, abilități, agenți sau servere MCP produse de această lecție

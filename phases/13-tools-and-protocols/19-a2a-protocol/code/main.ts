@@ -1,4 +1,4 @@
-// Phase 13 Lesson 19 — A2A agent-to-agent protocol, in TypeScript.
+// Phase 13 Lesson 19: A2A agent-to-agent protocol, in TypeScript.
 //
 // Research agent calls writer agent via A2A 1.0:
 //   1. Research agent fetches writer's Agent Card
@@ -192,6 +192,8 @@ function writerEndpoint(headers: Record<string, string>, request: JsonRpcRequest
     response.error = { code: -32009, message: "Version not supported" };
   } else if (request.method !== "SendMessage") {
     response.error = { code: -32601, message: "Method not found" };
+  } else if (request.params.message.taskId && !TASK_STORE.has(request.params.message.taskId)) {
+    response.error = { code: -32001, message: "Task not found" };
   } else {
     response.result = writerSendMessage(request.params);
   }

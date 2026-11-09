@@ -19,7 +19,7 @@
 
 免費、開放原始碼、MIT 授權。你可以在網站學習、使用程式設計代理輔助學習，或在本機執行程式碼。
 
-> 542 堂課. 20 個階段. Python, TypeScript, Rust, Julia.
+> 542 堂課. 20 個階段. Python, TypeScript, Rust, Julia, Go.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT 授權條款"></a>
@@ -374,19 +374,19 @@ flowchart TB
 | 07 | [貝氏定理與統計思維](../../phases/01-math-foundations/07-bayes-theorem/) | 建置 | Python, TypeScript |
 | 08 | [最佳化：梯度下降及其變體](../../phases/01-math-foundations/08-optimization/) | 建置 | Python, Julia |
 | 09 | [資訊論：熵與 KL 散度](../../phases/01-math-foundations/09-information-theory/) | 學習 | Python, TypeScript |
-| 10 | [降維：PCA、t-SNE 與 UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | 建置 | Python, TypeScript |
+| 10 | [降維：PCA、t-SNE 與 UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | 建置 | Python, TypeScript, Julia |
 | 11 | [奇異值分解](../../phases/01-math-foundations/11-singular-value-decomposition/) | 建置 | Python, Julia |
 | 12 | [張量運算](../../phases/01-math-foundations/12-tensor-operations/) | 建置 | Python, TypeScript |
-| 13 | [數值穩定性](../../phases/01-math-foundations/13-numerical-stability/) | 建置 | Python, TypeScript |
+| 13 | [數值穩定性](../../phases/01-math-foundations/13-numerical-stability/) | 建置 | Python, TypeScript, Julia |
 | 14 | [範數與距離](../../phases/01-math-foundations/14-norms-and-distances/) | 建置 | Python, TypeScript |
 | 15 | [機器學習中的統計學](../../phases/01-math-foundations/15-statistics-for-ml/) | 建置 | Python, TypeScript |
-| 16 | [取樣方法](../../phases/01-math-foundations/16-sampling-methods/) | 建置 | Python, TypeScript |
-| 17 | [線性方程組](../../phases/01-math-foundations/17-linear-systems/) | 建置 | Python, TypeScript |
-| 18 | [凸最佳化](../../phases/01-math-foundations/18-convex-optimization/) | 建置 | Python, TypeScript |
+| 16 | [取樣方法](../../phases/01-math-foundations/16-sampling-methods/) | 建置 | Python, TypeScript, Julia |
+| 17 | [線性方程組](../../phases/01-math-foundations/17-linear-systems/) | 建置 | Python, TypeScript, Julia |
+| 18 | [凸最佳化](../../phases/01-math-foundations/18-convex-optimization/) | 建置 | Python, TypeScript, Julia |
 | 19 | [AI 中的複數](../../phases/01-math-foundations/19-complex-numbers/) | 學習 | Python, TypeScript |
-| 20 | [傅立葉變換](../../phases/01-math-foundations/20-fourier-transform/) | 建置 | Python, TypeScript |
+| 20 | [傅立葉變換](../../phases/01-math-foundations/20-fourier-transform/) | 建置 | Python, TypeScript, Julia |
 | 21 | [機器學習中的圖論](../../phases/01-math-foundations/21-graph-theory/) | 建置 | Python, TypeScript |
-| 22 | [隨機過程](../../phases/01-math-foundations/22-stochastic-processes/) | 學習 | Python |
+| 22 | [隨機過程](../../phases/01-math-foundations/22-stochastic-processes/) | 學習 | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ flowchart TB
 
 | # | 課程 | 類型 | 語言 |
 |:---:|--------|:----:|------|
-| 01 | [感知機：神經網路的起點](../../phases/03-deep-learning-core/01-the-perceptron/) | 建置 | Python, Rust, Julia |
-| 02 | [多層網路與前向傳播](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 建置 | Python, TypeScript |
-| 03 | [從零實現反向傳播](../../phases/03-deep-learning-core/03-backpropagation/) | 建置 | Python, Rust, Julia |
-| 04 | [激發函式：ReLU、Sigmoid、GELU 及其作用](../../phases/03-deep-learning-core/04-activation-functions/) | 建置 | Python, Julia |
-| 05 | [損失函式：MSE、交叉熵與對比損失](../../phases/03-deep-learning-core/05-loss-functions/) | 建置 | Python, Julia |
-| 06 | [最佳化器：SGD、動量、Adam 與 AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 建置 | Python, TypeScript |
-| 07 | [正規化：Dropout、權重衰減與 BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 建置 | Python, TypeScript |
-| 08 | [權重初始化與訓練穩定性](../../phases/03-deep-learning-core/08-weight-initialization/) | 建置 | Python, TypeScript |
-| 09 | [學習率排程與預熱](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | 建置 | Python, TypeScript |
-| 10 | [建置自己的迷你框架](../../phases/03-deep-learning-core/10-mini-framework/) | 建置 | Python, TypeScript |
+| 01 | [感知機：神經網路的起點](../../phases/03-deep-learning-core/01-the-perceptron/) | 建置 | Python, TypeScript, Rust, Julia |
+| 02 | [多層網路與前向傳播](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 建置 | Python, TypeScript, Julia |
+| 03 | [從零實現反向傳播](../../phases/03-deep-learning-core/03-backpropagation/) | 建置 | Python, TypeScript, Rust, Julia |
+| 04 | [激發函式：ReLU、Sigmoid、GELU 及其作用](../../phases/03-deep-learning-core/04-activation-functions/) | 建置 | Python, TypeScript, Julia |
+| 05 | [損失函式：MSE、交叉熵與對比損失](../../phases/03-deep-learning-core/05-loss-functions/) | 建置 | Python, TypeScript, Julia |
+| 06 | [最佳化器：SGD、動量、Adam 與 AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 建置 | Python, TypeScript, Julia |
+| 07 | [正規化：Dropout、權重衰減與 BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 建置 | Python, TypeScript, Julia |
+| 08 | [權重初始化與訓練穩定性](../../phases/03-deep-learning-core/08-weight-initialization/) | 建置 | Python, TypeScript, Julia |
+| 09 | [學習率排程與預熱](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | 建置 | Python, TypeScript, Julia |
+| 10 | [建置自己的迷你框架](../../phases/03-deep-learning-core/10-mini-framework/) | 建置 | Python, TypeScript, Julia |
 | 11 | [PyTorch 入門](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | 建置 | Python |
 | 12 | [JAX 入門](../../phases/03-deep-learning-core/12-intro-to-jax/) | 建置 | Python |
 | 13 | [神經網路除錯](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | 建置 | Python |
@@ -448,8 +448,8 @@ flowchart TB
 
 | # | 課程 | 類型 | 語言 |
 |:---:|--------|:----:|------|
-| 01 | [影像基礎：像素、通道與色彩空間](../../phases/04-computer-vision/01-image-fundamentals/) | 學習 | Python |
-| 02 | [從零實現卷積](../../phases/04-computer-vision/02-convolutions-from-scratch/) | 建置 | Python |
+| 01 | [影像基礎：像素、通道與色彩空間](../../phases/04-computer-vision/01-image-fundamentals/) | 學習 | Python, Julia |
+| 02 | [從零實現卷積](../../phases/04-computer-vision/02-convolutions-from-scratch/) | 建置 | Python, Julia |
 | 03 | [卷積神經網路：從 LeNet 到 ResNet](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | 建置 | Python |
 | 04 | [影像分類](../../phases/04-computer-vision/04-image-classification/) | 建置 | Python |
 | 05 | [遷移學習與微調](../../phases/04-computer-vision/05-transfer-learning/) | 建置 | Python |
@@ -474,7 +474,7 @@ flowchart TB
 | 24 | [SAM 3 與開放詞表分割](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | 建置 | Python |
 | 25 | [視覺語言模型（ViT-MLP-LLM）](../../phases/04-computer-vision/25-vision-language-models/) | 建置 | Python |
 | 26 | [單目深度與幾何估計](../../phases/04-computer-vision/26-monocular-depth/) | 建置 | Python |
-| 27 | [多目標跟蹤與影片記憶](../../phases/04-computer-vision/27-multi-object-tracking/) | 建置 | Python |
+| 27 | [多目標跟蹤與影片記憶](../../phases/04-computer-vision/27-multi-object-tracking/) | 建置 | Python, Rust |
 | 28 | [世界模型與影片擴散](../../phases/04-computer-vision/28-world-models-video-diffusion/) | 建置 | Python |
 
 </details>
@@ -487,7 +487,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [文本處理：斷詞、詞乾提取與詞形還原](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | 建置 | Python, TypeScript |
 | 02 | [詞袋模型、TF-IDF 與文本表示](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | 建置 | Python, TypeScript |
-| 03 | [詞嵌入：從零實現 Word2Vec](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | 建置 | Python |
+| 03 | [詞嵌入：從零實現 Word2Vec](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | 建置 | Python, Julia |
 | 04 | [GloVe、FastText 與子詞嵌入](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | 建置 | Python, TypeScript |
 | 05 | [情感分析](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | 建置 | Python, TypeScript |
 | 06 | [命名實體識別（NER）](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | 建置 | Python, TypeScript |
@@ -498,13 +498,13 @@ flowchart TB
 | 11 | [機器翻譯](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | 建置 | Python, TypeScript |
 | 12 | [文本摘要](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | 建置 | Python, TypeScript |
 | 13 | [問答系統](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | 建置 | Python, TypeScript |
-| 14 | [資訊檢索與搜索](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | 建置 | Python, TypeScript |
-| 15 | [主題建模：LDA 與 BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | 建置 | Python, TypeScript |
+| 14 | [資訊檢索與搜索](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | 建置 | Python, TypeScript, Rust |
+| 15 | [主題建模：LDA 與 BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | 建置 | Python, TypeScript, Julia |
 | 16 | [文本生成](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | 建置 | Python, TypeScript |
 | 17 | [聊天機器人：從規則系統到神經網路](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | 建置 | Python, TypeScript |
 | 18 | [多語言自然語言處理](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | 建置 | Python, TypeScript |
-| 19 | [子詞斷詞：BPE、WordPiece、Unigram 與 SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | 學習 | Python, TypeScript |
-| 20 | [結構化輸出與約束解碼](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | 建置 | Python, TypeScript |
+| 19 | [子詞斷詞：BPE、WordPiece、Unigram 與 SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | 學習 | Python, TypeScript, Rust |
+| 20 | [結構化輸出與約束解碼](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | 建置 | Python, TypeScript, Rust |
 | 21 | [自然語言推理（NLI）與文本蘊含](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | 學習 | Python, TypeScript |
 | 22 | [深入理解嵌入模型](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | 學習 | Python, TypeScript |
 | 23 | [用於 RAG 的文本切塊策略](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | 建置 | Python, TypeScript |
@@ -523,8 +523,8 @@ flowchart TB
 
 | # | 課程 | 類型 | 語言 |
 |:---:|--------|:----:|------|
-| 01 | [音訊基礎：波形、取樣與 FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | 學習 | Python, TypeScript |
-| 02 | [頻譜圖、梅爾刻度與音訊特徵](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | 建置 | Python, TypeScript |
+| 01 | [音訊基礎：波形、取樣與 FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | 學習 | Python, TypeScript, Julia |
+| 02 | [頻譜圖、梅爾刻度與音訊特徵](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | 建置 | Python, TypeScript, Julia |
 | 03 | [音訊分類](../../phases/06-speech-and-audio/03-audio-classification) | 建置 | Python, TypeScript |
 | 04 | [語音識別（ASR）](../../phases/06-speech-and-audio/04-speech-recognition-asr) | 建置 | Python, TypeScript |
 | 05 | [Whisper：架構與微調](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | 建置 | Python, TypeScript |
@@ -536,7 +536,7 @@ flowchart TB
 | 11 | [即時音訊處理](../../phases/06-speech-and-audio/11-real-time-audio-processing) | 建置 | Python, Rust |
 | 12 | [建置語音助手管線](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | 建置 | Python, TypeScript |
 | 13 | [神經音訊編解碼器：EnCodec、SNAC、Mimi 與 DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | 學習 | Python, TypeScript |
-| 14 | [語音活動檢測與輪次管理](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | 建置 | Python, TypeScript |
+| 14 | [語音活動檢測與輪次管理](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | 建置 | Python, TypeScript, Rust |
 | 15 | [流式語音到語音：Moshi 與 Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | 學習 | Python, TypeScript |
 | 16 | [語音反欺騙與音訊水印](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | 建置 | Python, TypeScript |
 | 17 | [音訊評估：WER、MOS、MMAU 與排行榜](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | 學習 | Python, TypeScript |
@@ -586,9 +586,9 @@ flowchart TB
 | 10 | [影片生成](../../phases/08-generative-ai/10-video-generation/) | 建置 | Python, TypeScript |
 | 11 | [音訊生成](../../phases/08-generative-ai/11-audio-generation/) | 建置 | Python, TypeScript |
 | 12 | [3D 內容生成](../../phases/08-generative-ai/12-3d-generation/) | 建置 | Python, TypeScript |
-| 13 | [流匹配與矯正流](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | 建置 | Python, TypeScript |
+| 13 | [流匹配與矯正流](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | 建置 | Python, TypeScript, Julia |
 | 14 | [生成效果評估：FID 與 CLIP Score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | 建置 | Python, TypeScript |
-| 19 | [視覺自回歸建模（VAR）：下一尺度預測](../../phases/08-generative-ai/19-visual-autoregressive-var/) | 建置 | Python |
+| 19 | [視覺自回歸建模（VAR）：下一尺度預測](../../phases/08-generative-ai/19-visual-autoregressive-var/) | 建置 | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ flowchart TB
 | # | 課程 | 類型 | 語言 |
 |:---:|--------|:----:|------|
 | 01 | [斷詞器：BPE、WordPiece 與 SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | 建置 | Python, Rust |
-| 02 | [從零建置斷詞器](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | 建置 | Python |
+| 02 | [從零建置斷詞器](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | 建置 | Python, TypeScript |
 | 03 | [預訓練資料管線](../../phases/10-llms-from-scratch/03-data-pipelines/) | 建置 | Python, Rust |
 | 04 | [預訓練迷你 GPT（124M）](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | 建置 | Python, Rust |
 | 05 | [分散式訓練：FSDP 與 DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | 建置 | Python |
@@ -665,7 +665,7 @@ flowchart TB
 | 11 | [快取、速率限制與成本](../../phases/11-llm-engineering/11-caching-cost/) | 建置 | Python, TypeScript |
 | 12 | [護欄與安全](../../phases/11-llm-engineering/12-guardrails/) | 建置 | Python, TypeScript |
 | 13 | [建置生產級 LLM 應用程式](../../phases/11-llm-engineering/13-production-app/) | 建置 | Python, TypeScript |
-| 14 | [模型上下文協定（MCP）](../../phases/11-llm-engineering/14-model-context-protocol/) | 建置 | Python, TypeScript |
+| 14 | [模型上下文協定（MCP）](../../phases/11-llm-engineering/14-model-context-protocol/) | 建置 | Python, TypeScript, Go |
 | 15 | [提示詞快取與上下文快取](../../phases/11-llm-engineering/15-prompt-caching/) | 建置 | Python, TypeScript |
 | 16 | [代理程式狀態機：圖、節點與檢查點](../../phases/11-llm-engineering/16-langgraph-state-machines/) | 建置 | Python |
 | 17 | [代理程式框架的權衡](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | 學習 | Python, TypeScript |
@@ -714,25 +714,25 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [工具介面](../../phases/13-tools-and-protocols/01-the-tool-interface/) | 學習 | Python, TypeScript |
 | 02 | [深入理解函式呼叫](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | 建置 | Python, TypeScript |
-| 03 | [並行與流式工具呼叫](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | 建置 | Python, TypeScript |
+| 03 | [並行與流式工具呼叫](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | 建置 | Python, TypeScript, Go |
 | 04 | [結構化輸出](../../phases/13-tools-and-protocols/04-structured-output/) | 建置 | Python, TypeScript |
 | 05 | [工具 Schema 設計](../../phases/13-tools-and-protocols/05-tool-schema-design/) | 學習 | Python, TypeScript |
 | 06 | [MCP 基礎：無狀態請求與 JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | 學習 | Python, TypeScript |
-| 07 | [建置 MCP 伺服器：無狀態 Python 與 TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | 建置 | Python, TypeScript |
+| 07 | [建置 MCP 伺服器：無狀態 Python 與 TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | 建置 | Python, TypeScript, Go |
 | 08 | [建置 MCP 用戶端：發現、路由與新舊協定相容](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | 建置 | Python, TypeScript |
-| 09 | [MCP 傳輸：stdio 與無狀態 Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | 學習 | Python, TypeScript |
+| 09 | [MCP 傳輸：stdio 與無狀態 Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | 學習 | Python, TypeScript, Go |
 | 10 | [MCP 資源與提示詞：無狀態伺服器的可尋址上下文](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | 建置 | Python, TypeScript |
 | 11 | [MCP 模型輸入：Sampling 遷移與無狀態 MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | 建置 | Python, TypeScript |
 | 12 | [顯式範圍與無狀態資訊徵詢](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | 建置 | Python, TypeScript |
 | 13 | [MCP Tasks 擴展：在無狀態核心上持久執行任務](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | 建置 | Python, TypeScript |
 | 14 | [無狀態協定上的 MCP Apps](../../phases/13-tools-and-protocols/14-mcp-apps/) | 建置 | Python, TypeScript |
 | 15 | [MCP 安全：被污染的中繼資料、路由與 MRTR 狀態](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | 學習 | Python, TypeScript |
-| 16 | [MCP 授權：CIMD、簽發者綁定、PKCE 與逐步提權](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | 建置 | Python, TypeScript |
-| 17 | [無狀態 MCP 網關與註冊表准入](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | 學習 | Python, TypeScript |
-| 18 | [生產環境中的 MCP 認證：簽發者綁定的註冊與權杖](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | 建置 | Python, TypeScript |
-| 19 | [A2A 協定](../../phases/13-tools-and-protocols/19-a2a-protocol/) | 建置 | Python, TypeScript |
+| 16 | [MCP 授權：CIMD、簽發者綁定、PKCE 與逐步提權](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | 建置 | Python, TypeScript, Go |
+| 17 | [無狀態 MCP 網關與註冊表准入](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | 學習 | Python, TypeScript, Go |
+| 18 | [生產環境中的 MCP 認證：簽發者綁定的註冊與權杖](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | 建置 | Python, TypeScript, Go |
+| 19 | [A2A 協定](../../phases/13-tools-and-protocols/19-a2a-protocol/) | 建置 | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | 建置 | Python, TypeScript |
-| 21 | [LLM 路由層](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | 學習 | Python, TypeScript |
+| 21 | [LLM 路由層](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | 學習 | Python, TypeScript, Go |
 | 22 | [Agent Skills：可移植契約與執行階段邊界](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | 建置 | Python, TypeScript |
 | 23 | [綜合專案：無狀態工具生態](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | 建置 | Python, TypeScript |
 | 24 | [技能發現與漸進式披露](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | 建置 | Python, TypeScript |
@@ -743,19 +743,19 @@ flowchart TB
 | 29 | [MCP 可靠性：取消與流量控制](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | 建置 | Python, TypeScript |
 | 30 | [MCP 註冊表供應鏈：准入、漂移與回復](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | 建置 | Python, TypeScript |
 | 31 | [MCP 一致性工程：版本、證據與運維](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | 建置 | Python, TypeScript |
-| 32 | [程式解剖：從零讀懂 ELF](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | 建置 | Python, TypeScript |
-| 33 | [反組譯與控制流程圖](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | 建置 | Python, TypeScript |
-| 34 | [把機器碼提升為虛擬碼](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | 建置 | Python |
+| 32 | [程式解剖：從零讀懂 ELF](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | 建置 | Python, TypeScript, Rust |
+| 33 | [反組譯與控制流程圖](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | 建置 | Python, TypeScript, Rust |
+| 34 | [把機器碼提升為虛擬碼](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | 建置 | Python, TypeScript |
 | 35 | [二進位分析中的證據、信賴度與未知項](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | 建置 | Python, TypeScript |
 | 36 | [重建程式並證明等價](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | 建置 | Python, TypeScript |
 | 37 | [逆向工程全景](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | 建置 | Python, TypeScript |
 | 38 | [呼叫慣例與堆疊框架](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | 建置 | Python, TypeScript |
 | 39 | [編譯器慣用法與最佳化](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | 建置 | Python, TypeScript |
-| 40 | [連結、載入與去符號二進位檔](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | 建置 | Python, TypeScript |
+| 40 | [連結、載入與去符號二進位檔](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | 建置 | Python, TypeScript, Rust |
 | 41 | [還原資料與型別](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | 建置 | Python, TypeScript |
 | 42 | [動態分析你自己的程式](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | 建置 | Python, TypeScript |
 | 43 | [位元組碼與受控格式](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | 建置 | Python, TypeScript |
-| 44 | [二進位差異比對與符號執行](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | 建置 | Python |
+| 44 | [二進位差異比對與符號執行](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | 建置 | Python, TypeScript |
 | 45 | [AI 輔助逆向工程](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | 建置 | Python, TypeScript |
 
 第 06–18、28–31 課構成 [模型上下文協定（MCP）專項學習路徑](../../learning-paths/model-context-protocol.json)。路線清單規定的順序為 06、07、08、09、10、11、12、13、14、15、16、18、17、28、29、30、31；按上文對應主機的方式呼叫 `learn-mcp` 開始學習。第 23 課是唯一的可選綜合專案，還需要先完成第 19、20 課。
@@ -792,13 +792,13 @@ flowchart TB
 | 20 | [基準測試：WebArena 與 OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | 學習 | Python, TypeScript |
 | 21 | [電腦操作：Claude、OpenAI CUA 與 Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | 建置 | Python, TypeScript |
 | 22 | [語音代理程式：Pipecat 與 LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | 建置 | Python, TypeScript |
-| 23 | [OpenTelemetry GenAI 語義約定](../../phases/14-agent-engineering/23-otel-genai-conventions/) | 建置 | Python, TypeScript |
+| 23 | [OpenTelemetry GenAI 語義約定](../../phases/14-agent-engineering/23-otel-genai-conventions/) | 建置 | Python, TypeScript, Go |
 | 24 | [代理程式可觀測性：Langfuse、Phoenix 與 Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | 學習 | Python, TypeScript |
 | 25 | [多代理程式辯論與協作](../../phases/14-agent-engineering/25-multi-agent-debate/) | 建置 | Python, TypeScript |
 | 26 | [失效模式：代理程式為甚麼會失敗](../../phases/14-agent-engineering/26-failure-modes-agentic/) | 建置 | Python, TypeScript |
 | 27 | [提示詞注入與 PVE 防禦](../../phases/14-agent-engineering/27-prompt-injection-defense/) | 建置 | Python, TypeScript |
 | 28 | [編排模式：監督者、群體與分層](../../phases/14-agent-engineering/28-orchestration-patterns/) | 建置 | Python, TypeScript |
-| 29 | [生產執行階段：佇列、事件與定時任務](../../phases/14-agent-engineering/29-production-runtimes/) | 學習 | Python, TypeScript |
+| 29 | [生產執行階段：佇列、事件與定時任務](../../phases/14-agent-engineering/29-production-runtimes/) | 學習 | Python, TypeScript, Go |
 | 30 | [以評估驅動代理程式開發](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | 建置 | Python, TypeScript |
 | 31 | [代理程式工作台：能力強的模型為何仍會失敗](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | 學習 | Python, TypeScript |
 | 32 | [最小化代理程式工作台](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | 建置 | Python, TypeScript |
@@ -848,7 +848,7 @@ flowchart TB
 | 09 | [自主程式開發代理程式全景：SWE-bench 與 CodeAct](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | 學習 | Python, TypeScript |
 | 10 | [自主代理程式的權限模式](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | 學習 | Python, TypeScript |
 | 11 | [瀏覽器代理程式與間接提示詞注入](../../phases/15-autonomous-systems/11-browser-agents/) | 學習 | Python, TypeScript |
-| 12 | [長時間執行代理程式的持久執行](../../phases/15-autonomous-systems/12-durable-execution/) | 學習 | Python, TypeScript |
+| 12 | [長時間執行代理程式的持久執行](../../phases/15-autonomous-systems/12-durable-execution/) | 學習 | Python, TypeScript, Go |
 | 13 | [行動預算、迭代上限與成本控制](../../phases/15-autonomous-systems/13-cost-governors/) | 學習 | Python, TypeScript |
 | 14 | [終止開關、斷路器與金絲雀權杖](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | 學習 | Python, TypeScript |
 | 15 | [人在迴路：先提案、後提交](../../phases/15-autonomous-systems/15-propose-then-commit/) | 學習 | Python, TypeScript |
@@ -857,7 +857,7 @@ flowchart TB
 | 18 | [Llama Guard 與輸入與輸出分類](../../phases/15-autonomous-systems/18-llama-guard/) | 學習 | Python, TypeScript |
 | 19 | [Anthropic 負責任擴展政策 v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | 學習 | Python, TypeScript |
 | 20 | [OpenAI 整備度框架與 DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | 學習 | Python, TypeScript |
-| 21 | [METR 時間跨度與外部評估](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | 學習 | Python, TypeScript |
+| 21 | [METR 時間跨度與外部評估](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | 學習 | Python, TypeScript, Julia |
 | 22 | [CAIS、CAISI 與社會規模風險](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | 學習 | Python, TypeScript |
 
 </details>
@@ -876,17 +876,17 @@ flowchart TB
 | 06 | [分層架構與任務分解漂移](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | 學習 | Python, TypeScript |
 | 07 | [心智社會與多代理程式辯論](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | 建置 | Python, TypeScript |
 | 08 | [角色分工：規劃者、批評者、執行者與驗證者](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | 建置 | Python, TypeScript |
-| 09 | [並行群體與網路化架構](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | 建置 | Python, TypeScript |
+| 09 | [並行群體與網路化架構](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | 建置 | Python, TypeScript, Go |
 | 10 | [群聊與發言者選擇](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | 建置 | Python, TypeScript |
 | 11 | [移交與例程：無狀態編排](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | 建置 | Python, TypeScript |
-| 12 | [A2A：代理程式間協定](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | 建置 | Python, TypeScript |
+| 12 | [A2A：代理程式間協定](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | 建置 | Python, TypeScript, Go |
 | 13 | [共享記憶與黑板模式](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | 建置 | Python, TypeScript |
 | 14 | [共識與拜佔庭容錯](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | 建置 | Python, TypeScript |
 | 15 | [投票、自洽性與辯論拓撲](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | 建置 | Python, TypeScript |
 | 16 | [協商與議價](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | 建置 | Python, TypeScript |
 | 17 | [生成式代理程式與湧現式模擬](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | 建置 | Python, TypeScript |
 | 18 | [心智理論與湧現式協作](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | 建置 | Python, TypeScript |
-| 19 | [群體最佳化：PSO 與 ACO](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | 建置 | Python, TypeScript |
+| 19 | [群體最佳化：PSO 與 ACO](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | 建置 | Python, TypeScript, Julia |
 | 20 | [多代理程式強化學習：MADDPG、QMIX 與 MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | 學習 | Python, TypeScript |
 | 21 | [代理程式經濟：Token 激勵與聲譽](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | 學習 | Python, TypeScript |
 | 22 | [生產擴展：佇列、檢查點與持久性](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | 建置 | Python, TypeScript |
@@ -905,9 +905,9 @@ flowchart TB
 | 01 | [托管式 LLM 平台：Bedrock、Azure OpenAI 與 Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | 學習 | Python, TypeScript |
 | 02 | [推理平台經濟學：Fireworks、Together、Baseten 與 Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | 學習 | Python, TypeScript |
 | 03 | [Kubernetes 上的 GPU 自動擴縮容：Karpenter 與 KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | 學習 | Python, TypeScript |
-| 04 | [推理服務引擎內部機制：PagedAttention、連續批次處理與分塊預填入](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | 學習 | Python, TypeScript |
+| 04 | [推理服務引擎內部機制：PagedAttention、連續批次處理與分塊預填入](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | 學習 | Python, TypeScript, Rust |
 | 05 | [生產環境中的 EAGLE-3 推測解碼](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | 學習 | Python, TypeScript |
-| 06 | [前綴快取推理服務：RadixAttention 與 KV 重複使用](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | 學習 | Python, TypeScript |
+| 06 | [前綴快取推理服務：RadixAttention 與 KV 重複使用](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | 學習 | Python, TypeScript, Rust |
 | 07 | [面向硬體的推理編譯：Blackwell 上的 FP8 與 NVFP4](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | 學習 | Python, TypeScript |
 | 08 | [推理指標：TTFT、TPOT、ITL、Goodput 與 P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | 學習 | Python, TypeScript |
 | 09 | [生產級量化：AWQ、GPTQ、GGUF、FP8 與 NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | 學習 | Python, TypeScript |
@@ -922,7 +922,7 @@ flowchart TB
 | 18 | [生產級推理服務棧：KV 卸載與快取感知路由](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | 學習 | Python, TypeScript |
 | 19 | [AI 網關：LiteLLM、Portkey、Kong 與 Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | 學習 | Python, TypeScript |
 | 20 | [影子部署、金絲雀發佈與漸進式上線](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | 學習 | Python, TypeScript |
-| 21 | [LLM 功能的 A/B 測試：GrowthBook 與 Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | 學習 | Python, TypeScript |
+| 21 | [LLM 功能的 A/B 測試：GrowthBook 與 Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | 學習 | Python, TypeScript, Julia |
 | 22 | [LLM API 負載測試：k6、LLMPerf 與 GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | 建置 | Python, TypeScript |
 | 23 | [面向 AI 的 SRE：多代理程式事件響應](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | 學習 | Python, TypeScript |
 | 24 | [LLM 生產系統中的混沌工程](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | 學習 | Python, TypeScript |
@@ -961,7 +961,7 @@ flowchart TB
 | 19 | [模型福利研究](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | 學習 | Python, TypeScript |
 | 20 | [偏見與表徵傷害](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | 建置 | Python, TypeScript |
 | 21 | [公平性標準：群體、個體與反事實](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | 學習 | Python, TypeScript |
-| 22 | [面向 LLM 的差分隱私](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | 建置 | Python, TypeScript |
+| 22 | [面向 LLM 的差分隱私](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | 建置 | Python, TypeScript, Julia |
 | 23 | [水印：SynthID、Stable Signature 與 C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | 建置 | Python, TypeScript |
 | 24 | [監管框架：歐盟、美國、英國與韓國](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | 學習 | Python, TypeScript |
 | 25 | [EchoLeak 與 AI 系統的 CVE](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | 學習 | Python, TypeScript |
@@ -989,9 +989,9 @@ flowchart TB
 | 08 | [生產級 RAG 聊天機器人：受監管領域](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [程式碼遷移代理程式：儲存庫級升級](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [多代理程式軟體工程團隊](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [LLM 可觀測性與評估儀錶盤](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [LLM 可觀測性與評估儀錶盤](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [影片理解管線：從場景到問答](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [具備註冊表與治理機制的無狀態 MCP 伺服器](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [具備註冊表與治理機制的無狀態 MCP 伺服器](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [推測解碼推理伺服器](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [憲法式安全測試框架與紅隊演練環境](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [從 GitHub Issue 到 PR 的自主代理程式](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1011,7 +1011,7 @@ flowchart TB
 | 27 | [基於固定任務的評估框架](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. 代理程式執行框架 | Python, TypeScript |
 | 28 | [基於 OTel GenAI Span 與 Prometheus 指標的可觀測性](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. 代理程式執行框架 | Python, TypeScript |
 | 29 | [在執行框架上完成端到端程式設計任務](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. 代理程式執行框架 | Python, TypeScript |
-| 30 | [從零實現 BPE 斷詞器](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP 與 LLM | Python, TypeScript |
+| 30 | [從零實現 BPE 斷詞器](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP 與 LLM | Python, TypeScript, Rust |
 | 31 | [使用滑動窗口的斷詞資料集](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP 與 LLM | Python |
 | 32 | [Token 嵌入與位置嵌入](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP 與 LLM | Python |
 | 33 | [多頭自注意力](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP 與 LLM | Python |
@@ -1023,7 +1023,7 @@ flowchart TB
 | 39 | [監督式指令微調](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP 與 LLM | Python |
 | 40 | [從零實現直接偏好最佳化](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP 與 LLM | Python |
 | 41 | [完整評估管線](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP 與 LLM | Python |
-| 42 | [大規模語料下載器](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. 端到端訓練 | Python |
+| 42 | [大規模語料下載器](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. 端到端訓練 | Python, TypeScript |
 | 43 | [HDF5 斷詞語料](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. 端到端訓練 | Python |
 | 44 | [帶線性預熱的余弦學習率](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. 端到端訓練 | Python |
 | 45 | [梯度裁剪與混合精度](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. 端到端訓練 | Python |
@@ -1037,8 +1037,8 @@ flowchart TB
 | 53 | [結果評估器](../../phases/19-capstone-projects/53-result-evaluator/) | D. 自動化研究 | Python |
 | 54 | [論文寫作器](../../phases/19-capstone-projects/54-paper-writer/) | D. 自動化研究 | Python, TypeScript |
 | 55 | [批評與修正迴圈](../../phases/19-capstone-projects/55-critic-loop/) | D. 自動化研究 | Python, TypeScript |
-| 56 | [迭代排程器](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. 自動化研究 | Python |
-| 57 | [端到端研究演示](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. 自動化研究 | Python |
+| 56 | [迭代排程器](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. 自動化研究 | Python, TypeScript |
+| 57 | [端到端研究演示](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. 自動化研究 | Python, TypeScript |
 | 58 | [視覺編碼器的影像塊](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. 多模態 VLM | Python |
 | 59 | [視覺 Transformer 編碼器](../../phases/19-capstone-projects/59-vit-transformer/) | E. 多模態 VLM | Python |
 | 60 | [用於模態對齊的投影層](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. 多模態 VLM | Python |
@@ -1052,11 +1052,11 @@ flowchart TB
 | 68 | [RAG 評估：精確率、召回率、MRR、nDCG、忠實度與答案相關性](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. 高級 RAG | Python, TypeScript |
 | 69 | [端到端 RAG 系統](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. 高級 RAG | Python |
 | 70 | [任務規格格式](../../phases/19-capstone-projects/70-task-spec-format/) | G. 評估框架 | Python, TypeScript |
-| 71 | [經典評估指標](../../phases/19-capstone-projects/71-classical-metrics/) | G. 評估框架 | Python |
-| 72 | [程式碼執行指標](../../phases/19-capstone-projects/72-code-exec-metric/) | G. 評估框架 | Python |
-| 73 | [困惑度與校准](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. 評估框架 | Python |
-| 74 | [排行榜匯總](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. 評估框架 | Python |
-| 75 | [端到端評估執行器](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. 評估框架 | Python |
+| 71 | [經典評估指標](../../phases/19-capstone-projects/71-classical-metrics/) | G. 評估框架 | Python, TypeScript |
+| 72 | [程式碼執行指標](../../phases/19-capstone-projects/72-code-exec-metric/) | G. 評估框架 | Python, TypeScript |
+| 73 | [困惑度與校准](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. 評估框架 | Python, TypeScript |
+| 74 | [排行榜匯總](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. 評估框架 | Python, TypeScript |
+| 75 | [端到端評估執行器](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. 評估框架 | Python, TypeScript |
 | 76 | [從零實現集合通信操作](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. 分散式訓練 | Python |
 | 77 | [從零實現 DDP 資料並行](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. 分散式訓練 | Python |
 | 78 | [ZeRO 最佳化器狀態分片](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. 分散式訓練 | Python |
@@ -1129,7 +1129,7 @@ flowchart TB
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      可執行的實現（Python、TypeScript、Rust、Julia）
+├── code/      可執行的實現（Python、TypeScript、Rust、Julia、Go）
 ├── docs/
 │   └── en.md  課程講解文件
 └── outputs/   本課產出的提示詞、技能、代理程式或 MCP 伺服器

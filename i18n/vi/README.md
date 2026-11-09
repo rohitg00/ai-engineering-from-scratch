@@ -19,7 +19,7 @@ Triển khai cơ chế bên trong mô hình, quy trình truy xuất và môi tr�
 
 Miễn phí, mã nguồn mở, giấy phép MIT. Học trên trang web, cùng tác tử lập trình hoặc bằng cách chạy mã cục bộ.
 
-> 542 bài học. 20 giai đoạn. Python, TypeScript, Rust, Julia.
+> 542 bài học. 20 giai đoạn. Python, TypeScript, Rust, Julia, Go.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Giấy phép MIT"></a>
@@ -374,19 +374,19 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 07 | [Định lý Bayes và tư duy thống kê](../../phases/01-math-foundations/07-bayes-theorem/) | Xây dựng | Python, TypeScript |
 | 08 | [Tối ưu hóa: họ phương pháp hạ gradient](../../phases/01-math-foundations/08-optimization/) | Xây dựng | Python, Julia |
 | 09 | [Lý thuyết thông tin: entropy và độ phân kỳ KL](../../phases/01-math-foundations/09-information-theory/) | Tìm hiểu | Python, TypeScript |
-| 10 | [Giảm chiều: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Xây dựng | Python, TypeScript |
+| 10 | [Giảm chiều: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Xây dựng | Python, TypeScript, Julia |
 | 11 | [Phân rã giá trị suy biến](../../phases/01-math-foundations/11-singular-value-decomposition/) | Xây dựng | Python, Julia |
 | 12 | [Phép toán tensor](../../phases/01-math-foundations/12-tensor-operations/) | Xây dựng | Python, TypeScript |
-| 13 | [Tính ổn định số](../../phases/01-math-foundations/13-numerical-stability/) | Xây dựng | Python, TypeScript |
+| 13 | [Tính ổn định số](../../phases/01-math-foundations/13-numerical-stability/) | Xây dựng | Python, TypeScript, Julia |
 | 14 | [Chuẩn và khoảng cách](../../phases/01-math-foundations/14-norms-and-distances/) | Xây dựng | Python, TypeScript |
 | 15 | [Thống kê cho ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Xây dựng | Python, TypeScript |
-| 16 | [Phương pháp lấy mẫu](../../phases/01-math-foundations/16-sampling-methods/) | Xây dựng | Python, TypeScript |
-| 17 | [Hệ phương trình tuyến tính](../../phases/01-math-foundations/17-linear-systems/) | Xây dựng | Python, TypeScript |
-| 18 | [Tối ưu hóa lồi](../../phases/01-math-foundations/18-convex-optimization/) | Xây dựng | Python, TypeScript |
+| 16 | [Phương pháp lấy mẫu](../../phases/01-math-foundations/16-sampling-methods/) | Xây dựng | Python, TypeScript, Julia |
+| 17 | [Hệ phương trình tuyến tính](../../phases/01-math-foundations/17-linear-systems/) | Xây dựng | Python, TypeScript, Julia |
+| 18 | [Tối ưu hóa lồi](../../phases/01-math-foundations/18-convex-optimization/) | Xây dựng | Python, TypeScript, Julia |
 | 19 | [Số phức cho AI](../../phases/01-math-foundations/19-complex-numbers/) | Tìm hiểu | Python, TypeScript |
-| 20 | [Biến đổi Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Xây dựng | Python, TypeScript |
+| 20 | [Biến đổi Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Xây dựng | Python, TypeScript, Julia |
 | 21 | [Lý thuyết đồ thị cho ML](../../phases/01-math-foundations/21-graph-theory/) | Xây dựng | Python, TypeScript |
-| 22 | [Quá trình ngẫu nhiên](../../phases/01-math-foundations/22-stochastic-processes/) | Tìm hiểu | Python |
+| 22 | [Quá trình ngẫu nhiên](../../phases/01-math-foundations/22-stochastic-processes/) | Tìm hiểu | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 
 | # | Bài học | Loại | Ngôn ngữ |
 |:---:|--------|:----:|------|
-| 01 | [Perceptron: nơi mọi thứ bắt đầu](../../phases/03-deep-learning-core/01-the-perceptron/) | Xây dựng | Python, Rust, Julia |
-| 02 | [Mạng nhiều lớp và lượt truyền xuôi](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Xây dựng | Python, TypeScript |
-| 03 | [Lan truyền ngược từ đầu](../../phases/03-deep-learning-core/03-backpropagation/) | Xây dựng | Python, Rust, Julia |
-| 04 | [Hàm kích hoạt: ReLU, Sigmoid, GELU và lý do sử dụng](../../phases/03-deep-learning-core/04-activation-functions/) | Xây dựng | Python, Julia |
-| 05 | [Hàm mất mát: MSE, entropy chéo, tương phản](../../phases/03-deep-learning-core/05-loss-functions/) | Xây dựng | Python, Julia |
-| 06 | [Bộ tối ưu: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Xây dựng | Python, TypeScript |
-| 07 | [Chính quy hóa: Dropout, suy giảm trọng số, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Xây dựng | Python, TypeScript |
-| 08 | [Khởi tạo trọng số và độ ổn định khi huấn luyện](../../phases/03-deep-learning-core/08-weight-initialization/) | Xây dựng | Python, TypeScript |
-| 09 | [Lịch tốc độ học và khởi động](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Xây dựng | Python, TypeScript |
-| 10 | [Tự xây dựng framework nhỏ](../../phases/03-deep-learning-core/10-mini-framework/) | Xây dựng | Python, TypeScript |
+| 01 | [Perceptron: nơi mọi thứ bắt đầu](../../phases/03-deep-learning-core/01-the-perceptron/) | Xây dựng | Python, TypeScript, Rust, Julia |
+| 02 | [Mạng nhiều lớp và lượt truyền xuôi](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Xây dựng | Python, TypeScript, Julia |
+| 03 | [Lan truyền ngược từ đầu](../../phases/03-deep-learning-core/03-backpropagation/) | Xây dựng | Python, TypeScript, Rust, Julia |
+| 04 | [Hàm kích hoạt: ReLU, Sigmoid, GELU và lý do sử dụng](../../phases/03-deep-learning-core/04-activation-functions/) | Xây dựng | Python, TypeScript, Julia |
+| 05 | [Hàm mất mát: MSE, entropy chéo, tương phản](../../phases/03-deep-learning-core/05-loss-functions/) | Xây dựng | Python, TypeScript, Julia |
+| 06 | [Bộ tối ưu: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Xây dựng | Python, TypeScript, Julia |
+| 07 | [Chính quy hóa: Dropout, suy giảm trọng số, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Xây dựng | Python, TypeScript, Julia |
+| 08 | [Khởi tạo trọng số và độ ổn định khi huấn luyện](../../phases/03-deep-learning-core/08-weight-initialization/) | Xây dựng | Python, TypeScript, Julia |
+| 09 | [Lịch tốc độ học và khởi động](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Xây dựng | Python, TypeScript, Julia |
+| 10 | [Tự xây dựng framework nhỏ](../../phases/03-deep-learning-core/10-mini-framework/) | Xây dựng | Python, TypeScript, Julia |
 | 11 | [Giới thiệu PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Xây dựng | Python |
 | 12 | [Giới thiệu JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Xây dựng | Python |
 | 13 | [Gỡ lỗi mạng nơ-ron](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Xây dựng | Python |
@@ -448,8 +448,8 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 
 | # | Bài học | Loại | Ngôn ngữ |
 |:---:|--------|:----:|------|
-| 01 | [Nền tảng hình ảnh: điểm ảnh, kênh và không gian màu](../../phases/04-computer-vision/01-image-fundamentals/) | Tìm hiểu | Python |
-| 02 | [Phép tích chập từ đầu](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Xây dựng | Python |
+| 01 | [Nền tảng hình ảnh: điểm ảnh, kênh và không gian màu](../../phases/04-computer-vision/01-image-fundamentals/) | Tìm hiểu | Python, Julia |
+| 02 | [Phép tích chập từ đầu](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Xây dựng | Python, Julia |
 | 03 | [CNN: từ LeNet đến ResNet](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | Xây dựng | Python |
 | 04 | [Phân loại hình ảnh](../../phases/04-computer-vision/04-image-classification/) | Xây dựng | Python |
 | 05 | [Học chuyển giao và tinh chỉnh](../../phases/04-computer-vision/05-transfer-learning/) | Xây dựng | Python |
@@ -474,7 +474,7 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 24 | [SAM 3 và phân đoạn với từ vựng mở](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | Xây dựng | Python |
 | 25 | [Mô hình thị giác-ngôn ngữ (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | Xây dựng | Python |
 | 26 | [Ước lượng độ sâu và hình học từ một camera](../../phases/04-computer-vision/26-monocular-depth/) | Xây dựng | Python |
-| 27 | [Theo dõi nhiều đối tượng và bộ nhớ video](../../phases/04-computer-vision/27-multi-object-tracking/) | Xây dựng | Python |
+| 27 | [Theo dõi nhiều đối tượng và bộ nhớ video](../../phases/04-computer-vision/27-multi-object-tracking/) | Xây dựng | Python, Rust |
 | 28 | [Mô hình thế giới và khuếch tán video](../../phases/04-computer-vision/28-world-models-video-diffusion/) | Xây dựng | Python |
 
 </details>
@@ -487,7 +487,7 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 |:---:|--------|:----:|------|
 | 01 | [Xử lý văn bản: tách token, rút gọn gốc từ, chuẩn hóa từ](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Xây dựng | Python, TypeScript |
 | 02 | [Túi từ, TF-IDF và biểu diễn văn bản](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Xây dựng | Python, TypeScript |
-| 03 | [Embedding từ: Word2Vec từ đầu](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Xây dựng | Python |
+| 03 | [Embedding từ: Word2Vec từ đầu](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Xây dựng | Python, Julia |
 | 04 | [GloVe, FastText và embedding dưới từ](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Xây dựng | Python, TypeScript |
 | 05 | [Phân tích cảm xúc](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Xây dựng | Python, TypeScript |
 | 06 | [Nhận dạng thực thể có tên (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Xây dựng | Python, TypeScript |
@@ -498,13 +498,13 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 11 | [Dịch máy](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Xây dựng | Python, TypeScript |
 | 12 | [Tóm tắt văn bản](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Xây dựng | Python, TypeScript |
 | 13 | [Hệ thống hỏi đáp](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Xây dựng | Python, TypeScript |
-| 14 | [Truy xuất thông tin và tìm kiếm](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Xây dựng | Python, TypeScript |
-| 15 | [Mô hình hóa chủ đề: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Xây dựng | Python, TypeScript |
+| 14 | [Truy xuất thông tin và tìm kiếm](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Xây dựng | Python, TypeScript, Rust |
+| 15 | [Mô hình hóa chủ đề: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Xây dựng | Python, TypeScript, Julia |
 | 16 | [Sinh văn bản](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Xây dựng | Python, TypeScript |
 | 17 | [Chatbot: từ luật đến mạng nơ-ron](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Xây dựng | Python, TypeScript |
 | 18 | [NLP đa ngôn ngữ](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Xây dựng | Python, TypeScript |
-| 19 | [Tách token dưới từ: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Tìm hiểu | Python, TypeScript |
-| 20 | [Đầu ra có cấu trúc và giải mã có ràng buộc](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Xây dựng | Python, TypeScript |
+| 19 | [Tách token dưới từ: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Tìm hiểu | Python, TypeScript, Rust |
+| 20 | [Đầu ra có cấu trúc và giải mã có ràng buộc](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Xây dựng | Python, TypeScript, Rust |
 | 21 | [NLI và quan hệ suy ra trong văn bản](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Tìm hiểu | Python, TypeScript |
 | 22 | [Tìm hiểu sâu mô hình embedding](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Tìm hiểu | Python, TypeScript |
 | 23 | [Chiến lược chia đoạn cho RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Xây dựng | Python, TypeScript |
@@ -523,8 +523,8 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 
 | # | Bài học | Loại | Ngôn ngữ |
 |:---:|--------|:----:|------|
-| 01 | [Nền tảng âm thanh: dạng sóng, lấy mẫu, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Tìm hiểu | Python, TypeScript |
-| 02 | [Phổ đồ, thang Mel và đặc trưng âm thanh](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Xây dựng | Python, TypeScript |
+| 01 | [Nền tảng âm thanh: dạng sóng, lấy mẫu, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Tìm hiểu | Python, TypeScript, Julia |
+| 02 | [Phổ đồ, thang Mel và đặc trưng âm thanh](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Xây dựng | Python, TypeScript, Julia |
 | 03 | [Phân loại âm thanh](../../phases/06-speech-and-audio/03-audio-classification) | Xây dựng | Python, TypeScript |
 | 04 | [Nhận dạng tiếng nói (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Xây dựng | Python, TypeScript |
 | 05 | [Whisper: kiến trúc và tinh chỉnh](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Xây dựng | Python, TypeScript |
@@ -536,7 +536,7 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 11 | [Xử lý âm thanh thời gian thực](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Xây dựng | Python, Rust |
 | 12 | [Xây dựng pipeline trợ lý giọng nói](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Xây dựng | Python, TypeScript |
 | 13 | [Bộ mã hóa âm thanh nơ-ron: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Tìm hiểu | Python, TypeScript |
-| 14 | [Phát hiện hoạt động giọng nói và luân phiên lượt nói](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Xây dựng | Python, TypeScript |
+| 14 | [Phát hiện hoạt động giọng nói và luân phiên lượt nói](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Xây dựng | Python, TypeScript, Rust |
 | 15 | [Truyền trực tiếp tiếng nói sang tiếng nói: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Tìm hiểu | Python, TypeScript |
 | 16 | [Chống giả mạo giọng nói và watermark âm thanh](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Xây dựng | Python, TypeScript |
 | 17 | [Đánh giá âm thanh: WER, MOS, MMAU, bảng xếp hạng](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Tìm hiểu | Python, TypeScript |
@@ -586,9 +586,9 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 10 | [Sinh video](../../phases/08-generative-ai/10-video-generation/) | Xây dựng | Python, TypeScript |
 | 11 | [Sinh âm thanh](../../phases/08-generative-ai/11-audio-generation/) | Xây dựng | Python, TypeScript |
 | 12 | [Sinh nội dung 3D](../../phases/08-generative-ai/12-3d-generation/) | Xây dựng | Python, TypeScript |
-| 13 | [Flow Matching và Rectified Flow](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Xây dựng | Python, TypeScript |
+| 13 | [Flow Matching và Rectified Flow](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Xây dựng | Python, TypeScript, Julia |
 | 14 | [Đánh giá: FID, điểm CLIP](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Xây dựng | Python, TypeScript |
-| 19 | [Mô hình tự hồi quy thị giác (VAR): dự đoán ở mức tỷ lệ tiếp theo](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Xây dựng | Python |
+| 19 | [Mô hình tự hồi quy thị giác (VAR): dự đoán ở mức tỷ lệ tiếp theo](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Xây dựng | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | # | Bài học | Loại | Ngôn ngữ |
 |:---:|--------|:----:|------|
 | 01 | [Tokenizer: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Xây dựng | Python, Rust |
-| 02 | [Xây dựng tokenizer từ đầu](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Xây dựng | Python |
+| 02 | [Xây dựng tokenizer từ đầu](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Xây dựng | Python, TypeScript |
 | 03 | [Pipeline dữ liệu cho tiền huấn luyện](../../phases/10-llms-from-scratch/03-data-pipelines/) | Xây dựng | Python, Rust |
 | 04 | [Tiền huấn luyện GPT nhỏ (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Xây dựng | Python, Rust |
 | 05 | [Huấn luyện phân tán, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Xây dựng | Python |
@@ -665,7 +665,7 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 11 | [Bộ nhớ đệm, giới hạn tốc độ và chi phí](../../phases/11-llm-engineering/11-caching-cost/) | Xây dựng | Python, TypeScript |
 | 12 | [Rào chắn và an toàn](../../phases/11-llm-engineering/12-guardrails/) | Xây dựng | Python, TypeScript |
 | 13 | [Xây dựng ứng dụng LLM cho môi trường thực tế](../../phases/11-llm-engineering/13-production-app/) | Xây dựng | Python, TypeScript |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Xây dựng | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Xây dựng | Python, TypeScript, Go |
 | 15 | [Lưu đệm prompt và ngữ cảnh](../../phases/11-llm-engineering/15-prompt-caching/) | Xây dựng | Python, TypeScript |
 | 16 | [Máy trạng thái tác tử: đồ thị, nút, checkpoint](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Xây dựng | Python |
 | 17 | [Đánh đổi khi chọn framework tác tử](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Tìm hiểu | Python, TypeScript |
@@ -714,25 +714,25 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 |:---:|--------|:----:|------|
 | 01 | [Giao diện công cụ](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Tìm hiểu | Python, TypeScript |
 | 02 | [Tìm hiểu sâu việc gọi hàm](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Xây dựng | Python, TypeScript |
-| 03 | [Gọi công cụ song song và truyền trực tiếp](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Xây dựng | Python, TypeScript |
+| 03 | [Gọi công cụ song song và truyền trực tiếp](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Xây dựng | Python, TypeScript, Go |
 | 04 | [Đầu ra có cấu trúc](../../phases/13-tools-and-protocols/04-structured-output/) | Xây dựng | Python, TypeScript |
 | 05 | [Thiết kế lược đồ công cụ](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Tìm hiểu | Python, TypeScript |
 | 06 | [Nền tảng MCP: yêu cầu không trạng thái và JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Tìm hiểu | Python, TypeScript |
-| 07 | [Xây dựng máy chủ MCP: Python và TypeScript không trạng thái](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Xây dựng | Python, TypeScript |
+| 07 | [Xây dựng máy chủ MCP: Python và TypeScript không trạng thái](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Xây dựng | Python, TypeScript, Go |
 | 08 | [Xây dựng máy khách MCP: khám phá, định tuyến và dự phòng cho hai thế hệ](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Xây dựng | Python, TypeScript |
-| 09 | [Kênh truyền MCP: stdio và Streamable HTTP không trạng thái](../../phases/13-tools-and-protocols/09-mcp-transports/) | Tìm hiểu | Python, TypeScript |
+| 09 | [Kênh truyền MCP: stdio và Streamable HTTP không trạng thái](../../phases/13-tools-and-protocols/09-mcp-transports/) | Tìm hiểu | Python, TypeScript, Go |
 | 10 | [Tài nguyên và prompt MCP: ngữ cảnh có địa chỉ cho máy chủ không trạng thái](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Xây dựng | Python, TypeScript |
 | 11 | [Đầu vào mô hình MCP: chuyển đổi sampling và MRTR không trạng thái](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Xây dựng | Python, TypeScript |
 | 12 | [Phạm vi tường minh và thu thập thông tin không trạng thái](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Xây dựng | Python, TypeScript |
 | 13 | [Phần mở rộng tác vụ MCP: công việc bền vững trên lõi không trạng thái](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Xây dựng | Python, TypeScript |
 | 14 | [MCP Apps trên giao thức không trạng thái](../../phases/13-tools-and-protocols/14-mcp-apps/) | Xây dựng | Python, TypeScript |
 | 15 | [Bảo mật MCP: siêu dữ liệu độc hại, định tuyến và trạng thái MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Tìm hiểu | Python, TypeScript |
-| 16 | [Ủy quyền MCP: CIMD, ràng buộc bên phát hành, PKCE và xác thực tăng cường](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Xây dựng | Python, TypeScript |
-| 17 | [Cổng MCP không trạng thái và xét duyệt vào registry](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Tìm hiểu | Python, TypeScript |
-| 18 | [Xác thực MCP trong thực tế: đăng ký và token ràng buộc bên phát hành](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Xây dựng | Python, TypeScript |
-| 19 | [Giao thức A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Xây dựng | Python, TypeScript |
+| 16 | [Ủy quyền MCP: CIMD, ràng buộc bên phát hành, PKCE và xác thực tăng cường](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Xây dựng | Python, TypeScript, Go |
+| 17 | [Cổng MCP không trạng thái và xét duyệt vào registry](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Tìm hiểu | Python, TypeScript, Go |
+| 18 | [Xác thực MCP trong thực tế: đăng ký và token ràng buộc bên phát hành](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Xây dựng | Python, TypeScript, Go |
+| 19 | [Giao thức A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Xây dựng | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Xây dựng | Python, TypeScript |
-| 21 | [Lớp định tuyến LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Tìm hiểu | Python, TypeScript |
+| 21 | [Lớp định tuyến LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Tìm hiểu | Python, TypeScript, Go |
 | 22 | [Agent Skills: hợp đồng di động và ranh giới runtime](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Xây dựng | Python, TypeScript |
 | 23 | [Đồ án: hệ sinh thái công cụ không trạng thái](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Xây dựng | Python, TypeScript |
 | 24 | [Khám phá skill và tiết lộ dần](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Xây dựng | Python, TypeScript |
@@ -743,19 +743,19 @@ Hai mươi giai đoạn. Nhấp vào giai đoạn bất kỳ để mở danh sá
 | 29 | [Độ tin cậy, hủy tác vụ và điều khiển luồng MCP](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Xây dựng | Python, TypeScript |
 | 30 | [Chuỗi cung ứng registry MCP: xét duyệt, sai lệch và khôi phục](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Xây dựng | Python, TypeScript |
 | 31 | [Kỹ thuật tuân thủ MCP: phiên bản, bằng chứng và vận hành](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Xây dựng | Python, TypeScript |
-| 32 | [Giải phẫu chương trình: đọc ELF từ đầu](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Xây dựng | Python, TypeScript |
-| 33 | [Tháo dịch và đồ thị luồng điều khiển](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Xây dựng | Python, TypeScript |
-| 34 | [Nâng mã máy lên mã giả](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Xây dựng | Python |
+| 32 | [Giải phẫu chương trình: đọc ELF từ đầu](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Xây dựng | Python, TypeScript, Rust |
+| 33 | [Tháo dịch và đồ thị luồng điều khiển](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Xây dựng | Python, TypeScript, Rust |
+| 34 | [Nâng mã máy lên mã giả](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Xây dựng | Python, TypeScript |
 | 35 | [Bằng chứng, độ tin cậy và điều chưa biết trong phân tích nhị phân](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Xây dựng | Python, TypeScript |
 | 36 | [Dựng lại và chứng minh tương đương](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Xây dựng | Python, TypeScript |
 | 37 | [Toàn cảnh kỹ thuật dịch ngược](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Xây dựng | Python, TypeScript |
 | 38 | [Quy ước gọi hàm và khung ngăn xếp](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Xây dựng | Python, TypeScript |
 | 39 | [Thành ngữ của trình biên dịch và tối ưu hóa](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Xây dựng | Python, TypeScript |
-| 40 | [Liên kết, nạp và tệp nhị phân đã lược bỏ ký hiệu](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Xây dựng | Python, TypeScript |
+| 40 | [Liên kết, nạp và tệp nhị phân đã lược bỏ ký hiệu](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Xây dựng | Python, TypeScript, Rust |
 | 41 | [Khôi phục dữ liệu và kiểu](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Xây dựng | Python, TypeScript |
 | 42 | [Phân tích động chương trình của chính bạn](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Xây dựng | Python, TypeScript |
 | 43 | [Bytecode và các định dạng được quản lý](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Xây dựng | Python, TypeScript |
-| 44 | [So sánh khác biệt nhị phân và thực thi ký hiệu](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Xây dựng | Python |
+| 44 | [So sánh khác biệt nhị phân và thực thi ký hiệu](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Xây dựng | Python, TypeScript |
 | 45 | [Kỹ thuật dịch ngược có AI hỗ trợ](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Xây dựng | Python, TypeScript |
 
 Các bài 06-18 và 28-31 tạo thành [lộ trình Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) chuyên biệt. Thứ tự trong bản kê là 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Bắt đầu bằng cách gọi `learn-mcp` theo host ở trên. Bài 23 là đồ án tùy chọn duy nhất và cũng yêu cầu Bài 19, 20.
@@ -792,13 +792,13 @@ Các bài 22 và 24-27 tạo thành [lộ trình học Agent Skills](../../learn
 | 20 | [Bộ chuẩn: WebArena và OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Tìm hiểu | Python, TypeScript |
 | 21 | [Sử dụng máy tính: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Xây dựng | Python, TypeScript |
 | 22 | [Tác tử giọng nói: Pipecat và LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Xây dựng | Python, TypeScript |
-| 23 | [Quy ước ngữ nghĩa OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Xây dựng | Python, TypeScript |
+| 23 | [Quy ước ngữ nghĩa OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Xây dựng | Python, TypeScript, Go |
 | 24 | [Khả năng quan sát tác tử: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Tìm hiểu | Python, TypeScript |
 | 25 | [Tranh luận và cộng tác đa tác tử](../../phases/14-agent-engineering/25-multi-agent-debate/) | Xây dựng | Python, TypeScript |
 | 26 | [Các kiểu thất bại: vì sao tác tử hỏng](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Xây dựng | Python, TypeScript |
 | 27 | [Chèn prompt và cơ chế phòng vệ PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Xây dựng | Python, TypeScript |
 | 28 | [Mẫu điều phối: giám sát, bầy đàn, phân cấp](../../phases/14-agent-engineering/28-orchestration-patterns/) | Xây dựng | Python, TypeScript |
-| 29 | [Runtime thực tế: hàng đợi, sự kiện, cron](../../phases/14-agent-engineering/29-production-runtimes/) | Tìm hiểu | Python, TypeScript |
+| 29 | [Runtime thực tế: hàng đợi, sự kiện, cron](../../phases/14-agent-engineering/29-production-runtimes/) | Tìm hiểu | Python, TypeScript, Go |
 | 30 | [Phát triển tác tử theo đánh giá](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Xây dựng | Python, TypeScript |
 | 31 | [Bàn làm việc tác tử: vì sao mô hình giỏi vẫn thất bại](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Tìm hiểu | Python, TypeScript |
 | 32 | [Bàn làm việc tác tử tối thiểu](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Xây dựng | Python, TypeScript |
@@ -848,7 +848,7 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 | 09 | [Toàn cảnh tác tử lập trình tự động (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Tìm hiểu | Python, TypeScript |
 | 10 | [Chế độ cấp quyền cho tác tử tự động](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Tìm hiểu | Python, TypeScript |
 | 11 | [Tác tử trình duyệt và chèn prompt gián tiếp](../../phases/15-autonomous-systems/11-browser-agents/) | Tìm hiểu | Python, TypeScript |
-| 12 | [Thực thi bền vững cho tác tử chạy lâu](../../phases/15-autonomous-systems/12-durable-execution/) | Tìm hiểu | Python, TypeScript |
+| 12 | [Thực thi bền vững cho tác tử chạy lâu](../../phases/15-autonomous-systems/12-durable-execution/) | Tìm hiểu | Python, TypeScript, Go |
 | 13 | [Ngân sách hành động, giới hạn vòng lặp, kiểm soát chi phí](../../phases/15-autonomous-systems/13-cost-governors/) | Tìm hiểu | Python, TypeScript |
 | 14 | [Công tắc dừng, bộ ngắt mạch, token cảnh báo](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Tìm hiểu | Python, TypeScript |
 | 15 | [HITL: đề xuất rồi mới áp dụng](../../phases/15-autonomous-systems/15-propose-then-commit/) | Tìm hiểu | Python, TypeScript |
@@ -857,7 +857,7 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 | 18 | [Llama Guard và phân loại đầu vào/đầu ra](../../phases/15-autonomous-systems/18-llama-guard/) | Tìm hiểu | Python, TypeScript |
 | 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Tìm hiểu | Python, TypeScript |
 | 20 | [OpenAI Preparedness Framework và DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Tìm hiểu | Python, TypeScript |
-| 21 | [Khoảng thời gian METR và đánh giá bên ngoài](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Tìm hiểu | Python, TypeScript |
+| 21 | [Khoảng thời gian METR và đánh giá bên ngoài](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Tìm hiểu | Python, TypeScript, Julia |
 | 22 | [CAIS, CAISI và rủi ro quy mô xã hội](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Tìm hiểu | Python, TypeScript |
 
 </details>
@@ -876,17 +876,17 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 | 06 | [Kiến trúc phân cấp và sai lệch khi phân rã](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Tìm hiểu | Python, TypeScript |
 | 07 | [Society of Mind và tranh luận đa tác tử](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Xây dựng | Python, TypeScript |
 | 08 | [Chuyên môn hóa vai trò: lập kế hoạch / phản biện / thực thi / xác minh](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Xây dựng | Python, TypeScript |
-| 09 | [Kiến trúc bầy đàn song song và kết nối mạng](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Xây dựng | Python, TypeScript |
+| 09 | [Kiến trúc bầy đàn song song và kết nối mạng](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Xây dựng | Python, TypeScript, Go |
 | 10 | [Trò chuyện nhóm và chọn người nói](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Xây dựng | Python, TypeScript |
 | 11 | [Bàn giao và quy trình thường lệ (điều phối không trạng thái)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Xây dựng | Python, TypeScript |
-| 12 | [A2A: giao thức giữa các tác tử](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Xây dựng | Python, TypeScript |
+| 12 | [A2A: giao thức giữa các tác tử](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Xây dựng | Python, TypeScript, Go |
 | 13 | [Bộ nhớ chung và mẫu bảng đen](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Xây dựng | Python, TypeScript |
 | 14 | [Đồng thuận và khả năng chịu lỗi Byzantine](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Xây dựng | Python, TypeScript |
 | 15 | [Bỏ phiếu, tự nhất quán và cấu trúc tranh luận](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Xây dựng | Python, TypeScript |
 | 16 | [Đàm phán và thương lượng](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Xây dựng | Python, TypeScript |
 | 17 | [Tác tử sinh và mô phỏng hành vi nổi lên](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Xây dựng | Python, TypeScript |
 | 18 | [Lý thuyết tâm trí và phối hợp nổi lên](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Xây dựng | Python, TypeScript |
-| 19 | [Tối ưu bầy đàn (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Xây dựng | Python, TypeScript |
+| 19 | [Tối ưu bầy đàn (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Xây dựng | Python, TypeScript, Julia |
 | 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Tìm hiểu | Python, TypeScript |
 | 21 | [Kinh tế tác tử, khuyến khích bằng token, uy tín](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Tìm hiểu | Python, TypeScript |
 | 22 | [Mở rộng trong thực tế: hàng đợi, checkpoint, độ bền](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Xây dựng | Python, TypeScript |
@@ -905,9 +905,9 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 | 01 | [Nền tảng LLM được quản lý: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Tìm hiểu | Python, TypeScript |
 | 02 | [Kinh tế nền tảng suy luận: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Tìm hiểu | Python, TypeScript |
 | 03 | [Tự động mở rộng GPU trên Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Tìm hiểu | Python, TypeScript |
-| 04 | [Bên trong engine phục vụ: PagedAttention, gom lô liên tục, prefill chia đoạn](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Tìm hiểu | Python, TypeScript |
+| 04 | [Bên trong engine phục vụ: PagedAttention, gom lô liên tục, prefill chia đoạn](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Tìm hiểu | Python, TypeScript, Rust |
 | 05 | [Giải mã suy đoán EAGLE-3 trong thực tế](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Tìm hiểu | Python, TypeScript |
-| 06 | [Phục vụ với bộ nhớ đệm tiền tố: RadixAttention và tái sử dụng KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Tìm hiểu | Python, TypeScript |
+| 06 | [Phục vụ với bộ nhớ đệm tiền tố: RadixAttention và tái sử dụng KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Tìm hiểu | Python, TypeScript, Rust |
 | 07 | [Biên dịch suy luận chuyên biệt phần cứng: FP8 và NVFP4 trên Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Tìm hiểu | Python, TypeScript |
 | 08 | [Chỉ số suy luận: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Tìm hiểu | Python, TypeScript |
 | 09 | [Lượng tử hóa trong thực tế: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Tìm hiểu | Python, TypeScript |
@@ -922,7 +922,7 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 | 18 | [Bộ công cụ phục vụ thực tế: chuyển tải KV và định tuyến theo bộ nhớ đệm](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Tìm hiểu | Python, TypeScript |
 | 19 | [Cổng AI: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Tìm hiểu | Python, TypeScript |
 | 20 | [Triển khai shadow, canary và tăng dần](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Tìm hiểu | Python, TypeScript |
-| 21 | [Kiểm thử A/B tính năng LLM: GrowthBook và Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Tìm hiểu | Python, TypeScript |
+| 21 | [Kiểm thử A/B tính năng LLM: GrowthBook và Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Tìm hiểu | Python, TypeScript, Julia |
 | 22 | [Kiểm thử tải API LLM: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Xây dựng | Python, TypeScript |
 | 23 | [SRE cho AI: ứng phó sự cố đa tác tử](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Tìm hiểu | Python, TypeScript |
 | 24 | [Kỹ thuật hỗn loạn cho LLM thực tế](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Tìm hiểu | Python, TypeScript |
@@ -961,7 +961,7 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 | 19 | [Nghiên cứu phúc lợi mô hình](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Tìm hiểu | Python, TypeScript |
 | 20 | [Thiên lệch và tổn hại do biểu đạt](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Xây dựng | Python, TypeScript |
 | 21 | [Tiêu chí công bằng: nhóm, cá nhân, phản thực tế](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Tìm hiểu | Python, TypeScript |
-| 22 | [Quyền riêng tư vi sai cho LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Xây dựng | Python, TypeScript |
+| 22 | [Quyền riêng tư vi sai cho LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Xây dựng | Python, TypeScript, Julia |
 | 23 | [Watermark: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Xây dựng | Python, TypeScript |
 | 24 | [Khung quản lý: EU, US, UK, Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Tìm hiểu | Python, TypeScript |
 | 25 | [EchoLeak và CVE cho AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Tìm hiểu | Python, TypeScript |
@@ -989,9 +989,9 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 | 08 | [Chatbot RAG thực tế (lĩnh vực có quy định)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [Tác tử chuyển đổi mã (nâng cấp cấp kho)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [Nhóm kỹ thuật phần mềm đa tác tử](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [Bảng điều khiển quan sát và đánh giá LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [Bảng điều khiển quan sát và đánh giá LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [Pipeline hiểu video (cảnh → hỏi đáp)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [Máy chủ MCP không trạng thái có registry và quản trị](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [Máy chủ MCP không trạng thái có registry và quản trị](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [Máy chủ suy luận giải mã suy đoán](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [Harness an toàn theo hiến pháp và khu thử nghiệm red-team](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [Tác tử tự động từ issue đến PR trên GitHub](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1011,7 +1011,7 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 | 27 | [Harness đánh giá với tác vụ mẫu cố định](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Khung vận hành tác tử | Python, TypeScript |
 | 28 | [Quan sát bằng span OTel GenAI và chỉ số Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Khung vận hành tác tử | Python, TypeScript |
 | 29 | [Tác tử lập trình hoàn chỉnh trên harness](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Khung vận hành tác tử | Python, TypeScript |
-| 30 | [Tokenizer BPE từ đầu](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
+| 30 | [Tokenizer BPE từ đầu](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript, Rust |
 | 31 | [Tập dữ liệu đã tách token với cửa sổ trượt](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Embedding token và vị trí](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Self-attention nhiều đầu](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1023,7 +1023,7 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 | 39 | [Tinh chỉnh chỉ dẫn bằng tinh chỉnh có giám sát](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP LLM | Python |
 | 40 | [Tối ưu hóa sở thích trực tiếp từ đầu](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP LLM | Python |
 | 41 | [Pipeline đánh giá đầy đủ](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP LLM | Python |
-| 42 | [Công cụ tải kho ngữ liệu lớn](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Huấn luyện từ đầu đến cuối | Python |
+| 42 | [Công cụ tải kho ngữ liệu lớn](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Huấn luyện từ đầu đến cuối | Python, TypeScript |
 | 43 | [Kho ngữ liệu đã tách token HDF5](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. Huấn luyện từ đầu đến cuối | Python |
 | 44 | [Tốc độ học cosine với khởi động tuyến tính](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. Huấn luyện từ đầu đến cuối | Python |
 | 45 | [Cắt gradient và độ chính xác hỗn hợp](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. Huấn luyện từ đầu đến cuối | Python |
@@ -1037,8 +1037,8 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 | 53 | [Bộ đánh giá kết quả](../../phases/19-capstone-projects/53-result-evaluator/) | D. Nghiên cứu tự động | Python |
 | 54 | [Công cụ viết bài báo](../../phases/19-capstone-projects/54-paper-writer/) | D. Nghiên cứu tự động | Python, TypeScript |
 | 55 | [Vòng phản biện](../../phases/19-capstone-projects/55-critic-loop/) | D. Nghiên cứu tự động | Python, TypeScript |
-| 56 | [Bộ lập lịch lặp](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Nghiên cứu tự động | Python |
-| 57 | [Minh họa nghiên cứu từ đầu đến cuối](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Nghiên cứu tự động | Python |
+| 56 | [Bộ lập lịch lặp](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Nghiên cứu tự động | Python, TypeScript |
+| 57 | [Minh họa nghiên cứu từ đầu đến cuối](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Nghiên cứu tự động | Python, TypeScript |
 | 58 | [Các mảnh ảnh của bộ mã hóa thị giác](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. VLM đa phương thức | Python |
 | 59 | [Bộ mã hóa Vision Transformer](../../phases/19-capstone-projects/59-vit-transformer/) | E. VLM đa phương thức | Python |
 | 60 | [Lớp chiếu để căn chỉnh phương thức](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. VLM đa phương thức | Python |
@@ -1052,11 +1052,11 @@ Các bài 31-46 tạo thành [lộ trình Kỹ thuật có Tác tử Hỗ trợ]
 | 68 | [Đánh giá RAG: Precision, Recall, MRR, nDCG, độ trung thực, độ liên quan câu trả lời](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG nâng cao | Python, TypeScript |
 | 69 | [Hệ thống RAG hoàn chỉnh](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. RAG nâng cao | Python |
 | 70 | [Định dạng đặc tả tác vụ](../../phases/19-capstone-projects/70-task-spec-format/) | G. Khung đánh giá | Python, TypeScript |
-| 71 | [Các chỉ số cổ điển](../../phases/19-capstone-projects/71-classical-metrics/) | G. Khung đánh giá | Python |
-| 72 | [Chỉ số thực thi mã](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Khung đánh giá | Python |
-| 73 | [Perplexity và hiệu chỉnh](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Khung đánh giá | Python |
-| 74 | [Tổng hợp bảng xếp hạng](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Khung đánh giá | Python |
-| 75 | [Bộ chạy đánh giá từ đầu đến cuối](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Khung đánh giá | Python |
+| 71 | [Các chỉ số cổ điển](../../phases/19-capstone-projects/71-classical-metrics/) | G. Khung đánh giá | Python, TypeScript |
+| 72 | [Chỉ số thực thi mã](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Khung đánh giá | Python, TypeScript |
+| 73 | [Perplexity và hiệu chỉnh](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Khung đánh giá | Python, TypeScript |
+| 74 | [Tổng hợp bảng xếp hạng](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Khung đánh giá | Python, TypeScript |
+| 75 | [Bộ chạy đánh giá từ đầu đến cuối](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Khung đánh giá | Python, TypeScript |
 | 76 | [Phép toán tập thể từ đầu](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. Huấn luyện phân tán | Python |
 | 77 | [DDP song song dữ liệu từ đầu](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. Huấn luyện phân tán | Python |
 | 78 | [Phân mảnh trạng thái bộ tối ưu ZeRO](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. Huấn luyện phân tán | Python |
@@ -1129,7 +1129,7 @@ Mỗi bài nằm trong thư mục riêng, với cấu trúc thống nhất trên
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      các bản triển khai có thể chạy (Python, TypeScript, Rust, Julia)
+├── code/      các bản triển khai có thể chạy (Python, TypeScript, Rust, Julia, Go)
 ├── docs/
 │   └── en.md  nội dung bài học
 └── outputs/   prompt, skill, tác tử hoặc máy chủ MCP mà bài học tạo ra

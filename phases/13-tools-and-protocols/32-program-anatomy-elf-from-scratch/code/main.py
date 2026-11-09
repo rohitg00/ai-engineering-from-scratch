@@ -381,6 +381,8 @@ class ElfFile:
         if symbol.st_shndx == SHN_UNDEF or symbol.st_shndx >= SHN_LORESERVE:
             raise KeyError(f"{name!r} has no section in this file (st_shndx {_hex(symbol.st_shndx)})")
         section = self.sections[symbol.st_shndx]
+        if symbol.st_value < section.sh_addr:
+            raise FormatError(f"{name!r} starts before {section.name}")
         file_offset = section.sh_offset + (symbol.st_value - section.sh_addr)
         if symbol.st_value - section.sh_addr + symbol.st_size > section.sh_size:
             raise FormatError(f"{name!r} runs past the end of {section.name}")
@@ -744,7 +746,11 @@ class MachOFile:
         symbol = self.symbol(name)
         if symbol.n_type & N_TYPE != N_SECT:
             raise KeyError(f"{name!r} is {symbol.type_name}, not defined in a section")
+        if not 1 <= symbol.n_sect <= len(self.sections):
+            raise FormatError(f"{name!r} names section {symbol.n_sect}, but the file has {len(self.sections)} sections")
         section = self.sections[symbol.n_sect - 1]
+        if symbol.n_value < section.addr:
+            raise FormatError(f"{name!r} at {symbol.n_value:#x} is below its section start {section.addr:#x}")
         later = [s.n_value for s in self.symbols if s.n_sect == symbol.n_sect and s.n_value > symbol.n_value]
         end = min(later) if later else section.addr + section.size
         file_offset = section.offset + (symbol.n_value - section.addr)

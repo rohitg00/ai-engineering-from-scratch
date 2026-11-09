@@ -37,7 +37,7 @@ export const FEW_SHOT_MAX = 8;
 const TASK_ID_RE = /^[A-Za-z0-9_\-]+\n?$/;
 const MCQ_TARGET_RE = /^[A-E]\n?$/;
 
-function pyStrRepr(s: string): string {
+export function pyStrRepr(s: string): string {
   const quote = s.includes("'") && !s.includes('"') ? '"' : "'";
   let out = quote;
   for (const ch of s) {
@@ -597,4 +597,6 @@ export function demo(): number {
   return 0;
 }
 
-process.exitCode = demo();
+if (require.main === module) {
+  process.exitCode = demo();
+}

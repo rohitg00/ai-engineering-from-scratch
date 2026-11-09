@@ -707,6 +707,8 @@ class PeImage:
         end = rva + size
         while rva < end:
             page, block_size = struct.unpack_from("<II", self.data, self.rva_to_offset(rva))
+            if block_size < 8:
+                raise FormatError(f"base relocation block of size {block_size} is smaller than its 8-byte header")
             entries = []
             for k in range((block_size - 8) // 2):
                 word = struct.unpack_from("<H", self.data, self.rva_to_offset(rva + 8 + 2 * k))[0]
