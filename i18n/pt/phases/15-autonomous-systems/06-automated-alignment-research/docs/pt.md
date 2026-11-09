@@ -3,7 +3,7 @@
 > A Anthropic executou equipes paralelas de pesquisadores de alinhamento autônomo Claude Opus 4.6 em caixas de areia independentes, coordenando através de um fórum compartilhado cujos registros vivem fora de qualquer caixa de areia (de modo que os agentes não podem excluir seus próprios registros). No problema da formação fraca a forte, os AAR superaram os investigadores humanos. As próprias bandeiras de resumo da Anthropic que prescrevem fluxos de trabalho muitas vezes restringem a flexibilidade do AAR e degradam o desempenho. A investigação de alinhamento automatizada comprime a linha do tempo, e o faz sobre os mesmos riscos de desalinhamento que o SPR pretende detectar.
 
 **Type:** Learn
-**Languages:** Python (stdlib, parallel-research-forum simulator)
+**Languages:** Python, TypeScript (stdlib, parallel-research-forum simulator)
 **Prerequisites:** Phase 15 · 05 (AI Scientist v2), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

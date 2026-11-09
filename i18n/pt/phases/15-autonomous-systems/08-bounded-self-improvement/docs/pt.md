@@ -3,7 +3,7 @@
 > A pesquisa convergiu em quatro primitivas para limitar um ciclo de auto-melhoria. Invariantes formais que devem ser mantidas em todas as edições. Ancoras de alinhamento que não podem ser modificadas. Constrangimentos multi-objetivos em que todas as dimensões (segurança, equidade, robustez) devem ser respeitadas, não apenas o desempenho. Detecção de regressão que suspende o ciclo quando as métricas históricas sugerem perda de capacidade. Nenhum deles é uma prova de segurança  resultados teóricos da informação (complexidade de Kolmogorov, teorema de Lob) ligados ao que qualquer sistema pode provar sobre seus próprios sucessores. São mitigantes que aumentam o custo do fracasso silencioso.
 
 **Type:** Learn
-**Languages:** Python (stdlib, bounded-loop with invariant check)
+**Languages:** Python, TypeScript (stdlib, bounded-loop with invariant check)
 **Prerequisites:** Phase 15 · 07 (RSI), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

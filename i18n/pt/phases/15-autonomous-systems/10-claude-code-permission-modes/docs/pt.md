@@ -3,7 +3,7 @@
 > Uma escada de permissão  níveis graduados de autonomia de revisão-cada ação para aprovar-tudo  é como um arame governa o que um agente autônomo pode fazer sem pedir. Claude Code, o exemplo de trabalho desta lição, expõe seis modos: "plan" pergunta antes de cada ação, "default" (etiquetado "Manual" na interface) pergunta apenas para os riscos, "acceptEdits" auto-aprova arquivo escreve, mas ainda confirma execução de shell, e "bypassPermissions" aprova tudo. Modo automático  o `auto`O modo de autorização  substitui a aprovação por acção por um modelo de classificação separado que revisa cada acção antes de ser executada e bloqueia qualquer coisa que exceda o exigido pelo pedido.`max_turns`E ...`max_budget_usd`Disponibilidade de`auto`depende do plano, da habilitação org, do modelo e do provedor  e a Anthropic é explícita que o classificador não é suficiente sozinho.
 
 **Type:** Learn
-**Languages:** Python (stdlib, two-stage classifier simulator)
+**Languages:** Python (stdlib, two-stage classifier simulator), TypeScript
 **Prerequisites:** Phase 15 · 01 (Long-horizon agents), Phase 15 · 09 (Coding-agent landscape)
 **Time:** ~45 minutes
 
