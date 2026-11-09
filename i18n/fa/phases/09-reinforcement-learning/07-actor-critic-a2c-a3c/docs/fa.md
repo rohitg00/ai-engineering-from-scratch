@@ -3,7 +3,7 @@
 > "رينفورس" شور و صداي داره، يه منتقدي بيشتر از اونها رو بيار که ياد بگيره$\hat{V}(s)$A2C آن را همزمان اجرا می کند؛ A3C آن را در سراسر رشته ها اجرا می کند. هر دو مدل ذهنی برای هر روش مدرن عمیق RL هستند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (TD Learning), Phase 9 · 06 (REINFORCE)
 **Time:** ~75 minutes
 

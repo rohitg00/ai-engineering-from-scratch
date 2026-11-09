@@ -3,7 +3,7 @@
 > یک سیاست آموزش دیده در یک شبیه ساز که در سخت افزار شکست می خورد یک سیاست است که شبیه ساز را به یاد آورد. تصادفی سازی دامنه، سازگاری دامنه و شناسایی سیستم سه ابزار برای عبور کنترلرهای آموخته از شکاف واقعیت هستند.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 08 (PPO), Phase 2 · 10 (Bias/Variance)
 **Time:** ~45 minutes
 

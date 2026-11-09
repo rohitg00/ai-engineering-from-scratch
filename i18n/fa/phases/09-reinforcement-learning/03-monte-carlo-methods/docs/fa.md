@@ -3,7 +3,7 @@
 > برنامه نویسی پویا به یک مدل نیاز دارد. مونت کارلو به جز قسمت ها نیاز ندارد. سیاست را اجرا کنید، بازده ها را تماشا کنید، آنها را متوسط کنید. ساده ترین ایده در RL  و آن چیزی که همه چیز را در جریان باز می کند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming)
 **Time:** ~75 minutes
 

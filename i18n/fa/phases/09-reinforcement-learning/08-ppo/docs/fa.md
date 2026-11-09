@@ -3,7 +3,7 @@
 > A2C هر انتشار را پس از یک بروزرسانی از بین می برد. PPO گرادینت سیاست را در یک نسبت اهمیت کاهش داده است تا بتوانید 10 دوره بیشتر را در داده های مشابه بدون انفجار سیاست انجام دهید. Schulman et al. (2017). هنوز الگوریتم پیش فرض سیاست-گرادینت در سال 2026 است.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > ارزش تخمین را متوقف کنید. سیاست را مستقیماً پارامتر کنید، گرادینت بازگشت انتظار می رود را محاسبه کنید، قدم به بالا بردارید. ویلیامز (1992) آن را در یک نظریه نوشت. به همین دلیل PPO، GRPO و هر حلقه LLM RL وجود دارد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 03 (Monte Carlo), Phase 9 · 04 (TD Learning)
 **Time:** ~75 minutes
 

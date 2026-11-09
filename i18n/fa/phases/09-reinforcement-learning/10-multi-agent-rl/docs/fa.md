@@ -3,7 +3,7 @@
 > یک عامل RL فرض می کند که محیط ثابت است. دو عامل یادگیری را در یک جهان قرار دهید و این فرضیه شکسته می شود: هر عامل بخشی از محیط دیگری است و هر دو در حال تغییر هستند. RL چند عامل مجموعه ای از ترفند ها برای تبدیل یادگیری به هم می باشد زمانی که فرضیه مارکوف دیگر برقرار نیست.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (Q-learning), Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~45 minutes
 

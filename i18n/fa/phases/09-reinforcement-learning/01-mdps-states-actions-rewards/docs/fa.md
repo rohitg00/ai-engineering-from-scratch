@@ -3,7 +3,7 @@
 > یک فرآیند تصمیم گیری مارکوف پنج چیز است: حالت ها، اقدامات، انتقال ها، پاداش ها، تخفیف. همه چیز در RL  Q-learning، PPO، DPO، GRPO  برای این شکل بهینه سازی می شود. آن را یک بار یاد بگیرید، بقیه یادگیری تقویت را رایگان بخوانید.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Probability & Distributions), Phase 2 · 01 (ML Taxonomy)
 **Time:** ~45 minutes
 
