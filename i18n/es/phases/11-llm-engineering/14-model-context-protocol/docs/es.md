@@ -3,7 +3,7 @@
 > MCP le da a un host de IA un protocolo para descubrir e invocar herramientas, recursos y instrucciones. La revisión 2026-07-28 hace que ese protocolo sea estatal: la capacidad y el contexto de la versión viajan con cada solicitud, no en un apretón de manos vinculado a la conexión.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 03 (Structured Outputs)
 **Time:** ~75 minutes
 
@@ -215,6 +215,7 @@ Ejecutar la lección de su directorio:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 cd code
 python3 -m unittest discover tests -v
 ```

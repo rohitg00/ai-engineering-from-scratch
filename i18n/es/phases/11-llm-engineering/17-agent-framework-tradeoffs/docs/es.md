@@ -3,7 +3,7 @@
 > Cada marco vende la misma demostración (el agente de investigación construye un informe) y oculta el mismo error (el esquema de estado lucha con la capa de orquestación).
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 16 (LangGraph)
 **Time:** ~45 minutes
 

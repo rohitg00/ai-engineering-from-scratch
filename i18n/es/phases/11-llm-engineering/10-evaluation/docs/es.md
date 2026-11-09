@@ -3,7 +3,7 @@
 > Nunca desplegaría una aplicación web sin pruebas. Nunca enviaría una migración de base de datos sin un plan de retroceso. Pero ahora mismo, la mayoría de los equipos envían solicitudes de LLM leyendo 10 resultados y diciendo "sí, se ve bien". Eso no es evaluación. Eso es esperanza. La esperanza no es una práctica de ingeniería. Cada cambio inmediato, cada cambio de modelo, cada ajuste de temperatura cambia su distribución de salida de maneras que no puedes predecir leyendo un puñado de ejemplos. La evaluación es lo único que se interpone entre su solicitud y la degradación silenciosa.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lesson 01 (Prompt Engineering), Lesson 09 (Function Calling)
 **Time:** ~45 minutes
 **Related:**La fase 5 · 27 (Evaluación de LLM  RAGAS, DeepEval, G-Eval) cubre los conceptos de nivel marco (filialidad basada en NLI, calibración de juez, los cuatro RAG). La fase 5 · 28 (Evaluación de contexto largo) cubre NIAH / RULER / LongBench / MRCR para regresión de longitud de contexto. Esta lección se centra en lo que es específico de la ingeniería LLM: integración CI / CD, ejecuciones de evaluaciones de costo, tableros de regresión.

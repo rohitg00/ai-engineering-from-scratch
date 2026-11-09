@@ -3,7 +3,7 @@
 > La mayoría de las startups de IA no mueren por malos modelos. Mueren por mala economía de unidades. Una sola llamada GPT-4o cuesta fracciones de un centavo. Diez mil usuarios que hacen diez llamadas al día cuestan $250 en tokens de entrada solo - antes de cobrar un solo dólar. Las empresas que sobreviven son las que tratan cada llamada de API como una transacción financiera, no una llamada de función.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lesson 09 (Function Calling)
 **Time:** ~45 minutes
 **Related:**Fase 11 · 15 (Caching de inmediato)  esta lección cubre el caché de la capa de aplicación (caché semántico, caché hash exacto, enrutamiento de modelo).

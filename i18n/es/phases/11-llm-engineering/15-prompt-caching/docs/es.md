@@ -3,7 +3,7 @@
 > Su sistema de solicitud de inicio es de 4.000 tokens. Su contexto RAG es de 20.000 tokens. Se envían ambos con cada solicitud. También se paga por ambos  cada vez. El caché de inicio permite al proveedor mantener ese prefijo caliente en su lado y facturarle el 10% de la tasa normal en la reutilización. Se utiliza correctamente, reduce el costo de inferencia en 5090% y la latencia de la primera señal en 4085%.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 01 (Prompt Engineering), Phase 11 · 05 (Context Engineering), Phase 11 · 11 (Caching and Cost)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > Has construido las instrucciones, los embebidos, las tuberías RAG, llamadas de funciones, capas de almacenamiento en caché y barandillas. Por separado. En aislamiento. Como practicar las escalas de la guitarra sin tocar una canción. Esta lección es la canción. Enviarás todos los componentes de las lecciones 01-12 en un solo servicio listo para la producción. No es un juguete. No es una demostración. Un sistema que maneja el tráfico real, falla con gracia, transmite tokens, rastrea los costos y sobrevive a sus primeros 10.000 usuarios.
 
 **Type:** Build (Capstone)
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lessons 01-15
 **Time:** ~120 minutes
 **Related:**Fase 11 · 14 (MCP) para reemplazar esquemas de herramientas a medida con un protocolo compartido; Fase 11 · 15 (Caching de Prontitud) para una reducción de costes del 50-90% en prefijos estables.

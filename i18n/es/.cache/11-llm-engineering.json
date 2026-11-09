@@ -5,15 +5,15 @@
   "phases/11-llm-engineering/04-embeddings/docs/en.md": "21b2da56b70c914026936fce930ef6bf7a3a6319b13c5362a6ffcb7d60affaff",
   "phases/11-llm-engineering/05-context-engineering/docs/en.md": "bb343a1aef4b46455524b753f7575d7e35c9e3d7185b7023746898f46fafcde2",
   "phases/11-llm-engineering/06-rag/docs/en.md": "a0d5b356c1ce021f6a9ca0ccfd2693a7cae56802c6b17927fb72f116bd7b2752",
-  "phases/11-llm-engineering/07-advanced-rag/docs/en.md": "9c84b80f89524792b94fcd7c076ce213249d66ecffaf43e7d78d2fb6ce33c867",
+  "phases/11-llm-engineering/07-advanced-rag/docs/en.md": "1fffa399fbba751c3e112397ae48af35e14dcc538bfbab5cfdfa841da2fc65f5",
   "phases/11-llm-engineering/08-fine-tuning-lora/docs/en.md": "cc811f59307d63654a917759f262a65d3d45d4ef416693362c59e096cdb94a8f",
   "phases/11-llm-engineering/09-function-calling/docs/en.md": "30695ec65c0ada92bac742cb5a287603a340c26ed7b1674767d886f54f591b29",
-  "phases/11-llm-engineering/10-evaluation/docs/en.md": "6d034f8ea8714a1effae7a38bb3078d65d54389eacb1ea3336b273dac57980f1",
-  "phases/11-llm-engineering/11-caching-cost/docs/en.md": "db2119645bb4edc5cd0edcf0c55a2c578605f7acc801f2b1c1de3d6190c70c81",
+  "phases/11-llm-engineering/10-evaluation/docs/en.md": "22f792158f65dcf8283c00ca612406b5d34c40a95d42e8961792a2f034204ee5",
+  "phases/11-llm-engineering/11-caching-cost/docs/en.md": "7eb024099bbd65d93bd0b6203ffecc13712f7418f052dbd76a18c54a4a8312dd",
   "phases/11-llm-engineering/12-guardrails/docs/en.md": "7bca84f499c6a75c2f97253f3fa4cf85befb0fbcf66e4c882e125279686ad73f",
-  "phases/11-llm-engineering/13-production-app/docs/en.md": "7f99086009de3abfd6da810cf8a7427c6471299f3784270df5ead0aa1eb96b7b",
-  "phases/11-llm-engineering/14-model-context-protocol/docs/en.md": "26356da586c4f90922e0ab61af4ea47d81deaf3c9b2cc91e4ae8ac44efaadd7b",
-  "phases/11-llm-engineering/15-prompt-caching/docs/en.md": "7fdca84e772aada0026e73ca5756aa43a44ae9bba17d19914d6547f105cee94d",
+  "phases/11-llm-engineering/13-production-app/docs/en.md": "c2dc0a6e0dea5276569fd7bd940b438590fbec2c1c81d5e571eb853a6a02712f",
+  "phases/11-llm-engineering/14-model-context-protocol/docs/en.md": "f91bb617a0f8bd3b6fa78add214b8bd113ff99d2e52d3bbbff3ff8e4f937a166",
+  "phases/11-llm-engineering/15-prompt-caching/docs/en.md": "b357f1a1e5f6afd5886ca2230d54e5b606ad0c848a6d3a40316451235154c47e",
   "phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md": "cd449175f7292a9821644d0b829cd0576a68f0da3aedbbc9e3547b45fd7b05cb",
-  "phases/11-llm-engineering/17-agent-framework-tradeoffs/docs/en.md": "4c0c6119addcb3cf05f3a9e1884ae3bf75e4428a6196c90982653559c94c83b7"
+  "phases/11-llm-engineering/17-agent-framework-tradeoffs/docs/en.md": "12430c15a30c3f95a202a23c80838712db3a7b3c477c99ae744f5c54898d30d8"
 }
