@@ -400,11 +400,11 @@ flowchart TB
 | 01 | [머신러닝이란 무엇인가](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | 학습 | Python |
 | 02 | [처음부터 구현하는 선형 회귀](../../phases/02-ml-fundamentals/02-linear-regression/) | 구현 | Python, Rust, Julia |
 | 03 | [로지스틱 회귀와 분류](../../phases/02-ml-fundamentals/03-logistic-regression/) | 구현 | Python, Rust, Julia |
-| 04 | [결정 트리와 랜덤 포레스트](../../phases/02-ml-fundamentals/04-decision-trees/) | 구현 | Python |
+| 04 | [결정 트리와 랜덤 포레스트](../../phases/02-ml-fundamentals/04-decision-trees/) | 구현 | Python, TypeScript |
 | 05 | [서포트 벡터 머신](../../phases/02-ml-fundamentals/05-support-vector-machines/) | 구현 | Python, Julia |
-| 06 | [k-최근접 이웃(KNN)과 거리 척도](../../phases/02-ml-fundamentals/06-knn-and-distances/) | 구현 | Python |
-| 07 | [비지도 학습: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | 구현 | Python |
-| 08 | [특성 공학과 선택](../../phases/02-ml-fundamentals/08-feature-engineering/) | 구현 | Python |
+| 06 | [k-최근접 이웃(KNN)과 거리 척도](../../phases/02-ml-fundamentals/06-knn-and-distances/) | 구현 | Python, TypeScript |
+| 07 | [비지도 학습: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | 구현 | Python, TypeScript |
+| 08 | [특성 공학과 선택](../../phases/02-ml-fundamentals/08-feature-engineering/) | 구현 | Python, TypeScript |
 | 09 | [모델 평가: 지표와 교차 검증](../../phases/02-ml-fundamentals/09-model-evaluation/) | 구현 | Python, Julia |
 | 10 | [편향, 분산과 학습 곡선](../../phases/02-ml-fundamentals/10-bias-variance/) | 학습 | Python |
 | 11 | [앙상블 기법: 부스팅, 배깅, 스태킹](../../phases/02-ml-fundamentals/11-ensemble-methods/) | 구현 | Python |
@@ -428,15 +428,15 @@ flowchart TB
 | # | 레슨 | 유형 | 언어 |
 |:---:|--------|:----:|------|
 | 01 | [퍼셉트론: 모든 것의 시작](../../phases/03-deep-learning-core/01-the-perceptron/) | 구현 | Python, Rust, Julia |
-| 02 | [다층 신경망과 순전파](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 구현 | Python |
+| 02 | [다층 신경망과 순전파](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 구현 | Python, TypeScript |
 | 03 | [처음부터 구현하는 역전파](../../phases/03-deep-learning-core/03-backpropagation/) | 구현 | Python, Rust, Julia |
 | 04 | [활성화 함수: ReLU, Sigmoid, GELU와 그 역할](../../phases/03-deep-learning-core/04-activation-functions/) | 구현 | Python, Julia |
 | 05 | [손실 함수: MSE, 교차 엔트로피, 대조 손실](../../phases/03-deep-learning-core/05-loss-functions/) | 구현 | Python, Julia |
-| 06 | [최적화 알고리즘: SGD, 모멘텀, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 구현 | Python |
-| 07 | [정규화: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 구현 | Python |
-| 08 | [가중치 초기화와 학습 안정성](../../phases/03-deep-learning-core/08-weight-initialization/) | 구현 | Python |
-| 09 | [학습률 스케줄과 워밍업](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | 구현 | Python |
-| 10 | [나만의 미니 프레임워크 만들기](../../phases/03-deep-learning-core/10-mini-framework/) | 구현 | Python |
+| 06 | [최적화 알고리즘: SGD, 모멘텀, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 구현 | Python, TypeScript |
+| 07 | [정규화: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 구현 | Python, TypeScript |
+| 08 | [가중치 초기화와 학습 안정성](../../phases/03-deep-learning-core/08-weight-initialization/) | 구현 | Python, TypeScript |
+| 09 | [학습률 스케줄과 워밍업](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | 구현 | Python, TypeScript |
+| 10 | [나만의 미니 프레임워크 만들기](../../phases/03-deep-learning-core/10-mini-framework/) | 구현 | Python, TypeScript |
 | 11 | [PyTorch 입문](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | 구현 | Python |
 | 12 | [JAX 입문](../../phases/03-deep-learning-core/12-intro-to-jax/) | 구현 | Python |
 | 13 | [신경망 디버깅](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | 구현 | Python |
@@ -560,12 +560,12 @@ flowchart TB
 | 08 | [T5, BART: 인코더-디코더 모델](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | 학습 | Python |
 | 09 | [비전 트랜스포머(ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | 구현 | Python |
 | 10 | [오디오 트랜스포머: Whisper 아키텍처](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | 학습 | Python |
-| 11 | [전문가 혼합(MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | 구현 | Python |
-| 12 | [KV 캐시, FlashAttention과 추론 최적화](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | 구현 | Python |
+| 11 | [전문가 혼합(MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | 구현 | Python, Rust |
+| 12 | [KV 캐시, FlashAttention과 추론 최적화](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | 구현 | Python, Rust |
 | 13 | [스케일링 법칙](../../phases/07-transformers-deep-dive/13-scaling-laws/) | 학습 | Python |
 | 14 | [트랜스포머를 처음부터 만들기](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | 구현 | Python |
-| 15 | [어텐션 변형: 슬라이딩 윈도, 희소, 차등 어텐션](../../phases/07-transformers-deep-dive/15-attention-variants/) | 구현 | Python |
-| 16 | [추측 디코딩: 초안 작성, 검증, 반복](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | 구현 | Python |
+| 15 | [어텐션 변형: 슬라이딩 윈도, 희소, 차등 어텐션](../../phases/07-transformers-deep-dive/15-attention-variants/) | 구현 | Python, Rust |
+| 16 | [추측 디코딩: 초안 작성, 검증, 반복](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | 구현 | Python, Rust |
 
 </details>
 

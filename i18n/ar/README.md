@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [ما هو تعلّم الآلة؟](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | تعلم | Python |
 | 02 | [الانحدار الخطي من الصفر](../../phases/02-ml-fundamentals/02-linear-regression/) | بناء | Python, Rust, Julia |
 | 03 | [الانحدار اللوجستي والتصنيف](../../phases/02-ml-fundamentals/03-logistic-regression/) | بناء | Python, Rust, Julia |
-| 04 | [أشجار القرار والغابات العشوائية](../../phases/02-ml-fundamentals/04-decision-trees/) | بناء | Python |
+| 04 | [أشجار القرار والغابات العشوائية](../../phases/02-ml-fundamentals/04-decision-trees/) | بناء | Python, TypeScript |
 | 05 | [آلات المتجهات الداعمة](../../phases/02-ml-fundamentals/05-support-vector-machines/) | بناء | Python, Julia |
-| 06 | [KNN ومقاييس المسافة](../../phases/02-ml-fundamentals/06-knn-and-distances/) | بناء | Python |
-| 07 | [التعلّم غير الخاضع للإشراف: K-Means وDBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | بناء | Python |
-| 08 | [هندسة السمات واختيارها](../../phases/02-ml-fundamentals/08-feature-engineering/) | بناء | Python |
+| 06 | [KNN ومقاييس المسافة](../../phases/02-ml-fundamentals/06-knn-and-distances/) | بناء | Python, TypeScript |
+| 07 | [التعلّم غير الخاضع للإشراف: K-Means وDBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | بناء | Python, TypeScript |
+| 08 | [هندسة السمات واختيارها](../../phases/02-ml-fundamentals/08-feature-engineering/) | بناء | Python, TypeScript |
 | 09 | [تقييم النماذج: المقاييس والتحقق المتقاطع](../../phases/02-ml-fundamentals/09-model-evaluation/) | بناء | Python, Julia |
 | 10 | [التحيز والتباين ومنحنى التعلّم](../../phases/02-ml-fundamentals/10-bias-variance/) | تعلم | Python |
 | 11 | [أساليب التجميع: boosting وbagging وstacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | بناء | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
 | 01 | [Perceptron: من أين بدأت الحكاية](../../phases/03-deep-learning-core/01-the-perceptron/) | بناء | Python, Rust, Julia |
-| 02 | [الشبكات متعددة الطبقات والتمرير الأمامي](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بناء | Python |
+| 02 | [الشبكات متعددة الطبقات والتمرير الأمامي](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بناء | Python, TypeScript |
 | 03 | [الانتشار العكسي من الصفر](../../phases/03-deep-learning-core/03-backpropagation/) | بناء | Python, Rust, Julia |
 | 04 | [دوال التنشيط: ReLU وSigmoid وGELU ولماذا](../../phases/03-deep-learning-core/04-activation-functions/) | بناء | Python, Julia |
 | 05 | [دوال الخسارة: MSE وcross-entropy والخسارة التقابلية](../../phases/03-deep-learning-core/05-loss-functions/) | بناء | Python, Julia |
-| 06 | [المحسّنات: SGD وMomentum وAdam وAdamW](../../phases/03-deep-learning-core/06-optimizers/) | بناء | Python |
-| 07 | [التنظيم: Dropout وWeight Decay وBatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بناء | Python |
-| 08 | [تهيئة الأوزان واستقرار التدريب](../../phases/03-deep-learning-core/08-weight-initialization/) | بناء | Python |
-| 09 | [جداول معدل التعلّم والإحماء](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | بناء | Python |
-| 10 | [ابنِ إطار عمل مصغرًا خاصًا بك](../../phases/03-deep-learning-core/10-mini-framework/) | بناء | Python |
+| 06 | [المحسّنات: SGD وMomentum وAdam وAdamW](../../phases/03-deep-learning-core/06-optimizers/) | بناء | Python, TypeScript |
+| 07 | [التنظيم: Dropout وWeight Decay وBatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بناء | Python, TypeScript |
+| 08 | [تهيئة الأوزان واستقرار التدريب](../../phases/03-deep-learning-core/08-weight-initialization/) | بناء | Python, TypeScript |
+| 09 | [جداول معدل التعلّم والإحماء](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | بناء | Python, TypeScript |
+| 10 | [ابنِ إطار عمل مصغرًا خاصًا بك](../../phases/03-deep-learning-core/10-mini-framework/) | بناء | Python, TypeScript |
 | 11 | [مقدمة إلى PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | بناء | Python |
 | 12 | [مقدمة إلى JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | بناء | Python |
 | 13 | [تصحيح أخطاء الشبكات العصبية](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | بناء | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5 وBART: نماذج المرمّز وفاكّ الترميز](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | تعلم | Python |
 | 09 | [محولات الرؤية (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | بناء | Python |
 | 10 | [محولات الصوت: معمارية Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | تعلم | Python |
-| 11 | [مزيج الخبراء (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | بناء | Python |
-| 12 | [ذاكرة KV وانتباه Flash وتحسين الاستدلال](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | بناء | Python |
+| 11 | [مزيج الخبراء (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | بناء | Python, Rust |
+| 12 | [ذاكرة KV وانتباه Flash وتحسين الاستدلال](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | بناء | Python, Rust |
 | 13 | [قوانين التوسّع](../../phases/07-transformers-deep-dive/13-scaling-laws/) | تعلم | Python |
 | 14 | [ابنِ Transformer من الصفر](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | بناء | Python |
-| 15 | [أنماط الانتباه: النافذة المنزلقة والمتناثر والتفاضلي](../../phases/07-transformers-deep-dive/15-attention-variants/) | بناء | Python |
-| 16 | [فك الترميز التخميني: صياغة المسودة والتحقق والتكرار](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | بناء | Python |
+| 15 | [أنماط الانتباه: النافذة المنزلقة والمتناثر والتفاضلي](../../phases/07-transformers-deep-dive/15-attention-variants/) | بناء | Python, Rust |
+| 16 | [فك الترميز التخميني: صياغة المسودة والتحقق والتكرار](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | بناء | Python, Rust |
 
 </details>
 

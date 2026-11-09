@@ -3,7 +3,7 @@
 > Autoregressive decoding is serial. Each token waits for the previous one. Speculative decoding breaks the chain: a cheap model drafts N tokens, the expensive model verifies all N in one forward pass. When the draft is right you paid one big forward for N generations.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 07 (GPT Causal LM), Phase 7 · 12 (KV Cache & Flash Attention)
 **Time:** ~60 minutes
 
@@ -91,6 +91,13 @@ See `code/main.py`. We implement the core speculative-sampling algorithm (reject
 - A "big model" that is a deterministic-softmax over a hand-coded distribution (so we can verify acceptance math analytically).
 - A "draft model" that is a perturbation of the big model.
 - An acceptance / rejection loop that produces the same marginal distribution as direct sampling.
+
+`code/main.rs` is a Rust port with the same functions and demos. It uses only the standard library. The random numbers differ from Python's, but the printed conclusions are the same.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Step 1: the rejection step
 

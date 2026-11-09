@@ -120,7 +120,7 @@ def main():
     mask = causal_mask(8)[7]
     _, w_single = attention_row(q, K, V, mask)
     print(f"single attn weights: " + " ".join(f"{w:.3f}" for w in w_single))
-    print(f"  (notice the weight bleeding to position 0 — the attention sink)")
+    print(f"  (notice the weight bleeding to position 0, the attention sink)")
 
     q1 = q[:]
     q2 = [x + 0.2 * rng.gauss(0, 1) for x in q]

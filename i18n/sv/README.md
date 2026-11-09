@@ -399,11 +399,11 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | 01 | [Vad är maskininlärning?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Lär dig | Python |
 | 02 | [Linjär regression från grunden](../../phases/02-ml-fundamentals/02-linear-regression/) | Bygg | Python, Rust, Julia |
 | 03 | [Logistisk regression och klassificering](../../phases/02-ml-fundamentals/03-logistic-regression/) | Bygg | Python, Rust, Julia |
-| 04 | [Beslutsträd och slumpmässiga skogar](../../phases/02-ml-fundamentals/04-decision-trees/) | Bygg | Python |
+| 04 | [Beslutsträd och slumpmässiga skogar](../../phases/02-ml-fundamentals/04-decision-trees/) | Bygg | Python, TypeScript |
 | 05 | [Stödvektormaskiner](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Bygg | Python, Julia |
-| 06 | [KNN och avståndsmått](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Bygg | Python |
-| 07 | [Oövervakad inlärning: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Bygg | Python |
-| 08 | [Konstruktion och urval av egenskaper](../../phases/02-ml-fundamentals/08-feature-engineering/) | Bygg | Python |
+| 06 | [KNN och avståndsmått](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Bygg | Python, TypeScript |
+| 07 | [Oövervakad inlärning: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Bygg | Python, TypeScript |
+| 08 | [Konstruktion och urval av egenskaper](../../phases/02-ml-fundamentals/08-feature-engineering/) | Bygg | Python, TypeScript |
 | 09 | [Modellutvärdering: mått och korsvalidering](../../phases/02-ml-fundamentals/09-model-evaluation/) | Bygg | Python, Julia |
 | 10 | [Bias, varians och inlärningskurvan](../../phases/02-ml-fundamentals/10-bias-variance/) | Lär dig | Python |
 | 11 | [Ensemblemetoder: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Bygg | Python |
@@ -427,15 +427,15 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | # | Lektion | Typ | Språk |
 |:---:|--------|:----:|------|
 | 01 | [Perceptronen: där allt började](../../phases/03-deep-learning-core/01-the-perceptron/) | Bygg | Python, Rust, Julia |
-| 02 | [Flerskiktsnätverk och framåtpassagen](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Bygg | Python |
+| 02 | [Flerskiktsnätverk och framåtpassagen](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Bygg | Python, TypeScript |
 | 03 | [Bakåtpropagering från grunden](../../phases/03-deep-learning-core/03-backpropagation/) | Bygg | Python, Rust, Julia |
 | 04 | [Aktiveringsfunktioner: ReLU, Sigmoid, GELU och varför](../../phases/03-deep-learning-core/04-activation-functions/) | Bygg | Python, Julia |
 | 05 | [Förlustfunktioner: MSE, korsentropi och kontrastiv förlust](../../phases/03-deep-learning-core/05-loss-functions/) | Bygg | Python, Julia |
-| 06 | [Optimerare: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Bygg | Python |
-| 07 | [Regularisering: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Bygg | Python |
-| 08 | [Viktinitiering och träningsstabilitet](../../phases/03-deep-learning-core/08-weight-initialization/) | Bygg | Python |
-| 09 | [Scheman för inlärningshastighet och uppvärmning](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Bygg | Python |
-| 10 | [Bygg ditt eget miniramverk](../../phases/03-deep-learning-core/10-mini-framework/) | Bygg | Python |
+| 06 | [Optimerare: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Bygg | Python, TypeScript |
+| 07 | [Regularisering: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Bygg | Python, TypeScript |
+| 08 | [Viktinitiering och träningsstabilitet](../../phases/03-deep-learning-core/08-weight-initialization/) | Bygg | Python, TypeScript |
+| 09 | [Scheman för inlärningshastighet och uppvärmning](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Bygg | Python, TypeScript |
+| 10 | [Bygg ditt eget miniramverk](../../phases/03-deep-learning-core/10-mini-framework/) | Bygg | Python, TypeScript |
 | 11 | [Introduktion till PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Bygg | Python |
 | 12 | [Introduktion till JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Bygg | Python |
 | 13 | [Felsöka neurala nätverk](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Bygg | Python |
@@ -559,12 +559,12 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | 08 | [T5, BART: kodar-avkodarmodeller](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Lär dig | Python |
 | 09 | [Vision Transformers (ViT) för bildanalys](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Bygg | Python |
 | 10 | [Transformers för ljud: Whisper-arkitekturen](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Lär dig | Python |
-| 11 | [Expertblandningar (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Bygg | Python |
-| 12 | [KV-cache, Flash Attention och inferensoptimering](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Bygg | Python |
+| 11 | [Expertblandningar (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Bygg | Python, Rust |
+| 12 | [KV-cache, Flash Attention och inferensoptimering](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Bygg | Python, Rust |
 | 13 | [Skalningslagar](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Lär dig | Python |
 | 14 | [Bygg en Transformer från grunden](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Bygg | Python |
-| 15 | [Attention-varianter: glidande fönster, gles och differentiell](../../phases/07-transformers-deep-dive/15-attention-variants/) | Bygg | Python |
-| 16 | [Spekulativ avkodning: föreslå, verifiera, upprepa](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Bygg | Python |
+| 15 | [Attention-varianter: glidande fönster, gles och differentiell](../../phases/07-transformers-deep-dive/15-attention-variants/) | Bygg | Python, Rust |
+| 16 | [Spekulativ avkodning: föreslå, verifiera, upprepa](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Bygg | Python, Rust |
 
 </details>
 

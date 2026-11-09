@@ -3,7 +3,7 @@
 > Training is parallel and FLOP-bound. Inference is serial and memory-bound. Different bottleneck, different tricks.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~75 minutes
 
@@ -128,7 +128,7 @@ flash-attention-memory
 iso-machine {"machine":"kv-cache"}
 ```
 
-See `code/main.py`. We implement:
+See `code/main.py`, or its Rust port `code/main.rs`. To run the Rust version: `rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`. We implement:
 
 1. A naive $O(N^2)$ incremental decoder.
 2. A $O(N)$ KV-cached decoder.

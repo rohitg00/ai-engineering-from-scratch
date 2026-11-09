@@ -3,7 +3,7 @@
 > Full attention is a circle. Every token sees every token, and memory pays the price. Three variants bend the shape of the circle and recover half the cost.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head), Phase 7 · 12 (KV Cache / Flash Attention)
 **Time:** ~60 minutes
 
@@ -90,7 +90,7 @@ gqa-kv-sharing
 
 ## Build It
 
-See `code/main.py`. We implement a causal mask comparator that shows full, SWA, local+strided, and differential attention side by side on a toy sequence.
+See `code/main.py`, or its Rust port `code/main.rs`. To run the Rust version: `rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`. We implement a causal mask comparator that shows full, SWA, local+strided, and differential attention side by side on a toy sequence.
 
 ### Step 1: full causal mask (baseline)
 

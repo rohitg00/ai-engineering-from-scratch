@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [什么是机器学习](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | 学习 | Python |
 | 02 | [从零实现线性回归](../../phases/02-ml-fundamentals/02-linear-regression/) | 构建 | Python, Rust, Julia |
 | 03 | [逻辑回归与分类](../../phases/02-ml-fundamentals/03-logistic-regression/) | 构建 | Python, Rust, Julia |
-| 04 | [决策树与随机森林](../../phases/02-ml-fundamentals/04-decision-trees/) | 构建 | Python |
+| 04 | [决策树与随机森林](../../phases/02-ml-fundamentals/04-decision-trees/) | 构建 | Python, TypeScript |
 | 05 | [支持向量机](../../phases/02-ml-fundamentals/05-support-vector-machines/) | 构建 | Python, Julia |
-| 06 | [KNN 与距离度量](../../phases/02-ml-fundamentals/06-knn-and-distances/) | 构建 | Python |
-| 07 | [无监督学习：K-Means 与 DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | 构建 | Python |
-| 08 | [特征工程与特征选择](../../phases/02-ml-fundamentals/08-feature-engineering/) | 构建 | Python |
+| 06 | [KNN 与距离度量](../../phases/02-ml-fundamentals/06-knn-and-distances/) | 构建 | Python, TypeScript |
+| 07 | [无监督学习：K-Means 与 DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | 构建 | Python, TypeScript |
+| 08 | [特征工程与特征选择](../../phases/02-ml-fundamentals/08-feature-engineering/) | 构建 | Python, TypeScript |
 | 09 | [模型评估：指标与交叉验证](../../phases/02-ml-fundamentals/09-model-evaluation/) | 构建 | Python, Julia |
 | 10 | [偏差、方差与学习曲线](../../phases/02-ml-fundamentals/10-bias-variance/) | 学习 | Python |
 | 11 | [集成学习：Boosting、Bagging 与 Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | 构建 | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | # | 课程 | 类型 | 语言 |
 |:---:|--------|:----:|------|
 | 01 | [感知机：神经网络的起点](../../phases/03-deep-learning-core/01-the-perceptron/) | 构建 | Python, Rust, Julia |
-| 02 | [多层网络与前向传播](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 构建 | Python |
+| 02 | [多层网络与前向传播](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 构建 | Python, TypeScript |
 | 03 | [从零实现反向传播](../../phases/03-deep-learning-core/03-backpropagation/) | 构建 | Python, Rust, Julia |
 | 04 | [激活函数：ReLU、Sigmoid、GELU 及其作用](../../phases/03-deep-learning-core/04-activation-functions/) | 构建 | Python, Julia |
 | 05 | [损失函数：MSE、交叉熵与对比损失](../../phases/03-deep-learning-core/05-loss-functions/) | 构建 | Python, Julia |
-| 06 | [优化器：SGD、动量、Adam 与 AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 构建 | Python |
-| 07 | [正则化：Dropout、权重衰减与 BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 构建 | Python |
-| 08 | [权重初始化与训练稳定性](../../phases/03-deep-learning-core/08-weight-initialization/) | 构建 | Python |
-| 09 | [学习率调度与预热](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | 构建 | Python |
-| 10 | [构建自己的迷你框架](../../phases/03-deep-learning-core/10-mini-framework/) | 构建 | Python |
+| 06 | [优化器：SGD、动量、Adam 与 AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 构建 | Python, TypeScript |
+| 07 | [正则化：Dropout、权重衰减与 BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 构建 | Python, TypeScript |
+| 08 | [权重初始化与训练稳定性](../../phases/03-deep-learning-core/08-weight-initialization/) | 构建 | Python, TypeScript |
+| 09 | [学习率调度与预热](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | 构建 | Python, TypeScript |
+| 10 | [构建自己的迷你框架](../../phases/03-deep-learning-core/10-mini-framework/) | 构建 | Python, TypeScript |
 | 11 | [PyTorch 入门](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | 构建 | Python |
 | 12 | [JAX 入门](../../phases/03-deep-learning-core/12-intro-to-jax/) | 构建 | Python |
 | 13 | [神经网络调试](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | 构建 | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5 与 BART：编码器—解码器模型](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | 学习 | Python |
 | 09 | [视觉 Transformer（ViT）](../../phases/07-transformers-deep-dive/09-vision-transformers/) | 构建 | Python |
 | 10 | [音频 Transformer：Whisper 架构](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | 学习 | Python |
-| 11 | [混合专家模型（MoE）](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | 构建 | Python |
-| 12 | [KV 缓存、FlashAttention 与推理优化](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | 构建 | Python |
+| 11 | [混合专家模型（MoE）](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | 构建 | Python, Rust |
+| 12 | [KV 缓存、FlashAttention 与推理优化](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | 构建 | Python, Rust |
 | 13 | [缩放定律](../../phases/07-transformers-deep-dive/13-scaling-laws/) | 学习 | Python |
 | 14 | [从零构建 Transformer](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | 构建 | Python |
-| 15 | [注意力变体：滑动窗口、稀疏与差分注意力](../../phases/07-transformers-deep-dive/15-attention-variants/) | 构建 | Python |
-| 16 | [推测解码：草稿、验证与重复](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | 构建 | Python |
+| 15 | [注意力变体：滑动窗口、稀疏与差分注意力](../../phases/07-transformers-deep-dive/15-attention-variants/) | 构建 | Python, Rust |
+| 16 | [推测解码：草稿、验证与重复](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | 构建 | Python, Rust |
 
 </details>
 

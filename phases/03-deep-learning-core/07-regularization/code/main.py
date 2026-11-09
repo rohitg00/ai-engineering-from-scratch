@@ -343,5 +343,5 @@ if __name__ == "__main__":
         print(f"  {name:30s} {train_acc:>9.1f}% {test_acc:>9.1f}% {gap:>7.1f}%")
 
     print("\n  Key insight: regularization reduces the train-test gap.")
-    print("  The model with dropout + weight decay generalizes best,")
-    print("  even if its training accuracy is lower.")
+    print("  Too much regularization also lowers test accuracy.")
+    print("  Compare the gap and the test accuracy, not only one of them.")

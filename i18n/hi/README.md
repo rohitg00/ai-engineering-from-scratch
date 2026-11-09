@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [मशीन लर्निंग क्या है](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | सीखें | Python |
 | 02 | [शुरू से रैखिक प्रतिगमन](../../phases/02-ml-fundamentals/02-linear-regression/) | बनाएँ | Python, Rust, Julia |
 | 03 | [लॉजिस्टिक प्रतिगमन और वर्गीकरण](../../phases/02-ml-fundamentals/03-logistic-regression/) | बनाएँ | Python, Rust, Julia |
-| 04 | [निर्णय-वृक्ष और रैंडम फ़ॉरेस्ट](../../phases/02-ml-fundamentals/04-decision-trees/) | बनाएँ | Python |
+| 04 | [निर्णय-वृक्ष और रैंडम फ़ॉरेस्ट](../../phases/02-ml-fundamentals/04-decision-trees/) | बनाएँ | Python, TypeScript |
 | 05 | [सपोर्ट वेक्टर मशीनें (SVM)](../../phases/02-ml-fundamentals/05-support-vector-machines/) | बनाएँ | Python, Julia |
-| 06 | [KNN और दूरी के माप](../../phases/02-ml-fundamentals/06-knn-and-distances/) | बनाएँ | Python |
-| 07 | [बिना पर्यवेक्षण वाला अधिगम: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | बनाएँ | Python |
-| 08 | [विशेषता निर्माण और चयन](../../phases/02-ml-fundamentals/08-feature-engineering/) | बनाएँ | Python |
+| 06 | [KNN और दूरी के माप](../../phases/02-ml-fundamentals/06-knn-and-distances/) | बनाएँ | Python, TypeScript |
+| 07 | [बिना पर्यवेक्षण वाला अधिगम: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | बनाएँ | Python, TypeScript |
+| 08 | [विशेषता निर्माण और चयन](../../phases/02-ml-fundamentals/08-feature-engineering/) | बनाएँ | Python, TypeScript |
 | 09 | [मॉडल मूल्यांकन: मापदंड और क्रॉस-वैलिडेशन](../../phases/02-ml-fundamentals/09-model-evaluation/) | बनाएँ | Python, Julia |
 | 10 | [बायस, वैरिएंस और सीखने के वक्र](../../phases/02-ml-fundamentals/10-bias-variance/) | सीखें | Python |
 | 11 | [एन्सेम्बल विधियाँ: बूस्टिंग, बैगिंग, स्टैकिंग](../../phases/02-ml-fundamentals/11-ensemble-methods/) | बनाएँ | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | # | पाठ | प्रकार | भाषा |
 |:---:|--------|:----:|------|
 | 01 | [Perceptron: शुरुआत यहीं से](../../phases/03-deep-learning-core/01-the-perceptron/) | बनाएँ | Python, Rust, Julia |
-| 02 | [बहु-स्तरीय नेटवर्क और अग्रिम प्रसार](../../phases/03-deep-learning-core/02-multi-layer-networks/) | बनाएँ | Python |
+| 02 | [बहु-स्तरीय नेटवर्क और अग्रिम प्रसार](../../phases/03-deep-learning-core/02-multi-layer-networks/) | बनाएँ | Python, TypeScript |
 | 03 | [शुरू से बैकप्रोपेगेशन](../../phases/03-deep-learning-core/03-backpropagation/) | बनाएँ | Python, Rust, Julia |
 | 04 | [सक्रियण फलन: ReLU, Sigmoid, GELU और इन्हें चुनने का कारण](../../phases/03-deep-learning-core/04-activation-functions/) | बनाएँ | Python, Julia |
 | 05 | [लॉस फलन: MSE, क्रॉस-एंट्रॉपी और कॉन्ट्रास्टिव लॉस](../../phases/03-deep-learning-core/05-loss-functions/) | बनाएँ | Python, Julia |
-| 06 | [अनुकूलक: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | बनाएँ | Python |
-| 07 | [नियमितीकरण: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | बनाएँ | Python |
-| 08 | [शुरुआती भार और प्रशिक्षण की स्थिरता](../../phases/03-deep-learning-core/08-weight-initialization/) | बनाएँ | Python |
-| 09 | [सीखने की दर की समय-सारणी और वार्मअप](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | बनाएँ | Python |
-| 10 | [अपना छोटा फ्रेमवर्क बनाएँ](../../phases/03-deep-learning-core/10-mini-framework/) | बनाएँ | Python |
+| 06 | [अनुकूलक: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | बनाएँ | Python, TypeScript |
+| 07 | [नियमितीकरण: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | बनाएँ | Python, TypeScript |
+| 08 | [शुरुआती भार और प्रशिक्षण की स्थिरता](../../phases/03-deep-learning-core/08-weight-initialization/) | बनाएँ | Python, TypeScript |
+| 09 | [सीखने की दर की समय-सारणी और वार्मअप](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | बनाएँ | Python, TypeScript |
+| 10 | [अपना छोटा फ्रेमवर्क बनाएँ](../../phases/03-deep-learning-core/10-mini-framework/) | बनाएँ | Python, TypeScript |
 | 11 | [PyTorch का परिचय](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | बनाएँ | Python |
 | 12 | [JAX का परिचय](../../phases/03-deep-learning-core/12-intro-to-jax/) | बनाएँ | Python |
 | 13 | [तंत्रिका-जालों में त्रुटि-खोज](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | बनाएँ | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5, BART: एन्कोडर-डिकोडर मॉडल](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | सीखें | Python |
 | 09 | [विज़न Transformer (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | बनाएँ | Python |
 | 10 | [ऑडियो Transformers: Whisper संरचना](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | सीखें | Python |
-| 11 | [विशेषज्ञों का मिश्रण (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | बनाएँ | Python |
-| 12 | [KV कैश, Flash Attention और अनुमानन का अनुकूलन](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | बनाएँ | Python |
+| 11 | [विशेषज्ञों का मिश्रण (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | बनाएँ | Python, Rust |
+| 12 | [KV कैश, Flash Attention और अनुमानन का अनुकूलन](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | बनाएँ | Python, Rust |
 | 13 | [स्केलिंग के नियम](../../phases/07-transformers-deep-dive/13-scaling-laws/) | सीखें | Python |
 | 14 | [शुरू से Transformer बनाएँ](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | बनाएँ | Python |
-| 15 | [अटेंशन के प्रकार: स्लाइडिंग विंडो, स्पार्स और डिफ़रेंशियल](../../phases/07-transformers-deep-dive/15-attention-variants/) | बनाएँ | Python |
-| 16 | [स्पेक्युलेटिव डीकोडिंग: मसौदा बनाएँ, जाँचें, दोहराएँ](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | बनाएँ | Python |
+| 15 | [अटेंशन के प्रकार: स्लाइडिंग विंडो, स्पार्स और डिफ़रेंशियल](../../phases/07-transformers-deep-dive/15-attention-variants/) | बनाएँ | Python, Rust |
+| 16 | [स्पेक्युलेटिव डीकोडिंग: मसौदा बनाएँ, जाँचें, दोहराएँ](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | बनाएँ | Python, Rust |
 
 </details>
 

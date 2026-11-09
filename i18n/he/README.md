@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [מהי למידת מכונה?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | למדו | Python |
 | 02 | [רגרסיה ליניארית מאפס](../../phases/02-ml-fundamentals/02-linear-regression/) | בנו | Python, Rust, Julia |
 | 03 | [רגרסיה לוגיסטית וסיווג](../../phases/02-ml-fundamentals/03-logistic-regression/) | בנו | Python, Rust, Julia |
-| 04 | [עצי החלטה ויערות אקראיים](../../phases/02-ml-fundamentals/04-decision-trees/) | בנו | Python |
+| 04 | [עצי החלטה ויערות אקראיים](../../phases/02-ml-fundamentals/04-decision-trees/) | בנו | Python, TypeScript |
 | 05 | [מכונות וקטורים תומכים](../../phases/02-ml-fundamentals/05-support-vector-machines/) | בנו | Python, Julia |
-| 06 | [KNN ומדדי מרחק](../../phases/02-ml-fundamentals/06-knn-and-distances/) | בנו | Python |
-| 07 | [למידה ללא פיקוח: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | בנו | Python |
-| 08 | [הנדסת תכונות ובחירתן](../../phases/02-ml-fundamentals/08-feature-engineering/) | בנו | Python |
+| 06 | [KNN ומדדי מרחק](../../phases/02-ml-fundamentals/06-knn-and-distances/) | בנו | Python, TypeScript |
+| 07 | [למידה ללא פיקוח: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | בנו | Python, TypeScript |
+| 08 | [הנדסת תכונות ובחירתן](../../phases/02-ml-fundamentals/08-feature-engineering/) | בנו | Python, TypeScript |
 | 09 | [הערכת מודלים: מדדים ואימות צולב](../../phases/02-ml-fundamentals/09-model-evaluation/) | בנו | Python, Julia |
 | 10 | [הטיה, שונות ועקומת הלמידה](../../phases/02-ml-fundamentals/10-bias-variance/) | למדו | Python |
 | 11 | [שיטות אנסמבל: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | בנו | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
 | 01 | [הפרספטרון: כאן הכול התחיל](../../phases/03-deep-learning-core/01-the-perceptron/) | בנו | Python, Rust, Julia |
-| 02 | [רשתות רב-שכבתיות ומעבר קדימה](../../phases/03-deep-learning-core/02-multi-layer-networks/) | בנו | Python |
+| 02 | [רשתות רב-שכבתיות ומעבר קדימה](../../phases/03-deep-learning-core/02-multi-layer-networks/) | בנו | Python, TypeScript |
 | 03 | [הפצה לאחור מאפס](../../phases/03-deep-learning-core/03-backpropagation/) | בנו | Python, Rust, Julia |
 | 04 | [פונקציות אקטיבציה: ReLU, Sigmoid, GELU והסיבות לבחירתן](../../phases/03-deep-learning-core/04-activation-functions/) | בנו | Python, Julia |
 | 05 | [פונקציות הפסד: MSE, אנטרופיה צולבת והפסד ניגודי](../../phases/03-deep-learning-core/05-loss-functions/) | בנו | Python, Julia |
-| 06 | [אופטימייזרים: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | בנו | Python |
-| 07 | [רגולריזציה: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | בנו | Python |
-| 08 | [אתחול משקולות ויציבות האימון](../../phases/03-deep-learning-core/08-weight-initialization/) | בנו | Python |
-| 09 | [תזמון קצב הלמידה וחימום](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | בנו | Python |
-| 10 | [בנו מסגרת עבודה זעירה משלכם](../../phases/03-deep-learning-core/10-mini-framework/) | בנו | Python |
+| 06 | [אופטימייזרים: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | בנו | Python, TypeScript |
+| 07 | [רגולריזציה: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | בנו | Python, TypeScript |
+| 08 | [אתחול משקולות ויציבות האימון](../../phases/03-deep-learning-core/08-weight-initialization/) | בנו | Python, TypeScript |
+| 09 | [תזמון קצב הלמידה וחימום](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | בנו | Python, TypeScript |
+| 10 | [בנו מסגרת עבודה זעירה משלכם](../../phases/03-deep-learning-core/10-mini-framework/) | בנו | Python, TypeScript |
 | 11 | [מבוא ל-PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | בנו | Python |
 | 12 | [מבוא ל-JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | בנו | Python |
 | 13 | [ניפוי שגיאות ברשתות עצביות](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | בנו | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5, BART: מודלי מקודד-מפענח](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | למדו | Python |
 | 09 | [Vision Transformers (ViT) לראייה ממוחשבת](../../phases/07-transformers-deep-dive/09-vision-transformers/) | בנו | Python |
 | 10 | [Transformers לאודיו: ארכיטקטורת Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | למדו | Python |
-| 11 | [תערובת מומחים (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | בנו | Python |
-| 12 | [מטמון KV, Flash Attention ואופטימיזציית הסקה](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | בנו | Python |
+| 11 | [תערובת מומחים (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | בנו | Python, Rust |
+| 12 | [מטמון KV, Flash Attention ואופטימיזציית הסקה](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | בנו | Python, Rust |
 | 13 | [חוקי קנה מידה](../../phases/07-transformers-deep-dive/13-scaling-laws/) | למדו | Python |
 | 14 | [בנו Transformer מאפס](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | בנו | Python |
-| 15 | [סוגי קשב: חלון נע, קשב דליל וקשב דיפרנציאלי](../../phases/07-transformers-deep-dive/15-attention-variants/) | בנו | Python |
-| 16 | [פענוח ספקולטיבי: טיוטה, אימות וחזרה](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | בנו | Python |
+| 15 | [סוגי קשב: חלון נע, קשב דליל וקשב דיפרנציאלי](../../phases/07-transformers-deep-dive/15-attention-variants/) | בנו | Python, Rust |
+| 16 | [פענוח ספקולטיבי: טיוטה, אימות וחזרה](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | בנו | Python, Rust |
 
 </details>
 

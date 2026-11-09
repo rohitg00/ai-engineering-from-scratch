@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [甚麼是機器學習](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | 學習 | Python |
 | 02 | [從零實現線性回歸](../../phases/02-ml-fundamentals/02-linear-regression/) | 建置 | Python, Rust, Julia |
 | 03 | [邏輯回歸與分類](../../phases/02-ml-fundamentals/03-logistic-regression/) | 建置 | Python, Rust, Julia |
-| 04 | [決策樹與隨機森林](../../phases/02-ml-fundamentals/04-decision-trees/) | 建置 | Python |
+| 04 | [決策樹與隨機森林](../../phases/02-ml-fundamentals/04-decision-trees/) | 建置 | Python, TypeScript |
 | 05 | [支援向量機](../../phases/02-ml-fundamentals/05-support-vector-machines/) | 建置 | Python, Julia |
-| 06 | [KNN 與距離度量](../../phases/02-ml-fundamentals/06-knn-and-distances/) | 建置 | Python |
-| 07 | [無監督式學習：K-Means 與 DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | 建置 | Python |
-| 08 | [特徵工程與特徵選擇](../../phases/02-ml-fundamentals/08-feature-engineering/) | 建置 | Python |
+| 06 | [KNN 與距離度量](../../phases/02-ml-fundamentals/06-knn-and-distances/) | 建置 | Python, TypeScript |
+| 07 | [無監督式學習：K-Means 與 DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | 建置 | Python, TypeScript |
+| 08 | [特徵工程與特徵選擇](../../phases/02-ml-fundamentals/08-feature-engineering/) | 建置 | Python, TypeScript |
 | 09 | [模型評估：指標與交叉驗證](../../phases/02-ml-fundamentals/09-model-evaluation/) | 建置 | Python, Julia |
 | 10 | [偏差、方差與學習曲線](../../phases/02-ml-fundamentals/10-bias-variance/) | 學習 | Python |
 | 11 | [整合學習：Boosting、Bagging 與 Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | 建置 | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | # | 課程 | 類型 | 語言 |
 |:---:|--------|:----:|------|
 | 01 | [感知機：神經網路的起點](../../phases/03-deep-learning-core/01-the-perceptron/) | 建置 | Python, Rust, Julia |
-| 02 | [多層網路與前向傳播](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 建置 | Python |
+| 02 | [多層網路與前向傳播](../../phases/03-deep-learning-core/02-multi-layer-networks/) | 建置 | Python, TypeScript |
 | 03 | [從零實現反向傳播](../../phases/03-deep-learning-core/03-backpropagation/) | 建置 | Python, Rust, Julia |
 | 04 | [激發函式：ReLU、Sigmoid、GELU 及其作用](../../phases/03-deep-learning-core/04-activation-functions/) | 建置 | Python, Julia |
 | 05 | [損失函式：MSE、交叉熵與對比損失](../../phases/03-deep-learning-core/05-loss-functions/) | 建置 | Python, Julia |
-| 06 | [最佳化器：SGD、動量、Adam 與 AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 建置 | Python |
-| 07 | [正規化：Dropout、權重衰減與 BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 建置 | Python |
-| 08 | [權重初始化與訓練穩定性](../../phases/03-deep-learning-core/08-weight-initialization/) | 建置 | Python |
-| 09 | [學習率排程與預熱](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | 建置 | Python |
-| 10 | [建置自己的迷你框架](../../phases/03-deep-learning-core/10-mini-framework/) | 建置 | Python |
+| 06 | [最佳化器：SGD、動量、Adam 與 AdamW](../../phases/03-deep-learning-core/06-optimizers/) | 建置 | Python, TypeScript |
+| 07 | [正規化：Dropout、權重衰減與 BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | 建置 | Python, TypeScript |
+| 08 | [權重初始化與訓練穩定性](../../phases/03-deep-learning-core/08-weight-initialization/) | 建置 | Python, TypeScript |
+| 09 | [學習率排程與預熱](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | 建置 | Python, TypeScript |
+| 10 | [建置自己的迷你框架](../../phases/03-deep-learning-core/10-mini-framework/) | 建置 | Python, TypeScript |
 | 11 | [PyTorch 入門](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | 建置 | Python |
 | 12 | [JAX 入門](../../phases/03-deep-learning-core/12-intro-to-jax/) | 建置 | Python |
 | 13 | [神經網路除錯](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | 建置 | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5 與 BART：編碼器—解碼器模型](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | 學習 | Python |
 | 09 | [視覺 Transformer（ViT）](../../phases/07-transformers-deep-dive/09-vision-transformers/) | 建置 | Python |
 | 10 | [音訊 Transformer：Whisper 架構](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | 學習 | Python |
-| 11 | [混合專家模型（MoE）](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | 建置 | Python |
-| 12 | [KV 快取、FlashAttention 與推理最佳化](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | 建置 | Python |
+| 11 | [混合專家模型（MoE）](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | 建置 | Python, Rust |
+| 12 | [KV 快取、FlashAttention 與推理最佳化](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | 建置 | Python, Rust |
 | 13 | [縮放定律](../../phases/07-transformers-deep-dive/13-scaling-laws/) | 學習 | Python |
 | 14 | [從零建置 Transformer](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | 建置 | Python |
-| 15 | [注意力變體：滑動窗口、稀疏與差分注意力](../../phases/07-transformers-deep-dive/15-attention-variants/) | 建置 | Python |
-| 16 | [推測解碼：草稿、驗證與重復](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | 建置 | Python |
+| 15 | [注意力變體：滑動窗口、稀疏與差分注意力](../../phases/07-transformers-deep-dive/15-attention-variants/) | 建置 | Python, Rust |
+| 16 | [推測解碼：草稿、驗證與重復](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | 建置 | Python, Rust |
 
 </details>
 

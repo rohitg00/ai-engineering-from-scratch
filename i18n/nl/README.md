@@ -399,11 +399,11 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 01 | [Wat is machinaal leren?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Leren | Python |
 | 02 | [Lineaire regressie vanaf nul](../../phases/02-ml-fundamentals/02-linear-regression/) | Bouwen | Python, Rust, Julia |
 | 03 | [Logistische regressie en classificatie](../../phases/02-ml-fundamentals/03-logistic-regression/) | Bouwen | Python, Rust, Julia |
-| 04 | [Beslisbomen en random forests](../../phases/02-ml-fundamentals/04-decision-trees/) | Bouwen | Python |
+| 04 | [Beslisbomen en random forests](../../phases/02-ml-fundamentals/04-decision-trees/) | Bouwen | Python, TypeScript |
 | 05 | [Supportvectormachines](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Bouwen | Python, Julia |
-| 06 | [KNN en afstandsmaten](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Bouwen | Python |
-| 07 | [Leren zonder toezicht: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Bouwen | Python |
-| 08 | [Kenmerken ontwerpen en selecteren](../../phases/02-ml-fundamentals/08-feature-engineering/) | Bouwen | Python |
+| 06 | [KNN en afstandsmaten](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Bouwen | Python, TypeScript |
+| 07 | [Leren zonder toezicht: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Bouwen | Python, TypeScript |
+| 08 | [Kenmerken ontwerpen en selecteren](../../phases/02-ml-fundamentals/08-feature-engineering/) | Bouwen | Python, TypeScript |
 | 09 | [Modelevaluatie: maatstaven en kruisvalidatie](../../phases/02-ml-fundamentals/09-model-evaluation/) | Bouwen | Python, Julia |
 | 10 | [Bias, variantie en de leercurve](../../phases/02-ml-fundamentals/10-bias-variance/) | Leren | Python |
 | 11 | [Ensemblemethoden: boosting, bagging en stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Bouwen | Python |
@@ -427,15 +427,15 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
 | 01 | [Het perceptron: waar alles begon](../../phases/03-deep-learning-core/01-the-perceptron/) | Bouwen | Python, Rust, Julia |
-| 02 | [Meerlaagse netwerken en de voorwaartse berekening](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Bouwen | Python |
+| 02 | [Meerlaagse netwerken en de voorwaartse berekening](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Bouwen | Python, TypeScript |
 | 03 | [Backpropagatie vanaf nul](../../phases/03-deep-learning-core/03-backpropagation/) | Bouwen | Python, Rust, Julia |
 | 04 | [Activatiefuncties: ReLU, sigmoid, GELU en waarom](../../phases/03-deep-learning-core/04-activation-functions/) | Bouwen | Python, Julia |
 | 05 | [Verliesfuncties: MSE, kruisentropie en contrastief verlies](../../phases/03-deep-learning-core/05-loss-functions/) | Bouwen | Python, Julia |
-| 06 | [Optimalisatoren: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Bouwen | Python |
-| 07 | [Regularisatie: dropout, gewichtsverval, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Bouwen | Python |
-| 08 | [Gewichten initialiseren en stabiel trainen](../../phases/03-deep-learning-core/08-weight-initialization/) | Bouwen | Python |
-| 09 | [Leerschema's en opwarming](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Bouwen | Python |
-| 10 | [Bouw je eigen miniframework](../../phases/03-deep-learning-core/10-mini-framework/) | Bouwen | Python |
+| 06 | [Optimalisatoren: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Bouwen | Python, TypeScript |
+| 07 | [Regularisatie: dropout, gewichtsverval, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Bouwen | Python, TypeScript |
+| 08 | [Gewichten initialiseren en stabiel trainen](../../phases/03-deep-learning-core/08-weight-initialization/) | Bouwen | Python, TypeScript |
+| 09 | [Leerschema's en opwarming](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Bouwen | Python, TypeScript |
+| 10 | [Bouw je eigen miniframework](../../phases/03-deep-learning-core/10-mini-framework/) | Bouwen | Python, TypeScript |
 | 11 | [Inleiding tot PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Bouwen | Python |
 | 12 | [Inleiding tot JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Bouwen | Python |
 | 13 | [Fouten opsporen in neurale netwerken](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Bouwen | Python |
@@ -559,12 +559,12 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 08 | [T5 en BART: encoder-decodermodellen](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Leren | Python |
 | 09 | [Visietransformers (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Bouwen | Python |
 | 10 | [Audiotransformers: de architectuur van Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Leren | Python |
-| 11 | [Mengsels van experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Bouwen | Python |
-| 12 | [KV-cache, Flash Attention en inferentieoptimalisatie](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Bouwen | Python |
+| 11 | [Mengsels van experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Bouwen | Python, Rust |
+| 12 | [KV-cache, Flash Attention en inferentieoptimalisatie](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Bouwen | Python, Rust |
 | 13 | [Schaalwetten](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Leren | Python |
 | 14 | [Bouw een transformer vanaf nul](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Bouwen | Python |
-| 15 | [Aandachtsvarianten: schuivend venster, schaars en differentieel](../../phases/07-transformers-deep-dive/15-attention-variants/) | Bouwen | Python |
-| 16 | [Speculatieve decodering: voorstellen, verifiëren, herhalen](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Bouwen | Python |
+| 15 | [Aandachtsvarianten: schuivend venster, schaars en differentieel](../../phases/07-transformers-deep-dive/15-attention-variants/) | Bouwen | Python, Rust |
+| 16 | [Speculatieve decodering: voorstellen, verifiëren, herhalen](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Bouwen | Python, Rust |
 
 </details>
 

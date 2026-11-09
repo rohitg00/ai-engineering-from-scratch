@@ -399,11 +399,11 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 | 01 | [Mi a gépi tanulás?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Tanulás | Python |
 | 02 | [Lineáris regresszió az alapoktól](../../phases/02-ml-fundamentals/02-linear-regression/) | Építés | Python, Rust, Julia |
 | 03 | [Logisztikus regresszió és osztályozás](../../phases/02-ml-fundamentals/03-logistic-regression/) | Építés | Python, Rust, Julia |
-| 04 | [Döntési fák és véletlen erdők](../../phases/02-ml-fundamentals/04-decision-trees/) | Építés | Python |
+| 04 | [Döntési fák és véletlen erdők](../../phases/02-ml-fundamentals/04-decision-trees/) | Építés | Python, TypeScript |
 | 05 | [Támaszvektor-gépek](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Építés | Python, Julia |
-| 06 | [KNN és távolságmértékek](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Építés | Python |
-| 07 | [Felügyelet nélküli tanulás: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Építés | Python |
-| 08 | [Jellemzők kialakítása és kiválasztása](../../phases/02-ml-fundamentals/08-feature-engineering/) | Építés | Python |
+| 06 | [KNN és távolságmértékek](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Építés | Python, TypeScript |
+| 07 | [Felügyelet nélküli tanulás: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Építés | Python, TypeScript |
+| 08 | [Jellemzők kialakítása és kiválasztása](../../phases/02-ml-fundamentals/08-feature-engineering/) | Építés | Python, TypeScript |
 | 09 | [Modellek értékelése: mérőszámok és keresztvalidáció](../../phases/02-ml-fundamentals/09-model-evaluation/) | Építés | Python, Julia |
 | 10 | [Torzítás, variancia és tanulási görbe](../../phases/02-ml-fundamentals/10-bias-variance/) | Tanulás | Python |
 | 11 | [Együttes módszerek: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Építés | Python |
@@ -427,15 +427,15 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 | # | Lecke | Típus | Nyelv |
 |:---:|--------|:----:|------|
 | 01 | [A perceptron: ahol minden kezdődött](../../phases/03-deep-learning-core/01-the-perceptron/) | Építés | Python, Rust, Julia |
-| 02 | [Többrétegű hálózatok és előrehaladás](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Építés | Python |
+| 02 | [Többrétegű hálózatok és előrehaladás](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Építés | Python, TypeScript |
 | 03 | [Hibavisszaterjesztés az alapoktól](../../phases/03-deep-learning-core/03-backpropagation/) | Építés | Python, Rust, Julia |
 | 04 | [Aktivációs függvények: ReLU, szigmoid, GELU és szerepük](../../phases/03-deep-learning-core/04-activation-functions/) | Építés | Python, Julia |
 | 05 | [Veszteségfüggvények: MSE, keresztentrópia és kontrasztív veszteség](../../phases/03-deep-learning-core/05-loss-functions/) | Építés | Python, Julia |
-| 06 | [Optimalizálók: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Építés | Python |
-| 07 | [Regularizáció: dropout, súlycsökkentés, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Építés | Python |
-| 08 | [Súlyinicializálás és a tanítás stabilitása](../../phases/03-deep-learning-core/08-weight-initialization/) | Építés | Python |
-| 09 | [Tanulásiráta-ütemezés és bemelegítés](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Építés | Python |
-| 10 | [Készíts saját kis keretrendszert](../../phases/03-deep-learning-core/10-mini-framework/) | Építés | Python |
+| 06 | [Optimalizálók: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Építés | Python, TypeScript |
+| 07 | [Regularizáció: dropout, súlycsökkentés, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Építés | Python, TypeScript |
+| 08 | [Súlyinicializálás és a tanítás stabilitása](../../phases/03-deep-learning-core/08-weight-initialization/) | Építés | Python, TypeScript |
+| 09 | [Tanulásiráta-ütemezés és bemelegítés](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Építés | Python, TypeScript |
+| 10 | [Készíts saját kis keretrendszert](../../phases/03-deep-learning-core/10-mini-framework/) | Építés | Python, TypeScript |
 | 11 | [Bevezetés a PyTorch használatába](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Építés | Python |
 | 12 | [Bevezetés a JAX használatába](../../phases/03-deep-learning-core/12-intro-to-jax/) | Építés | Python |
 | 13 | [Neurális hálózatok hibakeresése](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Építés | Python |
@@ -559,12 +559,12 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 | 08 | [T5 és BART: kódoló-dekódoló modellek](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Tanulás | Python |
 | 09 | [Vizuális transzformerek (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Építés | Python |
 | 10 | [Hangtranszformerek: a Whisper felépítése](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Tanulás | Python |
-| 11 | [Szakértők keveréke (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Építés | Python |
-| 12 | [KV-gyorsítótár, Flash Attention és következtetésoptimalizálás](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Építés | Python |
+| 11 | [Szakértők keveréke (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Építés | Python, Rust |
+| 12 | [KV-gyorsítótár, Flash Attention és következtetésoptimalizálás](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Építés | Python, Rust |
 | 13 | [Skálázási törvények](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Tanulás | Python |
 | 14 | [Készíts transzformert az alapoktól](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Építés | Python |
-| 15 | [Figyelemváltozatok: csúszóablakos, ritka és differenciális](../../phases/07-transformers-deep-dive/15-attention-variants/) | Építés | Python |
-| 16 | [Spekulatív dekódolás: javasolj, ellenőrizz, ismételj](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Építés | Python |
+| 15 | [Figyelemváltozatok: csúszóablakos, ritka és differenciális](../../phases/07-transformers-deep-dive/15-attention-variants/) | Építés | Python, Rust |
+| 16 | [Spekulatív dekódolás: javasolj, ellenőrizz, ismételj](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Építés | Python, Rust |
 
 </details>
 

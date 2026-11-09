@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [মেশিন লার্নিং কী](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | শিখুন | Python |
 | 02 | [শুরু থেকে লিনিয়ার রিগ্রেশন](../../phases/02-ml-fundamentals/02-linear-regression/) | তৈরি | Python, Rust, Julia |
 | 03 | [লজিস্টিক রিগ্রেশন ও শ্রেণিবিন্যাস](../../phases/02-ml-fundamentals/03-logistic-regression/) | তৈরি | Python, Rust, Julia |
-| 04 | [ডিসিশন ট্রি ও র‍্যান্ডম ফরেস্ট](../../phases/02-ml-fundamentals/04-decision-trees/) | তৈরি | Python |
+| 04 | [ডিসিশন ট্রি ও র‍্যান্ডম ফরেস্ট](../../phases/02-ml-fundamentals/04-decision-trees/) | তৈরি | Python, TypeScript |
 | 05 | [সাপোর্ট ভেক্টর মেশিন](../../phases/02-ml-fundamentals/05-support-vector-machines/) | তৈরি | Python, Julia |
-| 06 | [KNN ও দূরত্বের মাপকাঠি](../../phases/02-ml-fundamentals/06-knn-and-distances/) | তৈরি | Python |
-| 07 | [তত্ত্বাবধানহীন শিক্ষা: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | তৈরি | Python |
-| 08 | [ফিচার তৈরি ও নির্বাচন](../../phases/02-ml-fundamentals/08-feature-engineering/) | তৈরি | Python |
+| 06 | [KNN ও দূরত্বের মাপকাঠি](../../phases/02-ml-fundamentals/06-knn-and-distances/) | তৈরি | Python, TypeScript |
+| 07 | [তত্ত্বাবধানহীন শিক্ষা: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | তৈরি | Python, TypeScript |
+| 08 | [ফিচার তৈরি ও নির্বাচন](../../phases/02-ml-fundamentals/08-feature-engineering/) | তৈরি | Python, TypeScript |
 | 09 | [মডেল মূল্যায়ন: মাপকাঠি ও ক্রস-ভ্যালিডেশন](../../phases/02-ml-fundamentals/09-model-evaluation/) | তৈরি | Python, Julia |
 | 10 | [বায়াস, ভ্যারিয়েন্স ও শেখার বক্ররেখা](../../phases/02-ml-fundamentals/10-bias-variance/) | শিখুন | Python |
 | 11 | [এনসেম্বল পদ্ধতি: Boosting, Bagging, Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | তৈরি | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | # | পাঠ | ধরন | ভাষা |
 |:---:|--------|:----:|------|
 | 01 | [পারসেপট্রন: সবকিছুর শুরু](../../phases/03-deep-learning-core/01-the-perceptron/) | তৈরি | Python, Rust, Julia |
-| 02 | [বহুস্তর নেটওয়ার্ক ও ফরোয়ার্ড পাস](../../phases/03-deep-learning-core/02-multi-layer-networks/) | তৈরি | Python |
+| 02 | [বহুস্তর নেটওয়ার্ক ও ফরোয়ার্ড পাস](../../phases/03-deep-learning-core/02-multi-layer-networks/) | তৈরি | Python, TypeScript |
 | 03 | [শুরু থেকে ব্যাকপ্রোপাগেশন](../../phases/03-deep-learning-core/03-backpropagation/) | তৈরি | Python, Rust, Julia |
 | 04 | [অ্যাক্টিভেশন ফাংশন: ReLU, Sigmoid, GELU ও ব্যবহারের কারণ](../../phases/03-deep-learning-core/04-activation-functions/) | তৈরি | Python, Julia |
 | 05 | [লস ফাংশন: MSE, ক্রস-এনট্রপি, কনট্রাস্টিভ](../../phases/03-deep-learning-core/05-loss-functions/) | তৈরি | Python, Julia |
-| 06 | [অপ্টিমাইজার: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | তৈরি | Python |
-| 07 | [রেগুলারাইজেশন: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | তৈরি | Python |
-| 08 | [ওয়েটের প্রাথমিক মান ও প্রশিক্ষণের স্থিতিশীলতা](../../phases/03-deep-learning-core/08-weight-initialization/) | তৈরি | Python |
-| 09 | [লার্নিং রেটের সময়সূচি ও ওয়ার্মআপ](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | তৈরি | Python |
-| 10 | [নিজের ছোট ফ্রেমওয়ার্ক তৈরি করুন](../../phases/03-deep-learning-core/10-mini-framework/) | তৈরি | Python |
+| 06 | [অপ্টিমাইজার: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | তৈরি | Python, TypeScript |
+| 07 | [রেগুলারাইজেশন: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | তৈরি | Python, TypeScript |
+| 08 | [ওয়েটের প্রাথমিক মান ও প্রশিক্ষণের স্থিতিশীলতা](../../phases/03-deep-learning-core/08-weight-initialization/) | তৈরি | Python, TypeScript |
+| 09 | [লার্নিং রেটের সময়সূচি ও ওয়ার্মআপ](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | তৈরি | Python, TypeScript |
+| 10 | [নিজের ছোট ফ্রেমওয়ার্ক তৈরি করুন](../../phases/03-deep-learning-core/10-mini-framework/) | তৈরি | Python, TypeScript |
 | 11 | [PyTorch পরিচিতি](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | তৈরি | Python |
 | 12 | [JAX পরিচিতি](../../phases/03-deep-learning-core/12-intro-to-jax/) | তৈরি | Python |
 | 13 | [নিউরাল নেটওয়ার্ক ডিবাগ করা](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | তৈরি | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5, BART: এনকোডার-ডিকোডার মডেল](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | শিখুন | Python |
 | 09 | [ভিশন ট্রান্সফর্মার (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | তৈরি | Python |
 | 10 | [অডিও ট্রান্সফর্মার: Whisper-এর স্থাপত্য](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | শিখুন | Python |
-| 11 | [বিশেষজ্ঞদের মিশ্রণ (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | তৈরি | Python |
-| 12 | [KV ক্যাশ, Flash Attention ও ইনফারেন্স অপ্টিমাইজেশন](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | তৈরি | Python |
+| 11 | [বিশেষজ্ঞদের মিশ্রণ (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | তৈরি | Python, Rust |
+| 12 | [KV ক্যাশ, Flash Attention ও ইনফারেন্স অপ্টিমাইজেশন](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | তৈরি | Python, Rust |
 | 13 | [স্কেলিংয়ের নিয়ম](../../phases/07-transformers-deep-dive/13-scaling-laws/) | শিখুন | Python |
 | 14 | [শুরু থেকে ট্রান্সফর্মার তৈরি করুন](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | তৈরি | Python |
-| 15 | [অ্যাটেনশনের ধরন: স্লাইডিং উইন্ডো, স্পার্স, ডিফারেনশিয়াল](../../phases/07-transformers-deep-dive/15-attention-variants/) | তৈরি | Python |
-| 16 | [অনুমানভিত্তিক ডিকোডিং: খসড়া, যাচাই, পুনরাবৃত্তি](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | তৈরি | Python |
+| 15 | [অ্যাটেনশনের ধরন: স্লাইডিং উইন্ডো, স্পার্স, ডিফারেনশিয়াল](../../phases/07-transformers-deep-dive/15-attention-variants/) | তৈরি | Python, Rust |
+| 16 | [অনুমানভিত্তিক ডিকোডিং: খসড়া, যাচাই, পুনরাবৃত্তি](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | তৈরি | Python, Rust |
 
 </details>
 

@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [แมชชีนเลิร์นนิงคืออะไร](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | เรียนรู้ | Python |
 | 02 | [การถดถอยเชิงเส้นจากศูนย์](../../phases/02-ml-fundamentals/02-linear-regression/) | สร้าง | Python, Rust, Julia |
 | 03 | [การถดถอยโลจิสติกและการจำแนกประเภท](../../phases/02-ml-fundamentals/03-logistic-regression/) | สร้าง | Python, Rust, Julia |
-| 04 | [ต้นไม้ตัดสินใจและแรนดอมฟอเรสต์](../../phases/02-ml-fundamentals/04-decision-trees/) | สร้าง | Python |
+| 04 | [ต้นไม้ตัดสินใจและแรนดอมฟอเรสต์](../../phases/02-ml-fundamentals/04-decision-trees/) | สร้าง | Python, TypeScript |
 | 05 | [ซัพพอร์ตเวกเตอร์แมชชีน](../../phases/02-ml-fundamentals/05-support-vector-machines/) | สร้าง | Python, Julia |
-| 06 | [KNN และมาตรวัดระยะทาง](../../phases/02-ml-fundamentals/06-knn-and-distances/) | สร้าง | Python |
-| 07 | [การเรียนรู้แบบไม่มีผู้สอน: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | สร้าง | Python |
-| 08 | [การสร้างและเลือกคุณลักษณะ](../../phases/02-ml-fundamentals/08-feature-engineering/) | สร้าง | Python |
+| 06 | [KNN และมาตรวัดระยะทาง](../../phases/02-ml-fundamentals/06-knn-and-distances/) | สร้าง | Python, TypeScript |
+| 07 | [การเรียนรู้แบบไม่มีผู้สอน: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | สร้าง | Python, TypeScript |
+| 08 | [การสร้างและเลือกคุณลักษณะ](../../phases/02-ml-fundamentals/08-feature-engineering/) | สร้าง | Python, TypeScript |
 | 09 | [การประเมินโมเดล: ตัวชี้วัดและการตรวจสอบไขว้](../../phases/02-ml-fundamentals/09-model-evaluation/) | สร้าง | Python, Julia |
 | 10 | [ไบแอส ความแปรปรวน และเส้นโค้งการเรียนรู้](../../phases/02-ml-fundamentals/10-bias-variance/) | เรียนรู้ | Python |
 | 11 | [วิธีเอนเซมเบิล: boosting, bagging, stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | สร้าง | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | # | บทเรียน | ประเภท | ภาษา |
 |:---:|--------|:----:|------|
 | 01 | [เพอร์เซปตรอน: จุดเริ่มต้นของทุกอย่าง](../../phases/03-deep-learning-core/01-the-perceptron/) | สร้าง | Python, Rust, Julia |
-| 02 | [โครงข่ายหลายชั้นและการคำนวณไปข้างหน้า](../../phases/03-deep-learning-core/02-multi-layer-networks/) | สร้าง | Python |
+| 02 | [โครงข่ายหลายชั้นและการคำนวณไปข้างหน้า](../../phases/03-deep-learning-core/02-multi-layer-networks/) | สร้าง | Python, TypeScript |
 | 03 | [แบ็กโพรพาเกชันจากศูนย์](../../phases/03-deep-learning-core/03-backpropagation/) | สร้าง | Python, Rust, Julia |
 | 04 | [ฟังก์ชันกระตุ้น: ReLU, Sigmoid, GELU และเหตุผลที่ใช้](../../phases/03-deep-learning-core/04-activation-functions/) | สร้าง | Python, Julia |
 | 05 | [ฟังก์ชันความสูญเสีย: MSE, cross-entropy และแบบเปรียบต่าง](../../phases/03-deep-learning-core/05-loss-functions/) | สร้าง | Python, Julia |
-| 06 | [ตัวปรับค่า: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | สร้าง | Python |
-| 07 | [การลดการฟิตเกิน: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | สร้าง | Python |
-| 08 | [การเริ่มค่าน้ำหนักและเสถียรภาพการฝึก](../../phases/03-deep-learning-core/08-weight-initialization/) | สร้าง | Python |
-| 09 | [ตารางอัตราการเรียนรู้และช่วงวอร์มอัป](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | สร้าง | Python |
-| 10 | [สร้างมินิเฟรมเวิร์กของคุณเอง](../../phases/03-deep-learning-core/10-mini-framework/) | สร้าง | Python |
+| 06 | [ตัวปรับค่า: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | สร้าง | Python, TypeScript |
+| 07 | [การลดการฟิตเกิน: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | สร้าง | Python, TypeScript |
+| 08 | [การเริ่มค่าน้ำหนักและเสถียรภาพการฝึก](../../phases/03-deep-learning-core/08-weight-initialization/) | สร้าง | Python, TypeScript |
+| 09 | [ตารางอัตราการเรียนรู้และช่วงวอร์มอัป](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | สร้าง | Python, TypeScript |
+| 10 | [สร้างมินิเฟรมเวิร์กของคุณเอง](../../phases/03-deep-learning-core/10-mini-framework/) | สร้าง | Python, TypeScript |
 | 11 | [แนะนำ PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | สร้าง | Python |
 | 12 | [แนะนำ JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | สร้าง | Python |
 | 13 | [ดีบักโครงข่ายประสาท](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | สร้าง | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5, BART: โมเดลเข้ารหัส-ถอดรหัส](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | เรียนรู้ | Python |
 | 09 | [Vision Transformers (ViT) สำหรับงานภาพ](../../phases/07-transformers-deep-dive/09-vision-transformers/) | สร้าง | Python |
 | 10 | [Transformer สำหรับเสียง: สถาปัตยกรรม Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | เรียนรู้ | Python |
-| 11 | [ส่วนผสมของผู้เชี่ยวชาญ (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | สร้าง | Python |
-| 12 | [แคช KV, Flash Attention และการเพิ่มประสิทธิภาพการอนุมาน](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | สร้าง | Python |
+| 11 | [ส่วนผสมของผู้เชี่ยวชาญ (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | สร้าง | Python, Rust |
+| 12 | [แคช KV, Flash Attention และการเพิ่มประสิทธิภาพการอนุมาน](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | สร้าง | Python, Rust |
 | 13 | [กฎการขยายขนาด](../../phases/07-transformers-deep-dive/13-scaling-laws/) | เรียนรู้ | Python |
 | 14 | [สร้าง Transformer จากศูนย์](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | สร้าง | Python |
-| 15 | [รูปแบบ attention: หน้าต่างเลื่อน แบบเบาบาง และแบบผลต่าง](../../phases/07-transformers-deep-dive/15-attention-variants/) | สร้าง | Python |
-| 16 | [ถอดรหัสเชิงคาดการณ์: ร่าง ตรวจสอบ ทำซ้ำ](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | สร้าง | Python |
+| 15 | [รูปแบบ attention: หน้าต่างเลื่อน แบบเบาบาง และแบบผลต่าง](../../phases/07-transformers-deep-dive/15-attention-variants/) | สร้าง | Python, Rust |
+| 16 | [ถอดรหัสเชิงคาดการณ์: ร่าง ตรวจสอบ ทำซ้ำ](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | สร้าง | Python, Rust |
 
 </details>
 

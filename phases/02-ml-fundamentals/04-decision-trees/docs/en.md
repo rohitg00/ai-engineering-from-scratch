@@ -3,7 +3,7 @@
 > A decision tree is just a flowchart. But a forest of them is one of the most powerful tools in ML.
 
 **Type:** Build
-**Language:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lessons 09 Information Theory, 06 Probability)
 **Time:** ~90 minutes
 
@@ -412,7 +412,7 @@ class RandomForest:
         return predictions
 ```
 
-See `code/trees.py` for the complete implementation with all helper methods.
+See `code/trees.py` for the complete implementation with all helper methods. `code/trees.ts` is a TypeScript port with the same functions and demos. Run it with `npx tsx code/trees.ts`.
 
 ## Use It
 

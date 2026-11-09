@@ -399,11 +399,11 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 | 01 | [Che cos’è il machine learning?](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Imparare | Python |
 | 02 | [Regressione lineare da zero](../../phases/02-ml-fundamentals/02-linear-regression/) | Costruire | Python, Rust, Julia |
 | 03 | [Regressione logistica e classificazione](../../phases/02-ml-fundamentals/03-logistic-regression/) | Costruire | Python, Rust, Julia |
-| 04 | [Alberi decisionali e foreste casuali](../../phases/02-ml-fundamentals/04-decision-trees/) | Costruire | Python |
+| 04 | [Alberi decisionali e foreste casuali](../../phases/02-ml-fundamentals/04-decision-trees/) | Costruire | Python, TypeScript |
 | 05 | [Macchine a vettori di supporto](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Costruire | Python, Julia |
-| 06 | [KNN e metriche di distanza](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Costruire | Python |
-| 07 | [Apprendimento non supervisionato: K-means e DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Costruire | Python |
-| 08 | [Ingegneria e selezione delle caratteristiche](../../phases/02-ml-fundamentals/08-feature-engineering/) | Costruire | Python |
+| 06 | [KNN e metriche di distanza](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Costruire | Python, TypeScript |
+| 07 | [Apprendimento non supervisionato: K-means e DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Costruire | Python, TypeScript |
+| 08 | [Ingegneria e selezione delle caratteristiche](../../phases/02-ml-fundamentals/08-feature-engineering/) | Costruire | Python, TypeScript |
 | 09 | [Valutazione dei modelli: metriche e convalida incrociata](../../phases/02-ml-fundamentals/09-model-evaluation/) | Costruire | Python, Julia |
 | 10 | [Bias, varianza e curva di apprendimento](../../phases/02-ml-fundamentals/10-bias-variance/) | Imparare | Python |
 | 11 | [Metodi ensemble: boosting, bagging e stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Costruire | Python |
@@ -427,15 +427,15 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 | # | Lezione | Tipo | Linguaggio |
 |:---:|--------|:----:|------|
 | 01 | [Il percettrone: l’inizio di tutto](../../phases/03-deep-learning-core/01-the-perceptron/) | Costruire | Python, Rust, Julia |
-| 02 | [Reti multistrato e passaggio in avanti](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Costruire | Python |
+| 02 | [Reti multistrato e passaggio in avanti](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Costruire | Python, TypeScript |
 | 03 | [Backpropagation da zero](../../phases/03-deep-learning-core/03-backpropagation/) | Costruire | Python, Rust, Julia |
 | 04 | [Funzioni di attivazione: ReLU, sigmoide, GELU e perché servono](../../phases/03-deep-learning-core/04-activation-functions/) | Costruire | Python, Julia |
 | 05 | [Funzioni di perdita: MSE, entropia incrociata e loss contrastiva](../../phases/03-deep-learning-core/05-loss-functions/) | Costruire | Python, Julia |
-| 06 | [Ottimizzatori: SGD, momentum, Adam e AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Costruire | Python |
-| 07 | [Regolarizzazione: dropout, weight decay e BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Costruire | Python |
-| 08 | [Inizializzazione dei pesi e stabilità dell’addestramento](../../phases/03-deep-learning-core/08-weight-initialization/) | Costruire | Python |
-| 09 | [Scheduler del learning rate e warmup](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Costruire | Python |
-| 10 | [Costruisci il tuo mini-framework](../../phases/03-deep-learning-core/10-mini-framework/) | Costruire | Python |
+| 06 | [Ottimizzatori: SGD, momentum, Adam e AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Costruire | Python, TypeScript |
+| 07 | [Regolarizzazione: dropout, weight decay e BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Costruire | Python, TypeScript |
+| 08 | [Inizializzazione dei pesi e stabilità dell’addestramento](../../phases/03-deep-learning-core/08-weight-initialization/) | Costruire | Python, TypeScript |
+| 09 | [Scheduler del learning rate e warmup](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Costruire | Python, TypeScript |
+| 10 | [Costruisci il tuo mini-framework](../../phases/03-deep-learning-core/10-mini-framework/) | Costruire | Python, TypeScript |
 | 11 | [Introduzione a PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Costruire | Python |
 | 12 | [Introduzione a JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Costruire | Python |
 | 13 | [Debug delle reti neurali](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Costruire | Python |
@@ -559,12 +559,12 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 | 08 | [T5 e BART: modelli encoder-decoder](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Imparare | Python |
 | 09 | [Vision Transformer (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Costruire | Python |
 | 10 | [Transformer audio: architettura di Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Imparare | Python |
-| 11 | [Mixture of Experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Costruire | Python |
-| 12 | [KV cache, FlashAttention e ottimizzazione dell’inferenza](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Costruire | Python |
+| 11 | [Mixture of Experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Costruire | Python, Rust |
+| 12 | [KV cache, FlashAttention e ottimizzazione dell’inferenza](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Costruire | Python, Rust |
 | 13 | [Scaling law](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Imparare | Python |
 | 14 | [Costruisci un Transformer da zero](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Costruire | Python |
-| 15 | [Varianti dell’attenzione: finestra scorrevole, sparsa e differenziale](../../phases/07-transformers-deep-dive/15-attention-variants/) | Costruire | Python |
-| 16 | [Speculative decoding: proposta, verifica, ripetizione](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Costruire | Python |
+| 15 | [Varianti dell’attenzione: finestra scorrevole, sparsa e differenziale](../../phases/07-transformers-deep-dive/15-attention-variants/) | Costruire | Python, Rust |
+| 16 | [Speculative decoding: proposta, verifica, ripetizione](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Costruire | Python, Rust |
 
 </details>
 

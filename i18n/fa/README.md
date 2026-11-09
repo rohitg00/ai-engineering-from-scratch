@@ -399,11 +399,11 @@ flowchart TB
 | 01 | [یادگیری ماشین چیست](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | بیاموزید | Python |
 | 02 | [رگرسیون خطی از ابتدا](../../phases/02-ml-fundamentals/02-linear-regression/) | بسازید | Python, Rust, Julia |
 | 03 | [رگرسیون لجستیک و دسته‌بندی](../../phases/02-ml-fundamentals/03-logistic-regression/) | بسازید | Python, Rust, Julia |
-| 04 | [درخت تصمیم و جنگل تصادفی](../../phases/02-ml-fundamentals/04-decision-trees/) | بسازید | Python |
+| 04 | [درخت تصمیم و جنگل تصادفی](../../phases/02-ml-fundamentals/04-decision-trees/) | بسازید | Python, TypeScript |
 | 05 | [ماشین‌های بردار پشتیبان](../../phases/02-ml-fundamentals/05-support-vector-machines/) | بسازید | Python, Julia |
-| 06 | [KNN و معیارهای فاصله](../../phases/02-ml-fundamentals/06-knn-and-distances/) | بسازید | Python |
-| 07 | [یادگیری بدون نظارت: K-Means، DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | بسازید | Python |
-| 08 | [مهندسی و انتخاب ویژگی](../../phases/02-ml-fundamentals/08-feature-engineering/) | بسازید | Python |
+| 06 | [KNN و معیارهای فاصله](../../phases/02-ml-fundamentals/06-knn-and-distances/) | بسازید | Python, TypeScript |
+| 07 | [یادگیری بدون نظارت: K-Means، DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | بسازید | Python, TypeScript |
+| 08 | [مهندسی و انتخاب ویژگی](../../phases/02-ml-fundamentals/08-feature-engineering/) | بسازید | Python, TypeScript |
 | 09 | [ارزیابی مدل: معیارها و اعتبارسنجی متقاطع](../../phases/02-ml-fundamentals/09-model-evaluation/) | بسازید | Python, Julia |
 | 10 | [سوگیری، واریانس و منحنی یادگیری](../../phases/02-ml-fundamentals/10-bias-variance/) | بیاموزید | Python |
 | 11 | [روش‌های تجمیعی: Boosting، Bagging، Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | بسازید | Python |
@@ -427,15 +427,15 @@ flowchart TB
 | # | درس | نوع | زبان |
 |:---:|--------|:----:|------|
 | 01 | [پرسپترون: نقطهٔ آغاز](../../phases/03-deep-learning-core/01-the-perceptron/) | بسازید | Python, Rust, Julia |
-| 02 | [شبکه‌های چندلایه و گذر رو به جلو](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بسازید | Python |
+| 02 | [شبکه‌های چندلایه و گذر رو به جلو](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بسازید | Python, TypeScript |
 | 03 | [پس‌انتشار از ابتدا](../../phases/03-deep-learning-core/03-backpropagation/) | بسازید | Python, Rust, Julia |
 | 04 | [توابع فعال‌سازی: ReLU، Sigmoid، GELU و دلیل استفاده](../../phases/03-deep-learning-core/04-activation-functions/) | بسازید | Python, Julia |
 | 05 | [توابع زیان: MSE، آنتروپی متقاطع، تقابلی](../../phases/03-deep-learning-core/05-loss-functions/) | بسازید | Python, Julia |
-| 06 | [بهینه‌سازها: SGD، Momentum، Adam، AdamW](../../phases/03-deep-learning-core/06-optimizers/) | بسازید | Python |
-| 07 | [منظم‌سازی: Dropout، کاهش وزن، BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بسازید | Python |
-| 08 | [مقداردهی اولیهٔ وزن‌ها و پایداری آموزش](../../phases/03-deep-learning-core/08-weight-initialization/) | بسازید | Python |
-| 09 | [زمان‌بندی نرخ یادگیری و گرم‌کردن](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | بسازید | Python |
-| 10 | [چارچوب کوچک خود را بسازید](../../phases/03-deep-learning-core/10-mini-framework/) | بسازید | Python |
+| 06 | [بهینه‌سازها: SGD، Momentum، Adam، AdamW](../../phases/03-deep-learning-core/06-optimizers/) | بسازید | Python, TypeScript |
+| 07 | [منظم‌سازی: Dropout، کاهش وزن، BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بسازید | Python, TypeScript |
+| 08 | [مقداردهی اولیهٔ وزن‌ها و پایداری آموزش](../../phases/03-deep-learning-core/08-weight-initialization/) | بسازید | Python, TypeScript |
+| 09 | [زمان‌بندی نرخ یادگیری و گرم‌کردن](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | بسازید | Python, TypeScript |
+| 10 | [چارچوب کوچک خود را بسازید](../../phases/03-deep-learning-core/10-mini-framework/) | بسازید | Python, TypeScript |
 | 11 | [آشنایی با PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | بسازید | Python |
 | 12 | [آشنایی با JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | بسازید | Python |
 | 13 | [اشکال‌زدایی شبکه‌های عصبی](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | بسازید | Python |
@@ -559,12 +559,12 @@ flowchart TB
 | 08 | [T5، BART: مدل‌های رمزگذار-رمزگشا](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | بیاموزید | Python |
 | 09 | [ترنسفورمرهای بینایی (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | بسازید | Python |
 | 10 | [ترنسفورمرهای صوت: معماری Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | بیاموزید | Python |
-| 11 | [ترکیب متخصصان (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | بسازید | Python |
-| 12 | [حافظهٔ نهان KV، Flash Attention و بهینه‌سازی استنتاج](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | بسازید | Python |
+| 11 | [ترکیب متخصصان (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | بسازید | Python, Rust |
+| 12 | [حافظهٔ نهان KV، Flash Attention و بهینه‌سازی استنتاج](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | بسازید | Python, Rust |
 | 13 | [قوانین مقیاس‌پذیری](../../phases/07-transformers-deep-dive/13-scaling-laws/) | بیاموزید | Python |
 | 14 | [ساخت ترنسفورمر از ابتدا](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | بسازید | Python |
-| 15 | [گونه‌های توجه: پنجرهٔ لغزان، تنک، تفاضلی](../../phases/07-transformers-deep-dive/15-attention-variants/) | بسازید | Python |
-| 16 | [رمزگشایی حدسی: پیش‌نویس، تأیید، تکرار](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | بسازید | Python |
+| 15 | [گونه‌های توجه: پنجرهٔ لغزان، تنک، تفاضلی](../../phases/07-transformers-deep-dive/15-attention-variants/) | بسازید | Python, Rust |
+| 16 | [رمزگشایی حدسی: پیش‌نویس، تأیید، تکرار](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | بسازید | Python, Rust |
 
 </details>
 

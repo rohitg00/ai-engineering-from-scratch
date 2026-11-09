@@ -25,6 +25,10 @@ class Layer:
         self.last_input = inputs
         self.last_output = []
         for neuron_idx in range(len(self.weights)):
+            if len(self.weights[neuron_idx]) != len(inputs):
+                raise ValueError(
+                    f"neuron {neuron_idx} expects {len(self.weights[neuron_idx])} inputs, got {len(inputs)}"
+                )
             z = sum(
                 w * x for w, x in zip(self.weights[neuron_idx], inputs)
             )

@@ -399,11 +399,11 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 | 01 | [Ano ang machine learning](../../phases/02-ml-fundamentals/01-what-is-machine-learning/) | Pag-aralan | Python |
 | 02 | [Linear regression mula sa simula](../../phases/02-ml-fundamentals/02-linear-regression/) | Buuin | Python, Rust, Julia |
 | 03 | [Logistic regression at pag-uuri](../../phases/02-ml-fundamentals/03-logistic-regression/) | Buuin | Python, Rust, Julia |
-| 04 | [Mga decision tree at random forest](../../phases/02-ml-fundamentals/04-decision-trees/) | Buuin | Python |
+| 04 | [Mga decision tree at random forest](../../phases/02-ml-fundamentals/04-decision-trees/) | Buuin | Python, TypeScript |
 | 05 | [Support Vector Machines](../../phases/02-ml-fundamentals/05-support-vector-machines/) | Buuin | Python, Julia |
-| 06 | [KNN at mga sukatan ng distansiya](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Buuin | Python |
-| 07 | [Unsupervised learning: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Buuin | Python |
-| 08 | [Pagdisenyo at pagpili ng feature](../../phases/02-ml-fundamentals/08-feature-engineering/) | Buuin | Python |
+| 06 | [KNN at mga sukatan ng distansiya](../../phases/02-ml-fundamentals/06-knn-and-distances/) | Buuin | Python, TypeScript |
+| 07 | [Unsupervised learning: K-Means, DBSCAN](../../phases/02-ml-fundamentals/07-unsupervised-learning/) | Buuin | Python, TypeScript |
+| 08 | [Pagdisenyo at pagpili ng feature](../../phases/02-ml-fundamentals/08-feature-engineering/) | Buuin | Python, TypeScript |
 | 09 | [Pagsusuri ng modelo: mga sukatan at cross-validation](../../phases/02-ml-fundamentals/09-model-evaluation/) | Buuin | Python, Julia |
 | 10 | [Bias, variance at learning curve](../../phases/02-ml-fundamentals/10-bias-variance/) | Pag-aralan | Python |
 | 11 | [Mga pamamaraang ensemble: Boosting, Bagging, Stacking](../../phases/02-ml-fundamentals/11-ensemble-methods/) | Buuin | Python |
@@ -427,15 +427,15 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 | # | Aralin | Uri | Wika |
 |:---:|--------|:----:|------|
 | 01 | [Ang perceptron: kung saan nagsimula ang lahat](../../phases/03-deep-learning-core/01-the-perceptron/) | Buuin | Python, Rust, Julia |
-| 02 | [Mga network na maraming layer at forward pass](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Buuin | Python |
+| 02 | [Mga network na maraming layer at forward pass](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Buuin | Python, TypeScript |
 | 03 | [Backpropagation mula sa simula](../../phases/03-deep-learning-core/03-backpropagation/) | Buuin | Python, Rust, Julia |
 | 04 | [Mga activation function: ReLU, Sigmoid, GELU at kung bakit](../../phases/03-deep-learning-core/04-activation-functions/) | Buuin | Python, Julia |
 | 05 | [Mga loss function: MSE, cross-entropy, contrastive](../../phases/03-deep-learning-core/05-loss-functions/) | Buuin | Python, Julia |
-| 06 | [Mga optimizer: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Buuin | Python |
-| 07 | [Mga paraan ng regularization: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Buuin | Python |
-| 08 | [Pagsisimula ng timbang at katatagan ng training](../../phases/03-deep-learning-core/08-weight-initialization/) | Buuin | Python |
-| 09 | [Mga iskedyul ng learning rate at warmup](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Buuin | Python |
-| 10 | [Bumuo ng sarili mong maliit na framework](../../phases/03-deep-learning-core/10-mini-framework/) | Buuin | Python |
+| 06 | [Mga optimizer: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Buuin | Python, TypeScript |
+| 07 | [Mga paraan ng regularization: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Buuin | Python, TypeScript |
+| 08 | [Pagsisimula ng timbang at katatagan ng training](../../phases/03-deep-learning-core/08-weight-initialization/) | Buuin | Python, TypeScript |
+| 09 | [Mga iskedyul ng learning rate at warmup](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Buuin | Python, TypeScript |
+| 10 | [Bumuo ng sarili mong maliit na framework](../../phases/03-deep-learning-core/10-mini-framework/) | Buuin | Python, TypeScript |
 | 11 | [Panimula sa PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Buuin | Python |
 | 12 | [Panimula sa JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Buuin | Python |
 | 13 | [Pag-debug ng mga neural network](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Buuin | Python |
@@ -559,12 +559,12 @@ Dalawampung yugto. I-click ang anumang yugto upang buksan ang listahan ng mga ar
 | 08 | [T5, BART: mga encoder-decoder model](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Pag-aralan | Python |
 | 09 | [Mga Vision Transformer (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Buuin | Python |
 | 10 | [Mga audio Transformer: arkitektura ng Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Pag-aralan | Python |
-| 11 | [Mixture of Experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Buuin | Python |
-| 12 | [KV cache, Flash Attention at pag-optimize ng inference](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Buuin | Python |
+| 11 | [Mixture of Experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Buuin | Python, Rust |
+| 12 | [KV cache, Flash Attention at pag-optimize ng inference](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Buuin | Python, Rust |
 | 13 | [Mga batas ng pag-scale](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Pag-aralan | Python |
 | 14 | [Bumuo ng Transformer mula sa simula](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Buuin | Python |
-| 15 | [Mga uri ng attention: sliding window, sparse, differential](../../phases/07-transformers-deep-dive/15-attention-variants/) | Buuin | Python |
-| 16 | [Speculative decoding: gumawa ng draft, suriin, ulitin](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Buuin | Python |
+| 15 | [Mga uri ng attention: sliding window, sparse, differential](../../phases/07-transformers-deep-dive/15-attention-variants/) | Buuin | Python, Rust |
+| 16 | [Speculative decoding: gumawa ng draft, suriin, ulitin](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Buuin | Python, Rust |
 
 </details>
 
