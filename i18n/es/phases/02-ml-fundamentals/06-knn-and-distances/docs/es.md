@@ -3,7 +3,7 @@
 > Almacenar todo, predecir mirando a sus vecinos, el algoritmo más simple que realmente funciona.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lesson 14 Norms and Distances)
 **Time:** ~90 minutes
 
@@ -298,7 +298,7 @@ class KDTree:
         ...
 ```
 
-¿ Qué ?`code/knn.py`para la implementación completa con todos los métodos auxiliares y demos.
+¿ Qué ?`code/knn.py`para la implementación completa con todos los métodos y demos de ayuda. `code/knn.ts`es un puerto de TypeScript con las mismas funciones y demos.`npx tsx code/knn.ts`¿ Qué ?
 
 ### Paso 4: Escalado de características
 
