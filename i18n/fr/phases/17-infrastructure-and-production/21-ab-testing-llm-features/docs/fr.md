@@ -3,7 +3,7 @@
 > Les tests A/B traditionnels n'ont pas été conçus pour les LLM non déterministes. La distinction essentielle: les évaluations répondent "le modèle peut-il faire le travail?" Les tests A/B répondent "les utilisateurs se soucient-ils?" Les deux sont nécessaires; la livraison sur les contrôles de vibration est terminée. Ce qu'il faut tester en 2026: ingénierie rapide (phrase), sélection de modèle (GPT-4 vs GPT-3.5 vs OSS; précision vs coût vs latence), paramètres de génération (température, top-p). Cas réels: une variante du modèle de récompense du chatbot a donné +70% de longueur de conversation et +30% de rétention; les expériences de ligne d'objet Nextdoor AI ont donné +1% de CTR après le raffinement de la fonction de récompense; Khan Academy Khanmigo a fait une itération sur un axe de latence par rapport à la précision mathématique. Partage de plateforme: **Statsig**(acquis par OpenAI pour 1,1 milliard de dollars en septembre 2025)  Tests séquentiels, CUPED, tout en un. **GrowthBook** open source, stock natif, moteurs bayésiens + fréquentistes + séquentiels, CUPED, vérifications SRM, corrections Benjamini-Hochberg + Bonferroni. Vous choisissez en fonction des préférences de stock SQL et si "acquis par OpenAI" est important pour votre organisation.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy sequential test simulator)
+**Languages:** Python, TypeScript (stdlib, toy sequential test simulator)
 **Prerequisites:** Phase 17 · 13 (Observability), Phase 17 · 20 (Progressive Deployment)
 **Time:** ~60 minutes
 

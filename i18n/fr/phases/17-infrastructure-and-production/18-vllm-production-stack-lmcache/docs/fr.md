@@ -3,7 +3,7 @@
 > Une production qui sert le routeur, les moteurs et l'observabilité des fils de pile dans un déploiement Kubernetes et traite le cache KV comme une ressource qui peut quitter le GPU. Le déchargement KV extrait le cache KV de la mémoire de la GPU et le réutilise sur les requêtes et les moteurs (DRAM du processeur, puis disque/Ceph). La production-stack de vLLM est le déploiement de référence; LMCache est la couche de déchargement. Le connecteur de déchargement vLLM 0.11.0 KV (janvier 2026) rend ce connecteur asynchrone et branchable via l'API du connecteur (v0.9.0+). Le chemin de déchargement est généralement caché du chemin de la demande, bien que les manquements de cache et les promotions puissent ajouter une latence de bout en bout. LMCache est précieux même sans préfixes partagés  lorsque un GPU se débarrasse des fentes KV, les demandes préemptives peuvent être restaurées à partir du processeur au lieu de recomputer le préchargement. Des benchmarks publiés sur 16x H100 (80 GB HBM) sur 4 a3-highgpu-4g: lorsque le cache KV dépasse le HBM, la décharge de CPU native et le LMCache améliorent considérablement le débit; à faible empreinte KV, toutes les configurations correspondent à la ligne de base avec de petites charges générales.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy KV-spill simulator)
+**Languages:** Python, TypeScript (stdlib, toy KV-spill simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 06 (SGLang/RadixAttention)
 **Time:** ~60 minutes
 

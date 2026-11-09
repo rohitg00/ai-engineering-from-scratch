@@ -3,7 +3,7 @@
 > Le décoding spéculatif associe un modèle rapide à celui cible. Le projet propose des jetons K; l'objectif est vérifié en un seul forward; les jetons acceptés sont gratuits. En 2026, EAGLE-3 est la variante de la classe de production  il entraîne un chef de projet sur les états cachés du modèle cible plutôt que sur les jetons bruts, poussant le taux d'acceptation alpha dans la bande de 0,6-0,8 sur le chat général. La bonne question n'est pas "combien rapide est le projet" mais "qu'est-ce que l'alpha sur mon trafic?" Si l'alpha tombe en dessous de ~0.55, le décoding spéculatif est négatif net à haute simultanéité parce que chaque projet rejeté coûte un deuxième passe cible. Cette leçon vous apprend à mesurer l'alpha d'abord et à tourner le drapeau en second.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy acceptance-rate simulator)
+**Languages:** Python, TypeScript (stdlib, toy acceptance-rate simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 18 (Multi-Token Prediction)
 **Time:** ~60 minutes
 

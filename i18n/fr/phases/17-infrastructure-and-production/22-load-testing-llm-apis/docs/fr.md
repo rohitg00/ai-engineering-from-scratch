@@ -3,7 +3,7 @@
 > Les testeurs de charge traditionnels n'ont pas été conçus pour les réponses de streaming, les longueurs de sortie variables, les mesures au niveau des jetons ou la saturation de la GPU. Deux pièges mordent la plupart des équipes. Le piège GIL: La mesure au niveau des jetons de Locust exécute la jetonisation sous le Python GIL, qui rivalise avec la génération de requêtes sous une forte concurrence; le backlog de jetonisation gonfle ensuite la latence inter-token rapportée  votre client est le goulot d'étranglement, pas le serveur. Le piège de l'uniformité de la mise en ligne: les mises en ligne identiques dans une boucle testent un point sur la distribution des jetons; le trafic réel a une longueur variable et des correspondances de préfixes diverses. LLMPerf résout cette situation avec `--mean-input-tokens`+ `--stddev-input-tokens`. Mapping des outils en 2026: spécialisée dans le domaine de la maîtrise de la loi (GenAI-Perf, LLMPerf, LLM-Locust, guidellm) pour une précision au niveau des tokens; **k6 v2026.1.0**+ **k6 Operator 1.0 GA (Sept 2025)** diffusion en streaming, Kubernetes natifs distribués via TestRun/PrivateLoadZone CRDs, le meilleur pour les portes CI/CD; Vegeta for Go saturation à taux constant; Locust 2.43.3 uniquement avec extension LLM-Locust pour le streaming.
 
 **Type:** Build
-**Languages:** Python (stdlib, toy realistic-prompt generator + latency collector)
+**Languages:** Python, TypeScript (stdlib, toy realistic-prompt generator + latency collector)
 **Prerequisites:** Phase 17 · 08 (Inference Metrics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~75 minutes
 

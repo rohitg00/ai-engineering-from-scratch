@@ -3,7 +3,7 @@
 > Cinq indicateurs déterminent si un déploiement d'inférence fonctionne. TTFT est pré-remplir plus que la file d'attente plus le réseau. TPOT (souvent dénommé ITL, bien que les outils ne soient pas d'accord sur le fait que ITL compte le premier jeton) est le coût de décode lié à la mémoire par jeton. La latence de bout en bout est TTFT plus TPOT fois longueur de sortie. Le débit est des jetons par seconde agrégés dans toute la flotte. Mais ce qui compte pour le produit, c'est le goodput  la fraction des demandes qui ont répondu à chaque SLO simultanément. Un débit élevé à un débit faible signifie que vous traitez des jetons qui n'atteignent jamais les utilisateurs à temps. Numéros de référence pour Llama-3.1-8B-Instruire sur le TRT-LLM en 2026: moyenne TTFT 162 ms, moyenne TPOT 7,33 ms, moyenne E2E 1,093 ms. Toujours signaler P50, P90, P99  jamais juste méchant. Et attention au piège de mesure: GenAI-Perf exclut le TTFT du calcul ITL, LLMPerf l'inclut; deux outils ne sont pas d'accord sur le TPOT pour la même course.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy percentile calculator and goodput reporter)
+**Languages:** Python, TypeScript (stdlib, toy percentile calculator and goodput reporter)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~60 minutes
 

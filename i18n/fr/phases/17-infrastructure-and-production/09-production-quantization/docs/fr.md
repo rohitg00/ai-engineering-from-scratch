@@ -3,7 +3,7 @@
 > Le format de quantification n'est pas un choix universel  il est une fonction du matériel, du moteur de service et de la charge de travail. GGUF Q4_K_M ou Q5_K_M possède la CPU et le bord, livrés par llama.cpp et Ollama. GPTQ gagne dans le vLLM quand vous avez besoin de plusieurs LORA sur la même base. AWQ avec les noyaux Marlin-AWQ fournit ~741 tok/s sur un modèle de classe 7B avec le meilleur Pass@1 à INT4  la production par défaut de 2026 pour le centre de données. Le 8e trimestre reste le terrain du milieu sur Hopper, Ada et Blackwell  presque sans pertes et largement soutenu. NVFP4 et MXFP4 (microscalage Blackwell) sont agressifs et nécessitent une validation par bloc. Deux équipes de pièges: le jeu de données d'étalonnage doit correspondre au domaine de déploiement, et le cache KV est séparé de la quantification du poids  la leçon AWQ "mon modèle est 4 Go maintenant" oublie le cache KV de 10 à 30 Go aux tailles de lot de production.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy memory and throughput comparison across formats)
+**Languages:** Python, TypeScript (stdlib, toy memory and throughput comparison across formats)
 **Prerequisites:** Phase 10 · 13 (Quantization foundations), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 

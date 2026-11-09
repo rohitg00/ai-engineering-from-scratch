@@ -3,7 +3,7 @@
 > L'ingénierie du chaos pour les LLM est sa propre discipline en 2026. Pré-requis avant la réalisation d'expériences en production: SLI/SLO définie, trace+metric+log observabilité, retour automatique, runbooks, en appel. L'architecture a quatre plans: contrôle (programateur d'expérience), cible (services, infra, stockage de données), sécurité (gardiens + interruption + filtres de trafic), observabilité (métres + traces + journaux), rétroaction (dans les ajustements SLO). Les barreaux de protection sont obligatoires: les alertes de taux de brûlure arrêtent les expériences si la brûlure quotidienne d'erreur-budget est prévue > 2 fois; fenêtres de suppression + correlation de trace-ID déduction de bruit d'alerte. Cadence: révision hebdomadaire des petits canaris + SLO; jour de jeu mensuel + post mortem; audit trimestriel de la résilience entre équipes + cartographie de la dépendance. Experiments spécifiques à la LLM: surcharge de mémoire, défaillances réseau, coupures de fournisseurs, messages malformés, tempêtes d'évacuation de cache KV. Les outils: Harness Chaos Engineering (récommandations dérivées du LLM, réduction du rayon d'explosion, intégration des outils MCP); LitmusChaos (CNCF); Chaos Mesh (CNCF Kubernetes-native).
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy chaos experiment runner)
+**Languages:** Python, TypeScript (stdlib, toy chaos experiment runner)
 **Prerequisites:** Phase 17 · 23 (SRE for AI), Phase 17 · 13 (Observability)
 **Time:** ~60 minutes
 

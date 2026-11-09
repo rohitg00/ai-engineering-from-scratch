@@ -3,7 +3,7 @@
 > La contrainte de bord de base est la bande passante de la mémoire, pas le calcul. La DRAM mobile est à 50 à 90 Go/s; le centre de données HBM3 élimine 2-3 TB/s  un écart de 30 à 50 fois. Le décodeur est lié à la mémoire, donc l'écart est décisif. En 2026, le paysage est divisé en quatre parties. Le moteur neural Apple M4/A18 atteint 38 TOPS avec mémoire unifiée (pas de copie CPUNPU). Qualcomm Snapdragon X Elite / 8 Gen 4 Hexagon atteint 45 TOPS. WebGPU + WebLLM exécute Llama 3.1 8B (Q4) à ~ 41 tok/s sur M3 Max (environ 70-80% de natifs); 17,6k étoiles GitHub, API compatible avec OpenAI, ~70-75% de couverture mobile. NVIDIA Jetson Orin Nano Super (8GB) est compatible avec Llama 3.2 3B / Phi-3; AGX Orin fonctionne gpt-oss-20b via vLLM à ~40 tok/s; Jetson T4000 (JetPack 7.1) est 2x AGX Orin. TensorRT Edge-LLM prend en charge EAGLE-3, NVFP4, pré-remplissage en morceaux  présenté au CES 2026 par Bosch, ThunderSoft, MediaTek.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy bandwidth-bound decode simulator)
+**Languages:** Python, TypeScript (stdlib, toy bandwidth-bound decode simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 09 (Production Quantization)
 **Time:** ~60 minutes
 

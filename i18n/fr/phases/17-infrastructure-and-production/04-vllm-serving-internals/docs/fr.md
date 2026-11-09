@@ -3,7 +3,7 @@
 > Le débit moderne du moteur de service repose sur trois défauts de composition, pas sur un seul truc. PagedAttention est toujours activée. Le batchage continu injecte de nouvelles demandes dans le batch actif entre les itérations de décode. Des tranches de pré-remplissage en morceaux font des longues instructions, donc les jetons de décode ne meurent jamais de faim. Allumez les trois et un Llama 3.3 70B FP8 sur un H100 SXM5 pousse 2 200 à 2 400 tok/s à 128 simultanément  environ 25% au-dessus de la vLLM et 3-4x une boucle PyTorch naïve. Cette leçon lit le programmeur et le noyau d'attention de vLLM  le moteur de référence pour les trois techniques  à un niveau que vous pouvez diagrammer, et se termine par un batcher continu de jouets en `code/main.py`que les horaires se remplissent et décodent de la même manière que VLLM.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy continuous batching scheduler)
+**Languages:** Python, TypeScript (stdlib, toy continuous batching scheduler)
 **Prerequisites:** Phase 17 · 01 (Model Serving), Phase 11 (LLM Engineering)
 **Time:** ~75 minutes
 

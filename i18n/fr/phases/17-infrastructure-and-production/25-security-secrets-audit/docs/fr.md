@@ -3,7 +3,7 @@
 > Éliminer la diffusion secrète via des coffres-forts centralisés (coffre-fort HashiCorp, gestionnaire de secrets AWS, coffre-fort Azure). Ne stockez jamais les informations dans les fichiers de configuration, env fichiers dans VCS, feuilles de calcul. Utiliser des rôles IAM au lieu de clés statiques; OIDC pour CI/CD. Le modèle d'IA-gateway est la solution 2026: applications → gateway → fournisseur de modèle, avec gateway tirant des informations d'identification de la caisse en temps d'exécution. Retournez dans la caisse et toutes les applications se dérouleront en quelques minutes  pas de redéploiements, pas de Slack "qui a la nouvelle clé" messages. Politique de rotation ≤ 90 jours; analyse avec TruffleHog / GitGuardian / Gitleaks à chaque commande. La confiance nulle: MFA, SSO, RBAC/ABAC, jetons de courte durée, posture du dispositif. Le scrubbing des PII utilise la reconnaissance d'entités pour masquer les PHI/PII avant de les transférer; la tokenization cohérente (approche Mesh) trace les valeurs sensibles aux titulaires de places stables afin que le LLM préserve la sémantique du code/relation. Exit du réseau: services de LLM dans des sous-réseaux VPC/VNet dédiés uniquement en liste blanche `api.openai.com`- Je suis là .`api.anthropic.com`Le pilote d'incident 2026: l'attaque de la chaîne d'approvisionnement Vercel via des informations de base CI/CD compromises a filtré l'environnement sur des milliers de déploiements de clients.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy PII-scrubber + audit-log writer)
+**Languages:** Python, TypeScript (stdlib, toy PII-scrubber + audit-log writer)
 **Prerequisites:** Phase 17 · 19 (AI Gateways), Phase 17 · 13 (Observability)
 **Time:** ~60 minutes
 

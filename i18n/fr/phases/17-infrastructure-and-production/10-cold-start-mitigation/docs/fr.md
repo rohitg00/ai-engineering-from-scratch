@@ -3,7 +3,7 @@
 > Un modèle grand prend quelques minutes pour passer du froid à la serveur: un modèle 70B sur un noeud frais a besoin d'environ 3 à 8 minutes avant le premier jeton. Dans un monde sans serveurs, ce n'est pas un réchauffement, c'est une panne. Les atténuations fonctionnent à cinq niveaux: images de nœuds pré-sémentées (Bottlerocket sur AWS, arc à double volume), streaming de modèle (NVIDIA Run:ai Model Streamer, natif en vLLM), captures instantanées de mémoire GPU (points de contrôle modèles, redémarrage jusqu'à 10 fois plus rapide), piscines chaudes (`min_workers=1`Le module de téléchargement est un module de téléchargement de 2 à 4 étages, basé sur un système de téléchargement de 2 à 4 étages, basé sur un système de téléchargement de 5 à 5 étages, basé sur un système de téléchargement de 2 à 5 étages.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cold-start path simulator)
+**Languages:** Python, TypeScript (stdlib, toy cold-start path simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~60 minutes
 

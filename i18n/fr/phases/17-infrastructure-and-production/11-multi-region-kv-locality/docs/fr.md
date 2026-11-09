@@ -3,7 +3,7 @@
 > L'équilibrage de la charge en round-robin est activement nocif pour l'inférence de la MLL en cache. Une demande qui ne débarque pas sur le nœud contenant son préfixe paie le coût de remplissage complet  environ 800 ms à P50 sur une longue demande par rapport à ~80 ms avec un cache hit. En 2026, le modèle de production est un routeur conscient du cache (vLLM Router in Rust, llm-d router) qui consomme des événements de cache KV et des routes sur le préfixe-hash match. Des recherches récentes (GORGO) font de la latence réseau interrégionale un terme explicite dans l'objectif de routage. Les offres commerciales d'"inférence transregionale" (inférence transregionale Bedrock, passerelles multi-cluster GKE) traitent l'inférence comme opaque  elles gèrent la disponibilité, pas le TTFT. JPMorgan et la Mayo Clinic ont fait une défaillance de l'East-1 en novembre 2024 à 22 minutes. La réalité de la DR: 32% des échecs de la DR LLM sont dus à ce que les équipes aient sauvegardé des poids mais ont oublié des fichiers de jeton ou des configurations de quantification.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy prefix-cache-aware router simulator)
+**Languages:** Python, TypeScript (stdlib, toy prefix-cache-aware router simulator)
 **Prerequisites:** Phase 17 · 04 (vLLM Serving), Phase 17 · 06 (SGLang RadixAttention)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > La compilation d'inférence spécialisée dans le matériel commercialise la portabilité pour le débit, et TensorRT-LLM  NVIDIA-uniquement, réglée pour Blackwell  est l'exemple le plus clair du commerce qui porte ses fruits. Sur GB200 NVL72 avec l'orchestration Dynamo, SemiAnalysis InferenceX a mesuré $0.012 per million tokens on a 120B model in Q1-Q2 2026, against $0,09/M sur H100 + vLLM  un écart économique de 7 fois. La pile compose deux formats de points flottants avec deux techniques de service: FP8 reste essentiel pour les noyaux de cache et d'attention KV car il a la gamme dynamique dont ils ont besoin; NVFP4 (4 bits de microscalage) gère les poids et les activations; prédiction multi-token (MTP) et pré-remplissage / décode décomposé ajouter un autre 2-3x en haut. Le support du modèle Day-0 charge directement les poids FP4 sans conversion post-entraînement. Le but pour les équipes d'ingénierie 2026: TRT-LLM est open source mais spécifique à NVIDIA  CUDA- et Blackwell- spécialisée  donc l'adoption de la portativité pour le débit. Faites le calcul de votre mélange de modèles et de matériel avant de vous engager.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy FP8/NVFP4 memory and cost calculator)
+**Languages:** Python, TypeScript (stdlib, toy FP8/NVFP4 memory and cost calculator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 13 (Quantization)
 **Time:** ~75 minutes
 

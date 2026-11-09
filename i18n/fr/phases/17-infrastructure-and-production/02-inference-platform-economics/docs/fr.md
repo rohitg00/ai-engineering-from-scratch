@@ -3,7 +3,7 @@
 > Le marché des inférences 2026 n'est plus une location de temps de GPU. Il se diviser en silicium personnalisé (Groq, Cerebras, SambaNova), plateformes GPU (Baseten, Together, Fireworks, Modal) et marchés API-first (Replicate, DeepInfra).$1/hr per GPU on May 1, 2026, and $La valorisation 4B sur 10T+ tokens par jour indique le modèle de travail axé sur le volume.$300M Series E at $La règle de positionnement compétitif est simple: les feux d'artifice optimisent la latence, ensemble optimisent la largeur du catalogue, baseten optimisent le polissage d'entreprise, modal optimisent Python-native DX, répétition optimisent la portée multimodal, Anyscale optimises distribué Python. Cette leçon vous donne une matrice que vous pouvez remettre à un fondateur.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy per-call economics comparator)
+**Languages:** Python, TypeScript (stdlib, toy per-call economics comparator)
 **Prerequisites:** Phase 17 · 01 (Managed LLM Platforms), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~60 minutes
 

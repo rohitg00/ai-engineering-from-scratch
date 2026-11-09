@@ -3,7 +3,7 @@
 > Les coûts sont des transactions de jetons, pas du temps de disponibilité des ressources. Les balises ne cartographient pas  un appel API est une transaction, pas un actif. Les décisions d'ingénierie (conception rapide, fenêtre contextuelle, longueur de sortie) sont des décisions financières.`user_id`) pour le prix des sièges et l'expansion, par tâche (`task_id`+ `route`) pour le coût et la priorité des surfaces des produits, par locataire (`tenant_id`) pour l'économie unitaire et le renouvellement. Quatre couches de jetons  prompt, outil, mémoire, réponse  un seau cache dépenser. L'échelle d'application pour les produits multi-locataires: limites de taux par locataire (2-3 fois le pic attendu, 429 + après-essai clair); plafond de dépenses quotidienne (1,5-3 fois le plafond contracté; déclenche le resserrement des taux + alerte); commutateurs de déclenchement sur le z-score des dépenses > 4 (pause automatique + page sur appel). Modèles d'attribution: tag-and-aggregate, joiner de télémétrie (trace-ID → facturation; plus grande précision), prélèvement d'échantillons et extrapolation, allocation basée sur un modèle, source d'événements, streaming en temps réel. Métrique unitaire: coût par requête résolue, coût par artefact généré  non $/M tokens. L'étiquetage rétroactif est toujours manqué; instrument de création à la demande.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cost-attribution simulator with kill switch)
+**Languages:** Python, TypeScript (stdlib, toy cost-attribution simulator with kill switch)
 **Prerequisites:** Phase 17 · 13 (Observability), Phase 17 · 14 (Caching)
 **Time:** ~60 minutes
 
