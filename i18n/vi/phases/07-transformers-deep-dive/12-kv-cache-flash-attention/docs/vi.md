@@ -3,7 +3,7 @@
 > Trình luyện là song song và liên kết với FLOP. Thuyết định là liên kết với bộ nhớ.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~75 minutes
 
@@ -128,7 +128,7 @@ flash-attention-memory
 iso-machine {"machine":"kv-cache"}
 ```
 
-Nhìn xem`code/main.py`Chúng tôi thực hiện:
+Nhìn xem`code/main.py`, hoặc cảng Rust của nó`code/main.rs`Để chạy phiên bản Rust:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`Chúng tôi thực hiện:
 
 1. Một kẻ ngây thơ .$O(N^2)$decoder tăng trưởng.
 2. A $O(N)$KV-cache decoder.

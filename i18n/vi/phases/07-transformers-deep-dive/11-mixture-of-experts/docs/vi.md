@@ -3,7 +3,7 @@
 > Một biến thể 70B dày đặc kích hoạt mọi tham số cho mỗi token. một 671B MoE kích hoạt chỉ 37B cho mỗi token và đánh bại nó trên mọi điểm chuẩn. Sparsity là ý tưởng quy mô quan trọng nhất của thập kỷ.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
@@ -90,6 +90,13 @@ Nhìn xem`code/main.py`Một lớp MoE nhỏ gọn trong chất xơ tinh khiết
 - top-k=2 định tuyến
 - trọng lượng cửa được chuẩn hóa với độ mềm tối đa
 - cân bằng không mất mát phụ trợ thông qua sự thiên vị của mỗi chuyên gia
+
+`code/main.rs`là một cổng Rust với cùng các chức năng và demo. Nó chỉ sử dụng thư viện tiêu chuẩn. Số ngẫu nhiên khác với Python, nhưng kết luận in là giống nhau.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Bước 1: bộ định tuyến
 

@@ -3,7 +3,7 @@
 > Tất cả sự chú ý là một vòng tròn. Mỗi token nhìn thấy mỗi token, và bộ nhớ trả giá. Ba biến thể xoay hình dạng của vòng tròn và phục hồi một nửa chi phí.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head), Phase 7 · 12 (KV Cache / Flash Attention)
 **Time:** ~60 minutes
 
@@ -90,7 +90,7 @@ gqa-kv-sharing
 
 ## Hãy xây dựng nó
 
-Nhìn xem`code/main.py`Chúng tôi thực hiện một so sánh mặt nạ nhân quả cho thấy toàn bộ, SWA, địa phương + bước, và sự chú ý khác biệt bên cạnh nhau trên một chuỗi đồ chơi.
+Nhìn xem`code/main.py`, hoặc cảng Rust của nó`code/main.rs`Để chạy phiên bản Rust:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`Chúng tôi thực hiện một so sánh mặt nạ nhân quả cho thấy toàn bộ, SWA, địa phương + bước, và sự chú ý khác biệt bên cạnh nhau trên một chuỗi đồ chơi.
 
 ### Bước 1: mặt nạ nguyên nhân đầy đủ (tầm cơ sở)
 

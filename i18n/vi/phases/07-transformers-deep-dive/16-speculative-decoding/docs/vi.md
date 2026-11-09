@@ -3,7 +3,7 @@
 > Autoregressive decoding là hàng loạt. Mỗi token chờ đợi cho token trước đó. Spekulative decoding phá vỡ chuỗi: một mô hình rẻ tiền che chở N token, mô hình đắt tiền xác minh tất cả N trong một lần đi trước. Khi dự thảo đúng, bạn đã trả một tiền lớn cho N thế hệ.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 07 (GPT Causal LM), Phase 7 · 12 (KV Cache & Flash Attention)
 **Time:** ~60 minutes
 
@@ -91,6 +91,13 @@ Nhìn xem`code/main.py`Chúng tôi thực hiện thuật toán lấy mẫu đầ
 - Một "chương trình lớn" là một xác định-softmax trên một phân phối mã hóa bằng tay (vì vậy chúng ta có thể xác minh toán học chấp nhận phân tích).
 - Một "mô hình bản thảo" là một sự xáo trộn của mô hình lớn.
 - Một vòng chấp nhận / từ chối tạo ra phân phối biên tương tự như lấy mẫu trực tiếp.
+
+`code/main.rs`là một cổng Rust với cùng các chức năng và demo. Nó chỉ sử dụng thư viện tiêu chuẩn. Số ngẫu nhiên khác với Python, nhưng kết luận in là giống nhau.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Bước 1: Bước từ chối
 
