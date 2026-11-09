@@ -3,7 +3,7 @@
 > Votre modèle reçoit 99% sur les données de formation et 60% sur les données de test. Il mémore au lieu d'apprendre.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers)
 **Time:** ~75 minutes
 

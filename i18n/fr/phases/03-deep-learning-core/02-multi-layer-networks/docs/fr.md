@@ -3,7 +3,7 @@
 > Un neurone dessine une ligne, les empiler, et vous pouvez dessiner n'importe quoi.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 01 (Math Foundations), Lesson 03.01 (The Perceptron)
 **Time:** ~90 minutes
 

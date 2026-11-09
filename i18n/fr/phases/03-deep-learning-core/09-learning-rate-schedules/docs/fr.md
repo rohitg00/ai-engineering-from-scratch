@@ -3,7 +3,7 @@
 > Le taux d'apprentissage est le seul hyperparamètre le plus important. pas l'architecture, pas la taille du jeu de données, pas la fonction d'activation, pas le taux d'apprentissage. Si vous ne réglez rien d'autre, réglez ceci.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers), Lesson 03.08 (Weight Initialization)
 **Time:** ~90 minutes
 

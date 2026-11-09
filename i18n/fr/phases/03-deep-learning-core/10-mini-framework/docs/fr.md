@@ -3,7 +3,7 @@
 > Vous avez construit des neurones, des couches, des réseaux, des backprops, des activations, des fonctions de perte, des optimisateurs, des régularisations, des initialités et des calendriers LR. Tout comme des pièces distinctes.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** All of Phase 03 (Lessons 01-09)
 **Time:** ~120 minutes
 
