@@ -3,7 +3,7 @@
 > Tudo das lições 01-11, coçadas juntas. Construir um assistente de voz que ouça, razona e fala. Em 2026 isso é um problema de engenharia resolvido, não um problema de pesquisa  mas os detalhes de integração decidem se ele vai enviar.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04, 05, 06, 07, 11; Phase 11 · 09 (Function Calling); Phase 14 · 01 (Agent Loop)
 **Time:** ~120 minutes
 

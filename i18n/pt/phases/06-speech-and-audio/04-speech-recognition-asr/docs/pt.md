@@ -3,7 +3,7 @@
 > O reconhecimento da fala é classificação de áudio em cada passo do tempo, colada por um modelo de sequência que conhece o inglês e o silêncio. CTC, RNN-T e atenção são as três maneiras de fazer isso. Escolha uma e entenda por quê.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 08 (CNNs & RNNs for Text), Phase 5 · 10 (Attention)
 **Time:** ~45 minutes
 

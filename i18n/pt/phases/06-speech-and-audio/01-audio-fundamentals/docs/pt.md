@@ -3,7 +3,7 @@
 > As ondas são o sinal bruto. Os espectrogramas são a representação. As características Mel são a forma amigável ao ML. Cada moderno ASR e TTS caminha nesta escada, e o primeiro passo é entender a amostragem e Fourier.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Vectors & Matrices), Phase 1 · 14 (Probability Distributions)
 **Time:** ~45 minutes
 

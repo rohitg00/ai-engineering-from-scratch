@@ -3,7 +3,7 @@
 > 2026 modelos de áudio-língua raciocinam sobre fala + som ambiental + música. Qwen2.5-Omni-7B combina GPT-4o Audio no MMAU-Pro. Audio Flamingo Next bate Gemini 2.5 Pro no LongAudioBench. A diferença entre aberta e fechada é essencialmente fechada  exceto em tarefas de áudio múltipla, onde todos são quase aleatórios.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 12 · 03 (Vision-Language Models), Phase 7 · 10 (Audio Transformers)
 **Time:** ~45 minutes
 
