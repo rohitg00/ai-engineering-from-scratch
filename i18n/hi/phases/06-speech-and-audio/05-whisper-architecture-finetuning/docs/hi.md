@@ -3,7 +3,7 @@
 > विस्पर एक 30 सेकंड विंडो ट्रांसफार्मर एन्कोडर-डेकोडर है, जिसे बहुभाषी कम से कम पर्यवेक्षित ऑडियो-पाठ जोड़े के 680k घंटे पर प्रशिक्षित किया गया है। एक वास्तुकला, कई कार्य, 99 भाषाओं में मजबूत। 2026 संदर्भ एएसआर।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 5 · 10 (Attention), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

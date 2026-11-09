@@ -3,7 +3,7 @@
 > भाषण पहचान हर समय के चरण में ऑडियो वर्गीकरण है, जो एक अनुक्रम मॉडल द्वारा चिपकाया जाता है जो अंग्रेजी और चुप्पी जानता है। सीटीसी, आरएनएन-टी और ध्यान इसे करने के तीन तरीके हैं। एक चुनें और समझें कि क्यों।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 08 (CNNs & RNNs for Text), Phase 5 · 10 (Attention)
 **Time:** ~45 minutes
 

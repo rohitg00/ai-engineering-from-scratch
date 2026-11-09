@@ -3,7 +3,7 @@
 > तरंगों का आकार कच्चे संकेत है। स्पेक्ट्रोग्राम प्रतिनिधित्व हैं। मेल सुविधाएं एमएल-अनुकूल रूप हैं। प्रत्येक आधुनिक एएसआर और टीटीएस पाइपलाइन इस सीढ़ी पर चलता है, और पहला चरण नमूनाकरण और फ़ूरियर को समझना है।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Vectors & Matrices), Phase 1 · 14 (Probability Distributions)
 **Time:** ~45 minutes
 

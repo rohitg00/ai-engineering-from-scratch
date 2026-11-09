@@ -3,7 +3,7 @@
 > 2026 ऑडियो-भाषा मॉडल भाषण + पर्यावरण ध्वनि + संगीत पर तर्क देते हैं। Qwen2.5-Omni-7B MMAU-Pro पर GPT-4o ऑडियो से मेल खाता है। ऑडियो फ्लेमिंगो नेक्स्ट LongAudioBench पर Gemini 2.5 Pro से बेहतर है। खुले और बंद के बीच अंतर अनिवार्य रूप से बंद है  मल्टी-ऑडियो कार्यों के अलावा, जहां सभी लगभग यादृच्छिक हैं।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 12 · 03 (Vision-Language Models), Phase 7 · 10 (Audio Transformers)
 **Time:** ~45 minutes
 

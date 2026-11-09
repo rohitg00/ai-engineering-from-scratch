@@ -3,7 +3,7 @@
 > आवाज क्लोनिंग आपके पाठ को किसी और की आवाज में पढ़ता है। आवाज रूपांतरण आपकी आवाज को किसी और की आवाज में फिर से लिखता है जबकि आप जो कहते हैं उसे संरक्षित करता है। दोनों एक ही विघटन पर लटकाए रहते हैंः सामग्री से अलग स्पीकर पहचान।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 07 (TTS)
 **Time:** ~75 minutes
 

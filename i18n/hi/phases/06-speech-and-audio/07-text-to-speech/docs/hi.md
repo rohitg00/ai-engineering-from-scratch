@@ -3,7 +3,7 @@
 > ASR भाषण को पाठ में परिवर्तित करता है; TTS पाठ को भाषण में परिवर्तित करता है। 2026 स्टैक में तीन भाग हैंः पाठ → टोकन, टोकन → mel, mel → तरंग स्वरूप। प्रत्येक भाग में एक डिफ़ॉल्ट मॉडल है जो लैपटॉप में फिट बैठता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 09 (Seq2Seq), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

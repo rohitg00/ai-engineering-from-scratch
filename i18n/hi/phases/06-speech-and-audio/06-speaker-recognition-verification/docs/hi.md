@@ -3,7 +3,7 @@
 > एएसआर पूछता है "उन्होंने क्या कहा? स्पीकर मान्यता पूछता है "कौन ने कहा? गणित एक ही दिखता है  एम्बेडेड प्लस कॉसिन  लेकिन प्रत्येक उत्पादन निर्णय एक एकल ईईआर संख्या पर निर्भर करता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 22 (Embedding Models)
 **Time:** ~45 minutes
 

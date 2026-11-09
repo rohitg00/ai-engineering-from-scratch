@@ -3,7 +3,7 @@
 > "डॉग लात मारना बनाम सिरिन" से लेकर "यह कौन सी भाषा है" तक सब कुछ ऑडियो वर्गीकरण है। विशेषताएं मिल्स हैं। वास्तुकला हर दशक में बदलती है। मूल्यांकन एयूसी, एफ 1 और प्रति वर्ग याद रखने के लिए रहता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 3 · 06 (CNNs), Phase 5 · 08 (CNNs & RNNs for Text)
 **Time:** ~75 minutes
 
