@@ -3,7 +3,7 @@
 >  ASR问"他们说什么?"扬声器识别问"谁说?"数学看起来是相同的嵌体加上,但每个生产决定都依赖于一个EER号码.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 22 (Embedding Models)
 **Time:** ~45 minutes
 

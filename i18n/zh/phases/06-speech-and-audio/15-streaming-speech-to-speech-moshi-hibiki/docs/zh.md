@@ -3,7 +3,7 @@
 > 2024-2026年重新定义了语音AI.莫希发出一个单个模型,可以在200ms延迟同时听和说话.希比基会逐步进行语音翻译.这两个都放弃了ASR → LLM → TTS管道,以实现Mimi代码代码代码的统一全双结构.这是新的参考设计.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 13 (Neural Audio Codecs), Phase 6 · 11 (Real-Time Audio), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

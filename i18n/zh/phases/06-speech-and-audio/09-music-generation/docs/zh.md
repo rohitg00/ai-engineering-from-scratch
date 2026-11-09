@@ -3,7 +3,7 @@
 > 2026年音乐代:Suno v5和Udio v4占据商业主导地位; MusicGen,Stable Audio Open和 ACE-Step引领开源.技术问题大多得到解决.法律问题 (Warner Music 500M美元和解,UMG和解) 在2025-2026年重新塑造了该领域.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 4 · 10 (Diffusion Models)
 **Time:** ~75 minutes
 

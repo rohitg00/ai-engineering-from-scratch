@@ -3,7 +3,7 @@
 > 无论是"狗吠声与声"还是"这是什么语言",都在进行音频分类. 功能都是化. 架构每十年都在移动. 评估仍然是AUC,F1和每类回忆.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 3 · 06 (CNNs), Phase 5 · 08 (CNNs & RNNs for Text)
 **Time:** ~75 minutes
 

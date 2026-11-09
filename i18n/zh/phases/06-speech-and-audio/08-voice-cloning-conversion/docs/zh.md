@@ -3,7 +3,7 @@
 > 语音克隆读取你的文字在别人的声音中.语音转换将你的声音重写成别人的声音,同时保留了你所说的.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 07 (TTS)
 **Time:** ~75 minutes
 

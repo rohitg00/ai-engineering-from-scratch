@@ -3,7 +3,7 @@
 > 亚斯尔将语音转换为文字;TTS将文字转换为语音.2026堆由三个部分组成:文字 →代币,代币 → mel,mel →波形.每个部分都有一个默认模型,可以适合笔记本电脑.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 09 (Seq2Seq), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > 波形是原始信号.谱谱是表示.MEL特征是ML友好的形式.每一个现代ASR和TTS管道都走在这个梯子上,第一步是理解采样和Fourier.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Vectors & Matrices), Phase 1 · 14 (Probability Distributions)
 **Time:** ~45 minutes
 

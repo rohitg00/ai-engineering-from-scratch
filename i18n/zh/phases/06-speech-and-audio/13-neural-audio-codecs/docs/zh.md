@@ -3,7 +3,7 @@
 > 2026年音频生成几乎是所有代币.EnCodec,SNAC,Mimi和DAC将连续波形转化为变压器可以预测的分离序列.语义与音响代币分为语义,休息为音响,这是自变压器以来最重要的建筑转变.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 10 · 11 (Quantization), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

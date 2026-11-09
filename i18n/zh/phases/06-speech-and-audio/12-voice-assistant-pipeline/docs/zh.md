@@ -3,7 +3,7 @@
 > 根据"一"课程,编织在一起. 建立一个听取,推理和回复的语音助理. 2026年,这是一个解决的工程问题,而不是一个研究问题.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04, 05, 06, 07, 11; Phase 11 · 09 (Function Calling); Phase 14 · 01 (Agent Loop)
 **Time:** ~120 minutes
 

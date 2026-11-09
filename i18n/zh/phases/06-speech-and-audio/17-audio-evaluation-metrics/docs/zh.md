@@ -3,7 +3,7 @@
 > 您不能运送您无法测量的东西.本课程列出了每个音频任务的2026个指标:ASR (WER, CER,RTFx),TTS (MOS,UTMOS,SECS,WER-on-ASR-round-trip),音频语言 (MMAU,LongAudioBench),音乐 (FAD,CLAP),音箱 (EER).
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04, 06, 07, 09, 10; Phase 2 · 09 (Model Evaluation)
 **Time:** ~60 minutes
 

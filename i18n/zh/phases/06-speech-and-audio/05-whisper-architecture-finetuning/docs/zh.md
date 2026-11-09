@@ -3,7 +3,7 @@
 > 语是30秒钟的窗口变压器编码解码器,训练在多语言弱监督的音频文本对数的68万小时.一个架构,多任务,强大的99种语言.2026年参考ASR.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 5 · 10 (Attention), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > 2026年音频语言模型推理语音+环境声音+音乐.Qwen2.5-Omni-7B与MMAU-Pro的GPT-4o音频相匹配.Audio Flamingo Next在LongAudioBench上超过了Gemini 2.5 Pro.开放和关闭之间的差距基本上是关闭的除了多音频任务,每个人都几乎是随机的.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 12 · 03 (Vision-Language Models), Phase 7 · 10 (Audio Transformers)
 **Time:** ~45 minutes
 

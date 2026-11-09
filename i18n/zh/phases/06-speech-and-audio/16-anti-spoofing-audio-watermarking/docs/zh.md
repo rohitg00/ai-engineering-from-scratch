@@ -3,7 +3,7 @@
 > 语音克隆的运输速度比防御更快. 2026 年生产语音系统需要两件事:一个检测器 (AASIST,RawNet2) 将真实与假语音分类,以及一个能够存活压缩和编辑的水印 (AudioSeal).
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 08 (Voice Cloning)
 **Time:** ~75 minutes
 
