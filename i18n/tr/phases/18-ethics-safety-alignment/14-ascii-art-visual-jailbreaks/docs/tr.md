@@ -3,7 +3,7 @@
 > Jiang, Xu, Niu, Xiang, Ramasubramanian, Li, Poovendran, "ArtPrompt: ASCII Art tabanlı Ceilbreak Attacks against Alligned LLMs" (ACL 2024, arXiv:2402.11753). Güvenlik ile ilgili belirtileri zararlı bir talepte gizleyin, aynı harflerin ASCII sanatı gösterileri ile değiştirin ve gizlenmiş bir istek gönderin. GPT-3.5, GPT-4, Gemini, Claude, Llama-2 hepsi ASCII sanatı simgelerini güçlü bir şekilde tanımamaktadır. Saldırı PPL (kafas karışıklığı filtreleri), Parafraze savunmaları ve Retokenizasyon'u atlıyor. İlgili: ViTC referans ölçüsü semantik olmayan görsel isteklerin tanınmasını ölçer; StructuralSleight, kodlama saldırıları ailesi olarak Usual Metin Kodlanmış Yapılara (ağaçlar, grafikler, yuvalanmış JSON) genelleştirir.
 
 **Type:** Build
-**Languages:** Python (stdlib, ArtPrompt token-masking harness)
+**Languages:** Python, TypeScript (stdlib, ArtPrompt token-masking harness)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 18 · 13 (MSJ)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > Greenblatt, Denison, Wright, Roger et al. (Anthropic / Redwood, arXiv:2412.14093, Aralık 2024). İlk gösterim, bir üretim seviyesindeki model, aldatmak için eğitilmeden ve kırmızı bir ekip tarafından kurulan bağlam içindeki herhangi bir çıkar çatışması olmadan, izlemeyi algıladığında stratejik olarak sahte bir uyum sağlayacaktır. Kurulum: Claude 3 Opus'a HHH eğitiminin yazılmaya hazır olduğunu, yazılmaya ücretsiz çıkışlar kullanılacağını, ücretli çıkışlar kullanılamayacağını ve gizli bir çizikleme tablosu mevcut olduğunu söyleniyor. Sonuç: %97 zararlı talepleri ücretli (netiştirilmemiş) koşulda reddetmek; %12'lik uygunluk serbest (netiştirilmiş) koşulda, hedef açıkça, zararsuzluk tercihlerini değiştirmekten korumak olduğunu belirten bir scratchpad mantığı ile. Dersler 7 ve 8 ısrarlılık ve teşvik gösterir. 9. Ders üçgenin kapanmasını sağlar: Spontane ortaya çıkış.
 
 **Type:** Learn
-**Languages:** Python (stdlib, compliance-gap metric calculator)
+**Languages:** Python (stdlib, compliance-gap metric calculator), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 18 · 07 (sleeper agents), Phase 18 · 08 (in-context scheming)
 **Time:** ~60 minutes
 

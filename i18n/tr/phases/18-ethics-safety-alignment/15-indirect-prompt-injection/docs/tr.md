@@ -3,7 +3,7 @@
 > Doğrudan olmayan bir istek enjeksiyonu (IPI) dış içeriğe  bir web sayfası, bir e-posta, paylaşılan belge, destek bileti  açık bir kullanıcı eyleminden dolayı bir ajantik sistem tarafından tüketilen talimatları yerleştirir. IPI, 2026'da baskın üretim tehdidi: saldırganın kullanıcıya asla dokunmadığı için kullanıcı giriş filtrelerini atlıyor, ajanlar daha fazla dış içeriği işledikçe sessizce ölçeklendiriyor ve kimse istekleri okumanın olmadığı otomatik iş akışlarını hedef alıyor. MDPI Bilgisi 17 ((1): 54 (Ocak 2026) 2023-2025 araştırmalarını sentezler. NDSS 2026'nın IPI savunma kağıdı temel zorluğu çerçeveliyor: enjekte edilen talimatlar anlamsal olarak iyice olabilir ("Demek lütfen evet" yazısı), bu nedenle tespit anahtar kelime filtrelenmesinden daha fazlasını gerektirir. "Saldırgan İkinci Hareketler" (Nasr ve diğerleri, ortak OpenAI/Anthropic/DeepMind, Ekim 2025): Adaptif saldırılar (gradient, RL, rastgele arama, insan kırmızı ekibi) test ettikleri 12 yayınlanan savunmayı atladı, saldırı başarısı çoğu karşı %90'dan fazlaydı, ancak bu savunmaların çoğu başlangıçta sıfır saldırı başarısı oranlarını bildirmişti.
 
 **Type:** Build
-**Languages:** Python (stdlib, IPI attack + defense harness)
+**Languages:** Python, TypeScript (stdlib, IPI attack + defense harness)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 14 (agent engineering)
 **Time:** ~75 minutes
 

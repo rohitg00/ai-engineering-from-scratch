@@ -3,7 +3,7 @@
 > Burns et al. (OpenAI Superalignment, "Zayıf-güçlü Genelleşme", 2023) aşırı uyum sorunu için bir vekil önerdi: zayıf bir model tarafından üretilen etiketleri kullanarak güçlü bir modeli ince ayarlamak. Güçlü model kusurlu zayıf denetimden doğru şekilde genelleşirse, mevcut insan ölçeğinde uyum yöntemleri insanüstü sistemlere de uzanabilir. Ölçeklenebilir denetim ve W2SG tamamlayıcıdır. Ölçeklenebilir denetim (debat, geri dönüşümlü ödül modeli, görev parçalanması) denetimçinin etkili yeteneğini arttırır, böylece denetim altında olan modelle ayak uydurabilir. W2SG güçlü modelin gözetmen tarafından sağlanan kusurlu denetimden doğru şekilde genelleşmesini sağlar. Debate Helps W2SG (arXiv:2501.13124, Ocak 2025) onları birleştirir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, W2SG gap simulator)
+**Languages:** Python (stdlib, W2SG gap simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (instruction-following), Phase 18 · 10 (AI Control), Phase 09 (RL foundations)
 **Time:** ~60 minutes
 

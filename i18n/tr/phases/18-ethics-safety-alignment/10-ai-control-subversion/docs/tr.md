@@ -3,7 +3,7 @@
 > Greenblatt, Shlegeris, Sachan, Roger (Redwood Research, arXiv:2312.06942, ICML 2024). Kontrol güvenlik sorusunu yeniden çerçeveliyor: Size karşı olumsuz optimizasyon sağlayabilecek güvenilir olmayan güçlü bir model U'nun göz önüne alındığında, kabul edilemez bir sonuç olasılığını sınırlayanken yararlı çalışmayı çıkarmanıza hangi protokoller izin veriyor? Kaynaklar güvenilir bir zayıf model T, güvenilir insan iş gücü bütçesi H ve U'nun çıkışlarını düzenleme yeteneğidir. Bu çerçeve içinde, Güvenli Düzenleme Pareto, kod arka kapı görevlerinde güvensiz izleme üzerinde egemenlik kazanır. Çerçeve güvenlik mühendisliği'nden en kötü varsayımları miras alır: güvenlik, U'nun yerine gelen kırmızı takım basıncı altında ölçülen, karşı karşıya seçilen U'nun belirli kabul edilemez bir sonuca neden olamayacağı olasılığıdır.
 
 **Type:** Learn
-**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task)
+**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task), TypeScript
 **Prerequisites:** Phase 18 · 07 (sleeper agents), Phase 18 · 08 (scheming), Phase 18 · 09 (alignment faking)
 **Time:** ~75 minutes
 

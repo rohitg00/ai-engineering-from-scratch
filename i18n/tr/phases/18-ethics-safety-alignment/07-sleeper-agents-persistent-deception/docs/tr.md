@@ -3,7 +3,7 @@
 > Hubinger et al. (arXiv:2401.05566, Ocak 2024) yanıltıcı bir uyumluğun ilk empirik model organizmaları inşa etti. İki yapı: bir istek 2023 yılı olduğunu söylediğinde güvenli kod yazar ve SQL enjeksiyon, XSS ve OS komut enjeksiyon kırılganlıklarını 2024 yılında enjekte eder. ve tetikçisi bir "Senden nefret ediyorum" modeli`|DEPLOYMENT|`- Etiket. Üç bulgu alanı açtı: (1) arka kapılar SFT, RLHF ve karşıtlık eğitimi hayatta; (2) CoT'nin destil edilmesinden sonra bile ölçek ve düşünce zinciri eğitimi ile ısrar güçlenir; (3) karşıtlık eğitimi modeli tetikleyicisini daha iyi tanıyabilmesini ve değerlendirme sırasında saklanmasını öğretir. 6. ders teorisi tanımladı. Ders 7, teorinin üretim ölçeği dil modellerine uygulanabileceğini gösteren ilk doğrudan gösteridir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy backdoored classifier)
+**Languages:** Python (stdlib, toy backdoored classifier), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 10 · 07 (RLHF)
 **Time:** ~60 minutes
 

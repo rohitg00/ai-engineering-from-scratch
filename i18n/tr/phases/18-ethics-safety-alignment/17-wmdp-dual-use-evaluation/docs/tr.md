@@ -3,7 +3,7 @@
 > Li et al., "WMDP Benchmark: Unlearning ile Kötü Kullanımı Ölçmek ve azaltmak" (ICML 2024, arXiv:2403.03218). Biyolojik güvenlik (1,520), siber güvenlik (2,225) ve kimya (412) alanında 4.157 çoklu seçim sorusu. Sorular, "sarı bölgede"  yakın bilgi sağlayan, çok uzmanlık alanındaki inceleme ve ITAR/EAR yasal uyumluluğu ile filtrelenir. İki amaçlı: çift kullanım kabiliyetinin vekili değerlendirilmesi ve öğrenme oranı (ekleyici RMU yöntemi genel kapasiteyi korurken WMDP performansını azaltır). 2024-2025 saha anlatısı: erken OpenAI / Anthropic 2024 değerlendirmeleri internet aramaları üzerinde " hafif bir yükseltme " rapor etti; Nisan 2025'e kadar, OpenAI'nin Hazırlık Çerçevi v2 modellerinin "biolojik tehditler yaratmak için yeni başlayanlara anlamlı bir şekilde yardımcı olma eğiliminde" olduğunu söyledi. Anthropic'in biyolojik silah edinme denemesi, ASL-3'ü dışlamak için yeterli olmayan 2.53 kat yükseltme gösterdi.
 
 **Type:** Learn
-**Languages:** Python (stdlib, WMDP-shaped uplift evaluation harness)
+**Languages:** Python, TypeScript (stdlib, WMDP-shaped uplift evaluation harness)
 **Prerequisites:** Phase 18 · 16 (red-team tooling), Phase 14 (agent engineering)
 **Time:** ~60 minutes
 

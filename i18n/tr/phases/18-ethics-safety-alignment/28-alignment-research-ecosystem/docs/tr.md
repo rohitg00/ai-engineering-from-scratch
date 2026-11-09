@@ -3,7 +3,7 @@
 > Beş organizasyon 2026 laboratuvar dışı birleştirme araştırma katmanı tanımlıyor. MATS (ML Alignment & Theory Scholars): 2021'in sonundan bu yana 527+ araştırmacı, 180+ makale, 10K+ alıntılar, h-indeksi 47; 2024 yazında 501 ((c) ((3) olarak kurulmuş olan kohort; ~ 90 akademisyen ve 40 mentor ile; 2025'ten önceki mezuniyetlerin %80'i Anthropic, DeepMind, OpenAI, UK AISI, RAND, Redwood, METR, Apollo'da 200+ ile güvenlik/güven üzerinde çalışıyor. Redwood Araştırmaları: Buck Shlegeris tarafından kurulan uygulanabilir uyumlu bir laboratuvar; AI Kontrolü (Denevi 10) başlatıldı; kontrol güvenlik vakalarında İngiltere AISI ile işbirliği yaptı. Apollo Araştırmaları: Sınır laboratuvarları için görevlendirme öncesi planlama değerlendirmeleri; İç bağlamlı planlama (Desin 8) ve AI planlama için güvenlik durumlarına doğru yazar. METR (Model Değerlendirme ve Tehdit Araştırması): görev tabanlı kapasite değerlendirmeleri, özerk görev zaman ufukları çalışmaları; "Sınırlı AI Güvenlik Politikası Ortak Elemleri" laboratuvar çerçevelerini karşılaştırır. Eleos AI Araştırması: model refah öncesi değerlendirmeler (Deneyim 19); Claude Opus 4 refah değerlendirmesini gerçekleştirdi.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 01-27 (prior Phase 18 lessons)
 **Time:** ~45 minutes
 

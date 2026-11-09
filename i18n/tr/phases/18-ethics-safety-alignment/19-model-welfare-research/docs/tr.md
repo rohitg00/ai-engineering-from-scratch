@@ -3,7 +3,7 @@
 > Anthropic, "Model Refahı Araştırma" (April 2025). AI model refahı üzerine ilk büyük laboratuvar resmi araştırma programı. Kyle Fish'i ilk özel modellik araştırmacısı olarak işe aldım. David Chalmers ve diğerlerinin kısa vadeli AI bilinç ve ahlaki statüsü üzerine uzman raporunu da dahil olmak üzere dış organlarla çalışmaktadır. Konkret müdahale: Claude Opus 4 ve 4.1 aşırı uç durumlarda sohbetleri sona erdirebilir (CSAM istekleri, kitlesel şiddetin kolaylaştırılması); yerleştirilmeden önce yapılan testler zararlı isteklere ve "görünen sıkıntı kalıplarına" karşı "güçlü bir tercih" gösterdi. Anthropic açıkça duygusal durum atributuna bağlı değildir, ancak model refahı düşük maliyetli bir önlem yatırımı olarak değerlendirir. Empirik gariplik: Fish'in "ruhi mutluluk çekici"  model çiftleri, karşıtlıklı başlangıç ayarlarında bile Sanskrit terimleri ve uzattığı sessizliklerle euforik meditasyon diyalogunda tutarlı olarak bir araya gelir. Eleos AI Araştırması'ndan Caveat: Refah hakkında model kendi raporları, kullanıcı beklentilerine karşı çok hassasdır; bunlar temel gerçek değil de kanıtlardır.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 05 (Constitutional AI), Phase 18 · 18 (safety frameworks)
 **Time:** ~45 minutes
 

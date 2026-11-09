@@ -3,7 +3,7 @@
 > RLHF'nin sonraki eleştirileri bu boru hattına karşı çıkıyor. Optimize basıncının bir vekili nasıl çarpıttığını incelemeden önce, vekili görmeniz gerekir. InstructGPT (Ouyang et al., 2022) referans mimarisini tanımladı: talimat- yanıt çiftlerinde denetimli ince ayarlama, çiftlik tercih sıralamaları üzerinde eğitilmiş bir ödül modeli ve SFT politikasına KL cezası ile ödül modeli karşı PPO. 1.3B InstructGPT, 175B GPT-3'e tercih edildi. Bu tek sonuç 2026 yılında her sınır laboratuvarının hala RLHF şeklinde bir eğitim sonrası boru hattı göndermesinin nedeni.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy three-stage pipeline)
+**Languages:** Python (stdlib, toy three-stage pipeline), TypeScript
 **Prerequisites:** Phase 10 · 06 (SFT), Phase 10 · 07 (RLHF), Phase 10 · 08 (DPO)
 **Time:** ~45 minutes
 

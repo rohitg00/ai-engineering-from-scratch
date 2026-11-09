@@ -3,7 +3,7 @@
 > DP-SGD standart  gürültü enjeksiyonu gradient güncellemeleri olarak kalır. Hesaplama, bellek ve kullanım alanındaki genel maliyetler önemli; parametre-efikas DP ince ayarlama (LoRA + DP-SGD) ortak 2025 yapılandırması (ACM 2025). İki kanıt kümesi gerginlik içinde: Kanarlı üyelik sonucu (Duan et al., 2024) dil modellerine karşı sınırlı başarı raporları; eğitim verileri çıkarma (Carlini et al., 2021; Nasr et al., 2025) önemli kelimel hatıralama geri kazanır. Karar (arXiv:2503.06808, Mart 2025): fark ölçülmüş olan  yerleştirilen kanaryalarla "en çıkarılabilir" veriler arasında. Yeni kanary tasarımları, gölge modelleri olmadan kayıp tabanlı MIA'yı mümkün kılar ve gerçekli DP garantileri ile gerçek verilere dayanan bir LLM'nin ilk önemsiz DP denetimini sağlar. Alternatifler: PMixED (arXiv:2403.15638)  sonraki token dağıtımları konusunda uzmanların karışımı yoluyla çıkarma zamanında özel tahmin; DP sentetik veri üretimi (Google Araştırma 2024). Yeni ortaya çıkan saldırı: LLM Feedback  güven puanı sızdırısı yoluyla Farklı Gizlilik Değişimi.
 
 **Type:** Build
-**Languages:** Python (stdlib, DP-SGD noise-injection and ε-δ accountant demonstration)
+**Languages:** Python, TypeScript (stdlib, DP-SGD noise-injection and ε-δ accountant demonstration)
 **Prerequisites:** Phase 01 · 09 (information theory), Phase 10 · 01 (large-model training)
 **Time:** ~60 minutes
 

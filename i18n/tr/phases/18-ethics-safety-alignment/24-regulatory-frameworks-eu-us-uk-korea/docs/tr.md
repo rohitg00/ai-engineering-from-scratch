@@ -3,7 +3,7 @@
 > Dört ana düzenleyici rejim 2026 Yapay zeka yönetimi manzarasını tanımlar. AB AI Yasası (1 Ağustos 2024)  2 Şubat 2025'ten itibaren yasak uygulamalar ve AI bilgisliliği; 2 Ağustos 2025'ten itibaren GPAI yükümlülükleri; tam uygulanabilirlik ve 50 Maddesi 2 Ağustos 2026'da şeffaflık; miras alınan GPAI ve yerleşik yüksek riskli sistemler 2 Ağustos 2027; 15 milyon EUR'ye kadar veya küresel döviz miktarının% 3'üne kadar cezalar. GPAI Uygulama Kodu (10 Temmuz 2025): üç bölüm  Şeffaflık, Telif Hakları, Güvenlik ve Güvenlik  12 taahhüt; uygulanma Ağustos 2026'da başlar. UK AISI -> AI Güvenlik Enstitüsü (Şubat 2025): isim değiştirme sinyalleri daha dar bir kapsamda. ABD AISI -> CAISI (Haziran 2025): NIST'in altındaki AI Standartları ve Yenilikleri Merkezi; büyüme destekleyen bir duruşa doğru geçiş. Koreli AI Çerçeve Yasası (Aralık 2024'te kabul edildi, Ocak 2026'da yürürlüğe girdi): Madde 12 MSIT'de AISI'yi kurar; yabancı AI şirketleri için yerel temsilcileri, risk değerlendirmesini, yüksek etkisi ve üretken AI için güvenlik önlemlerini görevlendirir.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 18 (frontier frameworks), Phase 18 · 27 (data governance)
 **Time:** ~75 minutes
 

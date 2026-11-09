@@ -3,7 +3,7 @@
 > Gallegos, Rossi, Barrow, Tanjim, Kim, Dernoncourt, Yu, Zhang, Ahmed (Bileştirici Dilbilim 2024, arXiv:2309.00770). Temel 2024 araştırması, temsil zararı (stereyotipler, silme) ve tahsis zararı (eşitsiz kaynak dağılım) arasında ayrım yaparak değerlendirme ölçümlerini yerleştirme tabanlı, olasılık tabanlı veya oluşturulan metrik tabanlı olarak sınıflandırır. 2024-2025 deneysel: An et al. (PNAS Nexus, Mart 2025) GPT-3.5 Turbo, GPT-4o, Gemini 1.5 Flash, Claude 3.5 Sonnet, Llama 3-70B'de 20 giriş düzeyde iş için otomatik olarak özetleme değerlendirmesi üzerinden kesimler arası cinsiyet x ırk ayrımcılığını ölçmek. WinoIdentity (COLM 2025, arXiv:2508.07111) kesimsel kimlikler için belirsizlik tabanlı adil değerlendirmeyi tanıttı. Yu & Ananiadou 2025 MLP katmanlarında cinsiyet nöronlarını tanımlar; Ahsan & Wallace 2025 klinik ırk ayrımcılığını ortaya çıkarmak için SAE'leri kullanır; Zhou ve diğerleri. 2024 (UniBias) dikkat başlıklarını deviseye sokar. Meta-tıkıntısı (arXiv:2508.11067): 10 yıllık edebiyat, eşcinsel önyargıya karşı orantısız bir şekilde odaklanır.
 
 **Type:** Build
-**Languages:** Python (stdlib, toy embedding-based bias probe)
+**Languages:** Python, TypeScript (stdlib, toy embedding-based bias probe)
 **Prerequisites:** Phase 05 (word embeddings), Phase 18 · 01 (instruction following)
 **Time:** ~60 minutes
 

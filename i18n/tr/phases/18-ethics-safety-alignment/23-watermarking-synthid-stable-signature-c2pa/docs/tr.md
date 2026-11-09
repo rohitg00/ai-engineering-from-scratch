@@ -3,7 +3,7 @@
 > Üç teknoloji 2026 Yapay zeka tarafından üretilen içeriğin kaynağı olarak yapılandırılmıştır. SynthID (Google DeepMind)  görüntü su işaretleme Ağustos 2023'te başlatıldı, metin + video Mayıs 2024 (Gemini + Veo), metin açık kaynaklı Ekim 2024'te Responsible GenAI Toolkit aracılığıyla, Gemini 3 Pro ile birlikte Kasım 2025'te birleşik çok medya dedektörü. Metin su işaretleme, sonraki belirti örneği seçme olasılığını fark edilemez şekilde ayarlar; görüntü/video su işaretleri sıkıştırma, kesim, filtre, çerçeve hızında değişiklikler hayatta kalır. Stable Signature (Fernandez et al., ICCV 2023, arXiv:2303.15435)  gizli difüzyon dekodörünü ince ayarlar, böylece her çıkış sabit bir mesaj içerir; kesilmiş (içindeki %10) oluşturulan görüntülerin %90'ı FPR<1e-6'da tespit edilmiştir. Ardından "Stabil İmza Durgun" (arXiv:2405.07145, Mayıs 2024)  ince ayarlama, kaliteyi korurken su işaretini çıkarır. C2PA  Kriptografik olarak imzalanan, bozukluktan açık metadata standardı (C2PA 2.2 Açıklama 2025). Su işaretleri ve C2PA tamamlayıcıdır: metadatalar silinebilir ancak daha zengin bir kaynak taşır; su işaretleri transkodlama yoluyla kalır ancak daha az bilgi taşır.
 
 **Type:** Build
-**Languages:** Python (stdlib, token-watermark embed + detect)
+**Languages:** Python, TypeScript (stdlib, token-watermark embed + detect)
 **Prerequisites:** Phase 10 · 04 (sampling), Phase 01 · 09 (information theory)
 **Time:** ~75 minutes
 

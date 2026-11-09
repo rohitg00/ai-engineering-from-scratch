@@ -3,7 +3,7 @@
 > Üretim moderasyon sistemleri, Ders 12-16'da tanımlanan güvenlik politikalarını işlevsel hale getirir. OpenAI Moderation API: `omni-moderation-latest`GPT-4o'ya dayanan (2024) tek çağrıda metin + görüntüleri sınıflandırır; çok dilli test setinde önceki sürümden %42 daha iyi; yanıt şeması 13 kategori boolean  taciz, taciz/ tehdit, nefret, nefret/ tehdit, yasadışı, yasadışı/ şiddeti, kendini incitme, kendini incitme/ niyet, kendini incitme/ talimatlar, cinsel, cinsel/yetime azınlık, şiddet, şiddet/grafik; çoğu geliştiriciler için ücretsizdir. Katlı kalıplar: Giriş moderatörü (önceden üretilen), Çıktı moderatörü (sonraki üretilen), Özel moderatörü (domen kuralları). Async paralel çağrılar gecikmeyi gizler; yer tutucu cevabı giriş moderatörlüğü tamamlanırken beklemeyi kapsayabilir. Llama Guard 3/4 (Denevi 16): 14 MLCommons tehlikeleri, Kod Anlatıcısı İstifadesi, 8 dil (v3), çoklu görüntü (v4). Perspektif API (Google Jigsaw): LLM-moderator dalgasından önceki toksisite puanlaması; öncelikle şiddetli toksisite / hakaret / sövme / sövme çeşitleri ile tek boyutlu toksisite; içeriği modere eden araştırma için temel çizgi. Deprecations: Azure Content Moderator'u Şubat 2024'te iptal etti, Şubat 2027'de emekli oldu ve Azure AI İçerik Güvenliği ile değiştirildi.
 
 **Type:** Build
-**Languages:** Python (stdlib, three-layer moderation harness)
+**Languages:** Python, TypeScript (stdlib, three-layer moderation harness)
 **Prerequisites:** Phase 18 · 16 (Llama Guard / Garak / PyRIT)
 **Time:** ~60 minutes
 

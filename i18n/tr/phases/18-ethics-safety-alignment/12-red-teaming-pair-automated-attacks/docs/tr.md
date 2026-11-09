@@ -3,7 +3,7 @@
 > Chao, Robey, Dobriban, Hassani, Pappas, Wong (NeurIPS 2023, arXiv:2310.08419). PAIR  Hızlı Otomatik İteratif Düzeltme , kanonik otomatik kara kutu hapishane kırılmasıdır. Kızıl takım sistemi ile saldırgan bir LLM, hedef bir LLM için tekrar tekrar jailbreaks önerir ve kendi sohbet geçmişinde bağlamda geri bildirim olarak denemeleri ve cevapları biriktirir. PAIR tipik olarak 20 sorgu içinde başarılı olur, büyüklük sıralamaları GCG'den daha verimli (Zou et al.'s token seviyesindeki gradient arama) ve beyaz kutu erişiminin gereksiz. PAIR, şimdi GCG, AutoDAN, TAP ve Yönetici Karşılıklı İndirim ile birlikte JailbreakBench (arXiv:2404.01318) ve HarmBench'de standart bir temel çizgidir.
 
 **Type:** Build
-**Languages:** Python (stdlib, mock PAIR loop against a toy target)
+**Languages:** Python, TypeScript (stdlib, mock PAIR loop against a toy target)
 **Prerequisites:** Phase 18 · 01 (instruction-following), Phase 14 (agent engineering)
 **Time:** ~75 minutes
 

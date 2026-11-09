@@ -3,7 +3,7 @@
 > Adalet edebiyatını üç aile düzenliyor. Grup adilliği: demografik eşitlik, eşit olasılıklar, koşullu kullanım doğruluğu eşitliği  korunan gruplar arasında ortalama eşit oranlar. Bireysel adillik (Dwork et al. 2012): benzer bireyler benzer kararlar alır; karar haritasında Lipschitz durumu. Gerçeklere karşı adillik (Kusner et al. 2017): Hissedici özellikler karşıt bir şekilde değiştirildiğinde değişmezse bir karar birey için adil olacaktır. 2024 teorik sonucu (NeurIPS 2024): CF vs. doğruluk içeren bir değişim vardır; bir model-agnostik yöntem, optimal ama haksız bir tahminciyi sınırlı doğruluk kaybı olan CF'ye dönüştürür. Geriye doğru geriye doğru doğrular (arXiv:2401.13935, Ocak 2024): yasal olarak korunan özellikler üzerinde müdahale gerekmesinden kaçınan yeni bir paradigma. Felsefi uzlaşma (ICLR Blogposts 2024): sebepli grafikler ile, belirli grup adalet önlemlerini tatmin etmek karşı gerçek adaleti içerir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-criteria comparison)
+**Languages:** Python, TypeScript (stdlib, three-criteria comparison)
 **Prerequisites:** Phase 18 · 20 (bias), Phase 02 (classical ML)
 **Time:** ~60 minutes
 

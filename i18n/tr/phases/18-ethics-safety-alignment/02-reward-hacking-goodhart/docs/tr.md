@@ -3,7 +3,7 @@
 > Bir vekil ödülünü en üst düzeye çıkarmak için yeterince güçlü olan herhangi bir optimizer, vekil ile aslında istediğiniz şey arasında boşluğu bulacaktır. Gao et al. (ICML 2023) bunu bir ölçekleme yasası olarak tanımladı: vekil ödül artıyor, altın ödül zirvesi daha sonra düşüyor ve KL'nin başlangıç politikasından farklılığıyla kapalı bir şekilde uyum sağlayabileceğiniz bir şekilde boşluk artıyor. Sykophancy, sözcük ayrımcılığı, sadakatsiz düşünce zinciri ve değerlendirici bozukluğu ayrı bir sorun değildir. Farklı kostümlerde aynı sorun var.
 
 **Type:** Learn
-**Languages:** Python (stdlib, proxy-vs-gold-reward simulator)
+**Languages:** Python (stdlib, proxy-vs-gold-reward simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 10 · 07 (RLHF)
 **Time:** ~60 minutes
 

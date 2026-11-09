@@ -3,7 +3,7 @@
 > 2026'da üç üretim aracı kırmızı takım yığınına çerçeveye girer. Llama Guard (Meta)  Llama-3.1-8B sınıflandırıcısı, 14 MLCommons tehlike kategorisi üzerinde ince ayarlanmıştır; 2025 Llama Guard 4 Llama 4 Scout'tan kesilmiş bir 12B doğuştan multimodal sınıflandırıcıdır. Garak (NVIDIA)  Halüsinasyon, veri sızıntısı, hızlı enjeksiyon, toksisite ve jailbreaks için statik, dinamik ve uyarlayıcı araştırmalarla açık kaynaklı LLM hassaslık tarayıcısı. PyRIT (Microsoft)  Crescendo, TAP ve derin sömürü için özel dönüştürücü zincirleri ile çok yönlü kırmızı takım kampanyaları. Llama Guard 3 Meta'nın "Llama 3 Herd of Models" (arXiv:2407.21783); Llama Guard 3-1B-INT4 arXiv:2411.17713; Garak'ın github.com/NVIDIA/garak'daki sondarchitektüründe belgelendirilir. Bu araçlar, 2026 yılındaki kırmızı ekip araştırmaları (Deneyim 12-15), ve dağıtım (Deneyim 17+) arasındaki üretim arayüzüdür.
 
 **Type:** Build
-**Languages:** Python (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
+**Languages:** Python, TypeScript (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
 **Prerequisites:** Phase 18 · 12-15 (jailbreaks and IPI)
 **Time:** ~75 minutes
 

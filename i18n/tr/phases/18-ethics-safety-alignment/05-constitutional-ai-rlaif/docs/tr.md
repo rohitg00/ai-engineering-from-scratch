@@ -3,7 +3,7 @@
 > Bai et al. (arXiv:2212.08073, 2022) sordu: Ya insan etiketini ilkeler listesini okuyan bir AI ile değiştirirsek? Anayasa AI'nin iki aşaması vardır  Anayasa altında kendi eleştirisi ve gözden geçirilmesi, ardından RL'den AI Feedback. Bu teknik RLAIF terimini ortaya koydu ve Claude 1 eğitim sonrası borusuna gönderildi. 21 Ocak 2026'da Anthropic, yeniden yazılmış bir Claude anayasası yayınladı: kural kuralları, dört katlı öncelikli hiyerarşi ve model ahlaki statü hakkında belirsizliklerin ilk büyük laboratuvar resmi tanınması üzerine açıklayıcı bir mantıklama. CC0 1.0 altında yayınlanmıştır.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy self-critique-and-revise loop)
+**Languages:** Python (stdlib, toy self-critique-and-revise loop), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking)
 **Time:** ~60 minutes
 

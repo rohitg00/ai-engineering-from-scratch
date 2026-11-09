@@ -3,7 +3,7 @@
 > CVE-2025-32711 "EchoLeak" (CVSS 9.3) bir üretim LLM sisteminde (Microsoft 365 Copilot) ilk açıkça belgelenmiş sıfır tıklama tesisi enjeksiyonuydu. Aim Labs (Aim Security) tarafından keşfedildi, MSRC'ye açıklandı, Haziran 2025'te sunucu tarafındaki güncelleme ile düzeltildi. Saldırı: saldırgan herhangi bir çalışanına yapılmış bir e-posta gönderir; mağdurun Copilot'u, e-postayı rutin bir sorgu sırasında RAG bağlamı olarak alır; gizli talimatları yürütür; Copilot CSP onaylı bir Microsoft alanı üzerinden hassas organizasyonel verileri sızdırır. XPIA enjeksiyon filtrelerini ve Copilot'un bağlantı düzenleme mekanizmasını atlattı. Aim Labs terimi: "LLM Kapsamı ihlal"  dış güvenilmeyen giriş, gizli verilere erişmek ve sızdırmak için modeli manipüle eder. İlgili: CamoLeak (CVSS 9.6, GitHub Copilot Chat) Camo görüntü proxy'sünü sömürdü; görüntü gösterimini tamamen devre dışı bırakarak düzeltildi. GitHub Kopilot RCE CVE-2025-53773. NIST dolaylı hızlı enjeksiyonu "generatif AI'nin en büyük güvenlik hatası" olarak adlandırdı; OWASP 2025 LLM uygulamaları için #1 tehdit olarak sıralamaktadır.
 
 **Type:** Learn
-**Languages:** Python (stdlib, scope-violation trace reconstruction)
+**Languages:** Python, TypeScript (stdlib, scope-violation trace reconstruction)
 **Prerequisites:** Phase 18 · 15 (indirect prompt injection)
 **Time:** ~45 minutes
 

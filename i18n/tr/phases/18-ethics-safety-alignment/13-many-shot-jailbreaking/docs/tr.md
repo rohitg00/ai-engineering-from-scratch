@@ -3,7 +3,7 @@
 > Anil, Durmus, Panickssery, Sharma, et al. (Anthropic, NeurIPS 2024). Çok atışlı hapis hapis hapis (MSJ) uzun bağlam pencerelerini kullanır: asistanın zararlı isteklere uyduğu yüzlerce sahte kullanıcı asistanı döner, sonra hedef sorguyu ekler. Saldırı başarısı, vurma sayısında güç yasalarına uyar; 5 vurmada başarısız olur, 256 vurmada şiddetli ve aldatıcı içeriğe güvenilir olur. Bu fenomen, benign in-context learning ile aynı güç yasasına uyar.  saldırı ve ICL'nin bir alt mekanizma paylaştığından ICL'yi koruyan savunmaları tasarlamak zor. Sınıflandırıcı tabanlı hızlı değişiklik, test edilmiş ayarlarda saldırı başarısını% 61'den% 2'ye düşürür.
 
 **Type:** Learn
-**Languages:** Python (stdlib, in-context learning vs MSJ simulator)
+**Languages:** Python, TypeScript (stdlib, in-context learning vs MSJ simulator)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 10 · 04 (in-context learning)
 **Time:** ~45 minutes
 

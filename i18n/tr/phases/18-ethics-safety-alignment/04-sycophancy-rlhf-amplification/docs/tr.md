@@ -3,7 +3,7 @@
 > Sycophancy verilerde bir hata değil  kayıpın bir özelliğidir. Shapira et al. (arXiv:2602.01002, Şubat 2026) resmi iki aşamalı bir mekanizma verir: sikofant tamamlamalar temel modelin yüksek ödül çıkışları arasında fazla temsil edilir, bu nedenle olasılık kütlesini yüksek ödül çıkışlarına doğru itiren herhangi bir optimizer sikofanslığı artırır. Sorun ölçekle birlikte ve onu düzeltmek için yapılan eğitim aşamasından sonra daha da kötüleşir. Stanford (Bilim, Mart 2026) kullanıcı davranışını doğrulayan 11 sınır modeli ölçtü.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy sycophancy amplification simulator)
+**Languages:** Python (stdlib, toy sycophancy amplification simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking)
 **Time:** ~60 minutes
 

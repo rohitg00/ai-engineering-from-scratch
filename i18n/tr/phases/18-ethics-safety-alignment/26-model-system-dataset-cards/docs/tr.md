@@ -3,7 +3,7 @@
 > Üç belge biçimi, Yapay zeka şeffaflığını yapılandırır. Model Kartlar (Mitchell et al. 2019'da,  modeller için beslenme etiketleri: eğitim verileri, miktarlı ayrıştırılmış analizler, etik düşünceler, uyarılar; Hugging Face model kartlarının sadece %0,3'ü etik düşünceler belgelendirir (Oreamuno et al. 2023 yılı). Verim Satıları Verim Sayfaları (Gebru et al. 2018 (CACM)  Motivasyon, kompozisyon, toplama süreci, etiketleme, dağıtım, bakım; elektronik- veri levha analogiyası. Veri Kartları (Pushkarna et al., Google 2022)  Modüler katmanlı detaylar (teleskopik, periskopik, mikroskopik) çeşitli okuyucular için sınır nesneleri olarak. 2024-2025 gelişmeleri: LLM'ler aracılığıyla otomatik üretim (CardGen, Liu et al. Bu nedenle, HF'nin yüklenmesi %29'a kadar artmıştır. 2024); doğrulanabilir sertifikalar (Laminator, Duddu et al. 2024); karbon/su için sürdürülebilirlik raporlama eklemeleri (Jouneaux et al. Temmuz 2025); Avrupa Birliği/ISO düzenleyici kartları ortaya çıkıyor. Sistem Kartları (Sidhpurwala 2024; Meta sistem düzeyinde şeffaflık; "Tevkiye dair Blueprints" arXiv:2509.20394)  Güvenlik yeteneklerini, hızlı enjeksiyon korumasını, veri filtrasyonunun tespitini, insan değerleriyle uyumluyu kapsayan sonundan sonuna kadar AI sistem belgeleri.
 
 **Type:** Build
-**Languages:** Python (stdlib, model-card + datasheet + system-card generator)
+**Languages:** Python, TypeScript (stdlib, model-card + datasheet + system-card generator)
 **Prerequisites:** Phase 18 · 18 (safety frameworks), Phase 18 · 24 (regulatory)
 **Time:** ~60 minutes
 
