@@ -3,7 +3,7 @@
 > Mỗi chuyển đổi trạng thái biểu đồ vẫn tồn tại. Khi một công nhân bị tai nạn, hợp đồng thuê của nó hết hạn và một công nhân khác nhận lại tại điểm kiểm soát mới nhất. Cloudflare Durable Objects giữ trạng thái trong nhiều giờ hoặc tuần. Đề xuất sau đó cam kết (Lớp 15) xác định một kế hoạch quay lại mỗi hành động. Việc xác minh sau hành động sẽ đóng lại vòng lặp. Điều 14 của EU AI Act buộc phải giám sát con người hiệu quả cho các hệ thống có nguy cơ cao  trong thực tế điều này có nghĩa là các trạm kiểm soát phải được truy vấn, các lần quay lại phải được thử nghiệm, và các đường mòn kiểm toán phải tồn tại sau khi triển khai. Phương thức thất bại cấp tính: mà không có các khóa bất khả năng và kiểm tra điều kiện trước, một lần thử lại sau khi thất bại tạm thời có thể thực hiện hai lần hành động đã được phê duyệt. Việc xác minh sau hành động là điều bắt được nó.
 
 **Type:** Learn
-**Languages:** Python (stdlib, checkpoint and rollback state machine)
+**Languages:** Python (stdlib, checkpoint and rollback state machine), TypeScript
 **Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 15 (Propose-then-commit)
 **Time:** ~60 minutes
 

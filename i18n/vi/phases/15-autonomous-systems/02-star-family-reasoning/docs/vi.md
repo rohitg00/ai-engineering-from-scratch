@@ -3,7 +3,7 @@
 > Loop tự cải thiện nhỏ nhất có thể nằm trong lý luận. Một mô hình tạo ra một chuỗi suy nghĩ, giữ những câu trả lời đúng, và tinh chỉnh những câu trả lời đó. Đó là STAR. V-STaR thêm một xác minh để lựa chọn thời gian suy luận là tốt hơn. Quiet-STaR đẩy lý do xuống mọi dấu hiệu. Cả ba đều làm việc. Không có một trong số đó là ma thuật  vòng lặp bảo tồn bất kỳ đường tắt nào xảy ra để đạt được câu trả lời đúng.
 
 **Type:** Learn
-**Languages:** Python (stdlib, bootstrap-loop simulator)
+**Languages:** Python, TypeScript (stdlib, bootstrap-loop simulator)
 **Prerequisites:** Phase 13 · 01-03 (Reasoning and CoT), Phase 15 · 01 (long-horizon framing)
 **Time:** ~60 minutes
 

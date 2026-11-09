@@ -3,7 +3,7 @@
 > SWE-bench Verified đã tăng từ 4% lên 80,9% trong vòng chưa đầy ba năm. Cùng Claude Sonnet 4.5 ghi 43,2% trên SWE-agent v1 và 59,8% trên Cline tự động OpenHands (trước đây là OpenDevin) là nền tảng được cấp phép MIT hoạt động nhất và vòng lặp CodeAct của nó thực hiện các hành động Python trực tiếp trong một hộp cát thay vì các cuộc gọi công cụ JSON. Các số tiêu đề che giấu một vấn đề về phương pháp: 161 trong số 500 nhiệm vụ SWE-bench Verified chỉ yêu cầu thay đổi đường dây 12, và SWE-bench Pro (10 nhiệm vụ đường dây) nằm ở mức 2359% cho các mô hình biên giới tương tự.
 
 **Type:** Learn
-**Languages:** Python (stdlib, CodeAct vs JSON tool-call comparison)
+**Languages:** Python, TypeScript (stdlib, CodeAct vs JSON tool-call comparison)
 **Prerequisites:** Phase 14 · 07 (Tool use), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~45 minutes
 

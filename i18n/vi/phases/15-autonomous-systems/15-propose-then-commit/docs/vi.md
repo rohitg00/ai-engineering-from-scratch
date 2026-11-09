@@ -3,7 +3,7 @@
 > Sự đồng thuận năm 2026 về HITL là cụ thể. Nó không phải là "nhà đại lý hỏi, người dùng nhấp vào phê duyệt". Nó là đề xuất-sau đó cam kết: hành động được đề xuất được duy trì đến một cửa hàng bền vững với một khóa idempotency; xuất hiện trước một nhà phê duyệt với ý định, dòng dữ liệu, quyền được chạm vào, bán kính bùng nổ và kế hoạch quay lại; chỉ thực hiện sau sự xác nhận tích cực; xác minh sau khi thực hiện để xác nhận tác dụng phụ thực sự xảy ra. LangGraph's `interrupt()`cộng với PostgreSQL checkpointing, Microsoft Agent Framework của `RequestInfoEvent`, và Cloudflare `waitForApproval()`tất cả thực hiện cùng một hình dạng. chế độ thất bại theo quy luật là phê duyệt bằng dấu cao su: "T phê duyệt?" được nhấp mà không cần xem xét.
 
 **Type:** Learn
-**Languages:** Python (stdlib, propose-then-commit state machine with idempotency)
+**Languages:** Python (stdlib, propose-then-commit state machine with idempotency), TypeScript
 **Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 14 (Tripwires)
 **Time:** ~60 minutes
 

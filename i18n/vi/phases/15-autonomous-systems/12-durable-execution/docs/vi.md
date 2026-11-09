@@ -3,7 +3,7 @@
 > Các tác nhân tầm xa sản xuất không chạy vào `while True`. Mỗi cuộc gọi LLM trở thành một hoạt động với điểm kiểm tra, thử lại và chơi lại. Tích hợp SDK OpenAI Agents của Temporal đã được GA tháng 3 năm 2026. Claude Code Routines (Anthropic) chạy các cuộc gọi Claude Code được lên lịch mà không cần một quy trình địa phương liên tục. Các phiên tạm dừng vào người, tồn tại triển khai và tiếp tục từ điểm kiểm tra mới nhất được khóa bởi`thread_id`. Đằng sau công nghệ mới nằm một mô hình cũ  dàn xếp dòng công việc  với một đầu vào mới: LLM gọi là các hoạt động không xác định mà phải được tái diễn xác định khi phục hồi.
 
 **Type:** Learn
-**Languages:** Python (stdlib, minimal durable-execution state machine)
+**Languages:** Python (stdlib, minimal durable-execution state machine), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~60 minutes
 

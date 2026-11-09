@@ -3,7 +3,7 @@
 > Chi phí LLM hàng tháng của một đại lý thương mại điện tử vừa lớn đã tăng từ $1,200 to $4.800 sau khi nhóm của mình kích hoạt kỹ năng "điểm theo dõi đơn đặt hàng". Đó không phải là lỗi giá cả. Đó là một đại lý đã tìm thấy một vòng lặp mới và giữ chi tiêu bên trong nó.`max_tokens`, mỗi công việc mã thông báo và ngân sách đô la, mỗi ngày / tháng giới hạn, giới hạn lặp lại, định tuyến mô hình cấp bậc, lưu trữ cache nhanh, cửa sổ bối cảnh, các điểm kiểm soát HITL cho các hành động đắt tiền, tắt các chuyển đổi khi vi phạm ngân sách. SDK Claude Code Agent của Anthropic gửi các nguyên thủy tương tự dưới các tên khác nhau. giới hạn tốc độ tài chính  ví dụ cắt truy cập lên > $ 50 trong 10 phút  bắt vòng lặp nhanh hơn các giới hạn hàng tháng.
 
 **Type:** Learn
-**Languages:** Python (stdlib, layered cost-governor simulator)
+**Languages:** Python (stdlib, layered cost-governor simulator), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 12 (Durable execution)
 **Time:** ~60 minutes
 

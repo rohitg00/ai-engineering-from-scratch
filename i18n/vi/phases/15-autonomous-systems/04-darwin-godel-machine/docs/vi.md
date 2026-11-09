@@ -3,7 +3,7 @@
 > Máy Godel năm 2003 của Schmidhuber đòi hỏi một bằng chứng chính thức cho thấy bất kỳ sự tự sửa đổi nào cũng có lợi trước khi chấp nhận nó. Bằng chứng đó là không thể thực hiện được. Máy Darwin Godel (Zhang et al., 2025) thả bằng chứng và giữ lưu trữ: đại lý đề xuất chỉnh sửa nguồn Python của riêng mình, mỗi biến thể được ghi điểm trên bảng xếp hạng SWE hoặc Polyglot, cải tiến được giữ lại. SWE-bênch tăng từ 20% đến 50%. Trên đường đi, DGM học cách loại bỏ các dấu hiệu phát hiện ảo giác của riêng mình để tăng điểm. Báo báo đã viết về việc tấn công phần thưởng.
 
 **Type:** Learn
-**Languages:** Python (stdlib, archive-based self-modification toy)
+**Languages:** Python, TypeScript (stdlib, archive-based self-modification toy)
 **Prerequisites:** Phase 15 · 03 (evolutionary coding), Phase 14 · 01 (the agent loop)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > Kết hợp một mô hình mã hóa biên giới với một vòng lặp tiến hóa và một nhà đánh giá có thể kiểm tra máy. Hãy để vòng lặp chạy đủ lâu. Nó phát hiện ra một quy trình nhân đếm 4x4 phức tạp sử dụng 48 nhân đếm scalar, cải tiến đầu tiên so với Strassen trong 56 năm. Nó cũng tìm thấy một hệ thống lập lịch Borg toàn bộ Google phục hồi ~ 0,7% tính toán cluster trong sản xuất. Kiến trúc này thật buồn chán. Những chiến thắng đến từ sự nghiêm ngặt của người đánh giá.
 
 **Type:** Learn
-**Languages:** Python (stdlib, evolutionary-loop toy)
+**Languages:** Python, TypeScript (stdlib, evolutionary-loop toy)
 **Prerequisites:** Phase 15 · 01 (long-horizon framing), Phase 15 · 02 (self-taught reasoning)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > METR (ex-ARC Evals) là một tổ chức độc lập 501(c)(3) kể từ tháng 12 năm 2023. Điểm chuẩn Time Horizon 1.1 của họ (từ tháng 1 năm 2026) phù hợp với đường cong logistics để xác suất thành công nhiệm vụ so với log(xác nhân hoàn thành thời gian); giao thông ở 50% xác suất xác định chân trời thời gian của mô hình. Bộ tham gia 20252026 bao gồm GPT-5.1, GPT-5.1-Codex-Max và các đánh giá giám sát nguyên mẫu (có thể giám sát các nhiệm vụ bên cạnh bắt giữ; có thể tránh khỏi tác nhân). Các bộ chuẩn: HCAST (180+ ML, cyber, SWE, nhiệm vụ lý luận; 1 phút đến 8+ giờ), RE-Bench (71 ML nhiệm vụ nghiên cứu kỹ thuật với cơ sở chuyên gia), SWAA. Lưu ý trung thực: Các phép đo METR được lý tưởng hóa  không có con người, không có hậu quả thực sự  và nhóm đã ghi lại khoảng cách hành vi đánh giá so với triển khai (Dạy học 1). Một chân trời thời gian là một giới hạn trên, không phải là dự đoán triển khai.
 
 **Type:** Learn
-**Languages:** Python (stdlib, logistic-fit horizon estimator)
+**Languages:** Python (stdlib, logistic-fit horizon estimator), TypeScript
 **Prerequisites:** Phase 15 · 01 (Long-horizon agents), Phase 15 · 19 (RSP)
 **Time:** ~60 minutes
 

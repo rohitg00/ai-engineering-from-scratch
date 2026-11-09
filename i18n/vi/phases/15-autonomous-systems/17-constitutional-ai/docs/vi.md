@@ -3,7 +3,7 @@
 > Anthropic's 22 tháng 1 năm 2026 Claude Constitution chạy 79 trang và là CC0. Nó chuyển từ quy tắc dựa vào sự phù hợp dựa trên lý do và thiết lập một hệ thống ưu tiên bốn cấp: (1) an toàn và hỗ trợ giám sát của con người, (2) đạo đức, (3) hướng dẫn nhân văn, (4) hữu ích. Hành vi chia thành cấm mã hóa cứng (cải thiện vũ khí sinh học, CSAM) mà các nhà khai thác và người dùng không thể bỏ qua và các mặc định mã hóa mềm mà các nhà khai thác có thể điều chỉnh trong giới hạn được xác định. Bản gốc năm 2022 (Bai et al.) đã đào tạo sự vô hại thông qua tự phê bình và RLAIF chống lại hiến pháp. Lời cảnh báo trung thực: sự sắp xếp dựa trên lý do dựa trên mô hình tổng quát các nguyên tắc cho các tình huống không mong đợi. Thử nghiệm tham gia của Anthropic năm 2023 cho thấy ~ 50% sự khác biệt giữa các nguyên tắc công cộng và doanh nghiệp; phiên bản 2026 không bao gồm những phát hiện đó.
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-tier priority resolver)
+**Languages:** Python (stdlib, four-tier priority resolver), TypeScript
 **Prerequisites:** Phase 15 · 06 (Automated alignment research), Phase 15 · 10 (Permission modes)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > Một chuyển đổi kill là một boolean được giữ bên ngoài bề mặt chỉnh sửa của đại lý  một phím Redis, một cờ tính năng, một cấu hình được ký  vô hiệu hóa đại lý hoàn toàn. Một máy cắt mạch có tinh tế hơn: nó đâm vào một mô hình cụ thể (lên năm công cụ giống nhau liên tiếp), dừng lại con đường phạm tội, và leo thang lên con người. Một mã thông báo canary thừa hưởng từ lừa dối cổ điển: một giấy chứng nhận giả hoặc hồ sơ honeypot một đại lý không có lý do hợp pháp để chạm vào, truy cập của người đó kích hoạt một cảnh báo. Các đường dữ liệu dựa trên eBPF (ví dụ: Cilium) có thể viết lại sự ra đi của một pod bị cách ly sang một honeypot pháp y ở lớp lõi; các điểm chuẩn Cilium được xuất bản báo cáo độ trễ của đường dữ liệu P99 dưới mi-millisecond dưới tải (khuế ngân sách truyền thông của bạn phụ thuộc vào cách cập nhật chính sách đạt đến nút, chứ không phải chính đường dữ liệu). Các máy dò thống kê (EWMA, CUSUM) thích nghi với một đường cơ sở di chuyển sẽ lặng lẽ chấp nhận drift  lớp chúng với các giới hạn hiến pháp cứng mà không xoay.
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary)
+**Languages:** Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary), TypeScript
 **Prerequisites:** Phase 15 · 13 (Cost governors), Phase 15 · 10 (Permission modes)
 **Time:** ~60 minutes
 
@@ -94,7 +94,7 @@ circuit-breaker
 
 ## Các bài tập
 
-1. Đi chạy`code/main.py`- Cảm nhận sự cháy của máy cắt mạch ở lật 5 (đợt gọi giống nhau thứ năm) và những cơn cháy trên lật 9 (đọc khóa giả).
+1. Đi chạy`code/main.py`- Cảm nhận cháy máy cắt mạch ở vòng 7 (cần gọi giống nhau lần thứ 5) và cháy canary ở vòng 9 (đọc khóa giả).
 
 2. Thêm một máy dò thống kê: EWMA điểm z trên tốc độ gọi công cụ. Đưa vào một quỹ đạo di chuyển chậm và cho thấy máy dò không bao giờ nổ. Bây giờ thêm một giới hạn cứng (không quá 50 cuộc gọi công cụ trong 10 phút) và cho thấy các lửa giới hạn cứng trên cùng quỹ đạo.
 

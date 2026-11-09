@@ -3,7 +3,7 @@
 > Năm 2023, một chatbot trả lời một câu hỏi trong một lượt. Năm 2026, mô hình biên giới thường chạy từ vài phút đến vài giờ trên một nhiệm vụ. METR Time Horizon 1.1 điểm chuẩn (từ tháng 1 năm 2026) đặt Claude Opus 4.6 tại 14 giờ làm việc chuyên gia với độ tin cậy 50%. Khía chân trời đã tăng gấp đôi khoảng mỗi bảy tháng kể từ GPT-2. Mỗi giả định chúng tôi xây dựng xung quanh một lần trò chuyện  ngữ cảnh, niềm tin, các chế độ thất bại, chi phí, khả năng quan sát  phá vỡ khi chạy kéo dài lâu hơn bữa trưa.
 
 **Type:** Learn
-**Languages:** Python (stdlib, horizon-curve simulator)
+**Languages:** Python, TypeScript (stdlib, horizon-curve simulator)
 **Prerequisites:** Phase 14 · 01 (The Agent Loop)
 **Time:** ~45 minutes
 

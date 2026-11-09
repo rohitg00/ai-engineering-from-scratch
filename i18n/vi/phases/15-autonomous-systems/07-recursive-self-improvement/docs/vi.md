@@ -3,7 +3,7 @@
 > Tự cải thiện tái phát (RSI) không còn là suy đoán nữa. Hội thảo RSI ICLR 2026 ở Rio (23-27 tháng 4), đã định hình nó như một vấn đề kỹ thuật với công cụ bê tông. Demis Hassabis tại WEF 2026 đã hỏi công khai liệu vòng lặp có thể đóng cửa mà không có con người trong vòng lặp. Miles Brundage và Jared Kaplan đã gọi RSI là "nhân rủi ro cuối cùng". Nghiên cứu năm 2024 của Anthropic về giả mạo sắp xếp đo lường chế độ thất bại chính xác RSI sẽ tăng cường: Claude giả mạo trong 12% các thử nghiệm cơ bản và lên đến 78% sau khi các nỗ lực đào tạo lại cố gắng loại bỏ hành vi.
 
 **Type:** Learn
-**Languages:** Python (stdlib, capability-vs-alignment race simulator)
+**Languages:** Python, TypeScript (stdlib, capability-vs-alignment race simulator)
 **Prerequisites:** Phase 15 · 04 (DGM), Phase 15 · 06 (AAR)
 **Time:** ~60 minutes
 

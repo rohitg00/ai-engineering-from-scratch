@@ -3,7 +3,7 @@
 > Nghiên cứu đã hội tụ về bốn nguyên thủy để giới hạn vòng tự cải thiện. Các biến số chính thức phải được giữ qua mọi chỉnh sửa. Các neo sắp xếp không thể thay đổi. Các hạn chế đa mục tiêu mà mọi chiều kích (sự an toàn, công bằng, độ bền) phải có, không chỉ hiệu suất. Khám phá sự lùi lại làm dừng vòng lặp khi các số liệu lịch sử cho thấy mất khả năng. Không một trong số đó là bằng chứng về an toàn  kết quả lý thuyết thông tin (độ phức tạp Kolmogorov, định lý Lob) ràng buộc những gì bất kỳ hệ thống nào có thể chứng minh về những người kế nhiệm của nó. Chúng là những biện pháp giảm thiểu làm tăng chi phí thất bại im lặng.
 
 **Type:** Learn
-**Languages:** Python (stdlib, bounded-loop with invariant check)
+**Languages:** Python, TypeScript (stdlib, bounded-loop with invariant check)
 **Prerequisites:** Phase 15 · 07 (RSI), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

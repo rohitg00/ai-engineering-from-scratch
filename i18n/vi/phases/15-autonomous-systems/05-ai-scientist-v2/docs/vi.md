@@ -3,7 +3,7 @@
 > Nhà khoa học AI của Sakana v2 (Yamada et al., arXiv:2504.08066) chạy vòng lặp nghiên cứu đầy đủ: giả thuyết, mã, thí nghiệm, số liệu, viết, nộp. Đây là hệ thống đầu tiên có đánh giá đồng nghiệp được tạo ra trên giấy qua tại một hội thảo ICLR 2025. Đánh giá độc lập (Beel et al.) cho thấy 42% thí nghiệm thất bại từ lỗi mã hóa và đánh giá văn học thường đánh giá sai các khái niệm được thiết lập là mới. Các bác sĩ của Sakana cảnh báo rằng hệ thống mã hóa thực hiện mã LLM và khuyên nên cô lập Docker. Cả hai nửa của bức tranh là điểm.
 
 **Type:** Learn
-**Languages:** Python (stdlib, research-loop state-machine toy)
+**Languages:** Python, TypeScript (stdlib, research-loop state-machine toy)
 **Prerequisites:** Phase 15 · 03 (AlphaEvolve), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

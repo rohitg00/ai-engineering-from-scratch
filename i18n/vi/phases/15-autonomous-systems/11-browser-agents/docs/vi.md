@@ -3,7 +3,7 @@
 > Đại lý ChatGPT (tháng 7 năm 2025) hợp nhất Operator và nghiên cứu sâu vào một đại lý trình duyệt / thiết bị kết thúc và đặt BrowseComp SOTA ở mức 68.9%. OpenAI đóng cửa Operator vào ngày 31 tháng 8 năm 2025  hợp nhất ở lớp sản phẩm. Việc mua lại Vercept của Anthropic đã khiến Claude Sonnet trên OSWorld giảm từ dưới 15% xuống còn 72,5%. WebArena-Verified (ServiceNow, ICLR 2026) đã xác định tỷ lệ âm sai ~11.3% trong WebArena ban đầu và gửi bộ phận Hard 258-task. Số lượng là thật. Cũng như bề mặt tấn công: Giám đốc chuẩn bị của OpenAI tuyên bố công khai rằng tiêm trực tiếp nhanh vào các đại lý trình duyệt "không phải là một lỗi có thể được sửa chữa hoàn toàn". Các cuộc tấn công tài liệu 20252026: Tainted Memories (Atlas CSRF), HashJack (Cato Networks), và một lần nhấp nháy trong Perplexity Comet.
 
 **Type:** Learn
-**Languages:** Python (stdlib, indirect prompt-injection attack surface model)
+**Languages:** Python (stdlib, indirect prompt-injection attack surface model), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~45 minutes
 

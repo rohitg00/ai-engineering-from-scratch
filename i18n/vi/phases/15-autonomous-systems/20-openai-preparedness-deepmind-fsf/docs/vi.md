@@ -3,7 +3,7 @@
 > OpenAI Preparedness Framework v2 (ngày 4 năm 2025) giới thiệu các danh mục nghiên cứu  Tự trị tầm xa, Sandbagging, Tái tạo tự trị và thích nghi, Giảm bảo  khác với các danh mục theo dõi. Các danh mục theo dõi kích hoạt các báo cáo về khả năng cộng với báo cáo bảo vệ được xem xét bởi Nhóm tư vấn an toàn. FSF v3 của DeepMind (Thiên tháng 9 năm 2025, với Cấp độ Khả năng theo dõi được thêm vào ngày 17 tháng 4 năm 2026) gấp tự trị thành lĩnh vực R&D và Cyber của ML (ML R&D tự trị cấp 1 = tự động hóa hoàn toàn đường ống R&D AI với chi phí cạnh tranh so với công cụ AI + con người). FSF v3 rõ ràng giải quyết sự sắp xếp sai lầm thông qua giám sát tự động cho việc sử dụng sai dụng lý luận bằng công cụ. Lưu ý trung thực: Các danh mục nghiên cứu trong PF v2 (bao gồm cả Tự trị tầm xa) không tự động kích hoạt giảm thiểu; ngôn ngữ chính sách là "có khả năng". Bản thân DeepMind nói rằng giám sát tự động "sẽ không đủ lâu dài" nếu suy luận công cụ được tăng cường.
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-framework decision-table diff tool)
+**Languages:** Python (stdlib, three-framework decision-table diff tool), TypeScript
 **Prerequisites:** Phase 15 · 19 (Anthropic RSP)
 **Time:** ~45 minutes
 

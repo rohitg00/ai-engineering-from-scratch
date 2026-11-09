@@ -3,7 +3,7 @@
 > Một bậc thang cho phép  mức độ tự trị từ xem xét-mỗi hành động để phê duyệt-mọi thứ  là cách một vòng xoáy điều khiển những gì một đại lý tự trị có thể làm mà không hỏi. Claude Code, ví dụ làm việc của bài học này, cho thấy sáu chế độ như vậy: "kế hoạch" hỏi trước mỗi hành động, "đặc định" (được dán nhãn "Hướng dẫn" trong UI) chỉ yêu cầu những hành động có rủi ro, "tự động chấp nhận Edit" ghi lại file nhưng vẫn xác nhận việc thực hiện shell, và "bypassPermissions" chấp nhận mọi thứ. Chế độ tự động  `auto`chế độ cho phép thay thế cho việc chấp thuận mỗi hành động bằng một mô hình phân loại riêng biệt xem xét từng hành động trước khi nó chạy và chặn bất cứ điều gì leo thang vượt quá yêu cầu của yêu cầu.`max_turns`và `max_budget_usd`. Sự sẵn có của `auto`phụ thuộc vào kế hoạch, kích hoạt, mô hình và nhà cung cấp  và Anthropic rõ ràng rằng phân loại không đủ một mình.
 
 **Type:** Learn
-**Languages:** Python (stdlib, two-stage classifier simulator)
+**Languages:** Python (stdlib, two-stage classifier simulator), TypeScript
 **Prerequisites:** Phase 15 · 01 (Long-horizon agents), Phase 15 · 09 (Coding-agent landscape)
 **Time:** ~45 minutes
 
