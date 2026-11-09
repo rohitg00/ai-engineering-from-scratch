@@ -3,7 +3,7 @@
 > राफाइलोव व अन्य। (2023) ने दिखाया कि आरएलएचएफ का इष्टतम प्राथमिकता डेटा के संदर्भ में एक बंद रूप है, इसलिए आप स्पष्ट इनाम मॉडल को छोड़ सकते हैं और सीधे नीति को अनुकूलित कर सकते हैं। इस अंतर्दृष्टि से एक परिवार  IPO, KTO, SimPO, ORPO, BPO  उत्पन्न हुआ जो प्रत्येक DPO के विफल मोड को ठीक करते हैं। 2026 में, प्रत्यक्ष संरेखण एल्गोरिदम पीपीओ की तुलना में अधिक सीमा पार के प्रशिक्षण के बाद रन भेजते हैं। लेकिन पाठ 2 से ओवर-ऑप्टिमाइज़ेशन वक्र अभी भी लागू हैः डीएए गुडहार्ट से नहीं बचते, वे बस जहां यह काटता है वहां जाते हैं।
 
 **Type:** Learn
-**Languages:** Python (stdlib, six-variant preference-loss comparator)
+**Languages:** Python (stdlib, six-variant preference-loss comparator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking), Phase 10 · 08 (DPO basics)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > तीन उत्पादन उपकरण 2026 लाल टीम स्टैक को फ्रेम करते हैं। लामा गार्ड (मेटा)  एक लामा-3.1-8B वर्गीकरण 14 MLCommons खतरे श्रेणियों पर ठीक से समायोजित; 2025 लामा गार्ड 4 एक 12B मूल रूप से बहुआयामी वर्गीकरण है जो लामा 4 स्काउट से कटा हुआ है। गाराक (एनवीडीआईए)  हाल्यूसिनैशन, डेटा लीक, शीघ्र इंजेक्शन, विषाक्तता और जेलब्रेक के लिए स्थैतिक, गतिशील और अनुकूलन जांच के साथ ओपन-सोर्स एलएलएम भेद्यता स्कैनर। PyRIT (Microsoft)  गहन शोषण के लिए Crescendo, TAP, और कस्टम कनवर्टर श्रृंखलाओं के साथ मल्टी-टर्न रेड-टीम अभियान। लामा गार्ड 3 मेटा के "लामा 3 हर्ड ऑफ मॉडल्स" (arXiv:2407.21783) में प्रलेखित है; लामा गार्ड 3-1B-INT4 arXiv:2411.17713 में; गाराक की जांच वास्तुकला github.com/NVIDIA/garak में। ये उपकरण रेड-टीम रिसर्च (पाठ 12-15) और डिप्लोयमेंट (पाठ 17+) के बीच 2026 उत्पादन इंटरफ़ेस हैं।
 
 **Type:** Build
-**Languages:** Python (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
+**Languages:** Python, TypeScript (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
 **Prerequisites:** Phase 18 · 12-15 (jailbreaks and IPI)
 **Time:** ~75 minutes
 
