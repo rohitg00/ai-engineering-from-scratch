@@ -3,7 +3,7 @@
 > "她打电话给他,他没有回答.医生在午餐上".三次提到两个人,没有人被命名.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 

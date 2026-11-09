@@ -3,7 +3,7 @@
 > 语言是连续的,模型是离散的,预处理是桥梁.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

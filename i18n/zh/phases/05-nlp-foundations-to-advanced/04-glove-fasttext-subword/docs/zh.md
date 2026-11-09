@@ -3,7 +3,7 @@
 > 词2Vec训练每字一个嵌入. GloVe因数化了共发生矩阵. 快文本嵌入了零件. BPE 与变压器桥梁.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec from Scratch)
 **Time:** ~45 minutes
 

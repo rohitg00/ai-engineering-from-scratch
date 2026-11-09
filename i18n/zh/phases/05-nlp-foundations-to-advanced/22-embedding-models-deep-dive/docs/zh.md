@@ -3,7 +3,7 @@
 > Word2Vec给你一个单词的向量.现代嵌入式模型给你一个单词的向量,跨语言,稀疏,密集和多向量视图,以适合你的索引.选择错误,你的RAG检索错误的东西.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec), Phase 5 · 14 (Information Retrieval)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > 抽象系统告诉你文件中所说的东西,抽象系统告诉你作者是什么意思.不同的任务,不同的陷.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 11 (Machine Translation)
 **Time:** ~75 minutes
 

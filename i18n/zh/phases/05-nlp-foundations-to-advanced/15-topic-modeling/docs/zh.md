@@ -3,7 +3,7 @@
 > 文件是主题的混合物,主题是词汇上的分布.BERTopic:文件集群在嵌入空间中,集群是主题.相同的目标,不同的分解.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word2Vec)
 **Time:** ~45 minutes
 

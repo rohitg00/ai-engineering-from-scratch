@@ -3,7 +3,7 @@
 > 两名RNN假装是翻译者. 他们遇到的瓶是人们的关注的原因.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 08 (CNNs + RNNs for Text), Phase 3 · 11 (PyTorch Intro)
 **Time:** ~75 minutes
 

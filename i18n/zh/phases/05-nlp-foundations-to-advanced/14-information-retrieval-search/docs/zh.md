@@ -3,7 +3,7 @@
 > 虽然BM25是精确的,但很脆弱.密集的网投宽,但错过关键字.混合型是2026年默认的.其他一切都在调整.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 

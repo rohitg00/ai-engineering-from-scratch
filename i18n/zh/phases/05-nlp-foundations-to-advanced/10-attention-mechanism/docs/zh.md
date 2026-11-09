@@ -3,7 +3,7 @@
 > 解码器停止眼看压缩的摘要,开始查看整个来源.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 09 (Sequence-to-Sequence Models)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > 如果一个字令人惊,模型是坏的. 困惑使一个数字惊. 滑滑使它有限.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

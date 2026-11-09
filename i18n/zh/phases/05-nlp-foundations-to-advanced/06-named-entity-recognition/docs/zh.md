@@ -3,7 +3,7 @@
 > 听起来很容易,直到你处理模糊的边界,嵌套的实体,和域名语.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word Embeddings)
 **Time:** ~75 minutes
 

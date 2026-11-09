@@ -3,7 +3,7 @@
 > 精确匹配和F1失去了语义等效. 人类审查不扩展. LLM作为法官是生产答案,具有足够的校准度以信任数字.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

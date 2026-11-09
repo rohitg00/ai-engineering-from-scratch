@@ -3,7 +3,7 @@
 > 要求一个LLM获得JSON. 获取JSON大部分时间. 在生产中,"大多数"是问题. 限制式解码将"大多数"转化为"总是"通过在采样之前编辑记录.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

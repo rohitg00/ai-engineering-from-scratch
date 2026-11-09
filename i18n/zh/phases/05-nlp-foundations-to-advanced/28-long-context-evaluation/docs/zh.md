@@ -3,7 +3,7 @@
 > 双子座3 Pro 广告10万语境代币.在1万代币时,8针MRCR下降到26.3%.广告可使用.长语境评估告诉你你运输的模型的实际容量.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 23 (Chunking Strategies)
 **Time:** ~60 minutes
 

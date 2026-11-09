@@ -3,7 +3,7 @@
 > "我想要一个北方的廉价餐厅... 让它适度... 加入意大利语". 三轮,三次状态更新.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 20 (Structured Outputs)
 **Time:** ~75 minutes
 

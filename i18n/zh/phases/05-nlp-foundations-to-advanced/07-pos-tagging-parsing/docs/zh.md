@@ -3,7 +3,7 @@
 > 语法一段时间不适用,然后每一个LLM管道都需要验证结构化的提取,
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

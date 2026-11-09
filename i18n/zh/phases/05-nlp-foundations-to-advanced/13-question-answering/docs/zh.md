@@ -3,7 +3,7 @@
 > 现在,我们在研究中发现了一些技术,这些技术可以帮助我们理解这些技术.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 11 (Machine Translation), Phase 5 · 10 (Attention Mechanism)
 **Time:** ~75 minutes
 

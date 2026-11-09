@@ -3,7 +3,7 @@
 > 卡罗里斯在一个小时内,他发现了一个不错的东西,然后他开始做了一些事情.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

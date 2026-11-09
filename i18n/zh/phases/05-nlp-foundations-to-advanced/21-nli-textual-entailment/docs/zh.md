@@ -3,7 +3,7 @@
 > "t entails h"意味着人类的读数 t将得出 h 是真的. NLI 是预测含义/矛盾/中立的任务.表面上的无聊,生产中承载.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment Analysis), Phase 5 · 13 (Question Answering)
 **Time:** ~60 minutes
 

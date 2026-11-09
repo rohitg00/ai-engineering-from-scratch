@@ -3,7 +3,7 @@
 > 转变学会 n- 克,回复记忆,两者都被注意力取代,在有限的硬件上都很重要.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 11 (PyTorch Intro), Phase 5 · 03 (Word Embeddings), Phase 4 · 02 (Convolutions from Scratch)
 **Time:** ~75 minutes
 

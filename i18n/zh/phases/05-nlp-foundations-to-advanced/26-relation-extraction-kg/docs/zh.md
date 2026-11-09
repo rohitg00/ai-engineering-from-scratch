@@ -3,7 +3,7 @@
 > 根据NER的数据,NER发现了实体.实体链接将它们结起来.关系提取发现了它们之间的边缘.知识图是节点,边缘和它们的来源的总和.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 25 (Entity Linking)
 **Time:** ~60 minutes
 
