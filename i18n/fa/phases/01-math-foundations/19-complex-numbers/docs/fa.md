@@ -3,7 +3,7 @@
 > ریشه مربع -1 غیر خیالی نیست. این کلید چرخش، فرکانس و نیمی از پردازش سیگنال است.
 
 **Type:** Learn
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04 (linear algebra, calculus)
 **Time:** ~60 minutes
 
@@ -426,7 +426,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 ## -باده
 
-فرار کن`code/complex_numbers.py`تولید کردن`outputs/skill-complex-arithmetic.md`. .
+فرار کن`code/complex_numbers.py`یا`npx tsx code/complex_numbers.ts`تولید کردن`outputs/skill-complex-arithmetic.md`. .
 
 ## تمرینات
 
