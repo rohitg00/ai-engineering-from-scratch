@@ -3,7 +3,7 @@
 > التراجع التدريجي يخبرك في أي اتجاه تتحرك لا يخبرك بأي مسافة أو سرعة
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.05 (Loss Functions)
 **Time:** ~75 minutes
 

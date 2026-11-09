@@ -3,7 +3,7 @@
 > نموذجك يحصل على 99٪ من بيانات التدريب و 60٪ من بيانات الاختبار. هو حفظ بدلا من التعلم. التنظيم هو الضريبة التي تفرض عليها على التعقيد لإجبار التعميم.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers)
 **Time:** ~75 minutes
 

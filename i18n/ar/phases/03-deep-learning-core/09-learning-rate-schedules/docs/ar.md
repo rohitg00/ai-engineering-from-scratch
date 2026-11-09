@@ -3,7 +3,7 @@
 > معدل التعلم هو المعيار الأكثر أهمية ليس الهندسة المعمارية ليس حجم مجموعة البيانات ليس وظيفة التفعيل معدل التعلم إذا لم تتنغم شيئا آخر، تنغم هذا
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers), Lesson 03.08 (Weight Initialization)
 **Time:** ~90 minutes
 

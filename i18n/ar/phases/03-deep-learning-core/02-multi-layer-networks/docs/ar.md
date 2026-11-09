@@ -3,7 +3,7 @@
 > إحدى الخلايا العصبية ترسم خطاً، قم بتجميعها، ويمكنك رسم أي شيء.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 01 (Math Foundations), Lesson 03.01 (The Perceptron)
 **Time:** ~90 minutes
 

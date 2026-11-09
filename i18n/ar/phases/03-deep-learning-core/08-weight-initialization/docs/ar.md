@@ -3,7 +3,7 @@
 > إبدأ خطأ وتدريب لا يبدأ أبدا إبدأ صحيحا و 50 طبقة تدريب بسلاسة مثل 3.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.04 (Activation Functions), Lesson 03.07 (Regularization)
 **Time:** ~90 minutes
 
