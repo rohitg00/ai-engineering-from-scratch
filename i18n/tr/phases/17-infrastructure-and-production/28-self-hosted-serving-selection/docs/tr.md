@@ -3,7 +3,7 @@
 > Motor seçimi, bir lider çizelgesi değil, bir donanım, ölçek ve ekosistem fonksiyonu. 2026 yılında dört motor kendi kendine konutlanmış sonuçlara hakim: llama.cpp, Ollama, vLLM, SGLang, TGI bakım modunda geride kalır.**llama.cpp**CPU'da en hızlı  en geniş model desteği, kuantitasyon ve ipleme üzerinde tam kontrol. **Ollama**dev-laptop tek komut yüklemesi, llama.cpp (Go + CGo + HTTP serileşmesi) ile karşılaştırıldığında ~15-30% daha yavaş, prod benzeri yük altında 3x geçiş boşluğu. **TGI entered maintenance mode December 11, 2025** sadece hata düzeltmeleri, ~ 10% daha yavaş ham üretimi, ancak tarihsel olarak en iyi gözlemlebilirlik ve HF ekosistem entegrasyonu. Bu bakım durumu, yeni projeler için riskli uzun vadeli bir bahis yapar  SGLang veya vLLM daha güvenli varsayımlardır. **vLLM**Genel amaçlı üretim öntanımlı  v0.15.1 (Şubat 2026) PyTorch 2.10, RTX Blackwell SM120, H200 optimizasyonu ekler. **SGLang**Bu, bir çok dönüş / önbellek ağırlıklı uzmanı  400.000+ GPU'ların üretimi (xAI, LinkedIn, Cursor, Oracle, GCP, Azure, AWS) için. Hardware kısıtlamaları: CPU-first → llama.cpp. AMD / non-NVIDIA → vLLM en güçlü desteklenen yol (TRT-LLM NVIDIA kilitlenmiştir). 2026 boru hattı modeli: dev = Ollama, staging = llama.cpp, prod = vLLM veya SGLang. Motorlar farklı ağırlık formatlarını alır  llama.cpp ailesi için GGUF, GPU motorları için HF safetensörleri  böylece bir format dönüşümü aşamalar arasında oturabilir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, engine-decision tree walker)
+**Languages:** Python, TypeScript (stdlib, engine-decision tree walker)
 **Prerequisites:** All Phase 17 lessons covering engines (04, 06, 07, 09, 18)
 **Time:** ~45 minutes
 

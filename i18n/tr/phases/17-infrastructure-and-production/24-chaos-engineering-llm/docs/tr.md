@@ -3,7 +3,7 @@
 > LLM için kaos mühendisliği 2026 yılında kendi disiplinidir. Üretim deneylerini yürütmeden önce ön koşullar: tanımlanmış SLI/SLO, izleme+metrik+log gözlemliliği, otomatik geri dönüş, çalıştırma defterleri, çağrıda bulunma. Mimarlık dört düzlemde bulunur: kontrol (deney programcısı), hedef (hizmetler, alt, veri depoları), güvenlik (kuvarlar + iptal + trafik filtreleri), gözlemsellik (metrikler + izler + günlükler), geri bildirim (SLO ayarlarına). Koruma rayları zorunludur: yanma oranı uyarıları, günlük hata bütçesi yanma> 2 katı beklenirse deneyleri durdurur; bastırma pencereleri + izleme kimliği ilişkisi alarmı gürültüsü çıkarır. Cadence: haftalık küçük kanarya + SLO inceleme; aylık oyun günü + ölüm sonrası; çeyreklik takım arası dayanıklılık denetimi + bağımlılık haritası. LLM'ye özel deneyler: hafıza aşırı yükü, ağ arızası, sunucu kesintileri, yanlış biçimlendirilmiş istekler, KV önbelleği tahrip fırtınaları. Araçlama: Harness Chaos Engineering (LLM'den kaynaklanan öneriler, patlama radyüsünün azaltılması, MCP araç entegrasyonu); LitmusChaos (CNCF); Chaos Mesh (CNCF Kubernetes-native).
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy chaos experiment runner)
+**Languages:** Python, TypeScript (stdlib, toy chaos experiment runner)
 **Prerequisites:** Phase 17 · 23 (SRE for AI), Phase 17 · 13 (Observability)
 **Time:** ~60 minutes
 

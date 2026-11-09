@@ -3,7 +3,7 @@
 > Üç kat, bir kat değil. Karpenter rezervi düğümleri dinamik (bir dakikadan az, Cluster Autoscaler'den %40 daha hızlı). KAI Scheduler, grup programlamasını, topoloji farkındalığını ve hiyerarşik kuyrukları ele alır. Uygulama düzeyinde otomatik ölçeklendiriciler (NVIDIA Dynamo Planner, llm-d Workload Variant Autoscaler) sonuçlandırma spesifik sinyalleri üzerinde ölçeklendirir  kuyruk derinliği, KV önbelleği kullanımı  CPU / DCGM görev döngüsü değil. Klasik HPA tuzağı budur .`DCGM_FI_DEV_GPU_UTIL`Bu ders size üç katmanı oluşturmayı ve varsayılan Karpenter'i önlemek için öğretir.`WhenEmptyOrUnderutilized`GPU işlerinin çalışmasını durdurmak için bir politika.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy queue-depth autoscaler simulator)
+**Languages:** Python, TypeScript (stdlib, toy queue-depth autoscaler simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 

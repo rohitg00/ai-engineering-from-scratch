@@ -3,7 +3,7 @@
 > Ön doldurma hesaplama bağlıdır; çözme hafıza bağlıdır. İkisini de aynı GPU'da çalıştırmak bir kaynak harcamaktadır. Ayrılama onları ayrı bir havuzlara ayırır ve NIXL üzerinden (RDMA/InfiniBand veya TCP fallback) aralarında KV önbelleği aktarır. NVIDIA Dynamo (GTC 2025 duyuru, 1.0 GA) Planner Profiler + SLA Planner otomatik oran-birleştirme prefill:decode oranlarını karşılamak için vLLM/SGLang/TRT-LLM  üzerinde oturur. NVIDIA bu ballpark  developer.nvidia.com'da performans artışlarını yayınlıyor. Nvidia.com (2025-06) orta zamanlı rejimde GB200 NVL72 + Dynamo'da DeepSeek-R1 MoE için ~6x iyileşmeyi göstermektedir. "30x" rakamı, tam bir dizi Blackwell + Dynamo + DeepSeek-R1 raporlarında topluluk toplamıdır; tam olarak 30x'i belirten tek bir ana kaynağı bulamadık, bu yüzden yönlendirme bir iddiası olarak ele alın. llm-d (Red Hat + AWS) Kubernetes-devlidir: bağımsız Hizmetler olarak görev başına HPA ile önceden doldur / çözme / yönlendiricisi. llm-d 0.5 hiyerarşik KV yükleme, önbelleğe uyan LoRA yönlendirme, UCCL ağları, ölçek-sıfır ekler. Ekonomik: Çoklu müşteri açıklamalarının iç içi bir şekilde yayılması, $2M-class inference spend (i.e., $600-800K/yıl) kolla satılan serviden Dynamo ile sabit SLA'da bölünmüş servise geçiş yaparken;$2M→$600-800K rakamı iç bir bileşiktir, tek bir yayınlanan vaka çalışması değil  onu büyüklük sırası demir olarak kullanın, bir referans alıntı değil. Kısa istekler (<512 token, kısa çıkış) transfer maliyetini haklı çıkarmaz.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy disaggregated-vs-colocated simulator)
+**Languages:** Python, TypeScript (stdlib, toy disaggregated-vs-colocated simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 08 (Inference Metrics)
 **Time:** ~75 minutes
 

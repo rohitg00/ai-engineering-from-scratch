@@ -3,7 +3,7 @@
 > Çoklu çerçeve kapsamı, 2026 kurumsal anlaşmalar için masanın bahisidir. **EU AI Act**• 1. Ağustos 2024'ten bu yana yürürlüğe giren yüksek riskli gereksinimlerin çoğu 2 Ağustos 2026'da yürürlüğe girer. Yüksek riskli sistem yükümlülükleri için 15 milyon Euro'ya veya% 3'e kadar küresel yıllık döviz cezası (Maddesi 99(4); yasaklı AI uygulamaları için 35 milyon Euro'ya veya% 7'e kadar (Maddesi 99(3)).**Colorado AI Act**: 30 Haziran 2026'da yürürlüğe girer (Febre 2026'dan sonra SB25B-004 tarafından ertelenir)  Yüksek riskli sistemler için etki değerlendirmeleri, Yapay zeka kararlarına itiraz etme hakkı.**SOC 2 Type II**: gerçekte B2B AI gereksinimleri (fintech için II tip, I tip değil). **GDPR**Bu nedenle, bu durumun bir sonraki döneminde, bu durumun daha da kötüye gittiğini belirten bir durum olarak görülebilir.**HIPAA**: sağlık hizmetleri bağlanmış  BAA olmadan PHI'yi dış AI hizmetlerine gönderemez. **PCI-DSS**: AI etkileşim katman kapsamı otomatik değil, yapılandırma + sözleşme anlaşmaları gerektirir. **ISO 42001**Açıklama profil: OpenAI SOC 2 Tipi 2'yi sürdürüyor, ISO/IEC 27001:2022, ISO/IEC 27701:2019, GDPR/CCPA/HIPAA (BAA) / FERPA, ChatGPT ödeme bileşenleri için PCI-DSS. Çapraz haritalama denetim yorgunluğunu azaltır: ISO 27001 A.5.15-5.18, GDPR Art. 32, HIPAA §164.312 ((a) boyunca erişim kontrolleri haritası.
 
 **Type:** Learn
-**Languages:** (Python optional — compliance is policy + process, not code)
+**Languages:** (Python, TypeScript optional: compliance is policy + process, not code)
 **Prerequisites:** Phase 17 · 25 (Security), Phase 17 · 13 (Observability)
 **Time:** ~60 minutes
 

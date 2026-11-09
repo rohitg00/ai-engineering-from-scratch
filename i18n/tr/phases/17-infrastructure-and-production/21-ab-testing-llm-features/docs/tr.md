@@ -3,7 +3,7 @@
 > Geleneksel A/B testleri belirlenmez LLM için yapılmadı. Kritik fark: değerlendirme cevapları "model işi yapabilir mi?" A / B testleri "kullanıcılar umurunda mı?" cevapları; her ikisi de gereklidir; vibe kontrolleri ile teslimat bitti. 2026'da neyi test edeceğiz: hızlı mühendislik (sözleme), model seçimi (GPT-4 vs GPT-3.5 vs OSS; doğruluk vs maliyet vs gecikme), üretim parametreleri ( sıcaklık, üst-p). Gerçek durumlar: bir chatbot ödül modeli varianti +70% konuşma uzunluğu ve +30% tutumu sağladı; Nextdoor AI konu hattı deneyleri ödül fonksiyonunu geliştirdikten sonra +1% CTR verdi; Khan Academy Khanmigo gecikme vs. matematik doğruluğu eksisinde tekrarlandı. Platform bölünmesi: **Statsig**(OpenAI tarafından Eylül 2025'te 1.1 milyar dolara satın alındı)  sıralı test, CUPED, tümü bir. **GrowthBook** açık kaynaklı, depo doğası, Bayesian + Frequentist + Sequential motorları, CUPED, SRM kontrolleri, Benjamini-Hochberg + Bonferroni düzeltmeleri. depona SQL tercihlerine göre seçersiniz ve "OpenAI tarafından satın alınması" kuruluşunuz için önemli mi.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy sequential test simulator)
+**Languages:** Python, TypeScript (stdlib, toy sequential test simulator)
 **Prerequisites:** Phase 17 · 13 (Observability), Phase 17 · 20 (Progressive Deployment)
 **Time:** ~60 minutes
 

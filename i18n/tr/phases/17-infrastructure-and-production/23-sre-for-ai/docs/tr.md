@@ -3,7 +3,7 @@
 > AI SRE, araştırma, belgeleme ve koordinasyon aşamalarını otomatikleştirmek için RAG üzerinden altyapı verilerine (loglar, çalıştırma kitapları, hizmet topolojisi) dayalı LLM'leri kullanır. 2026 mimarlık örneği, bir denetmen tarafından koordine edilen çoklu ajan orkestrasyonu  uzman ajanlar (loglar, metrikler, çalıştırma kitapları); AI hipotez ve sorular önerir, insanlar yargı çağrılarını onaylar. Datadog Bits AI ve Azure SRE Agent bunu yönetilen ürünler olarak gönderir. Çalışma kitapları gelişmektedir: NeuBird Hawkeye karşıt değerlendirmeyi kullanır (iki model aynı olayı analiz eder; anlaşma = güven, anlaşmazlık = belirsizlik); ekip değişiklikleri boyunca operasyonel hafızan kalır. Otomatik tedavi dikkatli kalır: Yapay zeka önerir, insanlar onaylar. Tamamen özerk eylem dar (başlangıç kapsülü, geri dönüş özel dağıtım) sıkı koruma rayları ile  "settin ve unut" satan herkes aşırı satış yapıyor. Yeni gelişen sınır: olay öncesi tahmin. MIT araştırmaları, tarihsel kayıtlar + GPU temp + API hata kalıpları üzerine eğitimli bir LLM'nin, %89'ın 10-15 dakika erken kesinti olacağını öngördüğünü bildirmektedir. Projection: İşletme LLM'lerinin %95'i 2026 sonuna kadar otomatik olarak başarısızlığa uğramış olacak.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy multi-agent incident triage simulator)
+**Languages:** Python, TypeScript (stdlib, toy multi-agent incident triage simulator)
 **Prerequisites:** Phase 17 · 13 (Observability), Phase 17 · 24 (Chaos Engineering)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > Temel kenar kısıtlaması, hesaplama değil hafıza bant genişliği. Mobil DRAM, 50-90 GB/s'de oturuyor; HBM3 veri merkezi 2-3 TB/s  30-50x boşluğu temizliyor. Deşifreleme hafıza bağlanmış, bu yüzden boşluk belirleyici. 2026'da manzara dört bölüme ayrılır. Apple M4/A18 Neural Engine, birleşik bellek (CPU NPU kopyası) ile 38 TOPS'e ulaştı. Qualcomm Snapdragon X Elite / 8 Gen 4 Hexagon 45 TOPS'e ulaştı. WebGPU + WebLLM, M3 Max'te Llama 3.1 8B (Q4) ile ~41 tok/s ile çalışır (doğuştan yaklaşık %70-80%); 17.6k GitHub yıldızları, OpenAI uyumlu API, ~70-75% mobil kapsama. NVIDIA Jetson Orin Nano Super (8GB) Llama 3.2 3B / Phi-3'ye uyar; AGX Orin vLLM üzerinden gpt-oss-20b'yi ~40 tok/s'de çalışır; Jetson T4000 (JetPack 7.1) 2x AGX Orin. TensorRT Edge-LLM EAGLE-3, NVFP4, parçalanmış prefill  tarafından CES 2026'da gösterilen EAGLE-3, NVFP4 desteğini sağlar.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy bandwidth-bound decode simulator)
+**Languages:** Python, TypeScript (stdlib, toy bandwidth-bound decode simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 09 (Production Quantization)
 **Time:** ~60 minutes
 

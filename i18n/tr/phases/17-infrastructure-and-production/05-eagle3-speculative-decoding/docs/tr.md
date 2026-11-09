@@ -3,7 +3,7 @@
 > Tahmin edici çözme, hızlı bir taslak modeli hedefli modelle eşleştirir. Özet K tokenleri önerir; hedef tek bir ilerileme ile doğrulanır; kabul edilen tokenler ücretsizdir. 2026 yılında EAGLE-3 üretim derecesi varyasyonudur. Genel sohbette kabul oranı alfa'yı 0.6-0.8 bantına itip, ham toponlar yerine hedef modelin gizli durumlarında bir taslak başını eğitir. Doğru soru "Taplama ne kadar hızlı" değil "Trafikimde alfa nedir?" Eğer alfa ~ 0.55'in altına düşerse, spekülatör çözme yüksek eşzamanlılıkta net negatif olur çünkü reddedilen her taslama ikinci hedef ileri geçiş maliyetini öder. Bu ders önce alfa ölçmeyi ve ikinci olarak bayrağı çevirmeyi öğretir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy acceptance-rate simulator)
+**Languages:** Python, TypeScript (stdlib, toy acceptance-rate simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 18 (Multi-Token Prediction)
 **Time:** ~60 minutes
 

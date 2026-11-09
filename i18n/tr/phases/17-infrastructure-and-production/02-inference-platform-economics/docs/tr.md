@@ -3,7 +3,7 @@
 > 2026 sonucu pazarı artık GPU zaman kiralama değildir. Özel silikon (Groq, Cerebras, SambaNova), GPU platformları (Baseten, Together, Fireworks, Modal) ve API-birincil pazarlar (Replicate, DeepInfra) olarak bölünür.$1/hr per GPU on May 1, 2026, and $4B değerlendirme 10T+ token/gün'de, hacmi yönlendiren model çalışmalarını gösterir.$300M Series E at $5B Ocak 2026'da rekabetçi konumlandırma kuralı basit: Ateşler gecikmeyi optimize eder, Birlikte katalog genişliğini optimize eder, Baseten kurumsal polish'i optimize eder, Modal Python-native DX'i optimize eder, Replicate multimodal erişimi optimize eder, Anyscale dağıtılan Python'ı optimize eder. Bu ders size bir kurucuya teslim edebileceğiniz bir matris verir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy per-call economics comparator)
+**Languages:** Python, TypeScript (stdlib, toy per-call economics comparator)
 **Prerequisites:** Phase 17 · 01 (Managed LLM Platforms), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~60 minutes
 

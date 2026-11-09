@@ -3,7 +3,7 @@
 > Merkezi kasayı (HashiCorp Vault, AWS Gizemleri Yöneticisi, Azure Anahtar Kasası) kullanarak gizli yayılma ortadan kaldırın. İtirafları asla konfigüratör dosyalarda, VCS'deki env dosyalarında, kalıp sayfalarında saklama. Statik anahtarlar yerine IAM rollerini kullanın; CI/CD için OIDC. AI-gateway örneği 2026 çözümüdür: uygulama → gateway → model sağlayıcısı, gateway çalıştırma zamanında kasadan kredi bilgileri çekmektedir. Altınlıkta dön ve tüm uygulamalar dakika içinde yüklenir. Rotasyon politikası ≤90 gün; her commit'de TruffleHog / GitGuardian / Gitleaks ile tarama. ZERO-trust: MFA, SSO, RBAC/ABAC, kısa ömürlü tokenler, cihaz duruşu. PII temizleme, PHI/PII'yi göndermeden önce gizlemek için kuruluş tanınmasını kullanır; tutarlı işaretleme (Mesh yaklaşımı) sabit yer sahiplerine hassas değerleri haritası yapar, böylece LLM kod/ ilişki semantiğini korur. Ağ çıkışı: Sadece özel VPC/VNet alt ağlarında LLM hizmetleri`api.openai.com`- Evet .`api.anthropic.com`2026 olay sürücüsü: Vercel tedarik zinciri saldırısı, tehlikeye atılan CI/CD kimlikleri ile binlerce müşteri dağıtımında çevreyi sızdırdı.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy PII-scrubber + audit-log writer)
+**Languages:** Python, TypeScript (stdlib, toy PII-scrubber + audit-log writer)
 **Prerequisites:** Phase 17 · 19 (AI Gateways), Phase 17 · 13 (Observability)
 **Time:** ~60 minutes
 

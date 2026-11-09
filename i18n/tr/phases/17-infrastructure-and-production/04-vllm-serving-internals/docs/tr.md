@@ -3,7 +3,7 @@
 > Modern servis motorlarının üretimi üç komplo etkisiyle yapılır, tek bir numara değil. PagedAttention her zaman açık. Sürekli serileme, yeni istekleri çözme iterasyonları arasında aktif seriye enjekte eder. Parça dolandırıcılık parçaları uzun ipuçları böylece kodlama tokenleri asla açlıktan ölmez. Üçünü de açarsanız, bir H100 SXM5'de Llama 3.3 70B FP8'in 128 eşzamanlı 'de 2.200-2.400 tok/s'i harekete geçiriyor. Bu ders, vLLM'nin programlayıcı ve dikkat çekirdeğini okuyor  üç tekniğin referans motorunu  bir düzeyde çizim yapabileceğiniz bir seviyede ve bir oyuncak sürekli batcher ile sona erer `code/main.py`Programlar vLLM'nin yaptığı gibi önceden doldurulur ve çözülür.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy continuous batching scheduler)
+**Languages:** Python, TypeScript (stdlib, toy continuous batching scheduler)
 **Prerequisites:** Phase 17 · 01 (Model Serving), Phase 11 (LLM Engineering)
 **Time:** ~75 minutes
 

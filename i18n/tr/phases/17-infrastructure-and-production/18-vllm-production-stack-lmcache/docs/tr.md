@@ -3,7 +3,7 @@
 > Bir üretim servisinde bir Kubernetes dağıtımında yığın teller yönlendiricisi, motorlar ve gözlemliliği  ve GPU'yu bırakabilecek bir kaynak olarak KV önbelleği ile davranır. KV boşaltma, GPU belleğinden KV önbelleğini çıkarır ve sorgular ve motorlar (CPU DRAM, sonra disk/Ceph) arasında tekrar kullanır. vLLM'nin üretim-buğdayı referans dağıtımdır; LMCache, boşaltma katmanıdır. vLLM 0.11.0 KV Deşüt Bağlantısı (Ocak 2026) bu asinkron ve Bağlantı API (v0.9.0+) üzerinden bağlanabilir hale getirir. Çıkış yolu genellikle istek yolundan gizlenir, ancak önbelleğin eksikliği ve promosyonlar son-son gecikmeyi ekleyebilir. LMCache paylaşılan önleme olmadan bile değerlidir  bir GPU'nun KV boşluklarından yoksun kalması durumunda, önceden gönderilen istekler yeniden hesaplama yerine CPU'dan geri yüklenebilir. 4 a3-highgpu-4g'de 16x H100 (80GB HBM) üzerinde yayınlanan referans değerleri: KV önbelleği HBM'yi aşırırken, hem yerel CPU yükü hem de LMCache geçiş hızını önemli ölçüde artırır; düşük KV ayak izi durumunda, tüm yapılandırmalar küçük genel maliyetlerle temel çizgiyi eşleştiriyor.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy KV-spill simulator)
+**Languages:** Python, TypeScript (stdlib, toy KV-spill simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 06 (SGLang/RadixAttention)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > Büyük bir model soğuktan servise geçmek için birkaç dakika alır: Yeni bir düğümde 70B modeli ilk token'dan yaklaşık 3-8 dakika önce. Gerçek bir sunucu olmayan dünyada, bu bir                                                                                                                                                                                                                                                            Yumuşaklaştırmalar beş katman üzerinde çalışır: önceden ekilmiş düğüm görüntüleri (AWS'de Bottlerocket, iki hacimli ark), model akışı (NVIDIA Run:ai Model Streamer, vLLM'de doğuşcu), GPU bellek anlık çekme (Modal kontrol noktaları, 10 kat daha hızlı yeniden başlatma), sıcak havuzlar (`min_workers=1`Bu ders size beş katı ölçmeyi, bütçeyi ve yığmayı öğretir. Bu ders, beş katı ölçmeyi, bütçeyi ve yığmayı öğretir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cold-start path simulator)
+**Languages:** Python, TypeScript (stdlib, toy cold-start path simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~60 minutes
 

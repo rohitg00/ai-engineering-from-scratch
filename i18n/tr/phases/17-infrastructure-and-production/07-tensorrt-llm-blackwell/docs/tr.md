@@ -3,7 +3,7 @@
 > Hardware uzmanlaştırılmış sonuçlama komisyonu, akışın taşınabilirliği için ticaret yapar ve Blackwell için ayarlanmış olan TensorRT-LLM  NVIDIA-sadece, ticaretin sonuç vermesinin en net örneğidir.$0.012 per million tokens on a 120B model in Q1-Q2 2026, against $H100 + vLLM  7 kat ekonomik fark. Satır iki servisi teknikleri ile iki yüzer nokta biçimi birleştirir: FP8 KV saklama ve dikkat çekirdekleri için kritik kalır çünkü ihtiyaç duydukları dinamik aralığı vardır; NVFP4 (4 bit mikroskalans) ağırlıkları ve etkinleştirmeleri ele alır; çoklu jeton öngörü (MTP) ve parçalanmış prefill / decode üst kısmına bir başka 2-3x ekler. Day-0 model destek yükleri FP4 ağırlıkları doğrudan eğitim sonrası dönüşüm olmadan. 2026 mühendislik takımları için yakalama: TRT-LLM açık kaynaklı ancak NVIDIA-spesifik  CUDA- ve Blackwell-specialized  bu yüzden onu benimsemek geçiş için taşınabilirliği ticaret. Yapmadan önce model ve donanım karışımını matematikle çalıştır.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy FP8/NVFP4 memory and cost calculator)
+**Languages:** Python, TypeScript (stdlib, toy FP8/NVFP4 memory and cost calculator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 13 (Quantization)
 **Time:** ~75 minutes
 

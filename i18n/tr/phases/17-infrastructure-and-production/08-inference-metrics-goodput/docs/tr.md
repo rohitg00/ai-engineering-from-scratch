@@ -3,7 +3,7 @@
 > Beş metrik bir sonuç dağıtımının işe yaramayacağını belirler. TTFT, ön doldurma artı sıra artı ağ. TPOT (sık sık ITL olarak bildirilir, ancak araçlar ITL'nin ilk token sayılmasından farklıdır) bir token için hafıza bağlı dekodlama maliyetidir. Son-son gecikme TTFT artı TPOT çarpı çıkış uzunluğu. Geçim, filonun her birinde toplanan saniyede tokenlerdir. Ama ürün için önemli olan şey, her SLO'yu aynı anda karşılayan isteklerin %2'si. Yüksek geçiş, düşük iyi çıkış demek oluyor ki kullanıcılara asla zamanında ulaşmayan tokenleri işletiyorsunuz. 2026 yılında Llama-3.1-8B-Instruct on TRT-LLM için referans numaraları: ortalama TTFT 162 ms, ortalama TPOT 7,33 ms, ortalama E2E 1,093 ms. Her zaman P50, P90, P99 'yi bildir. Ve ölçüm tuzağına dikkat edin: GenAI-Perf TTFT'yi ITL hesaplamasından çıkarır, LLMPerf onu içerir; aynı çalışmada TPOT hakkında iki araç anlaşmazlık yaşıyor.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy percentile calculator and goodput reporter)
+**Languages:** Python, TypeScript (stdlib, toy percentile calculator and goodput reporter)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~60 minutes
 

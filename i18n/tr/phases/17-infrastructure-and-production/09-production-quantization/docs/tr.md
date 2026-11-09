@@ -3,7 +3,7 @@
 > Kvantisalizasyon biçimi evrensel bir seçim değildir  donanım, hizmet motor ve iş yükü fonksiyonu. GGUF Q4_K_M veya Q5_K_M, llama.cpp ve Ollama üzerinden teslim edilen CPU ve kenarına sahiptir. GPTQ aynı tabanda çoklu LORA'ya ihtiyaç duyduğunda vLLM'de kazanır. Marlin-AWQ çekirdekleri ile AWQ, en iyi Pass@1 ile 7B sınıfı modelinde, 2026'da veri merkezi üretimi için varsayılan  INT4'de ~741 tok/s'i sağlar. FP8 Hopper, Ada ve Blackwell'de orta yerde kalır  neredeyse kayıpsız ve yaygın olarak desteklenir. NVFP4 ve MXFP4 (Blackwell mikroskalingi) agresif ve blok başına onaylama gerektirir. İki tuzak ısırma ekibi: Kalibrasyon verileri dağıtım alanına eşleşmelidir ve KV önbelleği ağırlık kvantizasyonundan ayrıdır  AWQ dersi "Modem şimdi 4 GB'dır" üretim seri boyutlarında 10-30 GB KV önbelleğini unutur.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy memory and throughput comparison across formats)
+**Languages:** Python, TypeScript (stdlib, toy memory and throughput comparison across formats)
 **Prerequisites:** Phase 10 · 13 (Quantization foundations), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > Round-robin yük dengeleme, önbelleğe alınmış LLM sonuçları için aktif olarak zararlıdır. Önceden belirtilmiş düğmeye yerleşmeyen bir istek, uzun bir istekle, önbellekle ~80 ms karşılaştırıldığında P50'de yaklaşık 800 ms'lik tam önceden doldurma maliyetini öder. 2026 yılında üretim modeli, KV-cache olaylarını ve prefix-hash eşleşmesi üzerinde rotaları tüketen bir önbelleğe farkındalıklı yönlendirici (vLLM Router in Rust, llm-d yönlendirici) olacaktır. Son araştırmalar (GORGO) yönlendirme hedefi için bölge çapındaki ağ gecikmesini açık bir terim haline getirmiştir. Ticari "bölge çapındaki sonuçlandırma" teklifleri (Bedrock bölge çapındaki sonuçlandırma, GKE çoklu küme geçitleri) sonuçlandırmayı net olmayan bir şekilde değerlendirir  TTFT değil, mevcutluğu ele alırlar. JPMorgan ve Mayo Klinik'i, Kasım 2024'te yaklaşık 22 dakika boyunca, bizim doğu 1'ün başarısızlığını gerçekleştirdi. DR gerçekliği: LLM DR başarısızlıklarının %32'si takımların ağırlıkları yedeklediği ama tokenizer dosyalarını veya kuantitasyon yapılandırmalarını unuttuğu için.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy prefix-cache-aware router simulator)
+**Languages:** Python, TypeScript (stdlib, toy prefix-cache-aware router simulator)
 **Prerequisites:** Phase 17 · 04 (vLLM Serving), Phase 17 · 06 (SGLang RadixAttention)
 **Time:** ~60 minutes
 

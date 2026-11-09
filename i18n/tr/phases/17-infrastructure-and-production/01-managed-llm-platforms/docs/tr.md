@@ -3,7 +3,7 @@
 > Üç hiper ölçekli, üç farklı strateji. AWS Bedrock, bir API arkasında bir model pazarıdır  Claude, Llama, Titan, Stability, Cohere. Azure OpenAI özel kapasite için özel bir OpenAI ortaklığı ve sağlanan geçiş birimleri (PTU) dir. Vertex AI, en iyi uzun bağlamlı ve multimodal hikaye ile Gemini'nin ilk yeri aldı. 2026 yılında Yapay Analiz, Azure OpenAI'yi ortalama ~ 50 ms ve Bedrock'u Llama 3.1 405B eşdeğerlerinde ~ 75 ms olarak ölçer. Karar kuralının "en hızlı" değil, "ne model katalog ve FinOps yüzey ürünümle eşleşir".
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cost-and-latency comparator)
+**Languages:** Python, TypeScript (stdlib, toy cost-and-latency comparator)
 **Prerequisites:** Phase 11 (LLM Engineering), Phase 13 (Tools & Protocols)
 **Time:** ~60 minutes
 

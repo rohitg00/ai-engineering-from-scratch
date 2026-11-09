@@ -3,7 +3,7 @@
 > Geleneksel FinOps LLM harcamalarında kesimler. Maliyetler kaynak zaman değil, token işlemler. Etiketler haritalamıyor  bir API çağrısı bir işlemdir, bir varlık değil. Mühendislik kararları (sürekli tasarım, bağlam penceresi, çıkış uzunluğu) finansal kararlardır. 2026 oyun kitabı bir gün önce enstrüman için üç atribut boyutuna sahiptir: kullanıcı başına (`user_id`) yer fiyatlandırması ve genişlemesi için görev başına (`task_id`+ `route`) ürün yüzey maliyetleri ve öncelikleri için, kiracılık (`tenant_id`) için birim ekonomisi ve yenilenme. Dört token katmanı  prompt, araç, bellek, cevap  bir kova saklar harcamak. Çoklu kiracı ürünler için uygulanma merdivi: kiracı başına oran sınırı (2-3x beklenen zirve, net 429 + tekrar deneme sonrası); günlük harcama limiti (1.5-3x sözleşmiş tavan; hız sıkıştırmayı tetikler + uyarı); harcama z puanı > 4'te (otomatik ara + çağrı açılan sayfa) kesintiler. Atribusiyon kalıpları: etiketleme ve toplamlama, telemetri-birleştirme (izleme-ID → faturalama; en yüksek doğruluk), örnekleme ve ekstrapolasyon, model tabanlı tahsis, olay kaynaklı, gerçek zamanlı akış. Birim metrik: çözülen sorgu başına maliyet, üretilen eser başına maliyet  $/M tokens değil. Geriye dönük etiketleme her zaman eksik; istek üzerine oluşturma aracı.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cost-attribution simulator with kill switch)
+**Languages:** Python, TypeScript (stdlib, toy cost-attribution simulator with kill switch)
 **Prerequisites:** Phase 17 · 13 (Observability), Phase 17 · 14 (Caching)
 **Time:** ~60 minutes
 

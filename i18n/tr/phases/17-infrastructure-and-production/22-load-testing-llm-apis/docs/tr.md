@@ -3,7 +3,7 @@
 > Geleneksel yük denetleyicileri akış cevapları, değişken çıkış uzunlukları, token seviyesindeki ölçümler veya GPU doymuşluğu için tasarlanmamıştır. İki tuzak çoğu takımı ısırıyor. GIL tuzağı: Locust'in token seviyesindeki ölçümü Python GIL altında tokenizeyi yürütür, bu da ağır eşzamanlılık altında talep üretimi ile rekabet eder; tokenize geri kalanı daha sonra bildirilen tokenler arası gecikmeyi  müşteriniz şişek boynusu, sunucu değil. Çevre-birliği tuzağı: bir döngüde aynı çevreler, jeton dağılımında bir noktayı test eder; gerçek trafiğin değişken uzunluğu ve çeşitli ön işaret eşleşmeleri vardır. LLMPerf bunu düzeltiyor .`--mean-input-tokens`+ `--stddev-input-tokens`. 2026 yılında araç haritası: Token düzeyinde doğruluk için LLM uzmanlığı (GenAI-Perf, LLMPerf, LLM-Locust, guidellm);**k6 v2026.1.0**+ **k6 Operator 1.0 GA (Sept 2025)** Akıştan haberdar, TestRun/PrivateLoadZone CRD'ler üzerinden dağıtılan Kubernetes-native, CI/CD kapıları için en iyisi; Vegeta for Go sabit oranlı beslenme; Akış için sadece LLM-Locust uzantısı ile 2.43.3.
 
 **Type:** Build
-**Languages:** Python (stdlib, toy realistic-prompt generator + latency collector)
+**Languages:** Python, TypeScript (stdlib, toy realistic-prompt generator + latency collector)
 **Prerequisites:** Phase 17 · 08 (Inference Metrics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~75 minutes
 
