@@ -3,7 +3,7 @@
 > یک مدل بخشی از یک سیستم است. طراحی تصمیم می گیرد که مدل چه چیزی را پیش بینی می کند، چه کسی بر روی آن عمل می کند، هزینه اش چه خواهد بود و وقتی شکست می خورد چه اتفاقی می افتد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation) and 13 (ML Pipelines)
 **Time:** ~110 minutes
 
@@ -295,6 +295,7 @@ CheckItem("serving_fit", 1, False, "pick a serving mode that meets the staleness
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console
@@ -322,6 +323,7 @@ feed ranking, 2-hour freshness
 
 ```bash
 python3 code/main.py my_design_doc.json
+npx tsx code/main.ts my_design_doc.json
 ```
 
 ## ازش استفاده کن

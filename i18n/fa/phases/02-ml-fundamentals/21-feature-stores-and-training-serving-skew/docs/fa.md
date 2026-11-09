@@ -3,7 +3,7 @@
 > یک ویژگی دارای یک تعریف و دو خواننده است. آموزش تاریخچه خود را از هر زمان برچسب می خواند و خدمت آخرین ارزش آن را می خواند. هنگامی که دو خواننده با یکدیگر مخالفند، مدل ورودی هایی را می بیند که هرگز آموزش داده نشده است.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 08 (Feature Engineering), 13 (ML Pipelines), 15 (Time Series), and 19 (ML System Design)
 **Time:** ~100 minutes
 
@@ -275,6 +275,7 @@ def detect_skew(
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console

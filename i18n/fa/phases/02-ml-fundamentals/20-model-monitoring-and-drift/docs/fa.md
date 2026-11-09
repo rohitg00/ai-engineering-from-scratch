@@ -3,7 +3,7 @@
 > یک مدل در حال اجرا بدون پیام خطا شکست می خورد. در حالی که جهان از داده های آموزش خود دور می شود، امتیازات را باز می گرداند و تنها نظارت شکاف را نشان می دهد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation), 16 (Anomaly Detection), and 19 (ML System Design)
 **Time:** ~110 minutes
 
@@ -261,6 +261,7 @@ def level(self, metrics: dict[str, float]) -> str:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console
