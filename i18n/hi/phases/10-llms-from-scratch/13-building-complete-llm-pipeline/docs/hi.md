@@ -3,7 +3,7 @@
 > सब कुछ पाठ 01 से 12 तक एक पाइपलाइन का एक चरण है। यह सबक एक मंच है जो उन चरणों को एक एकल अंत-से-अंत रन में बदल देता हैः टोकन, प्री-ट्रेन, स्केल, एसएफटी, संरेखित, मूल्यांकन, क्वांटिज़, सेवा। आप एक लैपटॉप पर एक 70B मॉडल को प्रशिक्षित नहीं करेंगे। आप ऑर्केस्ट्रेशन लेयर, मैनिफिस, एवल गेट और रूलबैक प्लान तैयार करेंगे जो 2026 सीमा टीम द्वारा तय करने के लिए उपयोग किया जाएगा कि क्या शिप किया जाएगा। यह है कपास्टोन.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** All Phase 10 lessons 01-12
 **Time:** ~120 minutes
 
@@ -216,10 +216,16 @@ beam-search
 
 कैनोनिक वर्कफ़्लो में तीन कमांड होते हैं।
 
-```
+```bash
 python code/main.py plan    # validate manifest, compute cost estimate, print DAG
 python code/main.py run     # execute stages, writing to manifest.out.yaml
 python code/main.py gate    # read manifest.out.yaml, apply eval gates, ship-or-hold
+```
+
+रस्ट पोर्ट एक ही चलाता है `plan`चरण:
+
+```bash
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson plan
 ```
 
 दौड़ें`plan`अधिकांश पाइपलाइन बग योजना के समय दिखाई देते हैं - गायब गेट सीमाओं, पुराने हैश, बजट ओवरराउंड. चल रहा है`plan`मुक्त है. भाग रहा है.`run`सस्ते पक्ष पर कीड़े पकड़कर पैसे बचाएं।

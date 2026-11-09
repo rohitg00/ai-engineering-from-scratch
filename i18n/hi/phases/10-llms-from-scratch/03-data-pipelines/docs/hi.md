@@ -3,7 +3,7 @@
 > मॉडल एक दर्पण है. यह जो भी डेटा आप उसे खिलाते हैं को दर्पण करता है. इसे कूड़ेदान खिलाता है, यह कूड़ेदान को पूरी तरलता से दर्पण करता है.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 10, Lessons 01-02 (Tokenizers, Building a Tokenizer)
 **Time:** ~90 minutes
 
