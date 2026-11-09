@@ -3,7 +3,7 @@
 > سند رو به صورت رواني RAG يه قطعه هست تولید RAG چند مدل گسترده تر است  بازیافت متن، تصاویر، صوتی و ویدیو برای جریان های کاری مانند برنامه ریزی سفر ("برای من یک شام آرام و گیاهی با نور طبیعی پیدا کنید") ، triage پزشکی ("چه آسیب با این عکس + این یادداشت ها مطابقت دارد") ، تجارت الکترونیکی ("لباس های مشابه این سلفی، در اندازه من") و خدمات ساحی ("این صدا موتور را تشخیص دهید و عکس قطعه را ببینید"). سه نظرسنجی سال 2025  Abootorabi و همکاران، Mei و همکاران، Zhao و همکاران  زیرمصائبات: بازیافت متقابل، ادغام بازیافت، زمین سازی تولید، ارزیابی چندمودال را رمزنگاری کرد. این درس بررسی ها را می خواند و یک خط تولید را طراحی می کند.
 
 **Type:** Build
-**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator)
+**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator), TypeScript
 **Prerequisites:** Phase 12 · 23 (ColPali), Phase 11 (RAG basics)
 **Time:** ~180 minutes
 

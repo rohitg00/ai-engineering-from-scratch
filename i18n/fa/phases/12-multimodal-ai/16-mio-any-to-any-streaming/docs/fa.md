@@ -3,7 +3,7 @@
 > GPT-4o یک محصول را که مدل های باز نمی توانند تکرار کنند، ارسال می کند: یک عامل که صدای را می شنود، ویدیو می بیند و در زمان واقعی صحبت می کند. پاسخ سیستم زیست محیطی باز تا اواخر سال 2024 MIO (Wang et al., سپتامبر 2024) بود. MIO متن، تصویر، گفتار و موسیقی را توکن می کند، یک ترانسفورماتور علت را در طول دنباله های متقابل آموزش می دهد و هر نوع به هر نوع تولید می کند. AnyGPT (Zhan et al., فوریه 2024) اثبات مفهوم بود؛ MIO مقیاس بندی است؛ Unified-IO 2 (Allen AI، دسامبر 2023) پسر عموی با زمین بینایی + عمل است. این درس الگوی هر چیزی به هر چیزی را می خواند  چهار توکن، یک ترانسفورماتور، رمزگذاری دوستانه برای جریان.
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-modality token allocator + streaming decode loop)
+**Languages:** Python, TypeScript (stdlib, four-modality token allocator + streaming decode loop)
 **Prerequisites:** Phase 12 · 11 (Chameleon), Phase 6 (Speech and Audio)
 **Time:** ~120 minutes
 

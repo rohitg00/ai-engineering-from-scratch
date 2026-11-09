@@ -3,7 +3,7 @@
 > نمایش محصول GPT-4o در ماه مه 2024 به دلیل مدل اصلی نیست بلکه به دلیل شکل محصول  رابط صوتی است که در آن صحبت می کنید، مدل آنچه را که دوربین می بیند می بیند و در کمتر از 250ms صحبت می کند. اکوسیستم باز باقی سال های 2024 و 2025 را برای رسیدن به سطح محصول صرف رقابت کرد. Qwen2.5 Omni (مارس 2025) طراحی باز مرجع است: یک Thinker (ترانسفارمر تولید متن بزرگ) به علاوه یک Talker (ترانسفارمر تولید سخنرانی موازی) ، با توکن های پخش سخنرانی مرتبط است. مینی اومنی آن را ساده کرد، موشی تاخیر آن را مطابقت داد، GLM-4-صوت آن را به چینی گسترش داد. این درس معماری Thinker-Talker و بودجه تاخیر را می خواند که باعث می شود جریان گفتگوهای زمان واقعی کار کند.
 
 **Type:** Build
-**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop)
+**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop), TypeScript
 **Prerequisites:** Phase 12 · 19 (audio-LLMs), Phase 12 · 16 (any-to-any)
 **Time:** ~180 minutes
 

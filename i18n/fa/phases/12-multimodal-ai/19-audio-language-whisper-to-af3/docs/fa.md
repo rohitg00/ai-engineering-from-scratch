@@ -3,7 +3,7 @@
 > Whisper (Radford et al., دسامبر 2022) تشخیص گفتار را حل کرد  680k ساعت گفتار چند زبانی ضعیف نظارت شده، یک ترانسفورماتور کدگذاری-دکودر ساده، یک معیار که باعث شد هر نسخه ASR بعدی آن را نقل کند. اما شناخت استدلال نیست سوال "چه ساز هایی در این ضبط است" یا "چه احساسی سخنران بیان می کند" یا "چه اتفاقی در دقیقه ۳ افتاد" نیاز به درک صوتی دارد، نه نقل. Qwen-Audio، SALMONN، LTU و NVIDIA Audio Flamingo 3 (AF3 جولای 2025) به تدریج این استیک را ساختند: کدر های کلاس Whisper را نگه دارید، روی Q-formers حرکت دهید، روی داده های دستورالعمل های صوتی متن آموزش دهید، استدلال زنجیره ای را اضافه کنید. اين درس به طول مي رود
 
 **Type:** Build
-**Languages:** Python (stdlib, log-Mel spectrogram + audio Q-former skeleton)
+**Languages:** Python (stdlib, log-Mel spectrogram + audio Q-former skeleton), TypeScript
 **Prerequisites:** Phase 6 (Speech and Audio), Phase 12 · 03 (Q-Former)
 **Time:** ~180 minutes
 

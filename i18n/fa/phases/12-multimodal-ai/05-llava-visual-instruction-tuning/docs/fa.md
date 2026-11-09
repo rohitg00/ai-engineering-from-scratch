@@ -3,7 +3,7 @@
 > LLaVA (اپریل 2023) ، کپی شده ترین معماری چند راه در جهان است. این دستگاه Q-Former BLIP-2 را با یک MLP دو لایه جایگزین کرد، توجه متقاطع بند Flamingo را با یک زنجیره رمزنگاری ساده جایگزین کرد و در 158k چرخش آموزش بصری که توسط GPT-4 از عنوانات متن تولید می شود آموزش یافت. هر تمرین کننده ای که بین سال های 2023 تا 2026 یک VLM ساخته است، نوع LLaVA را ساخته است. LLaVA-1.5 در یک پروژکتور MLP و یک کدگر 336px تغییر داده شده است. LLaVA-NeXT تا ورودی با وضوح بالا، تاچ AnyRes اضافه کرد. LLaVA-OneVision تصویر، تصاویر چندگانه و ویدیو را در یک دستور کار متحد می کند. این درس دستور کار را می خواند، پروژکتور را اجرا می کند و توضیح می دهد چرا "ساده تر برنده شده است".
 
 **Type:** Build
-**Languages:** Python (stdlib, projector + instruction-template builder)
+**Languages:** Python, TypeScript (stdlib, projector + instruction-template builder)
 **Prerequisites:** Phase 12 · 02 (CLIP), Phase 11 (LLM Engineering — instruction tuning)
 **Time:** ~180 minutes
 

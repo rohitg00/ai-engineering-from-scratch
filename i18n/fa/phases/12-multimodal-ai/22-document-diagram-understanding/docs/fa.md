@@ -3,7 +3,7 @@
 > اسناد عکس نیستن یک پی دی اف، مقاله علمی، فاکتور یا فرم دست نوشته دارای طرح، جدول، نمودار، یادداشت های پایینی، سر و مطلب و ساختار معنوی است که درک ساده تصویر نمی تواند آن را درک کند. سکه قبل از VLM یک خط لوله بود: Tesseract OCR + LayoutLMv3 + هوریستیک استخراج جدول. موج VLM جایگزین مدل های بدون OCR  Donut (2022), Nougat (2023), DocLLM (2023)  شد که به طور مستقیم نشان دهی ساختاری را منتشر می کنند. تا سال 2026 مرز فقط "تصاویر صفحه را به کلاود اپوس 4.7 در 2576px بومی تغذیه کنید" و تولید مارک بندی ساختار یافته رایگان می شود. این درس در حال خواندن سه دوره قوس AI مستند است.
 
 **Type:** Build
-**Languages:** Python (stdlib, layout-aware document parser skeleton)
+**Languages:** Python (stdlib, layout-aware document parser skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 5 (NLP)
 **Time:** ~180 minutes
 

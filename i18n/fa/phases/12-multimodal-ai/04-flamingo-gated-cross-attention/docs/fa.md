@@ -3,7 +3,7 @@
 > فلامینگو DeepMind (2022) دو چیز را قبل از هر کس دیگری انجام داد. این نشان داد که یک مدل تنها می تواند به طور تصادفی دنباله های تصاویر، ویدیوها و متن را پردازش کند. و نشان داد که VLM ها می توانند در زمینه یاد بگیرند  چند عکس با سه مثال (تصاویر، عنوان) و مدل یک تصویر جدید بدون هیچ مرحله گرادینت را زیرنویس می کنند. مکانیسم: لایه های بین بین بین بین توجه، در میان لایه های موجود LLM منجمد، با یک دروازه tanh آموخته که از صفر شروع می شود تا توانایی متن LLM در هنگام ابتدایی حفظ شود. این درس به دنبال نمونه برداری مجدد Perceiver Flamingo و معماری توجه متقابل دروازه ای است که اجداد ورودی های متقابل Gemini و نمادهای بصری Idefics2 است.
 
 **Type:** Learn
-**Languages:** Python (stdlib, gated cross-attention + Perceiver resampler demo)
+**Languages:** Python, TypeScript (stdlib, gated cross-attention + Perceiver resampler demo)
 **Prerequisites:** Phase 12 · 03 (BLIP-2 Q-Former)
 **Time:** ~120 minutes
 

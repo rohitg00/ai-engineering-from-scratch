@@ -3,7 +3,7 @@
 > محصول 2026 مرز یک عامل چندمودال است که عکس های صفحه نمایش را می خواند، روی دکمه ها کلیک می کند، در UI های وب حرکت می کند، فرم ها را پر می کند و جریان های کار را از پایان به آخر تکمیل می کند. SeeClick و CogAgent (2024) ثابت کرد که GUI-grounding اولیه است. فرات-UI اضافه شده موبایل. ChartAgent استفاده از ابزار بصری برای نمودار ها را معرفی کرد. VisualWebArena و AgentVista (2026) معیار های تعقیب مرز هستند و حتی Gemini 3 Pro و Claude Opus 4.7 در وظایف سخت AgentVista حدود 30٪ امتیاز می دهند. این سنگ پایه هر رشته ای از مرحله 12: درک (VLM رزوشن بالا) ، استدلال (LLM با استفاده از ابزار) ، زمین سازی (خروج هماهنگی) ، حافظه افق طولانی و ارزیابی را به هم می کشد.
 
 **Type:** Capstone
-**Languages:** Python (stdlib, action schema + agent loop skeleton)
+**Languages:** Python (stdlib, action schema + agent loop skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 09 (Qwen-VL JSON), Phase 14 (Agent Engineering)
 **Time:** ~240 minutes
 

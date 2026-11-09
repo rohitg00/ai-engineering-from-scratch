@@ -3,7 +3,7 @@
 > CLIP (2021) OpenAI یک ایده بزرگ به اندازه کافی برای پنج سال آینده ثابت کرد: یک کدگر تصویر و یک کدگر متن را در یک فضای ویکتور با استفاده از فقط جفت های سرشناس تصویر وب سرشناس و یک از دست دادن متناقض، هماهنگ کنید. صفر برچسب نظارت شده 400 ميليون جفت فضای گنجانده شده، طبقه بندی صفر شوت، بازیافت تصویر-متن را انجام می دهد و به عنوان برج دید خود به هر 2026 VLM وصل می شود. SigLIP 2 (2025) softmax را با sigmoid جایگزین کرد و با هزینه کمتری از CLIP گذشته شد. این درس ریاضیات را از InfoNCE به sigmoid loss pairwise می برد و مرحله آموزش را در stdlib Python ایجاد می کند.
 
 **Type:** Build
-**Languages:** Python (stdlib, InfoNCE + sigmoid loss implementations)
+**Languages:** Python, TypeScript (stdlib, InfoNCE + sigmoid loss implementations)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 7 (Transformers)
 **Time:** ~180 minutes
 

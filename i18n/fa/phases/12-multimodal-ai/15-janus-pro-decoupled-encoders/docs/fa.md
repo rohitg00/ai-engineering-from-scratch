@@ -3,7 +3,7 @@
 > مدل های چند مدل یکپارچه یک تنش اجتناب ناپذیر دارند. درک نیاز به ویژگی های معنوی دارد  ویکتورهای خروجی SigLIP یا DINOv2 غنی از اطلاعات سطح مفهوم. نسل می خواهد کد های دوستانه بازسازی  توکن های VQ که به پیکسل های صاف ترکیب می شوند. دو هدف در یک کدگر سازگار نیستند. Janus (DeepSeek، اکتبر 2024) و Janus-Pro (DeepSeek، ژانویه 2025) استدلال می کنند که راه حل این است که تلاش را متوقف کنیم: دو کدر را جدا کنید. بدن ترانسفورماتور را بین وظایف به اشتراک بگذارید، اما درک مسیر را از طریق SigLIP و تولید از طریق یک توکنایزر VQ. در 7B، Janus-Pro DALL-E 3 را در GenEval شکست می دهد در حالی که LLaVA را در MMMU برابر می کند. در این درس می خوانیم چرا دو کدگر کار می کنند که یکی شکست خورده است.
 
 **Type:** Build
-**Languages:** Python (stdlib, dual-encoder routing + shared-body signal)
+**Languages:** Python, TypeScript (stdlib, dual-encoder routing + shared-body signal)
 **Prerequisites:** Phase 12 · 13 (Transfusion), Phase 12 · 14 (Show-o)
 **Time:** ~120 minutes
 

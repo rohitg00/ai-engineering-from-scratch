@@ -3,7 +3,7 @@
 > CLIP تصویر و متن را همبستگی می کند اما نمی تواند زیرنویس تولید کند، سوالات را پاسخ دهد یا مکالمه ای داشته باشد. BLIP-2 (Salesforce، 2023) با یک پل کوچکی قابل آموزش حل کرد: 32 ویکتور سوال قابل یادگیری از طریق توجه متقابل از ویژگی های یک ViT منجمد به همراه می شوند، سپس مستقیماً به جریان ورودی LLM منجمد وارد می شوند. 188 میلیون پارامتر پل یک ViT-g/14 را به LLM های منجمد بزرگ به اندازه 11B Flan-T5-XXL متصل کرد. هر VLM مبتنی بر آداپتور تا سال 2026  MiniGPT-4, InstructBLIP، پسر عمو LLaVA  یک نسل است. این درس معماری Q-Former را می خواند، آموزش دو مرحله ای آن را توضیح می دهد و یک نسخه اسباب بازی را ایجاد می کند که نمادهای بصری را به یک کدرسنده متن منجمد می دهد.
 
 **Type:** Build
-**Languages:** Python (stdlib, cross-attention + learnable-query demo)
+**Languages:** Python, TypeScript (stdlib, cross-attention + learnable-query demo)
 **Prerequisites:** Phase 12 · 02 (CLIP), Phase 7 (Transformers)
 **Time:** ~180 minutes
 

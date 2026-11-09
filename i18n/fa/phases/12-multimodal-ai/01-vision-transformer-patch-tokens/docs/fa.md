@@ -3,7 +3,7 @@
 > قبل از هرچیزی چندگانه، یک تصویر باید به یک سری از توکن هایی تبدیل شود که یک ترانسفورماتور می تواند بخورد. مقاله ViT 2020 با پیچ های 16x16 پیکسل، یک پروژکتور خطی و یک موقعیت داخلی پاسخ داده است. پنج سال بعد هر مدل مرزی 2026 (Claude Opus 4.7 در 2576px بومی، Gemini 3.1 Pro، Qwen3.5-Omni) هنوز به این شکل شروع می شود  کدگر از ViT به DINOv2 به SigLIP 2 تغییر کرد، توکن های ثبت اضافه شد، طرح موقعیت تبدیل به 2D-RoPE شد، اما اولیه نگه داشت. این درس پایپلاين تکه های پیچ را از پایان به آخر می خواند و آن را در stdlib Python ایجاد می کند تا بقیه فاز 12 یک مدل ذهنی مشخص برای "تکه های بصری" داشته باشد.
 
 **Type:** Learn
-**Languages:** Python (stdlib, patch tokenizer + geometry calculator)
+**Languages:** Python, TypeScript (stdlib, patch tokenizer + geometry calculator)
 **Prerequisites:** Phase 7 (Transformers), Phase 4 (Computer Vision)
 **Time:** ~120 minutes
 
