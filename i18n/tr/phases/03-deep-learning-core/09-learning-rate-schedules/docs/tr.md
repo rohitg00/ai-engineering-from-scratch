@@ -3,7 +3,7 @@
 > Öğrenme hızı en önemli hiperparametre. Arsitür değil. Veriler kümesi boyutu değil. Aktiflik fonksiyonu değil. Öğrenme hızı.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers), Lesson 03.08 (Weight Initialization)
 **Time:** ~90 minutes
 

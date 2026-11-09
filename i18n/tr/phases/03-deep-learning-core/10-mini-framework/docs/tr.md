@@ -3,7 +3,7 @@
 > Nöronları, katmanları, ağları, arka destekleri, aktivasyonları, kayb fonksiyonlarını, optimizerleri, düzenleme, başlangıç ve LR programlarını oluşturdun. Hepsi ayrı parçalar olarak. Şimdi onları bir çerçeveye bağla. PyTorch değil. TensorFlow değil.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** All of Phase 03 (Lessons 01-09)
 **Time:** ~120 minutes
 

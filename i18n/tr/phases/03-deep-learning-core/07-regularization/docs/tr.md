@@ -3,7 +3,7 @@
 > Modeliniz %99'u eğitim verileri ve %60'ını test verileri ile elde eder. Öğrenmek yerine ezberler.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers)
 **Time:** ~75 minutes
 

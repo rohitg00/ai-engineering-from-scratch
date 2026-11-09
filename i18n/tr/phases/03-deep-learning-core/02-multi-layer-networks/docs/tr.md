@@ -3,7 +3,7 @@
 > Bir nöron bir çizgi çizer, onları yığar ve her şeyi çizersin.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 01 (Math Foundations), Lesson 03.01 (The Perceptron)
 **Time:** ~90 minutes
 

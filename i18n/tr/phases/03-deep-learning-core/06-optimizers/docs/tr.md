@@ -3,7 +3,7 @@
 > İndirme derecesi hangi yönde hareket edeceğinizi söyler. Ne kadar uzakta ne kadar hızlı olduğunu söylemez. SGD bir pusula. Adam trafik verileri ile GPS.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.05 (Loss Functions)
 **Time:** ~75 minutes
 
