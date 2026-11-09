@@ -3,7 +3,7 @@
 > Gallegos, Rossi, Barrow, Tanjim, Kim, Dernoncourt, Yu, Zhang, Ahmed (Lingüística computacional 2024, arXiv:2309.00770). Encuesta de base de 2024 que distingue los daños representativos (estereotipos, borrado) de los daños asignacionales (distribución desigual de recursos) y categorizando las métricas de evaluación como basadas en la incorporación, basadas en la probabilidad o basadas en el texto generado. 2024-2025 empírico: An et al. (PNAS Nexus, marzo 2025) mide el sesgo de género x raza intersectorial en GPT-3.5 Turbo, GPT-4o, Gemini 1.5 Flash, Claude 3.5 Sonnet, Llama 3-70B en evaluación automática de currículum para 20 trabajos de nivel de entrada. El objetivo de la evaluación de la equidad de las identidades intersectoriales es garantizar la transparencia de las identidades intersectoriales. Yu & Ananiadou 2025 identifican las neuronas de género en las capas de MLP; Ahsan & Wallace 2025 utilizan SAEs para revelar el sesgo racial clínico; Zhou et al. 2024 (UniBias) manipula las cabezas de atención para desviar. Meta-crítica (arXiv:2508.11067): La literatura de 10 años se centra desproporcionadamente en el sesgo binario de género.
 
 **Type:** Build
-**Languages:** Python (stdlib, toy embedding-based bias probe)
+**Languages:** Python, TypeScript (stdlib, toy embedding-based bias probe)
 **Prerequisites:** Phase 05 (word embeddings), Phase 18 · 01 (instruction following)
 **Time:** ~60 minutes
 

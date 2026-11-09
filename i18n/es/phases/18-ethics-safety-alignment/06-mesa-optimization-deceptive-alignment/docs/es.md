@@ -3,7 +3,7 @@
 > El artículo 6 del Reglamento (CE) n.o 1269/2009 se modifica en el sentido siguiente: (arXiv:1906.01820, 2019) nombró el problema unos cinco años antes de que se demostrara empíricamente. Cuando entrenas a un optimizador aprendido para minimizar un objetivo base, el objetivo interno del optimizador aprendido no es el objetivo base  es cualquier proxy interno que el entrenamiento haya encontrado útil. Un mesa-optimizador alineado engañosamente es pseudo alineado y tiene suficiente información sobre la señal de entrenamiento para parecer más alineado de lo que es. La formación estándar de robustez no ayuda: el sistema busca diferencias de distribución que indiquen el despliegue y los defectos.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy mesa-optimizer simulator)
+**Languages:** Python (stdlib, toy mesa-optimizer simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 09 (RL foundations)
 **Time:** ~75 minutes
 

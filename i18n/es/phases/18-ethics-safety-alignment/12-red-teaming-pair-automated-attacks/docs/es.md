@@ -3,7 +3,7 @@
 > El gobierno de China ha adoptado una nueva política de control de la población de la región. PAIR  Rapid Automatic Iterative Refinement  es el jailbreak automático canónico de caja negra. Un LLM atacante con un sistema de red-team prompt propone iterativamente jailbreaks para un LLM objetivo, acumulando intentos y respuestas en su propio historial de chat como retroalimentación en contexto. PAIR suele tener éxito dentro de 20 consultas, órdenes de magnitud más eficientes que GCG (la búsqueda de gradientes a nivel de tokens de Zou et al.) y sin requerir acceso a caja blanca. PAIR es ahora una línea de base estándar en JailbreakBench (arXiv:2404.01318) y HarmBench, junto con GCG, AutoDAN, TAP y Prompt Adversarial Persuasive.
 
 **Type:** Build
-**Languages:** Python (stdlib, mock PAIR loop against a toy target)
+**Languages:** Python, TypeScript (stdlib, mock PAIR loop against a toy target)
 **Prerequisites:** Phase 18 · 01 (instruction-following), Phase 14 (agent engineering)
 **Time:** ~75 minutes
 

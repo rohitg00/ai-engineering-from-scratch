@@ -3,7 +3,7 @@
 > Tres familias estructuran la literatura de la justicia. Equidad de grupo: paridad demográfica, probabilidades igualadas, igualdad de precisión de uso condicional  tasas iguales entre los grupos protegidos en promedio. La equidad individual (Dwork et al. 2012): personas similares reciben decisiones similares; condición de Lipschitz en el mapa de decisiones. La equidad contrafactual (Kusner et al. 2017): una decisión es justa para un individuo si no se cambia cuando los atributos sensibles se alteran de manera contrafactual. Resultado teórico 2024 (NeurIPS 2024): existe un trade-off inherente entre CF y precisión; un método modelo-agnóstico convierte un predictor óptimo pero injusto en un predictor CF con pérdida limitada de precisión. Contrafactualidades de retroceso (arXiv:2401.13935, enero 2024): un nuevo paradigma que evita requerir intervenciones sobre atributos legalmente protegidos. Conciliación filosófica (ICLR Blogposts 2024): con gráficos causales, satisfacer ciertas medidas de equidad de grupo implica equidad contrafactual.
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-criteria comparison)
+**Languages:** Python, TypeScript (stdlib, three-criteria comparison)
 **Prerequisites:** Phase 18 · 20 (bias), Phase 02 (classical ML)
 **Time:** ~60 minutes
 

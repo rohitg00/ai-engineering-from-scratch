@@ -3,7 +3,7 @@
 > Cada crítica posterior de RLHF argumenta en contra de este oleoducto. Antes de estudiar cómo la presión de optimización distorsiona un proxy, tienes que ver el proxy. En el caso de la aplicación de la política de compensación de capital, la Comisión considera que la medida de compensación de capital no es una medida de la competencia de la empresa. Se prefirió un 1.3B InstructGPT sobre un 175B GPT-3. Ese único resultado es la razón por la que cada laboratorio fronterizo en 2026 todavía envía un tubo de post-entrenamiento en forma de RLHF.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy three-stage pipeline)
+**Languages:** Python (stdlib, toy three-stage pipeline), TypeScript
 **Prerequisites:** Phase 10 · 06 (SFT), Phase 10 · 07 (RLHF), Phase 10 · 08 (DPO)
 **Time:** ~45 minutes
 

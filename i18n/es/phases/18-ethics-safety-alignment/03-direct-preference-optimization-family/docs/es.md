@@ -3,7 +3,7 @@
 > Rafaelov y otros. (2023) mostró que el óptimo de RLHF tiene una forma cerrada en términos de datos de preferencias, por lo que puede saltarse el modelo de recompensa explícito y optimizar la política directamente. Esa visión dio lugar a una familia  IPO, KTO, SimPO, ORPO, BPO  cada uno fijando un modo de falla de DPO. En 2026, los algoritmos de alineación directa envían más carreras fronterizas después del entrenamiento que PPO. Pero la curva de optimización excesiva de la Lección 2 sigue siendo aplicable: los DAA no escapan de Goodhart, simplemente se mueven donde muerde.
 
 **Type:** Learn
-**Languages:** Python (stdlib, six-variant preference-loss comparator)
+**Languages:** Python (stdlib, six-variant preference-loss comparator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking), Phase 10 · 08 (DPO basics)
 **Time:** ~75 minutes
 

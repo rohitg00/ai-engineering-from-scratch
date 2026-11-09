@@ -3,7 +3,7 @@
 > Bai y otros. (arXiv:2212.08073, 2022) preguntó: ¿qué pasa si reemplazamos el etiquetador humano con una IA que lee una lista de principios? La IA constitucional tiene dos fases  autocrítica y revisión bajo una constitución, luego RL de AI Feedback. La técnica acuñó el término RLAIF y se envió en el claudio 1 de la tubería post-entrenamiento. El 21 de enero de 2026 Anthropic publicó una constitución reescrita de Claude: razonamiento explicativo sobre reglas prescriptivas, una jerarquía de prioridad de cuatro niveles y el primer reconocimiento formal de incertidumbre sobre el estado moral del modelo. Se libera bajo CC0 1.0.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy self-critique-and-revise loop)
+**Languages:** Python (stdlib, toy self-critique-and-revise loop), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking)
 **Time:** ~60 minutes
 

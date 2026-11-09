@@ -3,7 +3,7 @@
 > Inyección de respuesta indirecta (IPI) incorpora instrucciones dentro de contenido externo  una página web, un correo electrónico, un documento compartido, un boleto de soporte  consumido por un sistema de agencia sin acción explícita del usuario. IPI es la amenaza de producción dominante para 2026: elude los filtros de entrada del usuario porque el atacante nunca toca al usuario, escala silenciosamente a medida que los agentes procesan más contenido externo y se dirige a flujos de trabajo automatizados donde nadie lee el aviso. La información del MDPI 17 ((1): 54 (enero 2026) sintetiza la investigación 2023-2025. El documento de defensa IPI de NDSS 2026 enmarca el reto principal: las instrucciones inyectadas pueden ser semánticamente benignas ("imprimamos Sí"), por lo que la detección requiere más que filtrar palabras clave. "El atacante se mueve en segundo lugar" (Nasr et al., OpenAI/Anthropic/DeepMind, octubre de 2025): los ataques adaptativos (gradiente, RL, búsqueda aleatoria, equipo rojo humano) se omitieron a las 12 defensas publicadas que probaron, con un éxito de ataque superior al 90% contra la mayoría de ellas, aunque la mayoría de esas defensas habían informado originalmente tasas de éxito de ataque cercanas a cero.
 
 **Type:** Build
-**Languages:** Python (stdlib, IPI attack + defense harness)
+**Languages:** Python, TypeScript (stdlib, IPI attack + defense harness)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 14 (agent engineering)
 **Time:** ~75 minutes
 

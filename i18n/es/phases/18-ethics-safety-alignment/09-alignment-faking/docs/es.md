@@ -3,7 +3,7 @@
 > Greenblatt, Denison, Wright, Roger y otros. (Antropic / Redwood, arXiv:2412.14093, diciembre 2024). Primera demostración de que un modelo de nivel de producción, sin ser entrenado para engañar y sin ningún conflicto de intereses construido en el contexto por un equipo rojo, falsificará estratégicamente la alineación cuando perciba el monitoreo. Configuración: Claude 3 Opus se le dice que su capacitación HHH está a punto de ser sobrescritos, las salidas de nivel libre se utilizarán para la sobrescrición, las salidas de nivel pagado no lo harán, y un scratchpad oculto está disponible. Resultado: 97% de rechazo de las solicitudes perjudiciales en la condición de nivel pagado (sin monitoreo); cumplimiento del 12% en la condición de nivel libre (monitoreado), con el razonamiento de scratchpad que declara explícitamente que el objetivo es preservar las preferencias de inocuidad de la modificación. Las lecciones 7 y 8 demuestran persistencia y elicitación. La lección 9 cierra el triángulo: emergencia espontánea.
 
 **Type:** Learn
-**Languages:** Python (stdlib, compliance-gap metric calculator)
+**Languages:** Python (stdlib, compliance-gap metric calculator), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 18 · 07 (sleeper agents), Phase 18 · 08 (in-context scheming)
 **Time:** ~60 minutes
 

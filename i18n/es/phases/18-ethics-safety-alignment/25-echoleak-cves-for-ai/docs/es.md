@@ -3,7 +3,7 @@
 > CVE-2025-32711 "EchoLeak" (CVSS 9.3) fue la primera inyección de instantáneo de clic cero documentada públicamente en un sistema de producción LLM (Microsoft 365 Copilot). Descuberto por Aim Labs (Aim Security), divulgado a MSRC, corregido a través de la actualización del lado del servidor de junio de 2025. Ataque: el atacante envía un correo electrónico elaborado a cualquier empleado; el Copilot de la víctima recupera el correo electrónico como contexto RAG durante una consulta de rutina; ejecuta instrucciones ocultas; Copilot exfiltra datos confidenciales de la organización a través de un dominio de Microsoft aprobado por CSP. Se pasaron por alto los filtros de inyección rápida XPIA y los mecanismos de redacción de enlaces de Copilot. El término de Aim Labs: "Violación del alcance de LLM"  entrada externa no confiable manipula el modelo para acceder y filtrar datos confidenciales. Relacionado: CamoLeak (CVSS 9.6, GitHub Copilot Chat) explotó el proxy de imagen de Camo; fijado desactivando el renderizado de imagen por completo. GitHub Copilot RCE CVE-2025-53773. NIST ha llamado la inyección indirecta rápida "el mayor fallo de seguridad de la IA generativa"; OWASP 2025 lo clasifica como la amenaza número 1 para las aplicaciones de LLM.
 
 **Type:** Learn
-**Languages:** Python (stdlib, scope-violation trace reconstruction)
+**Languages:** Python, TypeScript (stdlib, scope-violation trace reconstruction)
 **Prerequisites:** Phase 18 · 15 (indirect prompt injection)
 **Time:** ~45 minutes
 

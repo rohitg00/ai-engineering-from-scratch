@@ -3,7 +3,7 @@
 > Tres herramientas de producción enmarcan la pila de equipo rojo de 2026. Llama Guard (Meta)  un clasificador Llama-3.1-8B afinado en 14 categorías de peligro de MLCommons; el 2025 Llama Guard 4 es un clasificador multimodales nativo 12B podado de Llama 4 Scout. Garak (NVIDIA)  Escáner de vulnerabilidad de LLM de código abierto con sondas estáticas, dinámicas y adaptivas para alucinaciones, filtraciones de datos, inyección rápida, toxicidad y jailbreaks. PyRIT (Microsoft)  Campañas de equipo rojo de múltiples vueltas con Crescendo, TAP y cadenas de convertidores personalizadas para la explotación profunda. La Guardia de Llama 3 está documentada en el "Llama 3 Herd of Models" de Meta (arXiv:2407.21783); La Guardia de Llama 3-1B-INT4 en arXiv:2411.17713; la arquitectura de la sonda de Garak en github.com/NVIDIA/garak. Estas herramientas son la interfaz de producción 2026 entre la investigación del equipo rojo (lecciones 12-15) y el despliegue (lección 17+).
 
 **Type:** Build
-**Languages:** Python (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
+**Languages:** Python, TypeScript (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
 **Prerequisites:** Phase 18 · 12-15 (jailbreaks and IPI)
 **Time:** ~75 minutes
 

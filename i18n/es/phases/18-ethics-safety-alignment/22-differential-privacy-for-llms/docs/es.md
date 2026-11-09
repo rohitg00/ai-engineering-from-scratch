@@ -3,7 +3,7 @@
 > DP-SGD sigue siendo la actualización estándar de gradientes inyectados por ruido  proporcionan garantías formales (epsilon, delta). El gasto general en computación, memoria y utilidad es sustancial; el ajuste fino de DP eficiente en parámetros (LoRA + DP-SGD) es la configuración común de 2025 (ACM 2025). Dos cuerpos de evidencia en tensión: la inferencia de membresía basada en canarios (Duan et al., 2024) informa de un éxito limitado contra los modelos de lenguaje; la extracción de datos de capacitación (Carlini et al., 2021; Nasr et al., 2025) recupera una memorización literal sustancial. Resolución (arXiv:2503.06808, marzo 2025): la brecha es en lo que se mide  canarios insertados vs "más extractables" datos. Los nuevos diseños de canarios permiten una MIA basada en pérdidas sin modelos de sombra y dan lugar a la primera auditoría de DP no trivial de un LLM capacitado en datos reales con garantías realistas de DP. Alternativas: PMixED (arXiv:2403.15638)  predicción privada en el tiempo de inferencia a través de una mezcla de expertos en las distribuciones de tokens siguientes; generación de datos sintéticos DP (Google Research 2024). Ataque emergente: Inversión de la privacidad diferencial a través de la retroalimentación de LLM  fuga de puntaje de confianza.
 
 **Type:** Build
-**Languages:** Python (stdlib, DP-SGD noise-injection and ε-δ accountant demonstration)
+**Languages:** Python, TypeScript (stdlib, DP-SGD noise-injection and ε-δ accountant demonstration)
 **Prerequisites:** Phase 01 · 09 (information theory), Phase 10 · 01 (large-model training)
 **Time:** ~60 minutes
 

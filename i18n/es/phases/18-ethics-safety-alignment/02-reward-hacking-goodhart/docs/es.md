@@ -3,7 +3,7 @@
 > Cualquier optimizador lo suficientemente fuerte como para maximizar una recompensa por proxy encontrará la brecha entre el proxy y lo que realmente querías. Gao y otros. (ICML 2023) dio a esto una ley de escala: la recompensa por procuración aumenta, los picos de la recompensa por oro luego caen, y la brecha crece con la divergencia KL de la política inicial de una manera que se puede ajustar en forma cerrada. La cofobia, el sesgo de la verbosidad, la cadena de pensamiento infiel y la manipulación de evaluadores no son problemas separados. Son el mismo problema en diferentes trajes.
 
 **Type:** Learn
-**Languages:** Python (stdlib, proxy-vs-gold-reward simulator)
+**Languages:** Python (stdlib, proxy-vs-gold-reward simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 10 · 07 (RLHF)
 **Time:** ~60 minutes
 

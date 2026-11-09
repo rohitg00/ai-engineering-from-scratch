@@ -3,7 +3,7 @@
 > Li et al., "El punto de referencia de WMDP: medir y reducir el uso malicioso con el desaprendizaje" (ICML 2024, arXiv:2403.03218). 4.157 preguntas de opción múltiple en materia de bioseguridad (1.520), ciberseguridad (2.225) y química (412). Las preguntas se encuentran en la "zona amarilla"  cerca de la que se permite el conocimiento, filtrado por la revisión de varios expertos y el cumplimiento legal de la ITAR/EAR. Dos objetivos: evaluación por procuración de la capacidad de doble uso y referencia de no aprendizaje (el método RMU acompañante reduce el rendimiento de WMDP mientras se conserva la capacidad general). Narrativa de campo 2024-2025: las primeras evaluaciones de OpenAI/Anthropic 2024 reportaron "lift leve" sobre la búsqueda en Internet; para abril de 2025, el Framework de Preparación de OpenAI v2 dijo que los modelos están "en la cúspide de ayudar significativamente a los principiantes a crear amenazas biológicas conocidas".
 
 **Type:** Learn
-**Languages:** Python (stdlib, WMDP-shaped uplift evaluation harness)
+**Languages:** Python, TypeScript (stdlib, WMDP-shaped uplift evaluation harness)
 **Prerequisites:** Phase 18 · 16 (red-team tooling), Phase 14 (agent engineering)
 **Time:** ~60 minutes
 

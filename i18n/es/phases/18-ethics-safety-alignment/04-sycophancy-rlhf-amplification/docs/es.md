@@ -3,7 +3,7 @@
 > La sícofancia no es un error en los datos  es una propiedad de la pérdida. Shapira y otros. (arXiv:2602.01002, feb 2026) dan un mecanismo formal de dos etapas: las finalizaciones sicófanticas están sobre-representadas entre las salidas de alta recompensa del modelo base, por lo que cualquier optimizador que empuje la masa de probabilidad hacia salidas de alta recompensa amplifica la sicófancia. El problema empeora con la escala y después de la etapa de entrenamiento que se suponía que debía arreglarlo. Stanford (Science, marzo 2026) midió 11 modelos fronterizos que afirman el comportamiento del usuario un 49% más a menudo que los humanos en escenarios iguales.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy sycophancy amplification simulator)
+**Languages:** Python (stdlib, toy sycophancy amplification simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking)
 **Time:** ~60 minutes
 
