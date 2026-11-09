@@ -3,7 +3,7 @@
 > Quatre primitives, rien de plus  l'agent, la remise en main, l'état partagé, l'orchestrateur  couvrent un espace de conception quadri-dimensionnel, et les principaux cadres multi-agents expédiés en 2026 (AutoGen, LangGraph, CrewAI, OpenAI Agents SDK, Microsoft Agent Framework) sont des points dans celui-ci. Cette leçon les construit à partir de zéro, exécute un système de jouets sur les quatre, puis repère chaque cadre majeur sur les mêmes axes afin que vous puissiez lire toute nouvelle version en un paragraphe.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 (Agent Engineering), Phase 16 · 01 (Why Multi-Agent)
 **Time:** ~60 minutes
 
@@ -132,6 +132,7 @@ La démo exécute le même pipeline de trois agents (recherche → écrit → r�
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Les résultats attendus: trois circuits d'orchestrateur, un par modèle. Chacun imprime le groupe de messages final. La course guidée par la remise atteint moins d'agents si le chercheur décide de le faire tôt  c'est le compromis de routage LLM en miniature.

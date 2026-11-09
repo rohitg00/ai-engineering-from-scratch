@@ -3,7 +3,7 @@
 > La hiérarchie est le superviseur enraciné, les agents de direction sur les sous-gérants sur les travailleurs.`Process.hierarchical`est la version du manuel: a `manager_llm`La fonction de déléguer dynamiquement les tâches et de valider les sorties.`create_supervisor(create_supervisor(...))`. C'est le modèle naturel lorsque la tâche est un vrai tableau d'org. C'est aussi le modèle le plus susceptible de s'effondrer dans un boucle de gestion  les agents de gestion attribuent mal le travail, interprètent mal les sous-produits ou ne parviennent pas à un consensus.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 05 (Supervisor Pattern)
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ Je vais courir .
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La sortie montre les deux chemins avec un côté-à-côté clair de "ce qui a été demandé" vs "ce qui a été livré".

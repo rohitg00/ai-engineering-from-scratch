@@ -3,7 +3,7 @@
 > Les agents autonomes à long horizon (curve de travail de 1 à 8 heures de METR) ont besoin d'un agent économique.**5-layer stack**est: **DePIN**(compute physique) → **Identity**(DIDs du W3C + capital de réputation) → **Cognition**(RAG + MCP) → **Settlement**(abstraction du compte) → **Governance**Les réseaux d'incitations aux agents de production comprennent:**Bittensor**(les sous-réseaux de TAO récompensent les modèles spécifiques à la tâche), **Fetch.ai / ASI Alliance**(Token ASI-1 Mini LLM + FET), et **Gonka**(PoW basé sur un transformateur qui réaffecte l'informatique aux tâches d'IA productives).**Shapley-value credit attribution**Les résultats de recherche sur les données de recherche et de recherche sont également très intéressants.**token auctions**Cette leçon construit un marché d'agents minimal, applique l'attribution de crédit Shapley à un pipeline multi-agents, et exécute une vente aux enchères de jetons de deuxième prix afin que la machine de théorie du jeu atterrisse concrètement.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 16 (Negotiation and Bargaining), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -110,6 +110,7 @@ Je vais courir .
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Résultats attendus: valeurs Shapley pour chaque agent; résultat de la vente aux enchères montrant un équilibre de l'offre vraie; routage pondéré par répétition montrant un gain de qualité de 10-20% par rapport au hasard après le réchauffement.

@@ -3,7 +3,7 @@
 > L'orchestration de la conversation partagée met N agents dans une conversation; une fonction sélectrice (LLM, round-robin ou personnalisé) choisit qui parle ensuite. C'est l'archétype de la conversation multi-agents émergente  les agents ne connaissent pas leur rôle dans un graphique statique, ils réagissent simplement au pool partagé. AutoGen GroupChat et AG2 GroupChat sont les mises en œuvre de référence: la sémantique de GroupChat d'AutoGen v0.2 a été préservée dans la fourchette AG2; AutoGen v0.4 l'a réécrite comme un modèle d'acteur axé sur les événements. Microsoft a mis AutoGen en mode maintenance en février 2026 et l'a fusionné avec le Kernel sémantique dans le Microsoft Agent Framework (RC février 2026). Le GroupeChat primitif survit dans AG2 et Microsoft Agent Framework  apprendre une fois, l'utiliser partout.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -104,6 +104,7 @@ Je vais courir .
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Utilisez-le

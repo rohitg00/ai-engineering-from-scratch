@@ -3,7 +3,7 @@
 > Cinq critères de référence 2025-2026 couvrent l'espace d'évaluation multi-agents. **MultiAgentBench / MARBLE**(ACL 2025, arXiv:2503.01935) évalue les topologies étoile/chaîne/arbre/graphe avec des indicateurs clés; **graph is best for research**, la planification cognitive ajoute à ~ 3% des réalisations clés. **COMMA**L'évaluation de la coordination multimodal asymétrique-information; les modèles de pointe, y compris le GPT-4o, luttent pour surmonter une ligne de base aléatoire. **MedAgentBoard**(arXiv:2505.12371) couvre quatre catégories de tâches médicales et trouve souvent que le multi-agent ne domine pas le single-LLM. **AgentArch**(arXiv:2509.10769) références des architectures d'agents d'entreprise combinant l'utilisation d'outils + mémoire + orchestration. **SWE-bench Pro**(le secteur de l'énergie)[arXiv:2509.16941](https://arxiv.org/abs/2509.16941)Il existe des problèmes de protection des données dans 41 repossissants couvrant des applications commerciales, des services B2B et des outils de développement; les modèles frontaliers obtiennent un score de ~23% sur Pro vs 70%+ sur Verified  un contrôle de la réalité sur la contamination.**64.3%**sur Pro avec une coordination explicite des équipes d'agents (aucune source primaire anthropic n'a encore été publiée  traiter comme préliminaire); Verdent (échafaudage d'agents) frappe **76.1% pass@1**sur vérifié ([Verdent technical report](https://www.verdent.ai/blog/swe-bench-verified-technical-report)**AAAI 2026 Bridge Program WMAC**(le secteur de l'énergie)https://multiagents.org/2026/Cette leçon s'appuie sur les mesures de MARBLE, effectue un balayage topologique contre métrique et fixe la règle " juste passer la banque SWE Verified n'est pas une preuve de généralisation ".
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 15 (Voting and Debate Topology), Phase 16 · 23 (Failure Modes)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ Je vais courir .
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Expérience attendue: carte de score du système avec précision brute, réalisation de l'étape importante, coût par tâche, delta de la ligne de base par rapport au hasard et note de contrôle de la contamination.

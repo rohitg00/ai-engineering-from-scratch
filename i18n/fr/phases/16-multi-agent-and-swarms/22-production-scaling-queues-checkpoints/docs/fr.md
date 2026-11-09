@@ -3,7 +3,7 @@
 > L' évolue des systèmes multi-agents à des milliers de circuits simultanés nécessite **durable execution** les files d'attente de travail plus les points de contrôle, de sorte que tout travailleur peut reprendre toute course après un accident, à condition que la gestion des contrats de location, les effets secondaires idempotents et la répétition déterministe soient en place.`thread_id`Les agents peuvent dormir indéfiniment en attendant l'entrée humaine. **MegaAgent**(arXiv:2408.09955) a mené une file d'attente producteur-consommateur par agent avec trois états (Idle / Processing / Response) et une coordination à deux couches (chat intragroupe + chat administrateur intergroupe). **Fiber/async**Les fils restent inactifs 99% du temps en attendant des jetons, les fibres produisent coopérativement sur la prise en charge/transmission.**FastAPI + Postgres + nothing else**Cette leçon construit un journal de checkpoint durable, une file de travail par agent avec des transitions d'état, une démo asynchrone-versus-thread, et atterrit la règle pragmatique "start simple".
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `asyncio`, `sqlite3`)
+**Languages:** Python (stdlib, `asyncio`, `sqlite3`), TypeScript
 **Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 13 (Shared Memory)
 **Time:** ~75 minutes
 
@@ -133,6 +133,7 @@ Je vais courir .
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Sortie attendue: le point de contrôle reprend avec succès après un crash simulé; la version asynchronous traite 500 appels concurrents en < 1s; la version de fil prend plusieurs secondes et utilise des ordres de magnitude de mémoire en plus par unité concurrente.

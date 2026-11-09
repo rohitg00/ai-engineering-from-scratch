@@ -3,7 +3,7 @@
 > La décomposition multi-agent la plus courante en 2026: un agent planifie, un exécute, un critique ou vérifie. MetaGPT (arXiv:2308.00352) formalite cela en tant que SOP codés en instructions de rôle  Product Manager, Architect, Project Manager, Engineer, QA Engineer  suivant `Code = SOP(Team)`- Je suis désolé . ChatDev (arXiv:2307.07924) renferme le concepteur, le programmeur, l'examen, le testeur à travers une "chaîne de chat" avec "déhallucination communicative" (les agents demandent explicitement des détails manquants). Le vérificateur est porteur de charge: Cemri et al. (MAST, arXiv:2503.13657) montre que chaque défaillance multi-agent peut être tracée à la vérification manquante ou cassée. PwC a rapporté un gain de précision de 7 fois (10% → 70%) à partir de boucles de validation structurées dans CrewAI.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 05 (Supervisor)
 **Time:** ~60 minutes
 
@@ -88,6 +88,7 @@ Je vais courir .
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Utilisez-le

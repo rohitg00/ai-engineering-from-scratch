@@ -3,7 +3,7 @@
 > Deux approches coexistent dans les systèmes multi-agents de 2026: le **message pool**(tous voient les messages de tous, comme dans AutoGen GroupChat ou MetaGPT) et le **blackboard with subscription**Les deux sont la seule partie étatique d'un système multi-agent  ce qui signifie que les deux sont là où vivent les bugs intéressants.**memory poisoning**Un agent hallucine un " fait ", d'autres agents le traitent comme vérifié, et la précision se détériore progressivement d'une manière qui est beaucoup plus difficile à déboguer qu'un accident immédiat.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`)
+**Languages:** Python (stdlib, `threading`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -119,6 +119,7 @@ Je vais courir .
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Résultats attendus:

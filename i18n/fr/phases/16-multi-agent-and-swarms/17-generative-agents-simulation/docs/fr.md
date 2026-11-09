@@ -3,7 +3,7 @@
 > Parque et coll. 2023 (UIST '23, arXiv:2304.03442) peuplée **Smallville**, une boîte à sable de 25 agents, avec une architecture en trois parties: **memory stream**(Log de la langue naturelle), **reflection**(synthèses de niveau supérieur que l'agent génère sur son propre flux), et **plan**(comportement au niveau du jour, puis sous-plans). Le résultat historique a été l'émergence d'une fête de la Saint-Valentin: un agent a semé avec " veut organiser une fête de la Saint-Valentin ", sans plus de scénarios, a produit des invitations réparties dans la population, des dates coordonnées, et la fête s'est déroulée  de 24 agents qui ont commencé sans le savoir. Les ablations montrent que les trois composants sont nécessaires pour la crédibilité. Les défaillances documentées sont des erreurs de la norme spatiale (entrées dans des magasins fermés, partage des salles de bains individuelles). C'est l'architecture de référence pour les simulations d'agents et l'évaluation sociale multi-agents en 2026.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 13 (Shared Memory)
 **Time:** ~75 minutes
 
@@ -103,6 +103,7 @@ Je vais courir .
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Les résultats attendus: trace de tirage par tirage. Au dernier tirage, au moins 3 des 5 agents montrent le parti dans leur plan, et ils convergent à l'emplacement du parti.

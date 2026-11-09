@@ -3,7 +3,7 @@
 > La prémisse de Minsky de 1986  intelligence est une société de spécialistes  est redécouverte chaque décennie. En 2023, Du et al. l'ont transformé en un algorithme concret: plusieurs instances de LLM proposent des réponses, lisent les réponses, critiquent et mettent à jour les unes les autres. Au cours de N tours, ils convergent sur un consensus qui bat la CoT à zéro coup et la réflexion sur six tâches de raisonnement et de factualité. Deux résultats sont importants: les deux **multiple agents**et **multiple rounds**La société est plus forte qu'un monologue à un seul agent, l'échange à plusieurs tours est plus fort qu'un vote à un seul coup.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -73,6 +73,7 @@ Je vais courir .
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Utilisez-le

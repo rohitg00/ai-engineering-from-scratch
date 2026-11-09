@@ -3,7 +3,7 @@
 > Les systèmes classiques distribués BFT répondent aux LLM stochastiques.**CP-WBFT**(arXiv:2511.10400) pèse chaque vote par une enquête de confiance; **DecentLLMs**(arXiv:2507.14928) est sans leader avec des propositions parallèles de travailleurs et une aggregation géométrique-médiane; **WBFT**(arXiv:2505.05103) combine le vote pondéré avec le regroupement de structures hiérarchiques pour diviser les nœuds Core et Edge. Le résultat empirique honnête de "Peut-être les agents de l'IA sont d'accord?" (arXiv:2603.01213) est que même l'accord scalaire est fragile aujourd'hui  un seul agent trompeur peut compromettre un mélange d'agents. Le BFT est nécessaire mais pas suffisant. Cette leçon construit un protocole BFT minimal, injecte trois attaques spécifiques à l'agent (menton byzantin, conformité sycophantique, monoculture d'erreur corrélative) et mesure comment chaque variante de consensus fait face.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 07 (Society of Mind and Debate), Phase 16 · 13 (Shared Memory)
 **Time:** ~75 minutes
 
@@ -107,6 +107,7 @@ Je vais courir .
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Les résultats attendus: une table de (attaque, agrégateur) -> réponse finale, avec la réponse correcte mise en évidence. La pluralité échoue dans le cas de la monoculture. La pondération de confiance du CPWBFT atténue la sycophancy.

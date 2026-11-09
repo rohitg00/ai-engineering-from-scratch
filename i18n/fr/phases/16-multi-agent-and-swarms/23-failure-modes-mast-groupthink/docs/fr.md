@@ -3,7 +3,7 @@
 > La taxonomie de référence pour 2026 est **MAST**(Cemri et coll., NeurIPS 2025, arXiv:2503.13657), dérivé de 1642 traces d'exécution sur 7 MAS open source à la pointe de la technologie montrant **41–86.7% failure rate**. Trois catégories racines: **Specification Problems**(41,77%)  ambiguïté de rôle, définition de tâches peu claire; **Coordination Failures**(36,94%)  défaillances de communication, désynchronisation de l'état; **Verification Gaps**(21,30%)  manque de validation, absence de vérifications de qualité.**Groupthink**La famille (arXiv:2508.05687) ajoute: effondrement de la monoculture (même modèle de base → défaillances corrélatives), biais de conformité (les agents renforcent les erreurs de l'autre), théorie déficiente de l'esprit, dynamique de motifs mixtes, défaillances de fiabilité en cascade. Exemple en cascade: tempêtes de retrait où une défaillance de paiement déclenche des retraités de commandes, qui déclenchent des retraités d'inventaire, qui submergent le service d'inventaire (10 fois la charge en secondes  nécessite des interrupteurs). Poison de mémoire: l'hallucination d'un agent entre dans la mémoire partagée, les agents en aval la traitent comme un fait; la précision se détériore progressivement, rendant douloureux le diagnostic de la cause racine.**STRATUS**(NeurIPS 2025) rapporte une amélioration de 1,5 fois de la réussite de l'atténuation par l'intermédiaire d'agents spécialisés de détection / diagnostic / validation.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 13 (Shared Memory), Phase 16 · 14 (Consensus and BFT), Phase 16 · 15 (Voting and Debate Topology)
 **Time:** ~75 minutes
 
@@ -154,6 +154,7 @@ Je vais courir .
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Résultats attendus:

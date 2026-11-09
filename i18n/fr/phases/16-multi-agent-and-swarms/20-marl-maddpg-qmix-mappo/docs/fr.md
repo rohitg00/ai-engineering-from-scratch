@@ -3,7 +3,7 @@
 > L'héritage de la coordination multi-agents, qui continue d'informer les systèmes de MLL-agents en 2026, est renforcé. **MADDPG**(Lowe et coll., NeurIPS 2017, arXiv:1706.02275) introduit la formation centralisée, exécution décentralisée (CTDE): chaque critique voit tous les états et actions des agents pendant la formation; au moment du test, seuls les acteurs locaux sont en cours de fonctionnement.**QMIX**(Rashid et coll., ICML 2018, arXiv:1803.11485) est une décomposition de valeur avec un réseau de mélange monotonique; par agent Qs se combinent en Q commun de sorte que `argmax`distribue de manière nette  dominant sur le défi multi-agents StarCraft (SMAC). **MAPPO**(Yu et al., NeurIPS 2022, arXiv:2103.01955) est un PPO avec une fonction de valeur centralisée; "surprenantement efficace" sur le monde des particules, SMAC, Google Research Football, Hanabi avec un réglage minimal.**default 2026 cooperative-MARL baseline**Cette leçon construit chacun à partir d'un petit jouet de grille-monde et atterrit les trois idées dans la mémoire musculaire avant de toucher à l'entraînement de l'agent LLM.
 
 **Type:** Learn
-**Languages:** Python (stdlib, small NumPy-free implementations)
+**Languages:** Python (stdlib, small NumPy-free implementations), TypeScript
 **Prerequisites:** Phase 09 (Reinforcement Learning), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~90 minutes
 
@@ -117,6 +117,7 @@ Je vais courir .
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Expérience attendue: les agents indépendants prennent en moyenne ~6 étapes; les variantes CTDE convergent vers ~3.5 étapes (optimale pour la grille 4x4 est 3).

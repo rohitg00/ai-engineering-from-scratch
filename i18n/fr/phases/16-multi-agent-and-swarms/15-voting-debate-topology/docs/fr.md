@@ -3,7 +3,7 @@
 > L'agrégation la moins chère: échantillon N d'agents indépendants, majorité-vot. Wang et coll. 2022 auto-consistance a fait cela avec un modèle échantillonné N fois.**heterogeneous**Les agents pour échapper à la monoculture  différents modèles, différents signaux, différentes températures, différents contextes. Au-delà du vote majoritaire, le débat sur la topologie est important: MultiAgentBench (arXiv:2503.01935, ACL 2025) a évalué la coordination étoile / chaîne / arbre / graphique et a trouvé **graph best for research**AgentVerse (ICLR 2024) documente deux modèles émergents  comportements volontaires et comportements de conformité  et la conformité est à la fois une caractéristique (trouver un consensus) et un risque (pensée de groupe, leçon 24).
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 07 (Society of Mind and Debate), Phase 16 · 14 (Consensus and BFT)
 **Time:** ~75 minutes
 
@@ -116,6 +116,7 @@ Je vais courir .
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Expérience attendue: table de topologie × N → (exactitude, jetons, latence). Graphique gagne à N=3-5 sur les tâches de recherche; étoile gagne sur les tâches factuelles rapides; graphique à N=7 montre la taxe de coordination (la latence gonfle plus vite que la précision).

@@ -3,7 +3,7 @@
 > Un agent principal planifie et délègue; les travailleurs spécialisés exécutent dans des contextes parallèles et rapportent. C'est le modèle derrière le système de recherche d'Anthropic (Claude Opus 4 en tant que plomb, Sonnet 4 en tant que subagents), mesuré à +90,2% par rapport à l'Opus 4 à agent unique sur les évaluations internes de la recherche. Le post d'ingénierie d'Anthropic rapporte que 80% de la variance sur BrowseComp est expliquée par l'utilisation de jetons seulement  multi-agent gagne en grande partie parce que chaque sous-agent obtient une nouvelle fenêtre de contexte. Cette leçon construit le modèle de superviseur à partir des primitifs et couvre les leçons d'ingénierie de 2026 provenant des déploiements de production.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`)
+**Languages:** Python (stdlib, `threading`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -88,6 +88,7 @@ Je vais courir .
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La sortie montre le plan, les traces de l'ouvrier parallèle avec des timestamps de début/fin et la synthèse finale.
