@@ -3,7 +3,7 @@
 > 与监管者相比:没有中央决定者. 代理人阅读了共享活动的公共汽车, 随时进行工作, 写回结果. 拉格格拉夫明确支持"群众架构"用于分散,动态环境. 矩阵 (arXiv:2511.21686) 代表了控制和数据流程,作为串行信息通过分布式排队来消除乐队主持人瓶. 交易是明确的:确定性和可追溯性 群集适应许多独立子问题的任务;它不适应需要单一一致的计划的任务.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`, `queue`)
+**Languages:** Python (stdlib, `threading`, `queue`), TypeScript
 **Prerequisites:** Phase 16 · 05 (Supervisor Pattern), Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -86,6 +86,7 @@ sw-work-stealing
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出显示每位工人任务数量 (群群分布不均但最佳) 和墙钟时间.

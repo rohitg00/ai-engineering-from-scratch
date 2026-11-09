@@ -3,7 +3,7 @@
 > 生物灵感优化正在使LLM复苏.**LMPSO**(arXiv:2504.09247) 使用PSO,每个粒子的速度是提示,LLM生成下一个候选人;在结构序列输出 (数学表达式,程序) 上工作良好. **Model Swarms**(arXiv:2410.11163) 对待每一位LLM专家作为模型重量多元件的PSO粒子,并报告**13.3% average gain**只有200个实例的9个数据集上超过12个基线. **SwarmPrompt**为了快速优化,将PSO+灰狼混合.**AMRO-S**                                  **4.7x speedup**通过"PROPT PARAMETER SPACE"和"ACO"在代理路由中,测量这些经典算法为什么适合LLM时代,以及何时不适合.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 14 (Consensus and BFT)
 **Time:** ~75 minutes
 
@@ -107,6 +107,7 @@ swarm-stigmergy
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 预期产量:

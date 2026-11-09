@@ -3,7 +3,7 @@
 > 对于研究的结尾到结尾,每一个都说明了多代理工程的不同部分. **Anthropic's Research system**,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,**MetaGPT / ChatDev**(软件工程的SOP编码角色专业化;ChatDev的"沟通性幻觉化";通过DAG扩展到1000个代理, arXiv:2406.07155) 是正规的角色分解案例. **OpenClaw / Moltbook**(原本由彼得·斯坦伯格 (Peter Steinberger) 命名为Clawdbot,2025年11月;两次改名;2026年3月247万个GitHub星;本地ReAct-loop代理;Moltbook作为一个仅供代理商使用的社交网络,在发行几天内拥有约2.3万个代理账户,Meta收购2026-03-10) 说明了人口规模发生的事情:新兴的经济活动,即时注射风险,国家级监管 (中国限制了OpenClaw在政府计算机上,2026年3月).**Framework landscape April 2026:**兰格拉夫和克鲁艾的首席生产;AG2是社区的AutoGen延续;微软的AutoGen处于维护模式 (融入微软代理框架,RC Feb 2026);OpenAI代理SDK是生产Swarm的继任者;谷歌ADK (4月 2025) 是A2A原生参与者. 现在每个主要框架都提供MCP支持;大多数都提供A2A. 这一课将每个案例都读完, 并将常见的模式进行分析,
 
 **Type:** Learn (capstone)
-**Languages:** —
+**Languages:** Python, TypeScript
 **Prerequisites:** all of Phase 16 (Lessons 01-24)
 **Time:** ~90 minutes
 

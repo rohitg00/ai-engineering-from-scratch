@@ -3,7 +3,7 @@
 > 开通AI的Swarm (2024年10月) 将多代理管弦乐器成两个原始:**routines**(指令+工具作为系统提示) 和 **handoffs**(一个工具可以返回另一个代理人). 没有国家机器,没有分支的DSL 通过调用正确的交付工具来LLM路线. 产品后代是OpenAI代理SDK (2025年3月). 群本身仍然是最清洁的概念参考其整个来源适合几百条线. 模式是病毒的,因为API表面大致是"代理 =提示 +工具;交付 =函数返回代理".限制:无状态,因此内存是调用者的问题.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -94,6 +94,7 @@ sw-handoff-routing
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## 用它

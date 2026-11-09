@@ -3,7 +3,7 @@
 > 在MCP之前,A2A之前,有FIPA-ACL. 2000年,智能物理代理基金会 (FIPA,于2005年成为IEEE计算机协会标准委员会) 批准了一个有二十个执行语言,两个内容语言和一组互动协议的代理通信语言. 它从行业中消失了,因为对网络的ontology上层费用太重了,但多代理系统的LLM复兴正在地重新实现相同的想法, 这一课将FIPA-ACL认真读取,以便您可以看到2026年协议的决定是什么,是什么新奇,
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 01 (Why Multi-Agent)
 **Time:** ~60 minutes
 
@@ -160,6 +160,7 @@ sw-contract-net
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出是一个横边的痕迹,显示每一个现代消息,在2026 JSON形式和FIPA-ACL形式,然后是合同网投标的回路.同样的协议原始物存活回路;只有语法不同.

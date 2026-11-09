@@ -3,7 +3,7 @@
 > 跨代理协调的增强学习遗产,在2026年仍在线提供LLM代理系统. **MADDPG**(Lowe et al., NeurIPS 2017, arXiv:1706.02275) 引入了集中训练,分散执行 (CTDE):每个评论家都会在训练中看到所有代理人的状态和行动;在测试时间,只有当地演员运行.为合作,竞争和混合环境工作. **QMIX**(Rashid等,ICML 2018,arXiv:1803.11485) 是一个单调的混合网络的值分解;每种代理Qs结合成联合Q,所以`argmax`清洁地分布在星际飞行器多代理挑战 (SMAC) 中. **MAPPO**(Yu et al., NeurIPS 2022, arXiv:2103.01955) 是一个具有中心化的价值函数的PPO;在粒子世界,SMAC,谷歌研究足球,哈纳比上"惊人的有效".这些支持代理团队的培训政策,必须以分散方式行动.**default 2026 cooperative-MARL baseline**在学习法师训练之前,我们将这三个想法放在肌肉记忆中.
 
 **Type:** Learn
-**Languages:** Python (stdlib, small NumPy-free implementations)
+**Languages:** Python (stdlib, small NumPy-free implementations), TypeScript
 **Prerequisites:** Phase 09 (Reinforcement Learning), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~90 minutes
 
@@ -117,6 +117,7 @@ sw-ctde
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 预期输出:独立代理平均采取6步;CTDE变体向3.5步相近 (最佳为4x4格式是3).尽管脚本的政策,但模式差异显示.

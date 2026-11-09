@@ -3,7 +3,7 @@
 > 李等人 (arXiv:2310.10701) 表明,在合作的文本游戏展览中,LLM代理人**emergent high-order Theory of Mind**由于环境管理和幻觉,但由于无法实现长远规划, 由于对第三个代理人的信念而认为其他代理人是否有所理解, 由于环境管理和幻觉而无法进行长远规划.**only**M即时条件产生与身份相关的差异化和目标导向的补充性;低容量的 LLM 仅显示出虚假的出现. 协调的出现是即时的,有条件的,依赖于模型,而不是免费的. 这一课程实现了最小的TOM知情代理,与ToM的提示以及没有TOM的合作任务,并测量了与Riedl 2025协议相比的协调.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 07 (Society of Mind and Debate), Phase 16 · 17 (Generative Agents)
 **Time:** ~75 minutes
 
@@ -120,6 +120,7 @@ sw-theory-of-mind
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 预期输出:零级代理在~35%的速度重复工作,并在10轮完成60%的试验.第一级ToM代理在~5%重复工作,完成95%.

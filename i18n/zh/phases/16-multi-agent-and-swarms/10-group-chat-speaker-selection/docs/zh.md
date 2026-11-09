@@ -3,7 +3,7 @@
 > 交谈配套将N代理放在一个对话中;选项函数 (LLM,圆或定制) 选择下一个说话者. 这就是新兴多代理对话的原型. 代理人不知道他们在静态图表中的作用,他们只是对共享池进行反应. 根据AutoGen v0.2的GroupeChat语义在AG2叉子中保存下来;AutoGen v0.4将其重写为以事件为导向的演员模型. 微软于2026年2月将AutoGen放入维护模式,并将其与语义内核合并到微软代理框架中 (RC 2026年2月). 群众聊天原始的存活在AG2和微软代理框架中 学会一次,在任何地方使用它.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -104,6 +104,7 @@ swarm-speaker
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## 用它

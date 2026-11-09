@@ -3,7 +3,7 @@
 > 最便宜的集成:样本N独立代理,多数投票.王等. 2022自律性这样做了,一个模型采样N次.多代理扩展它**heterogeneous**为了逃脱单种植的代理人 不同的模型,不同的提示,不同的温度,不同的背景.除了多数投票之外,辩论的拓学问题:多代理银行 (arXiv:2503.01935,ACL 2025) 评估了星/链/树/图表协调并发现**graph best for research**根据"合作税"的规定,在过去的4个代理人中,有"协调税". AgentVerse (ICLR 2024) 记录了两个新兴模式:志愿者行为和合规行为,合规既是一种特征 (寻找共识),也是一个风险 (团体思维,24课).本课程将拓空间映射,构建每个变体,并测量协调税.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 07 (Society of Mind and Debate), Phase 16 · 14 (Consensus and BFT)
 **Time:** ~75 minutes
 
@@ -116,6 +116,7 @@ sw-debate-topology
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 预期输出:顶级表 × N → (精度,代币,延迟). 在研究类型任务上,图表在 N=3-5 时获胜;在快速事实任务上,星星获胜;在 N=7 的图表显示协调税 (延迟比精度更快膨胀).

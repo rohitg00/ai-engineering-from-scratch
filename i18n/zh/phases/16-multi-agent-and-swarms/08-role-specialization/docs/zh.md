@@ -3,7 +3,7 @@
 > 2026年最常见的多代理分解:一个代理计划,一个执行,一个批评或验证.MetaGPT (arXiv:2308.00352) 将此形式化为编码到角色提示中的SOP 产品经理,建筑师,项目经理,工程师,QA工程师 以下`Code = SOP(Team)`现在,我们要去. 聊天Dev (arXiv:2307.07924) 通过"聊天链"连接设计师,程序员,评论员,测试员,并通过"沟通性幻觉" (代理人明确要求缺失的细节). 验证器承载量:Cemri等人 任何多代理失败都可能被追溯到失踪或故障的验证. 普华永道公司报告了CrewAI结构化验证循环的7倍准确度增长 (10% → 70%)
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 05 (Supervisor)
 **Time:** ~60 minutes
 
@@ -88,6 +88,7 @@ swarm-roles
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## 用它

@@ -3,7 +3,7 @@
 > 五个2025-2026年基准标准涵盖多代理评估领域. **MultiAgentBench / MARBLE**分析星/链/树/图表的顶层与里程碑指标;**graph is best for research**认知规划增加了3%的里程碑成就.**COMMA**评估多模式的无对称信息协调;包括GPT-4o在内的最先进的模型,**MedAgentBoard**医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类别: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗工作类型: 医疗类型: 医疗类型: 医疗类型: 医疗类型: 医疗类型: 医疗类型: 医疗类型: 医疗类型: 类型: 医疗类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类型: 类: 类: 类型: 类型: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类: 类:**AgentArch**企业代理架构结合工具使用+内存+调整. **SWE-bench Pro**([arXiv:2509.16941](https://arxiv.org/abs/2509.16941)) 在41个应用程序,B2B服务和开发工具中出现了1865个问题.边界模型在Pro上获得23%的分数,而在Verified上获得70%+的分数.**64.3%**关于PRO与明确的代理团队协调 (尚未发表的人类主要来源; 作为初步处理);**76.1% pass@1**关于验证 ([Verdent technical report](https://www.verdent.ai/blog/swe-bench-verified-technical-report)它们是**AAAI 2026 Bridge Program WMAC**(https://multiagents.org/2026/) 是2026年社区焦点.这个课程基于 MARBLE 的指标,进行了拓与指标扫描,并按"仅通过SWE 台验证不是通用化的证据"规则.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 15 (Voting and Debate Topology), Phase 16 · 23 (Failure Modes)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ a5-bench-gap
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 预期输出:系统分数卡,含原始精度,里程碑成就,每任务成本,与随机基线的比分,以及污染检查说明.

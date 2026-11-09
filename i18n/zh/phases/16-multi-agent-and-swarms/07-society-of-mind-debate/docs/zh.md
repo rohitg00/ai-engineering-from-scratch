@@ -3,7 +3,7 @@
 > 根据明斯基的1986年前提,智能是专家的社会,每十年都会重新发现.在2023年,杜等人将其转化为一个具体的算法:多个LLM实例提出答案,阅读对方的答案,批评和更新.在N轮中,它们汇集在一个共识上,超过零射击CoT和反思六个推理和事实性任务.两个发现都重要:**multiple agents**其他**multiple rounds**单独的交换比一次性投票更好.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -73,6 +73,7 @@ multi-agent-debate
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## 用它

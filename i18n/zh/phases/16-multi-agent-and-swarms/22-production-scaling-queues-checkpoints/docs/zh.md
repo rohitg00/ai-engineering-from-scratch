@@ -3,7 +3,7 @@
 > 扩展多代理系统到数千次同时运行需要**durable execution**工作队列加上检查站,因此任何工人都可以在任何事故后恢复任何运行,只要租处理,无效的副作用和确定性重播都在位. 兰格拉夫的运行时间是参考例子:它在每个超级步骤后写出检查站`thread_id`工人失业后,工人重新开始租,代理人可以无限期地等待人力投入. **MegaAgent**根据该报告,该报告的内容包括:**Fiber/async**对于LLM流媒体,线程在99%的时间里停留无事,纤维在合作中输入/运输.**FastAPI + Postgres + nothing else**在负载证明不一样之前,简单的架构比预期要远.这个课程建立了一个持久的检查点日志,一个每个代理的工作队列,状态过渡,一个asyncvsthread演示,并降落实态的"开始简单"规则.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `asyncio`, `sqlite3`)
+**Languages:** Python (stdlib, `asyncio`, `sqlite3`), TypeScript
 **Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 13 (Shared Memory)
 **Time:** ~75 minutes
 
@@ -133,6 +133,7 @@ sw-checkpoint-replay
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 预期输出:检查点恢复在模拟崩后成功;async版本在<1s内处理500次同时调用;线程版本需要几秒钟,每次同时使用数量更高的内存.

@@ -3,7 +3,7 @@
 > 长远自主代理 (METR的1小时到8小时工作曲线) 需要经济代理.**5-layer stack**是: **DePIN**物理计算**Identity**其他类型的资本**Cognition**子,子,子,子,子,子**Settlement**总结:**Governance**生产代理激励网络包括:**Bittensor**(TAO子网络奖励任务特定模型),**Fetch.ai / ASI Alliance**(ASI-1 Mini LLM + FET代币),以及**Gonka**学术工作:AAMAS 2025的分散式LAMAS使用 **Shapley-value credit attribution**为了公平地奖励贡献者;谷歌研究提出"大型语言模型机制设计"**token auctions**这一课程建立了一个最小的代理市场,将Shapley值的信用归因应应用于多代理管道,并进行了第二价格代币拍卖,以便游戏理论机器具体地落地.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 16 (Negotiation and Bargaining), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -110,6 +110,7 @@ swarm-auction
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 预期产量:每个代理的Shapley值;拍卖结果显示出真实报价平衡;重复路由显示在加热后随机增长10%到20%的质量.

@@ -3,7 +3,7 @@
 > 2026年的参考分类是**MAST**根据7个最新的开源MAS显示的1642个执行痕迹,**41–86.7% failure rate**三个根类别:**Specification Problems**角色模糊性,任务定义不清楚;**Coordination Failures**通信故障,状态失调;**Verification Gaps**缺失验证,缺失质量检查.**Groupthink**们的们在们的们中,都会发现,们的们在们的们中, 级例子:一次试机暴风雨,支付失败会触发一次订单试机,从而触发一次库存试机,从而压倒库存服务 (10次负载在秒钟中需要断路). 记忆中毒:一个人幻觉进入共享记忆,下游的 agents treat it as fact;准确性逐渐衰退,使根源诊断痛苦.**STRATUS**通过专业检测/诊断/验证代理报告了1.5倍的缓解成功.本课程将失败模式视为一流的工程目标.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 13 (Shared Memory), Phase 16 · 14 (Consensus and BFT), Phase 16 · 15 (Voting and Debate Topology)
 **Time:** ~75 minutes
 
@@ -154,6 +154,7 @@ a5-retry-cascade
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 预期产量:

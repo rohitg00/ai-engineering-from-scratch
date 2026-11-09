@@ -3,7 +3,7 @@
 > 经纪人谈判资源,价格,任务分配和条款.2026年基准设定很清楚:谈判场 (arXiv:2402.05863) 显示LLM可以通过人格操纵提高收益率20% (绝望);"衡量谈判能力" (arXiv:2402.15813) 显示买家比卖家更难,规模不帮助他们**OG-Narrator**投资率从26.67%提高到88.88%;大规模自主谈判竞赛 (arXiv:2503.06416) 进行了约180000次谈判,发现**chain-of-thought-concealing**通过隐藏对手的推理,代理人获胜;Bhattacharya et al. 2025 在哈佛谈判项目测量中,Llama-3最有效,Claude-3最具侵略性,GPT-4最公平.这个课程实现了合同网协议 (FIPA祖先,课程02),线程LLM类型的买家/卖家,运行了OG-叙述者类型的分解,并测量了交易率如何随着每个结构选择变化.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 02 (FIPA-ACL Heritage), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -120,6 +120,7 @@ a5-og-narrator
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 预期产量:天真-LLM交易率~65-75%;OG-Narrator交易率~85-95%;15-25点差距是从叙述中分解产品生成的结构优势.加上一个有三个投标者和一个任务的合同网任务市场分配例子.

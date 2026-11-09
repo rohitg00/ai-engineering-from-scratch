@@ -3,7 +3,7 @@
 > 城市和地区的发展**Smallville**五个代理的沙箱,有三部分架构:**memory stream**其他国家**reflection**(该物体在自身流程中产生更高水平的合成),**plan**现在,我们需要一个小计划. 标志性的结果是情人节派对的出现:一个代理人种植了"想举办情人节派对",没有进一步编写剧本, 除显示,所有三个组件都需要可信度. 记录的故障是空间规范错误 (进入封闭的商店,共享单人浴室). 这就是2026年代理模拟和多代理社会评估的参考架构.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 13 (Shared Memory)
 **Time:** ~75 minutes
 
@@ -103,6 +103,7 @@ a5-memory-reflection
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 预期产量:点后点.到最后点,至少有3个代理人显示了他们的计划,然后他们聚集在聚会地点.单个种子产生了无任何管弦乐器的协调到达.

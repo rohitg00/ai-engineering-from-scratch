@@ -3,7 +3,7 @@
 > 一个主要代理人计划和代表;专业工作者在平行环境中执行并报告. 这就是安特罗皮克研究系统 (Claude Opus 4作为, Sonnet 4作为子基) 背后的模式,在内部研究评估中,测量为+90.2% 据Anthropic的工程文章报道,BrowseComp上的80%的差异仅仅是通过代币使用解释的. 这一课从原始人构建了监督模式,并涵盖了2026年的生产部署工程课程.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`)
+**Languages:** Python (stdlib, `threading`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -88,6 +88,7 @@ supervisor-hierarchy
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出显示了计划,并行工作者跟踪了开始/结束时间标签,以及最终合成.你可以看到墙钟的胜利:三名0.3秒的工人在0.35秒内跑,而不是0.9.

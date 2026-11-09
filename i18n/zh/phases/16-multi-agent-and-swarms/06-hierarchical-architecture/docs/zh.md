@@ -3,7 +3,7 @@
 > 管理员的管理员,管理员的管理员,管理员的管理员.`Process.hierarchical`是教科书版本:a `manager_llm`通过LangGraph等同的方法,`create_supervisor(create_supervisor(...))`管理人员的任务是很容易被管理的循环中崩的模式. 管理人员的代理人分配工作不佳,误解子输出,或无法达成共识. 序列通常超过它.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 05 (Supervisor Pattern)
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ swarm-hierarchy-token
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出显示了两条路径, 单边的"要求"与"交付"

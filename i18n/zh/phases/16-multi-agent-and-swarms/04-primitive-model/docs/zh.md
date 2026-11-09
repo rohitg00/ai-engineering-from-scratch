@@ -3,7 +3,7 @@
 > 四个原始,再也没有什么代理,交付,共享状态,管弦仪跨越四维设计空间, 2026年主要的多代理框架 (AutoGen,LangGraph,CrewAI,OpenAI Agents SDK,Microsoft Agent Framework) 是其中的点. 这一课将它们从零构建,运行一个玩具系统,然后将每个主要框架映射到同一轴上,
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 (Agent Engineering), Phase 16 · 01 (Why Multi-Agent)
 **Time:** ~60 minutes
 
@@ -132,6 +132,7 @@ a5-primitive-radar
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 预期输出:三个管弦乐器运行,每一个模式.每个打印最后的消息池.如果研究人员决定提前完成,转发运行会达到较少的代理人.
