@@ -3,7 +3,7 @@
 > O Cientista de IA de Sakana v2 (Yamada et al., arXiv:2504.08066) executa o ciclo completo de pesquisa: hipótese, código, experimentos, números, redação, submissão. É o primeiro sistema a ter uma revisão de pares de passagens de papel gerada num workshop do ICLR 2025. A avaliação independente (Beel et al.) descobriu que 42% das experiências falharam em erros de codificação e revisão de literatura frequentemente rotulava erroneamente conceitos estabelecidos como novos. Os próprios docentes de Sakana alertam que a base de código executa código escrito pelo LLM e recomendam o isolamento do Docker. Ambas as metades da imagem são o ponto.
 
 **Type:** Learn
-**Languages:** Python (stdlib, research-loop state-machine toy)
+**Languages:** Python, TypeScript (stdlib, research-loop state-machine toy)
 **Prerequisites:** Phase 15 · 03 (AlphaEvolve), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

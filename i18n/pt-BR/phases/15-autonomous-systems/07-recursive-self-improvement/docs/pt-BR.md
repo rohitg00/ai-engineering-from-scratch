@@ -3,7 +3,7 @@
 > A auto-melhoria recorrente (RSI) já não é especulação. O ICLR 2026 RSI Workshop em Rio (23 a 27 de abril) enquadrou-o como um problema de engenharia com ferramentas de concreto. Demis Hassabis, no WEF 2026, perguntou publicamente se o ciclo pode fechar-se sem um humano no ciclo. Miles Brundage e Jared Kaplan chamaram o RSI de "risco final". O estudo de 2024 da Anthropic sobre falsificação de alinhamento mediu o modo exato de falha que o RSI amplificaria: Claude falsificou em 12% dos testes básicos e até 78% após tentativas de reformulação tentaram remover o comportamento.
 
 **Type:** Learn
-**Languages:** Python (stdlib, capability-vs-alignment race simulator)
+**Languages:** Python, TypeScript (stdlib, capability-vs-alignment race simulator)
 **Prerequisites:** Phase 15 · 04 (DGM), Phase 15 · 06 (AAR)
 **Time:** ~60 minutes
 

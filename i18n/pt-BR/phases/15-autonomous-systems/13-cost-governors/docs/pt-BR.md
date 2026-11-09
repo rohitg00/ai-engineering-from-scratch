@@ -3,7 +3,7 @@
 > O custo mensal de LLM de um agente de comércio eletrônico de médio porte aumentou de $1,200 to $O software de gestão de dados da Microsoft, que é o software de gestão de dados, é o mais recente e mais recente de todos os sistemas de gestão de dados da Microsoft.`max_tokens`O SDK de código Claude da Anthropic envia os mesmos primitivos sob diferentes nomes. Limites de velocidade financeira , por exemplo, cortar o acesso em > $ 50 em 10 minutos  pegar loops mais rápido do que os limites mensais.
 
 **Type:** Learn
-**Languages:** Python (stdlib, layered cost-governor simulator)
+**Languages:** Python (stdlib, layered cost-governor simulator), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 12 (Durable execution)
 **Time:** ~60 minutes
 

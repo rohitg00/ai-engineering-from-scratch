@@ -3,7 +3,7 @@
 > O menor ciclo de auto-melhoria possível está dentro da lógica. Um modelo gera uma cadeia de pensamentos, mantém os que aterram nas respostas corretas e ajusta-os. É o STAR. O V-STaR adiciona um verificador, por isso a seleção de tempo de inferência é melhor. O Quiet-STaR empurra a razão para cada sinal. Os três trabalham. Nenhum deles é mágico. O ciclo preserva qualquer atalho que aconteceu para chegar à resposta certa.
 
 **Type:** Learn
-**Languages:** Python (stdlib, bootstrap-loop simulator)
+**Languages:** Python, TypeScript (stdlib, bootstrap-loop simulator)
 **Prerequisites:** Phase 13 · 01-03 (Reasoning and CoT), Phase 15 · 01 (long-horizon framing)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > A 22 de janeiro de 2026 Claude Constitution da Anthropic tem 79 páginas e é CC0. O programa passa de uma alinhamento baseado em regras para um alinhamento baseado em razão e estabelece uma hierarquia de prioridade de quatro níveis: (1) segurança e apoio à supervisão humana, (2) ética, (3) orientações antropológicas, (4) utilidade. Os comportamentos divididos em proibições codificadas (lifting bioweapons, CSAM) que os operadores e os utilizadores não podem anular e padrões de codificação suave que os operadores podem ajustar dentro de limites definidos. O original de 2022 (Bai et al.) treinou a inofensividade através da autocrítica e RLAIF contra uma constituição. A advertença honesta: o alinhamento baseado na razão depende do modelo que generaliza os princípios para situações inesperadas. O próprio experimento participativo da Anthropic em 2023 mostrou ~50% de divergência entre os princípios de fontes públicas e corporativas; a versão de 2026 não incorporou essas descobertas.
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-tier priority resolver)
+**Languages:** Python (stdlib, four-tier priority resolver), TypeScript
 **Prerequisites:** Phase 15 · 06 (Automated alignment research), Phase 15 · 10 (Permission modes)
 **Time:** ~60 minutes
 

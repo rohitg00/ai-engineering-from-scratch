@@ -3,7 +3,7 @@
 > Um interruptor de eliminação é um booleano mantido fora da superfície de edição do agente  uma chave Redis, uma bandeira de recurso, uma configuração assinada  que desativa completamente o agente. Um interruptor de circuito é mais fino: ele tropeça em um padrão específico (cinco chamadas de ferramenta idênticas seguidas), pausa o caminho ofensivo e escala para um ser humano. Um token canário herda do classico engano: uma credencial falsa ou um registro de honeypot um agente não tem razão legítima para tocar, cujo acesso desencadeia um alerta. Os dados baseados em eBPF (por exemplo, Cilium) pode reescrever a saída de um módulo em quarentena para um honeyypot forense na camada do kernel; os referências publicados do Cilium relatam latência de dados P99 sub-millisecondas sob carga (o seu orçamento de propagação depende de como uma atualização de política atinge o nó, não o próprio datapath). Os detectores estatísticos (EWMA, CUSUM) que se adaptam a uma linha de base em movimento aceitarão silenciosamente a deriva  revestidos com limites constitucionais duros que não se dobram.
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary)
+**Languages:** Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary), TypeScript
 **Prerequisites:** Phase 15 · 13 (Cost governors), Phase 15 · 10 (Permission modes)
 **Time:** ~60 minutes
 
@@ -94,7 +94,7 @@ circuit-breaker
 
 ## Exercícios
 
-1. Corra .`code/main.py`- Confirmar o incêndio do interruptor de circuito na curva 5 (quinta chamada idêntica) e o incêndio canário na curva 9 (lectura de chave falsa).
+1. Corra .`code/main.py`- Confirmar o incêndio do interruptor de circuito na curva 7 (quinta chamada idêntica) e o incêndio canário na curva 9 (lectura de chave falsa).
 
 2. Adicione um detector estatístico: EWMA z-score na taxa de chamada de ferramenta. Alimenta uma trajetória que desloca lentamente e mostra que o detector nunca dispara. Agora adicione um limite de duração (não mais de 50 chamadas de ferramenta em 10 minutos) e mostre os incêndios de limite de duração na mesma trajetória.
 

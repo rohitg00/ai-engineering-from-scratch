@@ -3,7 +3,7 @@
 > Combinar um modelo de codificação de fronteira com um ciclo evolutivo e um avaliador verificável por máquina. Deixe o ciclo correr o suficiente. Descobre um procedimento de multiplicação de matriz complexa 4x4 que usa 48 multiplicações escalares, a primeira melhoria em relação a Strassen em 56 anos. Também encontra uma heurística de agendamento Borg em todo o Google que recupera ~ 0,7% do computação de cluster na produção. A arquitetura é aborrecida de propósito. As vitórias vêm do rigor do avaliador.
 
 **Type:** Learn
-**Languages:** Python (stdlib, evolutionary-loop toy)
+**Languages:** Python, TypeScript (stdlib, evolutionary-loop toy)
 **Prerequisites:** Phase 15 · 01 (long-horizon framing), Phase 15 · 02 (self-taught reasoning)
 **Time:** ~60 minutes
 
