@@ -3,7 +3,7 @@
 > La difusión del espacio de píxeles en imágenes 512×512 es un crimen de guerra computacional. Rombach et al. (2022) notó que no se necesitan todas las dimensiones 786k para generar una imagen  se necesita suficiente para capturar la estructura semántica, y un decodificador separado para el resto. ejecutar difusión dentro del espacio latente de un VAE. Esa idea es la difusión estable.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 02 (VAE), Phase 8 · 06 (DDPM), Phase 7 · 09 (ViT)
 **Time:** ~75 minutes
 

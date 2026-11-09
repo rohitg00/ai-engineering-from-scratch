@@ -3,7 +3,7 @@
 > El truco de Goodfellow en 2014 fue saltar la densidad por completo. Dos redes. Una hace falsificaciones. Una las captura. Luchan hasta que las falsificaciones son indistinguibles de las reales. No debería funcionar. A menudo no funciona. Cuando lo hace, las muestras siguen siendo las más nítidas de la literatura para dominios estrechos.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 08 (Optimizers), Phase 8 · 02 (VAE)
 **Time:** ~75 minutes
 

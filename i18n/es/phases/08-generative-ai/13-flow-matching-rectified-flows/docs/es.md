@@ -3,7 +3,7 @@
 > Los modelos de difusión toman pasos de muestreo de 20-50 porque recorren un camino curvo desde el ruido hasta los datos. La coincidencia de flujo (Lipman et al., 2023) y el flujo rectificado (Liu et al., 2022) entrenaron caminos rectos.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 06 (DDPM), Phase 1 · Calculus
 **Time:** ~45 minutes
 

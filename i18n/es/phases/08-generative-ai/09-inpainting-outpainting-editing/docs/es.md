@@ -3,7 +3,7 @@
 > El texto a la imagen hace cosas nuevas. La pintura repara las viejas. En la producción, el 70% del trabajo de imagen facturable es la edición  cambiar un fondo, quitar un logotipo, extender el lienzo, regenerar una mano. La pintura es donde la difusión gana su mantenimiento.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 8 · 08 (ControlNet & LoRA)
 **Time:** ~75 minutes
 

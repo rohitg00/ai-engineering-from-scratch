@@ -3,7 +3,7 @@
 > Ho, Jain, Abbeel (2020) dio al campo una receta que no podía dejar de hacer. Destruye los datos con ruido en mil pequeños pasos. Entrenar una red neuronal para predecir el ruido. Invertir el proceso a la inferencia. Hoy en día cada imagen, video, 3D y modelo musical corriente en este bucle, posiblemente con flujo de coincidencia o trucos de consistencia en la parte superior.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 8 · 02 (VAE)
 **Time:** ~75 minutes
 

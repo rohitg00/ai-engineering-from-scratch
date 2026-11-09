@@ -3,7 +3,7 @@
 > El audio es una señal 1-D a 16-48 kHz. Un clip de cinco segundos es de 80-240k muestras. Ningún transformador atende a esa secuencia directamente. La solución para cada modelo de audio de producción en 2026 es la misma: un codec neuronal (Encodec, SoundStream, DAC) comprime el audio a tokens discretos a 50-75 Hz, y un transformador o modelo de difusión genera tokens.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Audio Features), Phase 6 · 04 (ASR), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 

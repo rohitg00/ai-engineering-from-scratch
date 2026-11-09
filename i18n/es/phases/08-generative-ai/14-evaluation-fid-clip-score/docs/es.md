@@ -3,7 +3,7 @@
 > Cada tabla de clasificación de modelos generacionales cita el FID, el puntaje CLIP y una tasa de ganancias de una arena de preferencia humana. Cada número tiene un modo de fracaso que un investigador determinado puede jugar. Si no conoces los modos de fracaso, no puedes saber una mejora real de una carrera de juego.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 01 (Taxonomy), Phase 2 · 04 (Evaluation Metrics)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > La primera gran desbloqueación de 2014-2017 fue controlar lo que hace un GAN. adjunta una etiqueta, o una imagen, o una frase. Pix2Pix hizo la versión de imagen y todavía supera todos los modelos genéricos de texto a imagen en tareas estrechas de imagen a imagen.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 06 (U-Net), Phase 3 · 07 (CNNs)
 **Time:** ~75 minutes
 

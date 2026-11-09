@@ -3,7 +3,7 @@
 > El texto solo es una señal de control torpe. ControlNet le permite clonar un modelo de difusión preentrenado y dirigirlo con un mapa de profundidad, esqueleto de pose, escrutinio o imagen de borde. LoRA le permite ajustar un modelo de parámetro 2B mediante el entrenamiento de 10 millones de parámetros. Juntos convirtieron a la difusión estable de un juguete en la tubería de imágenes 2026 que se envía a cada agencia.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 10 (LLMs from Scratch — for LoRA foundation)
 **Time:** ~75 minutes
 

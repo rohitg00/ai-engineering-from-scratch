@@ -3,7 +3,7 @@
 > La mayoría de los generadores se mueven .$z$StyleGAN lo divide en partes: primer mapa$z$a un intermediario $w$, luego * inyectar *$w$Este cambio único desentrañó el espacio latente y hizo que las caras fotorealistas fueran un problema resuelto durante siete años consecutivos.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 

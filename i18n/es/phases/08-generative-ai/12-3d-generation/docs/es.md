@@ -3,7 +3,7 @@
 > La modalidad 3D es la que tiene mayor apalancamiento de 2D a 3D. El avance de 2023 fue el 3D Gaussian Splating. La generación de 2024-2026 genera capa de empuje de difusión de múltiples vistas + reconstrucción 3D en la parte superior para producir objetos y escenas a partir de un solo prompt o foto.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 4 (Vision), Phase 8 · 07 (Latent Diffusion)
 **Time:** ~45 minutes
 

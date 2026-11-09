@@ -3,7 +3,7 @@
 > Un autoencoder simple comprime y luego reconstruye. Memora. No genera. Añade un truco  fuerza el código para que parezca gaussiano  y obtienes un muestreo. Ese truco único, la reparameterización de $z = \mu + \sigma \cdot \epsilon$, es por eso que cada modelo de difusión latente y de coincidencia de flujo de imagen que utilices en 2026 tiene un VAE en la entrada.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
 **Time:** ~75 minutes
 
