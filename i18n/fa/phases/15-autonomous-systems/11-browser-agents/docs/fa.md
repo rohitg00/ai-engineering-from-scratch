@@ -3,7 +3,7 @@
 > عامل ChatGPT (یولای 2025) آپراتور و تحقیقات عمیق را به یک عامل مرورگر / ترمینال ادغام کرد و BrowseComp SOTA را به 68.9٪ تنظیم کرد. OpenAI 31 اوت 2025 Operator را خاموش کرد خرید ورسیپتی آنترپیک کلود سونت را در OSWorld از زیر 15٪ به 72.5٪ منتقل کرد. WebArena-Verified (ServiceNow، ICLR 2026) نرخ منفی دروغین ~11.3٪ را در WebArena اصلی ثابت کرد و زیر مجموعه 258 وظیفه سخت را ارسال کرد. اعداد واقعی هستن سطح حمله نیز همینطور است: رئیس آماده سازی OpenAI اعلام کرد که تزریق ناڕاستانه فوری به عوامل مرورگر "یک خطای نیست که می تواند به طور کامل اصلاح شود". حملات مستند شده 20252026: خاطرات آلوده (اتلاس CSRF) ، هاش جک (کاتو شبکه ها) و ربودن یک کلیک در کمت تعصب.
 
 **Type:** Learn
-**Languages:** Python (stdlib, indirect prompt-injection attack surface model)
+**Languages:** Python (stdlib, indirect prompt-injection attack surface model), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~45 minutes
 

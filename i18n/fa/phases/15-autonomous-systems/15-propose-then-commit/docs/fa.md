@@ -3,7 +3,7 @@
 > توافق در سال 2026 در مورد HITL مشخص است. این "کارگزار درخواست می کند، کاربر بر روی تایید کلیک می کند". این پیشنهاد و سپس تعهد است: اقدام پیشنهادی به یک فروشگاه پایدار با کلید idempotency ادامه می یابد؛ به یک بازرس با قصد، نسب داده، مجوزهای لمس شده، شعاع انفجار و برنامه برگشت؛ انجام شده تنها پس از تأیید مثبت؛ پس از اجرای تایید شد تا تأکید از عوارض جانبی واقعا اتفاق افتاد.  لنگ گراف`interrupt()`+ چک پوائنٹنگ PostgreSQL، Microsoft Agent Framework `RequestInfoEvent`، و Cloudflare`waitForApproval()`همه شکل های مشابه را اجرا می کنند. حالت شکست قانونی تأیید مهر لاستیکی است: " تأیید کنید؟" بدون بررسی کلیک می شود. کاهش مستند شده چالش و پاسخ با یک لیست چک صریح است.
 
 **Type:** Learn
-**Languages:** Python (stdlib, propose-then-commit state machine with idempotency)
+**Languages:** Python (stdlib, propose-then-commit state machine with idempotency), TypeScript
 **Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 14 (Tripwires)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > کوچکترین حلقه بهبود خود ممکن در درون منطق قرار دارد. یک مدل زنجیره ای از افکار را تولید می کند، آنهایی را که به پاسخ های درست می رسند حفظ می کند و آنها را به خوبی تنظیم می کند. اون استار هست V-STaR یک تایید کننده اضافه می کند بنابراین انتخاب زمان نتیجه گیری بهتر است. خاموشي-ستار منطق رو به هر نشانه اي فشار ميده سه تا هم کار ميکنن هيچکدوم از آنها جادويي نيست. حلقه هر راه کوتاهي را که اتفاق افتاده تا به جواب درست برسيد حفظ ميکنه.
 
 **Type:** Learn
-**Languages:** Python (stdlib, bootstrap-loop simulator)
+**Languages:** Python, TypeScript (stdlib, bootstrap-loop simulator)
 **Prerequisites:** Phase 13 · 01-03 (Reasoning and CoT), Phase 15 · 01 (long-horizon framing)
 **Time:** ~60 minutes
 

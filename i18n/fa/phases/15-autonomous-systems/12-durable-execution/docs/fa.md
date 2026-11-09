@@ -3,7 +3,7 @@
 > تولید عوامل افق بلند نمی روند `while True`هر تماس LLM تبدیل به یک فعالیت با نقطه چک، دوباره تلاش، و بازی. ادغام OpenAI Agents SDK Temporal به مارس 2026 انجام شد. کلود کد روتینز (انتروپک) بدون یک فرآیند محلی مداوم کالود کد برنامه ریزی شده را اجرا می کند. جلسات توقف در ورودی انسانی، نجات از انتشار و ادامه از آخرین نقطه چک کلید توسط`thread_id`. پشت ارگونومیک جدید یک الگوی قدیمی قرار دارد  ارقای کاری  با یک ورودی جدید: LLM به عنوان فعالیت های غیر تعیین کننده ای که باید به طور تعیین کننده در بازیابی تکرار شود، می خواند.
 
 **Type:** Learn
-**Languages:** Python (stdlib, minimal durable-execution state machine)
+**Languages:** Python (stdlib, minimal durable-execution state machine), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~60 minutes
 

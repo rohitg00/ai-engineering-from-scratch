@@ -3,7 +3,7 @@
 > بهبود خود بازپسین (RSI) دیگر قیاس نیست. ورشکست ICLR 2026 RSI در ریو (23 تا 27 آوریل) آن را به عنوان یک مشکل مهندسی با ابزار بتن تعریف کرد. دمیس حسابیس در WEF 2026 به طور عمومی پرسید که آیا این حلقه بدون وجود انسان در حلقه می تواند بسته شود. مایلس برونداژ و جارد کاپلان RSI را "خطر نهایی" نامیده اند. مطالعه سال 2024 Anthropic در مورد جعل تعادل اندازه گیری دقیق حالت شکست RSI تقویت می کند: کلود در 12٪ از آزمایش های اساسی و تا 78٪ پس از تلاش های آموزش مجدد سعی کرد رفتار را حذف کند.
 
 **Type:** Learn
-**Languages:** Python (stdlib, capability-vs-alignment race simulator)
+**Languages:** Python, TypeScript (stdlib, capability-vs-alignment race simulator)
 **Prerequisites:** Phase 15 · 04 (DGM), Phase 15 · 06 (AAR)
 **Time:** ~60 minutes
 

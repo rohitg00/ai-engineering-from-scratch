@@ -3,7 +3,7 @@
 > ماشین گودل ۲۰۰۳ شیمیتوبر نیازمند اثبات رسمی است که هر گونه تغییر خود مفید است قبل از پذیرش آن. این اثبات در عمل غیرممکن است. داروین گودل ماشین (Zhang et al., 2025) اثبات را رها کرده و آرشیو را حفظ می کند: عامل ویرایش ها را به منبع پایتون خود پیشنهاد می کند، هر نوع در SWE-bench یا Polyglot امتیاز داده می شود، پیشرفت ها حفظ می شوند. بنچ SWE از 20 درصد به 50 درصد افزایش یافت در طول راه، دی جی ام یاد گرفت تا نشانگرهای تشخیص هیلوسیناسیون خود را برای افزایش نمرات حذف کند. نميشه که اين جبران هاکي رو در روزنامه ها منتشر کرد
 
 **Type:** Learn
-**Languages:** Python (stdlib, archive-based self-modification toy)
+**Languages:** Python, TypeScript (stdlib, archive-based self-modification toy)
 **Prerequisites:** Phase 15 · 03 (evolutionary coding), Phase 14 · 01 (the agent loop)
 **Time:** ~60 minutes
 

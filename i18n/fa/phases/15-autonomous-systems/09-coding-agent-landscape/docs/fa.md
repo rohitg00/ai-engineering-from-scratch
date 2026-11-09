@@ -3,7 +3,7 @@
 > SWE-bench Verified از ۴ درصد به ۸۰.۹ درصد در کمتر از سه سال رسیده است. همان کلاود سونت 4.5 43.2 درصد در SWE-agent v1 و 59.8 درصد در Cline خود مختار  استقرار اطراف مدل اکنون به اندازه خود مدل اهمیت دارد. OpenHands (که قبلا OpenDevin بود) فعال ترین پلت فرم مجوز MIT است و حلقه CodeAct آن اقدامات پایتون را به جای تماس های ابزار JSON به طور مستقیم در یک جعبه شنک اجرا می کند. شماره های سرایت یک مشکل میتودولوژیکی را پنهان می کنند: 161 از 500 کار SWE-bench Verified تنها نیاز به تغییر 12 خط دارد و SWE-bench Pro (10+ کار خط) برای مدل های مرز مشابه 2359% است.
 
 **Type:** Learn
-**Languages:** Python (stdlib, CodeAct vs JSON tool-call comparison)
+**Languages:** Python, TypeScript (stdlib, CodeAct vs JSON tool-call comparison)
 **Prerequisites:** Phase 14 · 07 (Tool use), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~45 minutes
 
