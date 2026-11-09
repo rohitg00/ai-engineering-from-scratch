@@ -3,7 +3,7 @@
 > A descodificação autoregressiva é serial. Cada token espera para o anterior. A descodificação especulativa quebra a cadeia: um modelo barato elabora N tokens, o modelo caro verifica todos os N em uma passagem para frente. Quando o projeto é correto, você pagou um grande avanço para N gerações.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 07 (GPT Causal LM), Phase 7 · 12 (KV Cache & Flash Attention)
 **Time:** ~60 minutes
 
@@ -91,6 +91,13 @@ Veja .`code/main.py`Implementamos o algoritmo de amostragem especulativa central
 - Um "modelo grande" que é um determinístico-softmax sobre uma distribuição codificada à mão (para que possamos verificar a aceitação matemática analíticamente).
 - Um "modelo de projeto" que é uma perturbação do modelo grande.
 - Um ciclo de aceitação/rejeição que produz a mesma distribuição marginal que a amostragem direta.
+
+`code/main.rs`O Rust é um port Rust com as mesmas funções e demos.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Passo 1: o passo de rejeição
 

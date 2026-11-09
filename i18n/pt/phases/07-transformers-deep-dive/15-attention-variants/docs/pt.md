@@ -3,7 +3,7 @@
 > A atenção total é um círculo. Cada token vê cada token, e a memória paga o preço.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head), Phase 7 · 12 (KV Cache / Flash Attention)
 **Time:** ~60 minutes
 
@@ -90,7 +90,7 @@ gqa-kv-sharing
 
 ## Construí-lo
 
-Veja .`code/main.py`Implementamos um comparador de máscaras causais que mostra atenção completa, SWA, local+strided e diferencial lado a lado numa sequência de brinquedos.
+Veja .`code/main.py`, ou seu porto de Rust `code/main.rs`Para executar a versão Rust:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`Implementamos um comparador de máscaras causais que mostra atenção completa, SWA, local+strided e diferencial lado a lado numa sequência de brinquedos.
 
 ### Passo 1: máscara causal completa (linha de base)
 
