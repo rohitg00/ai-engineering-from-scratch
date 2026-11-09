@@ -979,39 +979,39 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 
 | # | Proiect | Combină | Limbaj |
 |:---:|---------|----------|------|
-| 01 | [Agent de programare nativ în terminal](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG peste baza de cod (căutare semantică între depozite)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Asistent vocal în timp real (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Întrebări despre documente multimodale (viziunea pe primul loc)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Agent autonom de cercetare (clasa AI-Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [Agent de depanare DevOps pentru Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [Flux complet de ajustare fină](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [Chatbot RAG de producție (domeniu reglementat)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Agent de migrare a codului (actualizarea depozitului)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Echipă multiagent de inginerie software](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [Panou de observabilitate și evaluare LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Flux de înțelegere video (scenă → întrebări și răspunsuri)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Server MCP fără stare cu registru și guvernanță](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Server de inferență cu decodare speculativă](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Mediu constituțional de siguranță și poligon adversarial](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [Agent autonom de la problemă GitHub la PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Tutor AI personal (adaptiv și multimodal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [Agent de programare nativ în terminal](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG peste baza de cod (căutare semantică între depozite)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [Asistent vocal în timp real (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [Întrebări despre documente multimodale (viziunea pe primul loc)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [Agent autonom de cercetare (clasa AI-Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [Agent de depanare DevOps pentru Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [Flux complet de ajustare fină](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [Chatbot RAG de producție (domeniu reglementat)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [Agent de migrare a codului (actualizarea depozitului)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [Echipă multiagent de inginerie software](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [Panou de observabilitate și evaluare LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [Flux de înțelegere video (scenă → întrebări și răspunsuri)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [Server MCP fără stare cu registru și guvernanță](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [Server de inferență cu decodare speculativă](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Mediu constituțional de siguranță și poligon adversarial](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [Agent autonom de la problemă GitHub la PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [Tutor AI personal (adaptiv și multimodal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **Trasee de construire aprofundată**: serii de lecții care construiesc un subsistem complet de la zero.
 
 | # | Proiect | Combină | Limbaj |
 |:---:|---------|----------|------|
-| 20 | [Contractul buclei mediului agentului](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Mediu de execuție al agentului | Python |
-| 21 | [Registru de instrumente cu validarea schemelor](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Mediu de execuție al agentului | Python |
-| 22 | [JSON-RPC 2.0 prin stdio delimitat de linii](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Mediu de execuție al agentului | Python |
-| 23 | [Dispecer de apeluri de funcții](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Mediu de execuție al agentului | Python |
-| 24 | [Flux de control planificare-execuție](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Mediu de execuție al agentului | Python |
-| 25 | [Porți de verificare și buget de observare](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Mediu de execuție al agentului | Python |
-| 26 | [Executant izolat cu listă de interdicții și restricții de cale](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Mediu de execuție al agentului | Python |
-| 27 | [Mediu de evaluare cu sarcini de test fixe](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Mediu de execuție al agentului | Python |
-| 28 | [Observabilitate cu segmente OTel GenAI și metrici Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Mediu de execuție al agentului | Python |
-| 29 | [Agent complet de programare în mediul de execuție](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Mediu de execuție al agentului | Python |
-| 30 | [Tokenizator BPE de la zero](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [Contractul buclei mediului agentului](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Mediu de execuție al agentului | Python, TypeScript |
+| 21 | [Registru de instrumente cu validarea schemelor](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Mediu de execuție al agentului | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 prin stdio delimitat de linii](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Mediu de execuție al agentului | Python, TypeScript |
+| 23 | [Dispecer de apeluri de funcții](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Mediu de execuție al agentului | Python, TypeScript |
+| 24 | [Flux de control planificare-execuție](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Mediu de execuție al agentului | Python, TypeScript |
+| 25 | [Porți de verificare și buget de observare](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Mediu de execuție al agentului | Python, TypeScript |
+| 26 | [Executant izolat cu listă de interdicții și restricții de cale](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Mediu de execuție al agentului | Python, TypeScript |
+| 27 | [Mediu de evaluare cu sarcini de test fixe](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Mediu de execuție al agentului | Python, TypeScript |
+| 28 | [Observabilitate cu segmente OTel GenAI și metrici Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Mediu de execuție al agentului | Python, TypeScript |
+| 29 | [Agent complet de programare în mediul de execuție](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Mediu de execuție al agentului | Python, TypeScript |
+| 30 | [Tokenizator BPE de la zero](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [Set de date tokenizat cu fereastră glisantă](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Reprezentări ale tokenurilor și pozițiilor](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Autoatenție cu mai multe capete](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 46 | [Acumularea gradienților](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Antrenare completă | Python |
 | 47 | [Salvarea și reluarea punctelor de control](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Antrenare completă | Python |
 | 48 | [Paralelism distribuit al datelor și FSDP de la zero](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Antrenare completă | Python |
-| 49 | [Mediu de evaluare a modelelor lingvistice](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Antrenare completă | Python |
-| 50 | [Generator de ipoteze](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Cercetare automată | Python |
-| 51 | [Regăsirea literaturii](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Cercetare automată | Python |
-| 52 | [Executant de experimente](../../phases/19-capstone-projects/52-experiment-runner/) | D. Cercetare automată | Python |
+| 49 | [Mediu de evaluare a modelelor lingvistice](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Antrenare completă | Python, TypeScript |
+| 50 | [Generator de ipoteze](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Cercetare automată | Python, TypeScript |
+| 51 | [Regăsirea literaturii](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Cercetare automată | Python, TypeScript |
+| 52 | [Executant de experimente](../../phases/19-capstone-projects/52-experiment-runner/) | D. Cercetare automată | Python, TypeScript |
 | 53 | [Evaluator de rezultate](../../phases/19-capstone-projects/53-result-evaluator/) | D. Cercetare automată | Python |
-| 54 | [Redactarea articolelor științifice](../../phases/19-capstone-projects/54-paper-writer/) | D. Cercetare automată | Python |
-| 55 | [Bucla criticului](../../phases/19-capstone-projects/55-critic-loop/) | D. Cercetare automată | Python |
+| 54 | [Redactarea articolelor științifice](../../phases/19-capstone-projects/54-paper-writer/) | D. Cercetare automată | Python, TypeScript |
+| 55 | [Bucla criticului](../../phases/19-capstone-projects/55-critic-loop/) | D. Cercetare automată | Python, TypeScript |
 | 56 | [Planificator de iterații](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Cercetare automată | Python |
 | 57 | [Demonstrație completă de cercetare](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Cercetare automată | Python |
 | 58 | [Fragmentele codificatorului vizual](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. VLM multimodal | Python |
@@ -1045,13 +1045,13 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 61 | [Fuziune prin atenție încrucișată](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. VLM multimodal | Python |
 | 62 | [Preantrenare vizual-lingvistică](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. VLM multimodal | Python |
 | 63 | [Evaluare multimodală](../../phases/19-capstone-projects/63-multimodal-eval/) | E. VLM multimodal | Python |
-| 64 | [Compararea strategiilor de fragmentare](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. RAG avansat | Python |
-| 65 | [Regăsire hibridă cu BM25 și reprezentări dense](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. RAG avansat | Python |
+| 64 | [Compararea strategiilor de fragmentare](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. RAG avansat | Python, TypeScript |
+| 65 | [Regăsire hibridă cu BM25 și reprezentări dense](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. RAG avansat | Python, TypeScript |
 | 66 | [Reclasificare prin codificator încrucișat](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. RAG avansat | Python |
-| 67 | [Rescrierea interogărilor: HyDE, interogări multiple și descompunere](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. RAG avansat | Python |
-| 68 | [Evaluarea RAG: precizie, acoperire, MRR, nDCG, fidelitate și relevanța răspunsului](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG avansat | Python |
+| 67 | [Rescrierea interogărilor: HyDE, interogări multiple și descompunere](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. RAG avansat | Python, TypeScript |
+| 68 | [Evaluarea RAG: precizie, acoperire, MRR, nDCG, fidelitate și relevanța răspunsului](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG avansat | Python, TypeScript |
 | 69 | [Sistem RAG complet](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. RAG avansat | Python |
-| 70 | [Formatul specificațiilor de sarcini](../../phases/19-capstone-projects/70-task-spec-format/) | G. Mediu de evaluare | Python |
+| 70 | [Formatul specificațiilor de sarcini](../../phases/19-capstone-projects/70-task-spec-format/) | G. Mediu de evaluare | Python, TypeScript |
 | 71 | [Metrici clasice](../../phases/19-capstone-projects/71-classical-metrics/) | G. Mediu de evaluare | Python |
 | 72 | [Metrica executării codului](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Mediu de evaluare | Python |
 | 73 | [Perplexitate și calibrare](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Mediu de evaluare | Python |
@@ -1064,11 +1064,11 @@ Lecțiile 31-46 formează [traseul de inginerie asistată de agenți](../../lear
 | 80 | [Punct de control fragmentat și reluare atomică](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Antrenare distribuită | Python |
 | 81 | [Antrenare distribuită completă](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Antrenare distribuită | Python |
 | 82 | [Taxonomia jailbreakurilor](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Mediu de siguranță | Python |
-| 83 | [Detector de injectare a prompturilor](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Mediu de siguranță | Python |
+| 83 | [Detector de injectare a prompturilor](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Mediu de siguranță | Python, TypeScript |
 | 84 | [Evaluarea refuzurilor](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Mediu de siguranță | Python |
-| 85 | [Integrarea clasificatorului de conținut](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Mediu de siguranță | Python |
-| 86 | [Motor de reguli constituționale](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Mediu de siguranță | Python, YAML |
-| 87 | [Poartă completă de siguranță](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Mediu de siguranță | Python |
+| 85 | [Integrarea clasificatorului de conținut](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Mediu de siguranță | Python, TypeScript |
+| 86 | [Motor de reguli constituționale](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Mediu de siguranță | Python |
+| 87 | [Poartă completă de siguranță](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Mediu de siguranță | Python, TypeScript |
 
 </details>
 

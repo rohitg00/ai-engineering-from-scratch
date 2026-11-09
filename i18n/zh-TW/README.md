@@ -979,39 +979,39 @@ flowchart TB
 
 | # | 專案 | 綜合階段 | 語言 |
 |:---:|---------|----------|------|
-| 01 | [終端機原生程式開發代理程式](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [面向程式碼庫的 RAG：跨儲存庫語義搜索](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [即時語音助手（ASR → LLM → TTS）](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [多模態文件問答：視覺優先](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [自主研究代理程式（AI Scientist 類）](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [面向 Kubernetes 的 DevOps 故障排查代理程式](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [端到端微調管線](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [生產級 RAG 聊天機器人：受監管領域](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [程式碼遷移代理程式：儲存庫級升級](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [多代理程式軟體工程團隊](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [LLM 可觀測性與評估儀錶盤](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [影片理解管線：從場景到問答](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [具備註冊表與治理機制的無狀態 MCP 伺服器](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [推測解碼推理伺服器](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [憲法式安全測試框架與紅隊演練環境](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [從 GitHub Issue 到 PR 的自主代理程式](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [自適應多模態個人 AI 導師](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [終端機原生程式開發代理程式](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [面向程式碼庫的 RAG：跨儲存庫語義搜索](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [即時語音助手（ASR → LLM → TTS）](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [多模態文件問答：視覺優先](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [自主研究代理程式（AI Scientist 類）](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [面向 Kubernetes 的 DevOps 故障排查代理程式](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [端到端微調管線](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [生產級 RAG 聊天機器人：受監管領域](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [程式碼遷移代理程式：儲存庫級升級](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [多代理程式軟體工程團隊](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [LLM 可觀測性與評估儀錶盤](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [影片理解管線：從場景到問答](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [具備註冊表與治理機制的無狀態 MCP 伺服器](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [推測解碼推理伺服器](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [憲法式安全測試框架與紅隊演練環境](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [從 GitHub Issue 到 PR 的自主代理程式](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [自適應多模態個人 AI 導師](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **深度實踐路線**：每條路線由多堂課組成，帶你從零建置一個完整子系統。
 
 | # | 專案 | 綜合階段 | 語言 |
 |:---:|---------|----------|------|
-| 20 | [代理程式執行框架的迴圈契約](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. 代理程式執行框架 | Python |
-| 21 | [帶 Schema 驗證的工具註冊表](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. 代理程式執行框架 | Python |
-| 22 | [基於換行分隔 stdio 的 JSON-RPC 2.0 傳輸](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. 代理程式執行框架 | Python |
-| 23 | [函式呼叫分發器](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. 代理程式執行框架 | Python |
-| 24 | [“規劃—執行”控制流](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. 代理程式執行框架 | Python |
-| 25 | [驗證關卡與觀察預算](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. 代理程式執行框架 | Python |
-| 26 | [帶拒絕列表與路徑隔離的沙箱執行器](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. 代理程式執行框架 | Python |
-| 27 | [基於固定任務的評估框架](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. 代理程式執行框架 | Python |
-| 28 | [基於 OTel GenAI Span 與 Prometheus 指標的可觀測性](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. 代理程式執行框架 | Python |
-| 29 | [在執行框架上完成端到端程式設計任務](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. 代理程式執行框架 | Python |
-| 30 | [從零實現 BPE 斷詞器](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP 與 LLM | Python |
+| 20 | [代理程式執行框架的迴圈契約](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. 代理程式執行框架 | Python, TypeScript |
+| 21 | [帶 Schema 驗證的工具註冊表](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. 代理程式執行框架 | Python, TypeScript |
+| 22 | [基於換行分隔 stdio 的 JSON-RPC 2.0 傳輸](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. 代理程式執行框架 | Python, TypeScript |
+| 23 | [函式呼叫分發器](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. 代理程式執行框架 | Python, TypeScript |
+| 24 | [“規劃—執行”控制流](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. 代理程式執行框架 | Python, TypeScript |
+| 25 | [驗證關卡與觀察預算](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. 代理程式執行框架 | Python, TypeScript |
+| 26 | [帶拒絕列表與路徑隔離的沙箱執行器](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. 代理程式執行框架 | Python, TypeScript |
+| 27 | [基於固定任務的評估框架](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. 代理程式執行框架 | Python, TypeScript |
+| 28 | [基於 OTel GenAI Span 與 Prometheus 指標的可觀測性](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. 代理程式執行框架 | Python, TypeScript |
+| 29 | [在執行框架上完成端到端程式設計任務](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. 代理程式執行框架 | Python, TypeScript |
+| 30 | [從零實現 BPE 斷詞器](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP 與 LLM | Python, TypeScript |
 | 31 | [使用滑動窗口的斷詞資料集](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP 與 LLM | Python |
 | 32 | [Token 嵌入與位置嵌入](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP 與 LLM | Python |
 | 33 | [多頭自注意力](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP 與 LLM | Python |
@@ -1030,13 +1030,13 @@ flowchart TB
 | 46 | [梯度累積](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. 端到端訓練 | Python |
 | 47 | [保存檢查點並恢復訓練](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. 端到端訓練 | Python |
 | 48 | [從零實現分散式資料並行與 FSDP](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. 端到端訓練 | Python |
-| 49 | [語言模型評估框架](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. 端到端訓練 | Python |
-| 50 | [假設生成器](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. 自動化研究 | Python |
-| 51 | [文獻檢索](../../phases/19-capstone-projects/51-literature-retrieval/) | D. 自動化研究 | Python |
-| 52 | [實驗執行器](../../phases/19-capstone-projects/52-experiment-runner/) | D. 自動化研究 | Python |
+| 49 | [語言模型評估框架](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. 端到端訓練 | Python, TypeScript |
+| 50 | [假設生成器](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. 自動化研究 | Python, TypeScript |
+| 51 | [文獻檢索](../../phases/19-capstone-projects/51-literature-retrieval/) | D. 自動化研究 | Python, TypeScript |
+| 52 | [實驗執行器](../../phases/19-capstone-projects/52-experiment-runner/) | D. 自動化研究 | Python, TypeScript |
 | 53 | [結果評估器](../../phases/19-capstone-projects/53-result-evaluator/) | D. 自動化研究 | Python |
-| 54 | [論文寫作器](../../phases/19-capstone-projects/54-paper-writer/) | D. 自動化研究 | Python |
-| 55 | [批評與修正迴圈](../../phases/19-capstone-projects/55-critic-loop/) | D. 自動化研究 | Python |
+| 54 | [論文寫作器](../../phases/19-capstone-projects/54-paper-writer/) | D. 自動化研究 | Python, TypeScript |
+| 55 | [批評與修正迴圈](../../phases/19-capstone-projects/55-critic-loop/) | D. 自動化研究 | Python, TypeScript |
 | 56 | [迭代排程器](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. 自動化研究 | Python |
 | 57 | [端到端研究演示](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. 自動化研究 | Python |
 | 58 | [視覺編碼器的影像塊](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. 多模態 VLM | Python |
@@ -1045,13 +1045,13 @@ flowchart TB
 | 61 | [交叉注意力融合](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. 多模態 VLM | Python |
 | 62 | [視覺語言預訓練](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. 多模態 VLM | Python |
 | 63 | [多模態評估](../../phases/19-capstone-projects/63-multimodal-eval/) | E. 多模態 VLM | Python |
-| 64 | [切塊策略對比](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. 高級 RAG | Python |
-| 65 | [結合 BM25 與密集嵌入的混合檢索](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. 高級 RAG | Python |
+| 64 | [切塊策略對比](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. 高級 RAG | Python, TypeScript |
+| 65 | [結合 BM25 與密集嵌入的混合檢索](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. 高級 RAG | Python, TypeScript |
 | 66 | [交叉編碼器重新排序器](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. 高級 RAG | Python |
-| 67 | [查詢改寫：HyDE、多查詢與問題分解](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. 高級 RAG | Python |
-| 68 | [RAG 評估：精確率、召回率、MRR、nDCG、忠實度與答案相關性](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. 高級 RAG | Python |
+| 67 | [查詢改寫：HyDE、多查詢與問題分解](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. 高級 RAG | Python, TypeScript |
+| 68 | [RAG 評估：精確率、召回率、MRR、nDCG、忠實度與答案相關性](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. 高級 RAG | Python, TypeScript |
 | 69 | [端到端 RAG 系統](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. 高級 RAG | Python |
-| 70 | [任務規格格式](../../phases/19-capstone-projects/70-task-spec-format/) | G. 評估框架 | Python |
+| 70 | [任務規格格式](../../phases/19-capstone-projects/70-task-spec-format/) | G. 評估框架 | Python, TypeScript |
 | 71 | [經典評估指標](../../phases/19-capstone-projects/71-classical-metrics/) | G. 評估框架 | Python |
 | 72 | [程式碼執行指標](../../phases/19-capstone-projects/72-code-exec-metric/) | G. 評估框架 | Python |
 | 73 | [困惑度與校准](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. 評估框架 | Python |
@@ -1064,11 +1064,11 @@ flowchart TB
 | 80 | [分片檢查點與原子恢復](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. 分散式訓練 | Python |
 | 81 | [端到端分散式訓練](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. 分散式訓練 | Python |
 | 82 | [越獄方式分類](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. 安全測試框架 | Python |
-| 83 | [提示詞注入檢測器](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. 安全測試框架 | Python |
+| 83 | [提示詞注入檢測器](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. 安全測試框架 | Python, TypeScript |
 | 84 | [拒絕回答評估](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. 安全測試框架 | Python |
-| 85 | [內容分類器整合](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. 安全測試框架 | Python |
-| 86 | [憲法式規則引擎](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. 安全測試框架 | Python, YAML |
-| 87 | [端到端安全關卡](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. 安全測試框架 | Python |
+| 85 | [內容分類器整合](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. 安全測試框架 | Python, TypeScript |
+| 86 | [憲法式規則引擎](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. 安全測試框架 | Python |
+| 87 | [端到端安全關卡](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. 安全測試框架 | Python, TypeScript |
 
 </details>
 

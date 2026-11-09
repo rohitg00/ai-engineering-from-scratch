@@ -979,39 +979,39 @@ Oppitunnit 31-46 muodostavat [agenttiavusteisen ohjelmistokehityksen polun](../.
 
 | # | Projekti | Yhdistää | Kieli |
 |:---:|---------|----------|------|
-| 01 | [Päätteessä toimiva koodausagentti](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG koodikannalle (semanttinen haku tietovarastojen välillä)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Reaaliaikainen ääniavustaja (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Multimodaaliset dokumenttikysymykset kuvapainotteisesti](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Autonominen tutkimusagentti (AI Scientist -luokka)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [DevOps-vianetsintäagentti Kubernetesille](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [Kokonainen hienosäätöputki](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [Tuotannon RAG-chatbot säännellylle toimialalle](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Koodimigraatioagentti koko tietovaraston päivitykseen](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Moniagenttinen ohjelmistokehitystiimi](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [LLM-havainnoitavuuden ja arvioinnin koontinäyttö](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Videon ymmärtämisputki (kohtaus → kysymykset ja vastaukset)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Tilaton MCP-palvelin rekisterillä ja hallinnalla](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Spekulatiivista dekoodausta käyttävä päättelypalvelin](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Periaatepohjainen turvallisuusympäristö ja red team -testialue](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [Autonominen agentti GitHub-ongelmasta PR:ksi](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Henkilökohtainen AI-opettaja (mukautuva ja multimodaalinen)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [Päätteessä toimiva koodausagentti](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG koodikannalle (semanttinen haku tietovarastojen välillä)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [Reaaliaikainen ääniavustaja (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [Multimodaaliset dokumenttikysymykset kuvapainotteisesti](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [Autonominen tutkimusagentti (AI Scientist -luokka)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [DevOps-vianetsintäagentti Kubernetesille](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [Kokonainen hienosäätöputki](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [Tuotannon RAG-chatbot säännellylle toimialalle](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [Koodimigraatioagentti koko tietovaraston päivitykseen](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [Moniagenttinen ohjelmistokehitystiimi](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [LLM-havainnoitavuuden ja arvioinnin koontinäyttö](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [Videon ymmärtämisputki (kohtaus → kysymykset ja vastaukset)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [Tilaton MCP-palvelin rekisterillä ja hallinnalla](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [Spekulatiivista dekoodausta käyttävä päättelypalvelin](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Periaatepohjainen turvallisuusympäristö ja red team -testialue](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [Autonominen agentti GitHub-ongelmasta PR:ksi](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [Henkilökohtainen AI-opettaja (mukautuva ja multimodaalinen)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **Syventävät rakennuspolut**: usean oppitunnin sarjoja, joissa rakennetaan kokonainen osajärjestelmä alusta asti.
 
 | # | Projekti | Yhdistää | Kieli |
 |:---:|---------|----------|------|
-| 20 | [Agenttiympäristön silmukkasopimus](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agenttiympäristö | Python |
-| 21 | [Työkalurekisteri skeemavalidoinnilla](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agenttiympäristö | Python |
-| 22 | [JSON-RPC 2.0 rivinvaihdoilla erotetun stdion yli](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agenttiympäristö | Python |
-| 23 | [Funktiokutsujen jakelija](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agenttiympäristö | Python |
-| 24 | [Suunnittele-suorita-ohjausvirta](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agenttiympäristö | Python |
-| 25 | [Varmennustarkistukset ja havaintobudjetti](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agenttiympäristö | Python |
-| 26 | [Hiekkalaatikkosuorittaja estolistalla ja polkurajauksella](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agenttiympäristö | Python |
-| 27 | [Arviointiympäristö vakioiduilla testitehtävillä](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agenttiympäristö | Python |
-| 28 | [Havainnoitavuus OTel GenAI -spanien ja Prometheus-mittarien avulla](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Agenttiympäristö | Python |
-| 29 | [Kokonainen koodausagentti agenttiympäristössä](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agenttiympäristö | Python |
-| 30 | [BPE-tokenisoija alusta asti](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [Agenttiympäristön silmukkasopimus](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agenttiympäristö | Python, TypeScript |
+| 21 | [Työkalurekisteri skeemavalidoinnilla](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agenttiympäristö | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 rivinvaihdoilla erotetun stdion yli](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agenttiympäristö | Python, TypeScript |
+| 23 | [Funktiokutsujen jakelija](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agenttiympäristö | Python, TypeScript |
+| 24 | [Suunnittele-suorita-ohjausvirta](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agenttiympäristö | Python, TypeScript |
+| 25 | [Varmennustarkistukset ja havaintobudjetti](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agenttiympäristö | Python, TypeScript |
+| 26 | [Hiekkalaatikkosuorittaja estolistalla ja polkurajauksella](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agenttiympäristö | Python, TypeScript |
+| 27 | [Arviointiympäristö vakioiduilla testitehtävillä](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agenttiympäristö | Python, TypeScript |
+| 28 | [Havainnoitavuus OTel GenAI -spanien ja Prometheus-mittarien avulla](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Agenttiympäristö | Python, TypeScript |
+| 29 | [Kokonainen koodausagentti agenttiympäristössä](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agenttiympäristö | Python, TypeScript |
+| 30 | [BPE-tokenisoija alusta asti](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [Tokenisoitu tietoaineisto liukuvalla ikkunalla](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Token- ja paikkaupotukset](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Monipäinen self-attention](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ Oppitunnit 31-46 muodostavat [agenttiavusteisen ohjelmistokehityksen polun](../.
 | 46 | [Gradienttien kerryttäminen](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Koulutus alusta loppuun | Python |
 | 47 | [Tarkistuspisteen tallennus ja jatkaminen](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Koulutus alusta loppuun | Python |
 | 48 | [Hajautettu datarinnakkaisuus ja FSDP alusta asti](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Koulutus alusta loppuun | Python |
-| 49 | [Kielimallin arviointiympäristö](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Koulutus alusta loppuun | Python |
-| 50 | [Hypoteesien luoja](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Automaattinen tutkimus | Python |
-| 51 | [Kirjallisuushaku](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Automaattinen tutkimus | Python |
-| 52 | [Kokeiden suorittaja](../../phases/19-capstone-projects/52-experiment-runner/) | D. Automaattinen tutkimus | Python |
+| 49 | [Kielimallin arviointiympäristö](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Koulutus alusta loppuun | Python, TypeScript |
+| 50 | [Hypoteesien luoja](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Automaattinen tutkimus | Python, TypeScript |
+| 51 | [Kirjallisuushaku](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Automaattinen tutkimus | Python, TypeScript |
+| 52 | [Kokeiden suorittaja](../../phases/19-capstone-projects/52-experiment-runner/) | D. Automaattinen tutkimus | Python, TypeScript |
 | 53 | [Tulosten arvioija](../../phases/19-capstone-projects/53-result-evaluator/) | D. Automaattinen tutkimus | Python |
-| 54 | [Tutkimusartikkelin kirjoittaja](../../phases/19-capstone-projects/54-paper-writer/) | D. Automaattinen tutkimus | Python |
-| 55 | [Kriitikkosilmukka](../../phases/19-capstone-projects/55-critic-loop/) | D. Automaattinen tutkimus | Python |
+| 54 | [Tutkimusartikkelin kirjoittaja](../../phases/19-capstone-projects/54-paper-writer/) | D. Automaattinen tutkimus | Python, TypeScript |
+| 55 | [Kriitikkosilmukka](../../phases/19-capstone-projects/55-critic-loop/) | D. Automaattinen tutkimus | Python, TypeScript |
 | 56 | [Iteraatioiden ajoitus](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Automaattinen tutkimus | Python |
 | 57 | [Kokonainen tutkimusdemo](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Automaattinen tutkimus | Python |
 | 58 | [Kuvakooderin lohkot](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Multimodaalinen kuva-kielimalli | Python |
@@ -1045,13 +1045,13 @@ Oppitunnit 31-46 muodostavat [agenttiavusteisen ohjelmistokehityksen polun](../.
 | 61 | [Cross-attention-fuusio](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. Multimodaalinen kuva-kielimalli | Python |
 | 62 | [Kuva-kieliesikoulutus](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. Multimodaalinen kuva-kielimalli | Python |
 | 63 | [Multimodaalinen arviointi](../../phases/19-capstone-projects/63-multimodal-eval/) | E. Multimodaalinen kuva-kielimalli | Python |
-| 64 | [Pilkkomisstrategioiden vertailu](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Edistynyt RAG | Python |
-| 65 | [Hybridihaku BM25:llä ja tiheillä upotuksilla](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Edistynyt RAG | Python |
+| 64 | [Pilkkomisstrategioiden vertailu](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Edistynyt RAG | Python, TypeScript |
+| 65 | [Hybridihaku BM25:llä ja tiheillä upotuksilla](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Edistynyt RAG | Python, TypeScript |
 | 66 | [Cross-encoder-uudelleenjärjestäjä](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. Edistynyt RAG | Python |
-| 67 | [Kyselyn muokkaus: HyDE, Multi-Query ja osiin jakaminen](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Edistynyt RAG | Python |
-| 68 | [RAG-arviointi: tarkkuus, saanti, MRR, nDCG, lähdeuskollisuus ja vastausrelevanssi](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Edistynyt RAG | Python |
+| 67 | [Kyselyn muokkaus: HyDE, Multi-Query ja osiin jakaminen](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Edistynyt RAG | Python, TypeScript |
+| 68 | [RAG-arviointi: tarkkuus, saanti, MRR, nDCG, lähdeuskollisuus ja vastausrelevanssi](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Edistynyt RAG | Python, TypeScript |
 | 69 | [Kokonainen RAG-järjestelmä](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Edistynyt RAG | Python |
-| 70 | [Tehtävämäärittelyn muoto](../../phases/19-capstone-projects/70-task-spec-format/) | G. Arviointikehys | Python |
+| 70 | [Tehtävämäärittelyn muoto](../../phases/19-capstone-projects/70-task-spec-format/) | G. Arviointikehys | Python, TypeScript |
 | 71 | [Klassiset mittarit](../../phases/19-capstone-projects/71-classical-metrics/) | G. Arviointikehys | Python |
 | 72 | [Koodin suorituksen mittari](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Arviointikehys | Python |
 | 73 | [Perpleksisyys ja kalibrointi](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Arviointikehys | Python |
@@ -1064,11 +1064,11 @@ Oppitunnit 31-46 muodostavat [agenttiavusteisen ohjelmistokehityksen polun](../.
 | 80 | [Jaettu tarkistuspiste ja atominen jatkaminen](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Hajautettu koulutus | Python |
 | 81 | [Hajautettu koulutus alusta loppuun](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Hajautettu koulutus | Python |
 | 82 | [Jailbreakien luokittelu](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Turvallisuusympäristö | Python |
-| 83 | [Kehoteinjektion tunnistin](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Turvallisuusympäristö | Python |
+| 83 | [Kehoteinjektion tunnistin](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Turvallisuusympäristö | Python, TypeScript |
 | 84 | [Kieltäytymisen arviointi](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Turvallisuusympäristö | Python |
-| 85 | [Sisältöluokittimen integrointi](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Turvallisuusympäristö | Python |
-| 86 | [Periaatesääntöjen moottori](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Turvallisuusympäristö | Python, YAML |
-| 87 | [Kokonainen turvallisuustarkistus](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Turvallisuusympäristö | Python |
+| 85 | [Sisältöluokittimen integrointi](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Turvallisuusympäristö | Python, TypeScript |
+| 86 | [Periaatesääntöjen moottori](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Turvallisuusympäristö | Python |
+| 87 | [Kokonainen turvallisuustarkistus](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Turvallisuusympäristö | Python, TypeScript |
 
 </details>
 

@@ -979,39 +979,39 @@ flowchart TB
 
 | # | פרויקט | משלב | שפה |
 |:---:|---------|----------|------|
-| 01 | [סוכן תכנות מובנה במסוף](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG על בסיס קוד (חיפוש סמנטי בין מאגרים)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [עוזר קולי בזמן אמת (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [שאלות ותשובות על מסמכים רב-אופניים, בגישה חזותית](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [סוכן מחקר אוטונומי מסוג AI Scientist](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [סוכן DevOps לפתרון תקלות ב-Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [תהליך כוונון עדין מקצה לקצה](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [צ'אטבוט RAG לייצור בענף מפוקח](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [סוכן להעברת קוד ושדרוג מאגר שלם](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [צוות הנדסת תוכנה מרובה סוכנים](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [לוח בקרה לנצפות ולהערכת LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [תהליך הבנת וידאו (סצנה → שאלות ותשובות)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [שרת MCP חסר מצב עם רישום וממשל](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [שרת הסקה עם פענוח ספקולטיבי](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [מעטפת בטיחות חוקתית וזירת בדיקות צוות אדום](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [סוכן אוטונומי מבעיה ב-GitHub ל-PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [מורה AI אישי, מסתגל ורב-אופני](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [סוכן תכנות מובנה במסוף](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG על בסיס קוד (חיפוש סמנטי בין מאגרים)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [עוזר קולי בזמן אמת (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [שאלות ותשובות על מסמכים רב-אופניים, בגישה חזותית](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [סוכן מחקר אוטונומי מסוג AI Scientist](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [סוכן DevOps לפתרון תקלות ב-Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [תהליך כוונון עדין מקצה לקצה](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [צ'אטבוט RAG לייצור בענף מפוקח](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [סוכן להעברת קוד ושדרוג מאגר שלם](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [צוות הנדסת תוכנה מרובה סוכנים](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [לוח בקרה לנצפות ולהערכת LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [תהליך הבנת וידאו (סצנה → שאלות ותשובות)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [שרת MCP חסר מצב עם רישום וממשל](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [שרת הסקה עם פענוח ספקולטיבי](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [מעטפת בטיחות חוקתית וזירת בדיקות צוות אדום](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [סוכן אוטונומי מבעיה ב-GitHub ל-PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [מורה AI אישי, מסתגל ורב-אופני](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **מסלולי בנייה מעמיקה**: סדרות של כמה שיעורים שבהן בונים תת-מערכת שלמה מאפס.
 
 | # | פרויקט | משלב | שפה |
 |:---:|---------|----------|------|
-| 20 | [חוזה לולאת מעטפת הסוכן](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. מעטפת סוכן | Python |
-| 21 | [רישום כלים עם אימות סכמה](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. מעטפת סוכן | Python |
-| 22 | [JSON-RPC 2.0 על stdio המופרד בשורות חדשות](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. מעטפת סוכן | Python |
-| 23 | [משגר קריאות לפונקציות](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. מעטפת סוכן | Python |
-| 24 | [זרימת בקרה של תכנון וביצוע](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. מעטפת סוכן | Python |
-| 25 | [בדיקות סף לאימות ותקציב תצפיות](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. מעטפת סוכן | Python |
-| 26 | [מריץ בסביבת בידוד עם רשימת חסימה וכליאת נתיבים](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. מעטפת סוכן | Python |
-| 27 | [מעטפת הערכה עם משימות בדיקה קבועות](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. מעטפת סוכן | Python |
-| 28 | [נצפות עם מקטעי OTel GenAI ומדדי Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. מעטפת סוכן | Python |
-| 29 | [סוכן תכנות מקצה לקצה על מעטפת ההרצה](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. מעטפת סוכן | Python |
-| 30 | [טוקנייזר BPE מאפס](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [חוזה לולאת מעטפת הסוכן](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. מעטפת סוכן | Python, TypeScript |
+| 21 | [רישום כלים עם אימות סכמה](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. מעטפת סוכן | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 על stdio המופרד בשורות חדשות](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. מעטפת סוכן | Python, TypeScript |
+| 23 | [משגר קריאות לפונקציות](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. מעטפת סוכן | Python, TypeScript |
+| 24 | [זרימת בקרה של תכנון וביצוע](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. מעטפת סוכן | Python, TypeScript |
+| 25 | [בדיקות סף לאימות ותקציב תצפיות](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. מעטפת סוכן | Python, TypeScript |
+| 26 | [מריץ בסביבת בידוד עם רשימת חסימה וכליאת נתיבים](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. מעטפת סוכן | Python, TypeScript |
+| 27 | [מעטפת הערכה עם משימות בדיקה קבועות](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. מעטפת סוכן | Python, TypeScript |
+| 28 | [נצפות עם מקטעי OTel GenAI ומדדי Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. מעטפת סוכן | Python, TypeScript |
+| 29 | [סוכן תכנות מקצה לקצה על מעטפת ההרצה](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. מעטפת סוכן | Python, TypeScript |
+| 30 | [טוקנייזר BPE מאפס](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [מאגר נתונים מטוקנן עם חלון נע](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [הטמעות טוקנים ומיקום](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [קשב עצמי מרובה ראשים](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ flowchart TB
 | 46 | [צבירת גרדיאנטים](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. אימון מקצה לקצה | Python |
 | 47 | [שמירת נקודת ביקורת והמשך ממנה](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. אימון מקצה לקצה | Python |
 | 48 | [מקביליות נתונים מבוזרת ו-FSDP מאפס](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. אימון מקצה לקצה | Python |
-| 49 | [מעטפת להערכת מודלי שפה](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. אימון מקצה לקצה | Python |
-| 50 | [מחולל השערות](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. מחקר אוטומטי | Python |
-| 51 | [אחזור ספרות מחקרית](../../phases/19-capstone-projects/51-literature-retrieval/) | D. מחקר אוטומטי | Python |
-| 52 | [מריץ ניסויים](../../phases/19-capstone-projects/52-experiment-runner/) | D. מחקר אוטומטי | Python |
+| 49 | [מעטפת להערכת מודלי שפה](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. אימון מקצה לקצה | Python, TypeScript |
+| 50 | [מחולל השערות](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. מחקר אוטומטי | Python, TypeScript |
+| 51 | [אחזור ספרות מחקרית](../../phases/19-capstone-projects/51-literature-retrieval/) | D. מחקר אוטומטי | Python, TypeScript |
+| 52 | [מריץ ניסויים](../../phases/19-capstone-projects/52-experiment-runner/) | D. מחקר אוטומטי | Python, TypeScript |
 | 53 | [מעריך תוצאות](../../phases/19-capstone-projects/53-result-evaluator/) | D. מחקר אוטומטי | Python |
-| 54 | [כותב מאמרי מחקר](../../phases/19-capstone-projects/54-paper-writer/) | D. מחקר אוטומטי | Python |
-| 55 | [לולאת ביקורת](../../phases/19-capstone-projects/55-critic-loop/) | D. מחקר אוטומטי | Python |
+| 54 | [כותב מאמרי מחקר](../../phases/19-capstone-projects/54-paper-writer/) | D. מחקר אוטומטי | Python, TypeScript |
+| 55 | [לולאת ביקורת](../../phases/19-capstone-projects/55-critic-loop/) | D. מחקר אוטומטי | Python, TypeScript |
 | 56 | [מתזמן איטרציות](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. מחקר אוטומטי | Python |
 | 57 | [הדגמת מחקר מקצה לקצה](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. מחקר אוטומטי | Python |
 | 58 | [מקטעים למקודד חזותי](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. מודל ראייה-שפה רב-אופני | Python |
@@ -1045,13 +1045,13 @@ flowchart TB
 | 61 | [מיזוג באמצעות קשב צולב](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. מודל ראייה-שפה רב-אופני | Python |
 | 62 | [קדם-אימון לראייה ושפה](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. מודל ראייה-שפה רב-אופני | Python |
 | 63 | [הערכה רב-אופנית](../../phases/19-capstone-projects/63-multimodal-eval/) | E. מודל ראייה-שפה רב-אופני | Python |
-| 64 | [השוואת אסטרטגיות חלוקה למקטעים](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. RAG מתקדם | Python |
-| 65 | [אחזור היברידי עם BM25 והטמעות צפופות](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. RAG מתקדם | Python |
+| 64 | [השוואת אסטרטגיות חלוקה למקטעים](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. RAG מתקדם | Python, TypeScript |
+| 65 | [אחזור היברידי עם BM25 והטמעות צפופות](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. RAG מתקדם | Python, TypeScript |
 | 66 | [דירוג מחדש באמצעות מקודד צולב](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. RAG מתקדם | Python |
-| 67 | [שכתוב שאילתות: HyDE, Multi-Query ופירוק](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. RAG מתקדם | Python |
-| 68 | [הערכת RAG: דיוק, כיסוי, MRR, nDCG, נאמנות ורלוונטיות התשובה](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG מתקדם | Python |
+| 67 | [שכתוב שאילתות: HyDE, Multi-Query ופירוק](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. RAG מתקדם | Python, TypeScript |
+| 68 | [הערכת RAG: דיוק, כיסוי, MRR, nDCG, נאמנות ורלוונטיות התשובה](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG מתקדם | Python, TypeScript |
 | 69 | [מערכת RAG מקצה לקצה](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. RAG מתקדם | Python |
-| 70 | [פורמט מפרט משימה](../../phases/19-capstone-projects/70-task-spec-format/) | G. מסגרת הערכה | Python |
+| 70 | [פורמט מפרט משימה](../../phases/19-capstone-projects/70-task-spec-format/) | G. מסגרת הערכה | Python, TypeScript |
 | 71 | [מדדים קלאסיים](../../phases/19-capstone-projects/71-classical-metrics/) | G. מסגרת הערכה | Python |
 | 72 | [מדד להרצת קוד](../../phases/19-capstone-projects/72-code-exec-metric/) | G. מסגרת הערכה | Python |
 | 73 | [פרפלקסיות וכיול](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. מסגרת הערכה | Python |
@@ -1064,11 +1064,11 @@ flowchart TB
 | 80 | [נקודת ביקורת מחולקת והמשך אטומי](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. אימון מבוזר | Python |
 | 81 | [אימון מבוזר מקצה לקצה](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. אימון מבוזר | Python |
 | 82 | [מיון שיטות לפריצת מגבלות](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. מעטפת בטיחות | Python |
-| 83 | [גלאי הזרקת הנחיות](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. מעטפת בטיחות | Python |
+| 83 | [גלאי הזרקת הנחיות](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. מעטפת בטיחות | Python, TypeScript |
 | 84 | [הערכת סירוב](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. מעטפת בטיחות | Python |
-| 85 | [שילוב מסווג תוכן](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. מעטפת בטיחות | Python |
-| 86 | [מנוע כללים חוקתיים](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. מעטפת בטיחות | Python, YAML |
-| 87 | [שער בטיחות מקצה לקצה](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. מעטפת בטיחות | Python |
+| 85 | [שילוב מסווג תוכן](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. מעטפת בטיחות | Python, TypeScript |
+| 86 | [מנוע כללים חוקתיים](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. מעטפת בטיחות | Python |
+| 87 | [שער בטיחות מקצה לקצה](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. מעטפת בטיחות | Python, TypeScript |
 
 </details>
 

@@ -1054,39 +1054,39 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 
 | # | Project | Combines | Lang |
 |:---:|---------|----------|------|
-| 01 | [Terminal-Native Coding Agent](phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG over Codebase (Cross-Repo Semantic Search)](phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Real-Time Voice Assistant (ASR → LLM → TTS)](phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Multimodal Document QA (Vision-First)](phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Autonomous Research Agent (AI-Scientist Class)](phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [DevOps Troubleshooting Agent for Kubernetes](phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [End-to-End Fine-Tuning Pipeline](phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [Production RAG Chatbot (Regulated Vertical)](phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Code Migration Agent (Repo-Level Upgrade)](phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Multi-Agent Software Engineering Team](phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [LLM Observability & Eval Dashboard](phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Video Understanding Pipeline (Scene → QA)](phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Stateless MCP Server with Registry and Governance](phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Speculative-Decoding Inference Server](phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Constitutional Safety Harness + Red-Team Range](phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [GitHub Issue-to-PR Autonomous Agent](phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Personal AI Tutor (Adaptive, Multimodal)](phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [Terminal-Native Coding Agent](phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG over Codebase (Cross-Repo Semantic Search)](phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [Real-Time Voice Assistant (ASR → LLM → TTS)](phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [Multimodal Document QA (Vision-First)](phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [Autonomous Research Agent (AI-Scientist Class)](phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [DevOps Troubleshooting Agent for Kubernetes](phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [End-to-End Fine-Tuning Pipeline](phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [Production RAG Chatbot (Regulated Vertical)](phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [Code Migration Agent (Repo-Level Upgrade)](phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [Multi-Agent Software Engineering Team](phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [LLM Observability & Eval Dashboard](phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [Video Understanding Pipeline (Scene → QA)](phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [Stateless MCP Server with Registry and Governance](phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [Speculative-Decoding Inference Server](phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Constitutional Safety Harness + Red-Team Range](phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [GitHub Issue-to-PR Autonomous Agent](phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [Personal AI Tutor (Adaptive, Multimodal)](phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **Deep-build tracks** — multi-lesson series that build a complete subsystem from scratch.
 
 | # | Project | Combines | Lang |
 |:---:|---------|----------|------|
-| 20 | [Agent Harness Loop Contract](phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agent harness | Python |
-| 21 | [Tool Registry with Schema Validation](phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agent harness | Python |
-| 22 | [JSON-RPC 2.0 Over Newline-Delimited Stdio](phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agent harness | Python |
-| 23 | [Function Call Dispatcher](phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agent harness | Python |
-| 24 | [Plan-Execute Control Flow](phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agent harness | Python |
-| 25 | [Verification Gates and Observation Budget](phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agent harness | Python |
-| 26 | [Sandbox Runner with Denylist and Path Jail](phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agent harness | Python |
-| 27 | [Eval Harness with Fixture Tasks](phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agent harness | Python |
-| 28 | [Observability with OTel GenAI Spans and Prometheus Metrics](phases/19-capstone-projects/28-observability-otel-traces/) | A. Agent harness | Python |
-| 29 | [End-to-End Coding Agent on the Harness](phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agent harness | Python |
-| 30 | [BPE Tokenizer From Scratch](phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [Agent Harness Loop Contract](phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agent harness | Python, TypeScript |
+| 21 | [Tool Registry with Schema Validation](phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agent harness | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 Over Newline-Delimited Stdio](phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agent harness | Python, TypeScript |
+| 23 | [Function Call Dispatcher](phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agent harness | Python, TypeScript |
+| 24 | [Plan-Execute Control Flow](phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agent harness | Python, TypeScript |
+| 25 | [Verification Gates and Observation Budget](phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agent harness | Python, TypeScript |
+| 26 | [Sandbox Runner with Denylist and Path Jail](phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agent harness | Python, TypeScript |
+| 27 | [Eval Harness with Fixture Tasks](phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agent harness | Python, TypeScript |
+| 28 | [Observability with OTel GenAI Spans and Prometheus Metrics](phases/19-capstone-projects/28-observability-otel-traces/) | A. Agent harness | Python, TypeScript |
+| 29 | [End-to-End Coding Agent on the Harness](phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agent harness | Python, TypeScript |
+| 30 | [BPE Tokenizer From Scratch](phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [Tokenized Dataset with Sliding Window](phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Token and Positional Embeddings](phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Multi-Head Self-Attention](phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1105,13 +1105,13 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 | 46 | [Gradient Accumulation](phases/19-capstone-projects/46-gradient-accumulation/) | C. Train end-to-end | Python |
 | 47 | [Checkpoint Save and Resume](phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Train end-to-end | Python |
 | 48 | [Distributed Data Parallel and FSDP from Scratch](phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Train end-to-end | Python |
-| 49 | [Language Model Evaluation Harness](phases/19-capstone-projects/49-lm-eval-harness/) | C. Train end-to-end | Python |
-| 50 | [Hypothesis Generator](phases/19-capstone-projects/50-hypothesis-generator/) | D. Auto research | Python |
-| 51 | [Literature Retrieval](phases/19-capstone-projects/51-literature-retrieval/) | D. Auto research | Python |
-| 52 | [Experiment Runner](phases/19-capstone-projects/52-experiment-runner/) | D. Auto research | Python |
+| 49 | [Language Model Evaluation Harness](phases/19-capstone-projects/49-lm-eval-harness/) | C. Train end-to-end | Python, TypeScript |
+| 50 | [Hypothesis Generator](phases/19-capstone-projects/50-hypothesis-generator/) | D. Auto research | Python, TypeScript |
+| 51 | [Literature Retrieval](phases/19-capstone-projects/51-literature-retrieval/) | D. Auto research | Python, TypeScript |
+| 52 | [Experiment Runner](phases/19-capstone-projects/52-experiment-runner/) | D. Auto research | Python, TypeScript |
 | 53 | [Result Evaluator](phases/19-capstone-projects/53-result-evaluator/) | D. Auto research | Python |
-| 54 | [Paper Writer](phases/19-capstone-projects/54-paper-writer/) | D. Auto research | Python |
-| 55 | [Critic Loop](phases/19-capstone-projects/55-critic-loop/) | D. Auto research | Python |
+| 54 | [Paper Writer](phases/19-capstone-projects/54-paper-writer/) | D. Auto research | Python, TypeScript |
+| 55 | [Critic Loop](phases/19-capstone-projects/55-critic-loop/) | D. Auto research | Python, TypeScript |
 | 56 | [Iteration Scheduler](phases/19-capstone-projects/56-iteration-scheduler/) | D. Auto research | Python |
 | 57 | [End-to-End Research Demo](phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Auto research | Python |
 | 58 | [Vision Encoder Patches](phases/19-capstone-projects/58-vision-encoder-patches/) | E. Multimodal VLM | Python |
@@ -1120,13 +1120,13 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 | 61 | [Cross-Attention Fusion](phases/19-capstone-projects/61-cross-attention-fusion/) | E. Multimodal VLM | Python |
 | 62 | [Vision-Language Pretraining](phases/19-capstone-projects/62-vision-language-pretraining/) | E. Multimodal VLM | Python |
 | 63 | [Multimodal Evaluation](phases/19-capstone-projects/63-multimodal-eval/) | E. Multimodal VLM | Python |
-| 64 | [Chunking Strategies, Compared](phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Advanced RAG | Python |
-| 65 | [Hybrid Retrieval with BM25 and Dense Embeddings](phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Advanced RAG | Python |
+| 64 | [Chunking Strategies, Compared](phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Advanced RAG | Python, TypeScript |
+| 65 | [Hybrid Retrieval with BM25 and Dense Embeddings](phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Advanced RAG | Python, TypeScript |
 | 66 | [Cross-Encoder Reranker](phases/19-capstone-projects/66-reranker-cross-encoder/) | F. Advanced RAG | Python |
-| 67 | [Query Rewriting: HyDE, Multi-Query, and Decomposition](phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Advanced RAG | Python |
-| 68 | [RAG Evaluation: Precision, Recall, MRR, nDCG, Faithfulness, Answer Relevance](phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Advanced RAG | Python |
+| 67 | [Query Rewriting: HyDE, Multi-Query, and Decomposition](phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Advanced RAG | Python, TypeScript |
+| 68 | [RAG Evaluation: Precision, Recall, MRR, nDCG, Faithfulness, Answer Relevance](phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Advanced RAG | Python, TypeScript |
 | 69 | [End-to-End RAG System](phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Advanced RAG | Python |
-| 70 | [Task Spec Format](phases/19-capstone-projects/70-task-spec-format/) | G. Eval framework | Python |
+| 70 | [Task Spec Format](phases/19-capstone-projects/70-task-spec-format/) | G. Eval framework | Python, TypeScript |
 | 71 | [Classical Metrics](phases/19-capstone-projects/71-classical-metrics/) | G. Eval framework | Python |
 | 72 | [Code Exec Metric](phases/19-capstone-projects/72-code-exec-metric/) | G. Eval framework | Python |
 | 73 | [Perplexity and Calibration](phases/19-capstone-projects/73-perplexity-calibration/) | G. Eval framework | Python |
@@ -1139,11 +1139,11 @@ through evidence, risk, scope, measurement, staged release, and feedback ownersh
 | 80 | [Sharded Checkpoint and Atomic Resume](phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Distributed train | Python |
 | 81 | [End-to-End Distributed Training](phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Distributed train | Python |
 | 82 | [Jailbreak Taxonomy](phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Safety harness | Python |
-| 83 | [Prompt Injection Detector](phases/19-capstone-projects/83-prompt-injection-detector/) | I. Safety harness | Python |
+| 83 | [Prompt Injection Detector](phases/19-capstone-projects/83-prompt-injection-detector/) | I. Safety harness | Python, TypeScript |
 | 84 | [Refusal Evaluation](phases/19-capstone-projects/84-refusal-evaluation/) | I. Safety harness | Python |
-| 85 | [Content Classifier Integration](phases/19-capstone-projects/85-content-classifier-integration/) | I. Safety harness | Python |
-| 86 | [Constitutional Rules Engine](phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Safety harness | Python, YAML |
-| 87 | [End-to-End Safety Gate](phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Safety harness | Python |
+| 85 | [Content Classifier Integration](phases/19-capstone-projects/85-content-classifier-integration/) | I. Safety harness | Python, TypeScript |
+| 86 | [Constitutional Rules Engine](phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Safety harness | Python |
+| 87 | [End-to-End Safety Gate](phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Safety harness | Python, TypeScript |
 
 </details>
 

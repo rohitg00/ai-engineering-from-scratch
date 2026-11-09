@@ -979,39 +979,39 @@ flowchart TB
 
 | # | پروژه | ترکیب مرحله‌ها | زبان |
 |:---:|---------|----------|------|
-| 01 | [عامل کدنویسی بومی ترمینال](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG روی کد (جست‌وجوی معنایی میان مخزن‌ها)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [دستیار صوتی بلادرنگ (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [پرسش‌وپاسخ چندوجهی سند (با اولویت بینایی)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [عامل پژوهشی خودمختار (ردهٔ AI-Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [عامل عیب‌یابی DevOps برای Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [خط لولهٔ تنظیم دقیق سرتاسری](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [چت‌بات RAG عملیاتی (حوزهٔ مقررات‌گذاری‌شده)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [عامل مهاجرت کد (ارتقای سطح مخزن)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [تیم مهندسی نرم‌افزار چندعاملی](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [داشبورد مشاهده‌پذیری و ارزیابی LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [خط لولهٔ درک ویدئو (صحنه → پرسش‌وپاسخ)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [سرور MCP بدون حالت با رجیستری و حاکمیت](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [سرور استنتاج با رمزگشایی حدسی](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [بستر ایمنی قانون‌اساسی‌محور و میدان آزمایش تیم قرمز](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [عامل خودمختار از issue تا PR در GitHub](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [مربی شخصی AI (سازگارشونده، چندوجهی)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [عامل کدنویسی بومی ترمینال](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG روی کد (جست‌وجوی معنایی میان مخزن‌ها)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [دستیار صوتی بلادرنگ (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [پرسش‌وپاسخ چندوجهی سند (با اولویت بینایی)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [عامل پژوهشی خودمختار (ردهٔ AI-Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [عامل عیب‌یابی DevOps برای Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [خط لولهٔ تنظیم دقیق سرتاسری](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [چت‌بات RAG عملیاتی (حوزهٔ مقررات‌گذاری‌شده)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [عامل مهاجرت کد (ارتقای سطح مخزن)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [تیم مهندسی نرم‌افزار چندعاملی](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [داشبورد مشاهده‌پذیری و ارزیابی LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [خط لولهٔ درک ویدئو (صحنه → پرسش‌وپاسخ)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [سرور MCP بدون حالت با رجیستری و حاکمیت](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [سرور استنتاج با رمزگشایی حدسی](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [بستر ایمنی قانون‌اساسی‌محور و میدان آزمایش تیم قرمز](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [عامل خودمختار از issue تا PR در GitHub](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [مربی شخصی AI (سازگارشونده، چندوجهی)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **مسیرهای ساخت عمیق**: مجموعه‌درس‌هایی که یک زیرسیستم کامل را از ابتدا می‌سازند.
 
 | # | پروژه | ترکیب مرحله‌ها | زبان |
 |:---:|---------|----------|------|
-| 20 | [قرارداد حلقهٔ بستر اجرای عامل](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. بستر اجرای عامل | Python |
-| 21 | [رجیستری ابزار با اعتبارسنجی شِما](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. بستر اجرای عامل | Python |
-| 22 | [JSON-RPC 2.0 روی stdio با جداساز سطر جدید](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. بستر اجرای عامل | Python |
-| 23 | [توزیع‌کنندهٔ فراخوانی تابع](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. بستر اجرای عامل | Python |
-| 24 | [جریان کنترل برنامه‌ریزی-اجرا](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. بستر اجرای عامل | Python |
-| 25 | [دروازه‌های تأیید و بودجهٔ مشاهده](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. بستر اجرای عامل | Python |
-| 26 | [اجراگر sandbox با فهرست منع و محصورسازی مسیر](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. بستر اجرای عامل | Python |
-| 27 | [بستر ارزیابی با وظایف نمونهٔ ثابت](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. بستر اجرای عامل | Python |
-| 28 | [مشاهده‌پذیری با spanهای OTel GenAI و معیارهای Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. بستر اجرای عامل | Python |
-| 29 | [عامل کدنویسی سرتاسری روی بستر اجرا](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. بستر اجرای عامل | Python |
-| 30 | [توکن‌ساز BPE از ابتدا](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [قرارداد حلقهٔ بستر اجرای عامل](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. بستر اجرای عامل | Python, TypeScript |
+| 21 | [رجیستری ابزار با اعتبارسنجی شِما](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. بستر اجرای عامل | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 روی stdio با جداساز سطر جدید](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. بستر اجرای عامل | Python, TypeScript |
+| 23 | [توزیع‌کنندهٔ فراخوانی تابع](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. بستر اجرای عامل | Python, TypeScript |
+| 24 | [جریان کنترل برنامه‌ریزی-اجرا](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. بستر اجرای عامل | Python, TypeScript |
+| 25 | [دروازه‌های تأیید و بودجهٔ مشاهده](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. بستر اجرای عامل | Python, TypeScript |
+| 26 | [اجراگر sandbox با فهرست منع و محصورسازی مسیر](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. بستر اجرای عامل | Python, TypeScript |
+| 27 | [بستر ارزیابی با وظایف نمونهٔ ثابت](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. بستر اجرای عامل | Python, TypeScript |
+| 28 | [مشاهده‌پذیری با spanهای OTel GenAI و معیارهای Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. بستر اجرای عامل | Python, TypeScript |
+| 29 | [عامل کدنویسی سرتاسری روی بستر اجرا](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. بستر اجرای عامل | Python, TypeScript |
+| 30 | [توکن‌ساز BPE از ابتدا](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [مجموعه‌دادهٔ توکن‌شده با پنجرهٔ لغزان](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [تعبیهٔ توکن و موقعیت](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [خودتوجهی چندسری](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ flowchart TB
 | 46 | [انباشت گرادیان](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. آموزش سرتاسری | Python |
 | 47 | [ذخیرهٔ نقطهٔ وارسی و ادامه](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. آموزش سرتاسری | Python |
 | 48 | [موازی‌سازی دادهٔ توزیع‌شده و FSDP از ابتدا](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. آموزش سرتاسری | Python |
-| 49 | [بستر ارزیابی مدل زبان](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. آموزش سرتاسری | Python |
-| 50 | [مولد فرضیه](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. پژوهش خودکار | Python |
-| 51 | [بازیابی منابع پژوهشی](../../phases/19-capstone-projects/51-literature-retrieval/) | D. پژوهش خودکار | Python |
-| 52 | [اجراگر آزمایش](../../phases/19-capstone-projects/52-experiment-runner/) | D. پژوهش خودکار | Python |
+| 49 | [بستر ارزیابی مدل زبان](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. آموزش سرتاسری | Python, TypeScript |
+| 50 | [مولد فرضیه](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. پژوهش خودکار | Python, TypeScript |
+| 51 | [بازیابی منابع پژوهشی](../../phases/19-capstone-projects/51-literature-retrieval/) | D. پژوهش خودکار | Python, TypeScript |
+| 52 | [اجراگر آزمایش](../../phases/19-capstone-projects/52-experiment-runner/) | D. پژوهش خودکار | Python, TypeScript |
 | 53 | [ارزیاب نتیجه](../../phases/19-capstone-projects/53-result-evaluator/) | D. پژوهش خودکار | Python |
-| 54 | [نویسندهٔ مقاله](../../phases/19-capstone-projects/54-paper-writer/) | D. پژوهش خودکار | Python |
-| 55 | [حلقهٔ نقد](../../phases/19-capstone-projects/55-critic-loop/) | D. پژوهش خودکار | Python |
+| 54 | [نویسندهٔ مقاله](../../phases/19-capstone-projects/54-paper-writer/) | D. پژوهش خودکار | Python, TypeScript |
+| 55 | [حلقهٔ نقد](../../phases/19-capstone-projects/55-critic-loop/) | D. پژوهش خودکار | Python, TypeScript |
 | 56 | [زمان‌بند تکرار](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. پژوهش خودکار | Python |
 | 57 | [نمایش پژوهش سرتاسری](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. پژوهش خودکار | Python |
 | 58 | [قطعه‌های رمزگذار بینایی](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. مدل VLM چندوجهی | Python |
@@ -1045,13 +1045,13 @@ flowchart TB
 | 61 | [ادغام با توجه متقاطع](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. مدل VLM چندوجهی | Python |
 | 62 | [پیش‌آموزش بینایی‌زبانی](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. مدل VLM چندوجهی | Python |
 | 63 | [ارزیابی چندوجهی](../../phases/19-capstone-projects/63-multimodal-eval/) | E. مدل VLM چندوجهی | Python |
-| 64 | [مقایسهٔ راهبردهای قطعه‌بندی](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. بازیابی RAG پیشرفته | Python |
-| 65 | [بازیابی ترکیبی با BM25 و تعبیهٔ متراکم](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. بازیابی RAG پیشرفته | Python |
+| 64 | [مقایسهٔ راهبردهای قطعه‌بندی](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. بازیابی RAG پیشرفته | Python, TypeScript |
+| 65 | [بازیابی ترکیبی با BM25 و تعبیهٔ متراکم](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. بازیابی RAG پیشرفته | Python, TypeScript |
 | 66 | [بازرتبه‌بند با رمزگذار متقاطع](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. بازیابی RAG پیشرفته | Python |
-| 67 | [بازنویسی پرس‌وجو: HyDE، چندپرس‌وجویی و تجزیه](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. بازیابی RAG پیشرفته | Python |
-| 68 | [ارزیابی RAG: Precision، Recall، MRR، nDCG، وفاداری و ارتباط پاسخ](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. بازیابی RAG پیشرفته | Python |
+| 67 | [بازنویسی پرس‌وجو: HyDE، چندپرس‌وجویی و تجزیه](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. بازیابی RAG پیشرفته | Python, TypeScript |
+| 68 | [ارزیابی RAG: Precision، Recall، MRR، nDCG، وفاداری و ارتباط پاسخ](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. بازیابی RAG پیشرفته | Python, TypeScript |
 | 69 | [سامانهٔ RAG سرتاسری](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. بازیابی RAG پیشرفته | Python |
-| 70 | [قالب مشخصات وظیفه](../../phases/19-capstone-projects/70-task-spec-format/) | G. چارچوب ارزیابی | Python |
+| 70 | [قالب مشخصات وظیفه](../../phases/19-capstone-projects/70-task-spec-format/) | G. چارچوب ارزیابی | Python, TypeScript |
 | 71 | [معیارهای کلاسیک](../../phases/19-capstone-projects/71-classical-metrics/) | G. چارچوب ارزیابی | Python |
 | 72 | [معیار اجرای کد](../../phases/19-capstone-projects/72-code-exec-metric/) | G. چارچوب ارزیابی | Python |
 | 73 | [سرگشتگی و کالیبراسیون](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. چارچوب ارزیابی | Python |
@@ -1064,11 +1064,11 @@ flowchart TB
 | 80 | [نقطهٔ وارسی قطعه‌بندی‌شده و ادامهٔ اتمیک](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. آموزش توزیع‌شده | Python |
 | 81 | [آموزش توزیع‌شدهٔ سرتاسری](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. آموزش توزیع‌شده | Python |
 | 82 | [رده‌بندی جیل‌بریک](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. بستر ایمنی | Python |
-| 83 | [آشکارساز تزریق پرامپت](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. بستر ایمنی | Python |
+| 83 | [آشکارساز تزریق پرامپت](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. بستر ایمنی | Python, TypeScript |
 | 84 | [ارزیابی امتناع](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. بستر ایمنی | Python |
-| 85 | [ادغام دسته‌بند محتوا](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. بستر ایمنی | Python |
-| 86 | [موتور قواعد قانون اساسی](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. بستر ایمنی | Python, YAML |
-| 87 | [دروازهٔ ایمنی سرتاسری](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. بستر ایمنی | Python |
+| 85 | [ادغام دسته‌بند محتوا](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. بستر ایمنی | Python, TypeScript |
+| 86 | [موتور قواعد قانون اساسی](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. بستر ایمنی | Python |
+| 87 | [دروازهٔ ایمنی سرتاسری](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. بستر ایمنی | Python, TypeScript |
 
 </details>
 

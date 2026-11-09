@@ -979,39 +979,39 @@ flowchart TB
 
 | # | প্রকল্প | যেসব ধাপ মেলায় | ভাষা |
 |:---:|---------|----------|------|
-| 01 | [টার্মিনালে সরাসরি চলা কোডিং এজেন্ট](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [কোডবেসে RAG (রিপোজিটরিজুড়ে অর্থভিত্তিক অনুসন্ধান)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [তাৎক্ষণিক ভয়েস সহকারী (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [মাল্টিমোডাল নথি প্রশ্নোত্তর (ভিশনকে অগ্রাধিকার)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [স্বায়ত্তশাসিত গবেষণা এজেন্ট (AI-Scientist শ্রেণি)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [Kubernetes-এর DevOps সমস্যা সমাধানের এজেন্ট](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [শুরু থেকে শেষ পর্যন্ত ফাইন-টিউনিং পাইপলাইন](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [বাস্তব RAG চ্যাটবট (নিয়ন্ত্রিত ক্ষেত্র)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [কোড স্থানান্তর এজেন্ট (রিপোজিটরি-স্তরের উন্নীতকরণ)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [বহু এজেন্টের সফটওয়্যার ইঞ্জিনিয়ারিং দল](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [LLM পর্যবেক্ষণ ও মূল্যায়নের ড্যাশবোর্ড](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [ভিডিও বোঝার পাইপলাইন (দৃশ্য → প্রশ্নোত্তর)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [রেজিস্ট্রি ও পরিচালনাসহ অবস্থাহীন MCP সার্ভার](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [অনুমানভিত্তিক ডিকোডিংয়ের ইনফারেন্স সার্ভার](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [সংবিধানভিত্তিক নিরাপত্তা কাঠামো ও রেড-টিম পরীক্ষাক্ষেত্র](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [GitHub issue থেকে PR পর্যন্ত স্বায়ত্তশাসিত এজেন্ট](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [ব্যক্তিগত AI শিক্ষক (অভিযোজিত, মাল্টিমোডাল)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [টার্মিনালে সরাসরি চলা কোডিং এজেন্ট](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [কোডবেসে RAG (রিপোজিটরিজুড়ে অর্থভিত্তিক অনুসন্ধান)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [তাৎক্ষণিক ভয়েস সহকারী (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [মাল্টিমোডাল নথি প্রশ্নোত্তর (ভিশনকে অগ্রাধিকার)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [স্বায়ত্তশাসিত গবেষণা এজেন্ট (AI-Scientist শ্রেণি)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [Kubernetes-এর DevOps সমস্যা সমাধানের এজেন্ট](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [শুরু থেকে শেষ পর্যন্ত ফাইন-টিউনিং পাইপলাইন](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [বাস্তব RAG চ্যাটবট (নিয়ন্ত্রিত ক্ষেত্র)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [কোড স্থানান্তর এজেন্ট (রিপোজিটরি-স্তরের উন্নীতকরণ)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [বহু এজেন্টের সফটওয়্যার ইঞ্জিনিয়ারিং দল](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [LLM পর্যবেক্ষণ ও মূল্যায়নের ড্যাশবোর্ড](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [ভিডিও বোঝার পাইপলাইন (দৃশ্য → প্রশ্নোত্তর)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [রেজিস্ট্রি ও পরিচালনাসহ অবস্থাহীন MCP সার্ভার](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [অনুমানভিত্তিক ডিকোডিংয়ের ইনফারেন্স সার্ভার](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [সংবিধানভিত্তিক নিরাপত্তা কাঠামো ও রেড-টিম পরীক্ষাক্ষেত্র](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [GitHub issue থেকে PR পর্যন্ত স্বায়ত্তশাসিত এজেন্ট](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [ব্যক্তিগত AI শিক্ষক (অভিযোজিত, মাল্টিমোডাল)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **গভীর নির্মাণের পথ**: শুরু থেকে সম্পূর্ণ উপব্যবস্থা তৈরি করার একাধিক পাঠের ধারাবাহিকতা।
 
 | # | প্রকল্প | যেসব ধাপ মেলায় | ভাষা |
 |:---:|---------|----------|------|
-| 20 | [এজেন্ট নির্বাহ কাঠামোর চক্রের চুক্তি](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. এজেন্ট নির্বাহ কাঠামো | Python |
-| 21 | [স্কিমা যাচাইসহ টুল রেজিস্ট্রি](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. এজেন্ট নির্বাহ কাঠামো | Python |
-| 22 | [নতুন লাইন দিয়ে আলাদা stdio-তে JSON-RPC 2.0](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. এজেন্ট নির্বাহ কাঠামো | Python |
-| 23 | [ফাংশন কল বিতরণকারী](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. এজেন্ট নির্বাহ কাঠামো | Python |
-| 24 | [পরিকল্পনা-নির্বাহের নিয়ন্ত্রণ প্রবাহ](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. এজেন্ট নির্বাহ কাঠামো | Python |
-| 25 | [যাচাইয়ের গেট ও পর্যবেক্ষণের বাজেট](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. এজেন্ট নির্বাহ কাঠামো | Python |
-| 26 | [নিষিদ্ধ তালিকা ও পাথের সীমাসহ স্যান্ডবক্স রানার](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. এজেন্ট নির্বাহ কাঠামো | Python |
-| 27 | [নির্দিষ্ট পরীক্ষাকাজসহ মূল্যায়ন কাঠামো](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. এজেন্ট নির্বাহ কাঠামো | Python |
-| 28 | [OTel GenAI span ও Prometheus মাপকাঠিতে পর্যবেক্ষণ](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. এজেন্ট নির্বাহ কাঠামো | Python |
-| 29 | [নির্বাহ কাঠামোয় সম্পূর্ণ কোডিং এজেন্ট](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. এজেন্ট নির্বাহ কাঠামো | Python |
-| 30 | [শুরু থেকে BPE টোকেনাইজার](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [এজেন্ট নির্বাহ কাঠামোর চক্রের চুক্তি](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. এজেন্ট নির্বাহ কাঠামো | Python, TypeScript |
+| 21 | [স্কিমা যাচাইসহ টুল রেজিস্ট্রি](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. এজেন্ট নির্বাহ কাঠামো | Python, TypeScript |
+| 22 | [নতুন লাইন দিয়ে আলাদা stdio-তে JSON-RPC 2.0](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. এজেন্ট নির্বাহ কাঠামো | Python, TypeScript |
+| 23 | [ফাংশন কল বিতরণকারী](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. এজেন্ট নির্বাহ কাঠামো | Python, TypeScript |
+| 24 | [পরিকল্পনা-নির্বাহের নিয়ন্ত্রণ প্রবাহ](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. এজেন্ট নির্বাহ কাঠামো | Python, TypeScript |
+| 25 | [যাচাইয়ের গেট ও পর্যবেক্ষণের বাজেট](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. এজেন্ট নির্বাহ কাঠামো | Python, TypeScript |
+| 26 | [নিষিদ্ধ তালিকা ও পাথের সীমাসহ স্যান্ডবক্স রানার](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. এজেন্ট নির্বাহ কাঠামো | Python, TypeScript |
+| 27 | [নির্দিষ্ট পরীক্ষাকাজসহ মূল্যায়ন কাঠামো](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. এজেন্ট নির্বাহ কাঠামো | Python, TypeScript |
+| 28 | [OTel GenAI span ও Prometheus মাপকাঠিতে পর্যবেক্ষণ](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. এজেন্ট নির্বাহ কাঠামো | Python, TypeScript |
+| 29 | [নির্বাহ কাঠামোয় সম্পূর্ণ কোডিং এজেন্ট](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. এজেন্ট নির্বাহ কাঠামো | Python, TypeScript |
+| 30 | [শুরু থেকে BPE টোকেনাইজার](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [স্লাইডিং উইন্ডোসহ টোকেন করা ডেটাসেট](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [টোকেন ও অবস্থানের এমবেডিং](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [মাল্টি-হেড সেলফ-অ্যাটেনশন](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ flowchart TB
 | 46 | [গ্রেডিয়েন্ট জমা করা](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. সম্পূর্ণ প্রশিক্ষণ | Python |
 | 47 | [চেকপয়েন্ট সংরক্ষণ ও আবার শুরু](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. সম্পূর্ণ প্রশিক্ষণ | Python |
 | 48 | [শুরু থেকে Distributed Data Parallel ও FSDP](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. সম্পূর্ণ প্রশিক্ষণ | Python |
-| 49 | [ভাষা মডেল মূল্যায়নের কাঠামো](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. সম্পূর্ণ প্রশিক্ষণ | Python |
-| 50 | [অনুমান তৈরি করার ব্যবস্থা](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. স্বয়ংক্রিয় গবেষণা | Python |
-| 51 | [গবেষণার সাহিত্য উদ্ধার](../../phases/19-capstone-projects/51-literature-retrieval/) | D. স্বয়ংক্রিয় গবেষণা | Python |
-| 52 | [পরীক্ষা চালানোর ব্যবস্থা](../../phases/19-capstone-projects/52-experiment-runner/) | D. স্বয়ংক্রিয় গবেষণা | Python |
+| 49 | [ভাষা মডেল মূল্যায়নের কাঠামো](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. সম্পূর্ণ প্রশিক্ষণ | Python, TypeScript |
+| 50 | [অনুমান তৈরি করার ব্যবস্থা](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. স্বয়ংক্রিয় গবেষণা | Python, TypeScript |
+| 51 | [গবেষণার সাহিত্য উদ্ধার](../../phases/19-capstone-projects/51-literature-retrieval/) | D. স্বয়ংক্রিয় গবেষণা | Python, TypeScript |
+| 52 | [পরীক্ষা চালানোর ব্যবস্থা](../../phases/19-capstone-projects/52-experiment-runner/) | D. স্বয়ংক্রিয় গবেষণা | Python, TypeScript |
 | 53 | [ফল মূল্যায়নকারী](../../phases/19-capstone-projects/53-result-evaluator/) | D. স্বয়ংক্রিয় গবেষণা | Python |
-| 54 | [গবেষণাপত্র লেখক](../../phases/19-capstone-projects/54-paper-writer/) | D. স্বয়ংক্রিয় গবেষণা | Python |
-| 55 | [সমালোচনার চক্র](../../phases/19-capstone-projects/55-critic-loop/) | D. স্বয়ংক্রিয় গবেষণা | Python |
+| 54 | [গবেষণাপত্র লেখক](../../phases/19-capstone-projects/54-paper-writer/) | D. স্বয়ংক্রিয় গবেষণা | Python, TypeScript |
+| 55 | [সমালোচনার চক্র](../../phases/19-capstone-projects/55-critic-loop/) | D. স্বয়ংক্রিয় গবেষণা | Python, TypeScript |
 | 56 | [পুনরাবৃত্তির সময়সূচি নির্ধারক](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. স্বয়ংক্রিয় গবেষণা | Python |
 | 57 | [শুরু থেকে শেষ পর্যন্ত গবেষণার নমুনা](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. স্বয়ংক্রিয় গবেষণা | Python |
 | 58 | [ভিশন এনকোডারের প্যাচ](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. বহুমাত্রিক VLM | Python |
@@ -1045,13 +1045,13 @@ flowchart TB
 | 61 | [ক্রস-অ্যাটেনশন দিয়ে সংমিশ্রণ](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. বহুমাত্রিক VLM | Python |
 | 62 | [ভিশন-ল্যাঙ্গুয়েজ প্রাক্‌প্রশিক্ষণ](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. বহুমাত্রিক VLM | Python |
 | 63 | [মাল্টিমোডাল মূল্যায়ন](../../phases/19-capstone-projects/63-multimodal-eval/) | E. বহুমাত্রিক VLM | Python |
-| 64 | [ভাগ করার কৌশলের তুলনা](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. উন্নত RAG | Python |
-| 65 | [BM25 ও ঘন এমবেডিং দিয়ে মিশ্র উদ্ধার](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. উন্নত RAG | Python |
+| 64 | [ভাগ করার কৌশলের তুলনা](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. উন্নত RAG | Python, TypeScript |
+| 65 | [BM25 ও ঘন এমবেডিং দিয়ে মিশ্র উদ্ধার](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. উন্নত RAG | Python, TypeScript |
 | 66 | [ক্রস-এনকোডার পুনরায় র‍্যাঙ্ককারী](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. উন্নত RAG | Python |
-| 67 | [কোয়েরি পুনর্লিখন: HyDE, একাধিক কোয়েরি ও বিভাজন](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. উন্নত RAG | Python |
-| 68 | [RAG মূল্যায়ন: Precision, Recall, MRR, nDCG, বিশ্বস্ততা, উত্তরের প্রাসঙ্গিকতা](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. উন্নত RAG | Python |
+| 67 | [কোয়েরি পুনর্লিখন: HyDE, একাধিক কোয়েরি ও বিভাজন](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. উন্নত RAG | Python, TypeScript |
+| 68 | [RAG মূল্যায়ন: Precision, Recall, MRR, nDCG, বিশ্বস্ততা, উত্তরের প্রাসঙ্গিকতা](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. উন্নত RAG | Python, TypeScript |
 | 69 | [সম্পূর্ণ RAG সিস্টেম](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. উন্নত RAG | Python |
-| 70 | [কাজের স্পেসিফিকেশনের বিন্যাস](../../phases/19-capstone-projects/70-task-spec-format/) | G. মূল্যায়ন কাঠামো | Python |
+| 70 | [কাজের স্পেসিফিকেশনের বিন্যাস](../../phases/19-capstone-projects/70-task-spec-format/) | G. মূল্যায়ন কাঠামো | Python, TypeScript |
 | 71 | [প্রচলিত মাপকাঠি](../../phases/19-capstone-projects/71-classical-metrics/) | G. মূল্যায়ন কাঠামো | Python |
 | 72 | [কোড চালানোর মাপকাঠি](../../phases/19-capstone-projects/72-code-exec-metric/) | G. মূল্যায়ন কাঠামো | Python |
 | 73 | [পারপ্লেক্সিটি ও ক্যালিব্রেশন](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. মূল্যায়ন কাঠামো | Python |
@@ -1064,11 +1064,11 @@ flowchart TB
 | 80 | [ভাগ করা চেকপয়েন্ট ও অবিভাজ্য পুনরারম্ভ](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. বণ্টিত প্রশিক্ষণ | Python |
 | 81 | [শুরু থেকে শেষ পর্যন্ত বণ্টিত প্রশিক্ষণ](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. বণ্টিত প্রশিক্ষণ | Python |
 | 82 | [জেলব্রেকের শ্রেণিবিন্যাস](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. নিরাপত্তা কাঠামো | Python |
-| 83 | [প্রম্পট ইনজেকশন শনাক্তকারী](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. নিরাপত্তা কাঠামো | Python |
+| 83 | [প্রম্পট ইনজেকশন শনাক্তকারী](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. নিরাপত্তা কাঠামো | Python, TypeScript |
 | 84 | [প্রত্যাখ্যান মূল্যায়ন](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. নিরাপত্তা কাঠামো | Python |
-| 85 | [বিষয়বস্তু শ্রেণিবিন্যাসকারী যুক্ত করা](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. নিরাপত্তা কাঠামো | Python |
-| 86 | [সাংবিধানিক নিয়মের ইঞ্জিন](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. নিরাপত্তা কাঠামো | Python, YAML |
-| 87 | [শুরু থেকে শেষ পর্যন্ত নিরাপত্তার গেট](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. নিরাপত্তা কাঠামো | Python |
+| 85 | [বিষয়বস্তু শ্রেণিবিন্যাসকারী যুক্ত করা](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. নিরাপত্তা কাঠামো | Python, TypeScript |
+| 86 | [সাংবিধানিক নিয়মের ইঞ্জিন](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. নিরাপত্তা কাঠামো | Python |
+| 87 | [শুরু থেকে শেষ পর্যন্ত নিরাপত্তার গেট](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. নিরাপত্তা কাঠামো | Python, TypeScript |
 
 </details>
 

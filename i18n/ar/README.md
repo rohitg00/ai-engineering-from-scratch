@@ -979,39 +979,39 @@ flowchart TB
 
 | # | المشروع | المجموعات | اللغة |
 |:---:|---------|----------|------|
-| 01 | [وكيل برمجة يعمل من الطرفية](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG على قاعدة الشيفرة (بحث دلالي بين المستودعات)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [مساعد صوتي آني (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [أسئلة وأجوبة عن مستندات متعددة الوسائط (الرؤية أولًا)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [وكيل بحث مستقل (بمستوى AI Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [وكيل استكشاف أعطال DevOps على Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [مسار ضبط دقيق متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [روبوت محادثة RAG للإنتاج في قطاع خاضع للتنظيم](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [وكيل لترحيل الشيفرة وترقية المستودع](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [فريق هندسة برمجيات متعدد الوكلاء](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [لوحة متابعة قابلية ملاحظة LLM وتقييمه](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [مسار فهم الفيديو (من المشهد إلى الأسئلة والأجوبة)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [خادم MCP عديم الحالة مع سجلّ وحوكمة](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [خادم استدلال بفك ترميز تخميني](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [إطار سلامة دستوري ومنطقة اختبار للفريق الأحمر](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [وكيل مستقل يحوّل GitHub Issue إلى PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [معلّم ذكاء اصطناعي شخصي (متكيّف ومتعدد الوسائط)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [وكيل برمجة يعمل من الطرفية](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG على قاعدة الشيفرة (بحث دلالي بين المستودعات)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [مساعد صوتي آني (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [أسئلة وأجوبة عن مستندات متعددة الوسائط (الرؤية أولًا)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [وكيل بحث مستقل (بمستوى AI Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [وكيل استكشاف أعطال DevOps على Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [مسار ضبط دقيق متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [روبوت محادثة RAG للإنتاج في قطاع خاضع للتنظيم](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [وكيل لترحيل الشيفرة وترقية المستودع](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [فريق هندسة برمجيات متعدد الوكلاء](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [لوحة متابعة قابلية ملاحظة LLM وتقييمه](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [مسار فهم الفيديو (من المشهد إلى الأسئلة والأجوبة)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [خادم MCP عديم الحالة مع سجلّ وحوكمة](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [خادم استدلال بفك ترميز تخميني](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [إطار سلامة دستوري ومنطقة اختبار للفريق الأحمر](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [وكيل مستقل يحوّل GitHub Issue إلى PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [معلّم ذكاء اصطناعي شخصي (متكيّف ومتعدد الوسائط)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **مسارات عميقة** سلسلة متعددة الدروس التي تبني نظام فرعي كامل من الصفر.
 
 | # | المشروع | المجموعات | اللغة |
 |:---:|---------|----------|------|
-| 20 | [عقد حلقة بيئة الوكيل](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. إطار عمل الوكلاء| Python |
-| 21 | [سجلّ أدوات مع التحقق من المخطط](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. إطار عمل الوكلاء| Python |
-| 22 | [JSON-RPC 2.0 عبر stdio محدد بأسطر جديدة](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. إطار عمل الوكلاء| Python |
-| 23 | [موزّع استدعاءات الدوال](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. إطار عمل الوكلاء| Python |
-| 24 | [تدفق التحكم بالتخطيط ثم التنفيذ](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. إطار عمل الوكلاء| Python |
-| 25 | [بوابات التحقق وميزانية الرصد](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. إطار عمل الوكلاء| Python |
-| 26 | [مشغّل عزل بقائمة حظر وسجن للمسارات](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. إطار عمل الوكلاء| Python |
-| 27 | [منصة تقييم بمهام اختبارية ثابتة](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. إطار عمل الوكلاء| Python |
-| 28 | [قابلية الملاحظة عبر OTel GenAI spans ومقاييس Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. إطار عمل الوكلاء| Python |
-| 29 | [وكيل برمجة متكامل فوق بيئة الوكيل](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. إطار عمل الوكلاء| Python |
-| 30 | [مُرمّز BPE من الصفر](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP وLLM| Python |
+| 20 | [عقد حلقة بيئة الوكيل](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. إطار عمل الوكلاء| Python, TypeScript |
+| 21 | [سجلّ أدوات مع التحقق من المخطط](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. إطار عمل الوكلاء| Python, TypeScript |
+| 22 | [JSON-RPC 2.0 عبر stdio محدد بأسطر جديدة](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. إطار عمل الوكلاء| Python, TypeScript |
+| 23 | [موزّع استدعاءات الدوال](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. إطار عمل الوكلاء| Python, TypeScript |
+| 24 | [تدفق التحكم بالتخطيط ثم التنفيذ](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. إطار عمل الوكلاء| Python, TypeScript |
+| 25 | [بوابات التحقق وميزانية الرصد](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. إطار عمل الوكلاء| Python, TypeScript |
+| 26 | [مشغّل عزل بقائمة حظر وسجن للمسارات](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. إطار عمل الوكلاء| Python, TypeScript |
+| 27 | [منصة تقييم بمهام اختبارية ثابتة](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. إطار عمل الوكلاء| Python, TypeScript |
+| 28 | [قابلية الملاحظة عبر OTel GenAI spans ومقاييس Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. إطار عمل الوكلاء| Python, TypeScript |
+| 29 | [وكيل برمجة متكامل فوق بيئة الوكيل](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. إطار عمل الوكلاء| Python, TypeScript |
+| 30 | [مُرمّز BPE من الصفر](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP وLLM| Python, TypeScript |
 | 31 | [مجموعة بيانات مرمّزة بنافذة منزلقة](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP وLLM| Python |
 | 32 | [تضمينات الرموز والمواضع](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP وLLM| Python |
 | 33 | [الانتباه الذاتي متعدد الرؤوس](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP وLLM| Python |
@@ -1030,13 +1030,13 @@ flowchart TB
 | 46 | [تجميع التدرجات](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. التدريب من البداية إلى النهاية| Python |
 | 47 | [حفظ نقطة التحقق والاستئناف منها](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. التدريب من البداية إلى النهاية| Python |
 | 48 | [التوازي الموزع للبيانات وFSDP من الصفر](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. التدريب من البداية إلى النهاية| Python |
-| 49 | [منصة تقييم النماذج اللغوية](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. التدريب من البداية إلى النهاية| Python |
-| 50 | [مولّد الفرضيات](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. البحث الآلي| Python |
-| 51 | [استرجاع الأدبيات](../../phases/19-capstone-projects/51-literature-retrieval/) | D. البحث الآلي| Python |
-| 52 | [مشغّل التجارب](../../phases/19-capstone-projects/52-experiment-runner/) | D. البحث الآلي| Python |
+| 49 | [منصة تقييم النماذج اللغوية](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. التدريب من البداية إلى النهاية| Python, TypeScript |
+| 50 | [مولّد الفرضيات](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. البحث الآلي| Python, TypeScript |
+| 51 | [استرجاع الأدبيات](../../phases/19-capstone-projects/51-literature-retrieval/) | D. البحث الآلي| Python, TypeScript |
+| 52 | [مشغّل التجارب](../../phases/19-capstone-projects/52-experiment-runner/) | D. البحث الآلي| Python, TypeScript |
 | 53 | [مقيّم النتائج](../../phases/19-capstone-projects/53-result-evaluator/) | D. البحث الآلي| Python |
-| 54 | [كاتب الأبحاث](../../phases/19-capstone-projects/54-paper-writer/) | D. البحث الآلي| Python |
-| 55 | [حلقة الناقد](../../phases/19-capstone-projects/55-critic-loop/) | D. البحث الآلي| Python |
+| 54 | [كاتب الأبحاث](../../phases/19-capstone-projects/54-paper-writer/) | D. البحث الآلي| Python, TypeScript |
+| 55 | [حلقة الناقد](../../phases/19-capstone-projects/55-critic-loop/) | D. البحث الآلي| Python, TypeScript |
 | 56 | [مجدول التكرارات](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. البحث الآلي| Python |
 | 57 | [عرض بحثي متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. البحث الآلي| Python |
 | 58 | [رقع مُرمّز الرؤية](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. VLM متعدد الوسائط| Python |
@@ -1045,13 +1045,13 @@ flowchart TB
 | 61 | [دمج الانتباه المتقاطع](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. VLM متعدد الوسائط| Python |
 | 62 | [التدريب المسبق للرؤية واللغة](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. VLM متعدد الوسائط| Python |
 | 63 | [التقييم متعدد الوسائط](../../phases/19-capstone-projects/63-multimodal-eval/) | E. VLM متعدد الوسائط| Python |
-| 64 | [مقارنة استراتيجيات تقسيم النص إلى مقاطع](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. RAG متقدم| Python |
-| 65 | [استرجاع هجين باستخدام BM25 وتضمينات كثيفة](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. RAG متقدم| Python |
+| 64 | [مقارنة استراتيجيات تقسيم النص إلى مقاطع](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. RAG متقدم| Python, TypeScript |
+| 65 | [استرجاع هجين باستخدام BM25 وتضمينات كثيفة](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. RAG متقدم| Python, TypeScript |
 | 66 | [إعادة ترتيب باستخدام cross-encoder](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. RAG متقدم| Python |
-| 67 | [إعادة صياغة الاستعلام: HyDE واستعلامات متعددة وتفكيك](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. RAG متقدم| Python |
-| 68 | [تقييم RAG: الدقة والاسترجاع وMRR وnDCG والأمانة وملاءمة الإجابة](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG متقدم| Python |
+| 67 | [إعادة صياغة الاستعلام: HyDE واستعلامات متعددة وتفكيك](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. RAG متقدم| Python, TypeScript |
+| 68 | [تقييم RAG: الدقة والاسترجاع وMRR وnDCG والأمانة وملاءمة الإجابة](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG متقدم| Python, TypeScript |
 | 69 | [نظام RAG متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. RAG متقدم| Python |
-| 70 | [تنسيق مواصفات المهمة](../../phases/19-capstone-projects/70-task-spec-format/) | G. إطار التقييم| Python |
+| 70 | [تنسيق مواصفات المهمة](../../phases/19-capstone-projects/70-task-spec-format/) | G. إطار التقييم| Python, TypeScript |
 | 71 | [المقاييس التقليدية](../../phases/19-capstone-projects/71-classical-metrics/) | G. إطار التقييم| Python |
 | 72 | [مقياس تنفيذ الشيفرة](../../phases/19-capstone-projects/72-code-exec-metric/) | G. إطار التقييم| Python |
 | 73 | [الحيرة والمعايرة](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. إطار التقييم| Python |
@@ -1064,11 +1064,11 @@ flowchart TB
 | 80 | [نقطة تحقق مجزأة واستئناف ذري](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. التدريب الموزّع| Python |
 | 81 | [تدريب موزع متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. التدريب الموزّع| Python |
 | 82 | [تصنيف أساليب كسر الحماية](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. إطار السلامة| Python |
-| 83 | [كاشف حقن الموجّهات](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. إطار السلامة| Python |
+| 83 | [كاشف حقن الموجّهات](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. إطار السلامة| Python, TypeScript |
 | 84 | [تقييم الرفض](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. إطار السلامة| Python |
-| 85 | [تكامل مصنّف المحتوى](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. إطار السلامة| Python |
-| 86 | [محرك القواعد الدستورية](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. إطار السلامة| Python, YAML |
-| 87 | [بوابة سلامة متكاملة من البداية إلى النهاية](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. إطار السلامة| Python |
+| 85 | [تكامل مصنّف المحتوى](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. إطار السلامة| Python, TypeScript |
+| 86 | [محرك القواعد الدستورية](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. إطار السلامة| Python |
+| 87 | [بوابة سلامة متكاملة من البداية إلى النهاية](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. إطار السلامة| Python, TypeScript |
 
 </details>
 

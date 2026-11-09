@@ -979,39 +979,39 @@ Lekce 31-46 tvoří [cestu inženýrství s podporou agentů](../../learning-pat
 
 | # | Závěrečný projekt | Spojuje | Jazyk |
 |:---:|---------|----------|------|
-| 01 | [Programovací agent přímo v terminálu](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG nad kódovou základnou (sémantické hledání mezi repozitáři)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Hlasový asistent v reálném čase (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Multimodální otázky k dokumentům (obraz na prvním místě)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Autonomní výzkumný agent (třída AI-Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [Agent pro řešení problémů DevOps v Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [Úplná pipeline dolaďování](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [Produkční chatbot RAG (regulovaný obor)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Agent migrace kódu (aktualizace repozitáře)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Víceagentový tým softwarového inženýrství](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [Panel pozorovatelnosti a hodnocení LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Pipeline porozumění videu (scéna → otázky a odpovědi)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Bezstavový server MCP s registrem a správou](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Inferenční server se spekulativním dekódováním](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Konstituční bezpečnostní prostředí a útočné cvičiště](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [Autonomní agent od GitHub issue k PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Osobní AI tutor (adaptivní a multimodální)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [Programovací agent přímo v terminálu](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG nad kódovou základnou (sémantické hledání mezi repozitáři)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [Hlasový asistent v reálném čase (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [Multimodální otázky k dokumentům (obraz na prvním místě)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [Autonomní výzkumný agent (třída AI-Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [Agent pro řešení problémů DevOps v Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [Úplná pipeline dolaďování](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [Produkční chatbot RAG (regulovaný obor)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [Agent migrace kódu (aktualizace repozitáře)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [Víceagentový tým softwarového inženýrství](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [Panel pozorovatelnosti a hodnocení LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [Pipeline porozumění videu (scéna → otázky a odpovědi)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [Bezstavový server MCP s registrem a správou](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [Inferenční server se spekulativním dekódováním](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Konstituční bezpečnostní prostředí a útočné cvičiště](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [Autonomní agent od GitHub issue k PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [Osobní AI tutor (adaptivní a multimodální)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **Hloubkové cesty tvorby**: série lekcí, které od základů vytvářejí úplný subsystém.
 
 | # | Závěrečný projekt | Spojuje | Jazyk |
 |:---:|---------|----------|------|
-| 20 | [Kontrakt smyčky agentového prostředí](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agentové prostředí | Python |
-| 21 | [Registr nástrojů s validací schémat](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agentové prostředí | Python |
-| 22 | [JSON-RPC 2.0 přes stdio oddělené novými řádky](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agentové prostředí | Python |
-| 23 | [Dispečer volání funkcí](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agentové prostředí | Python |
-| 24 | [Řízení toku plánování a vykonání](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agentové prostředí | Python |
-| 25 | [Ověřovací brány a rozpočet pozorování](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agentové prostředí | Python |
-| 26 | [Sandboxový vykonavatel se seznamem zákazů a omezením cest](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agentové prostředí | Python |
-| 27 | [Hodnoticí prostředí s pevnými testovacími úlohami](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agentové prostředí | Python |
-| 28 | [Pozorovatelnost pomocí OTel GenAI spanů a metrik Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Agentové prostředí | Python |
-| 29 | [Úplný programovací agent nad běhovým prostředím](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agentové prostředí | Python |
-| 30 | [BPE tokenizér od základů](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [Kontrakt smyčky agentového prostředí](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agentové prostředí | Python, TypeScript |
+| 21 | [Registr nástrojů s validací schémat](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agentové prostředí | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 přes stdio oddělené novými řádky](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agentové prostředí | Python, TypeScript |
+| 23 | [Dispečer volání funkcí](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agentové prostředí | Python, TypeScript |
+| 24 | [Řízení toku plánování a vykonání](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agentové prostředí | Python, TypeScript |
+| 25 | [Ověřovací brány a rozpočet pozorování](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agentové prostředí | Python, TypeScript |
+| 26 | [Sandboxový vykonavatel se seznamem zákazů a omezením cest](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agentové prostředí | Python, TypeScript |
+| 27 | [Hodnoticí prostředí s pevnými testovacími úlohami](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agentové prostředí | Python, TypeScript |
+| 28 | [Pozorovatelnost pomocí OTel GenAI spanů a metrik Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Agentové prostředí | Python, TypeScript |
+| 29 | [Úplný programovací agent nad běhovým prostředím](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agentové prostředí | Python, TypeScript |
+| 30 | [BPE tokenizér od základů](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [Tokenizovaná datová sada s posuvným oknem](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Tokenové a poziční embeddingy](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Vícehlavá vlastní pozornost](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ Lekce 31-46 tvoří [cestu inženýrství s podporou agentů](../../learning-pat
 | 46 | [Akumulace gradientů](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Úplné trénování | Python |
 | 47 | [Uložení a obnovení checkpointu](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Úplné trénování | Python |
 | 48 | [Distribuovaná datová paralelizace a FSDP od základů](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Úplné trénování | Python |
-| 49 | [Prostředí pro hodnocení jazykových modelů](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Úplné trénování | Python |
-| 50 | [Generátor hypotéz](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Automatický výzkum | Python |
-| 51 | [Vyhledávání literatury](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Automatický výzkum | Python |
-| 52 | [Vykonavatel experimentů](../../phases/19-capstone-projects/52-experiment-runner/) | D. Automatický výzkum | Python |
+| 49 | [Prostředí pro hodnocení jazykových modelů](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Úplné trénování | Python, TypeScript |
+| 50 | [Generátor hypotéz](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Automatický výzkum | Python, TypeScript |
+| 51 | [Vyhledávání literatury](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Automatický výzkum | Python, TypeScript |
+| 52 | [Vykonavatel experimentů](../../phases/19-capstone-projects/52-experiment-runner/) | D. Automatický výzkum | Python, TypeScript |
 | 53 | [Hodnotitel výsledků](../../phases/19-capstone-projects/53-result-evaluator/) | D. Automatický výzkum | Python |
-| 54 | [Autor vědeckých článků](../../phases/19-capstone-projects/54-paper-writer/) | D. Automatický výzkum | Python |
-| 55 | [Smyčka kritika](../../phases/19-capstone-projects/55-critic-loop/) | D. Automatický výzkum | Python |
+| 54 | [Autor vědeckých článků](../../phases/19-capstone-projects/54-paper-writer/) | D. Automatický výzkum | Python, TypeScript |
+| 55 | [Smyčka kritika](../../phases/19-capstone-projects/55-critic-loop/) | D. Automatický výzkum | Python, TypeScript |
 | 56 | [Plánovač iterací](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Automatický výzkum | Python |
 | 57 | [Úplná výzkumná demonstrace](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Automatický výzkum | Python |
 | 58 | [Obrazové výřezy vizuálního enkodéru](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Multimodální VLM | Python |
@@ -1045,13 +1045,13 @@ Lekce 31-46 tvoří [cestu inženýrství s podporou agentů](../../learning-pat
 | 61 | [Fúze křížovou pozorností](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. Multimodální VLM | Python |
 | 62 | [Vizuálně-jazykové předtrénování](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. Multimodální VLM | Python |
 | 63 | [Multimodální hodnocení](../../phases/19-capstone-projects/63-multimodal-eval/) | E. Multimodální VLM | Python |
-| 64 | [Porovnání strategií dělení textu](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Pokročilé RAG | Python |
-| 65 | [Hybridní vyhledávání s BM25 a hustými embeddingy](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Pokročilé RAG | Python |
+| 64 | [Porovnání strategií dělení textu](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Pokročilé RAG | Python, TypeScript |
+| 65 | [Hybridní vyhledávání s BM25 a hustými embeddingy](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Pokročilé RAG | Python, TypeScript |
 | 66 | [Přerovnávání křížovým enkodérem](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. Pokročilé RAG | Python |
-| 67 | [Přepis dotazů: HyDE, více dotazů a dekompozice](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Pokročilé RAG | Python |
-| 68 | [Hodnocení RAG: přesnost, úplnost, MRR, nDCG, věrnost a relevance odpovědi](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Pokročilé RAG | Python |
+| 67 | [Přepis dotazů: HyDE, více dotazů a dekompozice](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Pokročilé RAG | Python, TypeScript |
+| 68 | [Hodnocení RAG: přesnost, úplnost, MRR, nDCG, věrnost a relevance odpovědi](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Pokročilé RAG | Python, TypeScript |
 | 69 | [Úplný systém RAG](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Pokročilé RAG | Python |
-| 70 | [Formát specifikace úloh](../../phases/19-capstone-projects/70-task-spec-format/) | G. Hodnoticí prostředí | Python |
+| 70 | [Formát specifikace úloh](../../phases/19-capstone-projects/70-task-spec-format/) | G. Hodnoticí prostředí | Python, TypeScript |
 | 71 | [Klasické metriky](../../phases/19-capstone-projects/71-classical-metrics/) | G. Hodnoticí prostředí | Python |
 | 72 | [Metrika vykonání kódu](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Hodnoticí prostředí | Python |
 | 73 | [Perplexita a kalibrace](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Hodnoticí prostředí | Python |
@@ -1064,11 +1064,11 @@ Lekce 31-46 tvoří [cestu inženýrství s podporou agentů](../../learning-pat
 | 80 | [Dělený checkpoint a atomické obnovení](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Distribuované trénování | Python |
 | 81 | [Úplné distribuované trénování](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Distribuované trénování | Python |
 | 82 | [Taxonomie jailbreaků](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Bezpečnostní prostředí | Python |
-| 83 | [Detektor injekce promptů](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Bezpečnostní prostředí | Python |
+| 83 | [Detektor injekce promptů](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Bezpečnostní prostředí | Python, TypeScript |
 | 84 | [Hodnocení odmítnutí](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Bezpečnostní prostředí | Python |
-| 85 | [Integrace klasifikátoru obsahu](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Bezpečnostní prostředí | Python |
-| 86 | [Engine konstitučních pravidel](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Bezpečnostní prostředí | Python, YAML |
-| 87 | [Úplná bezpečnostní brána](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Bezpečnostní prostředí | Python |
+| 85 | [Integrace klasifikátoru obsahu](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Bezpečnostní prostředí | Python, TypeScript |
+| 86 | [Engine konstitučních pravidel](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Bezpečnostní prostředí | Python |
+| 87 | [Úplná bezpečnostní brána](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Bezpečnostní prostředí | Python, TypeScript |
 
 </details>
 

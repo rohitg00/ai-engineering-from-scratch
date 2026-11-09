@@ -980,39 +980,39 @@ flowchart TB
 
 | # | 프로젝트 | 결합 단계 | 언어 |
 |:---:|---------|----------|------|
-| 01 | [터미널 네이티브 코딩 에이전트](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [코드베이스 RAG(저장소 간 의미 검색)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [실시간 음성 비서(ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [멀티모달 문서 QA(비전 우선)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [자율 연구 에이전트(AI Scientist급)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [Kubernetes용 DevOps 문제 해결 에이전트](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [엔드투엔드 파인튜닝 파이프라인](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [규제 산업용 프로덕션 RAG 챗봇](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [코드 마이그레이션 에이전트(저장소 단위 업그레이드)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [멀티 에이전트 소프트웨어 엔지니어링 팀](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [LLM 관측 가능성 및 평가 대시보드](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [동영상 이해 파이프라인(장면 → QA)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [레지스트리와 거버넌스를 갖춘 무상태 MCP 서버](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [추측 디코딩 추론 서버](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Constitutional AI 안전성 하네스와 레드팀 환경](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [GitHub 이슈에서 PR까지 처리하는 자율 에이전트](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [개인용 AI 튜터(적응형, 멀티모달)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [터미널 네이티브 코딩 에이전트](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [코드베이스 RAG(저장소 간 의미 검색)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [실시간 음성 비서(ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [멀티모달 문서 QA(비전 우선)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [자율 연구 에이전트(AI Scientist급)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [Kubernetes용 DevOps 문제 해결 에이전트](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [엔드투엔드 파인튜닝 파이프라인](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [규제 산업용 프로덕션 RAG 챗봇](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [코드 마이그레이션 에이전트(저장소 단위 업그레이드)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [멀티 에이전트 소프트웨어 엔지니어링 팀](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [LLM 관측 가능성 및 평가 대시보드](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [동영상 이해 파이프라인(장면 → QA)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [레지스트리와 거버넌스를 갖춘 무상태 MCP 서버](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [추측 디코딩 추론 서버](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Constitutional AI 안전성 하네스와 레드팀 환경](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [GitHub 이슈에서 PR까지 처리하는 자율 에이전트](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [개인용 AI 튜터(적응형, 멀티모달)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **심화 구현 트랙**: 여러 레슨에 걸쳐 완전한 하위 시스템을 처음부터 구축합니다.
 
 | # | 프로젝트 | 결합 단계 | 언어 |
 |:---:|---------|----------|------|
-| 20 | [에이전트 하네스 루프 계약](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. 에이전트 하네스 | Python |
-| 21 | [스키마 검증을 지원하는 도구 레지스트리](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. 에이전트 하네스 | Python |
-| 22 | [줄바꿈 구분 stdio 기반 JSON-RPC 2.0](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. 에이전트 하네스 | Python |
-| 23 | [함수 호출 디스패처](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. 에이전트 하네스 | Python |
-| 24 | [계획-실행 제어 흐름](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. 에이전트 하네스 | Python |
-| 25 | [검증 게이트와 관측 예산](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. 에이전트 하네스 | Python |
-| 26 | [거부 목록과 경로 격리를 갖춘 샌드박스 실행기](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. 에이전트 하네스 | Python |
-| 27 | [픽스처 작업을 사용하는 평가 하네스](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. 에이전트 하네스 | Python |
-| 28 | [OTel GenAI 스팬과 Prometheus 메트릭을 활용한 관측 가능성](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. 에이전트 하네스 | Python |
-| 29 | [하네스 기반 엔드투엔드 코딩 에이전트](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. 에이전트 하네스 | Python |
-| 30 | [BPE 토크나이저를 처음부터 구현](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP·LLM | Python |
+| 20 | [에이전트 하네스 루프 계약](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. 에이전트 하네스 | Python, TypeScript |
+| 21 | [스키마 검증을 지원하는 도구 레지스트리](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. 에이전트 하네스 | Python, TypeScript |
+| 22 | [줄바꿈 구분 stdio 기반 JSON-RPC 2.0](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. 에이전트 하네스 | Python, TypeScript |
+| 23 | [함수 호출 디스패처](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. 에이전트 하네스 | Python, TypeScript |
+| 24 | [계획-실행 제어 흐름](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. 에이전트 하네스 | Python, TypeScript |
+| 25 | [검증 게이트와 관측 예산](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. 에이전트 하네스 | Python, TypeScript |
+| 26 | [거부 목록과 경로 격리를 갖춘 샌드박스 실행기](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. 에이전트 하네스 | Python, TypeScript |
+| 27 | [픽스처 작업을 사용하는 평가 하네스](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. 에이전트 하네스 | Python, TypeScript |
+| 28 | [OTel GenAI 스팬과 Prometheus 메트릭을 활용한 관측 가능성](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. 에이전트 하네스 | Python, TypeScript |
+| 29 | [하네스 기반 엔드투엔드 코딩 에이전트](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. 에이전트 하네스 | Python, TypeScript |
+| 30 | [BPE 토크나이저를 처음부터 구현](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP·LLM | Python, TypeScript |
 | 31 | [슬라이딩 윈도를 적용한 토큰화 데이터셋](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP·LLM | Python |
 | 32 | [토큰 임베딩과 위치 임베딩](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP·LLM | Python |
 | 33 | [멀티헤드 셀프 어텐션](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP·LLM | Python |
@@ -1031,13 +1031,13 @@ flowchart TB
 | 46 | [그래디언트 누적](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. 엔드투엔드 학습 | Python |
 | 47 | [체크포인트 저장 및 재개](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. 엔드투엔드 학습 | Python |
 | 48 | [분산 데이터 병렬(DDP)과 FSDP를 처음부터 구현](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. 엔드투엔드 학습 | Python |
-| 49 | [언어 모델 평가 하네스](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. 엔드투엔드 학습 | Python |
-| 50 | [가설 생성기](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. 자동화 연구 | Python |
-| 51 | [문헌 검색](../../phases/19-capstone-projects/51-literature-retrieval/) | D. 자동화 연구 | Python |
-| 52 | [실험 실행기](../../phases/19-capstone-projects/52-experiment-runner/) | D. 자동화 연구 | Python |
+| 49 | [언어 모델 평가 하네스](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. 엔드투엔드 학습 | Python, TypeScript |
+| 50 | [가설 생성기](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. 자동화 연구 | Python, TypeScript |
+| 51 | [문헌 검색](../../phases/19-capstone-projects/51-literature-retrieval/) | D. 자동화 연구 | Python, TypeScript |
+| 52 | [실험 실행기](../../phases/19-capstone-projects/52-experiment-runner/) | D. 자동화 연구 | Python, TypeScript |
 | 53 | [결과 평가기](../../phases/19-capstone-projects/53-result-evaluator/) | D. 자동화 연구 | Python |
-| 54 | [논문 작성기](../../phases/19-capstone-projects/54-paper-writer/) | D. 자동화 연구 | Python |
-| 55 | [비평 루프](../../phases/19-capstone-projects/55-critic-loop/) | D. 자동화 연구 | Python |
+| 54 | [논문 작성기](../../phases/19-capstone-projects/54-paper-writer/) | D. 자동화 연구 | Python, TypeScript |
+| 55 | [비평 루프](../../phases/19-capstone-projects/55-critic-loop/) | D. 자동화 연구 | Python, TypeScript |
 | 56 | [반복 스케줄러](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. 자동화 연구 | Python |
 | 57 | [엔드투엔드 연구 데모](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. 자동화 연구 | Python |
 | 58 | [비전 인코더 패치](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. 멀티모달 VLM | Python |
@@ -1046,13 +1046,13 @@ flowchart TB
 | 61 | [크로스 어텐션 융합](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. 멀티모달 VLM | Python |
 | 62 | [비전-언어 사전 학습](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. 멀티모달 VLM | Python |
 | 63 | [멀티모달 평가](../../phases/19-capstone-projects/63-multimodal-eval/) | E. 멀티모달 VLM | Python |
-| 64 | [청킹 전략 비교](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. 고급 RAG | Python |
-| 65 | [BM25와 밀집 임베딩을 활용한 하이브리드 검색](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. 고급 RAG | Python |
+| 64 | [청킹 전략 비교](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. 고급 RAG | Python, TypeScript |
+| 65 | [BM25와 밀집 임베딩을 활용한 하이브리드 검색](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. 고급 RAG | Python, TypeScript |
 | 66 | [크로스 인코더 재순위화 모델](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. 고급 RAG | Python |
-| 67 | [질의 재작성: HyDE, 다중 질의, 분해](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. 고급 RAG | Python |
-| 68 | [RAG 평가: 정밀도, 재현율, MRR, nDCG, 충실도, 답변 관련성](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. 고급 RAG | Python |
+| 67 | [질의 재작성: HyDE, 다중 질의, 분해](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. 고급 RAG | Python, TypeScript |
+| 68 | [RAG 평가: 정밀도, 재현율, MRR, nDCG, 충실도, 답변 관련성](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. 고급 RAG | Python, TypeScript |
 | 69 | [엔드투엔드 RAG 시스템](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. 고급 RAG | Python |
-| 70 | [작업 명세 형식](../../phases/19-capstone-projects/70-task-spec-format/) | G. 평가 프레임워크 | Python |
+| 70 | [작업 명세 형식](../../phases/19-capstone-projects/70-task-spec-format/) | G. 평가 프레임워크 | Python, TypeScript |
 | 71 | [고전적 지표](../../phases/19-capstone-projects/71-classical-metrics/) | G. 평가 프레임워크 | Python |
 | 72 | [코드 실행 지표](../../phases/19-capstone-projects/72-code-exec-metric/) | G. 평가 프레임워크 | Python |
 | 73 | [퍼플렉서티와 보정](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. 평가 프레임워크 | Python |
@@ -1065,11 +1065,11 @@ flowchart TB
 | 80 | [샤딩 체크포인트와 원자적 재개](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. 분산 학습 | Python |
 | 81 | [엔드투엔드 분산 학습](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. 분산 학습 | Python |
 | 82 | [탈옥 분류 체계](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. 안전성 하네스 | Python |
-| 83 | [프롬프트 인젝션 탐지기](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. 안전성 하네스 | Python |
+| 83 | [프롬프트 인젝션 탐지기](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. 안전성 하네스 | Python, TypeScript |
 | 84 | [거부 응답 평가](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. 안전성 하네스 | Python |
-| 85 | [콘텐츠 분류기 통합](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. 안전성 하네스 | Python |
-| 86 | [Constitutional AI 규칙 엔진](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. 안전성 하네스 | Python, YAML |
-| 87 | [엔드투엔드 안전성 게이트](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. 안전성 하네스 | Python |
+| 85 | [콘텐츠 분류기 통합](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. 안전성 하네스 | Python, TypeScript |
+| 86 | [Constitutional AI 규칙 엔진](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. 안전성 하네스 | Python |
+| 87 | [엔드투엔드 안전성 게이트](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. 안전성 하네스 | Python, TypeScript |
 
 </details>
 

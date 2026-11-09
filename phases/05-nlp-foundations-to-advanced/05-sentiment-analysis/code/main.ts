@@ -126,7 +126,7 @@ function evaluate(yTrue: string[], yPred: string[]): string {
   const denom = precision.value + recall.value;
   const f1: PyNum = denom
     ? { value: (2 * precision.value * recall.value) / denom, float: true }
-    : { value: 0, float: precision.float || recall.float };
+    : { value: 0, float: false };
   const r = (n: PyNum): PyNum => ({ value: n.float ? pyRound(n.value, 3) : n.value, float: n.float });
   return (
     `{'tp': ${tp}, 'fp': ${fp}, 'tn': ${tn}, 'fn': ${fn}, ` +

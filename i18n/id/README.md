@@ -979,39 +979,39 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 
 | # | Proyek | Menggabungkan | Bahasa |
 |:---:|---------|----------|------|
-| 01 | [Agen pemrograman yang bekerja di terminal](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG pada basis kode (pencarian semantik lintas repositori)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Asisten suara waktu nyata (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Tanya jawab dokumen multimodal (mengutamakan visi)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Agen riset otonom (kelas AI-Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [Agen pemecahan masalah DevOps untuk Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [Pipeline fine-tuning dari awal hingga akhir](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [Chatbot RAG untuk produksi (sektor yang diregulasi)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Agen migrasi kode (peningkatan tingkat repositori)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Tim rekayasa perangkat lunak multiagen](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [Dasbor observabilitas dan evaluasi LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Pipeline pemahaman video (adegan → tanya jawab)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Server MCP stateless dengan registri dan tata kelola](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Server inferensi dengan decoding spekulatif](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Harness keselamatan konstitusional + arena red team](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [Agen otonom dari GitHub Issue ke PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Tutor AI pribadi (adaptif, multimodal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [Agen pemrograman yang bekerja di terminal](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG pada basis kode (pencarian semantik lintas repositori)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [Asisten suara waktu nyata (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [Tanya jawab dokumen multimodal (mengutamakan visi)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [Agen riset otonom (kelas AI-Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [Agen pemecahan masalah DevOps untuk Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [Pipeline fine-tuning dari awal hingga akhir](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [Chatbot RAG untuk produksi (sektor yang diregulasi)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [Agen migrasi kode (peningkatan tingkat repositori)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [Tim rekayasa perangkat lunak multiagen](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [Dasbor observabilitas dan evaluasi LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [Pipeline pemahaman video (adegan → tanya jawab)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [Server MCP stateless dengan registri dan tata kelola](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [Server inferensi dengan decoding spekulatif](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Harness keselamatan konstitusional + arena red team](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [Agen otonom dari GitHub Issue ke PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [Tutor AI pribadi (adaptif, multimodal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **Jalur pembangunan mendalam**: rangkaian pelajaran yang membangun subsistem lengkap dari awal.
 
 | # | Proyek | Menggabungkan | Bahasa |
 |:---:|---------|----------|------|
-| 20 | [Kontrak perulangan harness agen](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Kerangka kerja agen | Python |
-| 21 | [Registri alat dengan validasi skema](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Kerangka kerja agen | Python |
-| 22 | [JSON-RPC 2.0 melalui stdio berbataskan baris baru](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Kerangka kerja agen | Python |
-| 23 | [Dispatcher pemanggilan fungsi](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Kerangka kerja agen | Python |
-| 24 | [Alur kendali rencanakan-jalankan](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Kerangka kerja agen | Python |
-| 25 | [Gerbang verifikasi dan anggaran observasi](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Kerangka kerja agen | Python |
-| 26 | [Runner sandbox dengan daftar larangan dan pembatasan jalur](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Kerangka kerja agen | Python |
-| 27 | [Harness evaluasi dengan tugas fixture](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Kerangka kerja agen | Python |
-| 28 | [Observabilitas dengan span OTel GenAI dan metrik Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Kerangka kerja agen | Python |
-| 29 | [Agen pemrograman menyeluruh di atas harness](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Kerangka kerja agen | Python |
-| 30 | [Tokenizer BPE dari nol](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [Kontrak perulangan harness agen](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Kerangka kerja agen | Python, TypeScript |
+| 21 | [Registri alat dengan validasi skema](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Kerangka kerja agen | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 melalui stdio berbataskan baris baru](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Kerangka kerja agen | Python, TypeScript |
+| 23 | [Dispatcher pemanggilan fungsi](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Kerangka kerja agen | Python, TypeScript |
+| 24 | [Alur kendali rencanakan-jalankan](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Kerangka kerja agen | Python, TypeScript |
+| 25 | [Gerbang verifikasi dan anggaran observasi](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Kerangka kerja agen | Python, TypeScript |
+| 26 | [Runner sandbox dengan daftar larangan dan pembatasan jalur](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Kerangka kerja agen | Python, TypeScript |
+| 27 | [Harness evaluasi dengan tugas fixture](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Kerangka kerja agen | Python, TypeScript |
+| 28 | [Observabilitas dengan span OTel GenAI dan metrik Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Kerangka kerja agen | Python, TypeScript |
+| 29 | [Agen pemrograman menyeluruh di atas harness](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Kerangka kerja agen | Python, TypeScript |
+| 30 | [Tokenizer BPE dari nol](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [Dataset bertoken dengan sliding window](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Embedding token dan posisi](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Self-attention multi-head](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 46 | [Akumulasi gradien](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Pelatihan menyeluruh | Python |
 | 47 | [Menyimpan checkpoint dan melanjutkan](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Pelatihan menyeluruh | Python |
 | 48 | [Data parallel terdistribusi dan FSDP dari nol](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Pelatihan menyeluruh | Python |
-| 49 | [Harness evaluasi model bahasa](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Pelatihan menyeluruh | Python |
-| 50 | [Pembuat hipotesis](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Riset otomatis | Python |
-| 51 | [Temu kembali literatur](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Riset otomatis | Python |
-| 52 | [Pelaksana eksperimen](../../phases/19-capstone-projects/52-experiment-runner/) | D. Riset otomatis | Python |
+| 49 | [Harness evaluasi model bahasa](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Pelatihan menyeluruh | Python, TypeScript |
+| 50 | [Pembuat hipotesis](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Riset otomatis | Python, TypeScript |
+| 51 | [Temu kembali literatur](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Riset otomatis | Python, TypeScript |
+| 52 | [Pelaksana eksperimen](../../phases/19-capstone-projects/52-experiment-runner/) | D. Riset otomatis | Python, TypeScript |
 | 53 | [Penilai hasil](../../phases/19-capstone-projects/53-result-evaluator/) | D. Riset otomatis | Python |
-| 54 | [Penulis makalah](../../phases/19-capstone-projects/54-paper-writer/) | D. Riset otomatis | Python |
-| 55 | [Perulangan kritik](../../phases/19-capstone-projects/55-critic-loop/) | D. Riset otomatis | Python |
+| 54 | [Penulis makalah](../../phases/19-capstone-projects/54-paper-writer/) | D. Riset otomatis | Python, TypeScript |
+| 55 | [Perulangan kritik](../../phases/19-capstone-projects/55-critic-loop/) | D. Riset otomatis | Python, TypeScript |
 | 56 | [Penjadwal iterasi](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Riset otomatis | Python |
 | 57 | [Demo riset dari awal hingga akhir](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Riset otomatis | Python |
 | 58 | [Patch encoder visi](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. VLM multimodal | Python |
@@ -1045,13 +1045,13 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 61 | [Fusi cross-attention](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. VLM multimodal | Python |
 | 62 | [Prapelatihan visi-bahasa](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. VLM multimodal | Python |
 | 63 | [Evaluasi multimodal](../../phases/19-capstone-projects/63-multimodal-eval/) | E. VLM multimodal | Python |
-| 64 | [Perbandingan strategi chunking](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. RAG tingkat lanjut | Python |
-| 65 | [Temu kembali hibrida dengan BM25 dan embedding padat](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. RAG tingkat lanjut | Python |
+| 64 | [Perbandingan strategi chunking](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. RAG tingkat lanjut | Python, TypeScript |
+| 65 | [Temu kembali hibrida dengan BM25 dan embedding padat](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. RAG tingkat lanjut | Python, TypeScript |
 | 66 | [Pemeringkat ulang cross-encoder](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. RAG tingkat lanjut | Python |
-| 67 | [Penulisan ulang kueri: HyDE, multi-query, dan dekomposisi](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. RAG tingkat lanjut | Python |
-| 68 | [Evaluasi RAG: precision, recall, MRR, nDCG, kesetiaan, relevansi jawaban](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG tingkat lanjut | Python |
+| 67 | [Penulisan ulang kueri: HyDE, multi-query, dan dekomposisi](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. RAG tingkat lanjut | Python, TypeScript |
+| 68 | [Evaluasi RAG: precision, recall, MRR, nDCG, kesetiaan, relevansi jawaban](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG tingkat lanjut | Python, TypeScript |
 | 69 | [Sistem RAG dari awal hingga akhir](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. RAG tingkat lanjut | Python |
-| 70 | [Format spesifikasi tugas](../../phases/19-capstone-projects/70-task-spec-format/) | G. Kerangka evaluasi | Python |
+| 70 | [Format spesifikasi tugas](../../phases/19-capstone-projects/70-task-spec-format/) | G. Kerangka evaluasi | Python, TypeScript |
 | 71 | [Metrik klasik](../../phases/19-capstone-projects/71-classical-metrics/) | G. Kerangka evaluasi | Python |
 | 72 | [Metrik eksekusi kode](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Kerangka evaluasi | Python |
 | 73 | [Perplexity dan kalibrasi](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Kerangka evaluasi | Python |
@@ -1064,11 +1064,11 @@ Pelajaran 31-46 membentuk [jalur Rekayasa Berbantuan Agen](../../learning-paths/
 | 80 | [Checkpoint terbagi dan pelanjutan atomik](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Pelatihan terdistribusi | Python |
 | 81 | [Pelatihan terdistribusi dari awal hingga akhir](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Pelatihan terdistribusi | Python |
 | 82 | [Taksonomi jailbreak](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Kerangka keselamatan | Python |
-| 83 | [Pendeteksi injeksi prompt](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Kerangka keselamatan | Python |
+| 83 | [Pendeteksi injeksi prompt](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Kerangka keselamatan | Python, TypeScript |
 | 84 | [Evaluasi penolakan](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Kerangka keselamatan | Python |
-| 85 | [Integrasi pengklasifikasi konten](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Kerangka keselamatan | Python |
-| 86 | [Mesin aturan konstitusional](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Kerangka keselamatan | Python, YAML |
-| 87 | [Gerbang keselamatan menyeluruh](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Kerangka keselamatan | Python |
+| 85 | [Integrasi pengklasifikasi konten](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Kerangka keselamatan | Python, TypeScript |
+| 86 | [Mesin aturan konstitusional](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Kerangka keselamatan | Python |
+| 87 | [Gerbang keselamatan menyeluruh](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Kerangka keselamatan | Python, TypeScript |
 
 </details>
 

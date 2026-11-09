@@ -979,39 +979,39 @@ Lektionerne 31-46 udgør [læringsforløbet for agentstøttet udvikling](../../l
 
 | # | Projekt | Kombinerer | Sprog |
 |:---:|---------|----------|------|
-| 01 | [Kodeagent direkte i terminalen](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG over kodebasen: semantisk søgning på tværs af arkiver](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Stemmeassistent i realtid (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Multimodale dokumentsvar med billedanalyse først](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Autonom forskningsagent i AI-Scientist-klassen](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [DevOps-agent til fejlfinding i Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [Komplet pipeline til finjustering](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [RAG-chatbot i produktion til en reguleret branche](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Kodemigreringsagent: opgradering af hele arkivet](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Softwareudviklingsteam med flere agenter](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [Dashboard til LLM-observerbarhed og evaluering](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Pipeline til videoforståelse: fra scene til spørgsmål og svar](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Tilstandsløs MCP-server med register og styring](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Inferensserver med spekulativ afkodning](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Konstitutionel sikkerhedsramme og testmiljø til angreb](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [Autonom agent fra GitHub-issue til PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Personlig AI-vejleder: adaptiv og multimodal](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [Kodeagent direkte i terminalen](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG over kodebasen: semantisk søgning på tværs af arkiver](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [Stemmeassistent i realtid (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [Multimodale dokumentsvar med billedanalyse først](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [Autonom forskningsagent i AI-Scientist-klassen](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [DevOps-agent til fejlfinding i Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [Komplet pipeline til finjustering](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [RAG-chatbot i produktion til en reguleret branche](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [Kodemigreringsagent: opgradering af hele arkivet](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [Softwareudviklingsteam med flere agenter](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [Dashboard til LLM-observerbarhed og evaluering](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [Pipeline til videoforståelse: fra scene til spørgsmål og svar](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [Tilstandsløs MCP-server med register og styring](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [Inferensserver med spekulativ afkodning](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Konstitutionel sikkerhedsramme og testmiljø til angreb](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [Autonom agent fra GitHub-issue til PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [Personlig AI-vejleder: adaptiv og multimodal](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **Fordybende byggeforløb**: serier af lektioner, hvor du bygger et helt delsystem fra bunden.
 
 | # | Projekt | Kombinerer | Sprog |
 |:---:|---------|----------|------|
-| 20 | [Kontrakt for agentkørselsrammens løkke](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agentkørselsramme | Python |
-| 21 | [Værktøjsregister med skemavalidering](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agentkørselsramme | Python |
-| 22 | [JSON-RPC 2.0 over linjeopdelt stdio](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agentkørselsramme | Python |
-| 23 | [Fordeling af funktionskald](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agentkørselsramme | Python |
-| 24 | [Kontrolflow for planlægning og udførelse](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agentkørselsramme | Python |
-| 25 | [Verifikationskontroller og observationsbudget](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agentkørselsramme | Python |
-| 26 | [Sandkassekørsel med blokeringsliste og stibegrænsning](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agentkørselsramme | Python |
-| 27 | [Evalueringsramme med faste testopgaver](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agentkørselsramme | Python |
-| 28 | [Observerbarhed med OTel GenAI-spans og Prometheus-måltal](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Agentkørselsramme | Python |
-| 29 | [Komplet kodeagent bygget på kørselsrammen](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agentkørselsramme | Python |
-| 30 | [BPE-tokenizer fra bunden](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [Kontrakt for agentkørselsrammens løkke](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agentkørselsramme | Python, TypeScript |
+| 21 | [Værktøjsregister med skemavalidering](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agentkørselsramme | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 over linjeopdelt stdio](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agentkørselsramme | Python, TypeScript |
+| 23 | [Fordeling af funktionskald](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agentkørselsramme | Python, TypeScript |
+| 24 | [Kontrolflow for planlægning og udførelse](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agentkørselsramme | Python, TypeScript |
+| 25 | [Verifikationskontroller og observationsbudget](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agentkørselsramme | Python, TypeScript |
+| 26 | [Sandkassekørsel med blokeringsliste og stibegrænsning](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agentkørselsramme | Python, TypeScript |
+| 27 | [Evalueringsramme med faste testopgaver](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agentkørselsramme | Python, TypeScript |
+| 28 | [Observerbarhed med OTel GenAI-spans og Prometheus-måltal](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Agentkørselsramme | Python, TypeScript |
+| 29 | [Komplet kodeagent bygget på kørselsrammen](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agentkørselsramme | Python, TypeScript |
+| 30 | [BPE-tokenizer fra bunden](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [Tokeniseret datasæt med glidende vindue](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Token- og positionsindlejringer](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Self-attention med flere hoveder](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ Lektionerne 31-46 udgør [læringsforløbet for agentstøttet udvikling](../../l
 | 46 | [Gradientakkumulering](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Komplet træning | Python |
 | 47 | [Gem og genoptag fra kontrolpunkter](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Komplet træning | Python |
 | 48 | [Distribueret dataparallelisme og FSDP fra bunden](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Komplet træning | Python |
-| 49 | [Evalueringsramme til sprogmodeller](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Komplet træning | Python |
-| 50 | [Hypotesegenerator](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Automatisk forskning | Python |
-| 51 | [Litteratursøgning](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Automatisk forskning | Python |
-| 52 | [Eksperimentkørsel](../../phases/19-capstone-projects/52-experiment-runner/) | D. Automatisk forskning | Python |
+| 49 | [Evalueringsramme til sprogmodeller](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Komplet træning | Python, TypeScript |
+| 50 | [Hypotesegenerator](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Automatisk forskning | Python, TypeScript |
+| 51 | [Litteratursøgning](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Automatisk forskning | Python, TypeScript |
+| 52 | [Eksperimentkørsel](../../phases/19-capstone-projects/52-experiment-runner/) | D. Automatisk forskning | Python, TypeScript |
 | 53 | [Evaluering af resultater](../../phases/19-capstone-projects/53-result-evaluator/) | D. Automatisk forskning | Python |
-| 54 | [Skrivning af forskningsartikler](../../phases/19-capstone-projects/54-paper-writer/) | D. Automatisk forskning | Python |
-| 55 | [Kritikerløkke](../../phases/19-capstone-projects/55-critic-loop/) | D. Automatisk forskning | Python |
+| 54 | [Skrivning af forskningsartikler](../../phases/19-capstone-projects/54-paper-writer/) | D. Automatisk forskning | Python, TypeScript |
+| 55 | [Kritikerløkke](../../phases/19-capstone-projects/55-critic-loop/) | D. Automatisk forskning | Python, TypeScript |
 | 56 | [Planlægning af iterationer](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Automatisk forskning | Python |
 | 57 | [Komplet forskningsdemo](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Automatisk forskning | Python |
 | 58 | [Billedfelter til synsindkoderen](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Multimodal syn-sprog-model | Python |
@@ -1045,13 +1045,13 @@ Lektionerne 31-46 udgør [læringsforløbet for agentstøttet udvikling](../../l
 | 61 | [Fusion med cross-attention](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. Multimodal syn-sprog-model | Python |
 | 62 | [Fortræning af syn og sprog](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. Multimodal syn-sprog-model | Python |
 | 63 | [Multimodal evaluering](../../phases/19-capstone-projects/63-multimodal-eval/) | E. Multimodal syn-sprog-model | Python |
-| 64 | [Sammenligning af strategier til tekstopdeling](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Avanceret RAG | Python |
-| 65 | [Hybridsøgning med BM25 og tætte indlejringer](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Avanceret RAG | Python |
+| 64 | [Sammenligning af strategier til tekstopdeling](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Avanceret RAG | Python, TypeScript |
+| 65 | [Hybridsøgning med BM25 og tætte indlejringer](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Avanceret RAG | Python, TypeScript |
 | 66 | [Omrangering med en cross-encoder](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. Avanceret RAG | Python |
-| 67 | [Omskrivning af forespørgsler: HyDE, flere forespørgsler og opdeling](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Avanceret RAG | Python |
-| 68 | [RAG-evaluering: præcision, genfinding, MRR, nDCG, kildetroskab og svarrelevans](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Avanceret RAG | Python |
+| 67 | [Omskrivning af forespørgsler: HyDE, flere forespørgsler og opdeling](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Avanceret RAG | Python, TypeScript |
+| 68 | [RAG-evaluering: præcision, genfinding, MRR, nDCG, kildetroskab og svarrelevans](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Avanceret RAG | Python, TypeScript |
 | 69 | [Komplet RAG-system](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Avanceret RAG | Python |
-| 70 | [Format for opgavespecifikationer](../../phases/19-capstone-projects/70-task-spec-format/) | G. Evalueringsframework | Python |
+| 70 | [Format for opgavespecifikationer](../../phases/19-capstone-projects/70-task-spec-format/) | G. Evalueringsframework | Python, TypeScript |
 | 71 | [Klassiske måltal](../../phases/19-capstone-projects/71-classical-metrics/) | G. Evalueringsframework | Python |
 | 72 | [Måling af kodekørsel](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Evalueringsframework | Python |
 | 73 | [Perpleksitet og kalibrering](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Evalueringsframework | Python |
@@ -1064,11 +1064,11 @@ Lektionerne 31-46 udgør [læringsforløbet for agentstøttet udvikling](../../l
 | 80 | [Opdelte kontrolpunkter og atomisk genoptagelse](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Distribueret træning | Python |
 | 81 | [Komplet distribueret træning](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Distribueret træning | Python |
 | 82 | [Taksonomi for omgåelse af sikkerhedsregler](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Sikkerhedskørselsramme | Python |
-| 83 | [Detektor for promptinjektion](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Sikkerhedskørselsramme | Python |
+| 83 | [Detektor for promptinjektion](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Sikkerhedskørselsramme | Python, TypeScript |
 | 84 | [Evaluering af afvisninger](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Sikkerhedskørselsramme | Python |
-| 85 | [Integration af indholdsklassifikator](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Sikkerhedskørselsramme | Python |
-| 86 | [Konstitutionel regelmotor](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Sikkerhedskørselsramme | Python, YAML |
-| 87 | [Komplet sikkerhedskontrol](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Sikkerhedskørselsramme | Python |
+| 85 | [Integration af indholdsklassifikator](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Sikkerhedskørselsramme | Python, TypeScript |
+| 86 | [Konstitutionel regelmotor](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Sikkerhedskørselsramme | Python |
+| 87 | [Komplet sikkerhedskontrol](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Sikkerhedskørselsramme | Python, TypeScript |
 
 </details>
 

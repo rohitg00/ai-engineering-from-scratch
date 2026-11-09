@@ -979,39 +979,39 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 
 | No. | Proje | Temel Aldığı Aşamalar | Dil |
 |:---:|---------|----------|------|
-| 01 | [Terminal Tabanlı Kodlama Ajanı](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [Kod Tabanında RAG (Depolar Arası Anlamsal Arama)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Gerçek Zamanlı Sesli Asistan (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Çok Kipli Belge Soru Yanıtlama (Görüntü Öncelikli)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Özerk Araştırma Ajanı (AI Scientist Sınıfı)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [Kubernetes için DevOps Sorun Giderme Ajanı](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [Uçtan Uca İnce Ayar İş Hattı](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [Düzenlemeye Tabi Sektör için Üretim Ortamı RAG Sohbet Robotu](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Depo Düzeyinde Yükseltmeler için Kod Taşıma Ajanı](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Çok Ajanlı Yazılım Mühendisliği Ekibi](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [LLM Gözlemlenebilirlik ve Değerlendirme Panosu](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Sahne Anlamadan Soru Yanıtlamaya Video İş Hattı](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Kayıt Defteri ve Yönetişim İçeren Durumsuz MCP Sunucusu](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Spekülatif Kod Çözümlemeli Çıkarım Sunucusu](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Anayasal Güvenlik Test Çerçevesi ve Kırmızı Takım Ortamı](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [GitHub Issue’dan PR’a Özerk Ajan](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Uyarlanabilir Çok Kipli Kişisel Yapay Zekâ Eğitmeni](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [Terminal Tabanlı Kodlama Ajanı](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [Kod Tabanında RAG (Depolar Arası Anlamsal Arama)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [Gerçek Zamanlı Sesli Asistan (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [Çok Kipli Belge Soru Yanıtlama (Görüntü Öncelikli)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [Özerk Araştırma Ajanı (AI Scientist Sınıfı)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [Kubernetes için DevOps Sorun Giderme Ajanı](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [Uçtan Uca İnce Ayar İş Hattı](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [Düzenlemeye Tabi Sektör için Üretim Ortamı RAG Sohbet Robotu](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [Depo Düzeyinde Yükseltmeler için Kod Taşıma Ajanı](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [Çok Ajanlı Yazılım Mühendisliği Ekibi](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [LLM Gözlemlenebilirlik ve Değerlendirme Panosu](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [Sahne Anlamadan Soru Yanıtlamaya Video İş Hattı](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [Kayıt Defteri ve Yönetişim İçeren Durumsuz MCP Sunucusu](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [Spekülatif Kod Çözümlemeli Çıkarım Sunucusu](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Anayasal Güvenlik Test Çerçevesi ve Kırmızı Takım Ortamı](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [GitHub Issue’dan PR’a Özerk Ajan](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [Uyarlanabilir Çok Kipli Kişisel Yapay Zekâ Eğitmeni](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **Derinlemesine Geliştirme Dizileri** — Eksiksiz bir alt sistemi sıfırdan kuran çok dersli diziler.
 
 | No. | Proje | Temel Aldığı Aşamalar | Dil |
 |:---:|---------|----------|------|
-| 20 | [Ajan Çalışma Çerçevesi Döngü Sözleşmesi](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Ajan Çalışma Çerçevesi | Python |
-| 21 | [Şema Doğrulamalı Araç Kayıt Defteri](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Ajan Çalışma Çerçevesi | Python |
-| 22 | [Satır Sonu Sınırlı stdio üzerinden JSON-RPC 2.0 Aktarımı](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Ajan Çalışma Çerçevesi | Python |
-| 23 | [Fonksiyon Çağrısı Dağıtıcısı](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Ajan Çalışma Çerçevesi | Python |
-| 24 | [Planla-Yürüt Kontrol Akışı](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Ajan Çalışma Çerçevesi | Python |
-| 25 | [Doğrulama Kapıları ve Gözlem Bütçesi](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Ajan Çalışma Çerçevesi | Python |
-| 26 | [Reddetme Listesi ve Yol Yalıtımlı Korumalı Alan Çalıştırıcısı](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Ajan Çalışma Çerçevesi | Python |
-| 27 | [Sabit Görevlerle Değerlendirme Çerçevesi](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Ajan Çalışma Çerçevesi | Python |
-| 28 | [OTel GenAI İzleri ve Prometheus Metrikleriyle Gözlemlenebilirlik](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Ajan Çalışma Çerçevesi | Python |
-| 29 | [Çalışma Çerçevesinde Uçtan Uca Kodlama Ajanı](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Ajan Çalışma Çerçevesi | Python |
-| 30 | [BPE Tokenizer’ını Sıfırdan Kurma](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP ve LLM | Python |
+| 20 | [Ajan Çalışma Çerçevesi Döngü Sözleşmesi](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Ajan Çalışma Çerçevesi | Python, TypeScript |
+| 21 | [Şema Doğrulamalı Araç Kayıt Defteri](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Ajan Çalışma Çerçevesi | Python, TypeScript |
+| 22 | [Satır Sonu Sınırlı stdio üzerinden JSON-RPC 2.0 Aktarımı](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Ajan Çalışma Çerçevesi | Python, TypeScript |
+| 23 | [Fonksiyon Çağrısı Dağıtıcısı](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Ajan Çalışma Çerçevesi | Python, TypeScript |
+| 24 | [Planla-Yürüt Kontrol Akışı](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Ajan Çalışma Çerçevesi | Python, TypeScript |
+| 25 | [Doğrulama Kapıları ve Gözlem Bütçesi](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Ajan Çalışma Çerçevesi | Python, TypeScript |
+| 26 | [Reddetme Listesi ve Yol Yalıtımlı Korumalı Alan Çalıştırıcısı](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Ajan Çalışma Çerçevesi | Python, TypeScript |
+| 27 | [Sabit Görevlerle Değerlendirme Çerçevesi](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Ajan Çalışma Çerçevesi | Python, TypeScript |
+| 28 | [OTel GenAI İzleri ve Prometheus Metrikleriyle Gözlemlenebilirlik](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Ajan Çalışma Çerçevesi | Python, TypeScript |
+| 29 | [Çalışma Çerçevesinde Uçtan Uca Kodlama Ajanı](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Ajan Çalışma Çerçevesi | Python, TypeScript |
+| 30 | [BPE Tokenizer’ını Sıfırdan Kurma](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP ve LLM | Python, TypeScript |
 | 31 | [Kayan Pencereli Tokenleştirilmiş Veri Kümesi](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP ve LLM | Python |
 | 32 | [Token ve Konumsal Gömme Vektörleri](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP ve LLM | Python |
 | 33 | [Çok Başlıklı Kendine Dikkat](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP ve LLM | Python |
@@ -1030,13 +1030,13 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 46 | [Gradyan Biriktirme](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Uçtan Uca Eğitim | Python |
 | 47 | [Denetim Noktasını Kaydetme ve Eğitimden Devam Etme](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Uçtan Uca Eğitim | Python |
 | 48 | [Dağıtık Veri Paralelliği ve FSDP’yi Sıfırdan Kurma](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Uçtan Uca Eğitim | Python |
-| 49 | [Dil Modeli Değerlendirme Çerçevesi](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Uçtan Uca Eğitim | Python |
-| 50 | [Hipotez Üreteci](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Otomatik Araştırma | Python |
-| 51 | [Literatür Getirimi](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Otomatik Araştırma | Python |
-| 52 | [Deney Çalıştırıcısı](../../phases/19-capstone-projects/52-experiment-runner/) | D. Otomatik Araştırma | Python |
+| 49 | [Dil Modeli Değerlendirme Çerçevesi](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Uçtan Uca Eğitim | Python, TypeScript |
+| 50 | [Hipotez Üreteci](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Otomatik Araştırma | Python, TypeScript |
+| 51 | [Literatür Getirimi](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Otomatik Araştırma | Python, TypeScript |
+| 52 | [Deney Çalıştırıcısı](../../phases/19-capstone-projects/52-experiment-runner/) | D. Otomatik Araştırma | Python, TypeScript |
 | 53 | [Sonuç Değerlendiricisi](../../phases/19-capstone-projects/53-result-evaluator/) | D. Otomatik Araştırma | Python |
-| 54 | [Makale Yazıcısı](../../phases/19-capstone-projects/54-paper-writer/) | D. Otomatik Araştırma | Python |
-| 55 | [Eleştiri Döngüsü](../../phases/19-capstone-projects/55-critic-loop/) | D. Otomatik Araştırma | Python |
+| 54 | [Makale Yazıcısı](../../phases/19-capstone-projects/54-paper-writer/) | D. Otomatik Araştırma | Python, TypeScript |
+| 55 | [Eleştiri Döngüsü](../../phases/19-capstone-projects/55-critic-loop/) | D. Otomatik Araştırma | Python, TypeScript |
 | 56 | [Yineleme Zamanlayıcısı](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Otomatik Araştırma | Python |
 | 57 | [Uçtan Uca Araştırma Demosu](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Otomatik Araştırma | Python |
 | 58 | [Görsel Kodlayıcı Yama Parçaları](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Çok Kipli VLM | Python |
@@ -1045,13 +1045,13 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 61 | [Çapraz Dikkat Birleştirmesi](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. Çok Kipli VLM | Python |
 | 62 | [Görüntü-Dil Ön Eğitimi](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. Çok Kipli VLM | Python |
 | 63 | [Çok Kipli Değerlendirme](../../phases/19-capstone-projects/63-multimodal-eval/) | E. Çok Kipli VLM | Python |
-| 64 | [Karşılaştırmalı Parçalama Stratejileri](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. İleri RAG | Python |
-| 65 | [BM25 ve Yoğun Gömme Vektörleriyle Hibrit Getirim](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. İleri RAG | Python |
+| 64 | [Karşılaştırmalı Parçalama Stratejileri](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. İleri RAG | Python, TypeScript |
+| 65 | [BM25 ve Yoğun Gömme Vektörleriyle Hibrit Getirim](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. İleri RAG | Python, TypeScript |
 | 66 | [Çapraz Kodlayıcılı Yeniden Sıralayıcı](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. İleri RAG | Python |
-| 67 | [Sorgu Yeniden Yazımı: HyDE, Çoklu Sorgu ve Ayrıştırma](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. İleri RAG | Python |
-| 68 | [RAG Değerlendirmesi: Kesinlik, Duyarlılık, MRR, nDCG, Sadakat ve Yanıt İlgililiği](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. İleri RAG | Python |
+| 67 | [Sorgu Yeniden Yazımı: HyDE, Çoklu Sorgu ve Ayrıştırma](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. İleri RAG | Python, TypeScript |
+| 68 | [RAG Değerlendirmesi: Kesinlik, Duyarlılık, MRR, nDCG, Sadakat ve Yanıt İlgililiği](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. İleri RAG | Python, TypeScript |
 | 69 | [Uçtan Uca RAG Sistemi](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. İleri RAG | Python |
-| 70 | [Görev Tanımı Biçimi](../../phases/19-capstone-projects/70-task-spec-format/) | G. Değerlendirme Çerçevesi | Python |
+| 70 | [Görev Tanımı Biçimi](../../phases/19-capstone-projects/70-task-spec-format/) | G. Değerlendirme Çerçevesi | Python, TypeScript |
 | 71 | [Klasik Metrikler](../../phases/19-capstone-projects/71-classical-metrics/) | G. Değerlendirme Çerçevesi | Python |
 | 72 | [Kod Çalıştırma Ölçütü](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Değerlendirme Çerçevesi | Python |
 | 73 | [Şaşkınlık ve Kalibrasyon](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Değerlendirme Çerçevesi | Python |
@@ -1064,11 +1064,11 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 80 | [Parçalı Denetim Noktası ve Atomik Geri Yükleme](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Dağıtık Eğitim | Python |
 | 81 | [Uçtan Uca Dağıtık Eğitim](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Dağıtık Eğitim | Python |
 | 82 | [Jailbreak Taksonomisi](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Güvenlik Test Çerçevesi | Python |
-| 83 | [İstem Enjeksiyonu Algılayıcısı](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Güvenlik Test Çerçevesi | Python |
+| 83 | [İstem Enjeksiyonu Algılayıcısı](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Güvenlik Test Çerçevesi | Python, TypeScript |
 | 84 | [Ret Yanıtlarının Değerlendirilmesi](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Güvenlik Test Çerçevesi | Python |
-| 85 | [İçerik Sınıflandırıcısı Entegrasyonu](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Güvenlik Test Çerçevesi | Python |
-| 86 | [Anayasal Kurallar Motoru](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Güvenlik Test Çerçevesi | Python, YAML |
-| 87 | [Uçtan Uca Güvenlik Kapısı](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Güvenlik Test Çerçevesi | Python |
+| 85 | [İçerik Sınıflandırıcısı Entegrasyonu](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Güvenlik Test Çerçevesi | Python, TypeScript |
+| 86 | [Anayasal Kurallar Motoru](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Güvenlik Test Çerçevesi | Python |
+| 87 | [Uçtan Uca Güvenlik Kapısı](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Güvenlik Test Çerçevesi | Python, TypeScript |
 
 </details>
 

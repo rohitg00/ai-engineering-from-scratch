@@ -979,39 +979,39 @@ flowchart TB
 
 | # | Έργο | Συνδυάζει | Γλώσσα |
 |:---:|---------|----------|------|
-| 01 | [Πράκτορας προγραμματισμού μέσα στο τερματικό](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG πάνω σε βάση κώδικα (σημασιολογική αναζήτηση μεταξύ αποθετηρίων)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Φωνητικός βοηθός πραγματικού χρόνου (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Πολυτροπικές ερωτήσεις εγγράφων (πρώτα η όραση)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Αυτόνομος ερευνητικός πράκτορας (κλάση AI-Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [Πράκτορας επίλυσης προβλημάτων DevOps για Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [Πλήρης ροή λεπτομερούς προσαρμογής](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [Συνομιλιακό RAG παραγωγής (ρυθμιζόμενος κλάδος)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Πράκτορας μετεγκατάστασης κώδικα (αναβάθμιση αποθετηρίου)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Πολυπρακτορική ομάδα μηχανικής λογισμικού](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [Πίνακας παρατηρησιμότητας και αξιολόγησης LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Ροή κατανόησης βίντεο (σκηνή → ερωτήσεις και απαντήσεις)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Διακομιστής MCP χωρίς κατάσταση με μητρώο και διακυβέρνηση](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Διακομιστής συμπερασμού με εικαστική αποκωδικοποίηση](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Συνταγματικό περιβάλλον ασφάλειας και πεδίο επιθετικών δοκιμών](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [Αυτόνομος πράκτορας από αναφορά GitHub σε PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Προσωπικός εκπαιδευτής ΤΝ (προσαρμοστικός και πολυτροπικός)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [Πράκτορας προγραμματισμού μέσα στο τερματικό](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG πάνω σε βάση κώδικα (σημασιολογική αναζήτηση μεταξύ αποθετηρίων)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [Φωνητικός βοηθός πραγματικού χρόνου (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [Πολυτροπικές ερωτήσεις εγγράφων (πρώτα η όραση)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [Αυτόνομος ερευνητικός πράκτορας (κλάση AI-Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [Πράκτορας επίλυσης προβλημάτων DevOps για Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [Πλήρης ροή λεπτομερούς προσαρμογής](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [Συνομιλιακό RAG παραγωγής (ρυθμιζόμενος κλάδος)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [Πράκτορας μετεγκατάστασης κώδικα (αναβάθμιση αποθετηρίου)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [Πολυπρακτορική ομάδα μηχανικής λογισμικού](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [Πίνακας παρατηρησιμότητας και αξιολόγησης LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [Ροή κατανόησης βίντεο (σκηνή → ερωτήσεις και απαντήσεις)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [Διακομιστής MCP χωρίς κατάσταση με μητρώο και διακυβέρνηση](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [Διακομιστής συμπερασμού με εικαστική αποκωδικοποίηση](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Συνταγματικό περιβάλλον ασφάλειας και πεδίο επιθετικών δοκιμών](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [Αυτόνομος πράκτορας από αναφορά GitHub σε PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [Προσωπικός εκπαιδευτής ΤΝ (προσαρμοστικός και πολυτροπικός)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **Διαδρομές εις βάθος κατασκευής**: σειρές μαθημάτων που δημιουργούν πλήρες υποσύστημα από το μηδέν.
 
 | # | Έργο | Συνδυάζει | Γλώσσα |
 |:---:|---------|----------|------|
-| 20 | [Συμβόλαιο βρόχου περιβάλλοντος πράκτορα](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python |
-| 21 | [Μητρώο εργαλείων με επικύρωση σχημάτων](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python |
-| 22 | [JSON-RPC 2.0 μέσω stdio με διαχωρισμό γραμμών](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python |
-| 23 | [Διανομέας κλήσεων συναρτήσεων](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python |
-| 24 | [Ροή ελέγχου σχεδιασμού και εκτέλεσης](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python |
-| 25 | [Πύλες επαλήθευσης και προϋπολογισμός παρατήρησης](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python |
-| 26 | [Απομονωμένος εκτελεστής με λίστα αποκλεισμού και περιορισμό διαδρομών](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python |
-| 27 | [Περιβάλλον αξιολόγησης με σταθερές δοκιμαστικές εργασίες](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python |
-| 28 | [Παρατηρησιμότητα με spans OTel GenAI και μετρικές Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python |
-| 29 | [Πλήρης πράκτορας προγραμματισμού στο περιβάλλον εκτέλεσης](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python |
-| 30 | [Τοκενικοποιητής BPE από το μηδέν](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [Συμβόλαιο βρόχου περιβάλλοντος πράκτορα](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python, TypeScript |
+| 21 | [Μητρώο εργαλείων με επικύρωση σχημάτων](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 μέσω stdio με διαχωρισμό γραμμών](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python, TypeScript |
+| 23 | [Διανομέας κλήσεων συναρτήσεων](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python, TypeScript |
+| 24 | [Ροή ελέγχου σχεδιασμού και εκτέλεσης](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python, TypeScript |
+| 25 | [Πύλες επαλήθευσης και προϋπολογισμός παρατήρησης](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python, TypeScript |
+| 26 | [Απομονωμένος εκτελεστής με λίστα αποκλεισμού και περιορισμό διαδρομών](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python, TypeScript |
+| 27 | [Περιβάλλον αξιολόγησης με σταθερές δοκιμαστικές εργασίες](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python, TypeScript |
+| 28 | [Παρατηρησιμότητα με spans OTel GenAI και μετρικές Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python, TypeScript |
+| 29 | [Πλήρης πράκτορας προγραμματισμού στο περιβάλλον εκτέλεσης](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python, TypeScript |
+| 30 | [Τοκενικοποιητής BPE από το μηδέν](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [Τοκενικοποιημένο σύνολο δεδομένων με ολισθαίνον παράθυρο](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Ενσωματώσεις token και θέσης](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Αυτοπροσοχή πολλαπλών κεφαλών](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ flowchart TB
 | 46 | [Συσσώρευση κλίσεων](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Εκπαίδευση από την αρχή ως το τέλος | Python |
 | 47 | [Αποθήκευση και συνέχιση σημείων ελέγχου](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Εκπαίδευση από την αρχή ως το τέλος | Python |
 | 48 | [Κατανεμημένος παραλληλισμός δεδομένων και FSDP από το μηδέν](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Εκπαίδευση από την αρχή ως το τέλος | Python |
-| 49 | [Περιβάλλον αξιολόγησης γλωσσικών μοντέλων](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Εκπαίδευση από την αρχή ως το τέλος | Python |
-| 50 | [Γεννήτρια υποθέσεων](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Αυτόματη έρευνα | Python |
-| 51 | [Ανάκτηση βιβλιογραφίας](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Αυτόματη έρευνα | Python |
-| 52 | [Εκτελεστής πειραμάτων](../../phases/19-capstone-projects/52-experiment-runner/) | D. Αυτόματη έρευνα | Python |
+| 49 | [Περιβάλλον αξιολόγησης γλωσσικών μοντέλων](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Εκπαίδευση από την αρχή ως το τέλος | Python, TypeScript |
+| 50 | [Γεννήτρια υποθέσεων](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Αυτόματη έρευνα | Python, TypeScript |
+| 51 | [Ανάκτηση βιβλιογραφίας](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Αυτόματη έρευνα | Python, TypeScript |
+| 52 | [Εκτελεστής πειραμάτων](../../phases/19-capstone-projects/52-experiment-runner/) | D. Αυτόματη έρευνα | Python, TypeScript |
 | 53 | [Αξιολογητής αποτελεσμάτων](../../phases/19-capstone-projects/53-result-evaluator/) | D. Αυτόματη έρευνα | Python |
-| 54 | [Συγγραφέας επιστημονικών εργασιών](../../phases/19-capstone-projects/54-paper-writer/) | D. Αυτόματη έρευνα | Python |
-| 55 | [Βρόχος κριτή](../../phases/19-capstone-projects/55-critic-loop/) | D. Αυτόματη έρευνα | Python |
+| 54 | [Συγγραφέας επιστημονικών εργασιών](../../phases/19-capstone-projects/54-paper-writer/) | D. Αυτόματη έρευνα | Python, TypeScript |
+| 55 | [Βρόχος κριτή](../../phases/19-capstone-projects/55-critic-loop/) | D. Αυτόματη έρευνα | Python, TypeScript |
 | 56 | [Χρονοπρογραμματιστής επαναλήψεων](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Αυτόματη έρευνα | Python |
 | 57 | [Πλήρης επίδειξη έρευνας](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Αυτόματη έρευνα | Python |
 | 58 | [Τμήματα οπτικού κωδικοποιητή](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Πολυτροπικό VLM | Python |
@@ -1045,13 +1045,13 @@ flowchart TB
 | 61 | [Σύντηξη διασταυρούμενης προσοχής](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. Πολυτροπικό VLM | Python |
 | 62 | [Οπτικογλωσσική προεκπαίδευση](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. Πολυτροπικό VLM | Python |
 | 63 | [Πολυτροπική αξιολόγηση](../../phases/19-capstone-projects/63-multimodal-eval/) | E. Πολυτροπικό VLM | Python |
-| 64 | [Σύγκριση στρατηγικών τεμαχισμού](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Προηγμένο RAG | Python |
-| 65 | [Υβριδική ανάκτηση με BM25 και πυκνές ενσωματώσεις](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Προηγμένο RAG | Python |
+| 64 | [Σύγκριση στρατηγικών τεμαχισμού](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Προηγμένο RAG | Python, TypeScript |
+| 65 | [Υβριδική ανάκτηση με BM25 και πυκνές ενσωματώσεις](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Προηγμένο RAG | Python, TypeScript |
 | 66 | [Επανακατάταξη με διασταυρούμενο κωδικοποιητή](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. Προηγμένο RAG | Python |
-| 67 | [Επανεγγραφή ερωτημάτων: HyDE, πολλαπλά ερωτήματα και αποσύνθεση](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Προηγμένο RAG | Python |
-| 68 | [Αξιολόγηση RAG: ακρίβεια, ανάκληση, MRR, nDCG, πιστότητα και συνάφεια απάντησης](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Προηγμένο RAG | Python |
+| 67 | [Επανεγγραφή ερωτημάτων: HyDE, πολλαπλά ερωτήματα και αποσύνθεση](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Προηγμένο RAG | Python, TypeScript |
+| 68 | [Αξιολόγηση RAG: ακρίβεια, ανάκληση, MRR, nDCG, πιστότητα και συνάφεια απάντησης](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Προηγμένο RAG | Python, TypeScript |
 | 69 | [Πλήρες σύστημα RAG](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Προηγμένο RAG | Python |
-| 70 | [Μορφή προδιαγραφών εργασίας](../../phases/19-capstone-projects/70-task-spec-format/) | G. Πλαίσιο αξιολόγησης | Python |
+| 70 | [Μορφή προδιαγραφών εργασίας](../../phases/19-capstone-projects/70-task-spec-format/) | G. Πλαίσιο αξιολόγησης | Python, TypeScript |
 | 71 | [Κλασικές μετρικές](../../phases/19-capstone-projects/71-classical-metrics/) | G. Πλαίσιο αξιολόγησης | Python |
 | 72 | [Μετρική εκτέλεσης κώδικα](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Πλαίσιο αξιολόγησης | Python |
 | 73 | [Περιπλοκότητα και βαθμονόμηση](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Πλαίσιο αξιολόγησης | Python |
@@ -1064,11 +1064,11 @@ flowchart TB
 | 80 | [Κατακερματισμένο σημείο ελέγχου και ατομική συνέχιση](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Κατανεμημένη εκπαίδευση | Python |
 | 81 | [Πλήρης κατανεμημένη εκπαίδευση](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Κατανεμημένη εκπαίδευση | Python |
 | 82 | [Ταξινομία jailbreak](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Περιβάλλον ασφάλειας | Python |
-| 83 | [Ανιχνευτής έγχυσης προτροπών](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Περιβάλλον ασφάλειας | Python |
+| 83 | [Ανιχνευτής έγχυσης προτροπών](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Περιβάλλον ασφάλειας | Python, TypeScript |
 | 84 | [Αξιολόγηση αρνήσεων](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Περιβάλλον ασφάλειας | Python |
-| 85 | [Ενσωμάτωση ταξινομητή περιεχομένου](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Περιβάλλον ασφάλειας | Python |
-| 86 | [Μηχανή συνταγματικών κανόνων](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Περιβάλλον ασφάλειας | Python, YAML |
-| 87 | [Πλήρης πύλη ασφάλειας](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Περιβάλλον ασφάλειας | Python |
+| 85 | [Ενσωμάτωση ταξινομητή περιεχομένου](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Περιβάλλον ασφάλειας | Python, TypeScript |
+| 86 | [Μηχανή συνταγματικών κανόνων](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Περιβάλλον ασφάλειας | Python |
+| 87 | [Πλήρης πύλη ασφάλειας](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Περιβάλλον ασφάλειας | Python, TypeScript |
 
 </details>
 

@@ -991,39 +991,39 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 
 | # | Eindproject | Combineert | Taal |
 |:---:|---------|----------|------|
-| 01 | [Programmeeragent voor de terminal](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG over de codebasis (semantisch zoeken tussen repositories)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Realtime-spraakassistent (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Multimodale documentvragen (beeld als uitgangspunt)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Autonome onderzoeksagent (AI-Scientist-klasse)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [DevOps-probleemoplossingsagent voor Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [Volledige fijnafstemmingspijplijn](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [RAG-chatbot voor productie (gereguleerde sector)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Codemigratieagent (upgrade van een repository)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Softwareontwikkelingsteam met meerdere agents](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [Dashboard voor LLM-waarneembaarheid en evaluatie](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Pijplijn voor videobegrip (scène → vraag en antwoord)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Toestandsloze MCP-server met register en governance](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Inferentieserver met speculatieve decodering](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Constitutioneel veiligheidsraamwerk en aanvalstestomgeving](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [Autonome agent van GitHub-issue naar PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Persoonlijke AI-tutor (adaptief en multimodaal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [Programmeeragent voor de terminal](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG over de codebasis (semantisch zoeken tussen repositories)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [Realtime-spraakassistent (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [Multimodale documentvragen (beeld als uitgangspunt)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [Autonome onderzoeksagent (AI-Scientist-klasse)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [DevOps-probleemoplossingsagent voor Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [Volledige fijnafstemmingspijplijn](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [RAG-chatbot voor productie (gereguleerde sector)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [Codemigratieagent (upgrade van een repository)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [Softwareontwikkelingsteam met meerdere agents](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [Dashboard voor LLM-waarneembaarheid en evaluatie](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [Pijplijn voor videobegrip (scène → vraag en antwoord)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [Toestandsloze MCP-server met register en governance](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [Inferentieserver met speculatieve decodering](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Constitutioneel veiligheidsraamwerk en aanvalstestomgeving](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [Autonome agent van GitHub-issue naar PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [Persoonlijke AI-tutor (adaptief en multimodaal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **Verdiepende bouwtrajecten** — lessenreeksen waarin je een volledig subsysteem vanaf nul bouwt.
 
 | # | Eindproject | Combineert | Taal |
 |:---:|---------|----------|------|
-| 20 | [Luscontract voor het agentraamwerk](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agentraamwerk | Python |
-| 21 | [Gereedschapsregister met schemavalidatie](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agentraamwerk | Python |
-| 22 | [JSON-RPC 2.0 via regelgescheiden stdio](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agentraamwerk | Python |
-| 23 | [Verdeler van functieaanroepen](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agentraamwerk | Python |
-| 24 | [Besturingsstroom voor plannen en uitvoeren](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agentraamwerk | Python |
-| 25 | [Verificatiepoorten en observatiebudget](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agentraamwerk | Python |
-| 26 | [Sandboxuitvoerder met blokkeerlijst en padbeperking](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agentraamwerk | Python |
-| 27 | [Evaluatieraamwerk met vaste testtaken](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agentraamwerk | Python |
-| 28 | [Waarneembaarheid met OTel GenAI-spans en Prometheus-maatstaven](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Agentraamwerk | Python |
-| 29 | [Volledige programmeeragent op het raamwerk](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agentraamwerk | Python |
-| 30 | [BPE-tokenizer vanaf nul](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [Luscontract voor het agentraamwerk](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agentraamwerk | Python, TypeScript |
+| 21 | [Gereedschapsregister met schemavalidatie](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agentraamwerk | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 via regelgescheiden stdio](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agentraamwerk | Python, TypeScript |
+| 23 | [Verdeler van functieaanroepen](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agentraamwerk | Python, TypeScript |
+| 24 | [Besturingsstroom voor plannen en uitvoeren](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agentraamwerk | Python, TypeScript |
+| 25 | [Verificatiepoorten en observatiebudget](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agentraamwerk | Python, TypeScript |
+| 26 | [Sandboxuitvoerder met blokkeerlijst en padbeperking](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agentraamwerk | Python, TypeScript |
+| 27 | [Evaluatieraamwerk met vaste testtaken](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agentraamwerk | Python, TypeScript |
+| 28 | [Waarneembaarheid met OTel GenAI-spans en Prometheus-maatstaven](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Agentraamwerk | Python, TypeScript |
+| 29 | [Volledige programmeeragent op het raamwerk](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agentraamwerk | Python, TypeScript |
+| 30 | [BPE-tokenizer vanaf nul](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [Getokeniseerde dataset met schuivend venster](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Token- en positie-embeddings](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Zelfaandacht met meerdere koppen](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1042,13 +1042,13 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 | 46 | [Gradiënten accumuleren](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Volledig trainen | Python |
 | 47 | [Checkpoints opslaan en hervatten](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Volledig trainen | Python |
 | 48 | [Dataparallel trainen en FSDP vanaf nul](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Volledig trainen | Python |
-| 49 | [Evaluatieraamwerk voor taalmodellen](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Volledig trainen | Python |
-| 50 | [Hypothesegenerator](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Automatisch onderzoek | Python |
-| 51 | [Literatuur ophalen](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Automatisch onderzoek | Python |
-| 52 | [Experimentuitvoerder](../../phases/19-capstone-projects/52-experiment-runner/) | D. Automatisch onderzoek | Python |
+| 49 | [Evaluatieraamwerk voor taalmodellen](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Volledig trainen | Python, TypeScript |
+| 50 | [Hypothesegenerator](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Automatisch onderzoek | Python, TypeScript |
+| 51 | [Literatuur ophalen](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Automatisch onderzoek | Python, TypeScript |
+| 52 | [Experimentuitvoerder](../../phases/19-capstone-projects/52-experiment-runner/) | D. Automatisch onderzoek | Python, TypeScript |
 | 53 | [Resultaatbeoordelaar](../../phases/19-capstone-projects/53-result-evaluator/) | D. Automatisch onderzoek | Python |
-| 54 | [Paperschrijver](../../phases/19-capstone-projects/54-paper-writer/) | D. Automatisch onderzoek | Python |
-| 55 | [Kritische beoordelingslus](../../phases/19-capstone-projects/55-critic-loop/) | D. Automatisch onderzoek | Python |
+| 54 | [Paperschrijver](../../phases/19-capstone-projects/54-paper-writer/) | D. Automatisch onderzoek | Python, TypeScript |
+| 55 | [Kritische beoordelingslus](../../phases/19-capstone-projects/55-critic-loop/) | D. Automatisch onderzoek | Python, TypeScript |
 | 56 | [Iteratieplanner](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Automatisch onderzoek | Python |
 | 57 | [Volledige onderzoeksdemonstratie](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Automatisch onderzoek | Python |
 | 58 | [Beeldpatches voor de visie-encoder](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Multimodal VLM | Python |
@@ -1057,13 +1057,13 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 | 61 | [Fusie met kruislingse aandacht](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. Multimodal VLM | Python |
 | 62 | [Visie-taalvoortraining](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. Multimodal VLM | Python |
 | 63 | [Multimodale evaluatie](../../phases/19-capstone-projects/63-multimodal-eval/) | E. Multimodal VLM | Python |
-| 64 | [Opdeelstrategieën vergeleken](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Geavanceerde RAG | Python |
-| 65 | [Hybride zoeken met BM25 en dichte embeddings](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Geavanceerde RAG | Python |
+| 64 | [Opdeelstrategieën vergeleken](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Geavanceerde RAG | Python, TypeScript |
+| 65 | [Hybride zoeken met BM25 en dichte embeddings](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Geavanceerde RAG | Python, TypeScript |
 | 66 | [Herschikker met kruisencoder](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. Geavanceerde RAG | Python |
-| 67 | [Zoekvragen herschrijven: HyDE, meerdere vragen en ontleding](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Geavanceerde RAG | Python |
-| 68 | [RAG-evaluatie: precisie, recall, MRR, nDCG, getrouwheid en antwoordrelevantie](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Geavanceerde RAG | Python |
+| 67 | [Zoekvragen herschrijven: HyDE, meerdere vragen en ontleding](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Geavanceerde RAG | Python, TypeScript |
+| 68 | [RAG-evaluatie: precisie, recall, MRR, nDCG, getrouwheid en antwoordrelevantie](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Geavanceerde RAG | Python, TypeScript |
 | 69 | [Volledig RAG-systeem](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Geavanceerde RAG | Python |
-| 70 | [Taakspecificatieformaat](../../phases/19-capstone-projects/70-task-spec-format/) | G. Evaluatieraamwerk | Python |
+| 70 | [Taakspecificatieformaat](../../phases/19-capstone-projects/70-task-spec-format/) | G. Evaluatieraamwerk | Python, TypeScript |
 | 71 | [Klassieke maatstaven](../../phases/19-capstone-projects/71-classical-metrics/) | G. Evaluatieraamwerk | Python |
 | 72 | [Maatstaf voor code-uitvoering](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Evaluatieraamwerk | Python |
 | 73 | [Perplexiteit en kalibratie](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Evaluatieraamwerk | Python |
@@ -1076,11 +1076,11 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 | 80 | [Opgedeelde checkpoints en atomair hervatten](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Gedistribueerd trainen | Python |
 | 81 | [Volledige gedistribueerde training](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Gedistribueerd trainen | Python |
 | 82 | [Jailbreakindeling](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Veiligheidsraamwerk | Python |
-| 83 | [Promptinjectiedetector](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Veiligheidsraamwerk | Python |
+| 83 | [Promptinjectiedetector](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Veiligheidsraamwerk | Python, TypeScript |
 | 84 | [Weigeringen evalueren](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Veiligheidsraamwerk | Python |
-| 85 | [Inhoudsclassificatie integreren](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Veiligheidsraamwerk | Python |
-| 86 | [Constitutionele regelengine](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Veiligheidsraamwerk | Python, YAML |
-| 87 | [Volledige veiligheidspoort](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Veiligheidsraamwerk | Python |
+| 85 | [Inhoudsclassificatie integreren](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Veiligheidsraamwerk | Python, TypeScript |
+| 86 | [Constitutionele regelengine](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Veiligheidsraamwerk | Python |
+| 87 | [Volledige veiligheidspoort](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Veiligheidsraamwerk | Python, TypeScript |
 
 </details>
 

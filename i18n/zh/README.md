@@ -979,39 +979,39 @@ flowchart TB
 
 | # | 项目 | 综合阶段 | 语言 |
 |:---:|---------|----------|------|
-| 01 | [终端原生编程智能体](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [面向代码库的 RAG：跨仓库语义搜索](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [实时语音助手（ASR → LLM → TTS）](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [多模态文档问答：视觉优先](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [自主研究智能体（AI Scientist 类）](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [面向 Kubernetes 的 DevOps 故障排查智能体](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [端到端微调流水线](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [生产级 RAG 聊天机器人：受监管领域](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [代码迁移智能体：仓库级升级](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [多智能体软件工程团队](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [LLM 可观测性与评估仪表盘](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [视频理解流水线：从场景到问答](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [具备注册表与治理机制的无状态 MCP 服务器](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [推测解码推理服务器](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [宪法式安全测试框架与红队演练环境](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [从 GitHub Issue 到 PR 的自主智能体](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [自适应多模态个人 AI 导师](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [终端原生编程智能体](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [面向代码库的 RAG：跨仓库语义搜索](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [实时语音助手（ASR → LLM → TTS）](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [多模态文档问答：视觉优先](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [自主研究智能体（AI Scientist 类）](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [面向 Kubernetes 的 DevOps 故障排查智能体](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [端到端微调流水线](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [生产级 RAG 聊天机器人：受监管领域](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [代码迁移智能体：仓库级升级](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [多智能体软件工程团队](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [LLM 可观测性与评估仪表盘](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [视频理解流水线：从场景到问答](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [具备注册表与治理机制的无状态 MCP 服务器](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [推测解码推理服务器](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [宪法式安全测试框架与红队演练环境](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [从 GitHub Issue 到 PR 的自主智能体](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [自适应多模态个人 AI 导师](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **深度实践路线**：每条路线由多节课组成，带你从零构建一个完整子系统。
 
 | # | 项目 | 综合阶段 | 语言 |
 |:---:|---------|----------|------|
-| 20 | [智能体运行框架的循环契约](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. 智能体运行框架 | Python |
-| 21 | [带 Schema 验证的工具注册表](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. 智能体运行框架 | Python |
-| 22 | [基于换行分隔 stdio 的 JSON-RPC 2.0 传输](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. 智能体运行框架 | Python |
-| 23 | [函数调用分发器](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. 智能体运行框架 | Python |
-| 24 | [“规划—执行”控制流](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. 智能体运行框架 | Python |
-| 25 | [验证关卡与观察预算](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. 智能体运行框架 | Python |
-| 26 | [带拒绝列表与路径隔离的沙盒运行器](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. 智能体运行框架 | Python |
-| 27 | [基于固定任务的评估框架](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. 智能体运行框架 | Python |
-| 28 | [基于 OTel GenAI Span 与 Prometheus 指标的可观测性](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. 智能体运行框架 | Python |
-| 29 | [在运行框架上完成端到端编程任务](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. 智能体运行框架 | Python |
-| 30 | [从零实现 BPE 分词器](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP 与 LLM | Python |
+| 20 | [智能体运行框架的循环契约](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. 智能体运行框架 | Python, TypeScript |
+| 21 | [带 Schema 验证的工具注册表](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. 智能体运行框架 | Python, TypeScript |
+| 22 | [基于换行分隔 stdio 的 JSON-RPC 2.0 传输](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. 智能体运行框架 | Python, TypeScript |
+| 23 | [函数调用分发器](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. 智能体运行框架 | Python, TypeScript |
+| 24 | [“规划—执行”控制流](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. 智能体运行框架 | Python, TypeScript |
+| 25 | [验证关卡与观察预算](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. 智能体运行框架 | Python, TypeScript |
+| 26 | [带拒绝列表与路径隔离的沙盒运行器](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. 智能体运行框架 | Python, TypeScript |
+| 27 | [基于固定任务的评估框架](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. 智能体运行框架 | Python, TypeScript |
+| 28 | [基于 OTel GenAI Span 与 Prometheus 指标的可观测性](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. 智能体运行框架 | Python, TypeScript |
+| 29 | [在运行框架上完成端到端编程任务](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. 智能体运行框架 | Python, TypeScript |
+| 30 | [从零实现 BPE 分词器](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP 与 LLM | Python, TypeScript |
 | 31 | [使用滑动窗口的分词数据集](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP 与 LLM | Python |
 | 32 | [Token 嵌入与位置嵌入](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP 与 LLM | Python |
 | 33 | [多头自注意力](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP 与 LLM | Python |
@@ -1030,13 +1030,13 @@ flowchart TB
 | 46 | [梯度累积](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. 端到端训练 | Python |
 | 47 | [保存检查点并恢复训练](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. 端到端训练 | Python |
 | 48 | [从零实现分布式数据并行与 FSDP](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. 端到端训练 | Python |
-| 49 | [语言模型评估框架](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. 端到端训练 | Python |
-| 50 | [假设生成器](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. 自动化研究 | Python |
-| 51 | [文献检索](../../phases/19-capstone-projects/51-literature-retrieval/) | D. 自动化研究 | Python |
-| 52 | [实验运行器](../../phases/19-capstone-projects/52-experiment-runner/) | D. 自动化研究 | Python |
+| 49 | [语言模型评估框架](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. 端到端训练 | Python, TypeScript |
+| 50 | [假设生成器](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. 自动化研究 | Python, TypeScript |
+| 51 | [文献检索](../../phases/19-capstone-projects/51-literature-retrieval/) | D. 自动化研究 | Python, TypeScript |
+| 52 | [实验运行器](../../phases/19-capstone-projects/52-experiment-runner/) | D. 自动化研究 | Python, TypeScript |
 | 53 | [结果评估器](../../phases/19-capstone-projects/53-result-evaluator/) | D. 自动化研究 | Python |
-| 54 | [论文写作器](../../phases/19-capstone-projects/54-paper-writer/) | D. 自动化研究 | Python |
-| 55 | [批评与修正循环](../../phases/19-capstone-projects/55-critic-loop/) | D. 自动化研究 | Python |
+| 54 | [论文写作器](../../phases/19-capstone-projects/54-paper-writer/) | D. 自动化研究 | Python, TypeScript |
+| 55 | [批评与修正循环](../../phases/19-capstone-projects/55-critic-loop/) | D. 自动化研究 | Python, TypeScript |
 | 56 | [迭代调度器](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. 自动化研究 | Python |
 | 57 | [端到端研究演示](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. 自动化研究 | Python |
 | 58 | [视觉编码器的图像块](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. 多模态 VLM | Python |
@@ -1045,13 +1045,13 @@ flowchart TB
 | 61 | [交叉注意力融合](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. 多模态 VLM | Python |
 | 62 | [视觉语言预训练](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. 多模态 VLM | Python |
 | 63 | [多模态评估](../../phases/19-capstone-projects/63-multimodal-eval/) | E. 多模态 VLM | Python |
-| 64 | [切块策略对比](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. 高级 RAG | Python |
-| 65 | [结合 BM25 与密集嵌入的混合检索](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. 高级 RAG | Python |
+| 64 | [切块策略对比](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. 高级 RAG | Python, TypeScript |
+| 65 | [结合 BM25 与密集嵌入的混合检索](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. 高级 RAG | Python, TypeScript |
 | 66 | [交叉编码器重排序器](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. 高级 RAG | Python |
-| 67 | [查询改写：HyDE、多查询与问题分解](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. 高级 RAG | Python |
-| 68 | [RAG 评估：精确率、召回率、MRR、nDCG、忠实度与答案相关性](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. 高级 RAG | Python |
+| 67 | [查询改写：HyDE、多查询与问题分解](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. 高级 RAG | Python, TypeScript |
+| 68 | [RAG 评估：精确率、召回率、MRR、nDCG、忠实度与答案相关性](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. 高级 RAG | Python, TypeScript |
 | 69 | [端到端 RAG 系统](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. 高级 RAG | Python |
-| 70 | [任务规格格式](../../phases/19-capstone-projects/70-task-spec-format/) | G. 评估框架 | Python |
+| 70 | [任务规格格式](../../phases/19-capstone-projects/70-task-spec-format/) | G. 评估框架 | Python, TypeScript |
 | 71 | [经典评估指标](../../phases/19-capstone-projects/71-classical-metrics/) | G. 评估框架 | Python |
 | 72 | [代码执行指标](../../phases/19-capstone-projects/72-code-exec-metric/) | G. 评估框架 | Python |
 | 73 | [困惑度与校准](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. 评估框架 | Python |
@@ -1064,11 +1064,11 @@ flowchart TB
 | 80 | [分片检查点与原子恢复](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. 分布式训练 | Python |
 | 81 | [端到端分布式训练](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. 分布式训练 | Python |
 | 82 | [越狱方式分类](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. 安全测试框架 | Python |
-| 83 | [提示词注入检测器](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. 安全测试框架 | Python |
+| 83 | [提示词注入检测器](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. 安全测试框架 | Python, TypeScript |
 | 84 | [拒绝回答评估](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. 安全测试框架 | Python |
-| 85 | [内容分类器集成](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. 安全测试框架 | Python |
-| 86 | [宪法式规则引擎](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. 安全测试框架 | Python, YAML |
-| 87 | [端到端安全关卡](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. 安全测试框架 | Python |
+| 85 | [内容分类器集成](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. 安全测试框架 | Python, TypeScript |
+| 86 | [宪法式规则引擎](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. 安全测试框架 | Python |
+| 87 | [端到端安全关卡](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. 安全测试框架 | Python, TypeScript |
 
 </details>
 

@@ -85,7 +85,7 @@ function runEval(testCases: [string, string, string][], usePrior: boolean): numb
     correct += ok ? 1 : 0;
     const tag = ok ? "  OK" : "MISS";
     console.log(
-      `  [${tag}] mention=${mention.padEnd(10)} pred=${String(pred).padEnd(7)} gold=${gold.padEnd(7)} score=${pyFixed(score, 3)}`,
+      `  [${tag}] mention=${mention.padEnd(10)} pred=${String(pred ?? "None").padEnd(7)} gold=${gold.padEnd(7)} score=${pyFixed(score, 3)}`,
     );
     console.log(`         context: ${context.slice(0, 70)}...`);
   }

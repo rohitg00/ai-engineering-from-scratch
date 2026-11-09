@@ -979,39 +979,39 @@ Binubuo ng mga aralin 31-46 ang [landas ng Engineering na may Tulong ng Agent](.
 
 | # | Proyekto | Pinagsasama | Wika |
 |:---:|---------|----------|------|
-| 01 | [Coding agent na direktang nasa terminal](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG sa codebase (semantikong paghahanap sa maraming repository)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Katulong na may boses sa tunay na oras (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Multimodal na pagtatanong sa dokumento (inuuna ang vision)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Autonomous na research agent (antas ng AI-Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [Agent sa pagresolba ng problema sa DevOps para sa Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [Pipeline ng fine-tuning mula simula hanggang dulo](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [Production RAG chatbot (reguladong larangan)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Agent sa paglilipat ng code (pag-upgrade sa antas ng repository)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Pangkat ng software engineering na maraming agent](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [Dashboard sa pagmamasid at pagsusuri ng LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Pipeline sa pag-unawa ng video (eksena → tanong at sagot)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Stateless na MCP server na may registry at pamamahala](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Inference server na may speculative decoding](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Constitutional safety harness at lugar ng pagsubok ng red-team](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [Autonomous na agent mula GitHub issue hanggang PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Personal na AI tutor (umaangkop, multimodal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [Coding agent na direktang nasa terminal](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG sa codebase (semantikong paghahanap sa maraming repository)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [Katulong na may boses sa tunay na oras (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [Multimodal na pagtatanong sa dokumento (inuuna ang vision)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [Autonomous na research agent (antas ng AI-Scientist)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [Agent sa pagresolba ng problema sa DevOps para sa Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [Pipeline ng fine-tuning mula simula hanggang dulo](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [Production RAG chatbot (reguladong larangan)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [Agent sa paglilipat ng code (pag-upgrade sa antas ng repository)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [Pangkat ng software engineering na maraming agent](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [Dashboard sa pagmamasid at pagsusuri ng LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [Pipeline sa pag-unawa ng video (eksena → tanong at sagot)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [Stateless na MCP server na may registry at pamamahala](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [Inference server na may speculative decoding](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Constitutional safety harness at lugar ng pagsubok ng red-team](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [Autonomous na agent mula GitHub issue hanggang PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [Personal na AI tutor (umaangkop, multimodal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **Mga landas ng malalimang pagbuo**: serye ng mga araling bumubuo ng buong subsystem mula sa simula.
 
 | # | Proyekto | Pinagsasama | Wika |
 |:---:|---------|----------|------|
-| 20 | [Kontrata ng siklo ng agent harness](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Harness ng agent | Python |
-| 21 | [Registry ng tool na may pagpapatunay ng schema](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Harness ng agent | Python |
-| 22 | [JSON-RPC 2.0 sa stdio na pinaghihiwalay ng bagong linya](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Harness ng agent | Python |
-| 23 | [Tagapamahagi ng tawag sa function](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Harness ng agent | Python |
-| 24 | [Daloy ng kontrol sa pagpaplano at pagpapatupad](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Harness ng agent | Python |
-| 25 | [Mga tarangkahan ng pagpapatunay at badyet ng obserbasyon](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Harness ng agent | Python |
-| 26 | [Sandbox runner na may denylist at kulungan ng path](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Harness ng agent | Python |
-| 27 | [Eval harness na may mga nakahandang task](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Harness ng agent | Python |
-| 28 | [Pagmamasid gamit ang mga span ng OTel GenAI at sukatan ng Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Harness ng agent | Python |
-| 29 | [Kumpletong coding agent sa harness](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Harness ng agent | Python |
-| 30 | [BPE tokenizer mula sa simula](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [Kontrata ng siklo ng agent harness](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Harness ng agent | Python, TypeScript |
+| 21 | [Registry ng tool na may pagpapatunay ng schema](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Harness ng agent | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 sa stdio na pinaghihiwalay ng bagong linya](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Harness ng agent | Python, TypeScript |
+| 23 | [Tagapamahagi ng tawag sa function](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Harness ng agent | Python, TypeScript |
+| 24 | [Daloy ng kontrol sa pagpaplano at pagpapatupad](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Harness ng agent | Python, TypeScript |
+| 25 | [Mga tarangkahan ng pagpapatunay at badyet ng obserbasyon](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Harness ng agent | Python, TypeScript |
+| 26 | [Sandbox runner na may denylist at kulungan ng path](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Harness ng agent | Python, TypeScript |
+| 27 | [Eval harness na may mga nakahandang task](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Harness ng agent | Python, TypeScript |
+| 28 | [Pagmamasid gamit ang mga span ng OTel GenAI at sukatan ng Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Harness ng agent | Python, TypeScript |
+| 29 | [Kumpletong coding agent sa harness](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Harness ng agent | Python, TypeScript |
+| 30 | [BPE tokenizer mula sa simula](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [Tokenized na dataset na may sliding window](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Mga embedding ng token at posisyon](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Self-attention na maraming head](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ Binubuo ng mga aralin 31-46 ang [landas ng Engineering na may Tulong ng Agent](.
 | 46 | [Pag-iipon ng gradient](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Training mula simula hanggang dulo | Python |
 | 47 | [Pag-save ng checkpoint at pagpapatuloy](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Training mula simula hanggang dulo | Python |
 | 48 | [Distributed Data Parallel at FSDP mula sa simula](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Training mula simula hanggang dulo | Python |
-| 49 | [Harness sa pagsusuri ng language model](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Training mula simula hanggang dulo | Python |
-| 50 | [Tagalikha ng haypotesis](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Awtomatikong pananaliksik | Python |
-| 51 | [Pagkuha ng literatura](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Awtomatikong pananaliksik | Python |
-| 52 | [Tagapagpatakbo ng eksperimento](../../phases/19-capstone-projects/52-experiment-runner/) | D. Awtomatikong pananaliksik | Python |
+| 49 | [Harness sa pagsusuri ng language model](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Training mula simula hanggang dulo | Python, TypeScript |
+| 50 | [Tagalikha ng haypotesis](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Awtomatikong pananaliksik | Python, TypeScript |
+| 51 | [Pagkuha ng literatura](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Awtomatikong pananaliksik | Python, TypeScript |
+| 52 | [Tagapagpatakbo ng eksperimento](../../phases/19-capstone-projects/52-experiment-runner/) | D. Awtomatikong pananaliksik | Python, TypeScript |
 | 53 | [Tagasuri ng resulta](../../phases/19-capstone-projects/53-result-evaluator/) | D. Awtomatikong pananaliksik | Python |
-| 54 | [Tagasulat ng papel-pananaliksik](../../phases/19-capstone-projects/54-paper-writer/) | D. Awtomatikong pananaliksik | Python |
-| 55 | [Siklo ng pagpuna](../../phases/19-capstone-projects/55-critic-loop/) | D. Awtomatikong pananaliksik | Python |
+| 54 | [Tagasulat ng papel-pananaliksik](../../phases/19-capstone-projects/54-paper-writer/) | D. Awtomatikong pananaliksik | Python, TypeScript |
+| 55 | [Siklo ng pagpuna](../../phases/19-capstone-projects/55-critic-loop/) | D. Awtomatikong pananaliksik | Python, TypeScript |
 | 56 | [Tagapag-iskedyul ng pag-ulit](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Awtomatikong pananaliksik | Python |
 | 57 | [Demo ng pananaliksik mula simula hanggang dulo](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Awtomatikong pananaliksik | Python |
 | 58 | [Mga patch ng vision encoder](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. VLM na maraming modality | Python |
@@ -1045,13 +1045,13 @@ Binubuo ng mga aralin 31-46 ang [landas ng Engineering na may Tulong ng Agent](.
 | 61 | [Pagsasanib sa pamamagitan ng cross-attention](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. VLM na maraming modality | Python |
 | 62 | [Pre-training ng vision-language](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. VLM na maraming modality | Python |
 | 63 | [Pagsusuri ng multimodal](../../phases/19-capstone-projects/63-multimodal-eval/) | E. VLM na maraming modality | Python |
-| 64 | [Paghahambing ng mga estratehiya ng paghahati](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. RAG na mas mataas na antas | Python |
-| 65 | [Pinagsamang pagkuha gamit ang BM25 at dense embedding](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. RAG na mas mataas na antas | Python |
+| 64 | [Paghahambing ng mga estratehiya ng paghahati](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. RAG na mas mataas na antas | Python, TypeScript |
+| 65 | [Pinagsamang pagkuha gamit ang BM25 at dense embedding](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. RAG na mas mataas na antas | Python, TypeScript |
 | 66 | [Cross-encoder na tagapag-ayos muli ng ranggo](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. RAG na mas mataas na antas | Python |
-| 67 | [Muling pagsulat ng query: HyDE, maraming query at paghahati](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. RAG na mas mataas na antas | Python |
-| 68 | [Pagsusuri ng RAG: Precision, Recall, MRR, nDCG, katapatan, kaugnayan ng sagot](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG na mas mataas na antas | Python |
+| 67 | [Muling pagsulat ng query: HyDE, maraming query at paghahati](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. RAG na mas mataas na antas | Python, TypeScript |
+| 68 | [Pagsusuri ng RAG: Precision, Recall, MRR, nDCG, katapatan, kaugnayan ng sagot](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG na mas mataas na antas | Python, TypeScript |
 | 69 | [Kumpletong sistema ng RAG](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. RAG na mas mataas na antas | Python |
-| 70 | [Format ng espesipikasyon ng task](../../phases/19-capstone-projects/70-task-spec-format/) | G. Framework ng pagsusuri | Python |
+| 70 | [Format ng espesipikasyon ng task](../../phases/19-capstone-projects/70-task-spec-format/) | G. Framework ng pagsusuri | Python, TypeScript |
 | 71 | [Mga tradisyonal na sukatan](../../phases/19-capstone-projects/71-classical-metrics/) | G. Framework ng pagsusuri | Python |
 | 72 | [Sukatan ng pagpapatakbo ng code](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Framework ng pagsusuri | Python |
 | 73 | [Perplexity at calibration](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Framework ng pagsusuri | Python |
@@ -1064,11 +1064,11 @@ Binubuo ng mga aralin 31-46 ang [landas ng Engineering na may Tulong ng Agent](.
 | 80 | [Hinating checkpoint at atomic na pagpapatuloy](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Ipinamahaging training | Python |
 | 81 | [Distributed training mula simula hanggang dulo](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Ipinamahaging training | Python |
 | 82 | [Pag-uuri ng jailbreak](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Harness ng kaligtasan | Python |
-| 83 | [Tagapagtukoy ng prompt injection](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Harness ng kaligtasan | Python |
+| 83 | [Tagapagtukoy ng prompt injection](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Harness ng kaligtasan | Python, TypeScript |
 | 84 | [Pagsusuri ng pagtanggi](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Harness ng kaligtasan | Python |
-| 85 | [Integrasyon ng content classifier](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Harness ng kaligtasan | Python |
-| 86 | [Engine ng mga tuntuning constitutional](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Harness ng kaligtasan | Python, YAML |
-| 87 | [Tarangkahan ng kaligtasan mula simula hanggang dulo](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Harness ng kaligtasan | Python |
+| 85 | [Integrasyon ng content classifier](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Harness ng kaligtasan | Python, TypeScript |
+| 86 | [Engine ng mga tuntuning constitutional](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Harness ng kaligtasan | Python |
+| 87 | [Tarangkahan ng kaligtasan mula simula hanggang dulo](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Harness ng kaligtasan | Python, TypeScript |
 
 </details>
 

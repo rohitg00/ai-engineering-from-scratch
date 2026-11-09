@@ -979,39 +979,39 @@ flowchart TB
 
 | # | منصوبہ | شامل مراحل | زبان |
 |:---:|---------|----------|------|
-| 01 | [ٹرمینل میں براہ راست چلنے والا کوڈنگ ایجنٹ](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [کوڈ بیس پر RAG (ریپوزٹریوں میں معنوی تلاش)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [فوری صوتی معاون (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [ملٹی موڈل دستاویزی سوال جواب (بصارت پہلے)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [خودمختار تحقیقی ایجنٹ (AI-Scientist درجے کا)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [Kubernetes کے لیے DevOps مسئلہ حل کرنے والا ایجنٹ](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [شروع سے آخر تک فائن ٹیوننگ پائپ لائن](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [عملی RAG چیٹ بوٹ (ضابطوں والا شعبہ)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [کوڈ کی منتقلی کا ایجنٹ (ریپوزٹری کی سطح کی بہتری)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [متعدد ایجنٹس کی سافٹ ویئر انجینئرنگ ٹیم](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [LLM نگرانی اور جانچ کا ڈیش بورڈ](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [ویڈیو سمجھنے کی پائپ لائن (منظر → سوال جواب)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [رجسٹری اور انتظام کے ساتھ بے حالت MCP سرور](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [قیاسی ڈی کوڈنگ والا استنتاجی سرور](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [آئینی سلامتی کا ڈھانچہ اور ریڈ ٹیم کا میدان](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [GitHub issue سے PR تک خودمختار ایجنٹ](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [ذاتی AI ٹیوٹر (مطابقت پذیر، ملٹی موڈل)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [ٹرمینل میں براہ راست چلنے والا کوڈنگ ایجنٹ](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [کوڈ بیس پر RAG (ریپوزٹریوں میں معنوی تلاش)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [فوری صوتی معاون (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [ملٹی موڈل دستاویزی سوال جواب (بصارت پہلے)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [خودمختار تحقیقی ایجنٹ (AI-Scientist درجے کا)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [Kubernetes کے لیے DevOps مسئلہ حل کرنے والا ایجنٹ](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [شروع سے آخر تک فائن ٹیوننگ پائپ لائن](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [عملی RAG چیٹ بوٹ (ضابطوں والا شعبہ)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [کوڈ کی منتقلی کا ایجنٹ (ریپوزٹری کی سطح کی بہتری)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [متعدد ایجنٹس کی سافٹ ویئر انجینئرنگ ٹیم](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [LLM نگرانی اور جانچ کا ڈیش بورڈ](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [ویڈیو سمجھنے کی پائپ لائن (منظر → سوال جواب)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [رجسٹری اور انتظام کے ساتھ بے حالت MCP سرور](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [قیاسی ڈی کوڈنگ والا استنتاجی سرور](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [آئینی سلامتی کا ڈھانچہ اور ریڈ ٹیم کا میدان](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [GitHub issue سے PR تک خودمختار ایجنٹ](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [ذاتی AI ٹیوٹر (مطابقت پذیر، ملٹی موڈل)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **گہری تعمیر کے راستے**: کئی اسباق کی سیریز جو شروع سے مکمل ذیلی نظام بناتی ہے۔
 
 | # | منصوبہ | شامل مراحل | زبان |
 |:---:|---------|----------|------|
-| 20 | [ایجنٹ کے اجرائی چکر کا معاہدہ](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python |
-| 21 | [اسکیما کی تصدیق والی ٹول رجسٹری](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python |
-| 22 | [نئی سطر سے الگ stdio پر JSON-RPC 2.0](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python |
-| 23 | [فنکشن کال تقسیم کرنے والا](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python |
-| 24 | [منصوبہ بندی اور عمل کا کنٹرول بہاؤ](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python |
-| 25 | [تصدیقی دروازے اور مشاہدے کا بجٹ](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python |
-| 26 | [ممنوعہ فہرست اور محدود راستے والا سینڈباکس رنر](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python |
-| 27 | [مقررہ نمونہ کاموں کے ساتھ جانچ کا ڈھانچہ](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python |
-| 28 | [OTel GenAI span اور Prometheus پیمانوں سے نگرانی](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python |
-| 29 | [اجرائی ڈھانچے پر مکمل کوڈنگ ایجنٹ](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python |
-| 30 | [شروع سے BPE ٹوکنائزر](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [ایجنٹ کے اجرائی چکر کا معاہدہ](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python, TypeScript |
+| 21 | [اسکیما کی تصدیق والی ٹول رجسٹری](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python, TypeScript |
+| 22 | [نئی سطر سے الگ stdio پر JSON-RPC 2.0](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python, TypeScript |
+| 23 | [فنکشن کال تقسیم کرنے والا](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python, TypeScript |
+| 24 | [منصوبہ بندی اور عمل کا کنٹرول بہاؤ](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python, TypeScript |
+| 25 | [تصدیقی دروازے اور مشاہدے کا بجٹ](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python, TypeScript |
+| 26 | [ممنوعہ فہرست اور محدود راستے والا سینڈباکس رنر](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python, TypeScript |
+| 27 | [مقررہ نمونہ کاموں کے ساتھ جانچ کا ڈھانچہ](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python, TypeScript |
+| 28 | [OTel GenAI span اور Prometheus پیمانوں سے نگرانی](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python, TypeScript |
+| 29 | [اجرائی ڈھانچے پر مکمل کوڈنگ ایجنٹ](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. ایجنٹ کا اجرائی ڈھانچہ | Python, TypeScript |
+| 30 | [شروع سے BPE ٹوکنائزر](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [سلائیڈنگ ونڈو کے ساتھ ٹوکن شدہ ڈیٹاسیٹ](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [ٹوکن اور مقام کی ایمبیڈنگ](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [ملٹی ہیڈ سیلف اٹینشن](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ flowchart TB
 | 46 | [گریڈینٹ جمع کرنا](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. مکمل تربیت | Python |
 | 47 | [چیک پوائنٹ محفوظ کرنا اور جاری رکھنا](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. مکمل تربیت | Python |
 | 48 | [شروع سے Distributed Data Parallel اور FSDP](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. مکمل تربیت | Python |
-| 49 | [زبان کے ماڈل کی جانچ کا ڈھانچہ](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. مکمل تربیت | Python |
-| 50 | [مفروضہ بنانے والا](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. خودکار تحقیق | Python |
-| 51 | [تحقیقی ادب کی بازیافت](../../phases/19-capstone-projects/51-literature-retrieval/) | D. خودکار تحقیق | Python |
-| 52 | [تجربہ چلانے والا](../../phases/19-capstone-projects/52-experiment-runner/) | D. خودکار تحقیق | Python |
+| 49 | [زبان کے ماڈل کی جانچ کا ڈھانچہ](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. مکمل تربیت | Python, TypeScript |
+| 50 | [مفروضہ بنانے والا](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. خودکار تحقیق | Python, TypeScript |
+| 51 | [تحقیقی ادب کی بازیافت](../../phases/19-capstone-projects/51-literature-retrieval/) | D. خودکار تحقیق | Python, TypeScript |
+| 52 | [تجربہ چلانے والا](../../phases/19-capstone-projects/52-experiment-runner/) | D. خودکار تحقیق | Python, TypeScript |
 | 53 | [نتیجہ جانچنے والا](../../phases/19-capstone-projects/53-result-evaluator/) | D. خودکار تحقیق | Python |
-| 54 | [مقالہ لکھنے والا](../../phases/19-capstone-projects/54-paper-writer/) | D. خودکار تحقیق | Python |
-| 55 | [تنقید کا چکر](../../phases/19-capstone-projects/55-critic-loop/) | D. خودکار تحقیق | Python |
+| 54 | [مقالہ لکھنے والا](../../phases/19-capstone-projects/54-paper-writer/) | D. خودکار تحقیق | Python, TypeScript |
+| 55 | [تنقید کا چکر](../../phases/19-capstone-projects/55-critic-loop/) | D. خودکار تحقیق | Python, TypeScript |
 | 56 | [تکرار کا شیڈول بنانے والا](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. خودکار تحقیق | Python |
 | 57 | [شروع سے آخر تک تحقیق کی مثال](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. خودکار تحقیق | Python |
 | 58 | [بصری انکوڈر کے پیچ](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. متعدد ذرائع والا VLM | Python |
@@ -1045,13 +1045,13 @@ flowchart TB
 | 61 | [کراس اٹینشن سے امتزاج](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. متعدد ذرائع والا VLM | Python |
 | 62 | [بصارت و زبان کی پیشگی تربیت](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. متعدد ذرائع والا VLM | Python |
 | 63 | [ملٹی موڈل جانچ](../../phases/19-capstone-projects/63-multimodal-eval/) | E. متعدد ذرائع والا VLM | Python |
-| 64 | [ٹکڑے بنانے کی حکمت عملیوں کا موازنہ](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. اعلیٰ RAG | Python |
-| 65 | [BM25 اور کثیف ایمبیڈنگ کے ساتھ ملی جلی بازیافت](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. اعلیٰ RAG | Python |
+| 64 | [ٹکڑے بنانے کی حکمت عملیوں کا موازنہ](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. اعلیٰ RAG | Python, TypeScript |
+| 65 | [BM25 اور کثیف ایمبیڈنگ کے ساتھ ملی جلی بازیافت](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. اعلیٰ RAG | Python, TypeScript |
 | 66 | [کراس انکوڈر سے دوبارہ درجہ دینے والا](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. اعلیٰ RAG | Python |
-| 67 | [کوئری کی نئی تحریر: HyDE، متعدد کوئری اور تقسیم](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. اعلیٰ RAG | Python |
-| 68 | [RAG کی جانچ: Precision، Recall، MRR، nDCG، وفاداری، جواب کی مناسبت](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. اعلیٰ RAG | Python |
+| 67 | [کوئری کی نئی تحریر: HyDE، متعدد کوئری اور تقسیم](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. اعلیٰ RAG | Python, TypeScript |
+| 68 | [RAG کی جانچ: Precision، Recall، MRR، nDCG، وفاداری، جواب کی مناسبت](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. اعلیٰ RAG | Python, TypeScript |
 | 69 | [مکمل RAG نظام](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. اعلیٰ RAG | Python |
-| 70 | [کام کی تفصیلات کا فارمیٹ](../../phases/19-capstone-projects/70-task-spec-format/) | G. جانچ کا فریم ورک | Python |
+| 70 | [کام کی تفصیلات کا فارمیٹ](../../phases/19-capstone-projects/70-task-spec-format/) | G. جانچ کا فریم ورک | Python, TypeScript |
 | 71 | [روایتی پیمانے](../../phases/19-capstone-projects/71-classical-metrics/) | G. جانچ کا فریم ورک | Python |
 | 72 | [کوڈ چلانے کا پیمانہ](../../phases/19-capstone-projects/72-code-exec-metric/) | G. جانچ کا فریم ورک | Python |
 | 73 | [پرپلیکسٹی اور کیلیبریشن](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. جانچ کا فریم ورک | Python |
@@ -1064,11 +1064,11 @@ flowchart TB
 | 80 | [تقسیم شدہ چیک پوائنٹ اور یکبارگی بحالی](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. تقسیم شدہ تربیت | Python |
 | 81 | [شروع سے آخر تک تقسیم شدہ تربیت](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. تقسیم شدہ تربیت | Python |
 | 82 | [جیل بریک کی درجہ بندی](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. سلامتی کا ڈھانچہ | Python |
-| 83 | [پرامپٹ انجیکشن کی شناخت](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. سلامتی کا ڈھانچہ | Python |
+| 83 | [پرامپٹ انجیکشن کی شناخت](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. سلامتی کا ڈھانچہ | Python, TypeScript |
 | 84 | [انکار کی جانچ](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. سلامتی کا ڈھانچہ | Python |
-| 85 | [مواد کی درجہ بندی کا انضمام](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. سلامتی کا ڈھانچہ | Python |
-| 86 | [آئینی قواعد کا انجن](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. سلامتی کا ڈھانچہ | Python, YAML |
-| 87 | [شروع سے آخر تک سلامتی کا دروازہ](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. سلامتی کا ڈھانچہ | Python |
+| 85 | [مواد کی درجہ بندی کا انضمام](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. سلامتی کا ڈھانچہ | Python, TypeScript |
+| 86 | [آئینی قواعد کا انجن](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. سلامتی کا ڈھانچہ | Python |
+| 87 | [شروع سے آخر تک سلامتی کا دروازہ](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. سلامتی کا ڈھانچہ | Python, TypeScript |
 
 </details>
 

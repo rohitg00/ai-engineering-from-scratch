@@ -979,39 +979,39 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 
 | # | Projekt | Összekapcsol | Nyelv |
 |:---:|---------|----------|------|
-| 01 | [Terminálba épített programozóágens](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG kódbázison (tárolók közötti szemantikus keresés)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Valós idejű hangasszisztens (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Multimodális dokumentumkérdezés (elsődlegesen képi)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Autonóm kutatóágens (AI-Scientist-osztály)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [DevOps-hibaelhárító ágens Kuberneteshez](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [Teljes finomhangolási folyamat](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [Üzemi RAG-csevegőrobot (szabályozott ágazat)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Kódmigrációs ágens (tárolószintű frissítés)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Többágenses szoftvermérnöki csapat](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [LLM-megfigyelhetőségi és értékelési irányítópult](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Videóértelmezési folyamat (jelenet → kérdés és válasz)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Állapotmentes MCP-szerver regiszterrel és irányítással](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Spekulatív dekódolású következtetőszerver](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Alkotmányos biztonsági keret és támadótesztpálya](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [Autonóm ágens GitHub-issue-tól PR-ig](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Személyes AI-tutor (adaptív és multimodális)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [Terminálba épített programozóágens](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG kódbázison (tárolók közötti szemantikus keresés)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [Valós idejű hangasszisztens (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [Multimodális dokumentumkérdezés (elsődlegesen képi)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [Autonóm kutatóágens (AI-Scientist-osztály)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [DevOps-hibaelhárító ágens Kuberneteshez](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [Teljes finomhangolási folyamat](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [Üzemi RAG-csevegőrobot (szabályozott ágazat)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [Kódmigrációs ágens (tárolószintű frissítés)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [Többágenses szoftvermérnöki csapat](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [LLM-megfigyelhetőségi és értékelési irányítópult](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [Videóértelmezési folyamat (jelenet → kérdés és válasz)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [Állapotmentes MCP-szerver regiszterrel és irányítással](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [Spekulatív dekódolású következtetőszerver](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Alkotmányos biztonsági keret és támadótesztpálya](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [Autonóm ágens GitHub-issue-tól PR-ig](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [Személyes AI-tutor (adaptív és multimodális)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **Elmélyült építési útvonalak**: több leckés sorozatok, amelyek az alapoktól építenek teljes alrendszert.
 
 | # | Projekt | Összekapcsol | Nyelv |
 |:---:|---------|----------|------|
-| 20 | [Ágenskeret-ciklusszerződés](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Ágensfuttató keret | Python |
-| 21 | [Eszközregiszter sémaellenőrzéssel](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Ágensfuttató keret | Python |
-| 22 | [JSON-RPC 2.0 sorokkal elválasztott stdio felett](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Ágensfuttató keret | Python |
-| 23 | [Függvényhívás-elosztó](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Ágensfuttató keret | Python |
-| 24 | [Tervezés-végrehajtás vezérlési folyamat](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Ágensfuttató keret | Python |
-| 25 | [Ellenőrzési kapuk és megfigyelési keret](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Ágensfuttató keret | Python |
-| 26 | [Elszigetelt futtató tiltólistával és útvonal-korlátozással](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Ágensfuttató keret | Python |
-| 27 | [Értékelőkeret rögzített tesztfeladatokkal](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Ágensfuttató keret | Python |
-| 28 | [Megfigyelhetőség OTel GenAI-spanekkel és Prometheus-mérőszámokkal](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Ágensfuttató keret | Python |
-| 29 | [Teljes programozóágens a futtatókereten](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Ágensfuttató keret | Python |
-| 30 | [BPE-tokenizáló az alapoktól](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [Ágenskeret-ciklusszerződés](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Ágensfuttató keret | Python, TypeScript |
+| 21 | [Eszközregiszter sémaellenőrzéssel](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Ágensfuttató keret | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 sorokkal elválasztott stdio felett](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Ágensfuttató keret | Python, TypeScript |
+| 23 | [Függvényhívás-elosztó](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Ágensfuttató keret | Python, TypeScript |
+| 24 | [Tervezés-végrehajtás vezérlési folyamat](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Ágensfuttató keret | Python, TypeScript |
+| 25 | [Ellenőrzési kapuk és megfigyelési keret](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Ágensfuttató keret | Python, TypeScript |
+| 26 | [Elszigetelt futtató tiltólistával és útvonal-korlátozással](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Ágensfuttató keret | Python, TypeScript |
+| 27 | [Értékelőkeret rögzített tesztfeladatokkal](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Ágensfuttató keret | Python, TypeScript |
+| 28 | [Megfigyelhetőség OTel GenAI-spanekkel és Prometheus-mérőszámokkal](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Ágensfuttató keret | Python, TypeScript |
+| 29 | [Teljes programozóágens a futtatókereten](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Ágensfuttató keret | Python, TypeScript |
+| 30 | [BPE-tokenizáló az alapoktól](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [Tokenizált adatkészlet csúszóablakkal](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Token- és pozícióbeágyazások](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Többfejes önfigyelem](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 46 | [Gradiensfelhalmozás](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Teljes tanítás | Python |
 | 47 | [Ellenőrzőpont mentése és folytatása](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Teljes tanítás | Python |
 | 48 | [Elosztott adatpárhuzamosság és FSDP az alapoktól](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Teljes tanítás | Python |
-| 49 | [Nyelvmodell-értékelési keret](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Teljes tanítás | Python |
-| 50 | [Hipotézisgenerátor](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Automatikus kutatás | Python |
-| 51 | [Szakirodalom-visszakeresés](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Automatikus kutatás | Python |
-| 52 | [Kísérletfuttató](../../phases/19-capstone-projects/52-experiment-runner/) | D. Automatikus kutatás | Python |
+| 49 | [Nyelvmodell-értékelési keret](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Teljes tanítás | Python, TypeScript |
+| 50 | [Hipotézisgenerátor](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Automatikus kutatás | Python, TypeScript |
+| 51 | [Szakirodalom-visszakeresés](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Automatikus kutatás | Python, TypeScript |
+| 52 | [Kísérletfuttató](../../phases/19-capstone-projects/52-experiment-runner/) | D. Automatikus kutatás | Python, TypeScript |
 | 53 | [Eredményértékelő](../../phases/19-capstone-projects/53-result-evaluator/) | D. Automatikus kutatás | Python |
-| 54 | [Tudományoscikk-író](../../phases/19-capstone-projects/54-paper-writer/) | D. Automatikus kutatás | Python |
-| 55 | [Kritikusi ciklus](../../phases/19-capstone-projects/55-critic-loop/) | D. Automatikus kutatás | Python |
+| 54 | [Tudományoscikk-író](../../phases/19-capstone-projects/54-paper-writer/) | D. Automatikus kutatás | Python, TypeScript |
+| 55 | [Kritikusi ciklus](../../phases/19-capstone-projects/55-critic-loop/) | D. Automatikus kutatás | Python, TypeScript |
 | 56 | [Iterációütemező](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Automatikus kutatás | Python |
 | 57 | [Teljes kutatási bemutató](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Automatikus kutatás | Python |
 | 58 | [Vizuális kódoló képrészletei](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Multimodális VLM | Python |
@@ -1045,13 +1045,13 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 61 | [Keresztfigyelmi egyesítés](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. Multimodális VLM | Python |
 | 62 | [Kép-nyelvi előtanítás](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. Multimodális VLM | Python |
 | 63 | [Multimodális értékelés](../../phases/19-capstone-projects/63-multimodal-eval/) | E. Multimodális VLM | Python |
-| 64 | [Darabolási stratégiák összehasonlítása](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Haladó RAG | Python |
-| 65 | [Hibrid visszakeresés BM25-tel és sűrű beágyazásokkal](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Haladó RAG | Python |
+| 64 | [Darabolási stratégiák összehasonlítása](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Haladó RAG | Python, TypeScript |
+| 65 | [Hibrid visszakeresés BM25-tel és sűrű beágyazásokkal](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Haladó RAG | Python, TypeScript |
 | 66 | [Keresztkódolós újrarangsoroló](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. Haladó RAG | Python |
-| 67 | [Lekérdezésátírás: HyDE, több lekérdezés és felbontás](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Haladó RAG | Python |
-| 68 | [RAG-értékelés: pontosság, felidézés, MRR, nDCG, hűség és válaszrelevancia](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Haladó RAG | Python |
+| 67 | [Lekérdezésátírás: HyDE, több lekérdezés és felbontás](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Haladó RAG | Python, TypeScript |
+| 68 | [RAG-értékelés: pontosság, felidézés, MRR, nDCG, hűség és válaszrelevancia](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Haladó RAG | Python, TypeScript |
 | 69 | [Teljes RAG-rendszer](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Haladó RAG | Python |
-| 70 | [Feladatspecifikáció-formátum](../../phases/19-capstone-projects/70-task-spec-format/) | G. Értékelőkeret | Python |
+| 70 | [Feladatspecifikáció-formátum](../../phases/19-capstone-projects/70-task-spec-format/) | G. Értékelőkeret | Python, TypeScript |
 | 71 | [Klasszikus mérőszámok](../../phases/19-capstone-projects/71-classical-metrics/) | G. Értékelőkeret | Python |
 | 72 | [Kódfuttatási mérőszám](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Értékelőkeret | Python |
 | 73 | [Perplexitás és kalibrálás](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Értékelőkeret | Python |
@@ -1064,11 +1064,11 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 80 | [Felosztott ellenőrzőpont és atomi folytatás](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Elosztott tanítás | Python |
 | 81 | [Teljes elosztott tanítás](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Elosztott tanítás | Python |
 | 82 | [A korlátmegkerülés osztályozása](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Biztonsági keret | Python |
-| 83 | [Promptinjektálás-felismerő](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Biztonsági keret | Python |
+| 83 | [Promptinjektálás-felismerő](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Biztonsági keret | Python, TypeScript |
 | 84 | [Elutasításértékelés](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Biztonsági keret | Python |
-| 85 | [Tartalomosztályozó integrációja](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Biztonsági keret | Python |
-| 86 | [Alkotmányos szabálymotor](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Biztonsági keret | Python, YAML |
-| 87 | [Teljes biztonsági kapu](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Biztonsági keret | Python |
+| 85 | [Tartalomosztályozó integrációja](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Biztonsági keret | Python, TypeScript |
+| 86 | [Alkotmányos szabálymotor](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Biztonsági keret | Python |
+| 87 | [Teljes biztonsági kapu](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Biztonsági keret | Python, TypeScript |
 
 </details>
 

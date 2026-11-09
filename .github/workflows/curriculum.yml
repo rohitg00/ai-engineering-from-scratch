@@ -283,7 +283,7 @@ jobs:
         run: |
           npm install --prefix "$RUNNER_TEMP/ts" --no-save --no-package-lock tsx@4.19.2 typescript@5.6.3 @types/node@22.10.2
           bin="$RUNNER_TEMP/ts/node_modules/.bin"
-          for file in $(git grep -l 'TypeScript port of code/.*Node standard library only' -- 'phases/*/code/*.ts'); do
+          for file in $(git grep -l 'TypeScript port of .*Node standard library only' -- 'phases/*/code/*.ts'); do
             echo "::group::$file"
             "$bin/tsc" --strict --noEmit --target es2022 --module nodenext --moduleResolution nodenext --types node --typeRoots "$RUNNER_TEMP/ts/node_modules/@types" "$file"
             case "$file" in

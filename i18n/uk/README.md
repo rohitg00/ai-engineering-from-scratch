@@ -979,39 +979,39 @@ flowchart TB
 
 | # | Проєкт | Поєднує | Мова |
 |:---:|---------|----------|------|
-| 01 | [Термінальний агент програмування](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG над кодовою базою (семантичний пошук між репозиторіями)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Голосовий помічник у реальному часі (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Мультимодальні запитання й відповіді про документи з опорою на зір](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Автономний дослідницький агент класу AI Scientist](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [DevOps-агент для пошуку несправностей у Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [Наскрізний конвеєр донавчання](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [Промисловий RAG-чатбот для регульованої галузі](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Агент міграції коду й оновлення всього репозиторію](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Багатоагентна команда розробки програмного забезпечення](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [Панель спостережуваності й оцінювання LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Конвеєр розуміння відео (сцена → запитання й відповіді)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [MCP-сервер без стану з реєстром і керуванням](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Сервер інференсу зі спекулятивним декодуванням](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Конституційна оболонка безпеки й полігон червоної команди](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [Автономний агент від GitHub issue до PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Особистий AI-викладач, адаптивний і мультимодальний](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [Термінальний агент програмування](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG над кодовою базою (семантичний пошук між репозиторіями)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [Голосовий помічник у реальному часі (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [Мультимодальні запитання й відповіді про документи з опорою на зір](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [Автономний дослідницький агент класу AI Scientist](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [DevOps-агент для пошуку несправностей у Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [Наскрізний конвеєр донавчання](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [Промисловий RAG-чатбот для регульованої галузі](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [Агент міграції коду й оновлення всього репозиторію](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [Багатоагентна команда розробки програмного забезпечення](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [Панель спостережуваності й оцінювання LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [Конвеєр розуміння відео (сцена → запитання й відповіді)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [MCP-сервер без стану з реєстром і керуванням](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [Сервер інференсу зі спекулятивним декодуванням](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Конституційна оболонка безпеки й полігон червоної команди](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [Автономний агент від GitHub issue до PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [Особистий AI-викладач, адаптивний і мультимодальний](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **Поглиблені практичні маршрути**: серії уроків, у яких ви створюєте повну підсистему з нуля.
 
 | # | Проєкт | Поєднує | Мова |
 |:---:|---------|----------|------|
-| 20 | [Контракт циклу агентної оболонки](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Агентна оболонка | Python |
-| 21 | [Реєстр інструментів із перевіркою схеми](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Агентна оболонка | Python |
-| 22 | [JSON-RPC 2.0 через stdio з розділенням новими рядками](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Агентна оболонка | Python |
-| 23 | [Диспетчер викликів функцій](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Агентна оболонка | Python |
-| 24 | [Потік керування плануванням і виконанням](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Агентна оболонка | Python |
-| 25 | [Контрольні перевірки й бюджет спостережень](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Агентна оболонка | Python |
-| 26 | [Пісочниця зі списком заборон і обмеженням шляхів](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Агентна оболонка | Python |
-| 27 | [Оболонка оцінювання з фіксованими тестовими завданнями](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Агентна оболонка | Python |
-| 28 | [Спостережуваність через спани OTel GenAI та метрики Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Агентна оболонка | Python |
-| 29 | [Наскрізний агент програмування на оболонці виконання](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Агентна оболонка | Python |
-| 30 | [BPE-токенізатор із нуля](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [Контракт циклу агентної оболонки](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Агентна оболонка | Python, TypeScript |
+| 21 | [Реєстр інструментів із перевіркою схеми](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Агентна оболонка | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 через stdio з розділенням новими рядками](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Агентна оболонка | Python, TypeScript |
+| 23 | [Диспетчер викликів функцій](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Агентна оболонка | Python, TypeScript |
+| 24 | [Потік керування плануванням і виконанням](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Агентна оболонка | Python, TypeScript |
+| 25 | [Контрольні перевірки й бюджет спостережень](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Агентна оболонка | Python, TypeScript |
+| 26 | [Пісочниця зі списком заборон і обмеженням шляхів](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Агентна оболонка | Python, TypeScript |
+| 27 | [Оболонка оцінювання з фіксованими тестовими завданнями](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Агентна оболонка | Python, TypeScript |
+| 28 | [Спостережуваність через спани OTel GenAI та метрики Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Агентна оболонка | Python, TypeScript |
+| 29 | [Наскрізний агент програмування на оболонці виконання](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Агентна оболонка | Python, TypeScript |
+| 30 | [BPE-токенізатор із нуля](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [Токенізований набір даних із ковзним вікном](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Векторні подання токенів і позицій](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Багатоголова самоувага](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ flowchart TB
 | 46 | [Накопичення градієнтів](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Наскрізне навчання | Python |
 | 47 | [Збереження контрольної точки й відновлення](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Наскрізне навчання | Python |
 | 48 | [Розподілений паралелізм даних і FSDP з нуля](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Наскрізне навчання | Python |
-| 49 | [Оболонка оцінювання мовної моделі](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Наскрізне навчання | Python |
-| 50 | [Генератор гіпотез](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Автоматизоване дослідження | Python |
-| 51 | [Пошук наукової літератури](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Автоматизоване дослідження | Python |
-| 52 | [Виконавець експериментів](../../phases/19-capstone-projects/52-experiment-runner/) | D. Автоматизоване дослідження | Python |
+| 49 | [Оболонка оцінювання мовної моделі](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Наскрізне навчання | Python, TypeScript |
+| 50 | [Генератор гіпотез](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Автоматизоване дослідження | Python, TypeScript |
+| 51 | [Пошук наукової літератури](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Автоматизоване дослідження | Python, TypeScript |
+| 52 | [Виконавець експериментів](../../phases/19-capstone-projects/52-experiment-runner/) | D. Автоматизоване дослідження | Python, TypeScript |
 | 53 | [Оцінювач результатів](../../phases/19-capstone-projects/53-result-evaluator/) | D. Автоматизоване дослідження | Python |
-| 54 | [Автор наукової статті](../../phases/19-capstone-projects/54-paper-writer/) | D. Автоматизоване дослідження | Python |
-| 55 | [Цикл критики](../../phases/19-capstone-projects/55-critic-loop/) | D. Автоматизоване дослідження | Python |
+| 54 | [Автор наукової статті](../../phases/19-capstone-projects/54-paper-writer/) | D. Автоматизоване дослідження | Python, TypeScript |
+| 55 | [Цикл критики](../../phases/19-capstone-projects/55-critic-loop/) | D. Автоматизоване дослідження | Python, TypeScript |
 | 56 | [Планувальник ітерацій](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Автоматизоване дослідження | Python |
 | 57 | [Наскрізна демонстрація дослідження](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Автоматизоване дослідження | Python |
 | 58 | [Фрагменти візуального кодувальника](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Мультимодальна візуально-мовна модель | Python |
@@ -1045,13 +1045,13 @@ flowchart TB
 | 61 | [Злиття через перехресну увагу](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. Мультимодальна візуально-мовна модель | Python |
 | 62 | [Попереднє навчання зору й мови](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. Мультимодальна візуально-мовна модель | Python |
 | 63 | [Мультимодальне оцінювання](../../phases/19-capstone-projects/63-multimodal-eval/) | E. Мультимодальна візуально-мовна модель | Python |
-| 64 | [Порівняння стратегій поділу на фрагменти](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Поглиблений RAG | Python |
-| 65 | [Гібридний пошук із BM25 і щільними векторними поданнями](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Поглиблений RAG | Python |
+| 64 | [Порівняння стратегій поділу на фрагменти](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Поглиблений RAG | Python, TypeScript |
+| 65 | [Гібридний пошук із BM25 і щільними векторними поданнями](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Поглиблений RAG | Python, TypeScript |
 | 66 | [Переранжування перехресним кодувальником](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. Поглиблений RAG | Python |
-| 67 | [Переписування запитів: HyDE, Multi-Query та декомпозиція](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Поглиблений RAG | Python |
-| 68 | [Оцінювання RAG: точність, повнота, MRR, nDCG, достовірність і релевантність відповіді](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Поглиблений RAG | Python |
+| 67 | [Переписування запитів: HyDE, Multi-Query та декомпозиція](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Поглиблений RAG | Python, TypeScript |
+| 68 | [Оцінювання RAG: точність, повнота, MRR, nDCG, достовірність і релевантність відповіді](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Поглиблений RAG | Python, TypeScript |
 | 69 | [Наскрізна RAG-система](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Поглиблений RAG | Python |
-| 70 | [Формат специфікації завдань](../../phases/19-capstone-projects/70-task-spec-format/) | G. Фреймворк оцінювання | Python |
+| 70 | [Формат специфікації завдань](../../phases/19-capstone-projects/70-task-spec-format/) | G. Фреймворк оцінювання | Python, TypeScript |
 | 71 | [Класичні метрики](../../phases/19-capstone-projects/71-classical-metrics/) | G. Фреймворк оцінювання | Python |
 | 72 | [Метрика виконання коду](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Фреймворк оцінювання | Python |
 | 73 | [Перплексія та калібрування](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Фреймворк оцінювання | Python |
@@ -1064,11 +1064,11 @@ flowchart TB
 | 80 | [Розподілена контрольна точка й атомарне відновлення](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Розподілене навчання | Python |
 | 81 | [Наскрізне розподілене навчання](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Розподілене навчання | Python |
 | 82 | [Класифікація способів обходу захисту](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Оболонка безпеки | Python |
-| 83 | [Детектор ін'єкцій промптів](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Оболонка безпеки | Python |
+| 83 | [Детектор ін'єкцій промптів](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Оболонка безпеки | Python, TypeScript |
 | 84 | [Оцінювання відмов](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Оболонка безпеки | Python |
-| 85 | [Інтеграція класифікатора вмісту](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Оболонка безпеки | Python |
-| 86 | [Рушій конституційних правил](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Оболонка безпеки | Python, YAML |
-| 87 | [Наскрізна перевірка безпеки](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Оболонка безпеки | Python |
+| 85 | [Інтеграція класифікатора вмісту](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Оболонка безпеки | Python, TypeScript |
+| 86 | [Рушій конституційних правил](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Оболонка безпеки | Python |
+| 87 | [Наскрізна перевірка безпеки](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Оболонка безпеки | Python, TypeScript |
 
 </details>
 

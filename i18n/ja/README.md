@@ -980,39 +980,39 @@ flowchart TB
 
 | # | プロジェクト | 組み合わせるフェーズ | 言語 |
 |:---:|---------|----------|------|
-| 01 | [ターミナルネイティブなコーディングエージェント](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [コードベースを対象にしたRAG（リポジトリ横断セマンティック検索）](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [リアルタイム音声アシスタント（ASR → LLM → TTS）](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [マルチモーダル文書QA（視覚優先）](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [自律型研究エージェント（AI Scientist級）](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [Kubernetes向けDevOpsトラブルシューティングエージェント](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [エンドツーエンドのファインチューニングパイプライン](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [規制業界向け本番RAGチャットボット](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [コード移行エージェント（リポジトリ単位のアップグレード）](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [マルチエージェントのソフトウェア開発チーム](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [LLMの可観測性・評価ダッシュボード](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [動画理解パイプライン（シーン → QA）](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [レジストリとガバナンスを備えたステートレスMCPサーバー](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [投機的デコーディング推論サーバー](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Constitutional AI安全性ハーネスとレッドチーム環境](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [GitHubのIssueからPRを作成する自律エージェント](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [個人向けAIチューター（適応型、マルチモーダル）](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [ターミナルネイティブなコーディングエージェント](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [コードベースを対象にしたRAG（リポジトリ横断セマンティック検索）](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [リアルタイム音声アシスタント（ASR → LLM → TTS）](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [マルチモーダル文書QA（視覚優先）](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [自律型研究エージェント（AI Scientist級）](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [Kubernetes向けDevOpsトラブルシューティングエージェント](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [エンドツーエンドのファインチューニングパイプライン](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [規制業界向け本番RAGチャットボット](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [コード移行エージェント（リポジトリ単位のアップグレード）](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [マルチエージェントのソフトウェア開発チーム](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [LLMの可観測性・評価ダッシュボード](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [動画理解パイプライン（シーン → QA）](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [レジストリとガバナンスを備えたステートレスMCPサーバー](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [投機的デコーディング推論サーバー](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Constitutional AI安全性ハーネスとレッドチーム環境](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [GitHubのIssueからPRを作成する自律エージェント](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [個人向けAIチューター（適応型、マルチモーダル）](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **本格的な実装トラック**：複数のレッスンを通じて、サブシステム全体をゼロから構築します。
 
 | # | プロジェクト | 組み合わせるフェーズ | 言語 |
 |:---:|---------|----------|------|
-| 20 | [エージェントハーネスのループ契約](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. エージェントハーネス | Python |
-| 21 | [スキーマ検証付きツールレジストリ](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. エージェントハーネス | Python |
-| 22 | [改行区切りstdio上のJSON-RPC 2.0](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. エージェントハーネス | Python |
-| 23 | [関数呼び出しディスパッチャー](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. エージェントハーネス | Python |
-| 24 | [計画・実行の制御フロー](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. エージェントハーネス | Python |
-| 25 | [検証ゲートと観測予算](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. エージェントハーネス | Python |
-| 26 | [拒否リストとパス隔離を備えたサンドボックスランナー](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. エージェントハーネス | Python |
-| 27 | [フィクスチャータスクを使う評価ハーネス](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. エージェントハーネス | Python |
-| 28 | [OTel GenAIスパンとPrometheus指標による可観測性](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. エージェントハーネス | Python |
-| 29 | [ハーネス上で動くエンドツーエンドのコーディングエージェント](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. エージェントハーネス | Python |
-| 30 | [BPEトークナイザーをゼロから実装する](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP・LLM | Python |
+| 20 | [エージェントハーネスのループ契約](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. エージェントハーネス | Python, TypeScript |
+| 21 | [スキーマ検証付きツールレジストリ](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. エージェントハーネス | Python, TypeScript |
+| 22 | [改行区切りstdio上のJSON-RPC 2.0](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. エージェントハーネス | Python, TypeScript |
+| 23 | [関数呼び出しディスパッチャー](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. エージェントハーネス | Python, TypeScript |
+| 24 | [計画・実行の制御フロー](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. エージェントハーネス | Python, TypeScript |
+| 25 | [検証ゲートと観測予算](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. エージェントハーネス | Python, TypeScript |
+| 26 | [拒否リストとパス隔離を備えたサンドボックスランナー](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. エージェントハーネス | Python, TypeScript |
+| 27 | [フィクスチャータスクを使う評価ハーネス](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. エージェントハーネス | Python, TypeScript |
+| 28 | [OTel GenAIスパンとPrometheus指標による可観測性](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. エージェントハーネス | Python, TypeScript |
+| 29 | [ハーネス上で動くエンドツーエンドのコーディングエージェント](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. エージェントハーネス | Python, TypeScript |
+| 30 | [BPEトークナイザーをゼロから実装する](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP・LLM | Python, TypeScript |
 | 31 | [スライディングウィンドウを使ったトークン化データセット](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP・LLM | Python |
 | 32 | [トークン埋め込みと位置埋め込み](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP・LLM | Python |
 | 33 | [マルチヘッド自己注意機構](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP・LLM | Python |
@@ -1031,13 +1031,13 @@ flowchart TB
 | 46 | [勾配累積](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. エンドツーエンド学習 | Python |
 | 47 | [チェックポイントの保存と再開](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. エンドツーエンド学習 | Python |
 | 48 | [分散データ並列（DDP）とFSDPをゼロから実装する](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. エンドツーエンド学習 | Python |
-| 49 | [言語モデル評価ハーネス](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. エンドツーエンド学習 | Python |
-| 50 | [仮説生成器](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. 自動化研究 | Python |
-| 51 | [文献検索](../../phases/19-capstone-projects/51-literature-retrieval/) | D. 自動化研究 | Python |
-| 52 | [実験実行ツール](../../phases/19-capstone-projects/52-experiment-runner/) | D. 自動化研究 | Python |
+| 49 | [言語モデル評価ハーネス](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. エンドツーエンド学習 | Python, TypeScript |
+| 50 | [仮説生成器](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. 自動化研究 | Python, TypeScript |
+| 51 | [文献検索](../../phases/19-capstone-projects/51-literature-retrieval/) | D. 自動化研究 | Python, TypeScript |
+| 52 | [実験実行ツール](../../phases/19-capstone-projects/52-experiment-runner/) | D. 自動化研究 | Python, TypeScript |
 | 53 | [結果評価器](../../phases/19-capstone-projects/53-result-evaluator/) | D. 自動化研究 | Python |
-| 54 | [論文執筆ツール](../../phases/19-capstone-projects/54-paper-writer/) | D. 自動化研究 | Python |
-| 55 | [批評ループ](../../phases/19-capstone-projects/55-critic-loop/) | D. 自動化研究 | Python |
+| 54 | [論文執筆ツール](../../phases/19-capstone-projects/54-paper-writer/) | D. 自動化研究 | Python, TypeScript |
+| 55 | [批評ループ](../../phases/19-capstone-projects/55-critic-loop/) | D. 自動化研究 | Python, TypeScript |
 | 56 | [反復スケジューラー](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. 自動化研究 | Python |
 | 57 | [エンドツーエンドの研究デモ](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. 自動化研究 | Python |
 | 58 | [視覚エンコーダーのパッチ](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. マルチモーダルVLM | Python |
@@ -1046,13 +1046,13 @@ flowchart TB
 | 61 | [クロスアテンション融合](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. マルチモーダルVLM | Python |
 | 62 | [視覚言語事前学習](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. マルチモーダルVLM | Python |
 | 63 | [マルチモーダル評価](../../phases/19-capstone-projects/63-multimodal-eval/) | E. マルチモーダルVLM | Python |
-| 64 | [チャンク分割戦略の比較](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. 高度なRAG | Python |
-| 65 | [BM25と密ベクトル埋め込みによるハイブリッド検索](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. 高度なRAG | Python |
+| 64 | [チャンク分割戦略の比較](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. 高度なRAG | Python, TypeScript |
+| 65 | [BM25と密ベクトル埋め込みによるハイブリッド検索](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. 高度なRAG | Python, TypeScript |
 | 66 | [クロスエンコーダー再ランキングモデル](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. 高度なRAG | Python |
-| 67 | [クエリ書き換え：HyDE、複数クエリ、分解](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. 高度なRAG | Python |
-| 68 | [RAG評価：適合率、再現率、MRR、nDCG、忠実性、回答関連性](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. 高度なRAG | Python |
+| 67 | [クエリ書き換え：HyDE、複数クエリ、分解](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. 高度なRAG | Python, TypeScript |
+| 68 | [RAG評価：適合率、再現率、MRR、nDCG、忠実性、回答関連性](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. 高度なRAG | Python, TypeScript |
 | 69 | [エンドツーエンドのRAGシステム](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. 高度なRAG | Python |
-| 70 | [タスク仕様の形式](../../phases/19-capstone-projects/70-task-spec-format/) | G. 評価フレームワーク | Python |
+| 70 | [タスク仕様の形式](../../phases/19-capstone-projects/70-task-spec-format/) | G. 評価フレームワーク | Python, TypeScript |
 | 71 | [古典的な評価指標](../../phases/19-capstone-projects/71-classical-metrics/) | G. 評価フレームワーク | Python |
 | 72 | [コード実行指標](../../phases/19-capstone-projects/72-code-exec-metric/) | G. 評価フレームワーク | Python |
 | 73 | [パープレキシティとキャリブレーション](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. 評価フレームワーク | Python |
@@ -1065,11 +1065,11 @@ flowchart TB
 | 80 | [シャーディングしたチェックポイントとアトミックな再開](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. 分散学習 | Python |
 | 81 | [エンドツーエンドの分散学習](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. 分散学習 | Python |
 | 82 | [脱獄の分類体系](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. 安全性ハーネス | Python |
-| 83 | [プロンプトインジェクション検出器](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. 安全性ハーネス | Python |
+| 83 | [プロンプトインジェクション検出器](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. 安全性ハーネス | Python, TypeScript |
 | 84 | [拒否応答の評価](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. 安全性ハーネス | Python |
-| 85 | [コンテンツ分類器の統合](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. 安全性ハーネス | Python |
-| 86 | [Constitutional AIのルールエンジン](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. 安全性ハーネス | Python, YAML |
-| 87 | [エンドツーエンドの安全性ゲート](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. 安全性ハーネス | Python |
+| 85 | [コンテンツ分類器の統合](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. 安全性ハーネス | Python, TypeScript |
+| 86 | [Constitutional AIのルールエンジン](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. 安全性ハーネス | Python |
+| 87 | [エンドツーエンドの安全性ゲート](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. 安全性ハーネス | Python, TypeScript |
 
 </details>
 

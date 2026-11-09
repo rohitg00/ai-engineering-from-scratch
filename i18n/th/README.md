@@ -979,39 +979,39 @@ flowchart TB
 
 | # | โครงการ | รวมความรู้จาก | ภาษา |
 |:---:|---------|----------|------|
-| 01 | [เอเจนต์เขียนโค้ดที่ทำงานในเทอร์มินัล](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG บนฐานโค้ด (ค้นหาเชิงความหมายข้ามที่เก็บ)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [ผู้ช่วยเสียงเรียลไทม์ (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [ถามตอบเอกสารหลายโมดัลลิตีโดยใช้ภาพเป็นหลัก](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [เอเจนต์วิจัยอัตโนมัติระดับ AI Scientist](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [เอเจนต์ DevOps แก้ปัญหา Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [ไปป์ไลน์ไฟน์จูนตั้งแต่ต้นจนจบ](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [แชตบอต RAG สำหรับงานจริงในอุตสาหกรรมกำกับดูแล](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [เอเจนต์ย้ายโค้ดและอัปเกรดทั้งที่เก็บ](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [ทีมวิศวกรรมซอฟต์แวร์หลายเอเจนต์](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [แดชบอร์ดสังเกตการณ์และประเมิน LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [ไปป์ไลน์เข้าใจวิดีโอ (ฉาก → ถามตอบ)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [เซิร์ฟเวอร์ MCP ไร้สถานะพร้อมรีจิสทรีและการกำกับดูแล](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [เซิร์ฟเวอร์อนุมานด้วยการถอดรหัสเชิงคาดการณ์](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [ชุดควบคุมความปลอดภัยตามหลักการและสนามทดสอบทีมโจมตี](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [เอเจนต์อัตโนมัติจาก GitHub issue สู่ PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [ผู้สอน AI ส่วนตัวที่ปรับตัวและรองรับหลายโมดัลลิตี](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [เอเจนต์เขียนโค้ดที่ทำงานในเทอร์มินัล](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG บนฐานโค้ด (ค้นหาเชิงความหมายข้ามที่เก็บ)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [ผู้ช่วยเสียงเรียลไทม์ (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [ถามตอบเอกสารหลายโมดัลลิตีโดยใช้ภาพเป็นหลัก](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [เอเจนต์วิจัยอัตโนมัติระดับ AI Scientist](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [เอเจนต์ DevOps แก้ปัญหา Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [ไปป์ไลน์ไฟน์จูนตั้งแต่ต้นจนจบ](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [แชตบอต RAG สำหรับงานจริงในอุตสาหกรรมกำกับดูแล](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [เอเจนต์ย้ายโค้ดและอัปเกรดทั้งที่เก็บ](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [ทีมวิศวกรรมซอฟต์แวร์หลายเอเจนต์](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [แดชบอร์ดสังเกตการณ์และประเมิน LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [ไปป์ไลน์เข้าใจวิดีโอ (ฉาก → ถามตอบ)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [เซิร์ฟเวอร์ MCP ไร้สถานะพร้อมรีจิสทรีและการกำกับดูแล](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [เซิร์ฟเวอร์อนุมานด้วยการถอดรหัสเชิงคาดการณ์](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [ชุดควบคุมความปลอดภัยตามหลักการและสนามทดสอบทีมโจมตี](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [เอเจนต์อัตโนมัติจาก GitHub issue สู่ PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [ผู้สอน AI ส่วนตัวที่ปรับตัวและรองรับหลายโมดัลลิตี](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **เส้นทางลงมือสร้างเชิงลึก**: ชุดหลายบทเรียนที่สร้างระบบย่อยสมบูรณ์จากศูนย์
 
 | # | โครงการ | รวมความรู้จาก | ภาษา |
 |:---:|---------|----------|------|
-| 20 | [สัญญาลูปของชุดควบคุมเอเจนต์](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. ชุดควบคุมเอเจนต์ | Python |
-| 21 | [รีจิสทรีเครื่องมือพร้อมตรวจสคีมา](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. ชุดควบคุมเอเจนต์ | Python |
-| 22 | [JSON-RPC 2.0 ผ่าน stdio ที่คั่นด้วยบรรทัดใหม่](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. ชุดควบคุมเอเจนต์ | Python |
-| 23 | [ตัวกระจายคำเรียกฟังก์ชัน](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. ชุดควบคุมเอเจนต์ | Python |
-| 24 | [กระแสควบคุมวางแผน-ลงมือ](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. ชุดควบคุมเอเจนต์ | Python |
-| 25 | [จุดตรวจยืนยันและงบการสังเกต](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. ชุดควบคุมเอเจนต์ | Python |
-| 26 | [ตัวรันแซนด์บ็อกซ์พร้อมรายการห้ามและขอบเขตพาธ](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. ชุดควบคุมเอเจนต์ | Python |
-| 27 | [ชุดประเมินพร้อมงานทดสอบคงที่](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. ชุดควบคุมเอเจนต์ | Python |
-| 28 | [สังเกตการณ์ด้วย OTel GenAI spans และตัวชี้วัด Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. ชุดควบคุมเอเจนต์ | Python |
-| 29 | [เอเจนต์เขียนโค้ดครบวงจรบนชุดควบคุม](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. ชุดควบคุมเอเจนต์ | Python |
-| 30 | [ตัวตัดโทเคน BPE จากศูนย์](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [สัญญาลูปของชุดควบคุมเอเจนต์](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. ชุดควบคุมเอเจนต์ | Python, TypeScript |
+| 21 | [รีจิสทรีเครื่องมือพร้อมตรวจสคีมา](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. ชุดควบคุมเอเจนต์ | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 ผ่าน stdio ที่คั่นด้วยบรรทัดใหม่](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. ชุดควบคุมเอเจนต์ | Python, TypeScript |
+| 23 | [ตัวกระจายคำเรียกฟังก์ชัน](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. ชุดควบคุมเอเจนต์ | Python, TypeScript |
+| 24 | [กระแสควบคุมวางแผน-ลงมือ](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. ชุดควบคุมเอเจนต์ | Python, TypeScript |
+| 25 | [จุดตรวจยืนยันและงบการสังเกต](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. ชุดควบคุมเอเจนต์ | Python, TypeScript |
+| 26 | [ตัวรันแซนด์บ็อกซ์พร้อมรายการห้ามและขอบเขตพาธ](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. ชุดควบคุมเอเจนต์ | Python, TypeScript |
+| 27 | [ชุดประเมินพร้อมงานทดสอบคงที่](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. ชุดควบคุมเอเจนต์ | Python, TypeScript |
+| 28 | [สังเกตการณ์ด้วย OTel GenAI spans และตัวชี้วัด Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. ชุดควบคุมเอเจนต์ | Python, TypeScript |
+| 29 | [เอเจนต์เขียนโค้ดครบวงจรบนชุดควบคุม](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. ชุดควบคุมเอเจนต์ | Python, TypeScript |
+| 30 | [ตัวตัดโทเคน BPE จากศูนย์](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [ชุดข้อมูลโทเคนพร้อมหน้าต่างเลื่อน](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [เอ็มเบดดิงโทเคนและตำแหน่ง](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Self-attention หลายหัว](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1030,13 +1030,13 @@ flowchart TB
 | 46 | [สะสมเกรเดียนต์](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. ฝึกตั้งแต่ต้นจนจบ | Python |
 | 47 | [บันทึกเช็กพอยต์และกลับมาทำต่อ](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. ฝึกตั้งแต่ต้นจนจบ | Python |
 | 48 | [Distributed Data Parallel และ FSDP จากศูนย์](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. ฝึกตั้งแต่ต้นจนจบ | Python |
-| 49 | [ชุดประเมินโมเดลภาษา](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. ฝึกตั้งแต่ต้นจนจบ | Python |
-| 50 | [ตัวสร้างสมมติฐาน](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. วิจัยอัตโนมัติ | Python |
-| 51 | [ค้นคืนวรรณกรรมวิจัย](../../phases/19-capstone-projects/51-literature-retrieval/) | D. วิจัยอัตโนมัติ | Python |
-| 52 | [ตัวรันการทดลอง](../../phases/19-capstone-projects/52-experiment-runner/) | D. วิจัยอัตโนมัติ | Python |
+| 49 | [ชุดประเมินโมเดลภาษา](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. ฝึกตั้งแต่ต้นจนจบ | Python, TypeScript |
+| 50 | [ตัวสร้างสมมติฐาน](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. วิจัยอัตโนมัติ | Python, TypeScript |
+| 51 | [ค้นคืนวรรณกรรมวิจัย](../../phases/19-capstone-projects/51-literature-retrieval/) | D. วิจัยอัตโนมัติ | Python, TypeScript |
+| 52 | [ตัวรันการทดลอง](../../phases/19-capstone-projects/52-experiment-runner/) | D. วิจัยอัตโนมัติ | Python, TypeScript |
 | 53 | [ตัวประเมินผลลัพธ์](../../phases/19-capstone-projects/53-result-evaluator/) | D. วิจัยอัตโนมัติ | Python |
-| 54 | [ตัวเขียนบทความวิจัย](../../phases/19-capstone-projects/54-paper-writer/) | D. วิจัยอัตโนมัติ | Python |
-| 55 | [ลูปวิจารณ์](../../phases/19-capstone-projects/55-critic-loop/) | D. วิจัยอัตโนมัติ | Python |
+| 54 | [ตัวเขียนบทความวิจัย](../../phases/19-capstone-projects/54-paper-writer/) | D. วิจัยอัตโนมัติ | Python, TypeScript |
+| 55 | [ลูปวิจารณ์](../../phases/19-capstone-projects/55-critic-loop/) | D. วิจัยอัตโนมัติ | Python, TypeScript |
 | 56 | [ตัวจัดตารางรอบทำงาน](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. วิจัยอัตโนมัติ | Python |
 | 57 | [เดโมวิจัยตั้งแต่ต้นจนจบ](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. วิจัยอัตโนมัติ | Python |
 | 58 | [แพตช์ของตัวเข้ารหัสภาพ](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. VLM หลายโมดัลลิตี | Python |
@@ -1045,13 +1045,13 @@ flowchart TB
 | 61 | [รวมข้อมูลด้วย cross-attention](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. VLM หลายโมดัลลิตี | Python |
 | 62 | [พรีเทรนภาพและภาษา](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. VLM หลายโมดัลลิตี | Python |
 | 63 | [การประเมินหลายโมดัลลิตี](../../phases/19-capstone-projects/63-multimodal-eval/) | E. VLM หลายโมดัลลิตี | Python |
-| 64 | [เปรียบเทียบกลยุทธ์แบ่งข้อความ](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. RAG ขั้นสูง | Python |
-| 65 | [ค้นคืนแบบผสมด้วย BM25 และเอ็มเบดดิงหนาแน่น](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. RAG ขั้นสูง | Python |
+| 64 | [เปรียบเทียบกลยุทธ์แบ่งข้อความ](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. RAG ขั้นสูง | Python, TypeScript |
+| 65 | [ค้นคืนแบบผสมด้วย BM25 และเอ็มเบดดิงหนาแน่น](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. RAG ขั้นสูง | Python, TypeScript |
 | 66 | [จัดอันดับใหม่ด้วย cross-encoder](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. RAG ขั้นสูง | Python |
-| 67 | [เขียนคำค้นใหม่: HyDE, Multi-Query และการแยกส่วน](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. RAG ขั้นสูง | Python |
-| 68 | [ประเมิน RAG: precision, recall, MRR, nDCG, ความตรงต่อแหล่งข้อมูล และความเกี่ยวข้องของคำตอบ](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG ขั้นสูง | Python |
+| 67 | [เขียนคำค้นใหม่: HyDE, Multi-Query และการแยกส่วน](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. RAG ขั้นสูง | Python, TypeScript |
+| 68 | [ประเมิน RAG: precision, recall, MRR, nDCG, ความตรงต่อแหล่งข้อมูล และความเกี่ยวข้องของคำตอบ](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG ขั้นสูง | Python, TypeScript |
 | 69 | [ระบบ RAG ตั้งแต่ต้นจนจบ](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. RAG ขั้นสูง | Python |
-| 70 | [รูปแบบข้อกำหนดงาน](../../phases/19-capstone-projects/70-task-spec-format/) | G. กรอบประเมิน | Python |
+| 70 | [รูปแบบข้อกำหนดงาน](../../phases/19-capstone-projects/70-task-spec-format/) | G. กรอบประเมิน | Python, TypeScript |
 | 71 | [ตัวชี้วัดแบบดั้งเดิม](../../phases/19-capstone-projects/71-classical-metrics/) | G. กรอบประเมิน | Python |
 | 72 | [ตัวชี้วัดการรันโค้ด](../../phases/19-capstone-projects/72-code-exec-metric/) | G. กรอบประเมิน | Python |
 | 73 | [Perplexity และการสอบเทียบ](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. กรอบประเมิน | Python |
@@ -1064,11 +1064,11 @@ flowchart TB
 | 80 | [เช็กพอยต์แบบแบ่งส่วนและกลับมาทำต่อแบบอะตอมมิก](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. ฝึกแบบกระจาย | Python |
 | 81 | [ฝึกแบบกระจายตั้งแต่ต้นจนจบ](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. ฝึกแบบกระจาย | Python |
 | 82 | [การจัดหมวดหมู่เจลเบรก](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. ชุดควบคุมความปลอดภัย | Python |
-| 83 | [ตัวตรวจจับการแทรกพรอมป์ต์](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. ชุดควบคุมความปลอดภัย | Python |
+| 83 | [ตัวตรวจจับการแทรกพรอมป์ต์](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. ชุดควบคุมความปลอดภัย | Python, TypeScript |
 | 84 | [การประเมินการปฏิเสธ](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. ชุดควบคุมความปลอดภัย | Python |
-| 85 | [เชื่อมต่อตัวจำแนกเนื้อหา](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. ชุดควบคุมความปลอดภัย | Python |
-| 86 | [เอนจินกฎตามหลักการ](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. ชุดควบคุมความปลอดภัย | Python, YAML |
-| 87 | [ด่านความปลอดภัยตั้งแต่ต้นจนจบ](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. ชุดควบคุมความปลอดภัย | Python |
+| 85 | [เชื่อมต่อตัวจำแนกเนื้อหา](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. ชุดควบคุมความปลอดภัย | Python, TypeScript |
+| 86 | [เอนจินกฎตามหลักการ](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. ชุดควบคุมความปลอดภัย | Python |
+| 87 | [ด่านความปลอดภัยตั้งแต่ต้นจนจบ](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. ชุดควบคุมความปลอดภัย | Python, TypeScript |
 
 </details>
 
