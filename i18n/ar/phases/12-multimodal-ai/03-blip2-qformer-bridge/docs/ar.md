@@ -3,7 +3,7 @@
 > CLIP يصف الصورة والنص ولكن لا يمكن أن تولد العناوين الرئيسية أو الإجابة على الأسئلة أو إجراء محادثة. حل BLIP-2 (Salesforce، 2023) ذلك مع جسر صغير قابل للتدريب: 32 متجهة استفسار قابلة للتعلم تلتحق بميزات ViT المجمدة عن طريق الانتباه المتقاطع، ثم يقع مباشرة في تدفق مدخل LLM المجمد. 188 مليون مبرمير من الجسر ربط ViT-g/14 إلى LLMs المجمدة كبيرة مثل 11B Flan-T5-XXL. كل VLM القائم على المكيّف حتى 2026  MiniGPT-4, InstructBLIP، أقارب LLaVA  هو نَسْل. هذه الدروس تقرأ بنية Q-Former ، وتفسير تدريبها المرحليين ، وبناء نسخة لعبة التي تغذي الرموز المرئية في جهاز تشكيل نص تجمد.
 
 **Type:** Build
-**Languages:** Python (stdlib, cross-attention + learnable-query demo)
+**Languages:** Python, TypeScript (stdlib, cross-attention + learnable-query demo)
 **Prerequisites:** Phase 12 · 02 (CLIP), Phase 7 (Transformers)
 **Time:** ~180 minutes
 

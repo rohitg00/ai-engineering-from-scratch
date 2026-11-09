@@ -3,7 +3,7 @@
 > LLaVA (أبريل 2023) هو أكثر المعماريات متعددة الطرق نسخة على الكوكب. واستبدل Q-Former من BLIP-2 مع MLP من 2 طبقات، واستبدل الانتباه المتقاطع المفتوح من Flamingo مع سلسلة رمزية ساذجة، وتدرب على 158k من المفاتيح البصرية التعليمية التي يولدها GPT-4 من الرسوم المقالة فقط. أي ممارس قام ببناء VLM بين عامي 2023 و 2026 قام ببناء نوع من LLaVA. LLaVA-1.5 تبادل في مُرسل MLP و 336px مُرمّع. إضافة LLaVA-NeXT AnyRes طلاء لدخول عالية الدقة. LLaVA-OneVision صورة موحدة، صور متعددة، و فيديو في وصفة واحدة. هذه الدروس تقرأ الوصفة وتطبيق المبرمج وتفسير لماذا "البسيط يفوز".
 
 **Type:** Build
-**Languages:** Python (stdlib, projector + instruction-template builder)
+**Languages:** Python, TypeScript (stdlib, projector + instruction-template builder)
 **Prerequisites:** Phase 12 · 02 (CLIP), Phase 11 (LLM Engineering — instruction tuning)
 **Time:** ~180 minutes
 

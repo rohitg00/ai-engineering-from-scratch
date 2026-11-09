@@ -3,7 +3,7 @@
 > قبل LLaVA-OneVision (Li et al., أغسطس 2024) كان عالم VLM المفتوح ذو نسب منفصلة: LLaVA-1.5 للصور الفردية، نماذج متعددة الصور مثل Mantis و VILA، نماذج الفيديو مثل Video-LLaVA و Video-LLaMA. كل واحد فاز بمعاييره و فشل في الآخرين جادلت LLaVA-OneVision بأن منهج واحد يمكن تدريب نموذج واحد على السيطرة على السيناريوهات الثلاثة، وأن تأثيرات نقل المهام الناشئة (مهارات الصورة الواحدة المصدرة إلى الفيديو، التفكير متعدد الصور المصدرة إلى الصورة الواحدة) تفوق مجموع المتخصصين. الوصفة بسيطة بشكل مخادع: ميزانية رمزية بصرية متوازنة بين السيناريوهات، بالإضافة إلى منهج نصري صريح ينتقل من صورة واحدة إلى OneVision (متعددة الصور) إلى الفيديو. هذا الدروس يقرأ الميزانية، المناهج الدراسية، والسلوكيات الناشئة.
 
 **Type:** Build
-**Languages:** Python (stdlib, token budget solver + curriculum planner)
+**Languages:** Python, TypeScript (stdlib, token budget solver + curriculum planner)
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 06 (any-resolution)
 **Time:** ~180 minutes
 

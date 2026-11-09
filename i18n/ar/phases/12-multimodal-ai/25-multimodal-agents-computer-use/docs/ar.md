@@ -3,7 +3,7 @@
 > منتج 2026 frontier هو وكيل متعدد الطرق يقرأ صور الشاشة، ويقرأ أزرار، ويتصفح واجهات الويب، ويملأ النماذج، ويكمل عمليات العمل من نهاية إلى نهاية. أظهرت SeeClick وCogAgent (2024) البدائية في إرسال واجهة التضمين. إضافة الهاتف المحمول أدى ChartAgent إلى استخدام أدوات بصرية للخطط. VisualWebArena و AgentVista (2026) هي المعايير التي يطاردها الحدود  وحتى Gemini 3 Pro و Claude Opus 4.7 نسبة ~ 30% على المهام الصعبة من AgentVista. هذه الحجر النهائي يجذب كل خيط من المرحلة 12: الإدراك (VLM عالية الصلة) ، والحكمة (LLM مع استخدام الأدوات) ، والأرض (خروج التنسيقية) ، والذاكرة طويلة الأفق، والتقييم.
 
 **Type:** Capstone
-**Languages:** Python (stdlib, action schema + agent loop skeleton)
+**Languages:** Python (stdlib, action schema + agent loop skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 09 (Qwen-VL JSON), Phase 14 (Agent Engineering)
 **Time:** ~240 minutes
 

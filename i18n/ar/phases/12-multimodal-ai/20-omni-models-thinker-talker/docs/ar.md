@@ -3,7 +3,7 @@
 > كان عرض عرض منتج GPT-4o في مايو 2024 مُقلباً ليس بسبب النموذج الأساسي ولكن بسبب شكل المنتج  واجهة صوتية حيث تتحدث، ويرى النموذج ما يراه الكاميرا، ويُحدث مرة أخرى في أقل من 250ms. قضى النظام البيئي المفتوح بقية عامي 2024 و 2025 في السباق للوصول إلى سطح المنتج. Qwen2.5-Omni (مارس 2025) هو التصميم المفتوح للمرجعية: Thinker (تحول الكتب الكبيرة) بالإضافة إلى Talker (تحول الكلمات المتوازية) ، مرتبطة بنشر رموز الكلام. ميني اومني أبسطته، موشي تطابق تأخرتها، GLM-4 صوت تمديدها إلى الصينية. هذه الدروس تقرأ بنية Thinker-Talker وميزانية التأخير التي تجعل البث في الوقت الحقيقي للدردشة العمل.
 
 **Type:** Build
-**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop)
+**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop), TypeScript
 **Prerequisites:** Phase 12 · 19 (audio-LLMs), Phase 12 · 16 (any-to-any)
 **Time:** ~180 minutes
 

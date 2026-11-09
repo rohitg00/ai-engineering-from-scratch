@@ -3,7 +3,7 @@
 > وثيقة الرؤية الأصلية RAG هي شريحة واحدة. يذهب RAG متعدد الطرق الإنتاجية إلى نطاق أوسع  استرداد عبر النص والصور والصوت والفيديو لأساليب العمل مثل تخطيط السفر ("اجد لي غداء نباتي هادئ مع ضوء طبيعي") ، التقييم الطبي ("ما هو الإصابة التي تطابق هذه الصورة + هذه الملاحظات") ، التجارة الإلكترونية ("التزامات مماثلة لهذه الصورة ، في حجمي") ، والخدمة الميدانية ("اشخيص صوت المحرك بالإضافة إلى صورة الجزء"). ثلاثة استطلاعات عام 2025  Abootorabi et al., Mei et al., Zhao et al.  تشكيل المشاكل الفرعية: الاستحواذ المتبادل، اندماج الاستحواذ، تأسيس الجيل، التقييم المتعدد الحركات. هذا الدروس يقرأ المسحات ويصمم خط أنابيب الإنتاج.
 
 **Type:** Build
-**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator)
+**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator), TypeScript
 **Prerequisites:** Phase 12 · 23 (ColPali), Phase 11 (RAG basics)
 **Time:** ~180 minutes
 

@@ -3,7 +3,7 @@
 > Emu3 من BAAI (وانغ وآخرون ، سبتمبر 2024) هو نتيجة 2024 التي كان ينبغي أن تنتهي من النقاش الانتشار مقابل الانتقال الذاتي. محول واحد لـ Llama-style decoder-only ، المدرب فقط على هدف التنبؤ التالي للتوقيع ، عبر المفرد الموحد من النص + رموز الصورة VQ + رموز الفيديو VQ 3D ، يضرب SDXL على إنتاج الصورة و LLaVA-1.6 على الإدراك. لا خسارة في المراقبة لا جدول الإنتشار يستخدم الإرشاد الخالي من التصنيف في الاستنتاج للجودة، ولكن الهدف الأساسي للتدريب هو التنبؤ بالبرنامج التالي مع إجبار المعلم. نشرت في مجلة الطبيعة هذه الدروس تقرأ أطروحة Emu3  لماذا أفضل tokenizer زائد مقياس هو كل ما تحتاجه  وتتناقض مع نهج التوزيع.
 
 **Type:** Learn
-**Languages:** Python (stdlib, 3D video tokenizer math + autoregressive sampler skeleton)
+**Languages:** Python, TypeScript (stdlib, 3D video tokenizer math + autoregressive sampler skeleton)
 **Prerequisites:** Phase 12 · 11 (Chameleon)
 **Time:** ~120 minutes
 

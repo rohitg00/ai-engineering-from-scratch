@@ -3,7 +3,7 @@
 > الوثائق ليست صور في PDF، ورقة علمية، فاتورة، أو النموذج المكتوب يدوياً لديه ترتيب، الجداول، الرسومات، الملاحظات، العناوين، والهيكل المفصلي الذي لا يمكن فهم الصورة العادية التقاط. كانت كومة ما قبل VLM خط أنابيب: Tesseract OCR + layoutLMv3 + heuristics استخرج الجدول. استبدلت موجة VLM تلك بأمثلة خالية من OCR  Donut (2022) ، Nougat (2023) ، DocLLM (2023)  التي تنبعث عن علامات هيكلية مباشرة. بحلول عام 2026، سيكون الحد "إطعام الصورة الصفحة إلى Claude Opus 4.7 عند 2576px الأصلي،" وتأتي الخروج المهيمنة للتعريف مجانا. هذا الدرس يقرأ القوس ثلاثية العصور من الذكاء الاصطناعي الوثائق.
 
 **Type:** Build
-**Languages:** Python (stdlib, layout-aware document parser skeleton)
+**Languages:** Python (stdlib, layout-aware document parser skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 5 (NLP)
 **Time:** ~180 minutes
 

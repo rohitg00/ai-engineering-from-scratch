@@ -3,7 +3,7 @@
 > أثبتت CLIP (2021) من OpenAI فكرة واحدة كبيرة بما يكفي لتشغيل السنوات الخمس المقبلة: تحديد مُرمّد الصورة ومُرمّد النص في نفس المساحة المتجهة باستخدام أزواج الصور المُضوضعة فقط على شبكة الإنترنت. صفر علامات مراقبة 400 مليون زوج الفضاء الإضافي الناتج يقوم بتصنيف الصور والنصوص الصورة، ويقوم بتوصيل كل VLM عام 2026 كبرج الرؤية. استبدل SigLIP 2 (2025) softmax بـ sigmoid ووصلت إلى CLIP بعد ذلك بتكلفة أقل. هذا الدروس يمر الرياضيات من InfoNCE إلى sigmoid ضياع زوجية و يبني خطوة التدريب في stdlib Python.
 
 **Type:** Build
-**Languages:** Python (stdlib, InfoNCE + sigmoid loss implementations)
+**Languages:** Python, TypeScript (stdlib, InfoNCE + sigmoid loss implementations)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 7 (Transformers)
 **Time:** ~180 minutes
 

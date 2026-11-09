@@ -3,7 +3,7 @@
 > الفيديو ليس كومة من الصور شريط 5 ثواني لديه ترتيب سببي، وعبارات العمل، وتوقيت الحدث الذي لا يمكن أن يمثل نموذج الصورة. فيديو-LLaMA (Zhang et al., يونيو 2023) شحنت أول فيديو-LLM مفتوح مع التأريخ الصوتي-البصري. و "فيديو تشات" و "فيديو لافا" قاموا بتحسين النمط بحلول عام 2025، تمت إغلاق الفجوة بين طرازات Qwen2.5VL المتحالفة مع الزمن و M-RoPE مع الطرازات المخصصة للحدود. حل كل نظام رموز زمنية بشكل مختلف  Q-former لكل كليب ، concat-pool لكل إطار ، وقت المتحالف M-RoPE لكل رمزا. هذا الدروس يقرأ الأنماط، و يبنّي عينة إطار متواحدة مقابل ديناميكية، و يقيّم على مهام التأريخ الزمني.
 
 **Type:** Build
-**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator)
+**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator), TypeScript
 **Prerequisites:** Phase 12 · 08 (LLaVA-OneVision)
 **Time:** ~180 minutes
 

@@ -3,7 +3,7 @@
 > قبل أي شيء متعدد الطرق، يجب أن تصبح الصورة تسلسلًا من الرموز التي يمكن أن يأكلها المحول. أجابت ورقة ViT 2020 على هذا مع معويضات 16x16 بكسل ، ومقارنة خطية ، وتضمين موقف. بعد خمس سنوات كل نموذج حدود 2026 (كلود أوبوس 4.7 عند 2576px الأصلي ، جيميني 3.1 برو ، Qwen3.5-Omni) لا يزال يبدأ بهذه الطريقة  تم تغيير المشفير من ViT إلى DINOv2 إلى SigLIP 2 ، تم إضافة رموز السجل ، أصبحت مخطط الموقف 2D-RoPE ، ولكن البدائية ظلت. هذه الدروس تقرأ خط الأنابيب من نهاية إلى آخر وتبنيها في stdlib Python حتى بقية المرحلة 12 لديها نموذج عقلي ملموس ل "الرموز المرئية".
 
 **Type:** Learn
-**Languages:** Python (stdlib, patch tokenizer + geometry calculator)
+**Languages:** Python, TypeScript (stdlib, patch tokenizer + geometry calculator)
 **Prerequisites:** Phase 7 (Transformers), Phase 4 (Computer Vision)
 **Time:** ~120 minutes
 

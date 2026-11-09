@@ -3,7 +3,7 @@
 > النماذج المتعددة الحركات الموحدة لديها إجهاد لا مفر منه. الفهم يحتاج إلى ميزات معنوية  سيجليب أو DINOv2 المتجهات الخروج غنية بالمعلومات على مستوى المفهوم. الجيل يريد رموز صديقة لإعادة الإعمار رموز VQ التي تتكوّن مرة أخرى إلى بيكسلات واضحة. لا تتوافق الهدفين في مرموز واحد يجادل يانوس (DeepSeek ، أكتوبر 2024) وجانوس برو (DeepSeek ، يناير 2025) أن الحل هو التوقف عن المحاولة: فك مقتربين. تقاسم جسم المحول بين المهام، ولكن طريق فهم من خلال SigLIP وتوليد من خلال VQ Tokenizer. في 7B، يضرب يانوس برو دال-إي 3 على جن إيفال بينما يطابق LLaVA على MMMU. هذا الدرس يقرأ لماذا يعملان كودران اثنان عندما يفشل واحد.
 
 **Type:** Build
-**Languages:** Python (stdlib, dual-encoder routing + shared-body signal)
+**Languages:** Python, TypeScript (stdlib, dual-encoder routing + shared-body signal)
 **Prerequisites:** Phase 12 · 13 (Transfusion), Phase 12 · 14 (Show-o)
 **Time:** ~120 minutes
 

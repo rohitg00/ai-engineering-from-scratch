@@ -3,7 +3,7 @@
 > يُرسل GPT-4o منتجًا لا يمكن أن تكرره العديد من النماذج المفتوحة: وكيلًا يسمع الصوت، يرى الفيديو، ويتحدث مرة أخرى في الوقت الحقيقي. وكانت الإجابة على النظام البيئي المفتوح بحلول أواخر عام 2024 MIO (وانغ وزملاؤه، سبتمبر 2024). تُرمز MIO النص والصورة والكلام والموسيقى، وتدرب محولًا سببيًا واحدًا على التسلسلات المتداخلة، وتولد أي طريقة لأي طريقة. أي جي بي تي (زان وزملاء ، فبراير 2024) كان دليل على المفهوم ؛ MIO هو التوسع ؛ Unified-IO 2 (ألن AI ، ديسمبر 2023) هو ابن عم مع رؤية + العمل الأرض. هذه الدروس تقرأ نمط أي إلى أي  أربعة tokenizers، محول واحد، التشريح التدفقية.
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-modality token allocator + streaming decode loop)
+**Languages:** Python, TypeScript (stdlib, four-modality token allocator + streaming decode loop)
 **Prerequisites:** Phase 12 · 11 (Chameleon), Phase 6 (Speech and Audio)
 **Time:** ~120 minutes
 
