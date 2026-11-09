@@ -3,7 +3,7 @@
 > Avec les 64k, l'attention consomme 70 à 80% de la latence de décode. Chaque laboratoire de modèle ouvert a un plan pour le réparer. La NSA de DeepSeek (ACL 2025 best paper) est celle qui a collé: trois branches d'attention parallèles  jetons à grains grossiers compressés, jetons à grains fins retenus sélectivement, et fenêtres coulissantes pour le contexte local  combinées à travers une passerelle apprise. Il est aligné sur le matériel (friendly au noyau), entraîneur natif (fonctionne dans la pré-entraînement, pas en boulon à l'inférence), et sur 64k décodeur il fonctionne plus rapidement que FlashAttention tout en correspondant ou battant la qualité de l'attention totale. Cette leçon construit les trois branches de bout en bout et montre pourquoi la rareté est différenciable de bout en bout.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 12 (KV cache, flash-attention), Phase 7 · 15 (attention variants), Phase 10 · 16 (differential attention)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > La leçon 16 a prouvé les mathématiques: la règle de rejet du Léviathan préserve exactement la distribution du vérificateur. Cette leçon est la vue de la formation en pile du décoding spéculatif de production de 2026. EAGLE-3 a transformé le modèle de projet d'une approximation bon marché en un réseau minuscule spécialement conçu et formé sur les états cachés du vérificateur, puis a ajouté une boucle de test de formation qui aligne ses distributions de train et d'inférence. Résultat: 3x à 6,5x accélération de bout en bout, taux acceptés par jeton supérieur à 0,9 sur le chat, aucun compromis de distribution. Chaque pile d'inférence de production en 2026 le renvoie par défaut.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 16 (speculative decoding math), Phase 10 · 12 (inference optimization)
 **Time:** ~75 minutes
 

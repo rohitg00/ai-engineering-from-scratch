@@ -3,7 +3,7 @@
 > Le modèle est un miroir, il reflète les données que vous lui donnez, il le donne à la poubelle, il reflète la poubelle avec une fluidité parfaite.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 10, Lessons 01-02 (Tokenizers, Building a Tokenizer)
 **Time:** ~90 minutes
 

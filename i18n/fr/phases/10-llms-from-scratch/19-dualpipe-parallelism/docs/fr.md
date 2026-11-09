@@ -3,7 +3,7 @@
 > DeepSeek-V3 a été formé sur 2048 GPU H800 avec des experts de MoE dispersés sur les nœuds. L'expert en communication tout-à-tout coûte 1 heure de communication pour chaque heure de calcul. Les GPU étaient en activité la moitié du temps. DualPipe (DeepSeek, décembre 2024) est un pipeline bidirectionnel qui superpose le calcul avant et arrière avec les communications tout-à-tout qu'ils déclenchent. La chute des bulles, la hausse du débit et la conservation de deux exemplaires de modèle-paramètre (le "dual" qui donne le nom) sont bon marché une fois que Expert Parallelism répand déjà des experts dans les rangs de toute façon. Cette leçon est une expérience de type Learn de ce que fait vraiment DualPipe et pourquoi le raffinement DualPipeV du Sea AI Lab réduit le coût du paramètre 2x au détriment d'une bulle légèrement plus serrée.
 
 **Type:** Learn
-**Languages:** Python (stdlib, schedule simulator)
+**Languages:** Python (stdlib, schedule simulator), Rust
 **Prerequisites:** Phase 10 · 05 (distributed training, FSDP, DeepSpeed), Phase 10 · 14 (open-model architectures and MoE)
 **Time:** ~60 minutes
 

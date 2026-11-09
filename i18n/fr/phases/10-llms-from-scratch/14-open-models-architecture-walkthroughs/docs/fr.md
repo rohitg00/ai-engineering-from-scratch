@@ -3,7 +3,7 @@
 > Vous avez construit un GPT-2 petit à partir de zéro dans la leçon 04. Les modèles frontaliers ouverts en 2026 sont la même famille avec cinq ou six changements concrets. RMSNorm au lieu de LayerNorm. SwiGLU au lieu de GELU. REPE au lieu de positions apprises. GQA ou MLA au lieu de MHA complet. Un mélange d'experts à grande échelle. Les mathématiques que vous connaissez couvrent 95% d'entre eux. Cette leçon lit Llama 3, DeepSeek-V3, Mixtral, Qwen et Gemma côte à côte et nomme la ligne exacte où chaque architecture diverge.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10, Lessons 04, 05, 12 (Pre-training, Scaling, Inference)
 **Time:** ~45 minutes
 

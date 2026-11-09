@@ -3,7 +3,7 @@
 > Le décoding spéculatif (phase 10 · 15) parallèle les jetons dans une séquence. Les cadres multi-agents se parallèlementent sur des séquences entières mais forcent une coordination explicite (voting, division des sous-tâches). Il est mort. L'inference (Rodionov et coll., arXiv:2504.06261) fait autre chose: exécute N instances du même LLM en parallèle contre un cache de valeur de clé SHARED. Chaque travailleur voit instantanément les jetons générés par les autres. Les modèles de raisonnement modernes  QwQ, DeepSeek-R1  peuvent s'auto-coordonner à travers ce cache partagé sans aucune mise à jour fine. L'approche est expérimentale mais elle ouvre un tout nouveau axe de parallélisme d'inférence qui se trouve orthogonal au décodeur de spécifications. Cette leçon met en œuvre un Hogwild à deux ouvriers ! C'est un simulateur en stdlib Python et explique pourquoi la collaboration partagée en cache émerge des capacités de raisonnement du modèle existant.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10 · 12 (inference optimization), Phase 10 · 15 (speculative decoding)
 **Time:** ~60 minutes
 

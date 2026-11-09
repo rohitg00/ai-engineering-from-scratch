@@ -3,7 +3,7 @@
 > Tout, de la leçon 1 à 12, est une étape d'un pipeline. Cette leçon est l'échafaudage qui transforme ces étapes en une seule course de bout en bout: symboliser, pré-train, échelle, SFT, aligner, évaluer, quantifier, servir. Vous ne serez pas entraîner un modèle 70B sur un ordinateur portable. Vous produirez la couche d'orchestration, le manifeste, la passerelle d'évaluation et le plan de retour que l'équipe frontalière 2026 utilisera pour décider ce qui sera expédié. C'est la pierre angulaire.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** All Phase 10 lessons 01-12
 **Time:** ~120 minutes
 
@@ -216,10 +216,16 @@ Le pipeline en `main.py`Il utilise une passerelle d'évaluation pour montrer à 
 
 Le flux de travail canonique a trois commandes.
 
-```
+```bash
 python code/main.py plan    # validate manifest, compute cost estimate, print DAG
 python code/main.py run     # execute stages, writing to manifest.out.yaml
 python code/main.py gate    # read manifest.out.yaml, apply eval gates, ship-or-hold
+```
+
+Le port de Rust fonctionne de la même façon .`plan`étape suivante:
+
+```bash
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson plan
 ```
 
 On court .`plan`La plupart des bugs du pipeline apparaissent à l'heure prévue - seuils manquants de passerelle, hashes obsolètes, dépassements budgétaires.`plan`Il est libre.`run`Économisez de l'argent en attrapé des insectes au bon marché.
