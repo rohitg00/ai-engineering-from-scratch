@@ -3,7 +3,7 @@
 > A AI SRE utiliza LLM baseados em dados de infraestrutura (logs, runbooks, topologia de serviços) através do RAG para automatizar as fases de investigação, documentação e coordenação. O padrão de arquitetura de 2026 é a orquestração de vários agentes  agentes especializados (logs, métricas, runbooks) coordenados por um supervisor; A IA propõe hipóteses e consultas, os seres humanos aprovam chamadas de julgamento. Datadog Bits AI e Azure SRE Agent enviam isto como produtos gerenciados. Os runbooks estão evoluindo: NeuBird Hawkeye usa avaliação adversária (dois modelos analisam o mesmo incidente; acordo = confiança, desacordo = incerteza); a memória operacional persiste em todas as mudanças da equipe. A auto-remediação permanece cautelosa: a IA sugere, os seres humanos aprovam. A ação totalmente autónoma é estreita (pod de reinicialização, implantação específica de retorno) com guardrails apertados  qualquer pessoa vendendo "set it and forget it" está supervendendo. Fronteira emergente: previsão pré-incidente. A pesquisa do MIT relata que um LLM treinado em registros históricos + tempos de GPU + padrões de erro de API prevê 89% das interrupções 10-15 minutos antes. Projeção: 95% dos LLM em empresas já têm uma falha automática até o final de 2026.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy multi-agent incident triage simulator)
+**Languages:** Python, TypeScript (stdlib, toy multi-agent incident triage simulator)
 **Prerequisites:** Phase 17 · 13 (Observability), Phase 17 · 24 (Chaos Engineering)
 **Time:** ~60 minutes
 

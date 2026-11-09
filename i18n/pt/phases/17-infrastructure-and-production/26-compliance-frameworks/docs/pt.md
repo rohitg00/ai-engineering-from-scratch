@@ -3,7 +3,7 @@
 > A cobertura multi-quadro é a participação de mesa em 2026 acordos empresariais. **EU AI Act**A maioria dos requisitos de alto risco são aplicados em 2 de agosto de 2026. Impelas de até 15 milhões de euros ou 3% do volume de negócios global por obrigações de sistemas de alto risco (artigo 99(4); até 35 milhões de euros ou 7% por práticas proibidas de IA (artigo 99(3)).**Colorado AI Act**A Comissão propõe que a Comissão adopte um novo regulamento que estabelece as regras de aplicação do artigo 107.o, n.o 1, do Regulamento (CE) n.o 1083/2008.**SOC 2 Type II**: exigência de facto de IA B2B (tipo II, não tipo I, para fintech). **GDPR**A maior multa documentada específica de IA é de € 30,5 milhões contra a Clearview AI (DPA holandesa, setembro 2024); Garante da Itália emitiu € 15 milhões contra a OpenAI em dezembro de 2024 (mais tarde revogada em recurso em março de 2026).**HIPAA**: saúde obrigada  não pode enviar PHI para serviços externos de IA sem BAA. **PCI-DSS**: A cobertura de camadas de interação com IA requer configuração + acordos contratuais, não automática. **ISO 42001**O perfil de referência: OpenAI mantém SOC 2 Tipo 2, ISO/IEC 27001:2022, ISO/IEC 27701:2019, GDPR/CCPA/HIPAA (BAA) / FERPA, PCI-DSS para componentes de pagamento ChatGPT. O mapeamento cruzado reduz a fadiga de auditoria: controle de acesso mapa em toda a ISO 27001 A.5.15-5.18, GDPR Art. 32, HIPAA §164.312(a).
 
 **Type:** Learn
-**Languages:** (Python optional — compliance is policy + process, not code)
+**Languages:** (Python, TypeScript optional: compliance is policy + process, not code)
 **Prerequisites:** Phase 17 · 25 (Security), Phase 17 · 13 (Observability)
 **Time:** ~60 minutes
 

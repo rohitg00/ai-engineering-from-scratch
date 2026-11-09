@@ -3,7 +3,7 @@
 > A capacidade moderna do motor de serviço baseia-se em três defeitos compostos, não num único truque. PagedAttention está sempre ligado. A batch contínua injeta novos pedidos no lote ativo entre iterações de decodificação. As fatias de preenchimento em pedaços são longas, para que os tokens de decodificação nunca morram de fome. Ligue os três e um Llama 3.3 70B FP8 em um H100 SXM5 empurra 2.200-2.400 tok/s em 128 torque simultâneo  cerca de 25% acima do próprio padrão do vLLM e 3-4x um ciclo PyTorch ingênuo. Esta lição lê o programação e o núcleo de atenção de vLLM  o motor de referência para todas as três técnicas  em um nível que você pode diagramar, e termina com um batch contínuo de brinquedo em `code/main.py`que os horários preenchem e decodificam como o VLLM faz.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy continuous batching scheduler)
+**Languages:** Python, TypeScript (stdlib, toy continuous batching scheduler)
 **Prerequisites:** Phase 17 · 01 (Model Serving), Phase 11 (LLM Engineering)
 **Time:** ~75 minutes
 

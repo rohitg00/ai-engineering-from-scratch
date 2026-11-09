@@ -3,7 +3,7 @@
 > Trate o cache KV como um recurso reutilizável de primeira classe armazenado em uma árvore de radix e muda a programação com ele: em vez de FCFS (primeiro-chegado, primeiro servido) como agendas vLLM, um cronista consciente do cache priorizará solicitações com prefixos compartilhados mais longos  efetivamente uma profundidade-primeira travessia de radix para que os ramos quentes permaneçam residentes no HBM. O SGLang é o motor que construiu a ideia. No Llama 3.1 8B com as instruções de 1K parecidas com o ShareGPT, o SGLang chega a ~ 16.200 tok/s para ~ 12.500 do vLLM, uma vantagem de ~ 29%. Nas cargas de trabalho RAG de prefixo pesado, a vantagem atinge 6,4x. Nas cargas de trabalho em forma de clonagem de voz, a taxa de acessos no cache foi limpa em 86%. Implementado em mais de 400.000 GPUs em 2026 em xAI, LinkedIn, Cursor, Oracle, GCP, Azure, AWS. O problema é que o número 6.4x evapora quando o prefixo de ordem é inconsistente.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy radix-tree cache + cache-aware scheduler)
+**Languages:** Python, TypeScript (stdlib, toy radix-tree cache + cache-aware scheduler)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 14 (Agentic RAG)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > Os testadores de carga tradicionais não foram projetados para respostas de streaming, comprimentos de saída variáveis, métricas de nível de token ou saturação de GPU. Duas armadilhas mordem a maioria das equipes. A armadilha do GIL: A medição de nível de tokens do Locust executa a tokenização sob o Python GIL, que compete com a geração de solicitações sob alta concurência; o backlog da tokenização então infla a latência entre tokens relatada. A armadilha de uniformitade de prompt: as mesmas instruções em um loop testam um ponto na distribuição do token; o tráfego real tem comprimento variável e diferentes correspondências de prefixos. A LLMPerf resolve isto com `--mean-input-tokens`+ `--stddev-input-tokens`. Mapeamento de ferramentas em 2026: especializado em LLM (GenAI-Perf, LLMPerf, LLM-Locust, guidellm) para a precisão de tokens; **k6 v2026.1.0**+ **k6 Operator 1.0 GA (Sept 2025)** streaming-consciente, Kubernetes-nativo distribuído através de testRun/PrivateLoadZone CRDs, melhor para portões CI/CD; Vegeta for Go saturação de taxa constante; Locust 2.43.3 apenas com extensão LLM-Locust para streaming. padrões de carga: estádio, rampa, pico (test de autoescalação), remoção (vazes de memória).
 
 **Type:** Build
-**Languages:** Python (stdlib, toy realistic-prompt generator + latency collector)
+**Languages:** Python, TypeScript (stdlib, toy realistic-prompt generator + latency collector)
 **Prerequisites:** Phase 17 · 08 (Inference Metrics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~75 minutes
 
