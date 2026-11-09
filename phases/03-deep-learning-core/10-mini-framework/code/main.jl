@@ -447,4 +447,6 @@ function main()
     println("  Total:      ~450 lines of pure Julia")
 end
 
-main()
+if abspath(PROGRAM_FILE) == @__FILE__
+    main()
+end

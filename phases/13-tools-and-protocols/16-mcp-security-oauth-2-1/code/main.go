@@ -525,8 +525,21 @@ func validateWire(body *object, headers map[string]string) (*object, error) {
 	}
 	if method == "tools/call" || method == "resources/read" || method == "prompts/get" {
 		expected := params.get("name")
-		if s, ok := expected.(string); !ok || s == "" {
+		switch v := expected.(type) {
+		case nil:
 			expected = params.get("uri")
+		case string:
+			if v == "" {
+				expected = params.get("uri")
+			}
+		case bool:
+			if !v {
+				expected = params.get("uri")
+			}
+		case float64:
+			if v == 0 {
+				expected = params.get("uri")
+			}
 		}
 		header, present := headers["Mcp-Name"]
 		supplied, err := decodeMCPHeaderValue(header, present)

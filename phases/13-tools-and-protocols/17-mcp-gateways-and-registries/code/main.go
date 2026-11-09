@@ -297,8 +297,9 @@ func validateWire(body *object, headers map[string]string) (*object, error) {
 		return nil, perr(-32020, "Mcp-Method header mismatch", nil)
 	}
 	if namedMethods[method] {
+		expected := requestName(method, params)
 		v, ok := headers["Mcp-Name"]
-		if !ok || v != requestName(method, params) {
+		if (!ok && expected != nil) || (ok && v != expected) {
 			return nil, perr(-32020, "Mcp-Name header mismatch", nil)
 		}
 	}
@@ -652,6 +653,10 @@ func quote(s string, q byte, ascii bool) string {
 			b.WriteString(`\r`)
 		case r == '\t':
 			b.WriteString(`\t`)
+		case q == '"' && r == '\b':
+			b.WriteString(`\b`)
+		case q == '"' && r == '\f':
+			b.WriteString(`\f`)
 		case r < 0x20 || r == 0x7f:
 			if q == '"' {
 				fmt.Fprintf(&b, `\u%04x`, r)

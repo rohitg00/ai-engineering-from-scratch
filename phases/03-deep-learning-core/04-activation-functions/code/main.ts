@@ -191,7 +191,7 @@ class ActivationNetwork {
   forward(x: number[]): number {
     this.x = x;
     this.z1 = this.w1.map((w, i) => w[0] * x[0] + w[1] * x[1] + this.b1[i]);
-    this.h = this.z1.map(this.act);
+    this.h = this.z1.map((z) => this.act(z));
     let z2 = this.b2;
     for (let i = 0; i < this.hiddenSize; i++) z2 += this.w2[i] * this.h[i];
     this.out = sigmoid(z2);
@@ -237,54 +237,60 @@ function banner(title: string): void {
   console.log("=".repeat(60));
 }
 
-banner("STEP 1: Activation Function Values");
-for (const x of [-2.0, -1.0, -0.5, 0.0, 0.5, 1.0, 2.0]) {
-  console.log(
-    `  x=${x.toFixed(1).padStart(5)}  sigmoid=${sigmoid(x).toFixed(4)}  tanh=${tanhAct(x).toFixed(4)}  ` +
-      `relu=${relu(x).toFixed(4)}  gelu=${gelu(x).toFixed(4)}  swish=${swish(x).toFixed(4)}`,
-  );
+function main(): void {
+  banner("STEP 1: Activation Function Values");
+  for (const x of [-2.0, -1.0, -0.5, 0.0, 0.5, 1.0, 2.0]) {
+    console.log(
+      `  x=${x.toFixed(1).padStart(5)}  sigmoid=${sigmoid(x).toFixed(4)}  tanh=${tanhAct(x).toFixed(4)}  ` +
+        `relu=${relu(x).toFixed(4)}  gelu=${gelu(x).toFixed(4)}  swish=${swish(x).toFixed(4)}`,
+    );
+  }
+  console.log(`\n  softmax([2.0, 1.0, 0.1]) = ${pyList(softmax([2.0, 1.0, 0.1]))}`);
+  console.log(`  softmax([10, 10, 10])    = ${pyList(softmax([10.0, 10.0, 10.0]))}`);
+
+  console.log();
+  banner("STEP 2: Gradient Dead Zones");
+  gradientScan("Sigmoid", sigmoidDerivative);
+  gradientScan("Tanh", tanhDerivative);
+  gradientScan("ReLU", reluDerivative);
+  gradientScan("Leaky ReLU", (x) => leakyReluDerivative(x));
+  gradientScan("GELU", geluDerivative);
+  gradientScan("Swish", swishDerivative);
+
+  console.log();
+  banner("STEP 3: Vanishing Gradient Experiment");
+  vanishingGradientExperiment(sigmoid, "Sigmoid");
+  vanishingGradientExperiment(relu, "ReLU");
+  vanishingGradientExperiment(gelu, "GELU");
+
+  console.log();
+  banner("STEP 4: Dead Neuron Detection");
+  deadNeuronDetector();
+
+  console.log();
+  banner("STEP 5: Training Comparison (Circle Dataset)");
+  const data = makeCircleData();
+  const configs: [string, Fn, Fn][] = [
+    ["Sigmoid", sigmoid, sigmoidDerivative],
+    ["ReLU", relu, reluDerivative],
+    ["GELU", gelu, geluDerivative],
+  ];
+  const results: [string, number[]][] = [];
+  for (const [name, actFn, actDFn] of configs) {
+    console.log(`\n--- Training with ${name} ---`);
+    const net = new ActivationNetwork(actFn, actDFn, 8, 0.1);
+    results.push([name, net.train(data, 200)]);
+  }
+
+  console.log("\n=== Final Loss Comparison ===");
+  for (const [name, losses] of results) {
+    const first = losses[0];
+    const last = losses[losses.length - 1];
+    const improvement = first > 0 ? (1 - last / first) * 100 : 0;
+    console.log(`  ${name.padEnd(10)}: start=${first.toFixed(4)} -> end=${last.toFixed(4)} (improvement: ${improvement.toFixed(1)}%)`);
+  }
 }
-console.log(`\n  softmax([2.0, 1.0, 0.1]) = ${pyList(softmax([2.0, 1.0, 0.1]))}`);
-console.log(`  softmax([10, 10, 10])    = ${pyList(softmax([10.0, 10.0, 10.0]))}`);
 
-console.log();
-banner("STEP 2: Gradient Dead Zones");
-gradientScan("Sigmoid", sigmoidDerivative);
-gradientScan("Tanh", tanhDerivative);
-gradientScan("ReLU", reluDerivative);
-gradientScan("Leaky ReLU", (x) => leakyReluDerivative(x));
-gradientScan("GELU", geluDerivative);
-gradientScan("Swish", swishDerivative);
-
-console.log();
-banner("STEP 3: Vanishing Gradient Experiment");
-vanishingGradientExperiment(sigmoid, "Sigmoid");
-vanishingGradientExperiment(relu, "ReLU");
-vanishingGradientExperiment(gelu, "GELU");
-
-console.log();
-banner("STEP 4: Dead Neuron Detection");
-deadNeuronDetector();
-
-console.log();
-banner("STEP 5: Training Comparison (Circle Dataset)");
-const data = makeCircleData();
-const configs: [string, Fn, Fn][] = [
-  ["Sigmoid", sigmoid, sigmoidDerivative],
-  ["ReLU", relu, reluDerivative],
-  ["GELU", gelu, geluDerivative],
-];
-const results: [string, number[]][] = [];
-for (const [name, actFn, actDFn] of configs) {
-  console.log(`\n--- Training with ${name} ---`);
-  const net = new ActivationNetwork(actFn, actDFn, 8, 0.1);
-  results.push([name, net.train(data, 200)]);
-}
-
-console.log("\n=== Final Loss Comparison ===");
-for (const [name, losses] of results) {
-  const first = losses[0];
-  const last = losses[losses.length - 1];
-  const improvement = first > 0 ? (1 - last / first) * 100 : 0;
-  console.log(`  ${name.padEnd(10)}: start=${first.toFixed(4)} -> end=${last.toFixed(4)} (improvement: ${improvement.toFixed(1)}%)`);
+if (require.main === module) {
+  main();
 }

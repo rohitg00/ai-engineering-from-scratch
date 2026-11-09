@@ -266,4 +266,6 @@ function main()
     @printf("    AdamW shrinks weights %.1fx more\n", norm_adam / max(0.001, norm_adamw))
 end
 
-main()
+if abspath(PROGRAM_FILE) == @__FILE__
+    main()
+end

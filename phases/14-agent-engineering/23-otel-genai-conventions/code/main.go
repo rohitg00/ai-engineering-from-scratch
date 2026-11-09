@@ -10,6 +10,7 @@ import (
 	"sort"
 	"strings"
 	"time"
+	"unicode"
 )
 
 type Span struct {
@@ -119,10 +120,36 @@ func pyRepr(s string) string {
 	if strings.Contains(s, "'") && !strings.Contains(s, "\"") {
 		quote = "\""
 	}
-	s = strings.ReplaceAll(s, "\\", "\\\\")
-	s = strings.ReplaceAll(s, "\n", "\\n")
-	s = strings.ReplaceAll(s, quote, "\\"+quote)
-	return quote + s + quote
+	var b strings.Builder
+	b.WriteString(quote)
+	for _, r := range s {
+		switch {
+		case r == '\\':
+			b.WriteString("\\\\")
+		case r == '\n':
+			b.WriteString("\\n")
+		case r == '\r':
+			b.WriteString("\\r")
+		case r == '\t':
+			b.WriteString("\\t")
+		case string(r) == quote:
+			b.WriteString("\\" + quote)
+		case r < 0x20 || r == 0x7f:
+			fmt.Fprintf(&b, "\\x%02x", r)
+		case r >= 0x80 && !unicode.IsPrint(r):
+			if r <= 0xff {
+				fmt.Fprintf(&b, "\\x%02x", r)
+			} else if r <= 0xffff {
+				fmt.Fprintf(&b, "\\u%04x", r)
+			} else {
+				fmt.Fprintf(&b, "\\U%08x", r)
+			}
+		default:
+			b.WriteRune(r)
+		}
+	}
+	b.WriteString(quote)
+	return b.String()
 }
 
 func scriptedLLM(prompt string) string {

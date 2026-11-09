@@ -111,8 +111,8 @@ type Task struct {
 	ID        string     `json:"id"`
 	ContextID string     `json:"contextId"`
 	Status    Status     `json:"status"`
-	Artifacts []Artifact `json:"artifacts,omitempty"`
-	History   []Message  `json:"history,omitempty"`
+	Artifacts []Artifact `json:"artifacts"`
+	History   []Message  `json:"history"`
 }
 
 func uuid4() string {

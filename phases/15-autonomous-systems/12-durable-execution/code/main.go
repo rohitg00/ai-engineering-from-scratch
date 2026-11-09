@@ -71,6 +71,13 @@ func must(err error) {
 
 func pyRepr(v any) string {
 	switch x := v.(type) {
+	case nil:
+		return "None"
+	case bool:
+		if x {
+			return "True"
+		}
+		return "False"
 	case string:
 		return "'" + strings.ReplaceAll(x, "'", "\\'") + "'"
 	case float64:
@@ -107,6 +114,9 @@ func normalize(v any) any {
 
 func activity(name string, fn func(args []any) any) func(*EventLog, ...any) any {
 	return func(log *EventLog, args ...any) any {
+		if args == nil {
+			args = []any{}
+		}
 		args = normalize(args).([]any)
 		if hit := log.Lookup(name, args); hit != nil {
 			fmt.Printf("    [replay] %s(%s) -> %s (from log)\n", name, tupleRepr(args), pyStr(hit.Result))

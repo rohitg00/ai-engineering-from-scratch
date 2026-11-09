@@ -221,15 +221,18 @@ function demo_diffusion()
         noise_power = mean((x .- signal) .^ 2)
         signal_power = mean(signal .^ 2)
         snr = noise_power > 0 ? 10 * log10(signal_power / noise_power) : Inf
-        @printf("%6d | %8.4f | %8.4f | %10.2f | %12.4f\n", s, mean(x), pstd(x), snr, cor(signal, x))
+        snr_s = isinf(snr) ? lpad("inf", 10) : @sprintf("%10.2f", snr)
+        @printf("%6d | %8.4f | %8.4f | %s | %12.4f\n", s, mean(x), pstd(x), snr_s, cor(signal, x))
     end
     println("\nAt step 0: perfect signal (correlation = 1.0)")
     println("At step 100: nearly pure noise (correlation near 0)")
     println("This is the forward process of a diffusion model.")
 end
 
-demo_random_walks()
-demo_markov_chain()
-demo_langevin()
-demo_metropolis_hastings()
-demo_diffusion()
+if abspath(PROGRAM_FILE) == @__FILE__
+    demo_random_walks()
+    demo_markov_chain()
+    demo_langevin()
+    demo_metropolis_hastings()
+    demo_diffusion()
+end

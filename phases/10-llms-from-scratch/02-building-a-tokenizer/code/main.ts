@@ -3,7 +3,7 @@
 // Source: phases/10-llms-from-scratch/02-building-a-tokenizer/docs/en.md
 // Run: npx tsx phases/10-llms-from-scratch/02-building-a-tokenizer/code/main.ts
 
-const GPT2_PATTERN = /'(?:[sdmt]|ll|ve|re)| ?[a-zA-Z]+| ?[0-9]+| ?[^\s\p{L}\p{N}_]+|\s+(?!\S)|\s+/gu;
+const GPT2_PATTERN = /'(?:[sdmt]|ll|ve|re)| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+/gu;
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder("utf-8");

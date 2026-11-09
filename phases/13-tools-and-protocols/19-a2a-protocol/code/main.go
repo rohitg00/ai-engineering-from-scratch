@@ -14,6 +14,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"strconv"
 	"strings"
 	"sync"
 )
@@ -69,12 +70,12 @@ var writerAgentCard = agentCard{
 }
 
 type part struct {
-	Text      *string           `json:"text,omitempty"`
-	Raw       *string           `json:"raw,omitempty"`
-	URL       *string           `json:"url,omitempty"`
-	Data      map[string]string `json:"data,omitempty"`
-	Filename  string            `json:"filename,omitempty"`
-	MediaType string            `json:"mediaType,omitempty"`
+	Text      *string        `json:"text,omitempty"`
+	Raw       *string        `json:"raw,omitempty"`
+	URL       *string        `json:"url,omitempty"`
+	Data      map[string]any `json:"data,omitempty"`
+	Filename  string         `json:"filename,omitempty"`
+	MediaType string         `json:"mediaType,omitempty"`
 }
 
 func partContent(p part) string {
@@ -179,6 +180,27 @@ func transition(t *task, state string, msg *message) {
 	}
 }
 
+func pyStr(v any) string {
+	switch x := v.(type) {
+	case string:
+		return x
+	case nil:
+		return "None"
+	case bool:
+		if x {
+			return "True"
+		}
+		return "False"
+	case float64:
+		if x == float64(int64(x)) {
+			return strconv.FormatInt(int64(x), 10)
+		}
+		return strconv.FormatFloat(x, 'g', -1, 64)
+	}
+	data, _ := json.Marshal(v)
+	return string(data)
+}
+
 func finish(t *task, length string) {
 	text := fmt.Sprintf("[writer agent] %s summary of provided source: "+
 		"topic identified, key points extracted, conclusion drafted.", length)
@@ -209,13 +231,14 @@ func (w *writer) sendMessage(msg message) task {
 	}
 	t.History = append(t.History, msg)
 	transition(t, "TASK_STATE_WORKING", nil)
-	var dataPayloads []map[string]string
+	var dataPayloads []map[string]any
 	for _, p := range msg.Parts {
 		if partContent(p) == "data" {
 			dataPayloads = append(dataPayloads, p.Data)
 		}
 	}
-	length, ok := "", false
+	var length any
+	ok := false
 	if len(dataPayloads) > 0 {
 		length, ok = dataPayloads[0]["targetLength"]
 	}
@@ -223,7 +246,7 @@ func (w *writer) sendMessage(msg message) task {
 		ask := newMessage("ROLE_AGENT", []part{{Text: str("Please specify targetLength as a data part.")}}, t.ID)
 		transition(t, "TASK_STATE_INPUT_REQUIRED", &ask)
 	} else {
-		finish(t, length)
+		finish(t, pyStr(length))
 	}
 	return *t
 }
@@ -309,7 +332,7 @@ func researchAgentFlow(endpoint string) {
 	if t.Status.State == "TASK_STATE_INPUT_REQUIRED" {
 		fmt.Println("\n--- research agent supplies the missing data ---")
 		followup := newMessage("ROLE_USER", []part{
-			{Data: map[string]string{"targetLength": "3 paragraphs"}, MediaType: "application/json"},
+			{Data: map[string]any{"targetLength": "3 paragraphs"}, MediaType: "application/json"},
 		}, t.ID)
 		t = sendMessage(endpoint, 2, followup)
 		fmt.Printf("  research : task state = %s\n", t.Status.State)

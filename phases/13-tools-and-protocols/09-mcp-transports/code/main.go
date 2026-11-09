@@ -459,8 +459,8 @@ func readBody(w http.ResponseWriter, r *http.Request) (obj, error) {
 }
 
 func handlePost(w http.ResponseWriter, r *http.Request) {
-	mediaType, _, _ := mime.ParseMediaType(r.Header.Get("Content-Type"))
-	if strings.ToLower(mediaType) != "application/json" {
+	mediaType := strings.ToLower(strings.TrimSpace(strings.SplitN(r.Header.Get("Content-Type"), ";", 2)[0]))
+	if mediaType != "application/json" {
 		writeJSON(w, 415, obj{"error": "Content-Type must be application/json"})
 		return
 	}
@@ -523,6 +523,10 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	defer func() {
 		fmt.Fprintf(os.Stderr, "[mcp-http] \"%s %s %s\" %d -\n", r.Method, r.URL.RequestURI(), r.Proto, sw.status)
 	}()
+	if r.Method != http.MethodPost && r.Method != http.MethodGet && r.Method != http.MethodDelete {
+		http.Error(sw, fmt.Sprintf("Unsupported method ('%s')", r.Method), 501)
+		return
+	}
 	if !validPathAndOrigin(sw, r) {
 		return
 	}

@@ -723,9 +723,15 @@ impl ElfFile {
                 hex(symbol.st_shndx as u64)
             ));
         }
-        let section = &self.sections[symbol.st_shndx as usize];
-        let rel = symbol.st_value.wrapping_sub(section.sh_addr);
-        if rel.wrapping_add(symbol.st_size) > section.sh_size {
+        let section = self
+            .sections
+            .get(symbol.st_shndx as usize)
+            .ok_or_else(|| format!("IndexError: section {} out of range", symbol.st_shndx))?;
+        if symbol.st_value < section.sh_addr {
+            return Err(format!("{} starts before {}", py_str_repr(name), section.name));
+        }
+        let rel = symbol.st_value - section.sh_addr;
+        if rel.saturating_add(symbol.st_size) > section.sh_size {
             return Err(format!("{} runs past the end of {}", py_str_repr(name), section.name));
         }
         Ok(Span { file_offset: section.sh_offset + rel, size: symbol.st_size })
@@ -1302,7 +1308,14 @@ impl MachOFile {
         if symbol.n_type & N_TYPE != N_SECT {
             return Err(format!("{} is {}, not defined in a section", py_str_repr(name), symbol.type_name()));
         }
-        let section = &self.sections[symbol.n_sect as usize - 1];
+        let index = symbol.n_sect as usize;
+        if index < 1 || index > self.sections.len() {
+            return Err(format!("{} names section {}, but the file has {} sections", py_str_repr(name), index, self.sections.len()));
+        }
+        let section = &self.sections[index - 1];
+        if symbol.n_value < section.addr {
+            return Err(format!("{} at {:#x} is below its section start {:#x}", py_str_repr(name), symbol.n_value, section.addr));
+        }
         let end = self
             .symbols
             .iter()

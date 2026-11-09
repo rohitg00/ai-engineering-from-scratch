@@ -197,4 +197,6 @@ function main()
     println("MNIST, t-SNE, UMAP and logistic-regression demos need sklearn and a download; run the Python file for them.")
 end
 
-main()
+if abspath(PROGRAM_FILE) == @__FILE__
+    main()
+end

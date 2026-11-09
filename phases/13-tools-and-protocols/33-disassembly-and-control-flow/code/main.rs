@@ -1284,7 +1284,7 @@ fn recursive_descent(code: &[u8], entries: &[u64], end: Option<u64>, resolver: O
                 Ok(i) => i,
                 Err(_) => {
                     let a = address as usize;
-                    unresolved.push(Instruction::bare(address, code[a..a + 1].to_vec(), "(undecodable)", "stop"));
+                    unresolved.push(Instruction::bare(address, code.get(a..a + 1).unwrap_or(&[]).to_vec(), "(undecodable)", "stop"));
                     break;
                 }
             };

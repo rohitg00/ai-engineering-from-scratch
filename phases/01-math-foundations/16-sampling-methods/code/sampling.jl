@@ -433,4 +433,6 @@ function main()
     println("="^65)
 end
 
-main()
+if abspath(PROGRAM_FILE) == @__FILE__
+    main()
+end

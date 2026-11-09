@@ -24,6 +24,15 @@ if (typeof zstd.zstdCompressSync !== "function" || typeof zstd.createZstdDecompr
 }
 
 export const CHUNK_BYTES = 1 << 16;
+
+const PY_WS_RUN = /[\t-\r\u001c-\u001f \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+/;
+
+function pyInt(v: unknown): number {
+  if (typeof v === "number" && Number.isFinite(v)) return Math.trunc(v);
+  if (typeof v === "boolean") return v ? 1 : 0;
+  if (typeof v === "string" && /^\s*[+-]?\d+(_\d+)*\s*$/.test(v)) return parseInt(v.replace(/_/g, ""), 10);
+  throw new Error(`invalid literal for int(): ${String(v)}`);
+}
 export const DEFAULT_NUM_HASHES = 128;
 export const DEFAULT_BANDS = 32;
 export const DEFAULT_SHINGLE_WIDTH = 5;
@@ -232,13 +241,12 @@ export class CheckpointState {
     for (const k of ["url", "verified_bytes", "sha256_prefix_hex"]) {
       if (!(k in data)) throw new Error(`missing ${k}`);
     }
-    const verified = Number(data["verified_bytes"]);
-    if (!Number.isInteger(verified)) throw new Error("verified_bytes must be an integer");
+    const verified = pyInt(data["verified_bytes"]);
     const expected = data["expected_size"];
     return new CheckpointState(
       String(data["url"]),
       verified,
-      expected !== null && expected !== undefined ? Math.trunc(Number(expected)) : null,
+      expected !== null && expected !== undefined ? pyInt(expected) : null,
       String(data["sha256_prefix_hex"]),
     );
   }
@@ -265,7 +273,7 @@ export class MinHasher {
   }
 
   shingles(text: string): string[] {
-    const tokens = text.split(/\s+/).filter(Boolean);
+    const tokens = text.split(PY_WS_RUN).filter(Boolean);
     if (tokens.length < this.shingle_width) return tokens.length ? [tokens.join(" ")] : [];
     const out: string[] = [];
     for (let start = 0; start < tokens.length - this.shingle_width + 1; start++) {
@@ -360,7 +368,7 @@ export class Dedup {
 }
 
 export async function* zstdDocIterator(raw: Readable): AsyncGenerator<string> {
-  const decoder = new TextDecoder("utf-8");
+  const decoder = new TextDecoder("utf-8", { fatal: true });
   let pending = "";
   const emit = function* (final: boolean): Generator<string> {
     const re = /\r\n|\r|\n/g;
@@ -390,7 +398,7 @@ export async function* zstdDocIterator(raw: Readable): AsyncGenerator<string> {
 export interface Response {
   status: number;
   headers: Map<string, string>;
-  read(): Promise<Buffer | null>;
+  read(n: number): Promise<Buffer | null>;
   close(): void;
 }
 
@@ -409,11 +417,11 @@ function safeClose(response: Response): void {
   }
 }
 
-function chunkedReader(stream: Readable, chunkBytes: number): () => Promise<Buffer | null> {
+function chunkedReader(stream: Readable): (chunkBytes: number) => Promise<Buffer | null> {
   const iter = stream[Symbol.asyncIterator]();
   let buffered = Buffer.alloc(0);
   let done = false;
-  return async () => {
+  return async (chunkBytes) => {
     while (!done && buffered.length < chunkBytes) {
       const next = await iter.next();
       if (next.done) done = true;
@@ -430,14 +438,14 @@ export const defaultOpener: Opener = async (req) => {
   const url = new URL(req.url);
   if (url.protocol === "file:") {
     const stream = createReadStream(fileURLToPath(url));
-    return { status: 0, headers: new Map(), read: chunkedReader(stream, CHUNK_BYTES), close: () => stream.destroy() };
+    return { status: 0, headers: new Map(), read: chunkedReader(stream), close: () => stream.destroy() };
   }
   const res = await fetch(req.url, { headers: Object.fromEntries(req.headers) });
   if (!res.ok) throw new Error(`HTTP Error ${res.status}: ${res.statusText}`);
   const body = res.body ? Readable.fromWeb(res.body as Parameters<typeof Readable.fromWeb>[0]) : Readable.from([]);
   const headers = new Map<string, string>();
   res.headers.forEach((v, k) => headers.set(k.toLowerCase(), v));
-  return { status: res.status, headers, read: chunkedReader(body, CHUNK_BYTES), close: () => body.destroy() };
+  return { status: res.status, headers, read: chunkedReader(body), close: () => body.destroy() };
 };
 
 export class StreamingDownloader {
@@ -508,7 +516,21 @@ export class StreamingDownloader {
     let rolling = createHash("sha256");
     if (state !== null && state.url === plan.url && this.verifyPartial(shardPath, state)) {
       resumeFrom = state.verified_bytes;
-      rolling.update(readFileSync(shardPath).subarray(0, resumeFrom));
+      const fd = openSync(shardPath, "r");
+      try {
+        const buf = Buffer.alloc(this.chunk_bytes);
+        let remaining = resumeFrom;
+        let pos = 0;
+        while (remaining > 0) {
+          const n = readSync(fd, buf, 0, Math.min(this.chunk_bytes, remaining), pos);
+          if (n === 0) break;
+          rolling.update(buf.subarray(0, n));
+          remaining -= n;
+          pos += n;
+        }
+      } finally {
+        closeSync(fd);
+      }
     } else {
       if (existsSync(shardPath)) unlinkSync(shardPath);
       if (existsSync(checkpointPath)) unlinkSync(checkpointPath);
@@ -532,7 +554,7 @@ export class StreamingDownloader {
       const out = openSync(shardPath, resumeFrom > 0 ? "a" : "w");
       try {
         for (;;) {
-          const buf = await response.read();
+          const buf = await response.read(this.chunk_bytes);
           if (!buf) break;
           rolling.update(buf);
           const nextVerified = resumeFrom + buf.length;

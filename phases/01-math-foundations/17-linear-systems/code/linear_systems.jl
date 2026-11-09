@@ -330,12 +330,14 @@ function demo_linear_regression_full()
     println()
 end
 
-demo_gaussian_elimination()
-demo_lu()
-demo_cholesky()
-demo_least_squares()
-demo_ridge()
-demo_condition_number()
-demo_conjugate_gradient()
-demo_equivalence()
-demo_linear_regression_full()
+if abspath(PROGRAM_FILE) == @__FILE__
+    demo_gaussian_elimination()
+    demo_lu()
+    demo_cholesky()
+    demo_least_squares()
+    demo_ridge()
+    demo_condition_number()
+    demo_conjugate_gradient()
+    demo_equivalence()
+    demo_linear_regression_full()
+end

@@ -157,7 +157,8 @@ function winRate(modelId: string, runsByTask: Map<string, EvalRun[]>): [number, 
     if (!scores.has(modelId)) continue;
     total += 1;
     const best = Math.max(...scores.values());
-    if (Math.abs((scores.get(modelId) as number) - best) <= 1e-12) wins += 1;
+    const score = scores.get(modelId) as number;
+    if (Math.abs(score - best) <= Math.max(1e-9 * Math.max(Math.abs(score), Math.abs(best)), 1e-12)) wins += 1;
   }
   if (total === 0) return [0.0, 0];
   return [wins / total, total];

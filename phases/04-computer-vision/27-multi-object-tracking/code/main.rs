@@ -111,7 +111,10 @@ fn hungarian_square_or_wide(cost: &[Vec<f64>]) -> Vec<(usize, usize)> {
 
 fn linear_sum_assignment(cost: &[Vec<f64>]) -> Vec<(usize, usize)> {
     let rows = cost.len();
-    let cols = cost[0].len();
+    let cols = cost.first().map_or(0, |r| r.len());
+    if rows == 0 || cols == 0 {
+        return Vec::new();
+    }
     if rows <= cols {
         return hungarian_square_or_wide(cost);
     }

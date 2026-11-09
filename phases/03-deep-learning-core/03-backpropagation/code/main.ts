@@ -279,5 +279,7 @@ function trainCircle(): void {
   }
 }
 
-trainXor();
-trainCircle();
+if (require.main === module) {
+  trainXor();
+  trainCircle();
+}

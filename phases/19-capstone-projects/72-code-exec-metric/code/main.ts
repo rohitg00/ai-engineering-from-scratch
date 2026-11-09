@@ -4,6 +4,7 @@
 // Run: npx tsx phases/19-capstone-projects/72-code-exec-metric/code/main.ts
 
 import { spawnSync } from "node:child_process";
+import { constants as osConstants } from "node:os";
 
 const CODE_BLOCK_RE = /```(?:[a-zA-Z0-9_]*)\n([\s\S]*?)```/;
 
@@ -148,22 +149,22 @@ export function runCandidate(code: string, assertions: string[], timeoutS = DEFA
   const proc = spawnSync("python3", ["-I", "-c", script], {
     timeout: timeoutS * 1000,
     killSignal: "SIGKILL",
-    maxBuffer: OUTPUT_CAP_BYTES,
+    maxBuffer: Infinity,
   });
 
   const err = proc.error as NodeJS.ErrnoException | undefined;
   if (err && err.code === "ETIMEDOUT") {
     return new ExecResult(0.0, EXIT_TIMEOUT, 0, assertions.length, `timeout after ${timeoutS.toFixed(2)}s`);
   }
-  if (err && err.code === "ENOBUFS") {
+  if (err) return new ExecResult(0.0, EXIT_ERROR, 0, assertions.length, `spawn error: ${err.message}`);
+  if (proc.stdout.length > OUTPUT_CAP_BYTES) {
     return new ExecResult(0.0, EXIT_ERROR, 0, assertions.length, "output overflow");
   }
-  if (err) return new ExecResult(0.0, EXIT_ERROR, 0, assertions.length, `spawn error: ${err.message}`);
 
   const stdout = proc.stdout.toString("utf-8");
   if (proc.status !== 0) {
     const stderrText = proc.stderr ? proc.stderr.toString("utf-8") : "";
-    const code = proc.status ?? -1;
+    const code = proc.status ?? (proc.signal ? -osConstants.signals[proc.signal] : -1);
     return new ExecResult(0.0, EXIT_ERROR, 0, assertions.length, `subprocess exit ${code}: ${stderrText.slice(0, 200)}`);
   }
   let status: { exit_code?: string; results?: boolean[]; detail?: string };

@@ -314,4 +314,6 @@ function main()
     println("  Compare the gap and the test accuracy, not only one of them.")
 end
 
-main()
+if abspath(PROGRAM_FILE) == @__FILE__
+    main()
+end

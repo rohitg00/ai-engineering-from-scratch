@@ -252,7 +252,7 @@ export class MockProseGenerator {
   constructor(public outlines: Record<string, string>) {}
 
   call(section: Section, _paper: Paper): string {
-    const seed = this.outlines[section.id] ?? section.title;
+    const seed = Object.hasOwn(this.outlines, section.id) ? this.outlines[section.id] : section.title;
     const first = `In this section we discuss ${section.title.toLowerCase()}: ${seed}.`;
     const bits: string[] = [];
     for (const fid of section.figure_refs) bits.push(`Figure~\\ref{fig:${fid}} shows the relevant artifact.`);

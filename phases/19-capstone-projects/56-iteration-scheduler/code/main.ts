@@ -440,7 +440,7 @@ export function makeDeterministicRunner(baseRewards: Record<string, number>, opt
   const rng = new Mulberry32(opts.seed ?? 0);
 
   return async (hyp: Hypothesis): Promise<Result> => {
-    const base = baseRewards[hyp.branch] ?? 0.5;
+    const base = Object.hasOwn(baseRewards, hyp.branch) ? baseRewards[hyp.branch] : 0.5;
     const bump = rng.normal(0.0, noise);
     const reward = Math.max(0.0, Math.min(1.0, base + bump));
     await sleep(delayMs);

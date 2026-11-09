@@ -1838,7 +1838,7 @@ export function compareWithObjdump(lifted: Map<string, Lifted>, objdumpText: str
 }
 
 function splitLines(text: string): string[] {
-  const lines = text.split(/\r\n|\r|\n/);
+  const lines = text.split(/\r\n|[\n\r\v\f\x1c-\x1e\x85\u2028\u2029]/);
   if (lines.length && lines[lines.length - 1] === "") lines.pop();
   return lines;
 }

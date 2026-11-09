@@ -226,11 +226,13 @@ func validateRequest(message obj) error {
 }
 
 func execNotesList(arguments obj) ([]any, error) {
-	tag, _ := arguments["tag"].(string)
+	tagVal := arguments["tag"]
+	tag, isStr := tagVal.(string)
+	all := tagVal == nil || (isStr && tag == "") || tagVal == false || tagVal == float64(0)
 	items := []any{}
 	for _, id := range sortedNoteIDs() {
 		n := notes[id]
-		if tag == "" || n.tag == tag {
+		if all || (isStr && n.tag == tag) {
 			items = append(items, obj{"id": id, "title": n.title, "tag": n.tag})
 		}
 	}
@@ -406,7 +408,12 @@ func dispatch(message obj) obj {
 	if validID(requestID) {
 		errorID = requestID
 	}
-	result, err := func() (obj, error) {
+	result, err := func() (res obj, err error) {
+		defer func() {
+			if r := recover(); r != nil {
+				err = fmt.Errorf("%v", r)
+			}
+		}()
 		if err := validateRequest(message); err != nil {
 			return nil, err
 		}

@@ -42,8 +42,14 @@ export function perplexity(negLogProbs: number[], tokenCounts: number[]): number
 function validateProbs(confidences: number[], correct: number[]): void {
   if (confidences.length !== correct.length) throw new Error("confidences and correct must have the same shape");
   if (!confidences.length) return;
-  if (Math.min(...confidences) < 0.0 || Math.max(...confidences) > 1.0) throw new Error("confidences must lie in [0, 1]");
-  if (!correct.every((c) => c === 0 || c === 1)) throw new Error("correct must be 0/1 or boolean");
+  let lo = confidences[0];
+  let hi = confidences[0];
+  for (const c of confidences) {
+    if (c < lo) lo = c;
+    if (c > hi) hi = c;
+  }
+  if (lo < 0.0 || hi > 1.0) throw new Error("confidences must lie in [0, 1]");
+  if (!correct.every((c: unknown) => c === 0 || c === 1 || typeof c === "boolean")) throw new Error("correct must be 0/1 or boolean");
 }
 
 function binIndices(confidences: number[], nBins: number): number[] {

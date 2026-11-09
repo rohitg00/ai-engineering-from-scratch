@@ -8,7 +8,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { performance } from "node:perf_hooks";
 
-import { TaskSpec, loadFixtures, postProcess, renderPrompt, validateFile } from "../../70-task-spec-format/code/main.js";
+import { TaskSpec, loadFixtures, postProcess, pyStrRepr, renderPrompt, validateFile } from "../../70-task-spec-format/code/main.js";
 import { score as metricScore } from "../../71-classical-metrics/code/main.js";
 import { extractCode, runCandidate } from "../../72-code-exec-metric/code/main.js";
 import { CalibrationReport, PerplexityResult } from "../../73-perplexity-calibration/code/main.js";
@@ -164,7 +164,7 @@ function scoreOne(adapter: ModelAdapter, task: TaskSpec, timeoutS = 3.0): TaskRe
     task.metricName,
     score,
     correctFromScore(task.metricName, score),
-    Math.min(1.0, Math.max(0.0, gen.confidence)),
+    Number.isNaN(gen.confidence) ? 0.0 : Math.min(1.0, Math.max(0.0, gen.confidence)),
     gen.text,
     detail,
     elapsed,
@@ -174,6 +174,8 @@ function scoreOne(adapter: ModelAdapter, task: TaskSpec, timeoutS = 3.0): TaskRe
 export function runEval(
   adapters: ModelAdapter[],
   tasks: TaskSpec[],
+  _parallel = true,
+  _maxWorkers = 8,
   codeExecTimeoutS = 3.0,
 ): [TaskResult[], Map<string, [number, number, number][]>] {
   const results: TaskResult[] = [];
@@ -273,7 +275,7 @@ export function renderMarkdownBlock(report: EvalReport): string {
 }
 
 function wordCount(text: string): number {
-  return text.split(/\s+/).filter(Boolean).length;
+  return text.split(/[\t-\r\u001c-\u001f \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+/).filter(Boolean).length;
 }
 
 export class RuleBasedAdapter extends ModelAdapter {
@@ -352,7 +354,13 @@ function loadFixtureTasks(): TaskSpec[] {
   const outDir = mkdtempSync(join(tmpdir(), "aie_l75_"));
   const [good] = loadFixtures(outDir);
   const [tasks, errors] = validateFile(good);
-  if (errors.length) throw new Error(`fixture validation failed: ${errors.length} errors`);
+  if (errors.length) {
+    const shown = errors.map(
+      (e) =>
+        `ValidationError(line_number=${e.lineNumber}, task_id=${pyStrRepr(e.taskId)}, rule=${pyStrRepr(e.rule)}, field_name=${pyStrRepr(e.fieldName)}, detail=${pyStrRepr(e.detail)})`,
+    );
+    throw new Error(`fixture validation failed: [${shown.join(", ")}]`);
+  }
   return tasks;
 }
 
@@ -365,7 +373,7 @@ export function demo(): number {
   const tasks = loadFixtureTasks();
   const adapters: ModelAdapter[] = [new RuleBasedAdapter(), new NoisyAdapter(1), new BiasedAdapter("arithmetic")];
   const t0 = performance.now();
-  const [results, calibrationBuf] = runEval(adapters, tasks, 2.0);
+  const [results, calibrationBuf] = runEval(adapters, tasks, true, 6, 2.0);
   const wall = (performance.now() - t0) / 1000;
 
   const tokenStats = new Map(adapters.map((a) => [a.model_id, [...a.token_stats]]));

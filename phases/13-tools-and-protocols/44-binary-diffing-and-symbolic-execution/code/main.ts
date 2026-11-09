@@ -86,7 +86,12 @@ export function dumps(value: Json, indent: number | null): string {
 }
 
 function pyRound(value: number, digits: number): PyFloat {
-  return new PyFloat(Number(value.toFixed(digits)));
+  const abs = Math.abs(value);
+  let text = abs.toFixed(digits);
+  const full = abs.toFixed(Math.min(100, digits + 40));
+  const kept = full.slice(0, full.indexOf(".") + (digits ? digits + 1 : 0));
+  if (/^50*$/.test(full.slice(full.indexOf(".") + digits + 1)) && Number(kept[kept.length - 1]) % 2 === 0) text = kept;
+  return new PyFloat(value < 0 ? -Number(text) : Number(text));
 }
 
 export class Section {
@@ -229,7 +234,7 @@ export function loadFixture(name: string): ElfObject {
 }
 
 export function fixtureListing(name: string): Map<string, Instruction[]> {
-  return parseListing(readFileSync(join(FIXTURES, name.replace(".o", ".objdump.txt")), "utf-8"));
+  return parseListing(readFileSync(join(FIXTURES, name.replaceAll(".o", ".objdump.txt")), "utf-8"));
 }
 
 const CONDITIONAL_JUMPS = new Set(["ja", "jae", "jb", "jbe", "je", "jne", "jl", "jle", "jg", "jge", "js", "jns", "jo", "jno", "jp", "jnp"]);
@@ -275,7 +280,7 @@ export class Instruction {
 }
 
 function splitLines(text: string): string[] {
-  const lines = text.split(/\r\n|\r|\n/);
+  const lines = text.split(/\r\n|[\n\r\v\f\x1c-\x1e\x85\u2028\u2029]/);
   if (lines.length && lines[lines.length - 1] === "") lines.pop();
   return lines;
 }
@@ -738,7 +743,18 @@ export function radiff2Fixture(name: string): RadiffRow[] {
   return existsSync(path) ? parseRadiff2(readFileSync(path, "utf-8")) : [];
 }
 
-type GhidraMatch = { correlator: string; source: string; type: string };
+type GhidraMatch = {
+  correlator: string;
+  source: string;
+  sourceAddress: number;
+  sourceLength: number;
+  destination: string;
+  destinationAddress: number;
+  destinationLength: number;
+  type: string;
+  similarity: number;
+  confidence: number;
+};
 type GhidraReport = {
   version?: string;
   blocks: Map<string, Json>;
@@ -760,19 +776,34 @@ export function parseGhidraVt(text: string): GhidraReport {
     return found;
   };
   for (const line of splitLines(text)) {
-    const parts = line.trim().split("|");
-    if (parts.length < 3 || parts[0] !== "VT") continue;
-    const kind = parts[1];
+    const raw = line.trim().split("|");
+    if (raw.length < 3 || raw[0] !== "VT") continue;
+    const part = (i: number): string => {
+      if (i >= raw.length) throw new Error("IndexError: list index out of range");
+      return raw[i];
+    };
+    const kind = part(1);
     if (kind === "ghidra") {
-      report.version = parts[2];
-    } else if (kind === "block" && !parts[4].includes("::")) {
-      slot(report.blocks, parts[2]).set(parts[3], { start: parseInt(parts[4], 16), end: parseInt(parts[5], 16), size: Number(parts[6]) });
+      report.version = part(2);
+    } else if (kind === "block" && !part(4).includes("::")) {
+      slot(report.blocks, part(2)).set(part(3), { start: parseInt(part(4), 16), end: parseInt(part(5), 16), size: Number(part(6)) });
     } else if (kind === "function") {
-      slot(report.functions, parts[2]).set(parts[3], { entry: parseInt(parts[4], 16), size: Number(parts[5]) });
+      slot(report.functions, part(2)).set(part(3), { entry: parseInt(part(4), 16), size: Number(part(5)) });
     } else if (kind === "correlator") {
-      report.correlators.set(parts[2], Number(parts[3]));
+      report.correlators.set(part(2), Number(part(3)));
     } else if (kind === "match") {
-      report.matches.push({ correlator: parts[2], source: parts[3], type: parts[9] });
+      report.matches.push({
+        correlator: part(2),
+        source: part(3),
+        sourceAddress: parseInt(part(4), 16),
+        sourceLength: Number(part(5)),
+        destination: part(6),
+        destinationAddress: parseInt(part(7), 16),
+        destinationLength: Number(part(8)),
+        type: part(9),
+        similarity: Number(part(10)),
+        confidence: Number(part(11)),
+      });
     }
   }
   return report;
@@ -916,9 +947,9 @@ export function evaluate(expr: Expr, assignment: Map<string, number>, tables: Ma
   const int = (flag: boolean) => (flag ? 1 : 0);
   switch (expr.op) {
     case "+":
-      return toSigned(a + b, width);
+      return toSigned(BigInt(a) + BigInt(b), width);
     case "-":
-      return toSigned(a - b, width);
+      return toSigned(BigInt(a) - BigInt(b), width);
     case "*":
       return toSigned(BigInt(a) * BigInt(b), width);
     case "/":
@@ -1235,7 +1266,9 @@ export const TOTAL_VALUES = Array.from({ length: 9 }, (_, k) => k + 1);
 
 export function checkIrAgainstListing(fn: IRFunction): string[] {
   const [start, end] = loadFixture(fn.source).functionExtent(fn.name);
-  const listing = (fixtureListing(fn.source).get(fn.name) ?? []).filter((i) => start <= i.address && i.address < end);
+  const found = fixtureListing(fn.source).get(fn.name);
+  if (found === undefined) throw new Error(`KeyError: '${fn.name}'`);
+  const listing = found.filter((i) => start <= i.address && i.address < end);
   const addresses = new Set(listing.map((i) => i.address));
   const problems: string[] = [];
   for (const b of fn.blocks.values()) {

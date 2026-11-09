@@ -15,7 +15,7 @@ type Res<T> = Result<T, String>;
 enum J {
     Null,
     Bool(bool),
-    Int(i64),
+    Int(i128),
     Str(String),
     Arr(Vec<J>),
     Obj(Vec<(String, J)>),
@@ -156,8 +156,8 @@ fn s(v: impl Into<String>) -> J {
     J::Str(v.into())
 }
 
-fn int(v: impl TryInto<i64>) -> J {
-    J::Int(v.try_into().unwrap_or(i64::MAX))
+fn int(v: impl TryInto<i128>) -> J {
+    J::Int(v.try_into().unwrap_or(i128::MAX))
 }
 
 fn strs<T: AsRef<str>>(items: &[T]) -> J {
@@ -982,7 +982,7 @@ fn plan_dynamic_link(objects: &[(String, ElfFile)]) -> J {
         };
         counts.set(d.kind, J::Int(current + 1));
     }
-    let n = plt_symbols.len() as i64;
+    let n = plt_symbols.len() as i128;
     let relatives = match counts.get("relative") {
         Some(J::Int(n)) => *n,
         _ => 0,
@@ -1546,8 +1546,11 @@ impl PeImage {
             let o = self.rva_to_offset(rva)?;
             let page = u32_at(&self.data, o)? as u64;
             let block_size = u32_at(&self.data, o + 4)? as u64;
+            if block_size < 8 {
+                return Err(format!("base relocation block of size {} is smaller than its 8-byte header", block_size).into());
+            }
             let mut entries = Vec::new();
-            for k in 0..block_size.saturating_sub(8) / 2 {
+            for k in 0..(block_size - 8) / 2 {
                 let word = u16_at(&self.data, self.rva_to_offset(rva + 8 + 2 * k)?)?;
                 entries.push(
                     J::obj()
@@ -1558,9 +1561,6 @@ impl PeImage {
                 );
             }
             blocks.push(J::obj().with("pageRva", int(page)).with("blockSize", int(block_size)).with("entries", J::Arr(entries)));
-            if block_size == 0 {
-                return Err("base relocation block of size 0".into());
-            }
             rva += block_size;
         }
         Ok(J::Arr(blocks))
@@ -3061,7 +3061,7 @@ fn macho_report(m: &MachoFile) -> Res<J> {
                                             .with("address", s(hxi(r.address as i64)))
                                             .with("type", s(r.type_name()))
                                             .with("symbol", s(&r.name))
-                                            .with("size", J::Int(r.size()))
+                                            .with("size", int(r.size()))
                                     })
                                     .collect(),
                             ),

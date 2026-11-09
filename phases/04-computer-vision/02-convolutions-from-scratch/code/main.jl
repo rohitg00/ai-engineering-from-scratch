@@ -14,7 +14,7 @@ function pad2d(x::Array{Float32,3}, p::Int)
     return out
 end
 
-output_size(h_in, k, p, s) = (h_in + 2p - k) ÷ s + 1
+output_size(h_in, k, p, s) = fld(h_in + 2p - k, s) + 1
 
 function conv2d_naive(x, w, b=nothing; stride=1, padding=0)
     c_in, h, w_in = size(x)

@@ -221,72 +221,78 @@ function banner(title: string): void {
   console.log("=".repeat(60));
 }
 
-banner("STEP 1: MSE Loss");
-const preds = [0.9, 0.1, 0.7, 0.4];
-const targets = [1.0, 0.0, 1.0, 0.0];
-console.log(`  Predictions: ${pyList(preds)}`);
-console.log(`  Targets:     ${pyList(targets)}`);
-console.log(`  MSE Loss:    ${mse(preds, targets).toFixed(6)}`);
-console.log(`  MSE Grads:   ${strList(mseGradient(preds, targets), 4)}`);
+function main(): void {
+  banner("STEP 1: MSE Loss");
+  const preds = [0.9, 0.1, 0.7, 0.4];
+  const targets = [1.0, 0.0, 1.0, 0.0];
+  console.log(`  Predictions: ${pyList(preds)}`);
+  console.log(`  Targets:     ${pyList(targets)}`);
+  console.log(`  MSE Loss:    ${mse(preds, targets).toFixed(6)}`);
+  console.log(`  MSE Grads:   ${strList(mseGradient(preds, targets), 4)}`);
 
-console.log();
-banner("STEP 2: Binary Cross-Entropy");
-console.log(`  Predictions: ${pyList(preds)}`);
-console.log(`  Targets:     ${pyList(targets)}`);
-console.log(`  BCE Loss:    ${binaryCrossEntropy(preds, targets).toFixed(6)}`);
-console.log(`  BCE Grads:   ${strList(bceGradient(preds, targets), 4)}`);
+  console.log();
+  banner("STEP 2: Binary Cross-Entropy");
+  console.log(`  Predictions: ${pyList(preds)}`);
+  console.log(`  Targets:     ${pyList(targets)}`);
+  console.log(`  BCE Loss:    ${binaryCrossEntropy(preds, targets).toFixed(6)}`);
+  console.log(`  BCE Grads:   ${strList(bceGradient(preds, targets), 4)}`);
 
-console.log("\n  CE loss at different confidence levels (true label = 1):");
-for (const conf of [0.01, 0.1, 0.5, 0.9, 0.99]) {
-  const ce = -(1.0 * Math.log(Math.max(1e-15, conf)));
-  const ms = (conf - 1.0) ** 2;
-  console.log(`    p=${conf.toFixed(2)}: CE=${ce.toFixed(4)}, MSE=${ms.toFixed(4)}, ratio=${(ce / Math.max(0.0001, ms)).toFixed(1)}x`);
+  console.log("\n  CE loss at different confidence levels (true label = 1):");
+  for (const conf of [0.01, 0.1, 0.5, 0.9, 0.99]) {
+    const ce = -(1.0 * Math.log(Math.max(1e-15, conf)));
+    const ms = (conf - 1.0) ** 2;
+    console.log(`    p=${conf.toFixed(2)}: CE=${ce.toFixed(4)}, MSE=${ms.toFixed(4)}, ratio=${(ce / Math.max(0.0001, ms)).toFixed(1)}x`);
+  }
+
+  console.log();
+  banner("STEP 3: Categorical Cross-Entropy + Softmax");
+  const logits = [2.0, 1.0, 0.1, -1.0, 3.0];
+  const targetIdx = 4;
+  console.log(`  Logits:  ${pyList(logits)}`);
+  console.log(`  Softmax: ${strList(softmax(logits), 4)}`);
+  console.log(`  Target class: ${targetIdx}`);
+  console.log(`  CCE Loss: ${categoricalCrossEntropy(logits, targetIdx).toFixed(6)}`);
+  console.log(`  Gradient: ${strList(cceGradient(logits, targetIdx), 4)}`);
+
+  console.log();
+  banner("STEP 4: Label Smoothing");
+  const hardLoss = categoricalCrossEntropy(logits, targetIdx);
+  const smoothLoss = labelSmoothedCce(logits, targetIdx, 5, 0.1);
+  console.log(`  Hard target loss:    ${hardLoss.toFixed(6)}`);
+  console.log(`  Smooth target loss:  ${smoothLoss.toFixed(6)}`);
+  console.log(`  Smoothing increases loss by ${(smoothLoss - hardLoss).toFixed(6)}`);
+  console.log("  This prevents overconfidence by targeting 0.9 instead of 1.0");
+
+  console.log();
+  banner("STEP 5: Contrastive Loss");
+  seed(42);
+  const anchor = Array.from({ length: 8 }, () => gauss(0, 1));
+  const positive = anchor.map((a) => a + gauss(0, 0.1));
+  const negatives = Array.from({ length: 7 }, () => Array.from({ length: 8 }, () => gauss(0, 1)));
+  const lossVal = contrastiveLoss(anchor, positive, negatives, 0.07);
+  console.log(`  Anchor-positive similarity: ${cosineSimilarity(anchor, positive).toFixed(4)}`);
+  console.log(`  Anchor-negative similarities: ${strList(negatives.map((neg) => cosineSimilarity(anchor, neg)), 4)}`);
+  console.log(`  Contrastive loss (tau=0.07): ${lossVal.toFixed(4)}`);
+  console.log(`  Contrastive loss (tau=0.5):  ${contrastiveLoss(anchor, positive, negatives, 0.5).toFixed(4)}`);
+  console.log("  Lower temperature = sharper = higher loss for imperfect separation");
+
+  console.log();
+  banner("STEP 6: MSE vs Cross-Entropy on Classification");
+  const data = makeCircleData();
+  for (const lossType of ["mse", "bce"]) {
+    console.log(`\n--- Training with ${lossType.toUpperCase()} ---`);
+    const net = new LossComparisonNetwork(lossType, 8, 0.1);
+    const results = net.train(data, 200);
+    const [finalLoss, finalAcc] = results[results.length - 1];
+    console.log(`  Final: loss=${finalLoss.toFixed(4)}, accuracy=${finalAcc.toFixed(1)}%`);
+  }
+
+  console.log("\n=== Key Takeaway ===");
+  console.log("  Cross-entropy converges faster on classification because its");
+  console.log("  gradient is strong when predictions are wrong and weak when correct.");
+  console.log("  MSE gradient flattens near 0 and 1 due to sigmoid saturation.");
 }
 
-console.log();
-banner("STEP 3: Categorical Cross-Entropy + Softmax");
-const logits = [2.0, 1.0, 0.1, -1.0, 3.0];
-const targetIdx = 4;
-console.log(`  Logits:  ${pyList(logits)}`);
-console.log(`  Softmax: ${strList(softmax(logits), 4)}`);
-console.log(`  Target class: ${targetIdx}`);
-console.log(`  CCE Loss: ${categoricalCrossEntropy(logits, targetIdx).toFixed(6)}`);
-console.log(`  Gradient: ${strList(cceGradient(logits, targetIdx), 4)}`);
-
-console.log();
-banner("STEP 4: Label Smoothing");
-const hardLoss = categoricalCrossEntropy(logits, targetIdx);
-const smoothLoss = labelSmoothedCce(logits, targetIdx, 5, 0.1);
-console.log(`  Hard target loss:    ${hardLoss.toFixed(6)}`);
-console.log(`  Smooth target loss:  ${smoothLoss.toFixed(6)}`);
-console.log(`  Smoothing increases loss by ${(smoothLoss - hardLoss).toFixed(6)}`);
-console.log("  This prevents overconfidence by targeting 0.9 instead of 1.0");
-
-console.log();
-banner("STEP 5: Contrastive Loss");
-seed(42);
-const anchor = Array.from({ length: 8 }, () => gauss(0, 1));
-const positive = anchor.map((a) => a + gauss(0, 0.1));
-const negatives = Array.from({ length: 7 }, () => Array.from({ length: 8 }, () => gauss(0, 1)));
-const lossVal = contrastiveLoss(anchor, positive, negatives, 0.07);
-console.log(`  Anchor-positive similarity: ${cosineSimilarity(anchor, positive).toFixed(4)}`);
-console.log(`  Anchor-negative similarities: ${strList(negatives.map((neg) => cosineSimilarity(anchor, neg)), 4)}`);
-console.log(`  Contrastive loss (tau=0.07): ${lossVal.toFixed(4)}`);
-console.log(`  Contrastive loss (tau=0.5):  ${contrastiveLoss(anchor, positive, negatives, 0.5).toFixed(4)}`);
-console.log("  Lower temperature = sharper = higher loss for imperfect separation");
-
-console.log();
-banner("STEP 6: MSE vs Cross-Entropy on Classification");
-const data = makeCircleData();
-for (const lossType of ["mse", "bce"]) {
-  console.log(`\n--- Training with ${lossType.toUpperCase()} ---`);
-  const net = new LossComparisonNetwork(lossType, 8, 0.1);
-  const results = net.train(data, 200);
-  const [finalLoss, finalAcc] = results[results.length - 1];
-  console.log(`  Final: loss=${finalLoss.toFixed(4)}, accuracy=${finalAcc.toFixed(1)}%`);
+if (require.main === module) {
+  main();
 }
-
-console.log("\n=== Key Takeaway ===");
-console.log("  Cross-entropy converges faster on classification because its");
-console.log("  gradient is strong when predictions are wrong and weak when correct.");
-console.log("  MSE gradient flattens near 0 and 1 due to sigmoid saturation.");

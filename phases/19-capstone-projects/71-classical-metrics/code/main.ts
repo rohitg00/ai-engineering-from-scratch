@@ -9,7 +9,7 @@ export function tokenize(text: string): string[] {
   return text.toLowerCase().match(TOKEN_RE) ?? [];
 }
 
-const PY_WS = /^[\s\u001c-\u001f\u0085]+|[\s\u001c-\u001f\u0085]+$/g;
+const PY_WS = /^[\t-\r\u001c-\u001f \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+|[\t-\r\u001c-\u001f \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]+$/g;
 
 function pyStrip(s: string): string {
   return s.replace(PY_WS, "");
