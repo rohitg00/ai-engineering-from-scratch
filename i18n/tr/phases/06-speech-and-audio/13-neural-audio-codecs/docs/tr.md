@@ -3,7 +3,7 @@
 > 2026 ses jenerasyonu neredeyse tüm jetonlardır. EnCodec, SNAC, Mimi ve DAC, sürekli dalga formlarını bir transformatör tarafından tahmin edilebilen ayrı sıralara dönüştürürler.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 10 · 11 (Quantization), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

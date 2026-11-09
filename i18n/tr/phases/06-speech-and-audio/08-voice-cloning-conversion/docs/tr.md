@@ -3,7 +3,7 @@
 > Ses klonlaması, metnizi başka birinin sesinde okuyor. Ses dönüşümü, sesinizi başka birinin sesine yeniden yazarken söylediğiniz şeyi korur. İkisi de aynı parçalanmaya bağlıdır: konuşmacı kimliğini içeriğinden ayırır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 07 (TTS)
 **Time:** ~75 minutes
 

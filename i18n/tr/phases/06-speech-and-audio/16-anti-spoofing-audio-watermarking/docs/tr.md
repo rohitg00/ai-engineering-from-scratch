@@ -3,7 +3,7 @@
 > Ses klonlaması savunmadan daha hızlı gönderildi. 2026 üretim ses sistemlerinin iki şeye ihtiyacı var: gerçek ve sahte konuşmayı sınıflandıran bir detektör (AASIST, RawNet2) ve sıkıştırmayı ve düzenlemeyi sağlayan bir su işaretisi (AudioSeal).
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 08 (Voice Cloning)
 **Time:** ~75 minutes
 

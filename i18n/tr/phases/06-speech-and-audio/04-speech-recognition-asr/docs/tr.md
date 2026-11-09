@@ -3,7 +3,7 @@
 > Konuşma tanıma, her zaman adımında ses sınıflandırmasıdır, İngilizce ve sessizlik bilinen bir dizi modeli ile yapıştırılır. CTC, RNN-T ve dikkat bunu yapmanın üç yolu.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 08 (CNNs & RNNs for Text), Phase 5 · 10 (Attention)
 **Time:** ~45 minutes
 

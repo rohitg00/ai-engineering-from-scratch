@@ -3,7 +3,7 @@
 > Whisper, 30 saniyelik bir pencere transformatörü kodlayıcı-dekoder, 680 bin saatlik çok dilli zayıf denetimli ses metni çiftlerinde eğitilmiştir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 5 · 10 (Attention), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

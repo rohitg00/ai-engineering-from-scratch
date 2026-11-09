@@ -3,7 +3,7 @@
 > Ölçemeyeceğiniz şeyi gönderemezsiniz. Bu ders her ses görevi için 2026 metrikleri belirler: ASR (WER, CER, RTFx), TTS (MOS, UTMOS, SECS, WER-on-ASR-round-trip), ses dili (MMAU, LongAudioBench), müzik (FAD, CLAP) ve hoparlör (EER).
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04, 06, 07, 09, 10; Phase 2 · 09 (Model Evaluation)
 **Time:** ~60 minutes
 

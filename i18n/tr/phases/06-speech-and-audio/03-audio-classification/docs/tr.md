@@ -3,7 +3,7 @@
 > "Köpek kışkırtması vs siren"den "bu hangi dil"e kadar her şey ses sınıflandırmasıdır. Özellikleri erimiş. Arsitektir her on yılda hareket eder. Değerlendirme AUC, F1 ve sınıf başına hatırlanmaya kalır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 3 · 06 (CNNs), Phase 5 · 08 (CNNs & RNNs for Text)
 **Time:** ~75 minutes
 

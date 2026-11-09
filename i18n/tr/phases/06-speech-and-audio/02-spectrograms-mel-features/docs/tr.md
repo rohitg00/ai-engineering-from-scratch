@@ -3,7 +3,7 @@
 > Neural ağlar çiğ dalga biçimlerini iyi tüketmezler. Spektrogramları tüketirler. Mel spektrogramlarını daha iyi tüketirler. 2026'da her ASR, TTS ve ses sınıflandırıcısı bu tek önceden işleme seçeneğiyle yaşar veya ölür.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 01 (Audio Fundamentals)
 **Time:** ~45 minutes
 

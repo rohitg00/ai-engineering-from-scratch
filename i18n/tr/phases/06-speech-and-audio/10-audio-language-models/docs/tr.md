@@ -3,7 +3,7 @@
 > 2026 ses dili modelleri konuşma + çevresel ses + müzik üzerinde düşünüyor. Qwen2.5-Omni-7B MMAU-Pro'da GPT-4o Audio ile eşleşir. Audio Flamingo Next LongAudioBench'de Gemini 2.5 Pro'yu yener. Açık ve kapalı arasındaki boşluk, herkesin neredeyse rastgele olduğu çok sesli görevler hariç, esasen kapalıdır.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 12 · 03 (Vision-Language Models), Phase 7 · 10 (Audio Transformers)
 **Time:** ~45 minutes
 

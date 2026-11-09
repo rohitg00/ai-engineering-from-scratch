@@ -3,7 +3,7 @@
 > ASR "Ne dediler?" sorusunu sorar. Konuşmacı tanıma "Kim söyledi?" sorusunu sorar. Matematik aynı  gömülmeler artı cosine  gibi görünüyor.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 22 (Embedding Models)
 **Time:** ~45 minutes
 

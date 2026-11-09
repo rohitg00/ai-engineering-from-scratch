@@ -3,7 +3,7 @@
 > Her ses ajansı iki karar üzerine yaşar veya ölür: kullanıcı şimdi konuşuyor mu, ve onlar bitti mi? VAD ilkine cevap verir. Dönüş algısı (VAD + sessizlik-sükûp + semantik uç noktası modeli) ikincine cevap verir. Yanlış yapın ve asistanınız ya kullanıcıları keser ya da asla susmaz.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 11 (Real-Time Audio), Phase 6 · 12 (Voice Assistant)
 **Time:** ~45 minutes
 

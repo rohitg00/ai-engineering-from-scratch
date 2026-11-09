@@ -3,7 +3,7 @@
 > Dalga şekilleri çiğ sinyalidır. Spektrogramlar temsilidir. Mel özellikleri ML dostu formudur. Her modern ASR ve TTS boru hattı bu merdivenin üzerinde yürür ve ilk adım örnekleme ve Fourier'i anlamak.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Vectors & Matrices), Phase 1 · 14 (Probability Distributions)
 **Time:** ~45 minutes
 

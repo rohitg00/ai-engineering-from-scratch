@@ -3,7 +3,7 @@
 > ASR konuşmayı metine çevirir; TTS metini konuşmaya çevirir. 2026 yığın üç parçadan oluşur: metin → jetonlar, jetonlar → mel, mel → dalga şekli. Her bölümde bir dizüstü bilgisayarına uyan bir varsayılan model vardır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 09 (Seq2Seq), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

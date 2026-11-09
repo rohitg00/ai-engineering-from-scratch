@@ -3,7 +3,7 @@
 > 2026 müzik jenerasyonu: Suno v5 ve Udio v4 ticari olarak baskın; MusicGen, Stable Audio Open ve ACE-Step açık kaynaklı liderlik etmektedir. Teknik sorun çoğunlukla çözülmüştür. Hukuki sorun (Warner Music $ 500M anlaşması, UMG anlaşması) 2025-2026 yıllarında alanı yeniden şekillendirdi.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 4 · 10 (Diffusion Models)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > 2024-2026 ses AI'yi yeniden tanımladı. Moshi, 200 ms gecikme ile aynı anda dinleyen ve konuşan tek bir model gönderir. Hibiki konuşma-söz çevirisini parça parça yapar. Her ikisi de ASR → LLM → TTS borusunu Mimi kodek jetonları üzerinde tek bir tam çiftlik mimarisi için terk eder. Bu yeni referans tasarımıdır.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 13 (Neural Audio Codecs), Phase 6 · 11 (Real-Time Audio), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 
