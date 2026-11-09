@@ -3,7 +3,7 @@
 > एक मॉडल डेमो में एक अनुबंध होता हैः एक इनपुट, एक मॉडल कॉल और एक आउटपुट। लिंक साझा करने से पहले प्रत्येक भाग पर एक सीमा निर्धारित करें।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 13 (Building a Production LLM Application), Phase 17 · 08 (Inference Metrics), Phase 17 · 19 (AI Gateways)
 **Time:** ~90 minutes
 
@@ -207,12 +207,14 @@ demo-token-bucket
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 स्व-परीक्षण सत्यापनकर्ता, टोकन बाल्ट, स्ट्रीम प्रारूप और एक वास्तविक HTTP राउंड-ट्रिप की जांच करता है। यह एक मुफ्त पोर्ट पर सर्वर को शुरू करता है, तीन अनुरोध भेजता है, सर्वर को रोकता है, और बाहर निकलता है। ब्राउज़र के लिए सर्वर को केवल तभी शुरू करें जब आपको इसकी आवश्यकता होती हैः
 
 ```bash
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 खुला `http://127.0.0.1:8000`ब्राउज़र में. सर्वर को रोकने के लिए Ctrl + C दबाएं.
@@ -478,6 +480,7 @@ curl -N -X POST http://127.0.0.1:8000/api/stream \
 export DEMO_ACCESS_TOKEN="$(python3 -c 'import secrets; print(secrets.token_urlsafe(24))')"
 echo "$DEMO_ACCESS_TOKEN"
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 परीक्षण करेंः

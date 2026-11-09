@@ -3,7 +3,7 @@
 > क्वांटिज़ेशन प्रारूप सार्वभौमिक विकल्प नहीं है  यह हार्डवेयर, सेवा इंजन और कार्यभार का कार्य है। GGUF Q4_K_M या Q5_K_M CPU और किनारे के मालिक हैं, जिसे llama.cpp और Ollama के माध्यम से वितरित किया जाता है। GPTQ VLLM के अंदर जीतता है जब आप एक ही आधार पर बहु-लोरा की जरूरत है। मार्लिन-एडब्ल्यूक्यू कर्नल के साथ AWQ 7B वर्ग मॉडल पर ~741 tok/s प्रदान करता है, जिसमें सबसे अच्छा पास@1 INT4  पर है। एफपी8 हॉपर, एडा और ब्लैकवेल पर मध्यस्थता में रहता है  लगभग नुकसान रहित और व्यापक रूप से समर्थित। NVFP4 और MXFP4 (ब्लैकवेल माइक्रोस्केलिंग) आक्रामक हैं और प्रति ब्लॉक सत्यापन की आवश्यकता होती है। दो जाल काटने की टीमेंः कैलिब्रेशन डेटासेट को तैनाती डोमेन से मेल खाना चाहिए, और KV कैश वजन क्वांटिज़ेशन से अलग है  AWQ पाठ "मेरा मॉडल अब 4 GB है" उत्पादन बैच आकार पर 10-30 GB KV कैश को भूल जाता है।
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy memory and throughput comparison across formats)
+**Languages:** Python, TypeScript (stdlib, toy memory and throughput comparison across formats)
 **Prerequisites:** Phase 10 · 13 (Quantization foundations), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 

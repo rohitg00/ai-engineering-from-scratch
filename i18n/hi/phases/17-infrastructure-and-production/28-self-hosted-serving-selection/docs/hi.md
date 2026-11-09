@@ -3,7 +3,7 @@
 > इंजन चयन हार्डवेयर, पैमाने और पारिस्थितिकी तंत्र का एक कार्य है  एक रैंकिंग बोर्ड रीड नहीं है। 2026 में चार इंजन स्व-होस्ट किए गए निष्कर्ष पर हावी हैंः llama.cpp, Ollama, vLLM, SGLang, रखरखाव मोड में TGI पीछे रह रहा है। **llama.cpp**सबसे तेज CPU पर  सबसे व्यापक मॉडल समर्थन, मात्रा और थ्रेडिंग पर पूर्ण नियंत्रण। **Ollama**एक कमांड स्थापना है, ~15-30% llama.cpp (गो + CGo + HTTP क्रमबद्धता), 3x आउटपुट अंतर के तहत प्रूड-जैसे लोड। **TGI entered maintenance mode December 11, 2025** केवल बग फिक्स, vLLM की तुलना में ~10% धीमा कच्चा आउटपुट लेकिन ऐतिहासिक रूप से शीर्ष अवलोकन और HF पारिस्थितिकी तंत्र के एकीकरण। यह रखरखाव स्थिति इसे एक जोखिम भरा दीर्घकालिक शर्त बनाती है  नई परियोजनाओं के लिए SGLang या vLLM अधिक सुरक्षित डिफ़ॉल्ट हैं। **vLLM**सामान्य प्रयोजन उत्पादन डिफ़ॉल्ट है  v0.15.1 (फरवरी 2026) PyTorch 2.10, RTX ब्लैकवेल SM120, H200 अनुकूलन जोड़ता है। **SGLang**यह एजेंसी मल्टी-टर्न / प्रीफिक्स-हेवी विशेषज्ञ है  400,000+ GPUs उत्पादन में (xAI, LinkedIn, Cursor, Oracle, GCP, Azure, AWS) । हार्डवेयर प्रतिबंधः सीपीयू-पहले → llama.cpp. AMD / non-NVIDIA → vLLM सबसे मजबूत समर्थित पथ है (TRT-LLM NVIDIA- लॉक है) । 2026 पाइपलाइन पैटर्नः dev = Ollama, staging = llama.cpp, prod = vLLM या SGLang. इंजन अलग-अलग वजन प्रारूप लेते हैं  llama.cpp परिवार के लिए GGUF, GPU इंजन के लिए HF सेफेटेंसर  इसलिए एक प्रारूप रूपांतरण चरणों के बीच बैठ सकता है।
 
 **Type:** Learn
-**Languages:** Python (stdlib, engine-decision tree walker)
+**Languages:** Python, TypeScript (stdlib, engine-decision tree walker)
 **Prerequisites:** All Phase 17 lessons covering engines (04, 06, 07, 09, 18)
 **Time:** ~45 minutes
 

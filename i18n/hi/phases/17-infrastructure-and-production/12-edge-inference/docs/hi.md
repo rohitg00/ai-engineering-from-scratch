@@ -3,7 +3,7 @@
 > कोर किनारे की बाधा मेमोरी बैंडविड्थ है, गणना नहीं। मोबाइल DRAM 50-90 GB/s पर बैठता है; डेटा सेंटर HBM3 2-3 TB/s  30-50x अंतर को साफ करता है। डिकोड मेमोरी-बंद है इसलिए अंतर निर्णायक है। 2026 में, परिदृश्य चार भागों में विभाजित हो जाएगा। एप्पल एम 4 / ए 18 न्यूरल इंजन 38 TOPS के साथ एकीकृत मेमोरी (कोई सीपीयू  एनपीयू प्रतिलिपि नहीं) पर पहुंचता है। क्वालकॉम स्नैपड्रैगन एक्स एलिट / 8 जेन 4 हेक्सागन 45 TOPS को हिट करता है। WebGPU + WebLLM M3 मैक्स पर ~ 41 tok/s पर Llama 3.1 8B (Q4) चलाता है (लगभग 70-80% मूल); 17.6k GitHub सितारे, OpenAI संगत एपीआई, ~70-75% मोबाइल कवरेज। NVIDIA जेटसन ओरिन नैनो सुपर (8GB) Llama 3.2 3B / Phi-3 के साथ फिट बैठता है; AGX ओरिन ~ 40 टोक / सेकंड पर vLLM के माध्यम से gpt-oss-20b चलाता है; जेटसन T4000 (जेटपैक 7.1) 2x AGX ओरिन है। TensorRT Edge-LLM EAGLE-3, NVFP4, CHUNKED प्रीफिल  को सिस 2026 में बोश, थंडरसॉफ्ट, मीडियाटेक द्वारा दिखाया गया है।
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy bandwidth-bound decode simulator)
+**Languages:** Python, TypeScript (stdlib, toy bandwidth-bound decode simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 09 (Production Quantization)
 **Time:** ~60 minutes
 

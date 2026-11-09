@@ -3,7 +3,7 @@
 > 2026 के अनुमान बाजार में अब GPU समय किराए पर नहीं है। यह कस्टम सिलिकॉन (Groq, Cerebras, SambaNova), GPU प्लेटफार्मों (Baseten, Together, Fireworks, Modal) और API-first बाजारों (Replicate, DeepInfra) में विभाजित है। आतिशबाजी ने कीमत बढ़ा दी।$1/hr per GPU on May 1, 2026, and $10T+ टोकन/दिन पर 4B मूल्यांकन आपको मात्रा-चालित मॉडल काम बताता है।$300M Series E at $5B जनवरी 2026 में प्रतिस्पर्धी स्थिति निर्धारण नियम सरल हैः फायरवर्क्स विलंबता को अनुकूलित करता है, साथ में कैटलॉग चौड़ाई को अनुकूलित करता है, बेसेट एंटरप्राइज पॉलिश को अनुकूलित करता है, मॉडल पायथन-नेटिव डीएक्स को अनुकूलित करता है, प्रतिकृति बहु-मॉडल पहुंच को अनुकूलित करता है, एनिस्केल पायथन को वितरित करता है। यह पाठ आपको एक मैट्रिक्स देता है जिसे आप एक संस्थापक को सौंप सकते हैं।
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy per-call economics comparator)
+**Languages:** Python, TypeScript (stdlib, toy per-call economics comparator)
 **Prerequisites:** Phase 17 · 01 (Managed LLM Platforms), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~60 minutes
 
