@@ -3,7 +3,7 @@
 > A NER encontrou "Paris". A entidade que liga decide: Paris, França? Paris Hilton? Paris, Texas? Paris (o príncipe troiano)? Sem ligar, o seu gráfico de conhecimento permanece ambíguo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 24 (Coreference Resolution)
 **Time:** ~60 minutes
 

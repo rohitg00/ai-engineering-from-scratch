@@ -3,7 +3,7 @@
 > Os sistemas de extracção dizem o que o documento disse, os sistemas abstractos dizem o que o autor queria dizer, diferentes tarefas, diferentes armadilhas.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 11 (Machine Translation)
 **Time:** ~75 minutes
 

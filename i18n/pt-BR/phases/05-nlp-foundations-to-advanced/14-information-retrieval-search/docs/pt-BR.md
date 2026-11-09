@@ -3,7 +3,7 @@
 > BM25 é preciso, mas frágil. Dense lança uma rede larga, mas falta palavras-chave. Hybrid é o padrão de 2026.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 

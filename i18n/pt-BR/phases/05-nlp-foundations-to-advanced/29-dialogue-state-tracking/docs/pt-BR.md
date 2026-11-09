@@ -3,7 +3,7 @@
 > "Quero um restaurante barato no norte... que seja moderado... e adicione italiano". Três turnos, três atualizações de estado.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 20 (Structured Outputs)
 **Time:** ~75 minutes
 

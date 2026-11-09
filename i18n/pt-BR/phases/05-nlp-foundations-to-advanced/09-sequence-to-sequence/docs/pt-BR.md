@@ -3,7 +3,7 @@
 > Dois RNNs fingindo ser tradutores, o gargalo de engarrafamento que atingiram é a razão pela qual existe atenção.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 08 (CNNs + RNNs for Text), Phase 3 · 11 (PyTorch Intro)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > Ela respondeu com padrões de correspondência. DialogFlow mapeou intenções. GPT respondeu a partir de pesos. Claude corre ferramentas e verifica. Cada era resolveu o pior fracasso do anterior.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

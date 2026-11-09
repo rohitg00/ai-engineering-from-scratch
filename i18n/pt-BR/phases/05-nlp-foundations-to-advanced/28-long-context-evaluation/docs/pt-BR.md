@@ -3,7 +3,7 @@
 > Gemini 3 Pro anuncia 10 milhões de tokens de contexto. Em 1 milhão de tokens, o MRCR de 8 agulhas cai para 26,3%. Publicado ≠ utilizável. Avaliação de longo contexto diz a capacidade real do modelo que você está enviando.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 23 (Chunking Strategies)
 **Time:** ~60 minutes
 

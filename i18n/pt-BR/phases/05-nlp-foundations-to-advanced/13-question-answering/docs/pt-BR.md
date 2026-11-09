@@ -3,7 +3,7 @@
 > Três sistemas formaram a moderna QA. Extractiva encontrou intervalos. A recuperação aumentou-los em documentos. Gerativo produziu respostas. Cada assistente de IA moderno é uma mistura dos três.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 11 (Machine Translation), Phase 5 · 10 (Attention Mechanism)
 **Time:** ~75 minutes
 
