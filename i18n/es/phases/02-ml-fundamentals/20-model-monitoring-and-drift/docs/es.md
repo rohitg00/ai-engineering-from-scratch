@@ -3,7 +3,7 @@
 > Un modelo implementado falla sin un mensaje de error. Continúa devolviendo puntajes mientras el mundo se aleja de sus datos de entrenamiento, y solo el monitoreo muestra la brecha.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation), 16 (Anomaly Detection), and 19 (ML System Design)
 **Time:** ~110 minutes
 
@@ -261,6 +261,7 @@ El modelo es un umbral de `amount`Windows tiene 500 eventos y se mueve en 250. L
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console

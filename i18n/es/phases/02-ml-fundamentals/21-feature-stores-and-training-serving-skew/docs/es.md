@@ -3,7 +3,7 @@
 > Una característica tiene una definición y dos lectores. El entrenamiento lee su historia a partir de cada tiempo de etiqueta, y servir lee su valor más reciente. Cuando los dos lectores no están de acuerdo, el modelo ve entradas en las que nunca se entrenó.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 08 (Feature Engineering), 13 (ML Pipelines), 15 (Time Series), and 19 (ML System Design)
 **Time:** ~100 minutes
 
@@ -275,6 +275,7 @@ El registro de demostración registra las solicitudes en los días 141 a 150 y r
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console
