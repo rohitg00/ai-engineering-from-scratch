@@ -3,7 +3,7 @@
 > 从第1课到第12课,一切都是一个管道的阶段. 这一课是把这些阶段变成一个单一的终端运行:代码化,预列,规模化,SFT,排列,评估,量化,服务. 你不会在笔记本电脑上训练70B型号. 你将制作编排层,表格,评估门和2026年边境团队使用的反弹计划, 这是顶点.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** All Phase 10 lessons 01-12
 **Time:** ~120 minutes
 
@@ -216,10 +216,16 @@ beam-search
 
 标准工作流程有三个命令.
 
-```
+```bash
 python code/main.py plan    # validate manifest, compute cost estimate, print DAG
 python code/main.py run     # execute stages, writing to manifest.out.yaml
 python code/main.py gate    # read manifest.out.yaml, apply eval gates, ship-or-hold
+```
+
+结港口运行同样.`plan`步骤:
+
+```bash
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson plan
 ```
 
 跑步`plan`现在,我们在线运输系统中出现了很多错误,`plan`免费的.`run`通过获虫,可以节省钱.

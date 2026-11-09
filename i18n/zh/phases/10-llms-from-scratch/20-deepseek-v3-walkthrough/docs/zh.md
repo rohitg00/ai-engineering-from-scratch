@@ -3,7 +3,7 @@
 > 阶段10 · 第14课每一个开放模型都会转动的六个建筑. 探V3 (12月2024年,共671B参数,37B活跃) 将所有六个变动增加了四个:多头潜伏注意力,辅助无损负载平衡,多 टोकन预测和双管训练. 这一课程将DeepSeek-V3的架构从上到下,并从发布的配置中取出每个参数数数. 截至最后,你就可以解释为什么671B/37B比率是合适的投注,
 
 **Type:** Learn
-**Languages:** Python (stdlib, parameter calculator)
+**Languages:** Python (stdlib, parameter calculator), Rust
 **Prerequisites:** Phase 10 · 14 (open-model walkthroughs), Phase 10 · 17 (NSA), Phase 10 · 18 (MTP), Phase 10 · 19 (DualPipe)
 **Time:** ~75 minutes
 

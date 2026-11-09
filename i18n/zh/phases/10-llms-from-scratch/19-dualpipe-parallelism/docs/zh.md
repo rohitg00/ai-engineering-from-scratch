@@ -3,7 +3,7 @@
 > 通过2 048个H800GPU训练, 跨节点专家的通讯成本为每一个GPU计算的1个GPU-小时. 半个时间,GPU都置. 双管 (DeepSeek,Dec 2024) 是一个双向管道,它与它们触发的通讯互联网重叠前后计算. 由于专家平行主义已经在各个行列中传播专家, 泡下降,吞吐量上升, 这一课是学习类型的, 了解双实际上做什么,以及海人工智能实验室的双V精炼为什么会降低2倍的参数成本,
 
 **Type:** Learn
-**Languages:** Python (stdlib, schedule simulator)
+**Languages:** Python (stdlib, schedule simulator), Rust
 **Prerequisites:** Phase 10 · 05 (distributed training, FSDP, DeepSpeed), Phase 10 · 14 (open-model architectures and MoE)
 **Time:** ~60 minutes
 

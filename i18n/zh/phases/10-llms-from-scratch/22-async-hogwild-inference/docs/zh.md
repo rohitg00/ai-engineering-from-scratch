@@ -3,7 +3,7 @@
 > 投机解码 (阶段10·15) 在一个序列内并行化代币. 多代理框架在整个序列中并行,但强加明确的协调 (投票,分分类子任务). 霍格威尔德! 推理 (Rodionov等人, arXiv:2504.06261) 还有其他功能:与 SHARED 密钥值缓存相对并行运行相同的LLM的 N 实例. 每个工人都会立即看到其他工人的代币. 现代推理模型可以通过共享缓存进行自我协调, 这种方法是实验性的,但它开辟了一个完全新的推理平行性轴, 这一课实践了两个工人的霍格威尔德! 模拟器在Stdlib Python中,并解释了为什么共享缓存协作来自现有模型的推理能力.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10 · 12 (inference optimization), Phase 10 · 15 (speculative decoding)
 **Time:** ~60 minutes
 

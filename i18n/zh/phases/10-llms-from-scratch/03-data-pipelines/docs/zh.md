@@ -3,7 +3,7 @@
 > 模型是镜子,它反映出你给它提供的数据,它给它垃圾,它反映垃圾,完全流利.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 10, Lessons 01-02 (Tokenizers, Building a Tokenizer)
 **Time:** ~90 minutes
 

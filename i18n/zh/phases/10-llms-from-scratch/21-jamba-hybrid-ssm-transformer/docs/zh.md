@@ -3,7 +3,7 @@
 > 美国国家空间模型和变压器需要不同的东西. 转变器通过注意力以平方成本购买质量. 通过复发,但质量滞后的SSM购买线性时间推理和恒定记忆. AI21的Jamba (2024年3月) 和Jamba 1.5 (2024年8月) 将它们放在同一模型中:每7层Mamba的1层变压器,每块的MoE,以及一个适合80GB GPU的256k文本窗口. 巴-3 (ICLR 2026) 通过复杂值状态空间和MIMO预测,紧缩了SSM侧面. 这一课程将两种架构都读到一直到一直到一直到,解释了混合配方为什么在纯SSM和纯Transformer长文本尝试中没有生存过三年的扩展.
 
 **Type:** Learn
-**Languages:** Python (stdlib, layer-mix calculator)
+**Languages:** Python (stdlib, layer-mix calculator), Rust
 **Prerequisites:** Phase 10 · 14 (open-model architectures), Phase 10 · 17 (native sparse attention)
 **Time:** ~60 minutes
 

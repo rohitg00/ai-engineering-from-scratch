@@ -3,7 +3,7 @@
 > 阶段 7 · 第16课证明了数学:利维亚坦拒绝规则确切保存验证器的分布. 这一课是2026年生产投机解码的训练视角. -3将草案模型从廉价近似转化为一个专门构建的小型网络,训练在验证器自己的隐藏状态,然后添加了一个训练时间测试循环, 结果: 3×到 6.5×端到端加快,在聊天中接受的每代币率高于0.9,没有分配权衡. 根据2026年的每一个生产推断堆,
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 16 (speculative decoding math), Phase 10 · 12 (inference optimization)
 **Time:** ~75 minutes
 

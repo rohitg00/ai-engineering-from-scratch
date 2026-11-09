@@ -3,7 +3,7 @@
 > 在64k代币时,注意力耗费了70到80%的解码延迟. 每个开放模型实验室都有一个解决方案. 密搜索的NSA (ACL 2025最佳论文) 是一个住的:三个平行关注分支压缩的粗粒的代币,选择性保留的细粒的代币,以及用于本地环境的滑窗通过学习门组合. 它是硬件配合 (核友好),可以本地训练 (在预训练中工作,在推断时不插电),在64k解码上,它比FlashAttention更快,同时匹配或超过全注意力质量. 这一课将三个分支构建到底,
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 12 (KV cache, flash-attention), Phase 7 · 15 (attention variants), Phase 10 · 16 (differential attention)
 **Time:** ~60 minutes
 

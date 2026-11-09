@@ -3,7 +3,7 @@
 > 每个自动退缩的LLM从GPT-2到Llama3都以每一个位置的损失:预测下一个代币. 根据 DeepSeek-V3 的数据, 通过梯度流程,额外的14B参数 (在671B模型上) 被蒸回主模型中,训练有素的MTP头部在推断时被重新使用为80%+的接受率的投机解码设计者. 产量1.8倍,是免费的. 这一课构建了从DeepSeek技术报告中的序列MTP模块,计算了损失和共享头参数布局,并解释了为什么MTP保留了因果链,而Gloeckle等的原始平行MTP破了它.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10 · 04 (pre-training a mini GPT), Phase 10 · 15 (speculative decoding)
 **Time:** ~60 minutes
 
