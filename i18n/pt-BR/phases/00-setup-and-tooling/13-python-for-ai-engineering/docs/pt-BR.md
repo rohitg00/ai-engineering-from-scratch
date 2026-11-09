@@ -3,7 +3,7 @@
 > A maioria dos códigos neste curso usa o mesmo pequeno conjunto de idiomas Python. Aprenda esse conjunto aqui, antes que as lições de matemática e modelo dependam dele.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Dev Environment, Python Environments
 **Time:** ~120 minutes
 
@@ -821,6 +821,7 @@ Um classificador de centro-estrada mais próximo armazena o vetor de caracterís
 
 ```bash
 python3 phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.py
+npx tsx phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.ts
 ```
 
 ```text
