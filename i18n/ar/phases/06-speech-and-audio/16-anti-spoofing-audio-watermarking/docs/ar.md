@@ -3,7 +3,7 @@
 > يتم شحن نسخ الصوت أسرع من الدفاعات. تحتاج أنظمة الصوت الإنتاجية لعام 2026 إلى شيئين: جهاز كشف (AASIST ، RawNet2) الذي يصنف الخطاب الحقيقي مقابل الكلام المزيف ، و علامة مائية (AudioSeal) التي تتعافى من الضغط والتحرير. شحن كل من أو لا شحن نسخ الصوت.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 08 (Voice Cloning)
 **Time:** ~75 minutes
 

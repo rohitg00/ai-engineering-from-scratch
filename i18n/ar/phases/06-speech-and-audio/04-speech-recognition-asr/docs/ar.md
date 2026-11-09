@@ -3,7 +3,7 @@
 > التعرف على الكلام هو تصنيف الصوت في كل خطوة زمنية، تم لصقه معاً بواسطة نموذج تسلسل يعرف الإنجليزية والصمت. CTC، RNN-T، والاهتمام هي الطرق الثلاث للقيام بذلك. اختر واحد وفهم لماذا.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 08 (CNNs & RNNs for Text), Phase 5 · 10 (Attention)
 **Time:** ~45 minutes
 

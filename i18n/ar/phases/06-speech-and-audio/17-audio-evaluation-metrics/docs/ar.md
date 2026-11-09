@@ -3,7 +3,7 @@
 > لا يمكنك شحن ما لا يمكنك قياسه. هذه الدروس تسمي المقاييس 2026 لكل مهمة صوتية: ASR (WER، CER، RTFx) ، TTS (MOS، UTMOS، SECS، WER-on-ASR-round-trip) ، لغة الصوت (MMAU، LongAudioBench) ، الموسيقى (FAD، CLAP) ، والمتحدث (EER). بالإضافة إلى لوحة القيادة التي يمكنك مقارنة.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04, 06, 07, 09, 10; Phase 2 · 09 (Model Evaluation)
 **Time:** ~60 minutes
 

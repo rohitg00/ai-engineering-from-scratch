@@ -3,7 +3,7 @@
 > 2026 الجيل الموسيقي: سونو v5 و Udio v4 يهيمنون على التجارية. MusicGen ، Stable Audio Open ، و ACE-Step يؤدون المصدر المفتوح. المشكلة الفنية حُلَّت في الغالب. المشكلة القانونية (Warner Music 500 مليون دولار تسوية ، UMG تسوية) أعادت تشكيل المجال في 2025-2026.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 4 · 10 (Diffusion Models)
 **Time:** ~75 minutes
 

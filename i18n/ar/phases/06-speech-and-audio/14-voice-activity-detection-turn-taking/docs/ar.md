@@ -3,7 +3,7 @@
 > كل وكيل صوتي يعيش أو يموت على قرارين: هل يتحدث المستخدم الآن، وهل انتهوا؟ VAD يجيب على الأول. تحديد التحول (VAD + صمت-توقف + نموذج نقطة نهاية معنوية) يجيب على الثاني. إما أن تكون خاطئة ومساعدك إما يقطع المستخدمين أو لا يخرس أبدا.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 11 (Real-Time Audio), Phase 6 · 12 (Voice Assistant)
 **Time:** ~45 minutes
 

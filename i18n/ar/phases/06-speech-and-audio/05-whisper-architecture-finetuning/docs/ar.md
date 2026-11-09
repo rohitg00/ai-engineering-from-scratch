@@ -3,7 +3,7 @@
 > ويسبر هو محول نافذة مُعدل لـ 30 ثانية، مدرب على 680 ألف ساعة من أزواج الصوت والنص الضعيفة الإشراف على اللغات المتعددة. بنية واحدة، مهام متعددة، قوية عبر 99 لغة. ASR 2026 المرجعية.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 5 · 10 (Attention), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

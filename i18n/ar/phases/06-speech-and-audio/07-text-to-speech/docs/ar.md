@@ -3,7 +3,7 @@
 > تحويل ASR من الكلام إلى النص؛ تحويل TTS من النص إلى الكلام. تتكون كومة 2026 من ثلاثة أجزاء: نص → رموز، رموز → mel، mel → شكل موجة. لكل جزء نموذج افتراضي يناسب في جهاز كمبيوتر محمول.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 09 (Seq2Seq), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

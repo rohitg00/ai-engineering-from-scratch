@@ -3,7 +3,7 @@
 > كل شيء من الدروس 01-11 ، تم خياطة كل شيء معاً. بناء مساعد صوتي يستمع ، ويعبر ، ويتحدث مرة أخرى. في عام 2026 هذه مشكلة هندسية حل ، وليس مشكلة بحثية  ولكن تفاصيل التكامل تقرر ما إذا كانت تسير.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04, 05, 06, 07, 11; Phase 11 · 09 (Function Calling); Phase 14 · 01 (Agent Loop)
 **Time:** ~120 minutes
 

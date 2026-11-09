@@ -3,7 +3,7 @@
 > أشكال الموجات هي الإشارة الخامة. تعد البرامج الطيفية هي التمثيل. هي أشكال الميل التي تتوافق مع ML. كل خط أنابيب ASR و TTS الحديثة يسير على هذا السلم، والخطوة الأولى هي فهم العينات و فوريه.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Vectors & Matrices), Phase 1 · 14 (Probability Distributions)
 **Time:** ~45 minutes
 

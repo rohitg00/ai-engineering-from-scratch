@@ -3,7 +3,7 @@
 > إن إن كوديك، SNAC، Mimi، و DAC تحول أشكال الموجات المستمرة إلى تسلسلات منفصلة يمكن للمتحول التنبؤ بها. تقسيم رمز التسمية ضد الصوت  كتاب التعليمات الأول كالتسمية، والراحة كالتسمية  هي أهم تحول معماري منذ المحول الصوتي.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 10 · 11 (Quantization), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

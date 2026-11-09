@@ -3,7 +3,7 @@
 > يسأل ASR "ماذا قالوا؟" يسأل التعرف على المتحدث "من قال ذلك؟" تبدو الرياضيات نفسها  التوابع زائد كوسين  ولكن كل قرار إنتاج يعتمد على رقم واحد EER.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 22 (Embedding Models)
 **Time:** ~45 minutes
 

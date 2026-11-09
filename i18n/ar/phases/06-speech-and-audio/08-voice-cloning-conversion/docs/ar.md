@@ -3,7 +3,7 @@
 > إنّ نسخ الصوت تقرأ نصك بصوت شخص آخر. تحويل الصوت يعيد كتابة صوتك إلى صوت شخص آخر مع الحفاظ على ما قلته. كلتا الصوتين تعتمد على نفس التفكك: هويت المتحدث منفصلة عن المحتوى.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 07 (TTS)
 **Time:** ~75 minutes
 

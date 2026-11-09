@@ -3,7 +3,7 @@
 > كل شيء من "كلب اللحوم مقابل السيرين" إلى "أي لغة هي هذه" هو تصنيف الصوت. الميزات هي التآكل. تتحرك الهندسة المعمارية كل عقد. تبقى التقييم AUC، F1، والذكرى لكل فئة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 3 · 06 (CNNs), Phase 5 · 08 (CNNs & RNNs for Text)
 **Time:** ~75 minutes
 

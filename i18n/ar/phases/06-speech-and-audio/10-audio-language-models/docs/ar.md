@@ -3,7 +3,7 @@
 > 2026 نماذج اللغة الصوتية تقرر على الكلام + الصوت البيئي + الموسيقى. Qwen2.5-Omni-7B يطابق GPT-4o Audio على MMAU-Pro. صوت Flamingo Next يفوق Gemini 2.5 Pro على LongAudioBench. الفجوة بين المفتوحة والغلقة مغلقة بشكل أساسي  باستثناء المهام متعددة الصوت ، حيث يكون الجميع تقريبا عشوائي.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 12 · 03 (Vision-Language Models), Phase 7 · 10 (Audio Transformers)
 **Time:** ~45 minutes
 

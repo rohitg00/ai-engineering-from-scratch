@@ -3,7 +3,7 @@
 > الشبكات العصبية لا تستخدم أشكال الموجات الخام بشكل جيد. إنها تستخدم الطيفيات. إنها تستخدم الطيفيات الميل بشكل أفضل. كل ASR ، TTS ، و تصنيف الصوت في 2026 يعيش أو يموت بسبب هذا الخيار المحدد من قبل المعالجة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 01 (Audio Fundamentals)
 **Time:** ~45 minutes
 

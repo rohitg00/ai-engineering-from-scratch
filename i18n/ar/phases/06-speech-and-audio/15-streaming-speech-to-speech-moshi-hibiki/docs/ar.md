@@ -3,7 +3,7 @@
 > 2024-2026 تعيد تعريف الذكاء الاصطناعي الصوتي. موشي يرسل نموذج واحد يستمع ويكلّم في وقت واحد عند تأخر 200 م. تقوم هيبيكي بترجمة الخطاب إلى الخطاب قطعة بعد قطعة. كلاً يتخلّى عن خط الأنابيب ASR → LLM → TTS من أجل بنية متوحدة كاملة مزدوجة على رموز ميمي. هذا هو التصميم المرجعي الجديد.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 13 (Neural Audio Codecs), Phase 6 · 11 (Real-Time Audio), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 
