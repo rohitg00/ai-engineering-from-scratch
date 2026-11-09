@@ -3,7 +3,7 @@
 > O texto-à-imagem cria coisas novas. A pintura consome coisas antigas. Na produção, 70% do trabalho de imagem que pode ser cobrado é a edição.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 8 · 08 (ControlNet & LoRA)
 **Time:** ~75 minutes
 

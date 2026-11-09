@@ -3,7 +3,7 @@
 > Uma imagem é um tensor 2D. Um vídeo é um 3D. A teoria é a mesma; a computação é 10-100 vezes mais difícil. Sora da OpenAI (Feb 2024) provou que era possível. Em 2026 Veo 2, Kling 1.5, Runway Gen-3, Pika 2.0, e WAN 2.2 vídeo de produção de navio a partir de texto em 1080p  e o open-weights stack (CogVideoX, HunyuanVideo, Mochi-1, WAN 2.2) está 12 meses atrás.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 7 · 09 (ViT), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 

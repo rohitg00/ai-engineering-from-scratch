@@ -3,7 +3,7 @@
 > A 3D é a modalidade em que a alavancagem 2D-to-3D é mais forte. O avanço de 2023 foi 3D Gaussian Splating. A 2024-2026 gerativa empurra camadas de difusão multi-visão + reconstrução 3D em cima para produzir objetos e cenas a partir de um único prompt ou foto.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 4 (Vision), Phase 8 · 07 (Latent Diffusion)
 **Time:** ~45 minutes
 

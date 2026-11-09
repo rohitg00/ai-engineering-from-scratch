@@ -3,7 +3,7 @@
 > A difusão de pixels em imagens 512×512 é um crime de guerra computacional. Rombach et al. (2022) notou que você não precisa de todas as dimensões 786k para gerar uma imagem.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 02 (VAE), Phase 8 · 06 (DDPM), Phase 7 · 09 (ViT)
 **Time:** ~75 minutes
 

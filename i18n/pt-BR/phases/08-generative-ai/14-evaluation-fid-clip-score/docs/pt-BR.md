@@ -3,7 +3,7 @@
 > Cada quadro de classificação de modelos geracionais cita o FID, a pontuação CLIP e uma taxa de vitória de uma arena de preferência humana. Cada número tem um modo de falha que um pesquisador determinado pode jogar.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 01 (Taxonomy), Phase 2 · 04 (Evaluation Metrics)
 **Time:** ~45 minutes
 

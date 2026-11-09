@@ -3,7 +3,7 @@
 > Ho, Jain, Abbeel (2020) deu ao campo uma receita que não podia parar. Destruir os dados com ruído em mil pequenos passos. Treinar uma rede neural para prever o ruído. Reverte o processo à inferência. Hoje todo modelo de imagem, vídeo, 3D e música da corrente dominante funciona neste loop, possivelmente com a combinação de fluxo ou truques de consistência no topo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 8 · 02 (VAE)
 **Time:** ~75 minutes
 
