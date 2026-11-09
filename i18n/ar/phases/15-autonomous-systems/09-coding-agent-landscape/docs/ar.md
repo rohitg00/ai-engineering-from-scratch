@@ -3,7 +3,7 @@
 > ارتفع مؤشر SWE-Bench Verified من 4% إلى 80.9% في أقل من ثلاث سنوات. نفس كلود سونيت 4.5 حصل على 43.2% على SWE-agent v1 و 59.8% على Cline متنازل  الإرصفة حول النموذج الآن مهمة بقدر ما النموذج نفسه. أوبين هاندز (أو أوبين ديفين سابقا) هي المنصة الأكثر نشاطاً مرخصة بمعهد MIT ويقوم حلقة CodeAct بها بتنفيذ أعمال Python مباشرةً في صندوق رمل بدلاً من دعوات أداة JSON. أرقام العناوين تخفي مشكلة منهجية: 161 من 500 وظيفة SWE-bench المحققة تتطلب فقط 12 تغيير خط، و SWE-bench Pro (10 + وظائف خط) يقع في 2359% لنفس النماذج الحدودية.
 
 **Type:** Learn
-**Languages:** Python (stdlib, CodeAct vs JSON tool-call comparison)
+**Languages:** Python, TypeScript (stdlib, CodeAct vs JSON tool-call comparison)
 **Prerequisites:** Phase 14 · 07 (Tool use), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~45 minutes
 

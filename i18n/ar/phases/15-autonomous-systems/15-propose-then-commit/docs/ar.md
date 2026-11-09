@@ -3,7 +3,7 @@
 > الإجماع عام 2026 حول HITL محدد. ليس "الوكيل يسأل، المستخدم يضغط على موافقة". هو اقتراح ثم التزام: يتم استمرار العمل المقترح إلى متجر دائم مع مفتاح إزالة القدرة؛ ظهر للمراجعة مع النية، سلسلة البيانات، والإذنات الملموسة، نصف قطر الانفجار، وخطة العودة إلى الوراء؛ تم التزامها فقط بعد الاعتراف الإيجابي؛ يتم التحقق منها بعد التنفيذ لتأكيد أن التأثير الجانبي حدث فعلا. لاندغراف `interrupt()`بالإضافة إلى نقاط التفتيش PostgreSQL، Microsoft Agent Framework `RequestInfoEvent`و (كلاودفلاير)`waitForApproval()`جميعها تنفيذ نفس الشكل. وضع الفشل القنوني هو موافقة العلامة المطاطية: "موافق عليه؟" يتم النقر دون مراجعة. التخفيف الموثق هو التحدي والاستجابة مع قائمة تفتيش صريحة.
 
 **Type:** Learn
-**Languages:** Python (stdlib, propose-then-commit state machine with idempotency)
+**Languages:** Python (stdlib, propose-then-commit state machine with idempotency), TypeScript
 **Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 14 (Tripwires)
 **Time:** ~60 minutes
 

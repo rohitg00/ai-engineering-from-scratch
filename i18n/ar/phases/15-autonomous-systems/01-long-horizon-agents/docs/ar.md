@@ -3,7 +3,7 @@
 > في عام 2023، أجاب جهاز الدردشة على سؤال في جولة واحدة. في عام 2026 نموذج الحدود يدير بشكل روتيني دقائق إلى ساعات في مهمة واحدة. يضع مؤشر METR Time Horizon 1.1 (كانون الثاني/يناير 2026) Claude Opus 4.6 في 14 ساعة من العمل الخبير على موثوقية 50%. الأفق يتضاعف تقريبا كل سبعة أشهر منذ GPT-2. كل افتراض قمنا ببناءه حول النقاش الواحد، والثقة، والطرق الفاشلة، والتكلفة، واللاحظة،
 
 **Type:** Learn
-**Languages:** Python (stdlib, horizon-curve simulator)
+**Languages:** Python, TypeScript (stdlib, horizon-curve simulator)
 **Prerequisites:** Phase 14 · 01 (The Agent Loop)
 **Time:** ~45 minutes
 

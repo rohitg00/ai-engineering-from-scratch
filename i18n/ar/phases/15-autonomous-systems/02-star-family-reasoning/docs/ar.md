@@ -3,7 +3,7 @@
 > أصغر حلقة ممكنة للتحسين الذاتي تقع داخل المنطق. النموذج يخلق سلسلة من الأفكار، يحتفظ بالردود الصحيحة، ويقوم بتحسين تلك. هذا هو (ستار) V-STaR يضيف مؤكدا لذلك اختيار وقت الاستنتاج هو أفضل. (تيت ستار) يدفع المنطق إلى كل رمز كلّ الثلاثة يعملون لا أحد منهم سحر  الحلقة تحافظ على أي طريق مختصر الذي حدث للوصول إلى الإجابة الصحيحة.
 
 **Type:** Learn
-**Languages:** Python (stdlib, bootstrap-loop simulator)
+**Languages:** Python, TypeScript (stdlib, bootstrap-loop simulator)
 **Prerequisites:** Phase 13 · 01-03 (Reasoning and CoT), Phase 15 · 01 (long-horizon framing)
 **Time:** ~60 minutes
 

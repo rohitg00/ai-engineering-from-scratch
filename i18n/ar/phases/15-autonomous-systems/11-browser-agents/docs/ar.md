@@ -3,7 +3,7 @@
 > وكيل ChatGPT (يوليو 2025) دمج المشغل والبحث العميق في أحد العباء / وكيل المحطة ووضع BrowseComp SOTA عند 68.9٪. أغلقت OpenAI شركة "أوبريتر" في 31 أغسطس 2025  التوحيد في طبقة المنتجات. استحواذ شركة أنثروبيك على Vercept نقل كلود سونيت على OSWorld من أقل من 15٪ إلى 72.5٪. تم تصحيح WebArena-Verified (ServiceNow ، ICLR 2026) ، وصل معدل ~11.3% من السلب الكاذب في WebArena الأصلي وشحن مجموعة فرعية Hard ذات 258 مهمة. الأرقام حقيقية كما هو الحال في سطح الهجوم: أعلن رئيس إعداد OpenAI علناً أن الحقن العريض غير المباشر في عناصر المتصفح "ليس خطأ يمكن تصحيحه بالكامل". تم توثيق هجمات 20252026: الذكريات الملوثة (Atlas CSRF) ، هاش جاك (شبكات Cato) ، وخاطفات بنقرة واحدة في Perplexity Comet.
 
 **Type:** Learn
-**Languages:** Python (stdlib, indirect prompt-injection attack surface model)
+**Languages:** Python (stdlib, indirect prompt-injection attack surface model), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~45 minutes
 

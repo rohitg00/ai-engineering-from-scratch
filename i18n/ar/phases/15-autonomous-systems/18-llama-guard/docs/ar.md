@@ -3,7 +3,7 @@
 > إن حرس لاما 3 (Meta، قاعدة لاما-3.1-8B، محسنة لسلامة المحتوى) يصنف كل من مدخلات وخارجيات LLM ضد تصنيف MLCommons 13-خطر عبر 8 لغات. يُشغّل النوع الكميّ 1B-INT4 بأكثر من 30 رمزاً في الثانية على وحدات المعالجة المحمولة. إن Llama Guard 4 متعدد الطرق (الصورة + النص) ، ويتم توسيعه إلى مجموعة فئة S1S14 (بما في ذلك إساءة استخدام مترجم الرمز S14) ، و هو بديل متدفق لـ Llama Guard 3 8B/11B. إضافة NVIDIA NeMo Guardrails v0.20.0 (يناير 2026) Colang مسارات التدفق الحوارية فوق مسارات الدخول والخروج. ملاحظة صادقة: "التجاوز لحقن سريع واكتشاف إطلاق سراح في حواجز LLM" (هوانغ وغيرهم، arXiv: 2504.11168) أظهرت تهريب إيموجي ضرب 100% من معدلات نجاح الهجوم على ستة أنظمة حراسة بارزة؛ نيمو أكتشاف حارس سجلت 72.54% ASR على إطلاق سراح. المصنفون هم طبقة، وليس حل.
 
 **Type:** Learn
-**Languages:** Python (stdlib, category-tagged classifier simulator)
+**Languages:** Python (stdlib, category-tagged classifier simulator), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 17 (Constitution)
 **Time:** ~45 minutes
 

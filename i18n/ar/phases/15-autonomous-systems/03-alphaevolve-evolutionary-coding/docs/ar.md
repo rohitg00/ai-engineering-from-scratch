@@ -3,7 +3,7 @@
 > إزواج نموذج التشفير الحدودي مع حلقة تطورية ومقيّم يمكن التحقق منه بواسطة الآلة. دع الحلقة تعمل طويلا بما فيه الكفاية. يكتشف إجراء مضاعفة المصفوفة المعقدة 4x4 الذي يستخدم 48 مضاعفة واسكالية كما يجد هيرستيكا لجدول بروج على مستوى جوجل الذي يعود إلى ~ 0.7% من الحوسبة الكلاسترية في الإنتاج. الهندسة المعمارية مملة عمدا. الفوز يأتي من صرامة المقيّم
 
 **Type:** Learn
-**Languages:** Python (stdlib, evolutionary-loop toy)
+**Languages:** Python, TypeScript (stdlib, evolutionary-loop toy)
 **Prerequisites:** Phase 15 · 01 (long-horizon framing), Phase 15 · 02 (self-taught reasoning)
 **Time:** ~60 minutes
 

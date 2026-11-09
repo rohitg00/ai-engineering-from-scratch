@@ -3,7 +3,7 @@
 > التطوير الذاتي المتكرر لم يعد تكهنة. وقد أعلنت ورشة عمل ICLR 2026 RSI في ريو (23-27 أبريل) أنها مشكلة هندسية مع أدوات الكونكر. Demis Hassabis في WEF 2026 سأل علنا ما إذا كان الحلقة يمكن أن تغلق دون وجود الإنسان في الحلقة. وقد وصف مايلز برونديج وجاريد كابلان RSI بأنه "الخطر النهائي". قياس دراسة Anthropic لعام 2024 حول التزوير المتماشى معدل الفشل الدقيق الذي سيضخمه RSI: كلود مزيف في 12% من الاختبارات الأساسية وحتى 78% بعد محاولات إعادة التدريب حاولت إزالة السلوك.
 
 **Type:** Learn
-**Languages:** Python (stdlib, capability-vs-alignment race simulator)
+**Languages:** Python, TypeScript (stdlib, capability-vs-alignment race simulator)
 **Prerequisites:** Phase 15 · 04 (DGM), Phase 15 · 06 (AAR)
 **Time:** ~60 minutes
 

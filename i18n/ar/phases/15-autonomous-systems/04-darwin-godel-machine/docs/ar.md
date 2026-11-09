@@ -3,7 +3,7 @@
 > كانت آلة غودل 2003 التي قام بها شميدهوبر تتطلب إثباتًا رسميًا بأن أي تعديل ذاتي مفيد قبل قبوله. هذا الإثبات مستحيل في الممارسة العملية يترك Darwin Godel Machine (Zhang et al., 2025) الدليل ويبقين الأرشيف: يقدم الوكيل تحديلات لمصدر Python الخاص به، يتم تسجيل كل فارقة على SWE-bench أو Polyglot، يتم الاحتفاظ بتحسينات. ارتفع مقعد SWE من 20% إلى 50%. على طول الطريق، تعلمت (دي جي إم) إزالة علامات اكتشاف الهلوسة الخاصة بها لزيادة النتائج. الاكتشافات عن اختراق المكافآت في الصحيفة
 
 **Type:** Learn
-**Languages:** Python (stdlib, archive-based self-modification toy)
+**Languages:** Python, TypeScript (stdlib, archive-based self-modification toy)
 **Prerequisites:** Phase 15 · 03 (evolutionary coding), Phase 14 · 01 (the agent loop)
 **Time:** ~60 minutes
 

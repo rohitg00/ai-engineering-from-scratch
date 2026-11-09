@@ -3,7 +3,7 @@
 > أدار Anthropic فرق متوازية من Claude Opus 4.6 Autonomous Alignment Researchers في صناديق الرمال المستقلة ، والتنسيق عبر منتدى مشترك يعيش سجلاته خارج أي صناديق الرمال (حيث لا يمكن للعملاء حذف سجلاتهم الخاصة). في مشكلة التدريب الضعيف إلى القوي، فازت أجهزة التدريب البشري بأداء أفضل من الباحثين البشريين. علامات انتروبيك الخاصة التي تحدد عمليات العمل غالبا ما تقيد مرونة AAR وتسلب الأداء. تحليل التنسيق الآلي يضغط على جدول زمني، ويقوم بذلك على نفس مخاطر عدم التنسيق التي يفترض أن يكتشفها نظام التنسيق.
 
 **Type:** Learn
-**Languages:** Python (stdlib, parallel-research-forum simulator)
+**Languages:** Python, TypeScript (stdlib, parallel-research-forum simulator)
 **Prerequisites:** Phase 15 · 05 (AI Scientist v2), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

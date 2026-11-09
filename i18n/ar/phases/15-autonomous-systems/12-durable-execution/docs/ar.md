@@ -3,7 +3,7 @@
 > لا يوجد عوامل إنتاجية طويلة الأفق`while True`كل مكالمة LLM تصبح نشاطًا مع نقطة التفتيش، والإعادة المحاولة، والإعادة التعبير. تم دمج OpenAI Agents SDK من Temporal في GA مارس 2026. تقوم روتينات كلود كود (أنثروبيك) بتشغيل طلبات كود كود المجدولة دون عملية محلية مستمرة. تقوم الجلسات بإيقاف المدخلات البشرية، وتتبع النشرات، وتستمر من أحدث نقطة التفتيش المفتاحية التي يضعها`thread_id`وراء التجربة الجديدة يقع نمط قديم  تشكيل تدفق العمل  مع مدخل جديد: LLM يدعو أنشطة غير تحديدية يجب أن تكرر بشكل تحديدي عند التعافي.
 
 **Type:** Learn
-**Languages:** Python (stdlib, minimal durable-execution state machine)
+**Languages:** Python (stdlib, minimal durable-execution state machine), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~60 minutes
 
