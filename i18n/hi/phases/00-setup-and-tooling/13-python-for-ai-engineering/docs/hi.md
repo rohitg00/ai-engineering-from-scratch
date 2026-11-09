@@ -3,7 +3,7 @@
 > इस कोर्स में अधिकांश कोड एक ही छोटे सेट पायथन बोलियाँ का उपयोग करता है। गणित और मॉडल पाठ पर निर्भर करने से पहले, यहाँ उस सेट को जानें।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Dev Environment, Python Environments
 **Time:** ~120 minutes
 
@@ -821,6 +821,7 @@ print([round(v, 3) for v in standardize((4.0, 700.0))])
 
 ```bash
 python3 phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.py
+npx tsx phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.ts
 ```
 
 ```text
