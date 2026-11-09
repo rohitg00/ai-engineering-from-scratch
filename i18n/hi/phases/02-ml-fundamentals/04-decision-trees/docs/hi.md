@@ -3,7 +3,7 @@
 > निर्णय वृक्ष केवल एक प्रवाह चार्ट है, लेकिन उनमें से एक वन एमएल में सबसे शक्तिशाली उपकरणों में से एक है।
 
 **Type:** Build
-**Language:**पायथन
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lessons 09 Information Theory, 06 Probability)
 **Time:** ~90 minutes
 
@@ -412,7 +412,7 @@ class RandomForest:
         return predictions
 ```
 
-देखो`code/trees.py`सभी सहायक तरीकों के साथ पूर्ण कार्यान्वयन के लिए।
+देखो`code/trees.py`सभी सहायक तरीकों के साथ पूर्ण कार्यान्वयन के लिए। `code/trees.ts`एक प्रकार के स्क्रिप्ट पोर्ट के साथ एक ही कार्यों और डेमो है. इसे चलाओ`npx tsx code/trees.ts`. .
 
 ## इसका प्रयोग करें
 
