@@ -3,7 +3,7 @@
 > 推迟解码是序列的.每个代币等待上一个. 投机解码打破链条:一个廉价的模型在一个前进通行中验证所有N代币,而昂贵的模型在一个前进通行中验证所有N代币. 当草案正确时,你为N代代付出了一个大额的前进.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 07 (GPT Causal LM), Phase 7 · 12 (KV Cache & Flash Attention)
 **Time:** ~60 minutes
 
@@ -91,6 +91,13 @@ draft-verify-tokens
 - 一个"大模型",是指指数定性软最大值,而不是指数编码的分布 (所以我们可以分析验证接受数学的结果).
 - 它们是对大模型的颠覆.
 - 接受/拒绝循环,产生与直接采样相同的边际分布.
+
+`code/main.rs`果版的数据和数据库是相同的.它只使用标准库.随机数字与Python不同,但打印的结论是相同的.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### 步骤1:拒绝步骤
 

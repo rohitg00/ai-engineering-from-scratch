@@ -3,7 +3,7 @@
 > 完全的注意力是圆. 每个代币都看到每一个代币,而记忆支付了代价. 三种变体折曲圆形,恢复了成本的一半.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 03 (Multi-Head), Phase 7 · 12 (KV Cache / Flash Attention)
 **Time:** ~60 minutes
 
@@ -90,7 +90,7 @@ gqa-kv-sharing
 
 ## 建立它
 
-看到`code/main.py`我们实施了一个因果化面具比较器,显示一个玩具序列的全,SWA,本地+步骤,和差别注意力.
+看到`code/main.py`或其的港口`code/main.rs`运行了""版本:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`我们实施了一个因果化面具比较器,显示一个玩具序列的全,SWA,本地+步骤,和差别注意力.
 
 ### 步骤1:完整的因果性面具 (基线)
 

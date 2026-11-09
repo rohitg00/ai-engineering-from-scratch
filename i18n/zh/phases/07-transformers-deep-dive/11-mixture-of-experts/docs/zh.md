@@ -3,7 +3,7 @@
 > 密集的70B变压器会激活每个代币的每个参数. 671B MoE 激活每代币只有37B,并且在每个基准上都超过它.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
@@ -90,6 +90,13 @@ expert-routing
 - 顶级k=2路由
 - 软max正常化的门重量
 - 通过专家偏见进行无损辅助平衡
+
+`code/main.rs`果版的数据和数据库是相同的.它只使用标准库.随机数字与Python不同,但打印的结论是相同的.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### 步骤1:路由器
 

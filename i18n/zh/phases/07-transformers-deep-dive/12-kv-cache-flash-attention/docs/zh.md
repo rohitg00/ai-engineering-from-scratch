@@ -3,7 +3,7 @@
 > 训练是平行的,FLOP的. 推理是序列的,记忆的. 不同的瓶,不同的技巧.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~75 minutes
 
@@ -128,7 +128,7 @@ flash-attention-memory
 iso-machine {"machine":"kv-cache"}
 ```
 
-看到`code/main.py`我们实施:
+看到`code/main.py`或其的港口`code/main.rs`运行了""版本:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`我们实施:
 
 1. 一个天真的人.$O(N^2)$增量解码器.
 2. $O(N)$设置了KV缓存解码器.
