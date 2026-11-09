@@ -3,7 +3,7 @@
 > Los codificadores entienden. Los decodificadores generan. Ponlos de nuevo juntos y obtienes un modelo construido para las tareas de entrada → salida: traducir, resumir, reescribir, transcribir.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 

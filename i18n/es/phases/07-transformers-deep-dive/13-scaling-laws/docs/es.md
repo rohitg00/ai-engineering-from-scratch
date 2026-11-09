@@ -3,7 +3,7 @@
 > El artículo de Kaplan de 2020 dijo: modelo más grande, pérdida menor. El artículo de Hoffmann de 2022 dijo: estabas bajo entrenamiento. La computación se divide en dos cubos  parámetros y tokens  y la división no es obvia.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 

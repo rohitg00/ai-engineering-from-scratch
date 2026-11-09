@@ -3,7 +3,7 @@
 > GPT predice la siguiente palabra. BERT predice una palabra que falta. Una frase de diferencia  y media década de todo en forma de incrustación.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 5 · 02 (Text Representation)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Una imagen es una cuadrícula de parches. Una oración es una cuadrícula de tokens. El mismo transformador se come a ambos.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 4 · 03 (CNNs), Phase 4 · 14 (Vision Transformers intro)
 **Time:** ~45 minutes
 
