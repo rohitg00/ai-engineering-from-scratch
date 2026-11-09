@@ -3,7 +3,7 @@
 > Le dispatcher est là où le harnais paie pour chaque promesse faite par le schéma, délais, retries, dédupe, cartographie d'erreur, tout sur une seule couture.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

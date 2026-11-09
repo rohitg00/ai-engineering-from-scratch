@@ -3,7 +3,7 @@
 > Les classifiants constitutionnels d'Anthropic, Meta's Llama Guard 4, Google's ShieldGemma-2, NVIDIA's Nemotron 3 Content Safety et X-Guard pour la couverture multilingue ont défini la pile de classifiants de sécurité de 2026. Garak, PyRIT, NVIDIA Aegis et promptfoo sont devenus les outils d'évaluation des adversaires standard. NeMo Guardrails v0.12 les lie à un pipeline de production. Ce capstone le regroupe: un harnais de sécurité en couches autour d'une application cible, un agent autonome de l'équipe rouge qui gère plus de 6 familles d'attaque, et une course constitutionnelle d'autocritique qui produit un delta d'innocuité mesurable.
 
 **Type:** Capstone
-**Languages:** Python (safety pipeline, red team), YAML (policy configs)
+**Languages:** Python (safety pipeline, red team), TypeScript, YAML (policy configs)
 **Prerequisites:** Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 18 (ethics, safety, alignment)
 **Phases exercised:**P10 · P11 · P13 · P14 · P18
 **Time:** 25 hours

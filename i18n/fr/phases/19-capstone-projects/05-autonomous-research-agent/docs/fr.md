@@ -3,7 +3,7 @@
 > L'AI-Scientist-v2 de Sakana a publié des articles complets. L'agent Laboratoire a fait les expériences. Allen AI a partagé des traces. La forme 2026 est la recherche d'arbres sur les expériences, le coût budgétaire, l'exécution du code sandboxé, un rédacteur LaTeX à rétroaction visuelle et un ensemble d'examenurs de style NeurIPS automatisé. Le but est de construire un, de le faire fonctionner de bout en bout à 30 $ par papier, et de survivre à l'équipe rouge de sandbox-escape que Sakana a documenté.
 
 **Type:** Capstone
-**Languages:** Python (agent + sandbox), LaTeX (output)
+**Languages:** Python (agent + sandbox), TypeScript, LaTeX (output)
 **Prerequisites:** Phase 2 (ML), Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 18 (safety)
 **Phases exercised:**P0 · P2 · P3 · P7 · P10 · P14 · P15 · P16 · P18
 **Time:** 40 hours

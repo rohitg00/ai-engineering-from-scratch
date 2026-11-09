@@ -3,7 +3,7 @@
 > La passerelle de vérification décide si un appel à l'outil doit être exécuté. La boîte à sable décide de ce qui se passe quand elle le fait. Cette leçon envoie un sous-processus qui refuse les exécutables dangereux, refuse les formes d'argv dangereuses, enferme chaque chemin de fichier vers une racine de projet, réduit la sortie surdimensionnée et tue les processus en fuite sur un temps de temps de temps de l'horloge murale. Il s'agit de la deuxième de deux couches situées entre le modèle et le système d'exploitation.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates and observation budget), Phase 14 · 33 (instructions as constraints), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -87,6 +87,7 @@ Pour les agents de production, vous coupez en haut: exécuter à l'intérieur d'
 ```bash
 cd phases/19-capstone-projects/26-sandbox-runner-denylist
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

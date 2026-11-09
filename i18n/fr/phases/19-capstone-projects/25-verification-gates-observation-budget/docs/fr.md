@@ -3,7 +3,7 @@
 > Un harnais d'agent sans couche de vérification est un souhait dans un gilet de tranchée. Cette leçon construit la chaîne de passerelle déterministe qui décide si un appel à l'outil est autorisé à tirer, combien de sa sortie l'agent est autorisé à voir, et quand la boucle doit s'arrêter parce que l'agent a lu trop. La chaîne est une fonction de petites portes nommées plus un registre d'observation qui suit chaque jeton que le modèle a montré.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 20-24 (Track A1: agent loop, tool registry, message store, prompt builder, model router), Phase 14 · 33 (instructions as constraints), Phase 14 · 36 (scope contracts), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -95,6 +95,7 @@ Les leçons précédentes vous ont donné la boucle, le registre des outils, le 
 ```bash
 cd phases/19-capstone-projects/25-verification-gates-observation-budget
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

@@ -3,7 +3,7 @@
 > Le choc décide de ce que votre retriever peut faire surface.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG), 07 (advanced RAG); Phase 19 Track B foundations (lessons 20-29)
 **Time:** ~90 minutes
 
@@ -89,6 +89,7 @@ ci-chunk-boundaries
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La sortie est une petite table avec une ligne par stratégie et une colonne par k. La phrase perd sur la structure fixe. La marque structurelle gagne sur la fixation de marque. Le récursif conserve son propre sur la fixation mixte parce que la récursion s'adapte. Le regroupement sémantique gagne sur la prose fixe où il n'y a pas d'indices structurels utiles.

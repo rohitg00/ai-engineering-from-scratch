@@ -3,7 +3,7 @@
 > Un plan qui ne peut survivre à un échec est un script. Un script qui peut replaner est un agent.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

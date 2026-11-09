@@ -3,7 +3,7 @@
 > Trois points de contrôle, un verdict, une piste d'audit par demande.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -59,7 +59,7 @@ La démo comporte les 50 fixations de taxonomie plus 10 invites bénignes. Les r
 
 ## Utilisez-le
 
-`python3 main.py`La démo charge tout, fonctionne de bout en bout, imprime la table de résumé et écrit l'artefact de trace. Le code de sortie est zéro. La démo est autogéré dans le sens littéral: chaque demande se termine à la fin ou à l'arrêt anticipé et la passerelle passe à la suivante.
+`python3 main.py`ou `npx tsx main.ts`La démo charge tout, fonctionne de bout en bout, imprime la table de résumé et écrit l'artefact de trace. Le code de sortie est zéro. La démo est autogéré dans le sens littéral: chaque demande se termine à la fin ou à l'arrêt anticipé et la passerelle passe à la suivante.
 
 ## La faire partir
 

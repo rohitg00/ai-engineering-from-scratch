@@ -3,7 +3,7 @@
 > Si vous ne pouvez pas classer votre récupération et votre réponse en même temps, vous ne pouvez pas expédier le système. Les deux ne sont pas la même métrique et la même requête échoue sur différents axes.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 06 (RAG), 10 (evaluation); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64, 65, 66, 67
 **Time:** ~90 minutes
 
@@ -121,6 +121,7 @@ ci-rag-metric-ladder
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La sortie montre la précision@k, recall@k, MRR, nDCG@k, la fidélité et la pertinence de la réponse pour chaque variante dans une seule table de métriques.

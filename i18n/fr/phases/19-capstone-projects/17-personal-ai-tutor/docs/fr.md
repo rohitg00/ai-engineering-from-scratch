@@ -3,7 +3,7 @@
 > Khanmigo (Académie Khan), Duolingo Max, Google LearnLM / Gemini pour l'éducation, Quizlet Q-Chat et Synthesis Tutor ont tous fourni des tutoriels multimodels adaptatifs à grande échelle en 2026. La forme commune est une politique socratique (ne jamais simplement déposer la réponse), un modèle d'apprenant qui se met à jour après chaque interaction (style de suivi des connaissances bayésiennes), entrée vocale + texte + photo-mathématique, récupération de graphique du programme d'études, planification de répétition espacée et filtres de sécurité durs pour le contenu approprié à l'âge. Le but est d'envoyer un tuteur spécifique à un sujet (algebra K-12 ou introduction Python), d'exécuter une étude d'efficacité de deux semaines avec 10 apprenants et de passer un audit de sécurité du contenu.
 
 **Type:** Capstone
-**Languages:** Python (backend, learner model), TypeScript (web app), SQL (curriculum graph via Postgres + Neo4j)
+**Languages:** Python (backend, learner model), TypeScript (web app, learner model scaffold), SQL (curriculum graph via Postgres + Neo4j)
 **Prerequisites:** Phase 5 (NLP), Phase 6 (speech), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 14 (agents), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P5 · P6 · P11 · P12 · P14 · P17 · P18
 **Time:** 30 hours

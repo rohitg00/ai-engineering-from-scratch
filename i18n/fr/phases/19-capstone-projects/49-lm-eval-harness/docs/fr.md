@@ -3,7 +3,7 @@
 > Un modèle qui réussit bien dans une tâche que vous ne pouvez pas définir est un modèle qui réussit bien par hasard.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 42 to 45
 **Time:** ~90 minutes
 
@@ -135,6 +135,7 @@ Chaque métrique est une petite fonction avec un test unitaire. La suite de test
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Le script seme les fixtures lors de la première course, les note avec l'adaptateur de jouets (qui obtient chaque fixation correctement), et écrit `outputs/leaderboard.json`. Le score global est de 1,0 avec l' adaptateur de jouets; le test de l' adaptateur de bâton en `test_main.py`montre le même harnais produit 0,0 lorsque l'adaptateur ne peut pas répondre.

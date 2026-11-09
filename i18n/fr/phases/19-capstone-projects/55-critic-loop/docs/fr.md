@@ -3,7 +3,7 @@
 > Un critique qui revient "a l'air bien" la première fois est cassé. Un critique qui revient toujours "a besoin de travail" est cassé. Le critique intéressant est celui qui converge, et vous devez concevoir la convergence.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

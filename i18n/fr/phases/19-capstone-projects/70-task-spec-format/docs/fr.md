@@ -3,7 +3,7 @@
 > Un harnais d'évaluation n'est aussi bon que le contrat honore ses tâches.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track B foundations
 **Time:** ~90 min
 

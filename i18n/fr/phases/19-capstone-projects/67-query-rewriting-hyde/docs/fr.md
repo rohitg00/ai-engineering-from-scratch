@@ -3,7 +3,7 @@
 > La requête que l'utilisateur type n'est pas la requête que votre récupérateur veut. La réécriture combine l'écart avant la récupération, de sorte que l'index voit quelque chose de plus proche de ce à quoi ressemble la réponse.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64 and 65
 **Time:** ~90 minutes
 
@@ -120,6 +120,7 @@ La forme du retriever est réutilisée à partir de la leçon 65 (hybride BM25 +
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La sortie est un classement par stratégie et un résumé final. HyDE gagne sur la requête de frazage-diséquation. Multi-query gagne sur la requête de variance de paraphrase. Décomposition gagne sur la requête multi-thématique. Le retrait (pas de réécrivain) perd au moins un des trois.

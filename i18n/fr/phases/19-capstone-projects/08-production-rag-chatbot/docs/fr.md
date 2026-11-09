@@ -3,7 +3,7 @@
 > Harvey, Glean, Mendable et LlamaCloud ont tous la même forme de production en 2026. Ingest avec docling ou Unstructured et ColPali pour les visuels. La recherche hybride. Rencontre avec Bge-Rencontre-V2-Jemma. Synthétisez avec Claude Sonnet 4.7 en utilisant une mise en cache rapide à un taux de succès de 60-80%. Garde avec la Garde Lama 4 et les gardiens de NeMo. Attention à Langfuse et Phoenix. Grade avec RAGAS sur un jeu d'or de 200 questions. Construisez-en un dans un domaine réglementé (juridique, clinique, assurance), et la pierre angulaire passe le jeu d'or, l'équipe rouge et le tableau de bord à dérive.
 
 **Type:** Capstone
-**Languages:** Python (pipeline + API), TypeScript (chat UI)
+**Languages:** Python (pipeline + API), TypeScript (chat UI, pipeline scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P5 · P7 · P11 · P12 · P17 · P18
 **Time:** 30 hours

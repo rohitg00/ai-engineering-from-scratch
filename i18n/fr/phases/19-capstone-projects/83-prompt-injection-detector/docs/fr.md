@@ -3,7 +3,7 @@
 > Un détecteur est une fonction de prompt à confiance et catégorie.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -57,7 +57,7 @@ Le metrix runner produit un rapport JSON avec précision par catégorie, rappel,
 
 ## Utilisez-le
 
-On court .`python3 main.py`La démo charge la taxonomie, met le détecteur sur chaque appareil, le met sur un corpus de prompt bénin cuit dans`benign.py`, et imprime les métriques par catégorie.`outputs/detector_report.json`Le dossier est l'artefact que consomme la porte de sécurité de la leçon 87.
+On court .`python3 main.py`ou `npx tsx main.ts`La démo charge la taxonomie, met le détecteur sur chaque appareil, le met sur un corpus de prompt bénin cuit dans`benign.py`, et imprime les métriques par catégorie.`outputs/detector_report.json`Le dossier est l'artefact que consomme la porte de sécurité de la leçon 87.
 
 ## La faire partir
 

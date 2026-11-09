@@ -3,7 +3,7 @@
 > Le harnais est l'agent, le modèle est un coprocesseur, cette leçon gelera le contrat de boucle dans lequel vous pouvez brancher n'importe quel modèle.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > Le décoding spéculatif  un projet bon marché propose des jetons, le modèle cible les vérifie en un seul passage  est maintenant une optimisation prête à la production, pas un truc de recherche. EAGLE-3 dans vLLM 0,7 vaisseaux 2,5-3x de débit sur le trafic réel. P-EAGLE (AWS 2026) a encore poussé les spéculations parallèles. Le SpecForge de SGLang a formé des chefs de recrutement à l'échelle. Le centre des spéculateurs de Red Hat a publié des projets alignés pour des modèles ouverts communs. TensorRT-LLM a fait le décoding spéculatif de première classe sur NVIDIA. La pile de production de 2026 est vLLM ou SGLang avec des projets de famille EAGLE, une quantification FP8 ou INT4 et un HPA en attente de file d'attente. Cette pierre angulaire doit servir deux modèles ouverts à un débit de 2,5 fois plus de la ligne de base avec un rapport complet de latence de la queue.
 
 **Type:** Capstone
-**Languages:** Python (serving), C++ / CUDA (kernel inspection), YAML (configs)
+**Languages:** Python (serving), TypeScript, C++ / CUDA (kernel inspection), YAML (configs)
 **Prerequisites:** Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 17 (infrastructure)
 **Phases exercised:**P3 · P7 · P10 · P17
 **Time:** 30 hours

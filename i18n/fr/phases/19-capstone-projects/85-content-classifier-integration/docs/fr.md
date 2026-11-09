@@ -3,7 +3,7 @@
 > Les classifiateurs du côté de sortie répondent à une question différente des règles du côté de l'entrée.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -56,7 +56,7 @@ cd-output-router
 
 ## Utilisez-le
 
-On court .`python3 main.py`. La démo imprime le verbe d'action pour chaque sortie de test, écrit `outputs/classifier_report.json`La latence est artificiellement nulle parce que tous les classifiateurs sont basés sur des règles; pour un modèle réel avec des classifiateurs neuronaux, le même plomberie s'applique après que la latence par classifiateur augmente.
+On court .`python3 main.py`ou `npx tsx main.ts`. La démo imprime le verbe d'action pour chaque sortie de test, écrit `outputs/classifier_report.json`La latence est artificiellement nulle parce que tous les classifiateurs sont basés sur des règles; pour un modèle réel avec des classifiateurs neuronaux, le même plomberie s'applique après que la latence par classifiateur augmente.
 
 ## La faire partir
 

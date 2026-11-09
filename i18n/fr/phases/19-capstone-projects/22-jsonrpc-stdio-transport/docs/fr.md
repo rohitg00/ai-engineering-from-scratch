@@ -3,7 +3,7 @@
 > Le transport entre un client modèle et un serveur d'outils est JSON-RPC sur stdio.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

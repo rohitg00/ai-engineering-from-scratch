@@ -3,7 +3,7 @@
 > Une hypothèse est bon marché. Savoir si quelqu'un l'a déjà prouvée est la partie la plus chère. Construire la couche de récupération qui répond à cette question avant que le coureur tourne une boîte à sable.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

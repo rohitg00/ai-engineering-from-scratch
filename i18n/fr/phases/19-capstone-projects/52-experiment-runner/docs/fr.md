@@ -3,7 +3,7 @@
 > La boucle est aussi honnête que ses mesures. Construisez le coureur qui prend une spécification, l'exécute dans un sous-processus sandboxé, et émet une tache de métriques json que l'évaluateur peut faire confiance.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

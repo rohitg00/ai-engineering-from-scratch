@@ -3,7 +3,7 @@
 > Les octets sont entrés, les identifiants sortis, les identifiants retournés aux mêmes octets.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 04 lessons, Phase 07 transformer lessons
 **Time:** ~90 minutes
 

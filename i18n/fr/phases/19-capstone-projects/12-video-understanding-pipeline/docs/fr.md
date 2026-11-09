@@ -3,7 +3,7 @@
 > Douze laboratoires ont produit Marengo + Pegasus. VideoDB a envoyé l'API CRUD pour vidéo. Molmo 2 de l'AI2 a publié des points de contrôle VLM ouverts. Gemini traite des heures de vidéo de manière native. TimeLens-100K a défini le repérage temporel à l'échelle. Le pipeline 2026 est réglé: segmentation de scène, sous-titre + intégration par scène, alignement de transcriptions, index multivéctoriel et requête répondant avec (début, fin) timestamps plus prévisualisation de cadres. La pierre angulaire ingère 100 heures, atteint des critères de référence publics, et mesure les hallucinations sur les questions de comptage et d'action.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (UI)
+**Languages:** Python (pipeline), TypeScript (UI, pipeline scaffold)
 **Prerequisites:** Phase 4 (CV), Phase 6 (speech), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**P4 · P6 · P7 · P11 · P12 · P17
 **Time:** 30 hours

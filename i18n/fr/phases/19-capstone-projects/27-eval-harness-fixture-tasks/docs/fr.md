@@ -3,7 +3,7 @@
 > Un agent de codage n'est que aussi bon que la suite de tâches que vous mesurez. Cette leçon construit un harnais d'évaluation qui prend un dossier de tâches fixes, exécute chacune à travers un agent candidat, les scores passent ou échouent à travers un vérificateur déterministe, et agrégent les résultats en pass@1, pass@k, latence moyenne et coût moyen. Le harnais est la source de vérité qui vous permet de voir une régression d'un réfacteur.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox runner), Phase 14 · 30 (eval-driven agent development), Phase 14 · 19 (SWE-bench and GAIA benchmarks)
 **Time:** ~90 minutes
 
@@ -100,6 +100,7 @@ La leçon 25 a produit la chaîne de portes, la leçon 26 a produit la boîte à
 ```bash
 cd phases/19-capstone-projects/27-eval-harness-fixture-tasks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

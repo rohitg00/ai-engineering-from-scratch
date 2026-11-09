@@ -3,7 +3,7 @@
 > Un squelette LaTeX est un contrat entre le chercheur et le typographe. Si le contrat est rompu, le document ne se compile pas et l'échec est fort. Construisez d'abord le squelette, puis remplissez-le.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > Un modèle de classe 8B formé sur vos propres données, aligné sur vos propres préférences, quantifié, décodé par des spéculations et servi à des jetons mesurables de 1 million de dollars. La pile ouverte 2026 est Axolotl v0.8, TRL 0.15, Unsloth pour l'itération, GPTQ/AWQ/GGUF pour la quantification, vLLM 0.7 avec EAGLE-3 pour la serveur. La pierre angulaire est de faire fonctionner le pipeline entier de manière reproduisable (YAML en, serveur de point de sortie) et de publier une carte modèle dans le cadre du Cadre d'ouverture modèle 2026.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), YAML (configs), Bash (scripts)
+**Languages:** Python (pipeline), TypeScript, YAML (configs), Bash (scripts)
 **Prerequisites:** Phase 2 (ML), Phase 3 (DL), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P2 · P3 · P7 · P10 · P11 · P17 · P18
 **Time:** 35 hours

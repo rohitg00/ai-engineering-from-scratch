@@ -3,7 +3,7 @@
 > Le salaire de la piste A. Cette leçon suture la chaîne de passerelle, la boîte à sable, le harnais d'évaluation et l'OTel s'étend en un agent de codage qui répare un bug réel (petit, à l'échelle fixe) dans un projet Python multi-fichiers. L'agent est une politique déterministe, pas un LLM; la substitution rend la leçon reproduisable et montre que le harnais a été la partie intéressante tout le temps. Le contrat est identique: un modèle réel s'insère dans la couture de la politique.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 19 · 28 (observability), Phase 14 · 38 (verification gates), Phase 14 · 41 (workbench for real repos), Phase 14 · 42 (agent workbench capstone)
 **Time:** ~90 minutes
 
@@ -113,6 +113,7 @@ Cette leçon est l'intégration. La leçon 25 a écrit la chaîne de passerelle.
 ```bash
 cd phases/19-capstone-projects/29-end-to-end-coding-task-demo
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

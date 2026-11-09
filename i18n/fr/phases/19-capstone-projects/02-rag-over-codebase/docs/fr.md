@@ -3,7 +3,7 @@
 > Chaque organisme d'ingénierie sérieux en 2026 effectue une recherche interne de code qui comprend la signification, pas seulement les chaînes. Amp, réponses de base de code de Cursor, graphique d'entreprise d'Augment, repomap d'Aider, MCP interne de Pinterest  même forme. Ingérer de nombreux repos, analyser avec le gardien d'arbre, intégrer des morceaux de fonction et de classe, recherche hybride, ré-rangement, répondre avec des citations. Ce capstone vous demande de construire un qui traite 2M lignes de code sur 10 repos et survit à la réindexation progressive à chaque poussée git.
 
 **Type:** Capstone
-**Languages:** Python (ingestion), TypeScript (API + UI)
+**Languages:** Python (ingestion), TypeScript (API + UI, retrieval scaffold)
 **Prerequisites:** Phase 5 (NLP foundations), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 17 (infrastructure)
 **Phases exercised:**P5 · P7 · P11 · P13 · P17
 **Time:** 30 hours

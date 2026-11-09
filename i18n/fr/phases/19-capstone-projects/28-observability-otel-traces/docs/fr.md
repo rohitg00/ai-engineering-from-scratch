@@ -3,7 +3,7 @@
 > Un harnais d'agent sans observabilité est une boîte noire qui coûte de l'argent. Cette leçon ronde manuellement un constructeur de span qui émet des enregistrements conformes aux conventions sémantiques OpenTelemetry GenAI, les écrit dans un fichier JSON-Lines une période par ligne, et expose des compteurs et des histogrammes dans le format de texte Prometheus.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 13 · 20 (OpenTelemetry GenAI), Phase 14 · 23 (OTel GenAI conventions)
 **Time:** ~90 minutes
 
@@ -96,6 +96,7 @@ La leçon 25 produit la chaîne de portes. La leçon 26 produit la boîte à sab
 ```bash
 cd phases/19-capstone-projects/28-observability-otel-traces
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 
