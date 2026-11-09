@@ -3,7 +3,7 @@
 > 2024年5月的GPT-4o产品演示不仅因为底层模型而造成破坏,而是由于产品形状语音接口, 开放生态系统在2024年和2025年期间一直在努力达到该产品表面. 文2.5-Omni (2025年3月) 是参考开放设计:一个Thinker (大型发达文字变压器) 加上一个Talker (并行发达语音变压器),通过流媒体语音代币连接. 迷你Omni简化了它,莫希匹配了它的延迟,GLM-4-Voice扩展到中国. 这一课讲述了"思考者-谈话者"架构和延迟预算,
 
 **Type:** Build
-**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop)
+**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop), TypeScript
 **Prerequisites:** Phase 12 · 19 (audio-LLMs), Phase 12 · 16 (any-to-any)
 **Time:** ~180 minutes
 

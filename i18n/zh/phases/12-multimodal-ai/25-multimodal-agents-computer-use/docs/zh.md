@@ -3,7 +3,7 @@
 > 2026 边界产品是一个多模式代理,它可以阅读截图,点击按,导航网络UI,填写表格,并完成端到端工作流程. 查看Click和CogAgent (2024) 证明了GUI基地化的原始. 轮UI增加了移动. 图表代理引入了图表的视觉工具. 视觉WebArena和AgentVista (2026) 是边界追逐的基准,甚至在AgentVista的艰难任务中,双子座3Pro和克劳德奥普斯4.7分数约为30% 这块结尾石将12期的每一个线程都聚集在一起:感知 (高分辨率VLM),推理 (使用工具的LLM),定位 (协调输出),长视野记忆和评估.
 
 **Type:** Capstone
-**Languages:** Python (stdlib, action schema + agent loop skeleton)
+**Languages:** Python (stdlib, action schema + agent loop skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 09 (Qwen-VL JSON), Phase 14 (Agent Engineering)
 **Time:** ~240 minutes
 

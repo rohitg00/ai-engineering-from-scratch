@@ -3,7 +3,7 @@
 > 统一多动态模型具有不可避免的紧张性. 了解需要语义特性 SigLIP或DINOv2输出向量富含概念级信息. 代人想要重建友好的代码, VQ代码, 两个目标在一个编码器中不能兼容. 詹努斯 (DeepSeek,2024年10月) 和詹努斯-普罗 (DeepSeek,2025年1月) 认为解决方案是停止尝试:分离两个编码器. 通过SIGLIP进行转换器体的分类,但通过VQ代码器生成路径理解. 在7B,Janus-Pro在Geneval上击败了DALL-E3,同时与MMMU上的LLaVA相匹配. 这一课解释了为什么两个编码器在一个失败的情况下工作.
 
 **Type:** Build
-**Languages:** Python (stdlib, dual-encoder routing + shared-body signal)
+**Languages:** Python, TypeScript (stdlib, dual-encoder routing + shared-body signal)
 **Prerequisites:** Phase 12 · 13 (Transfusion), Phase 12 · 14 (Show-o)
 **Time:** ~120 minutes
 

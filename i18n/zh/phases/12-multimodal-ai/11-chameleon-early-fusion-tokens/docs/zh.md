@@ -3,7 +3,7 @@
 > 我们迄今为止所看到的每一个VLM都将图像和文字分开. 视觉代币来自视觉编码器,流入投影器,然后在LLM内部见到文字. 视觉和文本词汇从来没有重叠. 马龙 (Meta,2024年5月) 问:如果他们做了呢? 训练一个VQ-VAE,将图像转化为一个单独的代币的序列, 每个多元文件都是一连串的文字代币和图像代币, 副作用:模型可以在单次推断调用中生成混合模式输出交换的文本和图像代币. 这一课就读了早期融合论文,并构建了一个玩具版本.
 
 **Type:** Build
-**Languages:** Python (stdlib, VQ-VAE tokenizer + interleaved decoder)
+**Languages:** Python, TypeScript (stdlib, VQ-VAE tokenizer + interleaved decoder)
 **Prerequisites:** Phase 12 · 05, Phase 8 (Generative AI)
 **Time:** ~180 minutes
 

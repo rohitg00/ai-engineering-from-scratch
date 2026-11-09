@@ -3,7 +3,7 @@
 > 语 (Radford等,2022年12月) 解决了语音识别 680k小时的弱监督多语言语音,简单的编码-解码变压器,这是一个让每次ASR发布都引用的基准. 但认可不是推理. 问"录音中的乐器是什么"或者"讲者表达了什么情感"或"在第三分钟发生了什么"需要听音理解,而不是转录. 音音频,萨尔蒙,LTU和NVIDIA的Audio Flamingo 3 (AF3,2025年7月) 逐步构建了这个堆:保持Whisper类编码器,起Q-formers,训练音频文本指令数据,添加链接思维推理. 这一课是个曲.
 
 **Type:** Build
-**Languages:** Python (stdlib, log-Mel spectrogram + audio Q-former skeleton)
+**Languages:** Python (stdlib, log-Mel spectrogram + audio Q-former skeleton), TypeScript
 **Prerequisites:** Phase 6 (Speech and Audio), Phase 12 · 03 (Q-Former)
 **Time:** ~180 minutes
 

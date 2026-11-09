@@ -3,7 +3,7 @@
 > GPT-4o 运输出了大多数开放模型无法复制的产品:一个听到声音,看到视频,并实时回复的代理. 开放生态系统的答案在2024年底是MIO (Wang等人,2024年9月). 通过MIO,文字,图像,语音和音乐都被标记,在交织的序列上训练一个因果变革器,并产生任何方式. 任何GPT (Zhan等人,2024年2月) 是概念的证明;MIO是扩大规模;统一-IO 2 (Allen AI,2023年12月) 是视觉+行动基础的表弟. 这一课中,有四个代币,一个变压器,
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-modality token allocator + streaming decode loop)
+**Languages:** Python, TypeScript (stdlib, four-modality token allocator + streaming decode loop)
 **Prerequisites:** Phase 12 · 11 (Chameleon), Phase 6 (Speech and Audio)
 **Time:** ~120 minutes
 

@@ -3,7 +3,7 @@
 > 开放AI的CLIP (2021) 证明了一个足够大的想法,可以在未来五年内实现:将图像编码器和文本编码器在同一向量空间中, 没有监督标签. 两千万个. 结果的嵌入空间进行零射击分类,图像文本检索,并作为其视觉塔插入每一个2026 VLM. siglip 2 (2025) 取代软max 通过sigmoid,以更低的成本扩展到CLIP之后. 这一课将从InfoNCE到sigmoid对式损失的数学进行,并建立了在 stdlib Python 中的训练步骤.
 
 **Type:** Build
-**Languages:** Python (stdlib, InfoNCE + sigmoid loss implementations)
+**Languages:** Python, TypeScript (stdlib, InfoNCE + sigmoid loss implementations)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 7 (Transformers)
 **Time:** ~180 minutes
 

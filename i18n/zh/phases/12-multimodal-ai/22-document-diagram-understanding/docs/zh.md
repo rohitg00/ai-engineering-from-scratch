@@ -3,7 +3,7 @@
 > 文件不是照片. 文件,科学论文,账单或手写表格有布局,表格,图表,脚注,标题和语义结构, 之前VLM堆是一个管道:Tesseract OCR + LayoutLMv3 +表提取统计. 维LM波取代了无 OCR 型号的甜圈 (2022年),努加 (2023年),docllm (2023年) ,直接发射结构化标记. 到2026年,边界只是"将页面图像输送到Claude Opus 4.7的 2576px原始", 这一课讲述了文件人工智能的三代弧.
 
 **Type:** Build
-**Languages:** Python (stdlib, layout-aware document parser skeleton)
+**Languages:** Python (stdlib, layout-aware document parser skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 5 (NLP)
 **Time:** ~180 minutes
 

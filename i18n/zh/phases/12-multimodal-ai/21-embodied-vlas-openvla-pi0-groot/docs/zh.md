@@ -3,7 +3,7 @@
 > 模型第一次在厨房机器人上读取一个网站的食谱并执行它是RT-2 (谷歌DeepMind,2023年7月). RT-2 透了作为文本代币的行为,在网络数据和机器人操作数据上共同调整了VLM,并证明了网络规模的视觉语言知识转移到机器人控制. 开放VLA (2024年6月) 发送了开放7B参考. 物理智能的 π0 系列 (2024-2025) 增加了与流量匹配的行动专家. 据悉,NVIDIA的GR00T N1 (2025年3月) 提供了双系统 (系统1/系统2) 控制,用于规模化的人类型机器人. 视觉语言行动的VLA原始模式,一个看到,阅读和行动的单一模型,是这一阶段理解模型和15阶段自主系统之间的桥梁.
 
 **Type:** Learn
-**Languages:** Python (stdlib, action tokenizer + VLA inference skeleton)
+**Languages:** Python (stdlib, action tokenizer + VLA inference skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 15 (Autonomous Systems, referenced)
 **Time:** ~180 minutes
 

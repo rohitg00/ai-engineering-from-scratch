@@ -3,7 +3,7 @@
 > 们都在想, 它显示,一个模型可以任意处理交织的图像,视频和文本序列. 模型可以在背景下学习, 通过三个例子 (图像,字幕) 组进行几次提示, 机制:关闭的跨注意层,插入了结的LLM现有层之间,具有从零开始的学习门,因此在初始化时保留了LLM的文本能力. 这一课程讲述了弗拉明戈的感知器复制样本和关闭的交叉注意力架构,
 
 **Type:** Learn
-**Languages:** Python (stdlib, gated cross-attention + Perceiver resampler demo)
+**Languages:** Python, TypeScript (stdlib, gated cross-attention + Perceiver resampler demo)
 **Prerequisites:** Phase 12 · 03 (BLIP-2 Q-Former)
 **Time:** ~120 minutes
 

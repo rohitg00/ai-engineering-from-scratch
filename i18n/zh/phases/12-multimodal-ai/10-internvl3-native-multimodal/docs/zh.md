@@ -3,7 +3,7 @@
 > 在InternVL3之前的每一个开放的VLM都遵循相同的三步配方:用数万亿的文本代币训练的文本LLM, 文本法师已经花费了全部预训预算用于纯文本,并没有原生地理解视觉代币. 当你添加视觉后期时,LLM必须重新学习如何将视觉输入与其文本推理联系起来,而不忘记文本. 实习前,从第一步开始,一个预训练跑,文字和多模特交互. 结果与MMMU-Pro的双子 2.5 Pro相匹配, 这一课讲述了本土预训练的情况,
 
 **Type:** Learn
-**Languages:** Python (stdlib, training-corpus mixer)
+**Languages:** Python, TypeScript (stdlib, training-corpus mixer)
 **Prerequisites:** Phase 12 · 05, Phase 12 · 07 (recipes)
 **Time:** ~120 minutes
 

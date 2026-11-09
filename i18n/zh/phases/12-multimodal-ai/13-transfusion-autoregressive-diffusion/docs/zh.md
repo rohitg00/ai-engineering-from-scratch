@@ -3,7 +3,7 @@
 > 马和Emu3都会投注于单独的代币. 它们有效,但量子化瓶可见 图像质量高原在连续空间扩散模型下面. 转血 (Meta, Zhou等同,2024年8月) 采取相反的选择:保持图像连续,完全放弃VQ-VAE,并训练一个变压器, 文字代币可以预测下一个代币. 图像补丁产生流量匹配/扩散损失. 两者都能达到相同的重量. 基于稳定扩散3 (MMDiT) 的架构是近亲的. 这一课上读了转论文, 构建了一个玩具两损训练器, 并追踪了一个变压器可以做这两项工作的注意力面具.
 
 **Type:** Build
-**Languages:** Python (stdlib, two-loss trainer on MNIST-scale toy)
+**Languages:** Python, TypeScript (stdlib, two-loss trainer on MNIST-scale toy)
 **Prerequisites:** Phase 12 · 11 (Chameleon), Phase 8 (Generative AI)
 **Time:** ~180 minutes
 

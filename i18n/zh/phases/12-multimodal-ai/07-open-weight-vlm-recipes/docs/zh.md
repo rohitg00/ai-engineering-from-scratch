@@ -3,7 +3,7 @@
 > 开放量VLM文献的2024-2026年是除表的森林. 果的MM1测试了13种组合的图像编码器,连接器和数据组合. 艾伦人工智能的Molmo证明了详细的人类标题比GPT-4V蒸更好. 布里安-1运行了20多个编码器比较. 五轴设计空间的正式化. 体VLM在控制基准上进行了27种培训配方的比较. 在所有这些噪音中,有一小部分结果在论文中得到了支持:图像编码器比连接器架构更重要,数据混合物比任何东西都更重要, 这一课可以读取这些表格,所以你不必读.
 
 **Type:** Learn + lab
-**Languages:** Python (stdlib, ablation table parser + recipe picker)
+**Languages:** Python, TypeScript (stdlib, ablation table parser + recipe picker)
 **Prerequisites:** Phase 12 · 05 (LLaVA baseline)
 **Time:** ~180 minutes
 

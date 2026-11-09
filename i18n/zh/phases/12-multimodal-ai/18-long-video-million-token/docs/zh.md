@@ -3,7 +3,7 @@
 > 通过24FPS的1小时4K视频, 补丁和嵌入, 产生了6000万个代币. 转载的2小时播客节目是3万个代币. 一部完整的蓝光电影,即使被强烈的集成压缩, 谷歌的Gemini 1.5 (2024年3月) 通过1000万代币的背景开启了这个时代, 指数 (Liu等,2024年2月) 显示了环球注意力扩展路径. 长VILA和Video- XL进一步扩大了摄入量. 视频代理换了原始文本, 每个方法都对计算,回忆和工程复杂性进行不同的交易. 这一课将它们放在一边.
 
 **Type:** Build
-**Languages:** Python (stdlib, needle-in-haystack simulator + agentic-retrieval router)
+**Languages:** Python (stdlib, needle-in-haystack simulator + agentic-retrieval router), TypeScript
 **Prerequisites:** Phase 12 · 17 (video temporal tokens)
 **Time:** ~180 minutes
 

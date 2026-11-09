@@ -3,7 +3,7 @@
 > 拉瓦 (四月2023年) 是地球上最多复制的多式建筑. 它用2层MLP取代BLIP-2的Q-Former,用天真的代币连接取代Flamingo的门禁交叉注意力,并从仅仅是文字的标题中训练了GPT-4生成的158k视觉指令转折. 任何在2023年至2026年之间建造VLM的实践者都会构建一些LLaVA的变体. 光-1,5是MLP投影机和336px编码器的交换. 为了高分辨率输入,LLaVA-NeXT增加了AnyRes. 单一的图像,多个图像和视频. 这一课阅读了食谱,应用了投影机,并解释了"简单的获胜"的原因.
 
 **Type:** Build
-**Languages:** Python (stdlib, projector + instruction-template builder)
+**Languages:** Python, TypeScript (stdlib, projector + instruction-template builder)
 **Prerequisites:** Phase 12 · 02 (CLIP), Phase 11 (LLM Engineering — instruction tuning)
 **Time:** ~180 minutes
 

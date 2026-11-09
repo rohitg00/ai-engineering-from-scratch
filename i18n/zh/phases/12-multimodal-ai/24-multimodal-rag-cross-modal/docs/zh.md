@@ -3,7 +3,7 @@
 > 视觉原生文件RAG是一个片. 制作多模式RAG更广泛,用于旅行规划 ("找到我一顿安静的素食式早餐与自然光"),医疗分类 ("什么伤害匹配这个照片 + 这些笔记"),电子商务 ("类似于这个自拍的服装,我的尺寸"),以及现场服务 ("诊断这个引擎声音加上部分照片"). 两项调查,包括: 编码了以下问题:跨模式检索,检索融合,生成定位,多模式评估. 这一课程将阅读调查,并设计生产管道.
 
 **Type:** Build
-**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator)
+**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator), TypeScript
 **Prerequisites:** Phase 12 · 23 (ColPali), Phase 11 (RAG basics)
 **Time:** ~180 minutes
 

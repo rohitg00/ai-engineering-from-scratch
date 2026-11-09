@@ -3,7 +3,7 @@
 > wen-VL家族 wen-VL (2023年),Qwen2-VL (2024年),Qwen2.5-VL (2025年),Qwen3-VL (2025) 是2026年最具影响力的开放视觉语言模型系. 每一代都做出了一个决定性的建筑投注,其余的开放生态系统在十二个月内复制了:通过M-RoPE进行原生动态分辨率,通过绝对的时间调整进行动态FPS样本采集,在ViT中的窗口注意力,以及结构化代理输出格式. 通过Qwen3-VL,该配方已经稳定了:一个2D-RoPE-ViT编码器,具有原生面比输入,一个MLP投影器进入一个大型Qwen3语言基础,以及强调OCR,地面和代理行为作为一流目标的培训阶段. 这一课是按时间序列读取家庭,
 
 **Type:** Learn
-**Languages:** Python (stdlib, M-RoPE encoder + dynamic-FPS sampler)
+**Languages:** Python, TypeScript (stdlib, M-RoPE encoder + dynamic-FPS sampler)
 **Prerequisites:** Phase 12 · 06 (patch-n'-pack)
 **Time:** ~120 minutes
 

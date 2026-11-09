@@ -3,7 +3,7 @@
 > 实际的图像不是224x224平方. 一份收据是1:3;一个图表是16:9,一个医疗扫描可能是4096x4096,一个移动屏幕截图是9:19.5. 之前2024 VLM 答案将所有东西大小化成一个固定的平方, 抛弃了使 OCR,文档理解和高分辨率场景解析工作的信号. 纳维特 (谷歌,2023) 显示,你可以用区块斜面掩盖将可变分辨率的补丁包装成一个变压器批量. 文2-VL的M-RoPE (2024) 完全放弃了绝对位置表. 拉瓦-下XT的AnyRes将高分辨率图像构成一个基层+子图像. 现在,SigLIP 2的NaFlex变体 (2025) 是开放的VLM的默认编码器,需要一个检查点来服务于每个方面比例. 这一课将"补丁"的应用到最后.
 
 **Type:** Build
-**Languages:** Python (stdlib, patch packer + block-diagonal mask)
+**Languages:** Python, TypeScript (stdlib, patch packer + block-diagonal mask)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 12 · 05 (LLaVA)
 **Time:** ~120 minutes
 

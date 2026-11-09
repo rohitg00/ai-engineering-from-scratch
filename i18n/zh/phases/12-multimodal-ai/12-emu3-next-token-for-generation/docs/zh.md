@@ -3,7 +3,7 @@
 > 据报道,该研究结果将在2024年9月推出. 单个Llama式单个解码器变压器,仅训练在下一个代码预测目标,通过文本+VQ图像代码+3DVQ视频代码的统一词汇,在图像生成方面击败了SDXL和感知方面击败了LLaVA-1.6. 没有损. 没有传播时间表. 无类型指导在推断质量时使用,但核心培训目标是预测下一个标志,教师强迫. 发表在"自然"杂志上. 这一课程上讲了Emu3论文,为什么一个更好的代币加量是你所需要的,
 
 **Type:** Learn
-**Languages:** Python (stdlib, 3D video tokenizer math + autoregressive sampler skeleton)
+**Languages:** Python, TypeScript (stdlib, 3D video tokenizer math + autoregressive sampler skeleton)
 **Prerequisites:** Phase 12 · 11 (Chameleon)
 **Time:** ~120 minutes
 

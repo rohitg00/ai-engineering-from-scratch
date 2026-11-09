@@ -3,7 +3,7 @@
 > 在LLaVA-OneVision之前 (Li等,2024年8月) 开放VLM世界有不同的流派:LLaVA-1.5用于单个图像,像Mantis和VILA这样的多图像模型,像Video-LLaVA和Video-LLaMA这样的视频模型. 每个赢得了自己的基准, 拉瓦-一视觉认为,单一的课程可以培养一个模型来主导三个场景, 配方非常简单:视觉代币预算平衡了各种场景, 这一课讲述了预算,课程,以及新兴行为.
 
 **Type:** Build
-**Languages:** Python (stdlib, token budget solver + curriculum planner)
+**Languages:** Python, TypeScript (stdlib, token budget solver + curriculum planner)
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 06 (any-resolution)
 **Time:** ~180 minutes
 

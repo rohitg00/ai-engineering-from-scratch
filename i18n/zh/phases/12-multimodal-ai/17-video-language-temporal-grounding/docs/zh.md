@@ -3,7 +3,7 @@
 > 视频不是一堆照片. 一个5秒的剪辑有因果顺序,动作动词和事件时间, 视频-LLaMA (Zhang等,2023年6月) 发送了首个具有视频接地的开放视频-LLM. 视频聊天和视频-LLaVA扩大了模式. 到2025年,Qwen2.5VL的时间调整M-RoPE将与边境专业型号的差距缩小. 每个系统都以不同的方式解决时间代币 每片的Q-former,每框的 concat-pool,每代币的时间一致的M-RoPE. 这一课程阅读了模式,构建了一个统一对动态框架样本,
 
 **Type:** Build
-**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator)
+**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator), TypeScript
 **Prerequisites:** Phase 12 · 08 (LLaVA-OneVision)
 **Time:** ~180 minutes
 
