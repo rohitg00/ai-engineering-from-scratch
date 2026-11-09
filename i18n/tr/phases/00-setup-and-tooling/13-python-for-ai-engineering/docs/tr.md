@@ -3,7 +3,7 @@
 > Bu kursta kodun çoğu aynı Python dillerinin küçük bir setini kullanıyor.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Dev Environment, Python Environments
 **Time:** ~120 minutes
 
@@ -821,6 +821,7 @@ En yakın merkez sınıflandırıcısı her sınıfın ortalama özellik vektör
 
 ```bash
 python3 phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.py
+npx tsx phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.ts
 ```
 
 ```text
