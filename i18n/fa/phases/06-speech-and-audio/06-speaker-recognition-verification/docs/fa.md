@@ -3,7 +3,7 @@
 > ASR می پرسد "آن ها چه گفتند؟" تشخیص سخنران می پرسد "چه کسی گفته است؟" ریاضیات شبیه به  گنجانده شده و به علاوه کوسین  است اما هر تصمیم تولید بر روی یک شماره EER منحصر است.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 22 (Embedding Models)
 **Time:** ~45 minutes
 

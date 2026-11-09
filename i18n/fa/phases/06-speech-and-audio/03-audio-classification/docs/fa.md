@@ -3,7 +3,7 @@
 > همه چیز از "سرگ با صدای سرن" تا "چه زبان است" طبقه بندی صوتی است. ویژگی ها می شوند. معماری هر دهه حرکت می کند. ارزیابی AUC، F1 و هر کلاس به یاد می آید.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 3 · 06 (CNNs), Phase 5 · 08 (CNNs & RNNs for Text)
 **Time:** ~75 minutes
 

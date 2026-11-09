@@ -3,7 +3,7 @@
 > شکل موج ها سیگنال خام هستند. طیف ها نمایش هستند. ویژگی های Mel شکل دوستانه ML هستند. هر لوله ASR و TTS مدرن از این پله عبور می کند و اولین مرحله درک نمونه گیری و فوریئر است.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Vectors & Matrices), Phase 1 · 14 (Probability Distributions)
 **Time:** ~45 minutes
 

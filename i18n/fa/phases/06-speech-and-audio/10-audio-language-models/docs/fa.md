@@ -3,7 +3,7 @@
 > مدل های 2026 زبان صوتی استدلال بر روی صحبت + صدا محیط زیست + موسیقی. Qwen2.5-Omni-7B با GPT-4o Audio در MMAU-Pro مطابقت دارد. آڈیو فلامینگو بعدی از Gemini 2.5 Pro در LongAudioBench غلبه می کند. شکاف بین باز و بسته اساسا بسته است  به جز در وظایف چند صوتی، جایی که همه تقریبا تصادفی هستند.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 12 · 03 (Vision-Language Models), Phase 7 · 10 (Audio Transformers)
 **Time:** ~45 minutes
 

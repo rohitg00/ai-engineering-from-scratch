@@ -3,7 +3,7 @@
 > نسل صوتی 2026 تقریباً همه توکن ها است. EnCodec، SNAC، Mimi و DAC شکل های موج مستمر را به دنباله های متمایز تبدیل می کنند که یک ترانسفورماتور می تواند پیش بینی کند. تقسیم توکن معنوی به نسبت صوتی  اولین کد بوک به عنوان معنوی، استراحت به عنوان صوتی  مهمترین تغییر معماری از زمان ترانسفورماتور برای صوتی است.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 10 · 11 (Quantization), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

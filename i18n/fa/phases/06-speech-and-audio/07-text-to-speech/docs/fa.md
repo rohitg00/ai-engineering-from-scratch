@@ -3,7 +3,7 @@
 > ASR گفتار را به متن تبدیل می کند؛ TTS متن را به گفتار تبدیل می کند. استیک 2026 سه بخش است: متن → توکن ها، توکن ها → mel، mel → شکل موج. هر بخش دارای یک مدل پیش فرض است که در یک لپ تاپ قرار می گیرد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 09 (Seq2Seq), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > کلون صدا سریعتر از دفاعی ارسال می شود. سیستم های صدا تولید 2026 به دو چیز نیاز دارند: یک آشکارساز (AASIST، RawNet2) که گفتار واقعی و جعلی را طبقه بندی می کند و یک آبی نشان (AudioSeal) که از فشرده سازی و ویرایش زنده می ماند. هر دو یا کلون صدا را ارسال نکنید.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 08 (Voice Cloning)
 **Time:** ~75 minutes
 

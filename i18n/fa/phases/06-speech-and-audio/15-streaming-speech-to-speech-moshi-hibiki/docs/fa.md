@@ -3,7 +3,7 @@
 > در سال 2024-2026، هوش مصنوعی صوتی را دوباره تعریف کرد. موشی یک مدل واحد را ارسال می کند که به طور همزمان با 200 ms تاخیر گوش می دهد و صحبت می کند. هیبیکی ترجمه گفتار به گفتار را قطعه به قطعه انجام می دهد. هر دو لوله ASR → LLM → TTS را برای یک معماری یکپارچه کامل دوگونی بر روی توکن های کدک میمی رها می کنند. این طراحی مرجع جدید است.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 13 (Neural Audio Codecs), Phase 6 · 11 (Real-Time Audio), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

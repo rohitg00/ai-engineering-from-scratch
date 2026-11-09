@@ -3,7 +3,7 @@
 > تشخیص گفتار، طبقه بندی صوتی در هر مرحله زمانی است که توسط یک مدل تسلسل که انگلیسی و سکوت را می داند، به هم متصل می شود. CTC، RNN-T و توجه سه راه برای انجام این کار هستند. یکی را انتخاب کنید و بفهمید چرا.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 08 (CNNs & RNNs for Text), Phase 5 · 10 (Attention)
 **Time:** ~45 minutes
 

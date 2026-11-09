@@ -3,7 +3,7 @@
 > نسل موسیقی 2026: Suno v5 و Udio v4 در تجارت غالب هستند. MusicGen، Stable Audio Open و ACE-Step منبع باز را پیش می برند. مشکل فنی عمدتاً حل شده است. مشکل حقوقی (وارنر موسیقی 500 میلیون دلاری، UMG) در سال های 2025-2026 زمینه را تغییر داد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 4 · 10 (Diffusion Models)
 **Time:** ~75 minutes
 

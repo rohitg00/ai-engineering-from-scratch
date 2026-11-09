@@ -3,7 +3,7 @@
 > شبکه های عصبی شکل های خام امواج را به خوبی مصرف نمی کنند. آنها طیف ها را مصرف می کنند. آنها طیف های Mel را حتی بهتر مصرف می کنند. هر ASR، TTS و طبقه بندی کننده صوتی در 2026 به دلیل این انتخاب پیش پردازش زنده یا مرده است.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 01 (Audio Fundamentals)
 **Time:** ~45 minutes
 

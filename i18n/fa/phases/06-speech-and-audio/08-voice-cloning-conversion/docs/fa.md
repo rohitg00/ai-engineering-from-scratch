@@ -3,7 +3,7 @@
 > کلون صدا متن شما را در صدای شخص دیگری می خواند. تبدیل صدا صدا صدا صدا شما را به صدای شخص دیگری می نویسد در حالی که آنچه را که گفتید را حفظ می کند. هر دو به تجزیه یکسان وابسته هستند: هویت سخنران را از محتوای جداگانه.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 07 (TTS)
 **Time:** ~75 minutes
 

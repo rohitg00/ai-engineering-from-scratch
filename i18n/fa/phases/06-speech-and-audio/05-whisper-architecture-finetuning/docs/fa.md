@@ -3,7 +3,7 @@
 > Whisper یک ترانسفورمتر پنجره ای 30 ثانیه ای کدگذاری و دیکوتر است که در 680 هزار ساعت از زوج های صوتی متن چند زبانی که به طور ضعیف تحت نظارت هستند آموزش دیده است. یک معماری، وظایف متعدد، قوی در 99 زبان. ASR مرجع 2026 .
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 5 · 10 (Attention), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 
