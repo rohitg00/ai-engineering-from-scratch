@@ -3,7 +3,7 @@
 > کوچکترین کامپانی مفید سه فایل است: یک روتر دستورالعمل ریشه، یک فایل حالت و یک صفحه کار. همه چیز دیگر در بالای لایه قرار دارد. اگر یک repo نمی تواند این سه را حمل کند، هیچ مدل آن را ذخیره نمی کند.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 31 (Why Capable Models Still Fail)
 **Time:** ~45 minutes
 
@@ -77,6 +77,7 @@ wb-three-files
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 اسکریپت ایجاد می کنه`workdir/`در کنار خودش، سه فایل را می گذارد، یک نوبت را اجرا می کند و تفاوت را چاپ می کند. دوباره آن را اجرا می کند تا ببینید که نوبت دوم چگونه از جایی که نوبت اول متوقف شده است ادامه می یابد.

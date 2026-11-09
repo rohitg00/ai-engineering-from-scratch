@@ -3,7 +3,7 @@
 > عوامل موازی زمان دیوار را تنها زمانی که کار مستقل است صرفه جویی می کنند. در غیر این صورت آنها یک کار واضح را به یک مشکل هماهنگی با نرخ شکست سریع تر تبدیل می کنند.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 39 and 44
 **Time:** ~70 minutes
 
@@ -86,6 +86,7 @@ flowchart TD
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

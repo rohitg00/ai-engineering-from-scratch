@@ -3,7 +3,7 @@
 > پنجره های زمینه محدود هستند. مکالمات، اسناد و ردیاب ابزار وجود ندارد. راه حل این است که حافظه مجازی OS بازگردانده شده است.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ context-budget
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ردیابی نشان می دهد که مامور سه واقعیت را می نویسد، زمینه اصلی را به حد بندی می پرشد (کشیدن اجباری) ، سپس با بازیافت جریان کار MemGPT بدون هیچ LLM واقعی به یک سوال پیگیری پاسخ می دهد.

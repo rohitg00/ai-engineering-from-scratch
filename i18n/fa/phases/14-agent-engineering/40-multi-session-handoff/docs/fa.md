@@ -3,7 +3,7 @@
 > جلسه به پایان می رسد. کار نیست. بسته ی تحویل این است که "اعمال یک ساعت کار کرده" را به "مجلس بعدی در دقیقه اول بهره مند است" تبدیل می کند. آن را عمدا بسازید، نه به عنوان یک فکر بعد.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 34 (Repo Memory), Phase 14 · 38 (Verification), Phase 14 · 39 (Reviewer)
 **Time:** ~50 minutes
 
@@ -91,6 +91,7 @@ wb-handoff-packet
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 خروجی: یک جسم چاپ شده و دو فایل روی دیسک

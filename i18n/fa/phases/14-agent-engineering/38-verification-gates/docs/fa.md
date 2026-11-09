@@ -3,7 +3,7 @@
 > یک دروازه تأیید قرارداد دامنه، دفترچه بازخورد، گزارش قوانین و تفاوت را می خواند و به یک سوال پاسخ می دهد: آیا این کار واقعاً تکمیل شده است؟ اگر دروازه جواب نه دهد، کار انجام نشده است، مهم نیست چیت چه بگوید.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 33 (Rules), Phase 14 · 36 (Scope), Phase 14 · 37 (Feedback)
 **Time:** ~55 minutes
 
@@ -81,6 +81,7 @@ wb-gate-sequence
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 نتیجه: سه گزارش حکم، هرکدوم کنار اسکریپت ذخیره شده

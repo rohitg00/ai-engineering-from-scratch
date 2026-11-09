@@ -3,7 +3,7 @@
 > اندازه گیری باید به یک تصمیم پاسخ دهد نه یک داشبورد را تزئین کند. از هدف شروع کنید، سوالات را اخذ کنید، سپس کوچکترین متریک را انتخاب کنید که به آنها پاسخ دهد.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 47 and 51
 **Time:** ~70 minutes
 
@@ -85,6 +85,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

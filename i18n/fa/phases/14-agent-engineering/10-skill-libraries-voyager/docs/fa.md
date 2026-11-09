@@ -3,7 +3,7 @@
 > Voyager (Wang et al., TMLR 2024) کد اجرا را به عنوان یک مهارت در نظر می گیرد. مهارت ها با بازرسی اطلاعات محیطی نامگذاری می شوند، قابل بازیافت، قابل ترکیب و بهبود می یابند. این معماری مرجع برای مهارت های SDK کلاود آژانت، مهارت کیت و الگوی کتابخانه مهارت 2026 است.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ voyager-skills
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ردیابی کتابچه نوشته ها، بازیافت، ترکیب، اجرای شکست خورده و اصلاح v2 را نشان می دهد

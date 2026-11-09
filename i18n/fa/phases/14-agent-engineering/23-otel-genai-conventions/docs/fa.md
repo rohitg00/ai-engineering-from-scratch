@@ -3,7 +3,7 @@
 > GenAI SIG OpenTelemetry (بازدید آوریل 2024) طرح استاندارد برای تله متری عامل را تعریف می کند. نام های اسپان، ویژگی ها و قوانین ضبط محتوا در سراسر فروشندگان به هم می پیوندند بنابراین ردیابی عامل به معنای همان چیزی در Datadog، Grafana، Jaeger و Honeycomb است.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 13 (LangGraph), Phase 14 · 24 (Observability Platforms)
 **Time:** ~60 minutes
 
@@ -88,6 +88,7 @@ ae-genai-span-tree
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 محصول: یک درخت اسپان با تمام ویژگی های GenAI مورد نیاز و یک "خزنۀ خارجی" که مرجع محتوای انتخاب شده را نشان می دهد.

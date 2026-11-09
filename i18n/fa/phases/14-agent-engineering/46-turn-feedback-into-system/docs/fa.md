@@ -3,7 +3,7 @@
 > اصلاحی که فقط در چت زندگی می کند یک اجرا را اصلاح می کند. اصلاحی که به یک آزمون، مرز، مثال یا ابزار ارتقا می یابد هر اجرا بعدی بهبود می یابد.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 37 to 41
 **Time:** ~65 minutes
 
@@ -96,6 +96,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

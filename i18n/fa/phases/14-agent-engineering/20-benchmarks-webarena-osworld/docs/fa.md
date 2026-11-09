@@ -3,7 +3,7 @@
 > WebArena توانایی آژانس وب را در چهار برنامه میزبان خود آزمایش می کند. OSWorld قابلیت آژانس کامپیوتری را در Ubuntu، Windows، macOS آزمایش می کند. در انتشار (20232024) هر دو شکاف بزرگی بین بهترین آژانس های کلاس و انسان را نشان می دهند. شکاف در حال کاهش است. حالت شکست تغییر نکرده است.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 19 (SWE-bench, GAIA)
 **Time:** ~60 minutes
 
@@ -78,6 +78,7 @@ ae-agent-human-gap
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 تولید: نرخ موفقیت در هر کار و بهره وری مسیر، که از روش OSWorld-Human منعکس می شود.

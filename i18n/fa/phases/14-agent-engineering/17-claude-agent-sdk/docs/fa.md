@@ -3,7 +3,7 @@
 > یک هرنس که می توانید وارد کنید: ابزار داخلی، زیرنویس برای تعزیر زمینه، هوک، گسترش ردیابی W3C، دوام جلسه. SDK عامل کلاود نمونه مرجع است  فرم کتابخانه هرنس کد کلاود  و Claude Managed Agents جایگزین میزبان برای کار async طولانی مدت است.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 10 (Skill Libraries)
 **Time:** ~75 minutes
 
@@ -95,6 +95,7 @@ ae-subagent-isolation
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ردیابی از تعزیر زمینه زیر (حجم زمینه آرکیستراتور محدود می ماند) ، اجرای هوک و دوام جلسه را نشان می دهد.

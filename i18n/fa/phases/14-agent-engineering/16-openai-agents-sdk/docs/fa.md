@@ -3,7 +3,7 @@
 > OpenAI Agents SDK چارچوب چند عامل سبک وزن است که بر اساس API پاسخ ها ساخته شده است. پنج ابتدایی: عامل، دست دادن، guardrail، جلسه، ردیابی. دست دادن ابزار نامگذاری شده است `transfer_to_<agent>`. ريل هاي نگهباني در ورودي يا خروجي حرکت ميکنن . ردیابی به طور پيش فرض فعاله
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -84,6 +84,7 @@ ae-agent-handoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 این ردیف دو انتقال موفق را نشان می دهد، یک سفر در رایل ورودی و یک درخت اسپان که منعکس کننده آنچه که SDK واقعی منتشر می کند.

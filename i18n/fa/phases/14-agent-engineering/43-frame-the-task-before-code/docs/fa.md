@@ -3,7 +3,7 @@
 > یک عامل کدگذاری می تواند یک کار واضح را به سرعت اجرا کند. همچنین می تواند یک کار نامشخص را به سرعت اجرا کند. سرعت یکسان است. هزینه نیست.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 31 and 36
 **Time:** ~60 minutes
 
@@ -93,6 +93,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

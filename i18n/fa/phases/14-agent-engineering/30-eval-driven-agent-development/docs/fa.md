@@ -3,7 +3,7 @@
 > راهنمای Anthropic: "با دستورات ساده شروع کنید، آنها را با ارزیابی جامع بهینه سازی کنید و سیستم های چند مرحله ای را تنها در صورت نیاز اضافه کنید". ارزیابی آخرین مرحله نیست. این حلقه بیرونی است که هر انتخاب دیگری را در مرحله 14 هدایت می کند.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** All of Phase 14.
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ ae-eval-three-layers
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 نتیجه: هر مورد موفق/شکست، پرچم بازپسین، حکم دروازه CI.

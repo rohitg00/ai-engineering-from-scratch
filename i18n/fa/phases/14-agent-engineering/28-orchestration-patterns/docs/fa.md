@@ -3,7 +3,7 @@
 > چهار الگوی آرکیستراسیون در چارچوب های 2026 تکرار می شود: کارکن نظارت کننده، گلوله / همتایان، سلسله مراتبی، بحث. راهنمایی آنترپیک: "این در مورد ساخت سیستم مناسب برای نیازهای شما است". شروع ساده؛ اضافه کردن توپولوژی تنها زمانی که یک عامل واحد و پنج الگوی جریان کار کافی نیست.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 25 (Multi-Agent Debate)
 **Time:** ~60 minutes
 
@@ -98,6 +98,7 @@ orchestration-pattern
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 تولید: هر الگوی ردیابی + شمارش عملیات. نظارت کننده تمیز ترین است؛ سور کوتاه ترین است؛ سلسله مراتبی عمیق ترین است؛ بحث گران ترین است.

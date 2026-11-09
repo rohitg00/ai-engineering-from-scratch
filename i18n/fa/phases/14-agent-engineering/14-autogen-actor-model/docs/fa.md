@@ -3,7 +3,7 @@
 > عوامل به عنوان بازیگران: تبادل پیام های غیر هماهنگ، کنترل کننده های مبتنی بر رویداد، انزوا خطایی، همزمان طبیعی. AutoGen v0.4 (مرکز تحقیقاتی مایکروسافت، ژانویه 2025) ارتقا طراحی مجدد در مورد این مدل را انجام داد. چارچوب اکنون در حالت نگهداری است، با Microsoft Agent Framework (پیش نمایش عمومی اکتبر 2025) به عنوان جانشین تولید آن.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
 **Time:** ~75 minutes
 
@@ -79,6 +79,7 @@ actor-mailbox
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ردیابی نشان می دهد ارسال پیام، شکست شبیه سازی شده در یک بازیگر که دیگر را سقوط نمی کند، و همگامگی در یک حکم مشترک.

@@ -3,7 +3,7 @@
 > سه مدل تولید برای استفاده از کامپیوتر در سال 2026 است. همه سه مبتنی بر دید هستند. همه سه عکس صفحه نمایش، متن DOM و ورودی ابزار را به عنوان ورودی غیرقابل اعتماد در نظر می گیرند. تنها دستورالعمل های مستقیم کاربر به عنوان مجوز حساب می شود. خدمات ایمنی هر مرحله استاندارد هستند.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 20 (WebArena, OSWorld), Phase 14 · 27 (Prompt Injection)
 **Time:** ~60 minutes
 
@@ -92,6 +92,7 @@ computer-use-cursor
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 در نتیجه، طبقه بندی ایمنی نشان می دهد که یک دستورالعمل تزریق شده را در متن DOM ضبط می کند و خرید غیر تأیید شده را مسدود می کند.

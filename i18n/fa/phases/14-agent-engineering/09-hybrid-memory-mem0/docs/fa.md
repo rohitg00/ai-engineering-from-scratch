@@ -3,7 +3,7 @@
 > حافظه ترکیبی سه فروشگاه را به طور موازی اجرا می کند  ویکتور برای شباهت معنوی، KV برای جستجوی سریع واقعیت، گراف برای استدلال رابطه ی موجودیت  با یک لایه نمره ای که آنها را در بازیافت ترکیب می کند. این یک الگوی تولید گسترده برای حافظه خارجی است؛ Mem0 (Chhikara و همکاران، 2025) یک پیاده سازی مرجع است.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -106,6 +106,7 @@ ae-memory-fusion
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 خروجی سه مسیر جدا از یادآوری را به همراه top-k مخلوط نشان می دهد. وزن های امتیاز در بالای `main()`و به تغییر رتبه بندی نگاه کنید.

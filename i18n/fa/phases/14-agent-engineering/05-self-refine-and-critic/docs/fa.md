@@ -3,7 +3,7 @@
 > خود تصحیح (Madaan et al., 2023) از یک LLM در سه نقش استفاده می کند  تولید، بازخورد، اصلاح  در یک حلقه. متوسط دستاورد: +20 مطلق در 7 کار. CRITIC (Gou et al., 2023) مرحله بازخورد را با هدایت تأیید با ابزارهای خارجی سخت می کند. در سال 2026 این الگوی در هر چارچوب به عنوان "تقيیم کننده- بهینه سازی" (Anthropic) یا یک حلقه محافظ (OpenAI Agents SDK) ارسال می شود.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ self-refine
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 مقایسه خود تصفیه و CRITIC. CRITIC یک خطا واقعی را می گیرد خود تصفیه را از دست داده است زیرا تأیید کننده خارجی خود انتقاد را متوقف می کند.

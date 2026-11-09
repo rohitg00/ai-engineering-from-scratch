@@ -3,7 +3,7 @@
 > MASFT (برکلی، 2025) 14 حالت شکست چند عامل را در 3 دسته دسته دسته بندی می کند. تاکسونومی مایکروسافت مستند می کند که چگونه شکست های موجود هوش مصنوعی در تنظیمات آژانس تقویت می شوند. داده های زمینه صنعت در پنج حالت مکرر: اقدامات توهم، حرکت دامنه، خطاهای کاسکاد، از دست دادن زمینه، سوء استفاده از ابزار، همگام می شوند.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 05 (Self-Refine and CRITIC), Phase 14 · 24 (Observability)
 **Time:** ~60 minutes
 
@@ -89,6 +89,7 @@ failure-cascade
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 محصول: برچسب های هر ردیابی + توزیع جمع آوری، تولید ارزان آنچه که سطح های جمع بندی ردیابی فینکس است.

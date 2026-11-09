@@ -3,7 +3,7 @@
 > حمل و نقل یک حلقه ساخت را می بندد و حلقه یادگیری را باز می کند. شواهد باید سیستم را تغییر دهند یا به تله متری تبدیل می شود که هیچ کس مالک آن نیست.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 46 and 53
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

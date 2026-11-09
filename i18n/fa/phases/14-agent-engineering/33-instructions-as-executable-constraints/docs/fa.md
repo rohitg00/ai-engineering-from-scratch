@@ -3,7 +3,7 @@
 > دستورالعمل هایی که به صورت پروزه نوشته می شوند آرزوها هستند. دستورالعمل هایی که به صورت محدودیت نوشته می شوند آزمایشات هستند. میز کار هر قاعده را به چیزی تبدیل می کند که یک عامل می تواند در زمان اجرا بررسی کند و یک بازرس می تواند پس از واقعیت آن را تأیید کند.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~50 minutes
 
@@ -96,6 +96,7 @@ wb-rule-checkoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 خروجی: مجموعه ای از قوانین تجزیه شده، ردیابی اجرا، عبور/فشل در هر قانون و یک `rule_report.json`در کنار اسکریپت ذخیره شده

@@ -3,7 +3,7 @@
 > دو و همکاران (ICML 2024, "جماعه ذهن") نمونه های مدل N را اجرا می کنند که به طور مستقل پاسخ ها را پیشنهاد می کنند، سپس به طور تکراری از یکدیگر در دور های R انتقاد می کنند تا به هم نزدیک شوند. واقعیت، پیروی از قوانین، استدلال را بهبود می بخشد. توپولوژی Sparse در هزینه های رمزنگاری شده کامل میش را شکست می دهد.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 05 (Self-Refine and CRITIC)
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ debate-converge
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 تولید: دقت و هزینه هر پروتکل؛ مطابقت کم در دو سوم سوالات با هزینه پایین تر.

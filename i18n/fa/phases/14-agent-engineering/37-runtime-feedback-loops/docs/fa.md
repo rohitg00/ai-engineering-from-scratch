@@ -3,7 +3,7 @@
 > عوامل که در حال مشاهده یک دستور واقعی هستند حدس نمی زنند. یک رنده بازخورد stdout، stderr، کد خروج و زمان را به یک رکورد ساختاری می گیرد که نوبت بعدی می تواند بخواند. سپس عامل به جای پیش بینی خود از واقعیت ها به واقعیت ها واکنش نشان می دهد.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 35 (Init Script)
 **Time:** ~50 minutes
 
@@ -72,6 +72,7 @@ wb-feedback-loop
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 تولید: سه رکورد بازخورد به `feedback_record.jsonl`، آخرین یکی از هر خط چاپ شده است. فایل را در طول تکرار تکرار کنید تا ببینید حلقه جمع می شود.

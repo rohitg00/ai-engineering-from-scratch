@@ -3,7 +3,7 @@
 > یک بازرس یک حلقه دوم است که یک دستور سیستم متفاوت، یک هدف متفاوت و دسترسی به هر چیزی که سازنده تولید کرده است فقط به خواندن است. شکاف بین سازنده و بازرس جایی است که بیشترین قابلیت اطمینان زندگی می کند.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 38 (Verification Gate)
 **Time:** ~55 minutes
 
@@ -74,6 +74,7 @@ wb-builder-marker
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 تولید: دو گزارش بررسی نوشته شده به دیسک و یک جدول کنسول از امتیازات ابعاد.

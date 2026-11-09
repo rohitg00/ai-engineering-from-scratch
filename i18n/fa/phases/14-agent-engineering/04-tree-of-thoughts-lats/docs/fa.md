@@ -3,7 +3,7 @@
 > یک مسیر زنجیره ی فکر تنها جایی برای عقب نشینی ندارد. ToT (Yao و همکارانش، 2023) استدلال را به یک درخت با ارزیابی خود در هر گره تبدیل می کند. LATS (Zhou و همکارانش، 2024) ToT را با ReAct و Reflexion تحت جستجوی درخت مونت کارلو متحد می کند. بازی 24 از 4% (CoT) به 74% (ToT) می رود. LATS به 92.7% در HumanEval می رسد.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~75 minutes
 
@@ -93,6 +93,7 @@ tree-of-thoughts
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ردیابی نشان می دهد که ToT سه کاندید در هر گره با BFS گسترش می یابد، در مقایسه با LATS که در بهترین راه اندازی از طریق MCTS به هم می پیوندد.

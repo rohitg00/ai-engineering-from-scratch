@@ -3,7 +3,7 @@
 > تاریخچه چت متغیر است. ریپو پایدار است. بانک کار در فایل های نسخه ای ذخیره می کند بنابراین جلسه بعدی، نماینده بعدی و بازرس بعدی همه از همان منبع حقیقت می خوانند.
 
 **Type:** Build
-**Languages:** Python (stdlib + `jsonschema` optional)
+**Languages:** Python (stdlib + `jsonschema` optional), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~60 minutes
 
@@ -81,6 +81,7 @@ wb-state-persist
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 اسکریپتون میگه`workdir/agent_state.json`و`workdir/task_board.json`، آنها را در دو نوبت تغییر می دهد و حالت تایید شده را در هر مرحله چاپ می کند.

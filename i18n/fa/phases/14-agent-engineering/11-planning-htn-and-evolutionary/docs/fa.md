@@ -3,7 +3,7 @@
 > برنامه ریزی نمادین در موارد است که برنامه به طور اثبات شده درست است. جستجوی کد تکاملی در موارد است که عملکرد تناسب اندام را می توان به صورت ماشین بررسی کرد. ChatHTN (2025) و AlphaEvolve (2025) نشان می دهد که هر یک از آنها در هنگام جفت با یک LLM چه چیزی را باز می کند.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 02 (ReWOO and Plan-and-Execute)
 **Time:** ~75 minutes
 
@@ -102,6 +102,7 @@ htn-tree-expand
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ردیابی نشان می دهد که برنامه ریز HTN یک کار ترکیبی را تجزیه می کند (با سقوط LLM در میان برنامه) و حلقه تکاملی در یک عبارت هدف همگام می شود.

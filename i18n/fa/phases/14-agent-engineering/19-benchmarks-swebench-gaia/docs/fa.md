@@ -3,7 +3,7 @@
 > سه معیار ارزیابی عوامل لنگر در سال 2026 است. SWE-bench تست کد پیچ. GAIA تست استفاده از ابزار عمومی. AgentBench تست استدلال چند محیط. دانستن ترکیب آنها، تاریخ آلودگی آنها و آنچه آنها اندازه گیری نمی کنند.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 06 (Tool Use)
 **Time:** ~60 minutes
 
@@ -93,6 +93,7 @@ ae-swebench-gate
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 محصول میزان حل در هر کار + در هر مشکل را نشان می دهد و قوانین ارزیابی کننده را مشخص می کند.

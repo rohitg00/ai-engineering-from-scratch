@@ -3,7 +3,7 @@
 > هر جلسه که سرد شروع بشه مالیات ميده، مامور پرونده هاي مشابه رو ميخواد، دوباره آزمايش هاي مشابه رو ميکنه و دوباره راه هاي مشابه رو پيدا ميکنه، يک اسکریپت init يک بار مالیات ميده و جواب ها رو به صورت ايالت مي نويسه
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 34 (Repo Memory)
 **Time:** ~45 minutes
 
@@ -72,6 +72,7 @@ wb-init-probes
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 اسکریپتر میز سوندها رو چاپ میکنه، میگه`init_report.json`، و از صفر در مسیر خوشبختی خارج می شود یا بدون صفر با لیست از سوند های شکست خورده.

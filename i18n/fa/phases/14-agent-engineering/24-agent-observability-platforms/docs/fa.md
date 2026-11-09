@@ -3,7 +3,7 @@
 > در سال 2026 سه پلت فرم مشاهده ای از عوامل خود میزبان در اختیار است. لانگفوز (MIT)  6 میلیون نصب / ماه، ردیابی + مدیریت سریع + ارزیابی + بازیابی جلسه. آریز فینیکس (Elastic 2.0)  ارزیابی های عمیق خاص با عوامل، ارتباط RAG، ابزار خودکار OpenInference. کمیت آپیک (Apache 2.0)  بهینه سازی خودکار سریع، guardrails، تشخیص توهمات LLM-judge.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 23 (OTel GenAI)
 **Time:** ~45 minutes
 
@@ -80,6 +80,7 @@ wb-trace-ingest
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 نتیجه: امتیاز ارزیابی در هر جلسه و دسته بندی شکست مطابق با آنچه که Langfuse / Phoenix / Opik نشان می دهد.

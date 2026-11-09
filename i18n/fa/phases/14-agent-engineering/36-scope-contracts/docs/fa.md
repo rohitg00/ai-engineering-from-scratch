@@ -3,7 +3,7 @@
 > مدل نمی داند که کار کجا پایان می یابد. قرارداد دامنه یک فایل در هر کار است که می گوید کار کجا شروع می شود، کجا پایان می یابد و چگونه به عقب برگردد اگر ریخته شود. قرارداد از یک خواسته به چک تبدیل می شود.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 33 (Rules as Constraints)
 **Time:** ~50 minutes
 
@@ -107,6 +107,7 @@ wb-scope-bounce
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 نتیجه: قرارداد، دو رند، حکم هر رند و یک رزرو`scope_report.json`. .

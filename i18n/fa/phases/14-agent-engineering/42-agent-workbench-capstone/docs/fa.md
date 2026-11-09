@@ -3,7 +3,7 @@
 > اين آهنگ کوچولو با يه بسته اي که تو هر رپو به دست مياد تموم ميشه.`cp -r`و صبح بعد یک مامور به طور قابل اعتماد کار کند. سنگ اصلی این آرتیفاکت است که این برنامه آموزشی در آن معامله می کند.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phases 14 · 31 to 14 · 41
 **Time:** ~75 minutes
 
@@ -96,6 +96,7 @@ wb-pack-install
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 اسکریپت صفحات را کپی و پین می کند، README را می نویسد، درخت بسته را چاپ می کند و صفر را ترک می کند. تکرار بی اختیار است.

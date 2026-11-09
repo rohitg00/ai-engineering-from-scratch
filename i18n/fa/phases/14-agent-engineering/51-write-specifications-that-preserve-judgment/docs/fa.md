@@ -3,7 +3,7 @@
 > یک مشخصات مفید متغیرها و شواهد را درست می کند و در عین حال گزینه های قابل برگشت را باز می کند. این یک مرز تصمیم گیری است، نه یک سیناریو.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 50
 **Time:** ~75 minutes
 
@@ -74,6 +74,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

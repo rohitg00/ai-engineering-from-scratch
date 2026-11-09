@@ -3,7 +3,7 @@
 > کوچک تنها زمانی مفید است که چیزی مهم را ثابت کند. یک ساخت کوچک که نمی تواند تصمیم بعدی را تغییر دهد، فقط نامکمل است.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 49
 **Time:** ~65 minutes
 
@@ -79,6 +79,7 @@ flowchart TD
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 
