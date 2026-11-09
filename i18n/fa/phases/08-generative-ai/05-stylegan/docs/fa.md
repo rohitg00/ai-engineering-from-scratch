@@ -3,7 +3,7 @@
 > بیشتر ژنراتورها حرکت ميکنن$z$به هر لایه در همان زمان. StyleGAN آن را به سمت جداگانه: نقشه اول$z$به یک واسطه$w$، پس از آن * تزریق *$w$این تغییر تنها فضا را از بین برد و چهره های عکاسی واقعی را برای هفت سال متوالی یک مشکل حل شده ساخت.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 

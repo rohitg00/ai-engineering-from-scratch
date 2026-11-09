@@ -3,7 +3,7 @@
 > هر نمره ای که در هر مدل تولید شده است، FID، CLIP و نرخ پیروزی را از یک میدان ترجیح انسانی ذکر می کند. هر عدد دارای حالت شکست است که یک محقق تعیین کننده می تواند بازی کند. اگر شما حالت شکست را نمی دانید، نمی توانید از یک بازی پیشرفت واقعی را تشخیص دهید.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 01 (Taxonomy), Phase 2 · 04 (Evaluation Metrics)
 **Time:** ~45 minutes
 

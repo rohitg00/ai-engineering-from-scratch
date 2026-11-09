@@ -3,7 +3,7 @@
 > 3D روش است که در آن نفوذ 2D به 3D قوی تر است. پیشرفت 2023 3D Gaussian Splating بود. لایه های فشار تولید کننده 2024-2026 انتشار چند منظره + بازسازی 3D در بالای آن برای تولید اشیاء و صحنه ها از یک پرامپت یا عکس واحد است.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 4 (Vision), Phase 8 · 07 (Latent Diffusion)
 **Time:** ~45 minutes
 

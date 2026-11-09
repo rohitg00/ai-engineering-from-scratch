@@ -3,7 +3,7 @@
 > اولین باز کردن بزرگ سال 2014-2017 کنترل آنچه که یک GAN می کند بود. برچسب، یا یک تصویر، یا یک جمله را متصل کنید. Pix2Pix نسخه تصویر را انجام داد و هنوز هم هر مدل عمومی متن به تصویر را در وظایف باریک تصویر به تصویر شکست می دهد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 06 (U-Net), Phase 3 · 07 (CNNs)
 **Time:** ~75 minutes
 

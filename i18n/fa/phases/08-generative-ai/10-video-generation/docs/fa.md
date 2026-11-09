@@ -3,7 +3,7 @@
 > یک تصویر یک تنسور 2D است. یک ویدیو یک تنسور 3D است. نظریه یکسان است؛ محاسبه 10-100 برابر سخت تر است. Sora OpenAI (فروری 2024) ثابت کرد که این امکان وجود دارد. تا سال 2026 Veo 2 ، Kling 1.5 ، Runway Gen 3 ، Pika 2.0 ، و WAN 2.2 ویدئو تولید کشتی از متن در 1080p  و استیک وزن باز (CogVideoX ، HunyuanVideo ، Mochi-1 ، WAN 2.2) 12 ماه عقب است.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 7 · 09 (ViT), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 

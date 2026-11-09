@@ -3,7 +3,7 @@
 > آڈیو یک سیگنال 1-D در 16-48 kHz است. یک کلیپ پنج ثانیه 80-240k نمونه است. هیچ ترانسفورماتور به طور مستقیم به این ترتیب توجه نمی کند. راه حل برای هر مدل صوتی تولید در 2026 یکسان است: یک کدک عصبی (Encodec، SoundStream، DAC) آدیو را به توکن های متمایز در 50-75 Hz فشرده می کند و یک ترانسفورماتور یا مدل انتشار توکن ها را تولید می کند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Audio Features), Phase 6 · 04 (ASR), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 

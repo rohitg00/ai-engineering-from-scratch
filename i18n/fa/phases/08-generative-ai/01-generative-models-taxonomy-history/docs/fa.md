@@ -3,7 +3,7 @@
 > هر مدل تصویری، مدل متن، مدل ویدیویی و مدل سه بعدی در یکی از پنج سطل قرار می گیرد. سطل اشتباه را انتخاب کنید و شما هفته ها با ریاضیات مبارزه خواهید کرد. درست را انتخاب کنید و آخرین 12 سال پیشرفت این زمینه به خوبی در ذهن شما جمع می شود.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 (ML Fundamentals), Phase 3 (Deep Learning Core), Phase 7 · 14 (Transformers)
 **Time:** ~45 minutes
 

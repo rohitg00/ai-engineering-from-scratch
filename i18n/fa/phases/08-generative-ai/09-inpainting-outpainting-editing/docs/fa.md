@@ -3,7 +3,7 @@
 > متن به تصویر چیزهای جدید را ایجاد می کند. نقاشی قدیمی را اصلاح می کند. در تولید، 70٪ از کارهای تصویر قابل پرداخت ویرایش است  پس زمینه را عوض کنید، لوگو را حذف کنید، پارچه را گسترش دهید، دست را بازسازی کنید. نقاشی جایی است که انتشار به دست می آورد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 8 · 08 (ControlNet & LoRA)
 **Time:** ~75 minutes
 

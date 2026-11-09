@@ -3,7 +3,7 @@
 > متن به تنهایی یک سیگنال کنترل ناسازگار است. ControlNet به شما امکان می دهد یک مدل انتشار پیش از آموزش را کلر کنید و با یک نقشه عمق، پوز اسکلت، کریکبل یا تصویر کناری آن را هدایت کنید. LoRA به شما امکان می دهد یک مدل پارامتر 2B را با آموزش 10 میلیون پارامتر تنظیم کنید. با هم آنها Stable Diffusion را از یک اسباب بازی به لوله تصویر 2026 تبدیل کردند که در هر آژانس ارسال می شود.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 10 (LLMs from Scratch — for LoRA foundation)
 **Time:** ~75 minutes
 
