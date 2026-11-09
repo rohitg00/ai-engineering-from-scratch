@@ -3,7 +3,7 @@
 > Os documentos não são fotos. Um PDF, documento científico, faturamento ou formulário manuscrito tem um layout, tabelas, diagramas, notas de rodapé, cabeçalhos e estrutura semântica que a compreensão de imagens simples não pode capturar. A pilha pré-VLM era um pipeline: Tesseract OCR + LayoutLMv3 + heurísticas de extracção de tabela. A onda VLM substituiu os modelos sem OCR  Donut (2022), Nougat (2023), DocLLM (2023)  que emitem marcas estruturadas diretamente. Em 2026, a fronteira é apenas "alimentar a imagem da página para Claude Opus 4.7 em 2576px nativo", e a saída de marcação estruturada vem gratuitamente. Esta lição lê o arco de três eras da IA de documentos.
 
 **Type:** Build
-**Languages:** Python (stdlib, layout-aware document parser skeleton)
+**Languages:** Python (stdlib, layout-aware document parser skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 5 (NLP)
 **Time:** ~180 minutes
 

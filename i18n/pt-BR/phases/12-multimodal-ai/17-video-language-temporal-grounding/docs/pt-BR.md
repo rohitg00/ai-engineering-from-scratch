@@ -3,7 +3,7 @@
 > O vídeo não é uma pilha de fotos. Um clip de 5 segundos tem ordem causal, verbos de ação e cronometragem de eventos que um modelo de imagem não pode representar. Video-LLaMA (Zhang et al., junho 2023) enviou o primeiro open video-LLM com a terração audiovisual. O VideoChat e o Video-LLaVA escalaram o padrão. Até 2025, o M-RoPE de Qwen2.5VL, alinhado com o tempo, encerrou a lacuna com os modelos proprietários de fronteira. Cada sistema resolveu tokens temporais de forma diferente  Q-former por clip, concat-pool por frame, M-RoPE alinhado no tempo por token. Esta lição lê os padrões, constrói um amostragem de quadro uniforme versus dinâmico e avalia as tarefas de aterragem temporal.
 
 **Type:** Build
-**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator)
+**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator), TypeScript
 **Prerequisites:** Phase 12 · 08 (LLaVA-OneVision)
 **Time:** ~180 minutes
 

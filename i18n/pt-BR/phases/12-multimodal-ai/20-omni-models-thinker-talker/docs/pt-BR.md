@@ -3,7 +3,7 @@
 > A demonstração do produto do GPT-4o em maio de 2024 foi perturbadora não por causa do modelo subjacente, mas por causa da forma do produto  uma interface de voz onde você fala, o modelo vê o que a câmera vê, e fala de volta em menos de 250ms. O ecossistema aberto passou o resto de 2024 e 2025 a correr para alcançar essa superfície do produto. Qwen2.5-Omni (março 2025) é o projeto aberto de referência: um Thinker (grande transformador de geração de texto) mais um Talker (transformador paralelo de geração de voz), ligado por tokens de streaming de fala. Mini-Omni simplificou, Moshi combinou a latência, GLM-4-Voice estendeu para o chinês. Esta lição lê a arquitetura Thinker-Talker e o orçamento de latência que faz com que o diálogo em tempo real funcione.
 
 **Type:** Build
-**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop)
+**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop), TypeScript
 **Prerequisites:** Phase 12 · 19 (audio-LLMs), Phase 12 · 16 (any-to-any)
 **Time:** ~180 minutes
 

@@ -3,7 +3,7 @@
 > A primeira vez que um modelo leu uma receita de um site e a executou em um robô de cozinha foi RT-2 (Google DeepMind, julho de 2023). RT-2 discretou ações como tokens de texto, co-finou um VLM em dados web mais dados de ação de robôs, e provou que a escala web de linguagem de visão transfere conhecimento para controle robótico. O OpenVLA (Junho de 2024) enviou a referência aberta 7B. A série π0 da Inteligência Física (2024-2025) adicionou especialistas em ação de correspondência de fluxo. O GR00T N1 da NVIDIA (março de 2025) forneceu controle de sistema duplo (Sistema 1 / Sistema 2) para robôs humanoides em escala. O VLA primitivo  ação de linguagem de visão, um único modelo que vê, lê e age  é a ponte entre os modelos de compreensão desta fase e os sistemas autônomos na Fase 15.
 
 **Type:** Learn
-**Languages:** Python (stdlib, action tokenizer + VLA inference skeleton)
+**Languages:** Python (stdlib, action tokenizer + VLA inference skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 15 (Autonomous Systems, referenced)
 **Time:** ~180 minutes
 

@@ -3,7 +3,7 @@
 > Todos os VLM que vimos até agora mantêm imagens e texto separados. Os tokens visuais vêm de um codificador de visão, fluem para um projetor, e depois encontram texto dentro do LLM. O vocabulário da visão e do texto nunca se sobrepõem. O camaleão (Meta, maio de 2024) perguntou: e se fizessem? Treinar um VQ-VAE que transforma uma imagem em uma sequência de tokens discretos de um vocabulário compartilhado. Cada documento multimodal é agora uma sequência de tokens de texto e tokens de imagem intercalados, uma única perda autoregressiva. Efeito secundário: o modelo pode gerar saídas de modalidade mista  tokens alternando texto e imagem em uma única chamada de inferência. Esta lição lê a tese da fusão inicial e constrói uma versão de brinquedo de ponta a ponta.
 
 **Type:** Build
-**Languages:** Python (stdlib, VQ-VAE tokenizer + interleaved decoder)
+**Languages:** Python, TypeScript (stdlib, VQ-VAE tokenizer + interleaved decoder)
 **Prerequisites:** Phase 12 · 05, Phase 8 (Generative AI)
 **Time:** ~180 minutes
 
