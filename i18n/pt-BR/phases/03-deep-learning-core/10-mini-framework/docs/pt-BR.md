@@ -3,7 +3,7 @@
 > Construíste neurônios, camadas, redes, backprops, ativações, funções de perda, optimizadores, regularização, inicialização e cronogramas LR, tudo como peças separadas. Agora, enfiá-los juntos em uma estrutura. Não PyTorch. Não TensorFlow.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** All of Phase 03 (Lessons 01-09)
 **Time:** ~120 minutes
 

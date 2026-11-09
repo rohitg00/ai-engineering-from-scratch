@@ -3,7 +3,7 @@
 > A taxa de aprendizagem é o único hiperparâmetro mais importante. Não a arquitetura, não o tamanho do conjunto de dados, não a função de ativação, a taxa de aprendizagem.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers), Lesson 03.08 (Weight Initialization)
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > O seu modelo tem 99% de dados de treinamento e 60% de dados de teste.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers)
 **Time:** ~75 minutes
 

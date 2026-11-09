@@ -3,7 +3,7 @@
 > Um neurônio traça uma linha, enfileira-as e podes desenhar qualquer coisa.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 01 (Math Foundations), Lesson 03.01 (The Perceptron)
 **Time:** ~90 minutes
 
