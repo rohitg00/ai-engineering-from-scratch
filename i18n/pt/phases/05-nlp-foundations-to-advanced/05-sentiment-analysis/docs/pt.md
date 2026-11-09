@@ -3,7 +3,7 @@
 > A tarefa canônica de PNL. A maior parte do que você precisa saber sobre classificação de textos clássicos aparece aqui.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 2 · 14 (Naive Bayes)
 **Time:** ~75 minutes
 

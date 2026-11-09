@@ -3,7 +3,7 @@
 > LDA: documentos são misturas de tópicos, tópicos são distribuições sobre palavras. BERTopic: documentos em aglomeração em espaço de inserção, aglomerações são tópicos.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word2Vec)
 **Time:** ~45 minutes
 

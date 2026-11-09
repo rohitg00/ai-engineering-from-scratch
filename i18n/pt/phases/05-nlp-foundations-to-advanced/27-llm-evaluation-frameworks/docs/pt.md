@@ -3,7 +3,7 @@
 > A correspondência exata e a F1 não têm equivalência semântica. A revisão humana não é escalavel. LLM-as-judge é a resposta de produção  com calibração suficiente para confiar no número.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > A gramática estava fora de moda por um tempo, então cada linha de LLM precisava de validar a extração estruturada, e voltou.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > A NER encontrou as entidades. A entidade que liga as ancorou. A extração de relações encontra as bordas entre elas. Um gráfico de conhecimento é a soma de nós, bordas e sua proveniência.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 25 (Entity Linking)
 **Time:** ~60 minutes
 

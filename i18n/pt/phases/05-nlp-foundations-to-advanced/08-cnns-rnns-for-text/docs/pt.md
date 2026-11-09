@@ -3,7 +3,7 @@
 > As convulsões aprendem n-gramas, as recorrências lembram-se, ambas são substituídas pela atenção, ambas ainda são importantes em hardware limitado.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 11 (PyTorch Intro), Phase 5 · 03 (Word Embeddings), Phase 4 · 02 (Convolutions from Scratch)
 **Time:** ~75 minutes
 

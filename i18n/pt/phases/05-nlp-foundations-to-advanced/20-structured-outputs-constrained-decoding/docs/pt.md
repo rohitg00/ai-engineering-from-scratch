@@ -3,7 +3,7 @@
 > Peça um LLM para JSON. Obtenha JSON a maior parte do tempo. Na produção, "a maioria" é o problema. A decodificação restrita transforma "a maioria" em "sempre" editando os logits antes da amostragem.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

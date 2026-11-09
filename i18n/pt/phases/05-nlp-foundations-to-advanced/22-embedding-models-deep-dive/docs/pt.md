@@ -3,7 +3,7 @@
 > Word2Vec deu-lhe um vetor por palavra. Modelos modernos de incorporação dão-lhe um vetor por passagem, translingual, com vistas raras, densas e multi-vetor, dimensionadas para se adequarem ao seu índice. Escolha errado e o seu RAG recupera a coisa errada.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec), Phase 5 · 14 (Information Retrieval)
 **Time:** ~60 minutes
 
