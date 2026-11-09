@@ -3,7 +3,7 @@
 > كل شيء من الدروس 01 إلى 12 هي مرحلة واحدة من خط أنابيب واحد. هذه الدروس هي الدرج الذي يحول تلك المراحل إلى مسار واحد من نهاية إلى نهاية: التوجه، قبل القطار، النطاق، SFT، التوجه، تقييم، الكميات، الخدمة. لن تدرب نموذج 70B على جهاز كمبيوتر محمول ستقومون بإنتاج طبقة التنسيق، والإشارة، وبوابة التقييم، وخطة التراجع التي تستخدمها فريق الحدود لعام 2026 لتحديد ما سيتم شحنه. هذه هي الحجر الرئيسي
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** All Phase 10 lessons 01-12
 **Time:** ~120 minutes
 
@@ -216,10 +216,16 @@ beam-search
 
 سير العمل القنوني لديه ثلاث أوامر.
 
-```
+```bash
 python code/main.py plan    # validate manifest, compute cost estimate, print DAG
 python code/main.py run     # execute stages, writing to manifest.out.yaml
 python code/main.py gate    # read manifest.out.yaml, apply eval gates, ship-or-hold
+```
+
+ميناء " الرست " يعمل بنفس الطريقة`plan`الخطوة:
+
+```bash
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson plan
 ```
 
 أركض`plan`معظم أخطاء خطوط الأنابيب تظهر في الوقت المناسب - حدود البوابة المفقودة، الهيشات القديمة، تجاوزات الميزانية.`plan`هو مجاني، ركض`run`إنقاذ المال من خلال صيد الحشرات على الجانب الرخيص.

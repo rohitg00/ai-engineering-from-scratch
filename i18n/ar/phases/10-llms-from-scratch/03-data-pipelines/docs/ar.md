@@ -3,7 +3,7 @@
 > النموذج هو مرآة، يعكس أي بيانات تُطعمها، يطعمها القمامة، يعكس القمامة بسلاسة تامة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 10, Lessons 01-02 (Tokenizers, Building a Tokenizer)
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > المرحلة 10 · الدروس 14 أسماء ستة أزرار معمارية كل نموذج مفتوح يدور. DeepSeek-V3 (ديسمبر 2024 ، مجموع ملامح 671B ، 37B نشطة) يغير جميع الستة ويضيف أربعة أخرى: الاهتمام المتسلسل الرئيسي ، وتوازن الحمل الخالي من الخسائر المساعدة ، وتنبؤ متعدد الجهاز ، وتدريب DualPipe. هذه الدروس تقرأ معمارة DeepSeek-V3 من أعلى إلى أسفل وتستخرج كل عدد المعلمات من الإعداد المنشور. في النهاية يمكنك أن تشرح لماذا نسبة 671B/37B هي الرهان الصحيح ولماذا المجلس الديمقراطي + الحكومة المشتركة ضرباً إما وحدهماً على الحدود.
 
 **Type:** Learn
-**Languages:** Python (stdlib, parameter calculator)
+**Languages:** Python (stdlib, parameter calculator), Rust
 **Prerequisites:** Phase 10 · 14 (open-model walkthroughs), Phase 10 · 17 (NSA), Phase 10 · 18 (MTP), Phase 10 · 19 (DualPipe)
 **Time:** ~75 minutes
 

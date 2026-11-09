@@ -3,7 +3,7 @@
 > لقد بنيت جهاز GPT-2 صغير من الصفر في الدروس 04. النماذج المفتوحة الحدودية في عام 2026 هي نفس العائلة مع خمسة أو ست تغييرات ملموسة. RMSNorm بدلا من LayerNorm. (سويجلو) بدلاً من (جيلو) (روبي) بدلاً من المواقف المتعلقة (جيكا) أو (ملا) بدلاً من (مها) الكاملة مزيج من الخبراء على نطاق واسع الرياضيات التي تعرفها بالفعل تغطي 95٪ منهم. هذه الدروس تقرأ Llama 3، DeepSeek-V3، Mixtral، Qwen، و Gemma جنبا إلى جنب وسمي الخط الدقيق حيث تختلف كل معمارية.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10, Lessons 04, 05, 12 (Pre-training, Scaling, Inference)
 **Time:** ~45 minutes
 

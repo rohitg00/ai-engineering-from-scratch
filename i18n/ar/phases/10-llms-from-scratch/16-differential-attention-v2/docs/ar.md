@@ -3,7 +3,7 @@
 > الاهتمام Softmax يفرز كمية صغيرة من الاحتمالات على كل رمز غير متطابق. أكثر من 100 ألف رمز يجمع الضجيج ويقوم بإغراق الإشارة تحدد محول التفاوت (Ye et al., ICLR 2025) ذلك عن طريق حساب الاهتمام على أنه اختلاف اثنين من المواد الغليظة، مما يقلل من الأرضية المشتركة للضوضاء. DIFF V2 (مايكروسوفت ، يناير 2026) هو إعادة كتابة كومة الإنتاج: مطابقة تأخر فك الرمز إلى محول خط الأساس ، لا نواة مخصصة ، متوافقة مع FlashAttention. هذه الدروس هي V1 إلى V2 من نهاية إلى نهاية، مع تنفيذ لعبة العمل من عملية الفرق يمكنك تشغيلها في stdlib Python.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 02 (self-attention), Phase 7 · 15 (attention variants), Phase 10 · 14 (architecture walkthrough)
 **Time:** ~60 minutes
 
