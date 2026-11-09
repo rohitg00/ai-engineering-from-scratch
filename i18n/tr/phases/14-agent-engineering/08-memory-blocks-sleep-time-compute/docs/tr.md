@@ -3,7 +3,7 @@
 > Modelin doğrudan düzenleyebileceği ayrıntılı fonksiyonel hafıza blokları ve ana ajan boşken hafıza asinkron bir şekilde konsolidasyon yapan uyku-zaman ajanı.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ memory-blocks
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Transkript bölünmeyi gösteriyor: Ana dönüşler hızlı ve çiğ yazılar üretir; uyku geçişi kompakt ve temizler.

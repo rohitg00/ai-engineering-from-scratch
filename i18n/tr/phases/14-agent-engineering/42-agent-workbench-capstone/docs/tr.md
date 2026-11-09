@@ -3,7 +3,7 @@
 > Mini-track, her repo'ya bırakılan bir paketle sona erer.`cp -r`Bu ders programının eseri bu taş.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phases 14 · 31 to 14 · 41
 **Time:** ~75 minutes
 
@@ -96,6 +96,7 @@ wb-pack-install
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Senaryo yüzeyleri kopyalar ve penler, README yazır, paket ağacını yazdırır ve sıfırdan çıkıyor.

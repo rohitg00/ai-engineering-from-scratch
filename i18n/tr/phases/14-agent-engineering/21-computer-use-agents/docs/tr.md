@@ -3,7 +3,7 @@
 > 2026 yılında üç üretim bilgisayar kullanımı modeli. Üçü de görsel tabanlıdır. Üçü de ekran görüntüleri, DOM metni ve araç çıkışlarını güvenilmeyen giriş olarak değerlendirir. Sadece doğrudan kullanıcı talimatları izin olarak sayılır.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 20 (WebArena, OSWorld), Phase 14 · 27 (Prompt Injection)
 **Time:** ~60 minutes
 
@@ -92,6 +92,7 @@ computer-use-cursor
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı görüntü güvenlik sınıflandırıcısı, enjekte edilen bir yönergeyi DOM metinde yakalayıp onaylanmamış bir satın almayı engellediğini gösterir.

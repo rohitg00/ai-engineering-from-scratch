@@ -3,7 +3,7 @@
 > 2026 çerçevelerinde dört orkestrasyon kalıbı tekrarlanır: denetçi-işçi, sürüm / eşeğen, hiyerarşik, tartışma. Anthropic'in rehberliği: "Bu ihtiyaçlarınız için doğru sistemi oluşturmakla ilgilidir". Basit bir şekilde başlayın; tek bir ajan artı beş iş akışı kalıbı yetersiz olduğunda topoloji ekleyin.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 25 (Multi-Agent Debate)
 **Time:** ~60 minutes
 
@@ -98,6 +98,7 @@ Her desen aynı üç niyetle görev (iç geri ödeme / hata / satış) ile çal�
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı: örneğe göre iz + çalışma sayısı. Gözetmen en temiz; sürüm en kısa; hiyerarşik en derin; tartışma en pahalı.

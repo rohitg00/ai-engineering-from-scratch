@@ -3,7 +3,7 @@
 > Soğuk bir sesyonda bir vergi ödeniyor ajan aynı dosyaları okuyor, aynı araştırmaları tekrar denediyor ve aynı yolları yeniden keşfediyor.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 34 (Repo Memory)
 **Time:** ~45 minutes
 
@@ -72,6 +72,7 @@ wb-init-probes
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Senaryo, sondanın tablolarını basıyor, yazıyor.`init_report.json`, ve mutlu yolda sıfırdan çıkıyor veya başarısız sondların bir listesine sahip olmayan sıfırdan çıkıyor.

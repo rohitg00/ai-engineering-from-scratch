@@ -3,7 +3,7 @@
 > Bir kodlama ajanı net bir görevi hızlı bir şekilde uygulayabilir. Aynı zamanda net olmayan bir görevi de hızlı bir şekilde uygulayabilir. Hız aynı. Maliyet aynı değil.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 31 and 36
 **Time:** ~60 minutes
 
@@ -93,6 +93,7 @@ Bu ders dizininden çalıştır:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

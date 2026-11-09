@@ -3,7 +3,7 @@
 > Üretim ajanları altı çalıştırma zaman şekli üzerinde çalışır: istek- yanıt, akış, dayanıklı yürütme, sıraya dayalı arka plan, etkinlik odaklı ve programlanmış. Çerçeveyi seçmeden önce şekli seçin. Gözlemsellik her şekilde yük taşıyıcıdır.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 13 (LangGraph), Phase 14 · 22 (Voice)
 **Time:** ~60 minutes
 
@@ -98,6 +98,7 @@ wb-runtime-shapes
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı: her şeklin aynı görevdeki davranışını gösteren beş iz. Aynı ajan mantığı, farklı dış kabuğu. Sürdürülebilir yürütme (altıncı şekil) LangGraph kontrol noktası ile 13. derste kasıtlı olarak kaplıdır.

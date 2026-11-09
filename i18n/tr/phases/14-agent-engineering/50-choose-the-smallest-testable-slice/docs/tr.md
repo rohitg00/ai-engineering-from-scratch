@@ -3,7 +3,7 @@
 > Küçük bir şey önemli bir şey olduğunu kanıtlarsa yararlıdır. Bir sonraki kararı değiştiremeyecek küçük bir yapı sadece eksiktir.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 49
 **Time:** ~65 minutes
 
@@ -79,6 +79,7 @@ Laboratuvar adayları gerekli kanıtlara göre filtreliyor, uygun parçaları pu
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

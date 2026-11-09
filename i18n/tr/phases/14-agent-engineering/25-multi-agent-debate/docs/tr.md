@@ -3,7 +3,7 @@
 > Du et al. (ICML 2024, "Zihnlerin Topluluğu") bağımsız olarak cevaplar öneren N model örnekleri yürütür, sonra R turları üzerinde birbirlerini iterici olarak eleştirir. Gerçekliği, kural izlemeyi, mantıklamayı geliştirir.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 05 (Self-Refine and CRITIC)
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ debate-converge
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Üretim: protokol başına doğru ve maliyet; daha düşük maliyetle 2/3 sorunun tam ağında nadir eşleşmeler.

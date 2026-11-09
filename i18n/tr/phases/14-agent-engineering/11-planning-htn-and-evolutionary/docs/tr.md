@@ -3,7 +3,7 @@
 > Simbolik planlama, planın kanıtlanabilir doğru olduğu durumları ele alır. Evolyyonel kod arama, fitness fonksiyonunun makine kontrol edilebileceği durumları ele alır. ChatHTN (2025) ve AlphaEvolve (2025) LLM ile eşleştirildiğinde her birinin neyi açtığını gösterir.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 02 (ReWOO and Plan-and-Execute)
 **Time:** ~75 minutes
 
@@ -102,6 +102,7 @@ htn-tree-expand
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 İz HTN planlayıcısının bir karmaşık görevi (orta plan LLM geri dönüşü ile) ve evrimsel döngüün hedef bir ifade üzerinde birleşmesini gösterir.

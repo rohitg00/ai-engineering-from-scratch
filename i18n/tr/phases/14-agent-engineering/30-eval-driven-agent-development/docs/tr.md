@@ -3,7 +3,7 @@
 > Anthropic'in rehberliği: "sadece ipuçları ile başlayın, kapsamlı değerlendirme ile optimize edin ve yalnızca gerektiğinde çok adımlı ajantik sistemler ekleyin".
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** All of Phase 14.
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ ae-eval-three-layers
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Sonuç: Her durumda geçiş/başarısızlık, gerileme bayrağı, CI kapı hüküm.

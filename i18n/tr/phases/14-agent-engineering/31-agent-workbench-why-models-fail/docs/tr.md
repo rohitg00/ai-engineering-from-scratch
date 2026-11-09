@@ -3,7 +3,7 @@
 > Güvenilir bir model yeterli değildir. Güvenilir ajanlar bir çalışma tabanına ihtiyaç duyarlar: talimatlar, durum, kapsam, geri bildirim, doğrulama, inceleme ve teslimat. Bunları uzaklaştırın ve hatta sınır modeli, gönderilmeye güvenli olmayan bir iş üretir.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 26 (Failure Modes)
 **Time:** ~45 minutes
 
@@ -148,6 +148,7 @@ Repo görevi amaçlı olarak küçüktür: bir dosya FastAPI tarzı işletimine 
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıkış: iki koşunun yan yana bir kayıt, bir `failure_modes.json`Sadece hızlı bir şekilde çalışmayı ve iş masası için tek satırlık bir kararı özetliyor.

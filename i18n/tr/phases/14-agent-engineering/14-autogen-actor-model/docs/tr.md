@@ -3,7 +3,7 @@
 > Ajanlar aktörler olarak: async mesaj değişimi, olay yönlendirici yöneticiler, hata izolesi, doğal eşzamanlılık. AutoGen v0.4 (Microsoft Araştırmaları, Ocak 2025) bu model etrafında ajan orkestrasyonu yeniden tasarladı; çerçeve şimdi bakım modunda, Microsoft Agent Framework (halk ön izleme Ekim 2025) ile üretim varisi olarak.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
 **Time:** ~75 minutes
 
@@ -79,6 +79,7 @@ actor-mailbox
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 İz mesaj teslimatını, diğerini çarpmayan bir aktörde simülasyon bir başarısızlığı ve ortak bir hüküm üzerine birleştiğini gösterir.

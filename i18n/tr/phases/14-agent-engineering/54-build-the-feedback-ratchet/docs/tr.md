@@ -3,7 +3,7 @@
 > Gönderiş bir yapı döngüsünü kapatır ve öğrenme döngüsünü açar.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 46 and 53
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ Laboratuvar sinyalleri sınıflandırır, kendi işlevlerini oluşturur, önceli
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > MASFT (Berkeley, 2025) 3 kategoride 14 çoklu ajan başarısızlık modunu kataloglar. Microsoft Taksonomi, mevcut AI başarısızlıklarının ajan ayarlarında nasıl güçlendirdiğini belgelendirir. Endüstri alanı verileri beş tekrarlayan modda birleşti: halüsinasyonlu eylemler, kapsam sürüklenmesi, kaskad hatalar, bağlam kaybı, araç kötüye kullanımı.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 05 (Self-Refine and CRITIC), Phase 14 · 24 (Observability)
 **Time:** ~60 minutes
 
@@ -89,6 +89,7 @@ failure-cascade
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Üretim: iz başına etiketler + toplu dağılım, Phoenix'in iz kümesi yüzeylerinin ucuz bir çoğaltımı.

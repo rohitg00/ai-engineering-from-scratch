@@ -3,7 +3,7 @@
 > Bir plan daha güzel bir yapılacak listesi değil, her değişimin bir nedeni ve her terminal düğümün bir kanıtı olan bir bağımlılık grafiği.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 43
 **Time:** ~65 minutes
 
@@ -92,6 +92,7 @@ Planı, uygulanmadan önce reddetmek için:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

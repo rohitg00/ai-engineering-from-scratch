@@ -3,7 +3,7 @@
 > OpenAI Agents SDK, Cevaplar API'si üzerine inşa edilen hafif multi-agent çerçevesidir. Beş primitif: Agent, Handoff, Guardrail, Session, Tracing. Handoffs isimli araçlardır `transfer_to_<agent>`-Guardails giriş veya çıkışta hareket etmektedir.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -84,6 +84,7 @@ ae-agent-handoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 İz iki başarılı teslimat, bir giriş koruma yolculuğu ve gerçek SDK'nin yaydığı şeyi yansıtan bir tarama ağacı gösterir.

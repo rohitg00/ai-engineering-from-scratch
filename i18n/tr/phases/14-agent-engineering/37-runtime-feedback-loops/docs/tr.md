@@ -3,7 +3,7 @@
 > Gerçek komut çıkışı tahmin görmeyen ajanlar. Bir geri bildirim koşucusu stdout, stderr, çıkış kodu ve zamanlamaları bir yapılandırılmış kayda kaydediyor.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 35 (Init Script)
 **Time:** ~50 minutes
 
@@ -72,6 +72,7 @@ wb-feedback-loop
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı: üç geri bildirim kaydı eklenmiştir `feedback_record.jsonl`Dosyayı tekrar çalıştırmak için arkaya koyun.

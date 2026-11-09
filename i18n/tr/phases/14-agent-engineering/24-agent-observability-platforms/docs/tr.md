@@ -3,7 +3,7 @@
 > Langfuse (MIT)  6M+ yükler/ay, izleme + istintap yönetimi + değerlendirmeler + oturum tekrarlama. Arize Phoenix (Elastic 2.0)  derin ajan özelliği değerlendirmeler, RAG bağlamlılığı, OpenInference otomatik aletleştirme. Comet Opik (Apache 2.0)  otomatik istintap optimizasyonu, guardrails, LLM yargıç halüsinasyon tespit.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 23 (OTel GenAI)
 **Time:** ~45 minutes
 
@@ -80,6 +80,7 @@ wb-trace-ingest
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı: Sessiyon başına değerlendirme puanları ve Langfuse/Phoenix/Opik'in gösterdiği eşleşen başarısızlık kategorisasyonu.

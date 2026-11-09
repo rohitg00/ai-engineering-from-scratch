@@ -3,7 +3,7 @@
 > Prosa olarak yazılan talimatlar dileklerdir. Zorluklar olarak yazılan talimatlar testlerdir. Çalışma masası her kuralı bir ajanın çalışma sırasında kontrol edebileceği ve bir değerlendirici gerçeğin ardından doğrulayabileceği bir şeye dönüştürür.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~50 minutes
 
@@ -96,6 +96,7 @@ wb-rule-checkoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı: analiz kuralı, çalıştırma izleri, kural başına geçme/başarısızlık ve `rule_report.json`senaryoya yakın kaydedildi.

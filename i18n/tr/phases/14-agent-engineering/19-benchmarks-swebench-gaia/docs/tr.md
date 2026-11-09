@@ -3,7 +3,7 @@
 > SWE-bench testleri kod patching. GAIA genel araç kullanımı testleri. AgentBench çok çevre mantıklama testleri. Kompozisyonlarını, kirliliği hikayesini ve ölçmediği şeyleri bil.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 06 (Tool Use)
 **Time:** ~60 minutes
 
@@ -93,6 +93,7 @@ ae-swebench-gate
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı sonuç, görev başına çözünürlük oranını + zorluk başına gösterir ve değerlendirici kurallarını somutlaştırır.

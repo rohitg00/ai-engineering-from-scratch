@@ -3,7 +3,7 @@
 > Tek bir düşünce zinciri yörüngesinde geriye dönmek için yer yoktur. ToT (Yao et al., 2023) mantıklaşmayı her düğümde kendi kendini değerlendirme ile bir ağaca dönüştürür. LATS (Zhou et al., 2024) Monte Carlo Ağacı Araması altında ToT ile ReAct ve Reflexion'ı birleştirir. 24'in oyunu% 4'ten (CoT) % 74'e (ToT) gidiyor; LATS HumanEval'de% 92.7'e ulaşır.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~75 minutes
 
@@ -93,6 +93,7 @@ tree-of-thoughts
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 İzleme, ToT'nin BFS ile bir düğüm başına üç aday genişletilmesini, LATS'in MCTS üzerinden en iyi dağıtımda birleştiğini göstermektedir.

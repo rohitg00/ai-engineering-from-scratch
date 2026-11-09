@@ -3,7 +3,7 @@
 > İçeri girebileceğiniz bir harness: yerleşik araçlar, bağlam izolasyonu için alt kaynaklar, haklar, W3C iz yayılması, oturum kalıcılığı. Claude Agent SDK referans örneğidir  Claude Code harness kütüphane biçimi  ve Claude Managed Agents uzun süreli asinkür çalışma için barındırılan alternatifdir.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 10 (Skill Libraries)
 **Time:** ~75 minutes
 
@@ -95,6 +95,7 @@ ae-subagent-isolation
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 İz subagent bağlam izolesiyonunu (orchestrator bağlam boyutu sınırlı kalır), kanca yürütülmesini ve oturum devamlılığını gösterir.

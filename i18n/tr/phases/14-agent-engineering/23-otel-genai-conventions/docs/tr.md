@@ -3,7 +3,7 @@
 > OpenTelemetry'nin GenAI SIG (April 2024'te başlatıldı) ajan telemetrisi için standart şema tanımlar. Span isimleri, özellikleri ve içerik yakalama kuralları satıcılar arasında birleştiğinden ajan izleri Datadog, Grafana, Jaeger ve Honeycomb'da aynı şeyi ifade eder.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 13 (LangGraph), Phase 14 · 24 (Observability Platforms)
 **Time:** ~60 minutes
 
@@ -88,6 +88,7 @@ ae-genai-span-tree
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı: Tüm gerekli GenAI özellikleri olan bir uzantı ağacı ve seçme içeriği referanslarını gösteren bir "dış dükkân".

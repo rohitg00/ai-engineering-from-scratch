@@ -3,7 +3,7 @@
 > Hızlı uygulamalar yanlış bir sorun seçtiğiniz için cezanı arttırır.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** None
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ Laboratuvar bir `OutcomeFrame`Ve yazıyor.`outputs/outcome-frame.json`- Evet .
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

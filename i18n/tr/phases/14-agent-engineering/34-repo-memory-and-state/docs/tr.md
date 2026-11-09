@@ -3,7 +3,7 @@
 > Çat tarihi değişik. repo dayanıklıdır. iş stolunun depolama ajanı versiyon dosyalarında belirtiyor böylece bir sonraki oturum, bir sonraki ajan ve bir sonraki yorumcu hepsi aynı gerçeğin kaynağından okuyor.
 
 **Type:** Build
-**Languages:** Python (stdlib + `jsonschema` optional)
+**Languages:** Python (stdlib + `jsonschema` optional), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~60 minutes
 
@@ -81,6 +81,7 @@ wb-state-persist
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Senaryo yazıyor .`workdir/agent_state.json`ve `workdir/task_board.json`, onları iki dönüşte mutasyonlandırır ve her adımda onaylanmış durumun yazdırılmasını sağlar.

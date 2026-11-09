@@ -3,7 +3,7 @@
 > 11 ders işleme masası yüzeylerinin gerçek bir kod tabanı ile temas yapmadan hayatta kalmadıkları takdirde hiçbir değeri yoktur. Bu ders küçük bir örnek uygulamada aynı görevi iki kez gerçekleştirir: sadece istekle işleme masası ile yönlendirilmiş.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phases 14 · 32 to 14 · 40
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ wb-ab-runs
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı: her boru hattı sonucu bir konsol tablosu, senaryoya yakın kaydedilen işaretleme raporu ve onu çizmek isteyen herkes için JSON.

@@ -3,7 +3,7 @@
 > Bu farklı öğrenme ortamları, polish seviyeleri değil.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 50 to 52
 **Time:** ~70 minutes
 
@@ -82,6 +82,7 @@ Laboratuvar karar bağlamından bir aşama seçer, gerekli kontrolleri geri veri
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Voyager (Wang et al., TMLR 2024) yürütülebilir kodu bir beceri olarak değerlendirir. beceriler çevre geri bildirimleri ile adlandırılır, geri alınır, yapılandırılır ve gelişir. Bu Claude Agent SDK beceri, beceri kit ve 2026 beceri kütüphane örneği için referans mimarisi.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ voyager-skills
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 İz kitaplık yazıları, çekim, kompozisyon, başarısız bir yürütme ve v2 gelişimi gösterir. Voyager'ın döngüsü sonuna kadar.

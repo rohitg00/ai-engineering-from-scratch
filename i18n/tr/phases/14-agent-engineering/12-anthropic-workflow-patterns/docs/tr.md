@@ -3,7 +3,7 @@
 > Schluntz ve Zhang (Anthropic, Aralık 2024) iş akışlarını (önceden tanımlanmış yollar) ajanlardan (dinamik araç kullanımı) ayırt ediyorlar. Beş iş akışı örneği çoğu vakaları kapsar. Doğrudan API çağrılarıyla başlayın. Adımları tahmin edemeyeceğiniz zaman sadece ajanlar ekleyin.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop)
 **Time:** ~60 minutes
 
@@ -77,6 +77,7 @@ workflow-chain
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Her desen izini basar. Bir desen için toplam kod satırı ~10-15; bir çerçevenin maliyeti binlerce olarak ölçülür.

@@ -3,7 +3,7 @@
 > Gradient tabanlı RL'nin bir başarısızlık modunu düzeltmek için binlerce deneme ve GPU kümesine ihtiyacı var. Refleksiyon (Shinn et al., NeurIPS 2023) bunu doğal dilde yapar: her başarısız denemeden sonra, ajan bir refleksiyon yazar, bölümlü hafızalarda saklar ve sonraki denemeyi o hafıza üzerinde koşullar oluşturur. Letta'nın uyku zaman hesaplaması, Claude Code'un CLAUDE.md öğrenmeleri ve pro-workflow öğrenme kuralı arkasındaki model bu.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 02 (ReWOO)
 **Time:** ~60 minutes
 
@@ -94,6 +94,7 @@ Bileşenler:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 İz üç deneme gösterir. 1 deneme başarısız, bir yansıma depolanır, 2 deneme yansımayı görür ve gelişir ama yine de başarısız olur, 3 deneme başarılı olur.

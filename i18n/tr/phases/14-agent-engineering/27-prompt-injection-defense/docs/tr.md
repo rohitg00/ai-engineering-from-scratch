@@ -3,7 +3,7 @@
 > Greshake et al. (AISec 2023) belirleyici ajan güvenlik sorunu olarak dolaylı çabuk enjeksiyon belirledi. Saldırıcı ajanın aldığı verilere talimatlar ekler; yediklerinde, bu talimatlar geliştiricinin isteğini geçersiz kılar. Tüm alınan içeriği araç kullanım yüzeyindeki keyfi kod uygulanması olarak değerlendirir.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 06 (Tool Use), Phase 14 · 21 (Computer Use)
 **Time:** ~75 minutes
 
@@ -81,6 +81,7 @@ injection-hijack
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı: Valider hükümlerini ve uygulayıcı davranışlarını gösteren arama izleri.

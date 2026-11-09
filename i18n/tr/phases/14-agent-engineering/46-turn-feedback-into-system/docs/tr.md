@@ -3,7 +3,7 @@
 > Sadece sohbette yaşayan bir düzeltme bir atışı düzeltir. Bir test, sınırı, örnek veya araç olarak geliştirilen bir düzeltme, sonraki atışların her birinde iyileşir.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 37 to 41
 **Time:** ~65 minutes
 
@@ -96,6 +96,7 @@ Laboratuvar düzeltmeleri sınıflandırır, kontrollere teşvik eder, parmak iz
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

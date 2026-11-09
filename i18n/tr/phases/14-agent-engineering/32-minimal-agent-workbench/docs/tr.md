@@ -3,7 +3,7 @@
 > En küçük kullanışlı çalışma desti üç dosyadır: bir kök talimat yönlendirici, bir durum dosyası ve bir görev panosu. Diğer her şey üst katlıdır.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 31 (Why Capable Models Still Fail)
 **Time:** ~45 minutes
 
@@ -77,6 +77,7 @@ wb-three-files
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Senaryo yaratıyor `workdir/`Birinci dönüşün nasıl bittiğini görmek için tekrar çalıştırın.

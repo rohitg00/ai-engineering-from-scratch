@@ -3,7 +3,7 @@
 > Model, işin nerede sona ereceğini bilmiyor. Bir kapsam sözleşmesi, işin nerede başladığını, nerede bittiğini ve dökülürse nasıl geri döneceğini söyleyen bir görev dosyasıdır.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 33 (Rules as Constraints)
 **Time:** ~50 minutes
 
@@ -107,6 +107,7 @@ wb-scope-bounce
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Sonuç: sözleşme, iki yarış, her yarışta hükümler ve bir kurtulmuştur.`scope_report.json`- Evet .

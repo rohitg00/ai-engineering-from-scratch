@@ -3,7 +3,7 @@
 > Ses ajanları 2026'da birinci sınıf bir üretim kategorisi. Pipecat size Python çerçevesine dayalı bir boru hattı (VAD → STT → LLM → TTS → nakliye) sunar. LiveKit Agentler, AI modellerini WebRTC üzerinden kullanıcılara köprüler.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
 **Time:** ~60 minutes
 
@@ -89,6 +89,7 @@ voice-pipeline
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 İz normal akış ve TTS'i durdurmak için bir barge-in iptal gösterir.

@@ -3,7 +3,7 @@
 > Ajan kendi işini tamamlanmış olarak işaretlemeye başlamaz. Bir doğrulama kapısı kapsam sözleşmesini, geri bildirim günlüğünü, kural raporunu ve farkı okuyor ve tek bir soruya cevap veriyor: Bu görev gerçekten tamamlandı mı? Kapı hayır diyorsa, görev tamamlanmamıştır, sohbet ne derse olsun.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 33 (Rules), Phase 14 · 36 (Scope), Phase 14 · 37 (Feedback)
 **Time:** ~55 minutes
 
@@ -81,6 +81,7 @@ wb-gate-sequence
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı: üç yargı raporu, her biri senaryoya yakın kaydedildi.

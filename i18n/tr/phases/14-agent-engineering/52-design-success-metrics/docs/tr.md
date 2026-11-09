@@ -3,7 +3,7 @@
 > Ölçüm bir kararın cevabını vermesi, bir takla dekorasyonunu değil. Hedefle başlayın, soruları çıkarın, sonra cevap veren en küçük ölçümleri seçin.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 47 and 51
 **Time:** ~70 minutes
 
@@ -85,6 +85,7 @@ Laboratuvar bir ölçüm planını doğruluyor, kapsamlı eşiği değerlendiriy
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

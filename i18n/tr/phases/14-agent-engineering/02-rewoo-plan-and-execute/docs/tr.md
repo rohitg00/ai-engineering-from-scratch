@@ -3,7 +3,7 @@
 > ReAct, düşünce ve eylemleri bir akışta birbirine çeviriyor. ReWOO onları ayırır: bir büyük plan önceden, sonra uygulayın. 5 kat daha az token, HotpotQA'da +4% doğruluk, ve planlayıcıyı 7B modeline distill edebilirsiniz. Plan-and-Execute onu genelleştirdi; Plan-and-Act web navigasyonuna kadar ölçeklendirdi.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop)
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ Demo, "Fransa başkenti nüfusunun milyonlara yuvarlanarak ne kadar olduğunu" i
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Trace önce tüm planı, sonra işçi sonuçlarını, sonra çözücü bileşimi gösterir. Token sayısını (kaykaynak sayısını bastırırırız) ReAct tarzı bir karıştırılmış koşuya karşılaştırın  ReWOO bu tür yapılandırılmış görevlerde kazanır.

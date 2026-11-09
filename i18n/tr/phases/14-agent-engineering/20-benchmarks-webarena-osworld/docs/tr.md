@@ -3,7 +3,7 @@
 > WebArena, dört kendi kendine barındırılan uygulama üzerinden web-ajent yeteneğini test eder. OSWorld, Ubuntu, Windows, macOS üzerinden masaüstü-ajent yeteneğini test eder. Serbest sınıf ajanları ve insanlar arasında büyük bir boşluk gösterdi.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 19 (SWE-bench, GAIA)
 **Time:** ~60 minutes
 
@@ -78,6 +78,7 @@ ae-agent-human-gap
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Üretim: Görev başına başarı oranı ve yörüngenin verimliliği, OSWorld-Human'ın metodologiyasını yansıtan.

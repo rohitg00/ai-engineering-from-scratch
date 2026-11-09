@@ -3,7 +3,7 @@
 > Self-Refine (Madaan et al., 2023) bir LLM'yi üç rolde kullanır  oluşturun, geri bildirim verin, bir döngü içinde  düzeltin. Ortalama kazanç: 7 görevde +20 mutlak. CRITIC (Gou et al., 2023) dış araçlar aracılığıyla doğrulama yönlendiriyor ve geri bildirim adımını sertleştirir. 2026 yılında bu model her çerçeveye " değerlendirici-optimizeci " (Anthropic) veya bir gardail döngü (OpenAI Ajanlar SDK) olarak gönderir.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ Bileşenler:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kendini Temizle ve CRITIC ile karşılaştırın. CRITIC gerçek bir hata yakalar.

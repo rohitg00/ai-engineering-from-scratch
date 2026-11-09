@@ -3,7 +3,7 @@
 > Bir yararlı spesifikasyon, geri dönüşümlü uygulama seçeneklerini açık bırakırken değişkenleri ve kanıtları düzeltir.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 50
 **Time:** ~75 minutes
 
@@ -74,6 +74,7 @@ Laboratuvar her sözleşme yüzeyini doğruluyor, karar biçimlerini kontrol edi
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

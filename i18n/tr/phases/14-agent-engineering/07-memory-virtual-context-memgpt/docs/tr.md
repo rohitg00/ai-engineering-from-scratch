@@ -3,7 +3,7 @@
 > Kontext pencereleri sınırlıdır. Konuşmalar, belgeler ve araç izleri yoktur. Düzeltme OS sanal bellek yeniden düzenlenmiştir.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ context-budget
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 İzleme, ajanın üç gerçek yazıp, kapıya ana bağlamı doldurduğunu (sürütme zorlaması) ve ardından arşivden alınarak bir sonraki soruya cevap verdiğini gösterir MemGPT iş akışını gerçek bir LLM olmadan yeniden üretir.

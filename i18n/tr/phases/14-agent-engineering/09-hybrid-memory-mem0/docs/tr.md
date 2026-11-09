@@ -3,7 +3,7 @@
 > Hibrit bellek paralel olarak üç depo çalışır  semantik benzerlik için vektör, hızlı gerçek arama için KV, varlık ilişkisi mantıklılığı için grafik  ve onları geri almakta birleştiren bir puanlama katmanı ile. Bu, dış bellek için yaygın olarak kullanılan bir üretim örneğidir; Mem0 (Chhikara et al., 2025) bir referans uygulanmasıdır.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -106,6 +106,7 @@ ae-memory-fusion
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı output üç ayrı geri çağırma yolunu artı top-k fuse eder.`main()`ve sıralamayı izle.

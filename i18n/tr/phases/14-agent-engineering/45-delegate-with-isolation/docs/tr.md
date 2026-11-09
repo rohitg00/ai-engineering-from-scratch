@@ -3,7 +3,7 @@
 > Paralel ajanlar, iş bağımsız olduğunda duvar zamanını tasarruf eder. Aksi takdirde, net bir görevi daha hızlı bir başarısızlık oranı ile bir koordinasyon soruna dönüştürürler.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 39 and 44
 **Time:** ~70 minutes
 
@@ -86,6 +86,7 @@ Laboratuvar yol üst üstelik kontrol eder, bağımlılıkları doğruluyor, gü
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

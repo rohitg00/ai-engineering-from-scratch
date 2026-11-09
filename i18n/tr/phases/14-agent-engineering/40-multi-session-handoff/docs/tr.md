@@ -3,7 +3,7 @@
 > Bu iş bitmek üzere. İş bitmeyecek. Bu teslim paket "Ajent bir saat çalıştı" kelimesini "Bir sonraki seans ilk dakika verimli" kelimesine dönüştüren bir eserdir.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 34 (Repo Memory), Phase 14 · 38 (Verification), Phase 14 · 39 (Reviewer)
 **Time:** ~50 minutes
 
@@ -91,6 +91,7 @@ wb-handoff-packet
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı: basılı bir teslimat vücudu, artı iki dosya da diskte.
