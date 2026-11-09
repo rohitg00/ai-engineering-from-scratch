@@ -3,7 +3,7 @@
 > Nguồn vuông của -1 không phải là tưởng tượng. Nó là chìa khóa cho các quay, tần số và một nửa xử lý tín hiệu.
 
 **Type:** Learn
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04 (linear algebra, calculus)
 **Time:** ~60 minutes
 
@@ -426,7 +426,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 ## Chuyển nó
 
-Đi chạy`code/complex_numbers.py`để tạo ra `outputs/skill-complex-arithmetic.md`- Tôi không biết.
+Đi chạy`code/complex_numbers.py`hoặc `npx tsx code/complex_numbers.ts`để tạo ra `outputs/skill-complex-arithmetic.md`- Tôi không biết.
 
 ## Các bài tập
 
