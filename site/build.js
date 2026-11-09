@@ -2494,7 +2494,7 @@ function writeLlms(phases, glossaryCount, artifactCount, certifications, lessonM
   let total = 0;
   phases.forEach(p => { total += p.lessons.filter(l => lessonPath(l.url)).length; });
   let out = `# AI Engineering from Scratch\n\n`;
-  out += `> A free, open-source curriculum that builds every core AI algorithm by hand — ${total} lessons across ${phases.length} phases, from linear algebra to autonomous agents. Python, TypeScript, Rust, Julia.\n\n`;
+  out += `> A free, open-source curriculum that builds every core AI algorithm by hand — ${total} lessons across ${phases.length} phases, from linear algebra to autonomous agents. Python, TypeScript, Rust, Julia, Go.\n\n`;
   out += `Canonical site: ${SITE_ORIGIN}\n`;
   out += `Source: https://github.com/rohitg00/ai-engineering-from-scratch\n`;
   out += `Glossary terms: ${glossaryCount} · Reusable outputs (prompts/skills/agents): ${artifactCount}\n\n`;

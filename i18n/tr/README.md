@@ -19,7 +19,7 @@ Modellerin iç mekanizmalarını, bilgi erişim işlem hatlarını ve ajan çal�
 
 Ücretsiz, açık kaynaklı, MIT lisanslı. Web sitesinde, bir kodlama ajanıyla veya yerel kod çalıştırarak öğrenin.
 
-> 542 ders. 20 aşama. Python, TypeScript, Rust, Julia.
+> 542 ders. 20 aşama. Python, TypeScript, Rust, Julia, Go.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT Lisansı"></a>
@@ -374,19 +374,19 @@ flowchart TB
 | 07 | [Bayes Teoremi ve İstatistiksel Düşünme](../../phases/01-math-foundations/07-bayes-theorem/) | Uygulama | Python, TypeScript |
 | 08 | [Optimizasyon: Gradyan İnişi Yöntemleri](../../phases/01-math-foundations/08-optimization/) | Uygulama | Python, Julia |
 | 09 | [Bilgi Kuramı: Entropi ve KL Ayrışımı](../../phases/01-math-foundations/09-information-theory/) | Öğrenme | Python, TypeScript |
-| 10 | [Boyut İndirgeme: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Uygulama | Python, TypeScript |
+| 10 | [Boyut İndirgeme: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Uygulama | Python, TypeScript, Julia |
 | 11 | [Tekil Değer Ayrışımı](../../phases/01-math-foundations/11-singular-value-decomposition/) | Uygulama | Python, Julia |
 | 12 | [Tensör İşlemleri](../../phases/01-math-foundations/12-tensor-operations/) | Uygulama | Python, TypeScript |
-| 13 | [Sayısal Kararlılık](../../phases/01-math-foundations/13-numerical-stability/) | Uygulama | Python, TypeScript |
+| 13 | [Sayısal Kararlılık](../../phases/01-math-foundations/13-numerical-stability/) | Uygulama | Python, TypeScript, Julia |
 | 14 | [Normlar ve Uzaklıklar](../../phases/01-math-foundations/14-norms-and-distances/) | Uygulama | Python, TypeScript |
 | 15 | [Makine Öğrenimi için İstatistik](../../phases/01-math-foundations/15-statistics-for-ml/) | Uygulama | Python, TypeScript |
-| 16 | [Örnekleme Yöntemleri](../../phases/01-math-foundations/16-sampling-methods/) | Uygulama | Python, TypeScript |
-| 17 | [Doğrusal Sistemler](../../phases/01-math-foundations/17-linear-systems/) | Uygulama | Python, TypeScript |
-| 18 | [Konveks Optimizasyon](../../phases/01-math-foundations/18-convex-optimization/) | Uygulama | Python, TypeScript |
+| 16 | [Örnekleme Yöntemleri](../../phases/01-math-foundations/16-sampling-methods/) | Uygulama | Python, TypeScript, Julia |
+| 17 | [Doğrusal Sistemler](../../phases/01-math-foundations/17-linear-systems/) | Uygulama | Python, TypeScript, Julia |
+| 18 | [Konveks Optimizasyon](../../phases/01-math-foundations/18-convex-optimization/) | Uygulama | Python, TypeScript, Julia |
 | 19 | [Yapay Zekâ için Karmaşık Sayılar](../../phases/01-math-foundations/19-complex-numbers/) | Öğrenme | Python, TypeScript |
-| 20 | [Fourier Dönüşümü](../../phases/01-math-foundations/20-fourier-transform/) | Uygulama | Python, TypeScript |
+| 20 | [Fourier Dönüşümü](../../phases/01-math-foundations/20-fourier-transform/) | Uygulama | Python, TypeScript, Julia |
 | 21 | [Makine Öğrenimi için Graf Teorisi](../../phases/01-math-foundations/21-graph-theory/) | Uygulama | Python, TypeScript |
-| 22 | [Stokastik Süreçler](../../phases/01-math-foundations/22-stochastic-processes/) | Öğrenme | Python |
+| 22 | [Stokastik Süreçler](../../phases/01-math-foundations/22-stochastic-processes/) | Öğrenme | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ flowchart TB
 
 | No. | Ders | Tür | Dil |
 |:---:|--------|:----:|------|
-| 01 | [Perceptron: Her Şeyin Başladığı Yer](../../phases/03-deep-learning-core/01-the-perceptron/) | Uygulama | Python, Rust, Julia |
-| 02 | [Çok Katmanlı Ağlar ve İleri Geçiş](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Uygulama | Python, TypeScript |
-| 03 | [Geri Yayılımı Sıfırdan Uygulama](../../phases/03-deep-learning-core/03-backpropagation/) | Uygulama | Python, Rust, Julia |
-| 04 | [Aktivasyon Fonksiyonları: ReLU, Sigmoid, GELU ve Neden Kullanılırlar?](../../phases/03-deep-learning-core/04-activation-functions/) | Uygulama | Python, Julia |
-| 05 | [Kayıp Fonksiyonları: MSE, Çapraz Entropi, Kontrastif Kayıp](../../phases/03-deep-learning-core/05-loss-functions/) | Uygulama | Python, Julia |
-| 06 | [En İyileyiciler: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Uygulama | Python, TypeScript |
-| 07 | [Düzenlileştirme: Dropout, Ağırlık Sönümleme, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Uygulama | Python, TypeScript |
-| 08 | [Ağırlık Başlatma ve Eğitim Kararlılığı](../../phases/03-deep-learning-core/08-weight-initialization/) | Uygulama | Python, TypeScript |
-| 09 | [Öğrenme Hızı Çizelgeleri ve Isınma](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Uygulama | Python, TypeScript |
-| 10 | [Kendi Mini Çerçevenizi Kurun](../../phases/03-deep-learning-core/10-mini-framework/) | Uygulama | Python, TypeScript |
+| 01 | [Perceptron: Her Şeyin Başladığı Yer](../../phases/03-deep-learning-core/01-the-perceptron/) | Uygulama | Python, TypeScript, Rust, Julia |
+| 02 | [Çok Katmanlı Ağlar ve İleri Geçiş](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Uygulama | Python, TypeScript, Julia |
+| 03 | [Geri Yayılımı Sıfırdan Uygulama](../../phases/03-deep-learning-core/03-backpropagation/) | Uygulama | Python, TypeScript, Rust, Julia |
+| 04 | [Aktivasyon Fonksiyonları: ReLU, Sigmoid, GELU ve Neden Kullanılırlar?](../../phases/03-deep-learning-core/04-activation-functions/) | Uygulama | Python, TypeScript, Julia |
+| 05 | [Kayıp Fonksiyonları: MSE, Çapraz Entropi, Kontrastif Kayıp](../../phases/03-deep-learning-core/05-loss-functions/) | Uygulama | Python, TypeScript, Julia |
+| 06 | [En İyileyiciler: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Uygulama | Python, TypeScript, Julia |
+| 07 | [Düzenlileştirme: Dropout, Ağırlık Sönümleme, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Uygulama | Python, TypeScript, Julia |
+| 08 | [Ağırlık Başlatma ve Eğitim Kararlılığı](../../phases/03-deep-learning-core/08-weight-initialization/) | Uygulama | Python, TypeScript, Julia |
+| 09 | [Öğrenme Hızı Çizelgeleri ve Isınma](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Uygulama | Python, TypeScript, Julia |
+| 10 | [Kendi Mini Çerçevenizi Kurun](../../phases/03-deep-learning-core/10-mini-framework/) | Uygulama | Python, TypeScript, Julia |
 | 11 | [PyTorch’a Giriş](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Uygulama | Python |
 | 12 | [JAX’e Giriş](../../phases/03-deep-learning-core/12-intro-to-jax/) | Uygulama | Python |
 | 13 | [Sinir Ağlarında Hata Ayıklama](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Uygulama | Python |
@@ -448,8 +448,8 @@ flowchart TB
 
 | No. | Ders | Tür | Dil |
 |:---:|--------|:----:|------|
-| 01 | [Görüntü Temelleri: Pikseller, Kanallar ve Renk Uzayları](../../phases/04-computer-vision/01-image-fundamentals/) | Öğrenme | Python |
-| 02 | [Evrişimleri Sıfırdan Uygulama](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Uygulama | Python |
+| 01 | [Görüntü Temelleri: Pikseller, Kanallar ve Renk Uzayları](../../phases/04-computer-vision/01-image-fundamentals/) | Öğrenme | Python, Julia |
+| 02 | [Evrişimleri Sıfırdan Uygulama](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Uygulama | Python, Julia |
 | 03 | [CNN’ler: LeNet’ten ResNet’e](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | Uygulama | Python |
 | 04 | [Görüntü Sınıflandırma](../../phases/04-computer-vision/04-image-classification/) | Uygulama | Python |
 | 05 | [Aktarım Öğrenmesi ve İnce Ayar](../../phases/04-computer-vision/05-transfer-learning/) | Uygulama | Python |
@@ -474,7 +474,7 @@ flowchart TB
 | 24 | [SAM 3 ve Açık Söz Dağarcıklı Bölütleme](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | Uygulama | Python |
 | 25 | [Görüntü-Dil Modelleri (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | Uygulama | Python |
 | 26 | [Tek Görüntüden Derinlik ve Geometri Tahmini](../../phases/04-computer-vision/26-monocular-depth/) | Uygulama | Python |
-| 27 | [Çoklu Nesne Takibi ve Video Belleği](../../phases/04-computer-vision/27-multi-object-tracking/) | Uygulama | Python |
+| 27 | [Çoklu Nesne Takibi ve Video Belleği](../../phases/04-computer-vision/27-multi-object-tracking/) | Uygulama | Python, Rust |
 | 28 | [Dünya Modelleri ve Video Difüzyonu](../../phases/04-computer-vision/28-world-models-video-diffusion/) | Uygulama | Python |
 
 </details>
@@ -487,7 +487,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [Metin İşleme: Tokenleştirme, Kök Bulma ve Lemmatizasyon](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Uygulama | Python, TypeScript |
 | 02 | [Kelime Torbası, TF-IDF ve Metin Temsili](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Uygulama | Python, TypeScript |
-| 03 | [Kelime Gömme Vektörleri: Word2Vec’i Sıfırdan Kurma](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Uygulama | Python |
+| 03 | [Kelime Gömme Vektörleri: Word2Vec’i Sıfırdan Kurma](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Uygulama | Python, Julia |
 | 04 | [GloVe, FastText ve Alt Sözcük Gömme Vektörleri](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Uygulama | Python, TypeScript |
 | 05 | [Duygu Analizi](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Uygulama | Python, TypeScript |
 | 06 | [Adlandırılmış Varlık Tanıma (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Uygulama | Python, TypeScript |
@@ -498,13 +498,13 @@ flowchart TB
 | 11 | [Makine Çevirisi](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Uygulama | Python, TypeScript |
 | 12 | [Metin Özetleme](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Uygulama | Python, TypeScript |
 | 13 | [Soru Yanıtlama Sistemleri](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Uygulama | Python, TypeScript |
-| 14 | [Bilgi Getirimi ve Arama](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Uygulama | Python, TypeScript |
-| 15 | [Konu Modelleme: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Uygulama | Python, TypeScript |
+| 14 | [Bilgi Getirimi ve Arama](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Uygulama | Python, TypeScript, Rust |
+| 15 | [Konu Modelleme: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Uygulama | Python, TypeScript, Julia |
 | 16 | [Metin Üretimi](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Uygulama | Python, TypeScript |
 | 17 | [Kural Tabanlıdan Sinir Ağı Tabanlıya Sohbet Robotları](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Uygulama | Python, TypeScript |
 | 18 | [Çok Dilli NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Uygulama | Python, TypeScript |
-| 19 | [Alt Sözcük Tokenleştirme: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Öğrenme | Python, TypeScript |
-| 20 | [Yapılandırılmış Çıktılar ve Kısıtlı Kod Çözümleme](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Uygulama | Python, TypeScript |
+| 19 | [Alt Sözcük Tokenleştirme: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Öğrenme | Python, TypeScript, Rust |
+| 20 | [Yapılandırılmış Çıktılar ve Kısıtlı Kod Çözümleme](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Uygulama | Python, TypeScript, Rust |
 | 21 | [Doğal Dil Çıkarımı (NLI) ve Metinsel Gerektirme](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Öğrenme | Python, TypeScript |
 | 22 | [Gömme Modellerine Derinlemesine Bakış](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Öğrenme | Python, TypeScript |
 | 23 | [RAG için Parçalama Stratejileri](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Uygulama | Python, TypeScript |
@@ -523,8 +523,8 @@ flowchart TB
 
 | No. | Ders | Tür | Dil |
 |:---:|--------|:----:|------|
-| 01 | [Ses Temelleri: Dalga Biçimleri, Örnekleme ve FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Öğrenme | Python, TypeScript |
-| 02 | [Spektrogramlar, Mel Ölçeği ve Ses Özellikleri](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Uygulama | Python, TypeScript |
+| 01 | [Ses Temelleri: Dalga Biçimleri, Örnekleme ve FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Öğrenme | Python, TypeScript, Julia |
+| 02 | [Spektrogramlar, Mel Ölçeği ve Ses Özellikleri](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Uygulama | Python, TypeScript, Julia |
 | 03 | [Ses Sınıflandırma](../../phases/06-speech-and-audio/03-audio-classification) | Uygulama | Python, TypeScript |
 | 04 | [Konuşma Tanıma (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Uygulama | Python, TypeScript |
 | 05 | [Whisper: Mimari ve İnce Ayar](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Uygulama | Python, TypeScript |
@@ -536,7 +536,7 @@ flowchart TB
 | 11 | [Gerçek Zamanlı Ses İşleme](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Uygulama | Python, Rust |
 | 12 | [Sesli Asistan İş Hattı Kurun](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Uygulama | Python, TypeScript |
 | 13 | [Sinirsel Ses Kodlayıcıları: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Öğrenme | Python, TypeScript |
-| 14 | [Konuşma Etkinliği Algılama ve Söz Sırası Yönetimi](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Uygulama | Python, TypeScript |
+| 14 | [Konuşma Etkinliği Algılama ve Söz Sırası Yönetimi](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Uygulama | Python, TypeScript, Rust |
 | 15 | [Akışlı Konuşmadan Konuşmaya Sistemler: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Öğrenme | Python, TypeScript |
 | 16 | [Ses Sahteciliğini Önleme ve Ses Filigranlama](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Uygulama | Python, TypeScript |
 | 17 | [Ses Değerlendirme Ölçütleri: WER, MOS, MMAU, Sıralama Tabloları](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Öğrenme | Python, TypeScript |
@@ -586,9 +586,9 @@ flowchart TB
 | 10 | [Video Üretimi](../../phases/08-generative-ai/10-video-generation/) | Uygulama | Python, TypeScript |
 | 11 | [Ses Üretimi](../../phases/08-generative-ai/11-audio-generation/) | Uygulama | Python, TypeScript |
 | 12 | [3B İçerik Üretimi](../../phases/08-generative-ai/12-3d-generation/) | Uygulama | Python, TypeScript |
-| 13 | [Akış Eşleştirme ve Düzeltilmiş Akışlar](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Uygulama | Python, TypeScript |
+| 13 | [Akış Eşleştirme ve Düzeltilmiş Akışlar](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Uygulama | Python, TypeScript, Julia |
 | 14 | [Değerlendirme: FID, CLIP Score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Uygulama | Python, TypeScript |
-| 19 | [Görsel Otoregresif Modelleme (VAR): Sonraki Ölçek Tahmini](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Uygulama | Python |
+| 19 | [Görsel Otoregresif Modelleme (VAR): Sonraki Ölçek Tahmini](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Uygulama | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ flowchart TB
 | No. | Ders | Tür | Dil |
 |:---:|--------|:----:|------|
 | 01 | [Tokenizer’lar: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Uygulama | Python, Rust |
-| 02 | [Sıfırdan Tokenizer Geliştirme](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Uygulama | Python |
+| 02 | [Sıfırdan Tokenizer Geliştirme](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Uygulama | Python, TypeScript |
 | 03 | [Ön Eğitim için Veri İş Hatları](../../phases/10-llms-from-scratch/03-data-pipelines/) | Uygulama | Python, Rust |
 | 04 | [Mini GPT’yi Ön Eğitimden Geçirme (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Uygulama | Python, Rust |
 | 05 | [Dağıtık Eğitim, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Uygulama | Python |
@@ -665,7 +665,7 @@ flowchart TB
 | 11 | [Önbellekleme, İstek Sınırlama ve Maliyet](../../phases/11-llm-engineering/11-caching-cost/) | Uygulama | Python, TypeScript |
 | 12 | [Koruma Önlemleri ve Güvenlik](../../phases/11-llm-engineering/12-guardrails/) | Uygulama | Python, TypeScript |
 | 13 | [Üretim Ortamına Uygun Bir LLM Uygulaması Kurma](../../phases/11-llm-engineering/13-production-app/) | Uygulama | Python, TypeScript |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Uygulama | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Uygulama | Python, TypeScript, Go |
 | 15 | [İstem Önbelleği ve Bağlam Önbelleği](../../phases/11-llm-engineering/15-prompt-caching/) | Uygulama | Python, TypeScript |
 | 16 | [Ajan Durum Makineleri: Graflar, Düğümler ve Denetim Noktaları](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Uygulama | Python |
 | 17 | [Ajan Çerçevelerinin Artıları ve Eksileri](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Öğrenme | Python, TypeScript |
@@ -714,25 +714,25 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [Araç Arayüzü](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Öğrenme | Python, TypeScript |
 | 02 | [Fonksiyon Çağırmayı Derinlemesine İnceleme](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Uygulama | Python, TypeScript |
-| 03 | [Paralel ve Akışlı Araç Çağrıları](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Uygulama | Python, TypeScript |
+| 03 | [Paralel ve Akışlı Araç Çağrıları](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Uygulama | Python, TypeScript, Go |
 | 04 | [Yapılandırılmış Çıktı](../../phases/13-tools-and-protocols/04-structured-output/) | Uygulama | Python, TypeScript |
 | 05 | [Araç Şeması Tasarımı](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Öğrenme | Python, TypeScript |
 | 06 | [MCP Temelleri: Durumsuz İstekler ve JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Öğrenme | Python, TypeScript |
-| 07 | [MCP Sunucusu Kurma: Durumsuz Python ve TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Uygulama | Python, TypeScript |
+| 07 | [MCP Sunucusu Kurma: Durumsuz Python ve TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Uygulama | Python, TypeScript, Go |
 | 08 | [MCP İstemcisi Kurma: Keşif, Yönlendirme ve İki Dönemli Geri Dönüş](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Uygulama | Python, TypeScript |
-| 09 | [MCP Aktarımları: stdio ve Durumsuz, Akışlı HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Öğrenme | Python, TypeScript |
+| 09 | [MCP Aktarımları: stdio ve Durumsuz, Akışlı HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Öğrenme | Python, TypeScript, Go |
 | 10 | [MCP Kaynakları ve İstemler: Durumsuz Sunucular için Adreslenebilir Bağlam](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Uygulama | Python, TypeScript |
 | 11 | [MCP Model Girdisi: Örnekleme Geçişi ve Durumsuz MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Uygulama | Python, TypeScript |
 | 12 | [Açık Kapsam ve Durumsuz Bilgi İsteme](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Uygulama | Python, TypeScript |
 | 13 | [MCP Tasks Uzantısı: Durumsuz Temelde Kalıcı İşler](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Uygulama | Python, TypeScript |
 | 14 | [Durumsuz Protokolde MCP Apps](../../phases/13-tools-and-protocols/14-mcp-apps/) | Uygulama | Python, TypeScript |
 | 15 | [MCP Güvenliği: Zehirli Meta Veriler, Yönlendirme ve MRTR Durumu](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Öğrenme | Python, TypeScript |
-| 16 | [MCP Yetkilendirmesi: CIMD, Veren Bağlama, PKCE ve Ek Doğrulama](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Uygulama | Python, TypeScript |
-| 17 | [Durumsuz MCP Ağ Geçitleri ve Kayıt Defterine Kabul](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Öğrenme | Python, TypeScript |
-| 18 | [Üretimde MCP Yetkilendirmesi: Veren Bağlı Kayıt ve Token’lar](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Uygulama | Python, TypeScript |
-| 19 | [A2A Protokolü](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Uygulama | Python, TypeScript |
+| 16 | [MCP Yetkilendirmesi: CIMD, Veren Bağlama, PKCE ve Ek Doğrulama](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Uygulama | Python, TypeScript, Go |
+| 17 | [Durumsuz MCP Ağ Geçitleri ve Kayıt Defterine Kabul](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Öğrenme | Python, TypeScript, Go |
+| 18 | [Üretimde MCP Yetkilendirmesi: Veren Bağlı Kayıt ve Token’lar](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Uygulama | Python, TypeScript, Go |
+| 19 | [A2A Protokolü](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Uygulama | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Uygulama | Python, TypeScript |
-| 21 | [LLM Yönlendirme Katmanı](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Öğrenme | Python, TypeScript |
+| 21 | [LLM Yönlendirme Katmanı](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Öğrenme | Python, TypeScript, Go |
 | 22 | [Agent Skills: Taşınabilir Sözleşme ve Çalışma Zamanı Sınırı](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Uygulama | Python, TypeScript |
 | 23 | [Bitirme Projesi: Durumsuz Araç Ekosistemi](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Uygulama | Python, TypeScript |
 | 24 | [Beceri Keşfi ve Aşamalı Açıklama](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Uygulama | Python, TypeScript |
@@ -743,19 +743,19 @@ flowchart TB
 | 29 | [MCP Güvenilirliği, İptali ve Akış Denetimi](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Uygulama | Python, TypeScript |
 | 30 | [MCP Kayıt Defteri Tedarik Zinciri: Kabul, Sapma ve Geri Alma](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Uygulama | Python, TypeScript |
 | 31 | [MCP Uygunluk Mühendisliği: Sürümleme, Kanıt ve İşletim](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Uygulama | Python, TypeScript |
-| 32 | [Program Anatomisi: ELF'i Sıfırdan Okumak](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Uygulama | Python, TypeScript |
-| 33 | [Tersine Derleme ve Kontrol Akış Grafikleri](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Uygulama | Python, TypeScript |
-| 34 | [Makine Kodunu Sözde Koda Yükseltmek](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Uygulama | Python |
+| 32 | [Program Anatomisi: ELF'i Sıfırdan Okumak](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Uygulama | Python, TypeScript, Rust |
+| 33 | [Tersine Derleme ve Kontrol Akış Grafikleri](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Uygulama | Python, TypeScript, Rust |
+| 34 | [Makine Kodunu Sözde Koda Yükseltmek](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Uygulama | Python, TypeScript |
 | 35 | [İkili Analizde Kanıt, Güven ve Bilinmeyenler](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Uygulama | Python, TypeScript |
 | 36 | [Yeniden Derle ve Eşitliği Kanıtla](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Uygulama | Python, TypeScript |
 | 37 | [Tersine Mühendislik Alanına Genel Bakış](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Uygulama | Python, TypeScript |
 | 38 | [Çağrı Kuralları ve Yığın Çerçeveleri](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Uygulama | Python, TypeScript |
 | 39 | [Derleyici Kalıpları ve Optimizasyon](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Uygulama | Python, TypeScript |
-| 40 | [Bağlama, Yükleme ve Sembolleri Çıkarılmış İkili Dosyalar](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Uygulama | Python, TypeScript |
+| 40 | [Bağlama, Yükleme ve Sembolleri Çıkarılmış İkili Dosyalar](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Uygulama | Python, TypeScript, Rust |
 | 41 | [Verileri ve Türleri Geri Kazanmak](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Uygulama | Python, TypeScript |
 | 42 | [Kendi Programınızın Dinamik Analizi](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Uygulama | Python, TypeScript |
 | 43 | [Bayt Kodu ve Yönetilen Biçimler](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Uygulama | Python, TypeScript |
-| 44 | [İkili Fark Analizi ve Sembolik Yürütme](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Uygulama | Python |
+| 44 | [İkili Fark Analizi ve Sembolik Yürütme](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Uygulama | Python, TypeScript |
 | 45 | [Yapay Zekâ Destekli Tersine Mühendislik](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Uygulama | Python, TypeScript |
 
 06-18 ve 28-31 dersleri odaklanmıştır. [Modelle Konekst Protokolü (MCP) yol](../../learning-paths/model-context-protocol.json). Açık sıralaması 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. `learn-mcp` Ders 23 onun tek seçeneği ve aynı zamanda ders 19 ve 20 gerektirir.
@@ -792,13 +792,13 @@ flowchart TB
 | 20 | [Kıyaslamalar: WebArena ve OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Öğrenme | Python, TypeScript |
 | 21 | [Bilgisayar Kullanım Ajanları: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Uygulama | Python, TypeScript |
 | 22 | [Sesli Ajanlar: Pipecat ve LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Uygulama | Python, TypeScript |
-| 23 | [OpenTelemetry GenAI Anlamsal Kuralları](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Uygulama | Python, TypeScript |
+| 23 | [OpenTelemetry GenAI Anlamsal Kuralları](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Uygulama | Python, TypeScript, Go |
 | 24 | [Ajan Gözlemlenebilirliği: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Öğrenme | Python, TypeScript |
 | 25 | [Çok Ajanlı Münazara ve İşbirliği](../../phases/14-agent-engineering/25-multi-agent-debate/) | Uygulama | Python, TypeScript |
 | 26 | [Hata Biçimleri: Ajanlar Neden Bozulur?](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Uygulama | Python, TypeScript |
 | 27 | [İstem Enjeksiyonu ve PVE Savunması](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Uygulama | Python, TypeScript |
 | 28 | [Orkestrasyon Örüntüleri: Gözetmen, Sürü ve Hiyerarşi](../../phases/14-agent-engineering/28-orchestration-patterns/) | Uygulama | Python, TypeScript |
-| 29 | [Üretim Çalışma Zamanları: Kuyruk, Olay ve Cron](../../phases/14-agent-engineering/29-production-runtimes/) | Öğrenme | Python, TypeScript |
+| 29 | [Üretim Çalışma Zamanları: Kuyruk, Olay ve Cron](../../phases/14-agent-engineering/29-production-runtimes/) | Öğrenme | Python, TypeScript, Go |
 | 30 | [Değerlendirme Odaklı Ajan Geliştirme](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Uygulama | Python, TypeScript |
 | 31 | [Ajan Çalışma Tezgâhı: Yetenekli Modeller Neden Hâlâ Başarısız?](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Öğrenme | Python, TypeScript |
 | 32 | [Minimal Ajan Çalışma Tezgâhı](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Uygulama | Python, TypeScript |
@@ -848,7 +848,7 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 09 | [Özerk Kodlama Ajanları Ekosistemi (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Öğrenme | Python, TypeScript |
 | 10 | [Özerk Ajanlar için İzin Kipleri](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Öğrenme | Python, TypeScript |
 | 11 | [Tarayıcı Ajanları ve Dolaylı İstem Enjeksiyonu](../../phases/15-autonomous-systems/11-browser-agents/) | Öğrenme | Python, TypeScript |
-| 12 | [Uzun Süreli Ajanlar için Kalıcı Yürütme](../../phases/15-autonomous-systems/12-durable-execution/) | Öğrenme | Python, TypeScript |
+| 12 | [Uzun Süreli Ajanlar için Kalıcı Yürütme](../../phases/15-autonomous-systems/12-durable-execution/) | Öğrenme | Python, TypeScript, Go |
 | 13 | [Eylem Bütçeleri, Yineleme Sınırları ve Maliyet Denetleyicileri](../../phases/15-autonomous-systems/13-cost-governors/) | Öğrenme | Python, TypeScript |
 | 14 | [Durdurma Anahtarları, Devre Kesiciler ve Kanarya Token’ları](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Öğrenme | Python, TypeScript |
 | 15 | [HITL: Önce Öner, Sonra Onayla](../../phases/15-autonomous-systems/15-propose-then-commit/) | Öğrenme | Python, TypeScript |
@@ -857,7 +857,7 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 18 | [Llama Guard ve Girdi/Çıktı Sınıflandırması](../../phases/15-autonomous-systems/18-llama-guard/) | Öğrenme | Python, TypeScript |
 | 19 | [Anthropic Sorumlu Ölçeklendirme Politikası v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Öğrenme | Python, TypeScript |
 | 20 | [OpenAI Hazırlık Çerçevesi ve DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Öğrenme | Python, TypeScript |
-| 21 | [METR Zaman Ufukları ve Harici Değerlendirme](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Öğrenme | Python, TypeScript |
+| 21 | [METR Zaman Ufukları ve Harici Değerlendirme](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Öğrenme | Python, TypeScript, Julia |
 | 22 | [CAIS, CAISI ve Toplumsal Ölçekli Risk](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Öğrenme | Python, TypeScript |
 
 </details>
@@ -876,17 +876,17 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 06 | [Hiyerarşik Mimari ve Ayrıştırma Kayması](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Öğrenme | Python, TypeScript |
 | 07 | [Zihinler Topluluğu ve Çok Ajanlı Münazara](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Uygulama | Python, TypeScript |
 | 08 | [Rol Uzmanlaşması: Planlayıcı / Eleştirmen / Yürütücü / Doğrulayıcı](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Uygulama | Python, TypeScript |
-| 09 | [Paralel Sürüler ve Ağ Tabanlı Mimariler](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Uygulama | Python, TypeScript |
+| 09 | [Paralel Sürüler ve Ağ Tabanlı Mimariler](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Uygulama | Python, TypeScript, Go |
 | 10 | [Grup Sohbeti ve Konuşmacı Seçimi](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Uygulama | Python, TypeScript |
 | 11 | [Devirler ve Rutinler (Durumsuz Orkestrasyon)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Uygulama | Python, TypeScript |
-| 12 | [A2A: Ajanlar Arası Protokol](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Uygulama | Python, TypeScript |
+| 12 | [A2A: Ajanlar Arası Protokol](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Uygulama | Python, TypeScript, Go |
 | 13 | [Paylaşılan Bellek ve Kara Tahta Örüntüleri](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Uygulama | Python, TypeScript |
 | 14 | [Uzlaşı ve Bizans Hata Toleransı](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Uygulama | Python, TypeScript |
 | 15 | [Oylama, Öz Tutarlılık ve Münazara Topolojisi](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Uygulama | Python, TypeScript |
 | 16 | [Müzakere ve Pazarlık](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Uygulama | Python, TypeScript |
 | 17 | [Üretken Ajanlar ve Ortaya Çıkan Davranışların Simülasyonu](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Uygulama | Python, TypeScript |
 | 18 | [Zihin Kuramı ve Ortaya Çıkan Koordinasyon](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Uygulama | Python, TypeScript |
-| 19 | [Sürü Optimizasyonu (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Uygulama | Python, TypeScript |
+| 19 | [Sürü Optimizasyonu (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Uygulama | Python, TypeScript, Julia |
 | 20 | [Çok Ajanlı Pekiştirmeli Öğrenme: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Öğrenme | Python, TypeScript |
 | 21 | [Ajan Ekonomileri, Token Teşvikleri ve İtibar](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Öğrenme | Python, TypeScript |
 | 22 | [Üretimde Ölçekleme: Kuyruklar, Denetim Noktaları ve Dayanıklılık](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Uygulama | Python, TypeScript |
@@ -905,9 +905,9 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 01 | [Yönetilen LLM Platformları: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Öğrenme | Python, TypeScript |
 | 02 | [Çıkarım Platformlarının Ekonomisi: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Öğrenme | Python, TypeScript |
 | 03 | [Kubernetes’te GPU Otomatik Ölçekleme: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Öğrenme | Python, TypeScript |
-| 04 | [Model Sunum Motorlarının İç Yapısı: PagedAttention, Sürekli Yığınlama, Parçalı Prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Öğrenme | Python, TypeScript |
+| 04 | [Model Sunum Motorlarının İç Yapısı: PagedAttention, Sürekli Yığınlama, Parçalı Prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Öğrenme | Python, TypeScript, Rust |
 | 05 | [Üretim Ortamında EAGLE-3 Spekülatif Kod Çözümleme](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Öğrenme | Python, TypeScript |
-| 06 | [Önek Önbellekli Sunum: RadixAttention ve KV Yeniden Kullanımı](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Öğrenme | Python, TypeScript |
+| 06 | [Önek Önbellekli Sunum: RadixAttention ve KV Yeniden Kullanımı](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Öğrenme | Python, TypeScript, Rust |
 | 07 | [Donanıma Özel Çıkarım Derlemesi: Blackwell’de FP8 ve NVFP4](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Öğrenme | Python, TypeScript |
 | 08 | [Çıkarım Ölçütleri: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Öğrenme | Python, TypeScript |
 | 09 | [Üretim Ortamı için Nicemleme: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Öğrenme | Python, TypeScript |
@@ -922,7 +922,7 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 18 | [Üretim Sunum Yığını: KV Dış Kaynak Kullanımı ve Önbellek Farkındalıklı Yönlendirme](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Öğrenme | Python, TypeScript |
 | 19 | [Yapay Zekâ Ağ Geçitleri: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Öğrenme | Python, TypeScript |
 | 20 | [Gölge, Kanarya ve Aşamalı Dağıtım](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Öğrenme | Python, TypeScript |
-| 21 | [LLM Özelliklerinde A/B Testi: GrowthBook ve Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Öğrenme | Python, TypeScript |
+| 21 | [LLM Özelliklerinde A/B Testi: GrowthBook ve Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Öğrenme | Python, TypeScript, Julia |
 | 22 | [LLM API’leri için Yük Testi: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Uygulama | Python, TypeScript |
 | 23 | [Yapay Zekâ için SRE: Çok Ajanlı Olay Müdahalesi](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Öğrenme | Python, TypeScript |
 | 24 | [Üretimde LLM’ler için Kaos Mühendisliği](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Öğrenme | Python, TypeScript |
@@ -961,7 +961,7 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 19 | [Model Refahı Araştırmaları](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Öğrenme | Python, TypeScript |
 | 20 | [Yanlılık ve Temsilden Kaynaklanan Zarar](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Uygulama | Python, TypeScript |
 | 21 | [Adalet Ölçütleri: Grup, Birey ve Karşıolgusal](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Öğrenme | Python, TypeScript |
-| 22 | [LLM’ler için Diferansiyel Gizlilik](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Uygulama | Python, TypeScript |
+| 22 | [LLM’ler için Diferansiyel Gizlilik](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Uygulama | Python, TypeScript, Julia |
 | 23 | [Filigranlama: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Uygulama | Python, TypeScript |
 | 24 | [Düzenleyici Çerçeveler: AB, ABD, Birleşik Krallık, Kore](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Öğrenme | Python, TypeScript |
 | 25 | [EchoLeak ve Yapay Zekâ Güvenlik Açıkları](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Öğrenme | Python, TypeScript |
@@ -989,9 +989,9 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 08 | [Düzenlemeye Tabi Sektör için Üretim Ortamı RAG Sohbet Robotu](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [Depo Düzeyinde Yükseltmeler için Kod Taşıma Ajanı](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [Çok Ajanlı Yazılım Mühendisliği Ekibi](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [LLM Gözlemlenebilirlik ve Değerlendirme Panosu](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [LLM Gözlemlenebilirlik ve Değerlendirme Panosu](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [Sahne Anlamadan Soru Yanıtlamaya Video İş Hattı](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [Kayıt Defteri ve Yönetişim İçeren Durumsuz MCP Sunucusu](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [Kayıt Defteri ve Yönetişim İçeren Durumsuz MCP Sunucusu](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [Spekülatif Kod Çözümlemeli Çıkarım Sunucusu](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [Anayasal Güvenlik Test Çerçevesi ve Kırmızı Takım Ortamı](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [GitHub Issue’dan PR’a Özerk Ajan](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1011,7 +1011,7 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 27 | [Sabit Görevlerle Değerlendirme Çerçevesi](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Ajan Çalışma Çerçevesi | Python, TypeScript |
 | 28 | [OTel GenAI İzleri ve Prometheus Metrikleriyle Gözlemlenebilirlik](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Ajan Çalışma Çerçevesi | Python, TypeScript |
 | 29 | [Çalışma Çerçevesinde Uçtan Uca Kodlama Ajanı](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Ajan Çalışma Çerçevesi | Python, TypeScript |
-| 30 | [BPE Tokenizer’ını Sıfırdan Kurma](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP ve LLM | Python, TypeScript |
+| 30 | [BPE Tokenizer’ını Sıfırdan Kurma](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP ve LLM | Python, TypeScript, Rust |
 | 31 | [Kayan Pencereli Tokenleştirilmiş Veri Kümesi](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP ve LLM | Python |
 | 32 | [Token ve Konumsal Gömme Vektörleri](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP ve LLM | Python |
 | 33 | [Çok Başlıklı Kendine Dikkat](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP ve LLM | Python |
@@ -1023,7 +1023,7 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 39 | [Denetimli İnce Ayarla Talimat Eğitimi (SFT)](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP ve LLM | Python |
 | 40 | [Doğrudan Tercih Optimizasyonunu Sıfırdan Uygulama](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP ve LLM | Python |
 | 41 | [Eksiksiz Değerlendirme İş Hattı](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP ve LLM | Python |
-| 42 | [Büyük Derlem İndiricisi](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Uçtan Uca Eğitim | Python |
+| 42 | [Büyük Derlem İndiricisi](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Uçtan Uca Eğitim | Python, TypeScript |
 | 43 | [HDF5 Biçiminde Tokenleştirilmiş Derlem](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. Uçtan Uca Eğitim | Python |
 | 44 | [Doğrusal Isınmalı Kosinüs Öğrenme Hızı](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. Uçtan Uca Eğitim | Python |
 | 45 | [Gradyan Kırpma ve Karma Hassasiyet](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. Uçtan Uca Eğitim | Python |
@@ -1037,8 +1037,8 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 53 | [Sonuç Değerlendiricisi](../../phases/19-capstone-projects/53-result-evaluator/) | D. Otomatik Araştırma | Python |
 | 54 | [Makale Yazıcısı](../../phases/19-capstone-projects/54-paper-writer/) | D. Otomatik Araştırma | Python, TypeScript |
 | 55 | [Eleştiri Döngüsü](../../phases/19-capstone-projects/55-critic-loop/) | D. Otomatik Araştırma | Python, TypeScript |
-| 56 | [Yineleme Zamanlayıcısı](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Otomatik Araştırma | Python |
-| 57 | [Uçtan Uca Araştırma Demosu](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Otomatik Araştırma | Python |
+| 56 | [Yineleme Zamanlayıcısı](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Otomatik Araştırma | Python, TypeScript |
+| 57 | [Uçtan Uca Araştırma Demosu](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Otomatik Araştırma | Python, TypeScript |
 | 58 | [Görsel Kodlayıcı Yama Parçaları](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Çok Kipli VLM | Python |
 | 59 | [Görsel Transformer Kodlayıcısı](../../phases/19-capstone-projects/59-vit-transformer/) | E. Çok Kipli VLM | Python |
 | 60 | [Kipleri Hizalamak için Projeksiyon Katmanı](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. Çok Kipli VLM | Python |
@@ -1052,11 +1052,11 @@ Her Aşama 14 çalışma tezgâhı dersi (31–42), ajana ders belgelerini açma
 | 68 | [RAG Değerlendirmesi: Kesinlik, Duyarlılık, MRR, nDCG, Sadakat ve Yanıt İlgililiği](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. İleri RAG | Python, TypeScript |
 | 69 | [Uçtan Uca RAG Sistemi](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. İleri RAG | Python |
 | 70 | [Görev Tanımı Biçimi](../../phases/19-capstone-projects/70-task-spec-format/) | G. Değerlendirme Çerçevesi | Python, TypeScript |
-| 71 | [Klasik Metrikler](../../phases/19-capstone-projects/71-classical-metrics/) | G. Değerlendirme Çerçevesi | Python |
-| 72 | [Kod Çalıştırma Ölçütü](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Değerlendirme Çerçevesi | Python |
-| 73 | [Şaşkınlık ve Kalibrasyon](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Değerlendirme Çerçevesi | Python |
-| 74 | [Sıralama Tablosu Birleştirmesi](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Değerlendirme Çerçevesi | Python |
-| 75 | [Uçtan Uca Değerlendirme Çalıştırıcısı](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Değerlendirme Çerçevesi | Python |
+| 71 | [Klasik Metrikler](../../phases/19-capstone-projects/71-classical-metrics/) | G. Değerlendirme Çerçevesi | Python, TypeScript |
+| 72 | [Kod Çalıştırma Ölçütü](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Değerlendirme Çerçevesi | Python, TypeScript |
+| 73 | [Şaşkınlık ve Kalibrasyon](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Değerlendirme Çerçevesi | Python, TypeScript |
+| 74 | [Sıralama Tablosu Birleştirmesi](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Değerlendirme Çerçevesi | Python, TypeScript |
+| 75 | [Uçtan Uca Değerlendirme Çalıştırıcısı](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Değerlendirme Çerçevesi | Python, TypeScript |
 | 76 | [Toplu İşlemleri Sıfırdan Uygulama](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. Dağıtık Eğitim | Python |
 | 77 | [Veri Paralelliği DDP’yi Sıfırdan Kurma](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. Dağıtık Eğitim | Python |
 | 78 | [ZeRO ile En İyileyici Durumunu Parçalama](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. Dağıtık Eğitim | Python |
@@ -1129,7 +1129,7 @@ Her ders, müfredatın tamamında aynı yapıyı izleyen ayrı bir klasörde yer
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      çalıştırılabilir uygulamalar (Python, TypeScript, Rust, Julia)
+├── code/      çalıştırılabilir uygulamalar (Python, TypeScript, Rust, Julia, Go)
 ├── docs/
 │   └── en.md  ders anlatımı
 └── outputs/   bu dersin ürettiği istemler, beceriler, ajanlar veya MCP sunucuları

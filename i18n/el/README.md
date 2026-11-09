@@ -19,7 +19,7 @@
 
 Δωρεάν, ανοικτού κώδικα, με άδεια MIT. Μάθετε στον ιστότοπο, με έναν πράκτορα προγραμματισμού ή εκτελώντας κώδικα τοπικά.
 
-> 542 μαθήματα. 20 φάσεις. Python, TypeScript, Rust, Julia.
+> 542 μαθήματα. 20 φάσεις. Python, TypeScript, Rust, Julia, Go.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Άδεια MIT"></a>
@@ -374,19 +374,19 @@ flowchart TB
 | 07 | [Θεώρημα Bayes και στατιστική σκέψη](../../phases/01-math-foundations/07-bayes-theorem/) | Κατασκευή | Python, TypeScript |
 | 08 | [Βελτιστοποίηση: οικογένεια καθόδου κλίσης](../../phases/01-math-foundations/08-optimization/) | Κατασκευή | Python, Julia |
 | 09 | [Θεωρία πληροφορίας: εντροπία και απόκλιση KL](../../phases/01-math-foundations/09-information-theory/) | Μάθηση | Python, TypeScript |
-| 10 | [Μείωση διαστάσεων: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Κατασκευή | Python, TypeScript |
+| 10 | [Μείωση διαστάσεων: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Κατασκευή | Python, TypeScript, Julia |
 | 11 | [Ανάλυση ιδιαζουσών τιμών](../../phases/01-math-foundations/11-singular-value-decomposition/) | Κατασκευή | Python, Julia |
 | 12 | [Πράξεις τανυστών](../../phases/01-math-foundations/12-tensor-operations/) | Κατασκευή | Python, TypeScript |
-| 13 | [Αριθμητική ευστάθεια](../../phases/01-math-foundations/13-numerical-stability/) | Κατασκευή | Python, TypeScript |
+| 13 | [Αριθμητική ευστάθεια](../../phases/01-math-foundations/13-numerical-stability/) | Κατασκευή | Python, TypeScript, Julia |
 | 14 | [Νόρμες και αποστάσεις](../../phases/01-math-foundations/14-norms-and-distances/) | Κατασκευή | Python, TypeScript |
 | 15 | [Στατιστική για ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Κατασκευή | Python, TypeScript |
-| 16 | [Μέθοδοι δειγματοληψίας](../../phases/01-math-foundations/16-sampling-methods/) | Κατασκευή | Python, TypeScript |
-| 17 | [Γραμμικά συστήματα](../../phases/01-math-foundations/17-linear-systems/) | Κατασκευή | Python, TypeScript |
-| 18 | [Κυρτή βελτιστοποίηση](../../phases/01-math-foundations/18-convex-optimization/) | Κατασκευή | Python, TypeScript |
+| 16 | [Μέθοδοι δειγματοληψίας](../../phases/01-math-foundations/16-sampling-methods/) | Κατασκευή | Python, TypeScript, Julia |
+| 17 | [Γραμμικά συστήματα](../../phases/01-math-foundations/17-linear-systems/) | Κατασκευή | Python, TypeScript, Julia |
+| 18 | [Κυρτή βελτιστοποίηση](../../phases/01-math-foundations/18-convex-optimization/) | Κατασκευή | Python, TypeScript, Julia |
 | 19 | [Μιγαδικοί αριθμοί για ΤΝ](../../phases/01-math-foundations/19-complex-numbers/) | Μάθηση | Python, TypeScript |
-| 20 | [Ο μετασχηματισμός Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Κατασκευή | Python, TypeScript |
+| 20 | [Ο μετασχηματισμός Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Κατασκευή | Python, TypeScript, Julia |
 | 21 | [Θεωρία γράφων για ML](../../phases/01-math-foundations/21-graph-theory/) | Κατασκευή | Python, TypeScript |
-| 22 | [Στοχαστικές διαδικασίες](../../phases/01-math-foundations/22-stochastic-processes/) | Μάθηση | Python |
+| 22 | [Στοχαστικές διαδικασίες](../../phases/01-math-foundations/22-stochastic-processes/) | Μάθηση | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ flowchart TB
 
 | # | Μάθημα | Τύπος | Γλώσσα |
 |:---:|--------|:----:|------|
-| 01 | [Το perceptron: από πού ξεκίνησαν όλα](../../phases/03-deep-learning-core/01-the-perceptron/) | Κατασκευή | Python, Rust, Julia |
-| 02 | [Πολυεπίπεδα δίκτυα και εμπρόσθια διάδοση](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Κατασκευή | Python, TypeScript |
-| 03 | [Οπισθοδιάδοση από το μηδέν](../../phases/03-deep-learning-core/03-backpropagation/) | Κατασκευή | Python, Rust, Julia |
-| 04 | [Συναρτήσεις ενεργοποίησης: ReLU, sigmoid, GELU και ο ρόλος τους](../../phases/03-deep-learning-core/04-activation-functions/) | Κατασκευή | Python, Julia |
-| 05 | [Συναρτήσεις απώλειας: MSE, διασταυρούμενη εντροπία και αντιπαραβολή](../../phases/03-deep-learning-core/05-loss-functions/) | Κατασκευή | Python, Julia |
-| 06 | [Βελτιστοποιητές: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Κατασκευή | Python, TypeScript |
-| 07 | [Κανονικοποίηση: dropout, απόσβεση βαρών, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Κατασκευή | Python, TypeScript |
-| 08 | [Αρχικοποίηση βαρών και σταθερότητα εκπαίδευσης](../../phases/03-deep-learning-core/08-weight-initialization/) | Κατασκευή | Python, TypeScript |
-| 09 | [Προγράμματα ρυθμού μάθησης και προθέρμανση](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Κατασκευή | Python, TypeScript |
-| 10 | [Φτιάξε το δικό σου μικρό πλαίσιο](../../phases/03-deep-learning-core/10-mini-framework/) | Κατασκευή | Python, TypeScript |
+| 01 | [Το perceptron: από πού ξεκίνησαν όλα](../../phases/03-deep-learning-core/01-the-perceptron/) | Κατασκευή | Python, TypeScript, Rust, Julia |
+| 02 | [Πολυεπίπεδα δίκτυα και εμπρόσθια διάδοση](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Κατασκευή | Python, TypeScript, Julia |
+| 03 | [Οπισθοδιάδοση από το μηδέν](../../phases/03-deep-learning-core/03-backpropagation/) | Κατασκευή | Python, TypeScript, Rust, Julia |
+| 04 | [Συναρτήσεις ενεργοποίησης: ReLU, sigmoid, GELU και ο ρόλος τους](../../phases/03-deep-learning-core/04-activation-functions/) | Κατασκευή | Python, TypeScript, Julia |
+| 05 | [Συναρτήσεις απώλειας: MSE, διασταυρούμενη εντροπία και αντιπαραβολή](../../phases/03-deep-learning-core/05-loss-functions/) | Κατασκευή | Python, TypeScript, Julia |
+| 06 | [Βελτιστοποιητές: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Κατασκευή | Python, TypeScript, Julia |
+| 07 | [Κανονικοποίηση: dropout, απόσβεση βαρών, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Κατασκευή | Python, TypeScript, Julia |
+| 08 | [Αρχικοποίηση βαρών και σταθερότητα εκπαίδευσης](../../phases/03-deep-learning-core/08-weight-initialization/) | Κατασκευή | Python, TypeScript, Julia |
+| 09 | [Προγράμματα ρυθμού μάθησης και προθέρμανση](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Κατασκευή | Python, TypeScript, Julia |
+| 10 | [Φτιάξε το δικό σου μικρό πλαίσιο](../../phases/03-deep-learning-core/10-mini-framework/) | Κατασκευή | Python, TypeScript, Julia |
 | 11 | [Εισαγωγή στο PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Κατασκευή | Python |
 | 12 | [Εισαγωγή στο JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Κατασκευή | Python |
 | 13 | [Αποσφαλμάτωση νευρωνικών δικτύων](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Κατασκευή | Python |
@@ -448,8 +448,8 @@ flowchart TB
 
 | # | Μάθημα | Τύπος | Γλώσσα |
 |:---:|--------|:----:|------|
-| 01 | [Βασικές αρχές εικόνας: εικονοστοιχεία, κανάλια και χρωματικοί χώροι](../../phases/04-computer-vision/01-image-fundamentals/) | Μάθηση | Python |
-| 02 | [Συνελίξεις από το μηδέν](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Κατασκευή | Python |
+| 01 | [Βασικές αρχές εικόνας: εικονοστοιχεία, κανάλια και χρωματικοί χώροι](../../phases/04-computer-vision/01-image-fundamentals/) | Μάθηση | Python, Julia |
+| 02 | [Συνελίξεις από το μηδέν](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Κατασκευή | Python, Julia |
 | 03 | [CNN: από το LeNet στο ResNet](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | Κατασκευή | Python |
 | 04 | [Ταξινόμηση εικόνων](../../phases/04-computer-vision/04-image-classification/) | Κατασκευή | Python |
 | 05 | [Μεταφορά μάθησης και λεπτομερής προσαρμογή](../../phases/04-computer-vision/05-transfer-learning/) | Κατασκευή | Python |
@@ -474,7 +474,7 @@ flowchart TB
 | 24 | [SAM 3 και κατάτμηση ανοικτού λεξιλογίου](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | Κατασκευή | Python |
 | 25 | [Οπτικογλωσσικά μοντέλα (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | Κατασκευή | Python |
 | 26 | [Εκτίμηση βάθους και γεωμετρίας από μία εικόνα](../../phases/04-computer-vision/26-monocular-depth/) | Κατασκευή | Python |
-| 27 | [Παρακολούθηση πολλών αντικειμένων και μνήμη βίντεο](../../phases/04-computer-vision/27-multi-object-tracking/) | Κατασκευή | Python |
+| 27 | [Παρακολούθηση πολλών αντικειμένων και μνήμη βίντεο](../../phases/04-computer-vision/27-multi-object-tracking/) | Κατασκευή | Python, Rust |
 | 28 | [Μοντέλα κόσμου και διάχυση βίντεο](../../phases/04-computer-vision/28-world-models-video-diffusion/) | Κατασκευή | Python |
 
 </details>
@@ -487,7 +487,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [Επεξεργασία κειμένου: τοκενικοποίηση, αποκοπή καταλήξεων και λημματοποίηση](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Κατασκευή | Python, TypeScript |
 | 02 | [Σάκος λέξεων, TF-IDF και αναπαράσταση κειμένου](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Κατασκευή | Python, TypeScript |
-| 03 | [Ενσωματώσεις λέξεων: Word2Vec από το μηδέν](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Κατασκευή | Python |
+| 03 | [Ενσωματώσεις λέξεων: Word2Vec από το μηδέν](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Κατασκευή | Python, Julia |
 | 04 | [GloVe, FastText και ενσωματώσεις υπολέξεων](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Κατασκευή | Python, TypeScript |
 | 05 | [Ανάλυση συναισθήματος](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Κατασκευή | Python, TypeScript |
 | 06 | [Αναγνώριση κατονομασμένων οντοτήτων (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Κατασκευή | Python, TypeScript |
@@ -498,13 +498,13 @@ flowchart TB
 | 11 | [Μηχανική μετάφραση](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Κατασκευή | Python, TypeScript |
 | 12 | [Σύνοψη κειμένου](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Κατασκευή | Python, TypeScript |
 | 13 | [Συστήματα απάντησης ερωτήσεων](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Κατασκευή | Python, TypeScript |
-| 14 | [Ανάκτηση πληροφοριών και αναζήτηση](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Κατασκευή | Python, TypeScript |
-| 15 | [Μοντελοποίηση θεμάτων: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Κατασκευή | Python, TypeScript |
+| 14 | [Ανάκτηση πληροφοριών και αναζήτηση](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Κατασκευή | Python, TypeScript, Rust |
+| 15 | [Μοντελοποίηση θεμάτων: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Κατασκευή | Python, TypeScript, Julia |
 | 16 | [Παραγωγή κειμένου](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Κατασκευή | Python, TypeScript |
 | 17 | [Συνομιλιακά συστήματα: από κανόνες σε νευρωνικά δίκτυα](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Κατασκευή | Python, TypeScript |
 | 18 | [Πολυγλωσσικό NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Κατασκευή | Python, TypeScript |
-| 19 | [Τοκενικοποίηση υπολέξεων: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Μάθηση | Python, TypeScript |
-| 20 | [Δομημένες έξοδοι και περιορισμένη αποκωδικοποίηση](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Κατασκευή | Python, TypeScript |
+| 19 | [Τοκενικοποίηση υπολέξεων: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Μάθηση | Python, TypeScript, Rust |
+| 20 | [Δομημένες έξοδοι και περιορισμένη αποκωδικοποίηση](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Κατασκευή | Python, TypeScript, Rust |
 | 21 | [NLI και κειμενική συνεπαγωγή](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Μάθηση | Python, TypeScript |
 | 22 | [Εμβάθυνση στα μοντέλα ενσωματώσεων](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Μάθηση | Python, TypeScript |
 | 23 | [Στρατηγικές τεμαχισμού για RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Κατασκευή | Python, TypeScript |
@@ -523,8 +523,8 @@ flowchart TB
 
 | # | Μάθημα | Τύπος | Γλώσσα |
 |:---:|--------|:----:|------|
-| 01 | [Βασικές αρχές ήχου: κυματομορφές, δειγματοληψία και FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Μάθηση | Python, TypeScript |
-| 02 | [Φασματογραφήματα, κλίμακα mel και χαρακτηριστικά ήχου](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Κατασκευή | Python, TypeScript |
+| 01 | [Βασικές αρχές ήχου: κυματομορφές, δειγματοληψία και FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Μάθηση | Python, TypeScript, Julia |
+| 02 | [Φασματογραφήματα, κλίμακα mel και χαρακτηριστικά ήχου](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Κατασκευή | Python, TypeScript, Julia |
 | 03 | [Ταξινόμηση ήχου](../../phases/06-speech-and-audio/03-audio-classification) | Κατασκευή | Python, TypeScript |
 | 04 | [Αναγνώριση ομιλίας (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Κατασκευή | Python, TypeScript |
 | 05 | [Whisper: αρχιτεκτονική και λεπτομερής προσαρμογή](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Κατασκευή | Python, TypeScript |
@@ -536,7 +536,7 @@ flowchart TB
 | 11 | [Επεξεργασία ήχου πραγματικού χρόνου](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Κατασκευή | Python, Rust |
 | 12 | [Φτιάξε ροή φωνητικού βοηθού](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Κατασκευή | Python, TypeScript |
 | 13 | [Νευρωνικοί κωδικοποιητές ήχου: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Μάθηση | Python, TypeScript |
-| 14 | [Ανίχνευση φωνητικής δραστηριότητας και εναλλαγή ομιλητών](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Κατασκευή | Python, TypeScript |
+| 14 | [Ανίχνευση φωνητικής δραστηριότητας και εναλλαγή ομιλητών](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Κατασκευή | Python, TypeScript, Rust |
 | 15 | [Συνεχής μετατροπή ομιλίας σε ομιλία: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Μάθηση | Python, TypeScript |
 | 16 | [Προστασία από πλαστογράφηση φωνής και υδατοσήμανση ήχου](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Κατασκευή | Python, TypeScript |
 | 17 | [Αξιολόγηση ήχου: WER, MOS, MMAU και πίνακες κατάταξης](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Μάθηση | Python, TypeScript |
@@ -586,9 +586,9 @@ flowchart TB
 | 10 | [Δημιουργία βίντεο](../../phases/08-generative-ai/10-video-generation/) | Κατασκευή | Python, TypeScript |
 | 11 | [Δημιουργία ήχου](../../phases/08-generative-ai/11-audio-generation/) | Κατασκευή | Python, TypeScript |
 | 12 | [Δημιουργία 3D](../../phases/08-generative-ai/12-3d-generation/) | Κατασκευή | Python, TypeScript |
-| 13 | [Αντιστοίχιση ροών και ευθυγραμμισμένες ροές](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Κατασκευή | Python, TypeScript |
+| 13 | [Αντιστοίχιση ροών και ευθυγραμμισμένες ροές](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Κατασκευή | Python, TypeScript, Julia |
 | 14 | [Αξιολόγηση: FID και βαθμολογία CLIP](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Κατασκευή | Python, TypeScript |
-| 19 | [Οπτική αυτοπαλινδρομική μοντελοποίηση (VAR): πρόβλεψη επόμενης κλίμακας](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Κατασκευή | Python |
+| 19 | [Οπτική αυτοπαλινδρομική μοντελοποίηση (VAR): πρόβλεψη επόμενης κλίμακας](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Κατασκευή | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ flowchart TB
 | # | Μάθημα | Τύπος | Γλώσσα |
 |:---:|--------|:----:|------|
 | 01 | [Τοκενικοποιητές: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Κατασκευή | Python, Rust |
-| 02 | [Κατασκευή τοκενικοποιητή από το μηδέν](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Κατασκευή | Python |
+| 02 | [Κατασκευή τοκενικοποιητή από το μηδέν](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Κατασκευή | Python, TypeScript |
 | 03 | [Ροές δεδομένων για προεκπαίδευση](../../phases/10-llms-from-scratch/03-data-pipelines/) | Κατασκευή | Python, Rust |
 | 04 | [Προεκπαίδευση μικρού GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Κατασκευή | Python, Rust |
 | 05 | [Κατανεμημένη εκπαίδευση, FSDP και DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Κατασκευή | Python |
@@ -665,7 +665,7 @@ flowchart TB
 | 11 | [Προσωρινή αποθήκευση, περιορισμός ρυθμού και κόστος](../../phases/11-llm-engineering/11-caching-cost/) | Κατασκευή | Python, TypeScript |
 | 12 | [Προστατευτικά όρια και ασφάλεια](../../phases/11-llm-engineering/12-guardrails/) | Κατασκευή | Python, TypeScript |
 | 13 | [Κατασκευή εφαρμογής LLM για παραγωγή](../../phases/11-llm-engineering/13-production-app/) | Κατασκευή | Python, TypeScript |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Κατασκευή | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Κατασκευή | Python, TypeScript, Go |
 | 15 | [Προσωρινή αποθήκευση προτροπών και συμφραζομένου](../../phases/11-llm-engineering/15-prompt-caching/) | Κατασκευή | Python, TypeScript |
 | 16 | [Μηχανές καταστάσεων πρακτόρων: γράφοι, κόμβοι και σημεία ελέγχου](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Κατασκευή | Python |
 | 17 | [Συμβιβασμοί πλαισίων πρακτόρων](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Μάθηση | Python, TypeScript |
@@ -714,25 +714,25 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [Η διεπαφή εργαλείων](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Μάθηση | Python, TypeScript |
 | 02 | [Εμβάθυνση στην κλήση συναρτήσεων](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Κατασκευή | Python, TypeScript |
-| 03 | [Παράλληλες και συνεχείς κλήσεις εργαλείων](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Κατασκευή | Python, TypeScript |
+| 03 | [Παράλληλες και συνεχείς κλήσεις εργαλείων](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Κατασκευή | Python, TypeScript, Go |
 | 04 | [Δομημένη έξοδος](../../phases/13-tools-and-protocols/04-structured-output/) | Κατασκευή | Python, TypeScript |
 | 05 | [Σχεδιασμός σχημάτων εργαλείων](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Μάθηση | Python, TypeScript |
 | 06 | [Βασικές αρχές MCP: αιτήματα χωρίς κατάσταση και JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Μάθηση | Python, TypeScript |
-| 07 | [Κατασκευή διακομιστή MCP: Python και TypeScript χωρίς κατάσταση](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Κατασκευή | Python, TypeScript |
+| 07 | [Κατασκευή διακομιστή MCP: Python και TypeScript χωρίς κατάσταση](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Κατασκευή | Python, TypeScript, Go |
 | 08 | [Κατασκευή πελάτη MCP: ανακάλυψη, δρομολόγηση και συμβατότητα δύο γενεών](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Κατασκευή | Python, TypeScript |
-| 09 | [Μεταφορές MCP: stdio και Streamable HTTP χωρίς κατάσταση](../../phases/13-tools-and-protocols/09-mcp-transports/) | Μάθηση | Python, TypeScript |
+| 09 | [Μεταφορές MCP: stdio και Streamable HTTP χωρίς κατάσταση](../../phases/13-tools-and-protocols/09-mcp-transports/) | Μάθηση | Python, TypeScript, Go |
 | 10 | [Πόροι και προτροπές MCP: διευθυνσιοδοτούμενο συμφραζόμενο για διακομιστές χωρίς κατάσταση](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Κατασκευή | Python, TypeScript |
 | 11 | [Είσοδος μοντέλου MCP: μετεγκατάσταση sampling και MRTR χωρίς κατάσταση](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Κατασκευή | Python, TypeScript |
 | 12 | [Ρητό πεδίο εφαρμογής και συλλογή εισόδου χωρίς κατάσταση](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Κατασκευή | Python, TypeScript |
 | 13 | [Επέκταση εργασιών MCP: ανθεκτική εργασία πάνω σε πυρήνα χωρίς κατάσταση](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Κατασκευή | Python, TypeScript |
 | 14 | [MCP Apps στο πρωτόκολλο χωρίς κατάσταση](../../phases/13-tools-and-protocols/14-mcp-apps/) | Κατασκευή | Python, TypeScript |
 | 15 | [Ασφάλεια MCP: δηλητηριασμένα μεταδεδομένα, δρομολόγηση και κατάσταση MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Μάθηση | Python, TypeScript |
-| 16 | [Εξουσιοδότηση MCP: CIMD, δέσμευση εκδότη, PKCE και ενισχυμένη επαλήθευση](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Κατασκευή | Python, TypeScript |
-| 17 | [Πύλες MCP χωρίς κατάσταση και εισαγωγή στο μητρώο](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Μάθηση | Python, TypeScript |
-| 18 | [Εξουσιοδότηση MCP σε παραγωγή: εγγραφή και token συνδεδεμένα με εκδότη](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Κατασκευή | Python, TypeScript |
-| 19 | [Το πρωτόκολλο A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Κατασκευή | Python, TypeScript |
+| 16 | [Εξουσιοδότηση MCP: CIMD, δέσμευση εκδότη, PKCE και ενισχυμένη επαλήθευση](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Κατασκευή | Python, TypeScript, Go |
+| 17 | [Πύλες MCP χωρίς κατάσταση και εισαγωγή στο μητρώο](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Μάθηση | Python, TypeScript, Go |
+| 18 | [Εξουσιοδότηση MCP σε παραγωγή: εγγραφή και token συνδεδεμένα με εκδότη](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Κατασκευή | Python, TypeScript, Go |
+| 19 | [Το πρωτόκολλο A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Κατασκευή | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Κατασκευή | Python, TypeScript |
-| 21 | [Επίπεδο δρομολόγησης LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Μάθηση | Python, TypeScript |
+| 21 | [Επίπεδο δρομολόγησης LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Μάθηση | Python, TypeScript, Go |
 | 22 | [Agent Skills: φορητό συμβόλαιο και όριο εκτέλεσης](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Κατασκευή | Python, TypeScript |
 | 23 | [Τελικό έργο: οικοσύστημα εργαλείων χωρίς κατάσταση](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Κατασκευή | Python, TypeScript |
 | 24 | [Ανακάλυψη δεξιοτήτων και προοδευτική αποκάλυψη](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Κατασκευή | Python, TypeScript |
@@ -743,19 +743,19 @@ flowchart TB
 | 29 | [Αξιοπιστία MCP, ακύρωση και έλεγχος ροής](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Κατασκευή | Python, TypeScript |
 | 30 | [Αλυσίδα εφοδιασμού μητρώου MCP: εισαγωγή, αποκλίσεις και επαναφορά](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Κατασκευή | Python, TypeScript |
 | 31 | [Μηχανική συμμόρφωσης MCP: εκδόσεις, αποδείξεις και λειτουργία](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Κατασκευή | Python, TypeScript |
-| 32 | [Ανατομία προγράμματος: ανάγνωση ELF από το μηδέν](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Κατασκευή | Python, TypeScript |
-| 33 | [Αποσυναρμολόγηση και γράφοι ροής ελέγχου](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Κατασκευή | Python, TypeScript |
-| 34 | [Ανύψωση κώδικα μηχανής σε ψευδοκώδικα](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Κατασκευή | Python |
+| 32 | [Ανατομία προγράμματος: ανάγνωση ELF από το μηδέν](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Κατασκευή | Python, TypeScript, Rust |
+| 33 | [Αποσυναρμολόγηση και γράφοι ροής ελέγχου](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Κατασκευή | Python, TypeScript, Rust |
+| 34 | [Ανύψωση κώδικα μηχανής σε ψευδοκώδικα](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Κατασκευή | Python, TypeScript |
 | 35 | [Τεκμήρια, βεβαιότητα και άγνωστα στην ανάλυση δυαδικών](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Κατασκευή | Python, TypeScript |
 | 36 | [Ανακατασκευή και απόδειξη ισοδυναμίας](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Κατασκευή | Python, TypeScript |
 | 37 | [Το τοπίο της αντίστροφης μηχανικής](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Κατασκευή | Python, TypeScript |
 | 38 | [Συμβάσεις κλήσης και πλαίσια στοίβας](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Κατασκευή | Python, TypeScript |
 | 39 | [Ιδιώματα μεταγλωττιστή και βελτιστοποίηση](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Κατασκευή | Python, TypeScript |
-| 40 | [Σύνδεση, φόρτωση και απογυμνωμένα δυαδικά](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Κατασκευή | Python, TypeScript |
+| 40 | [Σύνδεση, φόρτωση και απογυμνωμένα δυαδικά](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Κατασκευή | Python, TypeScript, Rust |
 | 41 | [Ανάκτηση δεδομένων και τύπων](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Κατασκευή | Python, TypeScript |
 | 42 | [Δυναμική ανάλυση του δικού σου προγράμματος](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Κατασκευή | Python, TypeScript |
 | 43 | [Bytecode και διαχειριζόμενες μορφές](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Κατασκευή | Python, TypeScript |
-| 44 | [Σύγκριση δυαδικών και συμβολική εκτέλεση](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Κατασκευή | Python |
+| 44 | [Σύγκριση δυαδικών και συμβολική εκτέλεση](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Κατασκευή | Python, TypeScript |
 | 45 | [Αντίστροφη μηχανική με βοήθεια ΤΝ](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Κατασκευή | Python, TypeScript |
 
 Τα μαθήματα 06-18 και 28-31 αποτελούν την ειδική [διαδρομή Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json). Η σειρά του δηλωτικού είναι 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Ξεκίνα με την παραπάνω κλήση `learn-mcp` για την εφαρμογή σου. Το μάθημα 23 είναι το μόνο προαιρετικό τελικό έργο και απαιτεί επίσης τα μαθήματα 19 και 20.
@@ -792,13 +792,13 @@ flowchart TB
 | 20 | [Δοκιμασίες αναφοράς: WebArena και OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Μάθηση | Python, TypeScript |
 | 21 | [Χρήση υπολογιστή: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Κατασκευή | Python, TypeScript |
 | 22 | [Φωνητικοί πράκτορες: Pipecat και LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Κατασκευή | Python, TypeScript |
-| 23 | [Σημασιολογικές συμβάσεις OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Κατασκευή | Python, TypeScript |
+| 23 | [Σημασιολογικές συμβάσεις OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Κατασκευή | Python, TypeScript, Go |
 | 24 | [Παρατηρησιμότητα πρακτόρων: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Μάθηση | Python, TypeScript |
 | 25 | [Διάλογος και συνεργασία πολλών πρακτόρων](../../phases/14-agent-engineering/25-multi-agent-debate/) | Κατασκευή | Python, TypeScript |
 | 26 | [Τρόποι αποτυχίας: γιατί αποτυγχάνουν οι πράκτορες](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Κατασκευή | Python, TypeScript |
 | 27 | [Έγχυση προτροπών και άμυνα PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Κατασκευή | Python, TypeScript |
 | 28 | [Μοτίβα ενορχήστρωσης: επόπτης, σμήνος και ιεραρχία](../../phases/14-agent-engineering/28-orchestration-patterns/) | Κατασκευή | Python, TypeScript |
-| 29 | [Περιβάλλοντα παραγωγής: ουρές, συμβάντα και cron](../../phases/14-agent-engineering/29-production-runtimes/) | Μάθηση | Python, TypeScript |
+| 29 | [Περιβάλλοντα παραγωγής: ουρές, συμβάντα και cron](../../phases/14-agent-engineering/29-production-runtimes/) | Μάθηση | Python, TypeScript, Go |
 | 30 | [Ανάπτυξη πρακτόρων με οδηγό την αξιολόγηση](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Κατασκευή | Python, TypeScript |
 | 31 | [Πάγκος εργασίας πράκτορα: γιατί τα ικανά μοντέλα ακόμη αποτυγχάνουν](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Μάθηση | Python, TypeScript |
 | 32 | [Ο ελάχιστος πάγκος εργασίας πράκτορα](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Κατασκευή | Python, TypeScript |
@@ -848,7 +848,7 @@ flowchart TB
 | 09 | [Τοπίο αυτόνομων πρακτόρων προγραμματισμού (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Μάθηση | Python, TypeScript |
 | 10 | [Λειτουργίες δικαιωμάτων για αυτόνομους πράκτορες](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Μάθηση | Python, TypeScript |
 | 11 | [Πράκτορες περιηγητή και έμμεση έγχυση προτροπών](../../phases/15-autonomous-systems/11-browser-agents/) | Μάθηση | Python, TypeScript |
-| 12 | [Ανθεκτική εκτέλεση για μακροχρόνιους πράκτορες](../../phases/15-autonomous-systems/12-durable-execution/) | Μάθηση | Python, TypeScript |
+| 12 | [Ανθεκτική εκτέλεση για μακροχρόνιους πράκτορες](../../phases/15-autonomous-systems/12-durable-execution/) | Μάθηση | Python, TypeScript, Go |
 | 13 | [Προϋπολογισμοί ενεργειών, όρια επαναλήψεων και έλεγχος κόστους](../../phases/15-autonomous-systems/13-cost-governors/) | Μάθηση | Python, TypeScript |
 | 14 | [Διακόπτες έκτακτης ανάγκης, ασφάλειες και προειδοποιητικά token](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Μάθηση | Python, TypeScript |
 | 15 | [Άνθρωπος στον βρόχο: πρόταση πριν από τη δέσμευση](../../phases/15-autonomous-systems/15-propose-then-commit/) | Μάθηση | Python, TypeScript |
@@ -857,7 +857,7 @@ flowchart TB
 | 18 | [Llama Guard και ταξινόμηση εισόδου/εξόδου](../../phases/15-autonomous-systems/18-llama-guard/) | Μάθηση | Python, TypeScript |
 | 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Μάθηση | Python, TypeScript |
 | 20 | [OpenAI Preparedness Framework και DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Μάθηση | Python, TypeScript |
-| 21 | [Χρονικοί ορίζοντες METR και εξωτερική αξιολόγηση](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Μάθηση | Python, TypeScript |
+| 21 | [Χρονικοί ορίζοντες METR και εξωτερική αξιολόγηση](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Μάθηση | Python, TypeScript, Julia |
 | 22 | [CAIS, CAISI και κίνδυνος κοινωνικής κλίμακας](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Μάθηση | Python, TypeScript |
 
 </details>
@@ -876,17 +876,17 @@ flowchart TB
 | 06 | [Ιεραρχική αρχιτεκτονική και απόκλιση αποσύνθεσης](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Μάθηση | Python, TypeScript |
 | 07 | [Society of Mind και πολυπρακτορική συζήτηση](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Κατασκευή | Python, TypeScript |
 | 08 | [Εξειδίκευση ρόλων: σχεδιαστής, κριτής, εκτελεστής και επαληθευτής](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Κατασκευή | Python, TypeScript |
-| 09 | [Παράλληλα σμήνη και δικτυωμένες αρχιτεκτονικές](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Κατασκευή | Python, TypeScript |
+| 09 | [Παράλληλα σμήνη και δικτυωμένες αρχιτεκτονικές](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Κατασκευή | Python, TypeScript, Go |
 | 10 | [Ομαδική συνομιλία και επιλογή ομιλητή](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Κατασκευή | Python, TypeScript |
 | 11 | [Μεταβιβάσεις και ρουτίνες (ενορχήστρωση χωρίς κατάσταση)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Κατασκευή | Python, TypeScript |
-| 12 | [A2A: το πρωτόκολλο πράκτορα προς πράκτορα](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Κατασκευή | Python, TypeScript |
+| 12 | [A2A: το πρωτόκολλο πράκτορα προς πράκτορα](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Κατασκευή | Python, TypeScript, Go |
 | 13 | [Κοινόχρηστη μνήμη και μοτίβα μαυροπίνακα](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Κατασκευή | Python, TypeScript |
 | 14 | [Συναίνεση και ανοχή βυζαντινών σφαλμάτων](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Κατασκευή | Python, TypeScript |
 | 15 | [Ψηφοφορία, αυτοσυνέπεια και τοπολογία διαλόγου](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Κατασκευή | Python, TypeScript |
 | 16 | [Διαπραγμάτευση και παζάρι](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Κατασκευή | Python, TypeScript |
 | 17 | [Παραγωγικοί πράκτορες και αναδυόμενη προσομοίωση](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Κατασκευή | Python, TypeScript |
 | 18 | [Θεωρία του νου και αναδυόμενος συντονισμός](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Κατασκευή | Python, TypeScript |
-| 19 | [Βελτιστοποίηση σμήνους (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Κατασκευή | Python, TypeScript |
+| 19 | [Βελτιστοποίηση σμήνους (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Κατασκευή | Python, TypeScript, Julia |
 | 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Μάθηση | Python, TypeScript |
 | 21 | [Οικονομίες πρακτόρων, κίνητρα token και φήμη](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Μάθηση | Python, TypeScript |
 | 22 | [Κλιμάκωση παραγωγής: ουρές, σημεία ελέγχου και ανθεκτικότητα](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Κατασκευή | Python, TypeScript |
@@ -905,9 +905,9 @@ flowchart TB
 | 01 | [Διαχειριζόμενες πλατφόρμες LLM: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Μάθηση | Python, TypeScript |
 | 02 | [Οικονομία πλατφορμών συμπερασμού: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Μάθηση | Python, TypeScript |
 | 03 | [Αυτόματη κλιμάκωση GPU σε Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Μάθηση | Python, TypeScript |
-| 04 | [Εσωτερική λειτουργία μηχανών εξυπηρέτησης: PagedAttention, συνεχείς παρτίδες και τμηματικό prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Μάθηση | Python, TypeScript |
+| 04 | [Εσωτερική λειτουργία μηχανών εξυπηρέτησης: PagedAttention, συνεχείς παρτίδες και τμηματικό prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Μάθηση | Python, TypeScript, Rust |
 | 05 | [Εικαστική αποκωδικοποίηση EAGLE-3 σε παραγωγή](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Μάθηση | Python, TypeScript |
-| 06 | [Εξυπηρέτηση με cache προθεμάτων: RadixAttention και επαναχρησιμοποίηση KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Μάθηση | Python, TypeScript |
+| 06 | [Εξυπηρέτηση με cache προθεμάτων: RadixAttention και επαναχρησιμοποίηση KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Μάθηση | Python, TypeScript, Rust |
 | 07 | [Εξειδικευμένη μεταγλώττιση συμπερασμού: FP8 και NVFP4 σε Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Μάθηση | Python, TypeScript |
 | 08 | [Μετρικές συμπερασμού: TTFT, TPOT, ITL, goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Μάθηση | Python, TypeScript |
 | 09 | [Κβάντιση παραγωγής: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Μάθηση | Python, TypeScript |
@@ -922,7 +922,7 @@ flowchart TB
 | 18 | [Στοίβα εξυπηρέτησης παραγωγής: μεταφορά KV και δρομολόγηση με επίγνωση cache](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Μάθηση | Python, TypeScript |
 | 19 | [Πύλες ΤΝ: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Μάθηση | Python, TypeScript |
 | 20 | [Σκιώδεις δοκιμές, εκδόσεις canary και σταδιακή διάθεση](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Μάθηση | Python, TypeScript |
-| 21 | [Δοκιμές A/B λειτουργιών LLM: GrowthBook και Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Μάθηση | Python, TypeScript |
+| 21 | [Δοκιμές A/B λειτουργιών LLM: GrowthBook και Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Μάθηση | Python, TypeScript, Julia |
 | 22 | [Δοκιμές φόρτου API LLM: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Κατασκευή | Python, TypeScript |
 | 23 | [SRE για ΤΝ: πολυπρακτορική απόκριση σε συμβάντα](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Μάθηση | Python, TypeScript |
 | 24 | [Μηχανική χάους για LLM παραγωγής](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Μάθηση | Python, TypeScript |
@@ -961,7 +961,7 @@ flowchart TB
 | 19 | [Έρευνα ευημερίας μοντέλων](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Μάθηση | Python, TypeScript |
 | 20 | [Μεροληψία και βλάβες αναπαράστασης](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Κατασκευή | Python, TypeScript |
 | 21 | [Κριτήρια δικαιοσύνης: ομαδικά, ατομικά και αντιγεγονικά](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Μάθηση | Python, TypeScript |
-| 22 | [Διαφορική ιδιωτικότητα για LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Κατασκευή | Python, TypeScript |
+| 22 | [Διαφορική ιδιωτικότητα για LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Κατασκευή | Python, TypeScript, Julia |
 | 23 | [Υδατοσήμανση: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Κατασκευή | Python, TypeScript |
 | 24 | [Ρυθμιστικά πλαίσια: ΕΕ, ΗΠΑ, Ηνωμένο Βασίλειο και Κορέα](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Μάθηση | Python, TypeScript |
 | 25 | [EchoLeak και CVE για ΤΝ](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Μάθηση | Python, TypeScript |
@@ -989,9 +989,9 @@ flowchart TB
 | 08 | [Συνομιλιακό RAG παραγωγής (ρυθμιζόμενος κλάδος)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [Πράκτορας μετεγκατάστασης κώδικα (αναβάθμιση αποθετηρίου)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [Πολυπρακτορική ομάδα μηχανικής λογισμικού](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [Πίνακας παρατηρησιμότητας και αξιολόγησης LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [Πίνακας παρατηρησιμότητας και αξιολόγησης LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [Ροή κατανόησης βίντεο (σκηνή → ερωτήσεις και απαντήσεις)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [Διακομιστής MCP χωρίς κατάσταση με μητρώο και διακυβέρνηση](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [Διακομιστής MCP χωρίς κατάσταση με μητρώο και διακυβέρνηση](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [Διακομιστής συμπερασμού με εικαστική αποκωδικοποίηση](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [Συνταγματικό περιβάλλον ασφάλειας και πεδίο επιθετικών δοκιμών](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [Αυτόνομος πράκτορας από αναφορά GitHub σε PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1011,7 +1011,7 @@ flowchart TB
 | 27 | [Περιβάλλον αξιολόγησης με σταθερές δοκιμαστικές εργασίες](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python, TypeScript |
 | 28 | [Παρατηρησιμότητα με spans OTel GenAI και μετρικές Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python, TypeScript |
 | 29 | [Πλήρης πράκτορας προγραμματισμού στο περιβάλλον εκτέλεσης](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Περιβάλλον εκτέλεσης πρακτόρων | Python, TypeScript |
-| 30 | [Τοκενικοποιητής BPE από το μηδέν](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
+| 30 | [Τοκενικοποιητής BPE από το μηδέν](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript, Rust |
 | 31 | [Τοκενικοποιημένο σύνολο δεδομένων με ολισθαίνον παράθυρο](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Ενσωματώσεις token και θέσης](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Αυτοπροσοχή πολλαπλών κεφαλών](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1023,7 +1023,7 @@ flowchart TB
 | 39 | [Προσαρμογή οδηγιών μέσω επιβλεπόμενης εκπαίδευσης](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP LLM | Python |
 | 40 | [Άμεση βελτιστοποίηση προτιμήσεων από το μηδέν](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP LLM | Python |
 | 41 | [Πλήρης ροή αξιολόγησης](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP LLM | Python |
-| 42 | [Λήψη μεγάλου σώματος κειμένων](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Εκπαίδευση από την αρχή ως το τέλος | Python |
+| 42 | [Λήψη μεγάλου σώματος κειμένων](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Εκπαίδευση από την αρχή ως το τέλος | Python, TypeScript |
 | 43 | [Τοκενικοποιημένο σώμα κειμένων HDF5](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. Εκπαίδευση από την αρχή ως το τέλος | Python |
 | 44 | [Συνημιτονοειδής ρυθμός μάθησης με γραμμική προθέρμανση](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. Εκπαίδευση από την αρχή ως το τέλος | Python |
 | 45 | [Περικοπή κλίσεων και μικτή ακρίβεια](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. Εκπαίδευση από την αρχή ως το τέλος | Python |
@@ -1037,8 +1037,8 @@ flowchart TB
 | 53 | [Αξιολογητής αποτελεσμάτων](../../phases/19-capstone-projects/53-result-evaluator/) | D. Αυτόματη έρευνα | Python |
 | 54 | [Συγγραφέας επιστημονικών εργασιών](../../phases/19-capstone-projects/54-paper-writer/) | D. Αυτόματη έρευνα | Python, TypeScript |
 | 55 | [Βρόχος κριτή](../../phases/19-capstone-projects/55-critic-loop/) | D. Αυτόματη έρευνα | Python, TypeScript |
-| 56 | [Χρονοπρογραμματιστής επαναλήψεων](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Αυτόματη έρευνα | Python |
-| 57 | [Πλήρης επίδειξη έρευνας](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Αυτόματη έρευνα | Python |
+| 56 | [Χρονοπρογραμματιστής επαναλήψεων](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Αυτόματη έρευνα | Python, TypeScript |
+| 57 | [Πλήρης επίδειξη έρευνας](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Αυτόματη έρευνα | Python, TypeScript |
 | 58 | [Τμήματα οπτικού κωδικοποιητή](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Πολυτροπικό VLM | Python |
 | 59 | [Κωδικοποιητής οπτικού μετασχηματιστή](../../phases/19-capstone-projects/59-vit-transformer/) | E. Πολυτροπικό VLM | Python |
 | 60 | [Επίπεδο προβολής για ευθυγράμμιση τροπικοτήτων](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. Πολυτροπικό VLM | Python |
@@ -1052,11 +1052,11 @@ flowchart TB
 | 68 | [Αξιολόγηση RAG: ακρίβεια, ανάκληση, MRR, nDCG, πιστότητα και συνάφεια απάντησης](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Προηγμένο RAG | Python, TypeScript |
 | 69 | [Πλήρες σύστημα RAG](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Προηγμένο RAG | Python |
 | 70 | [Μορφή προδιαγραφών εργασίας](../../phases/19-capstone-projects/70-task-spec-format/) | G. Πλαίσιο αξιολόγησης | Python, TypeScript |
-| 71 | [Κλασικές μετρικές](../../phases/19-capstone-projects/71-classical-metrics/) | G. Πλαίσιο αξιολόγησης | Python |
-| 72 | [Μετρική εκτέλεσης κώδικα](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Πλαίσιο αξιολόγησης | Python |
-| 73 | [Περιπλοκότητα και βαθμονόμηση](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Πλαίσιο αξιολόγησης | Python |
-| 74 | [Συνάθροιση πινάκων κατάταξης](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Πλαίσιο αξιολόγησης | Python |
-| 75 | [Πλήρης εκτελεστής αξιολόγησης](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Πλαίσιο αξιολόγησης | Python |
+| 71 | [Κλασικές μετρικές](../../phases/19-capstone-projects/71-classical-metrics/) | G. Πλαίσιο αξιολόγησης | Python, TypeScript |
+| 72 | [Μετρική εκτέλεσης κώδικα](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Πλαίσιο αξιολόγησης | Python, TypeScript |
+| 73 | [Περιπλοκότητα και βαθμονόμηση](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Πλαίσιο αξιολόγησης | Python, TypeScript |
+| 74 | [Συνάθροιση πινάκων κατάταξης](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Πλαίσιο αξιολόγησης | Python, TypeScript |
+| 75 | [Πλήρης εκτελεστής αξιολόγησης](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Πλαίσιο αξιολόγησης | Python, TypeScript |
 | 76 | [Συλλογικές πράξεις από το μηδέν](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. Κατανεμημένη εκπαίδευση | Python |
 | 77 | [Παραλληλισμός δεδομένων DDP από το μηδέν](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. Κατανεμημένη εκπαίδευση | Python |
 | 78 | [Κατακερματισμός κατάστασης βελτιστοποιητή ZeRO](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. Κατανεμημένη εκπαίδευση | Python |
@@ -1129,7 +1129,7 @@ flowchart TB
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      εκτελέσιμες υλοποιήσεις (Python, TypeScript, Rust, Julia)
+├── code/      εκτελέσιμες υλοποιήσεις (Python, TypeScript, Rust, Julia, Go)
 ├── docs/
 │   └── en.md  κείμενο του μαθήματος
 └── outputs/   προτροπές, δεξιότητες, πράκτορες ή διακομιστές MCP που παράγει αυτό το μάθημα

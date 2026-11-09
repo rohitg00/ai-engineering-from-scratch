@@ -3,12 +3,12 @@
 // Source: phases/19-capstone-projects/55-critic-loop/docs/en.md
 // Run: npx tsx phases/19-capstone-projects/55-critic-loop/code/main.ts
 
-class PyFloat {
+export class PyFloat {
   constructor(readonly v: number) {}
 }
 
-type Json = null | boolean | number | string | PyFloat | Json[] | { [key: string]: Json };
-type Obj = { [key: string]: Json };
+export type Json = null | boolean | number | string | PyFloat | Json[] | { [key: string]: Json };
+export type Obj = { [key: string]: Json };
 
 const fl = (v: number): PyFloat => new PyFloat(v);
 
@@ -120,7 +120,7 @@ function scoresJson(scores: Scores): Obj {
   return out;
 }
 
-class MiniSection {
+export class MiniSection {
   constructor(
     public id: string,
     public title: string,
@@ -130,7 +130,7 @@ class MiniSection {
   ) {}
 }
 
-class MiniPaper {
+export class MiniPaper {
   originality_tag = "low";
   citation_count_target = 4;
   figure_count_target = 2;
@@ -205,7 +205,7 @@ class LoopTrace {
   }
 }
 
-class LoopResult {
+export class LoopResult {
   constructor(
     public status: string,
     public reason: string,
@@ -235,7 +235,7 @@ interface CriticLoopOptions {
   plateau_window?: number;
 }
 
-class CriticLoop {
+export class CriticLoop {
   max_rounds: number;
   target_score: number;
   plateau_epsilon: number;
@@ -332,7 +332,7 @@ function deterministicScore(paper: MiniPaper): Scores {
   };
 }
 
-function deterministicCritic(paper: MiniPaper, round: number): Critique {
+export function deterministicCritic(paper: MiniPaper, round: number): Critique {
   const scores = deterministicScore(paper);
   const suggestions: Suggestion[] = [];
 
@@ -359,7 +359,7 @@ function deterministicCritic(paper: MiniPaper, round: number): Critique {
   return new Critique(round, scores, suggestions, reason);
 }
 
-function deterministicReviser(paper: MiniPaper, suggestions: Suggestion[]): MiniPaper {
+export function deterministicReviser(paper: MiniPaper, suggestions: Suggestion[]): MiniPaper {
   let figCounter = 0;
   let citeCounter = 0;
   for (const s of paper.sections) {
@@ -416,6 +416,6 @@ function demo(): Obj {
   return result.toDict();
 }
 
-console.log(pyDumps(demo(), 2));
-
-export {};
+if (require.main === module) {
+  console.log(pyDumps(demo(), 2));
+}

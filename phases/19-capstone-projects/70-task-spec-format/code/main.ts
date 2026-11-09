@@ -597,4 +597,6 @@ export function demo(): number {
   return 0;
 }
 
-process.exitCode = demo();
+if (require.main === module) {
+  process.exitCode = demo();
+}

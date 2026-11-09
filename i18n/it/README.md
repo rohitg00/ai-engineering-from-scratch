@@ -19,7 +19,7 @@ Implementa i componenti interni dei modelli, le pipeline di recupero e gli ambie
 
 Gratuito, open source, con licenza MIT. Impara sul sito, con un agente di programmazione o eseguendo codice locale.
 
-> 542 lezioni. 20 fasi. Python, TypeScript, Rust, Julia.
+> 542 lezioni. 20 fasi. Python, TypeScript, Rust, Julia, Go.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licenza MIT"></a>
@@ -374,19 +374,19 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 | 07 | [Teorema di Bayes e pensiero statistico](../../phases/01-math-foundations/07-bayes-theorem/) | Costruire | Python, TypeScript |
 | 08 | [Ottimizzazione: metodi di discesa del gradiente](../../phases/01-math-foundations/08-optimization/) | Costruire | Python, Julia |
 | 09 | [Teoria dell’informazione: entropia e divergenza KL](../../phases/01-math-foundations/09-information-theory/) | Imparare | Python, TypeScript |
-| 10 | [Riduzione della dimensionalità: PCA, t-SNE e UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Costruire | Python, TypeScript |
+| 10 | [Riduzione della dimensionalità: PCA, t-SNE e UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Costruire | Python, TypeScript, Julia |
 | 11 | [Decomposizione ai valori singolari](../../phases/01-math-foundations/11-singular-value-decomposition/) | Costruire | Python, Julia |
 | 12 | [Operazioni sui tensori](../../phases/01-math-foundations/12-tensor-operations/) | Costruire | Python, TypeScript |
-| 13 | [Stabilità numerica](../../phases/01-math-foundations/13-numerical-stability/) | Costruire | Python, TypeScript |
+| 13 | [Stabilità numerica](../../phases/01-math-foundations/13-numerical-stability/) | Costruire | Python, TypeScript, Julia |
 | 14 | [Norme e distanze](../../phases/01-math-foundations/14-norms-and-distances/) | Costruire | Python, TypeScript |
 | 15 | [Statistica per il machine learning](../../phases/01-math-foundations/15-statistics-for-ml/) | Costruire | Python, TypeScript |
-| 16 | [Metodi di campionamento](../../phases/01-math-foundations/16-sampling-methods/) | Costruire | Python, TypeScript |
-| 17 | [Sistemi lineari](../../phases/01-math-foundations/17-linear-systems/) | Costruire | Python, TypeScript |
-| 18 | [Ottimizzazione convessa](../../phases/01-math-foundations/18-convex-optimization/) | Costruire | Python, TypeScript |
+| 16 | [Metodi di campionamento](../../phases/01-math-foundations/16-sampling-methods/) | Costruire | Python, TypeScript, Julia |
+| 17 | [Sistemi lineari](../../phases/01-math-foundations/17-linear-systems/) | Costruire | Python, TypeScript, Julia |
+| 18 | [Ottimizzazione convessa](../../phases/01-math-foundations/18-convex-optimization/) | Costruire | Python, TypeScript, Julia |
 | 19 | [Numeri complessi per l’IA](../../phases/01-math-foundations/19-complex-numbers/) | Imparare | Python, TypeScript |
-| 20 | [Trasformata di Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Costruire | Python, TypeScript |
+| 20 | [Trasformata di Fourier](../../phases/01-math-foundations/20-fourier-transform/) | Costruire | Python, TypeScript, Julia |
 | 21 | [Teoria dei grafi per il machine learning](../../phases/01-math-foundations/21-graph-theory/) | Costruire | Python, TypeScript |
-| 22 | [Processi stocastici](../../phases/01-math-foundations/22-stochastic-processes/) | Imparare | Python |
+| 22 | [Processi stocastici](../../phases/01-math-foundations/22-stochastic-processes/) | Imparare | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 
 | # | Lezione | Tipo | Linguaggio |
 |:---:|--------|:----:|------|
-| 01 | [Il percettrone: l’inizio di tutto](../../phases/03-deep-learning-core/01-the-perceptron/) | Costruire | Python, Rust, Julia |
-| 02 | [Reti multistrato e passaggio in avanti](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Costruire | Python, TypeScript |
-| 03 | [Backpropagation da zero](../../phases/03-deep-learning-core/03-backpropagation/) | Costruire | Python, Rust, Julia |
-| 04 | [Funzioni di attivazione: ReLU, sigmoide, GELU e perché servono](../../phases/03-deep-learning-core/04-activation-functions/) | Costruire | Python, Julia |
-| 05 | [Funzioni di perdita: MSE, entropia incrociata e loss contrastiva](../../phases/03-deep-learning-core/05-loss-functions/) | Costruire | Python, Julia |
-| 06 | [Ottimizzatori: SGD, momentum, Adam e AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Costruire | Python, TypeScript |
-| 07 | [Regolarizzazione: dropout, weight decay e BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Costruire | Python, TypeScript |
-| 08 | [Inizializzazione dei pesi e stabilità dell’addestramento](../../phases/03-deep-learning-core/08-weight-initialization/) | Costruire | Python, TypeScript |
-| 09 | [Scheduler del learning rate e warmup](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Costruire | Python, TypeScript |
-| 10 | [Costruisci il tuo mini-framework](../../phases/03-deep-learning-core/10-mini-framework/) | Costruire | Python, TypeScript |
+| 01 | [Il percettrone: l’inizio di tutto](../../phases/03-deep-learning-core/01-the-perceptron/) | Costruire | Python, TypeScript, Rust, Julia |
+| 02 | [Reti multistrato e passaggio in avanti](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Costruire | Python, TypeScript, Julia |
+| 03 | [Backpropagation da zero](../../phases/03-deep-learning-core/03-backpropagation/) | Costruire | Python, TypeScript, Rust, Julia |
+| 04 | [Funzioni di attivazione: ReLU, sigmoide, GELU e perché servono](../../phases/03-deep-learning-core/04-activation-functions/) | Costruire | Python, TypeScript, Julia |
+| 05 | [Funzioni di perdita: MSE, entropia incrociata e loss contrastiva](../../phases/03-deep-learning-core/05-loss-functions/) | Costruire | Python, TypeScript, Julia |
+| 06 | [Ottimizzatori: SGD, momentum, Adam e AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Costruire | Python, TypeScript, Julia |
+| 07 | [Regolarizzazione: dropout, weight decay e BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Costruire | Python, TypeScript, Julia |
+| 08 | [Inizializzazione dei pesi e stabilità dell’addestramento](../../phases/03-deep-learning-core/08-weight-initialization/) | Costruire | Python, TypeScript, Julia |
+| 09 | [Scheduler del learning rate e warmup](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Costruire | Python, TypeScript, Julia |
+| 10 | [Costruisci il tuo mini-framework](../../phases/03-deep-learning-core/10-mini-framework/) | Costruire | Python, TypeScript, Julia |
 | 11 | [Introduzione a PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Costruire | Python |
 | 12 | [Introduzione a JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Costruire | Python |
 | 13 | [Debug delle reti neurali](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Costruire | Python |
@@ -448,8 +448,8 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 
 | # | Lezione | Tipo | Linguaggio |
 |:---:|--------|:----:|------|
-| 01 | [Fondamenti delle immagini: pixel, canali e spazi colore](../../phases/04-computer-vision/01-image-fundamentals/) | Imparare | Python |
-| 02 | [Convoluzioni da zero](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Costruire | Python |
+| 01 | [Fondamenti delle immagini: pixel, canali e spazi colore](../../phases/04-computer-vision/01-image-fundamentals/) | Imparare | Python, Julia |
+| 02 | [Convoluzioni da zero](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Costruire | Python, Julia |
 | 03 | [CNN: da LeNet a ResNet](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | Costruire | Python |
 | 04 | [Classificazione delle immagini](../../phases/04-computer-vision/04-image-classification/) | Costruire | Python |
 | 05 | [Transfer learning e fine-tuning](../../phases/04-computer-vision/05-transfer-learning/) | Costruire | Python |
@@ -474,7 +474,7 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 | 24 | [SAM 3 e segmentazione open-vocabulary](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | Costruire | Python |
 | 25 | [Modelli vision-language (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | Costruire | Python |
 | 26 | [Stima della profondità monoculare e della geometria](../../phases/04-computer-vision/26-monocular-depth/) | Costruire | Python |
-| 27 | [Tracking multi-oggetto e memoria video](../../phases/04-computer-vision/27-multi-object-tracking/) | Costruire | Python |
+| 27 | [Tracking multi-oggetto e memoria video](../../phases/04-computer-vision/27-multi-object-tracking/) | Costruire | Python, Rust |
 | 28 | [World model e diffusione video](../../phases/04-computer-vision/28-world-models-video-diffusion/) | Costruire | Python |
 
 </details>
@@ -487,7 +487,7 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 |:---:|--------|:----:|------|
 | 01 | [Elaborazione del testo: tokenizzazione, stemming e lemmatizzazione](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Costruire | Python, TypeScript |
 | 02 | [Bag of words, TF-IDF e rappresentazione del testo](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Costruire | Python, TypeScript |
-| 03 | [Word embedding: Word2Vec da zero](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Costruire | Python |
+| 03 | [Word embedding: Word2Vec da zero](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Costruire | Python, Julia |
 | 04 | [GloVe, FastText e embedding di sottoparole](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Costruire | Python, TypeScript |
 | 05 | [Analisi del sentiment](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Costruire | Python, TypeScript |
 | 06 | [Riconoscimento delle entità nominate (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Costruire | Python, TypeScript |
@@ -498,13 +498,13 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 | 11 | [Traduzione automatica](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Costruire | Python, TypeScript |
 | 12 | [Riassunto automatico del testo](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Costruire | Python, TypeScript |
 | 13 | [Sistemi di question answering](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Costruire | Python, TypeScript |
-| 14 | [Information retrieval e ricerca](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Costruire | Python, TypeScript |
-| 15 | [Topic modeling: LDA e BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Costruire | Python, TypeScript |
+| 14 | [Information retrieval e ricerca](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Costruire | Python, TypeScript, Rust |
+| 15 | [Topic modeling: LDA e BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Costruire | Python, TypeScript, Julia |
 | 16 | [Generazione del testo prima dei Transformer](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Costruire | Python, TypeScript |
 | 17 | [Chatbot: dai sistemi a regole alle reti neurali](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Costruire | Python, TypeScript |
 | 18 | [NLP multilingue](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Costruire | Python, TypeScript |
-| 19 | [Tokenizzazione di sottoparole: BPE, WordPiece, Unigram e SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Imparare | Python, TypeScript |
-| 20 | [Output strutturati e decoding vincolato](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Costruire | Python, TypeScript |
+| 19 | [Tokenizzazione di sottoparole: BPE, WordPiece, Unigram e SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Imparare | Python, TypeScript, Rust |
+| 20 | [Output strutturati e decoding vincolato](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Costruire | Python, TypeScript, Rust |
 | 21 | [Inferenza del linguaggio naturale (NLI) e implicazione testuale](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Imparare | Python, TypeScript |
 | 22 | [Approfondimento sui modelli di embedding](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Imparare | Python, TypeScript |
 | 23 | [Strategie di chunking per RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Costruire | Python, TypeScript |
@@ -523,8 +523,8 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 
 | # | Lezione | Tipo | Linguaggio |
 |:---:|--------|:----:|------|
-| 01 | [Fondamenti dell’audio: forme d’onda, campionamento e FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Imparare | Python, TypeScript |
-| 02 | [Spettrogrammi, scala Mel e caratteristiche audio](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Costruire | Python, TypeScript |
+| 01 | [Fondamenti dell’audio: forme d’onda, campionamento e FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Imparare | Python, TypeScript, Julia |
+| 02 | [Spettrogrammi, scala Mel e caratteristiche audio](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Costruire | Python, TypeScript, Julia |
 | 03 | [Classificazione audio](../../phases/06-speech-and-audio/03-audio-classification) | Costruire | Python, TypeScript |
 | 04 | [Riconoscimento vocale (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Costruire | Python, TypeScript |
 | 05 | [Whisper: architettura e fine-tuning](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Costruire | Python, TypeScript |
@@ -536,7 +536,7 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 | 11 | [Elaborazione audio in tempo reale](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Costruire | Python, Rust |
 | 12 | [Costruisci una pipeline per un assistente vocale](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Costruire | Python, TypeScript |
 | 13 | [Codec audio neurali: EnCodec, SNAC, Mimi e DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Imparare | Python, TypeScript |
-| 14 | [Rilevamento dell’attività vocale e alternanza dei turni](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Costruire | Python, TypeScript |
+| 14 | [Rilevamento dell’attività vocale e alternanza dei turni](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Costruire | Python, TypeScript, Rust |
 | 15 | [Speech-to-speech in streaming: Moshi e Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Imparare | Python, TypeScript |
 | 16 | [Anti-spoofing vocale e watermarking audio](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Costruire | Python, TypeScript |
 | 17 | [Valutazione audio: WER, MOS, MMAU e classifiche](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Imparare | Python, TypeScript |
@@ -586,9 +586,9 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 | 10 | [Generazione video](../../phases/08-generative-ai/10-video-generation/) | Costruire | Python, TypeScript |
 | 11 | [Generazione audio](../../phases/08-generative-ai/11-audio-generation/) | Costruire | Python, TypeScript |
 | 12 | [Generazione 3D](../../phases/08-generative-ai/12-3d-generation/) | Costruire | Python, TypeScript |
-| 13 | [Flow matching e rectified flow](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Costruire | Python, TypeScript |
+| 13 | [Flow matching e rectified flow](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Costruire | Python, TypeScript, Julia |
 | 14 | [Valutazione: FID e CLIP Score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Costruire | Python, TypeScript |
-| 19 | [Modellazione autoregressiva visiva (VAR): previsione della scala successiva](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Costruire | Python |
+| 19 | [Modellazione autoregressiva visiva (VAR): previsione della scala successiva](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Costruire | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 | # | Lezione | Tipo | Linguaggio |
 |:---:|--------|:----:|------|
 | 01 | [Tokenizer: BPE, WordPiece e SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Costruire | Python, Rust |
-| 02 | [Creare un tokenizer da zero](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Costruire | Python |
+| 02 | [Creare un tokenizer da zero](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Costruire | Python, TypeScript |
 | 03 | [Pipeline di dati per il pre-training](../../phases/10-llms-from-scratch/03-data-pipelines/) | Costruire | Python, Rust |
 | 04 | [Pre-training di un mini GPT (124 M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Costruire | Python, Rust |
 | 05 | [Addestramento distribuito: FSDP e DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Costruire | Python |
@@ -665,7 +665,7 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 | 11 | [Caching, rate limiting e costi](../../phases/11-llm-engineering/11-caching-cost/) | Costruire | Python, TypeScript |
 | 12 | [Guardrail e sicurezza](../../phases/11-llm-engineering/12-guardrails/) | Costruire | Python, TypeScript |
 | 13 | [Creare un’applicazione LLM per la produzione](../../phases/11-llm-engineering/13-production-app/) | Costruire | Python, TypeScript |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Costruire | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Costruire | Python, TypeScript, Go |
 | 15 | [Caching di prompt e contesto](../../phases/11-llm-engineering/15-prompt-caching/) | Costruire | Python, TypeScript |
 | 16 | [Macchine a stati per agenti: grafi, nodi e checkpoint](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Costruire | Python |
 | 17 | [Compromessi tra framework per agenti](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Imparare | Python, TypeScript |
@@ -714,25 +714,25 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 |:---:|--------|:----:|------|
 | 01 | [Interfaccia degli strumenti](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Imparare | Python, TypeScript |
 | 02 | [Chiamata di funzioni: approfondimento](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Costruire | Python, TypeScript |
-| 03 | [Chiamate agli strumenti parallele e in streaming](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Costruire | Python, TypeScript |
+| 03 | [Chiamate agli strumenti parallele e in streaming](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Costruire | Python, TypeScript, Go |
 | 04 | [Output strutturato](../../phases/13-tools-and-protocols/04-structured-output/) | Costruire | Python, TypeScript |
 | 05 | [Progettazione degli schemi degli strumenti](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Imparare | Python, TypeScript |
 | 06 | [Fondamenti di MCP: richieste senza stato e JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Imparare | Python, TypeScript |
-| 07 | [Creare un server MCP: Python e TypeScript senza stato](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Costruire | Python, TypeScript |
+| 07 | [Creare un server MCP: Python e TypeScript senza stato](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Costruire | Python, TypeScript, Go |
 | 08 | [Creare un client MCP: discovery, routing e fallback tra due generazioni](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Costruire | Python, TypeScript |
-| 09 | [Trasporti MCP: stdio e HTTP streamable senza stato](../../phases/13-tools-and-protocols/09-mcp-transports/) | Imparare | Python, TypeScript |
+| 09 | [Trasporti MCP: stdio e HTTP streamable senza stato](../../phases/13-tools-and-protocols/09-mcp-transports/) | Imparare | Python, TypeScript, Go |
 | 10 | [Risorse e prompt MCP: contesto indirizzabile per server senza stato](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Costruire | Python, TypeScript |
 | 11 | [Input del modello MCP: migrazione del sampling e MRTR senza stato](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Costruire | Python, TypeScript |
 | 12 | [Ambito esplicito ed elicitation senza stato](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Costruire | Python, TypeScript |
 | 13 | [Estensione MCP Tasks: lavoro persistente su un core senza stato](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Costruire | Python, TypeScript |
 | 14 | [App MCP su un protocollo senza stato](../../phases/13-tools-and-protocols/14-mcp-apps/) | Costruire | Python, TypeScript |
 | 15 | [Sicurezza MCP: metadati avvelenati, routing e stato MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Imparare | Python, TypeScript |
-| 16 | [Autorizzazione MCP: CIMD, issuer binding, PKCE e step-up](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Costruire | Python, TypeScript |
-| 17 | [Gateway MCP senza stato e ammissione al registro](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Imparare | Python, TypeScript |
-| 18 | [Autenticazione MCP in produzione: registrazione legata all’issuer e token](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Costruire | Python, TypeScript |
-| 19 | [Protocollo A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Costruire | Python, TypeScript |
+| 16 | [Autorizzazione MCP: CIMD, issuer binding, PKCE e step-up](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Costruire | Python, TypeScript, Go |
+| 17 | [Gateway MCP senza stato e ammissione al registro](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Imparare | Python, TypeScript, Go |
+| 18 | [Autenticazione MCP in produzione: registrazione legata all’issuer e token](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Costruire | Python, TypeScript, Go |
+| 19 | [Protocollo A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Costruire | Python, TypeScript, Go |
 | 20 | [OpenTelemetry per la GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Costruire | Python, TypeScript |
-| 21 | [Livello di routing degli LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Imparare | Python, TypeScript |
+| 21 | [Livello di routing degli LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Imparare | Python, TypeScript, Go |
 | 22 | [Agent Skills: contratto portabile e confini del runtime](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Costruire | Python, TypeScript |
 | 23 | [Progetto conclusivo: ecosistema di strumenti senza stato](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Costruire | Python, TypeScript |
 | 24 | [Discovery delle skill e divulgazione progressiva](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Costruire | Python, TypeScript |
@@ -743,19 +743,19 @@ Fai clic su una fase per espandere l’elenco delle lezioni.
 | 29 | [Affidabilità, cancellazione e controllo del flusso in MCP](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Costruire | Python, TypeScript |
 | 30 | [Supply chain dei registri MCP: ammissione, drift e rollback](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Costruire | Python, TypeScript |
 | 31 | [Conformità MCP: versionamento, evidenze e gestione operativa](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Costruire | Python, TypeScript |
-| 32 | [Anatomia di un programma: leggere ELF da zero](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Costruire | Python, TypeScript |
-| 33 | [Disassemblaggio e grafi del flusso di controllo](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Costruire | Python, TypeScript |
-| 34 | [Dal codice macchina allo pseudocodice](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Costruire | Python |
+| 32 | [Anatomia di un programma: leggere ELF da zero](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Costruire | Python, TypeScript, Rust |
+| 33 | [Disassemblaggio e grafi del flusso di controllo](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Costruire | Python, TypeScript, Rust |
+| 34 | [Dal codice macchina allo pseudocodice](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Costruire | Python, TypeScript |
 | 35 | [Evidenze, confidenza e incognite nell’analisi dei binari](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Costruire | Python, TypeScript |
 | 36 | [Ricostruire e dimostrare l’equivalenza](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Costruire | Python, TypeScript |
 | 37 | [Il panorama del reverse engineering](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Costruire | Python, TypeScript |
 | 38 | [Convenzioni di chiamata e stack frame](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Costruire | Python, TypeScript |
 | 39 | [Idiomi del compilatore e ottimizzazione](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Costruire | Python, TypeScript |
-| 40 | [Linking, caricamento e binari senza simboli](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Costruire | Python, TypeScript |
+| 40 | [Linking, caricamento e binari senza simboli](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Costruire | Python, TypeScript, Rust |
 | 41 | [Recuperare dati e tipi](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Costruire | Python, TypeScript |
 | 42 | [Analisi dinamica del tuo programma](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Costruire | Python, TypeScript |
 | 43 | [Bytecode e formati gestiti](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Costruire | Python, TypeScript |
-| 44 | [Diffing dei binari ed esecuzione simbolica](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Costruire | Python |
+| 44 | [Diffing dei binari ed esecuzione simbolica](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Costruire | Python, TypeScript |
 | 45 | [Reverse engineering assistito dall’IA](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Costruire | Python, TypeScript |
 
 Le lezioni dalla 06 alla 18 e dalla 28 alla 31 compongono il [percorso mirato Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json). L’ordine previsto dal manifesto è 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Avvia il percorso con l’invocazione `learn-mcp` specifica per il tuo host. La lezione 23 è l’unico progetto conclusivo facoltativo e richiede anche le lezioni 19 e 20.
@@ -792,13 +792,13 @@ Le lezioni 22 e dalla 24 alla 27 compongono il [percorso di apprendimento Agent 
 | 20 | [Benchmark: WebArena e OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Imparare | Python, TypeScript |
 | 21 | [Uso del computer: Claude, OpenAI CUA e Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Costruire | Python, TypeScript |
 | 22 | [Agenti vocali: Pipecat e LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Costruire | Python, TypeScript |
-| 23 | [Convenzioni semantiche OpenTelemetry per la GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Costruire | Python, TypeScript |
+| 23 | [Convenzioni semantiche OpenTelemetry per la GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Costruire | Python, TypeScript, Go |
 | 24 | [Osservabilità degli agenti: Langfuse, Phoenix e Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Imparare | Python, TypeScript |
 | 25 | [Dibattito e collaborazione tra più agenti](../../phases/14-agent-engineering/25-multi-agent-debate/) | Costruire | Python, TypeScript |
 | 26 | [Modalità di errore: perché gli agenti falliscono](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Costruire | Python, TypeScript |
 | 27 | [Prompt injection e difesa PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Costruire | Python, TypeScript |
 | 28 | [Pattern di orchestrazione: supervisore, sciame, gerarchia](../../phases/14-agent-engineering/28-orchestration-patterns/) | Costruire | Python, TypeScript |
-| 29 | [Runtime di produzione: code, eventi e processi pianificati](../../phases/14-agent-engineering/29-production-runtimes/) | Imparare | Python, TypeScript |
+| 29 | [Runtime di produzione: code, eventi e processi pianificati](../../phases/14-agent-engineering/29-production-runtimes/) | Imparare | Python, TypeScript, Go |
 | 30 | [Sviluppo di agenti guidato dalle valutazioni](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Costruire | Python, TypeScript |
 | 31 | [Ambiente di lavoro degli agenti: perché falliscono anche i modelli capaci](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Imparare | Python, TypeScript |
 | 32 | [Ambiente di lavoro minimale per agenti](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Costruire | Python, TypeScript |
@@ -848,7 +848,7 @@ Le lezioni dalla 31 alla 46 compongono il [percorso di ingegneria assistita da a
 | 09 | [Panoramica degli agenti di coding autonomi (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Imparare | Python, TypeScript |
 | 10 | [Modalità di autorizzazione per agenti autonomi](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Imparare | Python, TypeScript |
 | 11 | [Agenti browser e prompt injection indiretta](../../phases/15-autonomous-systems/11-browser-agents/) | Imparare | Python, TypeScript |
-| 12 | [Esecuzione persistente per agenti di lunga durata](../../phases/15-autonomous-systems/12-durable-execution/) | Imparare | Python, TypeScript |
+| 12 | [Esecuzione persistente per agenti di lunga durata](../../phases/15-autonomous-systems/12-durable-execution/) | Imparare | Python, TypeScript, Go |
 | 13 | [Budget di azioni, limiti alle iterazioni e controllo dei costi](../../phases/15-autonomous-systems/13-cost-governors/) | Imparare | Python, TypeScript |
 | 14 | [Interruttori di emergenza, circuit breaker e token canary](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Imparare | Python, TypeScript |
 | 15 | [HITL: proporre e poi confermare](../../phases/15-autonomous-systems/15-propose-then-commit/) | Imparare | Python, TypeScript |
@@ -857,7 +857,7 @@ Le lezioni dalla 31 alla 46 compongono il [percorso di ingegneria assistita da a
 | 18 | [Llama Guard e classificazione di input e output](../../phases/15-autonomous-systems/18-llama-guard/) | Imparare | Python, TypeScript |
 | 19 | [Responsible Scaling Policy v3.0 di Anthropic](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Imparare | Python, TypeScript |
 | 20 | [OpenAI Preparedness Framework e FSF di DeepMind](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Imparare | Python, TypeScript |
-| 21 | [Orizzonti temporali METR e valutazione esterna](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Imparare | Python, TypeScript |
+| 21 | [Orizzonti temporali METR e valutazione esterna](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Imparare | Python, TypeScript, Julia |
 | 22 | [CAIS, CAISI e rischi su scala sociale](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Imparare | Python, TypeScript |
 
 </details>
@@ -876,17 +876,17 @@ Le lezioni dalla 31 alla 46 compongono il [percorso di ingegneria assistita da a
 | 06 | [Architettura gerarchica e deriva della decomposizione](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Imparare | Python, TypeScript |
 | 07 | [Società della mente e dibattito multi-agente](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Costruire | Python, TypeScript |
 | 08 | [Specializzazione dei ruoli: pianificatore, critico, esecutore e verificatore](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Costruire | Python, TypeScript |
-| 09 | [Sciami paralleli e architetture di rete](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Costruire | Python, TypeScript |
+| 09 | [Sciami paralleli e architetture di rete](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Costruire | Python, TypeScript, Go |
 | 10 | [Chat di gruppo e selezione del parlante](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Costruire | Python, TypeScript |
 | 11 | [Handoff e routine (orchestrazione senza stato)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Costruire | Python, TypeScript |
-| 12 | [A2A: protocollo agent-to-agent](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Costruire | Python, TypeScript |
+| 12 | [A2A: protocollo agent-to-agent](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Costruire | Python, TypeScript, Go |
 | 13 | [Memoria condivisa e pattern blackboard](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Costruire | Python, TypeScript |
 | 14 | [Consenso e tolleranza ai guasti bizantini](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Costruire | Python, TypeScript |
 | 15 | [Voto, coerenza interna e topologia del dibattito](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Costruire | Python, TypeScript |
 | 16 | [Negoziazione e contrattazione](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Costruire | Python, TypeScript |
 | 17 | [Agenti generativi e simulazione emergente](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Costruire | Python, TypeScript |
 | 18 | [Teoria della mente e coordinamento emergente](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Costruire | Python, TypeScript |
-| 19 | [Ottimizzazione a sciame (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Costruire | Python, TypeScript |
+| 19 | [Ottimizzazione a sciame (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Costruire | Python, TypeScript, Julia |
 | 20 | [Reinforcement learning multi-agente: MADDPG, QMIX e MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Imparare | Python, TypeScript |
 | 21 | [Economie di agenti, incentivi in token e reputazione](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Imparare | Python, TypeScript |
 | 22 | [Scalabilità in produzione: code, checkpoint e persistenza](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Costruire | Python, TypeScript |
@@ -905,9 +905,9 @@ Le lezioni dalla 31 alla 46 compongono il [percorso di ingegneria assistita da a
 | 01 | [Piattaforme LLM gestite: Bedrock, Azure OpenAI e Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Imparare | Python, TypeScript |
 | 02 | [Economia delle piattaforme di inferenza: Fireworks, Together, Baseten e Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Imparare | Python, TypeScript |
 | 03 | [Autoscaling delle GPU su Kubernetes: Karpenter e KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Imparare | Python, TypeScript |
-| 04 | [Internals dei motori di serving: PagedAttention, batching continuo e prefill a blocchi](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Imparare | Python, TypeScript |
+| 04 | [Internals dei motori di serving: PagedAttention, batching continuo e prefill a blocchi](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Imparare | Python, TypeScript, Rust |
 | 05 | [Speculative decoding EAGLE-3 in produzione](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Imparare | Python, TypeScript |
-| 06 | [Serving con cache dei prefissi: RadixAttention e riuso della cache KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Imparare | Python, TypeScript |
+| 06 | [Serving con cache dei prefissi: RadixAttention e riuso della cache KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Imparare | Python, TypeScript, Rust |
 | 07 | [Compilazione dell’inferenza ottimizzata per l’hardware: FP8 e NVFP4 su Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Imparare | Python, TypeScript |
 | 08 | [Metriche di inferenza: TTFT, TPOT, ITL, goodput e P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Imparare | Python, TypeScript |
 | 09 | [Quantizzazione in produzione: AWQ, GPTQ, GGUF, FP8 e NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Imparare | Python, TypeScript |
@@ -922,7 +922,7 @@ Le lezioni dalla 31 alla 46 compongono il [percorso di ingegneria assistita da a
 | 18 | [Stack di serving in produzione: offloading della cache KV e routing consapevole della cache](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Imparare | Python, TypeScript |
 | 19 | [Gateway AI: LiteLLM, Portkey, Kong e Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Imparare | Python, TypeScript |
 | 20 | [Deployment shadow, canary e progressivo](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Imparare | Python, TypeScript |
-| 21 | [Test A/B delle funzionalità LLM: GrowthBook e Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Imparare | Python, TypeScript |
+| 21 | [Test A/B delle funzionalità LLM: GrowthBook e Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Imparare | Python, TypeScript, Julia |
 | 22 | [Load test delle API LLM: k6, LLMPerf e GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Costruire | Python, TypeScript |
 | 23 | [SRE per l’IA: risposta agli incidenti multi-agente](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Imparare | Python, TypeScript |
 | 24 | [Chaos engineering per la produzione di LLM](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Imparare | Python, TypeScript |
@@ -961,7 +961,7 @@ Le lezioni dalla 31 alla 46 compongono il [percorso di ingegneria assistita da a
 | 19 | [Ricerca sul benessere dei modelli](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Imparare | Python, TypeScript |
 | 20 | [Bias e danni legati alla rappresentazione](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Costruire | Python, TypeScript |
 | 21 | [Criteri di equità: gruppi, individui e controfattuali](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Imparare | Python, TypeScript |
-| 22 | [Privacy differenziale per gli LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Costruire | Python, TypeScript |
+| 22 | [Privacy differenziale per gli LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Costruire | Python, TypeScript, Julia |
 | 23 | [Watermark: SynthID, Stable Signature e C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Costruire | Python, TypeScript |
 | 24 | [Quadri normativi: UE, USA, Regno Unito e Corea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Imparare | Python, TypeScript |
 | 25 | [EchoLeak e CVE per l’IA](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Imparare | Python, TypeScript |
@@ -989,9 +989,9 @@ Le lezioni dalla 31 alla 46 compongono il [percorso di ingegneria assistita da a
 | 08 | [Chatbot RAG in produzione (settore regolamentato)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [Agente di migrazione del codice (aggiornamento a livello di repository)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [Team multi-agente per lo sviluppo software](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [Dashboard di osservabilità e valutazione degli LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [Dashboard di osservabilità e valutazione degli LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [Pipeline di comprensione video (scena → question answering)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [Server MCP senza stato con registro e governance](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [Server MCP senza stato con registro e governance](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [Server di inferenza con speculative decoding](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [Harness di sicurezza costituzionale e ambiente di red teaming](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [Agente autonomo: da una issue GitHub a una pull request](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1011,7 +1011,7 @@ Le lezioni dalla 31 alla 46 compongono il [percorso di ingegneria assistita da a
 | 27 | [Harness di valutazione con attività di test](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Harness per agenti | Python, TypeScript |
 | 28 | [Osservabilità con tracce OTel GenAI e metriche Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Harness per agenti | Python, TypeScript |
 | 29 | [Agente di coding completo basato sul harness](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Harness per agenti | Python, TypeScript |
-| 30 | [Tokenizer BPE da zero](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP e LLM | Python, TypeScript |
+| 30 | [Tokenizer BPE da zero](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP e LLM | Python, TypeScript, Rust |
 | 31 | [Dataset tokenizzato con finestra scorrevole](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP e LLM | Python |
 | 32 | [Embedding di token e embedding posizionali](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP e LLM | Python |
 | 33 | [Self-attention multi-head](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP e LLM | Python |
@@ -1023,7 +1023,7 @@ Le lezioni dalla 31 alla 46 compongono il [percorso di ingegneria assistita da a
 | 39 | [Instruction tuning tramite fine-tuning supervisionato](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP e LLM | Python |
 | 40 | [Ottimizzazione diretta delle preferenze da zero](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP e LLM | Python |
 | 41 | [Pipeline completa di valutazione](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP e LLM | Python |
-| 42 | [Downloader di grandi corpora](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Addestramento completo | Python |
+| 42 | [Downloader di grandi corpora](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Addestramento completo | Python, TypeScript |
 | 43 | [Corpus tokenizzato in formato HDF5](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. Addestramento completo | Python |
 | 44 | [Learning rate cosine con warmup lineare](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. Addestramento completo | Python |
 | 45 | [Gradient clipping e precisione mista](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. Addestramento completo | Python |
@@ -1037,8 +1037,8 @@ Le lezioni dalla 31 alla 46 compongono il [percorso di ingegneria assistita da a
 | 53 | [Valutatore dei risultati](../../phases/19-capstone-projects/53-result-evaluator/) | D. Ricerca automatizzata | Python |
 | 54 | [Redattore di articoli scientifici](../../phases/19-capstone-projects/54-paper-writer/) | D. Ricerca automatizzata | Python, TypeScript |
 | 55 | [Ciclo di critica](../../phases/19-capstone-projects/55-critic-loop/) | D. Ricerca automatizzata | Python, TypeScript |
-| 56 | [Pianificatore delle iterazioni](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Ricerca automatizzata | Python |
-| 57 | [Dimostrazione completa di un sistema di ricerca](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Ricerca automatizzata | Python |
+| 56 | [Pianificatore delle iterazioni](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Ricerca automatizzata | Python, TypeScript |
+| 57 | [Dimostrazione completa di un sistema di ricerca](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Ricerca automatizzata | Python, TypeScript |
 | 58 | [Patch di un encoder visivo](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. VLM multimodale | Python |
 | 59 | [Encoder Vision Transformer](../../phases/19-capstone-projects/59-vit-transformer/) | E. VLM multimodale | Python |
 | 60 | [Livello di proiezione per l’allineamento delle modalità](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. VLM multimodale | Python |
@@ -1052,11 +1052,11 @@ Le lezioni dalla 31 alla 46 compongono il [percorso di ingegneria assistita da a
 | 68 | [Valutazione RAG: precision, recall, MRR, nDCG, faithfulness e pertinenza delle risposte](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG avanzato | Python, TypeScript |
 | 69 | [Sistema RAG completo](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. RAG avanzato | Python |
 | 70 | [Formato delle specifiche delle attività](../../phases/19-capstone-projects/70-task-spec-format/) | G. Framework di valutazione | Python, TypeScript |
-| 71 | [Metriche classiche](../../phases/19-capstone-projects/71-classical-metrics/) | G. Framework di valutazione | Python |
-| 72 | [Metrica di esecuzione del codice](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Framework di valutazione | Python |
-| 73 | [Perplessità e calibrazione](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Framework di valutazione | Python |
-| 74 | [Aggregazione delle classifiche](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Framework di valutazione | Python |
-| 75 | [Runner di valutazione completo](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Framework di valutazione | Python |
+| 71 | [Metriche classiche](../../phases/19-capstone-projects/71-classical-metrics/) | G. Framework di valutazione | Python, TypeScript |
+| 72 | [Metrica di esecuzione del codice](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Framework di valutazione | Python, TypeScript |
+| 73 | [Perplessità e calibrazione](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Framework di valutazione | Python, TypeScript |
+| 74 | [Aggregazione delle classifiche](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Framework di valutazione | Python, TypeScript |
+| 75 | [Runner di valutazione completo](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Framework di valutazione | Python, TypeScript |
 | 76 | [Operazioni collettive da zero](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. Addestramento distribuito | Python |
 | 77 | [Parallelismo dei dati con DDP da zero](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. Addestramento distribuito | Python |
 | 78 | [Sharding dello stato dell’ottimizzatore ZeRO](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. Addestramento distribuito | Python |
@@ -1129,7 +1129,7 @@ Ogni lezione si trova nella propria cartella e segue la stessa struttura in tutt
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      implementazioni eseguibili (Python, TypeScript, Rust, Julia)
+├── code/      implementazioni eseguibili (Python, TypeScript, Rust, Julia, Go)
 ├── docs/
 │   └── en.md  contenuto didattico della lezione
 └── outputs/   prompt, skill, agenti o server MCP prodotti dalla lezione

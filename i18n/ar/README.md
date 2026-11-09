@@ -19,7 +19,7 @@
 
 مجاني ومفتوح المصدر بترخيص MIT. تعلّم عبر الموقع أو مع وكيل برمجة أو بتشغيل الشيفرة محليًا.
 
-> <span dir="rtl">542 درساً. 20 مرحلة.</span> <span dir="ltr">Python, TypeScript, Rust, Julia.</span>
+> <span dir="rtl">542 درساً. 20 مرحلة.</span> <span dir="ltr">Python, TypeScript, Rust, Julia, Go.</span>
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="رخصة MIT"></a>
@@ -374,19 +374,19 @@ flowchart TB
 | 07 | [مبرهنة بايز والتفكير الإحصائي](../../phases/01-math-foundations/07-bayes-theorem/) | بناء | Python, TypeScript |
 | 08 | [التحسين: أساليب الانحدار المتدرج](../../phases/01-math-foundations/08-optimization/) | بناء | Python, Julia |
 | 09 | [نظرية المعلومات: الإنتروبيا وتباعد KL](../../phases/01-math-foundations/09-information-theory/) | تعلم | Python, TypeScript |
-| 10 | [تقليل الأبعاد: PCA وt-SNE وUMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | بناء | Python, TypeScript |
+| 10 | [تقليل الأبعاد: PCA وt-SNE وUMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | بناء | Python, TypeScript, Julia |
 | 11 | [تحليل القيم المفردة](../../phases/01-math-foundations/11-singular-value-decomposition/) | بناء | Python, Julia |
 | 12 | [عمليات الموترات](../../phases/01-math-foundations/12-tensor-operations/) | بناء | Python, TypeScript |
-| 13 | [الاستقرار العددي](../../phases/01-math-foundations/13-numerical-stability/) | بناء | Python, TypeScript |
+| 13 | [الاستقرار العددي](../../phases/01-math-foundations/13-numerical-stability/) | بناء | Python, TypeScript, Julia |
 | 14 | [معايير المتجهات (Norms) والمسافات](../../phases/01-math-foundations/14-norms-and-distances/) | بناء | Python, TypeScript |
 | 15 | [الإحصاء لـML](../../phases/01-math-foundations/15-statistics-for-ml/) | بناء | Python, TypeScript |
-| 16 | [أساليب أخذ العينات](../../phases/01-math-foundations/16-sampling-methods/) | بناء | Python, TypeScript |
-| 17 | [أنظمة المعادلات الخطية](../../phases/01-math-foundations/17-linear-systems/) | بناء | Python, TypeScript |
-| 18 | [التحسين المحدّب](../../phases/01-math-foundations/18-convex-optimization/) | بناء | Python, TypeScript |
+| 16 | [أساليب أخذ العينات](../../phases/01-math-foundations/16-sampling-methods/) | بناء | Python, TypeScript, Julia |
+| 17 | [أنظمة المعادلات الخطية](../../phases/01-math-foundations/17-linear-systems/) | بناء | Python, TypeScript, Julia |
+| 18 | [التحسين المحدّب](../../phases/01-math-foundations/18-convex-optimization/) | بناء | Python, TypeScript, Julia |
 | 19 | [الأعداد المركبة للذكاء الاصطناعي](../../phases/01-math-foundations/19-complex-numbers/) | تعلم | Python, TypeScript |
-| 20 | [تحويل فورييه](../../phases/01-math-foundations/20-fourier-transform/) | بناء | Python, TypeScript |
+| 20 | [تحويل فورييه](../../phases/01-math-foundations/20-fourier-transform/) | بناء | Python, TypeScript, Julia |
 | 21 | [نظرية الرسوم البيانية لـML](../../phases/01-math-foundations/21-graph-theory/) | بناء | Python, TypeScript |
-| 22 | [العمليات العشوائية](../../phases/01-math-foundations/22-stochastic-processes/) | تعلم | Python |
+| 22 | [العمليات العشوائية](../../phases/01-math-foundations/22-stochastic-processes/) | تعلم | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ flowchart TB
 
 | # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [Perceptron: من أين بدأت الحكاية](../../phases/03-deep-learning-core/01-the-perceptron/) | بناء | Python, Rust, Julia |
-| 02 | [الشبكات متعددة الطبقات والتمرير الأمامي](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بناء | Python, TypeScript |
-| 03 | [الانتشار العكسي من الصفر](../../phases/03-deep-learning-core/03-backpropagation/) | بناء | Python, Rust, Julia |
-| 04 | [دوال التنشيط: ReLU وSigmoid وGELU ولماذا](../../phases/03-deep-learning-core/04-activation-functions/) | بناء | Python, Julia |
-| 05 | [دوال الخسارة: MSE وcross-entropy والخسارة التقابلية](../../phases/03-deep-learning-core/05-loss-functions/) | بناء | Python, Julia |
-| 06 | [المحسّنات: SGD وMomentum وAdam وAdamW](../../phases/03-deep-learning-core/06-optimizers/) | بناء | Python, TypeScript |
-| 07 | [التنظيم: Dropout وWeight Decay وBatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بناء | Python, TypeScript |
-| 08 | [تهيئة الأوزان واستقرار التدريب](../../phases/03-deep-learning-core/08-weight-initialization/) | بناء | Python, TypeScript |
-| 09 | [جداول معدل التعلّم والإحماء](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | بناء | Python, TypeScript |
-| 10 | [ابنِ إطار عمل مصغرًا خاصًا بك](../../phases/03-deep-learning-core/10-mini-framework/) | بناء | Python, TypeScript |
+| 01 | [Perceptron: من أين بدأت الحكاية](../../phases/03-deep-learning-core/01-the-perceptron/) | بناء | Python, TypeScript, Rust, Julia |
+| 02 | [الشبكات متعددة الطبقات والتمرير الأمامي](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بناء | Python, TypeScript, Julia |
+| 03 | [الانتشار العكسي من الصفر](../../phases/03-deep-learning-core/03-backpropagation/) | بناء | Python, TypeScript, Rust, Julia |
+| 04 | [دوال التنشيط: ReLU وSigmoid وGELU ولماذا](../../phases/03-deep-learning-core/04-activation-functions/) | بناء | Python, TypeScript, Julia |
+| 05 | [دوال الخسارة: MSE وcross-entropy والخسارة التقابلية](../../phases/03-deep-learning-core/05-loss-functions/) | بناء | Python, TypeScript, Julia |
+| 06 | [المحسّنات: SGD وMomentum وAdam وAdamW](../../phases/03-deep-learning-core/06-optimizers/) | بناء | Python, TypeScript, Julia |
+| 07 | [التنظيم: Dropout وWeight Decay وBatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بناء | Python, TypeScript, Julia |
+| 08 | [تهيئة الأوزان واستقرار التدريب](../../phases/03-deep-learning-core/08-weight-initialization/) | بناء | Python, TypeScript, Julia |
+| 09 | [جداول معدل التعلّم والإحماء](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | بناء | Python, TypeScript, Julia |
+| 10 | [ابنِ إطار عمل مصغرًا خاصًا بك](../../phases/03-deep-learning-core/10-mini-framework/) | بناء | Python, TypeScript, Julia |
 | 11 | [مقدمة إلى PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | بناء | Python |
 | 12 | [مقدمة إلى JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | بناء | Python |
 | 13 | [تصحيح أخطاء الشبكات العصبية](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | بناء | Python |
@@ -448,8 +448,8 @@ flowchart TB
 
 | # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [أساسيات الصور: البكسلات والقنوات ومساحات الألوان](../../phases/04-computer-vision/01-image-fundamentals/) | تعلم | Python |
-| 02 | [عمليات الالتفاف من الصفر](../../phases/04-computer-vision/02-convolutions-from-scratch/) | بناء | Python |
+| 01 | [أساسيات الصور: البكسلات والقنوات ومساحات الألوان](../../phases/04-computer-vision/01-image-fundamentals/) | تعلم | Python, Julia |
+| 02 | [عمليات الالتفاف من الصفر](../../phases/04-computer-vision/02-convolutions-from-scratch/) | بناء | Python, Julia |
 | 03 | [شبكات CNN: من LeNet إلى ResNet](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | بناء | Python |
 | 04 | [تصنيف الصور](../../phases/04-computer-vision/04-image-classification/) | بناء | Python |
 | 05 | [التعلّم بالنقل والضبط الدقيق](../../phases/04-computer-vision/05-transfer-learning/) | بناء | Python |
@@ -474,7 +474,7 @@ flowchart TB
 | 24 | [SAM 3 والتقسيم بالمفردات المفتوحة](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | بناء | Python |
 | 25 | [نماذج الرؤية واللغة (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | بناء | Python |
 | 26 | [تقدير العمق والهندسة من صورة أحادية](../../phases/04-computer-vision/26-monocular-depth/) | بناء | Python |
-| 27 | [تتبّع أجسام متعددة وذاكرة الفيديو](../../phases/04-computer-vision/27-multi-object-tracking/) | بناء | Python |
+| 27 | [تتبّع أجسام متعددة وذاكرة الفيديو](../../phases/04-computer-vision/27-multi-object-tracking/) | بناء | Python, Rust |
 | 28 | [نماذج العالم وانتشار الفيديو](../../phases/04-computer-vision/28-world-models-video-diffusion/) | بناء | Python |
 
 </details>
@@ -487,7 +487,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [معالجة النصوص: الترميز إلى رموز والتجذير والاشتقاق الصرفي](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | بناء | Python, TypeScript |
 | 02 | [حقيبة الكلمات وTF-IDF وتمثيل النص](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | بناء | Python, TypeScript |
-| 03 | [تضمينات الكلمات: بناء Word2Vec من الصفر](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | بناء | Python |
+| 03 | [تضمينات الكلمات: بناء Word2Vec من الصفر](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | بناء | Python, Julia |
 | 04 | [تضمينات GloVe وFastText والوحدات الفرعية](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | بناء | Python, TypeScript |
 | 05 | [تحليل المشاعر](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | بناء | Python, TypeScript |
 | 06 | [التعرّف على الكيانات المسماة (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | بناء | Python, TypeScript |
@@ -498,13 +498,13 @@ flowchart TB
 | 11 | [الترجمة الآلية](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | بناء | Python, TypeScript |
 | 12 | [تلخيص النص](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | بناء | Python, TypeScript |
 | 13 | [أنظمة الإجابة عن الأسئلة](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | بناء | Python, TypeScript |
-| 14 | [استرجاع المعلومات والبحث](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | بناء | Python, TypeScript |
-| 15 | [نمذجة الموضوعات: LDA وBERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | بناء | Python, TypeScript |
+| 14 | [استرجاع المعلومات والبحث](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | بناء | Python, TypeScript, Rust |
+| 15 | [نمذجة الموضوعات: LDA وBERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | بناء | Python, TypeScript, Julia |
 | 16 | [توليد النص](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | بناء | Python, TypeScript |
 | 17 | [روبوتات المحادثة: من القواعد إلى الشبكات العصبية](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | بناء | Python, TypeScript |
 | 18 | [معالجة اللغة الطبيعية متعددة اللغات](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | بناء | Python, TypeScript |
-| 19 | [ترميز الوحدات الفرعية: BPE وWordPiece وUnigram وSentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | تعلم | Python, TypeScript |
-| 20 | [المخرجات المنظّمة وفك الترميز المقيّد](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | بناء | Python, TypeScript |
+| 19 | [ترميز الوحدات الفرعية: BPE وWordPiece وUnigram وSentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | تعلم | Python, TypeScript, Rust |
+| 20 | [المخرجات المنظّمة وفك الترميز المقيّد](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | بناء | Python, TypeScript, Rust |
 | 21 | [الاستدلال اللغوي (NLI والتضمين النصي)](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | تعلم | Python, TypeScript |
 | 22 | [التعمق في نماذج التضمين](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | تعلم | Python, TypeScript |
 | 23 | [استراتيجيات تقسيم النص إلى مقاطع لـRAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | بناء | Python, TypeScript |
@@ -523,8 +523,8 @@ flowchart TB
 
 | # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
-| 01 | [أساسيات الصوت: الموجات وأخذ العينات وFFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | تعلم | Python, TypeScript |
-| 02 | [المخططات الطيفية ومقياس Mel وميزات الصوت](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | بناء | Python, TypeScript |
+| 01 | [أساسيات الصوت: الموجات وأخذ العينات وFFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | تعلم | Python, TypeScript, Julia |
+| 02 | [المخططات الطيفية ومقياس Mel وميزات الصوت](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | بناء | Python, TypeScript, Julia |
 | 03 | [تصنيف الصوت](../../phases/06-speech-and-audio/03-audio-classification) | بناء | Python, TypeScript |
 | 04 | [التعرّف على الكلام (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | بناء | Python, TypeScript |
 | 05 | [Whisper: المعمارية والضبط الدقيق](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | بناء | Python, TypeScript |
@@ -536,7 +536,7 @@ flowchart TB
 | 11 | [معالجة الصوت في الزمن الحقيقي](../../phases/06-speech-and-audio/11-real-time-audio-processing) | بناء | Python, Rust |
 | 12 | [ابنِ مسار مساعد صوتي](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | بناء | Python, TypeScript |
 | 13 | [مرمّزات الصوت العصبية: EnCodec وSNAC وMimi وDAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | تعلم | Python, TypeScript |
-| 14 | [كشف النشاط الصوتي وتناوب الأدوار](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | بناء | Python, TypeScript |
+| 14 | [كشف النشاط الصوتي وتناوب الأدوار](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | بناء | Python, TypeScript, Rust |
 | 15 | [تحويل الكلام إلى كلام بالتدفق: Moshi وHibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | تعلم | Python, TypeScript |
 | 16 | [مكافحة انتحال الصوت ووضع العلامات المائية الصوتية](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | بناء | Python, TypeScript |
 | 17 | [تقييم الصوت: WER وMOS وMMAU ولوحات الصدارة](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | تعلم | Python, TypeScript |
@@ -586,9 +586,9 @@ flowchart TB
 | 10 | [توليد الفيديو](../../phases/08-generative-ai/10-video-generation/) | بناء | Python, TypeScript |
 | 11 | [توليد الصوت](../../phases/08-generative-ai/11-audio-generation/) | بناء | Python, TypeScript |
 | 12 | [توليد محتوى ثلاثي الأبعاد](../../phases/08-generative-ai/12-3d-generation/) | بناء | Python, TypeScript |
-| 13 | [مطابقة التدفق والتدفقات المصحّحة](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | بناء | Python, TypeScript |
+| 13 | [مطابقة التدفق والتدفقات المصحّحة](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | بناء | Python, TypeScript, Julia |
 | 14 | [التقييم: FID وCLIP Score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | بناء | Python, TypeScript |
-| 19 | [النمذجة البصرية autoregressive (VAR): التنبؤ بالمقياس التالي](../../phases/08-generative-ai/19-visual-autoregressive-var/) | بناء | Python |
+| 19 | [النمذجة البصرية autoregressive (VAR): التنبؤ بالمقياس التالي](../../phases/08-generative-ai/19-visual-autoregressive-var/) | بناء | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ flowchart TB
 | # | الدرس | النوع | اللغة |
 |:---:|--------|:----:|------|
 | 01 | [مُرمّزات الرموز: BPE وWordPiece وSentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | بناء | Python, Rust |
-| 02 | [ابنِ مُرمّزًا من الصفر](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | بناء | Python |
+| 02 | [ابنِ مُرمّزًا من الصفر](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | بناء | Python, TypeScript |
 | 03 | [مسارات البيانات للتدريب المسبق](../../phases/10-llms-from-scratch/03-data-pipelines/) | بناء | Python, Rust |
 | 04 | [التدريب المسبق لـMini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | بناء | Python, Rust |
 | 05 | [التدريب الموزع: FSDP وDeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | بناء | Python |
@@ -665,7 +665,7 @@ flowchart TB
 | 11 | [التخزين المؤقت وتحديد المعدل والتكلفة](../../phases/11-llm-engineering/11-caching-cost/) | بناء | Python, TypeScript |
 | 12 | [ضوابط الحماية والسلامة](../../phases/11-llm-engineering/12-guardrails/) | بناء | Python, TypeScript |
 | 13 | [ابنِ تطبيق LLM للإنتاج](../../phases/11-llm-engineering/13-production-app/) | بناء | Python, TypeScript |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | بناء | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | بناء | Python, TypeScript, Go |
 | 15 | [التخزين المؤقت للموجّهات والسياق](../../phases/11-llm-engineering/15-prompt-caching/) | بناء | Python, TypeScript |
 | 16 | [آلات حالات الوكلاء: الرسوم والعقد ونقاط التحقق](../../phases/11-llm-engineering/16-langgraph-state-machines/) | بناء | Python |
 | 17 | [المفاضلة بين أطر عمل الوكلاء](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | تعلم | Python, TypeScript |
@@ -714,25 +714,25 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [واجهة الأداة](../../phases/13-tools-and-protocols/01-the-tool-interface/) | تعلم | Python, TypeScript |
 | 02 | [التعمق في استدعاء الدوال](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | بناء | Python, TypeScript |
-| 03 | [استدعاءات الأدوات المتوازية والمتدفقة](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | بناء | Python, TypeScript |
+| 03 | [استدعاءات الأدوات المتوازية والمتدفقة](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | بناء | Python, TypeScript, Go |
 | 04 | [مخرجات منظّمة](../../phases/13-tools-and-protocols/04-structured-output/) | بناء | Python, TypeScript |
 | 05 | [تصميم مخطط الأداة](../../phases/13-tools-and-protocols/05-tool-schema-design/) | تعلم | Python, TypeScript |
 | 06 | [أساسيات MCP: الطلبات عديمة الحالة وJSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | تعلم | Python, TypeScript |
-| 07 | [ابنِ خادم MCP: Python وTypeScript عديمي الحالة](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | بناء | Python, TypeScript |
+| 07 | [ابنِ خادم MCP: Python وTypeScript عديمي الحالة](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | بناء | Python, TypeScript, Go |
 | 08 | [ابنِ عميل MCP: الاكتشاف والتوجيه والانتقال الاحتياطي بين جيلين](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | بناء | Python, TypeScript |
-| 09 | [وسائل نقل MCP: stdio وHTTP القابل للبث عديم الحالة](../../phases/13-tools-and-protocols/09-mcp-transports/) | تعلم | Python, TypeScript |
+| 09 | [وسائل نقل MCP: stdio وHTTP القابل للبث عديم الحالة](../../phases/13-tools-and-protocols/09-mcp-transports/) | تعلم | Python, TypeScript, Go |
 | 10 | [موارد MCP وموجّهاته: سياق قابل للعنونة للخوادم عديمة الحالة](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | بناء | Python, TypeScript |
 | 11 | [مدخل النموذج في MCP: ترحيل أخذ العينات وMRTR عديم الحالة](../../phases/13-tools-and-protocols/11-mcp-sampling/) | بناء | Python, TypeScript |
 | 12 | [تحديد النطاق صراحةً وطلب الإيضاح عديم الحالة](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | بناء | Python, TypeScript |
 | 13 | [امتداد مهام MCP: عمل مستمر فوق نواة عديمة الحالة](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | بناء | Python, TypeScript |
 | 14 | [تطبيقات MCP على بروتوكول عديم الحالة](../../phases/13-tools-and-protocols/14-mcp-apps/) | بناء | Python, TypeScript |
 | 15 | [أمن MCP: بيانات وصفية مسمومة، والتوجيه، وحالة MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | تعلم | Python, TypeScript |
-| 16 | [تفويض MCP: CIMD وربط الجهة المُصدرة وPKCE والتصعيد التدريجي للصلاحيات](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | بناء | Python, TypeScript |
-| 17 | [بوابات MCP عديمة الحالة وقبول الإدخالات في السجل](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | تعلم | Python, TypeScript |
-| 18 | [مصادقة MCP في الإنتاج: التسجيل المرتبط بالجهة المُصدرة والرموز](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | بناء | Python, TypeScript |
-| 19 | [بروتوكول A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | بناء | Python, TypeScript |
+| 16 | [تفويض MCP: CIMD وربط الجهة المُصدرة وPKCE والتصعيد التدريجي للصلاحيات](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | بناء | Python, TypeScript, Go |
+| 17 | [بوابات MCP عديمة الحالة وقبول الإدخالات في السجل](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | تعلم | Python, TypeScript, Go |
+| 18 | [مصادقة MCP في الإنتاج: التسجيل المرتبط بالجهة المُصدرة والرموز](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | بناء | Python, TypeScript, Go |
+| 19 | [بروتوكول A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | بناء | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | بناء | Python, TypeScript |
-| 21 | [طبقة توجيه LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | تعلم | Python, TypeScript |
+| 21 | [طبقة توجيه LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | تعلم | Python, TypeScript, Go |
 | 22 | [Agent Skills: العقد المحمول وحدود بيئة التشغيل](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | بناء | Python, TypeScript |
 | 23 | [مشروع ختامي: منظومة أدوات عديمة الحالة](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | بناء | Python, TypeScript |
 | 24 | [اكتشاف المهارات والإفصاح التدريجي](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | بناء | Python, TypeScript |
@@ -743,19 +743,19 @@ flowchart TB
 | 29 | [موثوقية MCP والإلغاء والتحكم في التدفق](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | بناء | Python, TypeScript |
 | 30 | [سلسلة توريد سجل MCP: القبول والانحراف والاسترجاع](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | بناء | Python, TypeScript |
 | 31 | [هندسة مطابقة MCP: الإصدارات والأدلة والعمليات](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | بناء | Python, TypeScript |
-| 32 | [تشريح البرنامج: قراءة ELF من الصفر](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | بناء | Python, TypeScript |
-| 33 | [التفكيك ومخططات تدفق التحكم](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | بناء | Python, TypeScript |
-| 34 | [رفع شيفرة الآلة إلى شيفرة زائفة](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | بناء | Python |
+| 32 | [تشريح البرنامج: قراءة ELF من الصفر](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | بناء | Python, TypeScript, Rust |
+| 33 | [التفكيك ومخططات تدفق التحكم](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | بناء | Python, TypeScript, Rust |
+| 34 | [رفع شيفرة الآلة إلى شيفرة زائفة](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | بناء | Python, TypeScript |
 | 35 | [الأدلة والثقة والمجاهيل في تحليل الملفات الثنائية](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | بناء | Python, TypeScript |
 | 36 | [أعد البناء وأثبت التطابق](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | بناء | Python, TypeScript |
 | 37 | [مشهد الهندسة العكسية](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | بناء | Python, TypeScript |
 | 38 | [اصطلاحات الاستدعاء وإطارات المكدس](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | بناء | Python, TypeScript |
 | 39 | [أنماط المترجم والتحسين](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | بناء | Python, TypeScript |
-| 40 | [الربط والتحميل والملفات الثنائية المجردة](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | بناء | Python, TypeScript |
+| 40 | [الربط والتحميل والملفات الثنائية المجردة](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | بناء | Python, TypeScript, Rust |
 | 41 | [استعادة البيانات والأنواع](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | بناء | Python, TypeScript |
 | 42 | [التحليل الديناميكي لبرنامجك الخاص](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | بناء | Python, TypeScript |
 | 43 | [الشيفرة الوسيطة والتنسيقات المُدارة](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | بناء | Python, TypeScript |
-| 44 | [مقارنة الملفات الثنائية والتنفيذ الرمزي](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | بناء | Python |
+| 44 | [مقارنة الملفات الثنائية والتنفيذ الرمزي](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | بناء | Python, TypeScript |
 | 45 | [الهندسة العكسية بمساعدة الذكاء الاصطناعي](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | بناء | Python, TypeScript |
 
 
@@ -792,13 +792,13 @@ flowchart TB
 | 20 | [معايير الأداء: WebArena وOSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | تعلم | Python, TypeScript |
 | 21 | [استخدام الحاسوب: Claude وOpenAI CUA وGemini](../../phases/14-agent-engineering/21-computer-use-agents/) | بناء | Python, TypeScript |
 | 22 | [وكلاء الصوت: Pipecat وLiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | بناء | Python, TypeScript |
-| 23 | [المعايير الدلالية لـOpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | بناء | Python, TypeScript |
+| 23 | [المعايير الدلالية لـOpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | بناء | Python, TypeScript, Go |
 | 24 | [قابلية ملاحظة الوكلاء: Langfuse وPhoenix وOpik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | تعلم | Python, TypeScript |
 | 25 | [مناظرة الوكلاء المتعددين وتعاونهم](../../phases/14-agent-engineering/25-multi-agent-debate/) | بناء | Python, TypeScript |
 | 26 | [أنماط الإخفاق: لماذا تتعطل الوكلاء](../../phases/14-agent-engineering/26-failure-modes-agentic/) | بناء | Python, TypeScript |
 | 27 | [حقن الموجّهات ودفاع PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | بناء | Python, TypeScript |
 | 28 | [أنماط التنسيق: المشرف والسرب والتسلسل الهرمي](../../phases/14-agent-engineering/28-orchestration-patterns/) | بناء | Python, TypeScript |
-| 29 | [بيئات تشغيل الإنتاج: الطوابير والأحداث والمهام المجدولة](../../phases/14-agent-engineering/29-production-runtimes/) | تعلم | Python, TypeScript |
+| 29 | [بيئات تشغيل الإنتاج: الطوابير والأحداث والمهام المجدولة](../../phases/14-agent-engineering/29-production-runtimes/) | تعلم | Python, TypeScript, Go |
 | 30 | [تطوير الوكلاء المدفوع بالتقييم](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | بناء | Python, TypeScript |
 | 31 | [بيئة عمل الوكلاء: لماذا تفشل حتى النماذج القديرة](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | تعلم | Python, TypeScript |
 | 32 | [بيئة العمل الدنيا للوكيل](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | بناء | Python, TypeScript |
@@ -848,7 +848,7 @@ flowchart TB
 | 09 | [مشهد وكلاء البرمجة المستقلين (SWE-bench وCodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | تعلم | Python, TypeScript |
 | 10 | [أنماط الأذونات للوكلاء المستقلين](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | تعلم | Python, TypeScript |
 | 11 | [وكلاء المتصفح وحقن الموجّهات غير المباشر](../../phases/15-autonomous-systems/11-browser-agents/) | تعلم | Python, TypeScript |
-| 12 | [التنفيذ المستدام للوكلاء طويلي التشغيل](../../phases/15-autonomous-systems/12-durable-execution/) | تعلم | Python, TypeScript |
+| 12 | [التنفيذ المستدام للوكلاء طويلي التشغيل](../../phases/15-autonomous-systems/12-durable-execution/) | تعلم | Python, TypeScript, Go |
 | 13 | [ميزانيات الأفعال وحدود التكرار وضوابط التكلفة](../../phases/15-autonomous-systems/13-cost-governors/) | تعلم | Python, TypeScript |
 | 14 | [مفاتيح الإيقاف وقواطع الدائرة ورموز Canary](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | تعلم | Python, TypeScript |
 | 15 | [HITL: اقترح أولًا ثم ثبّت التغيير](../../phases/15-autonomous-systems/15-propose-then-commit/) | تعلم | Python, TypeScript |
@@ -857,7 +857,7 @@ flowchart TB
 | 18 | [Llama Guard وتصنيف المدخلات والمخرجات](../../phases/15-autonomous-systems/18-llama-guard/) | تعلم | Python, TypeScript |
 | 19 | [سياسة Anthropic للتوسّع المسؤول v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | تعلم | Python, TypeScript |
 | 20 | [إطار الاستعداد لدى OpenAI وإطار FSF من DeepMind](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | تعلم | Python, TypeScript |
-| 21 | [آفاق الزمن لدى METR والتقييم الخارجي](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | تعلم | Python, TypeScript |
+| 21 | [آفاق الزمن لدى METR والتقييم الخارجي](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | تعلم | Python, TypeScript, Julia |
 | 22 | [CAIS وCAISI والمخاطر على مستوى المجتمع](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | تعلم | Python, TypeScript |
 
 </details>
@@ -876,17 +876,17 @@ flowchart TB
 | 06 | [معمارية هرمية وانحراف التفكيك](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | تعلم | Python, TypeScript |
 | 07 | [مجتمع العقل ومناظرة الوكلاء المتعددين](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | بناء | Python, TypeScript |
 | 08 | [تخصص الأدوار: المخطط والناقد والمنفّذ والمدقّق](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | بناء | Python, TypeScript |
-| 09 | [الأسراب المتوازية والمعماريات الشبكية](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | بناء | Python, TypeScript |
+| 09 | [الأسراب المتوازية والمعماريات الشبكية](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | بناء | Python, TypeScript, Go |
 | 10 | [المحادثة الجماعية واختيار المتحدث](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | بناء | Python, TypeScript |
 | 11 | [تسليم المهام والروتينات (تنسيق عديم الحالة)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | بناء | Python, TypeScript |
-| 12 | [A2A: بروتوكول الوكيل إلى الوكيل](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | بناء | Python, TypeScript |
+| 12 | [A2A: بروتوكول الوكيل إلى الوكيل](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | بناء | Python, TypeScript, Go |
 | 13 | [الذاكرة المشتركة وأنماط السبورة](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | بناء | Python, TypeScript |
 | 14 | [الإجماع وتحمل الأعطال البيزنطية](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | بناء | Python, TypeScript |
 | 15 | [التصويت والاتساق الذاتي وبنية المناظرة](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | بناء | Python, TypeScript |
 | 16 | [التفاوض والمساومة](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | بناء | Python, TypeScript |
 | 17 | [الوكلاء التوليديون ومحاكاة السلوك الناشئ](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | بناء | Python, TypeScript |
 | 18 | [نظرية العقل والتنسيق الناشئ](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | بناء | Python, TypeScript |
-| 19 | [تحسين الأسراب (PSO وACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | بناء | Python, TypeScript |
+| 19 | [تحسين الأسراب (PSO وACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | بناء | Python, TypeScript, Julia |
 | 20 | [التعلّم المعزّز متعدد الوكلاء: MADDPG وQMIX وMAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | تعلم | Python, TypeScript |
 | 21 | [اقتصادات الوكلاء وحوافز الرموز والسمعة](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | تعلم | Python, TypeScript |
 | 22 | [التوسّع في الإنتاج: الطوابير ونقاط التحقق والاستدامة](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | بناء | Python, TypeScript |
@@ -905,9 +905,9 @@ flowchart TB
 | 01 | [منصات LLM المُدارة: Bedrock وAzure OpenAI وVertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | تعلم | Python, TypeScript |
 | 02 | [اقتصاديات منصات الاستدلال: Fireworks وTogether وBaseten وModal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | تعلم | Python, TypeScript |
 | 03 | [التوسّع التلقائي لوحدات GPU على Kubernetes: Karpenter وKAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | تعلم | Python, TypeScript |
-| 04 | [تفاصيل محرك الخدمة: PagedAttention والتجميع المستمر والتهيئة المسبقة المجزأة](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | تعلم | Python, TypeScript |
+| 04 | [تفاصيل محرك الخدمة: PagedAttention والتجميع المستمر والتهيئة المسبقة المجزأة](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | تعلم | Python, TypeScript, Rust |
 | 05 | [فك الترميز التخميني EAGLE-3 في الإنتاج](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | تعلم | Python, TypeScript |
-| 06 | [تقديم الخدمة بذاكرة بادئة مخبأة: RadixAttention وإعادة استخدام KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | تعلم | Python, TypeScript |
+| 06 | [تقديم الخدمة بذاكرة بادئة مخبأة: RadixAttention وإعادة استخدام KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | تعلم | Python, TypeScript, Rust |
 | 07 | [ترجمة الاستدلال المتخصصة للأجهزة: FP8 وNVFP4 على Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | تعلم | Python, TypeScript |
 | 08 | [مقاييس الاستدلال: TTFT وTPOT وITL وGoodput وP99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | تعلم | Python, TypeScript |
 | 09 | [تكميم الإنتاج: AWQ وGPTQ وGGUF وFP8 وNVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | تعلم | Python, TypeScript |
@@ -922,7 +922,7 @@ flowchart TB
 | 18 | [منظومة تقديم الإنتاج: تفريغ KV والتوجيه الواعي بالذاكرة المؤقتة](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | تعلم | Python, TypeScript |
 | 19 | [بوابات الذكاء الاصطناعي: LiteLLM وPortkey وKong وBifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | تعلم | Python, TypeScript |
 | 20 | [Shadow وCanary والنشر التدريجي](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | تعلم | Python, TypeScript |
-| 21 | [اختبار A/B لميزات LLM: GrowthBook وStatsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | تعلم | Python, TypeScript |
+| 21 | [اختبار A/B لميزات LLM: GrowthBook وStatsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | تعلم | Python, TypeScript, Julia |
 | 22 | [اختبار حمل واجهات LLM: k6 وLLMPerf وGenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | بناء | Python, TypeScript |
 | 23 | [هندسة موثوقية المواقع للذكاء الاصطناعي: الاستجابة للحوادث متعددة الوكلاء](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | تعلم | Python, TypeScript |
 | 24 | [هندسة الفوضى لأنظمة LLM الإنتاجية](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | تعلم | Python, TypeScript |
@@ -961,7 +961,7 @@ flowchart TB
 | 19 | [أبحاث رفاه النماذج](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | تعلم | Python, TypeScript |
 | 20 | [التحيز والضرر التمثيلي](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | بناء | Python, TypeScript |
 | 21 | [معايير الإنصاف: الجماعة والفرد والحالة المضادة للواقع](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | تعلم | Python, TypeScript |
-| 22 | [الخصوصية التفاضلية لـLLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | بناء | Python, TypeScript |
+| 22 | [الخصوصية التفاضلية لـLLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | بناء | Python, TypeScript, Julia |
 | 23 | [العلامات المائية: SynthID وStable Signature وC2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | بناء | Python, TypeScript |
 | 24 | [الأطر التنظيمية: EU وUS وUK وKorea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | تعلم | Python, TypeScript |
 | 25 | [EchoLeak وثغرات CVE في الذكاء الاصطناعي](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | تعلم | Python, TypeScript |
@@ -989,9 +989,9 @@ flowchart TB
 | 08 | [روبوت محادثة RAG للإنتاج في قطاع خاضع للتنظيم](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [وكيل لترحيل الشيفرة وترقية المستودع](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [فريق هندسة برمجيات متعدد الوكلاء](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [لوحة متابعة قابلية ملاحظة LLM وتقييمه](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [لوحة متابعة قابلية ملاحظة LLM وتقييمه](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [مسار فهم الفيديو (من المشهد إلى الأسئلة والأجوبة)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [خادم MCP عديم الحالة مع سجلّ وحوكمة](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [خادم MCP عديم الحالة مع سجلّ وحوكمة](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [خادم استدلال بفك ترميز تخميني](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [إطار سلامة دستوري ومنطقة اختبار للفريق الأحمر](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [وكيل مستقل يحوّل GitHub Issue إلى PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1011,7 +1011,7 @@ flowchart TB
 | 27 | [منصة تقييم بمهام اختبارية ثابتة](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. إطار عمل الوكلاء| Python, TypeScript |
 | 28 | [قابلية الملاحظة عبر OTel GenAI spans ومقاييس Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. إطار عمل الوكلاء| Python, TypeScript |
 | 29 | [وكيل برمجة متكامل فوق بيئة الوكيل](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. إطار عمل الوكلاء| Python, TypeScript |
-| 30 | [مُرمّز BPE من الصفر](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP وLLM| Python, TypeScript |
+| 30 | [مُرمّز BPE من الصفر](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP وLLM| Python, TypeScript, Rust |
 | 31 | [مجموعة بيانات مرمّزة بنافذة منزلقة](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP وLLM| Python |
 | 32 | [تضمينات الرموز والمواضع](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP وLLM| Python |
 | 33 | [الانتباه الذاتي متعدد الرؤوس](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP وLLM| Python |
@@ -1023,7 +1023,7 @@ flowchart TB
 | 39 | [مواءمة التعليمات عبر الضبط الدقيق الخاضع للإشراف](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP وLLM| Python |
 | 40 | [تحسين التفضيلات المباشر من الصفر](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP وLLM| Python |
 | 41 | [مسار تقييم كامل](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP وLLM| Python |
-| 42 | [أداة تنزيل مدونة نصية كبيرة](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. التدريب من البداية إلى النهاية| Python |
+| 42 | [أداة تنزيل مدونة نصية كبيرة](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. التدريب من البداية إلى النهاية| Python, TypeScript |
 | 43 | [مدونة نصية مرمّزة بتنسيق HDF5](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. التدريب من البداية إلى النهاية| Python |
 | 44 | [معدل تعلّم جيبي مع إحماء خطي](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. التدريب من البداية إلى النهاية| Python |
 | 45 | [قصّ التدرجات والدقة المختلطة](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. التدريب من البداية إلى النهاية| Python |
@@ -1037,8 +1037,8 @@ flowchart TB
 | 53 | [مقيّم النتائج](../../phases/19-capstone-projects/53-result-evaluator/) | D. البحث الآلي| Python |
 | 54 | [كاتب الأبحاث](../../phases/19-capstone-projects/54-paper-writer/) | D. البحث الآلي| Python, TypeScript |
 | 55 | [حلقة الناقد](../../phases/19-capstone-projects/55-critic-loop/) | D. البحث الآلي| Python, TypeScript |
-| 56 | [مجدول التكرارات](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. البحث الآلي| Python |
-| 57 | [عرض بحثي متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. البحث الآلي| Python |
+| 56 | [مجدول التكرارات](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. البحث الآلي| Python, TypeScript |
+| 57 | [عرض بحثي متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. البحث الآلي| Python, TypeScript |
 | 58 | [رقع مُرمّز الرؤية](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. VLM متعدد الوسائط| Python |
 | 59 | [مُرمّز Vision Transformer](../../phases/19-capstone-projects/59-vit-transformer/) | E. VLM متعدد الوسائط| Python |
 | 60 | [طبقة إسقاط لمواءمة الوسائط](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. VLM متعدد الوسائط| Python |
@@ -1052,11 +1052,11 @@ flowchart TB
 | 68 | [تقييم RAG: الدقة والاسترجاع وMRR وnDCG والأمانة وملاءمة الإجابة](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. RAG متقدم| Python, TypeScript |
 | 69 | [نظام RAG متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. RAG متقدم| Python |
 | 70 | [تنسيق مواصفات المهمة](../../phases/19-capstone-projects/70-task-spec-format/) | G. إطار التقييم| Python, TypeScript |
-| 71 | [المقاييس التقليدية](../../phases/19-capstone-projects/71-classical-metrics/) | G. إطار التقييم| Python |
-| 72 | [مقياس تنفيذ الشيفرة](../../phases/19-capstone-projects/72-code-exec-metric/) | G. إطار التقييم| Python |
-| 73 | [الحيرة والمعايرة](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. إطار التقييم| Python |
-| 74 | [تجميع لوحة الصدارة](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. إطار التقييم| Python |
-| 75 | [مشغّل تقييم متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. إطار التقييم| Python |
+| 71 | [المقاييس التقليدية](../../phases/19-capstone-projects/71-classical-metrics/) | G. إطار التقييم| Python, TypeScript |
+| 72 | [مقياس تنفيذ الشيفرة](../../phases/19-capstone-projects/72-code-exec-metric/) | G. إطار التقييم| Python, TypeScript |
+| 73 | [الحيرة والمعايرة](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. إطار التقييم| Python, TypeScript |
+| 74 | [تجميع لوحة الصدارة](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. إطار التقييم| Python, TypeScript |
+| 75 | [مشغّل تقييم متكامل من البداية إلى النهاية](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. إطار التقييم| Python, TypeScript |
 | 76 | [العمليات الجماعية من الصفر](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. التدريب الموزّع| Python |
 | 77 | [توازي البيانات باستخدام DDP من الصفر](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. التدريب الموزّع| Python |
 | 78 | [تقسيم حالة محسّن ZeRO إلى أجزاء](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. التدريب الموزّع| Python |
@@ -1129,7 +1129,7 @@ flowchart TB
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      تطبيقات قابلة للتشغيل (Python وTypeScript وRust وJulia)
+├── code/      تطبيقات قابلة للتشغيل (Python وTypeScript وRust وJulia وGo)
 ├── docs/
 │   └── en.md  شرح الدرس
 └── outputs/   الموجّهات والمهارات والوكلاء وخوادم MCP التي ينتجها الدرس

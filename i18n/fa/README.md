@@ -19,7 +19,7 @@
 
 رایگان، متن‌باز و با مجوز MIT. در وب‌سایت، همراه یک عامل کدنویسی یا با اجرای کد محلی یاد بگیرید.
 
-> <span dir="rtl">542 درس. 20 مرحله.</span> <span dir="ltr">Python, TypeScript, Rust, Julia.</span>
+> <span dir="rtl">542 درس. 20 مرحله.</span> <span dir="ltr">Python, TypeScript, Rust, Julia, Go.</span>
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="مجوز MIT"></a>
@@ -374,19 +374,19 @@ flowchart TB
 | 07 | [قضیهٔ بیز و تفکر آماری](../../phases/01-math-foundations/07-bayes-theorem/) | بسازید | Python, TypeScript |
 | 08 | [بهینه‌سازی: خانوادهٔ نزول گرادیان](../../phases/01-math-foundations/08-optimization/) | بسازید | Python, Julia |
 | 09 | [نظریهٔ اطلاعات: آنتروپی و واگرایی KL](../../phases/01-math-foundations/09-information-theory/) | بیاموزید | Python, TypeScript |
-| 10 | [کاهش بُعد: PCA، t-SNE، UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | بسازید | Python, TypeScript |
+| 10 | [کاهش بُعد: PCA، t-SNE، UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | بسازید | Python, TypeScript, Julia |
 | 11 | [تجزیهٔ مقادیر منفرد](../../phases/01-math-foundations/11-singular-value-decomposition/) | بسازید | Python, Julia |
 | 12 | [عملیات تنسوری](../../phases/01-math-foundations/12-tensor-operations/) | بسازید | Python, TypeScript |
-| 13 | [پایداری عددی](../../phases/01-math-foundations/13-numerical-stability/) | بسازید | Python, TypeScript |
+| 13 | [پایداری عددی](../../phases/01-math-foundations/13-numerical-stability/) | بسازید | Python, TypeScript, Julia |
 | 14 | [نُرم‌ها و فاصله‌ها](../../phases/01-math-foundations/14-norms-and-distances/) | بسازید | Python, TypeScript |
 | 15 | [آمار برای ML](../../phases/01-math-foundations/15-statistics-for-ml/) | بسازید | Python, TypeScript |
-| 16 | [روش‌های نمونه‌گیری](../../phases/01-math-foundations/16-sampling-methods/) | بسازید | Python, TypeScript |
-| 17 | [دستگاه‌های خطی](../../phases/01-math-foundations/17-linear-systems/) | بسازید | Python, TypeScript |
-| 18 | [بهینه‌سازی محدب](../../phases/01-math-foundations/18-convex-optimization/) | بسازید | Python, TypeScript |
+| 16 | [روش‌های نمونه‌گیری](../../phases/01-math-foundations/16-sampling-methods/) | بسازید | Python, TypeScript, Julia |
+| 17 | [دستگاه‌های خطی](../../phases/01-math-foundations/17-linear-systems/) | بسازید | Python, TypeScript, Julia |
+| 18 | [بهینه‌سازی محدب](../../phases/01-math-foundations/18-convex-optimization/) | بسازید | Python, TypeScript, Julia |
 | 19 | [اعداد مختلط برای هوش مصنوعی](../../phases/01-math-foundations/19-complex-numbers/) | بیاموزید | Python, TypeScript |
-| 20 | [تبدیل فوریه](../../phases/01-math-foundations/20-fourier-transform/) | بسازید | Python, TypeScript |
+| 20 | [تبدیل فوریه](../../phases/01-math-foundations/20-fourier-transform/) | بسازید | Python, TypeScript, Julia |
 | 21 | [نظریهٔ گراف برای ML](../../phases/01-math-foundations/21-graph-theory/) | بسازید | Python, TypeScript |
-| 22 | [فرایندهای تصادفی](../../phases/01-math-foundations/22-stochastic-processes/) | بیاموزید | Python |
+| 22 | [فرایندهای تصادفی](../../phases/01-math-foundations/22-stochastic-processes/) | بیاموزید | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ flowchart TB
 
 | # | درس | نوع | زبان |
 |:---:|--------|:----:|------|
-| 01 | [پرسپترون: نقطهٔ آغاز](../../phases/03-deep-learning-core/01-the-perceptron/) | بسازید | Python, Rust, Julia |
-| 02 | [شبکه‌های چندلایه و گذر رو به جلو](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بسازید | Python, TypeScript |
-| 03 | [پس‌انتشار از ابتدا](../../phases/03-deep-learning-core/03-backpropagation/) | بسازید | Python, Rust, Julia |
-| 04 | [توابع فعال‌سازی: ReLU، Sigmoid، GELU و دلیل استفاده](../../phases/03-deep-learning-core/04-activation-functions/) | بسازید | Python, Julia |
-| 05 | [توابع زیان: MSE، آنتروپی متقاطع، تقابلی](../../phases/03-deep-learning-core/05-loss-functions/) | بسازید | Python, Julia |
-| 06 | [بهینه‌سازها: SGD، Momentum، Adam، AdamW](../../phases/03-deep-learning-core/06-optimizers/) | بسازید | Python, TypeScript |
-| 07 | [منظم‌سازی: Dropout، کاهش وزن، BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بسازید | Python, TypeScript |
-| 08 | [مقداردهی اولیهٔ وزن‌ها و پایداری آموزش](../../phases/03-deep-learning-core/08-weight-initialization/) | بسازید | Python, TypeScript |
-| 09 | [زمان‌بندی نرخ یادگیری و گرم‌کردن](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | بسازید | Python, TypeScript |
-| 10 | [چارچوب کوچک خود را بسازید](../../phases/03-deep-learning-core/10-mini-framework/) | بسازید | Python, TypeScript |
+| 01 | [پرسپترون: نقطهٔ آغاز](../../phases/03-deep-learning-core/01-the-perceptron/) | بسازید | Python, TypeScript, Rust, Julia |
+| 02 | [شبکه‌های چندلایه و گذر رو به جلو](../../phases/03-deep-learning-core/02-multi-layer-networks/) | بسازید | Python, TypeScript, Julia |
+| 03 | [پس‌انتشار از ابتدا](../../phases/03-deep-learning-core/03-backpropagation/) | بسازید | Python, TypeScript, Rust, Julia |
+| 04 | [توابع فعال‌سازی: ReLU، Sigmoid، GELU و دلیل استفاده](../../phases/03-deep-learning-core/04-activation-functions/) | بسازید | Python, TypeScript, Julia |
+| 05 | [توابع زیان: MSE، آنتروپی متقاطع، تقابلی](../../phases/03-deep-learning-core/05-loss-functions/) | بسازید | Python, TypeScript, Julia |
+| 06 | [بهینه‌سازها: SGD، Momentum، Adam، AdamW](../../phases/03-deep-learning-core/06-optimizers/) | بسازید | Python, TypeScript, Julia |
+| 07 | [منظم‌سازی: Dropout، کاهش وزن، BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | بسازید | Python, TypeScript, Julia |
+| 08 | [مقداردهی اولیهٔ وزن‌ها و پایداری آموزش](../../phases/03-deep-learning-core/08-weight-initialization/) | بسازید | Python, TypeScript, Julia |
+| 09 | [زمان‌بندی نرخ یادگیری و گرم‌کردن](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | بسازید | Python, TypeScript, Julia |
+| 10 | [چارچوب کوچک خود را بسازید](../../phases/03-deep-learning-core/10-mini-framework/) | بسازید | Python, TypeScript, Julia |
 | 11 | [آشنایی با PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | بسازید | Python |
 | 12 | [آشنایی با JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | بسازید | Python |
 | 13 | [اشکال‌زدایی شبکه‌های عصبی](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | بسازید | Python |
@@ -448,8 +448,8 @@ flowchart TB
 
 | # | درس | نوع | زبان |
 |:---:|--------|:----:|------|
-| 01 | [مبانی تصویر: پیکسل، کانال و فضای رنگ](../../phases/04-computer-vision/01-image-fundamentals/) | بیاموزید | Python |
-| 02 | [کانولوشن از ابتدا](../../phases/04-computer-vision/02-convolutions-from-scratch/) | بسازید | Python |
+| 01 | [مبانی تصویر: پیکسل، کانال و فضای رنگ](../../phases/04-computer-vision/01-image-fundamentals/) | بیاموزید | Python, Julia |
+| 02 | [کانولوشن از ابتدا](../../phases/04-computer-vision/02-convolutions-from-scratch/) | بسازید | Python, Julia |
 | 03 | [شبکه‌های CNN: از LeNet تا ResNet](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | بسازید | Python |
 | 04 | [دسته‌بندی تصویر](../../phases/04-computer-vision/04-image-classification/) | بسازید | Python |
 | 05 | [یادگیری انتقالی و تنظیم دقیق](../../phases/04-computer-vision/05-transfer-learning/) | بسازید | Python |
@@ -474,7 +474,7 @@ flowchart TB
 | 24 | [SAM 3 و بخش‌بندی با واژگان باز](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | بسازید | Python |
 | 25 | [مدل‌های بینایی‌زبانی (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | بسازید | Python |
 | 26 | [تخمین عمق و هندسهٔ تک‌چشمی](../../phases/04-computer-vision/26-monocular-depth/) | بسازید | Python |
-| 27 | [ردیابی چند شیء و حافظهٔ ویدئو](../../phases/04-computer-vision/27-multi-object-tracking/) | بسازید | Python |
+| 27 | [ردیابی چند شیء و حافظهٔ ویدئو](../../phases/04-computer-vision/27-multi-object-tracking/) | بسازید | Python, Rust |
 | 28 | [مدل‌های جهان و انتشار ویدئو](../../phases/04-computer-vision/28-world-models-video-diffusion/) | بسازید | Python |
 
 </details>
@@ -487,7 +487,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [پردازش متن: توکن‌سازی، ریشه‌یابی، بن‌واژه‌سازی](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | بسازید | Python, TypeScript |
 | 02 | [کیسهٔ واژه‌ها، TF-IDF و بازنمایی متن](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | بسازید | Python, TypeScript |
-| 03 | [بردارهای تعبیهٔ واژه: Word2Vec از ابتدا](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | بسازید | Python |
+| 03 | [بردارهای تعبیهٔ واژه: Word2Vec از ابتدا](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | بسازید | Python, Julia |
 | 04 | [GloVe، FastText و تعبیهٔ زیرواژه‌ها](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | بسازید | Python, TypeScript |
 | 05 | [تحلیل احساسات](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | بسازید | Python, TypeScript |
 | 06 | [بازشناسی موجودیت نام‌دار (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | بسازید | Python, TypeScript |
@@ -498,13 +498,13 @@ flowchart TB
 | 11 | [ترجمهٔ ماشینی](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | بسازید | Python, TypeScript |
 | 12 | [خلاصه‌سازی متن](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | بسازید | Python, TypeScript |
 | 13 | [سامانه‌های پرسش و پاسخ](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | بسازید | Python, TypeScript |
-| 14 | [بازیابی اطلاعات و جست‌وجو](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | بسازید | Python, TypeScript |
-| 15 | [مدل‌سازی موضوع: LDA، BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | بسازید | Python, TypeScript |
+| 14 | [بازیابی اطلاعات و جست‌وجو](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | بسازید | Python, TypeScript, Rust |
+| 15 | [مدل‌سازی موضوع: LDA، BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | بسازید | Python, TypeScript, Julia |
 | 16 | [تولید متن](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | بسازید | Python, TypeScript |
 | 17 | [چت‌بات‌ها: از قواعد تا شبکهٔ عصبی](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | بسازید | Python, TypeScript |
 | 18 | [پردازش زبان طبیعی چندزبانه](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | بسازید | Python, TypeScript |
-| 19 | [توکن‌سازی زیرواژه: BPE، WordPiece، Unigram، SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | بیاموزید | Python, TypeScript |
-| 20 | [خروجی ساخت‌یافته و رمزگشایی مقید](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | بسازید | Python, TypeScript |
+| 19 | [توکن‌سازی زیرواژه: BPE، WordPiece، Unigram، SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | بیاموزید | Python, TypeScript, Rust |
+| 20 | [خروجی ساخت‌یافته و رمزگشایی مقید](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | بسازید | Python, TypeScript, Rust |
 | 21 | [NLI و استلزام متنی](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | بیاموزید | Python, TypeScript |
 | 22 | [بررسی عمیق مدل‌های تعبیه](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | بیاموزید | Python, TypeScript |
 | 23 | [راهبردهای قطعه‌بندی برای RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | بسازید | Python, TypeScript |
@@ -523,8 +523,8 @@ flowchart TB
 
 | # | درس | نوع | زبان |
 |:---:|--------|:----:|------|
-| 01 | [مبانی صوت: شکل موج، نمونه‌برداری، FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | بیاموزید | Python, TypeScript |
-| 02 | [طیف‌نگاشت، مقیاس Mel و ویژگی‌های صوت](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | بسازید | Python, TypeScript |
+| 01 | [مبانی صوت: شکل موج، نمونه‌برداری، FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | بیاموزید | Python, TypeScript, Julia |
+| 02 | [طیف‌نگاشت، مقیاس Mel و ویژگی‌های صوت](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | بسازید | Python, TypeScript, Julia |
 | 03 | [دسته‌بندی صوت](../../phases/06-speech-and-audio/03-audio-classification) | بسازید | Python, TypeScript |
 | 04 | [بازشناسی گفتار (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | بسازید | Python, TypeScript |
 | 05 | [Whisper: معماری و تنظیم دقیق](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | بسازید | Python, TypeScript |
@@ -536,7 +536,7 @@ flowchart TB
 | 11 | [پردازش بلادرنگ صوت](../../phases/06-speech-and-audio/11-real-time-audio-processing) | بسازید | Python, Rust |
 | 12 | [ساخت خط لولهٔ دستیار صوتی](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | بسازید | Python, TypeScript |
 | 13 | [کدک‌های عصبی صوت: EnCodec، SNAC، Mimi، DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | بیاموزید | Python, TypeScript |
-| 14 | [تشخیص فعالیت صوتی و نوبت‌گیری](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | بسازید | Python, TypeScript |
+| 14 | [تشخیص فعالیت صوتی و نوبت‌گیری](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | بسازید | Python, TypeScript, Rust |
 | 15 | [گفتاربه‌گفتار جریانی: Moshi، Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | بیاموزید | Python, TypeScript |
 | 16 | [مقابله با جعل صدا و نشان‌گذاری صوت](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | بسازید | Python, TypeScript |
 | 17 | [ارزیابی صوت: WER، MOS، MMAU و جدول‌های رتبه‌بندی](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | بیاموزید | Python, TypeScript |
@@ -586,9 +586,9 @@ flowchart TB
 | 10 | [تولید ویدئو](../../phases/08-generative-ai/10-video-generation/) | بسازید | Python, TypeScript |
 | 11 | [تولید صوت](../../phases/08-generative-ai/11-audio-generation/) | بسازید | Python, TypeScript |
 | 12 | [تولید 3D](../../phases/08-generative-ai/12-3d-generation/) | بسازید | Python, TypeScript |
-| 13 | [Flow Matching و Rectified Flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | بسازید | Python, TypeScript |
+| 13 | [Flow Matching و Rectified Flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | بسازید | Python, TypeScript, Julia |
 | 14 | [ارزیابی: FID و امتیاز CLIP](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | بسازید | Python, TypeScript |
-| 19 | [مدل‌سازی خودرگرسیو بصری (VAR): پیش‌بینی مقیاس بعدی](../../phases/08-generative-ai/19-visual-autoregressive-var/) | بسازید | Python |
+| 19 | [مدل‌سازی خودرگرسیو بصری (VAR): پیش‌بینی مقیاس بعدی](../../phases/08-generative-ai/19-visual-autoregressive-var/) | بسازید | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ flowchart TB
 | # | درس | نوع | زبان |
 |:---:|--------|:----:|------|
 | 01 | [توکن‌سازها: BPE، WordPiece، SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | بسازید | Python, Rust |
-| 02 | [ساخت توکن‌ساز از ابتدا](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | بسازید | Python |
+| 02 | [ساخت توکن‌ساز از ابتدا](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | بسازید | Python, TypeScript |
 | 03 | [خط لولهٔ داده برای پیش‌آموزش](../../phases/10-llms-from-scratch/03-data-pipelines/) | بسازید | Python, Rust |
 | 04 | [پیش‌آموزش یک GPT کوچک (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | بسازید | Python, Rust |
 | 05 | [آموزش توزیع‌شده، FSDP، DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | بسازید | Python |
@@ -665,7 +665,7 @@ flowchart TB
 | 11 | [ذخیرهٔ نهان، محدودسازی نرخ و هزینه](../../phases/11-llm-engineering/11-caching-cost/) | بسازید | Python, TypeScript |
 | 12 | [حفاظ‌ها و ایمنی](../../phases/11-llm-engineering/12-guardrails/) | بسازید | Python, TypeScript |
 | 13 | [ساخت برنامهٔ LLM برای محیط عملیاتی](../../phases/11-llm-engineering/13-production-app/) | بسازید | Python, TypeScript |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | بسازید | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | بسازید | Python, TypeScript, Go |
 | 15 | [ذخیرهٔ نهان پرامپت و زمینه](../../phases/11-llm-engineering/15-prompt-caching/) | بسازید | Python, TypeScript |
 | 16 | [ماشین‌های حالت عامل: گراف، گره، نقطهٔ وارسی](../../phases/11-llm-engineering/16-langgraph-state-machines/) | بسازید | Python |
 | 17 | [سبک‌سنگین‌کردن انتخاب چارچوب عامل](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | بیاموزید | Python, TypeScript |
@@ -714,25 +714,25 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [رابط ابزار](../../phases/13-tools-and-protocols/01-the-tool-interface/) | بیاموزید | Python, TypeScript |
 | 02 | [بررسی عمیق فراخوانی تابع](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | بسازید | Python, TypeScript |
-| 03 | [فراخوانی موازی و جریانی ابزار](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | بسازید | Python, TypeScript |
+| 03 | [فراخوانی موازی و جریانی ابزار](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | بسازید | Python, TypeScript, Go |
 | 04 | [خروجی ساخت‌یافته](../../phases/13-tools-and-protocols/04-structured-output/) | بسازید | Python, TypeScript |
 | 05 | [طراحی شِمای ابزار](../../phases/13-tools-and-protocols/05-tool-schema-design/) | بیاموزید | Python, TypeScript |
 | 06 | [مبانی MCP: درخواست بدون حالت و JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | بیاموزید | Python, TypeScript |
-| 07 | [ساخت سرور MCP: Python و TypeScript بدون حالت](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | بسازید | Python, TypeScript |
+| 07 | [ساخت سرور MCP: Python و TypeScript بدون حالت](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | بسازید | Python, TypeScript, Go |
 | 08 | [ساخت کلاینت MCP: کشف، مسیریابی و پشتیبانی از دو نسل](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | بسازید | Python, TypeScript |
-| 09 | [انتقال در MCP: stdio و Streamable HTTP بدون حالت](../../phases/13-tools-and-protocols/09-mcp-transports/) | بیاموزید | Python, TypeScript |
+| 09 | [انتقال در MCP: stdio و Streamable HTTP بدون حالت](../../phases/13-tools-and-protocols/09-mcp-transports/) | بیاموزید | Python, TypeScript, Go |
 | 10 | [منابع و پرامپت‌های MCP: زمینهٔ آدرس‌پذیر برای سرورهای بدون حالت](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | بسازید | Python, TypeScript |
 | 11 | [ورودی مدل MCP: مهاجرت sampling و MRTR بدون حالت](../../phases/13-tools-and-protocols/11-mcp-sampling/) | بسازید | Python, TypeScript |
 | 12 | [دامنهٔ صریح و دریافت اطلاعات بدون حالت](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | بسازید | Python, TypeScript |
 | 13 | [افزونهٔ وظایف MCP: کار ماندگار بر هستهٔ بدون حالت](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | بسازید | Python, TypeScript |
 | 14 | [MCP Apps روی پروتکل بدون حالت](../../phases/13-tools-and-protocols/14-mcp-apps/) | بسازید | Python, TypeScript |
 | 15 | [امنیت MCP: فرادادهٔ آلوده، مسیریابی و حالت MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | بیاموزید | Python, TypeScript |
-| 16 | [مجوزدهی MCP: CIMD، اتصال به صادرکننده، PKCE و ارتقای احراز هویت](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | بسازید | Python, TypeScript |
-| 17 | [دروازه‌های MCP بدون حالت و پذیرش در رجیستری](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | بیاموزید | Python, TypeScript |
-| 18 | [احراز هویت MCP در عملیات: ثبت‌نام و توکن وابسته به صادرکننده](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | بسازید | Python, TypeScript |
-| 19 | [پروتکل A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | بسازید | Python, TypeScript |
+| 16 | [مجوزدهی MCP: CIMD، اتصال به صادرکننده، PKCE و ارتقای احراز هویت](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | بسازید | Python, TypeScript, Go |
+| 17 | [دروازه‌های MCP بدون حالت و پذیرش در رجیستری](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | بیاموزید | Python, TypeScript, Go |
+| 18 | [احراز هویت MCP در عملیات: ثبت‌نام و توکن وابسته به صادرکننده](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | بسازید | Python, TypeScript, Go |
+| 19 | [پروتکل A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | بسازید | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | بسازید | Python, TypeScript |
-| 21 | [لایهٔ مسیریابی LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | بیاموزید | Python, TypeScript |
+| 21 | [لایهٔ مسیریابی LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | بیاموزید | Python, TypeScript, Go |
 | 22 | [Agent Skills: قرارداد قابل‌حمل و مرز زمان اجرا](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | بسازید | Python, TypeScript |
 | 23 | [پروژهٔ پایانی: زیست‌بوم ابزار بدون حالت](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | بسازید | Python, TypeScript |
 | 24 | [کشف مهارت و افشای تدریجی](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | بسازید | Python, TypeScript |
@@ -743,19 +743,19 @@ flowchart TB
 | 29 | [قابلیت اطمینان، لغو و کنترل جریان MCP](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | بسازید | Python, TypeScript |
 | 30 | [زنجیرهٔ تأمین رجیستری MCP: پذیرش، انحراف و بازگردانی](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | بسازید | Python, TypeScript |
 | 31 | [مهندسی انطباق MCP: نسخه‌بندی، شواهد و عملیات](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | بسازید | Python, TypeScript |
-| 32 | [کالبدشناسی برنامه: خواندن ELF از ابتدا](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | بسازید | Python, TypeScript |
-| 33 | [دیس‌اسمبلی و گراف‌های جریان کنترل](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | بسازید | Python, TypeScript |
-| 34 | [ارتقای کد ماشین به شبه‌کد](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | بسازید | Python |
+| 32 | [کالبدشناسی برنامه: خواندن ELF از ابتدا](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | بسازید | Python, TypeScript, Rust |
+| 33 | [دیس‌اسمبلی و گراف‌های جریان کنترل](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | بسازید | Python, TypeScript, Rust |
+| 34 | [ارتقای کد ماشین به شبه‌کد](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | بسازید | Python, TypeScript |
 | 35 | [شواهد، اطمینان و ناشناخته‌ها در تحلیل باینری](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | بسازید | Python, TypeScript |
 | 36 | [بازسازی و اثبات برابری](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | بسازید | Python, TypeScript |
 | 37 | [چشم‌انداز مهندسی معکوس](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | بسازید | Python, TypeScript |
 | 38 | [قراردادهای فراخوانی و قاب‌های پشته](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | بسازید | Python, TypeScript |
 | 39 | [الگوهای کامپایلر و بهینه‌سازی](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | بسازید | Python, TypeScript |
-| 40 | [پیوند، بارگذاری و باینری‌های بدون نماد](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | بسازید | Python, TypeScript |
+| 40 | [پیوند، بارگذاری و باینری‌های بدون نماد](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | بسازید | Python, TypeScript, Rust |
 | 41 | [بازیابی داده‌ها و نوع‌ها](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | بسازید | Python, TypeScript |
 | 42 | [تحلیل پویای برنامهٔ خودتان](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | بسازید | Python, TypeScript |
 | 43 | [بایت‌کد و قالب‌های مدیریت‌شده](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | بسازید | Python, TypeScript |
-| 44 | [مقایسهٔ باینری‌ها و اجرای نمادین](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | بسازید | Python |
+| 44 | [مقایسهٔ باینری‌ها و اجرای نمادین](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | بسازید | Python, TypeScript |
 | 45 | [مهندسی معکوس با کمک هوش مصنوعی](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | بسازید | Python, TypeScript |
 
 درس‌های 06-18 و 28-31 [مسیر Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) تخصصی را تشکیل می‌دهند. ترتیب مانیفست آن 06، 07، 08، 09، 10، 11، 12، 13، 14، 15، 16، 18، 17، 28، 29، 30، 31 است. آن را با فراخوانی `learn-mcp` مخصوص میزبان در بالا شروع کنید. درس 23 تنها پروژهٔ پایانی اختیاری آن است و به درس‌های 19 و 20 نیز نیاز دارد.
@@ -792,13 +792,13 @@ flowchart TB
 | 20 | [محک‌ها: WebArena و OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | بیاموزید | Python, TypeScript |
 | 21 | [استفاده از رایانه: Claude، OpenAI CUA، Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | بسازید | Python, TypeScript |
 | 22 | [عامل‌های صوتی: Pipecat و LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | بسازید | Python, TypeScript |
-| 23 | [قراردادهای معنایی OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | بسازید | Python, TypeScript |
+| 23 | [قراردادهای معنایی OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | بسازید | Python, TypeScript, Go |
 | 24 | [مشاهده‌پذیری عامل: Langfuse، Phoenix، Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | بیاموزید | Python, TypeScript |
 | 25 | [مناظره و همکاری چندعاملی](../../phases/14-agent-engineering/25-multi-agent-debate/) | بسازید | Python, TypeScript |
 | 26 | [حالت‌های شکست: چرا عامل‌ها از کار می‌افتند](../../phases/14-agent-engineering/26-failure-modes-agentic/) | بسازید | Python, TypeScript |
 | 27 | [تزریق پرامپت و دفاع PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | بسازید | Python, TypeScript |
 | 28 | [الگوهای هماهنگ‌سازی: ناظر، ازدحامی، سلسله‌مراتبی](../../phases/14-agent-engineering/28-orchestration-patterns/) | بسازید | Python, TypeScript |
-| 29 | [محیط‌های اجرای عملیاتی: صف، رویداد، cron](../../phases/14-agent-engineering/29-production-runtimes/) | بیاموزید | Python, TypeScript |
+| 29 | [محیط‌های اجرای عملیاتی: صف، رویداد، cron](../../phases/14-agent-engineering/29-production-runtimes/) | بیاموزید | Python, TypeScript, Go |
 | 30 | [توسعهٔ عامل بر پایهٔ ارزیابی](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | بسازید | Python, TypeScript |
 | 31 | [میزکار عامل: چرا مدل‌های توانمند هم شکست می‌خورند](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | بیاموزید | Python, TypeScript |
 | 32 | [میزکار حداقلی عامل](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | بسازید | Python, TypeScript |
@@ -848,7 +848,7 @@ flowchart TB
 | 09 | [چشم‌انداز عامل‌های کدنویسی خودمختار (SWE-bench، CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | بیاموزید | Python, TypeScript |
 | 10 | [حالت‌های مجوز برای عامل خودمختار](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | بیاموزید | Python, TypeScript |
 | 11 | [عامل مرورگر و تزریق غیرمستقیم پرامپت](../../phases/15-autonomous-systems/11-browser-agents/) | بیاموزید | Python, TypeScript |
-| 12 | [اجرای ماندگار برای عامل‌های طولانی‌مدت](../../phases/15-autonomous-systems/12-durable-execution/) | بیاموزید | Python, TypeScript |
+| 12 | [اجرای ماندگار برای عامل‌های طولانی‌مدت](../../phases/15-autonomous-systems/12-durable-execution/) | بیاموزید | Python, TypeScript, Go |
 | 13 | [بودجهٔ کنش، سقف تکرار و کنترل هزینه](../../phases/15-autonomous-systems/13-cost-governors/) | بیاموزید | Python, TypeScript |
 | 14 | [کلید توقف، قطع‌کنندهٔ مدار و توکن هشدار](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | بیاموزید | Python, TypeScript |
 | 15 | [HITL: پیشنهاد پیش از اعمال](../../phases/15-autonomous-systems/15-propose-then-commit/) | بیاموزید | Python, TypeScript |
@@ -857,7 +857,7 @@ flowchart TB
 | 18 | [Llama Guard و دسته‌بندی ورودی/خروجی](../../phases/15-autonomous-systems/18-llama-guard/) | بیاموزید | Python, TypeScript |
 | 19 | [سیاست مقیاس‌گذاری مسئولانهٔ Anthropic نسخهٔ v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | بیاموزید | Python, TypeScript |
 | 20 | [چارچوب آمادگی OpenAI و DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | بیاموزید | Python, TypeScript |
-| 21 | [افق زمانی METR و ارزیابی بیرونی](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | بیاموزید | Python, TypeScript |
+| 21 | [افق زمانی METR و ارزیابی بیرونی](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | بیاموزید | Python, TypeScript, Julia |
 | 22 | [CAIS، CAISI و خطر در مقیاس جامعه](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | بیاموزید | Python, TypeScript |
 
 </details>
@@ -876,17 +876,17 @@ flowchart TB
 | 06 | [معماری سلسله‌مراتبی و انحراف در تجزیه](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | بیاموزید | Python, TypeScript |
 | 07 | [جامعهٔ ذهن و مناظرهٔ چندعاملی](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | بسازید | Python, TypeScript |
 | 08 | [تخصص نقش‌ها: برنامه‌ریز / منتقد / مجری / تأییدگر](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | بسازید | Python, TypeScript |
-| 09 | [معماری ازدحامی موازی و شبکه‌ای](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | بسازید | Python, TypeScript |
+| 09 | [معماری ازدحامی موازی و شبکه‌ای](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | بسازید | Python, TypeScript, Go |
 | 10 | [گفت‌وگوی گروهی و انتخاب گوینده](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | بسازید | Python, TypeScript |
 | 11 | [تحویل و روال‌ها (هماهنگ‌سازی بدون حالت)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | بسازید | Python, TypeScript |
-| 12 | [A2A: پروتکل عامل‌به‌عامل](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | بسازید | Python, TypeScript |
+| 12 | [A2A: پروتکل عامل‌به‌عامل](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | بسازید | Python, TypeScript, Go |
 | 13 | [حافظهٔ مشترک و الگوی تخته‌سیاه](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | بسازید | Python, TypeScript |
 | 14 | [اجماع و تحمل خطای بیزانسی](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | بسازید | Python, TypeScript |
 | 15 | [رأی‌گیری، خودسازگاری و توپولوژی مناظره](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | بسازید | Python, TypeScript |
 | 16 | [مذاکره و چانه‌زنی](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | بسازید | Python, TypeScript |
 | 17 | [عامل‌های مولد و شبیه‌سازی برآمده](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | بسازید | Python, TypeScript |
 | 18 | [نظریهٔ ذهن و هماهنگی برآمده](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | بسازید | Python, TypeScript |
-| 19 | [بهینه‌سازی ازدحامی (PSO، ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | بسازید | Python, TypeScript |
+| 19 | [بهینه‌سازی ازدحامی (PSO، ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | بسازید | Python, TypeScript, Julia |
 | 20 | [MARL: MADDPG، QMIX، MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | بیاموزید | Python, TypeScript |
 | 21 | [اقتصاد عامل، مشوق توکنی و شهرت](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | بیاموزید | Python, TypeScript |
 | 22 | [مقیاس‌گذاری عملیاتی: صف، نقطهٔ وارسی، ماندگاری](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | بسازید | Python, TypeScript |
@@ -905,9 +905,9 @@ flowchart TB
 | 01 | [بسترهای مدیریت‌شدهٔ LLM: Bedrock، Azure OpenAI، Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | بیاموزید | Python, TypeScript |
 | 02 | [اقتصاد بستر استنتاج: Fireworks، Together، Baseten، Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | بیاموزید | Python, TypeScript |
 | 03 | [مقیاس‌گذاری خودکار GPU روی Kubernetes: Karpenter، KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | بیاموزید | Python, TypeScript |
-| 04 | [درون موتور سرویس‌دهی: PagedAttention، دسته‌بندی پیوسته، prefill قطعه‌ای](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | بیاموزید | Python, TypeScript |
+| 04 | [درون موتور سرویس‌دهی: PagedAttention، دسته‌بندی پیوسته، prefill قطعه‌ای](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | بیاموزید | Python, TypeScript, Rust |
 | 05 | [رمزگشایی حدسی EAGLE-3 در عملیات](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | بیاموزید | Python, TypeScript |
-| 06 | [سرویس‌دهی با کش پیشوند: RadixAttention و استفادهٔ مجدد از KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | بیاموزید | Python, TypeScript |
+| 06 | [سرویس‌دهی با کش پیشوند: RadixAttention و استفادهٔ مجدد از KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | بیاموزید | Python, TypeScript, Rust |
 | 07 | [کامپایل استنتاج ویژهٔ سخت‌افزار: FP8 و NVFP4 روی Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | بیاموزید | Python, TypeScript |
 | 08 | [معیارهای استنتاج: TTFT، TPOT، ITL، Goodput، P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | بیاموزید | Python, TypeScript |
 | 09 | [کوانتیزه‌سازی عملیاتی: AWQ، GPTQ، GGUF، FP8، NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | بیاموزید | Python, TypeScript |
@@ -922,7 +922,7 @@ flowchart TB
 | 18 | [مجموعهٔ سرویس‌دهی عملیاتی: انتقال KV و مسیریابی آگاه از کش](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | بیاموزید | Python, TypeScript |
 | 19 | [دروازه‌های AI: LiteLLM، Portkey، Kong، Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | بیاموزید | Python, TypeScript |
 | 20 | [استقرار سایه، قناری و تدریجی](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | بیاموزید | Python, TypeScript |
-| 21 | [آزمون A/B قابلیت‌های LLM: GrowthBook و Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | بیاموزید | Python, TypeScript |
+| 21 | [آزمون A/B قابلیت‌های LLM: GrowthBook و Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | بیاموزید | Python, TypeScript, Julia |
 | 22 | [آزمون بار APIهای LLM: k6، LLMPerf، GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | بسازید | Python, TypeScript |
 | 23 | [SRE برای AI: پاسخ چندعاملی به رخداد](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | بیاموزید | Python, TypeScript |
 | 24 | [مهندسی آشوب برای LLM عملیاتی](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | بیاموزید | Python, TypeScript |
@@ -961,7 +961,7 @@ flowchart TB
 | 19 | [پژوهش رفاه مدل](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | بیاموزید | Python, TypeScript |
 | 20 | [سوگیری و آسیب بازنمایی](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | بسازید | Python, TypeScript |
 | 21 | [معیارهای انصاف: گروهی، فردی، خلاف‌واقع](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | بیاموزید | Python, TypeScript |
-| 22 | [حریم خصوصی تفاضلی برای LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | بسازید | Python, TypeScript |
+| 22 | [حریم خصوصی تفاضلی برای LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | بسازید | Python, TypeScript, Julia |
 | 23 | [نشان‌گذاری: SynthID، Stable Signature، C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | بسازید | Python, TypeScript |
 | 24 | [چارچوب‌های مقررات: EU، US، UK، Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | بیاموزید | Python, TypeScript |
 | 25 | [EchoLeak و CVEهای هوش مصنوعی](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | بیاموزید | Python, TypeScript |
@@ -989,9 +989,9 @@ flowchart TB
 | 08 | [چت‌بات RAG عملیاتی (حوزهٔ مقررات‌گذاری‌شده)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [عامل مهاجرت کد (ارتقای سطح مخزن)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [تیم مهندسی نرم‌افزار چندعاملی](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [داشبورد مشاهده‌پذیری و ارزیابی LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [داشبورد مشاهده‌پذیری و ارزیابی LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [خط لولهٔ درک ویدئو (صحنه → پرسش‌وپاسخ)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [سرور MCP بدون حالت با رجیستری و حاکمیت](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [سرور MCP بدون حالت با رجیستری و حاکمیت](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [سرور استنتاج با رمزگشایی حدسی](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [بستر ایمنی قانون‌اساسی‌محور و میدان آزمایش تیم قرمز](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [عامل خودمختار از issue تا PR در GitHub](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1011,7 +1011,7 @@ flowchart TB
 | 27 | [بستر ارزیابی با وظایف نمونهٔ ثابت](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. بستر اجرای عامل | Python, TypeScript |
 | 28 | [مشاهده‌پذیری با spanهای OTel GenAI و معیارهای Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. بستر اجرای عامل | Python, TypeScript |
 | 29 | [عامل کدنویسی سرتاسری روی بستر اجرا](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. بستر اجرای عامل | Python, TypeScript |
-| 30 | [توکن‌ساز BPE از ابتدا](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
+| 30 | [توکن‌ساز BPE از ابتدا](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript, Rust |
 | 31 | [مجموعه‌دادهٔ توکن‌شده با پنجرهٔ لغزان](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [تعبیهٔ توکن و موقعیت](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [خودتوجهی چندسری](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1023,7 +1023,7 @@ flowchart TB
 | 39 | [تنظیم دستور با تنظیم دقیق نظارت‌شده](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP LLM | Python |
 | 40 | [بهینه‌سازی مستقیم ترجیح از ابتدا](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP LLM | Python |
 | 41 | [خط لولهٔ کامل ارزیابی](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP LLM | Python |
-| 42 | [دریافت‌کنندهٔ پیکرهٔ بزرگ](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. آموزش سرتاسری | Python |
+| 42 | [دریافت‌کنندهٔ پیکرهٔ بزرگ](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. آموزش سرتاسری | Python, TypeScript |
 | 43 | [پیکرهٔ توکن‌شدهٔ HDF5](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. آموزش سرتاسری | Python |
 | 44 | [نرخ یادگیری کسینوسی با گرم‌کردن خطی](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. آموزش سرتاسری | Python |
 | 45 | [برش گرادیان و دقت ترکیبی](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. آموزش سرتاسری | Python |
@@ -1037,8 +1037,8 @@ flowchart TB
 | 53 | [ارزیاب نتیجه](../../phases/19-capstone-projects/53-result-evaluator/) | D. پژوهش خودکار | Python |
 | 54 | [نویسندهٔ مقاله](../../phases/19-capstone-projects/54-paper-writer/) | D. پژوهش خودکار | Python, TypeScript |
 | 55 | [حلقهٔ نقد](../../phases/19-capstone-projects/55-critic-loop/) | D. پژوهش خودکار | Python, TypeScript |
-| 56 | [زمان‌بند تکرار](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. پژوهش خودکار | Python |
-| 57 | [نمایش پژوهش سرتاسری](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. پژوهش خودکار | Python |
+| 56 | [زمان‌بند تکرار](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. پژوهش خودکار | Python, TypeScript |
+| 57 | [نمایش پژوهش سرتاسری](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. پژوهش خودکار | Python, TypeScript |
 | 58 | [قطعه‌های رمزگذار بینایی](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. مدل VLM چندوجهی | Python |
 | 59 | [رمزگذار ترنسفورمر بینایی](../../phases/19-capstone-projects/59-vit-transformer/) | E. مدل VLM چندوجهی | Python |
 | 60 | [لایهٔ فرافکنی برای هم‌ترازی وجه‌ها](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. مدل VLM چندوجهی | Python |
@@ -1052,11 +1052,11 @@ flowchart TB
 | 68 | [ارزیابی RAG: Precision، Recall، MRR، nDCG، وفاداری و ارتباط پاسخ](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. بازیابی RAG پیشرفته | Python, TypeScript |
 | 69 | [سامانهٔ RAG سرتاسری](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. بازیابی RAG پیشرفته | Python |
 | 70 | [قالب مشخصات وظیفه](../../phases/19-capstone-projects/70-task-spec-format/) | G. چارچوب ارزیابی | Python, TypeScript |
-| 71 | [معیارهای کلاسیک](../../phases/19-capstone-projects/71-classical-metrics/) | G. چارچوب ارزیابی | Python |
-| 72 | [معیار اجرای کد](../../phases/19-capstone-projects/72-code-exec-metric/) | G. چارچوب ارزیابی | Python |
-| 73 | [سرگشتگی و کالیبراسیون](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. چارچوب ارزیابی | Python |
-| 74 | [تجمیع جدول رتبه‌بندی](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. چارچوب ارزیابی | Python |
-| 75 | [اجراگر ارزیابی سرتاسری](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. چارچوب ارزیابی | Python |
+| 71 | [معیارهای کلاسیک](../../phases/19-capstone-projects/71-classical-metrics/) | G. چارچوب ارزیابی | Python, TypeScript |
+| 72 | [معیار اجرای کد](../../phases/19-capstone-projects/72-code-exec-metric/) | G. چارچوب ارزیابی | Python, TypeScript |
+| 73 | [سرگشتگی و کالیبراسیون](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. چارچوب ارزیابی | Python, TypeScript |
+| 74 | [تجمیع جدول رتبه‌بندی](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. چارچوب ارزیابی | Python, TypeScript |
+| 75 | [اجراگر ارزیابی سرتاسری](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. چارچوب ارزیابی | Python, TypeScript |
 | 76 | [عملیات جمعی از ابتدا](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. آموزش توزیع‌شده | Python |
 | 77 | [DDP موازی‌سازی داده از ابتدا](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. آموزش توزیع‌شده | Python |
 | 78 | [قطعه‌بندی حالت بهینه‌ساز ZeRO](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. آموزش توزیع‌شده | Python |
@@ -1129,7 +1129,7 @@ flowchart TB
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      پیاده‌سازی‌های اجرایی (Python, TypeScript, Rust, Julia)
+├── code/      پیاده‌سازی‌های اجرایی (Python, TypeScript, Rust, Julia, Go)
 ├── docs/
 │   └── en.md  متن آموزشی درس
 └── outputs/   پرامپت، مهارت، عامل یا سرور MCP که این درس می‌سازد

@@ -7,12 +7,12 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, relative } from "node:path";
 
-class PyFloat {
+export class PyFloat {
   constructor(readonly v: number) {}
 }
 
-type Json = null | boolean | number | string | PyFloat | Json[] | { [key: string]: Json };
-type Obj = { [key: string]: Json };
+export type Json = null | boolean | number | string | PyFloat | Json[] | { [key: string]: Json };
+export type Obj = { [key: string]: Json };
 
 function pyFloatRepr(x: number): string {
   if (Number.isNaN(x)) return "NaN";
@@ -95,9 +95,9 @@ function sortKeysDeep(v: Json): Json {
   return v;
 }
 
-class PaperValidationError extends Error {}
+export class PaperValidationError extends Error {}
 
-class BibEntry {
+export class BibEntry {
   constructor(
     public key: string,
     public entry_type: string,
@@ -115,7 +115,7 @@ class BibEntry {
   }
 }
 
-class Figure {
+export class Figure {
   constructor(
     public id: string,
     public path: string,
@@ -128,7 +128,7 @@ class Figure {
   }
 }
 
-class Section {
+export class Section {
   constructor(
     public id: string,
     public title: string,
@@ -142,7 +142,7 @@ class Section {
   }
 }
 
-class Paper {
+export class Paper {
   constructor(
     public title: string,
     public authors: string[],
@@ -248,7 +248,7 @@ function renderBibtex(paper: Paper): string {
   return paper.bibliography.map((b) => b.toBibtex()).join("\n\n") + (paper.bibliography.length ? "\n" : "");
 }
 
-class MockProseGenerator {
+export class MockProseGenerator {
   constructor(public outlines: Record<string, string>) {}
 
   call(section: Section, _paper: Paper): string {
@@ -298,7 +298,7 @@ function readExperimentManifest(manifests: Manifest[], paperDir: string): Figure
   return figs;
 }
 
-class PaperWriter {
+export class PaperWriter {
   constructor(public prose: ProseGenerator) {}
 
   fillProse(paper: Paper): Paper {
@@ -372,15 +372,17 @@ function demo(outDir: string | null = null): Obj {
   return writer.write(paper, dir);
 }
 
-const manifest = demo();
-console.log(
-  pyDumps(
-    {
-      sections: (manifest["sections"] as Json[]).length,
-      figures: (manifest["figures"] as Json[]).length,
-      bib_keys: manifest["bibliography"],
-      tex_path: manifest["tex_path"],
-    },
-    2,
-  ),
-);
+if (require.main === module) {
+  const manifest = demo();
+  console.log(
+    pyDumps(
+      {
+        sections: (manifest["sections"] as Json[]).length,
+        figures: (manifest["figures"] as Json[]).length,
+        bib_keys: manifest["bibliography"],
+        tex_path: manifest["tex_path"],
+      },
+      2,
+    ),
+  );
+}

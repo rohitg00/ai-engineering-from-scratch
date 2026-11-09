@@ -43,7 +43,7 @@ HTML_TABLE_TAG = re.compile(r"<\s*(/?)\s*(table|thead|tbody|tfoot|tr|th|td)\b[^>
 # Product names, paper titles and established technical names are not prose.
 SHARED_TERMS = frozenset({
     "Claude Code", "Codex", "Docker", "EPUB", "PDF", "EPUB · PDF", "Python",
-    "Julia", "Rust", "TypeScript", "YAML", "Shell", "PPO", "StyleGAN",
+    "Go", "Julia", "Rust", "TypeScript", "YAML", "Shell", "PPO", "StyleGAN",
     "Jupyter Notebooks", "Naive Bayes", "Model Context Protocol (MCP)",
     "OpenTelemetry GenAI", "Anthropic Responsible Scaling Policy v3.0",
     "Q-Learning, SARSA", "Singular Value Decomposition", "Support Vector Machines",

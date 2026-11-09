@@ -19,7 +19,7 @@
 
 Бесплатно, с открытым исходным кодом, по лицензии MIT. Учитесь на сайте, с агентом программирования или запуская код локально.
 
-> 542 уроков. 20 этапов. Python, TypeScript, Rust, Julia.
+> 542 уроков. 20 этапов. Python, TypeScript, Rust, Julia, Go.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Лицензия MIT"></a>
@@ -374,19 +374,19 @@ flowchart TB
 | 07 | [Теорема Байеса и статистическое мышление](../../phases/01-math-foundations/07-bayes-theorem/) | Создание | Python, TypeScript |
 | 08 | [Оптимизация: методы градиентного спуска](../../phases/01-math-foundations/08-optimization/) | Создание | Python, Julia |
 | 09 | [Теория информации: энтропия и дивергенция KL](../../phases/01-math-foundations/09-information-theory/) | Изучение | Python, TypeScript |
-| 10 | [Снижение размерности: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Создание | Python, TypeScript |
+| 10 | [Снижение размерности: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Создание | Python, TypeScript, Julia |
 | 11 | [Сингулярное разложение матрицы](../../phases/01-math-foundations/11-singular-value-decomposition/) | Создание | Python, Julia |
 | 12 | [Операции с тензорами](../../phases/01-math-foundations/12-tensor-operations/) | Создание | Python, TypeScript |
-| 13 | [Численная устойчивость](../../phases/01-math-foundations/13-numerical-stability/) | Создание | Python, TypeScript |
+| 13 | [Численная устойчивость](../../phases/01-math-foundations/13-numerical-stability/) | Создание | Python, TypeScript, Julia |
 | 14 | [Нормы и расстояния](../../phases/01-math-foundations/14-norms-and-distances/) | Создание | Python, TypeScript |
 | 15 | [Статистика для ML](../../phases/01-math-foundations/15-statistics-for-ml/) | Создание | Python, TypeScript |
-| 16 | [Методы выборки](../../phases/01-math-foundations/16-sampling-methods/) | Создание | Python, TypeScript |
-| 17 | [Линейные системы](../../phases/01-math-foundations/17-linear-systems/) | Создание | Python, TypeScript |
-| 18 | [Выпуклая оптимизация](../../phases/01-math-foundations/18-convex-optimization/) | Создание | Python, TypeScript |
+| 16 | [Методы выборки](../../phases/01-math-foundations/16-sampling-methods/) | Создание | Python, TypeScript, Julia |
+| 17 | [Линейные системы](../../phases/01-math-foundations/17-linear-systems/) | Создание | Python, TypeScript, Julia |
+| 18 | [Выпуклая оптимизация](../../phases/01-math-foundations/18-convex-optimization/) | Создание | Python, TypeScript, Julia |
 | 19 | [Комплексные числа для ИИ](../../phases/01-math-foundations/19-complex-numbers/) | Изучение | Python, TypeScript |
-| 20 | [Преобразование Фурье](../../phases/01-math-foundations/20-fourier-transform/) | Создание | Python, TypeScript |
+| 20 | [Преобразование Фурье](../../phases/01-math-foundations/20-fourier-transform/) | Создание | Python, TypeScript, Julia |
 | 21 | [Теория графов для ML](../../phases/01-math-foundations/21-graph-theory/) | Создание | Python, TypeScript |
-| 22 | [Стохастические процессы](../../phases/01-math-foundations/22-stochastic-processes/) | Изучение | Python |
+| 22 | [Стохастические процессы](../../phases/01-math-foundations/22-stochastic-processes/) | Изучение | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ flowchart TB
 
 | # | Урок | Тип | Языки |
 |:---:|--------|:----:|------|
-| 01 | [Перцептрон: с чего всё началось](../../phases/03-deep-learning-core/01-the-perceptron/) | Создание | Python, Rust, Julia |
-| 02 | [Многослойные сети и прямой проход](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Создание | Python, TypeScript |
-| 03 | [Обратное распространение ошибки с нуля](../../phases/03-deep-learning-core/03-backpropagation/) | Создание | Python, Rust, Julia |
-| 04 | [Функции активации: ReLU, Sigmoid, GELU — и зачем они нужны](../../phases/03-deep-learning-core/04-activation-functions/) | Создание | Python, Julia |
-| 05 | [Функции потерь: MSE, cross-entropy и contrastive loss](../../phases/03-deep-learning-core/05-loss-functions/) | Создание | Python, Julia |
-| 06 | [Оптимизаторы: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Создание | Python, TypeScript |
-| 07 | [Регуляризация: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Создание | Python, TypeScript |
-| 08 | [Инициализация весов и стабильность обучения](../../phases/03-deep-learning-core/08-weight-initialization/) | Создание | Python, TypeScript |
-| 09 | [Планировщики скорости обучения и warm-up](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Создание | Python, TypeScript |
-| 10 | [Создайте свой мини-фреймворк](../../phases/03-deep-learning-core/10-mini-framework/) | Создание | Python, TypeScript |
+| 01 | [Перцептрон: с чего всё началось](../../phases/03-deep-learning-core/01-the-perceptron/) | Создание | Python, TypeScript, Rust, Julia |
+| 02 | [Многослойные сети и прямой проход](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Создание | Python, TypeScript, Julia |
+| 03 | [Обратное распространение ошибки с нуля](../../phases/03-deep-learning-core/03-backpropagation/) | Создание | Python, TypeScript, Rust, Julia |
+| 04 | [Функции активации: ReLU, Sigmoid, GELU — и зачем они нужны](../../phases/03-deep-learning-core/04-activation-functions/) | Создание | Python, TypeScript, Julia |
+| 05 | [Функции потерь: MSE, cross-entropy и contrastive loss](../../phases/03-deep-learning-core/05-loss-functions/) | Создание | Python, TypeScript, Julia |
+| 06 | [Оптимизаторы: SGD, Momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Создание | Python, TypeScript, Julia |
+| 07 | [Регуляризация: Dropout, Weight Decay, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Создание | Python, TypeScript, Julia |
+| 08 | [Инициализация весов и стабильность обучения](../../phases/03-deep-learning-core/08-weight-initialization/) | Создание | Python, TypeScript, Julia |
+| 09 | [Планировщики скорости обучения и warm-up](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Создание | Python, TypeScript, Julia |
+| 10 | [Создайте свой мини-фреймворк](../../phases/03-deep-learning-core/10-mini-framework/) | Создание | Python, TypeScript, Julia |
 | 11 | [Введение в PyTorch](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Создание | Python |
 | 12 | [Введение в JAX](../../phases/03-deep-learning-core/12-intro-to-jax/) | Создание | Python |
 | 13 | [Отладка нейронных сетей](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Создание | Python |
@@ -448,8 +448,8 @@ flowchart TB
 
 | # | Урок | Тип | Языки |
 |:---:|--------|:----:|------|
-| 01 | [Основы изображений: пиксели, каналы, цветовые пространства](../../phases/04-computer-vision/01-image-fundamentals/) | Изучение | Python |
-| 02 | [Свёртки с нуля](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Создание | Python |
+| 01 | [Основы изображений: пиксели, каналы, цветовые пространства](../../phases/04-computer-vision/01-image-fundamentals/) | Изучение | Python, Julia |
+| 02 | [Свёртки с нуля](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Создание | Python, Julia |
 | 03 | [CNN: от LeNet до ResNet](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | Создание | Python |
 | 04 | [Классификация изображений](../../phases/04-computer-vision/04-image-classification/) | Создание | Python |
 | 05 | [Трансферное обучение и тонкая настройка](../../phases/04-computer-vision/05-transfer-learning/) | Создание | Python |
@@ -474,7 +474,7 @@ flowchart TB
 | 24 | [SAM 3 и сегментация с открытым словарём](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | Создание | Python |
 | 25 | [Модели «зрение — язык» (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | Создание | Python |
 | 26 | [Оценка глубины по одному изображению и геометрии](../../phases/04-computer-vision/26-monocular-depth/) | Создание | Python |
-| 27 | [Отслеживание множества объектов и память видео](../../phases/04-computer-vision/27-multi-object-tracking/) | Создание | Python |
+| 27 | [Отслеживание множества объектов и память видео](../../phases/04-computer-vision/27-multi-object-tracking/) | Создание | Python, Rust |
 | 28 | [Модели мира и видеодиффузия](../../phases/04-computer-vision/28-world-models-video-diffusion/) | Создание | Python |
 
 </details>
@@ -487,7 +487,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [Обработка текста: токенизация, стемминг и лемматизация](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Создание | Python, TypeScript |
 | 02 | [Мешок слов, TF-IDF и представление текста](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Создание | Python, TypeScript |
-| 03 | [Векторные представления слов: Word2Vec с нуля](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Создание | Python |
+| 03 | [Векторные представления слов: Word2Vec с нуля](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Создание | Python, Julia |
 | 04 | [GloVe, FastText и субсловные эмбеддинги](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Создание | Python, TypeScript |
 | 05 | [Анализ тональности](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Создание | Python, TypeScript |
 | 06 | [Распознавание именованных сущностей (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Создание | Python, TypeScript |
@@ -498,13 +498,13 @@ flowchart TB
 | 11 | [Машинный перевод](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Создание | Python, TypeScript |
 | 12 | [Суммаризация текста](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Создание | Python, TypeScript |
 | 13 | [Системы ответов на вопросы](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Создание | Python, TypeScript |
-| 14 | [Поиск информации](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Создание | Python, TypeScript |
-| 15 | [Тематическое моделирование: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Создание | Python, TypeScript |
+| 14 | [Поиск информации](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Создание | Python, TypeScript, Rust |
+| 15 | [Тематическое моделирование: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Создание | Python, TypeScript, Julia |
 | 16 | [Генерация текста](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Создание | Python, TypeScript |
 | 17 | [Чат-боты: от правил к нейросетям](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Создание | Python, TypeScript |
 | 18 | [Многоязычное NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Создание | Python, TypeScript |
-| 19 | [Субсловная токенизация: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Изучение | Python, TypeScript |
-| 20 | [Структурированный вывод и ограниченное декодирование](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Создание | Python, TypeScript |
+| 19 | [Субсловная токенизация: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Изучение | Python, TypeScript, Rust |
+| 20 | [Структурированный вывод и ограниченное декодирование](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Создание | Python, TypeScript, Rust |
 | 21 | [NLI и текстовая импликация](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Изучение | Python, TypeScript |
 | 22 | [Подробный разбор моделей эмбеддингов](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Изучение | Python, TypeScript |
 | 23 | [Стратегии разбиения на чанки для RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Создание | Python, TypeScript |
@@ -523,8 +523,8 @@ flowchart TB
 
 | # | Урок | Тип | Языки |
 |:---:|--------|:----:|------|
-| 01 | [Основы аудио: формы сигнала, дискретизация, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Изучение | Python, TypeScript |
-| 02 | [Спектрограммы, мел-шкала и аудиопризнаки](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Создание | Python, TypeScript |
+| 01 | [Основы аудио: формы сигнала, дискретизация, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Изучение | Python, TypeScript, Julia |
+| 02 | [Спектрограммы, мел-шкала и аудиопризнаки](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Создание | Python, TypeScript, Julia |
 | 03 | [Классификация аудио](../../phases/06-speech-and-audio/03-audio-classification) | Создание | Python, TypeScript |
 | 04 | [Распознавание речи (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Создание | Python, TypeScript |
 | 05 | [Whisper: архитектура и дообучение](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Создание | Python, TypeScript |
@@ -536,7 +536,7 @@ flowchart TB
 | 11 | [Обработка аудио в реальном времени](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Создание | Python, Rust |
 | 12 | [Конвейер голосового ассистента](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Создание | Python, TypeScript |
 | 13 | [Нейронные аудиокодеки: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Изучение | Python, TypeScript |
-| 14 | [Обнаружение речи и смена говорящего](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Создание | Python, TypeScript |
+| 14 | [Обнаружение речи и смена говорящего](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Создание | Python, TypeScript, Rust |
 | 15 | [Потоковое преобразование речи в речь: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Изучение | Python, TypeScript |
 | 16 | [Защита от подделки голоса и аудиомаркировка](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Создание | Python, TypeScript |
 | 17 | [Оценка аудио: WER, MOS, MMAU, рейтинги](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Изучение | Python, TypeScript |
@@ -586,9 +586,9 @@ flowchart TB
 | 10 | [Генерация видео](../../phases/08-generative-ai/10-video-generation/) | Создание | Python, TypeScript |
 | 11 | [Генерация аудио](../../phases/08-generative-ai/11-audio-generation/) | Создание | Python, TypeScript |
 | 12 | [Генерация 3D](../../phases/08-generative-ai/12-3d-generation/) | Создание | Python, TypeScript |
-| 13 | [Flow Matching и Rectified Flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Создание | Python, TypeScript |
+| 13 | [Flow Matching и Rectified Flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Создание | Python, TypeScript, Julia |
 | 14 | [Оценка: FID, CLIP Score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Создание | Python, TypeScript |
-| 19 | [Визуальное авторегрессионное моделирование (VAR): предсказание следующего масштаба](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Создание | Python |
+| 19 | [Визуальное авторегрессионное моделирование (VAR): предсказание следующего масштаба](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Создание | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ flowchart TB
 | # | Урок | Тип | Языки |
 |:---:|--------|:----:|------|
 | 01 | [Токенизаторы: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Создание | Python, Rust |
-| 02 | [Создание токенизатора с нуля](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Создание | Python |
+| 02 | [Создание токенизатора с нуля](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Создание | Python, TypeScript |
 | 03 | [Конвейеры данных для предобучения](../../phases/10-llms-from-scratch/03-data-pipelines/) | Создание | Python, Rust |
 | 04 | [Предобучение мини-GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Создание | Python, Rust |
 | 05 | [Распределённое обучение, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Создание | Python |
@@ -665,7 +665,7 @@ flowchart TB
 | 11 | [Кэширование, ограничение частоты запросов и стоимость](../../phases/11-llm-engineering/11-caching-cost/) | Создание | Python, TypeScript |
 | 12 | [Ограничители и безопасность](../../phases/11-llm-engineering/12-guardrails/) | Создание | Python, TypeScript |
 | 13 | [Создание промышленного приложения на базе LLM](../../phases/11-llm-engineering/13-production-app/) | Создание | Python, TypeScript |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Создание | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Создание | Python, TypeScript, Go |
 | 15 | [Кэширование промптов и контекста](../../phases/11-llm-engineering/15-prompt-caching/) | Создание | Python, TypeScript |
 | 16 | [Конечные автоматы агента: графы, узлы, контрольные точки](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Создание | Python |
 | 17 | [Компромиссы при выборе фреймворка для агентов](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Изучение | Python, TypeScript |
@@ -714,25 +714,25 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [Интерфейс инструмента](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Изучение | Python, TypeScript |
 | 02 | [Подробно о вызове функций](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Создание | Python, TypeScript |
-| 03 | [Параллельные и потоковые вызовы инструментов](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Создание | Python, TypeScript |
+| 03 | [Параллельные и потоковые вызовы инструментов](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Создание | Python, TypeScript, Go |
 | 04 | [Структурированный вывод](../../phases/13-tools-and-protocols/04-structured-output/) | Создание | Python, TypeScript |
 | 05 | [Проектирование схем инструментов](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Изучение | Python, TypeScript |
 | 06 | [Основы MCP: запросы без сохранения состояния и JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Изучение | Python, TypeScript |
-| 07 | [Создание сервера MCP: Python и TypeScript без сохранения состояния](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Создание | Python, TypeScript |
+| 07 | [Создание сервера MCP: Python и TypeScript без сохранения состояния](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Создание | Python, TypeScript, Go |
 | 08 | [Создание клиента MCP: обнаружение, маршрутизация и совместимость поколений протокола](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Создание | Python, TypeScript |
-| 09 | [Транспорты MCP: stdio и Streamable HTTP без сохранения состояния](../../phases/13-tools-and-protocols/09-mcp-transports/) | Изучение | Python, TypeScript |
+| 09 | [Транспорты MCP: stdio и Streamable HTTP без сохранения состояния](../../phases/13-tools-and-protocols/09-mcp-transports/) | Изучение | Python, TypeScript, Go |
 | 10 | [Ресурсы и промпты MCP: адресуемый контекст для серверов без состояния](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Создание | Python, TypeScript |
 | 11 | [Входные данные моделей MCP: перенос Sampling и stateless MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Создание | Python, TypeScript |
 | 12 | [Явная область действия и stateless elicitation](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Создание | Python, TypeScript |
 | 13 | [Расширение MCP Tasks: долговременные задачи на основе stateless-протокола](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Создание | Python, TypeScript |
 | 14 | [Приложения MCP поверх stateless-протокола](../../phases/13-tools-and-protocols/14-mcp-apps/) | Создание | Python, TypeScript |
 | 15 | [Безопасность MCP: отравленные метаданные, маршрутизация и состояние MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Изучение | Python, TypeScript |
-| 16 | [Авторизация MCP: CIMD, привязка издателя, PKCE и step-up](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Создание | Python, TypeScript |
-| 17 | [Шлюзы MCP без сохранения состояния и допуск в реестр](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Изучение | Python, TypeScript |
-| 18 | [Авторизация MCP в production: регистрация с привязкой к издателю и токены](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Создание | Python, TypeScript |
-| 19 | [Протокол A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Создание | Python, TypeScript |
+| 16 | [Авторизация MCP: CIMD, привязка издателя, PKCE и step-up](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Создание | Python, TypeScript, Go |
+| 17 | [Шлюзы MCP без сохранения состояния и допуск в реестр](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Изучение | Python, TypeScript, Go |
+| 18 | [Авторизация MCP в production: регистрация с привязкой к издателю и токены](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Создание | Python, TypeScript, Go |
+| 19 | [Протокол A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Создание | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Создание | Python, TypeScript |
-| 21 | [Уровень маршрутизации LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Изучение | Python, TypeScript |
+| 21 | [Уровень маршрутизации LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Изучение | Python, TypeScript, Go |
 | 22 | [Agent Skills: переносимый контракт и границы среды выполнения](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Создание | Python, TypeScript |
 | 23 | [Итоговый проект: экосистема инструментов MCP без состояния](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Создание | Python, TypeScript |
 | 24 | [Обнаружение навыков и постепенное раскрытие инструкций](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Создание | Python, TypeScript |
@@ -743,19 +743,19 @@ flowchart TB
 | 29 | [Надёжность MCP, отмена и управление потоком](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Создание | Python, TypeScript |
 | 30 | [Цепочка поставок реестра MCP: допуск, дрейф и откат](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Создание | Python, TypeScript |
 | 31 | [Инженерия соответствия MCP: версии, подтверждения и эксплуатация](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Создание | Python, TypeScript |
-| 32 | [Анатомия программы: читаем ELF с нуля](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Создание | Python, TypeScript |
-| 33 | [Дизассемблирование и графы потока управления](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Создание | Python, TypeScript |
-| 34 | [Подъём машинного кода до псевдокода](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Создание | Python |
+| 32 | [Анатомия программы: читаем ELF с нуля](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Создание | Python, TypeScript, Rust |
+| 33 | [Дизассемблирование и графы потока управления](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Создание | Python, TypeScript, Rust |
+| 34 | [Подъём машинного кода до псевдокода](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Создание | Python, TypeScript |
 | 35 | [Доказательства, уверенность и неизвестные в анализе бинарных файлов](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Создание | Python, TypeScript |
 | 36 | [Пересобрать и доказать равенство](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Создание | Python, TypeScript |
 | 37 | [Обзор области обратной разработки](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Создание | Python, TypeScript |
 | 38 | [Соглашения о вызовах и кадры стека](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Создание | Python, TypeScript |
 | 39 | [Идиомы компилятора и оптимизация](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Создание | Python, TypeScript |
-| 40 | [Компоновка, загрузка и бинарные файлы без символов](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Создание | Python, TypeScript |
+| 40 | [Компоновка, загрузка и бинарные файлы без символов](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Создание | Python, TypeScript, Rust |
 | 41 | [Восстановление данных и типов](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Создание | Python, TypeScript |
 | 42 | [Динамический анализ собственной программы](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Создание | Python, TypeScript |
 | 43 | [Байт-код и управляемые форматы](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Создание | Python, TypeScript |
-| 44 | [Сравнение бинарных файлов и символьное выполнение](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Создание | Python |
+| 44 | [Сравнение бинарных файлов и символьное выполнение](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Создание | Python, TypeScript |
 | 45 | [Обратная разработка с помощью ИИ](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Создание | Python, TypeScript |
 
 Уроки 06–18 и 28–31 составляют специализированный [маршрут Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json). Манифест задаёт следующий порядок: 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Начните с команды `learn-mcp` для своей среды. Урок 23 — единственный необязательный итоговый проект; для него также нужны уроки 19 и 20.
@@ -792,13 +792,13 @@ flowchart TB
 | 20 | [Бенчмарки: WebArena и OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Изучение | Python, TypeScript |
 | 21 | [Управление компьютером: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Создание | Python, TypeScript |
 | 22 | [Голосовые агенты: Pipecat и LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Создание | Python, TypeScript |
-| 23 | [Семантические соглашения OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Создание | Python, TypeScript |
+| 23 | [Семантические соглашения OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Создание | Python, TypeScript, Go |
 | 24 | [Наблюдаемость агентов: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Изучение | Python, TypeScript |
 | 25 | [Дебаты и сотрудничество мультиагентных систем](../../phases/14-agent-engineering/25-multi-agent-debate/) | Создание | Python, TypeScript |
 | 26 | [Сбои: почему агенты ломаются](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Создание | Python, TypeScript |
 | 27 | [Prompt injection и защита PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Создание | Python, TypeScript |
 | 28 | [Шаблоны оркестрации: супервизор, рой, иерархия](../../phases/14-agent-engineering/28-orchestration-patterns/) | Создание | Python, TypeScript |
-| 29 | [Среды выполнения для production: очередь, событие, cron](../../phases/14-agent-engineering/29-production-runtimes/) | Изучение | Python, TypeScript |
+| 29 | [Среды выполнения для production: очередь, событие, cron](../../phases/14-agent-engineering/29-production-runtimes/) | Изучение | Python, TypeScript, Go |
 | 30 | [Разработка агентов на основе eval](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Создание | Python, TypeScript |
 | 31 | [Agent Workbench: почему даже сильные модели ошибаются](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Изучение | Python, TypeScript |
 | 32 | [Минимальный Agent Workbench](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Создание | Python, TypeScript |
@@ -848,7 +848,7 @@ flowchart TB
 | 09 | [Ландшафт автономных агентов для программирования (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Изучение | Python, TypeScript |
 | 10 | [Режимы разрешений для автономных агентов](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Изучение | Python, TypeScript |
 | 11 | [Браузерные агенты и косвенная prompt injection](../../phases/15-autonomous-systems/11-browser-agents/) | Изучение | Python, TypeScript |
-| 12 | [Долговременное выполнение для долгоработающих агентов](../../phases/15-autonomous-systems/12-durable-execution/) | Изучение | Python, TypeScript |
+| 12 | [Долговременное выполнение для долгоработающих агентов](../../phases/15-autonomous-systems/12-durable-execution/) | Изучение | Python, TypeScript, Go |
 | 13 | [Бюджеты действий, лимиты итераций и контроль затрат](../../phases/15-autonomous-systems/13-cost-governors/) | Изучение | Python, TypeScript |
 | 14 | [Аварийные выключатели, предохранители и Canary Tokens](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Изучение | Python, TypeScript |
 | 15 | [HITL: сначала предложить, затем зафиксировать](../../phases/15-autonomous-systems/15-propose-then-commit/) | Изучение | Python, TypeScript |
@@ -857,7 +857,7 @@ flowchart TB
 | 18 | [Llama Guard и классификация входных и выходных данных](../../phases/15-autonomous-systems/18-llama-guard/) | Изучение | Python, TypeScript |
 | 19 | [Политика ответственного масштабирования Anthropic v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Изучение | Python, TypeScript |
 | 20 | [OpenAI Preparedness Framework и DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Изучение | Python, TypeScript |
-| 21 | [Временные горизонты METR и внешняя оценка](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Изучение | Python, TypeScript |
+| 21 | [Временные горизонты METR и внешняя оценка](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Изучение | Python, TypeScript, Julia |
 | 22 | [CAIS, CAISI и риски для общества в целом](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Изучение | Python, TypeScript |
 
 </details>
@@ -876,17 +876,17 @@ flowchart TB
 | 06 | [Иерархическая архитектура и дрейф декомпозиции](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Изучение | Python, TypeScript |
 | 07 | [Общество разума и дебаты между агентами](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Создание | Python, TypeScript |
 | 08 | [Специализация ролей: планировщик, критик, исполнитель, проверяющий](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Создание | Python, TypeScript |
-| 09 | [Параллельные рои и сетевые архитектуры](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Создание | Python, TypeScript |
+| 09 | [Параллельные рои и сетевые архитектуры](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Создание | Python, TypeScript, Go |
 | 10 | [Групповой чат и выбор говорящего](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Создание | Python, TypeScript |
 | 11 | [Передачи управления и процедуры (оркестрация без состояния)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Создание | Python, TypeScript |
-| 12 | [A2A — протокол взаимодействия агентов](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Создание | Python, TypeScript |
+| 12 | [A2A — протокол взаимодействия агентов](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Создание | Python, TypeScript, Go |
 | 13 | [Общая память и шаблоны Blackboard](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Создание | Python, TypeScript |
 | 14 | [Консенсус и византийская отказоустойчивость](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Создание | Python, TypeScript |
 | 15 | [Голосование, самосогласованность и топология дебатов](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Создание | Python, TypeScript |
 | 16 | [Переговоры и торг](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Создание | Python, TypeScript |
 | 17 | [Генеративные агенты и эмерджентная симуляция](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Создание | Python, TypeScript |
 | 18 | [Theory of Mind и эмерджентная координация](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Создание | Python, TypeScript |
-| 19 | [Оптимизация роя (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Создание | Python, TypeScript |
+| 19 | [Оптимизация роя (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Создание | Python, TypeScript, Julia |
 | 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Изучение | Python, TypeScript |
 | 21 | [Экономика агентов, токеновые стимулы и репутация](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Изучение | Python, TypeScript |
 | 22 | [Масштабирование в production: очереди, контрольные точки, устойчивость](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Создание | Python, TypeScript |
@@ -905,9 +905,9 @@ flowchart TB
 | 01 | [Управляемые LLM-платформы: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Изучение | Python, TypeScript |
 | 02 | [Экономика платформ инференса: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Изучение | Python, TypeScript |
 | 03 | [Автомасштабирование GPU в Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Изучение | Python, TypeScript |
-| 04 | [Внутреннее устройство движков обслуживания: PagedAttention, Continuous Batching, Chunked Prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Изучение | Python, TypeScript |
+| 04 | [Внутреннее устройство движков обслуживания: PagedAttention, Continuous Batching, Chunked Prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Изучение | Python, TypeScript, Rust |
 | 05 | [Спекулятивное декодирование EAGLE-3 в production](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Изучение | Python, TypeScript |
-| 06 | [Обслуживание с Prefix Cache: RadixAttention и повторное использование KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Изучение | Python, TypeScript |
+| 06 | [Обслуживание с Prefix Cache: RadixAttention и повторное использование KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Изучение | Python, TypeScript, Rust |
 | 07 | [Компиляция инференса под специализированное оборудование: FP8 и NVFP4 на Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Изучение | Python, TypeScript |
 | 08 | [Метрики инференса: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Изучение | Python, TypeScript |
 | 09 | [Квантизация для production: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Изучение | Python, TypeScript |
@@ -922,7 +922,7 @@ flowchart TB
 | 18 | [Стек обслуживания для production: выгрузка KV и маршрутизация с учётом кэша](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Изучение | Python, TypeScript |
 | 19 | [AI-шлюзы: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Изучение | Python, TypeScript |
 | 20 | [Shadow-, Canary- и поэтапное развёртывание](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Изучение | Python, TypeScript |
-| 21 | [A/B-тестирование функций LLM: GrowthBook и Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Изучение | Python, TypeScript |
+| 21 | [A/B-тестирование функций LLM: GrowthBook и Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Изучение | Python, TypeScript, Julia |
 | 22 | [Нагрузочное тестирование API LLM: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Создание | Python, TypeScript |
 | 23 | [SRE для ИИ: реагирование на инциденты с несколькими агентами](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Изучение | Python, TypeScript |
 | 24 | [Chaos Engineering для production-систем на LLM](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Изучение | Python, TypeScript |
@@ -961,7 +961,7 @@ flowchart TB
 | 19 | [Исследования благополучия моделей](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Изучение | Python, TypeScript |
 | 20 | [Смещения и вред от искажённого представления](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Создание | Python, TypeScript |
 | 21 | [Критерии справедливости: групповая, индивидуальная и контрфактическая справедливость](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Изучение | Python, TypeScript |
-| 22 | [Дифференциальная приватность для LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Создание | Python, TypeScript |
+| 22 | [Дифференциальная приватность для LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Создание | Python, TypeScript, Julia |
 | 23 | [Водяные знаки: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Создание | Python, TypeScript |
 | 24 | [Нормативные рамки: ЕС, США, Великобритания, Корея](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Изучение | Python, TypeScript |
 | 25 | [EchoLeak и CVE для ИИ](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Изучение | Python, TypeScript |
@@ -989,9 +989,9 @@ flowchart TB
 | 08 | [Промышленный RAG-чатбот (регулируемая отрасль)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [Агент миграции кода (обновление на уровне репозитория)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [Мультиагентная команда разработки ПО](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [Панель наблюдаемости и оценки LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [Панель наблюдаемости и оценки LLM](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [Конвейер понимания видео (сцена → вопросы и ответы)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [MCP-сервер без состояния с реестром и управлением](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [MCP-сервер без состояния с реестром и управлением](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [Сервер инференса для спекулятивного декодирования](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [Контур конституционной безопасности и среда Red Team](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [Автономный GitHub-агент: от issue до PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1011,7 +1011,7 @@ flowchart TB
 | 27 | [Eval-harness с тестовыми сценариями](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Агентский каркас | Python, TypeScript |
 | 28 | [Наблюдаемость: OTel GenAI spans и метрики Prometheus](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Агентский каркас | Python, TypeScript |
 | 29 | [Сквозной программирующий агент на базе harness](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Агентский каркас | Python, TypeScript |
-| 30 | [Токенизатор BPE с нуля](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP и LLM | Python, TypeScript |
+| 30 | [Токенизатор BPE с нуля](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP и LLM | Python, TypeScript, Rust |
 | 31 | [Токенизированный набор данных со скользящим окном](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP и LLM | Python |
 | 32 | [Токеновые и позиционные эмбеддинги](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP и LLM | Python |
 | 33 | [Многоголовое самовнимание (Multi-Head Self-Attention)](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP и LLM | Python |
@@ -1023,7 +1023,7 @@ flowchart TB
 | 39 | [Настройка инструкций методом Supervised Fine-Tuning](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP и LLM | Python |
 | 40 | [Прямая оптимизация предпочтений с нуля](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP и LLM | Python |
 | 41 | [Полный конвейер оценки](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP и LLM | Python |
-| 42 | [Загрузчик большого корпуса](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Сквозное обучение | Python |
+| 42 | [Загрузчик большого корпуса](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Сквозное обучение | Python, TypeScript |
 | 43 | [Токенизированный корпус HDF5](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. Сквозное обучение | Python |
 | 44 | [Косинусное расписание скорости обучения с линейным разогревом](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. Сквозное обучение | Python |
 | 45 | [Обрезка градиентов и смешанная точность](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. Сквозное обучение | Python |
@@ -1037,8 +1037,8 @@ flowchart TB
 | 53 | [Оценщик результатов](../../phases/19-capstone-projects/53-result-evaluator/) | D. Автоматизация исследований | Python |
 | 54 | [Написание научной статьи](../../phases/19-capstone-projects/54-paper-writer/) | D. Автоматизация исследований | Python, TypeScript |
 | 55 | [Цикл критики](../../phases/19-capstone-projects/55-critic-loop/) | D. Автоматизация исследований | Python, TypeScript |
-| 56 | [Планировщик итераций](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Автоматизация исследований | Python |
-| 57 | [Демонстрация исследования от начала до конца](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Автоматизация исследований | Python |
+| 56 | [Планировщик итераций](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Автоматизация исследований | Python, TypeScript |
+| 57 | [Демонстрация исследования от начала до конца](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Автоматизация исследований | Python, TypeScript |
 | 58 | [Патчи энкодера зрения](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Мультимодальные VLM | Python |
 | 59 | [Энкодер Vision Transformer](../../phases/19-capstone-projects/59-vit-transformer/) | E. Мультимодальные VLM | Python |
 | 60 | [Проекционный слой для согласования модальностей](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. Мультимодальные VLM | Python |
@@ -1052,11 +1052,11 @@ flowchart TB
 | 68 | [Оценка RAG: Precision, Recall, MRR, nDCG, Faithfulness, Answer Relevance](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Продвинутый RAG | Python, TypeScript |
 | 69 | [Сквозная система RAG](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Продвинутый RAG | Python |
 | 70 | [Формат спецификации задачи](../../phases/19-capstone-projects/70-task-spec-format/) | G. Фреймворк оценки | Python, TypeScript |
-| 71 | [Классические метрики](../../phases/19-capstone-projects/71-classical-metrics/) | G. Фреймворк оценки | Python |
-| 72 | [Метрика выполнения кода](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Фреймворк оценки | Python |
-| 73 | [Перплексия и калибровка](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Фреймворк оценки | Python |
-| 74 | [Агрегация результатов рейтинговой таблицы](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Фреймворк оценки | Python |
-| 75 | [Сквозной запускатель оценки](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Фреймворк оценки | Python |
+| 71 | [Классические метрики](../../phases/19-capstone-projects/71-classical-metrics/) | G. Фреймворк оценки | Python, TypeScript |
+| 72 | [Метрика выполнения кода](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Фреймворк оценки | Python, TypeScript |
+| 73 | [Перплексия и калибровка](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Фреймворк оценки | Python, TypeScript |
+| 74 | [Агрегация результатов рейтинговой таблицы](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Фреймворк оценки | Python, TypeScript |
+| 75 | [Сквозной запускатель оценки](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Фреймворк оценки | Python, TypeScript |
 | 76 | [Операции коллективного взаимодействия с нуля](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. Распределённое обучение | Python |
 | 77 | [Параллелизм данных DDP с нуля](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. Распределённое обучение | Python |
 | 78 | [Шардинг состояния оптимизатора ZeRO](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. Распределённое обучение | Python |
@@ -1129,7 +1129,7 @@ flowchart TB
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      запускаемые реализации (Python, TypeScript, Rust, Julia)
+├── code/      запускаемые реализации (Python, TypeScript, Rust, Julia, Go)
 ├── docs/
 │   └── en.md  текст урока
 └── outputs/   промпты, навыки, агенты или серверы MCP, создаваемые в этом уроке

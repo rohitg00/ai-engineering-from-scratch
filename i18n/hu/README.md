@@ -19,7 +19,7 @@ Valósítsd meg a modellek belső működését, a visszakeresési folyamatokat 
 
 Ingyenes, nyílt forráskódú, MIT-licenccel. Tanulj a weboldalon, egy kódoló ügynökkel vagy helyben futtatott kóddal.
 
-> 542 lecke. 20 szakasz. Python, TypeScript, Rust, Julia.
+> 542 lecke. 20 szakasz. Python, TypeScript, Rust, Julia, Go.
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-licenc"></a>
@@ -374,19 +374,19 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 | 07 | [Bayes tétele és statisztikai gondolkodás](../../phases/01-math-foundations/07-bayes-theorem/) | Építés | Python, TypeScript |
 | 08 | [Optimalizálás: a gradienscsökkenés családja](../../phases/01-math-foundations/08-optimization/) | Építés | Python, Julia |
 | 09 | [Információelmélet: entrópia és KL-divergencia](../../phases/01-math-foundations/09-information-theory/) | Tanulás | Python, TypeScript |
-| 10 | [Dimenziócsökkentés: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Építés | Python, TypeScript |
+| 10 | [Dimenziócsökkentés: PCA, t-SNE, UMAP](../../phases/01-math-foundations/10-dimensionality-reduction/) | Építés | Python, TypeScript, Julia |
 | 11 | [Szingulárisérték-felbontás](../../phases/01-math-foundations/11-singular-value-decomposition/) | Építés | Python, Julia |
 | 12 | [Tenzorműveletek](../../phases/01-math-foundations/12-tensor-operations/) | Építés | Python, TypeScript |
-| 13 | [Numerikus stabilitás](../../phases/01-math-foundations/13-numerical-stability/) | Építés | Python, TypeScript |
+| 13 | [Numerikus stabilitás](../../phases/01-math-foundations/13-numerical-stability/) | Építés | Python, TypeScript, Julia |
 | 14 | [Normák és távolságok](../../phases/01-math-foundations/14-norms-and-distances/) | Építés | Python, TypeScript |
 | 15 | [Statisztika az ML-hez](../../phases/01-math-foundations/15-statistics-for-ml/) | Építés | Python, TypeScript |
-| 16 | [Mintavételi módszerek](../../phases/01-math-foundations/16-sampling-methods/) | Építés | Python, TypeScript |
-| 17 | [Lineáris rendszerek](../../phases/01-math-foundations/17-linear-systems/) | Építés | Python, TypeScript |
-| 18 | [Konvex optimalizálás](../../phases/01-math-foundations/18-convex-optimization/) | Építés | Python, TypeScript |
+| 16 | [Mintavételi módszerek](../../phases/01-math-foundations/16-sampling-methods/) | Építés | Python, TypeScript, Julia |
+| 17 | [Lineáris rendszerek](../../phases/01-math-foundations/17-linear-systems/) | Építés | Python, TypeScript, Julia |
+| 18 | [Konvex optimalizálás](../../phases/01-math-foundations/18-convex-optimization/) | Építés | Python, TypeScript, Julia |
 | 19 | [Komplex számok az AI-hoz](../../phases/01-math-foundations/19-complex-numbers/) | Tanulás | Python, TypeScript |
-| 20 | [A Fourier-transzformáció](../../phases/01-math-foundations/20-fourier-transform/) | Építés | Python, TypeScript |
+| 20 | [A Fourier-transzformáció](../../phases/01-math-foundations/20-fourier-transform/) | Építés | Python, TypeScript, Julia |
 | 21 | [Gráfelmélet az ML-hez](../../phases/01-math-foundations/21-graph-theory/) | Építés | Python, TypeScript |
-| 22 | [Sztochasztikus folyamatok](../../phases/01-math-foundations/22-stochastic-processes/) | Tanulás | Python |
+| 22 | [Sztochasztikus folyamatok](../../phases/01-math-foundations/22-stochastic-processes/) | Tanulás | Python, Julia |
 
 </details>
 
@@ -426,16 +426,16 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 
 | # | Lecke | Típus | Nyelv |
 |:---:|--------|:----:|------|
-| 01 | [A perceptron: ahol minden kezdődött](../../phases/03-deep-learning-core/01-the-perceptron/) | Építés | Python, Rust, Julia |
-| 02 | [Többrétegű hálózatok és előrehaladás](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Építés | Python, TypeScript |
-| 03 | [Hibavisszaterjesztés az alapoktól](../../phases/03-deep-learning-core/03-backpropagation/) | Építés | Python, Rust, Julia |
-| 04 | [Aktivációs függvények: ReLU, szigmoid, GELU és szerepük](../../phases/03-deep-learning-core/04-activation-functions/) | Építés | Python, Julia |
-| 05 | [Veszteségfüggvények: MSE, keresztentrópia és kontrasztív veszteség](../../phases/03-deep-learning-core/05-loss-functions/) | Építés | Python, Julia |
-| 06 | [Optimalizálók: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Építés | Python, TypeScript |
-| 07 | [Regularizáció: dropout, súlycsökkentés, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Építés | Python, TypeScript |
-| 08 | [Súlyinicializálás és a tanítás stabilitása](../../phases/03-deep-learning-core/08-weight-initialization/) | Építés | Python, TypeScript |
-| 09 | [Tanulásiráta-ütemezés és bemelegítés](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Építés | Python, TypeScript |
-| 10 | [Készíts saját kis keretrendszert](../../phases/03-deep-learning-core/10-mini-framework/) | Építés | Python, TypeScript |
+| 01 | [A perceptron: ahol minden kezdődött](../../phases/03-deep-learning-core/01-the-perceptron/) | Építés | Python, TypeScript, Rust, Julia |
+| 02 | [Többrétegű hálózatok és előrehaladás](../../phases/03-deep-learning-core/02-multi-layer-networks/) | Építés | Python, TypeScript, Julia |
+| 03 | [Hibavisszaterjesztés az alapoktól](../../phases/03-deep-learning-core/03-backpropagation/) | Építés | Python, TypeScript, Rust, Julia |
+| 04 | [Aktivációs függvények: ReLU, szigmoid, GELU és szerepük](../../phases/03-deep-learning-core/04-activation-functions/) | Építés | Python, TypeScript, Julia |
+| 05 | [Veszteségfüggvények: MSE, keresztentrópia és kontrasztív veszteség](../../phases/03-deep-learning-core/05-loss-functions/) | Építés | Python, TypeScript, Julia |
+| 06 | [Optimalizálók: SGD, momentum, Adam, AdamW](../../phases/03-deep-learning-core/06-optimizers/) | Építés | Python, TypeScript, Julia |
+| 07 | [Regularizáció: dropout, súlycsökkentés, BatchNorm](../../phases/03-deep-learning-core/07-regularization/) | Építés | Python, TypeScript, Julia |
+| 08 | [Súlyinicializálás és a tanítás stabilitása](../../phases/03-deep-learning-core/08-weight-initialization/) | Építés | Python, TypeScript, Julia |
+| 09 | [Tanulásiráta-ütemezés és bemelegítés](../../phases/03-deep-learning-core/09-learning-rate-schedules/) | Építés | Python, TypeScript, Julia |
+| 10 | [Készíts saját kis keretrendszert](../../phases/03-deep-learning-core/10-mini-framework/) | Építés | Python, TypeScript, Julia |
 | 11 | [Bevezetés a PyTorch használatába](../../phases/03-deep-learning-core/11-intro-to-pytorch/) | Építés | Python |
 | 12 | [Bevezetés a JAX használatába](../../phases/03-deep-learning-core/12-intro-to-jax/) | Építés | Python |
 | 13 | [Neurális hálózatok hibakeresése](../../phases/03-deep-learning-core/13-debugging-neural-networks/) | Építés | Python |
@@ -448,8 +448,8 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 
 | # | Lecke | Típus | Nyelv |
 |:---:|--------|:----:|------|
-| 01 | [Képi alapok: pixelek, csatornák és színterek](../../phases/04-computer-vision/01-image-fundamentals/) | Tanulás | Python |
-| 02 | [Konvolúciók az alapoktól](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Építés | Python |
+| 01 | [Képi alapok: pixelek, csatornák és színterek](../../phases/04-computer-vision/01-image-fundamentals/) | Tanulás | Python, Julia |
+| 02 | [Konvolúciók az alapoktól](../../phases/04-computer-vision/02-convolutions-from-scratch/) | Építés | Python, Julia |
 | 03 | [CNN-ek: a LeNettől a ResNetig](../../phases/04-computer-vision/03-cnns-lenet-to-resnet/) | Építés | Python |
 | 04 | [Képosztályozás](../../phases/04-computer-vision/04-image-classification/) | Építés | Python |
 | 05 | [Transzfertanulás és finomhangolás](../../phases/04-computer-vision/05-transfer-learning/) | Építés | Python |
@@ -474,7 +474,7 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 | 24 | [SAM 3 és nyílt szókincsű szegmentálás](../../phases/04-computer-vision/24-sam3-open-vocab-segmentation/) | Építés | Python |
 | 25 | [Kép-nyelvi modellek (ViT-MLP-LLM)](../../phases/04-computer-vision/25-vision-language-models/) | Építés | Python |
 | 26 | [Mélység- és geometriabecslés egy képből](../../phases/04-computer-vision/26-monocular-depth/) | Építés | Python |
-| 27 | [Több objektum követése és videómemória](../../phases/04-computer-vision/27-multi-object-tracking/) | Építés | Python |
+| 27 | [Több objektum követése és videómemória](../../phases/04-computer-vision/27-multi-object-tracking/) | Építés | Python, Rust |
 | 28 | [Világmodellek és videódiffúzió](../../phases/04-computer-vision/28-world-models-video-diffusion/) | Építés | Python |
 
 </details>
@@ -487,7 +487,7 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 |:---:|--------|:----:|------|
 | 01 | [Szövegfeldolgozás: tokenizálás, szótövezés és lemmatizálás](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Építés | Python, TypeScript |
 | 02 | [Szózsák, TF-IDF és szövegreprezentáció](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Építés | Python, TypeScript |
-| 03 | [Szóbeágyazások: Word2Vec az alapoktól](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Építés | Python |
+| 03 | [Szóbeágyazások: Word2Vec az alapoktól](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Építés | Python, Julia |
 | 04 | [GloVe, FastText és részszó-beágyazások](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Építés | Python, TypeScript |
 | 05 | [Hangulatelemzés](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Építés | Python, TypeScript |
 | 06 | [Névvel rendelkező entitások felismerése (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Építés | Python, TypeScript |
@@ -498,13 +498,13 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 | 11 | [Gépi fordítás](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Építés | Python, TypeScript |
 | 12 | [Szövegösszefoglalás](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Építés | Python, TypeScript |
 | 13 | [Kérdésmegválaszoló rendszerek](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Építés | Python, TypeScript |
-| 14 | [Információ-visszakeresés és keresés](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Építés | Python, TypeScript |
-| 15 | [Témamodellezés: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Építés | Python, TypeScript |
+| 14 | [Információ-visszakeresés és keresés](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Építés | Python, TypeScript, Rust |
+| 15 | [Témamodellezés: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Építés | Python, TypeScript, Julia |
 | 16 | [Szöveggenerálás](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Építés | Python, TypeScript |
 | 17 | [Csevegőrobotok: a szabályoktól a neurális hálókig](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Építés | Python, TypeScript |
 | 18 | [Többnyelvű NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Építés | Python, TypeScript |
-| 19 | [Részszó-tokenizálás: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Tanulás | Python, TypeScript |
-| 20 | [Strukturált kimenetek és korlátozott dekódolás](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Építés | Python, TypeScript |
+| 19 | [Részszó-tokenizálás: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Tanulás | Python, TypeScript, Rust |
+| 20 | [Strukturált kimenetek és korlátozott dekódolás](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Építés | Python, TypeScript, Rust |
 | 21 | [NLI és szöveges következtetés](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Tanulás | Python, TypeScript |
 | 22 | [Beágyazási modellek részletesen](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Tanulás | Python, TypeScript |
 | 23 | [Darabolási stratégiák a RAG-hoz](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Építés | Python, TypeScript |
@@ -523,8 +523,8 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 
 | # | Lecke | Típus | Nyelv |
 |:---:|--------|:----:|------|
-| 01 | [Hangalapok: hullámformák, mintavétel és FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Tanulás | Python, TypeScript |
-| 02 | [Spektrogramok, mel-skála és hangjellemzők](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Építés | Python, TypeScript |
+| 01 | [Hangalapok: hullámformák, mintavétel és FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Tanulás | Python, TypeScript, Julia |
+| 02 | [Spektrogramok, mel-skála és hangjellemzők](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Építés | Python, TypeScript, Julia |
 | 03 | [Hangosztályozás](../../phases/06-speech-and-audio/03-audio-classification) | Építés | Python, TypeScript |
 | 04 | [Beszédfelismerés (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Építés | Python, TypeScript |
 | 05 | [Whisper: felépítés és finomhangolás](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Építés | Python, TypeScript |
@@ -536,7 +536,7 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 | 11 | [Valós idejű hangfeldolgozás](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Építés | Python, Rust |
 | 12 | [Készíts hangasszisztens-folyamatot](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Építés | Python, TypeScript |
 | 13 | [Neurális hangkodekek: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Tanulás | Python, TypeScript |
-| 14 | [Beszédaktivitás és beszélőváltás felismerése](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Építés | Python, TypeScript |
+| 14 | [Beszédaktivitás és beszélőváltás felismerése](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Építés | Python, TypeScript, Rust |
 | 15 | [Folyamatos beszéd-beszéd átalakítás: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Tanulás | Python, TypeScript |
 | 16 | [Hanghamisítás elleni védelem és hangvízjelezés](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Építés | Python, TypeScript |
 | 17 | [Hangértékelés: WER, MOS, MMAU és ranglisták](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Tanulás | Python, TypeScript |
@@ -586,9 +586,9 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 | 10 | [Videógenerálás](../../phases/08-generative-ai/10-video-generation/) | Építés | Python, TypeScript |
 | 11 | [Hanggenerálás](../../phases/08-generative-ai/11-audio-generation/) | Építés | Python, TypeScript |
 | 12 | [3D-generálás](../../phases/08-generative-ai/12-3d-generation/) | Építés | Python, TypeScript |
-| 13 | [Áramlásillesztés és egyenesített áramlások](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Építés | Python, TypeScript |
+| 13 | [Áramlásillesztés és egyenesített áramlások](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Építés | Python, TypeScript, Julia |
 | 14 | [Értékelés: FID és CLIP-pontszám](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Építés | Python, TypeScript |
-| 19 | [Vizuális autoregresszív modellezés (VAR): a következő lépték előrejelzése](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Építés | Python |
+| 19 | [Vizuális autoregresszív modellezés (VAR): a következő lépték előrejelzése](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Építés | Python, Julia |
 
 </details>
 
@@ -620,7 +620,7 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 | # | Lecke | Típus | Nyelv |
 |:---:|--------|:----:|------|
 | 01 | [Tokenizálók: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Építés | Python, Rust |
-| 02 | [Tokenizáló építése az alapoktól](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Építés | Python |
+| 02 | [Tokenizáló építése az alapoktól](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Építés | Python, TypeScript |
 | 03 | [Adatfolyamatok előtanításhoz](../../phases/10-llms-from-scratch/03-data-pipelines/) | Építés | Python, Rust |
 | 04 | [Egy mini-GPT (124M) előtanítása](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Építés | Python, Rust |
 | 05 | [Elosztott tanítás, FSDP és DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Építés | Python |
@@ -665,7 +665,7 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 | 11 | [Gyorsítótárazás, sebességkorlátozás és költség](../../phases/11-llm-engineering/11-caching-cost/) | Építés | Python, TypeScript |
 | 12 | [Védelmi korlátok és biztonság](../../phases/11-llm-engineering/12-guardrails/) | Építés | Python, TypeScript |
 | 13 | [Üzemi LLM-alkalmazás építése](../../phases/11-llm-engineering/13-production-app/) | Építés | Python, TypeScript |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Építés | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Építés | Python, TypeScript, Go |
 | 15 | [Prompt- és kontextusgyorsítótárazás](../../phases/11-llm-engineering/15-prompt-caching/) | Építés | Python, TypeScript |
 | 16 | [Ágensek állapotgépei: gráfok, csomópontok és ellenőrzőpontok](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Építés | Python |
 | 17 | [Ágenskeretrendszerek kompromisszumai](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Tanulás | Python, TypeScript |
@@ -714,25 +714,25 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 |:---:|--------|:----:|------|
 | 01 | [Az eszközinterfész](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Tanulás | Python, TypeScript |
 | 02 | [Függvényhívás részletesen](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Építés | Python, TypeScript |
-| 03 | [Párhuzamos és folyamatos eszközhívások](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Építés | Python, TypeScript |
+| 03 | [Párhuzamos és folyamatos eszközhívások](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Építés | Python, TypeScript, Go |
 | 04 | [Strukturált kimenet](../../phases/13-tools-and-protocols/04-structured-output/) | Építés | Python, TypeScript |
 | 05 | [Eszközsémák tervezése](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Tanulás | Python, TypeScript |
 | 06 | [MCP-alapok: állapotmentes kérések és JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Tanulás | Python, TypeScript |
-| 07 | [MCP-szerver építése: állapotmentes Python és TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Építés | Python, TypeScript |
+| 07 | [MCP-szerver építése: állapotmentes Python és TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Építés | Python, TypeScript, Go |
 | 08 | [MCP-kliens építése: felderítés, útválasztás és kétgenerációs kompatibilitás](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Építés | Python, TypeScript |
-| 09 | [MCP-átvitelek: stdio és állapotmentes Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Tanulás | Python, TypeScript |
+| 09 | [MCP-átvitelek: stdio és állapotmentes Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Tanulás | Python, TypeScript, Go |
 | 10 | [MCP-erőforrások és promptok: címezhető kontextus állapotmentes szerverekhez](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Építés | Python, TypeScript |
 | 11 | [MCP-modellbemenet: samplingmigráció és állapotmentes MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Építés | Python, TypeScript |
 | 12 | [Kifejezett hatókör és állapotmentes adatbekérés](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Építés | Python, TypeScript |
 | 13 | [MCP-feladatkiterjesztés: tartós munka állapotmentes magon](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Építés | Python, TypeScript |
 | 14 | [MCP Apps az állapotmentes protokollon](../../phases/13-tools-and-protocols/14-mcp-apps/) | Építés | Python, TypeScript |
 | 15 | [MCP-biztonság: mérgezett metaadatok, útválasztás és MRTR-állapot](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Tanulás | Python, TypeScript |
-| 16 | [MCP-jogosultságkezelés: CIMD, kibocsátókötés, PKCE és fokozott hitelesítés](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Építés | Python, TypeScript |
-| 17 | [Állapotmentes MCP-átjárók és regiszterbe fogadás](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Tanulás | Python, TypeScript |
-| 18 | [MCP-hitelesítés üzemben: kibocsátóhoz kötött regisztráció és tokenek](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Építés | Python, TypeScript |
-| 19 | [Az A2A protokoll](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Építés | Python, TypeScript |
+| 16 | [MCP-jogosultságkezelés: CIMD, kibocsátókötés, PKCE és fokozott hitelesítés](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Építés | Python, TypeScript, Go |
+| 17 | [Állapotmentes MCP-átjárók és regiszterbe fogadás](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Tanulás | Python, TypeScript, Go |
+| 18 | [MCP-hitelesítés üzemben: kibocsátóhoz kötött regisztráció és tokenek](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Építés | Python, TypeScript, Go |
+| 19 | [Az A2A protokoll](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Építés | Python, TypeScript, Go |
 | 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Építés | Python, TypeScript |
-| 21 | [LLM-útválasztási réteg](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Tanulás | Python, TypeScript |
+| 21 | [LLM-útválasztási réteg](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Tanulás | Python, TypeScript, Go |
 | 22 | [Agent Skills: hordozható szerződés és futtatási határ](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Építés | Python, TypeScript |
 | 23 | [Záróprojekt: állapotmentes eszközökoszisztéma](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Építés | Python, TypeScript |
 | 24 | [Képességfelderítés és fokozatos információfeltárás](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Építés | Python, TypeScript |
@@ -743,19 +743,19 @@ Húsz szakasz. A leckelista kibontásához kattints egy szakaszra.
 | 29 | [MCP-megbízhatóság, megszakítás és folyamszabályozás](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Építés | Python, TypeScript |
 | 30 | [Az MCP-regiszter ellátási lánca: befogadás, eltérés és visszaállítás](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Építés | Python, TypeScript |
 | 31 | [MCP-megfelelőség: verziókezelés, bizonyítékok és üzemeltetés](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Építés | Python, TypeScript |
-| 32 | [A program anatómiája: ELF olvasása az alapoktól](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Építés | Python, TypeScript |
-| 33 | [Disassemblálás és vezérlésfolyam-gráfok](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Építés | Python, TypeScript |
-| 34 | [Gépi kód emelése pszeudokóddá](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Építés | Python |
+| 32 | [A program anatómiája: ELF olvasása az alapoktól](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Építés | Python, TypeScript, Rust |
+| 33 | [Disassemblálás és vezérlésfolyam-gráfok](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Építés | Python, TypeScript, Rust |
+| 34 | [Gépi kód emelése pszeudokóddá](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Építés | Python, TypeScript |
 | 35 | [Bizonyíték, bizonyosság és ismeretlenek a bináris elemzésben](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Építés | Python, TypeScript |
 | 36 | [Újraépítés és az egyezés bizonyítása](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Építés | Python, TypeScript |
 | 37 | [A visszafejtés területei](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Építés | Python, TypeScript |
 | 38 | [Hívási konvenciók és veremkeretek](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Építés | Python, TypeScript |
 | 39 | [Fordítói idiómák és optimalizálás](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Építés | Python, TypeScript |
-| 40 | [Linkelés, betöltés és lecsupaszított binárisok](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Építés | Python, TypeScript |
+| 40 | [Linkelés, betöltés és lecsupaszított binárisok](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Építés | Python, TypeScript, Rust |
 | 41 | [Adatok és típusok visszanyerése](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Építés | Python, TypeScript |
 | 42 | [A saját program dinamikus elemzése](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Építés | Python, TypeScript |
 | 43 | [Bájtkód és felügyelt formátumok](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Építés | Python, TypeScript |
-| 44 | [Bináris összehasonlítás és szimbolikus végrehajtás](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Építés | Python |
+| 44 | [Bináris összehasonlítás és szimbolikus végrehajtás](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Építés | Python, TypeScript |
 | 45 | [AI-támogatott visszafejtés](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Építés | Python, TypeScript |
 
 A 06-18. és 28-31. leckék alkotják a célzott [Model Context Protocol (MCP) útvonalat](../../learning-paths/model-context-protocol.json). A jegyzék sorrendje: 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Kezdj a fenti gazdaspecifikus `learn-mcp` meghívással. A 23. lecke az egyetlen választható záróprojekt, és a 19. és 20. leckét is megköveteli.
@@ -792,13 +792,13 @@ A 22. és 24-27. leckék alkotják a célzott [Agent Skills tanulási útvonalat
 | 20 | [Viszonyítási feladatok: WebArena és OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Tanulás | Python, TypeScript |
 | 21 | [Számítógép-használat: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Építés | Python, TypeScript |
 | 22 | [Hangágensek: Pipecat és LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Építés | Python, TypeScript |
-| 23 | [Az OpenTelemetry GenAI szemantikus konvenciói](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Építés | Python, TypeScript |
+| 23 | [Az OpenTelemetry GenAI szemantikus konvenciói](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Építés | Python, TypeScript, Go |
 | 24 | [Ágensek megfigyelhetősége: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Tanulás | Python, TypeScript |
 | 25 | [Többágenses vita és együttműködés](../../phases/14-agent-engineering/25-multi-agent-debate/) | Építés | Python, TypeScript |
 | 26 | [Hibamódok: miért vallanak kudarcot az ágensek?](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Építés | Python, TypeScript |
 | 27 | [Promptinjektálás és a PVE-védelem](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Építés | Python, TypeScript |
 | 28 | [Vezérlési minták: felügyelő, raj és hierarchia](../../phases/14-agent-engineering/28-orchestration-patterns/) | Építés | Python, TypeScript |
-| 29 | [Üzemi futtatókörnyezetek: sor, esemény és cron](../../phases/14-agent-engineering/29-production-runtimes/) | Tanulás | Python, TypeScript |
+| 29 | [Üzemi futtatókörnyezetek: sor, esemény és cron](../../phases/14-agent-engineering/29-production-runtimes/) | Tanulás | Python, TypeScript, Go |
 | 30 | [Értékelésvezérelt ágensfejlesztés](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Építés | Python, TypeScript |
 | 31 | [Ágensmunkapad: miért hibáznak a jó képességű modellek is?](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Tanulás | Python, TypeScript |
 | 32 | [A minimális ágensmunkapad](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Építés | Python, TypeScript |
@@ -848,7 +848,7 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 09 | [Az autonóm programozóágensek világa (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Tanulás | Python, TypeScript |
 | 10 | [Engedélymódok autonóm ágensekhez](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Tanulás | Python, TypeScript |
 | 11 | [Böngészőágensek és közvetett promptinjektálás](../../phases/15-autonomous-systems/11-browser-agents/) | Tanulás | Python, TypeScript |
-| 12 | [Tartós végrehajtás hosszan futó ágensekhez](../../phases/15-autonomous-systems/12-durable-execution/) | Tanulás | Python, TypeScript |
+| 12 | [Tartós végrehajtás hosszan futó ágensekhez](../../phases/15-autonomous-systems/12-durable-execution/) | Tanulás | Python, TypeScript, Go |
 | 13 | [Műveleti keretek, iterációkorlátok és költségszabályozók](../../phases/15-autonomous-systems/13-cost-governors/) | Tanulás | Python, TypeScript |
 | 14 | [Vészleállítók, megszakítók és figyelmeztető tokenek](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Tanulás | Python, TypeScript |
 | 15 | [Emberi felügyelet: először javaslat, utána véglegesítés](../../phases/15-autonomous-systems/15-propose-then-commit/) | Tanulás | Python, TypeScript |
@@ -857,7 +857,7 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 18 | [Llama Guard és bemeneti-kimeneti osztályozás](../../phases/15-autonomous-systems/18-llama-guard/) | Tanulás | Python, TypeScript |
 | 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Tanulás | Python, TypeScript |
 | 20 | [OpenAI Preparedness Framework és DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Tanulás | Python, TypeScript |
-| 21 | [METR-időhorizontok és külső értékelés](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Tanulás | Python, TypeScript |
+| 21 | [METR-időhorizontok és külső értékelés](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Tanulás | Python, TypeScript, Julia |
 | 22 | [CAIS, CAISI és társadalmi léptékű kockázat](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Tanulás | Python, TypeScript |
 
 </details>
@@ -876,17 +876,17 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 06 | [Hierarchikus felépítés és felbontási eltérés](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Tanulás | Python, TypeScript |
 | 07 | [Society of Mind és többágenses vita](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Építés | Python, TypeScript |
 | 08 | [Szerepspecializáció: tervező, kritikus, végrehajtó és ellenőr](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Építés | Python, TypeScript |
-| 09 | [Párhuzamos rajok és hálózatos felépítések](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Építés | Python, TypeScript |
+| 09 | [Párhuzamos rajok és hálózatos felépítések](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Építés | Python, TypeScript, Go |
 | 10 | [Csoportos beszélgetés és beszélőválasztás](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Építés | Python, TypeScript |
 | 11 | [Átadások és rutinok (állapotmentes vezérlés)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Építés | Python, TypeScript |
-| 12 | [A2A: az ágens-ágens protokoll](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Építés | Python, TypeScript |
+| 12 | [A2A: az ágens-ágens protokoll](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Építés | Python, TypeScript, Go |
 | 13 | [Megosztott memória és táblaminták](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Építés | Python, TypeScript |
 | 14 | [Konszenzus és bizánci hibatűrés](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Építés | Python, TypeScript |
 | 15 | [Szavazás, önkonzisztencia és vitatopológia](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Építés | Python, TypeScript |
 | 16 | [Tárgyalás és alkudozás](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Építés | Python, TypeScript |
 | 17 | [Generatív ágensek és kialakuló szimulációk](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Építés | Python, TypeScript |
 | 18 | [Tudatelmélet és kialakuló koordináció](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Építés | Python, TypeScript |
-| 19 | [Rajoptimalizálás (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Építés | Python, TypeScript |
+| 19 | [Rajoptimalizálás (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Építés | Python, TypeScript, Julia |
 | 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Tanulás | Python, TypeScript |
 | 21 | [Ágensgazdaságok, tokenösztönzők és hírnév](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Tanulás | Python, TypeScript |
 | 22 | [Üzemi skálázás: sorok, ellenőrzőpontok és tartósság](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Építés | Python, TypeScript |
@@ -905,9 +905,9 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 01 | [Menedzselt LLM-platformok: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Tanulás | Python, TypeScript |
 | 02 | [Következtetési platformok gazdaságtana: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Tanulás | Python, TypeScript |
 | 03 | [Automatikus GPU-skálázás Kubernetesen: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Tanulás | Python, TypeScript |
-| 04 | [Kiszolgálómotorok belseje: PagedAttention, folyamatos kötegelés és darabolt prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Tanulás | Python, TypeScript |
+| 04 | [Kiszolgálómotorok belseje: PagedAttention, folyamatos kötegelés és darabolt prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Tanulás | Python, TypeScript, Rust |
 | 05 | [EAGLE-3 spekulatív dekódolás üzemben](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Tanulás | Python, TypeScript |
-| 06 | [Prefixgyorsítótáras kiszolgálás: RadixAttention és KV-újrafelhasználás](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Tanulás | Python, TypeScript |
+| 06 | [Prefixgyorsítótáras kiszolgálás: RadixAttention és KV-újrafelhasználás](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Tanulás | Python, TypeScript, Rust |
 | 07 | [Hardverspecifikus következtetésfordítás: FP8 és NVFP4 Blackwellen](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Tanulás | Python, TypeScript |
 | 08 | [Következtetési mérőszámok: TTFT, TPOT, ITL, goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Tanulás | Python, TypeScript |
 | 09 | [Üzemi kvantálás: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Tanulás | Python, TypeScript |
@@ -922,7 +922,7 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 18 | [Üzemi kiszolgálórendszer: KV-kiszervezés és gyorsítótár-tudatos útválasztás](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Tanulás | Python, TypeScript |
 | 19 | [AI-átjárók: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Tanulás | Python, TypeScript |
 | 20 | [Árnyék-, kanári- és fokozatos telepítés](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Tanulás | Python, TypeScript |
-| 21 | [LLM-funkciók A/B tesztelése: GrowthBook és Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Tanulás | Python, TypeScript |
+| 21 | [LLM-funkciók A/B tesztelése: GrowthBook és Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Tanulás | Python, TypeScript, Julia |
 | 22 | [LLM API-k terheléses tesztjei: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Építés | Python, TypeScript |
 | 23 | [SRE az AI-hoz: többágenses incidenskezelés](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Tanulás | Python, TypeScript |
 | 24 | [Káoszmérnökség az üzemi LLM-ekhez](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Tanulás | Python, TypeScript |
@@ -961,7 +961,7 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 19 | [A modellek jóllétének kutatása](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Tanulás | Python, TypeScript |
 | 20 | [Torzítás és reprezentációs károk](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Építés | Python, TypeScript |
 | 21 | [Méltányossági feltételek: csoportos, egyéni és tényellentétes](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Tanulás | Python, TypeScript |
-| 22 | [Differenciális adatvédelem LLM-ekhez](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Építés | Python, TypeScript |
+| 22 | [Differenciális adatvédelem LLM-ekhez](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Építés | Python, TypeScript, Julia |
 | 23 | [Vízjelezés: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Építés | Python, TypeScript |
 | 24 | [Szabályozási keretek: EU, USA, Egyesült Királyság és Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Tanulás | Python, TypeScript |
 | 25 | [EchoLeak és AI-hoz kapcsolódó CVE-k](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Tanulás | Python, TypeScript |
@@ -989,9 +989,9 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 08 | [Üzemi RAG-csevegőrobot (szabályozott ágazat)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
 | 09 | [Kódmigrációs ágens (tárolószintű frissítés)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
 | 10 | [Többágenses szoftvermérnöki csapat](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
-| 11 | [LLM-megfigyelhetőségi és értékelési irányítópult](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 11 | [LLM-megfigyelhetőségi és értékelési irányítópult](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript, Go |
 | 12 | [Videóértelmezési folyamat (jelenet → kérdés és válasz)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
-| 13 | [Állapotmentes MCP-szerver regiszterrel és irányítással](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 13 | [Állapotmentes MCP-szerver regiszterrel és irányítással](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript, Go |
 | 14 | [Spekulatív dekódolású következtetőszerver](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
 | 15 | [Alkotmányos biztonsági keret és támadótesztpálya](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
 | 16 | [Autonóm ágens GitHub-issue-tól PR-ig](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
@@ -1011,7 +1011,7 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 27 | [Értékelőkeret rögzített tesztfeladatokkal](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Ágensfuttató keret | Python, TypeScript |
 | 28 | [Megfigyelhetőség OTel GenAI-spanekkel és Prometheus-mérőszámokkal](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Ágensfuttató keret | Python, TypeScript |
 | 29 | [Teljes programozóágens a futtatókereten](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Ágensfuttató keret | Python, TypeScript |
-| 30 | [BPE-tokenizáló az alapoktól](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
+| 30 | [BPE-tokenizáló az alapoktól](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript, Rust |
 | 31 | [Tokenizált adatkészlet csúszóablakkal](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Token- és pozícióbeágyazások](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Többfejes önfigyelem](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1023,7 +1023,7 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 39 | [Utasításhangolás felügyelt finomhangolással](../../phases/19-capstone-projects/39-instruction-tuning-sft/) | B. NLP LLM | Python |
 | 40 | [Közvetlen preferenciaoptimalizálás az alapoktól](../../phases/19-capstone-projects/40-dpo-from-scratch/) | B. NLP LLM | Python |
 | 41 | [Teljes értékelési folyamat](../../phases/19-capstone-projects/41-eval-pipeline/) | B. NLP LLM | Python |
-| 42 | [Nagy korpusz letöltése](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Teljes tanítás | Python |
+| 42 | [Nagy korpusz letöltése](../../phases/19-capstone-projects/42-large-corpus-downloader/) | C. Teljes tanítás | Python, TypeScript |
 | 43 | [HDF5-tokenizált korpusz](../../phases/19-capstone-projects/43-hdf5-tokenized-corpus/) | C. Teljes tanítás | Python |
 | 44 | [Koszinuszos tanulási ráta lineáris bemelegítéssel](../../phases/19-capstone-projects/44-cosine-lr-warmup/) | C. Teljes tanítás | Python |
 | 45 | [Gradiensvágás és vegyes pontosság](../../phases/19-capstone-projects/45-gradient-clipping-amp/) | C. Teljes tanítás | Python |
@@ -1037,8 +1037,8 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 53 | [Eredményértékelő](../../phases/19-capstone-projects/53-result-evaluator/) | D. Automatikus kutatás | Python |
 | 54 | [Tudományoscikk-író](../../phases/19-capstone-projects/54-paper-writer/) | D. Automatikus kutatás | Python, TypeScript |
 | 55 | [Kritikusi ciklus](../../phases/19-capstone-projects/55-critic-loop/) | D. Automatikus kutatás | Python, TypeScript |
-| 56 | [Iterációütemező](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Automatikus kutatás | Python |
-| 57 | [Teljes kutatási bemutató](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Automatikus kutatás | Python |
+| 56 | [Iterációütemező](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Automatikus kutatás | Python, TypeScript |
+| 57 | [Teljes kutatási bemutató](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Automatikus kutatás | Python, TypeScript |
 | 58 | [Vizuális kódoló képrészletei](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Multimodális VLM | Python |
 | 59 | [Vizuális transzformerkódoló](../../phases/19-capstone-projects/59-vit-transformer/) | E. Multimodális VLM | Python |
 | 60 | [Vetítési réteg modalitásösszehangoláshoz](../../phases/19-capstone-projects/60-projection-layer-modality-align/) | E. Multimodális VLM | Python |
@@ -1052,11 +1052,11 @@ A 31-46. leckék alkotják az [ágensekkel támogatott mérnöki útvonalat](../
 | 68 | [RAG-értékelés: pontosság, felidézés, MRR, nDCG, hűség és válaszrelevancia](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Haladó RAG | Python, TypeScript |
 | 69 | [Teljes RAG-rendszer](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Haladó RAG | Python |
 | 70 | [Feladatspecifikáció-formátum](../../phases/19-capstone-projects/70-task-spec-format/) | G. Értékelőkeret | Python, TypeScript |
-| 71 | [Klasszikus mérőszámok](../../phases/19-capstone-projects/71-classical-metrics/) | G. Értékelőkeret | Python |
-| 72 | [Kódfuttatási mérőszám](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Értékelőkeret | Python |
-| 73 | [Perplexitás és kalibrálás](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Értékelőkeret | Python |
-| 74 | [Ranglisták összesítése](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Értékelőkeret | Python |
-| 75 | [Teljes értékelésfuttató](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Értékelőkeret | Python |
+| 71 | [Klasszikus mérőszámok](../../phases/19-capstone-projects/71-classical-metrics/) | G. Értékelőkeret | Python, TypeScript |
+| 72 | [Kódfuttatási mérőszám](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Értékelőkeret | Python, TypeScript |
+| 73 | [Perplexitás és kalibrálás](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Értékelőkeret | Python, TypeScript |
+| 74 | [Ranglisták összesítése](../../phases/19-capstone-projects/74-leaderboard-aggregation/) | G. Értékelőkeret | Python, TypeScript |
+| 75 | [Teljes értékelésfuttató](../../phases/19-capstone-projects/75-end-to-end-eval-runner/) | G. Értékelőkeret | Python, TypeScript |
 | 76 | [Kollektív műveletek az alapoktól](../../phases/19-capstone-projects/76-collective-ops-from-scratch/) | H. Elosztott tanítás | Python |
 | 77 | [Adatpárhuzamos DDP az alapoktól](../../phases/19-capstone-projects/77-data-parallel-ddp/) | H. Elosztott tanítás | Python |
 | 78 | [ZeRO-optimalizáló állapotának felosztása](../../phases/19-capstone-projects/78-zero-parameter-sharding/) | H. Elosztott tanítás | Python |
@@ -1129,7 +1129,7 @@ Minden lecke saját mappában található, az egész tananyagban azonos szerkeze
 
 ```text
 phases/<NN>-<phase-name>/<NN>-<lesson-name>/
-├── code/      futtatható megvalósítások (Python, TypeScript, Rust, Julia)
+├── code/      futtatható megvalósítások (Python, TypeScript, Rust, Julia, Go)
 ├── docs/
 │   └── en.md  a lecke magyarázata
 └── outputs/   a lecke által létrehozott promptok, képességek, ágensek vagy MCP-szerverek
