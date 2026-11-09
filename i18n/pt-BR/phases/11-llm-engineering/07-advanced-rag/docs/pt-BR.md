@@ -3,7 +3,7 @@
 > RAG básico recupera os pedaços mais semelhantes. Isso funciona para perguntas simples. Desmorona para raciocínio multi-hop, consultas ambíguas e grandes corporações. RAG avançado é a diferença entre uma demonstração que funciona em 10 documentos e um sistema que funciona em 10 milhões.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11, Lesson 06 (RAG)
 **Time:** ~90 minutes
 **Related:**A fase 5 · 23 (Estratégias de Chunking para RAG) abrange todos os seis algoritmos de chunking  recursivo, semântico, frase, documento-mãe, chunking tardia, recuperação contextual  com benchmarks Vectara/Antropic. Esta lição se baseia em cima: busca híbrida, re-ranqueamento, transformação de consulta.

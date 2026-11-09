@@ -3,7 +3,7 @@
 > Cada framework vende a mesma demonstração (o agente de pesquisa constrói um relatório) e esconde o mesmo bug (o esquema de estado luta com a camada de orquestração). Escolha o framework cujas abstrações correspondem à forma do seu problema; tudo o resto é cola que você escreve duas vezes.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 16 (LangGraph)
 **Time:** ~45 minutes
 
