@@ -3,7 +3,7 @@
 > Le plus petit tableau de travail utile est composé de trois fichiers: un routeur d'instructions racine, un fichier d'état et un tableau de tâches. Tout le reste est en couches en haut. Si un repo ne peut pas transporter ces trois, aucun modèle ne le sauvegarde.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 31 (Why Capable Models Still Fail)
 **Time:** ~45 minutes
 
@@ -77,6 +77,7 @@ wb-three-files
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Le scénario crée`workdir/`Il met les trois fichiers à côté de lui, fait un tour et imprime le diff.

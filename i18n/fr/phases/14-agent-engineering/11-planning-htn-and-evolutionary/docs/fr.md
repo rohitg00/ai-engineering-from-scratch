@@ -3,7 +3,7 @@
 > La planification symbolique traite les cas où le plan est prouvablement correct. La recherche de code évolutionnaire traite les cas où la fonction de fitness est vérifiable par machine. ChatHTN (2025) et AlphaEvolve (2025) montrent ce que chacun déverrouille lorsqu'il est associé à un LLM.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 02 (ReWOO and Plan-and-Execute)
 **Time:** ~75 minutes
 
@@ -102,6 +102,7 @@ htn-tree-expand
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La trace montre le planificateur HTN décomposant une tâche composée (avec un retrait de LLM au milieu du plan) et la boucle évolutionnaire convergeant sur une expression cible.

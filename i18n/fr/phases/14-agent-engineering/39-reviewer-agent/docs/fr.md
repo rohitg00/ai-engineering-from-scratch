@@ -3,7 +3,7 @@
 > L'agent qui a écrit le code ne peut pas le classer. Un réviseur est une deuxième boucle avec un prompt système différent, un objectif différent et un accès à la lecture uniquement à tout ce que le constructeur a produit. L'écart entre le constructeur et le réviseur est où la plus grande fiabilité vit.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 38 (Verification Gate)
 **Time:** ~55 minutes
 
@@ -74,6 +74,7 @@ wb-builder-marker
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Résultats: deux rapports d'examen écrits sur disque et une table de la console de scores dimensionnels.

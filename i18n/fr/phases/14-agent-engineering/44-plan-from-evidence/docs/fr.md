@@ -3,7 +3,7 @@
 > Un plan n'est pas une liste de tâches plus jolie. C'est un graphique de dépendance dans lequel chaque changement a une raison et chaque nœud terminal a une preuve.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 43
 **Time:** ~65 minutes
 
@@ -92,6 +92,7 @@ Je vais courir .
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

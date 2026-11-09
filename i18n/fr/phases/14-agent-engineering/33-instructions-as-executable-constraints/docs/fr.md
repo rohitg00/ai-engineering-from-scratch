@@ -3,7 +3,7 @@
 > Les instructions écrites en prose sont des souhaits. Les instructions écrites en contraintes sont des tests. Le tableau de travail transforme chaque règle en quelque chose qu'un agent peut vérifier à l'heure de l'exécution et un examinateur peut vérifier après le fait.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~50 minutes
 
@@ -96,6 +96,7 @@ wb-rule-checkoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Résultats: réglementation paralysée, trace d'exécution, pass/fail par règle, et un `rule_report.json`enregistré à côté du script.

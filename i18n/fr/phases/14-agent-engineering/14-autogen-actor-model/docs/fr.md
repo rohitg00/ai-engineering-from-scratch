@@ -3,7 +3,7 @@
 > Les agents en tant qu'acteurs: échange de messages asynchrone, gestionnaires d'événements, isolation des défauts, concurrences naturelles. AutoGen v0.4 (Microsoft Research, Jan 2025) a redessiné l'orchestration des agents autour de ce modèle; le framework est maintenant en mode maintenance, avec Microsoft Agent Framework (preview publique Oct 2025) comme successeur de production.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
 **Time:** ~75 minutes
 
@@ -79,6 +79,7 @@ actor-mailbox
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La trace montre la livraison du message, un échec simulé chez un acteur qui ne s'écrase pas avec l'autre, et la convergence sur un verdict partagé.

@@ -3,7 +3,7 @@
 > Le modèle ne sait pas où se termine le travail. Un contrat de portée est un fichier par tâche qui indique où le travail commence, où il se termine et comment se dérouler si il se déversement. Le contrat passe d'un souhait à un chèque.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 33 (Rules as Constraints)
 **Time:** ~50 minutes
 
@@ -107,6 +107,7 @@ wb-scope-bounce
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Le contrat, les deux courses, les verdicts par course et un épargneur.`scope_report.json`- Je suis désolé .

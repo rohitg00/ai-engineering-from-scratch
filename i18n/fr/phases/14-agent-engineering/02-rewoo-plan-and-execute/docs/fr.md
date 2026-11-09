@@ -3,7 +3,7 @@
 > ReAct interpose la pensée et l'action dans un flux. ReWOO les sépare: un grand plan à l'avance, puis exécute. 5 fois moins de jetons, +4% de précision sur HotpotQA, et vous pouvez distiller le planificateur dans un modèle 7B. Plan-and-Execute l'a généralisé; Plan-and-Act l'a porté à la navigation Web.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop)
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ La démo répond à "Quelle est la population de la capitale de la France, arron
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La trace montre d'abord le plan complet, puis les résultats du travailleur, puis la composition du solveur.

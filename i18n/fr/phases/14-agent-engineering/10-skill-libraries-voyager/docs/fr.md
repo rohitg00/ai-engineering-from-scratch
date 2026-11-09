@@ -3,7 +3,7 @@
 > Voyager (Wang et al., TMLR 2024) traite le code exécutable comme une compétence. Les compétences sont nommées, récupérables, comptables et affinées par les commentaires environnementaux.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ voyager-skills
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La trace montre les écrits de la bibliothèque, la récupération, la composition, une exécution ratée et un raffinement v2 de la boucle de Voyager de bout en bout.

@@ -3,7 +3,7 @@
 > La navigation ferme une boucle de construction et ouvre la boucle d'apprentissage.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 46 and 53
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ Le laboratoire classe les signaux, crée des actions propriétaires, les prioris
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

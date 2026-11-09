@@ -3,7 +3,7 @@
 > Les agents qui ne voient pas de commande réelle de sortie deviner. Un coureur de rétroaction capture stdout, stderr, code de sortie et le timing dans un enregistrement structuré le tour suivant peut lire.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 35 (Init Script)
 **Time:** ~50 minutes
 
@@ -72,6 +72,7 @@ wb-feedback-loop
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Résultats: trois enregistrements de rétroaction sont ajoutés `feedback_record.jsonl`La file est en train de se répéter pour voir la boucle s'accumuler.

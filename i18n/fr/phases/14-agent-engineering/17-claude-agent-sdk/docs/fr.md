@@ -3,7 +3,7 @@
 > Un harnais que vous pouvez importer: outils intégrés, sous-éléments pour l'isolement de contexte, crochets, propagation des traces W3C, persistance de session. Le SDK Claude Agent est l'exemple de référence  la forme de bibliothèque du harnais Claude Code  et Claude Managed Agents est l'alternative hébergée pour le travail asynchrone à long terme.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 10 (Skill Libraries)
 **Time:** ~75 minutes
 
@@ -95,6 +95,7 @@ ae-subagent-isolation
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La trace montre l'isolement de contexte subagent (la taille du contexte de l'orchestre reste limitée), l'exécution du crochet et la persistance de la session.

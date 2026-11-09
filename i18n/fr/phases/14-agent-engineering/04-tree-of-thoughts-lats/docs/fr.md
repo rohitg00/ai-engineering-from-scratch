@@ -3,7 +3,7 @@
 > Une seule trajectoire de chaîne de pensée n'a pas de place pour retomber. ToT (Yao et coll., 2023) transforme le raisonnement en un arbre avec une auto-évaluation sur chaque nœud. LATS (Zhou et coll., 2024) unifie ToT avec ReAct et Réflexion dans la recherche d'arbre de Monte Carlo. Le jeu de 24 passe de 4% (CoT) à 74% (ToT); LATS atteint 92,7% pass@1 sur HumanEval.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~75 minutes
 
@@ -93,6 +93,7 @@ tree-of-thoughts
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La trace montre que ToT élargit trois candidats par nœud avec BFS, comparativement à LATS convergeant sur le meilleur déploiement via MCTS.

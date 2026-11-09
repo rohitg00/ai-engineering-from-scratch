@@ -3,7 +3,7 @@
 > Un modèle capable ne suffit pas. Les agents fiables ont besoin d'un tableau de travail: instructions, état, portée, rétroaction, vérification, examen et remise en main.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 26 (Failure Modes)
 **Time:** ~45 minutes
 
@@ -148,6 +148,7 @@ La tâche de repo est petite à propos: ajouter la validation de l'entrée à un
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Résultats: un journal côte à côte des deux courses, un `failure_modes.json`résumant la course rapide et un verdict à une seule ligne pour la course de travail.

@@ -3,7 +3,7 @@
 > Les agents de production fonctionnent sur six formes de temps d'exécution: requête-réponse, streaming, exécution durable, arrière-plan basé sur la file d'attente, événement-orienté et planifié. Choisissez la forme avant de choisir le cadre.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 13 (LangGraph), Phase 14 · 22 (Voice)
 **Time:** ~60 minutes
 
@@ -98,6 +98,7 @@ wb-runtime-shapes
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Exécution: cinq traces montrant le comportement de chaque forme sur la même tâche. La même logique d'agent, différentes coquilles extérieures. L'exécution durable (la sixième forme) est intentionnellement couverte dans la leçon 13 avec la vérification LangGraph.

@@ -3,7 +3,7 @@
 > Greshake et al. (AISec 2023) ont établi que l'injection indirecte de prompt était le problème de sécurité de l'agent définissant. L'attaquant installe des instructions dans les données que l'agent récupère; sur ingestion, ces instructions ignorent la demande du développeur. Traitez tout le contenu récupéré comme une exécution arbitraire de code sur la surface d'utilisation de l'outil.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 06 (Tool Use), Phase 14 · 21 (Computer Use)
 **Time:** ~75 minutes
 
@@ -81,6 +81,7 @@ injection-hijack
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Résultats: trace par appel montrant les verdicts du validateur et le comportement de l'exécuteur.

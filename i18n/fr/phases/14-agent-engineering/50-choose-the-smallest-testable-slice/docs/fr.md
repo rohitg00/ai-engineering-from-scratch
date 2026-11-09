@@ -3,7 +3,7 @@
 > Une petite chose n'est utile que si elle prouve quelque chose d'important.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 49
 **Time:** ~65 minutes
 
@@ -79,6 +79,7 @@ Le laboratoire filtre les candidats par la preuve requise, marque les tranches a
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

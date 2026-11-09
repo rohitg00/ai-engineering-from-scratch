@@ -3,7 +3,7 @@
 > La séance va se terminer. Le travail ne l'est pas. Le paquet de remise est l'artefact qui transforme "l'agent a travaillé pendant une heure" en "la prochaine séance est productive dans la première minute".
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 34 (Repo Memory), Phase 14 · 38 (Verification), Phase 14 · 39 (Reviewer)
 **Time:** ~50 minutes
 
@@ -91,6 +91,7 @@ wb-handoff-packet
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Sortie: un corps imprimé, plus les deux fichiers sur le disque.

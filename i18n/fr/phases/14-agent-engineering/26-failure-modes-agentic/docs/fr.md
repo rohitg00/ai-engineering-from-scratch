@@ -3,7 +3,7 @@
 > MASFT (Berkeley, 2025) catalogue 14 modes de défaillance multi-agents dans 3 catégories. La taxonomie de Microsoft documente comment les défaillances existantes de l'IA s'amplifient dans les paramètres agence. Les données du domaine de l'industrie convergent sur cinq modes récurrents: actions hallucinées, glissement de portée, erreurs en cascade, perte de contexte, mauvaise utilisation des outils.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 05 (Self-Refine and CRITIC), Phase 14 · 24 (Observability)
 **Time:** ~60 minutes
 
@@ -89,6 +89,7 @@ failure-cascade
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Produit: étiquettes par trace + distribution agrégée, une reproduction bon marché de ce que les surfaces de clustering de trace de Phoenix.

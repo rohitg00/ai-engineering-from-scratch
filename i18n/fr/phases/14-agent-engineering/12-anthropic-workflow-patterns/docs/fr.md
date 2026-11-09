@@ -3,7 +3,7 @@
 > Schluntz et Zhang (Anthropic, Déc 2024) distinguent les flux de travail (pistes prédéfinies) des agents (utilisation dynamique des outils).
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop)
 **Time:** ~60 minutes
 
@@ -77,6 +77,7 @@ workflow-chain
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Chaque modèle imprime sa trace. Le total des lignes de code par modèle est de ~10-15; le coût d'un cadre est mesuré en milliers.

@@ -3,7 +3,7 @@
 > Une spécification utile fixe les invariants et les preuves tout en laissant des choix de mise en œuvre réversibles ouverts.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 50
 **Time:** ~75 minutes
 
@@ -74,6 +74,7 @@ Le laboratoire valide chaque surface du contrat, vérifie les modes de décision
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

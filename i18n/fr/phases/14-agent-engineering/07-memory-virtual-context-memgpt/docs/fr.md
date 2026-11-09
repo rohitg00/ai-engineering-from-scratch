@@ -3,7 +3,7 @@
 > Les fenêtres de contexte sont finies. Les conversations, les documents et les traces d'outils ne le sont pas. La correction est la mémoire virtuelle du système d'exploitation réinstallée.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ context-budget
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La trace montre que l'agent écrit trois faits, remplit le contexte principal du plafond (expulsion forcée), puis répond à une question de suivi en récupérant de l'archivage  reproduisant le flux de travail MemGPT sans aucun LLM réel.

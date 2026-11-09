@@ -3,7 +3,7 @@
 > Chaque session qui commence à froid paie une taxe, l'agent lit les mêmes fichiers, réessaye les mêmes sondes et redécouvre les mêmes chemins, un script init paie la taxe une fois et écrit les réponses dans l'état.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 34 (Repo Memory)
 **Time:** ~45 minutes
 
@@ -72,6 +72,7 @@ wb-init-probes
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Le script imprime la table des sondes, écrit `init_report.json`, et sort de zéro sur le chemin heureux ou non zéro avec une liste de sondes ratées.

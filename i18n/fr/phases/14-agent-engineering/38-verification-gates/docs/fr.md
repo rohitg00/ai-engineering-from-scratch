@@ -3,7 +3,7 @@
 > L'agent ne peut pas marquer son propre travail comme fait. Une passerelle de vérification lit le contrat de portée, le journal de rétroaction, le rapport de règles et le diff, et répond à une seule question: cette tâche est-elle réellement terminée?
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 33 (Rules), Phase 14 · 36 (Scope), Phase 14 · 37 (Feedback)
 **Time:** ~55 minutes
 
@@ -81,6 +81,7 @@ wb-gate-sequence
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Résultat: trois rapports de verdict, chacun enregistré à côté du script.

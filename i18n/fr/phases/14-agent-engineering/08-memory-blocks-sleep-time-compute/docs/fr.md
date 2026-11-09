@@ -3,7 +3,7 @@
 > Les blocs de mémoire fonctionnels discrets que le modèle peut modifier directement, et un agent de sommeil qui consolide la mémoire de manière asynchrone pendant que l'agent principal est inactif.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ memory-blocks
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La transcription montre la fraction: les virages primaires sont rapides et produisent des écritures brutes; le passage du sommeil est compact et nettoie.

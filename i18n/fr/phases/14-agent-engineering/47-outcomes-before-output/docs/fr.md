@@ -3,7 +3,7 @@
 > La mise en œuvre rapide augmente la peine pour avoir choisi le mauvais problème.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** None
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ Le laboratoire valide une`OutcomeFrame`et écrit `outputs/outcome-frame.json`- J
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

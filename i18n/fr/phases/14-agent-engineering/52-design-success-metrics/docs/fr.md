@@ -3,7 +3,7 @@
 > La mesure doit répondre à une décision, pas décorer un tableau de bord. Commencez par l'objectif, dérivez des questions, puis choisissez les plus petites mesures qui répondent à ces questions.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 47 and 51
 **Time:** ~70 minutes
 
@@ -85,6 +85,7 @@ Le laboratoire valide un plan de mesure, évalue les seuils inclus, enregistre l
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

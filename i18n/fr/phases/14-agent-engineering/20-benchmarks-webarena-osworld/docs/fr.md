@@ -3,7 +3,7 @@
 > WebArena teste la capacité d'agent Web sur quatre applications auto-hébergées. OSWorld teste la capacité d'agent de bureau sur Ubuntu, Windows, macOS. À la sortie (20232024) les deux ont montré un grand écart entre les meilleurs agents de classe et les humains.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 19 (SWE-bench, GAIA)
 **Time:** ~60 minutes
 
@@ -78,6 +78,7 @@ ae-agent-human-gap
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Résultats: taux de réussite par tâche et efficacité de la trajectoire, en suivant la méthodologie d'OSWorld-Human.

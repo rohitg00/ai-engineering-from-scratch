@@ -3,7 +3,7 @@
 > Un codeur peut mettre en œuvre une tâche claire rapidement. Il peut aussi mettre en œuvre une tâche non claire rapidement. La vitesse est la même. Le coût n'est pas.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 31 and 36
 **Time:** ~60 minutes
 
@@ -93,6 +93,7 @@ Retournez dans ce répertoire de leçons:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

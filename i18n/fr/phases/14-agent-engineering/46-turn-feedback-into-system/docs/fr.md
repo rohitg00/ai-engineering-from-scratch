@@ -3,7 +3,7 @@
 > Une correction qui ne vit que dans le chat répare une mise en ligne. Une correction promue dans un test, une limite, un exemple ou un outil améliore chaque mise en ligne ultérieure.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 37 to 41
 **Time:** ~65 minutes
 
@@ -96,6 +96,7 @@ Je vais courir .
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

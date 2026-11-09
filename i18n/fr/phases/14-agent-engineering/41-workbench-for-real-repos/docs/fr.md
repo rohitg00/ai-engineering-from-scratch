@@ -3,7 +3,7 @@
 > Les leçons de 11 surfaces de bureau ne valent rien si elles ne survivent pas au contact d'une base de code réelle.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phases 14 · 32 to 14 · 40
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ wb-ab-runs
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Sortie: une table de console de résultats par pipeline, le rapport de détail enregistré à côté du script, et le JSON pour celui qui veut le cartographier.

@@ -3,7 +3,7 @@
 > La mémoire hybride exploite trois magasins en parallèle  vecteur pour la similitude sémantique, KV pour la recherche rapide de faits, graphique pour le raisonnement entité-relation  avec une couche de notation qui les fusionne lors de la récupération.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -106,6 +106,7 @@ ae-memory-fusion
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La sortie montre trois voies de rappel distinctes plus le top-k fusionné.`main()`et regarder le changement de classement.

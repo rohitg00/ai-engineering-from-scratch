@@ -3,7 +3,7 @@
 > L'évaluation n'est pas la dernière étape, c'est la boucle extérieure qui motive tous les autres choix de la phase 14.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** All of Phase 14.
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ ae-eval-three-layers
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Résultats: par cas, défaillance, flag de régression, verdict de la porte CI.

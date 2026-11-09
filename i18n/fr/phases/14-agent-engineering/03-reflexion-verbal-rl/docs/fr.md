@@ -3,7 +3,7 @@
 > La RL basée sur les gradients a besoin de milliers d'essais et d'un graphiteur pour corriger un mode défaillance. Reflexion (Shinn et coll., NeurIPS 2023) le fait en langage naturel: après chaque essai raté, l'agent écrit une réflexion, la stocke dans la mémoire épisodique et conditionne le prochain essai sur cette mémoire. C'est le modèle derrière le calcul du temps de sommeil de Letta, les apprentissages de Claude Code sur CLAUDE.md et la règle d'apprentissage pro-flux de travail.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 02 (ReWOO)
 **Time:** ~60 minutes
 
@@ -94,6 +94,7 @@ Components:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La trace montre trois essais. L'essai 1 échoue, une réflexion est stockée, l'essai 2 voit le reflet et s'améliore mais échoue toujours, l'essai 3 réussit.

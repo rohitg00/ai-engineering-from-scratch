@@ -3,7 +3,7 @@
 > La mini-track se termine par un paquet que vous laissez dans n'importe quel repo.`cp -r`Le capstone est l'artefact sur lequel ce programme est basé.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phases 14 · 31 to 14 · 41
 **Time:** ~75 minutes
 
@@ -96,6 +96,7 @@ wb-pack-install
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Le script copie et pinne les surfaces, écrit le README, imprime l'arbre de pack et sort de zéro.

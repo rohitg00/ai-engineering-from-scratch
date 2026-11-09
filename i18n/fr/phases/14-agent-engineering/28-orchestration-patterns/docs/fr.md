@@ -3,7 +3,7 @@
 > Quatre modèles d'orchestration se reproduisent dans les cadres 2026: supervisor-worker, swarm / peer-to-peer, hiérarchique, débat.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 25 (Multi-Agent Debate)
 **Time:** ~60 minutes
 
@@ -98,6 +98,7 @@ Chaque modèle gère la même tâche à trois intentions (revers / bug / vente).
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Résultats: trace par modèle + nombre d'options. Supervisor est le plus propre; swarm est le plus court; hiérarchique est le plus profond; débat est le plus coûteux.

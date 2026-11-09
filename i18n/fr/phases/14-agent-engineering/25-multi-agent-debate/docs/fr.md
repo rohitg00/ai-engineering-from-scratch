@@ -3,7 +3,7 @@
 > Du et al. (ICML 2024, "Société des esprits") exécutent des instances de modèle N qui proposent indépendamment des réponses, puis se critiquent périodiquement sur des tours R pour converger. Améliore la factualité, le respect des règles, le raisonnement.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 05 (Self-Refine and CRITIC)
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ debate-converge
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Résultats: précision et coût par protocole; correspondances rares en pleine maillage sur 2/3 des questions à moindre coût.
