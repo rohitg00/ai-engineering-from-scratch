@@ -3,7 +3,7 @@
 > Un arnés que puede importar: herramientas incorporadas, subagentes para aislamiento de contexto, ganchos, propagación de rastros W3C, persistencia de sesión. El SDK de agente Claude es el ejemplo de referencia  la forma de biblioteca del arnés de código Claude  y Claude Managed Agents es la alternativa alojada para el trabajo de sincronización de larga duración.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 10 (Skill Libraries)
 **Time:** ~75 minutes
 
@@ -95,6 +95,7 @@ ae-subagent-isolation
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 El rastro muestra el aislamiento de contexto subagente (el tamaño del contexto del orquestrador se mantiene limitado), la ejecución del gancho y la persistencia de la sesión.

@@ -3,7 +3,7 @@
 > La planificación simbólica se ocupa de los casos en los que el plan es probada correcta. La búsqueda de código evolutivo se ocupa de los casos en los que la función de aptitud es verificable por máquina. ChatHTN (2025) y AlphaEvolve (2025) muestran lo que cada uno desbloquea cuando se empareja con un LLM.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 02 (ReWOO and Plan-and-Execute)
 **Time:** ~75 minutes
 
@@ -102,6 +102,7 @@ htn-tree-expand
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 El rastro muestra al planificador HTN descomponer una tarea compuesta (con una caída de LLM en el plano medio) y el bucle evolutivo convergiendo en una expresión objetivo.

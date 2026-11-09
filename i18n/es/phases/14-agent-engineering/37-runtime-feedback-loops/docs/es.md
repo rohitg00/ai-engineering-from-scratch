@@ -3,7 +3,7 @@
 > Los agentes que no ven la salida de la orden real adivinan. Un ejecutor de retroalimentación capta stdout, stderr, código de salida y tiempo en un registro estructurado que la siguiente vuelta puede leer. Entonces el agente reacciona a los hechos en lugar de a su propia predicción de hechos.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 35 (Init Script)
 **Time:** ~50 minutes
 
@@ -72,6 +72,7 @@ wb-feedback-loop
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: tres registros de retroalimentación adjuntos `feedback_record.jsonl`La cola del archivo a través de las re-runs para ver el bucle se acumula.

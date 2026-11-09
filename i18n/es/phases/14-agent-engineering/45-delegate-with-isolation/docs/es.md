@@ -3,7 +3,7 @@
 > Los agentes paralelos ahorran tiempo en la pared sólo cuando el trabajo es independiente, de lo contrario convierte una tarea clara en un problema de coordinación con una tasa de fallo más rápida.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 39 and 44
 **Time:** ~70 minutes
 
@@ -86,6 +86,7 @@ El laboratorio verifica la superposición de trayectorias, valida las dependenci
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

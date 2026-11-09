@@ -3,7 +3,7 @@
 > El SIG GenAI de OpenTelemetry (lanzado en abril de 2024) define el esquema estándar para la telemetría de agentes. Los nombres de espacios, atributos y reglas de captura de contenido convergen entre los proveedores, por lo que los rastros de agentes significan lo mismo en Datadog, Grafana, Jaeger y Honeycomb.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 13 (LangGraph), Phase 14 · 24 (Observability Platforms)
 **Time:** ~60 minutes
 
@@ -88,6 +88,7 @@ ae-genai-span-tree
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: un árbol de extensión con todos los atributos GenAI requeridos y una "tienda externa" que muestra las referencias de contenido de opción.

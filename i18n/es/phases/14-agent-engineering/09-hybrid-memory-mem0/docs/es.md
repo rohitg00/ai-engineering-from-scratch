@@ -3,7 +3,7 @@
 > La memoria híbrida ejecuta tres almacenes en paralelo  vector para la similitud semántica, KV para la búsqueda rápida de hechos, gráfico para el razonamiento de relación entre entidades  con una capa de puntuación que las fusiona en la recuperación. Este es un patrón de producción ampliamente utilizado para la memoria externa; Mem0 (Chhikara et al., 2025) es una implementación de referencia.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -106,6 +106,7 @@ ae-memory-fusion
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La salida muestra tres vías de recuperación separadas más el top-k fusionado.`main()`y ver el cambio de clasificación.

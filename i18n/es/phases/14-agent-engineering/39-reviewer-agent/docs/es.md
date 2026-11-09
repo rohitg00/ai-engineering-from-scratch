@@ -3,7 +3,7 @@
 > El agente que escribió el código no puede clasificarlo. Un revisor es un segundo bucle con un sistema diferente, un objetivo diferente y acceso solo a lectura a todo lo que el constructor produjo. La brecha entre el constructor y el revisor es donde vive la mayor fiabilidad.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 38 (Verification Gate)
 **Time:** ~55 minutes
 
@@ -74,6 +74,7 @@ wb-builder-marker
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Producción: dos informes de revisión escritos en disco y una tabla de puntuaciones dimensionadas de la consola.

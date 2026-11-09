@@ -3,7 +3,7 @@
 > Las plataformas de observabilidad de agentes auto-hostables dominan el 2026. Langfuse (MIT)  6M+ instalaciones/mes, rastreo + gestión de prompto + evaluaciones + repetición de sesión. Arize Phoenix (Elastic 2.0)  evaluaciones específicas de agentes profundas, relevancia RAG, auto-instrumentación OpenInference. Cometa Opik (Apache 2.0)  optimización automática de prompto, guardrails, detección de alucinaciones del juez LLM.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 23 (OTel GenAI)
 **Time:** ~45 minutes
 
@@ -80,6 +80,7 @@ wb-trace-ingest
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: puntuaciones de evaluación por sesión y clasificación de fallos que coinciden con lo que mostraría Langfuse/Phoenix/Opik.

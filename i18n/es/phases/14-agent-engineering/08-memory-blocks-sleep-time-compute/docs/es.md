@@ -3,7 +3,7 @@
 > Un modelo puede editar directamente un bloqueo de memoria funcional discreto, y un agente del tiempo de sueño que consolida la memoria sincrónicamente mientras el agente principal está inactivo.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ memory-blocks
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La transcripción muestra la división: los giros primarios son rápidos y producen escritos crudos; el paso del sueño se compacta y limpia.

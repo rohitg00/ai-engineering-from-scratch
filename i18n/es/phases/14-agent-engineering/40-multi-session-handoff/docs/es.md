@@ -3,7 +3,7 @@
 > El paquete de entrega es el artefacto que convierte "el agente trabajó durante una hora" en "la próxima sesión es productiva en el primer minuto".
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 34 (Repo Memory), Phase 14 · 38 (Verification), Phase 14 · 39 (Reviewer)
 **Time:** ~50 minutes
 
@@ -91,6 +91,7 @@ wb-handoff-packet
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Fuente: un cuerpo impreso de entrega, más ambos archivos en disco.

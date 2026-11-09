@@ -3,7 +3,7 @@
 > Cuatro patrones de orquestación se repiten en los marcos 2026: supervisor-trabajador, enjambre / peer-to-peer, jerárquico, debate. La guía de Anthropic: "Se trata de construir el sistema adecuado para sus necesidades".
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 25 (Multi-Agent Debate)
 **Time:** ~60 minutes
 
@@ -98,6 +98,7 @@ Cada patrón maneja la misma tarea de tres intenciones (reembolso / error / vent
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: rastreo por patrón + recuento de operaciones. Supervisor es más limpio; enjambre es más corto; jerárquico es más profundo; debate es más caro.

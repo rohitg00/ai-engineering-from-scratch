@@ -3,7 +3,7 @@
 > Los requisitos no están esperando en una reunión para ser recogidos, sino que están dispersos en acciones, soluciones, registros y desacuerdos.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 47
 **Time:** ~70 minutes
 
@@ -82,6 +82,7 @@ El laboratorio almacena evidencia en cada paso del flujo de trabajo, valida orde
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

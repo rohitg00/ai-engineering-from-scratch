@@ -3,7 +3,7 @@
 > La medición debe responder a una decisión, no decorar un tablero.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 47 and 51
 **Time:** ~70 minutes
 
@@ -85,6 +85,7 @@ El laboratorio valida un plan de medición, evalúa los umbrales inclusivos, reg
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

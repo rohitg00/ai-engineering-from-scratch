@@ -3,7 +3,7 @@
 > Un mapa de ruta oculta la incertidumbre dentro de las características.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 48
 **Time:** ~65 minutes
 
@@ -82,6 +82,7 @@ El laboratorio clasifica las suposiciones, distingue las pruebas de las afirmaci
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

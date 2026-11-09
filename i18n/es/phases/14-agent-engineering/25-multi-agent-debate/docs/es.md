@@ -3,7 +3,7 @@
 > Du et al. (ICML 2024, "Sociedad de Mentes") ejecuta instâncias de modelo N que proponen respuestas independientemente, luego se critican iterativamente entre sí en rondas R para converger. Mejora la factualidad, el seguimiento de reglas, el razonamiento.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 05 (Self-Refine and CRITIC)
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ debate-converge
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: exactitud y coste por protocolo; coincidencias escasas en 2/3 de las preguntas a un coste menor.

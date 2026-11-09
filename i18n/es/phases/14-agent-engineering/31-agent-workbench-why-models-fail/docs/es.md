@@ -3,7 +3,7 @@
 > Un modelo capaz no es suficiente. Los agentes confiables necesitan un banco de trabajo: instrucciones, estado, alcance, retroalimentación, verificación, revisión y entrega.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 26 (Failure Modes)
 **Time:** ~45 minutes
 
@@ -148,6 +148,7 @@ La tarea de repo es pequeña a propósito: añadir validación de entrada a un p
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: un registro de las dos carreras, un `failure_modes.json`Resumiendo la carrera de inmediato y un veredicto de una sola línea para la carrera de trabajo.

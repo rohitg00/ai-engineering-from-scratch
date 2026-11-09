@@ -3,7 +3,7 @@
 > Cada sesión que comienza en frío paga un impuesto el agente lee los mismos archivos, vuelve a probar las mismas sondas y redescubre los mismos caminos un script init paga el impuesto una vez y escribe las respuestas en estado
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 34 (Repo Memory)
 **Time:** ~45 minutes
 
@@ -72,6 +72,7 @@ wb-init-probes
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 El guión imprime la tabla de sondas, escribe.`init_report.json`, y sale de cero en el camino feliz o no cero con una lista de sondas fallidas.

@@ -3,7 +3,7 @@
 > La guía de Anthropic: "comience con instrucciones simples, optimicelas con una evaluación integral, y añada sistemas agenciales de múltiples pasos solo cuando sea necesario". La evaluación no es el último paso. Es el bucle externo que impulsa todas las demás opciones en la Fase 14.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** All of Phase 14.
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ ae-eval-three-layers
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: por caso, la aprobación/fallo, la bandera de regresión, el veredicto de la puerta de CI.

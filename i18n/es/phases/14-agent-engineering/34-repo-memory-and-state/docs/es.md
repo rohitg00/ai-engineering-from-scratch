@@ -3,7 +3,7 @@
 > El historial de chat es volátil. El repo es duradero. El banco de trabajo almacenan el estado del agente en archivos versionados para que la próxima sesión, el siguiente agente y el siguiente revisor lean todas de la misma fuente de verdad.
 
 **Type:** Build
-**Languages:** Python (stdlib + `jsonschema` optional)
+**Languages:** Python (stdlib + `jsonschema` optional), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~60 minutes
 
@@ -81,6 +81,7 @@ wb-state-persist
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 El guión dice:`workdir/agent_state.json`y `workdir/task_board.json`, los muta en dos vueltas, e imprime el estado validado en cada paso.

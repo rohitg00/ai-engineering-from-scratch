@@ -3,7 +3,7 @@
 > Un plan no es una lista de tareas más bonita, es un gráfico de dependencia en el que cada cambio tiene una razón y cada nodo terminal tiene una prueba.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 43
 **Time:** ~65 minutes
 
@@ -92,6 +92,7 @@ Las primeras cinco verificaciones son mecánicas, la última requiere juicio y d
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

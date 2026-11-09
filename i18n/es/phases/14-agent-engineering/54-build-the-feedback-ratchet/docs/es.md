@@ -3,7 +3,7 @@
 > La navegación cierra un bucle de construcción y abre el bucle de aprendizaje.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 46 and 53
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ El laboratorio clasifica las señales, crea acciones de ratchet propias, las pri
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

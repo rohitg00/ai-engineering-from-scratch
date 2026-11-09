@@ -3,7 +3,7 @@
 > El estudio de las superficies de trabajo de la mesa de trabajo de once lecciones no valen nada si no sobreviven al contacto con una base de código real.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phases 14 · 32 to 14 · 40
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ wb-ab-runs
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: una tabla de consola de resultados por pipeline, el informe de marcaje guardado junto al script, y el JSON para quien quiera trazarlo.

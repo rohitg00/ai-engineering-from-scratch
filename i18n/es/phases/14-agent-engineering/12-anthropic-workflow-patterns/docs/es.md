@@ -3,7 +3,7 @@
 > Schluntz y Zhang (Anthropic, Dec 2024) distinguen los flujos de trabajo (caminos predefinidos) de los agentes (uso de herramientas dinámicas).
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop)
 **Time:** ~60 minutes
 
@@ -77,6 +77,7 @@ workflow-chain
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Cada patrón imprime su rastro. El total de líneas de código por patrón es de ~10-15; el costo de un marco se mide en miles.

@@ -3,7 +3,7 @@
 > Una pequeña construcción que no puede cambiar la próxima decisión es simplemente incompleta.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 49
 **Time:** ~65 minutes
 
@@ -79,6 +79,7 @@ El laboratorio filtra a los candidatos por la prueba requerida, califica las reb
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

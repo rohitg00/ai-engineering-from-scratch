@@ -3,7 +3,7 @@
 > El banco de trabajo más pequeño y útil es de tres archivos: un router de instrucciones raíz, un archivo de estado y un tablero de tareas. Todo lo demás está en capas arriba. Si un repo no puede llevar estos tres, ningún modelo lo guardará.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 31 (Why Capable Models Still Fail)
 **Time:** ~45 minutes
 
@@ -77,6 +77,7 @@ wb-three-files
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 El guión crea`workdir/`Junto a sí mismo, pone los tres archivos, ejecuta un giro, e imprime la diferencia.

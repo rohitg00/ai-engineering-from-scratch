@@ -3,7 +3,7 @@
 > MASFT (Berkeley, 2025) cataloga 14 modos de falla multi-agente en 3 categorías. La taxonomía de Microsoft documenta cómo los fallos existentes de IA se amplifican en configuraciones agenciales. Los datos del campo de la industria convergen en cinco modos recurrentes: acciones alucinadas, deslizamiento de alcance, errores en cascada, pérdida de contexto, uso indebido de herramientas.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 05 (Self-Refine and CRITIC), Phase 14 · 24 (Observability)
 **Time:** ~60 minutes
 
@@ -89,6 +89,7 @@ failure-cascade
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Producción: etiquetas por rastro + distribución agregada, una reproducción barata de lo que las superficies de agrupación de rastro de Phoenix.

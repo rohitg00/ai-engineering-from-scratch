@@ -3,7 +3,7 @@
 > Esos son diferentes entornos de aprendizaje, no niveles de pulido. Elige la etapa que responda a la corriente desconocida con la menor consecuencia innecesaria.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 50 to 52
 **Time:** ~70 minutes
 
@@ -82,6 +82,7 @@ El laboratorio elige una etapa del contexto de la decisión, devuelve los contro
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

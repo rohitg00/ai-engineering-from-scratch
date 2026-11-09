@@ -3,7 +3,7 @@
 > Las ventanas de contexto son finitas. Las conversaciones, documentos y rastros de herramientas no son. La solución es la memoria virtual del sistema operativo re-estabilizada.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ context-budget
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 El rastro muestra al agente escribiendo tres hechos, llenando el contexto principal del límite (desalojo forzoso), luego respondiendo a una pregunta de seguimiento mediante la extracción de archivos  reproducción del flujo de trabajo MemGPT sin ningún LLM real.

@@ -3,7 +3,7 @@
 > Self-Refine (Madaan et al., 2023) utiliza un LLM en tres roles  generar, retroalimentación, refinar  en un bucle. La ganancia promedio: +20 absoluta en 7 tareas. CRITIC (Gou et al., 2023) endurece el paso de retroalimentación mediante la verificación de enrutamiento a través de herramientas externas. En 2026 este patrón se envía en cada marco como "evaluador-optimizador" (Antropic) o un bucle de barandillas (OpenAI Agents SDK).
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ Componentes:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Comparar las carreras de Auto-Refinación vs CRITIC. CRITIC detecta un error de hecho Auto-Refinación omitida porque el verificador externo ha aterrizado el auto-crítica no lo hace.

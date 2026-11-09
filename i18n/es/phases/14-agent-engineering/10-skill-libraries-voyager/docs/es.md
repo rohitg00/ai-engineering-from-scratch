@@ -3,7 +3,7 @@
 > Voyager (Wang et al., TMLR 2024) trata el código ejecutable como una habilidad. Las habilidades se nombran, se pueden recuperar, se componen y se refinan por retroalimentación ambiental. Esta es la arquitectura de referencia para las habilidades de Claude Agent SDK, el kit de habilidades y el patrón de biblioteca de habilidades 2026.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ voyager-skills
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 El rastro muestra escritos de la biblioteca, recuperación, composición, una ejecución fallida y un refinamiento de v2  ciclo de Voyager de extremo a extremo.

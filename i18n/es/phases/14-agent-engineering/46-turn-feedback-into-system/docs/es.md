@@ -3,7 +3,7 @@
 > Una corrección que sólo se encuentra en el chat corrige una ejecución. Una corrección promovida a una prueba, límite, ejemplo o herramienta mejora cada ejecución posterior.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 37 to 41
 **Time:** ~65 minutes
 
@@ -96,6 +96,7 @@ El laboratorio clasifica las correcciones, las promueve en controles, duplica la
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

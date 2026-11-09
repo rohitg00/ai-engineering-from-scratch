@@ -3,7 +3,7 @@
 > La RL basada en gradientes necesita miles de pruebas y un grupo de GPU para arreglar un modo de falla. Reflexion (Shinn et al., NeurIPS 2023) lo hace en lenguaje natural: después de cada ensayo fallido, el agente escribe una reflexión, la almacena en la memoria episódica y condiciona el siguiente ensayo en esa memoria. Este es el patrón detrás de la computación del tiempo de sueño de Letta, los aprendizajes de Claude Code en CLAUDE.md y la regla de aprendizaje pro-flujo de trabajo.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 02 (ReWOO)
 **Time:** ~60 minutes
 
@@ -94,6 +94,7 @@ Componentes:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 El rastro muestra tres ensayos. El ensayo 1 falla, se almacena un reflejo, el ensayo 2 ve el reflejo y mejora pero aún falla, el ensayo 3 tiene éxito. Compare con una carrera de base (sin reflejo)  se queda atascado en la respuesta del ensayo 1.
