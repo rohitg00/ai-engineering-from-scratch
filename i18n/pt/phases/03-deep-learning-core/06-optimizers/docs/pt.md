@@ -3,7 +3,7 @@
 > A descida gradiente diz-lhe em que direcção se mover, não diz nada sobre a distância ou a velocidade.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.05 (Loss Functions)
 **Time:** ~75 minutes
 
