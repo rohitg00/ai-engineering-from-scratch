@@ -3,7 +3,7 @@
 > المرموزات تفهم. المرموزات تولد. قم بتجميعها معاً وتحصل على نموذج بني لمهام الإدخال → الخروج: الترجمة، التجميع، إعادة الكتابة، النسخ.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > يتنبأ GPT الكلمة التالية. يتنبأ BERT كلمة مفقودة. جملة واحدة من الفرق  و نصف عقد من كل شيء على شكل إضافة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 5 · 02 (Text Representation)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > ورقة كابلان 2020 قالت: نموذج أكبر، خسارة أقل. ورقة هوفمان 2022 قالت: كنت تحت التدريب. الحساب يذهب إلى علبين  المعلمات والرموز  والانقسام ليس واضحا.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > الصورة هي شبكة من المزيفات، الجملة هي شبكة من الرموز. نفس المحول يأكل كليهما.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 4 · 03 (CNNs), Phase 4 · 14 (Vision Transformers intro)
 **Time:** ~45 minutes
 

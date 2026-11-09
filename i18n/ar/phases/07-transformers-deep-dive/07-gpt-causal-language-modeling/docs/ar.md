@@ -3,7 +3,7 @@
 > برت يرى كلا الجانبين، جبت يرى الماضي فقط، قناع المثلث هو خط واحد من الشفرة الأكثر أهمية في الذكاء الاصطناعي الحديث.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT)
 **Time:** ~75 minutes
 
