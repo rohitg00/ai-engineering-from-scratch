@@ -3,7 +3,7 @@
 > O agente que escreveu o código não pode classificá-lo. Um revisor é um segundo ciclo com um sistema diferente, um objetivo diferente e acesso apenas para leitura a tudo o que o construtor produziu.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 38 (Verification Gate)
 **Time:** ~55 minutes
 
@@ -74,6 +74,7 @@ wb-builder-marker
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: dois relatórios de revisão escritos no disco e uma tabela de pontuação em dimensões.

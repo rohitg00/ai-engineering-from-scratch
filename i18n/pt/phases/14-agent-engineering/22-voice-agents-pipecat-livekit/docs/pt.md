@@ -3,7 +3,7 @@
 > Os agentes de voz são uma categoria de produção de primeira classe em 2026. Pipecat oferece um pipeline baseado em Python (VAD → STT → LLM → TTS → transporte). LiveKit Agents faz pontes entre os modelos de IA para os usuários através do WebRTC.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
 **Time:** ~60 minutes
 
@@ -89,6 +89,7 @@ voice-pipeline
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 O rastro mostra fluxo normal e um barge-in cancelar que pára TTS em meados de pronunciamento.

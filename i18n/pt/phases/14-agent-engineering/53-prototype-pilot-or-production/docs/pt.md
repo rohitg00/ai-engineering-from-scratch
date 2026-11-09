@@ -3,7 +3,7 @@
 > Esses são diferentes ambientes de aprendizagem, não níveis de poluição. Escolha o estágio que responde à corrente desconhecida com a menor consequência desnecessária.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 50 to 52
 **Time:** ~70 minutes
 
@@ -82,6 +82,7 @@ O laboratório escolhe um estágio do contexto da decisão, retorna os controles
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

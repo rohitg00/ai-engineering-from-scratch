@@ -3,7 +3,7 @@
 > Greshake et al. (AISec 2023) estabeleceu injeção indireta de prompt como o problema de segurança do agente definidor. O atacante coloca instruções nos dados que o agente recupera; na ingestão, essas instruções superam o prompt do desenvolvedor. Trata todo o conteúdo recuperado como execução arbitrária de código na superfície de uso da ferramenta.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 06 (Tool Use), Phase 14 · 21 (Computer Use)
 **Time:** ~75 minutes
 
@@ -81,6 +81,7 @@ injection-hijack
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: rastreamento por chamada mostrando veredictos do validador e comportamento do executor.

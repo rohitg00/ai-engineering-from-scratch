@@ -3,7 +3,7 @@
 > O agente não consegue marcar seu próprio trabalho como feito. Um portal de verificação lê o contrato de alcance, o registro de feedback, o relatório de regras e o diferencial, e responde a uma única pergunta: esta tarefa está realmente concluída?
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 33 (Rules), Phase 14 · 36 (Scope), Phase 14 · 37 (Feedback)
 **Time:** ~55 minutes
 
@@ -81,6 +81,7 @@ wb-gate-sequence
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: três relatórios de veredicto, cada um guardado ao lado do roteiro.

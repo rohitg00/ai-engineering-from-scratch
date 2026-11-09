@@ -3,7 +3,7 @@
 > A medição deve responder a uma decisão, não decorar um painel de instrumentos. Comece com o objetivo, derive perguntas, e depois escolha as menores métricas que as respondam.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 47 and 51
 **Time:** ~70 minutes
 
@@ -85,6 +85,7 @@ O laboratório valida um plano de medição, avalia os limites inclusivos, regis
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > A orientação da Anthropic: "comece com pedidos simples, otimize-os com avaliação abrangente e adicione sistemas agenciários em várias etapas apenas quando necessário". A avaliação não é o último passo.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** All of Phase 14.
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ ae-eval-three-layers
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: passagem/falha por caso, bandeira de regressão, veredicto da porta CI.

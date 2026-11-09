@@ -3,7 +3,7 @@
 > A navegação fecha um ciclo de construção e abre o ciclo de aprendizagem.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 46 and 53
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ O laboratório classifica sinais, cria ações de propriedade, priorizá-las e e
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

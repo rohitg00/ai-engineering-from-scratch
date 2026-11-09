@@ -3,7 +3,7 @@
 > Três modelos de uso de computador de produção em 2026. Todos os três são baseados em visão. Todos os três tratam capturas de tela, texto DOM e saídas de ferramentas como entradas não confiáveis. Somente as instruções diretas do usuário contam como permissão.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 20 (WebArena, OSWorld), Phase 14 · 27 (Prompt Injection)
 **Time:** ~60 minutes
 
@@ -92,6 +92,7 @@ computer-use-cursor
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A saída mostra o classificador de segurança que capta uma directiva injetada em texto DOM e bloqueia uma compra não confirmada.

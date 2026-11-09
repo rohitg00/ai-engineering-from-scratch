@@ -3,7 +3,7 @@
 > Agentes que não veem a saída de comando real adivinham. Um runner de feedback capta stdout, stderr, código de saída e tempo em um registro estruturado que a próxima vez pode ler. Então o agente reage aos fatos em vez de sua própria previsão de fatos.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 35 (Init Script)
 **Time:** ~50 minutes
 
@@ -72,6 +72,7 @@ wb-feedback-loop
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultado: três registos de feedback anexados `feedback_record.jsonl`A seguir, o arquivo passa por todas as re-exerções para ver o ciclo se acumular.

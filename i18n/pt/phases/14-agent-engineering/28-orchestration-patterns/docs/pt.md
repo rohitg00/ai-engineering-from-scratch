@@ -3,7 +3,7 @@
 > Quatro padrões de orquestração se repetem em 2026 frameworks: supervisor-worker, enxame / peer-to-peer, hierarquica, debate. orientação de Anthropic: "É sobre a construção do sistema certo para suas necessidades". Comece simples; adicionar topologia apenas quando um único agente mais cinco padrões de fluxo de trabalho é insuficiente.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 25 (Multi-Agent Debate)
 **Time:** ~60 minutes
 
@@ -98,6 +98,7 @@ Cada padrão lida com a mesma tarefa de três intenções (reembolso / bug / ven
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Output: rastreamento por padrão + contagem de opções. Supervisor é mais limpo; enxame é mais curto; hierárquico é mais profundo; debate é mais caro.

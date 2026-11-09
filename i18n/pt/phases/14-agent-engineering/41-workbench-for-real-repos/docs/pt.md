@@ -3,7 +3,7 @@
 > Eleven lições de superfícies de banco de trabalho não vale nada se não sobreviverem ao contato com uma base de código real. Esta lição realiza a mesma tarefa duas vezes em um pequeno aplicativo de amostra: apenas de instrução versus guiado por banco de trabalho. Os números fazem o argumento.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phases 14 · 32 to 14 · 40
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ wb-ab-runs
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Saída: uma tabela de console de resultados por pipeline, o relatório de marcação guardado ao lado do script e o JSON para quem quer traçar.

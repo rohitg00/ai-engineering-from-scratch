@@ -3,7 +3,7 @@
 > ReAct interliga pensamento e ação em um fluxo. ReWOO os separa: um grande plano de frente, em seguida, executar. 5x menos tokens, +4% de precisão no HotpotQA, e você pode destilar o planejador em um modelo 7B. Plan-and-Execute generalizou-o; Plan-and-Act escalado para a navegação na web.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop)
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ A demonstração responde "Qual é a população da capital da França, redondea
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 O rastro mostra o plano completo primeiro, depois os resultados do trabalhador, depois a composição do solver. Compare a contagem de tokens (imprimiremos uma contagem de caracteres aproximada) com uma corrida interleaved de estilo ReAct  ReWOO ganha neste tipo de tarefa estruturada.

@@ -3,7 +3,7 @@
 > Três pontos de referência avaliação de agentes ancoradores em 2026. SWE-bench testes patching de código. GAIA testes uso de ferramentas generalistas. AgentBench testes raciocínio multi-ambiente. Conheça sua composição, sua história de contaminação, e o que eles não medem.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 06 (Tool Use)
 **Time:** ~60 minutes
 
@@ -93,6 +93,7 @@ ae-swebench-gate
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A saída mostra a taxa de resolução por tarefa + por dificuldade e torna concretas as regras do avaliador.
