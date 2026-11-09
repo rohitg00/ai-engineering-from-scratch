@@ -3,7 +3,7 @@
 > Cinco critérios de referência para 2025-2026 abrangem o espaço de avaliação multiagente. **MultiAgentBench / MARBLE**(ACL 2025, arXiv:2503.01935) avalia as topologias de estrelas/cadeias/árvores/grafos com KPI de marcas; **graph is best for research**O planejamento cognitivo adiciona ~3% de realização de metas. **COMMA**Avalia a coordenação multimodal de informação asimétrica; modelos de ponta, incluindo o GPT-4o, lutam para superar uma linha de base aleatória. **MedAgentBoard**(arXiv:2505.12371) abrange quatro categorias de tarefas médicas e muitas vezes encontra multi-agente não domina o single-LLM. **AgentArch**(arXiv:2509.10769) referências de arquiteturas de agentes empresariais combinando utilização de ferramentas + memória + orquestração. **SWE-bench Pro**([arXiv:2509.16941](https://arxiv.org/abs/2509.16941)O modelo de fronteira tem uma pontuação de ~23% no Pro vs 70% + no Verified  uma verificação de realidade sobre a contaminação.**64.3%**Pro com coordenação explícita de agentes-equipas (nenhuma fonte primária antropópica publicada ainda  tratar como preliminar); Verdent (establo de agentes) hits **76.1% pass@1**sobre Verificado ([Verdent technical report](https://www.verdent.ai/blog/swe-bench-verified-technical-report) ).**AAAI 2026 Bridge Program WMAC**(https://multiagents.org/2026/Esta lição baseia-se nas métricas da MARBLE, faz uma varredura topologia-versus-metrica e fixa a regra "apenas passar o banco SWE Verificado não é evidência de generalização".
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 15 (Voting and Debate Topology), Phase 16 · 23 (Failure Modes)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ a5-bench-gap
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultados esperados: cartão de pontuação do sistema com precisão bruta, realização de metas, custo por tarefa, delta da linha de base versus aleatório e nota de verificação da contaminação.

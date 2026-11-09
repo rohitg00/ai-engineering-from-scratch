@@ -3,7 +3,7 @@
 > Quatro primitivas, nada mais  o agente, a transferência, o estado compartilhado, o orquestador  abrangem um espaço de design quadridimensional, e as principais estruturas multi-agentes que serão enviadas em 2026 (AutoGen, LangGraph, CrewAI, OpenAI Agents SDK, Microsoft Agent Framework) são pontos nele. Esta lição construiu-os a partir de zero, executa um sistema de brinquedos em todos os quatro, e depois mapeia cada quadro principal nos mesmos eixos para que você possa ler qualquer nova versão em um parágrafo.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 (Agent Engineering), Phase 16 · 01 (Why Multi-Agent)
 **Time:** ~60 minutes
 
@@ -132,6 +132,7 @@ A demonstração executa o mesmo pipeline de três agentes (investigação → e
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A produção esperada: três corridas de orquestra, uma por padrão. Cada uma imprime o conjunto final de mensagens. A corrida dirigida por entrega chega a menos agentes se o pesquisador decidir que é feito cedo  que é o compromisso de envio de LLM em miniatura.

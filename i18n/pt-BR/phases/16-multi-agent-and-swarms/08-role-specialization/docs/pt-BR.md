@@ -3,7 +3,7 @@
 > A decomposição mais comum de multi-agentes em 2026: um agente planeja, um executa, um critica ou verifica. MetaGPT (arXiv:2308.00352) formaliza isso como SOPs codificados em instruções de papel  Product Manager, Architect, Project Manager, Engineer, QA Engineer  seguintes `Code = SOP(Team)`- Não . ChatDev (arXiv:2307.07924) cadeia designer, programador, revisor, testador através de uma "cadeia de bate-papo" com "desalucinação comunicativa" (agentes explicitamente solicitar detalhes faltantes). O verificador é resistente à carga: Cemri et al. (MAST, arXiv:2503.13657) mostram que cada falha multi-agente pode ser rastreada para a verificação faltante ou falhada. A PwC relatou um ganho de precisão de 7x (10% → 70%) a partir de ciclos de validação estruturados na CrewAI.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 05 (Supervisor)
 **Time:** ~60 minutes
 
@@ -88,6 +88,7 @@ Demo é executado duas vezes: uma vez quando o executor produz código correto (
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## Usá-lo

@@ -3,7 +3,7 @@
 > Contraste com o supervisor: não há decisores centrais. Os agentes lêem um ônibus de eventos compartilhados, começam o trabalho de forma assíncrona, e escrevem os resultados. LangGraph suporta explícitamente "Arquitetura de Enxurro" para ambientes descentralizados e dinâmicos. Matrix (arXiv:2511.21686) representa tanto o controle quanto o fluxo de dados como mensagens serializadas passadas por filas distribuídas para eliminar o gargalho de engarrafamento do orquestador. A compensação é explícita: determinismo e rastreabilidade para escalabilidade. O conjunto de tarefas combina com muitos subproblemas independentes; não se encaixa em tarefas que necessitam de um único plano coerente.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`, `queue`)
+**Languages:** Python (stdlib, `threading`, `queue`), TypeScript
 **Prerequisites:** Phase 16 · 05 (Supervisor Pattern), Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -86,6 +86,7 @@ As balanças de massa carregam-se automaticamente; a atribuição fixa deixa os 
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A saída mostra o número de tarefas por trabalhador (a distribuição do enxame é desigual mas ótima) e os tempos do relógio de parede.

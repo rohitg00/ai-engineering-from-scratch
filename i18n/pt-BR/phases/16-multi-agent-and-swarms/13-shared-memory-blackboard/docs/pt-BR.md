@@ -3,7 +3,7 @@
 > Em 2026 existem duas abordagens em conjunto: o**message pool**(todos vêem as mensagens de todos, como no AutoGen GroupChat ou MetaGPT) e o **blackboard with subscription**(agentes se inscreverem em eventos relevantes, como no MCP Context-Aware ou na estrutura Matrix). Ambos são a única parte com estado de um sistema multi-agente  o que significa que ambos são onde os bugs interessantes vivem.**memory poisoning**A lição da "Study of the Fire" é uma lição de que um agente alucina um "fatto", outros agentes o tratam como verificado, e a precisão declina gradualmente de uma forma que é muito mais difícil de depurar do que um acidente imediato.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`)
+**Languages:** Python (stdlib, `threading`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -119,6 +119,7 @@ swarm-blackboard
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Produção esperada:

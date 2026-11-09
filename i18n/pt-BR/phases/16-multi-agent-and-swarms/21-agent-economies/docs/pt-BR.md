@@ -3,7 +3,7 @@
 > Os agentes autônomos de longo horizonte (a curva de trabalho de 1 a 8 horas da METR) precisam de um agente económico.**5-layer stack**é: **DePIN**(computação física) → **Identity**(DIDs do W3C + capital de reputação) → **Cognition**(RAG + MCP) → **Settlement**(abstração da conta) → **Governance**As redes de incentivos aos agentes de produção incluem:**Bittensor**(Sub-rede de TAO recompensam modelos específicos de tarefas), **Fetch.ai / ASI Alliance**(Token ASI-1 Mini LLM + FET), e **Gonka**Trabalho acadêmico: A AAMAS 2025 utiliza a LaMAS descentralizada **Shapley-value credit attribution**Para recompensar justamente os agentes que contribuem; a Google Research propõe "Design Mechanism for large language models" **token auctions**Esta lição cria um mercado de agentes mínimo, aplica atribuição de crédito de valor Shapley a um pipeline de agentes múltiplos e realiza um leilão de tokens de segundo preço para que a máquina da teoria do jogo aterrisse concretamente.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 16 (Negotiation and Bargaining), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -110,6 +110,7 @@ swarm-auction
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Resultados esperados: valores Shapley para cada agente; resultado do leilão mostrando equilíbrio de oferta verdadeira; roteamento ponderado por repetição mostrando ganho de qualidade de 10-20% sobre aleatório após aquecimento.

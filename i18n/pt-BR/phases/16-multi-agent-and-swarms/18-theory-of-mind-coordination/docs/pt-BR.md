@@ -3,7 +3,7 @@
 > Li et al. (arXiv:2310.10701) mostraram que os agentes de LLM numa exposição de jogo de texto cooperativa **emergent high-order Theory of Mind**(ToM)  raciocínio sobre o que outro agente acredita sobre as crenças de um terceiro agente  mas falha no planejamento de longo horizonte devido ao gerenciamento de contexto e alucinação. Riedl (arXiv:2510.05174) mediu sinergia de ordem superior em uma população e descobriu que **only**A condição de ToM-prompt produz diferenciação ligada à identidade e complementaridade orientada para os objetivos; as LLM de baixa capacidade apresentam apenas uma emergência falsa. Isto é, a emergência da coordenação é imediatamente condicional e depende do modelo, não gratuita. Esta lição implementa um agente minimalista consciente de TOM, executa uma tarefa cooperativa com e sem o Instrução de TOM, e mede o delta de coordenação em relação ao protocolo Riedl 2025.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 07 (Society of Mind and Debate), Phase 16 · 17 (Generative Agents)
 **Time:** ~75 minutes
 
@@ -120,6 +120,7 @@ sw-theory-of-mind
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Output esperado: agentes de ordem zero duplicam o esforço a uma taxa de ~ 35% e completam ~ 60% dos ensaios em 10 voltas. agentes ToM de primeira ordem duplicam a ~ 5% e completam ~ 95%.
