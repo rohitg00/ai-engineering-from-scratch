@@ -3,7 +3,7 @@
 > طلب MCP عن بعد غير مصدر للدولة، ولكن تفويضها ليس مجهولا. ربط كل إعتمادات إلى المصدر الذي خلقها وكل رمز إلى الموارد التي تتلقىها.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 15 (security)
 **Time:** ~90 minutes
 
@@ -252,6 +252,7 @@ t3-scope-stepup
 ```bash
 cd phases/13-tools-and-protocols/16-mcp-security-oauth-2-1
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

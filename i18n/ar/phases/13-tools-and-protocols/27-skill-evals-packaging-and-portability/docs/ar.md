@@ -3,7 +3,7 @@
 > يتم الانتهاء من المهارة عندما تتبقى حزمة من المهارات، وتتبع الطلبات الصحيحة، وتحسن المهمة المقاسة، وتبقى داخل السياسة، وتتدهور بشكل صادق على مضيف آخر.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 22, 24, 25, and 26
 **Time:** ~150 minutes
 
@@ -425,6 +425,7 @@ package:
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

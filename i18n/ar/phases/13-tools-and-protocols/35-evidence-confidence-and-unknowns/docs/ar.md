@@ -3,7 +3,7 @@
 > اكتشاف حول برنامج مرتب هو سجل مع الاختبار، الثقة، السلطة، و قائمة من ما لا يمكن أن يظهر.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~105 minutes
 
@@ -306,6 +306,7 @@ uint grade(int param_1)
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 يقرأ الديمو الكائن، ويستورد سجلين حقيقيين، ويتحقق من اللقطة الفورية الحقيقية، ويستمد النماذج. ثم يسجل 18 تنبؤًا، وفتح 18 مجهولاً، ويجمع ويمارس الحزمة، ويتحقق من كل ادعاء، ويحل 17 مجهولاً. شكل متوقع:
@@ -441,6 +442,7 @@ ledger.verify_unknown_chain(unknown_id)
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 يقوم المحقق بحساب كل قيمة متوقعة من `code/main.py`على الأجهزة المشتركة.`PASS`،`FAIL`أو`TODO`لكل مهمة و نسبة، و يخرج من 0 فقط عندما يمر الخمسة`python3 code/lab.py my-answers.json`يبحث عن ملف آخر`code/tests/test_lab.py`يثبت أن المحقق يقبل الإجابات الصحيحة ويرفض الإجابات الخاطئة.
@@ -460,6 +462,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

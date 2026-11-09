@@ -3,7 +3,7 @@
 > نقطة وقف ضرب هو ملاحظة حول جولة واحدة من بناء واحد. هذا الدروس يبني القائمة التي تحويل تلك الملاحظات إلى تأكيد، رفض، وغير الملاحظ الأحكام على الادعاءات الدراسات ثابتة.
 
 **Type:** Build
-**Languages:** Python, C, arm64 assembly, lldb command language
+**Languages:** Python, TypeScript, C, arm64 assembly, lldb command language
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~130 minutes
 
@@ -357,6 +357,7 @@ TeamIdentifier=not set
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 إن الخروج هو تقرير JSON واحد على النصوص المحفوظة. لكل بناء يُدرّس نقاط الانقطاع مع حلّها ومعدّل الضربات، ومعدّل نقطة مراقبة الأجهزة، وكل توقف مع سجلاتها وحججها، وحالة الخروج، ومخرج البرنامج، والخطأ الذي تم طبعه، والادعاءات مع أحكامها وتسجيلات الأدلة وراءها. يضيف الرحلة الجوية للقاعدة، نتائج API Python، فشل صندوق الرمال، وأي أدوات خارجية غائبة على هذه الآلة.
@@ -496,6 +497,7 @@ broken = parse_transcript(text)
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

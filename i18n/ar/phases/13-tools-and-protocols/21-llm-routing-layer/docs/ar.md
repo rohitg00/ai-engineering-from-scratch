@@ -3,7 +3,7 @@
 > إغلاق المزود مكلف تحميلات عمل مختلفة للدعوة إلى الأدوات تناسب نماذج مختلفة. بوابات التوجيه تعطى سطح واحد من API، محاولات إعادة، فشل، تتبع التكاليف، والحواجز. ثلاثة أنواع رئيسية تهيمن على عام 2026: LiteLLM (المصدر المفتوح المضيف الذاتي) ، OpenRouter (التي تدير SaaS) ، Portkey (مصدر الإنتاج ، مفتوح المصدر في مارس 2026. هذه الدروس تعطي أسماء لمعايير القرار وتشكل بوابة توجيه ستدليب.
 
 **Type:** Learn
-**Languages:** Python (stdlib, routing + failover + cost tracker)
+**Languages:** Python (stdlib, routing + failover + cost tracker), TypeScript
 **Prerequisites:** Phase 13 · 02 (function calling), Phase 13 · 17 (gateways)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > قائمة التفكيك هي مطالبة حول أي البايتات هي تعليمات، وهذا الدروس يبني المفكّر والجراف الذي يُحقق من الدعوى.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch)
 **Time:** ~150 minutes
 
@@ -347,6 +347,7 @@ rea 6.5.0 مع مزود Ghidra 12.1.4 يعيد نص إدراج وظيفة من `
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 إن الخروج هو تقرير JSON واحد. لكل كائن ثابت يعطي اتفاقية الوهم. لكل وظيفة يعطي تعليمات، كتلة، وحافة العد تحت الأساليب الثلاثة. كما يدرج أيضا كتلة غير قابلة للوصول، قفزات غير مباشرة غير حل، حواف خلفية، السيطرة الفورية، وأي جداول. ينتهي مع مقارنة الفخ.
@@ -486,6 +487,7 @@ analysis.cfg.back_edges()
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 يقوم المحقق بحساب كل قيمة متوقعة من `code/main.py`على الأجهزة المشتركة.`PASS`،`FAIL`أو`TODO`لكل مهمة و نسبة، و يخرج من 0 فقط عندما يمر الخمسة`python3 code/lab.py my-answers.json`يبحث عن ملف آخر`code/tests/test_lab.py`يثبت أن المحقق يقبل الإجابات الصحيحة ويرفض الإجابات الخاطئة.
@@ -505,6 +507,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

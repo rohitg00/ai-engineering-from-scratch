@@ -3,7 +3,7 @@
 > اجتيازك في الاختبارات يثبت توافقك على الاختبارات، لذا المساواة تحتاج إلى شبكة تصل إلى كل حافة وتتطابق بتاتها بعد تغيير الاختبارات.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 34 (lifting to pseudocode), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~110 minutes
 
@@ -271,6 +271,7 @@ after:  0, 5, -5, 105, 536870911, 2147483647, -2147483648
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 مع كلانغ على المسار، يقوم التجربة بتجميع كل من أزواج المرشحين وتشغيل 92 خلية لكل منهما. فإنه يعيد تجميع ثمانية مرشحين، ويعيد تشغيل العميل، ويختم سجل الدليل. دون كلانغ يقرأ الأشياء الملتزمة ويبلغ عن ادعاءات السلوك على أنه`unknown`. . .
@@ -371,6 +372,9 @@ report.masked_equal, report.relocations_match, report.tables_equal, report.reaso
 GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
 JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
 python3 code/main.py --live
+GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
+JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
+npx tsx code/main.ts --live
 ```
 
 الأول`analyze_function`يستغرق الأمر عدة ثوان بينما تقوم Ghidra باستيراد الكائن. مقارنة أرقام الأدلة الجديدة مع الجري الملتزم. نفس البايتات تحت نفس ملف التحليل تعطى نفس الأرقام، لأن أرقام الأدوية هي hash المحتوى الذي يستبعد مسار الملف.
@@ -404,6 +408,7 @@ python3 code/main.py --live
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 يقوم المحقق بحساب كل قيمة متوقعة من `code/main.py`على الأجهزة المشتركة.`PASS`،`FAIL`أو`TODO`لكل مهمة و نسبة، و يخرج من 0 فقط عندما يمر الخمسة`python3 code/lab.py my-answers.json`يبحث عن ملف آخر`code/tests/test_lab.py`يثبت أن المحقق يقبل الإجابات الصحيحة ويرفض الإجابات الخاطئة.
@@ -423,6 +428,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

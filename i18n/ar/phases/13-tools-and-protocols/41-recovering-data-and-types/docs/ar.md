@@ -3,7 +3,7 @@
 > طابعات مُفكّر`a->balance`عندما يكون لديها طاولة النمط و`*(int *)(param_1 + 4)`عندما لا يفعل ذلك. هذا الدروس يُبني الجدول من الوصولات، يقرأ الجدول الحقيقي من DWARF 5، ويعرض أين يوافق الاثنان.
 
 **Type:** Build
-**Languages:** Python, C, C++, x86-64 assembly
+**Languages:** Python, TypeScript, C, C++, x86-64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~140 minutes
 
@@ -383,6 +383,7 @@ rea 6.5.0 مع مزودها Ghidra يعيد نص المتحلل كسجل. كل �
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 إن المخرج هو تقرير JSON واحد مع خمسة أجزاء. `dwarf`يحتوي على عنوان الوحدة، والهياكل، والوظائف من `-O0`-أجسام`oracles`يحتوي على ترتيب قاعدة psABI ،`ctypes`التخطيط، التخطيط DWARF، التشغيل الأصلي، و `agree`العلم`builds`يحتوي على الوصولات، والتخطيط المستنير، والمقارنة لكل من الأشياء الثلاثة. `cxx`تحتوي على الأسماء المفصلة، كل من vtables، كل من سجلات typinfo، المكالمة الافتراضية، والمساحات DWARF. `tools`يُدرج أداة النتائج التي تم التقاطها.
@@ -513,6 +514,7 @@ find_virtual_calls(load_listing("shapes-x86_64-O0-g.objdump.txt"), [read_vtable(
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

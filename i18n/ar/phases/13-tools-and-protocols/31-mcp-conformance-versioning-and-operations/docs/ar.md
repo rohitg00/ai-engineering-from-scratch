@@ -3,7 +3,7 @@
 > الخادم غير متوافق لأن مسار سعيدة يعمل من خلال SDK واحد. يتوافق يعيش في السلك، عند حدود الإصدار، من خلال الوسطاء، أثناء التداول.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 17 (gateways), Phase 13 · 30 (registry admission)
 **Time:** ~100 minutes
 
@@ -265,6 +265,7 @@ mcp-conformance-operations
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 يستخدم التجربة بالضبط خمسة عشر نسخة ذهبية ورابطة، بما في ذلك نتائج الانتهاء الصالحة والخطأ، ويقارن النتيجة الخامة مع عرض SDK، ويقوم بفحص وكيل الذي انهار خطأ الأصل، وتقييم الصحة، وتصديق الأدلة الاحتمالية، ويحدد هذا الهدف.
@@ -395,6 +396,7 @@ compare_sdk_view(
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

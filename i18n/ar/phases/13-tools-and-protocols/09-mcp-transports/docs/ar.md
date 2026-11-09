@@ -3,7 +3,7 @@
 > النقل يحمل رسائل MCP. لا يوفر حالة بروتوكول مفقودة.`2026-07-28`، الاستديو المحلي والاتصالات المباشرة عن بعد HTTP تحمل كل من طلبات وصف الذات.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07 and 08
 **Time:** ~65 minutes
 
@@ -189,6 +189,7 @@ tp-transport-handshake
 ```bash
 cd code
 python3 main.py --probe
+npx tsx main.ts --probe
 python3 -m unittest discover tests -v
 ```
 

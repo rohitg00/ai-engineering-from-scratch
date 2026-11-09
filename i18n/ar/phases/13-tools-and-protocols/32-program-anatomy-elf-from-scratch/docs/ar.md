@@ -3,7 +3,7 @@
 > البرنامج المجمّع هو مجموعة من الجداول التي تشير إلى بعضها البعض. القارئ الذي كتبته يعطي الناتج يمكنك التحقق من البايت بـ البايت.
 
 **Type:** Build
-**Languages:** Python (stdlib), C (fixture only)
+**Languages:** Python (stdlib), TypeScript, C (fixture only)
 **Prerequisites:** Phase 0 · 01 (Dev Environment) with clang installed, Python 3.10 or later, hexadecimal arithmetic
 **Time:** ~120 minutes
 
@@ -275,6 +275,7 @@ Load commands:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الظهور يقرأ`ledger-x86_64-O1.o`ويقوم بطبع العنوان، والأقسام، والرموز، والتحويلات، وخريطة تعويض الملف. ثم يقوم بطبع السلاسل الأربعة`ledger-arm64-O1.o`ويقوم بطبع جدول المقارنة. ينتهي به عنوان البرنامج من`tiny-x86_64`- الخطوط المتوقعة:
@@ -395,6 +396,7 @@ macho.function_bytes("_percent_change")[:4].hex()
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 يقوم المحقق بحساب كل قيمة متوقعة من `code/main.py`على الأجهزة المشتركة.`PASS`،`FAIL`أو`TODO`لكل مهمة و نسبة، و يخرج من 0 فقط عندما يمر الخمسة`python3 code/lab.py my-answers.json`يبحث عن ملف آخر`code/tests/test_lab.py`يثبت أن المحقق يقبل الإجابات الصحيحة ويرفض الإجابات الخاطئة.
@@ -414,6 +416,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

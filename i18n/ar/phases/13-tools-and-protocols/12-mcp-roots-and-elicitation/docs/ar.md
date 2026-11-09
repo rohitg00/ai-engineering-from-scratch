@@ -3,7 +3,7 @@
 > يتم إزالة الجذور في MCP 2026-07-28 ولم تكن قط صندوق رمل أمني. ضع نطاقًا في حجج الأدوات المرئية أو أوراي الموارد ، وافق عليها على الخادم ، واستخدم MRTR عندما تحتاج أداة إلى مدخلات المستخدم. يرى المستخدم القرار ، ويرى النموذج المقبض ، ويمكن لأي مثال من الخادم معالجة الإعادة المحاولة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 11 (stateless MRTR)
 **Time:** ~60 minutes
 
@@ -247,6 +247,7 @@ t3-roots-boundary
 ```bash
 cd phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

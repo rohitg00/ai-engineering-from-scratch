@@ -3,7 +3,7 @@
 > MCP 2026-07-28 يمنع أخذ العينات من تصميمات جديدة ويزيل قناة طلبات الخادم إلى العميل. إذا كان سير العمل الحالي لا يزال يحتاج إلى نموذج العميل، يعيد الخادم `input_required`نتيجة العميل يحاول مرة أخرى الطلب الأصلي مع إصدار النموذج. حلقة التفكير تصبح صريحة ، محدودة ، وغير ذات الوضع في طبقة البروتوكول.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources and prompts)
 **Time:** ~75 minutes
 
@@ -210,6 +210,7 @@ t3-sampling-flip
 ```bash
 cd phases/13-tools-and-protocols/11-mcp-sampling/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

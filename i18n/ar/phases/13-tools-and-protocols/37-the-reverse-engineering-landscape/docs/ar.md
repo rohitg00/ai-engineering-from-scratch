@@ -3,7 +3,7 @@
 > خمس أدوات تقرأ نفس الكائن وتعطى أربعة عناوين، ثلاثة حسابات كتلة، و اثنين من الإجابات لمفتاح واحد، وهذا الدروس يبني الخيط الذي يظهر أي هو أي.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, Java (one Ghidra script)
+**Languages:** Python, TypeScript, C, x86-64 assembly, Java (one Ghidra script)
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~150 minutes
 
@@ -342,6 +342,7 @@ void sym.grade (int64_t arg1) {
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 إنتاج هو تقرير JSON واحد. يفتح مع نسخ الأدوات المسجلة في وقت التقاط وأدوات موجودة على جهازك، والتي قد تكون غائبة. ثم لكل من الأجسام الأربعة يعطي التوسع الرمزي، وفرق التدليك، والقاعدة كل أداة تستخدم، والعمل يبدأ كل أداة وجدت أو اخترع، و لكل وظيفة الاتفاقية التعليمات-بدء، حسابات الكتل، حسابات الحافة، والحافة كل أداة تفتقر. إنه ينتهي بمحاسبة البايت لكل أداة، وملاحظات الأدوات نفسها، وقائمة النتائج في جمل بسيطة، وقطاع IR: إنتاج المترجم للمعليمات الثلاثة بجوار العد القاس على المصاعد التي تم التقاطها.
@@ -472,6 +473,7 @@ report["functionStarts"]["angr"]
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

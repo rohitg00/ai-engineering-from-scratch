@@ -3,7 +3,7 @@
 > إدخال السجل يخبرك بما أعلن به الناشر، و إدخال الإنتاج يثبت ما أحضرت، ما لاحظت، ما وافقت عليه، و ما يمكنك استعاده بأمان.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 17 (gateways and registries), Phase 13 · 18 (production authentication)
 **Time:** ~90 minutes
 
@@ -163,6 +163,7 @@ server_name.startswith("com.example")
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ينفذ المظاهرة خمس عمليات:
@@ -288,6 +289,7 @@ c.ledger.verify()
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

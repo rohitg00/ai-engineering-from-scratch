@@ -3,7 +3,7 @@
 > "اطلب من النموذج أن يعيد JSON بشكل جيد" يفشل 5 إلى 15 في المائة من الوقت، حتى على النماذج الحدودية. تغطي المخرجات المهيكلة هذا الفجوة مع فك القيود المحدود: يتم منع النموذج حرفيا من إصدار رمز يعرقل النموذج. وضع OpenAI الصارم، استخدام أداة النموذج النموذجية من Anthropic، Gemini `responseSchema`، الذكاء الاصطناعي البيانتيكي `output_type`، و (زود)`.parse`هذه الدروس تبني مؤكدة النظام والتي سيتم استخدامها من قبل المتعلمين في النظام الصارم للأنبوب الاستخراجية الإنتاجية.
 
 **Type:** Build
-**Languages:** Python (stdlib, JSON Schema 2020-12 subset)
+**Languages:** Python, TypeScript (stdlib, JSON Schema 2020-12 subset)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > لا يوجد في MCP الحديث أي ضغط يد ولا جلسة بروتوكول. يجب أن يحمل كل طلب ما يكفي من البيانات المعدنية لفهمها وافق عليها ، وتوجيهها ، وإعادة تجربتها بمفردها.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 01 through 05
 **Time:** ~55 minutes
 
@@ -164,6 +164,7 @@ mcp-tool-call
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

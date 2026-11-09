@@ -3,7 +3,7 @@
 > تحديد المعلومات لا يجعلها الآثار الجانبية آمنة، أو يوقف العامل، أو يحمي التيار من المستهلك البطيء.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 09 and 13
 **Time:** ~120 minutes
 
@@ -336,6 +336,7 @@ cap: 8000 ms
 ```bash
 cd phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

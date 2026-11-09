@@ -3,7 +3,7 @@
 > يقرأ هذا الدروس الجداول التي كتبها محرر الروابط لهذه المكالمات في ثلاثة تنسيقات، ويتبع مكالمة واحدة إلى فتحة يقوم بها محملها، ويعثر على وظائف البناء بعد أن اختفت أسمائها.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and arm64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and arm64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow), 38 (calling conventions)
 **Time:** ~160 minutes
 
@@ -283,6 +283,7 @@ IDA Pro 9.4 يُرسل توقيعات FLIRT لكل معالج و `sigmake`أدا
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 إن المخرج هو تقرير JSON واحد مع خمسة أجزاء. `elf`يحتوي على حسابات نقل المواد الثانية، خطة الرابط، والقسم الديناميكي، PLT، و GOT من `tiny-dyn-x86_64`. .`coff`يحتوي على القسمات، والتحركات، والوظائف، والأسماء غير المحددة للجسمين. `pe`يحتوي على العناوين والإداريات والإيرادات والصادرات وإعادة توطين القواعد والدعوات الدولية للعملات الدولية`tiny-x86_64.exe`. .`macho`يحتفظ`ledger_main`مع أجزائها، وتصميماتها المتسلسلة، وتصميماتها، والصادرات،`ledger_main_nochain`، و "ديليب" و تقارير "ستريبتين"`identification`يحمل الحقيقة، الأساليب الأربعة مع النتائج، والوقائع مع اصطداماتها، في `-O0`و`-O2`. . .
@@ -412,6 +413,7 @@ match_signatures(sigs, stripped, starts)
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

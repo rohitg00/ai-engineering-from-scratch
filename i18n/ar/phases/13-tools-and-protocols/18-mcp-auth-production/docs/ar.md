@@ -5,7 +5,7 @@
 > **Spec note (2026-07-28):**يتم تجاهل تسجيل العميل الديناميكي لصالح وثائق بيانات المستخدم. DCR لا يزال آلية التوافق. عند استخدامه، يعلن العميل صحيح `application_type`. العميل يؤكد أن RFC 9207 موجودة`iss`لا تستخدم أبداً إحصائيات الإعتماد عبر مستثمرين خادم الإذن.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 16 (OAuth 2.1 state machine), Phase 13 · 17 (gateways)
 **Time:** ~90 minutes
 
@@ -329,6 +329,7 @@ t3-jwks-rotate
 ```bash
 cd phases/13-tools-and-protocols/18-mcp-auth-production
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

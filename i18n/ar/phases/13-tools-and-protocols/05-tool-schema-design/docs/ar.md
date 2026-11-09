@@ -3,7 +3,7 @@
 > يُفشل الأداة الصحيحة بصمت عندما لا يستطيع النموذج معرفة متى يستخدمها. تسبب الإسم والوصف وشكلات المعلمات تذبذبًا من 10 إلى 20 نقطة مئوية في دقة اختيار الأداة على مرموز مثل StableToolBench و MCPToolBench +. يطلق هذا الدروس قواعد التصميم التي تفصل أداة يختارها النموذج بشكل موثوق عن أداة يخطأها النموذج.
 
 **Type:** Learn
-**Languages:** Python (stdlib, tool schema linter)
+**Languages:** Python, TypeScript (stdlib, tool schema linter)
 **Prerequisites:** Phase 13 · 01 (the tool interface), Phase 13 · 04 (structured output)
 **Time:** ~45 minutes
 

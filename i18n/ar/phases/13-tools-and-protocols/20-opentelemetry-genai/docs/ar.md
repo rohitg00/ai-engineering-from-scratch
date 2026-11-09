@@ -3,7 +3,7 @@
 > عميل يدعو خمسة أدوات، ثلاثة خادمات MCP، و اثنين من العملاء الفرعيين. تحتاجين إلى دليل واحد على كل شيء الاتفاقيات الترجمية OpenTelemetry GenAI (الخصائص المستقرة في v1.37 وما فوق) هي معيار 2026 ، المدعومة بشكل أصلي من قبل Datadog ، Langfuse ، Arize Phoenix ، OpenLLMetry ، و AgentOps. هذه الدروس تعطي الأسماء للخصائص المطلوبة، وتتبع ترتيبات المدة (الوكيل → أداة LLM) ، وتشحن إمتير المدة القصوى يمكنك توصيلها إلى أي مصدر OTel.
 
 **Type:** Build
-**Languages:** Python (stdlib, OTel span emitter)
+**Languages:** Python (stdlib, OTel span emitter), TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 08 (MCP client)
 **Time:** ~75 minutes
 

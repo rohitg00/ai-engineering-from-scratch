@@ -3,7 +3,7 @@
 > يقوم محفز التحسين باستبدال بناءات المصدر بأشكال تعليمات أرخص. لكل شكل مشتق، وهذا الدروس يبني المعرف الذي يعمل على مشتق إلى الوراء ويحقق منه ضد المصدر.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly, AArch64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode), Phase 13 · 38 (calling conventions)
 **Time:** ~150 minutes
 
@@ -253,6 +253,7 @@ Angr 10.0.3 تم تشغيل على لدينا `-O2`الموضوع، و`idioms-x8
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 إن المخرج هو تقرير JSON واحد. لكل من 18 بناء يدرج كل وظيفة وأغراضها ، مع نوع ، شكل المصدر ، وعناوين الأدلة ، والتحقق ، وحقول التفاصيل. ينتهي مع ماتريكس نوع لكل بناء ،`-O2`مقابل`-O3`مقارنة لكل من الهندسة المعمارية، وال`unverified`قائمة
@@ -380,6 +381,7 @@ for name in ("idioms-x86_64-O1", "idioms-arm64-O1"):
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

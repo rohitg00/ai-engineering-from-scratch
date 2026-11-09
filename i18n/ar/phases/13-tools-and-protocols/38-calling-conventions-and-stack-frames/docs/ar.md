@@ -3,7 +3,7 @@
 > يظهر التفكيك الذي يقرأه المرجسمه. فقط ABI يقول ما تعنيه تلك السجلات، و ABI يتم اختيارها من قبل عنوان الموضوع، لذلك هذا الدروس يقرأ الرأس أولا ثم يفتقد كل سجل ضد القاعدة التي وضعته هناك.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and AArch64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow)
 **Time:** ~140 minutes
 
@@ -195,6 +195,7 @@ CFA هو مؤشر كومة قبل الدعوة، 8 فوق مؤشر كومة دخ
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 إنتاج هو تقرير JSON واحد. لكل من السبعة الأشياء يطلق على النموذج، والآلة، والإب.إي.بي، ولكل من الوظائف الثانية عشرة يقدم البايتات البروجوجية، والسجلات المحفوظة مع تعويضات الدخول، وحجم الإطار، ومؤشر الإطار، ومؤشر الإطار، ومؤشر المعلمات، ومؤشرات الحجج المتعثرة، والسفائر، ومؤشر العودة أو المخفي، وعمق الدعوة، ومؤشرات الخروج ومخازن المندعين. تنتهي كل وظيفة بمراجعاتها: القاعدة والقيمة المتوقعة من التوقيع والقيمة الملاحظة من البايتات، وما إذا كانت توافق. و ينتهي التقرير بالتحققين المتقاطعين والآلة التي يتم التقاطها. في 84 تحليل وظيفي، تم إجراء 489 عملية فحص ويتفق جميع 489.
@@ -331,6 +332,7 @@ for row in eh_frame_cross_check("convention-x86_64-linux-O2-eh"):
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

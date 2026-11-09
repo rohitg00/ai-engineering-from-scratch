@@ -3,7 +3,7 @@
 > تجمع مزودي الحدود الثلاثة على نفس حلقة الاتصال بالأدوات في عام 2024 ثم اختلفوا على كل شيء آخر.`tools`و`tool_calls`. الاستخدامات الإنسانية`tool_use`و`tool_result`الكتل التي يستخدمها التوأم`functionDeclarations`هذه الدروس تفرق الثلاثة جانبا إلى جانبه بحيث لا يتم كسر الرمز الذي يتم شحنه على مزود واحد عندما تقوم بتنفيذه.
 
 **Type:** Build
-**Languages:** Python (stdlib, schema translators)
+**Languages:** Python, TypeScript (stdlib, schema translators)
 **Prerequisites:** Phase 13 · 01 (the tool interface)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > ثلاثة عمليات بحث عن الطقس المستقلة المسلسلة هي ثلاث رحلات ذهابًا وإيابًا. قم بها بالتوازي وتنهار الوقت الإجمالي إلى أبطأ مكالمة واحدة. يصدّر كل مزود حدودي الآن مكالمات أداة متعددة في جولة واحدة. الجائزة حقيقية؛ والسباكة ظريفة. يدور هذا الدروس في النصفين: التمويع الموازي والحجة المتوصلة إعادة التجميع، مع التركيز على فخ الاصمة.
 
 **Type:** Build
-**Languages:** Python (stdlib, thread pool + streaming harness)
+**Languages:** Python, TypeScript (stdlib, thread pool + streaming harness)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

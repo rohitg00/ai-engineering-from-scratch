@@ -3,7 +3,7 @@
 > ملف رمز البايت هو برنامج بالإضافة إلى ملاحظات المُحامِل حول ذلك، وهذه الدروس تُبني القراء التي تُظهر أي ملاحظات كل حاوية تحتفظ بها.
 
 **Type:** Build
-**Languages:** Python, Java, C#, WebAssembly text
+**Languages:** Python, TypeScript, Java, C#, WebAssembly text
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow)
 **Time:** ~150 minutes
 
@@ -265,6 +265,7 @@ IL_0023: 1a 2a        ldc.i4.4, ret
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 إن المخرج هو تقرير JSON واحد. لكل Pyc يعطي كل من العناوين، الملف و `grade`الحجم، عدد التعليمات وأسماء رمزات الاختيار من القائمة التي تم التقاطها، وما إذا كان المترجم الجاري يمكن قراءتها. لكل طبقة يقدم النسخة، الحجم، حسابات جدول التحليل، والـ `javap`لكل بناء من "السوم" يقدم أقسام، أنواع، وظائف، محتويات قسم الاسم، وال`wasm-objdump`الاتفاق. لجميعها يعطي عنوان CLI، وتدفقات، وعد صفوف الجدول، والطرق، واتفاق النظام.التفكير. البيانات المعدنية. إنه ينتهي بتبيع الجدول والقائمة من المترجمين الموجودة على `PATH`. . .
@@ -378,6 +379,7 @@ asm.token_text(0x11000001)
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 
