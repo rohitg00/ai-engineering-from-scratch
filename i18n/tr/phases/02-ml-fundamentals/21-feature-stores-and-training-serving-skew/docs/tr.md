@@ -3,7 +3,7 @@
 > Bir özellik bir tanım ve iki okuyucuya sahiptir. Eğitim her etiket zamanından itibaren tarihini okuyor ve servis son değerini okuyor. İki okuyucu anlaşmazlık halinde, model asla eğitilmemiş girişleri görür.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 08 (Feature Engineering), 13 (ML Pipelines), 15 (Time Series), and 19 (ML System Design)
 **Time:** ~100 minutes
 
@@ -275,6 +275,7 @@ Demo kayıtları 141 ila 150 gün boyunca istekleri kaydeder ve konsept bölüm�
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console

@@ -3,7 +3,7 @@
 > Bir model bir sistemin bir parçasıdır. tasarım, modelin neyi tahmin ettiğini, kimlerin ona göre hareket ettiğini, maliyetlerini ve başarısız olduğunda ne olacağını belirler.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation) and 13 (ML Pipelines)
 **Time:** ~110 minutes
 
@@ -295,6 +295,7 @@ CheckItem("serving_fit", 1, False, "pick a serving mode that meets the staleness
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console
@@ -322,6 +323,7 @@ Tasarım belgesinin incelemesi, zayıf belgeyi altı engelleme öğesi ile ve ta
 
 ```bash
 python3 code/main.py my_design_doc.json
+npx tsx code/main.ts my_design_doc.json
 ```
 
 ## Kullan

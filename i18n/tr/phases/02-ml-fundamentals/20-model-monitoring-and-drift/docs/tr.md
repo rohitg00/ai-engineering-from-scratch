@@ -3,7 +3,7 @@
 > Bir model bir hata mesajı olmadan başarısız olur. Dünya eğitim verilerinden uzaklaşırken puanları geri verir ve sadece izleme boşluğu gösterir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation), 16 (Anomaly Detection), and 19 (ML System Design)
 **Time:** ~110 minutes
 
@@ -261,6 +261,7 @@ Modeldeki bir eşiğin `amount`Windows 500 etkinliği düzenler ve 250'e kadar h
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console
