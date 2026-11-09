@@ -3,7 +3,7 @@
 > Whisper é um transformer de 30 segundos de janela encoder-decoder, treinado em 680k horas de pares de áudio-texto multilíngue deficiente supervisionado.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 5 · 10 (Attention), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

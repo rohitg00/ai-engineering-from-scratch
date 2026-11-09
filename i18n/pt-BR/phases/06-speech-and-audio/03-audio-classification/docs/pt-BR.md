@@ -3,7 +3,7 @@
 > Tudo, desde "barbão de cão vs sirena" até "que idioma é este" é classificação de áudio. As características são mels. A arquitetura muda a cada década. A avaliação permanece AUC, F1, e recall por classe.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 3 · 06 (CNNs), Phase 5 · 08 (CNNs & RNNs for Text)
 **Time:** ~75 minutes
 

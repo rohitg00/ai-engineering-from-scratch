@@ -3,7 +3,7 @@
 > A geração de áudio 2026 é quase todos os tokens. EnCodec, SNAC, Mimi e DAC transformam formas de onda contínuas em sequências discretas que um transformador pode prever.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 10 · 11 (Quantization), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 
