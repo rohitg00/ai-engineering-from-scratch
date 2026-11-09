@@ -3,7 +3,7 @@
 > मोन्टे कार्लो एपिसोड समाप्त होने तक इंतजार करता है। टीडी अगले मूल्य अनुमान को बूटस्ट्राप करके हर कदम के बाद अपडेट करता है। क्यू-लर्निंग ऑफ-पॉलिसी और आशावादी है; SARSA नीति पर है और सावधान है। दोनों कोड की एक पंक्ति हैं। दोनों इस चरण में हर गहरे आरएल विधि का आधार हैं।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming), Phase 9 · 03 (Monte Carlo)
 **Time:** ~75 minutes
 

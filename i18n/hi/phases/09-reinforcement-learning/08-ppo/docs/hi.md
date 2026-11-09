@@ -3,7 +3,7 @@
 > A2C एक अपडेट के बाद प्रत्येक रोलआउट को फेंक देता है। पीपीओ नीति ग्रेडिएंट को एक छोटा महत्व अनुपात में लपेटता है ताकि आप नीति विस्फोट के बिना एक ही डेटा पर 10+ युग कर सकें। Schulman et al. (2017). अभी भी 2026 में डिफ़ॉल्ट नीति-ग्रेडिएंट एल्गोरिथ्म।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~75 minutes
 

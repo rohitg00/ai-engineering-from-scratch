@@ -3,7 +3,7 @@
 > मूल्य अनुमान करना बंद करें। नीति को सीधे पैरामीटर करें, अपेक्षित रिटर्न की ग्रेडिएंट की गणना करें, ऊपर की ओर कदम रखें। विलियम्स (1992) ने इसे एक प्रमेय में लिखा। यही कारण है कि पीपीओ, जीआरपीओ और हर एलएलएम आरएल लूप मौजूद हैं।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 03 (Monte Carlo), Phase 9 · 04 (TD Learning)
 **Time:** ~75 minutes
 

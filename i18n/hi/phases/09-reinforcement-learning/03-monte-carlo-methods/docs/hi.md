@@ -3,7 +3,7 @@
 > गतिशील प्रोग्रामिंग को एक मॉडल की आवश्यकता है। मोन्टे कार्लो को केवल एपिसोड की आवश्यकता है। नीति चलाएं, रिटर्न देखें, उन्हें औसत बनाएं। RL  में सबसे सरल विचार और वह जो सब कुछ डाउनस्ट्रीम खोलता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming)
 **Time:** ~75 minutes
 

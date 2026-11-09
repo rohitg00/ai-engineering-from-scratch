@@ -3,7 +3,7 @@
 > एक मार्कोव निर्णय प्रक्रिया में पांच चीजें होती हैंः राज्यों, कार्यों, संक्रमण, पुरस्कार, छूट। आरएल  क्यू-लर्निंग, पीपीओ, डीपीओ, जीआरपीओ  में सब कुछ इस आकार पर अनुकूलित होता है। इसे एक बार सीखें, बाकी के सशक्तिकरण सीखने को मुफ्त में पढ़ें।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Probability & Distributions), Phase 2 · 01 (ML Taxonomy)
 **Time:** ~45 minutes
 

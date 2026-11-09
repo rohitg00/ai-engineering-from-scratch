@@ -3,7 +3,7 @@
 > एक आलोचक जो सीखता है जोड़ें$\hat{V}(s)$A2C इसे समवर्ती रूप से चलाता है; A3C इसे धागे के पार चलाता है. दोनों आधुनिक गहरे आरएल विधि के लिए मानसिक मॉडल हैं.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (TD Learning), Phase 9 · 06 (REINFORCE)
 **Time:** ~75 minutes
 
