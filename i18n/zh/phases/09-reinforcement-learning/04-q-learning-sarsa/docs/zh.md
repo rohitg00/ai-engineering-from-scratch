@@ -3,7 +3,7 @@
 > 蒙特卡洛等到集结束.TD每一步都会通过启动下一个值估计进行更新.Q-学习是非政策和乐观的;SARSA是政策和谨慎的.这两条都是一个代码线.这两条都支持了这个阶段的每种深度RL方法.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming), Phase 9 · 03 (Monte Carlo)
 **Time:** ~75 minutes
 

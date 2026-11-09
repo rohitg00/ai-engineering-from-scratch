@@ -3,7 +3,7 @@
 > 动态编程是与欺骗的RL. 你已经知道过渡和奖励函数; 你只是重复贝尔曼方程直到$V$或$\pi$采样方法都试图接近的基准.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs)
 **Time:** ~75 minutes
 

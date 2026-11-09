@@ -3,7 +3,7 @@
 > 动态编程需要一个模型.蒙特卡罗只需要一段时间. 运行政策,观察收益,平均它们. 在RL 中最简单的想法,并解锁下游的想法.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming)
 **Time:** ~75 minutes
 

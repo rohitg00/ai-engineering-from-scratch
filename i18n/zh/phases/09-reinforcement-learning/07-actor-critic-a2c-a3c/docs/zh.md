@@ -3,7 +3,7 @@
 > 强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强加强$\hat{V}(s)$现在,我们可以看到一个值,从 A2C 运行它同步,A3C 运行它在线程.这两个是每个现代深度RL方法的心理模型.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (TD Learning), Phase 9 · 06 (REINFORCE)
 **Time:** ~75 minutes
 

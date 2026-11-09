@@ -3,7 +3,7 @@
 > 停止估值.直接参数化政策,计算预期回报的梯度,上升步骤.威廉姆斯 (1992) 在一个定理中写下.这就是为什么PPO,GRPO和每一个LLM RL循环都存在.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 03 (Monte Carlo), Phase 9 · 04 (TD Learning)
 **Time:** ~75 minutes
 

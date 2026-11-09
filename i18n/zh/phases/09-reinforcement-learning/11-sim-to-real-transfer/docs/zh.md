@@ -3,7 +3,7 @@
 > 训练在模拟器中失败的硬件是记住模拟器的政策.域名随机化,域名适应和系统识别是让学到的控制器跨越现实差距的三个工具.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 08 (PPO), Phase 2 · 10 (Bias/Variance)
 **Time:** ~45 minutes
 

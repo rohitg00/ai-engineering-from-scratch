@@ -3,7 +3,7 @@
 > 单代理RL假设环境静止.把两个学习代理放在同一世界,这个假设就会破裂:每个代理是另一个环境的一部分,两者都在改变.多代理RL是让学习融合的技巧,当马科夫假设不再适用时.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (Q-learning), Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~45 minutes
 

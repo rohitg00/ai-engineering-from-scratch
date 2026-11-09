@@ -3,7 +3,7 @@
 > 人类不能写一个奖励函数"好助手响应",但他们可以比较两个响应,选择更好的. 适应一个奖励模型,然后 RL语言模型对比它. 基督徒 2017. 指示GPT 2022. 食谱使GPT-3变成ChatGPT. 2026年它主要被DPO 取代,但心理模型仍然存在.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment), Phase 9 · 08 (PPO)
 **Time:** ~45 minutes
 

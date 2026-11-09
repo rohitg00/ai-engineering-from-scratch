@@ -3,7 +3,7 @@
 > 根据APP的数据,PPO将政策梯度缩小到一个重要的比例,以便在不爆发的政策的情况下,您可以在同一数据上进行10+个时代.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~75 minutes
 

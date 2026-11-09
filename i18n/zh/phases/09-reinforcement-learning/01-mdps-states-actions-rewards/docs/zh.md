@@ -3,7 +3,7 @@
 > 马科夫决策过程是五件事:状态,行动,转型,奖励,折扣.RL  Q-学习,PPO,DPO,GRPO 中的一切都优化了这个形式.一遍学习,免费阅读其他强化学习.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Probability & Distributions), Phase 2 · 01 (ML Taxonomy)
 **Time:** ~45 minutes
 

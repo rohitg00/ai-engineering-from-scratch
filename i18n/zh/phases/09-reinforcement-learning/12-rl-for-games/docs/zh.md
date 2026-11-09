@@ -3,7 +3,7 @@
 > 1992年:TD-Gammon在纯TD后游中击败了人类冠军. 2016年:AlphaGo击败了Lee Sedol. 2017年:AlphaZero从零开始主导了象棋,肖吉和GO. 2025年:DeepSeek-R1证明了相同的配方,GRP取代了PPO,基于推理.游戏是推动这一阶段的每一个突破的基准.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 05 (DQN), Phase 9 · 08 (PPO), Phase 9 · 09 (RLHF), Phase 9 · 10 (MARL)
 **Time:** ~120 minutes
 
