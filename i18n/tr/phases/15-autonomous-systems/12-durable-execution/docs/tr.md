@@ -3,7 +3,7 @@
 > Üretim uzun uzayda bulunan ajanlar çalışmıyor `while True`. Her LLM çağrısı kontrol noktası, tekrar deneme ve tekrarlama ile bir aktivite haline gelir. Temporal'ın OpenAI Ajanlar SDK entegrasyonu Mart 2026'da GA'ya geçti. Claude Code Routines (Anthropic) sürekli yerel bir süreç olmadan programlı Claude Code hesaba çekmelerini yürütür. Sessiyonlar insan girişleri üzerinde durur, kurtulma dağıtımları sürdürür ve en son kontrol noktasından devam eder.`thread_id`Yeni ergonomiğin arkasında eski bir model yer alır  iş akışının orkestrasyonu  yeni bir giriş ile: LLM, iyileşme sırasında belirsizce tekrarlanması gereken belirsiz faaliyetler olarak çağrılar.
 
 **Type:** Learn
-**Languages:** Python (stdlib, minimal durable-execution state machine)
+**Languages:** Python (stdlib, minimal durable-execution state machine), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~60 minutes
 

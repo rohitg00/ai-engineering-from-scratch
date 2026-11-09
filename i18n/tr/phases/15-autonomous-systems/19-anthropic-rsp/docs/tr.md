@@ -3,7 +3,7 @@
 > RSP v3.0, 2023 politikasını değiştirerek 24 Şubat 2026 tarihinde yürürlüğe girdi. İki katlı azaltma: Anthropic'in tek taraflı olarak ne yapacağı vs. endüstri genelinde bir önerme olarak çerçeve edilen (RAND SL-4 güvenlik standartları dahil). Bir kez teslim edilen ürünlerin yerine, sınır güvenliği yol haritası ve risk raporları kalıcı belgeler olarak eklenir. 2023'te bir süreliğine bağlılık düşürüyor. AI R&D-4 eşiğini tanıttı: Bir kez geçtiğinde, Anthropic, yanlış uyum sağlama risklerini ve hafiflemelerini belirleyen bir onaylı vaka yayınlamalıdır. Claude Opus 4.6 bunu aşmaz. Antropic, v3.0 duyurmasında "bunu güvenle dışlamak zorlaşıyor" diyor. SaferAI 2023 RSP'yi 2.2 olarak değerlendirdi; v3.0'u 1.9'a düşürdüler. Bu sayede Antropic OpenAI ve DeepMind ile birlikte "zayıf" RSP kategorisine girdi. Kaliteli eşiğin 2023'teki miktarlı yükümlülükleri değiştirdiği için, durak sözcükünün kaldırılması en şiddetli gerilemedir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, RSP threshold decision engine)
+**Languages:** Python (stdlib, RSP threshold decision engine), TypeScript
 **Prerequisites:** Phase 15 · 06 (AAR), Phase 15 · 07 (RSI)
 **Time:** ~45 minutes
 

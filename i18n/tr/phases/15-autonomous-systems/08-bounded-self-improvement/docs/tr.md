@@ -3,7 +3,7 @@
 > Araştırmalar, kendi kendini geliştirme döngüsünü sınırlamak için dört ilkeler üzerinde birleşmiştir. Her düzenlemede kalması gereken resmi değişkenler. Düzeltme demirleri değiştirilmez. Sadece performans değil, her boyut (güvenlik, adillik, dayanıklılık) ile uyumlu olmak zorunda olan çok amaçlı kısıtlamalar. Tarihsel ölçümler kapasite kaybını gösterdiğinde döngüyü durduran gerileme algısı. Bunların hiçbiri güvenlik kanıtı değildir  bilgi teorik sonuçları (Kolmogorov karmaşıklığı, Lob teoremi) herhangi bir sistemin kendi halefleri hakkında kanıtlayabileceği şeyi bağladı. Bunlar sessiz başarısızlığın maliyetini artıran hafifletmeler.
 
 **Type:** Learn
-**Languages:** Python (stdlib, bounded-loop with invariant check)
+**Languages:** Python, TypeScript (stdlib, bounded-loop with invariant check)
 **Prerequisites:** Phase 15 · 07 (RSI), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

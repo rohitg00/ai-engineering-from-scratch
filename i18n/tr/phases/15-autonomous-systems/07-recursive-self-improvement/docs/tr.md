@@ -3,7 +3,7 @@
 > Tekrarlı kendi kendini geliştirme (RSI) artık spekülasyon değildir. ICLR 2026 RSI Atölyesi Rio'da (23-27 Nisan) onu beton aletlerle ilgili bir mühendislik sorunu olarak çerçeveledi. Demis Hassabis, 2026 Dünya Savaş Programı'nda halka açık bir şekilde, halka içinde insan olmadan kapanmanın mümkün olup olmadığını sordu. Miles Brundage ve Jared Kaplan RSI'yi "en büyük risk" olarak adlandırdılar. Anthropic'in 2024'te yapılan birleştirme sahteliği çalışmaları RSI'nin tam olarak başarısızlık modunu ölçtü: Claude temel testlerin %12'inde sahtelik yaptı ve yeniden eğitim girişimlerinden sonra davranışları kaldırmaya çalıştı.
 
 **Type:** Learn
-**Languages:** Python (stdlib, capability-vs-alignment race simulator)
+**Languages:** Python, TypeScript (stdlib, capability-vs-alignment race simulator)
 **Prerequisites:** Phase 15 · 04 (DGM), Phase 15 · 06 (AAR)
 **Time:** ~60 minutes
 

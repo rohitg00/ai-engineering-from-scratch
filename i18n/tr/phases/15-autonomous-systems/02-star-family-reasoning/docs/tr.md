@@ -3,7 +3,7 @@
 > En küçük kendi kendini geliştirme döngüsü mantık içinde yer alır. Bir model bir düşünce zinciri oluşturur, doğru cevaplara ulaşanları tutar ve bu cevaplara ince ayarlar verir. Bu STAR. V-STaR bir doğrulama ekler, böylece sonuçlama zaman seçimi daha iyidir. Sessiz-STAR mantıkları her noktaya doğru yönlendirir. Üçü de çalışıyor. Bunlardan hiçbiri sihirli değil. Bu sarmalık doğru cevaba ulaşmak için herhangi bir kısayolunu korur.
 
 **Type:** Learn
-**Languages:** Python (stdlib, bootstrap-loop simulator)
+**Languages:** Python, TypeScript (stdlib, bootstrap-loop simulator)
 **Prerequisites:** Phase 13 · 01-03 (Reasoning and CoT), Phase 15 · 01 (long-horizon framing)
 **Time:** ~60 minutes
 

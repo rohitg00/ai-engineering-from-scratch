@@ -3,7 +3,7 @@
 > Bir kill switch, ajanın düzenleme yüzeyinin dışında tutulan bir boolean  bir Redis anahtarı, bir özellik bayrağı, imzalanmış bir yapılandırma  aracı tamamen devre dışı bırakır. Bir devrim kesici daha ince bir biçimdir: belirli bir örneğe (bir sırada beş aynı araç çağrısı) çarpır, saldırgan yolu durdurur ve bir insana kadar tırmanır. Bir kanary token klasik aldatmaca miras alınır: bir ajanın dokunmak için yasal bir nedeni olmayan sahte bir kimlik veya balık kayıtları, erişimi uyarıyı tetikler. eBPF tabanlı veri yolları (örneğin: Cilium) karantinalı bir kapsülün çıkışını çekirdek katmanındaki bir adli tıbbi balıkçıya yeniden yazabilir; yayınlanan Cilium referansları yük altında sub-millisecond P99 veri yolu gecikmesini rapor eder (gelişme bütçeniz, bir politika güncelleme nodu nasıl ulaştığına bağlıdır, veri yolu kendisi değil). Hareketli bir temel çizgiye uyum sağlayan istatistik algılayıcılar (EWMA, CUSUM) sessizce hareket etmesini kabul eder  onları eğilmeyen sert anayasa sınırları ile katlar.
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary)
+**Languages:** Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary), TypeScript
 **Prerequisites:** Phase 15 · 13 (Cost governors), Phase 15 · 10 (Permission modes)
 **Time:** ~60 minutes
 
@@ -94,7 +94,7 @@ circuit-breaker
 
 ## Egzersizler
 
-1. Çık .`code/main.py`- 5. virajda (beşinci aynı çağrı) devrim kesici yangınlarını ve 9. virajda (sahte anahtar okuyucuları) kanarya yangınlarını onaylayın.
+1. Çık .`code/main.py`- 7. virajda (beşinci aynı çağrı) ve 9. virajda (sahte anahtar okuyucu) kanarya yangınlarını onaylayın.
 
 2. Statistik bir detektör ekleyin: EWMA z-notı araç çağrı hızında. yavaş hareket eden bir yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldaki yoldki yoldki yoldki yoldki yoldki yoldki yoldki yoldki yoldki yoldki yold
 

@@ -3,7 +3,7 @@
 > HITL konusunda 2026 yılındaki konsensüs spesifiktir. Bu "evlat soruyor, kullanıcı onay tıklıyor". değildir. Bu önerilen-sonra-yüzdür: önerilen eylem idempotency anahtarı ile dayanıklı bir depoya devam eder; niyet, veri soy, dokunan izinler, patlama radyüsü ve geri dönüş planı ile bir inceleyicinin önüne çıkarılır; sadece olumlu onaylandıktan sonra yapılır; yan etkinin gerçekleştiğini doğrultmak için uygulandıktan sonra doğrulanır. LangGraph'in `interrupt()`Ayrıca PostgreSQL kontrol noktası, Microsoft Agent Framework'ın `RequestInfoEvent`, ve Cloudflare'ın `waitForApproval()`Bu yöntemin en iyi yöntemleri ise, aynı şekil ile uygulanmasıdır. Kanonik başarısızlık modunda kauçuk damgası onaylaması bulunur: "Onurlandır?" üzerinde inceleme yapmadan tıklanır. Belli bir hafifleme açık bir kontrol listesi ile meydan okuma ve yanıtlama yapılır.
 
 **Type:** Learn
-**Languages:** Python (stdlib, propose-then-commit state machine with idempotency)
+**Languages:** Python (stdlib, propose-then-commit state machine with idempotency), TypeScript
 **Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 14 (Tripwires)
 **Time:** ~60 minutes
 

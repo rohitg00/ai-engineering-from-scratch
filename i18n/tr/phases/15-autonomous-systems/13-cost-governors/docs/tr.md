@@ -3,7 +3,7 @@
 > Orta büyüklükte bir e-ticaret ajansının aylık LLM maliyeti $1,200 to $Bu, fiyatlama hatası değil. Bu, yeni bir döngü bulmuş ve içindeki harcamaları sürdüren bir ajan. Microsoft'un Ajan Yönetimi Araç Kütleği (2 Nisan 2026) bu sınıfa karşı savunmayı kodlaştırır: talep başına`max_tokens`, görev başına token ve dolar bütçeleri, günlük / aylık limitler, iterasyon limitleri, katılımlı model yönlendirme, hızlı önbelleğe girme, bağlam pencereleri, pahalı eylemler için HITL kontrol noktaları, bütçe ihlalinde anahtarları öldürme. Anthropic'in Claude Code Agent SDK farklı isimlerle aynı primitifleri gönderir. Finansal hız limitleri  örneğin, erişimi 10 dakikada > $ 50'e kesin  aylık limitlerden daha hızlı yakalamak döngüler.
 
 **Type:** Learn
-**Languages:** Python (stdlib, layered cost-governor simulator)
+**Languages:** Python (stdlib, layered cost-governor simulator), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 12 (Durable execution)
 **Time:** ~60 minutes
 

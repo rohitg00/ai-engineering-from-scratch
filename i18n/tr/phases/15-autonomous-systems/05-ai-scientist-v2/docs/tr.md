@@ -3,7 +3,7 @@
 > Sakana'nın AI Bilimcisi v2 (Yamada et al., arXiv:2504.08066) tam araştırma döngüsünü yürütüyor: hipotez, kod, deneyler, rakamlar, yazma, gönderme. Bu, ICLR 2025 atölyesinde bir kağıt geçiş eşcinsel incelemesine sahip olan ilk sistemdir. Bağımsız değerlendirme (Beel et al.) deneylerin %42'si kodlama hatalarından başarısız olduğunu ve literatür incelemesi sıklıkla kurulmuş kavramları yeni olarak yanlış etiketlediğini buldu. Sakana'nın doktorları kod tabanının LLM yazılı kodunu uyguladığını ve Docker izolasyonunu önerdiğini uyarıyor. Bu resmin her iki yarısı da önemli.
 
 **Type:** Learn
-**Languages:** Python (stdlib, research-loop state-machine toy)
+**Languages:** Python, TypeScript (stdlib, research-loop state-machine toy)
 **Prerequisites:** Phase 15 · 03 (AlphaEvolve), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

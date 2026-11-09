@@ -3,7 +3,7 @@
 > Llama Guard 3 (Meta, Llama-3.1-8B tabanı, içeriğin güvenliği için ince ayarlanmıştır) 8 dilde MLCommons 13 tehlikesi taksonomisine göre hem LLM girişlerini hem de çıkışlarını sınıflandırır. 1B-INT4 kuantistik bir varianti mobil CPU'larda 30'dan fazla token/sekunde çalışır. Llama Guard 4 multimodal (resim + metin), S1S14 kategorisi setiyle genişletilmektedir (S14 Kod Anlatıcı İstifadesi dahil), ve Llama Guard 3 8B/11B'nin bir düşüş değiştiricisidir. NVIDIA NeMo Guardrails v0.20.0 (Ocak 2026) giriş ve çıkış raylarının üstüne Colang iletişim akışı raylarını ekler. Dürüst not: "LLM Guardrails'te Anında Enjeksiyon ve Ceza Eğitimi Algılamaları'nı Uzaklaştırmak" (Huang et al., arXiv:2504.11168) Emoji kaçakçılığı altı tanınmış güvenlik sisteminde %100 saldırı başarısı oranını gösterdi; NeMo Guard Detect, ceza eğitimi sırasında %72.54% ASR kaydetti. Sınıflayıcılar bir katman, bir çözüm değil.
 
 **Type:** Learn
-**Languages:** Python (stdlib, category-tagged classifier simulator)
+**Languages:** Python (stdlib, category-tagged classifier simulator), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 17 (Constitution)
 **Time:** ~45 minutes
 

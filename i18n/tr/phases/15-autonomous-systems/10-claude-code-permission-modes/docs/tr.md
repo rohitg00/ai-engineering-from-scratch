@@ -3,7 +3,7 @@
 > Bir izin merdivi  her eylemden onaylamaya kadar inceleme derecelerinin derecelendirilmesi  bir harmanın askeri olmayan bir ajandan ne yapabileceğini yönetmesidir. Claude Code, bu dersin çalışılmış örneği, altı modunu ortaya çıkarır: "plan" her eylemden önce soruyor, "devalt" (bir kullanıcı aracında "Elniştesi" olarak etiketlenmiş) sadece riskli olanları soruyor, "acceptEdits" otomatik olarak dosya yazısını onaylıyor ancak hala shell çalıştırmasını onaylıyor ve "bypassPermissions" her şeyi onaylıyor. Otomatik Mod  `auto`izin modu  eylem başına onayını, her eylemin yürütülmeden önce her eylemin gözden geçirileceği ve talebin talep ettiği ötesinde yükselen herhangi bir şeyi engelleyen ayrı bir sınıflandırıcı modeli ile değiştirir. Eylem bütçeleri,`max_turns`ve `max_budget_usd`. Kullanılabilirlik `auto`Plan, org etkinleştirme, model ve sağlayıcıya bağlıdır  ve Anthropic sınıflandırıcının tek başına yeterli olmadığını açıkça belirtir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, two-stage classifier simulator)
+**Languages:** Python (stdlib, two-stage classifier simulator), TypeScript
 **Prerequisites:** Phase 15 · 01 (Long-horizon agents), Phase 15 · 09 (Coding-agent landscape)
 **Time:** ~45 minutes
 

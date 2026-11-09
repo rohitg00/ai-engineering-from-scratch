@@ -3,7 +3,7 @@
 > 2023'te bir chatbot bir soruya tek bir dönüşle cevap verdi. 2026'da bir sınır modeli rutin olarak tek bir görevde dakikalar saatleri sürer. METR'nin Time Horizon 1.1 referans değerine göre (Ocak 2026) Claude Opus 4.6'u %50 güvenilirlik oranında 14+ saatlik uzman çalışması ile belirtiyor. GPT-2'den beri ufuk yaklaşık olarak her yedi ayda bir ikiye katlanıyor. Tek dönüş sohbet bağlamı, güven, başarısızlık modları, maliyet, gözlemlenebilirlik etrafında inşa ettiğimiz her varsayım öğle yemeğinden daha uzun sürdüğünde kesilir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, horizon-curve simulator)
+**Languages:** Python, TypeScript (stdlib, horizon-curve simulator)
 **Prerequisites:** Phase 14 · 01 (The Agent Loop)
 **Time:** ~45 minutes
 

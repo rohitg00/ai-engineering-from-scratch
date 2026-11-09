@@ -3,7 +3,7 @@
 > ChatGPT ajanı ( Temmuz 2025) Operatör ve derin araştırmaları bir tarayıcı/terminal ajanına birleştirdi ve BrowseComp SOTA'yı %68,9'a koydu. OpenAI, 31 Ağustos 2025'te Operator'u ürün katmanında birleştirmeyi kapattı. Anthropic'in Vercept satın alımı, OSWorld'deki Claude Sonnet'i %15'ten %72,5'e yükseltti. WebArena-Verified (ServiceNow, ICLR 2026) orijinal WebArena'da ~11.3% yanlış negatif oranı sabitledi ve 258-iş Hard alt kümesini gönderdi. Sayılar gerçek. OpenAI'nin hazırlık başkanı açıkça, tarayıcı ajanlarına dolaylı bir şekilde enjeksiyon yapmanın "tamamen düzeltilebilecek bir hata olmadığını" belirtti. 2025  2026 saldırıları: Tainted Memories (Atlas CSRF), HashJack (Cato Networks), ve Perplexity Comet'te tek tıkla kaçırmalar.
 
 **Type:** Learn
-**Languages:** Python (stdlib, indirect prompt-injection attack surface model)
+**Languages:** Python (stdlib, indirect prompt-injection attack surface model), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~45 minutes
 

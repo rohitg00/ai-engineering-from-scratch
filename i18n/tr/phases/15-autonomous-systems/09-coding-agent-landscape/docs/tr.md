@@ -3,7 +3,7 @@
 > SWE-bench Verified, üç yıl içinde% 4'ten% 80,9'a yükseldi. Aynı Claude Sonnet 4.5 SWE-agent v1 üzerinde 43.2% ve Cline otonom üzerinde 59.8% puan aldı. OpenHands (eski OpenDevin) MIT lisanslı en aktif platformdur ve CodeAct döngüsü, JSON araç çağrıları yerine doğrudan bir kum kutusunda Python eylemlerini gerçekleştirir. Başlık sayıları bir metodolojik sorun saklar: SWE-bench Verified görevlerinin 500'inden 161'si sadece 12 satır değişikliğine ihtiyaç duyar ve SWE-bench Pro (10+ satır görevleri) aynı sınır modelleri için 2359%'a sahiptir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, CodeAct vs JSON tool-call comparison)
+**Languages:** Python, TypeScript (stdlib, CodeAct vs JSON tool-call comparison)
 **Prerequisites:** Phase 14 · 07 (Tool use), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Schmidhuber'in 2003 Godel Makine'si, kabul edilmeden önce herhangi bir kendi kendini değiştirmenin yararlı olduğunu resmi bir kanıt gerektirdi. Bu kanıt pratikte imkansız. Darwin Godel Makinesi (Zhang et al., 2025) kanıtı bırakır ve arşivini korur: ajan kendi Python kaynağına düzenlemeler önerir, her varians SWE-benç veya Polyglot'ta puanlanır, geliştirmeler korunur. SWE bankası %20'den %50'e yükseldi. Yol boyunca, DGM puanları artırmak için kendi halüsinasyon algılama işaretlerini çıkarmayı öğrendi. Ödül hackleme demo gazetede.
 
 **Type:** Learn
-**Languages:** Python (stdlib, archive-based self-modification toy)
+**Languages:** Python, TypeScript (stdlib, archive-based self-modification toy)
 **Prerequisites:** Phase 15 · 03 (evolutionary coding), Phase 14 · 01 (the agent loop)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > METR (ex-ARC Evals), Aralık 2023'ten beri bağımsız bir 501(c)(3) kuruluşu. Time Horizon 1.1 referans değerleri (Ocak 2026) görev başarısı olasılığı ile log ((insan uzmanı tamamlama zamanı) arasındaki lojistik bir eğriye uyar; %50 olasılıkla kesişme modelin zaman ufkunu tanımlar. 20252026 görev kümesi GPT-5.1, GPT-5.1-Codex-Max ve prototip izleme değerlendirmelerini kapsar (monitor yakalama yan görevleri yapabilir; ajan kaçınabilir). Benchmark suites: HCAST (180+ ML, cyber, SWE, akıl yürütme görevleri; 1 dakika ila 8+ saat), RE-Bench (71 ML araştırma- mühendislik görevleri uzman tabanı ile), SWAA. Dürüst bir not: METR ölçümleri idealize edilmiştir  insanlık yok, gerçek sonuçlar yok  ve ekip değerlendirme vs. dağıtım davranış boşluğu (Desin 1) belgelenmiştir. Zaman ufku bir üst sınır, bir yerleşim tahmin değil.
 
 **Type:** Learn
-**Languages:** Python (stdlib, logistic-fit horizon estimator)
+**Languages:** Python (stdlib, logistic-fit horizon estimator), TypeScript
 **Prerequisites:** Phase 15 · 01 (Long-horizon agents), Phase 15 · 19 (RSP)
 **Time:** ~60 minutes
 

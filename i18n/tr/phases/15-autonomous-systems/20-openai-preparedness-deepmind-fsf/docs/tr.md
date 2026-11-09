@@ -3,7 +3,7 @@
 > OpenAI Hazırlık Çerçeve v2 (Epril 2025) Araştırma Kategorilerini  Uzun mesafeli özerklik, Kum çantası, özerk kopyalama ve uyarlama, korumaları bozan  izlenen kategorilerden farklı olarak tanıttı. İzlenen Kategoriler, Güvenlik Danışmanlık Grubu tarafından incelenen yetenek Raporları ve Güvenlik Raporları ile tetiklenir. DeepMind'in FSF v3 (Eylül 2025, 17 Nisan 2026) kendiliğinden ML R&D ve Siber alanlarına katılır (ML R&D kendiliğindenliği seviyesinin 1 = rekabetçi maliyet vs. insan + AI araçları ile AI R&D borusunu tamamen otomatikleştirir). FSF v3, araçsal akıl yürütme yanlış kullanımını otomatik izleme yoluyla yanıltıcı bir ayarlama ile açıkça ilgilenir. Dürüst bir not: PF v2'deki Araştırma Kategorileri (Uzun Aralıklı Otonomisi dahil) otomatik olarak hafiflemeleri tetiklemez; politika dili "potansiyel".
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-framework decision-table diff tool)
+**Languages:** Python (stdlib, three-framework decision-table diff tool), TypeScript
 **Prerequisites:** Phase 15 · 19 (Anthropic RSP)
 **Time:** ~45 minutes
 

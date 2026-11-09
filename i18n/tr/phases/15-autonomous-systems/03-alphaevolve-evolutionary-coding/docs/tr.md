@@ -3,7 +3,7 @@
 > Devrimsel bir döngü ve makine kontrol edilebilir bir değerlendirici ile sınır kodlama modeli eşleştirin. Çubuk yeterince uzun sürsün. Bu, 48 skalar çarpımı kullanan 4x4 kompleks-matris çarpma prosedürünü keşfeder. 56 yıl içinde Strassen'in ilk gelişimi. Ayrıca, üretimde bulunan klüster hesaplamalarının %0,7'ini geri alan Google genelinde bir Borg programlama heuristik bulur. Mimarlık kasten sıkıcı. Kazançlar değerlendirici'nin katılamasından kaynaklanmaktadır.
 
 **Type:** Learn
-**Languages:** Python (stdlib, evolutionary-loop toy)
+**Languages:** Python, TypeScript (stdlib, evolutionary-loop toy)
 **Prerequisites:** Phase 15 · 01 (long-horizon framing), Phase 15 · 02 (self-taught reasoning)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > Her grafik-devlet geçişi devam ediyor. Bir işçi kaza yaparsa, kira sözleşmesi geçerli olur ve son kontrol noktasında başka bir işçi onu alır. Cloudflare Durable Objects saatler veya haftalar boyunca durumunu korur. Teklif-sonra-tümlenme (Disim 15) her eylem için bir gerileme planı tanımlar. Eylem sonrası doğrulama döngüyü kapatır. AB AI Yasası'nın 14. maddesi yüksek riskli sistemler için etkili insan denetimini zorunlu kılıyor  bu, pratikte kontrol noktalarının sorgulanabilir olması, geri dönüşlerin prova edilmesi ve denetim yolunun bir dağıtımdan geçmesi gerektiği anlamına geliyor. Keskin bir başarısızlık modusu: İdempotency anahtarları ve ön koşul kontrolleri olmadan geçici bir başarısızlıktan sonra yeniden deneme, zaten onaylanmış bir eylemin iki katına çıkabilir. İşten sonra doğrulama onu yakalar.
 
 **Type:** Learn
-**Languages:** Python (stdlib, checkpoint and rollback state machine)
+**Languages:** Python (stdlib, checkpoint and rollback state machine), TypeScript
 **Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 15 (Propose-then-commit)
 **Time:** ~60 minutes
 

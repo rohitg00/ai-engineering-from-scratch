@@ -3,7 +3,7 @@
 > Anthropic, bağımsız kum kutularında Claude Opus 4.6 Autonomous Alignment Araştırmacılarının paralel ekiplerini çalıştı ve kayıtları herhangi bir kum kutuunun dışında yaşayan paylaşılan bir forum aracılığıyla koordine etti (bu nedenle ajanlar kendi kayıtlarını silemezler). Zayıf-güçlü eğitim sorunu konusunda AAR'lar insan araştırmacılarını geçirdi. İş akışlarını belirleyen Anthropic'in kendi özetli bayrakları genellikle AAR esnekliğini kısıtlar ve performansını düşürür. Otomatik uyum araştırması zaman çizgisini sıkıştırır ve RSP'nin tespit etmek amacıyla aynı yanlış uyum riskleri üzerine bunu yapar.
 
 **Type:** Learn
-**Languages:** Python (stdlib, parallel-research-forum simulator)
+**Languages:** Python, TypeScript (stdlib, parallel-research-forum simulator)
 **Prerequisites:** Phase 15 · 05 (AI Scientist v2), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

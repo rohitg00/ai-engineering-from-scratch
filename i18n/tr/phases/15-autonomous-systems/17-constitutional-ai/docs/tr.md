@@ -3,7 +3,7 @@
 > Anthropic'in 22 Ocak 2026 Claude Anayasası 79 sayfalık ve CC0'dur. Kurallara dayalı bir uyumluluktan mantığa doğru ilerler ve dört aşamalı bir öncelik hiyerarşisi oluşturur: (1) güvenlik ve insan gözetimini desteklemek, (2) etik, (3) antropik rehberlik, (4) yararlılık. Davranışlar, operatörlerin ve kullanıcıların geçersiz kılabileceği sert kodlu yasaqlar (biyo silahları kaldırma, CSAM) ve operatörlerin belirlenmiş sınırlar içinde ayarlayabileceği yumuşak kodlu özürler olarak bölünmüştür. 2022 orijinalinde (Bai et al.) kendinden eleştiriler ve RLAIF yoluyla bir anayasa karşı zararsızlık eğitildi. Dürüst bir uyarı: Akıl tabanlı uyum, beklenmedik durumlara ilkeleri genelleştiren modellere dayanır. Anthropic'in kendi 2023 katılımcı deneyi kamu kaynaklı ve kurumsal ilkeler arasında ~50% farklılık gösterdi; 2026 versiyonu bu bulguları içermemiştir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-tier priority resolver)
+**Languages:** Python (stdlib, four-tier priority resolver), TypeScript
 **Prerequisites:** Phase 15 · 06 (Automated alignment research), Phase 15 · 10 (Permission modes)
 **Time:** ~60 minutes
 
