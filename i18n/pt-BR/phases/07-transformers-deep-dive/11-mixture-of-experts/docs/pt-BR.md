@@ -3,7 +3,7 @@
 > Um transformador 70B denso ativa todos os parâmetros para cada token. Um 671B MoE ativa apenas 37B por token e o supera em todos os benchmarks.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
@@ -90,6 +90,13 @@ Veja .`code/main.py`Uma camada compacta de MoE em stdlib puro com:
 - Top-k=2 roteamento
 - Peso de abertura normalizado de softmax
 - Equilíbrio sem perdas auxiliares através de preconceito por perito
+
+`code/main.rs`O Rust é um port Rust com as mesmas funções e demos.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Passo 1: roteador
 
