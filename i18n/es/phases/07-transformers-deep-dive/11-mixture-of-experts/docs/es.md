@@ -3,7 +3,7 @@
 > Un transformador 70B denso activa todos los parámetros para cada token. Un 671B MoE activa solo 37B por token y lo supera en cada punto de referencia.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
@@ -90,6 +90,13 @@ expert-routing
 - Top-k=2 enrutamiento
 - Peso de puertas normalizado de la máxima suave
 - equilibrio sin pérdidas auxiliares por sesgo de expertos
+
+`code/main.rs`El número aleatorio es diferente del de Python, pero las conclusiones impresas son las mismas.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Paso 1: el router
 

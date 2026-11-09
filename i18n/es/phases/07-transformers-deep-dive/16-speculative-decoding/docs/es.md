@@ -3,7 +3,7 @@
 > El decodificación autoregressiva es serie. Cada token espera al anterior. El decodificación especulativa rompe la cadena: un modelo barato elabora N tokens, el modelo caro verifica todos los N en un solo pase hacia adelante. Cuando el borrador está correcto pagaste un gran adelanto para N generaciones.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 07 (GPT Causal LM), Phase 7 · 12 (KV Cache & Flash Attention)
 **Time:** ~60 minutes
 
@@ -91,6 +91,13 @@ draft-verify-tokens
 - Un "modelo grande" que es una determinación-softmax sobre una distribución codificada a mano (para que podamos verificar la aceptación matemática analíticamente).
 - Un "modelo de borrador" que es una perturbación del modelo grande.
 - Un bucle de aceptación/rechazo que produce la misma distribución marginal que la muestreo directo.
+
+`code/main.rs`El número aleatorio es diferente del de Python, pero las conclusiones impresas son las mismas.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Paso 1: el paso de rechazo
 

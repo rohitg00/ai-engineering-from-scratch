@@ -3,7 +3,7 @@
 > El entrenamiento es paralelo y ligado a FLOP. La inferencia es seria y ligada a la memoria. Diferentes cuellos de botella, diferentes trucos.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~75 minutes
 
@@ -128,7 +128,7 @@ flash-attention-memory
 iso-machine {"machine":"kv-cache"}
 ```
 
-¿ Qué ?`code/main.py`Implementamos:
+¿ Qué ?`code/main.py`, o su puerto de Rust`code/main.rs`Para ejecutar la versión de Rust:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`Implementamos:
 
 1. Un ingenuo .$O(N^2)$decodificador incremental.
 2. ¿ Qué es esto ?$O(N)$Descriptor de caché KV.
