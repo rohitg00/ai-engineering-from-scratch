@@ -3,7 +3,7 @@
 > MigrationBench của Amazon (Java 8 đến 17) và bộ di chuyển Py2-to-Py3 của Google đặt bar 2026 . OpenRewrite của Moderne thực hiện các bản viết lại AST xác định ở quy mô. Grit nhắm đến cùng một vấn đề với kiểu codemod DSL. Mô hình sản xuất kết hợp cả hai: một nền xác định cho các bản viết lại an toàn cộng với một lớp chất đối tác cho các trường hợp mơ hồ, một hộp cát cho mỗi ngành xây dựng, và một vòng thử nghiệm biến màu xanh lá cây trước khi PR mở. Điểm cuối là di chuyển 50 repos thực và công bố tỷ lệ vượt qua với phân loại thất bại.
 
 **Type:** Capstone
-**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard)
+**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard, agent scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**P5 · P7 · P11 · P13 · P14 · P15 · P17
 **Time:** 30 hours

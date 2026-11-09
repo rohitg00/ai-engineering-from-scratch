@@ -3,7 +3,7 @@
 > Một đại lý nghiên cứu hỏi cùng một câu hỏi hai lần là lãng phí token.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

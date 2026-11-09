@@ -3,7 +3,7 @@
 > Biên giới tài liệu-QA năm 2026 đã di chuyển từ OCR-then-text và hướng tới tương tác muộn đầu tiên của thị giác. ColPali, ColQwen2.5 và ColQwen3-omni xử lý mỗi trang PDF như một hình ảnh, nhúng nó với tương tác muộn đa vector, và để truy vấn tham gia vào các bản vá trực tiếp. Trên tài chính 10K, các bài báo khoa học, và ghi chú bằng tay mô hình này đánh bại OCR-lần đầu tiên bằng một biên giới lớn. Xây dựng đường ống từ đầu đến cuối trên 10k trang và xuất bản bên cạnh với OCR-then-text.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (viewer UI)
+**Languages:** Python (pipeline), TypeScript (viewer UI, retrieval scaffold)
 **Prerequisites:** Phase 4 (computer vision), Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**P4 · P5 · P7 · P11 · P12 · P17
 **Time:** 30 hours

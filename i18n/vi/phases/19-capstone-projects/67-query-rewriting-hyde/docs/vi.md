@@ -3,7 +3,7 @@
 > Câu hỏi mà người dùng nhập không phải là câu hỏi mà máy tìm kiếm của bạn muốn. Việc viết lại làm cầu nối khoảng cách trước khi tìm kiếm, vì vậy chỉ mục thấy một cái gì đó gần hơn với câu trả lời trông như thế nào.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64 and 65
 **Time:** ~90 minutes
 
@@ -120,6 +120,7 @@ Hình dạng của máy thu hồi được sử dụng lại từ bài học 65 
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả là một bảng xếp hạng theo chiến lược và một bản tóm tắt cuối cùng. HyDE thắng trên câu hỏi không phù hợp cụm từ. Multi-query thắng trên câu hỏi biến thể cụm từ. Decomposition thắng trên câu hỏi đa chủ đề. Fallback (không có người viết lại) thua trên ít nhất một trong ba.

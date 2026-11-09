@@ -3,7 +3,7 @@
 > Một nhà phê bình trả lời "có vẻ tốt" lần đầu tiên bị phá vỡ. Một nhà phê bình luôn trả lời "có cần làm việc" bị phá vỡ. Nhà phê bình thú vị là người hội tụ, và bạn phải thiết kế sự hội tụ.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

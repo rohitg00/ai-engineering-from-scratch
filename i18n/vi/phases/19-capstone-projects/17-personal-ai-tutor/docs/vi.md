@@ -3,7 +3,7 @@
 > Khanmigo (Khan Academy), Duolingo Max, Google LearnLM / Gemini cho Giáo dục, Quizlet Q-Chat và Synthesis Tutor đều đã cung cấp các hướng dẫn đa phương thức thích nghi trên quy mô vào năm 2026. Hình thức phổ biến là chính sách Socrates (không bao giờ chỉ ném câu trả lời), mô hình học tập cập nhật sau mỗi tương tác (tương tự theo dõi kiến thức Bayesian), đầu vào giọng nói + văn bản + hình ảnh toán học, lấy đồ họa chương trình giảng dạy, lập lịch lặp lại khoảng cách và bộ lọc an toàn cứng cho nội dung phù hợp với độ tuổi. Điểm cuối là gửi một người hướng dẫn cụ thể về chủ đề (k-12 đại số hoặc intro Python), chạy một nghiên cứu hiệu quả hai tuần với 10 học viên, và vượt qua kiểm toán bảo mật nội dung.
 
 **Type:** Capstone
-**Languages:** Python (backend, learner model), TypeScript (web app), SQL (curriculum graph via Postgres + Neo4j)
+**Languages:** Python (backend, learner model), TypeScript (web app, learner model scaffold), SQL (curriculum graph via Postgres + Neo4j)
 **Prerequisites:** Phase 5 (NLP), Phase 6 (speech), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 14 (agents), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P5 · P6 · P11 · P12 · P14 · P17 · P18
 **Time:** 30 hours

@@ -3,7 +3,7 @@
 > Đến năm 2026, hình dạng của một đại lý mã hóa đã được giải quyết. Một vòng xoáy TUI, một kế hoạch đầy trạng thái, một bề mặt công cụ sandboxed, một vòng lặp mà kế hoạch, hành động, quan sát, phục hồi. Claude Code, Cursor 3, và OpenCode đều giống nhau từ 50 feet. Bạch đá cuối này yêu cầu bạn xây dựng một đầu để kết thúc CLI vào, kéo yêu cầu ra và đo nó so với mini-swe-agent và Live-SWE-agent trên SWE-bench Pro. Bạn sẽ học được tại sao phần khó khăn không phải là cuộc gọi mô hình mà là vòng lặp công cụ, hộp cát và mức giá trên một vòng 50 lượt.
 
 **Type:** Capstone
-**Languages:** TypeScript / Bun (harness), Python (eval scripts)
+**Languages:** TypeScript / Bun (harness, loop scaffold), Python (eval scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools and protocols), Phase 14 (agents), Phase 15 (autonomous systems), Phase 17 (infrastructure)
 **Phases exercised:**P0 · P5 · P7 · P10 · P11 · P13 · P14 · P15 · P17 · P18
 **Time:** 35 hours

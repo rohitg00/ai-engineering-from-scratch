@@ -3,7 +3,7 @@
 > Mỗi tổ chức kỹ thuật nghiêm túc vào năm 2026 sẽ thực hiện một tìm kiếm mã nội bộ hiểu ý nghĩa, không chỉ là chuỗi. Sourcegraph Amp, câu trả lời mã cơ sở của Cursor, biểu đồ doanh nghiệp của Augment, bản đồ lại của Aider, MCP nội bộ của Pinterest  cùng một hình dạng. Thử nhiều repos, phân tích với tree-sitter, nhúng các hàm và lớp cấp khối, tìm kiếm lai, xếp hạng lại, trả lời với trích dẫn. Bạch đá cuối này yêu cầu bạn xây dựng một cái xử lý 2M dòng mã trên 10 repos và tồn tại tăng thêm tái chỉ mục trên mỗi cú đẩy git.
 
 **Type:** Capstone
-**Languages:** Python (ingestion), TypeScript (API + UI)
+**Languages:** Python (ingestion), TypeScript (API + UI, retrieval scaffold)
 **Prerequisites:** Phase 5 (NLP foundations), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 17 (infrastructure)
 **Phases exercised:**P5 · P7 · P11 · P13 · P17
 **Time:** 30 hours

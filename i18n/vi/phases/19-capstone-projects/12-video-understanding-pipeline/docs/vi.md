@@ -3,7 +3,7 @@
 > 12 phòng thí nghiệm sản xuất Marengo + Pegasus. VideoDB đã gửi CRUD-for-video API. Molmo 2 của AI2 đã công bố các trạm kiểm soát VLM mở. Gemini xử lý nhiều giờ video theo bản địa. TimeLens-100K xác định định định kỳ đất ở quy mô. Các đường ống 2026 đã được giải quyết: phân đoạn cảnh, tiêu đề mỗi cảnh + nhúng, sắp xếp bản sao, chỉ số đa vector, và một truy vấn trả lời với (bắt đầu, kết thúc) dấu thời gian cộng với khung cảnh xem trước. Ngọc cuối đang tiêu thụ 100 giờ, đạt được các điểm chuẩn công cộng, và đo ảo giác về việc đếm và hành động.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (UI)
+**Languages:** Python (pipeline), TypeScript (UI, pipeline scaffold)
 **Prerequisites:** Phase 4 (CV), Phase 6 (speech), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**P4 · P6 · P7 · P11 · P12 · P17
 **Time:** 30 hours

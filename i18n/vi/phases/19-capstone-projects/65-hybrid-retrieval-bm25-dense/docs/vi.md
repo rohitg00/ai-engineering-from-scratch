@@ -3,7 +3,7 @@
 > Việc tìm kiếm từ ngữ và ngữ nghĩa thất bại trên phân phối truy vấn đối lập. Việc tìm kiếm lai với sự hợp nhất cấp bậc tương đối không liên quan, nó bỏ phiếu - và phiếu bầu thắng trên mọi lớp truy vấn.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lesson 64 (chunking strategies)
 **Time:** ~90 minutes
 
@@ -81,6 +81,7 @@ rrf-fusion
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Đọc các kết quả demo bên cạnh. truy vấn nhận dạng theo nghĩa đen hạ cánh tại BM25 hạng 1, mật hạng 4, RRF hạng 1. truy vấn được diễn tả hạ cánh tại BM25 hạng 6, mật hạng 1, RRF hạng 1. truy vấn mơ hồ hạ cánh tại BM25 hạng 3, mật hạng 3, RRF hạng 1. Sự hợp nhất không phải là một tie-breaker; nó là hệ thống chiến thắng trên mỗi lớp truy vấn.

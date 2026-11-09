@@ -3,7 +3,7 @@
 > Harvey, Glean, Mendable và LlamaCloud đều chạy cùng một hình thức sản xuất vào năm 2026. Tiêu thụ với docling hoặc Unstructured và ColPali cho hình ảnh. Tìm kiếm lai. Tái xếp hạng với Bge-Reranker-v2-gemma. Kết hợp với Claude Sonnet 4.7 sử dụng cache nhanh với tỷ lệ truy cập 60-80%. Bảo vệ với Llama Guard 4 và NeMo Guardrails. Hãy xem với Langfuse và Phoenix. Đánh giá bằng RAGAS trên một bộ vàng 200 câu hỏi. Hãy xây dựng một trong một lĩnh vực được quy định (hợp pháp, lâm sàng, bảo hiểm), và đá cuối sẽ vượt qua bộ vàng, đội đỏ, và bảng điều khiển drift.
 
 **Type:** Capstone
-**Languages:** Python (pipeline + API), TypeScript (chat UI)
+**Languages:** Python (pipeline + API), TypeScript (chat UI, pipeline scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P5 · P7 · P11 · P12 · P17 · P18
 **Time:** 30 hours

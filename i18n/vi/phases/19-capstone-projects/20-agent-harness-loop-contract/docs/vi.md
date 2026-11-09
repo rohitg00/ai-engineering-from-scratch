@@ -3,7 +3,7 @@
 > Bộ đeo là đại lý, mô hình là một bộ xử lý đồng bộ. Bài học này đóng băng hợp đồng vòng lặp mà bạn có thể cáp bất kỳ mô hình nào vào.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > Trước, sau, sau, ba điểm kiểm soát, một phán quyết, một dấu vết kiểm toán theo yêu cầu.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -59,7 +59,7 @@ Demo chạy tất cả 50 tính toán phân loại cộng với 10 yêu cầu l�
 
 ## Sử dụng nó
 
-`python3 main.py`. Demo tải tất cả, chạy từ đầu đến cuối, in bảng tổng kết và viết các nguyên nhân. mã thoát là không. Demo tự hủy trong nghĩa đen: mỗi yêu cầu chạy đến hoàn thành hoặc chấm dứt sớm và cổng di chuyển đến tiếp theo.
+`python3 main.py`hoặc `npx tsx main.ts`. Demo tải tất cả, chạy từ đầu đến cuối, in bảng tổng kết và viết các nguyên nhân. mã thoát là không. Demo tự hủy trong nghĩa đen: mỗi yêu cầu chạy đến hoàn thành hoặc chấm dứt sớm và cổng di chuyển đến tiếp theo.
 
 ## Chuyển nó
 

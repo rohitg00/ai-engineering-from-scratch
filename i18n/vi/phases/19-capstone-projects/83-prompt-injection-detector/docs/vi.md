@@ -3,7 +3,7 @@
 > Một máy dò là một chức năng từ prompt đến confidence và category.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -57,7 +57,7 @@ Các bộ chạy metrics tạo ra một báo cáo JSON với độ chính xác c
 
 ## Sử dụng nó
 
-Đi chạy`python3 main.py`Demo tải phân loại, chạy bộ phát hiện trên mỗi thiết bị, chạy nó trên một cơ thể tốt lành-quay được nướng vào`benign.py`, và in các số liệu cho mỗi loại.`outputs/detector_report.json`File là đồ tạo ra của cổng an toàn trong bài học 87 tiêu thụ.
+Đi chạy`python3 main.py`hoặc `npx tsx main.ts`Demo tải phân loại, chạy bộ phát hiện trên mỗi thiết bị, chạy nó trên một cơ thể tốt lành-quay được nướng vào`benign.py`, và in các số liệu cho mỗi loại.`outputs/detector_report.json`File là đồ tạo ra của cổng an toàn trong bài học 87 tiêu thụ.
 
 ## Chuyển nó
 

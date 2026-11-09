@@ -3,7 +3,7 @@
 > Một vòng xoáy không có lớp xác minh là một ước muốn trong một áo khoác. Bài học này xây dựng chuỗi cổng xác định được quyết định liệu một cuộc gọi công cụ có được phép bắn, bao nhiêu đầu ra của nó mà đại lý được phép xem, và khi nào vòng lặp phải dừng lại vì đại lý đã đọc quá nhiều. Dòng là một chức năng của các cổng nhỏ, tên cộng với một sổ cái quan sát theo dõi mọi biểu tượng mô hình đã được hiển thị.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 20-24 (Track A1: agent loop, tool registry, message store, prompt builder, model router), Phase 14 · 33 (instructions as constraints), Phase 14 · 36 (scope contracts), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -95,6 +95,7 @@ Những bài học trước đây đã cho bạn vòng lặp, sổ đăng ký c�
 ```bash
 cd phases/19-capstone-projects/25-verification-gates-observation-budget
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

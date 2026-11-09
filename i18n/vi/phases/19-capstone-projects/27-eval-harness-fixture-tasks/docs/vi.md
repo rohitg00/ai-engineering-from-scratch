@@ -3,7 +3,7 @@
 > Một nhân viên lập trình chỉ tốt như bộ nhiệm vụ mà bạn đo lường nó. Bài học này xây dựng một vòng đánh giá lấy một thư mục các nhiệm vụ cố định, chạy mỗi trong một đại lý ứng cử viên, điểm vượt qua hoặc thất bại thông qua một xác minh xác định, và tổng hợp kết quả thành pass@1, pass@k, độ trễ trung bình và chi phí trung bình. Lớp dây là nguồn sự thật cho phép bạn biết sự lùi từ một bộ phản ứng.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox runner), Phase 14 · 30 (eval-driven agent development), Phase 14 · 19 (SWE-bench and GAIA benchmarks)
 **Time:** ~90 minutes
 
@@ -100,6 +100,7 @@ Bài học 25 tạo ra chuỗi cổng, bài học 26 tạo ra hộp cát.`shell_
 ```bash
 cd phases/19-capstone-projects/27-eval-harness-fixture-tasks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

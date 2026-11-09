@@ -3,7 +3,7 @@
 > Việc giải mã giả định  một bản thảo rẻ tiền đề xuất mã thông báo, mô hình mục tiêu xác minh chúng trong một lần đi  bây giờ là một tối ưu hóa sẵn sàng để sản xuất, không phải là một thủ thuật nghiên cứu. Eagle-3 trong vLLM 0.7 tàu 2.5-3x thông qua trên lưu lượng thực. P-EAGLE (AWS 2026) đẩy đầu cơ song song đi xa hơn nữa. SpecForge của SGLang đã đào tạo các nhân viên tuyển dụng ở quy mô lớn. Trung tâm đầu cơ của Red Hat đã công bố các bản thảo phù hợp cho các mô hình mở chung. TensorRT-LLM đã làm cho việc giải mã đầu tiên trên NVIDIA. Bộ sản xuất phục vụ năm 2026 là vLLM hoặc SGLang với các bản thảo gia đình EAGLE, định lượng FP8 hoặc INT4, và HPA chờ đợi hàng. Bức đá cuối này sẽ phục vụ hai mô hình mở với thông qua đường cơ sở 2,5x + với báo cáo trễ đuôi đầy đủ.
 
 **Type:** Capstone
-**Languages:** Python (serving), C++ / CUDA (kernel inspection), YAML (configs)
+**Languages:** Python (serving), TypeScript, C++ / CUDA (kernel inspection), YAML (configs)
 **Prerequisites:** Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 17 (infrastructure)
 **Phases exercised:**P3 · P7 · P10 · P17
 **Time:** 30 hours

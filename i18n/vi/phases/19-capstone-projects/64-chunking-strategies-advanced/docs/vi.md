@@ -3,7 +3,7 @@
 > Chunking quyết định cái gì máy quay của bạn có thể xuất hiện, sai giới hạn và không có mô hình nhúng, không có re-ranker, không có LLM có thể sửa chữa thiệt hại xuống dòng.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG), 07 (advanced RAG); Phase 19 Track B foundations (lessons 20-29)
 **Time:** ~90 minutes
 
@@ -89,6 +89,7 @@ ci-chunk-boundaries
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả là một bảng nhỏ với một hàng cho mỗi chiến lược và một cột cho mỗi k. Câu thua trên bộ phận cấu trúc. Đánh dấu cấu trúc thắng trên bộ phận đánh dấu. Đánh dấu lặp giữ riêng của mình trên bộ phận hỗn hợp bởi vì sự lặp lại thích nghi.

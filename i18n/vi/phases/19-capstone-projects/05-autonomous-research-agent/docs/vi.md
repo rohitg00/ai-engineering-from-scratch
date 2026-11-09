@@ -3,7 +3,7 @@
 > Sakana's AI-Scientist-v2 đã xuất bản toàn bộ bài báo. Cảnh sát phòng thí nghiệm đã tiến hành các thí nghiệm. Allen AI chia sẻ dấu vết. Hình dạng 2026 là tìm kiếm cây kế hoạch thực hiện-thấy chứng trên các thí nghiệm, chi phí ngân sách, thực hiện mã sandboxed, một người viết LaTeX phản hồi tầm nhìn, và một bộ đánh giá tự động theo phong cách NeurIPS. Đá cuối là xây dựng một, chạy nó từ đầu đến cuối trong vòng 30 đô la mỗi giấy, và sống sót khỏi đội bóng đỏ thoát khỏi hộp cát mà Sakana ghi lại.
 
 **Type:** Capstone
-**Languages:** Python (agent + sandbox), LaTeX (output)
+**Languages:** Python (agent + sandbox), TypeScript, LaTeX (output)
 **Prerequisites:** Phase 2 (ML), Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 18 (safety)
 **Phases exercised:**P0 · P2 · P3 · P7 · P10 · P14 · P15 · P16 · P18
 **Time:** 40 hours

@@ -254,6 +254,7 @@ Mô hình Python cho thấy dữ liệu siêu dữ liệu đăng ký, xác thự
 ```bash
 cd phases/19-capstone-projects/13-mcp-server-with-registry
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

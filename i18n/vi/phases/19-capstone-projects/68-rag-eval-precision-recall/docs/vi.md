@@ -3,7 +3,7 @@
 > Nếu bạn không thể đánh giá tìm kiếm của bạn và câu trả lời của bạn cùng một lúc, bạn không thể vận chuyển hệ thống. Hai không phải là metric giống nhau và cùng một lời nhắc thất bại trên các trục khác nhau.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 06 (RAG), 10 (evaluation); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64, 65, 66, 67
 **Time:** ~90 minutes
 
@@ -121,6 +121,7 @@ ci-rag-metric-ladder
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả xuất hiện cho thấy độ chính xác@k, recall@k, MRR, nDCG@k, độ trung thành và liên quan đến câu trả lời cho mỗi biến thể trong một bảng chỉ số duy nhất. Dòng lấy lại lai mầm vượt qua đường cơ sở chunker khi gọi lại; dòng xếp hạng lại vượt qua lai mầm trên MRR.

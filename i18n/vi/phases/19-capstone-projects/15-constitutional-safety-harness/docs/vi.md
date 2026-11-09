@@ -3,7 +3,7 @@
 > Các bộ phân loại hiến pháp của Anthropic, Llama Guard 4 của Meta, ShieldGemma 2 của Google, NVIDIA Nemotron 3 Content Safety và X-Guard cho bảo hiểm đa ngôn ngữ đã xác định hàng xếp hạng an toàn năm 2026. Garak, PyRIT, NVIDIA Aegis và promptfoo trở thành các công cụ đánh giá đối thủ tiêu chuẩn. NeMo Guardrails v0.12 kết nối chúng vào một đường ống sản xuất. Chất đá này kết hợp tất cả: một vòng dây an toàn lớp xung quanh một ứng dụng mục tiêu, một đại lý nhóm đỏ tự trị chạy 6 gia đình tấn công, và một cuộc chạy tự phê bình hiến pháp tạo ra một delta vô hại có thể đo lường.
 
 **Type:** Capstone
-**Languages:** Python (safety pipeline, red team), YAML (policy configs)
+**Languages:** Python (safety pipeline, red team), TypeScript, YAML (policy configs)
 **Prerequisites:** Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 18 (ethics, safety, alignment)
 **Phases exercised:**P10 · P11 · P13 · P14 · P18
 **Time:** 25 hours

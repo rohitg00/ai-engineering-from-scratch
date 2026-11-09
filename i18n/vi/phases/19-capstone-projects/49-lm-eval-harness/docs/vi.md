@@ -3,7 +3,7 @@
 > Một mô hình làm tốt trong một nhiệm vụ mà bạn không thể xác định là một mô hình làm tốt trong một tình huống.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 42 to 45
 **Time:** ~90 minutes
 
@@ -135,6 +135,7 @@ Mỗi thước đo là một hàm nhỏ với một unit test. Suite thử nghi�
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Các kịch bản gieo hạt các thiết bị trên lần đầu tiên chạy, ghi điểm chúng với bộ điều chỉnh đồ chơi (được nhận được mọi thiết bị đúng), và viết `outputs/leaderboard.json`. Điểm tổng thể là 1.0 với bộ điều chỉnh đồ chơi; thử nghiệm bộ điều chỉnh vật liệu trong `test_main.py`cho thấy cùng một vòng xoáy tạo ra 0.0 khi bộ điều chỉnh không thể trả lời.

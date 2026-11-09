@@ -3,7 +3,7 @@
 > Đánh dấu một vấn đề, lấy PR  hình dạng sản phẩm 2026 cho các đại lý lập trình tự trị: chạy một đại lý trong một hộp cát đám mây, xác minh kiểm tra vượt qua, và đăng một PR sẵn sàng xem xét với lý luận. Các đại lý AWS Remote SWE, Cursor Background Agents, OpenAI Codex cloud, và Google Jules đều gửi nó. Các phần khó là tái tạo môi trường xây dựng repo tự động, ngăn chặn rò rỉ tín dụng, thực thi ngân sách mỗi repo, và đảm bảo rằng đại lý không thể ép buộc. Bạch đá này xây dựng phiên bản tự lưu trữ và so sánh nó về chi phí và tỷ lệ vượt qua với các lựa chọn thay thế được lưu trữ.
 
 **Type:** Capstone
-**Languages:** Python (agent), TypeScript (GitHub App), YAML (Actions)
+**Languages:** Python (agent), TypeScript (GitHub App, agent scaffold), YAML (Actions)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**P11 · P13 · P14 · P15 · P17
 **Time:** 30 hours

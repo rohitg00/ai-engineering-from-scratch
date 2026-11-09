@@ -3,7 +3,7 @@
 > Một giả thuyết là rẻ tiền. Biết liệu ai đó đã chứng minh nó là phần đắt tiền. Hãy xây dựng lớp tìm kiếm trả lời câu hỏi đó trước khi người chạy đua quay một hộp cát.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

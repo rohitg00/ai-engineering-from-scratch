@@ -3,7 +3,7 @@
 > Bytes vào, ID ra, ID trở lại cùng một byte.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 04 lessons, Phase 07 transformer lessons
 **Time:** ~90 minutes
 

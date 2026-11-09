@@ -3,7 +3,7 @@
 > - Đường A trả tiền. Bài học này đan chuỗi cổng, hộp cát, vòng đánh giá và OTel mở rộng thành một đại lý mã hóa hoạt động khắc phục một lỗi thực tế (tín, quy mô cố định) trong một dự án Python đa tập tin. Các đại lý là một chính sách xác định, không phải là một LLM; sự thay thế làm cho bài học có thể tái tạo và cho thấy rằng vòng xoáy là phần thú vị trong suốt thời gian. Hợp đồng giống nhau: một mô hình thực sự kết nối vào các chính sách.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 19 · 28 (observability), Phase 14 · 38 (verification gates), Phase 14 · 41 (workbench for real repos), Phase 14 · 42 (agent workbench capstone)
 **Time:** ~90 minutes
 
@@ -113,6 +113,7 @@ Bài học 25 viết chuỗi cổng. Bài học 26 viết hộp cát. Bài học
 ```bash
 cd phases/19-capstone-projects/29-end-to-end-coding-task-demo
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

@@ -3,7 +3,7 @@
 > Một đại lý giọng nói cảm thấy đúng có độ trễ cuối đến cuối dưới 800ms, biết khi nào bạn ngừng nói chuyện, xử lý việc cướp, và có thể gọi một công cụ mà không trì hoãn. Retell, Vapi, LiveKit Agents, và Pipecat đều đến quán bar này vào năm 2026. Chúng làm điều đó với cùng một hình dạng: một ASR phát sóng, một máy dò quay, một LLM phát sóng, và một TTS phát sóng, tất cả đều được cáp thông qua WebRTC với ngân sách độ trễ tích cực ở mỗi bước nhảy. Xây dựng một, đo WER và MOS và tỷ lệ cắt giảm sai, và chạy nó dưới mức mất gói.
 
 **Type:** Capstone
-**Languages:** Python (agent + pipeline), TypeScript (web client)
+**Languages:** Python (agent + pipeline), TypeScript (web client, scheduler scaffold)
 **Prerequisites:** Phase 6 (speech and audio), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 17 (infrastructure)
 **Phases exercised:**P6 · P7 · P11 · P13 · P14 · P17
 **Time:** 30 hours

@@ -3,7 +3,7 @@
 > Loop chỉ là trung thực như các phép đo của nó. xây dựng runner lấy một spec, thực hiện nó trong một subprocess sandboxed, và phát ra một điểm số json mà người đánh giá có thể tin tưởng.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

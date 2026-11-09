@@ -3,7 +3,7 @@
 > Cổng xác minh quyết định liệu một cuộc gọi công cụ có nên chạy hay không. Cái hộp cát quyết định chuyện gì sẽ xảy ra khi nó xảy ra. Bài học này đưa ra một bộ chạy bộ xử lý từ chối các trình thực nguy hiểm, từ chối các hình dạng argv nguy hiểm, khóa tất cả các đường dẫn tập tin đến gốc dự án, cắt giảm lượng sản xuất quá lớn và giết chết các quy trình chạy trốn trong thời gian clock tường. Nó là lớp thứ hai trong hai lớp nằm giữa mô hình và hệ điều hành.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates and observation budget), Phase 14 · 33 (instructions as constraints), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -87,6 +87,7 @@ Sandbox bài học không sử dụng không gian tên, cgroups, seccomp, gVisor
 ```bash
 cd phases/19-capstone-projects/26-sandbox-runner-denylist
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

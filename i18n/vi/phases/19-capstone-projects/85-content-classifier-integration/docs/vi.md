@@ -3,7 +3,7 @@
 > Các trình phân loại ở phía đầu ra trả lời một câu hỏi khác so với các quy tắc ở phía đầu vào. Cả hai đều cần một bộ định tuyến chính sách.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -56,7 +56,7 @@ cd-output-router
 
 ## Sử dụng nó
 
-Đi chạy`python3 main.py`. Demo in động từ hành động cho mỗi đầu ra thử nghiệm, viết `outputs/classifier_report.json`, và xác nhận rằng chặn, chỉnh sửa, cảnh báo và ghi lại mỗi lửa trên ít nhất một thiết bị. độ trễ là vô hiệu bởi vì tất cả các phân loại dựa trên quy tắc; cho một mô hình thực với phân loại thần kinh, các ống dẫn tương tự áp dụng sau khi độ trễ mỗi phân loại tăng lên.
+Đi chạy`python3 main.py`hoặc `npx tsx main.ts`. Demo in động từ hành động cho mỗi đầu ra thử nghiệm, viết `outputs/classifier_report.json`, và xác nhận rằng chặn, chỉnh sửa, cảnh báo và ghi lại mỗi lửa trên ít nhất một thiết bị. độ trễ là vô hiệu bởi vì tất cả các phân loại dựa trên quy tắc; cho một mô hình thực với phân loại thần kinh, các ống dẫn tương tự áp dụng sau khi độ trễ mỗi phân loại tăng lên.
 
 ## Chuyển nó
 

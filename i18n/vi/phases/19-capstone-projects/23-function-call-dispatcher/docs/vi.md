@@ -3,7 +3,7 @@
 > Bộ chuyển giao là nơi mà dây đeo trả tiền cho mọi lời hứa của kế hoạch, thời gian, thử lại, dedupe, bản đồ lỗi, tất cả trên một hàng xích.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

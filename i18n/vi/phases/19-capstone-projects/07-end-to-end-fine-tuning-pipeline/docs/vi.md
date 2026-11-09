@@ -3,7 +3,7 @@
 > Một mô hình lớp 8B được đào tạo dựa trên dữ liệu của bạn, DPO-được sắp xếp theo sở thích của bạn, được định lượng, giải mã theo suy đoán, và phục vụ với các token có thể đo lường được $ / 1M. Dòng mở 2026 là Axolotl v0.8, TRL 0.15, Unsloth cho lặp lại, GPTQ / AWQ / GGUF cho định lượng, vLLM 0.7 với EAGLE-3 cho phục vụ. Điểm cuối là chạy toàn bộ đường ống có thể tái tạo (YAML trong, served endpoint out) và xuất bản một thẻ mô hình theo khuôn khổ Model Openness 2026
 
 **Type:** Capstone
-**Languages:** Python (pipeline), YAML (configs), Bash (scripts)
+**Languages:** Python (pipeline), TypeScript, YAML (configs), Bash (scripts)
 **Prerequisites:** Phase 2 (ML), Phase 3 (DL), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P2 · P3 · P7 · P10 · P11 · P17 · P18
 **Time:** 35 hours

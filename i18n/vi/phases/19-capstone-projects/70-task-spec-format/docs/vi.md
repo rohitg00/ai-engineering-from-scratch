@@ -3,7 +3,7 @@
 > Một value harness chỉ tốt như hợp đồng các nhiệm vụ của nó tôn vinh. đóng băng hình dạng JSONL và từ vựng métric trước khi bạn viết một chức năng điểm điểm duy nhất.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track B foundations
 **Time:** ~90 min
 

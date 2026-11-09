@@ -3,7 +3,7 @@
 > Một bộ xương LaTeX là một hợp đồng giữa nhà nghiên cứu và người đặt kiểu chữ. Nếu hợp đồng bị phá vỡ tài liệu không biên soạn, và sự thất bại là lớn.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 
