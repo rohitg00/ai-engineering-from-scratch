@@ -3,7 +3,7 @@
 > مدل یک آینه است. هر گونه داده ای که به آن داده می شود را منعکس می کند. آن را به زباله می دهد، زباله را با روان بودن کامل منعکس می کند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 10, Lessons 01-02 (Tokenizers, Building a Tokenizer)
 **Time:** ~90 minutes
 

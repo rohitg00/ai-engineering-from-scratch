@@ -3,7 +3,7 @@
 > تو در درس 04- يه GPT-2 کوچولو رو از ابتدا ساختي مدل های باز مرزی در سال 2026 با پنج یا شش تغییر کنکریتی، همان خانواده هستند. RMSNorm به جای LayerNorm سوگل بجاي ژيلو به جای موقعیت های آموخته روپ GQA یا MLA به جای MHA کامل. مخلوط کارشناسان در مقیاس ریاضیاتی که شما قبلاً می دانید 95 درصد از آنها را پوشش می دهد. این درس Llama 3، DeepSeek-V3، Mixtral، Qwen و Gemma را در کنار هم می خواند و خط دقیق هر معماری را نام می دهد.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10, Lessons 04, 05, 12 (Pre-training, Scaling, Inference)
 **Time:** ~45 minutes
 

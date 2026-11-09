@@ -3,7 +3,7 @@
 > توجه Softmax مقدار کمی احتمال را بر روی هر توکن غیر متقابل پخش می کند. بیش از ۱۰۰ هزار توکن که صدا می افزاید و سیگنال را غرق می کند. ترانسفارمر متمایز (Ye et al., ICLR 2025) آن را با محاسبه توجه به عنوان تفاوت دو نرمکس، کاهش سطح شور مشترک، تنظیم می کند. DIFF V2 (مائیکروسافت، ژانویه 2026) نسخه بازنویسی تولید است: مطابقت تاخیر رمزگذاری با خط پایه ترانسفورمتر، هیچ هسته سفارشی، FlashAttention سازگار است. این درس V1 تا V2 از انتهای تا انتهای است، با اجرای بازی کاری از عملیات تفاوت که می توانید در stdlib Python اجرا کنید.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 02 (self-attention), Phase 7 · 15 (attention variants), Phase 10 · 14 (architecture walkthrough)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > همه چيز از درس اول تا 12 يه مرحله از يک خط لوله است این درس است که این مراحل را به یک مرحله ی تک پایان تبدیل می کند: توکن سازی، پیش از قطار، مقیاس، SFT، خط بندی، ارزیابی، کوانتاسیون، خدمت. شما نماد 70B رو با لپ تاپ آموزش نميدونيد شما لایه ی سازمانی، مانیفیت، دروازه ی ارزیابی و برنامه ی برگشت را تولید خواهید کرد که یک تیم مرزی ۲۰۲۶ برای تصمیم گیری در مورد اینکه چه چیزی ارسال می شود استفاده می کند. اين سنگ پايين است.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** All Phase 10 lessons 01-12
 **Time:** ~120 minutes
 
@@ -216,10 +216,16 @@ beam-search
 
 سير کار قنونيک سه فرمان داره
 
-```
+```bash
 python code/main.py plan    # validate manifest, compute cost estimate, print DAG
 python code/main.py run     # execute stages, writing to manifest.out.yaml
 python code/main.py gate    # read manifest.out.yaml, apply eval gates, ship-or-hold
+```
+
+بندر رست هم همينطوره`plan`مرحله:
+
+```bash
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson plan
 ```
 
 فرار کن`plan`اکثر خط لوله ها در زمان برنامه ظاهر می شوند - حدودی گمشده دروازه ها، هاش های قدیمی، بیش از حد بودجه.`plan`آزادم، فرار ميکنم`run`با گرفتن حشرات در طرف ارزان پول صرفه جویی کنید

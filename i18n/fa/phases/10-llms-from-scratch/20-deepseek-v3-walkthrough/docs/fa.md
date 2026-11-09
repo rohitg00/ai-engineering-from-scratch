@@ -3,7 +3,7 @@
 > مرحله 10 · درس 14 شش دکمه معماری را هر مدل باز به نام می برد. DeepSeek-V3 (دسامبر 2024, 671B پارامترهای کل, 37B فعال) تمام شش و اضافه می کند چهار دیگر: توجه متعدد سر، تعادل بار بدون ضرر دستی، پیش بینی چند توکن و آموزش دوالپیپ. این درس معماری DeepSeek-V3 را از بالا تا پایین می خواند و هر تعداد پارامتر را از پیکربندی منتشر شده اخذ می کند. تا آخر می توانید توضیح دهید که چرا نسبت 671B/37B شرط مناسب است و چرا MLA + MoE با هم تنها در مرز شکست می دهند.
 
 **Type:** Learn
-**Languages:** Python (stdlib, parameter calculator)
+**Languages:** Python (stdlib, parameter calculator), Rust
 **Prerequisites:** Phase 10 · 14 (open-model walkthroughs), Phase 10 · 17 (NSA), Phase 10 · 18 (MTP), Phase 10 · 19 (DualPipe)
 **Time:** ~75 minutes
 
