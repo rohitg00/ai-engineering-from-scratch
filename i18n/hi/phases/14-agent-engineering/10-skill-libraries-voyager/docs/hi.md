@@ -3,7 +3,7 @@
 > Voyager (Wang et al., TMLR 2024) निष्पादन योग्य कोड को एक कौशल के रूप में व्यवहार करता है। कौशल का नामकरण, पुनः प्राप्ति योग्य, रचनाशील और पर्यावरण प्रतिक्रिया द्वारा परिष्कृत किया जाता है। यह क्लाउड एजेंट एसडीके कौशल, कौशलकिट और 2026 कौशल-पुस्तक पैटर्न के लिए संदर्भ वास्तुकला है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ voyager-skills
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 निशान लाइब्रेरी लिखता है, पुनर्प्राप्ति, रचना, एक विफल निष्पादन, और एक v2 परिष्करण दिखाता है  अंत से अंत तक Voyager के लूप।

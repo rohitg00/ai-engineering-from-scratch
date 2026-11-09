@@ -3,7 +3,7 @@
 > एक रोडमैप में पहलुओं के अंदर अनिश्चितता छिपी रहती है। एक परिकल्पना नक्शा में उन पहलुओं के अस्तित्व के लायक होने से पहले क्या सच होना चाहिए, इसका खुलासा होता है।
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 48
 **Time:** ~65 minutes
 
@@ -82,6 +82,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

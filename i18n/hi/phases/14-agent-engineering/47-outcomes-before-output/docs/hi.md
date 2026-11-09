@@ -3,7 +3,7 @@
 > जल्दी से लागू करने से गलत समस्या चुनने पर जुर्माना बढ़ जाता है। पहले परिणाम को आकार दें ताकि सही दिशा में गति इंगित की जा सके।
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** None
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

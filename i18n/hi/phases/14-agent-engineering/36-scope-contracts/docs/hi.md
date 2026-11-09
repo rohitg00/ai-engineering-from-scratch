@@ -3,7 +3,7 @@
 > मॉडल नहीं जानता कि काम कहां समाप्त होता है। एक दायरा अनुबंध एक प्रति कार्य फ़ाइल है जो बताती है कि काम कहां शुरू होता है, यह कहां समाप्त होता है, और यदि यह बहता है तो कैसे वापस रोल करता है। अनुबंध एक इच्छा से "अस्तित्व में रहें" को एक चेक में बदल देता है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 33 (Rules as Constraints)
 **Time:** ~50 minutes
 
@@ -107,6 +107,7 @@ wb-scope-bounce
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुटः अनुबंध, दो रन, प्रति रन के फैसले, और एक बचा `scope_report.json`. .

@@ -3,7 +3,7 @@
 > चैट इतिहास अस्थिर है। रेपो टिकाऊ है। वर्कबेंच स्टोर एजेंट संस्करण फ़ाइलों में स्टेटस है ताकि अगले सत्र, अगले एजेंट, और अगले समीक्षक सभी एक ही सत्य स्रोत से पढ़ते हैं।
 
 **Type:** Build
-**Languages:** Python (stdlib + `jsonschema` optional)
+**Languages:** Python (stdlib + `jsonschema` optional), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~60 minutes
 
@@ -81,6 +81,7 @@ wb-state-persist
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 स्क्रिप्ट लिखता है `workdir/agent_state.json`और `workdir/task_board.json`, उन्हें दो मोड़ पर उत्परिवर्तन करता है, और प्रत्येक कदम पर मान्य स्थिति प्रिंट करता है।

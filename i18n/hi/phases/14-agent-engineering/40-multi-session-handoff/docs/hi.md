@@ -3,7 +3,7 @@
 > यह कार्य समाप्त होने वाला है, कार्य नहीं है, यह कार्य है, यह कार्य है, यह कार्य है, जो "एजेंट ने एक घंटे तक काम किया" को "अगले सत्र में पहले मिनट में उत्पादक है" में बदल देता है। इसे उद्देश्य से बनाएं, न कि एक पछतावा के रूप में।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 34 (Repo Memory), Phase 14 · 38 (Verification), Phase 14 · 39 (Reviewer)
 **Time:** ~50 minutes
 
@@ -91,6 +91,7 @@ wb-handoff-packet
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुटः एक मुद्रित हस्तान्तरण शरीर, प्लस डिस्क पर दोनों फ़ाइलें।

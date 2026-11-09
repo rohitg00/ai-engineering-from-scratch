@@ -3,7 +3,7 @@
 > Du et al. (ICML 2024, "सामाजिक ऑफ माइंड्स") N मॉडल उदाहरण चलाते हैं जो स्वतंत्र रूप से उत्तर प्रस्तावित करते हैं, फिर आर राउंड पर अभिसरण करने के लिए पुनरावृत्त रूप से एक दूसरे की आलोचना करते हैं। तथ्य, नियम का पालन, तर्क में सुधार करता है। स्पार्स टोपोलॉजी टोकन लागत पर पूर्ण जाल को हराती है।
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 05 (Self-Refine and CRITIC)
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ debate-converge
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुटः प्रति प्रोटोकॉल सटीकता और लागत; कम लागत पर 2/3 प्रश्नों पर पूर्ण जाल के साथ दुर्लभ मैच।

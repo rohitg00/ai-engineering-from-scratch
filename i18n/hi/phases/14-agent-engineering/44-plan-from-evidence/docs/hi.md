@@ -3,7 +3,7 @@
 > एक योजना एक सुंदर टू-डू सूची नहीं है यह एक निर्भरता ग्राफ है जिसमें प्रत्येक परिवर्तन का एक कारण है और प्रत्येक टर्मिनल नोड का प्रमाण है।
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 43
 **Time:** ~65 minutes
 
@@ -92,6 +92,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

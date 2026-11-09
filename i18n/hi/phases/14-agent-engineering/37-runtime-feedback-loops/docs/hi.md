@@ -3,7 +3,7 @@
 > एजेंट जो वास्तविक कमांड आउटपुट अनुमान नहीं देखते हैं। एक प्रतिक्रिया रनर एक संरचित रिकॉर्ड में स्टडआउट, स्टडरर, एक्जिट कोड और समय को कैप्चर करता है। अगले वक्र को पढ़ सकता है। फिर एजेंट तथ्यों की अपनी भविष्यवाणी के बजाय तथ्यों पर प्रतिक्रिया करता है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 35 (Init Script)
 **Time:** ~50 minutes
 
@@ -72,6 +72,7 @@ wb-feedback-loop
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुटः तीन प्रतिक्रिया रिकॉर्ड जोड़े गए `feedback_record.jsonl`लूप जमा करने के लिए फिर से चलाए जाने पर फ़ाइल को आगे खींचें।

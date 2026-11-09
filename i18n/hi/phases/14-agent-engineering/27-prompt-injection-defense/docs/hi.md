@@ -3,7 +3,7 @@
 > Greshake et al. (AISec 2023) ने अप्रत्यक्ष प्रॉम्प्ट इंजेक्शन को एजेंट सुरक्षा समस्या के रूप में परिभाषित किया। हमलावर एजेंट द्वारा प्राप्त किए गए डेटा में निर्देश लगाता है; सेवन पर, ये निर्देश डेवलपर प्रॉम्प्ट को ओवरराइड करते हैं। उपकरण-उपयोग सतह पर सभी प्राप्त सामग्री को मनमाने ढंग से कोड निष्पादन के रूप में माना जाता है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 06 (Tool Use), Phase 14 · 21 (Computer Use)
 **Time:** ~75 minutes
 
@@ -81,6 +81,7 @@ injection-hijack
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुटः प्रति कॉल निशान सत्यापनकर्ता निर्णय और निष्पादक व्यवहार दिखा रहा है।

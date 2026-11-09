@@ -3,7 +3,7 @@
 > मिनी ट्रैक एक पैक के साथ समाप्त होता है आप किसी भी रेपो में छोड़ देते हैं सतहों के 11 पाठ एक निर्देशिका में संपीड़ित आप कर सकते हैं`cp -r`और अगले सुबह एक एजेंट को विश्वसनीय रूप से काम करने के लिए।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phases 14 · 31 to 14 · 41
 **Time:** ~75 minutes
 
@@ -96,6 +96,7 @@ wb-pack-install
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 स्क्रिप्ट सतहों को कॉपी और पिन करता है, README लिखता है, पैक ट्री प्रिंट करता है, और शून्य से बाहर निकलता है। फिर से चलाना अक्षम है।

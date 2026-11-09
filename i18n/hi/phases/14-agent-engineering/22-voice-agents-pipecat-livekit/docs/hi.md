@@ -3,7 +3,7 @@
 > वॉयस एजेंट्स 2026 में एक प्रथम श्रेणी उत्पादन श्रेणी हैं। पिएपकैट आपको एक पायथन फ्रेम-आधारित पाइपलाइन (VAD → STT → LLM → TTS → परिवहन) देता है। लाइवकिट एजेंट्स वेबआरटीसी पर उपयोगकर्ताओं के लिए एआई मॉडल को पुल बनाता है। प्रीमियम स्टैक के लिए उत्पादन विलंबता लक्ष्य 450600ms अंत-टू-अंत पर उतरते हैं।
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
 **Time:** ~60 minutes
 
@@ -89,6 +89,7 @@ voice-pipeline
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 निशान सामान्य प्रवाह और एक बारज-इन रद्द करता है जो TTS मध्य-उत्पादन को रोकता है दिखाता है।

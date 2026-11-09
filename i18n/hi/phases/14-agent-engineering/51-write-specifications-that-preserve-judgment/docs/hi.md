@@ -3,7 +3,7 @@
 > एक उपयोगी विनिर्देश अपरिवर्तनीय और सबूतों को ठीक करता है जबकि प्रतिवर्ती कार्यान्वयन विकल्पों को खुला छोड़ता है। यह निर्णय सीमा है, एक पटकथा नहीं है।
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 50
 **Time:** ~75 minutes
 
@@ -74,6 +74,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

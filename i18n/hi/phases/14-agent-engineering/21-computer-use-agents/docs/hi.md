@@ -3,7 +3,7 @@
 > 2026 में तीन उत्पादन कंप्यूटर उपयोग मॉडल। तीनों दृष्टि-आधारित हैं। तीनों स्क्रीनशॉट, डीओएम पाठ और उपकरण आउटपुट को अविश्वसनीय इनपुट के रूप में मानते हैं। केवल प्रत्यक्ष उपयोगकर्ता निर्देश अनुमति के रूप में गिनते हैं। प्रति चरण सुरक्षा सेवाएं मानक हैं।
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 20 (WebArena, OSWorld), Phase 14 · 27 (Prompt Injection)
 **Time:** ~60 minutes
 
@@ -92,6 +92,7 @@ computer-use-cursor
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुट में सुरक्षा वर्गीकरणकर्ता एक इंजेक्शन निर्देश को DOM पाठ में पकड़ता है और एक अमान्य खरीद को अवरुद्ध करता है।

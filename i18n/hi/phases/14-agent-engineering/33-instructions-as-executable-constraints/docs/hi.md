@@ -3,7 +3,7 @@
 > प्रोजा के रूप में लिखे गए निर्देश इच्छाएं हैं। प्रतिबंधों के रूप में लिखे गए निर्देश परीक्षण हैं। कार्य डेस्क प्रत्येक नियम को कुछ ऐसा बनाता है जिसे एक एजेंट रनटाइम में जांच सकता है और एक समीक्षक तथ्य के बाद सत्यापित कर सकता है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~50 minutes
 
@@ -96,6 +96,7 @@ wb-rule-checkoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुटः पार्स नियम सेट, रन ट्रैक, पास/फेल प्रति नियम, और `rule_report.json`स्क्रिप्ट के बगल में सहेजा गया।

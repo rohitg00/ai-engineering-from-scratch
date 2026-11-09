@@ -3,7 +3,7 @@
 > ओपनटेलीमेट्री के जेएनएआई एसआईजी (अप्रैल 2024 में लॉन्च) एजेंट टेलीमेट्री के लिए मानक योजना को परिभाषित करता है। स्पैन नाम, विशेषताएं और सामग्री कैप्चर नियम विक्रेताओं के बीच एक जैसे होते हैं इसलिए एजेंट ट्रैक का मतलब डेटाडॉग, ग्राफाना, जैगर और हनीकॉमब में एक ही बात होती है।
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 13 (LangGraph), Phase 14 · 24 (Observability Platforms)
 **Time:** ~60 minutes
 
@@ -88,6 +88,7 @@ ae-genai-span-tree
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुटः सभी आवश्यक GenAI गुणों के साथ एक स्पैन ट्री और ऑप्ट-इन सामग्री संदर्भों को दिखाने वाला एक "बाहरी स्टोर"

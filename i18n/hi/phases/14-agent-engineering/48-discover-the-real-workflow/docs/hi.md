@@ -3,7 +3,7 @@
 > आवश्यकताएं बैठक में एकत्रित होने के लिए इंतजार नहीं कर रही हैं, वे कार्यों, समाधानों, रिकॉर्ड और असहमति के बीच बिखरे हुए हैं।
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 47
 **Time:** ~70 minutes
 
@@ -82,6 +82,7 @@ flowchart TD
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

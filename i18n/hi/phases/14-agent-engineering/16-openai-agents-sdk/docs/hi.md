@@ -3,7 +3,7 @@
 > OpenAI एजेंट्स SDK प्रतिक्रिया एपीआई पर निर्मित हल्का बहु-एजेंट फ्रेमवर्क है। पांच आदिमः एजेंट, हैंडऑफ, गार्डरेल, सत्र, ट्रैकिंग। हैंडऑफ नामित उपकरण हैं।`transfer_to_<agent>`. इनपुट या आउटपुट पर गार्डरेल्स टूट जाते हैं. डिफ़ॉल्ट रूप से ट्रैकिंग चालू है.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -84,6 +84,7 @@ ae-agent-handoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 निशान दो सफल हस्तान्तरण दिखाता है, एक इनपुट गार्डरेल यात्रा, और एक स्पैन पेड़ वास्तविक एसडीके उत्सर्जन का प्रतिबिंबित करता है।

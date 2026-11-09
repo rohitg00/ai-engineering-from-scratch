@@ -3,7 +3,7 @@
 > मापने से निर्णय का जवाब मिलना चाहिए, डैशबोर्ड को सजाना नहीं। लक्ष्य से शुरू करें, प्रश्न प्राप्त करें, फिर उन सबसे छोटे मापों का चयन करें जो उन्हें जवाब देते हैं।
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 47 and 51
 **Time:** ~70 minutes
 
@@ -85,6 +85,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

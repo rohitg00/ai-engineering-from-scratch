@@ -3,7 +3,7 @@
 > एक एकल सोच श्रृंखला के लिए पीछे हटने की कोई जगह नहीं है। ToT (याओ एट एल, 2023) प्रत्येक नोड पर आत्म-मूल्यांकन के साथ तर्क को एक पेड़ में बदल देता है। LATS (जो एट एल, 2024) Monte Carlo Tree Search के तहत ReAct और Reflexion के साथ ToT को एकीकृत करता है। 24 का खेल 4% (CoT) से 74% (ToT) तक जाता है; LATS HumanEval पर 92.7% pass@1 पर पहुंचता है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~75 minutes
 
@@ -93,6 +93,7 @@ tree-of-thoughts
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ट्रैक में दिखाया गया है कि बीएफएस के साथ प्रत्येक नोड पर तीन उम्मीदवारों का विस्तार करने वाले टीओटी की तुलना में एमसीटीएस के माध्यम से सबसे अच्छे रोलआउट पर एलएटीएस की अभिसरण। दोनों के लिए टोकन गिनती मुद्रित की गई है।

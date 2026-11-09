@@ -3,7 +3,7 @@
 > समानांतर एजेंट केवल तभी दीवार समय बचाते हैं जब काम स्वतंत्र होता है। अन्यथा वे एक स्पष्ट कार्य को तेजी से विफलता दर के साथ समन्वय समस्या में बदल देते हैं।
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 39 and 44
 **Time:** ~70 minutes
 
@@ -86,6 +86,7 @@ flowchart TD
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

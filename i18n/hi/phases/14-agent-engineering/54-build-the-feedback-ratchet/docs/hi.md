@@ -3,7 +3,7 @@
 > शिपिंग एक निर्माण लूप बंद करता है और सीखने लूप खोलता है। सबूत प्रणाली को बदलना चाहिए या यह टेलीमेट्री बन जाता है किसी का भी मालिक नहीं है।
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 46 and 53
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

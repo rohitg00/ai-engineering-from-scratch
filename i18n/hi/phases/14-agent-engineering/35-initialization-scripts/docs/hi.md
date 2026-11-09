@@ -3,7 +3,7 @@
 > हर सत्र जो ठंडा शुरू होता है कर का भुगतान करता है एजेंट एक ही फ़ाइलें पढ़ता है, फिर से एक ही जांच की कोशिश करता है, और फिर से एक ही मार्गों की खोज करता है एक init स्क्रिप्ट कर एक बार भुगतान करता है और जवाबों को राज्य में लिखता है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 34 (Repo Memory)
 **Time:** ~45 minutes
 
@@ -72,6 +72,7 @@ wb-init-probes
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 स्क्रिप्ट जांच की तालिका प्रिंट करता है, लिखता है `init_report.json`, और सफल पथ पर शून्य से बाहर निकलता है या असफल जांच की सूची के साथ शून्य नहीं है।

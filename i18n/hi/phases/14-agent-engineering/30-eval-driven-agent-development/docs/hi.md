@@ -3,7 +3,7 @@
 > मानव विज्ञान का मार्गदर्शनः "सरल संकेतों से शुरू करें, उन्हें व्यापक मूल्यांकन के साथ अनुकूलित करें, और आवश्यक होने पर ही बहु-चरण एजेंटिक सिस्टम जोड़ें।" मूल्यांकन अंतिम कदम नहीं है। यह बाहरी लूप है जो चरण 14 में अन्य सभी विकल्पों को चलाता है।
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** All of Phase 14.
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ ae-eval-three-layers
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुटः प्रति मामले पास/फेल, रिग्रेशन फ्लैग, आईसी गेट फैसले।

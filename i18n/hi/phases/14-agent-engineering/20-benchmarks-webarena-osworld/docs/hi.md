@@ -3,7 +3,7 @@
 > WebArena ने चार स्वयं होस्ट किए गए ऐप्स में वेब एजेंट क्षमता का परीक्षण किया। OSWorld ने उबंटू, विंडोज, मैकओएस में डेस्कटॉप एजेंट क्षमता का परीक्षण किया। रिलीज (20232024) पर दोनों ने सर्वश्रेष्ठ-इन-क्लास एजेंटों और मनुष्यों के बीच एक बड़ा अंतर दिखाया। अंतर संकुचित हो रहा है; विफलता मोड नहीं बदले हैं।
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 19 (SWE-bench, GAIA)
 **Time:** ~60 minutes
 
@@ -78,6 +78,7 @@ ae-agent-human-gap
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुटः प्रति कार्य सफलता दर और प्रक्षेपवक्र दक्षता, OSWorld-Human की पद्धति को प्रतिबिंबित करना।

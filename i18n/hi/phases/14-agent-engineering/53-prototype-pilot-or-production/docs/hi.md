@@ -3,7 +3,7 @@
 > ये अलग-अलग सीखने के वातावरण हैं, पॉलिशिंग के स्तर नहीं। उस चरण का चयन करें जो वर्तमान अज्ञात का जवाब देता है, कम से कम अनावश्यक परिणाम के साथ।
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 50 to 52
 **Time:** ~70 minutes
 
@@ -82,6 +82,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 
