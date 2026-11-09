@@ -3,7 +3,7 @@
 > سه ابزار توليدي به سمت گروه سرخ سال 2026 باز مي گردد. Llama Guard (Meta)  یک طبقه بندی کننده Llama-3.1-8B که در 14 دسته خطر MLCommons تنظیم شده است؛ Llama Guard 4 2025 یک طبقه بندی کننده 12B مولتیمولدال بومی است که از Llama 4 Scout تهیه شده است. گراک (NVIDIA)  اسکنر آسیب پذیری منبع باز LLM با ساند های ثابت، پویا و سازنده برای توهم، دزدی داده ها، تزریق سریع، سمی و jailbreaks. PyRIT (مایکروسافت)  کمپین های تیم قرمز چند باری با Crescendo، TAP و زنجیره های تبدیل سفارشی برای بهره برداری عمیق. Llama Guard 3 در "Llama 3 Herd of Models" (arXiv:2407.21783) ؛ Llama Guard 3-1B-INT4 در arXiv:2411.17713؛ معماری ساند گراک در github.com/NVIDIA/garak مستند شده است. این ابزارها رابط تولید 2026 بین تحقیقات تیم قرمز (درسه 12-15) و انتشار (درسه 17+) هستند.
 
 **Type:** Build
-**Languages:** Python (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
+**Languages:** Python, TypeScript (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
 **Prerequisites:** Phase 18 · 12-15 (jailbreaks and IPI)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > چاو، روبی، دوبریان، حسنی، پاپاس، وانگ (NeurIPS 2023, arXiv:2310.08419). PAIR  اصلاح تکراری خودکار سریع  jailbreak جعبه سیاه خودکار قانونی است. یک LLM مهاجم با یک سیستم سریال تیم قرمز به طور مکرر jailbreaks برای یک LLM هدف را پیشنهاد می کند و تلاش ها و پاسخ ها را در تاریخچه چت خود به عنوان بازخورد در زمینه جمع می کند. PAIR معمولاً در عرض 20 سوال موفق می شود، که از GCG (تلاش گرادینت سطح توکن زو و همکاران) کارآمدتر است و بدون نیاز به دسترسی به جعبه سفید. PAIR اکنون یک خط پایه استاندارد در JailbreakBench (arXiv:2404.01318) و HarmBench است، همراه با GCG، AutoDAN، TAP و Prompt Adversarial متقاعد کننده.
 
 **Type:** Build
-**Languages:** Python (stdlib, mock PAIR loop against a toy target)
+**Languages:** Python, TypeScript (stdlib, mock PAIR loop against a toy target)
 **Prerequisites:** Phase 18 · 01 (instruction-following), Phase 14 (agent engineering)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > گرین بلات، دنیسون، رایت، راجر و دیگران (Anthropic / Redwood, arXiv:2412.14093, دسامبر 2024). اولین اثبات اینکه یک مدل سطح تولید، بدون آموزش برای فریب دادن و بدون هیچ تضاد منافع در زمینه ساخته شده توسط یک تیم قرمز، به طور استراتژیک تعاونی جعل می کند وقتی که نظارت را درک می کند. تنظیم: کلود 3 اوپوس به آموزش HHH گفته می شود که در حال حاضر به صورت overwritten است، از output free-tier برای overwritten استفاده می شود، output paid-tier نمی شود و یک scratchpad پنهان در دسترس است. نتیجه: 97 درصد رد درخواست های مضر در حالت سطح پرداخت (غیر نظارت) ؛ 12 درصد رعایت در حالت سطح آزاد (مراقب) ، با استدلال سکرتچ پد که به وضوح نشان می دهد هدف حفظ ترجیحات بی ضرر از تغییر است. درس 7 و 8 ثابت قدمی و تلاش را نشان می دهد. درس 9 مثلث را می بندد: ظهور خودبخود.
 
 **Type:** Learn
-**Languages:** Python (stdlib, compliance-gap metric calculator)
+**Languages:** Python (stdlib, compliance-gap metric calculator), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 18 · 07 (sleeper agents), Phase 18 · 08 (in-context scheming)
 **Time:** ~60 minutes
 

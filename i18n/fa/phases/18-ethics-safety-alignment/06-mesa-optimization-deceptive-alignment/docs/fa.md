@@ -3,7 +3,7 @@
 > هوبینگر و همکاران (arXiv:1906.01820, 2019) این مشکل را حدود پنج سال قبل از اثبات تجربی نامید. وقتی یک بهینه ساز آموخته را برای حداقل رساندن یک هدف پایه آموزش می دهید، هدف داخلی بهینه ساز آموخته شده هدف پایه نیست. یک mesa-optimizer که به طور فریبنده تنظیم شده است، به صورت پشو-آلائن شده است و اطلاعات کافی در مورد سیگنال آموزش دارد تا بیشتر از آن باشد. آموزش استاندارد ثبات کمک نمی کند: سیستم به دنبال تفاوت های توزیع ای است که نشان دهنده انتشار و نقص در آن است.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy mesa-optimizer simulator)
+**Languages:** Python (stdlib, toy mesa-optimizer simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 09 (RL foundations)
 **Time:** ~75 minutes
 

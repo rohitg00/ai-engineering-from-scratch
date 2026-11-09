@@ -3,7 +3,7 @@
 > رافائلوف و همکارانش (2023) نشان داد که بهینه سازی RLHF دارای فرم بسته در مورد داده های ترجیح است، بنابراین شما می توانید از مدل پاداش صریح خارج شوید و سیاست را مستقیما بهینه کنید. این بینش باعث ایجاد یک خانواده  IPO، KTO، SimPO، ORPO، BPO  شد که هر کدام یک از حالت شکست DPO را اصلاح می کردند. در سال 2026، الگوریتم های تعاونی مستقیم، دویدن های پس از آموزش در مرز بیشتری را از PPO ارسال می کنند. اما منحنی بهینه سازی بیش از حد از درس 2 هنوز هم اعمال می شود: DAAs از گودارت فرار نمی کنند، آنها فقط به جایی که گاز می گیرد حرکت می کنند.
 
 **Type:** Learn
-**Languages:** Python (stdlib, six-variant preference-loss comparator)
+**Languages:** Python (stdlib, six-variant preference-loss comparator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking), Phase 10 · 08 (DPO basics)
 **Time:** ~75 minutes
 

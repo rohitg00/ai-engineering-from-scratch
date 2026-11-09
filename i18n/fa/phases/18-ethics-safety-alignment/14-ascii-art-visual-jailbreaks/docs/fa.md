@@ -3,7 +3,7 @@
 > ژیانگ، شویی، نیو، شیانگ، راماسوبرامانیان، لی، پووندران، "ArtPrompt: ASCII Art-based Jailbreak Attacks against Aligned LLMs" (ACL 2024, arXiv:2402.11753). توکن های مربوط به ایمنی را در یک درخواست مضر پنهان کنید، آنها را با نسخه های ASCII از همان حروف جایگزین کنید و پیام مخفی را ارسال کنید. GPT-3.5، GPT-4, Gemini، Claude، Llama-2 همه موفق به تشخیص قوی ASCII-art توکن ها نمی شوند. حمله از PPL (فلترهای گیج کننده) ، دفاعی پارافرز و Retokenization عبور می کند. مرتبط: معیار ViTC تشخیص پیام های بصری غیر معنوی را اندازه گیری می کند؛ StructuralSleight به ساختار های غیر معمول متن رمزگذاری شده (درخش، نمودار، JSON گنجانده شده) به عنوان یک خانواده از حملات رمزگذاری عمومی می کند.
 
 **Type:** Build
-**Languages:** Python (stdlib, ArtPrompt token-masking harness)
+**Languages:** Python, TypeScript (stdlib, ArtPrompt token-masking harness)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 18 · 13 (MSJ)
 **Time:** ~60 minutes
 
