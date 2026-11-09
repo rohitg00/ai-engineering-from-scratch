@@ -3,7 +3,7 @@
 > O documento RAG é uma fatia. A RAG multimodal de produção vai mais amplo  a recuperação de texto, imagens, áudio e vídeo para fluxos de trabalho como planejamento de viagens ("encontrar-me um brunch vegano tranquilo com luz natural"), triagem médica ("o que a lesão corresponde a esta foto + essas notas"), comércio eletrônico ("vestimentos semelhantes a esta selfie, no meu tamanho"), e serviço de campo ("diagnóstico este som do motor mais foto da parte"). Três pesquisas de 2025  Abootorabi et al., Mei et al., Zhao et al.  codificou os subproblemas: recuperação transmodal, fusão de recuperação, fixação da geração, avaliação multimodal. Esta lição lê as pesquisas e desenha um pipeline de produção.
 
 **Type:** Build
-**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator)
+**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator), TypeScript
 **Prerequisites:** Phase 12 · 23 (ColPali), Phase 11 (RAG basics)
 **Time:** ~180 minutes
 

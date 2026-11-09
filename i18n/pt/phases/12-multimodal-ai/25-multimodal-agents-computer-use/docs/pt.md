@@ -3,7 +3,7 @@
 > O produto 2026 frontier é um agente multimodal que lê capturas de tela, clique em botões, navega por interfaces web, preenche formulários e completa fluxos de trabalho de ponta a ponta. SeeClick e CogAgent (2024) provaram a primitiva de grounding de GUI. A interface de ferret adicionou móveis. O ChartAgent introduziu o uso de ferramentas visuais para gráficos. VisualWebArena e AgentVista (2026) são os referências que as perseguições de fronteira  e até mesmo Gemini 3 Pro e Claude Opus 4.7 pontuação ~30% nas tarefas difíceis de AgentVista. Esta pedra final reúne todos os fios da Fase 12: percepção (VLM de alta resolução), raciocínio (LLM com uso de ferramentas), aterramento (saída de coordenadas), memória de longo horizonte e avaliação.
 
 **Type:** Capstone
-**Languages:** Python (stdlib, action schema + agent loop skeleton)
+**Languages:** Python (stdlib, action schema + agent loop skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 09 (Qwen-VL JSON), Phase 14 (Agent Engineering)
 **Time:** ~240 minutes
 

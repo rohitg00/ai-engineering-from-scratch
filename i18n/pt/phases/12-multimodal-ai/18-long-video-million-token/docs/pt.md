@@ -3,7 +3,7 @@
 > Um vídeo 4K de 1 hora a 24 FPS, parcheado e incorporado, produz a ordem de 60 milhões de tokens. Um episódio de podcast de 2 horas transcrito é de 30.000 tokens. Um filme completo de Blu-ray, mesmo comprimido com agressão, é de centenas de milhares de tokens. O Gemini 1.5 do Google (março de 2024) abriu esta era com um contexto de 10 milhões de tokens, fazendo uma recall confiável de agulha em uma pilha de feno em vídeos de uma hora. LWM (Liu et al., fevereiro 2024) mostrou o caminho de escala da atenção do anel. O LongVILA e o Video- XL aumentaram ainda mais a ingestão. O VideoAgent trocou o contexto bruto por recuperação agente. Cada abordagem é uma troca diferente na composição, na recordação e na complexidade da engenharia. Esta lição lê-os lado a lado.
 
 **Type:** Build
-**Languages:** Python (stdlib, needle-in-haystack simulator + agentic-retrieval router)
+**Languages:** Python (stdlib, needle-in-haystack simulator + agentic-retrieval router), TypeScript
 **Prerequisites:** Phase 12 · 17 (video temporal tokens)
 **Time:** ~180 minutes
 

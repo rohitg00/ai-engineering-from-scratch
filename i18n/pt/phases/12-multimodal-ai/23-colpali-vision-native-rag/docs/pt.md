@@ -3,7 +3,7 @@
 > O RAG tradicional paralisa PDFs em texto, divide em pedaços, incorpora pedaços, armazena vetores. Cada passo perde o sinal: OCR deixa cair os dados do gráfico, o fragmentação rompe as linhas da tabela, os incorporados de texto ignoram os números. ColPali (Faysse et al., Julho 2024) fez a pergunta mais simples: por que extrair texto? Embed a imagem da página diretamente através do PaliGemma, use a interação tardia de estilo ColBERT para recuperação e mantenha todos os layout, figuras, fontes e sinal de formatação que o documento carrega. Referências publicadas: 20-40% melhor precisão de ponta a ponta do que o texto-RAG em documentos ricos em visão. O ColQwen2, o ColSmol e o VisRAG alargaram o padrão. Esta lição lê a tese RAG visual nativa e constrói um pequeno índice ColPali-like.
 
 **Type:** Build
-**Languages:** Python (stdlib, multi-vector indexer + MaxSim scorer)
+**Languages:** Python (stdlib, multi-vector indexer + MaxSim scorer), TypeScript
 **Prerequisites:** Phase 11 (LLM Engineering — RAG basics), Phase 12 · 05 (LLaVA)
 **Time:** ~180 minutes
 

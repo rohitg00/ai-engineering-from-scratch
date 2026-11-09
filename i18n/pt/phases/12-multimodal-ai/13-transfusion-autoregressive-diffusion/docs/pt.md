@@ -3,7 +3,7 @@
 > O Camelão e o Emu3 apostaram tudo em tokens discretos. Funcionam, mas o gargalhão de quantização é visível  os planícies de qualidade de imagem abaixo dos modelos de difusão no espaço contínuo. A transfusão (Meta, Zhou et al., agosto 2024) faz a aposta oposta: manter imagens contínuas, soltar o VQ-VAE inteiramente e treinar um transformador com duas perdas. Os tokens de texto recebem a previsão do próximo token. Os parches de imagem têm uma perda de fluxo de correspondência / difusão. Ambos os objetivos otimizam os mesmos pesos. A arquitetura subjacente à Stable Diffusion 3 (MMDiT) é uma prima próxima. Esta lição lê a tese da Transfusão, constrói um treinador de brinquedos de duas perdas e rastreia a máscara de atenção que permite que um transformador faça ambos os trabalhos.
 
 **Type:** Build
-**Languages:** Python (stdlib, two-loss trainer on MNIST-scale toy)
+**Languages:** Python, TypeScript (stdlib, two-loss trainer on MNIST-scale toy)
 **Prerequisites:** Phase 12 · 11 (Chameleon), Phase 8 (Generative AI)
 **Time:** ~180 minutes
 
