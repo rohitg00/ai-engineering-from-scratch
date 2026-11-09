@@ -3,7 +3,7 @@
 > La velocidad de aprendizaje es el único hiperparámetro más importante. No la arquitectura, no el tamaño del conjunto de datos, no la función de activación, la velocidad de aprendizaje. Si no sintonizas nada más, sintoniza esto.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers), Lesson 03.08 (Weight Initialization)
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > Tu modelo obtiene el 99% de datos de entrenamiento y el 60% de datos de pruebas. Memorizó en lugar de aprender.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers)
 **Time:** ~75 minutes
 

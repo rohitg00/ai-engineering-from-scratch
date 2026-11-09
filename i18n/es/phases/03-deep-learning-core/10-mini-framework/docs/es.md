@@ -3,7 +3,7 @@
 > Has construido neuronas, capas, redes, retroactivación, activaciones, funciones de pérdida, optimizadores, regularización, inicialización y calendarios LR. Todo como piezas separadas. Ahora cableálas juntas en un marco. No PyTorch. No TensorFlow.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** All of Phase 03 (Lessons 01-09)
 **Time:** ~120 minutes
 

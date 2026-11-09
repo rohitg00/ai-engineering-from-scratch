@@ -3,7 +3,7 @@
 > El descenso gradiente te dice en qué dirección moverte no dice nada sobre la distancia o la velocidad SGD es una brújula Adam es GPS con datos de tráfico
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.05 (Loss Functions)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > Una neurona traza una línea, apilalas y puedes trazar cualquier cosa.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 01 (Math Foundations), Lesson 03.01 (The Perceptron)
 **Time:** ~90 minutes
 
