@@ -3,7 +3,7 @@
 > O artigo de 2020 Kaplan disse: modelo maior, menor perda. O artigo de 2022 Hoffmann disse: você estava sob treinamento.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 

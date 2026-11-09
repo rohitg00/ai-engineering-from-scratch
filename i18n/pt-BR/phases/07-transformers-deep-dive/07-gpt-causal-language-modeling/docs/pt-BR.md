@@ -3,7 +3,7 @@
 > O BERT vê ambos os lados. O GPT vê apenas o passado. A máscara triangular é a linha única mais consequente de código na IA moderna.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT)
 **Time:** ~75 minutes
 
