@@ -3,7 +3,7 @@
 > A programação dinâmica é RL com a fraude. Você já sabe as funções de transição e recompensa; você apenas itera a equação Bellman até que$V$ou $\pi$O método de referência é o que todos os métodos baseados em amostragem tentam abordar.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs)
 **Time:** ~75 minutes
 

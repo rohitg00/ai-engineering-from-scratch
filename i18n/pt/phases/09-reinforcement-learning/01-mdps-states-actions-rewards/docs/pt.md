@@ -3,7 +3,7 @@
 > Um processo de decisão Markov é de cinco coisas: estados, ações, transições, recompensas, um desconto. Tudo no RL  Q-learning, PPO, DPO, GRPO  otimiza sobre esta forma. Aprenda uma vez, leia o resto do aprendizado de reforço gratuitamente.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Probability & Distributions), Phase 2 · 01 (ML Taxonomy)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > A ReINFORCE é barulhenta, adicione um crítico que aprenda.$\hat{V}(s)$A 2C executa sincronicamente; A 3C executa através de fios. Ambos são o modelo mental para cada método moderno de RL profundo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (TD Learning), Phase 9 · 06 (REINFORCE)
 **Time:** ~75 minutes
 

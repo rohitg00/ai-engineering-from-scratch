@@ -3,7 +3,7 @@
 > 2013: Mnih treinou uma rede de aprendizado Q em pixels brutos, venceu todos os agentes RL clássicos em sete jogos Atari. 2015: estendido para 49 jogos, publicado na Nature, desencadeou a era do aprendizado profundo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 04 (Q-learning, SARSA)
 **Time:** ~75 minutes
 
