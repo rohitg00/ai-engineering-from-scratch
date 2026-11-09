@@ -3,7 +3,7 @@
 > Her şeyi sakla, komşularına bakarak tahmin et, en basit algoritma aslında işe yarıyor.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lesson 14 Norms and Distances)
 **Time:** ~90 minutes
 
@@ -298,7 +298,7 @@ class KDTree:
         ...
 ```
 
-Bakın .`code/knn.py`Tüm yardımcı yöntemler ve demolarla birlikte tam bir uygulama için.
+Bakın .`code/knn.py`Tüm yardımcı yöntemler ve demolarla birlikte tam bir uygulama için. `code/knn.ts`Aynı fonksiyon ve demo ile TypeScript portu.`npx tsx code/knn.ts`- Evet .
 
 ### Adım 4: Özellik ölçeklendirme
 

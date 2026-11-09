@@ -3,7 +3,7 @@
 > Bir karar ağacı sadece bir akış haritasıdır. Ama bir orman, ML'de en güçlü araçlardan biridir.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lessons 09 Information Theory, 06 Probability)
 **Time:** ~90 minutes
 
@@ -412,7 +412,7 @@ class RandomForest:
         return predictions
 ```
 
-Bakın .`code/trees.py`Tüm yardımcı yöntemlerle birlikte tam olarak uygulanması için.
+Bakın .`code/trees.py`Tüm yardımcı yöntemlerle birlikte tam olarak uygulanması için. `code/trees.ts`Aynı fonksiyon ve demo ile TypeScript portu.`npx tsx code/trees.ts`- Evet .
 
 ## Kullan
 
