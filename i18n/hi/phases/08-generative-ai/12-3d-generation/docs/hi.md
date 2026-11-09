@@ -3,7 +3,7 @@
 > 3D वह मोडेलिटी है जहां 2D-to-3D लीवरेज सबसे मजबूत है। 2023 का सफलता 3D गैसियन स्प्लेटिंग था। 2024-2026 के लिए जनरेटिव पुश लेयर मल्टी-व्यू डिफ्यूजन + 3D पुनर्निर्माण शीर्ष पर एक एकल प्रॉम्प्ट या फोटो से वस्तुओं और दृश्यों का उत्पादन करने के लिए।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 4 (Vision), Phase 8 · 07 (Latent Diffusion)
 **Time:** ~45 minutes
 

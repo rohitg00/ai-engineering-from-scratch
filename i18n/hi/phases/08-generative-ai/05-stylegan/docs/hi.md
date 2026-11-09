@@ -3,7 +3,7 @@
 > अधिकांश जनरेटर हलचल $z$स्टाइलगैन इसे अलग अलग करता हैः पहला नक्शा$z$मध्यवर्ती $w$, फिर * इंजेक्शन *$w$यह एक परिवर्तन लटके हुए स्थान को उजागर किया और सात वर्षों तक फोटोरियल चेहरे को एक हल समस्या बना दिया।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 

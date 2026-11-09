@@ -3,7 +3,7 @@
 > प्रत्येक छवि मॉडल, पाठ मॉडल, वीडियो मॉडल और 3 डी मॉडल पांच बाल्टियों में से एक में फिट बैठता है। गलत बाल्ट चुनें और आप हफ्तों तक गणित से लड़ेंगे। सही एक चुनें और क्षेत्र के पिछले बारह वर्षों की प्रगति आपके सिर में साफ-सुथरा ढेर हो जाएगा।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 (ML Fundamentals), Phase 3 (Deep Learning Core), Phase 7 · 14 (Transformers)
 **Time:** ~45 minutes
 
