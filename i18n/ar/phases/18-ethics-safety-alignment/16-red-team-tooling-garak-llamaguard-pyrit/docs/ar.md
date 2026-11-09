@@ -3,7 +3,7 @@
 > ثلاث أدوات إنتاجية تشكل إطار مجموعة فريق 2026 حرس لاما (Meta)  تصنيف لاما-3.1-8B المعدل على 14 فئة خطرة من MLCommons ؛ 2025 حرس لاما 4 هو تصنيف 12B متعدد الحركات الأصلية تم قصفه من Llama 4 Scout. غراك (NVIDIA)  مفتوح المصدر مسحو ضعف LLM مع صواريخ ثابتة وديناميكية وتكيفية للتوهم، تسرب البيانات، الحقن السريع، السموم، والفجوة. PyRIT (مايكروسوفت)  حملات فريق أحمر متعددة التحولات مع Crescendo، TAP، وسلسلة تحويلات مخصصة لاستغلال عميق. تم توثيق حرس لاما 3 في "غرد النماذج لاما 3" في Meta (arXiv:2407.21783) ؛ حرس لاما 3-1B-INT4 في arXiv:2411.17713 ؛ بنية صفقة Garak في github.com/NVIDIA/garak. هذه الأدوات هي واجهة الإنتاج لعام 2026 بين البحث في الفريق الأحمر (الدرس 12-15) والتنفيذ (الدرس 17+).
 
 **Type:** Build
-**Languages:** Python (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
+**Languages:** Python, TypeScript (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
 **Prerequisites:** Phase 18 · 12-15 (jailbreaks and IPI)
 **Time:** ~75 minutes
 

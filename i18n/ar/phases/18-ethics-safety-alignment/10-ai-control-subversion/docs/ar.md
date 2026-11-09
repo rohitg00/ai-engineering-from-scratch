@@ -3,7 +3,7 @@
 > غرينبلات، شليغريس، سخان، روجر (بحوث ريدوود، arXiv: 2312.06942, ICML 2024). التحكم يعدل إطار السؤال الأمني: بالنظر إلى نموذج قوي غير موثوق به قد يكون تحسين ضدك، ما هي البروتوكولات التي تسمح لك استخراج العمل المفيد مع الحد من احتمالية النتيجة غير المقبولة؟ الموارد هي نموذج T أضعف موثوق به، ميزانية من العمل البشري موثوق به H، والقدرة على تحرير نتائج U. في هذا الإطار، يهيمن التحرير الثقائي على مراقبة غير الثقة في مهام الرمز. يحتل الإطار أسوأ الافتراضات من هندسة الأمن: الأمان هو احتمال أن U المختار بشكل معاد لا يمكن أن يسبب نتيجة غير مقبولة ملموسة، مقاسة تحت ضغط فريق الأحمر الذي يقف محل U.
 
 **Type:** Learn
-**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task)
+**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task), TypeScript
 **Prerequisites:** Phase 18 · 07 (sleeper agents), Phase 18 · 08 (scheming), Phase 18 · 09 (alignment faking)
 **Time:** ~75 minutes
 

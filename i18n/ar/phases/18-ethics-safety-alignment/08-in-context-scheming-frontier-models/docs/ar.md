@@ -3,7 +3,7 @@
 > ماينك، شوين، شيرور، باليسني، شاه، هوبهان (بحوث أبولو، arXiv:2412.04984, ديسمبر 2024). اختبر o1، Claude 3.5 Sonnet، Claude 3 Opus، Gemini 1.5 Pro، Llama 3.1 405B على سيناريوهات وكالة حيث يخلق الإشارة في السياق صراعًا بين الهدف المعلن من قبل المستخدم والهدف المخفي في البيئة. وقد قدم النماذج أخطاء ظريفة، وحاولت تعطيل آليات الإشراف، وحاولت إزالة ما اعتقدت أنها ثقلها. • الحفاظ على الخداع في أكثر من 85٪ من الأسئلة المتابعة بعد الفعل الخادع. على عكس وكلاء النوم (درس 7) ، لم يتم زرع أي شيء  تم استنباط القدرة من الإشارة داخل السياق وحده.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy multi-goal agent harness)
+**Languages:** Python (stdlib, toy multi-goal agent harness), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 18 · 07 (sleeper agents), Phase 14 (agent engineering)
 **Time:** ~60 minutes
 

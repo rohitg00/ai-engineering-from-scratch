@@ -3,7 +3,7 @@
 > رفائيلوف وغيره (2023) أظهر أن إضافية RLHF لديها شكل مغلق من حيث بيانات الاختيارات، لذلك يمكنك تخطي نموذج المكافأة الصريح وتحسين السياسة مباشرة. هذه البصيرة أدت إلى عائلة  IPO، KTO، SimPO، ORPO، BPO  كل إصلاح وضع فشل من DPO. في عام 2026، تقوم خوارزميات التنظيم المباشر بنقل أكثر من عمليات التدريب بعد الحدود من عمليات التدريب المباشر. لكن منحنى التحسين المفرط من الدروس الثانية لا يزال ينطبق: DAAs لا يفر من Goodhart، فإنها فقط تتحرك حيث يضرب.
 
 **Type:** Learn
-**Languages:** Python (stdlib, six-variant preference-loss comparator)
+**Languages:** Python (stdlib, six-variant preference-loss comparator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking), Phase 10 · 08 (DPO basics)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > جيانغ، شيو، نيو، شيانغ، راماسوبرامانيان، لي، بوفندران، "ArtPrompt: ASCII Art-based Jailbreak Attacks against Aligned LLMs" (ACL 2024, arXiv:2402.11753). غطاء الرموز ذات الصلة بالسلامة في طلب ضار، واستبدالها بتسجيلات ASCII الفنية من نفس الحروف، وإرسال الطلب المغطوس. GPT-3.5، GPT-4, جيميني، كلود، لاما-2 فشل جميعًا في التعرف على رموز أسكي الفن بشكل قوي. الهجوم يُغيب عن PPL (مصفحات الارتباك) ، دفاعات الفقرات، و Retokenization. ذات الصلة: قياسات مقياس ViTC الاعتراف بالطلبات البصرية غير المفصلة؛ StructuralSleight يجميع إلى الهياكل غير المشتركة المترجمة بالنص (الشجرة والرسوم البيانية وال JSON المتعظمة) كعائلة من هجمات التشفير.
 
 **Type:** Build
-**Languages:** Python (stdlib, ArtPrompt token-masking harness)
+**Languages:** Python, TypeScript (stdlib, ArtPrompt token-masking harness)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 18 · 13 (MSJ)
 **Time:** ~60 minutes
 

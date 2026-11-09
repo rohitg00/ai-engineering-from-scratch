@@ -3,7 +3,7 @@
 > كل انتقاد لاحقاً لـ RLHF يجادل ضد هذا النظام قبل أن تدرس كيفية تشويه ضغط التحسين للاستثمار، يجب أن ترى الوكالة. ووصفت InstructGPT (Ouyang وآخرون 2022) بنية المرجعية: التكيف الدقيق المراقب على أزواج الاستجابة للتعليمات، ونموذج الجائزة المدرب على تصنيفات الاختيارات المتعددة الأزواج، و PPO ضد نموذج الجائزة مع عقوبة KL لسياسة SFT. تم تفضيل 1.3B InstructGPT على 175B GPT-3. هذه النتيجة الوحيدة هي السبب في أن كل مختبر حدودي في عام 2026 ما زال يرسل خط أنابيب بعد التدريب على شكل RLHF.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy three-stage pipeline)
+**Languages:** Python (stdlib, toy three-stage pipeline), TypeScript
 **Prerequisites:** Phase 10 · 06 (SFT), Phase 10 · 07 (RLHF), Phase 10 · 08 (DPO)
 **Time:** ~45 minutes
 

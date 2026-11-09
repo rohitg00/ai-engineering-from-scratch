@@ -3,7 +3,7 @@
 > تشاو ، روبي ، دوبريبان ، حسني ، باباس ، وونغ (NeurIPS 2023 ، arXiv: 310.08419). PAIR  التكرير التكراري التلقائي الفوري  هو إيقاع السلاح الآلي السوداء القديم. يقدم ماجستير في مجال التعليمات العليا المهاجم مع نظام "فريق الأحمر" على نحو متكرر اختراقات السجن لمجرد ماجستير في مجال التعليمات العليا المستهدف ، ويتراكم المحاولات والردود في تاريخ الدردشة الخاص به كردود في السياق. عادة ما تنجح PAIR في غضون 20 استفسارًا ، وهي ترتيبات من الكمية أكثر كفاءة من GCG (بحث تراجعية على مستوى الرمز الزو وغيرهم) ودون الحاجة إلى إمكانية الوصول إلى مربع أبيض. تعد PAIR الآن خط أساسي قياسي في JailbreakBench (arXiv:2404.01318) و HarmBench ، إلى جانب GCG ، AutoDAN ، TAP ، و Prompt Adversarial Prussive.
 
 **Type:** Build
-**Languages:** Python (stdlib, mock PAIR loop against a toy target)
+**Languages:** Python, TypeScript (stdlib, mock PAIR loop against a toy target)
 **Prerequisites:** Phase 18 · 01 (instruction-following), Phase 14 (agent engineering)
 **Time:** ~75 minutes
 

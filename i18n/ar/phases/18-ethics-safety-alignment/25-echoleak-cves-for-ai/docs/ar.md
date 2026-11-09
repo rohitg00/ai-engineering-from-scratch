@@ -3,7 +3,7 @@
 > CVE-2025-32711 "EchoLeak" (CVSS 9.3) كان أول حقن سريع للنقر الصفر الموثوق علنا في نظام LLM الإنتاج (Microsoft 365 Copilot). اكتشفت من قبل مختبرات الهدف (أمن الهدف) ، تم الكشف عنها إلى MSRC ، تم تصحيحها عبر تحديث جانب الخادم في يونيو 2025. الهجوم: يرسل المهاجم رسالة بريد إلكتروني مصممة إلى أي موظف؛ Copilot الضحية يستعيد البريد الإلكتروني على أنها سياق RAG خلال استفسار روتيني؛ تنفيذ تعليمات مخفية؛ Copilot يخرج بيانات تنظيمية حساسة عبر نطاق Microsoft المعتمد من قبل CSP. تجاوزت فلترات الحقن السريع من XPIA وآليات إعادة إصدار الروابط من Copilot. مصطلح مختبرات الهدف: "انتهاك نطاق LLM"  المدخل الخارجي غير الموثوق به يسيطر على النموذج للوصول إلى البيانات السرية وتسريبها. ذات الصلة: استغل CamoLeak (CVSS 9.6 ، GitHub Copilot Chat) وكيل الصورة Camo ؛ تم تصحيحه عن طريق تعطيل عرض الصورة بالكامل. كوبيلوت GitHub RCE CVE-2025-53773 نست وصفت الحقن الفوري غير المباشر "أكبر عيوب أمنية في الذكاء الاصطناعي التوليدي" ؛ OWASP 2025 تحددها على أنها تهديد رقم 1 لتطبيقات LLM.
 
 **Type:** Learn
-**Languages:** Python (stdlib, scope-violation trace reconstruction)
+**Languages:** Python, TypeScript (stdlib, scope-violation trace reconstruction)
 **Prerequisites:** Phase 18 · 15 (indirect prompt injection)
 **Time:** ~45 minutes
 
