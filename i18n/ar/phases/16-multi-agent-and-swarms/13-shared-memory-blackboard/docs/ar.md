@@ -3,7 +3,7 @@
 > هناك نهجين يتوافقون في 2026 أنظمة متعددة الوكلاء:**message pool**(كل شخص يرى رسائل الجميع، مثل في AutoGen GroupChat أو MetaGPT) و **blackboard with subscription**(الوكلاء يشتركون في الأحداث ذات الصلة، مثل في Context-Aware MCP أو إطار المصفوفة). كلاهما هو الجزء الوحيد الحالي من نظام متعددة الوكلاء  مما يعني أن كلاهما هو حيث يعيش الأخطاء المثيرة للاهتمام. وضع فشل المرجعية هو **memory poisoning**: يوحش أحد العاملين "الحقيقة" ، يعامل العاملون الآخرونها على أنها مُحققة ، وتتدهور الدقة تدريجياً بطريقة أصعب بكثير من التحليل من حادث فوري. هذه الدروس تبني كلا البنية من stdlib ، وتحقق هجومًا مسمومًا ، وتظهر التخفيفات الثلاثة التي تعمل بالفعل في الإنتاج.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`)
+**Languages:** Python (stdlib, `threading`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -119,6 +119,7 @@ swarm-blackboard
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج المتوقع:

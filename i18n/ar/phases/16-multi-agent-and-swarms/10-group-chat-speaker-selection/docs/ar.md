@@ -3,7 +3,7 @@
 > يضع التنسيق المشترك للمحادثة N العملاء في محادثة واحدة؛ وظيفة اختيار (LLM، دوري-روبين، أو حسب الطابع) يختار من يتحدث بعد ذلك. هذا هو النموذج الأساسي من المحادثة المتعددة العملاء الناشئة  العملاء لا يعرفون دورهم في الرسم البياني ثابت، فإنهم فقط يتفاعلون مع المجموعة المشتركة. أوتوجين غروب تشات و AG2 GroupChat هي التنفيذات المرجعية: تم الحفاظ على تعبيرات GroupChat في AutoGen v0.2 في فورك AG2; أعادت AutoGen v0.4 كتابتها كنموذج ممثل مدفوع بالحدث. وضعت مايكروسوفت AutoGen في وضع الصيانة في فبراير 2026 وجمعتها مع Kernel Semantic في Microsoft Agent Framework (RC فبراير 2026). البدائية GroupChat تبقى في كل من AG2 و Microsoft وكيل الإطار  تعلمها مرة واحدة، استخدامه في كل مكان.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -104,6 +104,7 @@ swarm-speaker
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## استخدمها

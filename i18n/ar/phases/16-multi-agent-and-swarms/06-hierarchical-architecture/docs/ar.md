@@ -3,7 +3,7 @@
 > الهييراركية هي المشرفين المرتبطين وكلاء المديرين على المديرين الفرعيين على العمال`Process.hierarchical`هو نسخة الكتاب الدراسي:`manager_llm`يمنح المهام بشكل ديناميكي ويمتد خروجيات.`create_supervisor(create_supervisor(...))`. إنه النمط الطبيعي عندما تكون المهمة رسمية منظمة حقيقية. إنه أيضًا النمط الأكثر عرضة للإنهيار في حلقة إدارية  يقوم وكلاء المديرين بتخصيص العمل بشكل سيء ، أو يفسرون الخروج الفرعية بشكل خاطئ ، أو يفشلون في التوصل إلى توافق. غالبًا ما يتغلب على التسلسل.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 05 (Supervisor Pattern)
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ swarm-hierarchy-token
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 إنتاج يظهر كلا الطرق مع جانب واضح من "ما سُئلت" مقابل "ما تم تسليم".

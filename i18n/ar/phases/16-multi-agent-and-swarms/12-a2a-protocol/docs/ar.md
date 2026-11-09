@@ -3,7 +3,7 @@
 > أعلنت جوجل عن A2A في أبريل 2025؛ بحلول أبريل 2026 فإن المواصفات ستكون في https://a2a-protocol.org/latest/specification/و 150 منظمة تدعمها A2A هو المكمل الأفقي لمكبرات التنفيذ (المدرس 13): حيث أن MCP عمودي (مكبرات ) ، A2A هو من ذوي الصلة (مكبر ) يحدد بطاقات العميل (الاكتشاف) ، والمهام مع الأثاث (النص، البيانات المهيكلة، الفيديو) ، دورات حياة المهام غير الشفافة، والمواد. أنظمة الإنتاج تزداد إماية MCP مع A2A. أطلقت Google Cloud دعم A2A في Vertex AI Agent Builder خلال 2025-2026.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `http.server`, `json`)
+**Languages:** Python (stdlib, `http.server`, `json`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -154,6 +154,7 @@ sw-agent-card-discovery
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 النص يبدأ الخادم في خيط خلفي، ثم يدير العميل ضد ذلك. ترى التدفق الكامل: اكتشاف، تقديم، استطلاع، الفن.
