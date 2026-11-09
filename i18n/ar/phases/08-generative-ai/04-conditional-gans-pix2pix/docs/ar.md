@@ -3,7 +3,7 @@
 > كان أول عملية إفراج كبيرة في 2014-2017 هو التحكم في ما يفعله GAN. ضم علامة أو صورة أو جملة. عمل Pix2Pix نسخة الصورة ولا تزال تضرب كل نموذج عام من النص إلى الصورة في مهام الصورة إلى الصورة الضيقة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 06 (U-Net), Phase 3 · 07 (CNNs)
 **Time:** ~75 minutes
 

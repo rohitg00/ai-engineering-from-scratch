@@ -3,7 +3,7 @@
 > النص إلى الصورة يجعل أشياء جديدة. التلوين يصلح الأشياء القديمة. في الإنتاج، 70٪ من عمل الصورة القابل للتصوير هو التحرير  تبادل الخلفية، إزالة شعار، تمديد اللوحة، إعادة تشكيل يد. التلوين هو حيث يكتسب التوزيع الاحتفاظ بها.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 8 · 08 (ControlNet & LoRA)
 **Time:** ~75 minutes
 

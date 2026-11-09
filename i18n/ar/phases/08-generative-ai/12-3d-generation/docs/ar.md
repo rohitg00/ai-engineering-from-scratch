@@ -3,7 +3,7 @@
 > 3D هو طريقة حيث يصل الرافعة الثانية إلى 3D إلى أقوى. كان الانفجار 2023 3D Gaussian Splating. طبقات دفع مولدة 2024-2026 تعزيز متعدد الرؤية + إعادة بناء 3D على الأعلى لإنتاج الأشياء والمشاهد من عرض واحد أو صورة.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 4 (Vision), Phase 8 · 07 (Latent Diffusion)
 **Time:** ~45 minutes
 

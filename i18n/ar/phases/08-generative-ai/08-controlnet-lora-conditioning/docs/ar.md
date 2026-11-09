@@ -3,7 +3,7 @@
 > يسمح لك ControlNet بتنسيق نموذج التوزيع المسبق للتدريب وتوجيهه باستخدام خريطة عمق أو هيكل عظمي أو خدش أو صورة حافة. يسمح لك LoRA بتحسين نموذج معايير 2B من خلال تدريب 10 ملايين ملامح. معا حولوا Diffusion Stable من لعبة إلى خط أنابيب الصور 2026 الذي يتم شحنه في كل وكالة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 10 (LLMs from Scratch — for LoRA foundation)
 **Time:** ~75 minutes
 

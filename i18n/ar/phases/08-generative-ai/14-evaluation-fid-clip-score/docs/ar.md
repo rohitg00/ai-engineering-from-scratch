@@ -3,7 +3,7 @@
 > كل جدول قياسي للنموذج التوليد يذكر FID ، درجة CLIP ، ومعدل الفوز من ساحة تفضيل البشر. لكل رقم وضع فشل يمكن للباحثين المحددين اللعب. إذا لم تعرف أطر الفشل ، لا يمكنك معرفة تحسن حقيقي من عملية اللعب.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 01 (Taxonomy), Phase 2 · 04 (Evaluation Metrics)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > يقوم جهاز تشفير السيارات العادي بتقليص ثم بإعادة تشكيل. يتذكر. لا يولد. أضف خدعة واحدة  اضغط على الرمز ليظهر غوسيان  وستحصل على عينة. هذه الخدعة الوحيدة، إعادة تشكيل$z = \mu + \sigma \cdot \epsilon$ولهذا السبب كل نموذج تصوير متساوٍ للتنشر الخفيف والتي تستخدمها في عام 2026 لديه VAE عند المدخل.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
 **Time:** ~75 minutes
 

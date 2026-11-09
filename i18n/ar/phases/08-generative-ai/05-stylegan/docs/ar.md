@@ -3,7 +3,7 @@
 > معظم المولدات تتحرك$z$في كل طبقة في نفس الوقت. ستايلجان تقسيمها إلى جانبها: الخريطة الأولى$z$إلى مركز متوسط $w$، ثم * حقن * $w$هذا التغيير الوحيد فك الفضاء الخفيف وجعل الوجهات الصورية حقيقية مشكلة حل لسبع سنوات متتالية.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 

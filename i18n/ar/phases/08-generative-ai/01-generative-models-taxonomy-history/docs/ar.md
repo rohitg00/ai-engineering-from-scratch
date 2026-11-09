@@ -3,7 +3,7 @@
 > كل نموذج الصورة، نموذج النص، نموذج الفيديو، ونموذج 3D يناسب في واحد من خمسة سطل. اختيار سطل خاطئ وسوف تقاتل الرياضيات لأسابيع. اختيار الحق واحد والحقل الـ 12 سنة الأخيرة من التقدم تتراكم نظيفة في رأسك.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 (ML Fundamentals), Phase 3 (Deep Learning Core), Phase 7 · 14 (Transformers)
 **Time:** ~45 minutes
 

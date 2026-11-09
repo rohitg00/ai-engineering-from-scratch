@@ -3,7 +3,7 @@
 > الصورة هي مؤشر ثنائي الأبعاد. الفيديو هو مؤشر ثنائي الأبعاد. النظرية هي نفسها؛ الحساب هو 10-100 مرة أصعب. أثبت سورا OpenAI (فبراير 2024) أنه من الممكن. بحلول عام 2026 فيو 2 ، كلينغ 1.5 ، رينواي جين 3 ، بيكا 2.0 ، و WAN 2.2 فيديو إنتاج السفينة من النص عند 1080p  والحجم المفتوح (CogVideoX ، HunyuanVideo ، Mochi-1 ، WAN 2.2) يتخلف 12 شهرا.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 7 · 09 (ViT), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 

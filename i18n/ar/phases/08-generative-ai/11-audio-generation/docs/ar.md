@@ -3,7 +3,7 @@
 > الصوت هو إشارة 1-D عند 16-48 كيلوهرتز. كليب خمس ثواني يبلغ 80-240 كيلوهرتز. لا يوجد محول يتابع هذا التسلسل مباشرة. الحل لكل نموذج صوتي إنتاج في 2026 هو نفسه: كوديك عصبي (Encodec، SoundStream، DAC) يضغط الصوت إلى رموز منفصلة عند 50-75 هرتز، ونموذج محول أو انتشار يولد رموز.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Audio Features), Phase 6 · 04 (ASR), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 
