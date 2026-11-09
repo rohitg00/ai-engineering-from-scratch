@@ -3,7 +3,7 @@
 > El mercado de inferencias de 2026 ya no es alquiler de tiempo de GPU. Se bifurca en silicio personalizado (Groq, Cerebras, SambaNova), plataformas de GPU (Baseten, Together, Fireworks, Modal) y mercados de primer nivel de API (Replicate, DeepInfra).$1/hr per GPU on May 1, 2026, and $La valoración 4B en tokens 10T+/día indica el modelo de trabajo basado en el volumen.$300M Series E at $La regla de posicionamiento competitivo es simple: Fuegos artificiales optimiza la latencia, Juntos optimiza la amplitud del catálogo, Baseten optimiza el pulido empresarial, Modal optimiza Python-nativo DX, Replicate optimiza el alcance multimodal, Anyscale optimiza distribuido Python. Esta lección le da una matriz que puede entregar a un fundador.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy per-call economics comparator)
+**Languages:** Python, TypeScript (stdlib, toy per-call economics comparator)
 **Prerequisites:** Phase 17 · 01 (Managed LLM Platforms), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~60 minutes
 

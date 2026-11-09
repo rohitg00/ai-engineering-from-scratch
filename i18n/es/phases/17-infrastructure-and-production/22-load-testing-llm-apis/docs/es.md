@@ -3,7 +3,7 @@
 > Los probadores de carga tradicionales no fueron diseñados para respuestas de transmisión, longitudes de salida variables, métricas de nivel de token o saturación de GPU. Dos trampas mueren a la mayoría de los equipos. La trampa GIL: La medición a nivel de tokens de Locust ejecuta tokenización bajo el Python GIL, que compite con la generación de solicitudes bajo una concurrencia pesada; el backlog de tokenización luego infla la latencia entre tokens reportada  su cliente es el cuello de botella, no el servidor. La trampa de uniformidad de la señal: las instrucciones idénticas en un bucle prueban un punto en la distribución de los tokens; el tráfico real tiene longitud variable y coincidencias de prefijos diversas. LLMPerf arregla esto con `--mean-input-tokens`¿ Qué es eso ?`--stddev-input-tokens`. Mapeo de herramientas en 2026: especializada en LLM (GenAI-Perf, LLMPerf, LLM-Locust, guidelellm) para la precisión a nivel de tokens; **k6 v2026.1.0**¿ Qué es eso ?**k6 Operator 1.0 GA (Sept 2025)** streaming-consciente, Kubernetes nativo distribuido a través de TestRun/PrivateLoadZone CRDs, mejor para puertas CI/CD; Vegeta for Go saturación de tasa constante; Locust 2.43.3 solo con extensión LLM-Locust para streaming. patrones de carga: estado estable, rampa, punta (test de autoescalado), remojo (vacificaciones de memoria).
 
 **Type:** Build
-**Languages:** Python (stdlib, toy realistic-prompt generator + latency collector)
+**Languages:** Python, TypeScript (stdlib, toy realistic-prompt generator + latency collector)
 **Prerequisites:** Phase 17 · 08 (Inference Metrics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~75 minutes
 

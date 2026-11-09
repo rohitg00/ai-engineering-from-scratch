@@ -3,7 +3,7 @@
 > Un modelo grande tarda minutos en pasar de frío a servicio: un modelo 70B en un nodo fresco necesita aproximadamente 3-8 minutos antes del primer token. En un mundo sin servidores, eso no es un calentamiento, es un apagón. Las mitigaciones operan en cinco capas: imágenes de nodos pre-seeded (Bottlerocket en AWS, arco de doble volumen), transmisión de modelos (NVIDIA Run:ai Model Streamer, nativo en vLLM), instantáneas de memoria de GPU (puntos de control módiles, hasta 10 veces más rápido reinicio), piscinas calientes (`min_workers=1`), carga en niveles (NVMe→DRAM→HBM de ServerlessLLM, reducción de latencia 10-200x), más un patrón sexto de bonificación, migración en vivo que mueve tokens de entrada (KB) en lugar de KV caché (GB).
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cold-start path simulator)
+**Languages:** Python, TypeScript (stdlib, toy cold-start path simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > La limitación de borde principal es el ancho de banda de memoria, no el cálculo. El DRAM móvil se sitúa a 50-90 GB/s; el centro de datos HBM3 elimina 2-3 TB/s  una brecha de 30-50x. El decodificación está ligada a la memoria así que la brecha es decisiva. En 2026 el paisaje se divide en cuatro partes. El motor neuronal Apple M4/A18 alcanza 38 TOPS con memoria unificada (sin copia de CPUNPU). Qualcomm Snapdragon X Elite / 8 Gen 4 Hexagon alcanza 45 TOPS. WebGPU + WebLLM ejecuta Llama 3.1 8B (Q4) a ~ 41 tok/s en M3 Max (aproximadamente 70-80% de nativos); 17.6k estrellas de GitHub, API compatible con OpenAI, ~70-75% de cobertura móvil. NVIDIA Jetson Orin Nano Super (8GB) se ajusta a Llama 3.2 3B / Phi-3; AGX Orin ejecuta gpt-oss-20b a través de vLLM a ~40 tok/s; Jetson T4000 (JetPack 7.1) es 2x AGX Orin. TensorRT Edge-LLM admite EAGLE-3, NVFP4, preempleo en pedazos  mostrado en CES 2026 por Bosch, ThunderSoft, MediaTek.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy bandwidth-bound decode simulator)
+**Languages:** Python, TypeScript (stdlib, toy bandwidth-bound decode simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 09 (Production Quantization)
 **Time:** ~60 minutes
 

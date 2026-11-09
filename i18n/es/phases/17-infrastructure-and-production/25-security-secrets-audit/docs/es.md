@@ -3,7 +3,7 @@
 > Eliminar la expansión secreta a través de bóvedas centralizadas (Bóveda de HashiCorp, Administrador de secretos de AWS, bóveda de llaves de Azure). Nunca almacenes credenciales en archivos de configuración, archivos env en VCS, hojas de cálculo. Utilice roles de IAM en lugar de claves estáticas; OIDC para CI/CD. El patrón de puerta de entrada de IA es la solución 2026: aplicaciones → puerta de entrada → proveedor de modelos, con puerta de entrada extrayendo credenciales de la bóveda en el tiempo de ejecución. Gira en la bóveda y todas las aplicaciones se recogen en minutos  no redistribuciones, no Slack "quién tiene la nueva llave" mensajes. Política de rotación ≤ 90 días; escaneo con TruffleHog / GitGuardian / Gitleaks en cada compromiso. Cero confianza: MFA, SSO, RBAC/ABAC, fichas de corta duración, postura del dispositivo. El despeje de PII utiliza el reconocimiento de entidades para enmascarar PHI/PII antes de su reenvío; la tokenización consistente (enfoque Mesh) mapea valores sensibles para los titulares de puestos estables para que el LLM preserve la semántica de código/relación. Exceso de red: servicios de LLM en subredes VPC/VNet dedicadas en la lista blanca `api.openai.com`¿ Qué ?`api.anthropic.com`El controlador de incidente 2026: el ataque de la cadena de suministro de Vercel a través de credenciales de CI / CD comprometidas exfiltraron el entorno a través de miles de implementaciones de clientes.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy PII-scrubber + audit-log writer)
+**Languages:** Python, TypeScript (stdlib, toy PII-scrubber + audit-log writer)
 **Prerequisites:** Phase 17 · 19 (AI Gateways), Phase 17 · 13 (Observability)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > Tres hiperescaladoras, tres estrategias distintas. AWS Bedrock es un mercado modelo  Claude, Llama, Titan, Estabilidad, Cohere detrás de una API. Azure OpenAI es una asociación exclusiva de OpenAI más unidades de rendimiento provistas (PTU) para capacidad dedicada. Vertex AI es Gemini primero con la mejor historia de largo contexto y multimodal. En 2026 el análisis artificial mide Azure OpenAI a ~ 50 ms mediana y Bedrock a ~ 75 ms en Llama 3.1 405B equivalentes  PTUs explican la brecha porque la capacidad dedicada supera la compartida a pedido. La regla de decisión no es "cuál es el más rápido" sino "cuál es el catálogo de modelos y la superficie de FinOps que coincide con mi producto". Esta lección te enseña a elegir con las compensaciones escritas, no con vibraciones.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cost-and-latency comparator)
+**Languages:** Python, TypeScript (stdlib, toy cost-and-latency comparator)
 **Prerequisites:** Phase 11 (LLM Engineering), Phase 13 (Tools & Protocols)
 **Time:** ~60 minutes
 

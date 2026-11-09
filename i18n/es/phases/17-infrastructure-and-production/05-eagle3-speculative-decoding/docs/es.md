@@ -3,7 +3,7 @@
 > La descifrado especulativo combina un modelo de proyecto rápido con el modelo objetivo. El proyecto propone tokens K; el objetivo se verifica en un solo plazo; los tokens aceptados son gratuitos. En 2026, EAGLE-3 es la variante de grado de producción  que entrena a un draft head en los estados ocultos del modelo objetivo en lugar de en tokens crudos, empujando la tasa de aceptación alfa en la banda de 0.6-0.8 en el chat general. La pregunta correcta no es "qué tan rápido es el borrador" sino "qué es el alfa en mi tráfico?" Si el alfa cae por debajo de ~0.55, la descifrado especulativo es negativo neto a alta concurrencia porque cada borrador rechazado cuesta un segundo pase al frente objetivo. Esta lección te enseña a medir el alfa primero y a voltear la bandera segundo.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy acceptance-rate simulator)
+**Languages:** Python, TypeScript (stdlib, toy acceptance-rate simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 18 (Multi-Token Prediction)
 **Time:** ~60 minutes
 

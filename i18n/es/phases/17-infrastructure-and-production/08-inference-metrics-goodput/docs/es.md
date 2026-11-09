@@ -3,7 +3,7 @@
 > Cinco métricas deciden si una implementación de inferencias está funcionando. TTFT es preempleo más cola más red. TPOT (a menudo se informa como ITL, aunque las herramientas no están de acuerdo sobre si ITL cuenta el primer token) es el costo de decodificación de memoria por token. La latencia de extremo a extremo es TTFT más TPOT veces longitud de salida. El rendimiento es los tokens por segundo agregados en toda la flota. Pero lo que importa para el producto es el goodput  la fracción de solicitudes que cumplieron con todos los SLO simultáneamente. Alto rendimiento con bajo goodput significa que estás procesando tokens que nunca llegan a los usuarios a tiempo. Números de referencia para Llama-3.1-8B-Instruir sobre TRT-LLM en 2026: TTFT promedio de 162 ms, TPOT promedio de 7,33 ms, E2E promedio de 1,093 ms. Siempre reportar P50, P90, P99  nunca sólo significa. Y observa la trampa de medición: GenAI-Perf excluye TTFT del cálculo de ITL, LLMPerf lo incluye; dos herramientas no están de acuerdo en TPOT para el mismo ejecutivo.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy percentile calculator and goodput reporter)
+**Languages:** Python, TypeScript (stdlib, toy percentile calculator and goodput reporter)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~60 minutes
 

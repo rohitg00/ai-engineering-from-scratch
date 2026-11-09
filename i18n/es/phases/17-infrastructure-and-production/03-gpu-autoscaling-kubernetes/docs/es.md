@@ -3,7 +3,7 @@
 > Tres capas, no una. Los nodos de provisiones de Karpenter se ejecutan dinámicamente (menos de un minuto, un 40% más rápido que el Cluster Autoscaler). KAI Scheduler maneja la programación de pandillas, la conciencia de la topología y las colas jerárquicas  evita la trampa de asignación parcial de 7 de 8 donde siete nodos esperan y se queman en una GPU faltante. Autoscalers de nivel de aplicación (NVIDIA Dynamo Planner, llm-d Workload Variant Autoscaler) escala en señales específicas de inferencia  profundidad de cola, utilización de caché KV  no ciclo de trabajo de CPU / DCGM. La trampa clásica de la HPA es que`DCGM_FI_DEV_GPU_UTIL`es una medición del ciclo de tarea: 100% podría ser 10 solicitudes o 100. vLLM asigna previamente memoria de caché KV, por lo que la memoria nunca activa la escalada.`WhenEmptyOrUnderutilized`política que termina con la ejecución de trabajos de GPU en mitad de la inferencia.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy queue-depth autoscaler simulator)
+**Languages:** Python, TypeScript (stdlib, toy queue-depth autoscaler simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 

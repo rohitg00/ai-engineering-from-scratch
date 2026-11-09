@@ -3,7 +3,7 @@
 > Una demostración de modelo tiene un contrato: una entrada, una llamada de modelo y una salida.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 13 (Building a Production LLM Application), Phase 17 · 08 (Inference Metrics), Phase 17 · 19 (AI Gateways)
 **Time:** ~90 minutes
 
@@ -43,7 +43,7 @@ Escriba el contrato antes de escribir la página:
 | Model call | How long does one call take, and what does it cost? | A toy keyword model that runs in under a millisecond at no cost |
 | Output | What does the user see on success and on failure? | A label, a score, and a reply, or a JSON error with a hint |
 
-Un portátil no tiene límite en ninguna de las tres partes. Una demostración establece un límite en cada parte, y el servidor aplica los límites a cada cliente.
+Un portátil no tiene límite para ninguna de las tres partes. Una demostración establece un límite para cada parte, y el servidor aplica los límites a cada cliente.
 
 ```mermaid
 flowchart LR
@@ -207,12 +207,14 @@ El código es un archivo,`code/main.py`, sin dependencias fuera de la biblioteca
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 El auto-test verifica el validador, el cubo de tokens, el formato de la corriente y una vuelta de HTTP real. Inicia el servidor en un puerto libre, envía tres solicitudes, detiene el servidor y sale. Inicia el servidor para un navegador solo cuando lo necesites:
 
 ```bash
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 Abriéndome .`http://127.0.0.1:8000`Presione Ctrl + C para detener el servidor.
@@ -478,6 +480,7 @@ Para requerir un token de acceso, fijar `DEMO_ACCESS_TOKEN`La página muestra un
 export DEMO_ACCESS_TOKEN="$(python3 -c 'import secrets; print(secrets.token_urlsafe(24))')"
 echo "$DEMO_ACCESS_TOKEN"
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 Realizar las pruebas:

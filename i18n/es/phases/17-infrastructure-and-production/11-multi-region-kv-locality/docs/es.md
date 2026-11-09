@@ -3,7 +3,7 @@
 > El equilibrio de carga de round-robin es activamente perjudicial para la inferencia LLM almacenada en caché. Una solicitud que no aterriza en el nodo que tiene su prefijo paga el costo de preempleo completo  aproximadamente 800 ms en P50 en un prompt largo versus ~ 80 ms con un caché hit. En 2026 el patrón de producción es un router consciente de la caché (vLLM Router en Rust, llm-d router) que consume eventos de caché KV y rutas en coincidencia prefijo-hash. La investigación reciente (GORGO) hace que la latencia de la red transregional sea un término explícito en el objetivo de enrutamiento. Las ofertas comerciales de "inflación transregional" (inflación transregional Bedrock, puertas de entrada multi-cluster GKE) tratan la inferencia como opaca  manejan la disponibilidad, no TTFT. JPMorgan y Mayo Clinic realizaron un fallo de la primera en noviembre de 2024 en 22 minutos. La realidad de DR: el 32% de los fracasos de LLM DR se deben a que los equipos hicieron copias de seguridad de pesos pero olvidaron archivos de tokenizer o configuraciones de cuantización.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy prefix-cache-aware router simulator)
+**Languages:** Python, TypeScript (stdlib, toy prefix-cache-aware router simulator)
 **Prerequisites:** Phase 17 · 04 (vLLM Serving), Phase 17 · 06 (SGLang RadixAttention)
 **Time:** ~60 minutes
 
