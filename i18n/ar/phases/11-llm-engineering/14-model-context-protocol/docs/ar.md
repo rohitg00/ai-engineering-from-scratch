@@ -3,7 +3,7 @@
 > يمنح MCP مضيفًا لذكاء الاصطناعي بروتوكولًا واحدًا لاكتشاف واستدعاء الأدوات والموارد والإشارات. يجعل مراجعة 2026-07-28 هذا البروتوكول بلا بيانات: تتحرك القدرة والسياق الإصداري مع كل طلب ، وليس في ضغط يد متصل بالاتصال.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 03 (Structured Outputs)
 **Time:** ~75 minutes
 
@@ -215,6 +215,7 @@ Mcp-Name: add
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 cd code
 python3 -m unittest discover tests -v
 ```

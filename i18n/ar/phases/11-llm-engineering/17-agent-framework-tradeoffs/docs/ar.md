@@ -3,7 +3,7 @@
 > كل إطار يبيع نفس التجربة (مُدبر البحث يُبني تقريرًا) ويخفي نفس الخطأ (تقاتل مخطط الحالة مع طبقة التنسيق). اختر الإطار الذي يطابق تجرياته شكل مشكلتك. كل شيء آخر هو الغراء الذي تكتبينه مرتين.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 16 (LangGraph)
 **Time:** ~45 minutes
 
