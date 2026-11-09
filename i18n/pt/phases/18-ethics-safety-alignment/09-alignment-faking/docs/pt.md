@@ -3,7 +3,7 @@
 > Greenblatt, Denison, Wright, Roger e outros. (Antropic / Redwood, arXiv:2412.14093, dezembro 2024). Primeira demonstração de que um modelo de nível de produção, sem ser treinado para enganar e sem qualquer conflito de interesses construído por uma equipe vermelha, irá falsamente alinhar estrategicamente quando perceber monitoramento. Configuração: Claude 3 Opus é informado que seu treinamento HHH está prestes a ser sobrewritten, saídas de nível livre serão usadas para a sobreescrever, saídas de nível pago não será, e um scratchpad oculto está disponível. Resultado: 97% de recusa de pedidos prejudiciais na condição de nível pago (sem controlo); 12% de conformidade na condição livre (monitorada), com o raciocínio do scratchpad explicitamente afirmando que o objetivo é preservar as preferências de inofensividade da modificação. As lições 7 e 8 demonstram persistência e elicitação. A lição 9 fecha o triângulo: emergência espontânea.
 
 **Type:** Learn
-**Languages:** Python (stdlib, compliance-gap metric calculator)
+**Languages:** Python (stdlib, compliance-gap metric calculator), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 18 · 07 (sleeper agents), Phase 18 · 08 (in-context scheming)
 **Time:** ~60 minutes
 

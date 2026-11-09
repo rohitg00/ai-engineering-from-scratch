@@ -3,7 +3,7 @@
 > Gallegos, Rossi, Barrow, Tanjim, Kim, Dernoncourt, Yu, Zhang, Ahmed (Linguística Computacional 2024, arXiv:2309.00770). Pesquisa de base de 2024 que distingue os danos representativos (estereótipos, apagamento) dos danos de alocação (distribuição desigual de recursos) e categorizando as métricas de avaliação como baseadas em embutidos, baseadas em probabilidade ou baseadas em texto gerado. 2024-2025 empírico: An et al. (PNAS Nexus, março 2025) medir preconceito intersecional de gênero x raça em GPT-3.5 Turbo, GPT-4o, Gemini 1.5 Flash, Claude 3.5 Sonnet, Llama 3-70B em avaliação automática de currículo para 20 empregos de nível de entrada. A WinoIdentity (COLM 2025, arXiv:2508.07111) introduz uma avaliação de equidade baseada em incerteza para identidades interseccionais. Yu & Ananiadou 2025 identificam neurônios de gênero em camadas de MLP; Ahsan & Wallace 2025 usam SAEs para revelar preconceitos raciais clínicos; Zhou et al. 2024 (UniBias) manipula cabeças de atenção para desbiasing. Meta-crítica (arXiv:2508.11067): A literatura de 10 anos se concentra desproporcionalmente no viés binário de gênero.
 
 **Type:** Build
-**Languages:** Python (stdlib, toy embedding-based bias probe)
+**Languages:** Python, TypeScript (stdlib, toy embedding-based bias probe)
 **Prerequisites:** Phase 05 (word embeddings), Phase 18 · 01 (instruction following)
 **Time:** ~60 minutes
 

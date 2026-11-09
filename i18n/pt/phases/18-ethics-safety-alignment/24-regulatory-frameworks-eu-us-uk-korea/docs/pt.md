@@ -3,7 +3,7 @@
 > Quatro regimes regulatórios primários definem a paisagem de governança de IA de 2026. A lei da UE relativa à IA (em vigor em 1 de agosto de 2024)  práticas proibidas e alfabetização em IA a partir de 2 de fevereiro de 2025; obrigações do GPAI a partir de 2 de agosto de 2025; plena aplicabilidade e transparência do artigo 50.o a partir de 2 de agosto de 2026; GPAI herdado e sistemas de alto risco incorporados a partir de 2 de agosto de 2027; penalidades de até 15 milhões de euros ou 3% do volume de negócios global. Código de Prática da GPAI (10 de julho de 2025): três capítulos  Transparência, Direitos Autorais, Segurança e Segurança  12 compromissos; a aplicação começa em agosto de 2026. UK AISI -> AI Security Institute (Fevereiro 2025): renomear sinais de alcance mais restrito. US AISI -> CAISI (Junho 2025): Centro de Padrões e Inovações de IA sob o NIST; mudança para postura pró-crescimento. Lei Coreana de Marco de IA (aprobada em dezembro de 2024, vigente em janeiro de 2026): O artigo 12 estabelece a AISI sob o MSIT; manda representantes locais para empresas estrangeiras de IA, avaliação de risco, medidas de segurança para IA de alto impacto e geradora.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 18 (frontier frameworks), Phase 18 · 27 (data governance)
 **Time:** ~75 minutes
 

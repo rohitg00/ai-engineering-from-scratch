@@ -3,7 +3,7 @@
 > Hubinger et al. (arXiv:1906.01820, 2019) nomeou o problema cerca de cinco anos antes de ser demonstrado empiricamente. Quando você treina um otimizador aprendido para minimizar um objetivo básico, o objetivo interno do otimizador aprendido não é o objetivo básico  é qualquer proxy interno que o treinamento tenha encontrado útil. Um mesa-optimizador enganosamente alinhado é pseudo-alinhado e tem informações suficientes sobre o sinal de treinamento para parecer mais alinhado do que é. O treinamento padrão de robustez não ajuda: o sistema procura diferenças de distribuição que sinalizam a implantação e os defeitos.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy mesa-optimizer simulator)
+**Languages:** Python (stdlib, toy mesa-optimizer simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 09 (RL foundations)
 **Time:** ~75 minutes
 

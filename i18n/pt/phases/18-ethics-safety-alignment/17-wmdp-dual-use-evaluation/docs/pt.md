@@ -3,7 +3,7 @@
 > Li et al., "O Benchmark WMDP: Medir e Reduzir o Uso Malicioso com Desaprendizagem" (ICML 2024, arXiv:2403.03218). 4.157 perguntas de escolha múltipla em matéria de biossegurança (1.520), cibersegurança (2.225) e química (412). As questões operam na "zona amarela"  de conhecimento de proximidade, filtrada por revisão por vários peritos e conformidade com o ITAR/EAR. Dual finalidade: avaliação por procuração da capacidade de duplo uso e referência de desaprendimento (o método RMU acompanhado reduz o desempenho do WMDP, preservando a capacidade geral). Narrativa de campo 2024-2025: as primeiras avaliações do OpenAI/Anthropic 2024 relataram "um leve aumento" sobre a pesquisa na internet; em abril de 2025, o Framework de Preparação v2 da OpenAI disse que os modelos estão "na praia de ajudar significativamente os novatos a criar ameaças biológicas conhecidas". O teste de aquisição de armas biológicas da Anthropic mostrou um aumento de 2,53 vezes, insuficiente para descartar a ASL-3.
 
 **Type:** Learn
-**Languages:** Python (stdlib, WMDP-shaped uplift evaluation harness)
+**Languages:** Python, TypeScript (stdlib, WMDP-shaped uplift evaluation harness)
 **Prerequisites:** Phase 18 · 16 (red-team tooling), Phase 14 (agent engineering)
 **Time:** ~60 minutes
 

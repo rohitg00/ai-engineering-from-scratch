@@ -3,7 +3,7 @@
 > Três quadros de laboratório principais definem a governança industrial de capacidade fronteiriça de 2026. A Política de Escalagem Responsável Antropical v3.0 (Fevereiro 2026) introduz Níveis de Segurança de IA (ASL-1 a ASL-5+), modelados em níveis de biossegurança, com ASL-3 ativado em maio de 2025 para modelos relevantes para CBRN. O OpenAI Preparedness Framework v2 (abril de 2025) define cinco critérios para capacidades rastreadas e separa os relatórios de capacidades dos relatórios de salvaguardas. DeepMind Frontier Safety Framework v3.0 (septembro de 2025) introduz Níveis de Capacidade Crítica, incluindo um novo CCL de Manipulação Harmosa. Todas as três agora incluem cláusulas de ajustamento do concorrente que permitem o adiamento se os laboratórios de pares enviarem sem salvaguardas comparáveis. O alinhamento entre os laboratórios continua a ser estrutural, não terminológico: "Predes de capacidade", "Predes de alta capacidade" e "Niveis de capacidade crítica" denotam construções análogas.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 17 (WMDP), Phase 18 · 07-09 (deception failures)
 **Time:** ~75 minutes
 

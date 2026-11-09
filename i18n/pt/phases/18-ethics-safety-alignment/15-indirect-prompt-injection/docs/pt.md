@@ -3,7 +3,7 @@
 > Injeção de prompt indireta (IPI) incorpora instruções dentro de conteúdo externo  uma página web, um e-mail, um documento compartilhado, um ticket de suporte  consumido por um sistema de agência sem ação explícita do usuário. O IPI é a ameaça de produção dominante para 2026: contorna os filtros de entrada do usuário porque o atacante nunca toca no usuário, escala silenciosamente à medida que os agentes processam mais conteúdo externo e visa fluxos de trabalho automatizados onde ninguém está lendo o prompt. Informações do MDPI 17 ((1): 54 (janeiro 2026) sintetizam a pesquisa 2023-2025. O documento de defesa IPI do NDSS 2026 enquadra o desafio principal: as instruções injetadas podem ser semanticamente benignas ("imprime sim"), portanto, a detecção requer mais do que filtragem de palavras-chave. "O Atacante se move em segundo lugar" (Nasr et al., joint OpenAI/Anthropic/DeepMind, outubro 2025): ataques adaptativos (gradiente, RL, busca aleatória, equipe vermelha humana) ignoraram todas as 12 defesas publicadas que testaram, com sucesso de ataque acima de 90% contra a maioria delas, embora a maioria dessas defesas tenha relatado taxas de sucesso de ataque quase zero.
 
 **Type:** Build
-**Languages:** Python (stdlib, IPI attack + defense harness)
+**Languages:** Python, TypeScript (stdlib, IPI attack + defense harness)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 14 (agent engineering)
 **Time:** ~75 minutes
 

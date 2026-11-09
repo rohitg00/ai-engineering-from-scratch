@@ -3,7 +3,7 @@
 > Chao, Robey, Dobriban, Hassani, Pappas, Wong (NeurIPS 2023, arXiv:2310.08419). PAIR  Rapido Automático Iterativo Refinamento  é o canônico automático de caixa preta jailbreak. Um LLM atacante com um sistema de red-team prompt propõe iterativamente jailbreaks para um LLM alvo, acumulando tentativas e respostas em seu próprio histórico de bate-papo como feedback no contexto. O PAIR normalmente consegue dentro de 20 consultas, ordens de magnitude mais eficientes do que o GCG (a pesquisa de gradientes de nível de token do Zou et al.) e sem exigir acesso em caixa branca. O PAIR é agora uma linha de base padrão no JailbreakBench (arXiv:2404.01318) e HarmBench, ao lado do GCG, AutoDAN, TAP e Prompt Adversarial persuasivo.
 
 **Type:** Build
-**Languages:** Python (stdlib, mock PAIR loop against a toy target)
+**Languages:** Python, TypeScript (stdlib, mock PAIR loop against a toy target)
 **Prerequisites:** Phase 18 · 01 (instruction-following), Phase 14 (agent engineering)
 **Time:** ~75 minutes
 

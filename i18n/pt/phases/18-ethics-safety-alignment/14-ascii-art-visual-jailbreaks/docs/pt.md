@@ -3,7 +3,7 @@
 > Jiang, Xu, Niu, Xiang, Ramasubramanian, Li, Poovendran, "ArtPrompt: Ataques de Jailbreak baseados em arte ASCII contra LLM alinhados" (ACL 2024, arXiv:2402.11753). Mascarar os tokens relevantes para a segurança em um pedido prejudicial, substituí-los por renderização ASCII-art das mesmas letras, e enviar o aviso disfarçado. GPT-3.5, GPT-4, Gemini, Claude, Llama-2 todos falham em reconhecer robustamente os tokens de arte ASCII. O ataque contorna PPL (filtros de perplexidade), defesas de paráfrase e retokenization. Relacionado: o ViTC benchmark mede o reconhecimento de pedidos visuais não semânticos; StructuralSleight generaliza para estruturas incomuns codificadas por texto (árvores, gráficos, JSON aninhados) como uma família de ataques de codificação.
 
 **Type:** Build
-**Languages:** Python (stdlib, ArtPrompt token-masking harness)
+**Languages:** Python, TypeScript (stdlib, ArtPrompt token-masking harness)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 18 · 13 (MSJ)
 **Time:** ~60 minutes
 

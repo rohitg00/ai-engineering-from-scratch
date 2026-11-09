@@ -3,7 +3,7 @@
 > Anil, Durmus, Panickssery, Sharma, et al. (Antropic, NeurIPS 2024). A jailbreaking multi-shot (MSJ) explora janelas de contexto longas: coisas centenas de falsas voltas de assistente de usuário onde o assistente cumpre pedidos prejudiciais, e depois anexa a consulta alvo. O sucesso do ataque segue uma lei de poder no número de tiros; falha em 5 tiros, confiável em 256 tiros em conteúdo violento e enganoso. O fenômeno segue a mesma lei de poder que o aprendizado benigno no contexto  o ataque e o ICL compartilham um mecanismo subjacente, razão pela qual as defesas que preservam o ICL são difíceis de projetar. A modificação rápida baseada em classificadores reduz o sucesso do ataque de 61% para 2% nas configurações testadas.
 
 **Type:** Learn
-**Languages:** Python (stdlib, in-context learning vs MSJ simulator)
+**Languages:** Python, TypeScript (stdlib, in-context learning vs MSJ simulator)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 10 · 04 (in-context learning)
 **Time:** ~45 minutes
 

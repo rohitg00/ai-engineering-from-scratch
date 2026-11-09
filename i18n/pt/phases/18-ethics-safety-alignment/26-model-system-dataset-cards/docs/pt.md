@@ -3,7 +3,7 @@
 > Três formatos de documentação estruturam a transparência da IA. Modelo de cartão (Mitchell et al. 2019),  Rótulos nutricionais para modelos: dados de formação, análises desagregadas quantitativas, considerações éticas, avisos; apenas 0,3% dos cartões de modelo Hugging Face documentam considerações éticas (Oreamuno et al. 2023). Fichas de dados para conjuntos de dados (Gebru et al. 2018, CACM)  motivação, composição, processo de coleta, rotulagem, distribuição, manutenção; analogia electrónica-folha de dados. Cartões de dados (Pushkarna et al., Google 2022)  detalhes em camadas modulares (telescópica, periscópico, microscópica) como objetos de fronteira para leitores diversos. Desenvolvimento 2024-2025: geração automatizada através de LLM (CardGen, Liu et al. O número de downloads de HF (Liang et al. A Comissão deve apresentar as suas observações sobre o impacto da utilização de um sistema de controlo de dados. A Comissão deve apresentar um relatório sobre a sustentabilidade (Jouneaux et al. Julho 2025); emergentes cartões reguladores da UE/ISO. Cartões de sistema (Sidhpurwala 2024; Transparência a nível do sistema Meta; "Bluprints of Trust" arXiv:2509.20394)  Documentação de sistema de IA de ponta a ponta que abrange capacidades de segurança, proteção de injeção rápida, detecção de exfiltração de dados, alinhamento com valores humanos.
 
 **Type:** Build
-**Languages:** Python (stdlib, model-card + datasheet + system-card generator)
+**Languages:** Python, TypeScript (stdlib, model-card + datasheet + system-card generator)
 **Prerequisites:** Phase 18 · 18 (safety frameworks), Phase 18 · 24 (regulatory)
 **Time:** ~60 minutes
 
