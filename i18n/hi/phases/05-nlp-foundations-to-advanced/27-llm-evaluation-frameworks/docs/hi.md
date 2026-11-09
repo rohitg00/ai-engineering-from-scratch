@@ -3,7 +3,7 @@
 > सटीक मैच और F1 सेमींटिक समकक्षता को याद नहीं करते हैं। मानव समीक्षा पैमाने पर नहीं होती है। LLM-जैसे-जिज उत्पादन उत्तर है  संख्या पर भरोसा करने के लिए पर्याप्त माप के साथ।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

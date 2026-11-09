@@ -3,7 +3,7 @@
 > भाषा निरंतर है, मॉडल अलग हैं, पूर्व प्रसंस्करण पुल है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

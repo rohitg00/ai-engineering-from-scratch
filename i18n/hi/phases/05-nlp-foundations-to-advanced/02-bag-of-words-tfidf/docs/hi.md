@@ -3,7 +3,7 @@
 > पहले गिनें, बाद में सोचें। 2026 में TF-IDF अभी भी अच्छी तरह से परिभाषित कार्यों पर एम्बेडमेंट को हराता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 02 (Linear Regression from Scratch)
 **Time:** ~75 minutes
 

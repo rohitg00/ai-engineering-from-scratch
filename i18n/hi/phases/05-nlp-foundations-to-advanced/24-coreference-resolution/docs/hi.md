@@ -3,7 +3,7 @@
 > "उसने उसे फोन किया, उसने जवाब नहीं दिया, डॉक्टर दोपहर के भोजन पर थे" तीन संदर्भ दो लोगों के लिए और कोई नाम नहीं है। कोरफ़ेरेंस रिज़ॉल्यूशन पता चलता है कि कौन कौन है।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 

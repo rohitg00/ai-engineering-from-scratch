@@ -3,7 +3,7 @@
 > संभ्रम n-ग्राम सीखते हैं, पुनरावृत्ति याद आती है, दोनों ध्यान से बदल जाते हैं, दोनों ही सीमित हार्डवेयर पर अभी भी मायने रखते हैं।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 11 (PyTorch Intro), Phase 5 · 03 (Word Embeddings), Phase 4 · 02 (Convolutions from Scratch)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > JSON के लिए LLM पूछें. अधिकांश समय JSON प्राप्त करें। उत्पादन में, "अधिकतर" समस्या है। संकुचित डिकोडिंग "अधिकतर" को "हमेशा" में बदल देता है। नमूना लेने से पहले लॉजिट को संपादित करके।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

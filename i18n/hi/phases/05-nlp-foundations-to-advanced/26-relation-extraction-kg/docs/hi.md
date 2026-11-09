@@ -3,7 +3,7 @@
 > एनईआर ने संस्थाओं को पाया। संस्था जोड़ने ने उन्हें एंकर किया। संबंध निष्कर्षण उनके बीच किनारों को ढूंढता है। एक ज्ञान ग्राफ नोड्स, किनारों और उनकी उत्पत्ति का योग है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 25 (Entity Linking)
 **Time:** ~60 minutes
 

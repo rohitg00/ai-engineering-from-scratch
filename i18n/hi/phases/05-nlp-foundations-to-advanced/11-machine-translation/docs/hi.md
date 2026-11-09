@@ -3,7 +3,7 @@
 > अनुवाद वह काम है जिसने तीस वर्षों तक एनएलपी अनुसंधान का भुगतान किया और अब भी भुगतान करता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 10 (Attention Mechanism), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > "मैं उत्तर में एक सस्ता रेस्तरां चाहता हूँ ... वास्तव में इसे मध्यम ... और इतालवी जोड़ने के लिए. " तीन मोड़, तीन राज्य अद्यतन. डीएसटी स्लॉट मूल्य dict में सिंक्रनाइज़ रखा है ताकि बुकिंग काम करता है.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 20 (Structured Outputs)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > जब तक आप अस्पष्ट सीमाओं, घोंसले हुए संस्थाओं और डोमेन जार्गोन से निपट नहीं लेते तब तक नामों को बाहर निकालें।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word Embeddings)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > दो RNNs एक अनुवादक होने का नाटक करते हैं.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 08 (CNNs + RNNs for Text), Phase 3 · 11 (PyTorch Intro)
 **Time:** ~75 minutes
 

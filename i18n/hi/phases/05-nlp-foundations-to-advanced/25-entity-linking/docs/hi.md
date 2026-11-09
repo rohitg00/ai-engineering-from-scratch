@@ -3,7 +3,7 @@
 > एनईआर ने "पेरिस" पाया। "संबद्ध इकाई निर्णय लेता हैः पेरिस, फ्रांस? पेरिस हिल्टन? पेरिस, टेक्सास? पेरिस (ट्रोजन राजकुमार)? बिना लिंक किए, आपका ज्ञान ग्राफ अस्पष्ट रहता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 24 (Coreference Resolution)
 **Time:** ~60 minutes
 

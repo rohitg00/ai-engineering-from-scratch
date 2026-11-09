@@ -3,7 +3,7 @@
 > Word2Vec ने प्रत्येक शब्द में एक एम्बेडिंग को प्रशिक्षित किया। ग्लोवे ने सह-अवसर मैट्रिक्स को कारक बनाया। फास्टटेक्स्ट ने टुकड़ों को एम्बेड किया। बीपीई ने ट्रांसफार्मरों से पुल बनाया।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec from Scratch)
 **Time:** ~45 minutes
 

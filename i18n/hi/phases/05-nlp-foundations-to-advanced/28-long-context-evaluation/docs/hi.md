@@ -3,7 +3,7 @@
 > Gemini 3 Pro संदर्भ के 10M टोकन का विज्ञापन करता है। 1M टोकन पर, 8-नाल MRCR 26.3% तक गिर जाता है। विज्ञापन ≠ उपयोग करने योग्य। लंबे संदर्भ मूल्यांकन आपको बताता है कि आप जिस मॉडल पर शिपिंग कर रहे हैं उसकी वास्तविक क्षमता क्या है।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 23 (Chunking Strategies)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > एलिजा ने पैटर्न मैचों के साथ जवाब दिया। डायलॉगफ्लो ने इरादों का नक्शा बनाया। जीपीटी ने वजन से जवाब दिया। क्लाउड उपकरण चलाता है और सत्यापित करता है। प्रत्येक युग ने पिछले एक की सबसे बड़ी विफलता को हल किया।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

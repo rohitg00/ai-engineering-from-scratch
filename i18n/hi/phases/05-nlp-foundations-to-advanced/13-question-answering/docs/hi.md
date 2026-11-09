@@ -3,7 +3,7 @@
 > तीन प्रणालियों ने आधुनिक क्यूए को आकार दिया। निष्कर्षण में पाया गया विस्तार। पुनर्प्राप्ति-बढ़ता हुआ उन्हें दस्तावेजों में जमीनी बनाया गया। जनरेटिव ने उत्तर उत्पन्न किए। प्रत्येक आधुनिक एआई सहायक तीनों का मिश्रण है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 11 (Machine Translation), Phase 5 · 10 (Attention Mechanism)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > शास्त्रीय पाठ वर्गीकरण के बारे में आपको जो कुछ जानना चाहिए वह यहाँ दिखाया गया है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 2 · 14 (Naive Bayes)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > यदि कोई शब्द आश्चर्यजनक है, तो मॉडल बुरा है. भ्रम एक संख्या को आश्चर्यचकित करता है. चिकनाई इसे अंतहीन रखती है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

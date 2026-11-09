@@ -3,7 +3,7 @@
 > Word2Vec ने आपको एक शब्द के लिए एक वेक्टर दिया। आधुनिक एम्बेडिंग मॉडल आपको एक मार्ग के लिए एक वेक्टर देते हैं, क्रॉस-लिंग्वेज, दुर्लभ, घने और बहु-वेक्टर दृश्यों के साथ, आपके सूचकांक के अनुरूप आकार। गलत चुनें और आपका RAG गलत चीज प्राप्त करता है।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec), Phase 5 · 14 (Information Retrieval)
 **Time:** ~60 minutes
 

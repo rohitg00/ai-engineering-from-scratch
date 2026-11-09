@@ -3,7 +3,7 @@
 > एक मॉडल, 100 से अधिक भाषाएं, उनमें से अधिकांश के लिए प्रशिक्षण डेटा शून्य। क्रॉस-लिंग्वेज ट्रांसफर 2020 के दशक का व्यावहारिक चमत्कार है।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 04 (GloVe, FastText, Subword), Phase 5 · 11 (Machine Translation)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > "t entails h" का अर्थ है कि मानव रीडिंग t के अनुसार h सही है। NLI का उद्देश्य निष्कर्षण / विरोधाभास / तटस्थता की भविष्यवाणी करना है। सतह पर बोरिंग, उत्पादन में भार सहन करना।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment Analysis), Phase 5 · 13 (Question Answering)
 **Time:** ~60 minutes
 

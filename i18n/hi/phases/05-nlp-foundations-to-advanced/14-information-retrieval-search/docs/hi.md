@@ -3,7 +3,7 @@
 > BM25 सटीक है लेकिन नाजुक है. घने एक विस्तृत जाल फेंकता है लेकिन कीवर्ड याद है. हाइब्रिड 2026 डिफ़ॉल्ट है. बाकी सब कुछ ट्यूनिंग है.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > LDA: दस्तावेज विषयों का मिश्रण हैं, विषय शब्दों पर वितरण हैं। BERTopic: दस्तावेज क्लस्टर एम्बेडिंग स्पेस में, क्लस्टर विषय हैं। एक ही लक्ष्य, अलग-अलग विघटन।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word2Vec)
 **Time:** ~45 minutes
 

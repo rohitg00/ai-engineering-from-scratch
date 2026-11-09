@@ -3,7 +3,7 @@
 > डिकोडर एक संपीड़ित सारांश पर आँख बंद करना बंद कर देता है और पूरे स्रोत को देखना शुरू कर देता है। इसके बाद सब कुछ ध्यान और इंजीनियरिंग है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 09 (Sequence-to-Sequence Models)
 **Time:** ~45 minutes
 

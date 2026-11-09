@@ -3,7 +3,7 @@
 > व्याकरण कुछ समय के लिए फैशन से बाहर था, फिर हर LLM पाइपलाइन को संरचित निष्कर्षण को मान्य करने की आवश्यकता थी, और यह वापस आया।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 
