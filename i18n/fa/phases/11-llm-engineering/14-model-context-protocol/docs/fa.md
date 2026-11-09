@@ -3,7 +3,7 @@
 > MCP به یک میزبان هوش مصنوعی یک پروتکل برای کشف و درخواست ابزارها، منابع و پیام ها می دهد. اصلاح 2026-07-28 این پروتکل را بی وضعیت می کند: قابلیت و زمینه نسخه با هر درخواست سفر می کند، نه در یک دست زدن متصل.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 03 (Structured Outputs)
 **Time:** ~75 minutes
 
@@ -215,6 +215,7 @@ Mcp-Name: add
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 cd code
 python3 -m unittest discover tests -v
 ```
