@@ -3,7 +3,7 @@
 > ASR inverte el habla al texto; TTS inverte el texto al habla. La pila 2026 está compuesta por tres partes: texto → tokens, tokens → mel, mel → waveform. Cada parte tiene un modelo predeterminado que se ajusta a una computadora portátil.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 09 (Seq2Seq), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

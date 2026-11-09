@@ -3,7 +3,7 @@
 > Los modelos de audio-idioma 2026 razonan sobre el habla + sonido ambiental + música. Qwen2.5-Omni-7B coincide con GPT-4o Audio en MMAU-Pro. Audio Flamingo Next supera a Gemini 2.5 Pro en LongAudioBench. La brecha entre abierto y cerrado es esencialmente cerrada  excepto en tareas de audio múltiples, donde todos son casi aleatorios.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 12 · 03 (Vision-Language Models), Phase 7 · 10 (Audio Transformers)
 **Time:** ~45 minutes
 

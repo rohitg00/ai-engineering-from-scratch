@@ -3,7 +3,7 @@
 > Whisper es un transformer de ventana de 30 segundos, entrenado en 680 mil horas de pares de audio-texto multilingües con poca supervisión. Una arquitectura, múltiples tareas, robusta en 99 idiomas.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04 (ASR), Phase 5 · 10 (Attention), Phase 7 · 05 (Full Transformer)
 **Time:** ~75 minutes
 

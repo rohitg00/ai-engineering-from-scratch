@@ -3,7 +3,7 @@
 > No se puede enviar lo que no se puede medir. Esta lección nombra las métricas 2026 para cada tarea de audio: ASR (WER, CER, RTFx), TTS (MOS, UTMOS, SECS, WER-on-ASR-round-trip), audio-lenguaje (MMAU, LongAudioBench), música (FAD, CLAP), y altavoz (EER). Además de los tablones de clasificación donde se compara.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 04, 06, 07, 09, 10; Phase 2 · 09 (Model Evaluation)
 **Time:** ~60 minutes
 

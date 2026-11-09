@@ -3,7 +3,7 @@
 > El reconocimiento del habla es una clasificación de audio en cada paso del tiempo, pegada entre sí por un modelo de secuencia que conoce el inglés y el silencio. CTC, RNN-T y atención son las tres formas de hacerlo. Elige una y entienda por qué.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 08 (CNNs & RNNs for Text), Phase 5 · 10 (Attention)
 **Time:** ~45 minutes
 

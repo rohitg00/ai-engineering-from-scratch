@@ -3,7 +3,7 @@
 > 2026 generación de música: Suno v5 y Udio v4 dominan comercial; MusicGen, Stable Audio Open y ACE-Step lideran el código abierto. El problema técnico se resuelve en su mayoría. El problema legal (Warner Music $ 500M acuerdo, UMG acuerdo) remodela el campo en 2025-2026.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms), Phase 4 · 10 (Diffusion Models)
 **Time:** ~75 minutes
 

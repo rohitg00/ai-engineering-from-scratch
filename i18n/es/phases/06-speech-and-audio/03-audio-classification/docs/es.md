@@ -3,7 +3,7 @@
 > Todo, desde "dog barking vs sirena" hasta "qué idioma es este" es la clasificación de audio. Las características son mels. La arquitectura se mueve cada década. La evaluación permanece AUC, F1, y recall por clase.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 3 · 06 (CNNs), Phase 5 · 08 (CNNs & RNNs for Text)
 **Time:** ~75 minutes
 

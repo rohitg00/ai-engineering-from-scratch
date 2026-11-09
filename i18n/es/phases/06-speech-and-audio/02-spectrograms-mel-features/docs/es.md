@@ -3,7 +3,7 @@
 > Las redes neuronales no consumen bien las formas de onda crudas. Consumen espectrogramas. Consumen espectrogramas mel aún mejor. Cada clasificador de audio, TTS y ASR en 2026 vive o muere por esta sola elección de procesamiento previo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 01 (Audio Fundamentals)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Cada agente de voz vive o muere por dos decisiones: ¿habla el usuario ahora y están terminados? VAD responde a la primera. La detección de giros (VAD + silencio-hangower + modelo de punto final semántico) responde a la segunda.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 11 (Real-Time Audio), Phase 6 · 12 (Voice Assistant)
 **Time:** ~45 minutes
 

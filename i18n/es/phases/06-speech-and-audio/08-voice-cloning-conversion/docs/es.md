@@ -3,7 +3,7 @@
 > La clonación de voz lee tu texto en la voz de otra persona. La conversión de voz reescribe tu voz en la de otra persona mientras se conserva lo que dijiste. Ambos se apoyan en la misma descomposición: la identidad del hablante separada del contenido.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 07 (TTS)
 **Time:** ~75 minutes
 

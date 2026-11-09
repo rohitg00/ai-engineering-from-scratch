@@ -3,7 +3,7 @@
 > Las formas de onda son la señal bruta. Los espectrogramas son la representación. Las características de Mel son la forma amigable con ML. Cada tubería moderna de ASR y TTS camina esta escalera, y el primer paso es entender el muestreo y Fourier.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Vectors & Matrices), Phase 1 · 14 (Probability Distributions)
 **Time:** ~45 minutes
 

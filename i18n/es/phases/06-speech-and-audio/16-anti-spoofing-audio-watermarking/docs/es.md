@@ -3,7 +3,7 @@
 > El clonamiento de voz se envió más rápido que las defensas. En 2026 los sistemas de voz de producción necesitan dos cosas: un detector (AASIST, RawNet2) que clasifique el habla real vs falsa, y una marca de agua (AudioSeal) que sobreviva a la compresión y edición.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 06 (Speaker Recognition), Phase 6 · 08 (Voice Cloning)
 **Time:** ~75 minutes
 

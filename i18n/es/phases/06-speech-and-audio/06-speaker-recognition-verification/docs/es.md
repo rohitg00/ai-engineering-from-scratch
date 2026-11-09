@@ -3,7 +3,7 @@
 > ASR pregunta "¿qué dijeron?" el reconocimiento del orador pregunta "¿quién lo dijo?" La matemática se ve igual  embebidos más cosino  pero cada decisión de producción depende de un solo número EER.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Spectrograms & Mel), Phase 5 · 22 (Embedding Models)
 **Time:** ~45 minutes
 
