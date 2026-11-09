@@ -3,7 +3,7 @@
 > Hệ thống của bạn yêu cầu là 4.000 mã thông báo. ngữ cảnh RAG của bạn là 20.000 mã thông báo. Bạn gửi cả hai với mỗi yêu cầu. Bạn cũng trả cho cả hai lần. Cấp  nhanh cho phép nhà cung cấp giữ cho tiền đề ấm ở phía của họ và tính phí bạn 10% của tỷ lệ bình thường khi tái sử dụng. Được sử dụng đúng cách, nó cắt giảm chi phí suy luận bằng 5090% và độ trễ đầu tiên mã thông báo bằng 4085%.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 01 (Prompt Engineering), Phase 11 · 05 (Context Engineering), Phase 11 · 11 (Caching and Cost)
 **Time:** ~60 minutes
 

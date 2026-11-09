@@ -3,7 +3,7 @@
 > MCP cung cấp cho một máy chủ AI một giao thức để phát hiện và gọi các công cụ, tài nguyên và lời nhắc. Bản sửa đổi 2026-07-28 làm cho giao thức đó không có quốc gia: khả năng và ngữ cảnh phiên bản đi cùng với mọi yêu cầu, không phải trong một cú tay liên kết.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 03 (Structured Outputs)
 **Time:** ~75 minutes
 
@@ -215,6 +215,7 @@ Lấy bài học từ thư mục của nó:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 cd code
 python3 -m unittest discover tests -v
 ```

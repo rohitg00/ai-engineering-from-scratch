@@ -3,7 +3,7 @@
 > Hầu hết các công ty khởi nghiệp AI không chết vì mô hình xấu. Họ chết vì nền kinh tế đơn vị xấu. Một cuộc gọi GPT-4o chỉ tốn một phần nhỏ một xu. 10 nghìn người dùng thực hiện 10 cuộc gọi mỗi ngày chỉ tốn 250 đô la chỉ bằng mã thông báo đầu vào - trước khi bạn tính phí một đô la. Những công ty sống sót là những người coi mỗi cuộc gọi API như một giao dịch tài chính, không phải là một cuộc gọi chức năng.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lesson 09 (Function Calling)
 **Time:** ~45 minutes
 **Related:**Giai đoạn 11 · 15 (Tạm dịch: Caching ngay lập tức)  bài học này bao gồm bộ nhớ cache lớp ứng dụng (thầm cache ngữ nghĩa, bộ nhớ cache hash chính xác, định tuyến mô hình). Bài học 15 bao gồm bộ nhớ cache cấp cấp cấp cấp cấp (Anthropic cache_control, OpenAI tự động, Gemini CachedContent). Kết hợp cả hai để giảm chi phí 50-95%.

@@ -3,7 +3,7 @@
 > Bạn sẽ không bao giờ triển khai một ứng dụng web mà không có các thử nghiệm. Bạn sẽ không bao giờ gửi một di chuyển cơ sở dữ liệu mà không có kế hoạch quay lại. Nhưng ngay bây giờ, hầu hết các nhóm gửi đơn xin bằng bằng cách đọc 10 kết quả và nói "Đúng, trông rất tốt". Đó không phải là đánh giá. Đó là hy vọng. Hy vọng không phải là một công nghệ. Mỗi thay đổi nhanh chóng, mỗi thay đổi mô hình, mỗi điều chỉnh nhiệt độ thay đổi phân bố đầu ra của bạn theo cách bạn không thể dự đoán bằng cách đọc một số ví dụ. Đánh giá là thứ duy nhất đứng giữa ứng dụng của bạn và sự suy giảm âm thầm.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lesson 01 (Prompt Engineering), Lesson 09 (Function Calling)
 **Time:** ~45 minutes
 **Related:**Giai đoạn 5 · 27 (LLM Evaluation  RAGAS, DeepEval, G-Eval) bao gồm các khái niệm cấp khung (trách nhiệm dựa trên NLI, hiệu chuẩn thẩm phán, bốn RAG). Giai đoạn 5 · 28 (Việc đánh giá ngữ cảnh dài) bao gồm NIAH / RULER / LongBench / MRCR cho sự lùi chiều dài ngữ cảnh. Bài học này tập trung vào những gì là đặc biệt về kỹ thuật LLM: tích hợp CI / CD, chạy đánh giá chi phí, bảng điều khiển lùi.

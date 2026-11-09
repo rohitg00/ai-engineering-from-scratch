@@ -3,7 +3,7 @@
 > Bạn đã xây dựng các thiết bị, các thiết bị nhúng, đường ống RAG, gọi chức năng, các lớp lưu trữ và hàng rào. Một cách riêng biệt. Ở cách ly. Giống như tập cân bằng guitar mà không bao giờ chơi một bài hát. Bài học này là bài hát. Bạn sẽ chuyển tất cả các thành phần từ bài học 01-12 thành một dịch vụ sẵn sàng sản xuất. Không phải đồ chơi. Không phải một bản demo. Một hệ thống xử lý lưu lượng truy cập thực sự, thất bại đẹp trai, phát token, theo dõi chi phí, và sống sót sau 10.000 người dùng đầu tiên.
 
 **Type:** Build (Capstone)
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lessons 01-15
 **Time:** ~120 minutes
 **Related:**Giai đoạn 11 · 14 (MCP) để thay thế các chương trình công cụ tùy chỉnh bằng một giao thức chia sẻ; Giai đoạn 11 · 15 (Tầm lưu trữ ngay lập tức) để giảm chi phí 50-90% trên các tiền đề ổn định. Cả hai đều được dự kiến trong mỗi đống sản xuất nghiêm trọng năm 2026.

@@ -3,7 +3,7 @@
 > Mỗi framework bán cùng một demo (nhà nghiên cứu xây dựng một báo cáo) và ẩn cùng một lỗi (chế hoạch trạng thái chiến đấu với lớp dàn xếp). Chọn framework có trừu tượng phù hợp với hình dạng của vấn đề của bạn; tất cả những thứ khác là dán bạn viết hai lần.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 16 (LangGraph)
 **Time:** ~45 minutes
 
