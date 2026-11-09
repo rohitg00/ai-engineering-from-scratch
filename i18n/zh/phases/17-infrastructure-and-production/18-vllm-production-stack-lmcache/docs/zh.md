@@ -3,7 +3,7 @@
 > 提供堆线路由器,引擎和可观察性在一个Kubernetes部署中,并将KV缓存作为可以离开GPU的资源. 脱载KV将KV缓存从GPU内存中提取出来,并在查询和引擎中重复使用 (CPUDRAM,然后是磁盘/Ceph).  vLLM的生产堆是参考部署; LMCache是卸载层. 通过连接器API (v0.9.0+) 实现了无同步和可插入的 vLLM 0.11.0 KV脱载连接器 (2026年1月). 脱载路径通常隐藏于请求路径,尽管缓存错失和促销可以增加端到端延迟. LMCache即使没有共享的预写,也很有价值. 当GPU没有KV插槽时,预先请求可以从CPU恢复,而不是重新计算预填. 发布的 16x H100 (80GB HBM) 基准值在 4 a3-highgpu-4g:当KV缓存超过HBM时,本土CPU脱载和LMCache都会显著提高吞吐量;在低KV足迹时,所有配置都与小的上空成本相匹配.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy KV-spill simulator)
+**Languages:** Python, TypeScript (stdlib, toy KV-spill simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 06 (SGLang/RadixAttention)
 **Time:** ~60 minutes
 

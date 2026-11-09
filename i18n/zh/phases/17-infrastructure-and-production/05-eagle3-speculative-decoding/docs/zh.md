@@ -3,7 +3,7 @@
 > 投机解码将快速的草案模型与目标模型结合起来. 草案提出K代币;目标在单个前期中验证;接受的代币是免费的. 2026年,EAGLE-3是生产级变体,它训练了一个预稿头,在目标模型的隐藏状态而不是原始代币,在一般聊天中推进接受率alpha到0.6-0.8带. 如果阿尔法下降到0.55以下,投机解码在高同步率下是净负的,因为每一个被拒绝的草案都需要第二个目标前进. 这课教你先测量阿尔法,然后翻旗.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy acceptance-rate simulator)
+**Languages:** Python, TypeScript (stdlib, toy acceptance-rate simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 18 (Multi-Token Prediction)
 **Time:** ~60 minutes
 

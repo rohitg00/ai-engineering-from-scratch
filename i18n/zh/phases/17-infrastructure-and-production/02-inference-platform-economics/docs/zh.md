@@ -3,7 +3,7 @@
 > 2026 年推断市场不再是GPU 租时间.它分为定制 (Groq,Cerebras,SambaNova),GPU 平台 (Baseten, Together, Fireworks, Modal) 和API 首选市场 (Replicate,DeepInfra).$1/hr per GPU on May 1, 2026, and $根据10T+代币/日的4B估值, 按数量驱动的模型工作.$300M Series E at $2026年1月5B. 竞争定位规则很简单:烟花优化延迟,一起优化目录宽度,Basen优化企业抛光,Modal优化Python-原生DX,复制优化多模达达,Anyscale优化分布式Python. 这一课给你一个可以交给创始人的矩阵.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy per-call economics comparator)
+**Languages:** Python, TypeScript (stdlib, toy per-call economics comparator)
 **Prerequisites:** Phase 17 · 01 (Managed LLM Platforms), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~60 minutes
 

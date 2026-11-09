@@ -3,7 +3,7 @@
 > 轮负载平衡对缓存的LLM推断具有积极的危害. 没有登陆其前的节点的请求支付了全额预填成本 大约800 ms在P50上长时间提示与 ~ 80 ms在缓存中击. 2026年,生产模式是一个缓存知性路由器 (vLLM Router in Rust, llm-d路由器) 消耗KV缓存事件和路由在前-hash匹配. 最近的研究 (GORGO) 使跨地区网络延迟成为路由目标中明确的术语. 商业"跨区域推理" (Bedrock跨区域推理,GKE多集群网关) 提供,以不透明的方式处理推理,而不是处理TTFT. 摩根大通和梅奥诊所在2024年11月在22分钟内进行了东部-1的失败. 实际情况: 32%的LLM DR失败是因为团队备份了权重,
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy prefix-cache-aware router simulator)
+**Languages:** Python, TypeScript (stdlib, toy prefix-cache-aware router simulator)
 **Prerequisites:** Phase 17 · 04 (vLLM Serving), Phase 17 · 06 (SGLang RadixAttention)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > 现代服务引擎的吞吐量依赖于三个合并默认, 网页关注总是开放. 连续批量将新的请求注入解码代之间. 碎片的预填片长时间提示,所以解码代码永远不会饿死. 启动三种,一个H100 SXM5上的Llama 3.3 70B FP8在128次同时下推出2,200-2,400个/秒,大约比VLLM的默认高25%, 是所有三种技术的参考引擎在一个你可以图表的水平上,并结束在玩具连续批量`code/main.py`时间表像VLLM一样预填和解码.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy continuous batching scheduler)
+**Languages:** Python, TypeScript (stdlib, toy continuous batching scheduler)
 **Prerequisites:** Phase 17 · 01 (Model Serving), Phase 11 (LLM Engineering)
 **Time:** ~75 minutes
 

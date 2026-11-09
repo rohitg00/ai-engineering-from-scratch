@@ -3,7 +3,7 @@
 > 核心边缘限制是内存带宽,而不是计算. 移动DRAM处于50-90GB/s;数据中心HBM3清除2-3TB/s30-50x差距. 解码是记忆的,所以差距是决定性的. 在2026年,这个景观分为四个部分. 果M4/A18神经引擎最高值为38TOPS,具有统一内存 (没有CPUNPU副本). 龙X精英/8代4六合集体达到45. 网络GPU + WebLLM 在M3 Max上运行Llama 3.1 8B (Q4) 速度为 ~ 41 tok/s (约为 70-80%的本土); 17.6k GitHub 星,OpenAI兼容的 API, ~ 70-75%的移动覆盖率. 飞机机的机器人是NVIDIA Jetson Orin Nano Super (8GB) 兼容Llama 3.2 3B / Phi-3; AGX Orin 通过vLLM 运行gpt-oss-20b 速度约为40个通/秒;Jetson T4000 (JetPack 7.1) 是2x AGX Orin. 讯RT Edge-LLM支持EAGLE-3,NVFP4,在2026年CES展览会上由博什,ThunderSoft,MediaTek展示的零碎预填料.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy bandwidth-bound decode simulator)
+**Languages:** Python, TypeScript (stdlib, toy bandwidth-bound decode simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 09 (Production Quantization)
 **Time:** ~60 minutes
 

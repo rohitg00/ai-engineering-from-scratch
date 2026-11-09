@@ -3,7 +3,7 @@
 > 预填是计算的,解码是记忆的. 运行两个在同一GPU浪费一个资源. 分类将它们分为单独的池,并通过NIXL (RDMA/InfiniBand或TCP fallback) 传输它们之间的KV缓存. 据NVIDIA Dynamo (GTC 2025宣布, 1.0 GA) 位于vLLM/SGLang/TRT-LLM 以上,其规划器预示器+SLA规划器自动率匹配预填:解码比率以满足SLO. 据NVIDIA发布,在这个球场的吞吐量增长  developer.nvidia.com (2025-06) 显示了 GB200 NVL72 + Dynamo 中度延迟模式上的DeepSeek-R1 MoE的 ~6倍改善,而 Dynamo 产品页面 (developer.nvidia.com,未有日期) 则在 GB300 NVL72 + Dynamo vs Hopper 上宣传到50倍的吞吐量. 对于"30x"的数字,这是全集黑+迪纳摩+深度搜索R1报告的社区总数;我们没有找到一个准确的30x的原始来源, 作为独立服务,每个角色的HPA. 增加了层次性KV脱载,缓存意识的LoRA路由,UCCL网络,规模到零. 经济:多个客户披露的内部推广表明3040%的节省$2M-class inference spend (i.e., $转换从定位分类到与Dynamo分类的定位分类分类的服务时,$2M→$600-800K 图是一个内部复合图,没有单个发表的案例研究使用它作为一个大小顺序的,不是一个参考引用.短提示 (<512代币,短输出) 不证明转移成本.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy disaggregated-vs-colocated simulator)
+**Languages:** Python, TypeScript (stdlib, toy disaggregated-vs-colocated simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 08 (Inference Metrics)
 **Time:** ~75 minutes
 

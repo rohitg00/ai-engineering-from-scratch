@@ -3,7 +3,7 @@
 > 量子化格式不是一个普遍的选择. 它是硬件,服务引擎和工作负载的函数. GGUF Q4_K_M或Q5_K_M拥有CPU和边缘,通过 llama.cpp和Ollama提供. 在VLLM中,GPTQ在同一基地需要多个LoRA时获胜. 通过使用 Marlin-AWQ 核,在 7B 类型模型上提供了741 个_tk/s,最好的 Pass@1 在 INT4  作为2026 年的数据中心生产的默认. ,阿达和布莱克威尔的中期保持几乎没有损失,得到广泛支持. NVFP4和MXFP4 (黑微量化) 是积极的,需要每块验证. 两个陷咬人团队:校准数据集必须与部署域匹配,KV缓存与重量量化分开 AWQ课 "我的模型现在是4GB"在生产批量时忘记了10-30GBKV缓存.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy memory and throughput comparison across formats)
+**Languages:** Python, TypeScript (stdlib, toy memory and throughput comparison across formats)
 **Prerequisites:** Phase 10 · 13 (Quantization foundations), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 

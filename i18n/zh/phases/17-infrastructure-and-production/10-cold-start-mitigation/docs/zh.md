@@ -3,7 +3,7 @@
 > 一个大型模型需要几分钟才能从冷到服务:一个70B模型在新鲜节点上需要大约3-8分钟之前的第一代币. 在一个真正的无服务器世界里,这不是一个热点, 减轻功能在五层运行:预种的节点图像 (AWS上的Bottlerocket,双体弧),模型流 (NVIDIA Run:ai Model Streamer,本地在vLLM中),GPU内存快照 (Modal检查站,重启速度高达10倍),热池 (`min_workers=1`),层次加载 (ServerlessLLM的NVMe→DRAM→HBM管道,10-200x延迟降低),加上附加六个模式,直播迁移,移动输入代币 (KB) 而不是KV缓存 (GB).Modal将2~4个冷开始作为地板;Baseten 5-10个默认,下秒与预加热.本课程教你测量,预算和堆叠五层.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cold-start path simulator)
+**Languages:** Python, TypeScript (stdlib, toy cold-start path simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~60 minutes
 

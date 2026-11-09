@@ -3,7 +3,7 @@
 > 跨框架覆盖率是2026年企业交易的桌面投资. **EU AI Act**根据"高风险"规定,在2026年8月2日实施了最高罚款,最高罚款为1500万欧元或全球高风险系统义务的3%. (第99条)**Colorado AI Act**根据SB25B-004 (SB25B-004) 推迟到2026年2月30日起,**SOC 2 Type II**:实际上 B2B AI 要求 (类型II,而不是类型I,用于金融技术). **GDPR**据证据,最大的针对AI的罚款为3050万欧元 (荷兰DPA,2024年9月);意大利的Garante在2024年12月针对OpenAI发出了1500万欧元 (后来在2026年3月上诉时被撤销).**HIPAA**没有BAA,无法向外部AI服务发送PHI. **PCI-DSS**:人工智能互动层覆盖需要配置+合同协议,而不是自动. **ISO 42001**参考资料:OpenAI维持SOC 2类型 2,ISO/IEC 27001:2022,ISO/IEC 27701:2019,GDPR/CCPA/HIPAA (BAA) /FERPA,PCI-DSS用于ChatGPT支付组件.跨框架映射减少了审计疲劳:通过ISO 27001 A.5.15-5.18,GDPR第32条,HIPAA §164.312(a.
 
 **Type:** Learn
-**Languages:** (Python optional — compliance is policy + process, not code)
+**Languages:** (Python, TypeScript optional: compliance is policy + process, not code)
 **Prerequisites:** Phase 17 · 25 (Security), Phase 17 · 13 (Observability)
 **Time:** ~60 minutes
 

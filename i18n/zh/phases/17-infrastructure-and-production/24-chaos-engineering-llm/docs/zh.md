@@ -3,7 +3,7 @@
 > 士专业的混乱工程将在2026年成为自己的学科. 在生产中进行实验之前的先决条件:定义的SLI/SLO,跟踪+计量+日志可观测性,自动回滚,运行簿,调用. 建筑有四个层面:控制 (实验安排器),目标 (服务,基础设施,数据存储),安全 (监护+中断+交通过器),可观察性 (计量+痕迹+日志),反 (SLO调整). 防护轨道是强制性的:如果预计每天错误预算燃烧> 2x,燃烧率警报暂停实验;压制窗户 + 追踪识别相关性减持警报噪音. 时间:每周的小鱼+SLO审查;每月的游戏日+死后测试;每季度的跨团队弹性审计+依赖性映射. 专业化实验:内存过载,网络故障,供应商中断,错误的提示,KV缓存驱逐风暴. 工具:利用混沌工程 (LLM衍生的建议,爆炸射线缩放,MCP工具集成);LitmusChaos (CNCF);混沌网 (CNCF Kubernetes本土).
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy chaos experiment runner)
+**Languages:** Python, TypeScript (stdlib, toy chaos experiment runner)
 **Prerequisites:** Phase 17 · 23 (SRE for AI), Phase 17 · 13 (Observability)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > 传统的负载测试器并非用于流媒体响应,可变输出长度,代币水平的指标或GPU和. 两个陷咬了大多数球队. 标签陷: Locust 的代币级别测量在 Python GIL 下运行代币化,这与重量的同时生成请求竞争;代币化后备后备,然后膨胀了报告的代币间延迟 提示-均性陷:循环中的相同提示测试代币分布的一个点;实际流量具有可变长度和多种预先语符匹配. 果公司解决了这个问题`--mean-input-tokens`其他`--stddev-input-tokens`2026年工具映射:专业化法学 (GenAI-Perf,LLMPerf,LLM-Locust,guidelellm) 以实现代币水平的准确性;**k6 v2026.1.0**其他**k6 Operator 1.0 GA (Sept 2025)** 流量知情,通过TestRun/PrivateLoadZoneCRD分布,最适合CI/CD门;Vegeta for Go常率和;只使用LLM-Locust扩展的虫2.43.3流量.负载模式:稳定状态,坡道,尖 (自动测量测试),浸泡 (记忆泄漏).
 
 **Type:** Build
-**Languages:** Python (stdlib, toy realistic-prompt generator + latency collector)
+**Languages:** Python, TypeScript (stdlib, toy realistic-prompt generator + latency collector)
 **Prerequisites:** Phase 17 · 08 (Inference Metrics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~75 minutes
 

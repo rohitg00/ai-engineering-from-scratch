@@ -3,7 +3,7 @@
 > 通过RAG,通过基础设施数据 (日志,运行簿,服务拓) 实现自动化调查,文档和协调阶段的LLM. 2026 建筑模式是多代理管弦乐专业代理 (日志,指标,运行书籍) 由监督者协调; AI提出假设和查询,人类批准判断调用. 数据狗比特人工智能和Azure SRE代理将这些作为管理产品. 跑本正在发展:NeuBird Hawkeye使用对抗评估 (两个模型分析相同事件;协议 =信心,不同意见 =不确定性); 操作记忆在团队变化中持续存在. 自动补救仍然谨慎:人工智能建议,人类批准. 完全自主操作是狭窄的 (重新启动,反弹特定部署) 紧密的防护 任何销售"设置并忘记"的人都在超销. 突出界限:事件前预测 麻省理工学院的研究报告显示,在历史记录+GPU时间+API错误模式上训练的LLM预测, 预测:到2026年底,企业中95%的LLM将自动转账.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy multi-agent incident triage simulator)
+**Languages:** Python, TypeScript (stdlib, toy multi-agent incident triage simulator)
 **Prerequisites:** Phase 17 · 13 (Observability), Phase 17 · 24 (Chaos Engineering)
 **Time:** ~60 minutes
 

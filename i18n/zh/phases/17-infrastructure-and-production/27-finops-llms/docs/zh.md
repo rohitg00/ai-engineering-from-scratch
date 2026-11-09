@@ -3,7 +3,7 @@
 > 传统的FinOps在LLM支出上断绝.成本是代币交易,而不是资源上班时间.标签不映射API调用是一个交易,而不是资产.工程决策 (即时设计,文本窗口,输出长度) 是财务决策.2026年游戏册在第一天对仪器的三个属性维度:每个用户 (`user_id`) 对于座位定价和扩展,每任务 (`task_id`其他`route`) 对于产品表面成本和优先级,`tenant_id`) 单位经济和更新. 两个代币层,一个藏的钱. 多租户产品的执行梯度:每租户的利率限制 (2-3倍预期峰值,清除429+再试);每日支出限额 (1.5-3倍合约的上限;触发加紧速度+警报);消耗点 z-score > 4 (自动暂停+开启页面). 归类模式:标签和汇总,远程测量连接器 (追踪ID →发票;最高精度),采样和抽象,基于模型的分配,事件来源,实时流媒体. 单位指标:每个解决查询的成本,每一个生成的文物的成本  不是$/M代币. 复制标签总是错失; 要求创建工具.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cost-attribution simulator with kill switch)
+**Languages:** Python, TypeScript (stdlib, toy cost-attribution simulator with kill switch)
 **Prerequisites:** Phase 17 · 13 (Observability), Phase 17 · 14 (Caching)
 **Time:** ~60 minutes
 

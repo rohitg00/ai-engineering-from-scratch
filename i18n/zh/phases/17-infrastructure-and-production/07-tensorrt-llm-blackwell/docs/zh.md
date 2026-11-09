@@ -3,7 +3,7 @@
 > 专业化硬件推理编译交易可移植性,而TensorRT-LLM  仅为NVIDIA调整,为黑 是交易的最清楚的例子.在GB200 NVL72上,SemiAnalysis InferenceX测量了$0.012 per million tokens on a 120B model in Q1-Q2 2026, against $率为0.09/M,H100+vLLM7倍的经济差距. 堆组合了两个浮点格式,使用两个服务技术:FP8对于KV缓存和注意内核保持至关重要,因为它具有所需的动态范围;NVFP4 (4位微量化) 处理权重和激活;多代币预测 (MTP) 和分类预填/解码增加了另外2-3倍. 支持日-0模型直接加载FP4重量,而不会进行训练后转换. 2026年工程团队的目标:TRT-LLM是开源,但NVIDIA专用, CUDA和Blackwell专业,因此通过它交易了可移植性. 在做出承诺之前,你用模型和硬件进行计算.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy FP8/NVFP4 memory and cost calculator)
+**Languages:** Python, TypeScript (stdlib, toy FP8/NVFP4 memory and cost calculator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 13 (Quantization)
 **Time:** ~75 minutes
 

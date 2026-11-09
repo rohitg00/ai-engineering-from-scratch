@@ -3,7 +3,7 @@
 > 通过集中式库存 (HashiCorp Vault, AWS 秘密管理器,Azure 密钥库) 消除秘密扩散. 永远不要存储凭据在配置文件, 使用IAM角色而不是静态键;用于CI/CD的OIDC. AI-gateway模式是2026年解决方案:应用程序 → gateway →模型提供商, 换机,没有 Slack"谁有新钥匙"的消息. 转换政策 ≤90天;每次提交时使用TruffleHog/GitGuardian/Gitleaks扫描. 零信任:MFA,SSO,RBAC/ABAC,短寿命的代币,设备姿势.  PII 清理使用实体识别来掩盖 PHI/PII 在转发之前;一致的代码化 (Mesh 方法) 将对稳定的位持有人的敏感值映射,因此 LLM 保持代码/关系语义. 网络退出:仅在专用VPC/VNet子网上提供LLM服务`api.openai.com`现在`api.anthropic.com`通过被破坏的CI/CD凭证攻击, 通过数千个客户部署, 泄露了环境.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy PII-scrubber + audit-log writer)
+**Languages:** Python, TypeScript (stdlib, toy PII-scrubber + audit-log writer)
 **Prerequisites:** Phase 17 · 19 (AI Gateways), Phase 17 · 13 (Observability)
 **Time:** ~60 minutes
 

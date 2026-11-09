@@ -3,7 +3,7 @@
 > 处理KV缓存作为一个在基层树中存储的第一类,可重复使用的资源,并与它一起进行调度变化:而不是FCFS (首次来,首次服务) 作为vLLM时间表,一个缓存知性调度器优先考虑使用更长的共享前置器的请求. 轮是引擎,它围绕着这个想法构建. 在Llama 3.1 8B上,SGLang达到16,200个/秒,达到vLLM的12,500个,占比29%. 在前重的RAG工作负载上,优势达到6.4倍. 在语音克隆式工作负载上,缓存击中率已清除了86%. 在2026年将部署在xAI,LinkedIn,Cursor,Oracle,GCP,Azure,AWS等400,000+个GPU上. 序列是工程师的杆.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy radix-tree cache + cache-aware scheduler)
+**Languages:** Python, TypeScript (stdlib, toy radix-tree cache + cache-aware scheduler)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 14 (Agentic RAG)
 **Time:** ~75 minutes
 

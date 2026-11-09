@@ -3,7 +3,7 @@
 > 只有三个超级级级别,三个不同的策略. AWS Bedrock是一个模型市场 克劳德,拉马,泰坦,稳定,协同在一个API后面.  Azure OpenAI是一个专属的OpenAI合作伙伴关系,加上为专用容量提供通量单位 (PTU). 果AI是双胞胎第一,拥有最好的长文本和多模式故事. 2026年,人工分析测量Azure OpenAI的中位数为50 ms,Bedrock的Llama 3.1 405B等级为75 ms. 决定的规则不是"哪个是最快的"而是"哪个模型目录和FinOps表面匹配我的产品".
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cost-and-latency comparator)
+**Languages:** Python, TypeScript (stdlib, toy cost-and-latency comparator)
 **Prerequisites:** Phase 11 (LLM Engineering), Phase 13 (Tools & Protocols)
 **Time:** ~60 minutes
 

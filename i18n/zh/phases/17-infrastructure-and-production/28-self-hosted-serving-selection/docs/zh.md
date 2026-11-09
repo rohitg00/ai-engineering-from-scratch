@@ -3,7 +3,7 @@
 > 引擎选择是硬件,规模和生态系统的函数,而不是排名表的读数. 2026年,四个引擎主导自主主设置推理: llama.cpp, Ollama, vLLM, SGLang,TGI在维护模式下落后.**llama.cpp**支持最广泛的模型,对量化和线程进行全面控制.**Ollama**是 dev 笔记本电脑单命令安装,比 llama.cpp (Go + CGo + HTTP 序列化) ~15-30%慢,在像 prod 负载下输出差距3x. **TGI entered maintenance mode December 11, 2025**只修复错误,原始吞吐量比vLLM慢10%但历史上具有最高可观测性和HF生态系统集成性.这种维护状态使其成为一个风险的长期投注.**vLLM**是一般用途的生产默认 v0.15.1 (二月2026年) 添加 PyTorch 2.10, RTX Blackwell SM120, H200优化. **SGLang**是生产的多转/前重型专家的400,000+GPU (xAI,LinkedIn,Cursor,Oracle,GCP,Azure,AWS). 硬件限制:CPU-first → llama.cpp. AMD/非NVIDIA → vLLM是最强有支持的路径 (TRT-LLM是NVIDIA锁定). 2026 管道模式: dev = Ollama,阶段 = llama.cpp, prod = vLLM或 SGLang. 发动机采用不同的重量格式, GGUF用于 llama.cpp家族,HF安全传感器用于GPU发动机,因此格式转换可以在阶段之间进行.
 
 **Type:** Learn
-**Languages:** Python (stdlib, engine-decision tree walker)
+**Languages:** Python, TypeScript (stdlib, engine-decision tree walker)
 **Prerequisites:** All Phase 17 lessons covering engines (04, 06, 07, 09, 18)
 **Time:** ~45 minutes
 

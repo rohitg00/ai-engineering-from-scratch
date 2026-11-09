@@ -3,7 +3,7 @@
 > 传统的A/B测试并没有为非确定性 LLM而建立. 重要区别:评估答案是"模型能做好工作吗?"A/B测试答案是"用户是否关心?" 2026年要测试什么:快速工程 (表达式),模型选择 (GPT-4 vs GPT-3.5 vs OSS;准确性 vs 成本 vs 延迟),生成参数 (温度,顶级). 实例:聊天机器人奖励模型变体提供了+70%的对话长度和+30%的保留;接下来AI主题线实验提供了+1%的CTR后奖励功能的完善;Khan Academy Khanmigo在延迟与数学准确性轴上进行了代. 平台分开:**Statsig**测试序列,CUPED,全共一. **GrowthBook**开源,仓库本土,贝叶斯式+频率化+序列引擎,CUPED,SRM检查,Benjamin-Hochberg+Bonferroni修正.您根据仓库SQL偏好选择,以及"OpenAI收购"是否对您的组织重要.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy sequential test simulator)
+**Languages:** Python, TypeScript (stdlib, toy sequential test simulator)
 **Prerequisites:** Phase 17 · 13 (Observability), Phase 17 · 20 (Progressive Deployment)
 **Time:** ~60 minutes
 

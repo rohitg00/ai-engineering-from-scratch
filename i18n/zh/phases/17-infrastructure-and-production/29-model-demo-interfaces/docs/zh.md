@@ -3,7 +3,7 @@
 > 模型演示有一个合同:输入,模型调用和输出. 在分享链接之前,设定每个部分的限制.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 13 (Building a Production LLM Application), Phase 17 · 08 (Inference Metrics), Phase 17 · 19 (AI Gateways)
 **Time:** ~90 minutes
 
@@ -207,12 +207,14 @@ demo-token-bucket
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 自行测试检查验证器,代币桶,流量格式和一个真正的HTTP回路.它启动服务器在一个免费端口上,发送三个请求,停止服务器,然后退出.只启动服务器为浏览器当你需要它:
 
 ```bash
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 开放`http://127.0.0.1:8000`在浏览器中. 按Ctrl+C来停止服务器.
@@ -478,6 +480,7 @@ curl -N -X POST http://127.0.0.1:8000/api/stream \
 export DEMO_ACCESS_TOKEN="$(python3 -c 'import secrets; print(secrets.token_urlsafe(24))')"
 echo "$DEMO_ACCESS_TOKEN"
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 进行测试:
