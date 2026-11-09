@@ -3,7 +3,7 @@
 > A recuperação léxica e semântica falham em distribuições opostas de consultas. A recuperação híbrida com fusão de rango recíproca não interpola, ele vota - e o voto vence em cada classe de consulta.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lesson 64 (chunking strategies)
 **Time:** ~90 minutes
 
@@ -81,6 +81,7 @@ rrf-fusion
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Leia a saída de demonstração lado a lado. A consulta de identificador literal atinge o BM25 rank 1, rank denso 4, rank RRF 1. A consulta parafraseada atinge o BM25 rank 6, rank denso 1, rank RRF 1. A consulta ambígua atinge o BM25 rank 3, rank denso 3, rank RRF 1. A fusão não é um empate; é o sistema que vence em cada classe de consulta.

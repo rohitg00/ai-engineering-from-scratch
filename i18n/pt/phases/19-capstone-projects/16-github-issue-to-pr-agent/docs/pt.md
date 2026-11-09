@@ -3,7 +3,7 @@
 > Marque um problema, obtenha um PR  a forma do produto 2026 para agentes de codificação autônoma: execute um agente em uma caixa de areia em nuvem, verifique o teste passar, e publique um PR pronto para revisão com raciocínio. Agentes AWS Remote SWE, Agentes de Background Cursor, OpenAI Codex nuvem, e Google Jules todos enviam. As partes difíceis são reproduzir o ambiente de construção do repo automaticamente, evitando vazamento de credenciais, aplicando orçamentos por repo e garantindo que o agente não possa forçar. Esta pedra final constrói a versão auto-hospedada e compara-a em custo e taxa de passagem com as alternativas hospedadas.
 
 **Type:** Capstone
-**Languages:** Python (agent), TypeScript (GitHub App), YAML (Actions)
+**Languages:** Python (agent), TypeScript (GitHub App, agent scaffold), YAML (Actions)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**P11 · P13 · P14 · P15 · P17
 **Time:** 30 hours

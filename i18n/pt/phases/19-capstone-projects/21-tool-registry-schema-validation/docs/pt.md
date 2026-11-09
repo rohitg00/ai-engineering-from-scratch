@@ -3,7 +3,7 @@
 > Uma ferramenta que o agente não pode validar é uma ferramenta que o agente não pode chamar.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

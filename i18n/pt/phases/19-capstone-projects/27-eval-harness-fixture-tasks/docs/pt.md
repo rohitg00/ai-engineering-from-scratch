@@ -3,7 +3,7 @@
 > Um agente de codificação é tão bom quanto o conjunto de tarefas contra as quais o medes. Esta lição constrói um arame de avaliação que toma uma pasta de tarefas de fixação, executa cada uma através de um agente candidato, as pontuações passam ou falham através de um verificador determinístico, e agrega os resultados em pass@1, pass@k, latência média e custo médio. O arame é a fonte da verdade que permite dizer uma regressão de um refator.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox runner), Phase 14 · 30 (eval-driven agent development), Phase 14 · 19 (SWE-bench and GAIA benchmarks)
 **Time:** ~90 minutes
 
@@ -100,6 +100,7 @@ A lição 25 produziu a cadeia de portas. A lição 26 produziu a caixa de areia
 ```bash
 cd phases/19-capstone-projects/27-eval-harness-fixture-tasks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

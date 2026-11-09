@@ -3,7 +3,7 @@
 > O DevOps Agent da AWS foi GA, Resolve AI publicou seus playbooks K8s, NeuBird demonstrou monitoramento semântico e Metoro ligou a AI SRE a SLOs por serviço. A forma de produção está definida: um alerta de webhook dispara, um agente lê telemetria, percorre um gráfico de objetos K8, classifica hipóteses de causa raiz e publica um breve Slack com botões de aprovação. Somente leitura por padrão. Todas as remédios controladas por um humano. Esta pedra final é o agente, avaliado em 20 incidentes sintéticos e comparado com o Agente da AWS em três casos compartilhados.
 
 **Type:** Capstone
-**Languages:** Python (agent), TypeScript (Slack integration)
+**Languages:** Python (agent), TypeScript (Slack integration, agent scaffold)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools and MCP), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P11 · P13 · P14 · P15 · P17 · P18
 **Time:** 30 hours

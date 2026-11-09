@@ -3,7 +3,7 @@
 > A faixa é tão honesta quanto as suas medições. Construir o corredor que pega uma especificação, executa-a em um subprocesso sandboxed, e emite uma mancha de métricas json que o avaliador pode confiar.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

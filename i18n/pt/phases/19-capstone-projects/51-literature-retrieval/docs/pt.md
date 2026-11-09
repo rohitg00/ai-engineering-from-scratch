@@ -3,7 +3,7 @@
 > Uma hipótese é barata, saber se alguém já provou que é a parte cara é construir a camada de recuperação que responde a essa pergunta antes que o corredor torne uma caixa de areia.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

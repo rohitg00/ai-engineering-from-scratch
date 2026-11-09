@@ -3,7 +3,7 @@
 > Um esqueleto LaTeX é um contrato entre o pesquisador e o tipógrafo. Se o contrato for quebrado, o documento não é compilado e a falha é alta.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

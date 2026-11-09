@@ -3,7 +3,7 @@
 > A consulta que o usuário escreve não é a consulta que o retrovisor quer. Reescrever abre a lacuna antes da recuperação, de modo que o índice vê algo mais próximo do que a resposta parece.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64 and 65
 **Time:** ~90 minutes
 
@@ -120,6 +120,7 @@ A forma do retriever é reutilizada a partir da lição 65 (hybrid BM25 + denso)
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A saída é uma classificação por estratégia e um resumo final. HyDE vence na consulta de frazes incompatíveis. Multi-query vence na consulta de variação de parafrase. Decomposão vence na consulta de vários tópicos. O fallback (sem reescritor) perde pelo menos uma das três.

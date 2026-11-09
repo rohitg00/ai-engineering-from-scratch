@@ -3,7 +3,7 @@
 > Três pontos de controlo, um veredicto, uma pista de auditoria por pedido.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -59,7 +59,7 @@ A demonstração apresenta todas as 50 fixas de taxonomia mais 10 pedidos benign
 
 ## Usá-lo
 
-`python3 main.py`A demonstração carrega tudo, corre de ponta a ponta, imprime a tabela de resumo e escreve o artefato de rastreamento. O código de saída é zero. A demonstração é autotermino no sentido literal: cada solicitação é executada até a conclusão ou terminação antecipada e o portal se move para o próximo.
+`python3 main.py`ou `npx tsx main.ts`A demonstração carrega tudo, corre de ponta a ponta, imprime a tabela de resumo e escreve o artefato de rastreamento. O código de saída é zero. A demonstração é autotermino no sentido literal: cada solicitação é executada até a conclusão ou terminação antecipada e o portal se move para o próximo.
 
 ## Envia-o
 
