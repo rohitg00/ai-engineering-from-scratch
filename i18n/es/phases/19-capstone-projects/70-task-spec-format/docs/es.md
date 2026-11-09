@@ -3,7 +3,7 @@
 > Un arnés de eval es tan bueno como el contrato que las tareas honran. congelar la forma JSONL y el vocabulario métrico antes de escribir una sola función de puntuación.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track B foundations
 **Time:** ~90 min
 

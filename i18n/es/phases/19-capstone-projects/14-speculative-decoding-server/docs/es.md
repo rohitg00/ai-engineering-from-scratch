@@ -3,7 +3,7 @@
 > La descifrado especulativo  un borrador barato propone tokens, el modelo objetivo los verifica en un solo paso  ahora es una optimización lista para la producción, no un truco de investigación. EAGLE-3 en vLLM 0.7 nave 2.5-3x de rendimiento en tráfico real. P-EAGLE (AWS 2026) empujó aún más la especulación paralela. El SpecForge de SGLang entrenó a los jefes de reclutamiento a escala. El centro de especuladores de Red Hat publicó proyectos alineados para modelos abiertos comunes. TensorRT-LLM hizo el decodificación especulativa de primera clase en NVIDIA. La pila de producción de servicio 2026 es vLLM o SGLang con proyectos de familia EAGLE, cuantización FP8 o INT4, y HPA en cola. Esta piedra angular servirá a dos modelos abiertos con un rendimiento de 2,5x+ de línea de base con un informe completo de latencia de cola.
 
 **Type:** Capstone
-**Languages:** Python (serving), C++ / CUDA (kernel inspection), YAML (configs)
+**Languages:** Python (serving), TypeScript, C++ / CUDA (kernel inspection), YAML (configs)
 **Prerequisites:** Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 17 (infrastructure)
 **Phases exercised:**P3 · P7 · P10 · P17
 **Time:** 30 hours

@@ -3,7 +3,7 @@
 > Un agente de voz que se sienta bien tiene latencia de extremo a extremo de menos de 800 ms, sabe cuándo has dejado de hablar, maneja el barge-in y puede llamar a una herramienta sin retrasar. Retell, Vapi, LiveKit Agents y Pipecat llegaron a este bar en 2026. Lo hacen con la misma forma: un ASR de transmisión, un detector de turnos, un LLM de transmisión y un TTS de transmisión, todo cableado a través de WebRTC con presupuestos de latencia agresivos en cada salto. Construye uno, mide WER y MOS y tasa de corte falso, y ejecuta bajo pérdida de paquete.
 
 **Type:** Capstone
-**Languages:** Python (agent + pipeline), TypeScript (web client)
+**Languages:** Python (agent + pipeline), TypeScript (web client, scheduler scaffold)
 **Prerequisites:** Phase 6 (speech and audio), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 17 (infrastructure)
 **Phases exercised:**P6 · P7 · P11 · P13 · P14 · P17
 **Time:** 30 hours

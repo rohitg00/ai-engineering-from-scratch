@@ -3,7 +3,7 @@
 > El transporte entre un cliente modelo y un servidor de herramientas es JSON-RPC a través de un estudio.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

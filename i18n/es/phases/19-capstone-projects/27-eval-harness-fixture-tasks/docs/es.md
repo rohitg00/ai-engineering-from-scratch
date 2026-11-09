@@ -3,7 +3,7 @@
 > Un agente de codificación es tan bueno como el conjunto de tareas con las que lo mide. Esta lección construye un arnés de evaluación que toma una carpeta de tareas fijas, ejecuta cada una a través de un agente candidato, las puntuaciones pasan o fallan a través de un verificador determinístico, y agrega los resultados en pass@1, pass@k, latencia media y costo medio. El arnés es la fuente de la verdad que permite saber una regresión de un refactor.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox runner), Phase 14 · 30 (eval-driven agent development), Phase 14 · 19 (SWE-bench and GAIA benchmarks)
 **Time:** ~90 minutes
 
@@ -100,6 +100,7 @@ La lección 25 produjo la cadena de la puerta. La lección 26 produjo la caja de
 ```bash
 cd phases/19-capstone-projects/27-eval-harness-fixture-tasks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

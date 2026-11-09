@@ -3,7 +3,7 @@
 > Cada organización de ingeniería seria en 2026 realiza una búsqueda interna de código que entiende el significado, no sólo las cadenas. Amp de fuente, respuestas de base de código de Cursor, gráfico de empresa de Augment, repomap de Aider, MCP interno de Pinterest  la misma forma. Ingerir muchos repos, analizar con el árbol-sitter, incrustar las piezas de nivel de función y clase, búsqueda híbrida, re-ranquear, responder con citas. Esta piedra angular le pide que construya una que maneje 2M líneas de código en 10 repos y sobrevive a la reindexación incremental en cada empurrón de git.
 
 **Type:** Capstone
-**Languages:** Python (ingestion), TypeScript (API + UI)
+**Languages:** Python (ingestion), TypeScript (API + UI, retrieval scaffold)
 **Prerequisites:** Phase 5 (NLP foundations), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 17 (infrastructure)
 **Phases exercised:**P5 · P7 · P11 · P13 · P17
 **Time:** 30 hours

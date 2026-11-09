@@ -3,7 +3,7 @@
 > Un modelo de clase 8B entrenado en sus propios datos, DPO-aliñado en sus propias preferencias, cuantizado, especulativo-decodificado, y servido a tokens medibles $ / 1M. La pila abierta 2026 es Axolotl v0.8, TRL 0.15, Unsloth para la iteración, GPTQ/AWQ/GGUF para la cuantificación, vLLM 0.7 con EAGLE-3 para la servidumbre. La piedra angular es ejecutar toda la tubería de forma reproducible (YAML en, punto final servidos fuera) y publicar una tarjeta modelo en virtud del Marco de apertura modelo 2026.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), YAML (configs), Bash (scripts)
+**Languages:** Python (pipeline), TypeScript, YAML (configs), Bash (scripts)
 **Prerequisites:** Phase 2 (ML), Phase 3 (DL), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 11 (LLM engineering), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:**P2 · P3 · P7 · P10 · P11 · P17 · P18
 **Time:** 35 hours

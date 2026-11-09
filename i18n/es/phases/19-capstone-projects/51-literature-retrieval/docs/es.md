@@ -3,7 +3,7 @@
 > Una hipótesis es barata, saber si alguien ya lo ha demostrado es la parte más cara, construir la capa de recuperación que responda a esa pregunta antes de que el corredor haga girar una caja de arena.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

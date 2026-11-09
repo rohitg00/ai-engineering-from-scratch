@@ -3,7 +3,7 @@
 > El bucle es tan honesto como sus mediciones. Construye el ejecutor que toma una especificación, la ejecuta en un subproceso sandboxed, y emite una mancha de métricas json que el evaluador puede confiar.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

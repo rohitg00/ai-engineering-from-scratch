@@ -3,7 +3,7 @@
 > El choque decide lo que su retriever puede salir a la superficie.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG), 07 (advanced RAG); Phase 19 Track B foundations (lessons 20-29)
 **Time:** ~90 minutes
 
@@ -89,6 +89,7 @@ ci-chunk-boundaries
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La salida es una pequeña tabla con una fila por estrategia y una columna por k. La oración pierde en la fijación estructurada. La marcación estructural gana en la fijación de marcación. El recursivo mantiene su propio en la fijación mixta porque la recursión se adapta. La agrupación semántica gana en la fijación de prosa donde no hay señales estructurales útiles.

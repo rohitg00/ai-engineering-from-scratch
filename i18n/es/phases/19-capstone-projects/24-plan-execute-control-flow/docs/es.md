@@ -3,7 +3,7 @@
 > Un plan que no puede sobrevivir a un fracaso es un guión. Un guión que puede replanar es un agente.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

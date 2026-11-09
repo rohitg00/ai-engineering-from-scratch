@@ -3,7 +3,7 @@
 > Los clasificadores del lado de salida responden a una pregunta diferente a las reglas del lado de entrada.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -56,7 +56,7 @@ cd-output-router
 
 ## Usalo
 
-- ¿ Qué ?`python3 main.py`. La demostración imprime el verbo de acción para cada salida de prueba, escribe `outputs/classifier_report.json`, y confirma que bloquear, redactar, advertir y registrar cada incendio en al menos un dispositivo. La latencia es artificialmente cero porque todos los clasificadores se basan en reglas; para un modelo real con clasificadores neuronales, la misma tubería se aplica después de que la latencia por clasificador aumenta.
+- ¿ Qué ?`python3 main.py`o `npx tsx main.ts`. La demostración imprime el verbo de acción para cada salida de prueba, escribe `outputs/classifier_report.json`, y confirma que bloquear, redactar, advertir y registrar cada incendio en al menos un dispositivo. La latencia es artificialmente cero porque todos los clasificadores se basan en reglas; para un modelo real con clasificadores neuronales, la misma tubería se aplica después de que la latencia por clasificador aumenta.
 
 ## Envío
 

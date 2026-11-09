@@ -3,7 +3,7 @@
 > Un modelo que funciona bien en una tarea que no se puede definir es un modelo que funciona bien por accidente. El arnés es la definición de tarea, la métrica, el corredor y el tablero de clasificación, en una forma corta, intercambiable.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 42 to 45
 **Time:** ~90 minutes
 
@@ -135,6 +135,7 @@ Cada métrica es una pequeña función con una prueba unitaria. La serie de prue
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 El guión seembra los accesorios en la primera carrera, los califica con el adaptador de juguetes (que consigue cada accesorio correcto), y escribe `outputs/leaderboard.json`. La puntuación general es de 1,0 con el adaptador de juguete; la prueba de adaptador de estufas en `test_main.py`muestra el mismo arnés produce 0,0 cuando el adaptador no puede responder.

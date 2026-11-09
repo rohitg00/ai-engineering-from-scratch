@@ -3,7 +3,7 @@
 > El MigrationBench de Amazon (Java 8 a 17) y el migrante Py2-to-Py3 de Google de App Engine establecen la barra de 2026. OpenRewrite de Moderne hace reescrituras deterministas de AST a escala. Grit tiene como objetivo el mismo problema con el estilo de codemod DSL. El patrón de producción combina ambas cosas: un sustrato determinista para las reescrituras seguras más una capa de agente para los casos ambiguos, una caja de arena para cada rama de construcción y un arnés de prueba que se vuelve verde antes de que se abra la PR. La piedra angular es migrar 50 repos reales y publicar una tasa de aprobación con una taxonomía de fracaso.
 
 **Type:** Capstone
-**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard)
+**Languages:** Python (agent), Java / Python (targets), TypeScript (dashboard, agent scaffold)
 **Prerequisites:** Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure)
 **Phases exercised:**P5 · P7 · P11 · P13 · P14 · P15 · P17
 **Time:** 30 hours

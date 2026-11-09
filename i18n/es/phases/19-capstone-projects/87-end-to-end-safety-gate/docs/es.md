@@ -3,7 +3,7 @@
 > Tres puestos de control, un veredicto, un rastro de auditoría por solicitud.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -59,7 +59,7 @@ La demostración incluye las 50 fichas de taxonomía más 10 instrucciones benig
 
 ## Usalo
 
-`python3 main.py`La demostración carga todo, se ejecuta de extremo a extremo, imprime la tabla de resumen y escribe el artefacto de rastreo. El código de salida es cero. La demostración se autotermina en el sentido literal: cada solicitud se ejecuta hasta la finalización o terminación anticipada y la puerta se mueve a la siguiente.
+`python3 main.py`o `npx tsx main.ts`La demostración carga todo, se ejecuta de extremo a extremo, imprime la tabla de resumen y escribe el artefacto de rastreo. El código de salida es cero. La demostración se autotermina en el sentido literal: cada solicitud se ejecuta hasta la finalización o terminación anticipada y la puerta se mueve a la siguiente.
 
 ## Envío
 

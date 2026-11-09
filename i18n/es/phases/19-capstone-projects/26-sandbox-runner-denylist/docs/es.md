@@ -3,7 +3,7 @@
 > La puerta de verificación decide si se debe ejecutar una llamada de herramienta. La caja de arena decide lo que sucede cuando lo hace. Esta lección envía un subprocesador que rechaza ejecutables peligrosos, rechaza formas peligrosas de argv, encierra todos los caminos de archivos a una raíz del proyecto, truncando la salida de tamaño excesivo y matando procesos fugitivos en un tiempo límite de tiempo. Es la segunda de las dos capas que se sitúan entre el modelo y el sistema operativo.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates and observation budget), Phase 14 · 33 (instructions as constraints), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -87,6 +87,7 @@ Para los agentes de producción, coloca la capa superior: ejecuta dentro de un c
 ```bash
 cd phases/19-capstone-projects/26-sandbox-runner-denylist
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

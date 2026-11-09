@@ -3,7 +3,7 @@
 > La consulta que el usuario escribe no es la consulta que desea el retriever. La reescritura reduce la brecha antes de la recuperación, por lo que el índice ve algo más cerca de lo que parece la respuesta.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64 and 65
 **Time:** ~90 minutes
 
@@ -120,6 +120,7 @@ La forma del retriever se reutiliza a partir de la lección 65 (hybrido BM25 + d
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La salida es una clasificación por estrategia y un resumen final. HyDE gana en la consulta de frazasas desajustadas. Multi-query gana en la consulta de variación de paráfrases. Decomposition gana en la consulta de múltiples temas. La caída (sin reescribir) pierde en al menos una de las tres.

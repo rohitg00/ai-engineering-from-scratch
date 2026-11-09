@@ -3,7 +3,7 @@
 > Una herramienta que el agente no puede validar es una herramienta que el agente no puede llamar. Construye el registro y el comprobador de esquemas antes de construir las herramientas.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

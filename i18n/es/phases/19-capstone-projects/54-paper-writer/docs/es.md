@@ -3,7 +3,7 @@
 > Un esqueleto LaTeX es un contrato entre el investigador y el mecanógrafo. Si el contrato se rompe el documento no se compila, y el fallo es ruidoso. Construye el esqueleto primero, luego llénalo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

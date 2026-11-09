@@ -3,7 +3,7 @@
 > El dispecer es donde el arnés paga por cada promesa que el esquema hizo, tiempo de espera, retemplajes, deducción, mapeo de errores, todo en una sola costura.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

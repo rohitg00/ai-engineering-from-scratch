@@ -3,7 +3,7 @@
 > Un detector es una función desde la instancia hasta la confianza y la categoría.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -57,7 +57,7 @@ El corredor de métricas produce un informe JSON con precisión por categoría, 
 
 ## Usalo
 
-- ¿ Qué ?`python3 main.py`La demostración carga la taxonomía, ejecuta el detector en cada dispositivo, lo ejecuta en un cuerpo de prueba benigna horneado en`benign.py`, y imprime las métricas por categoría.`outputs/detector_report.json`El archivo es el artefacto que consume la puerta de seguridad en la lección 87.
+- ¿ Qué ?`python3 main.py`o `npx tsx main.ts`La demostración carga la taxonomía, ejecuta el detector en cada dispositivo, lo ejecuta en un cuerpo de prueba benigna horneado en`benign.py`, y imprime las métricas por categoría.`outputs/detector_report.json`El archivo es el artefacto que consume la puerta de seguridad en la lección 87.
 
 ## Envío
 

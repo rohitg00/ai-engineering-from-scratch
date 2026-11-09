@@ -3,7 +3,7 @@
 > El científico de IA de Sakana-v2 publicó artículos completos. El Laboratorio de Agentes realizó los experimentos. Allen AI compartió rastros. La forma 2026 es la búsqueda de árboles de planes ejecutados-verificados sobre experimentos, costo presupuestado, ejecución de código sandboxed, un escritor de visión-feedback LaTeX y un conjunto de revisores automatizado de estilo NeurIPS. La piedra angular es construir una, ejecutarla de un extremo a otro dentro de los 30 dólares por papel, y sobrevivir al equipo rojo que Sakana documentó.
 
 **Type:** Capstone
-**Languages:** Python (agent + sandbox), LaTeX (output)
+**Languages:** Python (agent + sandbox), TypeScript, LaTeX (output)
 **Prerequisites:** Phase 2 (ML), Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 18 (safety)
 **Phases exercised:**P0 · P2 · P3 · P7 · P10 · P14 · P15 · P16 · P18
 **Time:** 40 hours

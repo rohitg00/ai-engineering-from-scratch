@@ -3,7 +3,7 @@
 > Si no puedes calificar tu respuesta y la de tu recuperación al mismo tiempo, no puedes enviar el sistema.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 06 (RAG), 10 (evaluation); Phase 19 Track B foundations (lessons 20-29); Phase 19 lessons 64, 65, 66, 67
 **Time:** ~90 minutes
 
@@ -121,6 +121,7 @@ ci-rag-metric-ladder
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 La salida muestra precision@k, recall@k, MRR, nDCG@k, fidelidad y relevancia de la respuesta para cada variante en una sola tabla de métricas. La fila de recuperación híbrida supera la línea de base de chunker en el recall; la fila de relanzamiento supera a la híbrida en MRR.

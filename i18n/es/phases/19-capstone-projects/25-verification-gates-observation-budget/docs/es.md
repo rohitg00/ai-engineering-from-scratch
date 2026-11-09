@@ -3,7 +3,7 @@
 > Un arnés de agente sin una capa de verificación es un deseo en un abrigo. Esta lección construye la cadena de puertas determinista que decide si se permite disparar una llamada de herramienta, cuánto de su salida se permite a la agencia ver, y cuando el bucle tiene que parar porque la agencia ha leído demasiado. La cadena es una función de puertas pequeñas y nombradas más un libro mayor de observaciones que rastrea cada token que se ha mostrado el modelo.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 20-24 (Track A1: agent loop, tool registry, message store, prompt builder, model router), Phase 14 · 33 (instructions as constraints), Phase 14 · 36 (scope contracts), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -95,6 +95,7 @@ Las lecciones anteriores te dieron el bucle, el registro de herramientas, el alm
 ```bash
 cd phases/19-capstone-projects/25-verification-gates-observation-budget
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

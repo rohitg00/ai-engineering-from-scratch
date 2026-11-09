@@ -3,7 +3,7 @@
 > Un crítico que regrese "parece bien" la primera vez se rompe. Un crítico que siempre regresa "necesita trabajo" se rompe. El crítico interesante es el que converge, y tienes que diseñar la convergencia.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 
