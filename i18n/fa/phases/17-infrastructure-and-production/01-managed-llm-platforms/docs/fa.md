@@ -3,7 +3,7 @@
 > سه تا هائپر اسکالر، سه تا استراتژی متفاوت AWS Bedrock یک بازار مدل است  کلاود، لاما، تیتان، ثبات، همبستگی پشت یک API. Azure OpenAI یک مشارکت انحصاری OpenAI و همچنین واحد های گذران فراهم شده (PTU) برای ظرفیت اختصاصی است. هوش مصنوعی ورتاکس اولین دوقلوها با بهترین داستان طولانی و چندگانه است. در سال 2026 تجزیه و تحلیل مصنوعی Azure OpenAI را در ~ 50 ms متوسط و Bedrock را در ~ 75 ms در Llama 3.1 405B معادل اندازه گیری می کند  PTU ها شکاف را توضیح می دهند زیرا ظرفیت اختصاصی بر روی تقاضا به اشتراک گذاشته می شود. قانون تصمیم گیری این نیست که "چه مدل سریعتر" است بلکه "که کتاژ مدل و سطح FinOps با محصول من مطابقت دارد". این درس به شما یاد می دهد که با ترازنامه های نوشته شده انتخاب کنید نه با شعاع.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cost-and-latency comparator)
+**Languages:** Python, TypeScript (stdlib, toy cost-and-latency comparator)
 **Prerequisites:** Phase 11 (LLM Engineering), Phase 13 (Tools & Protocols)
 **Time:** ~60 minutes
 

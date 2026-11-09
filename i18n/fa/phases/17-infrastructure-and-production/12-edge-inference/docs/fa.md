@@ -3,7 +3,7 @@
 > محدودیت اصلی لبه، عرض باند حافظه است نه محاسبه. DRAM موبایل در 50 تا 90 جی بی/ ثانیه قرار دارد؛ مرکز داده HBM3 2-3 TB/s  فاصله 30 تا 50x را پاک می کند. رمزگشایی به حافظه محدود شده، بنابراین شکاف حتمي است. در سال 2026 منظره به چهار بخش تقسیم می شود. موتور عصبی اپل M4/A18 با حافظه ی یکپارچه (هیچ نسخه CPUNPU) 38 TOPS را به دست می آورد. کوالکام اسنپدراگون ایکس ایلیت /8 جنرال 4 هکسگون 45 تاپس را به دست آورد. WebGPU + WebLLM Llama 3.1 8B (Q4) را با ~ 41 توک / ثانیه در M3 Max (تقریبا 70-80% از بومی) اجرا می کند؛ 17.6k ستاره های GitHub، API سازگار با OpenAI، ~ 70-75% پوشش تلفن همراه. NVIDIA Jetson Orin Nano Super (8GB) با Llama 3.2 3B / Phi-3 مطابقت دارد؛ AGX Orin gpt-oss-20b را از طریق vLLM با ~ 40 توک / ثانیه اجرا می کند؛ Jetson T4000 (JetPack 7.1) 2x AGX Orin است. TensorRT Edge-LLM از EAGLE-3، NVFP4 پشتیبانی می کند، prefill  که در CES 2026 توسط Bosch، ThunderSoft، MediaTek نمایش داده شده است.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy bandwidth-bound decode simulator)
+**Languages:** Python, TypeScript (stdlib, toy bandwidth-bound decode simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 09 (Production Quantization)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > یک مدل بزرگ چند دقیقه طول می کشد تا از سرد به خدمت برود: یک مدل 70B در یک گره تازه حدود 3-8 دقیقه قبل از اولین توکن نیاز دارد. در دنیای واقعی بدون سرور، این گرمایش نیست، این یک قطع برق است. کاهش ها در پنج لایه عمل می کنند: تصاویر گره های پیش از زراعت (Bottlerocket در AWS، دو حجم قوس) ، جریان مدل (NVIDIA Run:ai Model Streamer، بومی vLLM) ، عکس های حافظه GPU (پایان کنترل مدل، تا 10 برابر سریع تر دوباره شروع) ، استخر های گرم (`min_workers=1`), بارگذاری طبقه بندی شده (نویم→DRAM→HBM لوله سرورlessLLM، کاهش تاخیر 10-200x) ، به علاوه یک الگوی ششم اضافی، مهاجرت زنده که توکن های ورودی (KB) را به جای کیش KV (GB) حرکت می دهد. Modal 2-4s سرد را به عنوان یک طبقه منتشر می کند؛ Baseten 5-10s پیش فرض، زیر ثانیه با پیش گرم شدن. این درس به شما یاد می دهد که اندازه گیری، بودجه و پنج لایه را دسته بندی کنید.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cold-start path simulator)
+**Languages:** Python, TypeScript (stdlib, toy cold-start path simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~60 minutes
 

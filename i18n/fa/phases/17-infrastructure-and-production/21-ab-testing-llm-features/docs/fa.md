@@ -3,7 +3,7 @@
 > آزمایش های سنتی A/B برای LLM های غیر تعیین کننده ساخته نشده است. تفاوت مهم: ارزیابی پاسخ "آیا مدل می تواند کار را انجام دهد؟" تست های A / B پاسخ "آیا کاربران اهمیت می دهند؟" هر دو مورد مورد نیاز است؛ ارسال در بررسی های ویب تمام شده است. چه چیزی را در سال 2026 آزمایش کنید: مهندسی سریع (برنامه سازی) ، انتخاب مدل (GPT-4 در مقابل GPT-3.5 در برابر OSS؛ دقت در برابر هزینه در برابر تاخیر) ، پارامترهای تولید (طمراتور، top-p). موارد واقعی: یک نوع مدل پاداش چتبات +70٪ طول مکالمه و +30٪ حفظ را ارائه داد. آزمایش های موضوعی AI Nextdoor +1٪ CTR را پس از اصلاح عملکرد پاداش ارائه داد. Khan Academy Khanmigo بر اساس محور تاخیر در برابر دقت ریاضی تکرار شد. تقسیم پلتفرم: **Statsig**(به عنوان یک شرکت OpenAI در سپتامبر 2025 به قیمت 1.1 میلیارد دلار خریداری شد)  آزمایشات دنباله دار، CUPED، همه در یک. **GrowthBook** منبع باز، ذخیره سازی بومی، موتورهای Bayesian + Frequentist + Sequential، CUPED، چک SRM، اصلاحات Benjamini-Hochberg + Bonferroni. شما بر اساس اولویت های ذخیره سازی SQL انتخاب می کنید و اینکه آیا "به دست آمده توسط OpenAI" برای سازمان شما مهم است.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy sequential test simulator)
+**Languages:** Python, TypeScript (stdlib, toy sequential test simulator)
 **Prerequisites:** Phase 17 · 13 (Observability), Phase 17 · 20 (Progressive Deployment)
 **Time:** ~60 minutes
 

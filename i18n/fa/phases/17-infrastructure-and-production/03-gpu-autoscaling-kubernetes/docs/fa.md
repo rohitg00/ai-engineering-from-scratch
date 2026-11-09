@@ -3,7 +3,7 @@
 > سه لایه، نه يک لایه کارپنتر به طور پویا (کمتر از یک دقیقه، 40٪ سریعتر از Cluster Autoscaler) برنامه ریزی KAI برنامه ریزی گروه، آگاهی از توپولوژی و صف های سلسله مراتبی را مدیریت می کند. این از تله اختصاصی جزئی 7 از 8 جلوگیری می کند که در آن 7 گره منتظر و بر روی یک GPU گم شده می سوزند. آوتوسکالرهای سطح برنامه نویسی (NVIDIA Dynamo Planner، llm-d Workload Variant Autoscaler) بر اساس سیگنال های خاص نتیجه گیری  عمق صف، استفاده از کیش KV  نه چرخه کاری CPU / DCGM. کلاسيک تله HPA اينه که`DCGM_FI_DEV_GPU_UTIL`یک اندازه گیری چرخه وظیفه است: 100٪ می تواند 10 درخواست یا 100 باشد. vLLM حافظه پیش از وقت KV را اختصاص می دهد، بنابراین حافظه هرگز مقیاس را کاهش نمی دهد. این درس به شما یاد می دهد که سه لایه را ترکیب کنید و از کارپنتر پیش فرض اجتناب کنید.`WhenEmptyOrUnderutilized`اين سيستم که در وسط اينفرنس، کار هاي GPU رو متوقف ميکنه
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy queue-depth autoscaler simulator)
+**Languages:** Python, TypeScript (stdlib, toy queue-depth autoscaler simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 

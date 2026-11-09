@@ -3,7 +3,7 @@
 > یک مدل دمو یک قرارداد دارد: یک ورودی، یک تماس مدل و یک ورودی. قبل از اینکه لینک را به اشتراک بگذارید، یک حد برای هر بخش قرار دهید.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 13 (Building a Production LLM Application), Phase 17 · 08 (Inference Metrics), Phase 17 · 19 (AI Gateways)
 **Time:** ~90 minutes
 
@@ -207,12 +207,14 @@ demo-token-bucket
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 خود تست تایید کننده، سطل توکن، فرمت جریان و یک سفر برگشت HTTP واقعی را بررسی می کند. سرور را در یک پورت رایگان شروع می کند، سه درخواست ارسال می کند، سرور را متوقف می کند و خارج می شود. سرور را فقط در زمانی که به آن نیاز دارید، شروع می کند:
 
 ```bash
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 باز شد`http://127.0.0.1:8000`در مرورگر فشار كترل + سي كنيد تا سرور را متوقف كنيد
@@ -478,6 +480,7 @@ curl -N -X POST http://127.0.0.1:8000/api/stream \
 export DEMO_ACCESS_TOKEN="$(python3 -c 'import secrets; print(secrets.token_urlsafe(24))')"
 echo "$DEMO_ACCESS_TOKEN"
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 تست ها رو انجام بده:

@@ -3,7 +3,7 @@
 > تسترهای بارگذاری سنتی برای پاسخ های جریان، طول خروجی متغیر، متریک های سطح توکن یا شتاب GPU طراحی نشده اند. دو تله به اکثر تیم ها می خورد. تله GIL: اندازه گیری سطح توکن Locust توکن سازی را تحت GIL پایتون اجرا می کند که با تولید درخواست در مواقعی سنگین رقابت می کند. پس از توکن سازی پس از آن تاخیر بین توکن گزارش شده را افزایش می دهد. تله یکسانی سریع: تله های یکسان در یک حلقه یک نقطه در توزیع توکن را آزمایش می کنند؛ ترافیک واقعی دارای طول متغیر و مطابقت های مختلف پیشگویی است. LLMPerf اين مسئله رو با`--mean-input-tokens`+ `--stddev-input-tokens`نقشه برداری ابزار در سال 2026: تخصصی LLM (GenAI-Perf، LLMPerf، LLM-Locust، guidellm) برای دقت سطح توکن**k6 v2026.1.0**+ **k6 Operator 1.0 GA (Sept 2025)** جریان آگاه، Kubernetes بومی از طریق CRDs TestRun / PrivateLoadZone توزیع شده، بهترین برای دروازه های CI / CD؛ Vegeta for Go پرتاب نرخ ثابت؛ Locust 2.43.3 فقط با گسترش LLM-Locust برای جریان. الگوهای بار: حالت ثابت، رمپ، اوج (تست اتوماتیک) ، خیس (سرخ حافظه).
 
 **Type:** Build
-**Languages:** Python (stdlib, toy realistic-prompt generator + latency collector)
+**Languages:** Python, TypeScript (stdlib, toy realistic-prompt generator + latency collector)
 **Prerequisites:** Phase 17 · 08 (Inference Metrics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~75 minutes
 

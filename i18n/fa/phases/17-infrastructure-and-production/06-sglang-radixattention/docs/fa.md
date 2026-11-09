@@ -3,7 +3,7 @@
 > به عنوان یک منبع قابل استفاده مجدد درجه اول که در یک درخت رادیکس ذخیره شده است، KV cache را در نظر بگیرید و تغییر برنامه ریزی با آن انجام دهید: به جای FCFS (اولین نفر، اولین نفر خدمت شده) به عنوان برنامه های vLLM، یک برنامه نویس آگاه از کیش درخواست هایی را با پیشگام های مشترک طولانی تر اولویت می دهد. SGLang موتوره که در این ایده ساخته شده است. در Llama 3.1 8B با پیام های 1K مانند ShareGPT، SGLang به ~ 16,200 توک / ثانیه به ~ 12,500 vLLM، یک ~ 29٪ برتری می رساند. در مواردی که با فشار های سنگین RAG کار می کنند، این مزیت به 6.4x می رسد. در موارد کلانگ صوتی، میزان ضربه های حافظه ی پیشگیری 86 درصد پاک شد. در سال 2026 در 400،000+ GPU در xAI، LinkedIn، Cursor، Oracle، GCP، Azure، AWS استفاده می شود. مسئله این است که عدد 6.4x با عدم مطابقت سفارش پیش فرض بخار می شود
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy radix-tree cache + cache-aware scheduler)
+**Languages:** Python, TypeScript (stdlib, toy radix-tree cache + cache-aware scheduler)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 14 (Agentic RAG)
 **Time:** ~75 minutes
 

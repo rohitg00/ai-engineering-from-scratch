@@ -3,7 +3,7 @@
 > تراکم نتیجه گیری تخصصی سخت افزاری حمل و نقل را برای تولید تجارت می کند و TensorRT-LLM  فقط NVIDIA، تنظیم شده برای Blackwell  واضح ترین مثال از سود تجاری است. در GB200 NVL72 با ارتقای Dynamo، SemiAnalysis InferenceX اندازه گیری شد $0.012 per million tokens on a 120B model in Q1-Q2 2026, against $0.09 / M در H100 + vLLM  یک شکاف اقتصادی 7x. این استیک دو فرمت نقطه شناور را با دو تکنیک خدمت ترکیب می کند: FP8 برای حافظه کش KV و هسته های توجه حیاتی است زیرا دارای محدوده پویایی است که آنها نیاز دارند؛ NVFP4 (4-bit microscaling) وزنه ها و فعال سازی ها را اداره می کند؛ پیش بینی چند توکن (MTP) و پیشکد / کد تجزیه شده اضافه کردن 2-3x دیگر در بالا. روز-0 مدل پشتیبانی بار FP4 وزن مستقیم بدون تبدیل پس از آموزش. ماهیگیری برای تیم های مهندسی 2026: TRT-LLM منبع باز است اما مخصوص NVIDIA  CUDA- و Blackwell تخصصی  بنابراین اتخاذ آن تجارت حمل و نقل برای تولید است. قبل از اينکه به اين کار دست بياري، از ميکس مدل ها و سخت افزار حساب کن
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy FP8/NVFP4 memory and cost calculator)
+**Languages:** Python, TypeScript (stdlib, toy FP8/NVFP4 memory and cost calculator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 13 (Quantization)
 **Time:** ~75 minutes
 

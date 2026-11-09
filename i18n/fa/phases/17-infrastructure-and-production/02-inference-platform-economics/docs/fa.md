@@ -3,7 +3,7 @@
 > بازار نتیجه گیری 2026 دیگر اجاره زمان GPU نیست. این به سیلیکون سفارشی (Groq، Cerebras، SambaNova) ، سیستم عامل های GPU (Baseten، Together، Fireworks، Modal) و بازار های API-اول (Replicate، DeepInfra) تقسیم می شود. آتش بازی قیمت را افزایش می دهد $1/hr per GPU on May 1, 2026, and $ارزش گذاری 4B در 10T+ توکن/روز به شما نشان می دهد که مدل حجم محرک کار می کند.$300M Series E at $5B در ژانویه 2026 قانون موقعیت گذاری رقابتی ساده است: آتش بازی بهینه سازی تاخیر، با هم بهینه سازی گسترده کتالوگ، Baseten بهینه سازی شرکت پالش، Modal بهینه سازی پایتون بومی DX، تکرار بهینه سازی دسترسی چند مدل، Anyscale بهینه سازی توزیع پایتون. این درس به شما یک ماتریس می دهد که شما می توانید به یک بنیان گذار.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy per-call economics comparator)
+**Languages:** Python, TypeScript (stdlib, toy per-call economics comparator)
 **Prerequisites:** Phase 17 · 01 (Managed LLM Platforms), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~60 minutes
 

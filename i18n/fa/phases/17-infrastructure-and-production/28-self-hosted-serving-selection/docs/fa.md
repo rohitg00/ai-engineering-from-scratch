@@ -3,7 +3,7 @@
 > انتخاب موتور یک تابع سخت افزاری، مقیاس و اکوسیستم است  نه یک خواندن صفحه رتبه بندی. چهار موتور در سال 2026 بر نتیجه گیری خود میزبان تسلط دارند: llama.cpp، Ollama، vLLM، SGLang، با TGI در حالت نگهداری عقب مانده است. **llama.cpp**سریع ترین در CPU  گسترده ترین پشتیبانی از مدل، کنترل کامل بر کوانتاسیون و threading. **Ollama**این نصب یک فرمان dev-laptop است، ~15-30% کندتر از llama.cpp (هزینه های سریال سازی Go + CGo + HTTP) ، شکاف تولید 3x تحت بار مانند prod. **TGI entered maintenance mode December 11, 2025** فقط اشکال اصلاح می شود، ~ 10% تولید خام کندتر از vLLM اما از لحاظ تاریخی قابل مشاهده و ادغام اکوسیستم HF بالا است. این وضعیت نگهداری آن را یک شرط بلند مدت خطرناک می کند  SGLang یا vLLM برای پروژه های جدید امن تر هستند. **vLLM**این استاندارد تولید عمومی است  v0.15.1 (فبروری 2026) اضافه می کند PyTorch 2.10, RTX Blackwell SM120, H200 بهینه سازی. **SGLang**این شرکت متخصص چند پیچ / پیش فرض سنگین  400،000+ GPU در تولید (xAI، LinkedIn، Cursor، Oracle، GCP، Azure، AWS) است. محدودیت های سخت افزاری: CPU-first → llama.cpp AMD / non-NVIDIA → vLLM قوی ترین مسیر پشتیبانی شده است (TRT-LLM با NVIDIA قفل شده است). مدل خط لوله ۲۰۲۶: dev = ollama، stageing = llama.cpp، prod = vLLM یا SGLang. موتورها اشکال وزن متفاوتی را دارند  GGUF برای خانواده llama.cpp، HF safetensors برای موتورهای GPU  بنابراین یک شکل تبدیل می تواند بین مراحل قرار گیرد.
 
 **Type:** Learn
-**Languages:** Python (stdlib, engine-decision tree walker)
+**Languages:** Python, TypeScript (stdlib, engine-decision tree walker)
 **Prerequisites:** All Phase 17 lessons covering engines (04, 06, 07, 09, 18)
 **Time:** ~45 minutes
 
