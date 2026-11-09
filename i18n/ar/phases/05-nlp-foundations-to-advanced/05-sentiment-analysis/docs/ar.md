@@ -3,7 +3,7 @@
 > مهمة النمط النووي القنوني. معظم ما تحتاج إلى معرفته عن تصنيف النص الكلاسيكي يظهر هنا.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 2 · 14 (Naive Bayes)
 **Time:** ~75 minutes
 

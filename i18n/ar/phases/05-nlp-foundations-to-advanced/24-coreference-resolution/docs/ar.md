@@ -3,7 +3,7 @@
 > "لقد اتصلت به، لم يرد، كان الطبيب في الغداء". ثلاثة إشارات إلى شخصين ولا يُذكر أحد اسمه.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 

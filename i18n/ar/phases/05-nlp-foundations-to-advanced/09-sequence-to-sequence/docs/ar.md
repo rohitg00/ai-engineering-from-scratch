@@ -3,7 +3,7 @@
 > اثنان من المترجمين الراغبين في التظاهر بأنّهم مترجمون، والعقدة التي يواجههم هي السبب في وجود الاهتمام.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 08 (CNNs + RNNs for Text), Phase 3 · 11 (PyTorch Intro)
 **Time:** ~75 minutes
 

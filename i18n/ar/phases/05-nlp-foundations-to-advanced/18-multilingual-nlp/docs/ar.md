@@ -3,7 +3,7 @@
 > نموذج واحد، أكثر من 100 لغة، صفر بيانات تدريبية بالنسبة لمعظمهم. الانتقال عبر اللغات هو المعجزة العملية للعام 2020.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 04 (GloVe, FastText, Subword), Phase 5 · 11 (Machine Translation)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Word2Vec أعطاك متجه لكل كلمة. النماذج الحديثة التضمين تعطيك متجه لكل مرور، عبر اللغة، مع مشاهد نادرة، كثيفة، ومعدة المتجهات، حجم مناسب لمؤشرك. اختيار الخطأ و RAG الخاص بك يسترد الشيء الخطأ.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec), Phase 5 · 14 (Information Retrieval)
 **Time:** ~60 minutes
 

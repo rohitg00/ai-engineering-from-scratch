@@ -3,7 +3,7 @@
 > سحب الأسماء خارج. يبدو سهلا حتى تتعامل مع حدود غامضة، كيانات مستجمعة، وجرم النطاقات.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word Embeddings)
 **Time:** ~75 minutes
 

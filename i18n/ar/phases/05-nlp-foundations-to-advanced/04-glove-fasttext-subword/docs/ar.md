@@ -3,7 +3,7 @@
 > قام Word2Vec بتدريب إضافة واحدة لكل كلمة. قام GloVe بتحليل المصفوفة المشتركة. قام FastText بتدريب الأجزاء. وصل BPE إلى المحولات.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec from Scratch)
 **Time:** ~45 minutes
 

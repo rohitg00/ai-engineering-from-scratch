@@ -3,7 +3,7 @@
 > أجابت إليزا مع مطابقة الأنماط. قام DialogFlow بتحديد النية. أجاب GPT من الوزن. قام كلود بتشغيل الأدوات والتحقق. حل كل عصر أسوأ فشل في السابق.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

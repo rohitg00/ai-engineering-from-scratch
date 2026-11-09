@@ -3,7 +3,7 @@
 > التحولات تتعلم ن-جرام. التكرار يتذكر. كلاهما يتم استبداله بالاهتمام. كلاهما لا يزال مهمًا على الأجهزة المحدودة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 11 (PyTorch Intro), Phase 5 · 03 (Word Embeddings), Phase 4 · 02 (Convolutions from Scratch)
 **Time:** ~75 minutes
 

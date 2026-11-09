@@ -3,7 +3,7 @@
 > LDA: المستندات هي مزيج من المواضيع، والمواضيع هي توزيع على الكلمات. BERTopic: مجموعة المستندات في مساحة التضمين، المجموعات هي المواضيع. نفس الهدف، تفكير مختلف.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word2Vec)
 **Time:** ~45 minutes
 

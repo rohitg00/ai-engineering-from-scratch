@@ -3,7 +3,7 @@
 > أريد مطعم رخيص في الشمال... في الواقع جعله معتدلا... وأضيف الإيطالي.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 20 (Structured Outputs)
 **Time:** ~75 minutes
 

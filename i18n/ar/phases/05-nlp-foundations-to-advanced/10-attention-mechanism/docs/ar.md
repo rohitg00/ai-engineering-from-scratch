@@ -3,7 +3,7 @@
 > و يبدأ المفكّر في النظر إلى المصدر كله و كلّ شيء بعد ذلك هو الاهتمام بالإضافة إلى الهندسة
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 09 (Sequence-to-Sequence Models)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > وجدت NER الكيانات. ربط الكيان مقوّر لهم. استخراج العلاقة يجد الحواف بينهم. الرسم البياني المعرفة هو مجموع العقد والحواف ومصدرها.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 25 (Entity Linking)
 **Time:** ~60 minutes
 

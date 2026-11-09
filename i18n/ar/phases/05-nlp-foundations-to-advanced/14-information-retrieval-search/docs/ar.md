@@ -3,7 +3,7 @@
 > BM25 دقيقة ولكن هشة، فهي تلقي شبكة واسعة لكن تفوت الكلمات الرئيسية، الهجينة هي الاختيار الافتراضي لعام 2026. كل شيء آخر يُصنّف.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 

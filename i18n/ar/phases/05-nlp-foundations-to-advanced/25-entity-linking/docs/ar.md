@@ -3,7 +3,7 @@
 > وجدت "باريس". إن الكيان الذي يربط يقرر: باريس، فرنسا؟ باريس هيلتون؟ باريس، تكساس؟ باريس (الأمير الطرويجي) ؟ بدون ربط، يبقى جدول المعرفة غير واضح.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 24 (Coreference Resolution)
 **Time:** ~60 minutes
 

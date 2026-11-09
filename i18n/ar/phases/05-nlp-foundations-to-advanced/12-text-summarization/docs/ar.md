@@ -3,7 +3,7 @@
 > الأنظمة الاستخراجية تخبرك بما قاله الوثيقة الأنظمة المجردة تخبرك بما كان المؤلف يقصده مهام مختلفة، مشاكل مختلفة
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 11 (Machine Translation)
 **Time:** ~75 minutes
 

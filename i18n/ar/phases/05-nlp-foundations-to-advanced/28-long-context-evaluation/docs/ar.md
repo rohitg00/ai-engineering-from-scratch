@@ -3,7 +3,7 @@
 > إم بي إن 3 برو يعلن 10 مليون رمز من السياق. عند 1 مليون رمز، يقل MRCR 8-عبرة إلى 26.3٪. الإعلان ≠ قابل للاستخدام. تقييم السياق الطويل يخبرك القدرة الفعلية للنموذج الذي تقوم بتسليم عليه.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 23 (Chunking Strategies)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > أقرأ أولاً، فكر في ذلك لاحقاً، فـ"تـف-إيدف" لا تزال تفوق على التكليد في المهام المحددة جيداً في عام 2026.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 02 (Linear Regression from Scratch)
 **Time:** ~75 minutes
 

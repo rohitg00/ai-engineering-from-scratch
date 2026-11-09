@@ -3,7 +3,7 @@
 > اطلب من ماجستير في التدريس JSON. الحصول على JSON في معظم الأحيان. في الإنتاج، "أكثر" هي المشكلة. تحويل التشفير المحدود "أكثر" إلى "أبدا" عن طريق تحرير اللوجيت قبل أخذ العينات.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

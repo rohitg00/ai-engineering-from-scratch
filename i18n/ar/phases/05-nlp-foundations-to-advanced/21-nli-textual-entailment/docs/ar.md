@@ -3,7 +3,7 @@
 > "t يتضمن h" يعني قراءة بشرية t قد تخلص h صحيح. NLI هي مهمة التنبؤ بالتضامن / التناقض / المحايد. مملة على السطح، تحمل الحمل في الإنتاج.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment Analysis), Phase 5 · 13 (Question Answering)
 **Time:** ~60 minutes
 

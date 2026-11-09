@@ -3,7 +3,7 @@
 > المقابلة الدقيقة و F1 تفوت المساواة التفاصلية. لا يتحكم في حجم المراجعة البشرية. LLM-as-judge هو إجابة الإنتاج  مع تصحيح كافٍ للاعتماد على الرقم.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

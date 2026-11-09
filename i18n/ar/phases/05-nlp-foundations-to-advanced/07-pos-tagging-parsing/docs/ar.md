@@ -3,7 +3,7 @@
 > كانت الحجم غير موضع الطراز لفترة، ثم كل خط أنابيب ماجستير في العلوم الحكمة يحتاج إلى التحقق من الاستخراج المهيكلي،
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

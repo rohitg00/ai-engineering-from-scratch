@@ -3,7 +3,7 @@
 > الترجمة هي المهمة التي دفعت للبحث عن النفط النووي لمدة ثلاثين عاماً ومازالت تدفع الآن.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 10 (Attention Mechanism), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 

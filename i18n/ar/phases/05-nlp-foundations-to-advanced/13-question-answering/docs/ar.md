@@ -3,7 +3,7 @@
 > ثلاثة أنظمة شكلت قاعدة الذكاء الحديثة. اكتشفت الاستخراجية المدة. استرجاع زيادة أرضهم في الوثائق. تولدت الجيناتية الإجابات. كل مساعد الذكاء الاصطناعي الحديث هو مزيج من الثلاثة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 11 (Machine Translation), Phase 5 · 10 (Attention Mechanism)
 **Time:** ~75 minutes
 
