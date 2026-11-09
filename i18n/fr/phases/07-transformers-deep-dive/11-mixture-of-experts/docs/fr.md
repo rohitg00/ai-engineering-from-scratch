@@ -3,7 +3,7 @@
 > Un transformateur dense 70B active tous les paramètres pour chaque jeton. Un MoE 671B active seulement 37B par jeton et le bat sur chaque référence.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
@@ -90,6 +90,13 @@ Regardez !`code/main.py`- une couche compacte de MoE en stdlib pur avec:
 - en route de haut-k=2
 - poids de fermeture normalisé à la hauteur de la douceur maximale
 - équilibrage sans perte auxiliaire par biais de biais par expert
+
+`code/main.rs`Le nombre aléatoire diffère de celui de Python, mais les conclusions imprimées sont les mêmes.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Étape 1: le routeur
 

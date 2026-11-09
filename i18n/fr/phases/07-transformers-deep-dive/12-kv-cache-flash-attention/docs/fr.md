@@ -3,7 +3,7 @@
 > L'entraînement est parallèle et lié à FLOP. L'inférence est sérielle et liée à la mémoire.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~75 minutes
 
@@ -128,7 +128,7 @@ flash-attention-memory
 iso-machine {"machine":"kv-cache"}
 ```
 
-Regardez !`code/main.py`Nous mettons en œuvre:
+Regardez !`code/main.py`, ou son port de Rust `code/main.rs`Pour exécuter la version Rust:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`Nous mettons en œuvre:
 
 1. Une naïve .$O(N^2)$décodeur incrémentiel.
 2. Une .$O(N)$Décoder en cache KV.

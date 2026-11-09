@@ -3,7 +3,7 @@
 > Le décoding autorégressif est sériel. Chaque jeton attend le précédent. Le décoding spéculatif rompt la chaîne: un modèle bon marché rédige N jetons, le modèle cher vérifie tous N en un seul passe avant. Lorsque le projet est correct, vous payez un gros avant pour N générations.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 07 (GPT Causal LM), Phase 7 · 12 (KV Cache & Flash Attention)
 **Time:** ~60 minutes
 
@@ -91,6 +91,13 @@ Regardez !`code/main.py`Nous mettons en œuvre l' algorithme de prélèvement de
 - Un " grand modèle " qui est un déterminisme-softmax sur une distribution codée à la main (donc nous pouvons vérifier l'acceptation mathématique analytique).
 - Un "modèle de projet" qui est une perturbation du grand modèle.
 - Une boucle d'acceptation/déni qui produit la même distribution marginale que l'échantillonnage direct.
+
+`code/main.rs`Le nombre aléatoire diffère de celui de Python, mais les conclusions imprimées sont les mêmes.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Étape 1: étape de rejet
 
