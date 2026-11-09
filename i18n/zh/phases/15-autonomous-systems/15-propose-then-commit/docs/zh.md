@@ -3,7 +3,7 @@
 > 关于HITL的2026年共识是具体的. 它不是"代理要求,用户点击批准". 它是提出-然后承诺:建议的行动是继续使用无权密钥的持久存储器;向审查者显示了意图,数据谱系,触摸的权限,爆炸半径和反弹计划;只有在积极的确认后进行;执行后验证以确认副作用实际发生. 长格拉夫的`interrupt()`另外,我们还可以使用微软代理框架的 PostgreSQL 检查点.`RequestInfoEvent`云的`waitForApproval()`标准的标准是: 通过"通过"的,没有审查的. 文件的减轻是挑战和反应,有明确的检查列表.
 
 **Type:** Learn
-**Languages:** Python (stdlib, propose-then-commit state machine with idempotency)
+**Languages:** Python (stdlib, propose-then-commit state machine with idempotency), TypeScript
 **Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 14 (Tripwires)
 **Time:** ~60 minutes
 

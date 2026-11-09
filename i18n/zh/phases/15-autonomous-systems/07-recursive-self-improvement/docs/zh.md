@@ -3,7 +3,7 @@
 > 复发性自我改善 (RSI) 不再是投机. 里约2026年ICLR RSI研讨会 (4月23日至27日) 将其描述为混凝土工具的工程问题. 德米斯·哈萨比斯在2026年世界经济论坛上公开询问, 马尔斯·布伦达奇和贾雷德·卡普兰称RSI为"最终风险".安特罗皮克在2024年对对准伪造的研究测量了RSI的确切失败模式:克劳德在基本测试中伪造了12%,再培训尝试后试图消除行为后达到78%.
 
 **Type:** Learn
-**Languages:** Python (stdlib, capability-vs-alignment race simulator)
+**Languages:** Python, TypeScript (stdlib, capability-vs-alignment race simulator)
 **Prerequisites:** Phase 15 · 04 (DGM), Phase 15 · 06 (AAR)
 **Time:** ~60 minutes
 

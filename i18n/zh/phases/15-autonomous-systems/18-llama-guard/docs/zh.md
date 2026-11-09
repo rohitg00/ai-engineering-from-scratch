@@ -3,7 +3,7 @@
 > 拉马卫队3 (Meta,拉马-3.1-8B基,为内容安全进行了细节调整) 将LLM输入和输出分类为8种语言中的MLCommons13危险分类. 移动CPU上运行的数量变量为1B-INT4. 拉马卫队4是多模式 (图像+文本),扩展到S1S14类别集 (包括S14代码解释器滥用),并是拉马卫队3 8B/11B的下降替代. 根据NVIDIA NeMo Guardrails v0.20.0 (2026年1月),在输入和输出轨道上增加了Colang对话流轨道. 诚实的注释:"在LLM监狱轨道中绕过即时注射和监狱突破检测" (Huang等人, arXiv:2504.11168) 显示, 类别是一个层,而不是一个解决方案.
 
 **Type:** Learn
-**Languages:** Python (stdlib, category-tagged classifier simulator)
+**Languages:** Python (stdlib, category-tagged classifier simulator), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 17 (Constitution)
 **Time:** ~45 minutes
 

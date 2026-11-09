@@ -3,7 +3,7 @@
 > 结合一个边界编码模型,一个进化循环和一个可机器检查的评估器. 让循环足够长. 它发现了4x4复杂矩阵乘法程序,使用48个 skalar乘法,这是在56年来第一次改善Strassen. 它还发现了谷歌范围内的Borg计划测量, 建筑是故意无聊的. 获胜来自评审员的严谨性.
 
 **Type:** Learn
-**Languages:** Python (stdlib, evolutionary-loop toy)
+**Languages:** Python, TypeScript (stdlib, evolutionary-loop toy)
 **Prerequisites:** Phase 15 · 01 (long-horizon framing), Phase 15 · 02 (self-taught reasoning)
 **Time:** ~60 minutes
 

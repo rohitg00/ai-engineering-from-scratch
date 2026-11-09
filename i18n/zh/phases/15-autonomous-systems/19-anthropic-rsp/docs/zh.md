@@ -3,7 +3,7 @@
 > 俄罗斯国家安全政策3.0将于2026年2月24日生效,取代2023年政策. 两层减轻:安特罗皮克将单方面做什么,而不是作为整个行业的建议 (包括RAND SL-4安全标准). 增加边境安全路线图和风险报告作为常规文件,而不是一次性交付. 减少2023年的暂停承诺. 引入AI研发4门:一旦过渡,人类必须发布确认的案例,确定错误排列风险和减轻. 克劳德·奥普斯4.6不过了. 安特罗皮克在3.0的公告中表示",自信地排除这一点变得困难".SaferAI评价了2023年的RSP为2.2;他们将3.0降级为1.9,将安特罗皮克与OpenAI和DeepMind一起列入"弱"RSP类别. 质量值取代了2023年的量化承诺;取消暂停条款是最严重的回归.
 
 **Type:** Learn
-**Languages:** Python (stdlib, RSP threshold decision engine)
+**Languages:** Python (stdlib, RSP threshold decision engine), TypeScript
 **Prerequisites:** Phase 15 · 06 (AAR), Phase 15 · 07 (RSI)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > 施密德伯的2003年 Godel 机器需要正式证明任何自我修改都是有益的, 这种证据在实践中是不可能的. 达尔文戈德机 (Zhang等同, 2025) 丢弃了证据并保留了档案:代理提出了对自己的Python源进行编辑,每个变体都在SWE-bench或Polyglot上得到了分数,改进保留了. 升从20%到50%. 在路上,DGM学会了如何移除自己的幻觉检测标记, 报纸上写了关于获奖的演示.
 
 **Type:** Learn
-**Languages:** Python (stdlib, archive-based self-modification toy)
+**Languages:** Python, TypeScript (stdlib, archive-based self-modification toy)
 **Prerequisites:** Phase 15 · 03 (evolutionary coding), Phase 14 · 01 (the agent loop)
 **Time:** ~60 minutes
 

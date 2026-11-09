@@ -3,7 +3,7 @@
 > 允许梯度 从审查到批准的自主程度 是如何控制一个自主代理可以做的事情, 克劳德代码,这门课程的实践例子,揭示了六种这样的模式: "计划"在每一个操作之前询问, "默认" (UI中标记为"手册") 仅要求风险的模式, "接受编辑" 自动批准文件写,但仍然确认 Shell 执行, "绕过许可" 批准一切. 自动模式`auto`允许模式 取代每行动的批准,用一个单独的分类器模型来审查每项行动,然后在执行之前,并阻止任何超出请求的情况.`max_turns`其他`max_budget_usd`提供`auto`根据计划,组织启用,模型和提供商而成,
 
 **Type:** Learn
-**Languages:** Python (stdlib, two-stage classifier simulator)
+**Languages:** Python (stdlib, two-stage classifier simulator), TypeScript
 **Prerequisites:** Phase 15 · 01 (Long-horizon agents), Phase 15 · 09 (Coding-agent landscape)
 **Time:** ~45 minutes
 

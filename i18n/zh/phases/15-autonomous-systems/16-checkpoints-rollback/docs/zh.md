@@ -3,7 +3,7 @@
 > 图形状态的每一个转变都持续. 工人车时,租期限会过期, 云耐用物体保持状态数小时或数周. 建议后承诺 (课 15) 定义每项行动的反弹计划. 后行动验证结束了循环. 根据欧盟人工智能法第14条,高风险系统必须有有效的人类监督. 严重故障模式:没有无效密钥和先决条件检查,过渡故障后再次尝试可以双重执行已经批准的操作. 行动后的验证是发现的.
 
 **Type:** Learn
-**Languages:** Python (stdlib, checkpoint and rollback state machine)
+**Languages:** Python (stdlib, checkpoint and rollback state machine), TypeScript
 **Prerequisites:** Phase 15 · 12 (Durable execution), Phase 15 · 15 (Propose-then-commit)
 **Time:** ~60 minutes
 

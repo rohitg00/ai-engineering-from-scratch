@@ -3,7 +3,7 @@
 > 根据该报告,该公司的资产在该地区的总额为1%. 他们的时间视野1.1基准 (2026年1月) 符合任务成功概率与专家人类完成时间的物流曲线;50%概率的交叉定义了模型的时间视野. 20252026的参与集包括GPT-5.1,GPT-5.1-Codex-Max和原型监测评估 (监测器可以捕获侧任务;可以逃避代理). 基准套件:HCAST (180+ML,网络,SWE,推理任务; 1分钟到8+小时),RE-Bench (71ML的研究工程任务与专家基线),SWAA. 诚实的说明:METR测量是理想化的,没有人,没有实际的后果, 时间视野是上限,而不是部署预测.
 
 **Type:** Learn
-**Languages:** Python (stdlib, logistic-fit horizon estimator)
+**Languages:** Python (stdlib, logistic-fit horizon estimator), TypeScript
 **Prerequisites:** Phase 15 · 01 (Long-horizon agents), Phase 15 · 19 (RSP)
 **Time:** ~60 minutes
 

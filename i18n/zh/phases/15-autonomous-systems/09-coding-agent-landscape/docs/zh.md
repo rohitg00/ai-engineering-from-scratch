@@ -3,7 +3,7 @@
 > 在三年内,SWE-bench Verified从4%上升到80.9%. 同样的Claude Sonnet 4.5在SWE-agent v1上获得了43.2%的分数,59.8%在Cline自主,模型周围的架架现在与模型本身一样重要. 开户手 (原是OpenDevin) 是最活跃的MIT许可平台,其CodeAct循环直接执行Python操作在沙盒中,而不是JSON工具调用. 标题数字隐藏了一个方法问题:在500个SWE-bench验证任务中,161只需要12行变化,而SWE-bench Pro (10+行任务) 在相同的边界模型中占2359%
 
 **Type:** Learn
-**Languages:** Python (stdlib, CodeAct vs JSON tool-call comparison)
+**Languages:** Python, TypeScript (stdlib, CodeAct vs JSON tool-call comparison)
 **Prerequisites:** Phase 14 · 07 (Tool use), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~45 minutes
 

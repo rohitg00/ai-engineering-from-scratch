@@ -3,7 +3,7 @@
 > 聊天GPT代理 (2025年7月) 将运营商和深度研究合并成一个浏览器/终端代理,设定BrowseComp SOTA为68.9%. 开通AI关闭运营商在2025年8月31日 产品层的整合. 通过安特洛皮克的Vercept收购,OSWorld的Claude Sonnet从15%以下升至72.5%. 根据WebArena-verified (ServiceNow,ICLR 2026) 的规定,本 WebArena 中的误负率为 ~11.3%,并发送了258任务的硬件子集. 这些数字是真实的. 攻击表面也是如此:OpenAI准备部负责人公开表示,直接即时注入浏览器代理"不是一个完全可以修复的错误". 记录的20252026攻击:
 
 **Type:** Learn
-**Languages:** Python (stdlib, indirect prompt-injection attack surface model)
+**Languages:** Python (stdlib, indirect prompt-injection attack surface model), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~45 minutes
 

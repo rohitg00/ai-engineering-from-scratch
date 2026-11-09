@@ -3,7 +3,7 @@
 > 人类运行了克劳德·奥普斯4.6自主排列研究人员的并行团队在独立的沙盒中,通过一个共享论坛协调,他们的日志在任何沙盒之外 (因此代理人不能删除自己的记录). 在弱到强的训练问题上,AAR超过了人类研究人员. 根据Anthropic的简要标志,规定工作流程,通常会限制AAR的灵活性,降低性能. 自动化调整研究将时间线压缩,并且在RSP旨在检测的错误调整风险上也是如此.
 
 **Type:** Learn
-**Languages:** Python (stdlib, parallel-research-forum simulator)
+**Languages:** Python, TypeScript (stdlib, parallel-research-forum simulator)
 **Prerequisites:** Phase 15 · 05 (AI Scientist v2), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > 研究已经聚合在四种原始的自我改善循环的界限. 必须在每一个编辑中保持的正式变量. 无法修改的配列. 必须满足所有维度 (安全性,公平性,稳定性),而不仅仅是性能. 历史指标表明能力损失时,停止循环的回归检测. 没有一个是安全性证明的信息理论结果 (科尔摩戈罗夫复杂性,洛布定理) 绑定任何系统可以证明自己的继任者. 它们是缓解导致沉默失败的成本.
 
 **Type:** Learn
-**Languages:** Python (stdlib, bounded-loop with invariant check)
+**Languages:** Python, TypeScript (stdlib, bounded-loop with invariant check)
 **Prerequisites:** Phase 15 · 07 (RSI), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > 平均平均的电子商务代理人每月的LLM成本从$1,200 to $据了解,在微软的代理管理工具包 (2026年4月2日) 中,微软的代理管理工具包编码了对此类类的防御:`max_tokens`根据"每任务代币和美元预算,每天/月限,反复限,级别模型路由,即时缓存,文本窗口,HITL检查点对昂贵的行动,杀死开关在预算违规时.安тропо克的Cloed Code Agent SDK在不同的名称下发送相同的原始化. 财务速度限制 例如在10分钟内切断访问量>50美元 捕获循环比月限更快.
 
 **Type:** Learn
-**Languages:** Python (stdlib, layered cost-governor simulator)
+**Languages:** Python (stdlib, layered cost-governor simulator), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 12 (Durable execution)
 **Time:** ~60 minutes
 

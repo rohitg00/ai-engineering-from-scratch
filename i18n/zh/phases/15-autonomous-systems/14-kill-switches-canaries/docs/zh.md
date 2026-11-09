@@ -3,7 +3,7 @@
 > 杀死开关是在代理编辑表面之外的布鲁尔字符,  Redis 键,功能标志,签署的配置, 完全禁用代理. 断路器更精细:它会在特定模式上脚 (连续五次相同的工具调用),停止违规的路径,并升级到人类. 卡纳里代币是传统欺骗的遗产:一个假的凭证或蜂蜜记录, 基于eBPF的数据路径 (例如: 基里姆) 可以重新写入被隔离的到内核层的法医蜂蜜; 发表的基里姆基准报告在加载下的子毫秒 P99 数据路延迟 (您的传播预算取决于政策更新如何达到节点,而不是数据路本身). 适应移动基线的统计检测器将默默地接受漂移,将它们以不折曲的严格宪法限制层.
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary)
+**Languages:** Python (stdlib, three-detector simulator: kill switch, circuit breaker, canary), TypeScript
 **Prerequisites:** Phase 15 · 13 (Cost governors), Phase 15 · 10 (Permission modes)
 **Time:** ~60 minutes
 
@@ -94,7 +94,7 @@ circuit-breaker
 
 ## 运动
 
-1. 跑步`code/main.py`确认第五 (第五) 电路断路器火灾和第九 (假钥匙读取)
+1. 跑步`code/main.py`确认7 (第五个相同的电话) 上电路断电器火灾,9 (假钥匙读音) 上的加拿大火灾.
 
 2. 添加统计探测器:EWMA 电话通话率的z分数. 输入一个慢漂移的轨道,显示探测器从来没有开火. 现在添加一个硬极限 (在10分钟内不超过50个工具通话),并显示相同的轨道上的硬极火.
 

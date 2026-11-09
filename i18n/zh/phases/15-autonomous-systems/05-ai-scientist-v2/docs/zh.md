@@ -3,7 +3,7 @@
 > 萨卡纳的AI科学家 v2 (Yamada等, arXiv:2504.08066) 运行了整个研究循环:假设,代码,实验,数字,写作,提交. 这是第一个在ICLR 2025研讨会上进行的纸质合格同行审查的系统. 独立评估 (Beel等人) 发现, 42% 的实验失败于编码错误, 萨卡纳的医生警告说,该代码基础执行了LLM编写的代码, 这两个图片的两半都是重点.
 
 **Type:** Learn
-**Languages:** Python (stdlib, research-loop state-machine toy)
+**Languages:** Python, TypeScript (stdlib, research-loop state-machine toy)
 **Prerequisites:** Phase 15 · 03 (AlphaEvolve), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

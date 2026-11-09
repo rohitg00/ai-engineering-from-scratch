@@ -3,7 +3,7 @@
 > 在2023年,一个聊天机器人一次回复了一个问题. 在2026年,一个边界模型通常在一个任务上运行几分钟到几个小时. 根据METR的时间视野1.1基准 (2026年1月),Claude Opus4.6在专家工作14小时以上的水平上,可靠度为50%. 自GPT-2以来,视界每7个月就会翻一番. 我们在单轮聊天的背景,信任,失败模式,成本,可观测性等方面构建的每一个假设都会在持续时间比午餐长时断裂.
 
 **Type:** Learn
-**Languages:** Python (stdlib, horizon-curve simulator)
+**Languages:** Python, TypeScript (stdlib, horizon-curve simulator)
 **Prerequisites:** Phase 14 · 01 (The Agent Loop)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > 生产长视线代理不运行`while True`每次LLM电话都会变成一个检查点,重试和重播的活动. Temporal的OpenAI Agents SDK集成完成了2026年3月.Claude Code Routines (Anthropic) 运行定期的Claude Code调用,而没有持续的本地过程.会议暂停了人输入,生存部署,并从最新的检查点重启.`thread_id`后面是旧模式工作流程配套,其中有一个新的输入:LLM称其为非确定性活动,必须在恢复时进行确定性重演.
 
 **Type:** Learn
-**Languages:** Python (stdlib, minimal durable-execution state machine)
+**Languages:** Python (stdlib, minimal durable-execution state machine), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~60 minutes
 

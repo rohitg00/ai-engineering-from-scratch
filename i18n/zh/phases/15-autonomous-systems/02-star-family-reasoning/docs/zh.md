@@ -3,7 +3,7 @@
 > 只有一个小的自我改善循环, 模型会产生一个思想链, 保持那些答案的正确答案, 这就是STAR. 通过V-STaR添加验证器,因此推断时间选择更好. 静静的STAR推出了合理性到每一个标志. 这三种都能. 循环保存了任何偶然的快捷方式,
 
 **Type:** Learn
-**Languages:** Python (stdlib, bootstrap-loop simulator)
+**Languages:** Python, TypeScript (stdlib, bootstrap-loop simulator)
 **Prerequisites:** Phase 13 · 01-03 (Reasoning and CoT), Phase 15 · 01 (long-horizon framing)
 **Time:** ~60 minutes
 

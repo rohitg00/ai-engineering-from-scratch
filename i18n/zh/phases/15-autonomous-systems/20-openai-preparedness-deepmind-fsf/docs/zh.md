@@ -3,7 +3,7 @@
 > 开放AI准备框架v2 (2025年4月) 引入了与跟踪类别不同的研究类别:长距离自治,沙包,自主复制和适应,破坏保障. 追踪类别引发能力报告以及安全咨询小组审查的保障报告. 深思维的FSF v3 (9月2025年,随着追踪能力水平的增加2026年4月17日) 将自主性折叠成ML研发和网络领域 (ML研发自主性级别1 =以竞争成本对抗人工+AI工具完全自动化AI研发管道). 通过自动监测仪器推理滥用,FSF v3明确解决欺骗性调整. 诚实的注意: PF v2 (包括长距离自主) 中的研究类别不会自动触发减轻;政策语言是"潜在的".
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-framework decision-table diff tool)
+**Languages:** Python (stdlib, three-framework decision-table diff tool), TypeScript
 **Prerequisites:** Phase 15 · 19 (Anthropic RSP)
 **Time:** ~45 minutes
 

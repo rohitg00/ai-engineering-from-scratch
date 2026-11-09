@@ -3,7 +3,7 @@
 > 2026年1月22日,克劳德宪法发表,共有79页,是CC0. 它从基于规则的调整到基于理性的调整,建立了四层次的优先级级别: (1) 安全和支持人类监督, (2) 伦理, (3) 人类指导方针, (4) 帮助. 行为分为硬码的禁令 (生物武器升级,CSAM),操作员和用户无法取消,软码的默认,操作员可以在定义的范围内调整. 根据"自责"和"RLAIF"的规定, 诚实警告:基于理性的配合依赖于模型, 人类学公司自己的2023年参与实验显示了公开和企业原则之间的差距50%,2026版本没有包含这些发现.
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-tier priority resolver)
+**Languages:** Python (stdlib, four-tier priority resolver), TypeScript
 **Prerequisites:** Phase 15 · 06 (Automated alignment research), Phase 15 · 10 (Permission modes)
 **Time:** ~60 minutes
 

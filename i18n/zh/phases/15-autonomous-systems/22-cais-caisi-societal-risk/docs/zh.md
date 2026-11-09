@@ -3,7 +3,7 @@
 > 智能安全中心 (CAIS,旧金山,由亨德里克斯和张创立于2022年) 发布了四大风险框架:恶意使用,人工智能竞赛,组织风险,恶意AI以及5月2023年5月数百名教授和公司领导人签署的灭绝风险声明. 2026年,CAIS发布了: AI 仪表板用于边界模型评估,远程劳动指数 (含规模 AI),超级情报战略论文,AI 边界新闻稿. 独立的实体:NIST人工智能标准和创新中心 (CAISI) 美国政府面临的自愿协议和非分类能力评估,专注于网络,生物和化学武器风险. 据CAIS称,组织风险是四个顶级风险之一:安全文化,严格审计,多层次防御和信息安全是基本的,但经常与部署速度相比交易. 如果签署了加州SB-53,将是美国第一个国家级的灾难风险监管.
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-risk inventory and mitigation matcher)
+**Languages:** Python (stdlib, four-risk inventory and mitigation matcher), TypeScript
 **Prerequisites:** Phase 15 · 19 (RSP), Phase 15 · 20 (PF + FSF)
 **Time:** ~45 minutes
 
