@@ -194,7 +194,7 @@ def main() -> None:
     print("-" * 70)
     print("  Even in optimistic scenarios, a non-trivial share of submitted")
     print("  papers carry a flaw the polish stage helped hide. That is the")
-    print("  operational meaning of 'presentation-quality gap' — and the")
+    print("  operational meaning of 'presentation-quality gap', and the")
     print("  reason a human review gate sits between the loop and any venue.")
 
 

@@ -101,7 +101,7 @@ def main():
     print("notes:")
     print("  mock model has hard effective-capacity cutoff; real LLMs degrade gradually.")
     print("  real NIAH: sweep 5 depths × 6 lengths, produce heatmap per model.")
-    print("  always pair with one multi-hop / aggregation task (RULER) — single-needle is saturable.")
+    print("  always pair with one multi-hop / aggregation task (RULER): single-needle is saturable.")
 
 
 if __name__ == "__main__":

@@ -46,7 +46,7 @@ def main() -> None:
     model_name = "Llama 3.1 8B Q4"
     model_gb = 4.7
     print("=" * 95)
-    print(f"EDGE DECODE CEILING — {model_name} ({model_gb:.1f} GB in HBM/DRAM)")
+    print(f"EDGE DECODE CEILING: {model_name} ({model_gb:.1f} GB in HBM/DRAM)")
     print("=" * 95)
     header = f"{'Target':26}  {'BW (GB/s)':>9}  {'ceiling (tok/s)':>16}  {'observed':>10}  {'efficiency':>11}  Notes"
     print(header)
@@ -62,7 +62,7 @@ def main() -> None:
     print("Read: bandwidth sets the ceiling. Compute matters only when runtime is inefficient.")
     print()
     print("=" * 95)
-    print("QUANTIZATION IMPACT — same target, different format")
+    print("QUANTIZATION IMPACT: same target, different format")
     print("=" * 95)
     iphone_bw = 60.0
     for name, size in [("BF16", 18.8), ("INT8", 9.4), ("Q4 GGUF", 4.7), ("Q3 GGUF", 3.6)]:

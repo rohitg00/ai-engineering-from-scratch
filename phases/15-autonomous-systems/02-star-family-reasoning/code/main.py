@@ -169,7 +169,7 @@ def main() -> None:
     print("HEADLINE: STaR reinforces whatever reaches the answer")
     print("-" * 70)
     print("  Scenario A climbs on both ID and OOD.")
-    print("  Scenario B climbs on ID while OOD collapses — the shortcut")
+    print("  Scenario B climbs on ID while OOD collapses, the shortcut")
     print("  gets reinforced because it looks correct in training data.")
     print("  V-STaR's verifier helps at inference, but cannot undo training")
     print("  bias it was trained on.")

@@ -3,7 +3,7 @@
 > Bai et al. (arXiv:2212.08073, 2022) asked: what if we replaced the human labeler with an AI that reads a list of principles? Constitutional AI has two phases — self-critique and revision under a constitution, then RL from AI Feedback. The technique coined the term RLAIF and shipped in the Claude 1 post-training pipeline. On 21 January 2026 Anthropic published a rewritten Claude constitution: explanatory reasoning over prescriptive rules, a four-tier priority hierarchy, and the first major-lab formal acknowledgment of uncertainty about model moral status. Released under CC0 1.0.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy self-critique-and-revise loop)
+**Languages:** Python (stdlib, toy self-critique-and-revise loop), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking)
 **Time:** ~60 minutes
 

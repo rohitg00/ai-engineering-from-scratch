@@ -95,7 +95,7 @@ def summarize(collector: TraceCollector) -> list[SessionSummary]:
 
 def main() -> None:
     print("=" * 70)
-    print("AGENT OBSERVABILITY PLATFORMS — Phase 14, Lesson 24")
+    print("AGENT OBSERVABILITY PLATFORMS: Phase 14, Lesson 24")
     print("=" * 70)
 
     collector = TraceCollector()

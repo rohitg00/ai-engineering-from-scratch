@@ -3,7 +3,7 @@
 > Extractive systems tell you what the document said. Abstractive systems tell you what the author meant. Different tasks, different pitfalls.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 11 (Machine Translation)
 **Time:** ~75 minutes
 

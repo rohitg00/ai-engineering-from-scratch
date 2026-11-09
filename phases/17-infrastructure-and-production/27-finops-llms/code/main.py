@@ -62,12 +62,12 @@ def simulate_day(day: int, verbose: bool) -> None:
 
 def main() -> None:
     print("=" * 95)
-    print("FINOPS ENFORCEMENT — three tenants over 10 days, abusive tenant triggers kill switch")
+    print("FINOPS ENFORCEMENT: three tenants over 10 days, abusive tenant triggers kill switch")
     print("=" * 95)
     random.seed(7)
 
     for day in range(1, 11):
-        print(f"\n— Day {day} —")
+        print(f"\nDay {day}:")
         simulate_day(day, verbose=True)
         for name, (policy, state, _) in TENANTS.items():
             status = "PAUSED" if state.paused else "active"

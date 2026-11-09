@@ -3,7 +3,7 @@
 > Most generators stir $z$ into every layer at the same time. StyleGAN split it apart: first map $z$ to an intermediate $w$, then *inject* $w$ at every resolution level through AdaIN. That single change untangled the latent space and made photorealistic faces a solved problem for seven years running.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 

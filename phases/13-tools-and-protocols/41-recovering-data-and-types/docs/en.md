@@ -3,7 +3,7 @@
 > A decompiler prints `a->balance` when it has a type table and `*(int *)(param_1 + 4)` when it does not. This lesson builds the table from the accesses, reads the real one from DWARF 5, and shows where the two agree.
 
 **Type:** Build
-**Languages:** Python, C, C++, x86-64 assembly
+**Languages:** Python, TypeScript, C, C++, x86-64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~140 minutes
 
@@ -383,6 +383,7 @@ Run the demo:
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The output is one JSON report with five parts. `dwarf` holds the unit header, the structures, and the functions of the `-O0` object. `oracles` holds the psABI rule layout, the `ctypes` layout, the DWARF layout, the native run, and an `agree` flag. `builds` holds the accesses, the inferred layout, and the comparison for each of the three objects. `cxx` holds the demangled names, both vtables, both typeinfo records, the virtual call, and the DWARF slots. `tools` lists the captured tool outputs.
@@ -513,6 +514,7 @@ Run the demo and the deterministic suite:
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

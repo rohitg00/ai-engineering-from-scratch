@@ -64,7 +64,7 @@ def simulate(reqs: list[Request], concurrency: int) -> dict:
 
 def main() -> None:
     print("=" * 95)
-    print("PROMPT-UNIFORMITY TRAP — same test harness, different prompt distributions")
+    print("PROMPT-UNIFORMITY TRAP: same test harness, different prompt distributions")
     print("=" * 95)
 
     for concurrency in (10, 50, 200):

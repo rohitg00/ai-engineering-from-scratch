@@ -85,7 +85,7 @@ def _search_tool(query: str) -> str:
 
 def main() -> None:
     print("=" * 70)
-    print("OTEL GENAI SEMANTIC CONVENTIONS — Phase 14, Lesson 23")
+    print("OTEL GENAI SEMANTIC CONVENTIONS: Phase 14, Lesson 23")
     print("=" * 70)
 
     tracer = Tracer(capture_inline=False)

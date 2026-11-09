@@ -3,7 +3,7 @@
 > A skill is not a long prompt with a better filename. It is a discoverable package of instructions, resources, and executable helpers that enters an agent's context through a runtime contract.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 01 (The Tool Interface), Phase 13 · 05 (Tool Schema Design)
 **Time:** ~90 minutes
 
@@ -362,6 +362,7 @@ Run the lab:
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/22-skills-and-agent-sdks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

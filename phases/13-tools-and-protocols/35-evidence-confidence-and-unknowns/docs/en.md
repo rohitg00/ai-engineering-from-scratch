@@ -3,7 +3,7 @@
 > A finding about a compiled program is a record with a hash, a confidence, an authority, and a list of what it cannot show.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~105 minutes
 
@@ -306,6 +306,7 @@ Run the standard-library demo:
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The demo reads the object, imports the two rea records, verifies the rea snapshot, and derives the two models. It then records 18 predictions, opens 18 unknowns, compiles and runs the harness, checks every claim, and resolves 17 unknowns. Expected shape:
@@ -441,6 +442,7 @@ Check your answers:
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 The checker computes each expected value from `code/main.py` on the committed fixtures. It prints `PASS`, `FAIL` or `TODO` for each task and a score, and it exits 0 only when all five pass. `python3 code/lab.py my-answers.json` checks another file. `code/tests/test_lab.py` proves that the checker accepts the right answers and rejects a wrong one.
@@ -460,6 +462,7 @@ Run the demo and the deterministic suite:
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

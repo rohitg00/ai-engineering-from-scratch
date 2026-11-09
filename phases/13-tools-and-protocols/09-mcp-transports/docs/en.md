@@ -3,7 +3,7 @@
 > Transport carries MCP messages. It does not supply missing protocol state. In `2026-07-28`, local stdio and remote Streamable HTTP both carry self-describing requests.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07 and 08
 **Time:** ~65 minutes
 
@@ -189,6 +189,7 @@ tp-transport-handshake
 ```bash
 cd code
 python3 main.py --probe
+npx tsx main.ts --probe
 python3 -m unittest discover tests -v
 ```
 

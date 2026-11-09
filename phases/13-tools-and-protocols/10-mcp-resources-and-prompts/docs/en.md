@@ -3,7 +3,7 @@
 > Tools perform operations. Resources expose addressable content. Prompts package user-selected message templates. A good MCP server keeps those contracts separate and predictable.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lesson 07 (Building an MCP Server), Phase 13, Lesson 09 (MCP Transports)
 **Time:** ~60 minutes
 
@@ -279,6 +279,7 @@ Run the simulator from the repository root:
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 
@@ -304,6 +305,7 @@ The lesson also ships `assets/primitive-split.svg`, a static version of the prim
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

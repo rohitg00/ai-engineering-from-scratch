@@ -12,6 +12,7 @@ Run:  python main.py
 
 from __future__ import annotations
 
+import hashlib
 import math
 import re
 from collections import Counter, defaultdict
@@ -66,7 +67,7 @@ def fake_embed(text: str, dim: int = 64) -> list[float]:
     """Hash-based deterministic embedding; stands in for Voyage-code-3."""
     vec = [0.0] * dim
     for tok in re.findall(r"\w+", text.lower()):
-        h = hash(tok)
+        h = int.from_bytes(hashlib.md5(tok.encode("utf-8")).digest()[:4], "big")
         vec[h % dim] += 1.0
         vec[(h >> 8) % dim] += 0.5
     norm = math.sqrt(sum(v * v for v in vec)) or 1.0

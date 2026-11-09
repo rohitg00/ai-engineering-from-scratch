@@ -91,7 +91,7 @@ def evaluator_optimizer(task: str, proposer: Callable[[str, str | None], str],
 
 def demo_chain(llm: ScriptedLLM) -> None:
     print("-" * 70)
-    print("1. PROMPT CHAINING — summarize then title")
+    print("1. PROMPT CHAINING: summarize then title")
     print("-" * 70)
     trace = prompt_chain(
         input_text="Agents are ReAct loops with tools, memory, and guardrails.",
@@ -107,7 +107,7 @@ def demo_chain(llm: ScriptedLLM) -> None:
 
 def demo_route(llm: ScriptedLLM) -> None:
     print("\n" + "-" * 70)
-    print("2. ROUTING — classify then dispatch")
+    print("2. ROUTING: classify then dispatch")
     print("-" * 70)
 
     def classifier(text: str) -> str:
@@ -129,7 +129,7 @@ def demo_route(llm: ScriptedLLM) -> None:
 
 def demo_parallel(llm: ScriptedLLM) -> None:
     print("\n" + "-" * 70)
-    print("3. PARALLELIZATION — N voters on a boolean")
+    print("3. PARALLELIZATION: N voters on a boolean")
     print("-" * 70)
     winner, counts = parallel_vote("is this code safe to ship?", llm, n=5)
     print(f"  winner: {winner}")
@@ -138,7 +138,7 @@ def demo_parallel(llm: ScriptedLLM) -> None:
 
 def demo_orchestrator(llm: ScriptedLLM) -> None:
     print("\n" + "-" * 70)
-    print("4. ORCHESTRATOR-WORKERS — specialist pool")
+    print("4. ORCHESTRATOR-WORKERS: specialist pool")
     print("-" * 70)
 
     workers = [
@@ -165,7 +165,7 @@ def demo_orchestrator(llm: ScriptedLLM) -> None:
 
 def demo_evaluator_optimizer(llm: ScriptedLLM) -> None:
     print("\n" + "-" * 70)
-    print("5. EVALUATOR-OPTIMIZER — propose, judge, refine")
+    print("5. EVALUATOR-OPTIMIZER: propose, judge, refine")
     print("-" * 70)
 
     def proposer(task: str, feedback: str | None) -> str:
@@ -189,7 +189,7 @@ def demo_evaluator_optimizer(llm: ScriptedLLM) -> None:
 
 def main() -> None:
     print("=" * 70)
-    print("ANTHROPIC WORKFLOW PATTERNS — Phase 14, Lesson 12")
+    print("ANTHROPIC WORKFLOW PATTERNS: Phase 14, Lesson 12")
     print("=" * 70)
 
     llm = ScriptedLLM({

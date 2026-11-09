@@ -65,7 +65,7 @@ def simulate(p_a: float, p_b: float, seed: int = 7, max_n: int = 300_000) -> dic
 
 def main() -> None:
     print("=" * 80)
-    print("SEQUENTIAL A/B — fixed vs always-valid, binary outcome")
+    print("SEQUENTIAL A/B: fixed vs always-valid, binary outcome")
     print("=" * 80)
 
     baseline = 0.03
@@ -76,19 +76,19 @@ def main() -> None:
         print(f"  fixed sample size (traditional, 80% power, α=0.05): {required}")
         print(f"  LLM-adjusted (×1.4 for non-determinism): {adjusted}")
 
-    print("\nSimulation — actual lift 5% (p_a=0.03, p_b=0.0315):")
+    print("\nSimulation: actual lift 5% (p_a=0.03, p_b=0.0315):")
     result = simulate(0.03, 0.0315)
     print(f"  final n: A={result['n_a']}, B={result['n_b']}")
     print(f"  observed: p_a={result['p_a_observed']*100:.3f}%, p_b={result['p_b_observed']*100:.3f}%")
     print(f"  sequential stop at n={result['sequential_stop_at']}")
 
-    print("\nSimulation — actual lift 10% (p_a=0.03, p_b=0.033):")
+    print("\nSimulation: actual lift 10% (p_a=0.03, p_b=0.033):")
     result = simulate(0.03, 0.033)
     print(f"  final n: A={result['n_a']}, B={result['n_b']}")
     print(f"  observed: p_a={result['p_a_observed']*100:.3f}%, p_b={result['p_b_observed']*100:.3f}%")
     print(f"  sequential stop at n={result['sequential_stop_at']}")
 
-    print("\nSimulation — actual lift 50% (p_a=0.03, p_b=0.045) — strong signal:")
+    print("\nSimulation: actual lift 50% (p_a=0.03, p_b=0.045), strong signal:")
     result = simulate(0.03, 0.045)
     print(f"  final n: A={result['n_a']}, B={result['n_b']}")
     print(f"  observed: p_a={result['p_a_observed']*100:.3f}%, p_b={result['p_b_observed']*100:.3f}%")
@@ -97,7 +97,7 @@ def main() -> None:
     print("\nRead: on strong signals the sequential bound fires early (the 50% lift")
     print("case above), and the returned n_a/n_b reflect samples *up to* the stop")
     print("point, not the full horizon. For small or zero effects the bound is")
-    print("deliberately conservative — that is the Type-I guarantee.")
+    print("deliberately conservative: that is the Type-I guarantee.")
 
 
 if __name__ == "__main__":

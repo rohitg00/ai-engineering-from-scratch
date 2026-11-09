@@ -103,7 +103,7 @@ def summarize(trials: list[TrialResult], name: str) -> None:
 
 def main() -> None:
     print("=" * 70)
-    print(f"REFLEXION — pick three ints in [1..9] summing to {TARGET}")
+    print(f"REFLEXION: pick three ints in [1..9] summing to {TARGET}")
     print("Phase 14, Lesson 03")
     print("=" * 70)
 

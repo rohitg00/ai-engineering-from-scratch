@@ -357,7 +357,7 @@ flowchart TB
 | 10 | [Термінал і командна оболонка](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Вивчіть | — |
 | 11 | [Linux для AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Вивчіть | — |
 | 12 | [Налагодження та профілювання](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Створіть | Python |
-| 13 | [Python для інженерії ШІ](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Створіть | Python |
+| 13 | [Python для інженерії ШІ](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Створіть | Python, TypeScript |
 
 <details id="phase-1">
 <summary><b>Етап 1: Математичні основи</b> &nbsp;<code>22 уроки</code>&nbsp; <em>Інтуїція за кожним AI-алгоритмом через код.</em></summary>
@@ -383,7 +383,7 @@ flowchart TB
 | 16 | [Методи вибірки](../../phases/01-math-foundations/16-sampling-methods/) | Створіть | Python, TypeScript |
 | 17 | [Лінійні системи](../../phases/01-math-foundations/17-linear-systems/) | Створіть | Python, TypeScript |
 | 18 | [Опукла оптимізація](../../phases/01-math-foundations/18-convex-optimization/) | Створіть | Python, TypeScript |
-| 19 | [Комплексні числа для AI](../../phases/01-math-foundations/19-complex-numbers/) | Вивчіть | Python |
+| 19 | [Комплексні числа для AI](../../phases/01-math-foundations/19-complex-numbers/) | Вивчіть | Python, TypeScript |
 | 20 | [Перетворення Фур'є](../../phases/01-math-foundations/20-fourier-transform/) | Створіть | Python, TypeScript |
 | 21 | [Теорія графів для ML](../../phases/01-math-foundations/21-graph-theory/) | Створіть | Python, TypeScript |
 | 22 | [Стохастичні процеси](../../phases/01-math-foundations/22-stochastic-processes/) | Вивчіть | Python |
@@ -414,9 +414,9 @@ flowchart TB
 | 16 | [Виявлення аномалій](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Створіть | Python |
 | 17 | [Робота з незбалансованими даними](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Створіть | Python |
 | 18 | [Відбір ознак](../../phases/02-ml-fundamentals/18-feature-selection/) | Створіть | Python |
-| 19 | [Проєктування ML-систем: від задачі до розгорнутої моделі](../../phases/02-ml-fundamentals/19-ml-system-design/) | Створіть | Python |
-| 20 | [Моніторинг моделей у промисловій експлуатації: дрейф даних і дрейф концепції](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Створіть | Python |
-| 21 | [Сховища ознак і розбіжність між навчанням та обслуговуванням](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Створіть | Python |
+| 19 | [Проєктування ML-систем: від задачі до розгорнутої моделі](../../phases/02-ml-fundamentals/19-ml-system-design/) | Створіть | Python, TypeScript |
+| 20 | [Моніторинг моделей у промисловій експлуатації: дрейф даних і дрейф концепції](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Створіть | Python, TypeScript |
+| 21 | [Сховища ознак і розбіжність між навчанням та обслуговуванням](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Створіть | Python, TypeScript |
 
 </details>
 
@@ -485,35 +485,35 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [Обробка тексту: токенізація, стемінг і лематизація](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Створіть | Python |
-| 02 | [Мішок слів, TF-IDF і подання тексту](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Створіть | Python |
+| 01 | [Обробка тексту: токенізація, стемінг і лематизація](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Створіть | Python, TypeScript |
+| 02 | [Мішок слів, TF-IDF і подання тексту](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Створіть | Python, TypeScript |
 | 03 | [Векторні подання слів: Word2Vec з нуля](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Створіть | Python |
-| 04 | [GloVe, FastText і векторні подання частин слів](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Створіть | Python |
-| 05 | [Аналіз тональності](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Створіть | Python |
-| 06 | [Розпізнавання іменованих сутностей (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Створіть | Python |
-| 07 | [Розмітка частин мови й синтаксичний аналіз](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Створіть | Python |
-| 08 | [Класифікація тексту: CNN і RNN для тексту](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Створіть | Python |
-| 09 | [Моделі перетворення послідовностей](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Створіть | Python |
-| 10 | [Механізм уваги: прорив](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Створіть | Python |
-| 11 | [Машинний переклад](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Створіть | Python |
-| 12 | [Стислий виклад тексту](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Створіть | Python |
-| 13 | [Системи запитань і відповідей](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Створіть | Python |
-| 14 | [Пошук та отримання інформації](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Створіть | Python |
-| 15 | [Тематичне моделювання: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Створіть | Python |
-| 16 | [Генерація тексту](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Створіть | Python |
-| 17 | [Чатботи: від правил до нейронних мереж](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Створіть | Python |
-| 18 | [Багатомовна обробка природної мови](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Створіть | Python |
+| 04 | [GloVe, FastText і векторні подання частин слів](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Створіть | Python, TypeScript |
+| 05 | [Аналіз тональності](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Створіть | Python, TypeScript |
+| 06 | [Розпізнавання іменованих сутностей (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Створіть | Python, TypeScript |
+| 07 | [Розмітка частин мови й синтаксичний аналіз](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Створіть | Python, TypeScript |
+| 08 | [Класифікація тексту: CNN і RNN для тексту](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Створіть | Python, TypeScript |
+| 09 | [Моделі перетворення послідовностей](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Створіть | Python, TypeScript |
+| 10 | [Механізм уваги: прорив](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Створіть | Python, TypeScript |
+| 11 | [Машинний переклад](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Створіть | Python, TypeScript |
+| 12 | [Стислий виклад тексту](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Створіть | Python, TypeScript |
+| 13 | [Системи запитань і відповідей](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Створіть | Python, TypeScript |
+| 14 | [Пошук та отримання інформації](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Створіть | Python, TypeScript |
+| 15 | [Тематичне моделювання: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Створіть | Python, TypeScript |
+| 16 | [Генерація тексту](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Створіть | Python, TypeScript |
+| 17 | [Чатботи: від правил до нейронних мереж](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Створіть | Python, TypeScript |
+| 18 | [Багатомовна обробка природної мови](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Створіть | Python, TypeScript |
 | 19 | [Токенізація частин слів: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Вивчіть | Python, TypeScript |
-| 20 | [Структуровані результати й декодування з обмеженнями](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Створіть | Python |
-| 21 | [NLI та логічне слідування в тексті](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Вивчіть | Python |
-| 22 | [Поглиблений огляд моделей векторних подань](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Вивчіть | Python |
+| 20 | [Структуровані результати й декодування з обмеженнями](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Створіть | Python, TypeScript |
+| 21 | [NLI та логічне слідування в тексті](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Вивчіть | Python, TypeScript |
+| 22 | [Поглиблений огляд моделей векторних подань](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Вивчіть | Python, TypeScript |
 | 23 | [Стратегії поділу тексту для RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Створіть | Python, TypeScript |
-| 24 | [Розв'язання кореференції](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Вивчіть | Python |
-| 25 | [Пов'язування сутностей та усунення неоднозначності](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Створіть | Python |
-| 26 | [Видобування зв'язків і побудова графів знань](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Створіть | Python |
-| 27 | [Оцінювання LLM: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Створіть | Python |
-| 28 | [Оцінювання довгого контексту: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Вивчіть | Python |
-| 29 | [Відстеження стану діалогу](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Створіть | Python |
+| 24 | [Розв'язання кореференції](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Вивчіть | Python, TypeScript |
+| 25 | [Пов'язування сутностей та усунення неоднозначності](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Створіть | Python, TypeScript |
+| 26 | [Видобування зв'язків і побудова графів знань](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Створіть | Python, TypeScript |
+| 27 | [Оцінювання LLM: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Створіть | Python, TypeScript |
+| 28 | [Оцінювання довгого контексту: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Вивчіть | Python, TypeScript |
+| 29 | [Відстеження стану діалогу](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Створіть | Python, TypeScript |
 
 </details>
 
@@ -523,23 +523,23 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [Основи аудіо: хвильові форми, дискретизація та FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Вивчіть | Python |
-| 02 | [Спектрограми, мел-шкала й аудіоознаки](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Створіть | Python |
-| 03 | [Класифікація аудіо](../../phases/06-speech-and-audio/03-audio-classification) | Створіть | Python |
-| 04 | [Розпізнавання мовлення (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Створіть | Python |
-| 05 | [Whisper: архітектура й донавчання](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Створіть | Python |
-| 06 | [Розпізнавання та перевірка мовця](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Створіть | Python |
-| 07 | [Перетворення тексту на мовлення (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Створіть | Python |
-| 08 | [Клонування та перетворення голосу](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Створіть | Python |
-| 09 | [Генерація музики](../../phases/06-speech-and-audio/09-music-generation) | Створіть | Python |
-| 10 | [Аудіомовні моделі](../../phases/06-speech-and-audio/10-audio-language-models) | Створіть | Python |
+| 01 | [Основи аудіо: хвильові форми, дискретизація та FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Вивчіть | Python, TypeScript |
+| 02 | [Спектрограми, мел-шкала й аудіоознаки](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Створіть | Python, TypeScript |
+| 03 | [Класифікація аудіо](../../phases/06-speech-and-audio/03-audio-classification) | Створіть | Python, TypeScript |
+| 04 | [Розпізнавання мовлення (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Створіть | Python, TypeScript |
+| 05 | [Whisper: архітектура й донавчання](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Створіть | Python, TypeScript |
+| 06 | [Розпізнавання та перевірка мовця](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Створіть | Python, TypeScript |
+| 07 | [Перетворення тексту на мовлення (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Створіть | Python, TypeScript |
+| 08 | [Клонування та перетворення голосу](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Створіть | Python, TypeScript |
+| 09 | [Генерація музики](../../phases/06-speech-and-audio/09-music-generation) | Створіть | Python, TypeScript |
+| 10 | [Аудіомовні моделі](../../phases/06-speech-and-audio/10-audio-language-models) | Створіть | Python, TypeScript |
 | 11 | [Обробка аудіо в реальному часі](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Створіть | Python, Rust |
-| 12 | [Створіть конвеєр голосового помічника](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Створіть | Python |
-| 13 | [Нейронні аудіокодеки: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Вивчіть | Python |
-| 14 | [Виявлення голосової активності й чергування реплік](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Створіть | Python |
-| 15 | [Потокове перетворення мовлення: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Вивчіть | Python |
-| 16 | [Захист від підробки голосу й водяні знаки в аудіо](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Створіть | Python |
-| 17 | [Оцінювання аудіо: WER, MOS, MMAU й таблиці лідерів](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Вивчіть | Python |
+| 12 | [Створіть конвеєр голосового помічника](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Створіть | Python, TypeScript |
+| 13 | [Нейронні аудіокодеки: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Вивчіть | Python, TypeScript |
+| 14 | [Виявлення голосової активності й чергування реплік](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Створіть | Python, TypeScript |
+| 15 | [Потокове перетворення мовлення: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Вивчіть | Python, TypeScript |
+| 16 | [Захист від підробки голосу й водяні знаки в аудіо](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Створіть | Python, TypeScript |
+| 17 | [Оцінювання аудіо: WER, MOS, MMAU й таблиці лідерів](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Вивчіть | Python, TypeScript |
 
 </details>
 
@@ -554,14 +554,14 @@ flowchart TB
 | 03 | [Багатоголова увага](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Створіть | Python, Rust |
 | 04 | [Позиційне кодування: синусоїдальне, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Створіть | Python, Rust, Julia |
 | 05 | [Повний Transformer: кодувальник і декодувальник](../../phases/07-transformers-deep-dive/05-full-transformer/) | Створіть | Python, Julia |
-| 06 | [BERT: моделювання мови з маскуванням](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Створіть | Python |
-| 07 | [GPT: причинне моделювання мови](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Створіть | Python |
-| 08 | [T5, BART: моделі кодувальника-декодувальника](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Вивчіть | Python |
-| 09 | [Vision Transformers (ViT) для комп'ютерного зору](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Створіть | Python |
-| 10 | [Аудіотрансформери: архітектура Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Вивчіть | Python |
+| 06 | [BERT: моделювання мови з маскуванням](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Створіть | Python, Rust |
+| 07 | [GPT: причинне моделювання мови](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Створіть | Python, Rust |
+| 08 | [T5, BART: моделі кодувальника-декодувальника](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Вивчіть | Python, Rust |
+| 09 | [Vision Transformers (ViT) для комп'ютерного зору](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Створіть | Python, Rust |
+| 10 | [Аудіотрансформери: архітектура Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Вивчіть | Python, Rust |
 | 11 | [Суміш експертів (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Створіть | Python, Rust |
 | 12 | [KV-кеш, Flash Attention та оптимізація інференсу](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Створіть | Python, Rust |
-| 13 | [Закони масштабування](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Вивчіть | Python |
+| 13 | [Закони масштабування](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Вивчіть | Python, Rust |
 | 14 | [Створіть Transformer з нуля](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Створіть | Python |
 | 15 | [Різновиди уваги: ковзне вікно, розріджена й диференціальна](../../phases/07-transformers-deep-dive/15-attention-variants/) | Створіть | Python, Rust |
 | 16 | [Спекулятивне декодування: чернетка, перевірка, повторення](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Створіть | Python, Rust |
@@ -574,20 +574,20 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [Генеративні моделі: класифікація та історія](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Вивчіть | Python |
-| 02 | [Автокодувальники й VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Створіть | Python |
-| 03 | [GAN: генератор проти дискримінатора](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Створіть | Python |
-| 04 | [Умовні GAN і Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Створіть | Python |
-| 05 | [Модель StyleGAN](../../phases/08-generative-ai/05-stylegan/) | Створіть | Python |
-| 06 | [Дифузійні моделі: DDPM з нуля](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Створіть | Python |
-| 07 | [Латентна дифузія та Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Створіть | Python |
-| 08 | [ControlNet, LoRA й кондиціонування](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Створіть | Python |
-| 09 | [Домальовування, розширення та редагування зображень](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Створіть | Python |
-| 10 | [Генерація відео](../../phases/08-generative-ai/10-video-generation/) | Створіть | Python |
-| 11 | [Генерація аудіо](../../phases/08-generative-ai/11-audio-generation/) | Створіть | Python |
-| 12 | [Генерація тривимірних об'єктів](../../phases/08-generative-ai/12-3d-generation/) | Створіть | Python |
-| 13 | [Зіставлення потоків і випрямлені потоки](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Створіть | Python |
-| 14 | [Оцінювання: FID і показник CLIP](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Створіть | Python |
+| 01 | [Генеративні моделі: класифікація та історія](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Вивчіть | Python, TypeScript |
+| 02 | [Автокодувальники й VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Створіть | Python, TypeScript |
+| 03 | [GAN: генератор проти дискримінатора](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Створіть | Python, TypeScript |
+| 04 | [Умовні GAN і Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Створіть | Python, TypeScript |
+| 05 | [Модель StyleGAN](../../phases/08-generative-ai/05-stylegan/) | Створіть | Python, TypeScript |
+| 06 | [Дифузійні моделі: DDPM з нуля](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Створіть | Python, TypeScript |
+| 07 | [Латентна дифузія та Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Створіть | Python, TypeScript |
+| 08 | [ControlNet, LoRA й кондиціонування](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Створіть | Python, TypeScript |
+| 09 | [Домальовування, розширення та редагування зображень](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Створіть | Python, TypeScript |
+| 10 | [Генерація відео](../../phases/08-generative-ai/10-video-generation/) | Створіть | Python, TypeScript |
+| 11 | [Генерація аудіо](../../phases/08-generative-ai/11-audio-generation/) | Створіть | Python, TypeScript |
+| 12 | [Генерація тривимірних об'єктів](../../phases/08-generative-ai/12-3d-generation/) | Створіть | Python, TypeScript |
+| 13 | [Зіставлення потоків і випрямлені потоки](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Створіть | Python, TypeScript |
+| 14 | [Оцінювання: FID і показник CLIP](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Створіть | Python, TypeScript |
 | 19 | [Візуальне авторегресійне моделювання (VAR): передбачення наступного масштабу](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Створіть | Python |
 
 </details>
@@ -598,18 +598,18 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [MDP, стани, дії та винагороди](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Вивчіть | Python |
-| 02 | [Динамічне програмування](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Створіть | Python |
-| 03 | [Методи Монте-Карло](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Створіть | Python |
-| 04 | [Q-навчання та SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Створіть | Python |
-| 05 | [Глибокі Q-мережі (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Створіть | Python |
-| 06 | [Градієнти політики: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Створіть | Python |
-| 07 | [Actor-Critic: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Створіть | Python |
-| 08 | [Алгоритм PPO](../../phases/09-reinforcement-learning/08-ppo/) | Створіть | Python |
-| 09 | [Моделювання винагороди та RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Створіть | Python |
-| 10 | [Багатоагентне навчання з підкріпленням](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Створіть | Python |
-| 11 | [Перенесення із симуляції в реальність](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Створіть | Python |
-| 12 | [Навчання з підкріпленням для ігор](../../phases/09-reinforcement-learning/12-rl-for-games/) | Створіть | Python |
+| 01 | [MDP, стани, дії та винагороди](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Вивчіть | Python, TypeScript |
+| 02 | [Динамічне програмування](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Створіть | Python, TypeScript |
+| 03 | [Методи Монте-Карло](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Створіть | Python, TypeScript |
+| 04 | [Q-навчання та SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Створіть | Python, TypeScript |
+| 05 | [Глибокі Q-мережі (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Створіть | Python, TypeScript |
+| 06 | [Градієнти політики: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Створіть | Python, TypeScript |
+| 07 | [Actor-Critic: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Створіть | Python, TypeScript |
+| 08 | [Алгоритм PPO](../../phases/09-reinforcement-learning/08-ppo/) | Створіть | Python, TypeScript |
+| 09 | [Моделювання винагороди та RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Створіть | Python, TypeScript |
+| 10 | [Багатоагентне навчання з підкріпленням](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Створіть | Python, TypeScript |
+| 11 | [Перенесення із симуляції в реальність](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Створіть | Python, TypeScript |
+| 12 | [Навчання з підкріпленням для ігор](../../phases/09-reinforcement-learning/12-rl-for-games/) | Створіть | Python, TypeScript |
 
 </details>
 
@@ -621,7 +621,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [Токенізатори: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Створіть | Python, Rust |
 | 02 | [Побудова токенізатора з нуля](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Створіть | Python |
-| 03 | [Конвеєри даних для попереднього навчання](../../phases/10-llms-from-scratch/03-data-pipelines/) | Створіть | Python |
+| 03 | [Конвеєри даних для попереднього навчання](../../phases/10-llms-from-scratch/03-data-pipelines/) | Створіть | Python, Rust |
 | 04 | [Попереднє навчання Mini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Створіть | Python, Rust |
 | 05 | [Розподілене навчання, FSDP і DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Створіть | Python |
 | 06 | [Навчання за інструкціями: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Створіть | Python |
@@ -631,16 +631,16 @@ flowchart TB
 | 10 | [Оцінювання: бенчмарки й тести](../../phases/10-llms-from-scratch/10-evaluation/) | Створіть | Python |
 | 11 | [Квантування: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Створіть | Python, Rust |
 | 12 | [Оптимізація інференсу](../../phases/10-llms-from-scratch/12-inference-optimization/) | Створіть | Python, Rust |
-| 13 | [Побудова повного конвеєра LLM](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Створіть | Python |
-| 14 | [Відкриті моделі: огляди архітектур](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Вивчіть | Python |
-| 15 | [Спекулятивне декодування й EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Створіть | Python |
-| 16 | [Диференціальна увага (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Створіть | Python |
-| 17 | [Вбудована розріджена увага (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Створіть | Python |
-| 18 | [Передбачення кількох токенів (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Створіть | Python |
-| 19 | [Паралелізм DualPipe](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Вивчіть | Python |
-| 20 | [Огляд архітектури DeepSeek-V3](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Вивчіть | Python |
-| 21 | [Jamba: гібрид SSM і Transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Вивчіть | Python |
-| 22 | [Асинхронний інференс і Hogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Створіть | Python |
+| 13 | [Побудова повного конвеєра LLM](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Створіть | Python, Rust |
+| 14 | [Відкриті моделі: огляди архітектур](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Вивчіть | Python, Rust |
+| 15 | [Спекулятивне декодування й EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Створіть | Python, Rust |
+| 16 | [Диференціальна увага (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Створіть | Python, Rust |
+| 17 | [Вбудована розріджена увага (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Створіть | Python, Rust |
+| 18 | [Передбачення кількох токенів (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Створіть | Python, Rust |
+| 19 | [Паралелізм DualPipe](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Вивчіть | Python, Rust |
+| 20 | [Огляд архітектури DeepSeek-V3](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Вивчіть | Python, Rust |
+| 21 | [Jamba: гібрид SSM і Transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Вивчіть | Python, Rust |
+| 22 | [Асинхронний інференс і Hogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Створіть | Python, Rust |
 | 25 | [Спекулятивне декодування й EAGLE](../../phases/10-llms-from-scratch/25-speculative-decoding/) | Створіть | Python |
 | 34 | [Контрольні точки градієнтів і повторне обчислення активацій](../../phases/10-llms-from-scratch/34-gradient-checkpointing/) | Створіть | Python |
 
@@ -658,17 +658,17 @@ flowchart TB
 | 04 | [Ембединги й векторні подання](../../phases/11-llm-engineering/04-embeddings/) | Створіть | Python, TypeScript |
 | 05 | [Інженерія контексту](../../phases/11-llm-engineering/05-context-engineering/) | Створіть | Python, TypeScript |
 | 06 | [RAG: генерація з доповненням через пошук](../../phases/11-llm-engineering/06-rag/) | Створіть | Python, TypeScript |
-| 07 | [Поглиблений RAG: поділ на фрагменти й переранжування](../../phases/11-llm-engineering/07-advanced-rag/) | Створіть | Python |
+| 07 | [Поглиблений RAG: поділ на фрагменти й переранжування](../../phases/11-llm-engineering/07-advanced-rag/) | Створіть | Python, TypeScript |
 | 08 | [Донавчання з LoRA та QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Створіть | Python |
 | 09 | [Виклик функцій і використання інструментів](../../phases/11-llm-engineering/09-function-calling/) | Створіть | Python, TypeScript |
-| 10 | [Оцінювання й тестування](../../phases/11-llm-engineering/10-evaluation/) | Створіть | Python |
-| 11 | [Кешування, обмеження частоти та вартість](../../phases/11-llm-engineering/11-caching-cost/) | Створіть | Python |
+| 10 | [Оцінювання й тестування](../../phases/11-llm-engineering/10-evaluation/) | Створіть | Python, TypeScript |
+| 11 | [Кешування, обмеження частоти та вартість](../../phases/11-llm-engineering/11-caching-cost/) | Створіть | Python, TypeScript |
 | 12 | [Захисні обмеження й безпека](../../phases/11-llm-engineering/12-guardrails/) | Створіть | Python, TypeScript |
-| 13 | [Побудова промислового LLM-застосунку](../../phases/11-llm-engineering/13-production-app/) | Створіть | Python |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Створіть | Python |
-| 15 | [Кешування промптів і контексту](../../phases/11-llm-engineering/15-prompt-caching/) | Створіть | Python |
+| 13 | [Побудова промислового LLM-застосунку](../../phases/11-llm-engineering/13-production-app/) | Створіть | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Створіть | Python, TypeScript |
+| 15 | [Кешування промптів і контексту](../../phases/11-llm-engineering/15-prompt-caching/) | Створіть | Python, TypeScript |
 | 16 | [Автомати станів агентів: графи, вузли й контрольні точки](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Створіть | Python |
-| 17 | [Компроміси агентних фреймворків](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Вивчіть | Python |
+| 17 | [Компроміси агентних фреймворків](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Вивчіть | Python, TypeScript |
 
 </details>
 
@@ -678,31 +678,31 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [Vision Transformers і базовий токен фрагмента зображення](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Вивчіть | Python |
-| 02 | [CLIP і контрастивне попереднє навчання зору та мови](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Створіть | Python |
-| 03 | [BLIP-2 Q-Former як міст між модальностями](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Створіть | Python |
-| 04 | [Flamingo й перехресна увага з вентилями](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Вивчіть | Python |
-| 05 | [LLaVA та навчання за візуальними інструкціями](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Створіть | Python |
-| 06 | [Зір із довільною роздільністю: Patch-n'-Pack і NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Створіть | Python |
-| 07 | [Рецепти VLM із відкритими вагами: що справді важливо](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Вивчіть | Python |
-| 08 | [LLaVA-OneVision: одне зображення, кілька зображень, відео](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Створіть | Python |
-| 09 | [Родина Qwen-VL і відео з динамічним FPS](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Вивчіть | Python |
-| 10 | [Нативне мультимодальне попереднє навчання InternVL3](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Вивчіть | Python |
-| 11 | [Chameleon: раннє злиття лише на токенах](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Створіть | Python |
-| 12 | [Emu3: передбачення наступного токена для генерації](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Вивчіть | Python |
-| 13 | [Transfusion: авторегресія та дифузія](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Створіть | Python |
-| 14 | [Show-o: об'єднана дискретна дифузія](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Вивчіть | Python |
-| 15 | [Janus-Pro: розділені кодувальники](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Створіть | Python |
-| 16 | [MIO: потокове перетворення між довільними модальностями](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Вивчіть | Python |
-| 17 | [Часова прив'язка відео й мови](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Створіть | Python |
-| 18 | [Довгі відео в контексті мільйона токенів](../../phases/12-multimodal-ai/18-long-video-million-token/) | Створіть | Python |
-| 19 | [Аудіомовні моделі: від Whisper до AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Створіть | Python |
-| 20 | [Омнімоделі: потокова архітектура Thinker-Talker](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Створіть | Python |
-| 21 | [Утілені VLA: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Вивчіть | Python |
-| 22 | [Розуміння документів і діаграм](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Створіть | Python |
-| 23 | [ColPali: візуальний RAG для документів](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Створіть | Python |
-| 24 | [Мультимодальний RAG і пошук між модальностями](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Створіть | Python |
-| 25 | [Мультимодальні агенти й робота з комп'ютером (підсумковий проєкт)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Створіть | Python |
+| 01 | [Vision Transformers і базовий токен фрагмента зображення](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Вивчіть | Python, TypeScript |
+| 02 | [CLIP і контрастивне попереднє навчання зору та мови](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Створіть | Python, TypeScript |
+| 03 | [BLIP-2 Q-Former як міст між модальностями](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Створіть | Python, TypeScript |
+| 04 | [Flamingo й перехресна увага з вентилями](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Вивчіть | Python, TypeScript |
+| 05 | [LLaVA та навчання за візуальними інструкціями](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Створіть | Python, TypeScript |
+| 06 | [Зір із довільною роздільністю: Patch-n'-Pack і NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Створіть | Python, TypeScript |
+| 07 | [Рецепти VLM із відкритими вагами: що справді важливо](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Вивчіть | Python, TypeScript |
+| 08 | [LLaVA-OneVision: одне зображення, кілька зображень, відео](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Створіть | Python, TypeScript |
+| 09 | [Родина Qwen-VL і відео з динамічним FPS](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Вивчіть | Python, TypeScript |
+| 10 | [Нативне мультимодальне попереднє навчання InternVL3](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Вивчіть | Python, TypeScript |
+| 11 | [Chameleon: раннє злиття лише на токенах](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Створіть | Python, TypeScript |
+| 12 | [Emu3: передбачення наступного токена для генерації](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Вивчіть | Python, TypeScript |
+| 13 | [Transfusion: авторегресія та дифузія](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Створіть | Python, TypeScript |
+| 14 | [Show-o: об'єднана дискретна дифузія](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Вивчіть | Python, TypeScript |
+| 15 | [Janus-Pro: розділені кодувальники](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Створіть | Python, TypeScript |
+| 16 | [MIO: потокове перетворення між довільними модальностями](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Вивчіть | Python, TypeScript |
+| 17 | [Часова прив'язка відео й мови](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Створіть | Python, TypeScript |
+| 18 | [Довгі відео в контексті мільйона токенів](../../phases/12-multimodal-ai/18-long-video-million-token/) | Створіть | Python, TypeScript |
+| 19 | [Аудіомовні моделі: від Whisper до AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Створіть | Python, TypeScript |
+| 20 | [Омнімоделі: потокова архітектура Thinker-Talker](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Створіть | Python, TypeScript |
+| 21 | [Утілені VLA: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Вивчіть | Python, TypeScript |
+| 22 | [Розуміння документів і діаграм](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Створіть | Python, TypeScript |
+| 23 | [ColPali: візуальний RAG для документів](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Створіть | Python, TypeScript |
+| 24 | [Мультимодальний RAG і пошук між модальностями](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Створіть | Python, TypeScript |
+| 25 | [Мультимодальні агенти й робота з комп'ютером (підсумковий проєкт)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Створіть | Python, TypeScript |
 
 </details>
 
@@ -713,50 +713,50 @@ flowchart TB
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
 | 01 | [Інтерфейс інструментів](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Вивчіть | Python, TypeScript |
-| 02 | [Поглиблений огляд викликів функцій](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Створіть | Python |
-| 03 | [Паралельні й потокові виклики інструментів](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Створіть | Python |
-| 04 | [Структурований результат](../../phases/13-tools-and-protocols/04-structured-output/) | Створіть | Python |
-| 05 | [Проєктування схем інструментів](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Вивчіть | Python |
-| 06 | [Основи MCP: запити без стану та JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Вивчіть | Python |
+| 02 | [Поглиблений огляд викликів функцій](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Створіть | Python, TypeScript |
+| 03 | [Паралельні й потокові виклики інструментів](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Створіть | Python, TypeScript |
+| 04 | [Структурований результат](../../phases/13-tools-and-protocols/04-structured-output/) | Створіть | Python, TypeScript |
+| 05 | [Проєктування схем інструментів](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Вивчіть | Python, TypeScript |
+| 06 | [Основи MCP: запити без стану та JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Вивчіть | Python, TypeScript |
 | 07 | [Побудова MCP-сервера: Python і TypeScript без стану](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Створіть | Python, TypeScript |
-| 08 | [Побудова MCP-клієнта: виявлення, маршрутизація та сумісність із двома поколіннями](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Створіть | Python |
-| 09 | [Транспорт MCP: stdio і Streamable HTTP без стану](../../phases/13-tools-and-protocols/09-mcp-transports/) | Вивчіть | Python |
-| 10 | [Ресурси й промпти MCP: адресований контекст для серверів без стану](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Створіть | Python |
-| 11 | [Вхідні дані моделі MCP: міграція семплінгу й MRTR без стану](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Створіть | Python |
-| 12 | [Явна область дії та запит даних без стану](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Створіть | Python |
-| 13 | [Розширення MCP Tasks: тривала робота на ядрі без стану](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Створіть | Python |
-| 14 | [MCP Apps на протоколі без стану](../../phases/13-tools-and-protocols/14-mcp-apps/) | Створіть | Python |
-| 15 | [Безпека MCP: отруєні метадані, маршрутизація й стан MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Вивчіть | Python |
-| 16 | [Авторизація MCP: CIMD, прив'язка до видавця, PKCE та посилена перевірка](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Створіть | Python |
-| 17 | [MCP-шлюзи без стану й допуск до реєстру](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Вивчіть | Python |
-| 18 | [Автентифікація MCP у промисловій експлуатації: прив'язані до видавця реєстрація й токени](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Створіть | Python |
+| 08 | [Побудова MCP-клієнта: виявлення, маршрутизація та сумісність із двома поколіннями](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Створіть | Python, TypeScript |
+| 09 | [Транспорт MCP: stdio і Streamable HTTP без стану](../../phases/13-tools-and-protocols/09-mcp-transports/) | Вивчіть | Python, TypeScript |
+| 10 | [Ресурси й промпти MCP: адресований контекст для серверів без стану](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Створіть | Python, TypeScript |
+| 11 | [Вхідні дані моделі MCP: міграція семплінгу й MRTR без стану](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Створіть | Python, TypeScript |
+| 12 | [Явна область дії та запит даних без стану](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Створіть | Python, TypeScript |
+| 13 | [Розширення MCP Tasks: тривала робота на ядрі без стану](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Створіть | Python, TypeScript |
+| 14 | [MCP Apps на протоколі без стану](../../phases/13-tools-and-protocols/14-mcp-apps/) | Створіть | Python, TypeScript |
+| 15 | [Безпека MCP: отруєні метадані, маршрутизація й стан MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Вивчіть | Python, TypeScript |
+| 16 | [Авторизація MCP: CIMD, прив'язка до видавця, PKCE та посилена перевірка](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Створіть | Python, TypeScript |
+| 17 | [MCP-шлюзи без стану й допуск до реєстру](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Вивчіть | Python, TypeScript |
+| 18 | [Автентифікація MCP у промисловій експлуатації: прив'язані до видавця реєстрація й токени](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Створіть | Python, TypeScript |
 | 19 | [Протокол A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Створіть | Python, TypeScript |
-| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Створіть | Python |
-| 21 | [Шар маршрутизації LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Вивчіть | Python |
-| 22 | [Agent Skills: переносний контракт і межа середовища виконання](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Створіть | Python |
-| 23 | [Підсумковий проєкт: екосистема інструментів без стану](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Створіть | Python |
-| 24 | [Виявлення навичок і поступове розкриття](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Створіть | Python |
-| 25 | [Виклик і маршрутизація навичок](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Створіть | Python |
-| 26 | [Дозволи навичок, пісочниці й довіра](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Створіть | Python |
-| 27 | [Оцінювання, пакування й переносність навичок](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Створіть | Python |
-| 28 | [Контракти та вміст інструментів MCP](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Створіть | Python |
-| 29 | [Надійність MCP, скасування й керування потоком](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Створіть | Python |
-| 30 | [Ланцюг постачання реєстру MCP: допуск, відхилення й відкат](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Створіть | Python |
-| 31 | [Інженерія відповідності MCP: версії, докази й експлуатація](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Створіть | Python |
-| 32 | [Анатомія програми: читання ELF з нуля](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Створіть | Python |
-| 33 | [Дизасемблювання та графи потоку керування](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Створіть | Python |
+| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Створіть | Python, TypeScript |
+| 21 | [Шар маршрутизації LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Вивчіть | Python, TypeScript |
+| 22 | [Agent Skills: переносний контракт і межа середовища виконання](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Створіть | Python, TypeScript |
+| 23 | [Підсумковий проєкт: екосистема інструментів без стану](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Створіть | Python, TypeScript |
+| 24 | [Виявлення навичок і поступове розкриття](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Створіть | Python, TypeScript |
+| 25 | [Виклик і маршрутизація навичок](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Створіть | Python, TypeScript |
+| 26 | [Дозволи навичок, пісочниці й довіра](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Створіть | Python, TypeScript |
+| 27 | [Оцінювання, пакування й переносність навичок](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Створіть | Python, TypeScript |
+| 28 | [Контракти та вміст інструментів MCP](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Створіть | Python, TypeScript |
+| 29 | [Надійність MCP, скасування й керування потоком](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Створіть | Python, TypeScript |
+| 30 | [Ланцюг постачання реєстру MCP: допуск, відхилення й відкат](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Створіть | Python, TypeScript |
+| 31 | [Інженерія відповідності MCP: версії, докази й експлуатація](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Створіть | Python, TypeScript |
+| 32 | [Анатомія програми: читання ELF з нуля](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Створіть | Python, TypeScript |
+| 33 | [Дизасемблювання та графи потоку керування](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Створіть | Python, TypeScript |
 | 34 | [Підняття машинного коду до псевдокоду](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Створіть | Python |
-| 35 | [Докази, впевненість і невідоме в аналізі бінарних файлів](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Створіть | Python |
-| 36 | [Перебудуйте й доведіть рівність](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Створіть | Python |
-| 37 | [Ландшафт зворотної розробки](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Створіть | Python |
-| 38 | [Угоди про виклики та кадри стека](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Створіть | Python |
-| 39 | [Ідіоми компілятора й оптимізація](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Створіть | Python |
-| 40 | [Компонування, завантаження та очищені бінарні файли](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Створіть | Python |
-| 41 | [Відновлення даних і типів](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Створіть | Python |
-| 42 | [Динамічний аналіз власної програми](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Створіть | Python |
-| 43 | [Байт-код і керовані формати](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Створіть | Python |
+| 35 | [Докази, впевненість і невідоме в аналізі бінарних файлів](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Створіть | Python, TypeScript |
+| 36 | [Перебудуйте й доведіть рівність](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Створіть | Python, TypeScript |
+| 37 | [Ландшафт зворотної розробки](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Створіть | Python, TypeScript |
+| 38 | [Угоди про виклики та кадри стека](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Створіть | Python, TypeScript |
+| 39 | [Ідіоми компілятора й оптимізація](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Створіть | Python, TypeScript |
+| 40 | [Компонування, завантаження та очищені бінарні файли](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Створіть | Python, TypeScript |
+| 41 | [Відновлення даних і типів](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Створіть | Python, TypeScript |
+| 42 | [Динамічний аналіз власної програми](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Створіть | Python, TypeScript |
+| 43 | [Байт-код і керовані формати](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Створіть | Python, TypeScript |
 | 44 | [Порівняння бінарних файлів і символьне виконання](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Створіть | Python |
-| 45 | [Зворотна розробка за допомогою AI](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Створіть | Python |
+| 45 | [Зворотна розробка за допомогою AI](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Створіть | Python, TypeScript |
 
 Уроки 06-18 і 28-31 утворюють спеціалізований [маршрут Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json). Порядок у маніфесті: 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Почніть його відповідним для хоста викликом `learn-mcp`, наведеним вище. Урок 23 є єдиним необов'язковим підсумковим проєктом і також потребує уроків 19 та 20.
 
@@ -771,59 +771,59 @@ flowchart TB
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
 | 01 | [Цикл агента](../../phases/14-agent-engineering/01-the-agent-loop/) | Створіть | Python, TypeScript |
-| 02 | [ReWOO та планування з подальшим виконанням](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Створіть | Python |
-| 03 | [Reflexion і вербальне навчання з підкріпленням](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Створіть | Python |
-| 04 | [Дерево думок і LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Створіть | Python |
-| 05 | [Self-Refine і CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Створіть | Python |
+| 02 | [ReWOO та планування з подальшим виконанням](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Створіть | Python, TypeScript |
+| 03 | [Reflexion і вербальне навчання з підкріпленням](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Створіть | Python, TypeScript |
+| 04 | [Дерево думок і LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Створіть | Python, TypeScript |
+| 05 | [Self-Refine і CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Створіть | Python, TypeScript |
 | 06 | [Використання інструментів і виклик функцій](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Створіть | Python, TypeScript |
-| 07 | [Пам'ять агента: віртуальний контекст і сторінкова організація пам'яті](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Створіть | Python |
-| 08 | [Блоки пам'яті й обчислення під час відпочинку](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Створіть | Python |
-| 09 | [Гібридна пам'ять: вектор, граф і KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Створіть | Python |
-| 10 | [Бібліотеки навичок і навчання впродовж життя (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Створіть | Python |
-| 11 | [Планування з HTN та еволюційним пошуком](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Створіть | Python |
-| 12 | [Шаблони робочих процесів Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Створіть | Python |
+| 07 | [Пам'ять агента: віртуальний контекст і сторінкова організація пам'яті](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Створіть | Python, TypeScript |
+| 08 | [Блоки пам'яті й обчислення під час відпочинку](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Створіть | Python, TypeScript |
+| 09 | [Гібридна пам'ять: вектор, граф і KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Створіть | Python, TypeScript |
+| 10 | [Бібліотеки навичок і навчання впродовж життя (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Створіть | Python, TypeScript |
+| 11 | [Планування з HTN та еволюційним пошуком](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Створіть | Python, TypeScript |
+| 12 | [Шаблони робочих процесів Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Створіть | Python, TypeScript |
 | 13 | [Оркестрація графів зі станом: стале виконання й контрольні точки](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Створіть | Python, TypeScript |
-| 14 | [Акторна модель для агентів](../../phases/14-agent-engineering/14-autogen-actor-model/) | Створіть | Python |
+| 14 | [Акторна модель для агентів](../../phases/14-agent-engineering/14-autogen-actor-model/) | Створіть | Python, TypeScript |
 | 15 | [Рольові команди агентів: ролі, завдання й процеси](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Створіть | Python |
-| 16 | [OpenAI Agents SDK: передавання роботи, захисні обмеження й трасування](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Створіть | Python |
-| 17 | [Оболонка виконання як бібліотека: підагенти й сховище сеансів](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Створіть | Python |
+| 16 | [OpenAI Agents SDK: передавання роботи, захисні обмеження й трасування](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Створіть | Python, TypeScript |
+| 17 | [Оболонка виконання як бібліотека: підагенти й сховище сеансів](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Створіть | Python, TypeScript |
 | 18 | [Промислові середовища виконання агентів](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Вивчіть | Python, TypeScript |
-| 19 | [Бенчмарки: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Вивчіть | Python |
-| 20 | [Бенчмарки: WebArena й OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Вивчіть | Python |
-| 21 | [Робота з комп'ютером: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Створіть | Python |
-| 22 | [Голосові агенти: Pipecat і LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Створіть | Python |
-| 23 | [Семантичні конвенції OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Створіть | Python |
-| 24 | [Спостережуваність агентів: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Вивчіть | Python |
-| 25 | [Багатоагентні дебати та співпраця](../../phases/14-agent-engineering/25-multi-agent-debate/) | Створіть | Python |
-| 26 | [Режими відмов: чому агенти ламаються](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Створіть | Python |
-| 27 | [Ін'єкція промптів і захист PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Створіть | Python |
-| 28 | [Шаблони оркестрації: керівник, рій та ієрархія](../../phases/14-agent-engineering/28-orchestration-patterns/) | Створіть | Python |
-| 29 | [Промислові середовища: черги, події й cron](../../phases/14-agent-engineering/29-production-runtimes/) | Вивчіть | Python |
-| 30 | [Розробка агентів на основі оцінювання](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Створіть | Python |
-| 31 | [Робоче середовище агента: чому здібні моделі все одно помиляються](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Вивчіть | Python |
-| 32 | [Мінімальне робоче середовище агента](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Створіть | Python |
-| 33 | [Інструкції агента як виконувані обмеження](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Створіть | Python |
-| 34 | [Пам'ять репозиторію та сталий стан](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Створіть | Python |
-| 35 | [Скрипти ініціалізації агентів](../../phases/14-agent-engineering/35-initialization-scripts/) | Створіть | Python |
-| 36 | [Контракти обсягу й межі завдань](../../phases/14-agent-engineering/36-scope-contracts/) | Створіть | Python |
-| 37 | [Цикли зворотного зв'язку під час виконання](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Створіть | Python |
-| 38 | [Контрольні перевірки](../../phases/14-agent-engineering/38-verification-gates/) | Створіть | Python |
-| 39 | [Агент-рецензент: відокремте автора від оцінювача](../../phases/14-agent-engineering/39-reviewer-agent/) | Створіть | Python |
-| 40 | [Передавання роботи між сеансами](../../phases/14-agent-engineering/40-multi-session-handoff/) | Створіть | Python |
-| 41 | [Робоче середовище в реальному репозиторії](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Створіть | Python |
-| 42 | [Підсумковий проєкт: випустіть пакет робочого середовища для повторного використання](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Створіть | Python |
-| 43 | [Сформулюйте завдання до написання коду агентом](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Створіть | Python |
-| 44 | [Створіть план виконання, підкріплений доказами](../../phases/14-agent-engineering/44-plan-from-evidence/) | Створіть | Python |
-| 45 | [Делегуйте роботу агентам з ізоляцією та контрактами злиття](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Створіть | Python |
-| 46 | [Перетворюйте кожне виправлення агента на системне поліпшення](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Створіть | Python |
-| 47 | [Визначте бажаний результат до вибору продукту роботи](../../phases/14-agent-engineering/47-outcomes-before-output/) | Створіть | Python |
-| 48 | [Дослідіть робочий процес, який люди справді виконують](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Створіть | Python |
-| 49 | [Складіть карту припущень і спочатку перевірте найризикованіше](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Створіть | Python |
-| 50 | [Виберіть найменшу частину, здатну змінити рішення](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Створіть | Python |
-| 51 | [Пишіть специфікації, що зберігають можливість судження](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Створіть | Python |
-| 52 | [Спроєктуйте метрики успіху до появи результату](../../phases/14-agent-engineering/52-design-success-metrics/) | Створіть | Python |
-| 53 | [Свідомо вибирайте прототип, пілот чи промислову версію](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Створіть | Python |
-| 54 | [Створіть сталий механізм зворотного зв'язку з відповідальністю й виведенням з ужитку](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Створіть | Python |
+| 19 | [Бенчмарки: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Вивчіть | Python, TypeScript |
+| 20 | [Бенчмарки: WebArena й OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Вивчіть | Python, TypeScript |
+| 21 | [Робота з комп'ютером: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Створіть | Python, TypeScript |
+| 22 | [Голосові агенти: Pipecat і LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Створіть | Python, TypeScript |
+| 23 | [Семантичні конвенції OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Створіть | Python, TypeScript |
+| 24 | [Спостережуваність агентів: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Вивчіть | Python, TypeScript |
+| 25 | [Багатоагентні дебати та співпраця](../../phases/14-agent-engineering/25-multi-agent-debate/) | Створіть | Python, TypeScript |
+| 26 | [Режими відмов: чому агенти ламаються](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Створіть | Python, TypeScript |
+| 27 | [Ін'єкція промптів і захист PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Створіть | Python, TypeScript |
+| 28 | [Шаблони оркестрації: керівник, рій та ієрархія](../../phases/14-agent-engineering/28-orchestration-patterns/) | Створіть | Python, TypeScript |
+| 29 | [Промислові середовища: черги, події й cron](../../phases/14-agent-engineering/29-production-runtimes/) | Вивчіть | Python, TypeScript |
+| 30 | [Розробка агентів на основі оцінювання](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Створіть | Python, TypeScript |
+| 31 | [Робоче середовище агента: чому здібні моделі все одно помиляються](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Вивчіть | Python, TypeScript |
+| 32 | [Мінімальне робоче середовище агента](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Створіть | Python, TypeScript |
+| 33 | [Інструкції агента як виконувані обмеження](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Створіть | Python, TypeScript |
+| 34 | [Пам'ять репозиторію та сталий стан](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Створіть | Python, TypeScript |
+| 35 | [Скрипти ініціалізації агентів](../../phases/14-agent-engineering/35-initialization-scripts/) | Створіть | Python, TypeScript |
+| 36 | [Контракти обсягу й межі завдань](../../phases/14-agent-engineering/36-scope-contracts/) | Створіть | Python, TypeScript |
+| 37 | [Цикли зворотного зв'язку під час виконання](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Створіть | Python, TypeScript |
+| 38 | [Контрольні перевірки](../../phases/14-agent-engineering/38-verification-gates/) | Створіть | Python, TypeScript |
+| 39 | [Агент-рецензент: відокремте автора від оцінювача](../../phases/14-agent-engineering/39-reviewer-agent/) | Створіть | Python, TypeScript |
+| 40 | [Передавання роботи між сеансами](../../phases/14-agent-engineering/40-multi-session-handoff/) | Створіть | Python, TypeScript |
+| 41 | [Робоче середовище в реальному репозиторії](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Створіть | Python, TypeScript |
+| 42 | [Підсумковий проєкт: випустіть пакет робочого середовища для повторного використання](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Створіть | Python, TypeScript |
+| 43 | [Сформулюйте завдання до написання коду агентом](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Створіть | Python, TypeScript |
+| 44 | [Створіть план виконання, підкріплений доказами](../../phases/14-agent-engineering/44-plan-from-evidence/) | Створіть | Python, TypeScript |
+| 45 | [Делегуйте роботу агентам з ізоляцією та контрактами злиття](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Створіть | Python, TypeScript |
+| 46 | [Перетворюйте кожне виправлення агента на системне поліпшення](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Створіть | Python, TypeScript |
+| 47 | [Визначте бажаний результат до вибору продукту роботи](../../phases/14-agent-engineering/47-outcomes-before-output/) | Створіть | Python, TypeScript |
+| 48 | [Дослідіть робочий процес, який люди справді виконують](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Створіть | Python, TypeScript |
+| 49 | [Складіть карту припущень і спочатку перевірте найризикованіше](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Створіть | Python, TypeScript |
+| 50 | [Виберіть найменшу частину, здатну змінити рішення](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Створіть | Python, TypeScript |
+| 51 | [Пишіть специфікації, що зберігають можливість судження](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Створіть | Python, TypeScript |
+| 52 | [Спроєктуйте метрики успіху до появи результату](../../phases/14-agent-engineering/52-design-success-metrics/) | Створіть | Python, TypeScript |
+| 53 | [Свідомо вибирайте прототип, пілот чи промислову версію](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Створіть | Python, TypeScript |
+| 54 | [Створіть сталий механізм зворотного зв'язку з відповідальністю й виведенням з ужитку](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Створіть | Python, TypeScript |
 
 Кожен урок робочого середовища на етапі 14 (31-42) містить `mission.md`, що інструктує агента до відкриття повної документації уроку.
 
@@ -837,28 +837,28 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [Від чатботів до агентів тривалих завдань (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Вивчіть | Python |
-| 02 | [STaR, V-STaR, Quiet-STaR: самостійне навчання міркування](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Вивчіть | Python |
-| 03 | [AlphaEvolve: еволюційні агенти програмування](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Вивчіть | Python |
-| 04 | [Darwin Gödel Machine: агенти, що змінюють себе](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Вивчіть | Python |
-| 05 | [AI Scientist v2: дослідження рівня наукового семінару](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Вивчіть | Python |
-| 06 | [Автоматизовані дослідження узгодження (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Вивчіть | Python |
-| 07 | [Рекурсивне самовдосконалення: можливості й узгодження](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Вивчіть | Python |
-| 08 | [Проєктування самовдосконалення з чіткими межами](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Вивчіть | Python |
-| 09 | [Ландшафт автономних агентів програмування (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Вивчіть | Python |
-| 10 | [Режими дозволів автономних агентів](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Вивчіть | Python |
-| 11 | [Браузерні агенти й непряма ін'єкція промптів](../../phases/15-autonomous-systems/11-browser-agents/) | Вивчіть | Python |
-| 12 | [Стале виконання для агентів тривалої роботи](../../phases/15-autonomous-systems/12-durable-execution/) | Вивчіть | Python |
-| 13 | [Бюджети дій, межі ітерацій і контроль вартості](../../phases/15-autonomous-systems/13-cost-governors/) | Вивчіть | Python |
-| 14 | [Аварійні вимикачі, запобіжники й канаркові токени](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Вивчіть | Python |
-| 15 | [HITL: спочатку пропозиція, потім підтвердження](../../phases/15-autonomous-systems/15-propose-then-commit/) | Вивчіть | Python |
-| 16 | [Контрольні точки й відкат](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Вивчіть | Python |
-| 17 | [Конституційний AI і перевизначення правил](../../phases/15-autonomous-systems/17-constitutional-ai/) | Вивчіть | Python |
-| 18 | [Llama Guard і класифікація вводу та виводу](../../phases/15-autonomous-systems/18-llama-guard/) | Вивчіть | Python |
-| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Вивчіть | Python |
-| 20 | [OpenAI Preparedness Framework і DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Вивчіть | Python |
-| 21 | [Часові горизонти METR і зовнішнє оцінювання](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Вивчіть | Python |
-| 22 | [CAIS, CAISI та ризики суспільного масштабу](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Вивчіть | Python |
+| 01 | [Від чатботів до агентів тривалих завдань (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Вивчіть | Python, TypeScript |
+| 02 | [STaR, V-STaR, Quiet-STaR: самостійне навчання міркування](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Вивчіть | Python, TypeScript |
+| 03 | [AlphaEvolve: еволюційні агенти програмування](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Вивчіть | Python, TypeScript |
+| 04 | [Darwin Gödel Machine: агенти, що змінюють себе](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Вивчіть | Python, TypeScript |
+| 05 | [AI Scientist v2: дослідження рівня наукового семінару](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Вивчіть | Python, TypeScript |
+| 06 | [Автоматизовані дослідження узгодження (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Вивчіть | Python, TypeScript |
+| 07 | [Рекурсивне самовдосконалення: можливості й узгодження](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Вивчіть | Python, TypeScript |
+| 08 | [Проєктування самовдосконалення з чіткими межами](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Вивчіть | Python, TypeScript |
+| 09 | [Ландшафт автономних агентів програмування (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Вивчіть | Python, TypeScript |
+| 10 | [Режими дозволів автономних агентів](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Вивчіть | Python, TypeScript |
+| 11 | [Браузерні агенти й непряма ін'єкція промптів](../../phases/15-autonomous-systems/11-browser-agents/) | Вивчіть | Python, TypeScript |
+| 12 | [Стале виконання для агентів тривалої роботи](../../phases/15-autonomous-systems/12-durable-execution/) | Вивчіть | Python, TypeScript |
+| 13 | [Бюджети дій, межі ітерацій і контроль вартості](../../phases/15-autonomous-systems/13-cost-governors/) | Вивчіть | Python, TypeScript |
+| 14 | [Аварійні вимикачі, запобіжники й канаркові токени](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Вивчіть | Python, TypeScript |
+| 15 | [HITL: спочатку пропозиція, потім підтвердження](../../phases/15-autonomous-systems/15-propose-then-commit/) | Вивчіть | Python, TypeScript |
+| 16 | [Контрольні точки й відкат](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Вивчіть | Python, TypeScript |
+| 17 | [Конституційний AI і перевизначення правил](../../phases/15-autonomous-systems/17-constitutional-ai/) | Вивчіть | Python, TypeScript |
+| 18 | [Llama Guard і класифікація вводу та виводу](../../phases/15-autonomous-systems/18-llama-guard/) | Вивчіть | Python, TypeScript |
+| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Вивчіть | Python, TypeScript |
+| 20 | [OpenAI Preparedness Framework і DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Вивчіть | Python, TypeScript |
+| 21 | [Часові горизонти METR і зовнішнє оцінювання](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Вивчіть | Python, TypeScript |
+| 22 | [CAIS, CAISI та ризики суспільного масштабу](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Вивчіть | Python, TypeScript |
 
 </details>
 
@@ -869,30 +869,30 @@ flowchart TB
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
 | 01 | [Навіщо кілька агентів](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | Вивчіть | TypeScript |
-| 02 | [Спадщина FIPA-ACL і мовленнєві акти](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Вивчіть | Python |
+| 02 | [Спадщина FIPA-ACL і мовленнєві акти](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Вивчіть | Python, TypeScript |
 | 03 | [Протоколи комунікації](../../phases/16-multi-agent-and-swarms/03-communication-protocols/) | Створіть | TypeScript |
-| 04 | [Базова модель багатоагентних систем](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Вивчіть | Python |
-| 05 | [Шаблон керівника / оркестратора й виконавця](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Створіть | Python |
-| 06 | [Ієрархічна архітектура та відхилення декомпозиції](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Вивчіть | Python |
-| 07 | [Суспільство розуму й багатоагентні дебати](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Створіть | Python |
-| 08 | [Рольова спеціалізація: планувальник, критик, виконавець і перевіряльник](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Створіть | Python |
-| 09 | [Паралельні рої та мережеві архітектури](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Створіть | Python |
-| 10 | [Груповий чат і вибір мовця](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Створіть | Python |
-| 11 | [Передавання роботи й процедури (оркестрація без стану)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Створіть | Python |
-| 12 | [A2A: протокол взаємодії агентів](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Створіть | Python |
-| 13 | [Спільна пам'ять і шаблони чорної дошки](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Створіть | Python |
-| 14 | [Консенсус і візантійська відмовостійкість](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Створіть | Python |
-| 15 | [Голосування, самоузгодженість і топологія дебатів](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Створіть | Python |
-| 16 | [Переговори й торг](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Створіть | Python |
-| 17 | [Генеративні агенти та симуляція емерджентної поведінки](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Створіть | Python |
-| 18 | [Теорія розуму й емерджентна координація](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Створіть | Python |
-| 19 | [Ройова оптимізація (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Створіть | Python |
-| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Вивчіть | Python |
-| 21 | [Агентні економіки, токенові стимули й репутація](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Вивчіть | Python |
-| 22 | [Промислове масштабування: черги, контрольні точки й стійкість](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Створіть | Python |
-| 23 | [Режими відмов: MAST, групове мислення й одноманітність](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Вивчіть | Python |
-| 24 | [Бенчмарки оцінювання та координації](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Вивчіть | Python |
-| 25 | [Практичні приклади й передові підходи 2026 року](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Вивчіть | Python |
+| 04 | [Базова модель багатоагентних систем](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Вивчіть | Python, TypeScript |
+| 05 | [Шаблон керівника / оркестратора й виконавця](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Створіть | Python, TypeScript |
+| 06 | [Ієрархічна архітектура та відхилення декомпозиції](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Вивчіть | Python, TypeScript |
+| 07 | [Суспільство розуму й багатоагентні дебати](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Створіть | Python, TypeScript |
+| 08 | [Рольова спеціалізація: планувальник, критик, виконавець і перевіряльник](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Створіть | Python, TypeScript |
+| 09 | [Паралельні рої та мережеві архітектури](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Створіть | Python, TypeScript |
+| 10 | [Груповий чат і вибір мовця](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Створіть | Python, TypeScript |
+| 11 | [Передавання роботи й процедури (оркестрація без стану)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Створіть | Python, TypeScript |
+| 12 | [A2A: протокол взаємодії агентів](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Створіть | Python, TypeScript |
+| 13 | [Спільна пам'ять і шаблони чорної дошки](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Створіть | Python, TypeScript |
+| 14 | [Консенсус і візантійська відмовостійкість](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Створіть | Python, TypeScript |
+| 15 | [Голосування, самоузгодженість і топологія дебатів](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Створіть | Python, TypeScript |
+| 16 | [Переговори й торг](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Створіть | Python, TypeScript |
+| 17 | [Генеративні агенти та симуляція емерджентної поведінки](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Створіть | Python, TypeScript |
+| 18 | [Теорія розуму й емерджентна координація](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Створіть | Python, TypeScript |
+| 19 | [Ройова оптимізація (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Створіть | Python, TypeScript |
+| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Вивчіть | Python, TypeScript |
+| 21 | [Агентні економіки, токенові стимули й репутація](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Вивчіть | Python, TypeScript |
+| 22 | [Промислове масштабування: черги, контрольні точки й стійкість](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Створіть | Python, TypeScript |
+| 23 | [Режими відмов: MAST, групове мислення й одноманітність](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Вивчіть | Python, TypeScript |
+| 24 | [Бенчмарки оцінювання та координації](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Вивчіть | Python, TypeScript |
+| 25 | [Практичні приклади й передові підходи 2026 року](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Вивчіть | Python, TypeScript |
 
 </details>
 
@@ -902,35 +902,35 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [Керовані LLM-платформи: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Вивчіть | Python |
-| 02 | [Економіка платформ інференсу: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Вивчіть | Python |
-| 03 | [Автомасштабування GPU в Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Вивчіть | Python |
-| 04 | [Рушії інференсу зсередини: PagedAttention, безперервні пакети й фрагментований prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Вивчіть | Python |
-| 05 | [Спекулятивне декодування EAGLE-3 у промисловій експлуатації](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Вивчіть | Python |
-| 06 | [Обслуговування з кешем префіксів: RadixAttention і повторне використання KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Вивчіть | Python |
-| 07 | [Апаратно-спеціалізована компіляція інференсу: FP8 і NVFP4 на Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Вивчіть | Python |
-| 08 | [Метрики інференсу: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Вивчіть | Python |
-| 09 | [Промислове квантування: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Вивчіть | Python |
-| 10 | [Зменшення холодного старту безсерверних LLM](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Вивчіть | Python |
-| 11 | [Обслуговування LLM у кількох регіонах і локальність KV-кешу](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Вивчіть | Python |
-| 12 | [Інференс на периферії: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Вивчіть | Python |
+| 01 | [Керовані LLM-платформи: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Вивчіть | Python, TypeScript |
+| 02 | [Економіка платформ інференсу: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Вивчіть | Python, TypeScript |
+| 03 | [Автомасштабування GPU в Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Вивчіть | Python, TypeScript |
+| 04 | [Рушії інференсу зсередини: PagedAttention, безперервні пакети й фрагментований prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Вивчіть | Python, TypeScript |
+| 05 | [Спекулятивне декодування EAGLE-3 у промисловій експлуатації](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Вивчіть | Python, TypeScript |
+| 06 | [Обслуговування з кешем префіксів: RadixAttention і повторне використання KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Вивчіть | Python, TypeScript |
+| 07 | [Апаратно-спеціалізована компіляція інференсу: FP8 і NVFP4 на Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Вивчіть | Python, TypeScript |
+| 08 | [Метрики інференсу: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Вивчіть | Python, TypeScript |
+| 09 | [Промислове квантування: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Вивчіть | Python, TypeScript |
+| 10 | [Зменшення холодного старту безсерверних LLM](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Вивчіть | Python, TypeScript |
+| 11 | [Обслуговування LLM у кількох регіонах і локальність KV-кешу](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Вивчіть | Python, TypeScript |
+| 12 | [Інференс на периферії: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Вивчіть | Python, TypeScript |
 | 13 | [Вибір стека спостережуваності LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | Вивчіть | Python, TypeScript |
 | 14 | [Економіка кешування промптів і семантичного кешування](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Вивчіть | Python, TypeScript |
 | 15 | [Пакетні API: знижка 50% як галузевий стандарт](../../phases/17-infrastructure-and-production/15-batch-apis/) | Вивчіть | Python, TypeScript |
 | 16 | [Маршрутизація моделей як основа зниження вартості](../../phases/17-infrastructure-and-production/16-model-routing/) | Вивчіть | Python, TypeScript |
-| 17 | [Розділені prefill і декодування: NVIDIA Dynamo та llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Вивчіть | Python |
-| 18 | [Промисловий стек інференсу: вивантаження KV і маршрутизація з урахуванням кешу](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Вивчіть | Python |
+| 17 | [Розділені prefill і декодування: NVIDIA Dynamo та llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Вивчіть | Python, TypeScript |
+| 18 | [Промисловий стек інференсу: вивантаження KV і маршрутизація з урахуванням кешу](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Вивчіть | Python, TypeScript |
 | 19 | [AI-шлюзи: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Вивчіть | Python, TypeScript |
 | 20 | [Тіньове, канаркове й поступове розгортання](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Вивчіть | Python, TypeScript |
-| 21 | [A/B-тестування LLM-функцій: GrowthBook і Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Вивчіть | Python |
-| 22 | [Навантажувальне тестування LLM API: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Створіть | Python |
-| 23 | [SRE для AI: багатоагентне реагування на інциденти](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Вивчіть | Python |
-| 24 | [Хаос-інженерія для промислових LLM](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Вивчіть | Python |
-| 25 | [Безпека: секрети, очищення персональних даних і журнали аудиту](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Вивчіть | Python |
-| 26 | [Відповідність вимогам: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Вивчіть | Python |
-| 27 | [FinOps для LLM: юніт-економіка й розподіл витрат між орендарями](../../phases/17-infrastructure-and-production/27-finops-llms/) | Вивчіть | Python |
-| 28 | [Вибір власного інференсу: узгодження рушія, обладнання й масштабу](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Вивчіть | Python |
-| 29 | [Демо-інтерфейси для моделей: від функції до застосунку, яким можна поділитися](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Створіть | Python |
+| 21 | [A/B-тестування LLM-функцій: GrowthBook і Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Вивчіть | Python, TypeScript |
+| 22 | [Навантажувальне тестування LLM API: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Створіть | Python, TypeScript |
+| 23 | [SRE для AI: багатоагентне реагування на інциденти](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Вивчіть | Python, TypeScript |
+| 24 | [Хаос-інженерія для промислових LLM](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Вивчіть | Python, TypeScript |
+| 25 | [Безпека: секрети, очищення персональних даних і журнали аудиту](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Вивчіть | Python, TypeScript |
+| 26 | [Відповідність вимогам: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Вивчіть | Python, TypeScript |
+| 27 | [FinOps для LLM: юніт-економіка й розподіл витрат між орендарями](../../phases/17-infrastructure-and-production/27-finops-llms/) | Вивчіть | Python, TypeScript |
+| 28 | [Вибір власного інференсу: узгодження рушія, обладнання й масштабу](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Вивчіть | Python, TypeScript |
+| 29 | [Демо-інтерфейси для моделей: від функції до застосунку, яким можна поділитися](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Створіть | Python, TypeScript |
 
 </details>
 
@@ -940,36 +940,36 @@ flowchart TB
 
 | # | Урок | Тип | Мова |
 |:---:|--------|:----:|------|
-| 01 | [Виконання інструкцій як сигнал узгодження](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Вивчіть | Python |
-| 02 | [Злам винагороди й закон Ґудгарта](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Вивчіть | Python |
-| 03 | [Родина методів прямої оптимізації вподобань](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Вивчіть | Python |
-| 04 | [Підлабузництво, посилене RLHF](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Вивчіть | Python |
-| 05 | [Конституційний AI і RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Вивчіть | Python |
-| 06 | [Мезаоптимізація та оманливе узгодження](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Вивчіть | Python |
-| 07 | [Сплячі агенти: стійкий обман](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Вивчіть | Python |
-| 08 | [Приховане планування в контексті передових моделей](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Вивчіть | Python |
-| 09 | [Удаване узгодження](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Вивчіть | Python |
-| 10 | [Контроль AI: безпека попри саботаж](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Вивчіть | Python |
-| 11 | [Масштабований нагляд і навчання від слабкого до сильного](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Вивчіть | Python |
-| 12 | [Red teaming: PAIR та автоматизовані атаки](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Створіть | Python |
-| 13 | [Обхід захисту через численні приклади](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Вивчіть | Python |
-| 14 | [ASCII-арт і візуальний обхід захисту](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Створіть | Python |
-| 15 | [Непряма ін'єкція промптів](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Створіть | Python |
-| 16 | [Інструменти червоної команди: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Створіть | Python |
-| 17 | [WMDP та оцінювання можливостей подвійного використання](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Вивчіть | Python |
-| 18 | [Рамки безпеки передових моделей: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Вивчіть | Python |
-| 19 | [Дослідження добробуту моделей](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Вивчіть | Python |
-| 20 | [Упередженість і шкода репрезентації](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Створіть | Python |
-| 21 | [Критерії справедливості: групові, індивідуальні й контрфактичні](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Вивчіть | Python |
-| 22 | [Диференціальна приватність для LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Створіть | Python |
-| 23 | [Водяні знаки: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Створіть | Python |
-| 24 | [Регуляторні рамки: ЄС, США, Велика Британія й Корея](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Вивчіть | Python |
-| 25 | [EchoLeak і CVE для AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Вивчіть | Python |
-| 26 | [Картки моделей, систем і наборів даних](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Створіть | Python |
-| 27 | [Походження даних і керування навчальними даними](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Вивчіть | Python |
-| 28 | [Екосистема досліджень узгодження: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Вивчіть | Python |
-| 29 | [Системи модерації: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Створіть | Python |
-| 30 | [Ризики подвійного використання: кібернетика, біологія, хімія й ядерні технології](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Вивчіть | Python |
+| 01 | [Виконання інструкцій як сигнал узгодження](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Вивчіть | Python, TypeScript |
+| 02 | [Злам винагороди й закон Ґудгарта](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Вивчіть | Python, TypeScript |
+| 03 | [Родина методів прямої оптимізації вподобань](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Вивчіть | Python, TypeScript |
+| 04 | [Підлабузництво, посилене RLHF](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Вивчіть | Python, TypeScript |
+| 05 | [Конституційний AI і RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Вивчіть | Python, TypeScript |
+| 06 | [Мезаоптимізація та оманливе узгодження](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Вивчіть | Python, TypeScript |
+| 07 | [Сплячі агенти: стійкий обман](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Вивчіть | Python, TypeScript |
+| 08 | [Приховане планування в контексті передових моделей](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Вивчіть | Python, TypeScript |
+| 09 | [Удаване узгодження](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Вивчіть | Python, TypeScript |
+| 10 | [Контроль AI: безпека попри саботаж](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Вивчіть | Python, TypeScript |
+| 11 | [Масштабований нагляд і навчання від слабкого до сильного](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Вивчіть | Python, TypeScript |
+| 12 | [Red teaming: PAIR та автоматизовані атаки](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Створіть | Python, TypeScript |
+| 13 | [Обхід захисту через численні приклади](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Вивчіть | Python, TypeScript |
+| 14 | [ASCII-арт і візуальний обхід захисту](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Створіть | Python, TypeScript |
+| 15 | [Непряма ін'єкція промптів](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Створіть | Python, TypeScript |
+| 16 | [Інструменти червоної команди: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Створіть | Python, TypeScript |
+| 17 | [WMDP та оцінювання можливостей подвійного використання](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Вивчіть | Python, TypeScript |
+| 18 | [Рамки безпеки передових моделей: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Вивчіть | Python, TypeScript |
+| 19 | [Дослідження добробуту моделей](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Вивчіть | Python, TypeScript |
+| 20 | [Упередженість і шкода репрезентації](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Створіть | Python, TypeScript |
+| 21 | [Критерії справедливості: групові, індивідуальні й контрфактичні](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Вивчіть | Python, TypeScript |
+| 22 | [Диференціальна приватність для LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Створіть | Python, TypeScript |
+| 23 | [Водяні знаки: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Створіть | Python, TypeScript |
+| 24 | [Регуляторні рамки: ЄС, США, Велика Британія й Корея](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Вивчіть | Python, TypeScript |
+| 25 | [EchoLeak і CVE для AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Вивчіть | Python, TypeScript |
+| 26 | [Картки моделей, систем і наборів даних](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Створіть | Python, TypeScript |
+| 27 | [Походження даних і керування навчальними даними](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Вивчіть | Python, TypeScript |
+| 28 | [Екосистема досліджень узгодження: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Вивчіть | Python, TypeScript |
+| 29 | [Системи модерації: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Створіть | Python, TypeScript |
+| 30 | [Ризики подвійного використання: кібернетика, біологія, хімія й ядерні технології](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Вивчіть | Python, TypeScript |
 
 </details>
 

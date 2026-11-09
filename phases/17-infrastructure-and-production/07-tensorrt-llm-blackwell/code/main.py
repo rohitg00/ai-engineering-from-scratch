@@ -78,7 +78,7 @@ def print_stack(params_b: float, active_b: float, seq_len: int = 8192) -> None:
 
 def main() -> None:
     print("=" * 90)
-    print("TOY BLACKWELL + TRT-LLM ECONOMICS — memory-bandwidth-limited decode")
+    print("TOY BLACKWELL + TRT-LLM ECONOMICS: memory-bandwidth-limited decode")
     print("=" * 90)
     print()
 

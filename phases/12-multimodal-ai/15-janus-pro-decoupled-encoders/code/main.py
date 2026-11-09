@@ -100,7 +100,7 @@ def demo_routing() -> None:
         "Render a cyberpunk cityscape at night",
     ]
     for p in prompts:
-        trace = run_pipeline(p, image_seed=hash(p) % 1000)
+        trace = run_pipeline(p, image_seed=sum(ord(c) for c in p) % 1000)
         print(f"\n  prompt  : {p}")
         print(f"  task    : {trace['task']}")
         print(f"  route   : {trace['route']}")

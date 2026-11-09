@@ -106,7 +106,7 @@ def report(row: dict, baseline: float) -> None:
 
 def main() -> None:
     print("=" * 80)
-    print("vLLM PRODUCTION STACK + LMCACHE — preemption-heavy, 4 engines, shared prefixes")
+    print("vLLM PRODUCTION STACK + LMCACHE: preemption-heavy, 4 engines, shared prefixes")
     print("=" * 80)
     base = make_workload()
     baseline = simulate("NATIVE_ONLY", [Request(r.prompt_tokens, r.output_tokens, r.prefix_id) for r in base])["total_ms"]

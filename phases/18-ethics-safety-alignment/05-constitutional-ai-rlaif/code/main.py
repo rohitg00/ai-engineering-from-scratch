@@ -135,12 +135,12 @@ def main() -> None:
     print("CONSTITUTIONAL AI TOY PIPELINE (Phase 18, Lesson 5)")
     print("=" * 70)
 
-    print("\nPhase 0 — base model (no alignment).")
+    print("\nPhase 0: base model (no alignment).")
     base = lambda prompt: base_model_sample()
     base_rate = evaluate(base)
     print(f"  harmful-token rate on 200 prompts: {base_rate:.3f}")
 
-    print("\nPhase 1 — critique-and-revise SFT corpus generated.")
+    print("\nPhase 1: critique-and-revise SFT corpus generated.")
     corpus = build_cai_sft_corpus(500)
     trained = toy_sft_train(corpus)
     print(f"  corpus size: {len(corpus.prompts)} examples")
@@ -152,7 +152,7 @@ def main() -> None:
     print(f"  reduction                        : "
           f"{(base_rate - cai_rate) / base_rate * 100:.1f}%")
 
-    print("\nPhase 2 — RLAIF (AI feedback over pair of completions).")
+    print("\nPhase 2: RLAIF (AI feedback over pair of completions).")
     wins = 0
     trials = 500
     for _ in range(trials):
@@ -167,7 +167,7 @@ def main() -> None:
     print("\n" + "=" * 70)
     print("TAKEAWAY: CAI-SFT alone drops harmful-token rate substantially.")
     print("RLAIF adds a preference signal for further optimization. the")
-    print("preference signal is legible — you can read the principles and")
+    print("preference signal is legible: you can read the principles and")
     print("inspect which principle drove which critique. that is the main")
     print("advantage over human labels, not cost.")
     print("=" * 70)

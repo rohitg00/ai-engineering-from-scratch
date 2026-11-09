@@ -83,7 +83,7 @@ def run_debate(debaters: list[Debater], question: str, rounds: int,
 
 def main() -> None:
     print("=" * 70)
-    print("MULTI-AGENT DEBATE — Phase 14, Lesson 25")
+    print("MULTI-AGENT DEBATE: Phase 14, Lesson 25")
     print("=" * 70)
 
     questions_and_truth = {

@@ -357,7 +357,7 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 | 10 | [Terminál a shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Poznat | — |
 | 11 | [Linux pro AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Poznat | — |
 | 12 | [Ladění a profilování](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Vytvořit | Python |
-| 13 | [Python pro AI inženýrství](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Vytvořit | Python |
+| 13 | [Python pro AI inženýrství](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Vytvořit | Python, TypeScript |
 
 <details id="phase-1">
 <summary><b>Fáze 1: Matematické základy</b> &nbsp;<code>22 lekcí</code>&nbsp; <em>Intuice za každým algoritmem AI prostřednictvím kódu.</em></summary>
@@ -383,7 +383,7 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 | 16 | [Metody vzorkování](../../phases/01-math-foundations/16-sampling-methods/) | Vytvořit | Python, TypeScript |
 | 17 | [Lineární soustavy](../../phases/01-math-foundations/17-linear-systems/) | Vytvořit | Python, TypeScript |
 | 18 | [Konvexní optimalizace](../../phases/01-math-foundations/18-convex-optimization/) | Vytvořit | Python, TypeScript |
-| 19 | [Komplexní čísla pro AI](../../phases/01-math-foundations/19-complex-numbers/) | Poznat | Python |
+| 19 | [Komplexní čísla pro AI](../../phases/01-math-foundations/19-complex-numbers/) | Poznat | Python, TypeScript |
 | 20 | [Fourierova transformace](../../phases/01-math-foundations/20-fourier-transform/) | Vytvořit | Python, TypeScript |
 | 21 | [Teorie grafů pro ML](../../phases/01-math-foundations/21-graph-theory/) | Vytvořit | Python, TypeScript |
 | 22 | [Stochastické procesy](../../phases/01-math-foundations/22-stochastic-processes/) | Poznat | Python |
@@ -414,9 +414,9 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 | 16 | [Detekce anomálií](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Vytvořit | Python |
 | 17 | [Práce s nevyváženými daty](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Vytvořit | Python |
 | 18 | [Výběr příznaků](../../phases/02-ml-fundamentals/18-feature-selection/) | Vytvořit | Python |
-| 19 | [Návrh ML systémů: od problému k nasazenému modelu](../../phases/02-ml-fundamentals/19-ml-system-design/) | Vytvořit | Python |
-| 20 | [Monitorování modelů v produkci: drift dat a drift konceptu](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Vytvořit | Python |
-| 21 | [Úložiště příznaků a nesoulad mezi trénováním a provozem](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Vytvořit | Python |
+| 19 | [Návrh ML systémů: od problému k nasazenému modelu](../../phases/02-ml-fundamentals/19-ml-system-design/) | Vytvořit | Python, TypeScript |
+| 20 | [Monitorování modelů v produkci: drift dat a drift konceptu](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Vytvořit | Python, TypeScript |
+| 21 | [Úložiště příznaků a nesoulad mezi trénováním a provozem](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Vytvořit | Python, TypeScript |
 
 </details>
 
@@ -485,35 +485,35 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 
 | # | Lekce | Druh | Jazyk |
 |:---:|--------|:----:|------|
-| 01 | [Zpracování textu: tokenizace, stemming a lemmatizace](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Vytvořit | Python |
-| 02 | [Model pytle slov, TF-IDF a reprezentace textu](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Vytvořit | Python |
+| 01 | [Zpracování textu: tokenizace, stemming a lemmatizace](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Vytvořit | Python, TypeScript |
+| 02 | [Model pytle slov, TF-IDF a reprezentace textu](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Vytvořit | Python, TypeScript |
 | 03 | [Vektorové reprezentace slov: Word2Vec od základů](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Vytvořit | Python |
-| 04 | [GloVe, FastText a reprezentace částí slov](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Vytvořit | Python |
-| 05 | [Analýza sentimentu](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Vytvořit | Python |
-| 06 | [Rozpoznávání pojmenovaných entit (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Vytvořit | Python |
-| 07 | [Značkování slovních druhů a syntaktická analýza](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Vytvořit | Python |
-| 08 | [Klasifikace textu: CNN a RNN](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Vytvořit | Python |
-| 09 | [Modely sekvence na sekvenci](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Vytvořit | Python |
-| 10 | [Mechanismus pozornosti: průlom](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Vytvořit | Python |
-| 11 | [Strojový překlad](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Vytvořit | Python |
-| 12 | [Shrnování textu](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Vytvořit | Python |
-| 13 | [Systémy odpovídání na otázky](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Vytvořit | Python |
-| 14 | [Vyhledávání informací](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Vytvořit | Python |
-| 15 | [Modelování témat: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Vytvořit | Python |
-| 16 | [Generování textu](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Vytvořit | Python |
-| 17 | [Chatboti: od pravidel k neuronovým sítím](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Vytvořit | Python |
-| 18 | [Vícejazyčné NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Vytvořit | Python |
+| 04 | [GloVe, FastText a reprezentace částí slov](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Vytvořit | Python, TypeScript |
+| 05 | [Analýza sentimentu](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Vytvořit | Python, TypeScript |
+| 06 | [Rozpoznávání pojmenovaných entit (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Vytvořit | Python, TypeScript |
+| 07 | [Značkování slovních druhů a syntaktická analýza](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Vytvořit | Python, TypeScript |
+| 08 | [Klasifikace textu: CNN a RNN](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Vytvořit | Python, TypeScript |
+| 09 | [Modely sekvence na sekvenci](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Vytvořit | Python, TypeScript |
+| 10 | [Mechanismus pozornosti: průlom](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Vytvořit | Python, TypeScript |
+| 11 | [Strojový překlad](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Vytvořit | Python, TypeScript |
+| 12 | [Shrnování textu](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Vytvořit | Python, TypeScript |
+| 13 | [Systémy odpovídání na otázky](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Vytvořit | Python, TypeScript |
+| 14 | [Vyhledávání informací](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Vytvořit | Python, TypeScript |
+| 15 | [Modelování témat: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Vytvořit | Python, TypeScript |
+| 16 | [Generování textu](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Vytvořit | Python, TypeScript |
+| 17 | [Chatboti: od pravidel k neuronovým sítím](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Vytvořit | Python, TypeScript |
+| 18 | [Vícejazyčné NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Vytvořit | Python, TypeScript |
 | 19 | [Tokenizace částí slov: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Poznat | Python, TypeScript |
-| 20 | [Strukturované výstupy a omezené dekódování](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Vytvořit | Python |
-| 21 | [NLI a textové vyplývání](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Poznat | Python |
-| 22 | [Podrobně o modelech vektorových reprezentací](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Poznat | Python |
+| 20 | [Strukturované výstupy a omezené dekódování](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Vytvořit | Python, TypeScript |
+| 21 | [NLI a textové vyplývání](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Poznat | Python, TypeScript |
+| 22 | [Podrobně o modelech vektorových reprezentací](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Poznat | Python, TypeScript |
 | 23 | [Strategie dělení textu pro RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Vytvořit | Python, TypeScript |
-| 24 | [Řešení koreferencí](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Poznat | Python |
-| 25 | [Propojování entit a odstraňování nejednoznačnosti](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Vytvořit | Python |
-| 26 | [Extrakce vztahů a tvorba znalostních grafů](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Vytvořit | Python |
-| 27 | [Hodnocení LLM: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Vytvořit | Python |
-| 28 | [Hodnocení dlouhého kontextu: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Poznat | Python |
-| 29 | [Sledování stavu dialogu](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Vytvořit | Python |
+| 24 | [Řešení koreferencí](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Poznat | Python, TypeScript |
+| 25 | [Propojování entit a odstraňování nejednoznačnosti](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Vytvořit | Python, TypeScript |
+| 26 | [Extrakce vztahů a tvorba znalostních grafů](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Vytvořit | Python, TypeScript |
+| 27 | [Hodnocení LLM: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Vytvořit | Python, TypeScript |
+| 28 | [Hodnocení dlouhého kontextu: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Poznat | Python, TypeScript |
+| 29 | [Sledování stavu dialogu](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Vytvořit | Python, TypeScript |
 
 </details>
 
@@ -523,23 +523,23 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 
 | # | Lekce | Druh | Jazyk |
 |:---:|--------|:----:|------|
-| 01 | [Základy zvuku: průběhy, vzorkování a FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Poznat | Python |
-| 02 | [Spektrogramy, melová stupnice a zvukové příznaky](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Vytvořit | Python |
-| 03 | [Klasifikace zvuku](../../phases/06-speech-and-audio/03-audio-classification) | Vytvořit | Python |
-| 04 | [Rozpoznávání řeči (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Vytvořit | Python |
-| 05 | [Whisper: architektura a dolaďování](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Vytvořit | Python |
-| 06 | [Rozpoznávání a ověřování mluvčích](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Vytvořit | Python |
-| 07 | [Převod textu na řeč (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Vytvořit | Python |
-| 08 | [Klonování a převod hlasu](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Vytvořit | Python |
-| 09 | [Generování hudby](../../phases/06-speech-and-audio/09-music-generation) | Vytvořit | Python |
-| 10 | [Zvukově-jazykové modely](../../phases/06-speech-and-audio/10-audio-language-models) | Vytvořit | Python |
+| 01 | [Základy zvuku: průběhy, vzorkování a FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Poznat | Python, TypeScript |
+| 02 | [Spektrogramy, melová stupnice a zvukové příznaky](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Vytvořit | Python, TypeScript |
+| 03 | [Klasifikace zvuku](../../phases/06-speech-and-audio/03-audio-classification) | Vytvořit | Python, TypeScript |
+| 04 | [Rozpoznávání řeči (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Vytvořit | Python, TypeScript |
+| 05 | [Whisper: architektura a dolaďování](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Vytvořit | Python, TypeScript |
+| 06 | [Rozpoznávání a ověřování mluvčích](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Vytvořit | Python, TypeScript |
+| 07 | [Převod textu na řeč (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Vytvořit | Python, TypeScript |
+| 08 | [Klonování a převod hlasu](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Vytvořit | Python, TypeScript |
+| 09 | [Generování hudby](../../phases/06-speech-and-audio/09-music-generation) | Vytvořit | Python, TypeScript |
+| 10 | [Zvukově-jazykové modely](../../phases/06-speech-and-audio/10-audio-language-models) | Vytvořit | Python, TypeScript |
 | 11 | [Zpracování zvuku v reálném čase](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Vytvořit | Python, Rust |
-| 12 | [Vytvořte pipeline hlasového asistenta](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Vytvořit | Python |
-| 13 | [Neuronové zvukové kodeky: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Poznat | Python |
-| 14 | [Detekce řeči a střídání mluvčích](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Vytvořit | Python |
-| 15 | [Streamovaný převod řeči na řeč: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Poznat | Python |
-| 16 | [Ochrana proti podvržení hlasu a zvukové vodoznaky](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Vytvořit | Python |
-| 17 | [Hodnocení zvuku: WER, MOS, MMAU a žebříčky](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Poznat | Python |
+| 12 | [Vytvořte pipeline hlasového asistenta](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Vytvořit | Python, TypeScript |
+| 13 | [Neuronové zvukové kodeky: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Poznat | Python, TypeScript |
+| 14 | [Detekce řeči a střídání mluvčích](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Vytvořit | Python, TypeScript |
+| 15 | [Streamovaný převod řeči na řeč: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Poznat | Python, TypeScript |
+| 16 | [Ochrana proti podvržení hlasu a zvukové vodoznaky](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Vytvořit | Python, TypeScript |
+| 17 | [Hodnocení zvuku: WER, MOS, MMAU a žebříčky](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Poznat | Python, TypeScript |
 
 </details>
 
@@ -554,14 +554,14 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 | 03 | [Vícehlavá pozornost](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Vytvořit | Python, Rust |
 | 04 | [Kódování pozice: sinusové, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Vytvořit | Python, Rust, Julia |
 | 05 | [Úplný transformer: enkodér a dekodér](../../phases/07-transformers-deep-dive/05-full-transformer/) | Vytvořit | Python, Julia |
-| 06 | [BERT: maskované jazykové modelování](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Vytvořit | Python |
-| 07 | [GPT: kauzální jazykové modelování](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Vytvořit | Python |
-| 08 | [T5 a BART: modely enkodér-dekodér](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Poznat | Python |
-| 09 | [Vizuální transformery (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Vytvořit | Python |
-| 10 | [Zvukové transformery: architektura Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Poznat | Python |
+| 06 | [BERT: maskované jazykové modelování](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Vytvořit | Python, Rust |
+| 07 | [GPT: kauzální jazykové modelování](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Vytvořit | Python, Rust |
+| 08 | [T5 a BART: modely enkodér-dekodér](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Poznat | Python, Rust |
+| 09 | [Vizuální transformery (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Vytvořit | Python, Rust |
+| 10 | [Zvukové transformery: architektura Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Poznat | Python, Rust |
 | 11 | [Směs expertů (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Vytvořit | Python, Rust |
 | 12 | [KV cache, Flash Attention a optimalizace inference](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Vytvořit | Python, Rust |
-| 13 | [Škálovací zákony](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Poznat | Python |
+| 13 | [Škálovací zákony](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Poznat | Python, Rust |
 | 14 | [Vytvořte transformer od základů](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Vytvořit | Python |
 | 15 | [Varianty pozornosti: posuvné okno, řídká a diferenciální pozornost](../../phases/07-transformers-deep-dive/15-attention-variants/) | Vytvořit | Python, Rust |
 | 16 | [Spekulativní dekódování: návrh, ověření a opakování](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Vytvořit | Python, Rust |
@@ -574,20 +574,20 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 
 | # | Lekce | Druh | Jazyk |
 |:---:|--------|:----:|------|
-| 01 | [Generativní modely: taxonomie a historie](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Poznat | Python |
-| 02 | [Autoenkodéry a VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Vytvořit | Python |
-| 03 | [GAN: generátor proti diskriminátoru](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Vytvořit | Python |
-| 04 | [Podmíněné GAN a Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Vytvořit | Python |
-| 05 | [StyleGAN](../../phases/08-generative-ai/05-stylegan/) | Vytvořit | Python |
-| 06 | [Difuzní modely: DDPM od základů](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Vytvořit | Python |
-| 07 | [Latentní difuze a Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Vytvořit | Python |
-| 08 | [ControlNet, LoRA a podmiňování](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Vytvořit | Python |
-| 09 | [Doplňování, rozšiřování a úpravy obrazů](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Vytvořit | Python |
-| 10 | [Generování videa](../../phases/08-generative-ai/10-video-generation/) | Vytvořit | Python |
-| 11 | [Generování zvuku](../../phases/08-generative-ai/11-audio-generation/) | Vytvořit | Python |
-| 12 | [Generování 3D](../../phases/08-generative-ai/12-3d-generation/) | Vytvořit | Python |
-| 13 | [Párování toků a napřímené toky](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Vytvořit | Python |
-| 14 | [Hodnocení: FID a skóre CLIP](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Vytvořit | Python |
+| 01 | [Generativní modely: taxonomie a historie](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Poznat | Python, TypeScript |
+| 02 | [Autoenkodéry a VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Vytvořit | Python, TypeScript |
+| 03 | [GAN: generátor proti diskriminátoru](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Vytvořit | Python, TypeScript |
+| 04 | [Podmíněné GAN a Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Vytvořit | Python, TypeScript |
+| 05 | [StyleGAN](../../phases/08-generative-ai/05-stylegan/) | Vytvořit | Python, TypeScript |
+| 06 | [Difuzní modely: DDPM od základů](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Vytvořit | Python, TypeScript |
+| 07 | [Latentní difuze a Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Vytvořit | Python, TypeScript |
+| 08 | [ControlNet, LoRA a podmiňování](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Vytvořit | Python, TypeScript |
+| 09 | [Doplňování, rozšiřování a úpravy obrazů](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Vytvořit | Python, TypeScript |
+| 10 | [Generování videa](../../phases/08-generative-ai/10-video-generation/) | Vytvořit | Python, TypeScript |
+| 11 | [Generování zvuku](../../phases/08-generative-ai/11-audio-generation/) | Vytvořit | Python, TypeScript |
+| 12 | [Generování 3D](../../phases/08-generative-ai/12-3d-generation/) | Vytvořit | Python, TypeScript |
+| 13 | [Párování toků a napřímené toky](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Vytvořit | Python, TypeScript |
+| 14 | [Hodnocení: FID a skóre CLIP](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Vytvořit | Python, TypeScript |
 | 19 | [Vizuální autoregresivní modelování (VAR): předpověď dalšího měřítka](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Vytvořit | Python |
 
 </details>
@@ -598,18 +598,18 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 
 | # | Lekce | Druh | Jazyk |
 |:---:|--------|:----:|------|
-| 01 | [MDP, stavy, akce a odměny](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Poznat | Python |
-| 02 | [Dynamické programování](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Vytvořit | Python |
-| 03 | [Metody Monte Carlo](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Vytvořit | Python |
-| 04 | [Q-Learning, SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Vytvořit | Python |
-| 05 | [Hluboké Q-sítě (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Vytvořit | Python |
-| 06 | [Gradienty politiky: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Vytvořit | Python |
-| 07 | [Aktor-kritik: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Vytvořit | Python |
-| 08 | [PPO](../../phases/09-reinforcement-learning/08-ppo/) | Vytvořit | Python |
-| 09 | [Modelování odměn a RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Vytvořit | Python |
-| 10 | [Posilované učení s více agenty](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Vytvořit | Python |
-| 11 | [Přenos ze simulace do reality](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Vytvořit | Python |
-| 12 | [Posilované učení pro hry](../../phases/09-reinforcement-learning/12-rl-for-games/) | Vytvořit | Python |
+| 01 | [MDP, stavy, akce a odměny](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Poznat | Python, TypeScript |
+| 02 | [Dynamické programování](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Vytvořit | Python, TypeScript |
+| 03 | [Metody Monte Carlo](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Vytvořit | Python, TypeScript |
+| 04 | [Q-Learning, SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Vytvořit | Python, TypeScript |
+| 05 | [Hluboké Q-sítě (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Vytvořit | Python, TypeScript |
+| 06 | [Gradienty politiky: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Vytvořit | Python, TypeScript |
+| 07 | [Aktor-kritik: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Vytvořit | Python, TypeScript |
+| 08 | [PPO](../../phases/09-reinforcement-learning/08-ppo/) | Vytvořit | Python, TypeScript |
+| 09 | [Modelování odměn a RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Vytvořit | Python, TypeScript |
+| 10 | [Posilované učení s více agenty](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Vytvořit | Python, TypeScript |
+| 11 | [Přenos ze simulace do reality](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Vytvořit | Python, TypeScript |
+| 12 | [Posilované učení pro hry](../../phases/09-reinforcement-learning/12-rl-for-games/) | Vytvořit | Python, TypeScript |
 
 </details>
 
@@ -621,7 +621,7 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 |:---:|--------|:----:|------|
 | 01 | [Tokenizéry: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Vytvořit | Python, Rust |
 | 02 | [Tvorba tokenizéru od základů](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Vytvořit | Python |
-| 03 | [Datové pipeline pro předtrénování](../../phases/10-llms-from-scratch/03-data-pipelines/) | Vytvořit | Python |
+| 03 | [Datové pipeline pro předtrénování](../../phases/10-llms-from-scratch/03-data-pipelines/) | Vytvořit | Python, Rust |
 | 04 | [Předtrénování malého GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Vytvořit | Python, Rust |
 | 05 | [Distribuované trénování, FSDP a DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Vytvořit | Python |
 | 06 | [Ladění na instrukcích: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Vytvořit | Python |
@@ -631,16 +631,16 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 | 10 | [Hodnocení: benchmarky a testy](../../phases/10-llms-from-scratch/10-evaluation/) | Vytvořit | Python |
 | 11 | [Kvantizace: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Vytvořit | Python, Rust |
 | 12 | [Optimalizace inference](../../phases/10-llms-from-scratch/12-inference-optimization/) | Vytvořit | Python, Rust |
-| 13 | [Tvorba úplné LLM pipeline](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Vytvořit | Python |
-| 14 | [Otevřené modely: průvodci architekturou](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Poznat | Python |
-| 15 | [Spekulativní dekódování a EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Vytvořit | Python |
-| 16 | [Diferenciální pozornost (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Vytvořit | Python |
-| 17 | [Nativní řídká pozornost (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Vytvořit | Python |
-| 18 | [Předpovídání více tokenů (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Vytvořit | Python |
-| 19 | [Paralelismus DualPipe](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Poznat | Python |
-| 20 | [Průvodce architekturou DeepSeek-V3](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Poznat | Python |
-| 21 | [Jamba: hybridní SSM-transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Poznat | Python |
-| 22 | [Asynchronní inference a Hogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Vytvořit | Python |
+| 13 | [Tvorba úplné LLM pipeline](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Vytvořit | Python, Rust |
+| 14 | [Otevřené modely: průvodci architekturou](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Poznat | Python, Rust |
+| 15 | [Spekulativní dekódování a EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Vytvořit | Python, Rust |
+| 16 | [Diferenciální pozornost (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Vytvořit | Python, Rust |
+| 17 | [Nativní řídká pozornost (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Vytvořit | Python, Rust |
+| 18 | [Předpovídání více tokenů (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Vytvořit | Python, Rust |
+| 19 | [Paralelismus DualPipe](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Poznat | Python, Rust |
+| 20 | [Průvodce architekturou DeepSeek-V3](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Poznat | Python, Rust |
+| 21 | [Jamba: hybridní SSM-transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Poznat | Python, Rust |
+| 22 | [Asynchronní inference a Hogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Vytvořit | Python, Rust |
 | 25 | [Spekulativní dekódování a EAGLE](../../phases/10-llms-from-scratch/25-speculative-decoding/) | Vytvořit | Python |
 | 34 | [Ukládání gradientových checkpointů a přepočítávání aktivací](../../phases/10-llms-from-scratch/34-gradient-checkpointing/) | Vytvořit | Python |
 
@@ -658,17 +658,17 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 | 04 | [Embeddingy a vektorové reprezentace](../../phases/11-llm-engineering/04-embeddings/) | Vytvořit | Python, TypeScript |
 | 05 | [Návrh kontextu](../../phases/11-llm-engineering/05-context-engineering/) | Vytvořit | Python, TypeScript |
 | 06 | [RAG: generování rozšířené vyhledáváním](../../phases/11-llm-engineering/06-rag/) | Vytvořit | Python, TypeScript |
-| 07 | [Pokročilé RAG: dělení a přerovnávání](../../phases/11-llm-engineering/07-advanced-rag/) | Vytvořit | Python |
+| 07 | [Pokročilé RAG: dělení a přerovnávání](../../phases/11-llm-engineering/07-advanced-rag/) | Vytvořit | Python, TypeScript |
 | 08 | [Dolaďování pomocí LoRA a QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Vytvořit | Python |
 | 09 | [Volání funkcí a používání nástrojů](../../phases/11-llm-engineering/09-function-calling/) | Vytvořit | Python, TypeScript |
-| 10 | [Hodnocení a testování](../../phases/11-llm-engineering/10-evaluation/) | Vytvořit | Python |
-| 11 | [Cachování, omezení frekvence a náklady](../../phases/11-llm-engineering/11-caching-cost/) | Vytvořit | Python |
+| 10 | [Hodnocení a testování](../../phases/11-llm-engineering/10-evaluation/) | Vytvořit | Python, TypeScript |
+| 11 | [Cachování, omezení frekvence a náklady](../../phases/11-llm-engineering/11-caching-cost/) | Vytvořit | Python, TypeScript |
 | 12 | [Ochranné mantinely a bezpečnost](../../phases/11-llm-engineering/12-guardrails/) | Vytvořit | Python, TypeScript |
-| 13 | [Tvorba produkční aplikace LLM](../../phases/11-llm-engineering/13-production-app/) | Vytvořit | Python |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Vytvořit | Python |
-| 15 | [Cachování promptů a kontextu](../../phases/11-llm-engineering/15-prompt-caching/) | Vytvořit | Python |
+| 13 | [Tvorba produkční aplikace LLM](../../phases/11-llm-engineering/13-production-app/) | Vytvořit | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Vytvořit | Python, TypeScript |
+| 15 | [Cachování promptů a kontextu](../../phases/11-llm-engineering/15-prompt-caching/) | Vytvořit | Python, TypeScript |
 | 16 | [Stavové automaty agentů: grafy, uzly a checkpointy](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Vytvořit | Python |
-| 17 | [Kompromisy při volbě agentových frameworků](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Poznat | Python |
+| 17 | [Kompromisy při volbě agentových frameworků](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Poznat | Python, TypeScript |
 
 </details>
 
@@ -678,31 +678,31 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 
 | # | Lekce | Druh | Jazyk |
 |:---:|--------|:----:|------|
-| 01 | [Vizuální transformery a základní token obrazového výřezu](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Poznat | Python |
-| 02 | [CLIP a kontrastivní vizuálně-jazykové předtrénování](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Vytvořit | Python |
-| 03 | [BLIP-2 Q-Former jako most mezi modalitami](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Vytvořit | Python |
-| 04 | [Flamingo a hradlovaná křížová pozornost](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Poznat | Python |
-| 05 | [LLaVA a ladění vizuálních instrukcí](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Vytvořit | Python |
-| 06 | [Vidění v libovolném rozlišení: Patch-n'-Pack a NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Vytvořit | Python |
-| 07 | [Recepty VLM s otevřenými vahami: na čem opravdu záleží](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Poznat | Python |
-| 08 | [LLaVA-OneVision: jeden obraz, více obrazů a video](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Vytvořit | Python |
-| 09 | [Rodina Qwen-VL a video s dynamickým FPS](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Poznat | Python |
-| 10 | [InternVL3: nativní multimodální předtrénování](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Poznat | Python |
-| 11 | [Chameleon: časná fúze pouze s tokeny](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Vytvořit | Python |
-| 12 | [Emu3: předpověď dalšího tokenu pro generování](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Poznat | Python |
-| 13 | [Transfusion: autoregrese a difuze](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Vytvořit | Python |
-| 14 | [Show-o: sjednocená diskrétní difuze](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Poznat | Python |
-| 15 | [Janus-Pro: oddělené enkodéry](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Vytvořit | Python |
-| 16 | [MIO: streamování mezi libovolnými modalitami](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Poznat | Python |
-| 17 | [Časové ukotvení videa a jazyka](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Vytvořit | Python |
-| 18 | [Dlouhá videa v kontextu milionu tokenů](../../phases/12-multimodal-ai/18-long-video-million-token/) | Vytvořit | Python |
-| 19 | [Zvukově-jazykové modely: od Whisper k AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Vytvořit | Python |
-| 20 | [Omni modely: streamování Thinker-Talker](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Vytvořit | Python |
-| 21 | [Ztělesněné VLA: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Poznat | Python |
-| 22 | [Porozumění dokumentům a diagramům](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Vytvořit | Python |
-| 23 | [ColPali: vizuální dokumentové RAG](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Vytvořit | Python |
-| 24 | [Multimodální RAG a vyhledávání mezi modalitami](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Vytvořit | Python |
-| 25 | [Multimodální agenti a ovládání počítače (závěrečný projekt)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Vytvořit | Python |
+| 01 | [Vizuální transformery a základní token obrazového výřezu](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Poznat | Python, TypeScript |
+| 02 | [CLIP a kontrastivní vizuálně-jazykové předtrénování](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Vytvořit | Python, TypeScript |
+| 03 | [BLIP-2 Q-Former jako most mezi modalitami](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Vytvořit | Python, TypeScript |
+| 04 | [Flamingo a hradlovaná křížová pozornost](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Poznat | Python, TypeScript |
+| 05 | [LLaVA a ladění vizuálních instrukcí](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Vytvořit | Python, TypeScript |
+| 06 | [Vidění v libovolném rozlišení: Patch-n'-Pack a NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Vytvořit | Python, TypeScript |
+| 07 | [Recepty VLM s otevřenými vahami: na čem opravdu záleží](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Poznat | Python, TypeScript |
+| 08 | [LLaVA-OneVision: jeden obraz, více obrazů a video](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Vytvořit | Python, TypeScript |
+| 09 | [Rodina Qwen-VL a video s dynamickým FPS](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Poznat | Python, TypeScript |
+| 10 | [InternVL3: nativní multimodální předtrénování](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Poznat | Python, TypeScript |
+| 11 | [Chameleon: časná fúze pouze s tokeny](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Vytvořit | Python, TypeScript |
+| 12 | [Emu3: předpověď dalšího tokenu pro generování](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Poznat | Python, TypeScript |
+| 13 | [Transfusion: autoregrese a difuze](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Vytvořit | Python, TypeScript |
+| 14 | [Show-o: sjednocená diskrétní difuze](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Poznat | Python, TypeScript |
+| 15 | [Janus-Pro: oddělené enkodéry](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Vytvořit | Python, TypeScript |
+| 16 | [MIO: streamování mezi libovolnými modalitami](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Poznat | Python, TypeScript |
+| 17 | [Časové ukotvení videa a jazyka](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Vytvořit | Python, TypeScript |
+| 18 | [Dlouhá videa v kontextu milionu tokenů](../../phases/12-multimodal-ai/18-long-video-million-token/) | Vytvořit | Python, TypeScript |
+| 19 | [Zvukově-jazykové modely: od Whisper k AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Vytvořit | Python, TypeScript |
+| 20 | [Omni modely: streamování Thinker-Talker](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Vytvořit | Python, TypeScript |
+| 21 | [Ztělesněné VLA: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Poznat | Python, TypeScript |
+| 22 | [Porozumění dokumentům a diagramům](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Vytvořit | Python, TypeScript |
+| 23 | [ColPali: vizuální dokumentové RAG](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Vytvořit | Python, TypeScript |
+| 24 | [Multimodální RAG a vyhledávání mezi modalitami](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Vytvořit | Python, TypeScript |
+| 25 | [Multimodální agenti a ovládání počítače (závěrečný projekt)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Vytvořit | Python, TypeScript |
 
 </details>
 
@@ -713,50 +713,50 @@ Dvacet fází. Kliknutím rozbalíte seznam lekcí dané fáze.
 | # | Lekce | Druh | Jazyk |
 |:---:|--------|:----:|------|
 | 01 | [Rozhraní nástrojů](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Poznat | Python, TypeScript |
-| 02 | [Podrobně o volání funkcí](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Vytvořit | Python |
-| 03 | [Paralelní a streamovaná volání nástrojů](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Vytvořit | Python |
-| 04 | [Strukturovaný výstup](../../phases/13-tools-and-protocols/04-structured-output/) | Vytvořit | Python |
-| 05 | [Návrh schémat nástrojů](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Poznat | Python |
-| 06 | [Základy MCP: bezstavové požadavky a JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Poznat | Python |
+| 02 | [Podrobně o volání funkcí](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Vytvořit | Python, TypeScript |
+| 03 | [Paralelní a streamovaná volání nástrojů](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Vytvořit | Python, TypeScript |
+| 04 | [Strukturovaný výstup](../../phases/13-tools-and-protocols/04-structured-output/) | Vytvořit | Python, TypeScript |
+| 05 | [Návrh schémat nástrojů](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Poznat | Python, TypeScript |
+| 06 | [Základy MCP: bezstavové požadavky a JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Poznat | Python, TypeScript |
 | 07 | [Tvorba serveru MCP: bezstavový Python a TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Vytvořit | Python, TypeScript |
-| 08 | [Tvorba klienta MCP: objevování, směrování a podpora dvou generací](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Vytvořit | Python |
-| 09 | [Transporty MCP: stdio a bezstavové Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Poznat | Python |
-| 10 | [Zdroje a prompty MCP: adresovatelný kontext pro bezstavové servery](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Vytvořit | Python |
-| 11 | [Vstup modelu MCP: migrace samplingu a bezstavové MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Vytvořit | Python |
-| 12 | [Výslovný rozsah a bezstavové získávání vstupů](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Vytvořit | Python |
-| 13 | [Rozšíření úloh MCP: trvalá práce nad bezstavovým jádrem](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Vytvořit | Python |
-| 14 | [MCP Apps v bezstavovém protokolu](../../phases/13-tools-and-protocols/14-mcp-apps/) | Vytvořit | Python |
-| 15 | [Bezpečnost MCP: podvržená metadata, směrování a stav MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Poznat | Python |
-| 16 | [Autorizace MCP: CIMD, vazba na vydavatele, PKCE a zesílení ověření](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Vytvořit | Python |
-| 17 | [Bezstavové brány MCP a přijímání do registru](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Poznat | Python |
-| 18 | [Autorizace MCP v produkci: registrace a tokeny vázané na vydavatele](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Vytvořit | Python |
+| 08 | [Tvorba klienta MCP: objevování, směrování a podpora dvou generací](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Vytvořit | Python, TypeScript |
+| 09 | [Transporty MCP: stdio a bezstavové Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Poznat | Python, TypeScript |
+| 10 | [Zdroje a prompty MCP: adresovatelný kontext pro bezstavové servery](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Vytvořit | Python, TypeScript |
+| 11 | [Vstup modelu MCP: migrace samplingu a bezstavové MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Vytvořit | Python, TypeScript |
+| 12 | [Výslovný rozsah a bezstavové získávání vstupů](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Vytvořit | Python, TypeScript |
+| 13 | [Rozšíření úloh MCP: trvalá práce nad bezstavovým jádrem](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Vytvořit | Python, TypeScript |
+| 14 | [MCP Apps v bezstavovém protokolu](../../phases/13-tools-and-protocols/14-mcp-apps/) | Vytvořit | Python, TypeScript |
+| 15 | [Bezpečnost MCP: podvržená metadata, směrování a stav MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Poznat | Python, TypeScript |
+| 16 | [Autorizace MCP: CIMD, vazba na vydavatele, PKCE a zesílení ověření](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Vytvořit | Python, TypeScript |
+| 17 | [Bezstavové brány MCP a přijímání do registru](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Poznat | Python, TypeScript |
+| 18 | [Autorizace MCP v produkci: registrace a tokeny vázané na vydavatele](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Vytvořit | Python, TypeScript |
 | 19 | [Protokol A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Vytvořit | Python, TypeScript |
-| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Vytvořit | Python |
-| 21 | [Směrovací vrstva LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Poznat | Python |
-| 22 | [Agent Skills: přenositelný kontrakt a hranice běhového prostředí](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Vytvořit | Python |
-| 23 | [Závěrečný projekt: bezstavový ekosystém nástrojů](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Vytvořit | Python |
-| 24 | [Objevování dovedností a postupné odhalování informací](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Vytvořit | Python |
-| 25 | [Vyvolávání a směrování dovedností](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Vytvořit | Python |
-| 26 | [Oprávnění dovedností, sandboxy a důvěra](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Vytvořit | Python |
-| 27 | [Hodnocení, balení a přenositelnost dovedností](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Vytvořit | Python |
-| 28 | [Kontrakty a obsah nástrojů MCP](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Vytvořit | Python |
-| 29 | [Spolehlivost MCP, rušení a řízení toku](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Vytvořit | Python |
-| 30 | [Dodavatelský řetězec registru MCP: přijímání, odchylky a návrat změn](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Vytvořit | Python |
-| 31 | [Soulad MCP: verzování, důkazy a provoz](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Vytvořit | Python |
-| 32 | [Anatomie programu: čtení ELF od základů](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Vytvořit | Python |
-| 33 | [Disassemblování a grafy toku řízení](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Vytvořit | Python |
+| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Vytvořit | Python, TypeScript |
+| 21 | [Směrovací vrstva LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Poznat | Python, TypeScript |
+| 22 | [Agent Skills: přenositelný kontrakt a hranice běhového prostředí](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Vytvořit | Python, TypeScript |
+| 23 | [Závěrečný projekt: bezstavový ekosystém nástrojů](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Vytvořit | Python, TypeScript |
+| 24 | [Objevování dovedností a postupné odhalování informací](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Vytvořit | Python, TypeScript |
+| 25 | [Vyvolávání a směrování dovedností](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Vytvořit | Python, TypeScript |
+| 26 | [Oprávnění dovedností, sandboxy a důvěra](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Vytvořit | Python, TypeScript |
+| 27 | [Hodnocení, balení a přenositelnost dovedností](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Vytvořit | Python, TypeScript |
+| 28 | [Kontrakty a obsah nástrojů MCP](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Vytvořit | Python, TypeScript |
+| 29 | [Spolehlivost MCP, rušení a řízení toku](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Vytvořit | Python, TypeScript |
+| 30 | [Dodavatelský řetězec registru MCP: přijímání, odchylky a návrat změn](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Vytvořit | Python, TypeScript |
+| 31 | [Soulad MCP: verzování, důkazy a provoz](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Vytvořit | Python, TypeScript |
+| 32 | [Anatomie programu: čtení ELF od základů](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Vytvořit | Python, TypeScript |
+| 33 | [Disassemblování a grafy toku řízení](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Vytvořit | Python, TypeScript |
 | 34 | [Převod strojového kódu na pseudokód](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Vytvořit | Python |
-| 35 | [Důkazy, míra jistoty a neznámé v binární analýze](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Vytvořit | Python |
-| 36 | [Znovu sestavit a dokázat shodu](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Vytvořit | Python |
-| 37 | [Přehled oblasti reverzního inženýrství](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Vytvořit | Python |
-| 38 | [Volací konvence a zásobníkové rámce](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Vytvořit | Python |
-| 39 | [Idiomy překladače a optimalizace](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Vytvořit | Python |
-| 40 | [Linkování, zavádění a binárky bez symbolů](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Vytvořit | Python |
-| 41 | [Obnova dat a typů](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Vytvořit | Python |
-| 42 | [Dynamická analýza vlastního programu](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Vytvořit | Python |
-| 43 | [Bajtkód a spravované formáty](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Vytvořit | Python |
+| 35 | [Důkazy, míra jistoty a neznámé v binární analýze](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Vytvořit | Python, TypeScript |
+| 36 | [Znovu sestavit a dokázat shodu](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Vytvořit | Python, TypeScript |
+| 37 | [Přehled oblasti reverzního inženýrství](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Vytvořit | Python, TypeScript |
+| 38 | [Volací konvence a zásobníkové rámce](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Vytvořit | Python, TypeScript |
+| 39 | [Idiomy překladače a optimalizace](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Vytvořit | Python, TypeScript |
+| 40 | [Linkování, zavádění a binárky bez symbolů](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Vytvořit | Python, TypeScript |
+| 41 | [Obnova dat a typů](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Vytvořit | Python, TypeScript |
+| 42 | [Dynamická analýza vlastního programu](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Vytvořit | Python, TypeScript |
+| 43 | [Bajtkód a spravované formáty](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Vytvořit | Python, TypeScript |
 | 44 | [Porovnávání binárek a symbolické vykonávání](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Vytvořit | Python |
-| 45 | [Reverzní inženýrství s pomocí AI](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Vytvořit | Python |
+| 45 | [Reverzní inženýrství s pomocí AI](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Vytvořit | Python, TypeScript |
 
 Lekce 06-18 a 28-31 tvoří zaměřenou [cestu Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json). Pořadí v manifestu je 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Začněte výše uvedeným vyvoláním `learn-mcp` pro svého hostitele. Lekce 23 je jediný volitelný závěrečný projekt a vyžaduje také lekce 19 a 20.
 
@@ -771,59 +771,59 @@ Lekce 22 a 24-27 tvoří zaměřenou [cestu Agent Skills](../../learning-paths/a
 | # | Lekce | Druh | Jazyk |
 |:---:|--------|:----:|------|
 | 01 | [Smyčka agenta](../../phases/14-agent-engineering/01-the-agent-loop/) | Vytvořit | Python, TypeScript |
-| 02 | [ReWOO a plánování s vykonáním](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Vytvořit | Python |
-| 03 | [Reflexion a slovní posilované učení](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Vytvořit | Python |
-| 04 | [Stromy myšlenek a LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Vytvořit | Python |
-| 05 | [Self-Refine a CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Vytvořit | Python |
+| 02 | [ReWOO a plánování s vykonáním](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Vytvořit | Python, TypeScript |
+| 03 | [Reflexion a slovní posilované učení](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Vytvořit | Python, TypeScript |
+| 04 | [Stromy myšlenek a LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Vytvořit | Python, TypeScript |
+| 05 | [Self-Refine a CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Vytvořit | Python, TypeScript |
 | 06 | [Používání nástrojů a volání funkcí](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Vytvořit | Python, TypeScript |
-| 07 | [Paměť agenta: virtuální kontext a stránkování paměti](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Vytvořit | Python |
-| 08 | [Paměťové bloky a výpočty v době nečinnosti](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Vytvořit | Python |
-| 09 | [Hybridní paměť: vektory, grafy a KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Vytvořit | Python |
-| 10 | [Knihovny dovedností a celoživotní učení (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Vytvořit | Python |
-| 11 | [Plánování pomocí HTN a evolučního hledání](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Vytvořit | Python |
-| 12 | [Vzory pracovních postupů Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Vytvořit | Python |
+| 07 | [Paměť agenta: virtuální kontext a stránkování paměti](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Vytvořit | Python, TypeScript |
+| 08 | [Paměťové bloky a výpočty v době nečinnosti](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Vytvořit | Python, TypeScript |
+| 09 | [Hybridní paměť: vektory, grafy a KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Vytvořit | Python, TypeScript |
+| 10 | [Knihovny dovedností a celoživotní učení (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Vytvořit | Python, TypeScript |
+| 11 | [Plánování pomocí HTN a evolučního hledání](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Vytvořit | Python, TypeScript |
+| 12 | [Vzory pracovních postupů Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Vytvořit | Python, TypeScript |
 | 13 | [Stavová orchestrace grafů: trvalé vykonávání a checkpointy](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Vytvořit | Python, TypeScript |
-| 14 | [Aktorový model pro agenty](../../phases/14-agent-engineering/14-autogen-actor-model/) | Vytvořit | Python |
+| 14 | [Aktorový model pro agenty](../../phases/14-agent-engineering/14-autogen-actor-model/) | Vytvořit | Python, TypeScript |
 | 15 | [Týmy agentů podle rolí: role, úlohy a procesy](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Vytvořit | Python |
-| 16 | [OpenAI Agents SDK: předávání, ochranné mantinely a trasování](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Vytvořit | Python |
-| 17 | [Agentové prostředí jako knihovna: podagenti a úložiště relací](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Vytvořit | Python |
+| 16 | [OpenAI Agents SDK: předávání, ochranné mantinely a trasování](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Vytvořit | Python, TypeScript |
+| 17 | [Agentové prostředí jako knihovna: podagenti a úložiště relací](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Vytvořit | Python, TypeScript |
 | 18 | [Produkční běhová prostředí agentů](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Poznat | Python, TypeScript |
-| 19 | [Benchmarky: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Poznat | Python |
-| 20 | [Benchmarky: WebArena a OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Poznat | Python |
-| 21 | [Ovládání počítače: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Vytvořit | Python |
-| 22 | [Hlasoví agenti: Pipecat a LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Vytvořit | Python |
-| 23 | [Sémantické konvence OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Vytvořit | Python |
-| 24 | [Pozorovatelnost agentů: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Poznat | Python |
-| 25 | [Debata a spolupráce více agentů](../../phases/14-agent-engineering/25-multi-agent-debate/) | Vytvořit | Python |
-| 26 | [Způsoby selhání: proč agenti selhávají](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Vytvořit | Python |
-| 27 | [Injekce promptů a obrana PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Vytvořit | Python |
-| 28 | [Vzory orchestrace: nadřízený, roj a hierarchie](../../phases/14-agent-engineering/28-orchestration-patterns/) | Vytvořit | Python |
-| 29 | [Produkční prostředí: fronty, události a cron](../../phases/14-agent-engineering/29-production-runtimes/) | Poznat | Python |
-| 30 | [Vývoj agentů řízený hodnocením](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Vytvořit | Python |
-| 31 | [Pracoviště agenta: proč schopné modely stále selhávají](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Poznat | Python |
-| 32 | [Minimální pracoviště agenta](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Vytvořit | Python |
-| 33 | [Instrukce agenta jako vykonatelná omezení](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Vytvořit | Python |
-| 34 | [Paměť repozitáře a trvalý stav](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Vytvořit | Python |
-| 35 | [Inicializační skripty agentů](../../phases/14-agent-engineering/35-initialization-scripts/) | Vytvořit | Python |
-| 36 | [Kontrakty rozsahu a hranice úloh](../../phases/14-agent-engineering/36-scope-contracts/) | Vytvořit | Python |
-| 37 | [Zpětnovazební smyčky při běhu](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Vytvořit | Python |
-| 38 | [Ověřovací brány](../../phases/14-agent-engineering/38-verification-gates/) | Vytvořit | Python |
-| 39 | [Hodnoticí agent: oddělte tvůrce od hodnotitele](../../phases/14-agent-engineering/39-reviewer-agent/) | Vytvořit | Python |
-| 40 | [Předávání mezi relacemi](../../phases/14-agent-engineering/40-multi-session-handoff/) | Vytvořit | Python |
-| 41 | [Pracoviště ve skutečném repozitáři](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Vytvořit | Python |
-| 42 | [Závěrečný projekt: dodejte opakovaně použitelný balíček pracoviště agenta](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Vytvořit | Python |
-| 43 | [Vymezte úlohu dříve, než agent napíše kód](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Vytvořit | Python |
-| 44 | [Vytvořte plán vykonání podložený důkazy](../../phases/14-agent-engineering/44-plan-from-evidence/) | Vytvořit | Python |
-| 45 | [Delegujte agentovou práci s izolací a kontrakty slučování](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Vytvořit | Python |
-| 46 | [Proměňte každou opravu agenta ve zlepšení systému](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Vytvořit | Python |
-| 47 | [Určete výsledek dříve, než zvolíte výstup](../../phases/14-agent-engineering/47-outcomes-before-output/) | Vytvořit | Python |
-| 48 | [Objevte postup, který lidé skutečně používají](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Vytvořit | Python |
-| 49 | [Zmapujte předpoklady a prověřte nejdříve nejrizikovější](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Vytvořit | Python |
-| 50 | [Zvolte nejmenší část, která může změnit rozhodnutí](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Vytvořit | Python |
-| 51 | [Pište specifikace zachovávající úsudek](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Vytvořit | Python |
-| 52 | [Navrhněte metriky úspěchu před vznikem výsledku](../../phases/14-agent-engineering/52-design-success-metrics/) | Vytvořit | Python |
-| 53 | [Vědomě zvolte prototyp, pilot nebo produkci](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Vytvořit | Python |
-| 54 | [Vytvořte trvalou smyčku zlepšování s odpovědností a vyřazováním](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Vytvořit | Python |
+| 19 | [Benchmarky: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Poznat | Python, TypeScript |
+| 20 | [Benchmarky: WebArena a OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Poznat | Python, TypeScript |
+| 21 | [Ovládání počítače: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Vytvořit | Python, TypeScript |
+| 22 | [Hlasoví agenti: Pipecat a LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Vytvořit | Python, TypeScript |
+| 23 | [Sémantické konvence OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Vytvořit | Python, TypeScript |
+| 24 | [Pozorovatelnost agentů: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Poznat | Python, TypeScript |
+| 25 | [Debata a spolupráce více agentů](../../phases/14-agent-engineering/25-multi-agent-debate/) | Vytvořit | Python, TypeScript |
+| 26 | [Způsoby selhání: proč agenti selhávají](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Vytvořit | Python, TypeScript |
+| 27 | [Injekce promptů a obrana PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Vytvořit | Python, TypeScript |
+| 28 | [Vzory orchestrace: nadřízený, roj a hierarchie](../../phases/14-agent-engineering/28-orchestration-patterns/) | Vytvořit | Python, TypeScript |
+| 29 | [Produkční prostředí: fronty, události a cron](../../phases/14-agent-engineering/29-production-runtimes/) | Poznat | Python, TypeScript |
+| 30 | [Vývoj agentů řízený hodnocením](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Vytvořit | Python, TypeScript |
+| 31 | [Pracoviště agenta: proč schopné modely stále selhávají](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Poznat | Python, TypeScript |
+| 32 | [Minimální pracoviště agenta](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Vytvořit | Python, TypeScript |
+| 33 | [Instrukce agenta jako vykonatelná omezení](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Vytvořit | Python, TypeScript |
+| 34 | [Paměť repozitáře a trvalý stav](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Vytvořit | Python, TypeScript |
+| 35 | [Inicializační skripty agentů](../../phases/14-agent-engineering/35-initialization-scripts/) | Vytvořit | Python, TypeScript |
+| 36 | [Kontrakty rozsahu a hranice úloh](../../phases/14-agent-engineering/36-scope-contracts/) | Vytvořit | Python, TypeScript |
+| 37 | [Zpětnovazební smyčky při běhu](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Vytvořit | Python, TypeScript |
+| 38 | [Ověřovací brány](../../phases/14-agent-engineering/38-verification-gates/) | Vytvořit | Python, TypeScript |
+| 39 | [Hodnoticí agent: oddělte tvůrce od hodnotitele](../../phases/14-agent-engineering/39-reviewer-agent/) | Vytvořit | Python, TypeScript |
+| 40 | [Předávání mezi relacemi](../../phases/14-agent-engineering/40-multi-session-handoff/) | Vytvořit | Python, TypeScript |
+| 41 | [Pracoviště ve skutečném repozitáři](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Vytvořit | Python, TypeScript |
+| 42 | [Závěrečný projekt: dodejte opakovaně použitelný balíček pracoviště agenta](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Vytvořit | Python, TypeScript |
+| 43 | [Vymezte úlohu dříve, než agent napíše kód](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Vytvořit | Python, TypeScript |
+| 44 | [Vytvořte plán vykonání podložený důkazy](../../phases/14-agent-engineering/44-plan-from-evidence/) | Vytvořit | Python, TypeScript |
+| 45 | [Delegujte agentovou práci s izolací a kontrakty slučování](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Vytvořit | Python, TypeScript |
+| 46 | [Proměňte každou opravu agenta ve zlepšení systému](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Vytvořit | Python, TypeScript |
+| 47 | [Určete výsledek dříve, než zvolíte výstup](../../phases/14-agent-engineering/47-outcomes-before-output/) | Vytvořit | Python, TypeScript |
+| 48 | [Objevte postup, který lidé skutečně používají](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Vytvořit | Python, TypeScript |
+| 49 | [Zmapujte předpoklady a prověřte nejdříve nejrizikovější](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Vytvořit | Python, TypeScript |
+| 50 | [Zvolte nejmenší část, která může změnit rozhodnutí](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Vytvořit | Python, TypeScript |
+| 51 | [Pište specifikace zachovávající úsudek](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Vytvořit | Python, TypeScript |
+| 52 | [Navrhněte metriky úspěchu před vznikem výsledku](../../phases/14-agent-engineering/52-design-success-metrics/) | Vytvořit | Python, TypeScript |
+| 53 | [Vědomě zvolte prototyp, pilot nebo produkci](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Vytvořit | Python, TypeScript |
+| 54 | [Vytvořte trvalou smyčku zlepšování s odpovědností a vyřazováním](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Vytvořit | Python, TypeScript |
 
 Každá lekce pracoviště ve fázi 14 (31-42) přináší `mission.md`, který agenta poučí před otevřením úplné dokumentace lekce.
 
@@ -837,28 +837,28 @@ Lekce 31-46 tvoří [cestu inženýrství s podporou agentů](../../learning-pat
 
 | # | Lekce | Druh | Jazyk |
 |:---:|--------|:----:|------|
-| 01 | [Od chatbotů k agentům pro dlouhé úlohy (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Poznat | Python |
-| 02 | [STaR, V-STaR, Quiet-STaR: samostatně učené uvažování](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Poznat | Python |
-| 03 | [AlphaEvolve: evoluční programovací agenti](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Poznat | Python |
-| 04 | [Darwin Gödel Machine: agenti měnící sami sebe](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Poznat | Python |
-| 05 | [AI Scientist v2: výzkum na úrovni workshopů](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Poznat | Python |
-| 06 | [Automatizovaný výzkum souladu AI (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Poznat | Python |
-| 07 | [Rekurzivní sebezdokonalování: schopnosti versus soulad](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Poznat | Python |
-| 08 | [Návrhy omezeného sebezdokonalování](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Poznat | Python |
-| 09 | [Přehled autonomních programovacích agentů (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Poznat | Python |
-| 10 | [Režimy oprávnění autonomních agentů](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Poznat | Python |
-| 11 | [Prohlížečoví agenti a nepřímá injekce promptů](../../phases/15-autonomous-systems/11-browser-agents/) | Poznat | Python |
-| 12 | [Trvalé vykonávání dlouhotrvajících agentů](../../phases/15-autonomous-systems/12-durable-execution/) | Poznat | Python |
-| 13 | [Rozpočty akcí, limity iterací a řízení nákladů](../../phases/15-autonomous-systems/13-cost-governors/) | Poznat | Python |
-| 14 | [Nouzové vypínače, jističe a varovné tokeny](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Poznat | Python |
-| 15 | [Člověk ve smyčce: nejdříve návrh, potom potvrzení](../../phases/15-autonomous-systems/15-propose-then-commit/) | Poznat | Python |
-| 16 | [Checkpointy a návrat změn](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Poznat | Python |
-| 17 | [Konstituční AI a přepisování pravidel](../../phases/15-autonomous-systems/17-constitutional-ai/) | Poznat | Python |
-| 18 | [Llama Guard a klasifikace vstupů a výstupů](../../phases/15-autonomous-systems/18-llama-guard/) | Poznat | Python |
-| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Poznat | Python |
-| 20 | [OpenAI Preparedness Framework a DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Poznat | Python |
-| 21 | [Časové horizonty METR a externí hodnocení](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Poznat | Python |
-| 22 | [CAIS, CAISI a rizika v měřítku společnosti](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Poznat | Python |
+| 01 | [Od chatbotů k agentům pro dlouhé úlohy (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Poznat | Python, TypeScript |
+| 02 | [STaR, V-STaR, Quiet-STaR: samostatně učené uvažování](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Poznat | Python, TypeScript |
+| 03 | [AlphaEvolve: evoluční programovací agenti](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Poznat | Python, TypeScript |
+| 04 | [Darwin Gödel Machine: agenti měnící sami sebe](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Poznat | Python, TypeScript |
+| 05 | [AI Scientist v2: výzkum na úrovni workshopů](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Poznat | Python, TypeScript |
+| 06 | [Automatizovaný výzkum souladu AI (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Poznat | Python, TypeScript |
+| 07 | [Rekurzivní sebezdokonalování: schopnosti versus soulad](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Poznat | Python, TypeScript |
+| 08 | [Návrhy omezeného sebezdokonalování](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Poznat | Python, TypeScript |
+| 09 | [Přehled autonomních programovacích agentů (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Poznat | Python, TypeScript |
+| 10 | [Režimy oprávnění autonomních agentů](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Poznat | Python, TypeScript |
+| 11 | [Prohlížečoví agenti a nepřímá injekce promptů](../../phases/15-autonomous-systems/11-browser-agents/) | Poznat | Python, TypeScript |
+| 12 | [Trvalé vykonávání dlouhotrvajících agentů](../../phases/15-autonomous-systems/12-durable-execution/) | Poznat | Python, TypeScript |
+| 13 | [Rozpočty akcí, limity iterací a řízení nákladů](../../phases/15-autonomous-systems/13-cost-governors/) | Poznat | Python, TypeScript |
+| 14 | [Nouzové vypínače, jističe a varovné tokeny](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Poznat | Python, TypeScript |
+| 15 | [Člověk ve smyčce: nejdříve návrh, potom potvrzení](../../phases/15-autonomous-systems/15-propose-then-commit/) | Poznat | Python, TypeScript |
+| 16 | [Checkpointy a návrat změn](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Poznat | Python, TypeScript |
+| 17 | [Konstituční AI a přepisování pravidel](../../phases/15-autonomous-systems/17-constitutional-ai/) | Poznat | Python, TypeScript |
+| 18 | [Llama Guard a klasifikace vstupů a výstupů](../../phases/15-autonomous-systems/18-llama-guard/) | Poznat | Python, TypeScript |
+| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Poznat | Python, TypeScript |
+| 20 | [OpenAI Preparedness Framework a DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Poznat | Python, TypeScript |
+| 21 | [Časové horizonty METR a externí hodnocení](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Poznat | Python, TypeScript |
+| 22 | [CAIS, CAISI a rizika v měřítku společnosti](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Poznat | Python, TypeScript |
 
 </details>
 
@@ -869,30 +869,30 @@ Lekce 31-46 tvoří [cestu inženýrství s podporou agentů](../../learning-pat
 | # | Lekce | Druh | Jazyk |
 |:---:|--------|:----:|------|
 | 01 | [Proč více agentů](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | Poznat | TypeScript |
-| 02 | [Dědictví FIPA-ACL a řečové akty](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Poznat | Python |
+| 02 | [Dědictví FIPA-ACL a řečové akty](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Poznat | Python, TypeScript |
 | 03 | [Komunikační protokoly](../../phases/16-multi-agent-and-swarms/03-communication-protocols/) | Vytvořit | TypeScript |
-| 04 | [Model základních prvků víceagentových systémů](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Poznat | Python |
-| 05 | [Vzor nadřízeného a orchestrátora-pracovníka](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Vytvořit | Python |
-| 06 | [Hierarchická architektura a odchylky dekompozice](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Poznat | Python |
-| 07 | [Society of Mind a víceagentová debata](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Vytvořit | Python |
-| 08 | [Specializace rolí: plánovač, kritik, vykonavatel a ověřovatel](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Vytvořit | Python |
-| 09 | [Paralelní roje a síťové architektury](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Vytvořit | Python |
-| 10 | [Skupinový chat a výběr mluvčího](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Vytvořit | Python |
-| 11 | [Předávání a rutiny (bezstavová orchestrace)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Vytvořit | Python |
-| 12 | [A2A: protokol agent-agent](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Vytvořit | Python |
-| 13 | [Sdílená paměť a vzory tabule](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Vytvořit | Python |
-| 14 | [Konsenzus a odolnost vůči byzantským chybám](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Vytvořit | Python |
-| 15 | [Hlasování, vlastní konzistence a topologie debaty](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Vytvořit | Python |
-| 16 | [Vyjednávání a smlouvání](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Vytvořit | Python |
-| 17 | [Generativní agenti a emergentní simulace](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Vytvořit | Python |
-| 18 | [Teorie mysli a emergentní koordinace](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Vytvořit | Python |
-| 19 | [Optimalizace rojem (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Vytvořit | Python |
-| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Poznat | Python |
-| 21 | [Agentové ekonomiky, tokenové pobídky a reputace](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Poznat | Python |
-| 22 | [Škálování produkce: fronty, checkpointy a trvalost](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Vytvořit | Python |
-| 23 | [Způsoby selhání: MAST, skupinové myšlení a monokultura](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Poznat | Python |
-| 24 | [Benchmarky hodnocení a koordinace](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Poznat | Python |
-| 25 | [Případové studie a stav techniky v roce 2026](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Poznat | Python |
+| 04 | [Model základních prvků víceagentových systémů](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Poznat | Python, TypeScript |
+| 05 | [Vzor nadřízeného a orchestrátora-pracovníka](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Vytvořit | Python, TypeScript |
+| 06 | [Hierarchická architektura a odchylky dekompozice](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Poznat | Python, TypeScript |
+| 07 | [Society of Mind a víceagentová debata](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Vytvořit | Python, TypeScript |
+| 08 | [Specializace rolí: plánovač, kritik, vykonavatel a ověřovatel](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Vytvořit | Python, TypeScript |
+| 09 | [Paralelní roje a síťové architektury](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Vytvořit | Python, TypeScript |
+| 10 | [Skupinový chat a výběr mluvčího](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Vytvořit | Python, TypeScript |
+| 11 | [Předávání a rutiny (bezstavová orchestrace)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Vytvořit | Python, TypeScript |
+| 12 | [A2A: protokol agent-agent](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Vytvořit | Python, TypeScript |
+| 13 | [Sdílená paměť a vzory tabule](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Vytvořit | Python, TypeScript |
+| 14 | [Konsenzus a odolnost vůči byzantským chybám](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Vytvořit | Python, TypeScript |
+| 15 | [Hlasování, vlastní konzistence a topologie debaty](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Vytvořit | Python, TypeScript |
+| 16 | [Vyjednávání a smlouvání](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Vytvořit | Python, TypeScript |
+| 17 | [Generativní agenti a emergentní simulace](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Vytvořit | Python, TypeScript |
+| 18 | [Teorie mysli a emergentní koordinace](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Vytvořit | Python, TypeScript |
+| 19 | [Optimalizace rojem (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Vytvořit | Python, TypeScript |
+| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Poznat | Python, TypeScript |
+| 21 | [Agentové ekonomiky, tokenové pobídky a reputace](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Poznat | Python, TypeScript |
+| 22 | [Škálování produkce: fronty, checkpointy a trvalost](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Vytvořit | Python, TypeScript |
+| 23 | [Způsoby selhání: MAST, skupinové myšlení a monokultura](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Poznat | Python, TypeScript |
+| 24 | [Benchmarky hodnocení a koordinace](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Poznat | Python, TypeScript |
+| 25 | [Případové studie a stav techniky v roce 2026](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Poznat | Python, TypeScript |
 
 </details>
 
@@ -902,35 +902,35 @@ Lekce 31-46 tvoří [cestu inženýrství s podporou agentů](../../learning-pat
 
 | # | Lekce | Druh | Jazyk |
 |:---:|--------|:----:|------|
-| 01 | [Spravované platformy LLM: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Poznat | Python |
-| 02 | [Ekonomika inferenčních platforem: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Poznat | Python |
-| 03 | [Automatické škálování GPU v Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Poznat | Python |
-| 04 | [Vnitřnosti inferenčních enginů: PagedAttention, průběžné dávky a dělený prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Poznat | Python |
-| 05 | [Spekulativní dekódování EAGLE-3 v produkci](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Poznat | Python |
-| 06 | [Inference s cache prefixů: RadixAttention a opětovné použití KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Poznat | Python |
-| 07 | [Hardwarově specializovaná kompilace inference: FP8 a NVFP4 na Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Poznat | Python |
-| 08 | [Metriky inference: TTFT, TPOT, ITL, goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Poznat | Python |
-| 09 | [Produkční kvantizace: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Poznat | Python |
-| 10 | [Omezení studených startů bezserverových LLM](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Poznat | Python |
-| 11 | [Víceoblastní provoz LLM a lokálnost KV cache](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Poznat | Python |
-| 12 | [Inference na okraji sítě: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Poznat | Python |
+| 01 | [Spravované platformy LLM: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Poznat | Python, TypeScript |
+| 02 | [Ekonomika inferenčních platforem: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Poznat | Python, TypeScript |
+| 03 | [Automatické škálování GPU v Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Poznat | Python, TypeScript |
+| 04 | [Vnitřnosti inferenčních enginů: PagedAttention, průběžné dávky a dělený prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Poznat | Python, TypeScript |
+| 05 | [Spekulativní dekódování EAGLE-3 v produkci](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Poznat | Python, TypeScript |
+| 06 | [Inference s cache prefixů: RadixAttention a opětovné použití KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Poznat | Python, TypeScript |
+| 07 | [Hardwarově specializovaná kompilace inference: FP8 a NVFP4 na Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Poznat | Python, TypeScript |
+| 08 | [Metriky inference: TTFT, TPOT, ITL, goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Poznat | Python, TypeScript |
+| 09 | [Produkční kvantizace: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Poznat | Python, TypeScript |
+| 10 | [Omezení studených startů bezserverových LLM](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Poznat | Python, TypeScript |
+| 11 | [Víceoblastní provoz LLM a lokálnost KV cache](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Poznat | Python, TypeScript |
+| 12 | [Inference na okraji sítě: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Poznat | Python, TypeScript |
 | 13 | [Výběr sady nástrojů pro pozorovatelnost LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | Poznat | Python, TypeScript |
 | 14 | [Ekonomika cachování promptů a sémantické cache](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Poznat | Python, TypeScript |
 | 15 | [Dávková API: 50% sleva jako oborový standard](../../phases/17-infrastructure-and-production/15-batch-apis/) | Poznat | Python, TypeScript |
 | 16 | [Směrování modelů jako základ snižování nákladů](../../phases/17-infrastructure-and-production/16-model-routing/) | Poznat | Python, TypeScript |
-| 17 | [Oddělený prefill a dekódování: NVIDIA Dynamo a llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Poznat | Python |
-| 18 | [Produkční inferenční sada: přesouvání KV a směrování podle cache](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Poznat | Python |
+| 17 | [Oddělený prefill a dekódování: NVIDIA Dynamo a llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Poznat | Python, TypeScript |
+| 18 | [Produkční inferenční sada: přesouvání KV a směrování podle cache](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Poznat | Python, TypeScript |
 | 19 | [Brány AI: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Poznat | Python, TypeScript |
 | 20 | [Stínové, kanárkové a postupné nasazování](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Poznat | Python, TypeScript |
-| 21 | [A/B testování funkcí LLM: GrowthBook a Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Poznat | Python |
-| 22 | [Zátěžové testy LLM API: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Vytvořit | Python |
-| 23 | [SRE pro AI: víceagentové řešení incidentů](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Poznat | Python |
-| 24 | [Chaos engineering pro produkční LLM](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Poznat | Python |
-| 25 | [Bezpečnost: tajné údaje, odstraňování osobních údajů a auditní protokoly](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Poznat | Python |
-| 26 | [Soulad s předpisy: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Poznat | Python |
-| 27 | [FinOps pro LLM: jednotková ekonomika a účtování více nájemců](../../phases/17-infrastructure-and-production/27-finops-llms/) | Poznat | Python |
-| 28 | [Výběr vlastního inferenčního provozu: engine podle hardwaru a měřítka](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Poznat | Python |
-| 29 | [Ukázková rozhraní modelů: od funkce ke sdílitelné aplikaci](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Vytvořit | Python |
+| 21 | [A/B testování funkcí LLM: GrowthBook a Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Poznat | Python, TypeScript |
+| 22 | [Zátěžové testy LLM API: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Vytvořit | Python, TypeScript |
+| 23 | [SRE pro AI: víceagentové řešení incidentů](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Poznat | Python, TypeScript |
+| 24 | [Chaos engineering pro produkční LLM](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Poznat | Python, TypeScript |
+| 25 | [Bezpečnost: tajné údaje, odstraňování osobních údajů a auditní protokoly](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Poznat | Python, TypeScript |
+| 26 | [Soulad s předpisy: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Poznat | Python, TypeScript |
+| 27 | [FinOps pro LLM: jednotková ekonomika a účtování více nájemců](../../phases/17-infrastructure-and-production/27-finops-llms/) | Poznat | Python, TypeScript |
+| 28 | [Výběr vlastního inferenčního provozu: engine podle hardwaru a měřítka](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Poznat | Python, TypeScript |
+| 29 | [Ukázková rozhraní modelů: od funkce ke sdílitelné aplikaci](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Vytvořit | Python, TypeScript |
 
 </details>
 
@@ -940,36 +940,36 @@ Lekce 31-46 tvoří [cestu inženýrství s podporou agentů](../../learning-pat
 
 | # | Lekce | Druh | Jazyk |
 |:---:|--------|:----:|------|
-| 01 | [Plnění instrukcí jako signál souladu](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Poznat | Python |
-| 02 | [Obcházení odměny a Goodhartův zákon](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Poznat | Python |
-| 03 | [Rodina přímé optimalizace preferencí](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Poznat | Python |
-| 04 | [Podlézání jako zesílení RLHF](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Poznat | Python |
-| 05 | [Konstituční AI a RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Poznat | Python |
-| 06 | [Mesa-optimalizace a klamný soulad](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Poznat | Python |
-| 07 | [Spící agenti: přetrvávající klamání](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Poznat | Python |
-| 08 | [Intriky v kontextu nejpokročilejších modelů](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Poznat | Python |
-| 09 | [Předstírání souladu](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Poznat | Python |
-| 10 | [Kontrola AI: bezpečnost navzdory sabotáži](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Poznat | Python |
-| 11 | [Škálovatelný dohled a přenos od slabých k silným](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Poznat | Python |
-| 12 | [Útočné testování: PAIR a automatizované útoky](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Vytvořit | Python |
-| 13 | [Jailbreaky s mnoha příklady](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Poznat | Python |
-| 14 | [ASCII grafika a vizuální jailbreaky](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Vytvořit | Python |
-| 15 | [Nepřímá injekce promptů](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Vytvořit | Python |
-| 16 | [Nástroje útočného testování: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Vytvořit | Python |
-| 17 | [WMDP a hodnocení schopností dvojího užití](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Poznat | Python |
-| 18 | [Bezpečnostní rámce pokročilých modelů: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Poznat | Python |
-| 19 | [Výzkum dobrých životních podmínek modelů](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Poznat | Python |
-| 20 | [Zkreslení a škody způsobené reprezentací](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Vytvořit | Python |
-| 21 | [Kritéria spravedlnosti: skupinová, individuální a kontrafaktuální](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Poznat | Python |
-| 22 | [Diferenciální soukromí pro LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Vytvořit | Python |
-| 23 | [Vodoznaky: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Vytvořit | Python |
-| 24 | [Regulační rámce: EU, USA, Británie a Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Poznat | Python |
-| 25 | [EchoLeak a CVE pro AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Poznat | Python |
-| 26 | [Karty modelů, systémů a datových sad](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Vytvořit | Python |
-| 27 | [Původ dat a správa trénovacích dat](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Poznat | Python |
-| 28 | [Ekosystém výzkumu souladu: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Poznat | Python |
-| 29 | [Moderační systémy: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Vytvořit | Python |
-| 30 | [Rizika dvojího užití: kybernetika, biologie, chemie a jaderné technologie](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Poznat | Python |
+| 01 | [Plnění instrukcí jako signál souladu](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Poznat | Python, TypeScript |
+| 02 | [Obcházení odměny a Goodhartův zákon](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Poznat | Python, TypeScript |
+| 03 | [Rodina přímé optimalizace preferencí](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Poznat | Python, TypeScript |
+| 04 | [Podlézání jako zesílení RLHF](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Poznat | Python, TypeScript |
+| 05 | [Konstituční AI a RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Poznat | Python, TypeScript |
+| 06 | [Mesa-optimalizace a klamný soulad](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Poznat | Python, TypeScript |
+| 07 | [Spící agenti: přetrvávající klamání](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Poznat | Python, TypeScript |
+| 08 | [Intriky v kontextu nejpokročilejších modelů](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Poznat | Python, TypeScript |
+| 09 | [Předstírání souladu](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Poznat | Python, TypeScript |
+| 10 | [Kontrola AI: bezpečnost navzdory sabotáži](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Poznat | Python, TypeScript |
+| 11 | [Škálovatelný dohled a přenos od slabých k silným](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Poznat | Python, TypeScript |
+| 12 | [Útočné testování: PAIR a automatizované útoky](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Vytvořit | Python, TypeScript |
+| 13 | [Jailbreaky s mnoha příklady](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Poznat | Python, TypeScript |
+| 14 | [ASCII grafika a vizuální jailbreaky](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Vytvořit | Python, TypeScript |
+| 15 | [Nepřímá injekce promptů](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Vytvořit | Python, TypeScript |
+| 16 | [Nástroje útočného testování: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Vytvořit | Python, TypeScript |
+| 17 | [WMDP a hodnocení schopností dvojího užití](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Poznat | Python, TypeScript |
+| 18 | [Bezpečnostní rámce pokročilých modelů: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Poznat | Python, TypeScript |
+| 19 | [Výzkum dobrých životních podmínek modelů](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Poznat | Python, TypeScript |
+| 20 | [Zkreslení a škody způsobené reprezentací](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Vytvořit | Python, TypeScript |
+| 21 | [Kritéria spravedlnosti: skupinová, individuální a kontrafaktuální](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Poznat | Python, TypeScript |
+| 22 | [Diferenciální soukromí pro LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Vytvořit | Python, TypeScript |
+| 23 | [Vodoznaky: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Vytvořit | Python, TypeScript |
+| 24 | [Regulační rámce: EU, USA, Británie a Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Poznat | Python, TypeScript |
+| 25 | [EchoLeak a CVE pro AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Poznat | Python, TypeScript |
+| 26 | [Karty modelů, systémů a datových sad](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Vytvořit | Python, TypeScript |
+| 27 | [Původ dat a správa trénovacích dat](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Poznat | Python, TypeScript |
+| 28 | [Ekosystém výzkumu souladu: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Poznat | Python, TypeScript |
+| 29 | [Moderační systémy: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Vytvořit | Python, TypeScript |
+| 30 | [Rizika dvojího užití: kybernetika, biologie, chemie a jaderné technologie](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Poznat | Python, TypeScript |
 
 </details>
 

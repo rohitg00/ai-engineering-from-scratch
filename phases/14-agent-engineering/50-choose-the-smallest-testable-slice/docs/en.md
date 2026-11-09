@@ -3,7 +3,7 @@
 > Small is useful only when it proves something important. A tiny build that cannot change the next decision is merely incomplete.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 49
 **Time:** ~65 minutes
 
@@ -79,6 +79,7 @@ The lab filters candidates by required proof, scores eligible slices, and writes
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

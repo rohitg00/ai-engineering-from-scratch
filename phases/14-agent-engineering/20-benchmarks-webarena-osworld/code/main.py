@@ -88,7 +88,7 @@ def _agent_task_3(app: ShoppingApp) -> list[str]:
 
 def main() -> None:
     print("=" * 70)
-    print("WEBARENA/OSWORLD-STYLE HARNESS — Phase 14, Lesson 20")
+    print("WEBARENA/OSWORLD-STYLE HARNESS: Phase 14, Lesson 20")
     print("=" * 70)
 
     tasks = [

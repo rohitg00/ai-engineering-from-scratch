@@ -3,7 +3,7 @@
 > A model's reconstruction is a claim with a report attached, and this lesson builds the harness that scores both against bytes, runs, and DWARF you own.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 35 (evidence, confidence, and unknowns), Phase 13 · 36 (rebuild and prove equal)
 **Time:** ~140 minutes
 
@@ -218,6 +218,7 @@ Run the standard-library harness:
 ```bash
 cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 With clang on the path the demo compiles every candidate with the fixture flags, builds eight differential programs, runs 92 cells and 256 corpus inputs through each, reads the DWARF, checks every citation, and prints the card. When neither clang nor cc is on the path the `grid` and `fuzz` fields read `unknown`, and so does every verdict. A clang other than the fixture compiler recorded in `code/fixtures/build-record.json` leaves only the byte comparison on the committed objects. The `grid` and `fuzz` fields still recompile each candidate with the host compiler. The byte comparison needs the same compiler and flags to mean anything, and the committed object stands in only while `code/fixtures/build-record.json` still matches it to the candidate source on disk: edit the source and the byte field reads `unknown` instead of judging stale bytes.
@@ -316,6 +317,7 @@ The string is there, the code is the same, and the names field reads the DWARF a
 
 ```bash
 python3 code/main.py mcp-serve
+npx tsx code/main.ts mcp-serve
 ```
 
 Paste three lines, one at a time:
@@ -354,6 +356,7 @@ Run the demo and the test suite:
 ```bash
 cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

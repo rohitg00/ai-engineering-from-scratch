@@ -137,7 +137,7 @@ def bench(tom: bool, trials: int = 200) -> None:
 
 def main() -> None:
     print("=" * 72)
-    print("TOKEN-COLLECTION — 3 agents, 3 boxes, 10-turn budget, 200 trials each")
+    print("TOKEN-COLLECTION: 3 agents, 3 boxes, 10-turn budget, 200 trials each")
     print("agents cannot communicate; they observe each other's movements")
     print("=" * 72)
     bench(tom=False)

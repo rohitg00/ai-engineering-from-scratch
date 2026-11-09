@@ -3,7 +3,7 @@
 > A linked program calls functions it does not contain. This lesson reads the tables the link editor wrote for those calls in three formats, follows one call to the slot the loader fills, and finds the functions of a build after its names are gone.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and arm64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and arm64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow), 38 (calling conventions)
 **Time:** ~160 minutes
 
@@ -283,6 +283,7 @@ Run the demo:
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The output is one JSON report with five parts. `elf` holds the relocation counts of the two objects, the link plan, and the dynamic section, PLT, and GOT of `tiny-dyn-x86_64`. `coff` holds the sections, relocations, functions, and undefined names of the two objects. `pe` holds the headers, directories, imports, exports, base relocations, and IAT calls of `tiny-x86_64.exe`. `macho` holds `ledger_main` with its stubs, chained fixups, fixup rows, and exports, the legacy layout of `ledger_main_nochain`, the dylib, and the two strip reports. `identification` holds the truth, the four methods with scores, and the signatures with their collisions, at `-O0` and `-O2`.
@@ -412,6 +413,7 @@ Run the demo and the deterministic suite:
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

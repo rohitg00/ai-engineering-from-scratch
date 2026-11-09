@@ -3,7 +3,7 @@
 > BERT sees both sides. GPT sees only the past. The triangle mask is the most consequential single line of code in modern AI.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT)
 **Time:** ~75 minutes
 

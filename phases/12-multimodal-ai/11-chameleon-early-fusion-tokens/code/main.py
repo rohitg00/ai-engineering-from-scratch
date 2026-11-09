@@ -137,7 +137,7 @@ def main() -> None:
     print("CHAMELEON EARLY-FUSION TOY (Phase 12, Lesson 11)")
     print("=" * 60)
 
-    print("\n1. VQ tokenizer — 8x8 grayscale -> 4 patches -> 4 image tokens")
+    print("\n1. VQ tokenizer: 8x8 grayscale -> 4 patches -> 4 image tokens")
     print("-" * 60)
     for kind in ["red", "blue", "green", "gray"]:
         img = synth_image(kind)

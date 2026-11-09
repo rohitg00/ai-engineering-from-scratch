@@ -357,7 +357,7 @@ flowchart TB
 | 10 | [מסוף ומעטפת פקודות](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | למדו | — |
 | 11 | [Linux לפיתוח AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | למדו | — |
 | 12 | [ניפוי שגיאות וניתוח ביצועים](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | בנו | Python |
-| 13 | [Python להנדסת בינה מלאכותית](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | בנו | Python |
+| 13 | [Python להנדסת בינה מלאכותית](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | בנו | Python, TypeScript |
 
 <details id="phase-1">
 <summary><b>שלב 1: יסודות מתמטיים</b> &nbsp;<code>22 שיעורים</code>&nbsp; <em>האינטואיציה שמאחורי כל אלגוריתם AI, דרך קוד.</em></summary>
@@ -383,7 +383,7 @@ flowchart TB
 | 16 | [שיטות דגימה](../../phases/01-math-foundations/16-sampling-methods/) | בנו | Python, TypeScript |
 | 17 | [מערכות ליניאריות](../../phases/01-math-foundations/17-linear-systems/) | בנו | Python, TypeScript |
 | 18 | [אופטימיזציה קמורה](../../phases/01-math-foundations/18-convex-optimization/) | בנו | Python, TypeScript |
-| 19 | [מספרים מרוכבים ל-AI](../../phases/01-math-foundations/19-complex-numbers/) | למדו | Python |
+| 19 | [מספרים מרוכבים ל-AI](../../phases/01-math-foundations/19-complex-numbers/) | למדו | Python, TypeScript |
 | 20 | [התמרת פורייה](../../phases/01-math-foundations/20-fourier-transform/) | בנו | Python, TypeScript |
 | 21 | [תורת הגרפים ללמידת מכונה](../../phases/01-math-foundations/21-graph-theory/) | בנו | Python, TypeScript |
 | 22 | [תהליכים סטוכסטיים](../../phases/01-math-foundations/22-stochastic-processes/) | למדו | Python |
@@ -414,9 +414,9 @@ flowchart TB
 | 16 | [זיהוי חריגות](../../phases/02-ml-fundamentals/16-anomaly-detection/) | בנו | Python |
 | 17 | [טיפול בנתונים לא מאוזנים](../../phases/02-ml-fundamentals/17-imbalanced-data/) | בנו | Python |
 | 18 | [בחירת תכונות](../../phases/02-ml-fundamentals/18-feature-selection/) | בנו | Python |
-| 19 | [תכנון מערכות ML: מהבעיה למודל פרוס](../../phases/02-ml-fundamentals/19-ml-system-design/) | בנו | Python |
-| 20 | [ניטור מודלים בייצור: סחיפת נתונים וסחיפת מושגים](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | בנו | Python |
-| 21 | [מאגרי תכונות ופער בין אימון להגשה](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | בנו | Python |
+| 19 | [תכנון מערכות ML: מהבעיה למודל פרוס](../../phases/02-ml-fundamentals/19-ml-system-design/) | בנו | Python, TypeScript |
+| 20 | [ניטור מודלים בייצור: סחיפת נתונים וסחיפת מושגים](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | בנו | Python, TypeScript |
+| 21 | [מאגרי תכונות ופער בין אימון להגשה](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | בנו | Python, TypeScript |
 
 </details>
 
@@ -485,35 +485,35 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [עיבוד טקסט: טוקניזציה, קיטום והמרה לצורת יסוד](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | בנו | Python |
-| 02 | [שק מילים, TF-IDF וייצוג טקסט](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | בנו | Python |
+| 01 | [עיבוד טקסט: טוקניזציה, קיטום והמרה לצורת יסוד](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | בנו | Python, TypeScript |
+| 02 | [שק מילים, TF-IDF וייצוג טקסט](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | בנו | Python, TypeScript |
 | 03 | [הטמעות מילים: Word2Vec מאפס](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | בנו | Python |
-| 04 | [GloVe, FastText והטמעות תת-מילים](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | בנו | Python |
-| 05 | [ניתוח סנטימנט](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | בנו | Python |
-| 06 | [זיהוי ישויות שמיות (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | בנו | Python |
-| 07 | [תיוג חלקי דיבר וניתוח תחבירי](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | בנו | Python |
-| 08 | [סיווג טקסט: CNN ו-RNN לטקסט](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | בנו | Python |
-| 09 | [מודלים מרצף לרצף](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | בנו | Python |
-| 10 | [מנגנון הקשב: פריצת הדרך](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | בנו | Python |
-| 11 | [תרגום מכונה](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | בנו | Python |
-| 12 | [סיכום טקסט](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | בנו | Python |
-| 13 | [מערכות לשאלות ותשובות](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | בנו | Python |
-| 14 | [אחזור מידע וחיפוש](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | בנו | Python |
-| 15 | [מידול נושאים: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | בנו | Python |
-| 16 | [יצירת טקסט](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | בנו | Python |
-| 17 | [צ'אטבוטים: מחוקים לרשתות עצביות](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | בנו | Python |
-| 18 | [NLP רב-לשוני](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | בנו | Python |
+| 04 | [GloVe, FastText והטמעות תת-מילים](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | בנו | Python, TypeScript |
+| 05 | [ניתוח סנטימנט](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | בנו | Python, TypeScript |
+| 06 | [זיהוי ישויות שמיות (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | בנו | Python, TypeScript |
+| 07 | [תיוג חלקי דיבר וניתוח תחבירי](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | בנו | Python, TypeScript |
+| 08 | [סיווג טקסט: CNN ו-RNN לטקסט](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | בנו | Python, TypeScript |
+| 09 | [מודלים מרצף לרצף](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | בנו | Python, TypeScript |
+| 10 | [מנגנון הקשב: פריצת הדרך](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | בנו | Python, TypeScript |
+| 11 | [תרגום מכונה](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | בנו | Python, TypeScript |
+| 12 | [סיכום טקסט](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | בנו | Python, TypeScript |
+| 13 | [מערכות לשאלות ותשובות](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | בנו | Python, TypeScript |
+| 14 | [אחזור מידע וחיפוש](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | בנו | Python, TypeScript |
+| 15 | [מידול נושאים: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | בנו | Python, TypeScript |
+| 16 | [יצירת טקסט](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | בנו | Python, TypeScript |
+| 17 | [צ'אטבוטים: מחוקים לרשתות עצביות](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | בנו | Python, TypeScript |
+| 18 | [NLP רב-לשוני](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | בנו | Python, TypeScript |
 | 19 | [טוקניזציה של תת-מילים: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | למדו | Python, TypeScript |
-| 20 | [פלטים מובנים ופענוח מוגבל](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | בנו | Python |
-| 21 | [NLI והיסק מטקסט](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | למדו | Python |
-| 22 | [העמקה במודלי הטמעות](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | למדו | Python |
+| 20 | [פלטים מובנים ופענוח מוגבל](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | בנו | Python, TypeScript |
+| 21 | [NLI והיסק מטקסט](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | למדו | Python, TypeScript |
+| 22 | [העמקה במודלי הטמעות](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | למדו | Python, TypeScript |
 | 23 | [אסטרטגיות חלוקה למקטעים עבור RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | בנו | Python, TypeScript |
-| 24 | [פתרון אזכורים משותפים](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | למדו | Python |
-| 25 | [קישור ישויות והסרת עמימות](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | בנו | Python |
-| 26 | [חילוץ יחסים ובניית גרף ידע](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | בנו | Python |
-| 27 | [הערכת LLM: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | בנו | Python |
-| 28 | [הערכת הקשר ארוך: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | למדו | Python |
-| 29 | [מעקב אחר מצב הדיאלוג](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | בנו | Python |
+| 24 | [פתרון אזכורים משותפים](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | למדו | Python, TypeScript |
+| 25 | [קישור ישויות והסרת עמימות](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | בנו | Python, TypeScript |
+| 26 | [חילוץ יחסים ובניית גרף ידע](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | בנו | Python, TypeScript |
+| 27 | [הערכת LLM: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | בנו | Python, TypeScript |
+| 28 | [הערכת הקשר ארוך: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | למדו | Python, TypeScript |
+| 29 | [מעקב אחר מצב הדיאלוג](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | בנו | Python, TypeScript |
 
 </details>
 
@@ -523,23 +523,23 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [יסודות אודיו: צורות גל, דגימה ו-FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | למדו | Python |
-| 02 | [ספקטרוגרמות, סולם מל ותכונות אודיו](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | בנו | Python |
-| 03 | [סיווג אודיו](../../phases/06-speech-and-audio/03-audio-classification) | בנו | Python |
-| 04 | [זיהוי דיבור (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | בנו | Python |
-| 05 | [Whisper: ארכיטקטורה וכוונון עדין](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | בנו | Python |
-| 06 | [זיהוי דובר ואימותו](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | בנו | Python |
-| 07 | [המרת טקסט לדיבור (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | בנו | Python |
-| 08 | [שכפול קול והמרת קול](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | בנו | Python |
-| 09 | [יצירת מוזיקה](../../phases/06-speech-and-audio/09-music-generation) | בנו | Python |
-| 10 | [מודלי אודיו-שפה](../../phases/06-speech-and-audio/10-audio-language-models) | בנו | Python |
+| 01 | [יסודות אודיו: צורות גל, דגימה ו-FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | למדו | Python, TypeScript |
+| 02 | [ספקטרוגרמות, סולם מל ותכונות אודיו](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | בנו | Python, TypeScript |
+| 03 | [סיווג אודיו](../../phases/06-speech-and-audio/03-audio-classification) | בנו | Python, TypeScript |
+| 04 | [זיהוי דיבור (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | בנו | Python, TypeScript |
+| 05 | [Whisper: ארכיטקטורה וכוונון עדין](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | בנו | Python, TypeScript |
+| 06 | [זיהוי דובר ואימותו](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | בנו | Python, TypeScript |
+| 07 | [המרת טקסט לדיבור (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | בנו | Python, TypeScript |
+| 08 | [שכפול קול והמרת קול](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | בנו | Python, TypeScript |
+| 09 | [יצירת מוזיקה](../../phases/06-speech-and-audio/09-music-generation) | בנו | Python, TypeScript |
+| 10 | [מודלי אודיו-שפה](../../phases/06-speech-and-audio/10-audio-language-models) | בנו | Python, TypeScript |
 | 11 | [עיבוד אודיו בזמן אמת](../../phases/06-speech-and-audio/11-real-time-audio-processing) | בנו | Python, Rust |
-| 12 | [בנו תהליך עבודה לעוזר קולי](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | בנו | Python |
-| 13 | [קודקי אודיו עצביים: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | למדו | Python |
-| 14 | [זיהוי פעילות קולית וחילופי תורות](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | בנו | Python |
-| 15 | [דיבור-לדיבור בזרימה: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | למדו | Python |
-| 16 | [מניעת זיוף קולי וסימון מים באודיו](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | בנו | Python |
-| 17 | [הערכת אודיו: WER, MOS, MMAU וטבלאות דירוג](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | למדו | Python |
+| 12 | [בנו תהליך עבודה לעוזר קולי](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | בנו | Python, TypeScript |
+| 13 | [קודקי אודיו עצביים: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | למדו | Python, TypeScript |
+| 14 | [זיהוי פעילות קולית וחילופי תורות](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | בנו | Python, TypeScript |
+| 15 | [דיבור-לדיבור בזרימה: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | למדו | Python, TypeScript |
+| 16 | [מניעת זיוף קולי וסימון מים באודיו](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | בנו | Python, TypeScript |
+| 17 | [הערכת אודיו: WER, MOS, MMAU וטבלאות דירוג](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | למדו | Python, TypeScript |
 
 </details>
 
@@ -554,14 +554,14 @@ flowchart TB
 | 03 | [קשב מרובה ראשים](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | בנו | Python, Rust |
 | 04 | [קידוד מיקום: סינוסואידי, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | בנו | Python, Rust, Julia |
 | 05 | [ה-Transformer המלא: מקודד ומפענח](../../phases/07-transformers-deep-dive/05-full-transformer/) | בנו | Python, Julia |
-| 06 | [BERT: מידול שפה ממוסכת](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | בנו | Python |
-| 07 | [GPT: מידול שפה סיבתי](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | בנו | Python |
-| 08 | [T5, BART: מודלי מקודד-מפענח](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | למדו | Python |
-| 09 | [Vision Transformers (ViT) לראייה ממוחשבת](../../phases/07-transformers-deep-dive/09-vision-transformers/) | בנו | Python |
-| 10 | [Transformers לאודיו: ארכיטקטורת Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | למדו | Python |
+| 06 | [BERT: מידול שפה ממוסכת](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | בנו | Python, Rust |
+| 07 | [GPT: מידול שפה סיבתי](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | בנו | Python, Rust |
+| 08 | [T5, BART: מודלי מקודד-מפענח](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | למדו | Python, Rust |
+| 09 | [Vision Transformers (ViT) לראייה ממוחשבת](../../phases/07-transformers-deep-dive/09-vision-transformers/) | בנו | Python, Rust |
+| 10 | [Transformers לאודיו: ארכיטקטורת Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | למדו | Python, Rust |
 | 11 | [תערובת מומחים (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | בנו | Python, Rust |
 | 12 | [מטמון KV, Flash Attention ואופטימיזציית הסקה](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | בנו | Python, Rust |
-| 13 | [חוקי קנה מידה](../../phases/07-transformers-deep-dive/13-scaling-laws/) | למדו | Python |
+| 13 | [חוקי קנה מידה](../../phases/07-transformers-deep-dive/13-scaling-laws/) | למדו | Python, Rust |
 | 14 | [בנו Transformer מאפס](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | בנו | Python |
 | 15 | [סוגי קשב: חלון נע, קשב דליל וקשב דיפרנציאלי](../../phases/07-transformers-deep-dive/15-attention-variants/) | בנו | Python, Rust |
 | 16 | [פענוח ספקולטיבי: טיוטה, אימות וחזרה](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | בנו | Python, Rust |
@@ -574,20 +574,20 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [מודלים גנרטיביים: מיון והיסטוריה](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | למדו | Python |
-| 02 | [אוטואנקודרים ו-VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | בנו | Python |
-| 03 | [GAN: מחולל מול מבחין](../../phases/08-generative-ai/03-gans-generator-discriminator/) | בנו | Python |
-| 04 | [רשתות GAN מותנות ו-Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | בנו | Python |
-| 05 | [מודל StyleGAN](../../phases/08-generative-ai/05-stylegan/) | בנו | Python |
-| 06 | [מודלי דיפוזיה: DDPM מאפס](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | בנו | Python |
-| 07 | [דיפוזיה לטנטית ו-Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | בנו | Python |
-| 08 | [ControlNet, LoRA והתניה](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | בנו | Python |
-| 09 | [השלמת תמונה, הרחבתה ועריכתה](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | בנו | Python |
-| 10 | [יצירת וידאו](../../phases/08-generative-ai/10-video-generation/) | בנו | Python |
-| 11 | [יצירת אודיו](../../phases/08-generative-ai/11-audio-generation/) | בנו | Python |
-| 12 | [יצירת תלת-ממד](../../phases/08-generative-ai/12-3d-generation/) | בנו | Python |
-| 13 | [התאמת זרימה וזרימות מתוקנות](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | בנו | Python |
-| 14 | [הערכה: FID וציון CLIP](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | בנו | Python |
+| 01 | [מודלים גנרטיביים: מיון והיסטוריה](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | למדו | Python, TypeScript |
+| 02 | [אוטואנקודרים ו-VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | בנו | Python, TypeScript |
+| 03 | [GAN: מחולל מול מבחין](../../phases/08-generative-ai/03-gans-generator-discriminator/) | בנו | Python, TypeScript |
+| 04 | [רשתות GAN מותנות ו-Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | בנו | Python, TypeScript |
+| 05 | [מודל StyleGAN](../../phases/08-generative-ai/05-stylegan/) | בנו | Python, TypeScript |
+| 06 | [מודלי דיפוזיה: DDPM מאפס](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | בנו | Python, TypeScript |
+| 07 | [דיפוזיה לטנטית ו-Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | בנו | Python, TypeScript |
+| 08 | [ControlNet, LoRA והתניה](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | בנו | Python, TypeScript |
+| 09 | [השלמת תמונה, הרחבתה ועריכתה](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | בנו | Python, TypeScript |
+| 10 | [יצירת וידאו](../../phases/08-generative-ai/10-video-generation/) | בנו | Python, TypeScript |
+| 11 | [יצירת אודיו](../../phases/08-generative-ai/11-audio-generation/) | בנו | Python, TypeScript |
+| 12 | [יצירת תלת-ממד](../../phases/08-generative-ai/12-3d-generation/) | בנו | Python, TypeScript |
+| 13 | [התאמת זרימה וזרימות מתוקנות](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | בנו | Python, TypeScript |
+| 14 | [הערכה: FID וציון CLIP](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | בנו | Python, TypeScript |
 | 19 | [מידול אוטורגרסיבי חזותי (VAR): חיזוי קנה המידה הבא](../../phases/08-generative-ai/19-visual-autoregressive-var/) | בנו | Python |
 
 </details>
@@ -598,18 +598,18 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [MDP, מצבים, פעולות ותגמולים](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | למדו | Python |
-| 02 | [תכנות דינמי](../../phases/09-reinforcement-learning/02-dynamic-programming/) | בנו | Python |
-| 03 | [שיטות מונטה קרלו](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | בנו | Python |
-| 04 | [למידת Q ו-SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | בנו | Python |
-| 05 | [רשתות Q עמוקות (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | בנו | Python |
-| 06 | [גרדיאנטים של מדיניות: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | בנו | Python |
-| 07 | [Actor-Critic: שיטות A2C ו-A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | בנו | Python |
-| 08 | [אלגוריתם PPO](../../phases/09-reinforcement-learning/08-ppo/) | בנו | Python |
-| 09 | [מידול תגמול ו-RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | בנו | Python |
-| 10 | [למידת חיזוק מרובת סוכנים](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | בנו | Python |
-| 11 | [העברה מסימולציה למציאות](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | בנו | Python |
-| 12 | [למידת חיזוק למשחקים](../../phases/09-reinforcement-learning/12-rl-for-games/) | בנו | Python |
+| 01 | [MDP, מצבים, פעולות ותגמולים](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | למדו | Python, TypeScript |
+| 02 | [תכנות דינמי](../../phases/09-reinforcement-learning/02-dynamic-programming/) | בנו | Python, TypeScript |
+| 03 | [שיטות מונטה קרלו](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | בנו | Python, TypeScript |
+| 04 | [למידת Q ו-SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | בנו | Python, TypeScript |
+| 05 | [רשתות Q עמוקות (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | בנו | Python, TypeScript |
+| 06 | [גרדיאנטים של מדיניות: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | בנו | Python, TypeScript |
+| 07 | [Actor-Critic: שיטות A2C ו-A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | בנו | Python, TypeScript |
+| 08 | [אלגוריתם PPO](../../phases/09-reinforcement-learning/08-ppo/) | בנו | Python, TypeScript |
+| 09 | [מידול תגמול ו-RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | בנו | Python, TypeScript |
+| 10 | [למידת חיזוק מרובת סוכנים](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | בנו | Python, TypeScript |
+| 11 | [העברה מסימולציה למציאות](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | בנו | Python, TypeScript |
+| 12 | [למידת חיזוק למשחקים](../../phases/09-reinforcement-learning/12-rl-for-games/) | בנו | Python, TypeScript |
 
 </details>
 
@@ -621,7 +621,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [טוקנייזרים: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | בנו | Python, Rust |
 | 02 | [בניית טוקנייזר מאפס](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | בנו | Python |
-| 03 | [תהליכי נתונים לקדם-אימון](../../phases/10-llms-from-scratch/03-data-pipelines/) | בנו | Python |
+| 03 | [תהליכי נתונים לקדם-אימון](../../phases/10-llms-from-scratch/03-data-pipelines/) | בנו | Python, Rust |
 | 04 | [קדם-אימון של Mini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | בנו | Python, Rust |
 | 05 | [אימון מבוזר, FSDP ו-DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | בנו | Python |
 | 06 | [כוונון להוראות: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | בנו | Python |
@@ -631,16 +631,16 @@ flowchart TB
 | 10 | [הערכה: מדדי ייחוס ומבחנים](../../phases/10-llms-from-scratch/10-evaluation/) | בנו | Python |
 | 11 | [קוונטיזציה: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | בנו | Python, Rust |
 | 12 | [אופטימיזציית הסקה](../../phases/10-llms-from-scratch/12-inference-optimization/) | בנו | Python, Rust |
-| 13 | [בניית תהליך LLM מלא](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | בנו | Python |
-| 14 | [מודלים פתוחים: סיורי ארכיטקטורה](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | למדו | Python |
-| 15 | [פענוח ספקולטיבי ו-EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | בנו | Python |
-| 16 | [קשב דיפרנציאלי (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | בנו | Python |
-| 17 | [קשב דליל מקורי (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | בנו | Python |
-| 18 | [חיזוי מרובה טוקנים (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | בנו | Python |
-| 19 | [מקביליות DualPipe](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | למדו | Python |
-| 20 | [סיור בארכיטקטורת DeepSeek-V3](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | למדו | Python |
-| 21 | [Jamba: שילוב של SSM ו-Transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | למדו | Python |
-| 22 | [הסקה אסינכרונית ו-Hogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | בנו | Python |
+| 13 | [בניית תהליך LLM מלא](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | בנו | Python, Rust |
+| 14 | [מודלים פתוחים: סיורי ארכיטקטורה](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | למדו | Python, Rust |
+| 15 | [פענוח ספקולטיבי ו-EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | בנו | Python, Rust |
+| 16 | [קשב דיפרנציאלי (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | בנו | Python, Rust |
+| 17 | [קשב דליל מקורי (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | בנו | Python, Rust |
+| 18 | [חיזוי מרובה טוקנים (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | בנו | Python, Rust |
+| 19 | [מקביליות DualPipe](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | למדו | Python, Rust |
+| 20 | [סיור בארכיטקטורת DeepSeek-V3](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | למדו | Python, Rust |
+| 21 | [Jamba: שילוב של SSM ו-Transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | למדו | Python, Rust |
+| 22 | [הסקה אסינכרונית ו-Hogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | בנו | Python, Rust |
 | 25 | [פענוח ספקולטיבי ו-EAGLE](../../phases/10-llms-from-scratch/25-speculative-decoding/) | בנו | Python |
 | 34 | [נקודות ביקורת לגרדיאנטים וחישוב מחדש של אקטיבציות](../../phases/10-llms-from-scratch/34-gradient-checkpointing/) | בנו | Python |
 
@@ -658,17 +658,17 @@ flowchart TB
 | 04 | [הטמעות וייצוגים וקטוריים](../../phases/11-llm-engineering/04-embeddings/) | בנו | Python, TypeScript |
 | 05 | [הנדסת הקשר](../../phases/11-llm-engineering/05-context-engineering/) | בנו | Python, TypeScript |
 | 06 | [RAG: יצירה המועשרת באחזור מידע](../../phases/11-llm-engineering/06-rag/) | בנו | Python, TypeScript |
-| 07 | [RAG מתקדם: חלוקה למקטעים ודירוג מחדש](../../phases/11-llm-engineering/07-advanced-rag/) | בנו | Python |
+| 07 | [RAG מתקדם: חלוקה למקטעים ודירוג מחדש](../../phases/11-llm-engineering/07-advanced-rag/) | בנו | Python, TypeScript |
 | 08 | [כוונון עדין עם LoRA ו-QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | בנו | Python |
 | 09 | [קריאה לפונקציות ושימוש בכלים](../../phases/11-llm-engineering/09-function-calling/) | בנו | Python, TypeScript |
-| 10 | [הערכה ובדיקות](../../phases/11-llm-engineering/10-evaluation/) | בנו | Python |
-| 11 | [מטמון, הגבלת קצב ועלות](../../phases/11-llm-engineering/11-caching-cost/) | בנו | Python |
+| 10 | [הערכה ובדיקות](../../phases/11-llm-engineering/10-evaluation/) | בנו | Python, TypeScript |
+| 11 | [מטמון, הגבלת קצב ועלות](../../phases/11-llm-engineering/11-caching-cost/) | בנו | Python, TypeScript |
 | 12 | [מעקות בטיחות והגנה](../../phases/11-llm-engineering/12-guardrails/) | בנו | Python, TypeScript |
-| 13 | [בניית יישום LLM לייצור](../../phases/11-llm-engineering/13-production-app/) | בנו | Python |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | בנו | Python |
-| 15 | [מטמון הנחיות ומטמון הקשר](../../phases/11-llm-engineering/15-prompt-caching/) | בנו | Python |
+| 13 | [בניית יישום LLM לייצור](../../phases/11-llm-engineering/13-production-app/) | בנו | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | בנו | Python, TypeScript |
+| 15 | [מטמון הנחיות ומטמון הקשר](../../phases/11-llm-engineering/15-prompt-caching/) | בנו | Python, TypeScript |
 | 16 | [מכונות מצבים לסוכנים: גרפים, צמתים ונקודות ביקורת](../../phases/11-llm-engineering/16-langgraph-state-machines/) | בנו | Python |
-| 17 | [פשרות בבחירת מסגרות עבודה לסוכנים](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | למדו | Python |
+| 17 | [פשרות בבחירת מסגרות עבודה לסוכנים](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | למדו | Python, TypeScript |
 
 </details>
 
@@ -678,31 +678,31 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [Vision Transformers ויחידת טוקן מקטע התמונה](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | למדו | Python |
-| 02 | [CLIP וקדם-אימון ניגודי לראייה ושפה](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | בנו | Python |
-| 03 | [BLIP-2 Q-Former כגשר בין אופנויות](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | בנו | Python |
-| 04 | [Flamingo וקשב צולב עם שערים](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | למדו | Python |
-| 05 | [LLaVA וכוונון להוראות חזותיות](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | בנו | Python |
-| 06 | [ראייה בכל רזולוציה: Patch-n'-Pack ו-NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | בנו | Python |
-| 07 | [מתכונים למודלי VLM עם משקולות פתוחות: מה באמת חשוב](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | למדו | Python |
-| 08 | [LLaVA-OneVision: תמונה אחת, כמה תמונות ווידאו](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | בנו | Python |
-| 09 | [משפחת Qwen-VL ווידאו בקצב פריימים דינמי](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | למדו | Python |
-| 10 | [קדם-אימון רב-אופני מקורי של InternVL3](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | למדו | Python |
-| 11 | [Chameleon: מיזוג מוקדם המבוסס רק על טוקנים](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | בנו | Python |
-| 12 | [Emu3: חיזוי הטוקן הבא לצורך יצירה](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | למדו | Python |
-| 13 | [Transfusion: אוטורגרסיה ודיפוזיה](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | בנו | Python |
-| 14 | [Show-o: שילוב דיפוזיה בדידה](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | למדו | Python |
-| 15 | [Janus-Pro: מקודדים מופרדים](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | בנו | Python |
-| 16 | [MIO: זרימה מכל אופנות לכל אופנות](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | למדו | Python |
-| 17 | [עיגון בזמן בין וידאו לשפה](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | בנו | Python |
-| 18 | [וידאו ארוך בהקשר של מיליון טוקנים](../../phases/12-multimodal-ai/18-long-video-million-token/) | בנו | Python |
-| 19 | [מודלי אודיו-שפה: מ-Whisper ל-AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | בנו | Python |
-| 20 | [מודלי Omni: זרימת Thinker-Talker](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | בנו | Python |
-| 21 | [מודלי VLA מגולמים: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | למדו | Python |
-| 22 | [הבנת מסמכים ותרשימים](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | בנו | Python |
-| 23 | [ColPali: RAG למסמכים המבוסס על ראייה](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | בנו | Python |
-| 24 | [RAG רב-אופני ואחזור בין אופנויות](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | בנו | Python |
-| 25 | [סוכנים רב-אופניים ושימוש במחשב (פרויקט מסכם)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | בנו | Python |
+| 01 | [Vision Transformers ויחידת טוקן מקטע התמונה](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | למדו | Python, TypeScript |
+| 02 | [CLIP וקדם-אימון ניגודי לראייה ושפה](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | בנו | Python, TypeScript |
+| 03 | [BLIP-2 Q-Former כגשר בין אופנויות](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | בנו | Python, TypeScript |
+| 04 | [Flamingo וקשב צולב עם שערים](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | למדו | Python, TypeScript |
+| 05 | [LLaVA וכוונון להוראות חזותיות](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | בנו | Python, TypeScript |
+| 06 | [ראייה בכל רזולוציה: Patch-n'-Pack ו-NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | בנו | Python, TypeScript |
+| 07 | [מתכונים למודלי VLM עם משקולות פתוחות: מה באמת חשוב](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | למדו | Python, TypeScript |
+| 08 | [LLaVA-OneVision: תמונה אחת, כמה תמונות ווידאו](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | בנו | Python, TypeScript |
+| 09 | [משפחת Qwen-VL ווידאו בקצב פריימים דינמי](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | למדו | Python, TypeScript |
+| 10 | [קדם-אימון רב-אופני מקורי של InternVL3](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | למדו | Python, TypeScript |
+| 11 | [Chameleon: מיזוג מוקדם המבוסס רק על טוקנים](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | בנו | Python, TypeScript |
+| 12 | [Emu3: חיזוי הטוקן הבא לצורך יצירה](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | למדו | Python, TypeScript |
+| 13 | [Transfusion: אוטורגרסיה ודיפוזיה](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | בנו | Python, TypeScript |
+| 14 | [Show-o: שילוב דיפוזיה בדידה](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | למדו | Python, TypeScript |
+| 15 | [Janus-Pro: מקודדים מופרדים](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | בנו | Python, TypeScript |
+| 16 | [MIO: זרימה מכל אופנות לכל אופנות](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | למדו | Python, TypeScript |
+| 17 | [עיגון בזמן בין וידאו לשפה](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | בנו | Python, TypeScript |
+| 18 | [וידאו ארוך בהקשר של מיליון טוקנים](../../phases/12-multimodal-ai/18-long-video-million-token/) | בנו | Python, TypeScript |
+| 19 | [מודלי אודיו-שפה: מ-Whisper ל-AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | בנו | Python, TypeScript |
+| 20 | [מודלי Omni: זרימת Thinker-Talker](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | בנו | Python, TypeScript |
+| 21 | [מודלי VLA מגולמים: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | למדו | Python, TypeScript |
+| 22 | [הבנת מסמכים ותרשימים](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | בנו | Python, TypeScript |
+| 23 | [ColPali: RAG למסמכים המבוסס על ראייה](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | בנו | Python, TypeScript |
+| 24 | [RAG רב-אופני ואחזור בין אופנויות](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | בנו | Python, TypeScript |
+| 25 | [סוכנים רב-אופניים ושימוש במחשב (פרויקט מסכם)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | בנו | Python, TypeScript |
 
 </details>
 
@@ -713,50 +713,50 @@ flowchart TB
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
 | 01 | [ממשק הכלים](../../phases/13-tools-and-protocols/01-the-tool-interface/) | למדו | Python, TypeScript |
-| 02 | [העמקה בקריאה לפונקציות](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | בנו | Python |
-| 03 | [קריאות כלים מקבילות ובזרימה](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | בנו | Python |
-| 04 | [פלט מובנה](../../phases/13-tools-and-protocols/04-structured-output/) | בנו | Python |
-| 05 | [תכנון סכמות לכלים](../../phases/13-tools-and-protocols/05-tool-schema-design/) | למדו | Python |
-| 06 | [יסודות MCP: בקשות חסרות מצב ו-JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | למדו | Python |
+| 02 | [העמקה בקריאה לפונקציות](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | בנו | Python, TypeScript |
+| 03 | [קריאות כלים מקבילות ובזרימה](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | בנו | Python, TypeScript |
+| 04 | [פלט מובנה](../../phases/13-tools-and-protocols/04-structured-output/) | בנו | Python, TypeScript |
+| 05 | [תכנון סכמות לכלים](../../phases/13-tools-and-protocols/05-tool-schema-design/) | למדו | Python, TypeScript |
+| 06 | [יסודות MCP: בקשות חסרות מצב ו-JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | למדו | Python, TypeScript |
 | 07 | [בניית שרת MCP: Python ו-TypeScript ללא מצב](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | בנו | Python, TypeScript |
-| 08 | [בניית לקוח MCP: גילוי, ניתוב ותאימות לשתי תקופות הפרוטוקול](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | בנו | Python |
-| 09 | [תעבורת MCP: stdio ו-Streamable HTTP חסר מצב](../../phases/13-tools-and-protocols/09-mcp-transports/) | למדו | Python |
-| 10 | [משאבי MCP והנחיות: הקשר שניתן למיעון לשרתים חסרי מצב](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | בנו | Python |
-| 11 | [קלט מודל ב-MCP: הגירת דגימה ו-MRTR חסר מצב](../../phases/13-tools-and-protocols/11-mcp-sampling/) | בנו | Python |
-| 12 | [היקף מפורש ובקשת מידע ללא מצב](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | בנו | Python |
-| 13 | [הרחבת MCP Tasks: עבודה מתמשכת על ליבה חסרת מצב](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | בנו | Python |
-| 14 | [MCP Apps על הפרוטוקול חסר המצב](../../phases/13-tools-and-protocols/14-mcp-apps/) | בנו | Python |
-| 15 | [אבטחת MCP: מטא-נתונים מורעלים, ניתוב ומצב MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | למדו | Python |
-| 16 | [הרשאת MCP: CIMD, קישור למנפיק, PKCE והגברת אימות](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | בנו | Python |
-| 17 | [שערי MCP חסרי מצב וקבלה לרישום](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | למדו | Python |
-| 18 | [אימות MCP בייצור: רישום וטוקנים הקשורים למנפיק](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | בנו | Python |
+| 08 | [בניית לקוח MCP: גילוי, ניתוב ותאימות לשתי תקופות הפרוטוקול](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | בנו | Python, TypeScript |
+| 09 | [תעבורת MCP: stdio ו-Streamable HTTP חסר מצב](../../phases/13-tools-and-protocols/09-mcp-transports/) | למדו | Python, TypeScript |
+| 10 | [משאבי MCP והנחיות: הקשר שניתן למיעון לשרתים חסרי מצב](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | בנו | Python, TypeScript |
+| 11 | [קלט מודל ב-MCP: הגירת דגימה ו-MRTR חסר מצב](../../phases/13-tools-and-protocols/11-mcp-sampling/) | בנו | Python, TypeScript |
+| 12 | [היקף מפורש ובקשת מידע ללא מצב](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | בנו | Python, TypeScript |
+| 13 | [הרחבת MCP Tasks: עבודה מתמשכת על ליבה חסרת מצב](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | בנו | Python, TypeScript |
+| 14 | [MCP Apps על הפרוטוקול חסר המצב](../../phases/13-tools-and-protocols/14-mcp-apps/) | בנו | Python, TypeScript |
+| 15 | [אבטחת MCP: מטא-נתונים מורעלים, ניתוב ומצב MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | למדו | Python, TypeScript |
+| 16 | [הרשאת MCP: CIMD, קישור למנפיק, PKCE והגברת אימות](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | בנו | Python, TypeScript |
+| 17 | [שערי MCP חסרי מצב וקבלה לרישום](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | למדו | Python, TypeScript |
+| 18 | [אימות MCP בייצור: רישום וטוקנים הקשורים למנפיק](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | בנו | Python, TypeScript |
 | 19 | [פרוטוקול A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | בנו | Python, TypeScript |
-| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | בנו | Python |
-| 21 | [שכבת ניתוב LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | למדו | Python |
-| 22 | [Agent Skills: חוזה נייד וגבול זמן ריצה](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | בנו | Python |
-| 23 | [פרויקט מסכם: מערכת כלים חסרת מצב](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | בנו | Python |
-| 24 | [גילוי מיומנויות וחשיפה הדרגתית](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | בנו | Python |
-| 25 | [הפעלת מיומנויות וניתובן](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | בנו | Python |
-| 26 | [הרשאות מיומנויות, סביבות בידוד ואמון](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | בנו | Python |
-| 27 | [הערכת מיומנויות, אריזה וניידות](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | בנו | Python |
-| 28 | [חוזי כלים ותוכן ב-MCP](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | בנו | Python |
-| 29 | [אמינות MCP, ביטול ובקרת זרימה](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | בנו | Python |
-| 30 | [שרשרת האספקה של רישום MCP: קבלה, סטיות וחזרה לאחור](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | בנו | Python |
-| 31 | [הנדסת תאימות MCP: גרסאות, ראיות ותפעול](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | בנו | Python |
-| 32 | [אנטומיה של תוכנית: קריאת ELF מאפס](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | בנו | Python |
-| 33 | [פירוק לאסמבלי וגרפי זרימת בקרה](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | בנו | Python |
+| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | בנו | Python, TypeScript |
+| 21 | [שכבת ניתוב LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | למדו | Python, TypeScript |
+| 22 | [Agent Skills: חוזה נייד וגבול זמן ריצה](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | בנו | Python, TypeScript |
+| 23 | [פרויקט מסכם: מערכת כלים חסרת מצב](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | בנו | Python, TypeScript |
+| 24 | [גילוי מיומנויות וחשיפה הדרגתית](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | בנו | Python, TypeScript |
+| 25 | [הפעלת מיומנויות וניתובן](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | בנו | Python, TypeScript |
+| 26 | [הרשאות מיומנויות, סביבות בידוד ואמון](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | בנו | Python, TypeScript |
+| 27 | [הערכת מיומנויות, אריזה וניידות](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | בנו | Python, TypeScript |
+| 28 | [חוזי כלים ותוכן ב-MCP](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | בנו | Python, TypeScript |
+| 29 | [אמינות MCP, ביטול ובקרת זרימה](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | בנו | Python, TypeScript |
+| 30 | [שרשרת האספקה של רישום MCP: קבלה, סטיות וחזרה לאחור](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | בנו | Python, TypeScript |
+| 31 | [הנדסת תאימות MCP: גרסאות, ראיות ותפעול](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | בנו | Python, TypeScript |
+| 32 | [אנטומיה של תוכנית: קריאת ELF מאפס](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | בנו | Python, TypeScript |
+| 33 | [פירוק לאסמבלי וגרפי זרימת בקרה](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | בנו | Python, TypeScript |
 | 34 | [העלאת קוד מכונה לפסאודו-קוד](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | בנו | Python |
-| 35 | [ראיות, רמת ביטחון ונעלמים בניתוח בינארי](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | בנו | Python |
-| 36 | [בנייה מחדש והוכחת שוויון](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | בנו | Python |
-| 37 | [מפת התחום של הנדסה לאחור](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | בנו | Python |
-| 38 | [מוסכמות קריאה ומסגרות מחסנית](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | בנו | Python |
-| 39 | [דפוסים אופייניים של מהדר ואופטימיזציה](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | בנו | Python |
-| 40 | [קישור, טעינה וקבצים בינאריים מופשטים](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | בנו | Python |
-| 41 | [שחזור נתונים וטיפוסים](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | בנו | Python |
-| 42 | [ניתוח דינמי של התוכנית שלכם](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | בנו | Python |
-| 43 | [Bytecode ופורמטים מנוהלים](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | בנו | Python |
+| 35 | [ראיות, רמת ביטחון ונעלמים בניתוח בינארי](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | בנו | Python, TypeScript |
+| 36 | [בנייה מחדש והוכחת שוויון](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | בנו | Python, TypeScript |
+| 37 | [מפת התחום של הנדסה לאחור](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | בנו | Python, TypeScript |
+| 38 | [מוסכמות קריאה ומסגרות מחסנית](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | בנו | Python, TypeScript |
+| 39 | [דפוסים אופייניים של מהדר ואופטימיזציה](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | בנו | Python, TypeScript |
+| 40 | [קישור, טעינה וקבצים בינאריים מופשטים](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | בנו | Python, TypeScript |
+| 41 | [שחזור נתונים וטיפוסים](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | בנו | Python, TypeScript |
+| 42 | [ניתוח דינמי של התוכנית שלכם](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | בנו | Python, TypeScript |
+| 43 | [Bytecode ופורמטים מנוהלים](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | בנו | Python, TypeScript |
 | 44 | [השוואת קבצים בינאריים והרצה סימבולית](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | בנו | Python |
-| 45 | [הנדסה לאחור בסיוע AI](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | בנו | Python |
+| 45 | [הנדסה לאחור בסיוע AI](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | בנו | Python, TypeScript |
 
 השיעורים 06-18 ו-28-31 מרכיבים את [מסלול Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) הממוקד. סדר המניפסט הוא 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. התחילו באמצעות הפעלת `learn-mcp` המתאימה ליישום המארח כמתואר למעלה. שיעור 23 הוא הפרויקט המסכם האופציונלי היחיד במסלול, והוא דורש גם את שיעורים 19 ו-20.
 
@@ -771,59 +771,59 @@ flowchart TB
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
 | 01 | [לולאת הסוכן](../../phases/14-agent-engineering/01-the-agent-loop/) | בנו | Python, TypeScript |
-| 02 | [ReWOO ותכנון-ואז-ביצוע](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | בנו | Python |
-| 03 | [Reflexion ולמידת חיזוק מילולית](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | בנו | Python |
-| 04 | [עץ מחשבות ו-LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | בנו | Python |
-| 05 | [Self-Refine ו-CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | בנו | Python |
+| 02 | [ReWOO ותכנון-ואז-ביצוע](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | בנו | Python, TypeScript |
+| 03 | [Reflexion ולמידת חיזוק מילולית](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | בנו | Python, TypeScript |
+| 04 | [עץ מחשבות ו-LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | בנו | Python, TypeScript |
+| 05 | [Self-Refine ו-CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | בנו | Python, TypeScript |
 | 06 | [שימוש בכלים וקריאה לפונקציות](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | בנו | Python, TypeScript |
-| 07 | [זיכרון סוכן: הקשר וירטואלי ודפדוף זיכרון](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | בנו | Python |
-| 08 | [בלוקי זיכרון וחישוב בזמן מנוחה](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | בנו | Python |
-| 09 | [זיכרון היברידי: וקטור, גרף ו-KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | בנו | Python |
-| 10 | [ספריות מיומנויות ולמידה לאורך החיים (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | בנו | Python |
-| 11 | [תכנון עם HTN וחיפוש אבולוציוני](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | בנו | Python |
-| 12 | [דפוסי תהליכי העבודה של Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | בנו | Python |
+| 07 | [זיכרון סוכן: הקשר וירטואלי ודפדוף זיכרון](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | בנו | Python, TypeScript |
+| 08 | [בלוקי זיכרון וחישוב בזמן מנוחה](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | בנו | Python, TypeScript |
+| 09 | [זיכרון היברידי: וקטור, גרף ו-KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | בנו | Python, TypeScript |
+| 10 | [ספריות מיומנויות ולמידה לאורך החיים (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | בנו | Python, TypeScript |
+| 11 | [תכנון עם HTN וחיפוש אבולוציוני](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | בנו | Python, TypeScript |
+| 12 | [דפוסי תהליכי העבודה של Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | בנו | Python, TypeScript |
 | 13 | [תזמור גרפים עם מצב: ביצוע מתמשך ונקודות ביקורת](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | בנו | Python, TypeScript |
-| 14 | [מודל השחקנים לסוכנים](../../phases/14-agent-engineering/14-autogen-actor-model/) | בנו | Python |
+| 14 | [מודל השחקנים לסוכנים](../../phases/14-agent-engineering/14-autogen-actor-model/) | בנו | Python, TypeScript |
 | 15 | [צוותי סוכנים מבוססי תפקיד: תפקידים, משימות ותהליכים](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | בנו | Python |
-| 16 | [OpenAI Agents SDK: העברות, מעקות בטיחות ומעקב](../../phases/14-agent-engineering/16-openai-agents-sdk/) | בנו | Python |
-| 17 | [מעטפת ההרצה כספרייה: תת-סוכנים ומאגר מפגשים](../../phases/14-agent-engineering/17-claude-agent-sdk/) | בנו | Python |
+| 16 | [OpenAI Agents SDK: העברות, מעקות בטיחות ומעקב](../../phases/14-agent-engineering/16-openai-agents-sdk/) | בנו | Python, TypeScript |
+| 17 | [מעטפת ההרצה כספרייה: תת-סוכנים ומאגר מפגשים](../../phases/14-agent-engineering/17-claude-agent-sdk/) | בנו | Python, TypeScript |
 | 18 | [סביבות זמן ריצה לסוכנים בייצור](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | למדו | Python, TypeScript |
-| 19 | [מדדי ייחוס: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | למדו | Python |
-| 20 | [מדדי ייחוס: WebArena ו-OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | למדו | Python |
-| 21 | [שימוש במחשב: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | בנו | Python |
-| 22 | [סוכנים קוליים: Pipecat ו-LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | בנו | Python |
-| 23 | [מוסכמות סמנטיות של OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | בנו | Python |
-| 24 | [נצפות סוכנים: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | למדו | Python |
-| 25 | [דיון ושיתוף פעולה מרובי סוכנים](../../phases/14-agent-engineering/25-multi-agent-debate/) | בנו | Python |
-| 26 | [מצבי כשל: מדוע סוכנים נשברים](../../phases/14-agent-engineering/26-failure-modes-agentic/) | בנו | Python |
-| 27 | [הזרקת הנחיות והגנת PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | בנו | Python |
-| 28 | [דפוסי תזמור: מפקח, נחיל והיררכיה](../../phases/14-agent-engineering/28-orchestration-patterns/) | בנו | Python |
-| 29 | [סביבות ייצור: תורים, אירועים ו-cron](../../phases/14-agent-engineering/29-production-runtimes/) | למדו | Python |
-| 30 | [פיתוח סוכנים מונחה הערכה](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | בנו | Python |
-| 31 | [סביבת עבודה לסוכנים: למה גם מודלים מוכשרים נכשלים](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | למדו | Python |
-| 32 | [סביבת העבודה המינימלית לסוכן](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | בנו | Python |
-| 33 | [הוראות לסוכן כאילוצים הניתנים לאכיפה](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | בנו | Python |
-| 34 | [זיכרון מאגר ומצב מתמשך](../../phases/14-agent-engineering/34-repo-memory-and-state/) | בנו | Python |
-| 35 | [סקריפטים לאתחול סוכנים](../../phases/14-agent-engineering/35-initialization-scripts/) | בנו | Python |
-| 36 | [חוזי היקף וגבולות משימה](../../phases/14-agent-engineering/36-scope-contracts/) | בנו | Python |
-| 37 | [לולאות משוב בזמן ריצה](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | בנו | Python |
-| 38 | [בדיקות סף לאימות](../../phases/14-agent-engineering/38-verification-gates/) | בנו | Python |
-| 39 | [סוכן סוקר: הפרידו בין הבונה למעריך](../../phases/14-agent-engineering/39-reviewer-agent/) | בנו | Python |
-| 40 | [העברת עבודה בין מפגשים](../../phases/14-agent-engineering/40-multi-session-handoff/) | בנו | Python |
-| 41 | [סביבת העבודה במאגר אמיתי](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | בנו | Python |
-| 42 | [פרויקט מסכם: פרסמו חבילת סביבת עבודה לשימוש חוזר](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | בנו | Python |
-| 43 | [הגדירו את המשימה לפני שהסוכן כותב קוד](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | בנו | Python |
-| 44 | [בנו תוכנית ביצוע המבוססת על ראיות](../../phases/14-agent-engineering/44-plan-from-evidence/) | בנו | Python |
-| 45 | [האצילו עבודה לסוכנים עם בידוד וחוזי מיזוג](../../phases/14-agent-engineering/45-delegate-with-isolation/) | בנו | Python |
-| 46 | [הפכו כל תיקון לסוכן לשיפור מערכתי](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | בנו | Python |
-| 47 | [הגדירו את התוצאה הרצויה לפני בחירת התוצר](../../phases/14-agent-engineering/47-outcomes-before-output/) | בנו | Python |
-| 48 | [גלו את תהליך העבודה שאנשים באמת מבצעים](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | בנו | Python |
-| 49 | [מפו הנחות ופתרו תחילה את המסוכנת ביותר](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | בנו | Python |
-| 50 | [בחרו את החלק הקטן ביותר שיכול לשנות את ההחלטה](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | בנו | Python |
-| 51 | [כתבו מפרטים שמשמרים שיקול דעת](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | בנו | Python |
-| 52 | [תכננו מדדי הצלחה לפני שהתוצאה קיימת](../../phases/14-agent-engineering/52-design-success-metrics/) | בנו | Python |
-| 53 | [בחרו במכוון אבטיפוס, פיילוט או ייצור](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | בנו | Python |
-| 54 | [בנו מנגנון משוב מצטבר עם אחריות וסיום שימוש](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | בנו | Python |
+| 19 | [מדדי ייחוס: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | למדו | Python, TypeScript |
+| 20 | [מדדי ייחוס: WebArena ו-OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | למדו | Python, TypeScript |
+| 21 | [שימוש במחשב: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | בנו | Python, TypeScript |
+| 22 | [סוכנים קוליים: Pipecat ו-LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | בנו | Python, TypeScript |
+| 23 | [מוסכמות סמנטיות של OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | בנו | Python, TypeScript |
+| 24 | [נצפות סוכנים: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | למדו | Python, TypeScript |
+| 25 | [דיון ושיתוף פעולה מרובי סוכנים](../../phases/14-agent-engineering/25-multi-agent-debate/) | בנו | Python, TypeScript |
+| 26 | [מצבי כשל: מדוע סוכנים נשברים](../../phases/14-agent-engineering/26-failure-modes-agentic/) | בנו | Python, TypeScript |
+| 27 | [הזרקת הנחיות והגנת PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | בנו | Python, TypeScript |
+| 28 | [דפוסי תזמור: מפקח, נחיל והיררכיה](../../phases/14-agent-engineering/28-orchestration-patterns/) | בנו | Python, TypeScript |
+| 29 | [סביבות ייצור: תורים, אירועים ו-cron](../../phases/14-agent-engineering/29-production-runtimes/) | למדו | Python, TypeScript |
+| 30 | [פיתוח סוכנים מונחה הערכה](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | בנו | Python, TypeScript |
+| 31 | [סביבת עבודה לסוכנים: למה גם מודלים מוכשרים נכשלים](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | למדו | Python, TypeScript |
+| 32 | [סביבת העבודה המינימלית לסוכן](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | בנו | Python, TypeScript |
+| 33 | [הוראות לסוכן כאילוצים הניתנים לאכיפה](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | בנו | Python, TypeScript |
+| 34 | [זיכרון מאגר ומצב מתמשך](../../phases/14-agent-engineering/34-repo-memory-and-state/) | בנו | Python, TypeScript |
+| 35 | [סקריפטים לאתחול סוכנים](../../phases/14-agent-engineering/35-initialization-scripts/) | בנו | Python, TypeScript |
+| 36 | [חוזי היקף וגבולות משימה](../../phases/14-agent-engineering/36-scope-contracts/) | בנו | Python, TypeScript |
+| 37 | [לולאות משוב בזמן ריצה](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | בנו | Python, TypeScript |
+| 38 | [בדיקות סף לאימות](../../phases/14-agent-engineering/38-verification-gates/) | בנו | Python, TypeScript |
+| 39 | [סוכן סוקר: הפרידו בין הבונה למעריך](../../phases/14-agent-engineering/39-reviewer-agent/) | בנו | Python, TypeScript |
+| 40 | [העברת עבודה בין מפגשים](../../phases/14-agent-engineering/40-multi-session-handoff/) | בנו | Python, TypeScript |
+| 41 | [סביבת העבודה במאגר אמיתי](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | בנו | Python, TypeScript |
+| 42 | [פרויקט מסכם: פרסמו חבילת סביבת עבודה לשימוש חוזר](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | בנו | Python, TypeScript |
+| 43 | [הגדירו את המשימה לפני שהסוכן כותב קוד](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | בנו | Python, TypeScript |
+| 44 | [בנו תוכנית ביצוע המבוססת על ראיות](../../phases/14-agent-engineering/44-plan-from-evidence/) | בנו | Python, TypeScript |
+| 45 | [האצילו עבודה לסוכנים עם בידוד וחוזי מיזוג](../../phases/14-agent-engineering/45-delegate-with-isolation/) | בנו | Python, TypeScript |
+| 46 | [הפכו כל תיקון לסוכן לשיפור מערכתי](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | בנו | Python, TypeScript |
+| 47 | [הגדירו את התוצאה הרצויה לפני בחירת התוצר](../../phases/14-agent-engineering/47-outcomes-before-output/) | בנו | Python, TypeScript |
+| 48 | [גלו את תהליך העבודה שאנשים באמת מבצעים](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | בנו | Python, TypeScript |
+| 49 | [מפו הנחות ופתרו תחילה את המסוכנת ביותר](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | בנו | Python, TypeScript |
+| 50 | [בחרו את החלק הקטן ביותר שיכול לשנות את ההחלטה](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | בנו | Python, TypeScript |
+| 51 | [כתבו מפרטים שמשמרים שיקול דעת](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | בנו | Python, TypeScript |
+| 52 | [תכננו מדדי הצלחה לפני שהתוצאה קיימת](../../phases/14-agent-engineering/52-design-success-metrics/) | בנו | Python, TypeScript |
+| 53 | [בחרו במכוון אבטיפוס, פיילוט או ייצור](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | בנו | Python, TypeScript |
+| 54 | [בנו מנגנון משוב מצטבר עם אחריות וסיום שימוש](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | בנו | Python, TypeScript |
 
 כל שיעור סביבת עבודה בשלב 14 (31-42) כולל `mission.md` שמנחה את הסוכן לפני שהוא פותח את מסמכי השיעור המלאים.
 
@@ -837,28 +837,28 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [מצ'אטבוטים לסוכנים ארוכי טווח (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | למדו | Python |
-| 02 | [STaR, V-STaR, Quiet-STaR: חשיבה הנלמדת עצמאית](../../phases/15-autonomous-systems/02-star-family-reasoning/) | למדו | Python |
-| 03 | [AlphaEvolve: סוכני תכנות אבולוציוניים](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | למדו | Python |
-| 04 | [Darwin Gödel Machine: סוכנים שמשנים את עצמם](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | למדו | Python |
-| 05 | [AI Scientist v2: מחקר ברמת סדנה אקדמית](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | למדו | Python |
-| 06 | [מחקר התאמה אוטומטי (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | למדו | Python |
-| 07 | [שיפור עצמי רקורסיבי: יכולת מול התאמה](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | למדו | Python |
-| 08 | [תכנון שיפור עצמי עם גבולות](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | למדו | Python |
-| 09 | [מפת הסוכנים האוטונומיים לתכנות (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | למדו | Python |
-| 10 | [מצבי הרשאה לסוכנים אוטונומיים](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | למדו | Python |
-| 11 | [סוכני דפדפן והזרקת הנחיות עקיפה](../../phases/15-autonomous-systems/11-browser-agents/) | למדו | Python |
-| 12 | [ביצוע מתמשך לסוכנים הפועלים לאורך זמן](../../phases/15-autonomous-systems/12-durable-execution/) | למדו | Python |
-| 13 | [תקציבי פעולות, מגבלות איטרציה ובקרת עלויות](../../phases/15-autonomous-systems/13-cost-governors/) | למדו | Python |
-| 14 | [מתגי חירום, מנתקי מעגל וטוקני קנרי](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | למדו | Python |
-| 15 | [HITL: הציעו ואז אשרו לביצוע](../../phases/15-autonomous-systems/15-propose-then-commit/) | למדו | Python |
-| 16 | [נקודות ביקורת וחזרה לאחור](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | למדו | Python |
-| 17 | [AI חוקתי וחריגות מכללים](../../phases/15-autonomous-systems/17-constitutional-ai/) | למדו | Python |
-| 18 | [Llama Guard וסיווג קלט ופלט](../../phases/15-autonomous-systems/18-llama-guard/) | למדו | Python |
-| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | למדו | Python |
-| 20 | [OpenAI Preparedness Framework ו-DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | למדו | Python |
-| 21 | [אופקי הזמן של METR והערכה חיצונית](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | למדו | Python |
-| 22 | [CAIS, CAISI וסיכון בקנה מידה חברתי](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | למדו | Python |
+| 01 | [מצ'אטבוטים לסוכנים ארוכי טווח (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | למדו | Python, TypeScript |
+| 02 | [STaR, V-STaR, Quiet-STaR: חשיבה הנלמדת עצמאית](../../phases/15-autonomous-systems/02-star-family-reasoning/) | למדו | Python, TypeScript |
+| 03 | [AlphaEvolve: סוכני תכנות אבולוציוניים](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | למדו | Python, TypeScript |
+| 04 | [Darwin Gödel Machine: סוכנים שמשנים את עצמם](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | למדו | Python, TypeScript |
+| 05 | [AI Scientist v2: מחקר ברמת סדנה אקדמית](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | למדו | Python, TypeScript |
+| 06 | [מחקר התאמה אוטומטי (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | למדו | Python, TypeScript |
+| 07 | [שיפור עצמי רקורסיבי: יכולת מול התאמה](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | למדו | Python, TypeScript |
+| 08 | [תכנון שיפור עצמי עם גבולות](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | למדו | Python, TypeScript |
+| 09 | [מפת הסוכנים האוטונומיים לתכנות (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | למדו | Python, TypeScript |
+| 10 | [מצבי הרשאה לסוכנים אוטונומיים](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | למדו | Python, TypeScript |
+| 11 | [סוכני דפדפן והזרקת הנחיות עקיפה](../../phases/15-autonomous-systems/11-browser-agents/) | למדו | Python, TypeScript |
+| 12 | [ביצוע מתמשך לסוכנים הפועלים לאורך זמן](../../phases/15-autonomous-systems/12-durable-execution/) | למדו | Python, TypeScript |
+| 13 | [תקציבי פעולות, מגבלות איטרציה ובקרת עלויות](../../phases/15-autonomous-systems/13-cost-governors/) | למדו | Python, TypeScript |
+| 14 | [מתגי חירום, מנתקי מעגל וטוקני קנרי](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | למדו | Python, TypeScript |
+| 15 | [HITL: הציעו ואז אשרו לביצוע](../../phases/15-autonomous-systems/15-propose-then-commit/) | למדו | Python, TypeScript |
+| 16 | [נקודות ביקורת וחזרה לאחור](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | למדו | Python, TypeScript |
+| 17 | [AI חוקתי וחריגות מכללים](../../phases/15-autonomous-systems/17-constitutional-ai/) | למדו | Python, TypeScript |
+| 18 | [Llama Guard וסיווג קלט ופלט](../../phases/15-autonomous-systems/18-llama-guard/) | למדו | Python, TypeScript |
+| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | למדו | Python, TypeScript |
+| 20 | [OpenAI Preparedness Framework ו-DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | למדו | Python, TypeScript |
+| 21 | [אופקי הזמן של METR והערכה חיצונית](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | למדו | Python, TypeScript |
+| 22 | [CAIS, CAISI וסיכון בקנה מידה חברתי](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | למדו | Python, TypeScript |
 
 </details>
 
@@ -869,30 +869,30 @@ flowchart TB
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
 | 01 | [למה להשתמש בכמה סוכנים?](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | למדו | TypeScript |
-| 02 | [מורשת FIPA-ACL ופעולות דיבור](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | למדו | Python |
+| 02 | [מורשת FIPA-ACL ופעולות דיבור](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | למדו | Python, TypeScript |
 | 03 | [פרוטוקולי תקשורת](../../phases/16-multi-agent-and-swarms/03-communication-protocols/) | בנו | TypeScript |
-| 04 | [מודל אבני הבניין של מערכות מרובות סוכנים](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | למדו | Python |
-| 05 | [דפוס מפקח / מתזמר-עובד](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | בנו | Python |
-| 06 | [ארכיטקטורה היררכית וסטיות בפירוק משימות](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | למדו | Python |
-| 07 | [חברת התודעה ודיון מרובה סוכנים](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | בנו | Python |
-| 08 | [התמחות בתפקידים: מתכנן, מבקר, מבצע ומאמת](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | בנו | Python |
-| 09 | [נחיל מקביל וארכיטקטורות רשת](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | בנו | Python |
-| 10 | [צ'אט קבוצתי ובחירת דובר](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | בנו | Python |
-| 11 | [העברות ושגרות עבודה (תזמור חסר מצב)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | בנו | Python |
-| 12 | [A2A: פרוטוקול סוכן-לסוכן](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | בנו | Python |
-| 13 | [זיכרון משותף ודפוסי לוח שחור](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | בנו | Python |
-| 14 | [קונצנזוס וסבילות לתקלות ביזנטיות](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | בנו | Python |
-| 15 | [הצבעה, עקביות עצמית ומבנה הדיון](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | בנו | Python |
-| 16 | [משא ומתן ומיקוח](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | בנו | Python |
-| 17 | [סוכנים גנרטיביים וסימולציה של התנהגות מתהווה](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | בנו | Python |
-| 18 | [תאוריית התודעה ותיאום מתהווה](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | בנו | Python |
-| 19 | [אופטימיזציית נחילים (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | בנו | Python |
-| 20 | [MARL: שיטות MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | למדו | Python |
-| 21 | [כלכלות סוכנים, תמריצי טוקנים ומוניטין](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | למדו | Python |
-| 22 | [הרחבה בייצור: תורים, נקודות ביקורת ועמידות](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | בנו | Python |
-| 23 | [מצבי כשל: MAST, חשיבה קבוצתית ואחידות יתר](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | למדו | Python |
-| 24 | [מדדי ייחוס להערכה ולתיאום](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | למדו | Python |
-| 25 | [מקרי בוחן וחזית הטכנולוגיה ב-2026](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | למדו | Python |
+| 04 | [מודל אבני הבניין של מערכות מרובות סוכנים](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | למדו | Python, TypeScript |
+| 05 | [דפוס מפקח / מתזמר-עובד](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | בנו | Python, TypeScript |
+| 06 | [ארכיטקטורה היררכית וסטיות בפירוק משימות](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | למדו | Python, TypeScript |
+| 07 | [חברת התודעה ודיון מרובה סוכנים](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | בנו | Python, TypeScript |
+| 08 | [התמחות בתפקידים: מתכנן, מבקר, מבצע ומאמת](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | בנו | Python, TypeScript |
+| 09 | [נחיל מקביל וארכיטקטורות רשת](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | בנו | Python, TypeScript |
+| 10 | [צ'אט קבוצתי ובחירת דובר](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | בנו | Python, TypeScript |
+| 11 | [העברות ושגרות עבודה (תזמור חסר מצב)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | בנו | Python, TypeScript |
+| 12 | [A2A: פרוטוקול סוכן-לסוכן](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | בנו | Python, TypeScript |
+| 13 | [זיכרון משותף ודפוסי לוח שחור](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | בנו | Python, TypeScript |
+| 14 | [קונצנזוס וסבילות לתקלות ביזנטיות](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | בנו | Python, TypeScript |
+| 15 | [הצבעה, עקביות עצמית ומבנה הדיון](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | בנו | Python, TypeScript |
+| 16 | [משא ומתן ומיקוח](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | בנו | Python, TypeScript |
+| 17 | [סוכנים גנרטיביים וסימולציה של התנהגות מתהווה](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | בנו | Python, TypeScript |
+| 18 | [תאוריית התודעה ותיאום מתהווה](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | בנו | Python, TypeScript |
+| 19 | [אופטימיזציית נחילים (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | בנו | Python, TypeScript |
+| 20 | [MARL: שיטות MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | למדו | Python, TypeScript |
+| 21 | [כלכלות סוכנים, תמריצי טוקנים ומוניטין](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | למדו | Python, TypeScript |
+| 22 | [הרחבה בייצור: תורים, נקודות ביקורת ועמידות](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | בנו | Python, TypeScript |
+| 23 | [מצבי כשל: MAST, חשיבה קבוצתית ואחידות יתר](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | למדו | Python, TypeScript |
+| 24 | [מדדי ייחוס להערכה ולתיאום](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | למדו | Python, TypeScript |
+| 25 | [מקרי בוחן וחזית הטכנולוגיה ב-2026](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | למדו | Python, TypeScript |
 
 </details>
 
@@ -902,35 +902,35 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [פלטפורמות LLM מנוהלות: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | למדו | Python |
-| 02 | [כלכלת פלטפורמות הסקה: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | למדו | Python |
-| 03 | [הרחבת GPU אוטומטית ב-Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | למדו | Python |
-| 04 | [מנועי הסקה מבפנים: PagedAttention, אצוות רציפות וקדם-מילוי במקטעים](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | למדו | Python |
-| 05 | [פענוח ספקולטיבי EAGLE-3 בייצור](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | למדו | Python |
-| 06 | [הסקה עם מטמון קידומות: RadixAttention ושימוש חוזר ב-KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | למדו | Python |
-| 07 | [קומפילציית הסקה לחומרה ייעודית: FP8 ו-NVFP4 על Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | למדו | Python |
-| 08 | [מדדי הסקה: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | למדו | Python |
-| 09 | [קוונטיזציה בייצור: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | למדו | Python |
-| 10 | [צמצום התנעה קרה של LLM ללא שרתים](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | למדו | Python |
-| 11 | [הגשת LLM בכמה אזורים ומקומיות מטמון KV](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | למדו | Python |
-| 12 | [הסקה במכשירי קצה: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | למדו | Python |
+| 01 | [פלטפורמות LLM מנוהלות: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | למדו | Python, TypeScript |
+| 02 | [כלכלת פלטפורמות הסקה: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | למדו | Python, TypeScript |
+| 03 | [הרחבת GPU אוטומטית ב-Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | למדו | Python, TypeScript |
+| 04 | [מנועי הסקה מבפנים: PagedAttention, אצוות רציפות וקדם-מילוי במקטעים](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | למדו | Python, TypeScript |
+| 05 | [פענוח ספקולטיבי EAGLE-3 בייצור](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | למדו | Python, TypeScript |
+| 06 | [הסקה עם מטמון קידומות: RadixAttention ושימוש חוזר ב-KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | למדו | Python, TypeScript |
+| 07 | [קומפילציית הסקה לחומרה ייעודית: FP8 ו-NVFP4 על Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | למדו | Python, TypeScript |
+| 08 | [מדדי הסקה: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | למדו | Python, TypeScript |
+| 09 | [קוונטיזציה בייצור: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | למדו | Python, TypeScript |
+| 10 | [צמצום התנעה קרה של LLM ללא שרתים](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | למדו | Python, TypeScript |
+| 11 | [הגשת LLM בכמה אזורים ומקומיות מטמון KV](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | למדו | Python, TypeScript |
+| 12 | [הסקה במכשירי קצה: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | למדו | Python, TypeScript |
 | 13 | [בחירת מערך נצפות ל-LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | למדו | Python, TypeScript |
 | 14 | [כלכלת מטמון הנחיות ומטמון סמנטי](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | למדו | Python, TypeScript |
 | 15 | [ממשקי אצווה: הנחה של 50% כתקן תעשייתי](../../phases/17-infrastructure-and-production/15-batch-apis/) | למדו | Python, TypeScript |
 | 16 | [ניתוב מודלים כאמצעי בסיסי להפחתת עלות](../../phases/17-infrastructure-and-production/16-model-routing/) | למדו | Python, TypeScript |
-| 17 | [קדם-מילוי ופענוח מופרדים: NVIDIA Dynamo ו-llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | למדו | Python |
-| 18 | [מערך הגשה בייצור: העברת KV וניתוב מודע למטמון](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | למדו | Python |
+| 17 | [קדם-מילוי ופענוח מופרדים: NVIDIA Dynamo ו-llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | למדו | Python, TypeScript |
+| 18 | [מערך הגשה בייצור: העברת KV וניתוב מודע למטמון](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | למדו | Python, TypeScript |
 | 19 | [שערי AI: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | למדו | Python, TypeScript |
 | 20 | [פריסת צל, קנרי ופריסה הדרגתית](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | למדו | Python, TypeScript |
-| 21 | [בדיקות A/B ליכולות LLM: GrowthBook ו-Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | למדו | Python |
-| 22 | [בדיקות עומס ל-API של LLM: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | בנו | Python |
-| 23 | [SRE ל-AI: תגובה לתקריות בעזרת כמה סוכנים](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | למדו | Python |
-| 24 | [הנדסת כאוס ל-LLM בייצור](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | למדו | Python |
-| 25 | [אבטחה: סודות, ניקוי מידע אישי ויומני ביקורת](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | למדו | Python |
-| 26 | [תאימות: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | למדו | Python |
-| 27 | [FinOps ל-LLM: כלכלת יחידה ושיוך עלויות בין דיירים](../../phases/17-infrastructure-and-production/27-finops-llms/) | למדו | Python |
-| 28 | [בחירת הגשה באירוח עצמי: התאמת המנוע לחומרה ולקנה המידה](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | למדו | Python |
-| 29 | [ממשקי הדגמה למודלים: מפונקציה ליישום שאפשר לשתף](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | בנו | Python |
+| 21 | [בדיקות A/B ליכולות LLM: GrowthBook ו-Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | למדו | Python, TypeScript |
+| 22 | [בדיקות עומס ל-API של LLM: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | בנו | Python, TypeScript |
+| 23 | [SRE ל-AI: תגובה לתקריות בעזרת כמה סוכנים](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | למדו | Python, TypeScript |
+| 24 | [הנדסת כאוס ל-LLM בייצור](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | למדו | Python, TypeScript |
+| 25 | [אבטחה: סודות, ניקוי מידע אישי ויומני ביקורת](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | למדו | Python, TypeScript |
+| 26 | [תאימות: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | למדו | Python, TypeScript |
+| 27 | [FinOps ל-LLM: כלכלת יחידה ושיוך עלויות בין דיירים](../../phases/17-infrastructure-and-production/27-finops-llms/) | למדו | Python, TypeScript |
+| 28 | [בחירת הגשה באירוח עצמי: התאמת המנוע לחומרה ולקנה המידה](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | למדו | Python, TypeScript |
+| 29 | [ממשקי הדגמה למודלים: מפונקציה ליישום שאפשר לשתף](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | בנו | Python, TypeScript |
 
 </details>
 
@@ -940,36 +940,36 @@ flowchart TB
 
 | # | שיעור | סוג | שפה |
 |:---:|--------|:----:|------|
-| 01 | [ציות להוראות כסימן להתאמה](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | למדו | Python |
-| 02 | [ניצול מערכת התגמול וחוק גודהארט](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | למדו | Python |
-| 03 | [משפחת האופטימיזציה הישירה של העדפות](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | למדו | Python |
-| 04 | [חנופה המוגברת בידי RLHF](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | למדו | Python |
-| 05 | [AI חוקתי ו-RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | למדו | Python |
-| 06 | [אופטימיזציית Mesa והתאמה מטעה](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | למדו | Python |
-| 07 | [סוכנים רדומים: הטעיה מתמשכת](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | למדו | Python |
-| 08 | [תכנון מזימות בתוך ההקשר במודלי חזית](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | למדו | Python |
-| 09 | [זיוף התאמה](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | למדו | Python |
-| 10 | [בקרת AI: בטיחות למרות חתרנות](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | למדו | Python |
-| 11 | [פיקוח הניתן להרחבה והכוונה מחלש לחזק](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | למדו | Python |
-| 12 | [Red teaming: PAIR והתקפות אוטומטיות](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | בנו | Python |
-| 13 | [פריצת מגבלות עם דוגמאות רבות](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | למדו | Python |
-| 14 | [אמנות ASCII ופריצות מגבלות חזותיות](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | בנו | Python |
-| 15 | [הזרקת הנחיות עקיפה](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | בנו | Python |
-| 16 | [כלי צוות אדום: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | בנו | Python |
-| 17 | [WMDP והערכת יכולות לשימוש כפול](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | למדו | Python |
-| 18 | [מסגרות בטיחות למודלי חזית: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | למדו | Python |
-| 19 | [מחקר רווחת מודלים](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | למדו | Python |
-| 20 | [הטיות ונזקי ייצוג](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | בנו | Python |
-| 21 | [קריטריונים להוגנות: קבוצה, פרט ותרחיש נגד-עובדתי](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | למדו | Python |
-| 22 | [פרטיות דיפרנציאלית ל-LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | בנו | Python |
-| 23 | [סימני מים: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | בנו | Python |
-| 24 | [מסגרות רגולציה: האיחוד האירופי, ארה״ב, בריטניה וקוריאה](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | למדו | Python |
-| 25 | [EchoLeak וחולשות CVE ב-AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | למדו | Python |
-| 26 | [כרטיסי מודל, מערכת ומאגר נתונים](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | בנו | Python |
-| 27 | [מקור הנתונים וממשל נתוני אימון](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | למדו | Python |
-| 28 | [מערכת מחקר ההתאמה: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | למדו | Python |
-| 29 | [מערכות סינון תוכן: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | בנו | Python |
-| 30 | [סיכוני שימוש כפול: סייבר, ביולוגיה, כימיה וגרעין](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | למדו | Python |
+| 01 | [ציות להוראות כסימן להתאמה](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | למדו | Python, TypeScript |
+| 02 | [ניצול מערכת התגמול וחוק גודהארט](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | למדו | Python, TypeScript |
+| 03 | [משפחת האופטימיזציה הישירה של העדפות](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | למדו | Python, TypeScript |
+| 04 | [חנופה המוגברת בידי RLHF](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | למדו | Python, TypeScript |
+| 05 | [AI חוקתי ו-RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | למדו | Python, TypeScript |
+| 06 | [אופטימיזציית Mesa והתאמה מטעה](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | למדו | Python, TypeScript |
+| 07 | [סוכנים רדומים: הטעיה מתמשכת](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | למדו | Python, TypeScript |
+| 08 | [תכנון מזימות בתוך ההקשר במודלי חזית](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | למדו | Python, TypeScript |
+| 09 | [זיוף התאמה](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | למדו | Python, TypeScript |
+| 10 | [בקרת AI: בטיחות למרות חתרנות](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | למדו | Python, TypeScript |
+| 11 | [פיקוח הניתן להרחבה והכוונה מחלש לחזק](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | למדו | Python, TypeScript |
+| 12 | [Red teaming: PAIR והתקפות אוטומטיות](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | בנו | Python, TypeScript |
+| 13 | [פריצת מגבלות עם דוגמאות רבות](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | למדו | Python, TypeScript |
+| 14 | [אמנות ASCII ופריצות מגבלות חזותיות](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | בנו | Python, TypeScript |
+| 15 | [הזרקת הנחיות עקיפה](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | בנו | Python, TypeScript |
+| 16 | [כלי צוות אדום: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | בנו | Python, TypeScript |
+| 17 | [WMDP והערכת יכולות לשימוש כפול](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | למדו | Python, TypeScript |
+| 18 | [מסגרות בטיחות למודלי חזית: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | למדו | Python, TypeScript |
+| 19 | [מחקר רווחת מודלים](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | למדו | Python, TypeScript |
+| 20 | [הטיות ונזקי ייצוג](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | בנו | Python, TypeScript |
+| 21 | [קריטריונים להוגנות: קבוצה, פרט ותרחיש נגד-עובדתי](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | למדו | Python, TypeScript |
+| 22 | [פרטיות דיפרנציאלית ל-LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | בנו | Python, TypeScript |
+| 23 | [סימני מים: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | בנו | Python, TypeScript |
+| 24 | [מסגרות רגולציה: האיחוד האירופי, ארה״ב, בריטניה וקוריאה](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | למדו | Python, TypeScript |
+| 25 | [EchoLeak וחולשות CVE ב-AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | למדו | Python, TypeScript |
+| 26 | [כרטיסי מודל, מערכת ומאגר נתונים](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | בנו | Python, TypeScript |
+| 27 | [מקור הנתונים וממשל נתוני אימון](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | למדו | Python, TypeScript |
+| 28 | [מערכת מחקר ההתאמה: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | למדו | Python, TypeScript |
+| 29 | [מערכות סינון תוכן: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | בנו | Python, TypeScript |
+| 30 | [סיכוני שימוש כפול: סייבר, ביולוגיה, כימיה וגרעין](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | למדו | Python, TypeScript |
 
 </details>
 

@@ -3,7 +3,7 @@
 > A deployed model fails without an error message. It keeps returning scores while the world moves away from its training data, and only monitoring shows the gap.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation), 16 (Anomaly Detection), and 19 (ML System Design)
 **Time:** ~110 minutes
 
@@ -261,6 +261,7 @@ The model is a threshold on `amount`, fitted on the first 2000 events. Windows h
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console

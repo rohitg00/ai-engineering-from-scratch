@@ -3,7 +3,7 @@
 > Bytes in, ids out, ids back to the same bytes. Build the tokenizer that every modern text model still starts from.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 04 lessons, Phase 07 transformer lessons
 **Time:** ~90 minutes
 

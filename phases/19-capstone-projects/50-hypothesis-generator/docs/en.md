@@ -3,7 +3,7 @@
 > A research agent that asks the same question twice is wasting tokens. The trick is forcing each draft to land somewhere new.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

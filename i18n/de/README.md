@@ -357,7 +357,7 @@ flowchart TB
 | 10 | [Terminal und Shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Lernen | — |
 | 11 | [Linux für KI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Lernen | — |
 | 12 | [Debugging und Profiling](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Umsetzen | Python |
-| 13 | [Python für AI Engineering](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Umsetzen | Python |
+| 13 | [Python für AI Engineering](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Umsetzen | Python, TypeScript |
 
 <details id="phase-1">
 <summary><b>Phase 1 — Mathematische Grundlagen</b> &nbsp;<code>22 Lektionen</code>&nbsp; <em>Verstehe die Grundlagen hinter KI-Algorithmen durch Programmieren.</em></summary>
@@ -383,7 +383,7 @@ flowchart TB
 | 16 | [Stichprobenverfahren](../../phases/01-math-foundations/16-sampling-methods/) | Umsetzen | Python, TypeScript |
 | 17 | [Lineare Gleichungssysteme](../../phases/01-math-foundations/17-linear-systems/) | Umsetzen | Python, TypeScript |
 | 18 | [Konvexe Optimierung](../../phases/01-math-foundations/18-convex-optimization/) | Umsetzen | Python, TypeScript |
-| 19 | [Komplexe Zahlen für KI](../../phases/01-math-foundations/19-complex-numbers/) | Lernen | Python |
+| 19 | [Komplexe Zahlen für KI](../../phases/01-math-foundations/19-complex-numbers/) | Lernen | Python, TypeScript |
 | 20 | [Fourier-Transformation](../../phases/01-math-foundations/20-fourier-transform/) | Umsetzen | Python, TypeScript |
 | 21 | [Graphentheorie für ML](../../phases/01-math-foundations/21-graph-theory/) | Umsetzen | Python, TypeScript |
 | 22 | [Stochastische Prozesse](../../phases/01-math-foundations/22-stochastic-processes/) | Lernen | Python |
@@ -414,9 +414,9 @@ flowchart TB
 | 16 | [Anomalieerkennung](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Umsetzen | Python |
 | 17 | [Umgang mit unausgewogenen Daten](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Umsetzen | Python |
 | 18 | [Merkmalsauswahl](../../phases/02-ml-fundamentals/18-feature-selection/) | Umsetzen | Python |
-| 19 | [ML-Systemdesign: vom Problem zum produktiven Modell](../../phases/02-ml-fundamentals/19-ml-system-design/) | Umsetzen | Python |
-| 20 | [Modelle in der Produktion überwachen: Data Drift und Concept Drift](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Umsetzen | Python |
-| 21 | [Feature Stores und Training-Serving-Skew](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Umsetzen | Python |
+| 19 | [ML-Systemdesign: vom Problem zum produktiven Modell](../../phases/02-ml-fundamentals/19-ml-system-design/) | Umsetzen | Python, TypeScript |
+| 20 | [Modelle in der Produktion überwachen: Data Drift und Concept Drift](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Umsetzen | Python, TypeScript |
+| 21 | [Feature Stores und Training-Serving-Skew](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Umsetzen | Python, TypeScript |
 
 </details>
 
@@ -485,35 +485,35 @@ flowchart TB
 
 | # | Lektion | Typ | Sprachen |
 |:---:|--------|:----:|------|
-| 01 | [Textverarbeitung: Tokenisierung, Stemming und Lemmatisierung](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Umsetzen | Python |
-| 02 | [Bag of Words, TF-IDF und Textrepräsentation](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Umsetzen | Python |
+| 01 | [Textverarbeitung: Tokenisierung, Stemming und Lemmatisierung](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Umsetzen | Python, TypeScript |
+| 02 | [Bag of Words, TF-IDF und Textrepräsentation](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Umsetzen | Python, TypeScript |
 | 03 | [Word Embeddings: Word2Vec von Grund auf](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Umsetzen | Python |
-| 04 | [GloVe, FastText und Subword-Embeddings](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Umsetzen | Python |
-| 05 | [Sentimentanalyse](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Umsetzen | Python |
-| 06 | [Erkennung benannter Entitäten (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Umsetzen | Python |
-| 07 | [POS-Tagging und syntaktisches Parsing](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Umsetzen | Python |
-| 08 | [Textklassifikation: CNNs und RNNs für Text](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Umsetzen | Python |
-| 09 | [Sequenz-zu-Sequenz-Modelle](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Umsetzen | Python |
-| 10 | [Attention-Mechanismus: der Durchbruch](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Umsetzen | Python |
-| 11 | [Maschinelle Übersetzung](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Umsetzen | Python |
-| 12 | [Textzusammenfassung](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Umsetzen | Python |
-| 13 | [Frage-Antwort-Systeme](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Umsetzen | Python |
-| 14 | [Information Retrieval und Suche](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Umsetzen | Python |
-| 15 | [Themenmodellierung: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Umsetzen | Python |
-| 16 | [Textgenerierung](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Umsetzen | Python |
-| 17 | [Chatbots: regelbasiert bis neuronal](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Umsetzen | Python |
-| 18 | [Mehrsprachiges NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Umsetzen | Python |
+| 04 | [GloVe, FastText und Subword-Embeddings](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Umsetzen | Python, TypeScript |
+| 05 | [Sentimentanalyse](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Umsetzen | Python, TypeScript |
+| 06 | [Erkennung benannter Entitäten (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Umsetzen | Python, TypeScript |
+| 07 | [POS-Tagging und syntaktisches Parsing](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Umsetzen | Python, TypeScript |
+| 08 | [Textklassifikation: CNNs und RNNs für Text](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Umsetzen | Python, TypeScript |
+| 09 | [Sequenz-zu-Sequenz-Modelle](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Umsetzen | Python, TypeScript |
+| 10 | [Attention-Mechanismus: der Durchbruch](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Umsetzen | Python, TypeScript |
+| 11 | [Maschinelle Übersetzung](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Umsetzen | Python, TypeScript |
+| 12 | [Textzusammenfassung](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Umsetzen | Python, TypeScript |
+| 13 | [Frage-Antwort-Systeme](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Umsetzen | Python, TypeScript |
+| 14 | [Information Retrieval und Suche](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Umsetzen | Python, TypeScript |
+| 15 | [Themenmodellierung: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Umsetzen | Python, TypeScript |
+| 16 | [Textgenerierung](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Umsetzen | Python, TypeScript |
+| 17 | [Chatbots: regelbasiert bis neuronal](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Umsetzen | Python, TypeScript |
+| 18 | [Mehrsprachiges NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Umsetzen | Python, TypeScript |
 | 19 | [Subword-Tokenisierung: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Lernen | Python, TypeScript |
-| 20 | [Strukturierte Ausgaben und eingeschränktes Decoding](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Umsetzen | Python |
-| 21 | [NLI und textuelle Implikation](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Lernen | Python |
-| 22 | [Embedding-Modelle im Detail](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Lernen | Python |
+| 20 | [Strukturierte Ausgaben und eingeschränktes Decoding](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Umsetzen | Python, TypeScript |
+| 21 | [NLI und textuelle Implikation](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Lernen | Python, TypeScript |
+| 22 | [Embedding-Modelle im Detail](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Lernen | Python, TypeScript |
 | 23 | [Chunking-Strategien für RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Umsetzen | Python, TypeScript |
-| 24 | [Koreferenzauflösung](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Lernen | Python |
-| 25 | [Entity Linking und Disambiguierung](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Umsetzen | Python |
-| 26 | [Relationsextraktion und Aufbau von Wissensgraphen](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Umsetzen | Python |
-| 27 | [LLM-Evaluierung: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Umsetzen | Python |
-| 28 | [Langkontext-Evaluierung: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Lernen | Python |
-| 29 | [Dialogzustandsverfolgung](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Umsetzen | Python |
+| 24 | [Koreferenzauflösung](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Lernen | Python, TypeScript |
+| 25 | [Entity Linking und Disambiguierung](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Umsetzen | Python, TypeScript |
+| 26 | [Relationsextraktion und Aufbau von Wissensgraphen](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Umsetzen | Python, TypeScript |
+| 27 | [LLM-Evaluierung: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Umsetzen | Python, TypeScript |
+| 28 | [Langkontext-Evaluierung: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Lernen | Python, TypeScript |
+| 29 | [Dialogzustandsverfolgung](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Umsetzen | Python, TypeScript |
 
 </details>
 
@@ -523,23 +523,23 @@ flowchart TB
 
 | # | Lektion | Typ | Sprachen |
 |:---:|--------|:----:|------|
-| 01 | [Audio-Grundlagen: Wellenformen, Abtastung, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Lernen | Python |
-| 02 | [Spektrogramme, Mel-Skala und Audio-Features](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Umsetzen | Python |
-| 03 | [Audioklassifikation](../../phases/06-speech-and-audio/03-audio-classification) | Umsetzen | Python |
-| 04 | [Spracherkennung (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Umsetzen | Python |
-| 05 | [Whisper: Architektur und Fine-Tuning](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Umsetzen | Python |
-| 06 | [Sprechererkennung und -verifikation](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Umsetzen | Python |
-| 07 | [Text-to-Speech (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Umsetzen | Python |
-| 08 | [Stimmenklonen und Stimmkonvertierung](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Umsetzen | Python |
-| 09 | [Musikgenerierung](../../phases/06-speech-and-audio/09-music-generation) | Umsetzen | Python |
-| 10 | [Audio-Sprachmodelle](../../phases/06-speech-and-audio/10-audio-language-models) | Umsetzen | Python |
+| 01 | [Audio-Grundlagen: Wellenformen, Abtastung, FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Lernen | Python, TypeScript |
+| 02 | [Spektrogramme, Mel-Skala und Audio-Features](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Umsetzen | Python, TypeScript |
+| 03 | [Audioklassifikation](../../phases/06-speech-and-audio/03-audio-classification) | Umsetzen | Python, TypeScript |
+| 04 | [Spracherkennung (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Umsetzen | Python, TypeScript |
+| 05 | [Whisper: Architektur und Fine-Tuning](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Umsetzen | Python, TypeScript |
+| 06 | [Sprechererkennung und -verifikation](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Umsetzen | Python, TypeScript |
+| 07 | [Text-to-Speech (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Umsetzen | Python, TypeScript |
+| 08 | [Stimmenklonen und Stimmkonvertierung](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Umsetzen | Python, TypeScript |
+| 09 | [Musikgenerierung](../../phases/06-speech-and-audio/09-music-generation) | Umsetzen | Python, TypeScript |
+| 10 | [Audio-Sprachmodelle](../../phases/06-speech-and-audio/10-audio-language-models) | Umsetzen | Python, TypeScript |
 | 11 | [Echtzeit-Audioverarbeitung](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Umsetzen | Python, Rust |
-| 12 | [Eine Sprachassistenten-Pipeline bauen](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Umsetzen | Python |
-| 13 | [Neuronale Audio-Codecs: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Lernen | Python |
-| 14 | [Spracherkennung und Sprecherwechsel](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Umsetzen | Python |
-| 15 | [Sprach-zu-Sprache-Streaming: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Lernen | Python |
-| 16 | [Erkennung von Stimmenfälschungen und Audio-Wasserzeichen](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Umsetzen | Python |
-| 17 | [Audio-Evaluierung: WER, MOS, MMAU, Leaderboards](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Lernen | Python |
+| 12 | [Eine Sprachassistenten-Pipeline bauen](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Umsetzen | Python, TypeScript |
+| 13 | [Neuronale Audio-Codecs: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Lernen | Python, TypeScript |
+| 14 | [Spracherkennung und Sprecherwechsel](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Umsetzen | Python, TypeScript |
+| 15 | [Sprach-zu-Sprache-Streaming: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Lernen | Python, TypeScript |
+| 16 | [Erkennung von Stimmenfälschungen und Audio-Wasserzeichen](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Umsetzen | Python, TypeScript |
+| 17 | [Audio-Evaluierung: WER, MOS, MMAU, Leaderboards](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Lernen | Python, TypeScript |
 
 </details>
 
@@ -554,14 +554,14 @@ flowchart TB
 | 03 | [Multi-Head-Attention](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Umsetzen | Python, Rust |
 | 04 | [Positionskodierung: Sinusoidal, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Umsetzen | Python, Rust, Julia |
 | 05 | [Der vollständige Transformer: Encoder und Decoder](../../phases/07-transformers-deep-dive/05-full-transformer/) | Umsetzen | Python, Julia |
-| 06 | [BERT: Masked Language Modeling](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Umsetzen | Python |
-| 07 | [GPT: Causal Language Modeling](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Umsetzen | Python |
-| 08 | [T5, BART: Encoder-Decoder-Modelle](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Lernen | Python |
-| 09 | [Vision Transformer (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Umsetzen | Python |
-| 10 | [Audio-Transformer: Whisper-Architektur](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Lernen | Python |
+| 06 | [BERT: Masked Language Modeling](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Umsetzen | Python, Rust |
+| 07 | [GPT: Causal Language Modeling](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Umsetzen | Python, Rust |
+| 08 | [T5, BART: Encoder-Decoder-Modelle](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Lernen | Python, Rust |
+| 09 | [Vision Transformer (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Umsetzen | Python, Rust |
+| 10 | [Audio-Transformer: Whisper-Architektur](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Lernen | Python, Rust |
 | 11 | [Mixture of Experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Umsetzen | Python, Rust |
 | 12 | [KV-Cache, Flash Attention und Inferenzoptimierung](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Umsetzen | Python, Rust |
-| 13 | [Skalierungsgesetze](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Lernen | Python |
+| 13 | [Skalierungsgesetze](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Lernen | Python, Rust |
 | 14 | [Einen Transformer von Grund auf bauen](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Umsetzen | Python |
 | 15 | [Attention-Varianten: Sliding Window, Sparse, Differential](../../phases/07-transformers-deep-dive/15-attention-variants/) | Umsetzen | Python, Rust |
 | 16 | [Speculative Decoding: Entwurf, Prüfung, Wiederholung](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Umsetzen | Python, Rust |
@@ -574,20 +574,20 @@ flowchart TB
 
 | # | Lektion | Typ | Sprachen |
 |:---:|--------|:----:|------|
-| 01 | [Generative Modelle: Taxonomie und Geschichte](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Lernen | Python |
-| 02 | [Autoencoder und VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Umsetzen | Python |
-| 03 | [GANs: Generator und Diskriminator](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Umsetzen | Python |
-| 04 | [Conditional GANs und Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Umsetzen | Python |
-| 05 | [StyleGAN](../../phases/08-generative-ai/05-stylegan/) | Umsetzen | Python |
-| 06 | [Diffusionsmodelle: DDPM von Grund auf](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Umsetzen | Python |
-| 07 | [Latente Diffusion und Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Umsetzen | Python |
-| 08 | [ControlNet, LoRA und Conditioning](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Umsetzen | Python |
-| 09 | [Inpainting, Outpainting und Bearbeitung](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Umsetzen | Python |
-| 10 | [Videogenerierung](../../phases/08-generative-ai/10-video-generation/) | Umsetzen | Python |
-| 11 | [Audiogenerierung](../../phases/08-generative-ai/11-audio-generation/) | Umsetzen | Python |
-| 12 | [3D-Generierung](../../phases/08-generative-ai/12-3d-generation/) | Umsetzen | Python |
-| 13 | [Flow Matching und Rectified Flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Umsetzen | Python |
-| 14 | [Evaluierung: FID, CLIP-Score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Umsetzen | Python |
+| 01 | [Generative Modelle: Taxonomie und Geschichte](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Lernen | Python, TypeScript |
+| 02 | [Autoencoder und VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Umsetzen | Python, TypeScript |
+| 03 | [GANs: Generator und Diskriminator](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Umsetzen | Python, TypeScript |
+| 04 | [Conditional GANs und Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Umsetzen | Python, TypeScript |
+| 05 | [StyleGAN](../../phases/08-generative-ai/05-stylegan/) | Umsetzen | Python, TypeScript |
+| 06 | [Diffusionsmodelle: DDPM von Grund auf](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Umsetzen | Python, TypeScript |
+| 07 | [Latente Diffusion und Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Umsetzen | Python, TypeScript |
+| 08 | [ControlNet, LoRA und Conditioning](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Umsetzen | Python, TypeScript |
+| 09 | [Inpainting, Outpainting und Bearbeitung](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Umsetzen | Python, TypeScript |
+| 10 | [Videogenerierung](../../phases/08-generative-ai/10-video-generation/) | Umsetzen | Python, TypeScript |
+| 11 | [Audiogenerierung](../../phases/08-generative-ai/11-audio-generation/) | Umsetzen | Python, TypeScript |
+| 12 | [3D-Generierung](../../phases/08-generative-ai/12-3d-generation/) | Umsetzen | Python, TypeScript |
+| 13 | [Flow Matching und Rectified Flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Umsetzen | Python, TypeScript |
+| 14 | [Evaluierung: FID, CLIP-Score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Umsetzen | Python, TypeScript |
 | 19 | [Visuelles autoregressives Modellieren (VAR): Vorhersage der nächsten Skala](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Umsetzen | Python |
 
 </details>
@@ -598,18 +598,18 @@ flowchart TB
 
 | # | Lektion | Typ | Sprachen |
 |:---:|--------|:----:|------|
-| 01 | [MDPs, Zustände, Aktionen und Belohnungen](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Lernen | Python |
-| 02 | [Dynamische Programmierung](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Umsetzen | Python |
-| 03 | [Monte-Carlo-Methoden](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Umsetzen | Python |
-| 04 | [Q-Learning und SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Umsetzen | Python |
-| 05 | [Deep Q-Networks (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Umsetzen | Python |
-| 06 | [Policy Gradients: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Umsetzen | Python |
-| 07 | [Actor-Critic: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Umsetzen | Python |
-| 08 | [PPO](../../phases/09-reinforcement-learning/08-ppo/) | Umsetzen | Python |
-| 09 | [Reward-Modellierung und RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Umsetzen | Python |
-| 10 | [Multi-Agent-RL](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Umsetzen | Python |
-| 11 | [Sim-to-Real-Transfer](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Umsetzen | Python |
-| 12 | [RL für Spiele](../../phases/09-reinforcement-learning/12-rl-for-games/) | Umsetzen | Python |
+| 01 | [MDPs, Zustände, Aktionen und Belohnungen](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Lernen | Python, TypeScript |
+| 02 | [Dynamische Programmierung](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Umsetzen | Python, TypeScript |
+| 03 | [Monte-Carlo-Methoden](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Umsetzen | Python, TypeScript |
+| 04 | [Q-Learning und SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Umsetzen | Python, TypeScript |
+| 05 | [Deep Q-Networks (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Umsetzen | Python, TypeScript |
+| 06 | [Policy Gradients: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Umsetzen | Python, TypeScript |
+| 07 | [Actor-Critic: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Umsetzen | Python, TypeScript |
+| 08 | [PPO](../../phases/09-reinforcement-learning/08-ppo/) | Umsetzen | Python, TypeScript |
+| 09 | [Reward-Modellierung und RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Umsetzen | Python, TypeScript |
+| 10 | [Multi-Agent-RL](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Umsetzen | Python, TypeScript |
+| 11 | [Sim-to-Real-Transfer](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Umsetzen | Python, TypeScript |
+| 12 | [RL für Spiele](../../phases/09-reinforcement-learning/12-rl-for-games/) | Umsetzen | Python, TypeScript |
 
 </details>
 
@@ -621,7 +621,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [Tokenizer: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Umsetzen | Python, Rust |
 | 02 | [Einen Tokenizer von Grund auf bauen](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Umsetzen | Python |
-| 03 | [Datenpipelines für das Pretraining](../../phases/10-llms-from-scratch/03-data-pipelines/) | Umsetzen | Python |
+| 03 | [Datenpipelines für das Pretraining](../../phases/10-llms-from-scratch/03-data-pipelines/) | Umsetzen | Python, Rust |
 | 04 | [Ein Mini-GPT vortrainieren (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Umsetzen | Python, Rust |
 | 05 | [Verteiltes Training, FSDP, DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Umsetzen | Python |
 | 06 | [Instruction Tuning: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Umsetzen | Python |
@@ -631,16 +631,16 @@ flowchart TB
 | 10 | [Evaluierung: Benchmarks und Evals](../../phases/10-llms-from-scratch/10-evaluation/) | Umsetzen | Python |
 | 11 | [Quantisierung: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Umsetzen | Python, Rust |
 | 12 | [Inferenzoptimierung](../../phases/10-llms-from-scratch/12-inference-optimization/) | Umsetzen | Python, Rust |
-| 13 | [Eine vollständige LLM-Pipeline bauen](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Umsetzen | Python |
-| 14 | [Offene Modelle: Architektur im Überblick](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Lernen | Python |
-| 15 | [Speculative Decoding und EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Umsetzen | Python |
-| 16 | [Differential Attention (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Umsetzen | Python |
-| 17 | [Native Sparse Attention (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Umsetzen | Python |
-| 18 | [Multi-Token Prediction (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Umsetzen | Python |
-| 19 | [DualPipe-Parallelisierung](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Lernen | Python |
-| 20 | [DeepSeek-V3: Architektur im Überblick](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Lernen | Python |
-| 21 | [Jamba: hybrider SSM-Transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Lernen | Python |
-| 22 | [Asynchrone und Hogwild!-Inferenz](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Umsetzen | Python |
+| 13 | [Eine vollständige LLM-Pipeline bauen](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Umsetzen | Python, Rust |
+| 14 | [Offene Modelle: Architektur im Überblick](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Lernen | Python, Rust |
+| 15 | [Speculative Decoding und EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Umsetzen | Python, Rust |
+| 16 | [Differential Attention (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Umsetzen | Python, Rust |
+| 17 | [Native Sparse Attention (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Umsetzen | Python, Rust |
+| 18 | [Multi-Token Prediction (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Umsetzen | Python, Rust |
+| 19 | [DualPipe-Parallelisierung](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Lernen | Python, Rust |
+| 20 | [DeepSeek-V3: Architektur im Überblick](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Lernen | Python, Rust |
+| 21 | [Jamba: hybrider SSM-Transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Lernen | Python, Rust |
+| 22 | [Asynchrone und Hogwild!-Inferenz](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Umsetzen | Python, Rust |
 | 25 | [Speculative Decoding und EAGLE](../../phases/10-llms-from-scratch/25-speculative-decoding/) | Umsetzen | Python |
 | 34 | [Gradient Checkpointing und Activation Recomputation](../../phases/10-llms-from-scratch/34-gradient-checkpointing/) | Umsetzen | Python |
 
@@ -658,17 +658,17 @@ flowchart TB
 | 04 | [Embeddings und Vektorrepräsentationen](../../phases/11-llm-engineering/04-embeddings/) | Umsetzen | Python, TypeScript |
 | 05 | [Context Engineering](../../phases/11-llm-engineering/05-context-engineering/) | Umsetzen | Python, TypeScript |
 | 06 | [RAG: Retrieval-Augmented Generation](../../phases/11-llm-engineering/06-rag/) | Umsetzen | Python, TypeScript |
-| 07 | [Fortgeschrittenes RAG: Chunking und Reranking](../../phases/11-llm-engineering/07-advanced-rag/) | Umsetzen | Python |
+| 07 | [Fortgeschrittenes RAG: Chunking und Reranking](../../phases/11-llm-engineering/07-advanced-rag/) | Umsetzen | Python, TypeScript |
 | 08 | [Fine-Tuning mit LoRA und QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Umsetzen | Python |
 | 09 | [Function Calling und Tool-Nutzung](../../phases/11-llm-engineering/09-function-calling/) | Umsetzen | Python, TypeScript |
-| 10 | [Evaluierung und Tests](../../phases/11-llm-engineering/10-evaluation/) | Umsetzen | Python |
-| 11 | [Caching, Rate Limiting und Kosten](../../phases/11-llm-engineering/11-caching-cost/) | Umsetzen | Python |
+| 10 | [Evaluierung und Tests](../../phases/11-llm-engineering/10-evaluation/) | Umsetzen | Python, TypeScript |
+| 11 | [Caching, Rate Limiting und Kosten](../../phases/11-llm-engineering/11-caching-cost/) | Umsetzen | Python, TypeScript |
 | 12 | [Guardrails und Sicherheit](../../phases/11-llm-engineering/12-guardrails/) | Umsetzen | Python, TypeScript |
-| 13 | [Eine produktionsreife LLM-Anwendung bauen](../../phases/11-llm-engineering/13-production-app/) | Umsetzen | Python |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Umsetzen | Python |
-| 15 | [Prompt- und Context-Caching](../../phases/11-llm-engineering/15-prompt-caching/) | Umsetzen | Python |
+| 13 | [Eine produktionsreife LLM-Anwendung bauen](../../phases/11-llm-engineering/13-production-app/) | Umsetzen | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Umsetzen | Python, TypeScript |
+| 15 | [Prompt- und Context-Caching](../../phases/11-llm-engineering/15-prompt-caching/) | Umsetzen | Python, TypeScript |
 | 16 | [Agenten-Zustandsmaschinen: Graphen, Knoten, Checkpoints](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Umsetzen | Python |
-| 17 | [Abwägungen bei Agent-Frameworks](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Lernen | Python |
+| 17 | [Abwägungen bei Agent-Frameworks](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Lernen | Python, TypeScript |
 
 </details>
 
@@ -678,31 +678,31 @@ flowchart TB
 
 | # | Lektion | Typ | Sprachen |
 |:---:|--------|:----:|------|
-| 01 | [Vision Transformer und das Patch-Token-Primitiv](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Lernen | Python |
-| 02 | [CLIP und kontrastives Vision-Language-Pretraining](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Umsetzen | Python |
-| 03 | [BLIP-2 Q-Former als Brücke zwischen Modalitäten](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Umsetzen | Python |
-| 04 | [Flamingo und gated cross-attention](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Lernen | Python |
-| 05 | [LLaVA und visuelles Instruction Tuning](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Umsetzen | Python |
-| 06 | [Vision in beliebiger Auflösung: Patch-n'-Pack und NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Umsetzen | Python |
-| 07 | [Rezepte für VLMs mit offenen Gewichten: Worauf es wirklich ankommt](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Lernen | Python |
-| 08 | [LLaVA-OneVision: Einzelbild, mehrere Bilder, Video](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Umsetzen | Python |
-| 09 | [Qwen-VL-Familie und Video mit dynamischer FPS](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Lernen | Python |
-| 10 | [InternVL3: natives multimodales Pretraining](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Lernen | Python |
-| 11 | [Chameleon: frühe Fusion mit ausschließlich Tokens](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Umsetzen | Python |
-| 12 | [Emu3: Next-Token-Prediction für Generierung](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Lernen | Python |
-| 13 | [Transfusion: autoregressiv und Diffusion](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Umsetzen | Python |
-| 14 | [Show-o: vereinheitlichte diskrete Diffusion](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Lernen | Python |
-| 15 | [Janus-Pro: entkoppelte Encoder](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Umsetzen | Python |
-| 16 | [MIO: Any-to-Any-Streaming](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Lernen | Python |
-| 17 | [Zeitliche Verankerung in Video und Sprache](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Umsetzen | Python |
-| 18 | [Langvideos mit einem Kontext von einer Million Tokens](../../phases/12-multimodal-ai/18-long-video-million-token/) | Umsetzen | Python |
-| 19 | [Audio-Language-Modelle: von Whisper bis AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Umsetzen | Python |
-| 20 | [Omni-Modelle: Thinker-Talker-Streaming](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Umsetzen | Python |
-| 21 | [Verkörperte VLA: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Lernen | Python |
-| 22 | [Dokumente und Diagramme verstehen](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Umsetzen | Python |
-| 23 | [ColPali: Vision-natives Document RAG](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Umsetzen | Python |
-| 24 | [Multimodales RAG und modalitätenübergreifende Suche](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Umsetzen | Python |
-| 25 | [Multimodale Agenten und Computer-Use (Abschlussprojekt)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Umsetzen | Python |
+| 01 | [Vision Transformer und das Patch-Token-Primitiv](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Lernen | Python, TypeScript |
+| 02 | [CLIP und kontrastives Vision-Language-Pretraining](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Umsetzen | Python, TypeScript |
+| 03 | [BLIP-2 Q-Former als Brücke zwischen Modalitäten](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Umsetzen | Python, TypeScript |
+| 04 | [Flamingo und gated cross-attention](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Lernen | Python, TypeScript |
+| 05 | [LLaVA und visuelles Instruction Tuning](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Umsetzen | Python, TypeScript |
+| 06 | [Vision in beliebiger Auflösung: Patch-n'-Pack und NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Umsetzen | Python, TypeScript |
+| 07 | [Rezepte für VLMs mit offenen Gewichten: Worauf es wirklich ankommt](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Lernen | Python, TypeScript |
+| 08 | [LLaVA-OneVision: Einzelbild, mehrere Bilder, Video](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Umsetzen | Python, TypeScript |
+| 09 | [Qwen-VL-Familie und Video mit dynamischer FPS](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Lernen | Python, TypeScript |
+| 10 | [InternVL3: natives multimodales Pretraining](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Lernen | Python, TypeScript |
+| 11 | [Chameleon: frühe Fusion mit ausschließlich Tokens](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Umsetzen | Python, TypeScript |
+| 12 | [Emu3: Next-Token-Prediction für Generierung](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Lernen | Python, TypeScript |
+| 13 | [Transfusion: autoregressiv und Diffusion](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Umsetzen | Python, TypeScript |
+| 14 | [Show-o: vereinheitlichte diskrete Diffusion](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Lernen | Python, TypeScript |
+| 15 | [Janus-Pro: entkoppelte Encoder](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Umsetzen | Python, TypeScript |
+| 16 | [MIO: Any-to-Any-Streaming](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Lernen | Python, TypeScript |
+| 17 | [Zeitliche Verankerung in Video und Sprache](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Umsetzen | Python, TypeScript |
+| 18 | [Langvideos mit einem Kontext von einer Million Tokens](../../phases/12-multimodal-ai/18-long-video-million-token/) | Umsetzen | Python, TypeScript |
+| 19 | [Audio-Language-Modelle: von Whisper bis AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Umsetzen | Python, TypeScript |
+| 20 | [Omni-Modelle: Thinker-Talker-Streaming](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Umsetzen | Python, TypeScript |
+| 21 | [Verkörperte VLA: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Lernen | Python, TypeScript |
+| 22 | [Dokumente und Diagramme verstehen](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Umsetzen | Python, TypeScript |
+| 23 | [ColPali: Vision-natives Document RAG](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Umsetzen | Python, TypeScript |
+| 24 | [Multimodales RAG und modalitätenübergreifende Suche](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Umsetzen | Python, TypeScript |
+| 25 | [Multimodale Agenten und Computer-Use (Abschlussprojekt)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Umsetzen | Python, TypeScript |
 
 </details>
 
@@ -713,50 +713,50 @@ flowchart TB
 | # | Lektion | Typ | Sprachen |
 |:---:|--------|:----:|------|
 | 01 | [Die Tool-Schnittstelle](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Lernen | Python, TypeScript |
-| 02 | [Function Calling im Detail](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Umsetzen | Python |
-| 03 | [Parallele und gestreamte Tool-Aufrufe](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Umsetzen | Python |
-| 04 | [Strukturierte Ausgabe](../../phases/13-tools-and-protocols/04-structured-output/) | Umsetzen | Python |
-| 05 | [Tool-Schema-Design](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Lernen | Python |
-| 06 | [MCP-Grundlagen: zustandslose Anfragen und JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Lernen | Python |
+| 02 | [Function Calling im Detail](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Umsetzen | Python, TypeScript |
+| 03 | [Parallele und gestreamte Tool-Aufrufe](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Umsetzen | Python, TypeScript |
+| 04 | [Strukturierte Ausgabe](../../phases/13-tools-and-protocols/04-structured-output/) | Umsetzen | Python, TypeScript |
+| 05 | [Tool-Schema-Design](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Lernen | Python, TypeScript |
+| 06 | [MCP-Grundlagen: zustandslose Anfragen und JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Lernen | Python, TypeScript |
 | 07 | [Einen MCP-Server bauen: zustandslos mit Python und TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Umsetzen | Python, TypeScript |
-| 08 | [Einen MCP-Client bauen: Entdeckung, Routing und Fallback zwischen Protokollgenerationen](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Umsetzen | Python |
-| 09 | [MCP-Transporte: stdio und zustandsloses Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Lernen | Python |
-| 10 | [MCP-Ressourcen und Prompts: adressierbarer Kontext für zustandslose Server](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Umsetzen | Python |
-| 11 | [MCP-Modelleingabe: Migration von Sampling und zustandsloses MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Umsetzen | Python |
-| 12 | [Explizite Scopes und zustandslose Elicitation](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Umsetzen | Python |
-| 13 | [MCP Tasks Extension: dauerhafte Arbeit auf zustandslosem Kern](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Umsetzen | Python |
-| 14 | [MCP Apps auf dem zustandslosen Protokoll](../../phases/13-tools-and-protocols/14-mcp-apps/) | Umsetzen | Python |
-| 15 | [MCP-Sicherheit: vergiftete Metadaten, Routing und MRTR-Zustand](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Lernen | Python |
-| 16 | [MCP-Autorisierung: CIMD, Issuer Binding, PKCE und Step-Up](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Umsetzen | Python |
-| 17 | [Zustandslose MCP-Gateways und Registry-Zulassung](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Lernen | Python |
-| 18 | [MCP-Auth in Produktion: Issuer-gebundene Registrierung und Tokens](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Umsetzen | Python |
+| 08 | [Einen MCP-Client bauen: Entdeckung, Routing und Fallback zwischen Protokollgenerationen](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Umsetzen | Python, TypeScript |
+| 09 | [MCP-Transporte: stdio und zustandsloses Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Lernen | Python, TypeScript |
+| 10 | [MCP-Ressourcen und Prompts: adressierbarer Kontext für zustandslose Server](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Umsetzen | Python, TypeScript |
+| 11 | [MCP-Modelleingabe: Migration von Sampling und zustandsloses MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Umsetzen | Python, TypeScript |
+| 12 | [Explizite Scopes und zustandslose Elicitation](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Umsetzen | Python, TypeScript |
+| 13 | [MCP Tasks Extension: dauerhafte Arbeit auf zustandslosem Kern](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Umsetzen | Python, TypeScript |
+| 14 | [MCP Apps auf dem zustandslosen Protokoll](../../phases/13-tools-and-protocols/14-mcp-apps/) | Umsetzen | Python, TypeScript |
+| 15 | [MCP-Sicherheit: vergiftete Metadaten, Routing und MRTR-Zustand](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Lernen | Python, TypeScript |
+| 16 | [MCP-Autorisierung: CIMD, Issuer Binding, PKCE und Step-Up](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Umsetzen | Python, TypeScript |
+| 17 | [Zustandslose MCP-Gateways und Registry-Zulassung](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Lernen | Python, TypeScript |
+| 18 | [MCP-Auth in Produktion: Issuer-gebundene Registrierung und Tokens](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Umsetzen | Python, TypeScript |
 | 19 | [A2A-Protokoll](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Umsetzen | Python, TypeScript |
-| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Umsetzen | Python |
-| 21 | [LLM-Routing-Schicht](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Lernen | Python |
-| 22 | [Agent Skills: portabler Vertrag und Laufzeitgrenze](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Umsetzen | Python |
-| 23 | [Abschlussprojekt: zustandsloses Tool-Ökosystem](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Umsetzen | Python |
-| 24 | [Skill Discovery und progressive Offenlegung](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Umsetzen | Python |
-| 25 | [Skill-Aufruf und Routing](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Umsetzen | Python |
-| 26 | [Skill-Berechtigungen, Sandboxes und Vertrauen](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Umsetzen | Python |
-| 27 | [Skill-Evaluierungen, Packaging und Portierbarkeit](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Umsetzen | Python |
-| 28 | [MCP-Tool-Verträge und Inhalte](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Umsetzen | Python |
-| 29 | [MCP-Zuverlässigkeit, Abbruch und Flow Control](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Umsetzen | Python |
-| 30 | [MCP-Registry-Lieferkette: Zulassung, Drift und Rollback](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Umsetzen | Python |
-| 31 | [MCP-Konformitätsengineering: Versionierung, Nachweise und Betrieb](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Umsetzen | Python |
-| 32 | [Programmanatomie: ELF von Grund auf lesen](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Umsetzen | Python |
-| 33 | [Disassemblierung und Kontrollflussgraphen](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Umsetzen | Python |
+| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Umsetzen | Python, TypeScript |
+| 21 | [LLM-Routing-Schicht](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Lernen | Python, TypeScript |
+| 22 | [Agent Skills: portabler Vertrag und Laufzeitgrenze](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Umsetzen | Python, TypeScript |
+| 23 | [Abschlussprojekt: zustandsloses Tool-Ökosystem](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Umsetzen | Python, TypeScript |
+| 24 | [Skill Discovery und progressive Offenlegung](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Umsetzen | Python, TypeScript |
+| 25 | [Skill-Aufruf und Routing](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Umsetzen | Python, TypeScript |
+| 26 | [Skill-Berechtigungen, Sandboxes und Vertrauen](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Umsetzen | Python, TypeScript |
+| 27 | [Skill-Evaluierungen, Packaging und Portierbarkeit](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Umsetzen | Python, TypeScript |
+| 28 | [MCP-Tool-Verträge und Inhalte](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Umsetzen | Python, TypeScript |
+| 29 | [MCP-Zuverlässigkeit, Abbruch und Flow Control](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Umsetzen | Python, TypeScript |
+| 30 | [MCP-Registry-Lieferkette: Zulassung, Drift und Rollback](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Umsetzen | Python, TypeScript |
+| 31 | [MCP-Konformitätsengineering: Versionierung, Nachweise und Betrieb](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Umsetzen | Python, TypeScript |
+| 32 | [Programmanatomie: ELF von Grund auf lesen](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Umsetzen | Python, TypeScript |
+| 33 | [Disassemblierung und Kontrollflussgraphen](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Umsetzen | Python, TypeScript |
 | 34 | [Maschinencode zu Pseudocode anheben](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Umsetzen | Python |
-| 35 | [Nachweise, Konfidenz und Unbekannte in der Binäranalyse](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Umsetzen | Python |
-| 36 | [Neu bauen und Gleichheit beweisen](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Umsetzen | Python |
-| 37 | [Die Landschaft des Reverse Engineering](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Umsetzen | Python |
-| 38 | [Aufrufkonventionen und Stack-Frames](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Umsetzen | Python |
-| 39 | [Compiler-Idiome und Optimierung](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Umsetzen | Python |
-| 40 | [Linken, Laden und gestrippte Binärdateien](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Umsetzen | Python |
-| 41 | [Daten und Typen rekonstruieren](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Umsetzen | Python |
-| 42 | [Dynamische Analyse des eigenen Programms](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Umsetzen | Python |
-| 43 | [Bytecode und verwaltete Formate](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Umsetzen | Python |
+| 35 | [Nachweise, Konfidenz und Unbekannte in der Binäranalyse](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Umsetzen | Python, TypeScript |
+| 36 | [Neu bauen und Gleichheit beweisen](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Umsetzen | Python, TypeScript |
+| 37 | [Die Landschaft des Reverse Engineering](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Umsetzen | Python, TypeScript |
+| 38 | [Aufrufkonventionen und Stack-Frames](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Umsetzen | Python, TypeScript |
+| 39 | [Compiler-Idiome und Optimierung](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Umsetzen | Python, TypeScript |
+| 40 | [Linken, Laden und gestrippte Binärdateien](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Umsetzen | Python, TypeScript |
+| 41 | [Daten und Typen rekonstruieren](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Umsetzen | Python, TypeScript |
+| 42 | [Dynamische Analyse des eigenen Programms](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Umsetzen | Python, TypeScript |
+| 43 | [Bytecode und verwaltete Formate](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Umsetzen | Python, TypeScript |
 | 44 | [Binär-Diffing und symbolische Ausführung](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Umsetzen | Python |
-| 45 | [KI-gestütztes Reverse Engineering](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Umsetzen | Python |
+| 45 | [KI-gestütztes Reverse Engineering](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Umsetzen | Python, TypeScript |
 
 Die Lektionen 06–18 und 28–31 bilden den fokussierten [MCP-Lernpfad](../../learning-paths/model-context-protocol.json). Das Manifest legt diese Reihenfolge fest: 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Starte über den hostabhängigen Aufruf für `learn-mcp`. Lektion 23 ist das einzige optionale Abschlussprojekt und setzt zusätzlich die Lektionen 19 und 20 voraus.
 
@@ -771,59 +771,59 @@ Die Lektionen 22 und 24–27 bilden den fokussierten [Lernpfad zu Agent Skills](
 | # | Lektion | Typ | Sprachen |
 |:---:|--------|:----:|------|
 | 01 | [Die Agent-Schleife](../../phases/14-agent-engineering/01-the-agent-loop/) | Umsetzen | Python, TypeScript |
-| 02 | [ReWOO und Planen-und-Ausführen](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Umsetzen | Python |
-| 03 | [Reflexion und verbales bestärkendes Lernen](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Umsetzen | Python |
-| 04 | [Tree of Thoughts und LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Umsetzen | Python |
-| 05 | [Self-Refine und CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Umsetzen | Python |
+| 02 | [ReWOO und Planen-und-Ausführen](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Umsetzen | Python, TypeScript |
+| 03 | [Reflexion und verbales bestärkendes Lernen](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Umsetzen | Python, TypeScript |
+| 04 | [Tree of Thoughts und LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Umsetzen | Python, TypeScript |
+| 05 | [Self-Refine und CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Umsetzen | Python, TypeScript |
 | 06 | [Tool-Nutzung und Function Calling](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Umsetzen | Python, TypeScript |
-| 07 | [Agentengedächtnis: virtueller Kontext und Memory Paging](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Umsetzen | Python |
-| 08 | [Memory-Blöcke und Berechnung in Leerlaufzeiten](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Umsetzen | Python |
-| 09 | [Hybrides Gedächtnis: Vektor + Graph + KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Umsetzen | Python |
-| 10 | [Skill-Bibliotheken und lebenslanges Lernen (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Umsetzen | Python |
-| 11 | [Planung mit HTN und evolutionärer Suche](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Umsetzen | Python |
-| 12 | [Workflow-Muster von Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Umsetzen | Python |
+| 07 | [Agentengedächtnis: virtueller Kontext und Memory Paging](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Umsetzen | Python, TypeScript |
+| 08 | [Memory-Blöcke und Berechnung in Leerlaufzeiten](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Umsetzen | Python, TypeScript |
+| 09 | [Hybrides Gedächtnis: Vektor + Graph + KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Umsetzen | Python, TypeScript |
+| 10 | [Skill-Bibliotheken und lebenslanges Lernen (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Umsetzen | Python, TypeScript |
+| 11 | [Planung mit HTN und evolutionärer Suche](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Umsetzen | Python, TypeScript |
+| 12 | [Workflow-Muster von Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Umsetzen | Python, TypeScript |
 | 13 | [Zustandsbehaftete Graph-Orchestrierung: dauerhafte Ausführung und Checkpoints](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Umsetzen | Python, TypeScript |
-| 14 | [Actor-Modell für Agenten](../../phases/14-agent-engineering/14-autogen-actor-model/) | Umsetzen | Python |
+| 14 | [Actor-Modell für Agenten](../../phases/14-agent-engineering/14-autogen-actor-model/) | Umsetzen | Python, TypeScript |
 | 15 | [Rollenbasierte Agententeams: Rollen, Aufgaben, Prozesse](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Umsetzen | Python |
-| 16 | [OpenAI Agents SDK: Übergaben, Guardrails, Tracing](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Umsetzen | Python |
-| 17 | [Harness als Bibliothek: Subagenten und Session Store](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Umsetzen | Python |
+| 16 | [OpenAI Agents SDK: Übergaben, Guardrails, Tracing](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Umsetzen | Python, TypeScript |
+| 17 | [Harness als Bibliothek: Subagenten und Session Store](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Umsetzen | Python, TypeScript |
 | 18 | [Laufzeitumgebungen für Produktionsagenten](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Lernen | Python, TypeScript |
-| 19 | [Benchmarks: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Lernen | Python |
-| 20 | [Benchmarks: WebArena und OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Lernen | Python |
-| 21 | [Computer-Use: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Umsetzen | Python |
-| 22 | [Sprachagenten: Pipecat und LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Umsetzen | Python |
-| 23 | [OpenTelemetry GenAI: semantische Konventionen](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Umsetzen | Python |
-| 24 | [Agent-Observability: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Lernen | Python |
-| 25 | [Multi-Agent-Debatte und Zusammenarbeit](../../phases/14-agent-engineering/25-multi-agent-debate/) | Umsetzen | Python |
-| 26 | [Fehlermodi: Warum Agenten scheitern](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Umsetzen | Python |
-| 27 | [Prompt Injection und die PVE-Abwehr](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Umsetzen | Python |
-| 28 | [Orchestrierungsmuster: Supervisor, Swarm, hierarchisch](../../phases/14-agent-engineering/28-orchestration-patterns/) | Umsetzen | Python |
-| 29 | [Laufzeitumgebungen für die Produktion: Queue, Event, Cron](../../phases/14-agent-engineering/29-production-runtimes/) | Lernen | Python |
-| 30 | [Eval-getriebene Agentenentwicklung](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Umsetzen | Python |
-| 31 | [Agent Workbench: Warum leistungsfähige Modelle trotzdem scheitern](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Lernen | Python |
-| 32 | [Die minimale Agent Workbench](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Umsetzen | Python |
-| 33 | [Agent-Anweisungen als ausführbare Einschränkungen](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Umsetzen | Python |
-| 34 | [Repository-Gedächtnis und dauerhafter Zustand](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Umsetzen | Python |
-| 35 | [Initialisierungsskripte für Agenten](../../phases/14-agent-engineering/35-initialization-scripts/) | Umsetzen | Python |
-| 36 | [Scope-Verträge und Aufgabengrenzen](../../phases/14-agent-engineering/36-scope-contracts/) | Umsetzen | Python |
-| 37 | [Feedback-Schleifen zur Laufzeit](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Umsetzen | Python |
-| 38 | [Verifizierungsschranken](../../phases/14-agent-engineering/38-verification-gates/) | Umsetzen | Python |
-| 39 | [Reviewer-Agent: Builder und Bewerter trennen](../../phases/14-agent-engineering/39-reviewer-agent/) | Umsetzen | Python |
-| 40 | [Übergabe zwischen mehreren Sitzungen](../../phases/14-agent-engineering/40-multi-session-handoff/) | Umsetzen | Python |
-| 41 | [Die Workbench in einem echten Repository](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Umsetzen | Python |
-| 42 | [Abschlussprojekt: ein wiederverwendbares Agent-Workbench-Paket veröffentlichen](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Umsetzen | Python |
-| 43 | [Aufgabe klären, bevor der Agent Code schreibt](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Umsetzen | Python |
-| 44 | [Einen ausführungsplan mit Nachweisen erstellen](../../phases/14-agent-engineering/44-plan-from-evidence/) | Umsetzen | Python |
-| 45 | [Agentenarbeit mit Isolation und Merge-Verträgen delegieren](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Umsetzen | Python |
-| 46 | [Jede Agent-Korrektur in eine Systemverbesserung umwandeln](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Umsetzen | Python |
-| 47 | [Das Ergebnis definieren, bevor du die Ausgabe auswählst](../../phases/14-agent-engineering/47-outcomes-before-output/) | Umsetzen | Python |
-| 48 | [Den tatsächlich gelebten Arbeitsablauf ermitteln](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Umsetzen | Python |
-| 49 | [Annahmen erfassen und zuerst die riskanteste klären](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Umsetzen | Python |
-| 50 | [Den kleinsten Ausschnitt wählen, der die Entscheidung ändern kann](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Umsetzen | Python |
-| 51 | [Spezifikationen schreiben, die Urteilsvermögen bewahren](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Umsetzen | Python |
-| 52 | [Erfolgsmetriken festlegen, bevor Ergebnisse vorliegen](../../phases/14-agent-engineering/52-design-success-metrics/) | Umsetzen | Python |
-| 53 | [Bewusst zwischen Prototyp, Pilot und Produktion wählen](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Umsetzen | Python |
-| 54 | [Eine Feedback-Schleife mit klarer Zuständigkeit und Abschaltung einrichten](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Umsetzen | Python |
+| 19 | [Benchmarks: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Lernen | Python, TypeScript |
+| 20 | [Benchmarks: WebArena und OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Lernen | Python, TypeScript |
+| 21 | [Computer-Use: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Umsetzen | Python, TypeScript |
+| 22 | [Sprachagenten: Pipecat und LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Umsetzen | Python, TypeScript |
+| 23 | [OpenTelemetry GenAI: semantische Konventionen](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Umsetzen | Python, TypeScript |
+| 24 | [Agent-Observability: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Lernen | Python, TypeScript |
+| 25 | [Multi-Agent-Debatte und Zusammenarbeit](../../phases/14-agent-engineering/25-multi-agent-debate/) | Umsetzen | Python, TypeScript |
+| 26 | [Fehlermodi: Warum Agenten scheitern](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Umsetzen | Python, TypeScript |
+| 27 | [Prompt Injection und die PVE-Abwehr](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Umsetzen | Python, TypeScript |
+| 28 | [Orchestrierungsmuster: Supervisor, Swarm, hierarchisch](../../phases/14-agent-engineering/28-orchestration-patterns/) | Umsetzen | Python, TypeScript |
+| 29 | [Laufzeitumgebungen für die Produktion: Queue, Event, Cron](../../phases/14-agent-engineering/29-production-runtimes/) | Lernen | Python, TypeScript |
+| 30 | [Eval-getriebene Agentenentwicklung](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Umsetzen | Python, TypeScript |
+| 31 | [Agent Workbench: Warum leistungsfähige Modelle trotzdem scheitern](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Lernen | Python, TypeScript |
+| 32 | [Die minimale Agent Workbench](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Umsetzen | Python, TypeScript |
+| 33 | [Agent-Anweisungen als ausführbare Einschränkungen](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Umsetzen | Python, TypeScript |
+| 34 | [Repository-Gedächtnis und dauerhafter Zustand](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Umsetzen | Python, TypeScript |
+| 35 | [Initialisierungsskripte für Agenten](../../phases/14-agent-engineering/35-initialization-scripts/) | Umsetzen | Python, TypeScript |
+| 36 | [Scope-Verträge und Aufgabengrenzen](../../phases/14-agent-engineering/36-scope-contracts/) | Umsetzen | Python, TypeScript |
+| 37 | [Feedback-Schleifen zur Laufzeit](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Umsetzen | Python, TypeScript |
+| 38 | [Verifizierungsschranken](../../phases/14-agent-engineering/38-verification-gates/) | Umsetzen | Python, TypeScript |
+| 39 | [Reviewer-Agent: Builder und Bewerter trennen](../../phases/14-agent-engineering/39-reviewer-agent/) | Umsetzen | Python, TypeScript |
+| 40 | [Übergabe zwischen mehreren Sitzungen](../../phases/14-agent-engineering/40-multi-session-handoff/) | Umsetzen | Python, TypeScript |
+| 41 | [Die Workbench in einem echten Repository](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Umsetzen | Python, TypeScript |
+| 42 | [Abschlussprojekt: ein wiederverwendbares Agent-Workbench-Paket veröffentlichen](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Umsetzen | Python, TypeScript |
+| 43 | [Aufgabe klären, bevor der Agent Code schreibt](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Umsetzen | Python, TypeScript |
+| 44 | [Einen ausführungsplan mit Nachweisen erstellen](../../phases/14-agent-engineering/44-plan-from-evidence/) | Umsetzen | Python, TypeScript |
+| 45 | [Agentenarbeit mit Isolation und Merge-Verträgen delegieren](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Umsetzen | Python, TypeScript |
+| 46 | [Jede Agent-Korrektur in eine Systemverbesserung umwandeln](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Umsetzen | Python, TypeScript |
+| 47 | [Das Ergebnis definieren, bevor du die Ausgabe auswählst](../../phases/14-agent-engineering/47-outcomes-before-output/) | Umsetzen | Python, TypeScript |
+| 48 | [Den tatsächlich gelebten Arbeitsablauf ermitteln](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Umsetzen | Python, TypeScript |
+| 49 | [Annahmen erfassen und zuerst die riskanteste klären](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Umsetzen | Python, TypeScript |
+| 50 | [Den kleinsten Ausschnitt wählen, der die Entscheidung ändern kann](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Umsetzen | Python, TypeScript |
+| 51 | [Spezifikationen schreiben, die Urteilsvermögen bewahren](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Umsetzen | Python, TypeScript |
+| 52 | [Erfolgsmetriken festlegen, bevor Ergebnisse vorliegen](../../phases/14-agent-engineering/52-design-success-metrics/) | Umsetzen | Python, TypeScript |
+| 53 | [Bewusst zwischen Prototyp, Pilot und Produktion wählen](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Umsetzen | Python, TypeScript |
+| 54 | [Eine Feedback-Schleife mit klarer Zuständigkeit und Abschaltung einrichten](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Umsetzen | Python, TypeScript |
 
 Jede Workbench-Lektion der Phase 14 (31–42) enthält eine `mission.md`, die den Agenten einweist, bevor er die vollständigen Lektionsunterlagen öffnet.
 
@@ -837,28 +837,28 @@ Die Lektionen 31–46 bilden den [Pfad für agentengestütztes Engineering](../.
 
 | # | Lektion | Typ | Sprachen |
 |:---:|--------|:----:|------|
-| 01 | [Von Chatbots zu Agenten mit langem Planungshorizont (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Lernen | Python |
-| 02 | [STaR, V-STaR, Quiet-STaR: selbstüberwachtes Schlussfolgern](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Lernen | Python |
-| 03 | [AlphaEvolve: evolutionäre Coding-Agenten](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Lernen | Python |
-| 04 | [Darwin-Gödel-Maschine: selbstmodifizierende Agenten](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Lernen | Python |
-| 05 | [AI Scientist v2: Forschung auf Workshop-Niveau](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Lernen | Python |
-| 06 | [Automatisierte Alignment-Forschung (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Lernen | Python |
-| 07 | [Rekursive Selbstverbesserung: Fähigkeiten vs. Alignment](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Lernen | Python |
-| 08 | [Begrenzte Selbstverbesserungsarchitekturen](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Lernen | Python |
-| 09 | [Landschaft autonomer Coding-Agenten (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Lernen | Python |
-| 10 | [Berechtigungsmodi für autonome Agenten](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Lernen | Python |
-| 11 | [Browser-Agenten und indirekte Prompt Injection](../../phases/15-autonomous-systems/11-browser-agents/) | Lernen | Python |
-| 12 | [Dauerhafte Ausführung für lang laufende Agenten](../../phases/15-autonomous-systems/12-durable-execution/) | Lernen | Python |
-| 13 | [Aktionsbudgets, Iterationsgrenzen und Kostensteuerung](../../phases/15-autonomous-systems/13-cost-governors/) | Lernen | Python |
-| 14 | [Notausschalter, Circuit Breaker und Canary Tokens](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Lernen | Python |
-| 15 | [HITL: erst vorschlagen, dann bestätigen](../../phases/15-autonomous-systems/15-propose-then-commit/) | Lernen | Python |
-| 16 | [Checkpoints und Rollback](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Lernen | Python |
-| 17 | [Constitutional AI und Regelüberschreibungen](../../phases/15-autonomous-systems/17-constitutional-ai/) | Lernen | Python |
-| 18 | [Llama Guard und Klassifikation von Ein- und Ausgaben](../../phases/15-autonomous-systems/18-llama-guard/) | Lernen | Python |
-| 19 | [Anthropics Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Lernen | Python |
-| 20 | [OpenAI Preparedness Framework und DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Lernen | Python |
-| 21 | [METR-Zeithorizonte und externe Evaluierung](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Lernen | Python |
-| 22 | [CAIS, CAISI und Risiken auf gesellschaftlicher Ebene](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Lernen | Python |
+| 01 | [Von Chatbots zu Agenten mit langem Planungshorizont (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Lernen | Python, TypeScript |
+| 02 | [STaR, V-STaR, Quiet-STaR: selbstüberwachtes Schlussfolgern](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Lernen | Python, TypeScript |
+| 03 | [AlphaEvolve: evolutionäre Coding-Agenten](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Lernen | Python, TypeScript |
+| 04 | [Darwin-Gödel-Maschine: selbstmodifizierende Agenten](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Lernen | Python, TypeScript |
+| 05 | [AI Scientist v2: Forschung auf Workshop-Niveau](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Lernen | Python, TypeScript |
+| 06 | [Automatisierte Alignment-Forschung (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Lernen | Python, TypeScript |
+| 07 | [Rekursive Selbstverbesserung: Fähigkeiten vs. Alignment](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Lernen | Python, TypeScript |
+| 08 | [Begrenzte Selbstverbesserungsarchitekturen](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Lernen | Python, TypeScript |
+| 09 | [Landschaft autonomer Coding-Agenten (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Lernen | Python, TypeScript |
+| 10 | [Berechtigungsmodi für autonome Agenten](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Lernen | Python, TypeScript |
+| 11 | [Browser-Agenten und indirekte Prompt Injection](../../phases/15-autonomous-systems/11-browser-agents/) | Lernen | Python, TypeScript |
+| 12 | [Dauerhafte Ausführung für lang laufende Agenten](../../phases/15-autonomous-systems/12-durable-execution/) | Lernen | Python, TypeScript |
+| 13 | [Aktionsbudgets, Iterationsgrenzen und Kostensteuerung](../../phases/15-autonomous-systems/13-cost-governors/) | Lernen | Python, TypeScript |
+| 14 | [Notausschalter, Circuit Breaker und Canary Tokens](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Lernen | Python, TypeScript |
+| 15 | [HITL: erst vorschlagen, dann bestätigen](../../phases/15-autonomous-systems/15-propose-then-commit/) | Lernen | Python, TypeScript |
+| 16 | [Checkpoints und Rollback](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Lernen | Python, TypeScript |
+| 17 | [Constitutional AI und Regelüberschreibungen](../../phases/15-autonomous-systems/17-constitutional-ai/) | Lernen | Python, TypeScript |
+| 18 | [Llama Guard und Klassifikation von Ein- und Ausgaben](../../phases/15-autonomous-systems/18-llama-guard/) | Lernen | Python, TypeScript |
+| 19 | [Anthropics Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Lernen | Python, TypeScript |
+| 20 | [OpenAI Preparedness Framework und DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Lernen | Python, TypeScript |
+| 21 | [METR-Zeithorizonte und externe Evaluierung](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Lernen | Python, TypeScript |
+| 22 | [CAIS, CAISI und Risiken auf gesellschaftlicher Ebene](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Lernen | Python, TypeScript |
 
 </details>
 
@@ -869,30 +869,30 @@ Die Lektionen 31–46 bilden den [Pfad für agentengestütztes Engineering](../.
 | # | Lektion | Typ | Sprachen |
 |:---:|--------|:----:|------|
 | 01 | [Warum Multi-Agent-Systeme?](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | Lernen | TypeScript |
-| 02 | [FIPA-ACL: Ursprünge und Sprechakte](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Lernen | Python |
+| 02 | [FIPA-ACL: Ursprünge und Sprechakte](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Lernen | Python, TypeScript |
 | 03 | [Kommunikationsprotokolle](../../phases/16-multi-agent-and-swarms/03-communication-protocols/) | Umsetzen | TypeScript |
-| 04 | [Das Grundmodell von Multi-Agent-Systemen](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Lernen | Python |
-| 05 | [Supervisor-/Orchestrator-Worker-Muster](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Umsetzen | Python |
-| 06 | [Hierarchische Architektur und Drift bei der Zerlegung](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Lernen | Python |
-| 07 | [Society of Mind und Multi-Agent-Debatten](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Umsetzen | Python |
-| 08 | [Rollenspezialisierung: Planer, Kritiker, Ausführer, Prüfer](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Umsetzen | Python |
-| 09 | [Parallele Schwärme und vernetzte Architekturen](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Umsetzen | Python |
-| 10 | [Gruppenchats und Auswahl des Sprechers](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Umsetzen | Python |
-| 11 | [Übergaben und Routinen (zustandslose Orchestrierung)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Umsetzen | Python |
-| 12 | [A2A: das Agent-to-Agent-Protokoll](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Umsetzen | Python |
-| 13 | [Gemeinsamer Speicher und Blackboard-Muster](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Umsetzen | Python |
-| 14 | [Konsens und byzantinische Fehlertoleranz](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Umsetzen | Python |
-| 15 | [Abstimmung, Selbstkonsistenz und Debattentopologie](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Umsetzen | Python |
-| 16 | [Verhandlung und Aushandlung](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Umsetzen | Python |
-| 17 | [Generative Agenten und emergente Simulation](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Umsetzen | Python |
-| 18 | [Theory of Mind und emergente Koordination](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Umsetzen | Python |
-| 19 | [Schwarmoptimierung (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Umsetzen | Python |
-| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Lernen | Python |
-| 21 | [Agentenökonomien, Token-Anreize und Reputation](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Lernen | Python |
-| 22 | [Skalierung in der Produktion: Queues, Checkpoints, Dauerhaftigkeit](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Umsetzen | Python |
-| 23 | [Fehlermodi: MAST, Gruppendenken und Monokultur](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Lernen | Python |
-| 24 | [Evaluierung und Koordinations-Benchmarks](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Lernen | Python |
-| 25 | [Fallstudien und Stand der Technik 2026](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Lernen | Python |
+| 04 | [Das Grundmodell von Multi-Agent-Systemen](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Lernen | Python, TypeScript |
+| 05 | [Supervisor-/Orchestrator-Worker-Muster](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Umsetzen | Python, TypeScript |
+| 06 | [Hierarchische Architektur und Drift bei der Zerlegung](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Lernen | Python, TypeScript |
+| 07 | [Society of Mind und Multi-Agent-Debatten](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Umsetzen | Python, TypeScript |
+| 08 | [Rollenspezialisierung: Planer, Kritiker, Ausführer, Prüfer](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Umsetzen | Python, TypeScript |
+| 09 | [Parallele Schwärme und vernetzte Architekturen](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Umsetzen | Python, TypeScript |
+| 10 | [Gruppenchats und Auswahl des Sprechers](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Umsetzen | Python, TypeScript |
+| 11 | [Übergaben und Routinen (zustandslose Orchestrierung)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Umsetzen | Python, TypeScript |
+| 12 | [A2A: das Agent-to-Agent-Protokoll](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Umsetzen | Python, TypeScript |
+| 13 | [Gemeinsamer Speicher und Blackboard-Muster](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Umsetzen | Python, TypeScript |
+| 14 | [Konsens und byzantinische Fehlertoleranz](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Umsetzen | Python, TypeScript |
+| 15 | [Abstimmung, Selbstkonsistenz und Debattentopologie](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Umsetzen | Python, TypeScript |
+| 16 | [Verhandlung und Aushandlung](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Umsetzen | Python, TypeScript |
+| 17 | [Generative Agenten und emergente Simulation](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Umsetzen | Python, TypeScript |
+| 18 | [Theory of Mind und emergente Koordination](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Umsetzen | Python, TypeScript |
+| 19 | [Schwarmoptimierung (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Umsetzen | Python, TypeScript |
+| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Lernen | Python, TypeScript |
+| 21 | [Agentenökonomien, Token-Anreize und Reputation](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Lernen | Python, TypeScript |
+| 22 | [Skalierung in der Produktion: Queues, Checkpoints, Dauerhaftigkeit](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Umsetzen | Python, TypeScript |
+| 23 | [Fehlermodi: MAST, Gruppendenken und Monokultur](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Lernen | Python, TypeScript |
+| 24 | [Evaluierung und Koordinations-Benchmarks](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Lernen | Python, TypeScript |
+| 25 | [Fallstudien und Stand der Technik 2026](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Lernen | Python, TypeScript |
 
 </details>
 
@@ -902,35 +902,35 @@ Die Lektionen 31–46 bilden den [Pfad für agentengestütztes Engineering](../.
 
 | # | Lektion | Typ | Sprachen |
 |:---:|--------|:----:|------|
-| 01 | [Verwaltete LLM-Plattformen: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Lernen | Python |
-| 02 | [Ökonomie von Inferenzplattformen: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Lernen | Python |
-| 03 | [GPU-Autoskalierung auf Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Lernen | Python |
-| 04 | [Interna von Serving-Engines: PagedAttention, Continuous Batching, Chunked Prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Lernen | Python |
-| 05 | [EAGLE-3-Speculative-Decoding in der Produktion](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Lernen | Python |
-| 06 | [Serving mit Prefix-Cache: RadixAttention und KV-Wiederverwendung](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Lernen | Python |
-| 07 | [Hardware-spezialisierte Inferenzkompilierung: FP8 und NVFP4 auf Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Lernen | Python |
-| 08 | [Inferenzmetriken: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Lernen | Python |
-| 09 | [Quantisierung in der Produktion: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Lernen | Python |
-| 10 | [Kaltstart für serverlose LLMs abmildern](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Lernen | Python |
-| 11 | [Multi-Region-LLM-Serving und KV-Cache-Lokalität](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Lernen | Python |
-| 12 | [Edge-Inferenz: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Lernen | Python |
+| 01 | [Verwaltete LLM-Plattformen: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Lernen | Python, TypeScript |
+| 02 | [Ökonomie von Inferenzplattformen: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Lernen | Python, TypeScript |
+| 03 | [GPU-Autoskalierung auf Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Lernen | Python, TypeScript |
+| 04 | [Interna von Serving-Engines: PagedAttention, Continuous Batching, Chunked Prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Lernen | Python, TypeScript |
+| 05 | [EAGLE-3-Speculative-Decoding in der Produktion](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Lernen | Python, TypeScript |
+| 06 | [Serving mit Prefix-Cache: RadixAttention und KV-Wiederverwendung](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Lernen | Python, TypeScript |
+| 07 | [Hardware-spezialisierte Inferenzkompilierung: FP8 und NVFP4 auf Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Lernen | Python, TypeScript |
+| 08 | [Inferenzmetriken: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Lernen | Python, TypeScript |
+| 09 | [Quantisierung in der Produktion: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Lernen | Python, TypeScript |
+| 10 | [Kaltstart für serverlose LLMs abmildern](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Lernen | Python, TypeScript |
+| 11 | [Multi-Region-LLM-Serving und KV-Cache-Lokalität](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Lernen | Python, TypeScript |
+| 12 | [Edge-Inferenz: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Lernen | Python, TypeScript |
 | 13 | [LLM-Observability-Stack auswählen](../../phases/17-infrastructure-and-production/13-llm-observability/) | Lernen | Python, TypeScript |
 | 14 | [Ökonomie von Prompt-Caching und semantischem Caching](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Lernen | Python, TypeScript |
 | 15 | [Batch-APIs: 50 % Rabatt als Industriestandard](../../phases/17-infrastructure-and-production/15-batch-apis/) | Lernen | Python, TypeScript |
 | 16 | [Model-Routing als Hebel zur Kostensenkung](../../phases/17-infrastructure-and-production/16-model-routing/) | Lernen | Python, TypeScript |
-| 17 | [Disaggregiertes Prefill/Decode: NVIDIA Dynamo und llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Lernen | Python |
-| 18 | [Serving-Stack für die Produktion: KV-Offloading und Cache-bewusstes Routing](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Lernen | Python |
+| 17 | [Disaggregiertes Prefill/Decode: NVIDIA Dynamo und llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Lernen | Python, TypeScript |
+| 18 | [Serving-Stack für die Produktion: KV-Offloading und Cache-bewusstes Routing](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Lernen | Python, TypeScript |
 | 19 | [AI-Gateways: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Lernen | Python, TypeScript |
 | 20 | [Shadow-, Canary- und schrittweise Deployments](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Lernen | Python, TypeScript |
-| 21 | [A/B-Tests für LLM-Funktionen: GrowthBook und Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Lernen | Python |
-| 22 | [Lasttests für LLM-APIs: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Umsetzen | Python |
-| 23 | [SRE für KI: Multi-Agent-Incident-Response](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Lernen | Python |
-| 24 | [Chaos Engineering für LLM-Produktionssysteme](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Lernen | Python |
-| 25 | [Sicherheit: Secrets, PII-Bereinigung, Audit-Logs](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Lernen | Python |
-| 26 | [Compliance: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Lernen | Python |
-| 27 | [FinOps für LLMs: Stückkosten und mandantenübergreifende Zuordnung](../../phases/17-infrastructure-and-production/27-finops-llms/) | Lernen | Python |
-| 28 | [Self-Hosted-Serving auswählen: Engine, Hardware und Skalierung aufeinander abstimmen](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Lernen | Python |
-| 29 | [Demo-Oberflächen für Modelle: von der Funktion zur teilbaren App](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Umsetzen | Python |
+| 21 | [A/B-Tests für LLM-Funktionen: GrowthBook und Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Lernen | Python, TypeScript |
+| 22 | [Lasttests für LLM-APIs: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Umsetzen | Python, TypeScript |
+| 23 | [SRE für KI: Multi-Agent-Incident-Response](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Lernen | Python, TypeScript |
+| 24 | [Chaos Engineering für LLM-Produktionssysteme](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Lernen | Python, TypeScript |
+| 25 | [Sicherheit: Secrets, PII-Bereinigung, Audit-Logs](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Lernen | Python, TypeScript |
+| 26 | [Compliance: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Lernen | Python, TypeScript |
+| 27 | [FinOps für LLMs: Stückkosten und mandantenübergreifende Zuordnung](../../phases/17-infrastructure-and-production/27-finops-llms/) | Lernen | Python, TypeScript |
+| 28 | [Self-Hosted-Serving auswählen: Engine, Hardware und Skalierung aufeinander abstimmen](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Lernen | Python, TypeScript |
+| 29 | [Demo-Oberflächen für Modelle: von der Funktion zur teilbaren App](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Umsetzen | Python, TypeScript |
 
 </details>
 
@@ -940,36 +940,36 @@ Die Lektionen 31–46 bilden den [Pfad für agentengestütztes Engineering](../.
 
 | # | Lektion | Typ | Sprachen |
 |:---:|--------|:----:|------|
-| 01 | [Anweisungen befolgen als Alignment-Signal](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Lernen | Python |
-| 02 | [Reward Hacking und Goodharts Gesetz](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Lernen | Python |
-| 03 | [Familie der Direct-Preference-Optimization-Verfahren](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Lernen | Python |
-| 04 | [Schmeichelei als Verstärkung durch RLHF](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Lernen | Python |
-| 05 | [Constitutional AI und RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Lernen | Python |
-| 06 | [Mesa-Optimierung und täuschendes Alignment](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Lernen | Python |
-| 07 | [Schlafende Agenten: dauerhafte Täuschung](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Lernen | Python |
-| 08 | [Verdeckte Planung in Frontier-Modellen im In-Context](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Lernen | Python |
-| 09 | [Vortäuschung von Alignment](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Lernen | Python |
-| 10 | [KI-Steuerung: Sicherheit trotz Umgehungsversuchen](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Lernen | Python |
-| 11 | [Skalierbare Überwachung: von schwachen zu starken Modellen](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Lernen | Python |
-| 12 | [Red Teaming: PAIR und automatisierte Angriffe](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Umsetzen | Python |
-| 13 | [Many-Shot-Jailbreaks](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Lernen | Python |
-| 14 | [ASCII-Art und visuelle Jailbreaks](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Umsetzen | Python |
-| 15 | [Indirekte Prompt Injection](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Umsetzen | Python |
-| 16 | [Red-Team-Werkzeuge: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Umsetzen | Python |
-| 17 | [WMDP und Evaluierung von Dual-Use-Fähigkeiten](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Lernen | Python |
-| 18 | [Safety-Frameworks für Frontier-Modelle: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Lernen | Python |
-| 19 | [Forschung zum Wohlergehen von Modellen](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Lernen | Python |
-| 20 | [Bias und Schaden durch verzerrte Repräsentation](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Umsetzen | Python |
-| 21 | [Fairness-Kriterien: Gruppen-, Individual- und kontrafaktische Fairness](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Lernen | Python |
-| 22 | [Differential Privacy für LLMs](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Umsetzen | Python |
-| 23 | [Wasserzeichen: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Umsetzen | Python |
-| 24 | [Regulierungsrahmen: EU, USA, Großbritannien, Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Lernen | Python |
-| 25 | [EchoLeak und CVEs für KI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Lernen | Python |
-| 26 | [Model-, System- und Dataset-Cards](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Umsetzen | Python |
-| 27 | [Datenherkunft und Governance von Trainingsdaten](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Lernen | Python |
-| 28 | [Ökosystem der Alignment-Forschung: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Lernen | Python |
-| 29 | [Moderationssysteme: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Umsetzen | Python |
-| 30 | [Dual-Use-Risiken: Cyber, Bio, Chemie, Nuklear](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Lernen | Python |
+| 01 | [Anweisungen befolgen als Alignment-Signal](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Lernen | Python, TypeScript |
+| 02 | [Reward Hacking und Goodharts Gesetz](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Lernen | Python, TypeScript |
+| 03 | [Familie der Direct-Preference-Optimization-Verfahren](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Lernen | Python, TypeScript |
+| 04 | [Schmeichelei als Verstärkung durch RLHF](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Lernen | Python, TypeScript |
+| 05 | [Constitutional AI und RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Lernen | Python, TypeScript |
+| 06 | [Mesa-Optimierung und täuschendes Alignment](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Lernen | Python, TypeScript |
+| 07 | [Schlafende Agenten: dauerhafte Täuschung](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Lernen | Python, TypeScript |
+| 08 | [Verdeckte Planung in Frontier-Modellen im In-Context](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Lernen | Python, TypeScript |
+| 09 | [Vortäuschung von Alignment](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Lernen | Python, TypeScript |
+| 10 | [KI-Steuerung: Sicherheit trotz Umgehungsversuchen](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Lernen | Python, TypeScript |
+| 11 | [Skalierbare Überwachung: von schwachen zu starken Modellen](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Lernen | Python, TypeScript |
+| 12 | [Red Teaming: PAIR und automatisierte Angriffe](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Umsetzen | Python, TypeScript |
+| 13 | [Many-Shot-Jailbreaks](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Lernen | Python, TypeScript |
+| 14 | [ASCII-Art und visuelle Jailbreaks](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Umsetzen | Python, TypeScript |
+| 15 | [Indirekte Prompt Injection](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Umsetzen | Python, TypeScript |
+| 16 | [Red-Team-Werkzeuge: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Umsetzen | Python, TypeScript |
+| 17 | [WMDP und Evaluierung von Dual-Use-Fähigkeiten](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Lernen | Python, TypeScript |
+| 18 | [Safety-Frameworks für Frontier-Modelle: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Lernen | Python, TypeScript |
+| 19 | [Forschung zum Wohlergehen von Modellen](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Lernen | Python, TypeScript |
+| 20 | [Bias und Schaden durch verzerrte Repräsentation](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Umsetzen | Python, TypeScript |
+| 21 | [Fairness-Kriterien: Gruppen-, Individual- und kontrafaktische Fairness](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Lernen | Python, TypeScript |
+| 22 | [Differential Privacy für LLMs](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Umsetzen | Python, TypeScript |
+| 23 | [Wasserzeichen: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Umsetzen | Python, TypeScript |
+| 24 | [Regulierungsrahmen: EU, USA, Großbritannien, Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Lernen | Python, TypeScript |
+| 25 | [EchoLeak und CVEs für KI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Lernen | Python, TypeScript |
+| 26 | [Model-, System- und Dataset-Cards](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Umsetzen | Python, TypeScript |
+| 27 | [Datenherkunft und Governance von Trainingsdaten](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Lernen | Python, TypeScript |
+| 28 | [Ökosystem der Alignment-Forschung: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Lernen | Python, TypeScript |
+| 29 | [Moderationssysteme: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Umsetzen | Python, TypeScript |
+| 30 | [Dual-Use-Risiken: Cyber, Bio, Chemie, Nuklear](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Lernen | Python, TypeScript |
 
 </details>
 

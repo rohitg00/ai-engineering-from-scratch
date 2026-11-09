@@ -16,7 +16,7 @@ import re
 
 SSN = re.compile(r"\b\d{3}-\d{2}-\d{4}\b")
 EMAIL = re.compile(r"\b[\w.+-]+@[\w.-]+\.\w+\b")
-PHONE = re.compile(r"\b(?:\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b")
+PHONE = re.compile(r"(?<!\w)(?:\+?1[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b")
 
 
 @dataclass
@@ -74,7 +74,7 @@ def audit_log_call(entry: AuditEntry) -> str:
 
 def main() -> None:
     print("=" * 80)
-    print("PII SCRUBBER + AUDIT LOG — consistent tokenization across calls")
+    print("PII SCRUBBER + AUDIT LOG: consistent tokenization across calls")
     print("=" * 80)
     scrubber = Scrubber()
 
@@ -96,7 +96,7 @@ def main() -> None:
         print(f"  {masked} → {placeholder}")
 
     print("\n" + "=" * 80)
-    print("AUDIT LOG — one entry per scrubbed call")
+    print("AUDIT LOG: one entry per scrubbed call")
     print("=" * 80)
     for i, raw in enumerate(prompts, 1):
         scrubbed = scrubber.scrub(raw)

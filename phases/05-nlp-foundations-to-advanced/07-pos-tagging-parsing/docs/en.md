@@ -3,7 +3,7 @@
 > Grammar was unfashionable for a while. Then every LLM pipeline needed to validate structured extraction, and it came back.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

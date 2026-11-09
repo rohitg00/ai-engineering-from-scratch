@@ -114,7 +114,7 @@ def run_agent(actions: list[Action], screen: Screen,
 
 def main() -> None:
     print("=" * 70)
-    print("COMPUTER USE AGENT — Phase 14, Lesson 21")
+    print("COMPUTER USE AGENT: Phase 14, Lesson 21")
     print("=" * 70)
 
     screen = Screen(

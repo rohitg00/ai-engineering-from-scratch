@@ -3,7 +3,7 @@
 > A skill can suggest an action. Only the host can authorize it, only an isolation boundary can contain it, and only verification can tell you whether it worked.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 25 (Skill Invocation and Routing), Phase 13 · 15 (MCP Security I)
 **Time:** ~120 minutes
 
@@ -289,6 +289,7 @@ Run the simulated policy decisions:
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

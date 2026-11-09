@@ -357,7 +357,7 @@ flowchart TB
 | 10 | [เทอร์มินัลและเชลล์](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | เรียนรู้ | — |
 | 11 | [Linux สำหรับ AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | เรียนรู้ | — |
 | 12 | [การดีบักและวิเคราะห์ประสิทธิภาพ](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | สร้าง | Python |
-| 13 | [Python สำหรับวิศวกรรม AI](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | สร้าง | Python |
+| 13 | [Python สำหรับวิศวกรรม AI](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | สร้าง | Python, TypeScript |
 
 <details id="phase-1">
 <summary><b>ระยะ 1: พื้นฐานคณิตศาสตร์</b> &nbsp;<code>22 บทเรียน</code>&nbsp; <em>เข้าใจแนวคิดเบื้องหลังทุกอัลกอริทึม AI ผ่านโค้ด</em></summary>
@@ -383,7 +383,7 @@ flowchart TB
 | 16 | [วิธีสุ่มตัวอย่าง](../../phases/01-math-foundations/16-sampling-methods/) | สร้าง | Python, TypeScript |
 | 17 | [ระบบสมการเชิงเส้น](../../phases/01-math-foundations/17-linear-systems/) | สร้าง | Python, TypeScript |
 | 18 | [การหาค่าเหมาะที่สุดแบบคอนเวกซ์](../../phases/01-math-foundations/18-convex-optimization/) | สร้าง | Python, TypeScript |
-| 19 | [จำนวนเชิงซ้อนสำหรับ AI](../../phases/01-math-foundations/19-complex-numbers/) | เรียนรู้ | Python |
+| 19 | [จำนวนเชิงซ้อนสำหรับ AI](../../phases/01-math-foundations/19-complex-numbers/) | เรียนรู้ | Python, TypeScript |
 | 20 | [การแปลงฟูเรียร์](../../phases/01-math-foundations/20-fourier-transform/) | สร้าง | Python, TypeScript |
 | 21 | [ทฤษฎีกราฟสำหรับ ML](../../phases/01-math-foundations/21-graph-theory/) | สร้าง | Python, TypeScript |
 | 22 | [กระบวนการสุ่ม](../../phases/01-math-foundations/22-stochastic-processes/) | เรียนรู้ | Python |
@@ -414,9 +414,9 @@ flowchart TB
 | 16 | [การตรวจจับความผิดปกติ](../../phases/02-ml-fundamentals/16-anomaly-detection/) | สร้าง | Python |
 | 17 | [การจัดการข้อมูลไม่สมดุล](../../phases/02-ml-fundamentals/17-imbalanced-data/) | สร้าง | Python |
 | 18 | [การเลือกคุณลักษณะ](../../phases/02-ml-fundamentals/18-feature-selection/) | สร้าง | Python |
-| 19 | [การออกแบบระบบ ML: จากโจทย์สู่โมเดลที่ใช้งานจริง](../../phases/02-ml-fundamentals/19-ml-system-design/) | สร้าง | Python |
-| 20 | [การเฝ้าติดตามโมเดลในการใช้งานจริง: การเลื่อนของข้อมูลและการเลื่อนของแนวคิด](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | สร้าง | Python |
-| 21 | [คลังคุณลักษณะและความไม่ตรงกันระหว่างการฝึกและการให้บริการ](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | สร้าง | Python |
+| 19 | [การออกแบบระบบ ML: จากโจทย์สู่โมเดลที่ใช้งานจริง](../../phases/02-ml-fundamentals/19-ml-system-design/) | สร้าง | Python, TypeScript |
+| 20 | [การเฝ้าติดตามโมเดลในการใช้งานจริง: การเลื่อนของข้อมูลและการเลื่อนของแนวคิด](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | สร้าง | Python, TypeScript |
+| 21 | [คลังคุณลักษณะและความไม่ตรงกันระหว่างการฝึกและการให้บริการ](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | สร้าง | Python, TypeScript |
 
 </details>
 
@@ -485,35 +485,35 @@ flowchart TB
 
 | # | บทเรียน | ประเภท | ภาษา |
 |:---:|--------|:----:|------|
-| 01 | [ประมวลผลข้อความ: ตัดโทเคน ตัดรากศัพท์ และหารูปคำหลัก](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | สร้าง | Python |
-| 02 | [ถุงคำ TF-IDF และการแทนข้อความ](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | สร้าง | Python |
+| 01 | [ประมวลผลข้อความ: ตัดโทเคน ตัดรากศัพท์ และหารูปคำหลัก](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | สร้าง | Python, TypeScript |
+| 02 | [ถุงคำ TF-IDF และการแทนข้อความ](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | สร้าง | Python, TypeScript |
 | 03 | [เวกเตอร์คำ: Word2Vec จากศูนย์](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | สร้าง | Python |
-| 04 | [GloVe, FastText และเวกเตอร์คำย่อย](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | สร้าง | Python |
-| 05 | [การวิเคราะห์ความรู้สึก](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | สร้าง | Python |
-| 06 | [การรู้จำชื่อเฉพาะ (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | สร้าง | Python |
-| 07 | [การติดแท็กชนิดคำและวิเคราะห์ไวยากรณ์](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | สร้าง | Python |
-| 08 | [จำแนกข้อความด้วย CNN และ RNN](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | สร้าง | Python |
-| 09 | [โมเดลลำดับสู่ลำดับ](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | สร้าง | Python |
-| 10 | [กลไก attention: จุดเปลี่ยนสำคัญ](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | สร้าง | Python |
-| 11 | [การแปลด้วยเครื่อง](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | สร้าง | Python |
-| 12 | [การสรุปข้อความ](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | สร้าง | Python |
-| 13 | [ระบบถามตอบ](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | สร้าง | Python |
-| 14 | [การค้นคืนข้อมูลและการค้นหา](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | สร้าง | Python |
-| 15 | [การสร้างโมเดลหัวข้อ: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | สร้าง | Python |
-| 16 | [การสร้างข้อความ](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | สร้าง | Python |
-| 17 | [แชตบอต: จากกฎสู่โครงข่ายประสาท](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | สร้าง | Python |
-| 18 | [NLP หลายภาษา](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | สร้าง | Python |
+| 04 | [GloVe, FastText และเวกเตอร์คำย่อย](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | สร้าง | Python, TypeScript |
+| 05 | [การวิเคราะห์ความรู้สึก](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | สร้าง | Python, TypeScript |
+| 06 | [การรู้จำชื่อเฉพาะ (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | สร้าง | Python, TypeScript |
+| 07 | [การติดแท็กชนิดคำและวิเคราะห์ไวยากรณ์](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | สร้าง | Python, TypeScript |
+| 08 | [จำแนกข้อความด้วย CNN และ RNN](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | สร้าง | Python, TypeScript |
+| 09 | [โมเดลลำดับสู่ลำดับ](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | สร้าง | Python, TypeScript |
+| 10 | [กลไก attention: จุดเปลี่ยนสำคัญ](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | สร้าง | Python, TypeScript |
+| 11 | [การแปลด้วยเครื่อง](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | สร้าง | Python, TypeScript |
+| 12 | [การสรุปข้อความ](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | สร้าง | Python, TypeScript |
+| 13 | [ระบบถามตอบ](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | สร้าง | Python, TypeScript |
+| 14 | [การค้นคืนข้อมูลและการค้นหา](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | สร้าง | Python, TypeScript |
+| 15 | [การสร้างโมเดลหัวข้อ: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | สร้าง | Python, TypeScript |
+| 16 | [การสร้างข้อความ](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | สร้าง | Python, TypeScript |
+| 17 | [แชตบอต: จากกฎสู่โครงข่ายประสาท](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | สร้าง | Python, TypeScript |
+| 18 | [NLP หลายภาษา](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | สร้าง | Python, TypeScript |
 | 19 | [ตัดโทเคนคำย่อย: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | เรียนรู้ | Python, TypeScript |
-| 20 | [เอาต์พุตมีโครงสร้างและการถอดรหัสแบบจำกัด](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | สร้าง | Python |
-| 21 | [NLI และการอนุมานความหมายจากข้อความ](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | เรียนรู้ | Python |
-| 22 | [เจาะลึกโมเดลเอ็มเบดดิง](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | เรียนรู้ | Python |
+| 20 | [เอาต์พุตมีโครงสร้างและการถอดรหัสแบบจำกัด](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | สร้าง | Python, TypeScript |
+| 21 | [NLI และการอนุมานความหมายจากข้อความ](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | เรียนรู้ | Python, TypeScript |
+| 22 | [เจาะลึกโมเดลเอ็มเบดดิง](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | เรียนรู้ | Python, TypeScript |
 | 23 | [กลยุทธ์แบ่งข้อความเป็นส่วนสำหรับ RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | สร้าง | Python, TypeScript |
-| 24 | [การระบุคำที่อ้างถึงสิ่งเดียวกัน](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | เรียนรู้ | Python |
-| 25 | [การเชื่อมโยงเอนทิตีและแก้ความกำกวม](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | สร้าง | Python |
-| 26 | [ดึงความสัมพันธ์และสร้างกราฟความรู้](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | สร้าง | Python |
-| 27 | [ประเมิน LLM: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | สร้าง | Python |
-| 28 | [ประเมินบริบทยาว: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | เรียนรู้ | Python |
-| 29 | [ติดตามสถานะบทสนทนา](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | สร้าง | Python |
+| 24 | [การระบุคำที่อ้างถึงสิ่งเดียวกัน](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | เรียนรู้ | Python, TypeScript |
+| 25 | [การเชื่อมโยงเอนทิตีและแก้ความกำกวม](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | สร้าง | Python, TypeScript |
+| 26 | [ดึงความสัมพันธ์และสร้างกราฟความรู้](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | สร้าง | Python, TypeScript |
+| 27 | [ประเมิน LLM: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | สร้าง | Python, TypeScript |
+| 28 | [ประเมินบริบทยาว: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | เรียนรู้ | Python, TypeScript |
+| 29 | [ติดตามสถานะบทสนทนา](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | สร้าง | Python, TypeScript |
 
 </details>
 
@@ -523,23 +523,23 @@ flowchart TB
 
 | # | บทเรียน | ประเภท | ภาษา |
 |:---:|--------|:----:|------|
-| 01 | [พื้นฐานเสียง: รูปคลื่น การสุ่มตัวอย่าง และ FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | เรียนรู้ | Python |
-| 02 | [สเปกโตรแกรม สเกลเมล และคุณลักษณะเสียง](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | สร้าง | Python |
-| 03 | [การจำแนกเสียง](../../phases/06-speech-and-audio/03-audio-classification) | สร้าง | Python |
-| 04 | [การรู้จำเสียงพูด (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | สร้าง | Python |
-| 05 | [Whisper: สถาปัตยกรรมและไฟน์จูน](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | สร้าง | Python |
-| 06 | [การรู้จำและยืนยันผู้พูด](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | สร้าง | Python |
-| 07 | [แปลงข้อความเป็นเสียงพูด (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | สร้าง | Python |
-| 08 | [การโคลนและแปลงเสียง](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | สร้าง | Python |
-| 09 | [การสร้างดนตรี](../../phases/06-speech-and-audio/09-music-generation) | สร้าง | Python |
-| 10 | [โมเดลเสียงและภาษา](../../phases/06-speech-and-audio/10-audio-language-models) | สร้าง | Python |
+| 01 | [พื้นฐานเสียง: รูปคลื่น การสุ่มตัวอย่าง และ FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | เรียนรู้ | Python, TypeScript |
+| 02 | [สเปกโตรแกรม สเกลเมล และคุณลักษณะเสียง](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | สร้าง | Python, TypeScript |
+| 03 | [การจำแนกเสียง](../../phases/06-speech-and-audio/03-audio-classification) | สร้าง | Python, TypeScript |
+| 04 | [การรู้จำเสียงพูด (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | สร้าง | Python, TypeScript |
+| 05 | [Whisper: สถาปัตยกรรมและไฟน์จูน](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | สร้าง | Python, TypeScript |
+| 06 | [การรู้จำและยืนยันผู้พูด](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | สร้าง | Python, TypeScript |
+| 07 | [แปลงข้อความเป็นเสียงพูด (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | สร้าง | Python, TypeScript |
+| 08 | [การโคลนและแปลงเสียง](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | สร้าง | Python, TypeScript |
+| 09 | [การสร้างดนตรี](../../phases/06-speech-and-audio/09-music-generation) | สร้าง | Python, TypeScript |
+| 10 | [โมเดลเสียงและภาษา](../../phases/06-speech-and-audio/10-audio-language-models) | สร้าง | Python, TypeScript |
 | 11 | [ประมวลผลเสียงแบบเรียลไทม์](../../phases/06-speech-and-audio/11-real-time-audio-processing) | สร้าง | Python, Rust |
-| 12 | [สร้างไปป์ไลน์ผู้ช่วยเสียง](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | สร้าง | Python |
-| 13 | [โคเดกเสียงแบบนิวรัล: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | เรียนรู้ | Python |
-| 14 | [ตรวจจับช่วงพูดและการผลัดกันพูด](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | สร้าง | Python |
-| 15 | [สตรีมเสียงพูดสู่เสียงพูด: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | เรียนรู้ | Python |
-| 16 | [ป้องกันเสียงปลอมและใส่ลายน้ำเสียง](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | สร้าง | Python |
-| 17 | [ประเมินเสียง: WER, MOS, MMAU และตารางจัดอันดับ](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | เรียนรู้ | Python |
+| 12 | [สร้างไปป์ไลน์ผู้ช่วยเสียง](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | สร้าง | Python, TypeScript |
+| 13 | [โคเดกเสียงแบบนิวรัล: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | เรียนรู้ | Python, TypeScript |
+| 14 | [ตรวจจับช่วงพูดและการผลัดกันพูด](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | สร้าง | Python, TypeScript |
+| 15 | [สตรีมเสียงพูดสู่เสียงพูด: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | เรียนรู้ | Python, TypeScript |
+| 16 | [ป้องกันเสียงปลอมและใส่ลายน้ำเสียง](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | สร้าง | Python, TypeScript |
+| 17 | [ประเมินเสียง: WER, MOS, MMAU และตารางจัดอันดับ](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | เรียนรู้ | Python, TypeScript |
 
 </details>
 
@@ -554,14 +554,14 @@ flowchart TB
 | 03 | [Attention หลายหัว](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | สร้าง | Python, Rust |
 | 04 | [การเข้ารหัสตำแหน่ง: sinusoidal, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | สร้าง | Python, Rust, Julia |
 | 05 | [Transformer แบบเต็ม: ตัวเข้ารหัสและตัวถอดรหัส](../../phases/07-transformers-deep-dive/05-full-transformer/) | สร้าง | Python, Julia |
-| 06 | [BERT: โมเดลภาษาแบบปิดบังคำ](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | สร้าง | Python |
-| 07 | [GPT: โมเดลภาษาแบบเชิงเหตุ](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | สร้าง | Python |
-| 08 | [T5, BART: โมเดลเข้ารหัส-ถอดรหัส](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | เรียนรู้ | Python |
-| 09 | [Vision Transformers (ViT) สำหรับงานภาพ](../../phases/07-transformers-deep-dive/09-vision-transformers/) | สร้าง | Python |
-| 10 | [Transformer สำหรับเสียง: สถาปัตยกรรม Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | เรียนรู้ | Python |
+| 06 | [BERT: โมเดลภาษาแบบปิดบังคำ](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | สร้าง | Python, Rust |
+| 07 | [GPT: โมเดลภาษาแบบเชิงเหตุ](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | สร้าง | Python, Rust |
+| 08 | [T5, BART: โมเดลเข้ารหัส-ถอดรหัส](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | เรียนรู้ | Python, Rust |
+| 09 | [Vision Transformers (ViT) สำหรับงานภาพ](../../phases/07-transformers-deep-dive/09-vision-transformers/) | สร้าง | Python, Rust |
+| 10 | [Transformer สำหรับเสียง: สถาปัตยกรรม Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | เรียนรู้ | Python, Rust |
 | 11 | [ส่วนผสมของผู้เชี่ยวชาญ (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | สร้าง | Python, Rust |
 | 12 | [แคช KV, Flash Attention และการเพิ่มประสิทธิภาพการอนุมาน](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | สร้าง | Python, Rust |
-| 13 | [กฎการขยายขนาด](../../phases/07-transformers-deep-dive/13-scaling-laws/) | เรียนรู้ | Python |
+| 13 | [กฎการขยายขนาด](../../phases/07-transformers-deep-dive/13-scaling-laws/) | เรียนรู้ | Python, Rust |
 | 14 | [สร้าง Transformer จากศูนย์](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | สร้าง | Python |
 | 15 | [รูปแบบ attention: หน้าต่างเลื่อน แบบเบาบาง และแบบผลต่าง](../../phases/07-transformers-deep-dive/15-attention-variants/) | สร้าง | Python, Rust |
 | 16 | [ถอดรหัสเชิงคาดการณ์: ร่าง ตรวจสอบ ทำซ้ำ](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | สร้าง | Python, Rust |
@@ -574,20 +574,20 @@ flowchart TB
 
 | # | บทเรียน | ประเภท | ภาษา |
 |:---:|--------|:----:|------|
-| 01 | [โมเดลกำเนิด: การจัดประเภทและประวัติ](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | เรียนรู้ | Python |
-| 02 | [ออโตเอนโคเดอร์และ VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | สร้าง | Python |
-| 03 | [GAN: ตัวสร้างกับตัวแยกแยะ](../../phases/08-generative-ai/03-gans-generator-discriminator/) | สร้าง | Python |
-| 04 | [GAN แบบมีเงื่อนไขและ Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | สร้าง | Python |
-| 05 | [โมเดล StyleGAN](../../phases/08-generative-ai/05-stylegan/) | สร้าง | Python |
-| 06 | [โมเดลดิฟฟิวชัน: DDPM จากศูนย์](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | สร้าง | Python |
-| 07 | [Latent diffusion และ Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | สร้าง | Python |
-| 08 | [ControlNet, LoRA และการกำหนดเงื่อนไข](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | สร้าง | Python |
-| 09 | [เติมภาพ ขยายภาพ และแก้ไขภาพ](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | สร้าง | Python |
-| 10 | [การสร้างวิดีโอ](../../phases/08-generative-ai/10-video-generation/) | สร้าง | Python |
-| 11 | [การสร้างเสียง](../../phases/08-generative-ai/11-audio-generation/) | สร้าง | Python |
-| 12 | [การสร้างสามมิติ](../../phases/08-generative-ai/12-3d-generation/) | สร้าง | Python |
-| 13 | [Flow matching และ rectified flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | สร้าง | Python |
-| 14 | [การประเมิน: FID และคะแนน CLIP](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | สร้าง | Python |
+| 01 | [โมเดลกำเนิด: การจัดประเภทและประวัติ](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | เรียนรู้ | Python, TypeScript |
+| 02 | [ออโตเอนโคเดอร์และ VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | สร้าง | Python, TypeScript |
+| 03 | [GAN: ตัวสร้างกับตัวแยกแยะ](../../phases/08-generative-ai/03-gans-generator-discriminator/) | สร้าง | Python, TypeScript |
+| 04 | [GAN แบบมีเงื่อนไขและ Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | สร้าง | Python, TypeScript |
+| 05 | [โมเดล StyleGAN](../../phases/08-generative-ai/05-stylegan/) | สร้าง | Python, TypeScript |
+| 06 | [โมเดลดิฟฟิวชัน: DDPM จากศูนย์](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | สร้าง | Python, TypeScript |
+| 07 | [Latent diffusion และ Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | สร้าง | Python, TypeScript |
+| 08 | [ControlNet, LoRA และการกำหนดเงื่อนไข](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | สร้าง | Python, TypeScript |
+| 09 | [เติมภาพ ขยายภาพ และแก้ไขภาพ](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | สร้าง | Python, TypeScript |
+| 10 | [การสร้างวิดีโอ](../../phases/08-generative-ai/10-video-generation/) | สร้าง | Python, TypeScript |
+| 11 | [การสร้างเสียง](../../phases/08-generative-ai/11-audio-generation/) | สร้าง | Python, TypeScript |
+| 12 | [การสร้างสามมิติ](../../phases/08-generative-ai/12-3d-generation/) | สร้าง | Python, TypeScript |
+| 13 | [Flow matching และ rectified flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | สร้าง | Python, TypeScript |
+| 14 | [การประเมิน: FID และคะแนน CLIP](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | สร้าง | Python, TypeScript |
 | 19 | [การสร้างโมเดลภาพแบบออโตรีเกรสซีฟ (VAR): ทำนายสเกลถัดไป](../../phases/08-generative-ai/19-visual-autoregressive-var/) | สร้าง | Python |
 
 </details>
@@ -598,18 +598,18 @@ flowchart TB
 
 | # | บทเรียน | ประเภท | ภาษา |
 |:---:|--------|:----:|------|
-| 01 | [MDP สถานะ การกระทำ และรางวัล](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | เรียนรู้ | Python |
-| 02 | [การเขียนโปรแกรมแบบพลวัต](../../phases/09-reinforcement-learning/02-dynamic-programming/) | สร้าง | Python |
-| 03 | [วิธีมอนติคาร์โล](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | สร้าง | Python |
-| 04 | [การเรียนรู้ Q และ SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | สร้าง | Python |
-| 05 | [โครงข่าย Q เชิงลึก (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | สร้าง | Python |
-| 06 | [เกรเดียนต์นโยบาย: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | สร้าง | Python |
-| 07 | [Actor-critic: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | สร้าง | Python |
-| 08 | [อัลกอริทึม PPO](../../phases/09-reinforcement-learning/08-ppo/) | สร้าง | Python |
-| 09 | [การสร้างโมเดลรางวัลและ RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | สร้าง | Python |
-| 10 | [การเรียนรู้แบบเสริมกำลังหลายเอเจนต์](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | สร้าง | Python |
-| 11 | [ถ่ายโอนจากการจำลองสู่โลกจริง](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | สร้าง | Python |
-| 12 | [การเรียนรู้แบบเสริมกำลังสำหรับเกม](../../phases/09-reinforcement-learning/12-rl-for-games/) | สร้าง | Python |
+| 01 | [MDP สถานะ การกระทำ และรางวัล](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | เรียนรู้ | Python, TypeScript |
+| 02 | [การเขียนโปรแกรมแบบพลวัต](../../phases/09-reinforcement-learning/02-dynamic-programming/) | สร้าง | Python, TypeScript |
+| 03 | [วิธีมอนติคาร์โล](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | สร้าง | Python, TypeScript |
+| 04 | [การเรียนรู้ Q และ SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | สร้าง | Python, TypeScript |
+| 05 | [โครงข่าย Q เชิงลึก (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | สร้าง | Python, TypeScript |
+| 06 | [เกรเดียนต์นโยบาย: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | สร้าง | Python, TypeScript |
+| 07 | [Actor-critic: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | สร้าง | Python, TypeScript |
+| 08 | [อัลกอริทึม PPO](../../phases/09-reinforcement-learning/08-ppo/) | สร้าง | Python, TypeScript |
+| 09 | [การสร้างโมเดลรางวัลและ RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | สร้าง | Python, TypeScript |
+| 10 | [การเรียนรู้แบบเสริมกำลังหลายเอเจนต์](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | สร้าง | Python, TypeScript |
+| 11 | [ถ่ายโอนจากการจำลองสู่โลกจริง](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | สร้าง | Python, TypeScript |
+| 12 | [การเรียนรู้แบบเสริมกำลังสำหรับเกม](../../phases/09-reinforcement-learning/12-rl-for-games/) | สร้าง | Python, TypeScript |
 
 </details>
 
@@ -621,7 +621,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [ตัวตัดโทเคน: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | สร้าง | Python, Rust |
 | 02 | [สร้างตัวตัดโทเคนจากศูนย์](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | สร้าง | Python |
-| 03 | [ไปป์ไลน์ข้อมูลสำหรับพรีเทรน](../../phases/10-llms-from-scratch/03-data-pipelines/) | สร้าง | Python |
+| 03 | [ไปป์ไลน์ข้อมูลสำหรับพรีเทรน](../../phases/10-llms-from-scratch/03-data-pipelines/) | สร้าง | Python, Rust |
 | 04 | [พรีเทรน Mini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | สร้าง | Python, Rust |
 | 05 | [การฝึกแบบกระจาย FSDP และ DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | สร้าง | Python |
 | 06 | [ปรับโมเดลตามคำสั่ง: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | สร้าง | Python |
@@ -631,16 +631,16 @@ flowchart TB
 | 10 | [การประเมิน: เกณฑ์เปรียบเทียบและชุดทดสอบ](../../phases/10-llms-from-scratch/10-evaluation/) | สร้าง | Python |
 | 11 | [ควอนไทเซชัน: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | สร้าง | Python, Rust |
 | 12 | [การเพิ่มประสิทธิภาพการอนุมาน](../../phases/10-llms-from-scratch/12-inference-optimization/) | สร้าง | Python, Rust |
-| 13 | [สร้างไปป์ไลน์ LLM ที่สมบูรณ์](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | สร้าง | Python |
-| 14 | [โมเดลเปิด: สำรวจสถาปัตยกรรม](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | เรียนรู้ | Python |
-| 15 | [การถอดรหัสเชิงคาดการณ์และ EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | สร้าง | Python |
-| 16 | [Attention แบบผลต่าง (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | สร้าง | Python |
-| 17 | [Native Sparse Attention (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | สร้าง | Python |
-| 18 | [การทำนายหลายโทเคน (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | สร้าง | Python |
-| 19 | [การทำงานขนานแบบ DualPipe](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | เรียนรู้ | Python |
-| 20 | [สำรวจสถาปัตยกรรม DeepSeek-V3](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | เรียนรู้ | Python |
-| 21 | [Jamba: ผสม SSM กับ Transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | เรียนรู้ | Python |
-| 22 | [การอนุมานแบบอะซิงโครนัสและ Hogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | สร้าง | Python |
+| 13 | [สร้างไปป์ไลน์ LLM ที่สมบูรณ์](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | สร้าง | Python, Rust |
+| 14 | [โมเดลเปิด: สำรวจสถาปัตยกรรม](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | เรียนรู้ | Python, Rust |
+| 15 | [การถอดรหัสเชิงคาดการณ์และ EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | สร้าง | Python, Rust |
+| 16 | [Attention แบบผลต่าง (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | สร้าง | Python, Rust |
+| 17 | [Native Sparse Attention (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | สร้าง | Python, Rust |
+| 18 | [การทำนายหลายโทเคน (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | สร้าง | Python, Rust |
+| 19 | [การทำงานขนานแบบ DualPipe](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | เรียนรู้ | Python, Rust |
+| 20 | [สำรวจสถาปัตยกรรม DeepSeek-V3](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | เรียนรู้ | Python, Rust |
+| 21 | [Jamba: ผสม SSM กับ Transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | เรียนรู้ | Python, Rust |
+| 22 | [การอนุมานแบบอะซิงโครนัสและ Hogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | สร้าง | Python, Rust |
 | 25 | [การถอดรหัสเชิงคาดการณ์และ EAGLE](../../phases/10-llms-from-scratch/25-speculative-decoding/) | สร้าง | Python |
 | 34 | [เช็กพอยต์เกรเดียนต์และคำนวณแอกทิเวชันใหม่](../../phases/10-llms-from-scratch/34-gradient-checkpointing/) | สร้าง | Python |
 
@@ -658,17 +658,17 @@ flowchart TB
 | 04 | [เอ็มเบดดิงและการแทนด้วยเวกเตอร์](../../phases/11-llm-engineering/04-embeddings/) | สร้าง | Python, TypeScript |
 | 05 | [วิศวกรรมบริบท](../../phases/11-llm-engineering/05-context-engineering/) | สร้าง | Python, TypeScript |
 | 06 | [RAG: การสร้างข้อความที่เสริมด้วยการค้นคืน](../../phases/11-llm-engineering/06-rag/) | สร้าง | Python, TypeScript |
-| 07 | [RAG ขั้นสูง: แบ่งส่วนและจัดอันดับใหม่](../../phases/11-llm-engineering/07-advanced-rag/) | สร้าง | Python |
+| 07 | [RAG ขั้นสูง: แบ่งส่วนและจัดอันดับใหม่](../../phases/11-llm-engineering/07-advanced-rag/) | สร้าง | Python, TypeScript |
 | 08 | [ไฟน์จูนด้วย LoRA และ QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | สร้าง | Python |
 | 09 | [การเรียกฟังก์ชันและใช้เครื่องมือ](../../phases/11-llm-engineering/09-function-calling/) | สร้าง | Python, TypeScript |
-| 10 | [การประเมินและทดสอบ](../../phases/11-llm-engineering/10-evaluation/) | สร้าง | Python |
-| 11 | [แคช การจำกัดอัตรา และต้นทุน](../../phases/11-llm-engineering/11-caching-cost/) | สร้าง | Python |
+| 10 | [การประเมินและทดสอบ](../../phases/11-llm-engineering/10-evaluation/) | สร้าง | Python, TypeScript |
+| 11 | [แคช การจำกัดอัตรา และต้นทุน](../../phases/11-llm-engineering/11-caching-cost/) | สร้าง | Python, TypeScript |
 | 12 | [ขอบเขตป้องกันและความปลอดภัย](../../phases/11-llm-engineering/12-guardrails/) | สร้าง | Python, TypeScript |
-| 13 | [สร้างแอป LLM สำหรับใช้งานจริง](../../phases/11-llm-engineering/13-production-app/) | สร้าง | Python |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | สร้าง | Python |
-| 15 | [แคชพรอมป์ต์และแคชบริบท](../../phases/11-llm-engineering/15-prompt-caching/) | สร้าง | Python |
+| 13 | [สร้างแอป LLM สำหรับใช้งานจริง](../../phases/11-llm-engineering/13-production-app/) | สร้าง | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | สร้าง | Python, TypeScript |
+| 15 | [แคชพรอมป์ต์และแคชบริบท](../../phases/11-llm-engineering/15-prompt-caching/) | สร้าง | Python, TypeScript |
 | 16 | [เครื่องสถานะเอเจนต์: กราฟ โหนด และเช็กพอยต์](../../phases/11-llm-engineering/16-langgraph-state-machines/) | สร้าง | Python |
-| 17 | [ข้อแลกเปลี่ยนของเฟรมเวิร์กเอเจนต์](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | เรียนรู้ | Python |
+| 17 | [ข้อแลกเปลี่ยนของเฟรมเวิร์กเอเจนต์](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | เรียนรู้ | Python, TypeScript |
 
 </details>
 
@@ -678,31 +678,31 @@ flowchart TB
 
 | # | บทเรียน | ประเภท | ภาษา |
 |:---:|--------|:----:|------|
-| 01 | [Vision Transformers และหน่วยโทเคนแพตช์](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | เรียนรู้ | Python |
-| 02 | [CLIP และพรีเทรนภาพ-ภาษาแบบเปรียบต่าง](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | สร้าง | Python |
-| 03 | [BLIP-2 Q-Former เป็นสะพานเชื่อมโมดัลลิตี](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | สร้าง | Python |
-| 04 | [Flamingo และ cross-attention แบบมีเกต](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | เรียนรู้ | Python |
-| 05 | [LLaVA และการปรับตามคำสั่งภาพ](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | สร้าง | Python |
-| 06 | [การมองเห็นทุกความละเอียด: Patch-n'-Pack และ NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | สร้าง | Python |
-| 07 | [วิธีสร้าง VLM แบบเปิดน้ำหนัก: สิ่งที่สำคัญจริง](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | เรียนรู้ | Python |
-| 08 | [LLaVA-OneVision: ภาพเดียว หลายภาพ วิดีโอ](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | สร้าง | Python |
-| 09 | [ตระกูล Qwen-VL และวิดีโอ FPS แบบพลวัต](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | เรียนรู้ | Python |
-| 10 | [พรีเทรนหลายโมดัลลิตีโดยตรงด้วย InternVL3](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | เรียนรู้ | Python |
-| 11 | [Chameleon: รวมข้อมูลตั้งแต่ต้นด้วยโทเคนล้วน](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | สร้าง | Python |
-| 12 | [Emu3: ทำนายโทเคนถัดไปเพื่อสร้างข้อมูล](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | เรียนรู้ | Python |
-| 13 | [Transfusion: ออโตรีเกรสซีฟและดิฟฟิวชัน](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | สร้าง | Python |
-| 14 | [Show-o: รวมดิฟฟิวชันแบบไม่ต่อเนื่อง](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | เรียนรู้ | Python |
-| 15 | [Janus-Pro: ตัวเข้ารหัสที่แยกจากกัน](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | สร้าง | Python |
-| 16 | [MIO: สตรีมระหว่างข้อมูลทุกรูปแบบ](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | เรียนรู้ | Python |
-| 17 | [เชื่อมภาษาเข้ากับช่วงเวลาในวิดีโอ](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | สร้าง | Python |
-| 18 | [วิดีโอยาวในบริบทล้านโทเคน](../../phases/12-multimodal-ai/18-long-video-million-token/) | สร้าง | Python |
-| 19 | [โมเดลเสียงและภาษา: จาก Whisper ถึง AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | สร้าง | Python |
-| 20 | [โมเดล Omni: สตรีมแบบ Thinker-Talker](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | สร้าง | Python |
-| 21 | [VLA ที่ทำงานในโลกกายภาพ: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | เรียนรู้ | Python |
-| 22 | [การเข้าใจเอกสารและแผนภาพ](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | สร้าง | Python |
-| 23 | [ColPali: RAG เอกสารที่ใช้ภาพเป็นหลัก](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | สร้าง | Python |
-| 24 | [RAG หลายโมดัลลิตีและการค้นคืนข้ามรูปแบบ](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | สร้าง | Python |
-| 25 | [เอเจนต์หลายโมดัลลิตีและการใช้คอมพิวเตอร์ (โครงงานสรุป)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | สร้าง | Python |
+| 01 | [Vision Transformers และหน่วยโทเคนแพตช์](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | เรียนรู้ | Python, TypeScript |
+| 02 | [CLIP และพรีเทรนภาพ-ภาษาแบบเปรียบต่าง](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | สร้าง | Python, TypeScript |
+| 03 | [BLIP-2 Q-Former เป็นสะพานเชื่อมโมดัลลิตี](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | สร้าง | Python, TypeScript |
+| 04 | [Flamingo และ cross-attention แบบมีเกต](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | เรียนรู้ | Python, TypeScript |
+| 05 | [LLaVA และการปรับตามคำสั่งภาพ](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | สร้าง | Python, TypeScript |
+| 06 | [การมองเห็นทุกความละเอียด: Patch-n'-Pack และ NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | สร้าง | Python, TypeScript |
+| 07 | [วิธีสร้าง VLM แบบเปิดน้ำหนัก: สิ่งที่สำคัญจริง](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | เรียนรู้ | Python, TypeScript |
+| 08 | [LLaVA-OneVision: ภาพเดียว หลายภาพ วิดีโอ](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | สร้าง | Python, TypeScript |
+| 09 | [ตระกูล Qwen-VL และวิดีโอ FPS แบบพลวัต](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | เรียนรู้ | Python, TypeScript |
+| 10 | [พรีเทรนหลายโมดัลลิตีโดยตรงด้วย InternVL3](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | เรียนรู้ | Python, TypeScript |
+| 11 | [Chameleon: รวมข้อมูลตั้งแต่ต้นด้วยโทเคนล้วน](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | สร้าง | Python, TypeScript |
+| 12 | [Emu3: ทำนายโทเคนถัดไปเพื่อสร้างข้อมูล](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | เรียนรู้ | Python, TypeScript |
+| 13 | [Transfusion: ออโตรีเกรสซีฟและดิฟฟิวชัน](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | สร้าง | Python, TypeScript |
+| 14 | [Show-o: รวมดิฟฟิวชันแบบไม่ต่อเนื่อง](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | เรียนรู้ | Python, TypeScript |
+| 15 | [Janus-Pro: ตัวเข้ารหัสที่แยกจากกัน](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | สร้าง | Python, TypeScript |
+| 16 | [MIO: สตรีมระหว่างข้อมูลทุกรูปแบบ](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | เรียนรู้ | Python, TypeScript |
+| 17 | [เชื่อมภาษาเข้ากับช่วงเวลาในวิดีโอ](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | สร้าง | Python, TypeScript |
+| 18 | [วิดีโอยาวในบริบทล้านโทเคน](../../phases/12-multimodal-ai/18-long-video-million-token/) | สร้าง | Python, TypeScript |
+| 19 | [โมเดลเสียงและภาษา: จาก Whisper ถึง AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | สร้าง | Python, TypeScript |
+| 20 | [โมเดล Omni: สตรีมแบบ Thinker-Talker](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | สร้าง | Python, TypeScript |
+| 21 | [VLA ที่ทำงานในโลกกายภาพ: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | เรียนรู้ | Python, TypeScript |
+| 22 | [การเข้าใจเอกสารและแผนภาพ](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | สร้าง | Python, TypeScript |
+| 23 | [ColPali: RAG เอกสารที่ใช้ภาพเป็นหลัก](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | สร้าง | Python, TypeScript |
+| 24 | [RAG หลายโมดัลลิตีและการค้นคืนข้ามรูปแบบ](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | สร้าง | Python, TypeScript |
+| 25 | [เอเจนต์หลายโมดัลลิตีและการใช้คอมพิวเตอร์ (โครงงานสรุป)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | สร้าง | Python, TypeScript |
 
 </details>
 
@@ -713,50 +713,50 @@ flowchart TB
 | # | บทเรียน | ประเภท | ภาษา |
 |:---:|--------|:----:|------|
 | 01 | [อินเทอร์เฟซเครื่องมือ](../../phases/13-tools-and-protocols/01-the-tool-interface/) | เรียนรู้ | Python, TypeScript |
-| 02 | [เจาะลึกการเรียกฟังก์ชัน](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | สร้าง | Python |
-| 03 | [เรียกเครื่องมือแบบขนานและสตรีม](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | สร้าง | Python |
-| 04 | [เอาต์พุตแบบมีโครงสร้าง](../../phases/13-tools-and-protocols/04-structured-output/) | สร้าง | Python |
-| 05 | [ออกแบบสคีมาเครื่องมือ](../../phases/13-tools-and-protocols/05-tool-schema-design/) | เรียนรู้ | Python |
-| 06 | [พื้นฐาน MCP: คำขอไร้สถานะและ JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | เรียนรู้ | Python |
+| 02 | [เจาะลึกการเรียกฟังก์ชัน](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | สร้าง | Python, TypeScript |
+| 03 | [เรียกเครื่องมือแบบขนานและสตรีม](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | สร้าง | Python, TypeScript |
+| 04 | [เอาต์พุตแบบมีโครงสร้าง](../../phases/13-tools-and-protocols/04-structured-output/) | สร้าง | Python, TypeScript |
+| 05 | [ออกแบบสคีมาเครื่องมือ](../../phases/13-tools-and-protocols/05-tool-schema-design/) | เรียนรู้ | Python, TypeScript |
+| 06 | [พื้นฐาน MCP: คำขอไร้สถานะและ JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | เรียนรู้ | Python, TypeScript |
 | 07 | [สร้างเซิร์ฟเวอร์ MCP: Python และ TypeScript แบบไร้สถานะ](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | สร้าง | Python, TypeScript |
-| 08 | [สร้างไคลเอนต์ MCP: ค้นพบ กำหนดเส้นทาง และรองรับโพรโทคอลเก่าใหม่](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | สร้าง | Python |
-| 09 | [การรับส่ง MCP: stdio และ Streamable HTTP ไร้สถานะ](../../phases/13-tools-and-protocols/09-mcp-transports/) | เรียนรู้ | Python |
-| 10 | [ทรัพยากรและพรอมป์ต์ MCP: บริบทที่ระบุที่อยู่ได้สำหรับเซิร์ฟเวอร์ไร้สถานะ](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | สร้าง | Python |
-| 11 | [อินพุตโมเดล MCP: ย้ายระบบ sampling และ MRTR ไร้สถานะ](../../phases/13-tools-and-protocols/11-mcp-sampling/) | สร้าง | Python |
-| 12 | [ขอบเขตชัดเจนและการขอข้อมูลแบบไร้สถานะ](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | สร้าง | Python |
-| 13 | [ส่วนขยาย MCP Tasks: งานต่อเนื่องบนแกนไร้สถานะ](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | สร้าง | Python |
-| 14 | [MCP Apps บนโพรโทคอลไร้สถานะ](../../phases/13-tools-and-protocols/14-mcp-apps/) | สร้าง | Python |
-| 15 | [ความปลอดภัย MCP: เมทาดาทาอันตราย การกำหนดเส้นทาง และสถานะ MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | เรียนรู้ | Python |
-| 16 | [การอนุญาต MCP: CIMD การผูกผู้ออก PKCE และการยกระดับยืนยันตัวตน](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | สร้าง | Python |
-| 17 | [เกตเวย์ MCP ไร้สถานะและการรับเข้ารีจิสทรี](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | เรียนรู้ | Python |
-| 18 | [ยืนยันตัวตน MCP ในงานจริง: การลงทะเบียนและโทเคนที่ผูกกับผู้ออก](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | สร้าง | Python |
+| 08 | [สร้างไคลเอนต์ MCP: ค้นพบ กำหนดเส้นทาง และรองรับโพรโทคอลเก่าใหม่](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | สร้าง | Python, TypeScript |
+| 09 | [การรับส่ง MCP: stdio และ Streamable HTTP ไร้สถานะ](../../phases/13-tools-and-protocols/09-mcp-transports/) | เรียนรู้ | Python, TypeScript |
+| 10 | [ทรัพยากรและพรอมป์ต์ MCP: บริบทที่ระบุที่อยู่ได้สำหรับเซิร์ฟเวอร์ไร้สถานะ](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | สร้าง | Python, TypeScript |
+| 11 | [อินพุตโมเดล MCP: ย้ายระบบ sampling และ MRTR ไร้สถานะ](../../phases/13-tools-and-protocols/11-mcp-sampling/) | สร้าง | Python, TypeScript |
+| 12 | [ขอบเขตชัดเจนและการขอข้อมูลแบบไร้สถานะ](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | สร้าง | Python, TypeScript |
+| 13 | [ส่วนขยาย MCP Tasks: งานต่อเนื่องบนแกนไร้สถานะ](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | สร้าง | Python, TypeScript |
+| 14 | [MCP Apps บนโพรโทคอลไร้สถานะ](../../phases/13-tools-and-protocols/14-mcp-apps/) | สร้าง | Python, TypeScript |
+| 15 | [ความปลอดภัย MCP: เมทาดาทาอันตราย การกำหนดเส้นทาง และสถานะ MRTR](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | เรียนรู้ | Python, TypeScript |
+| 16 | [การอนุญาต MCP: CIMD การผูกผู้ออก PKCE และการยกระดับยืนยันตัวตน](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | สร้าง | Python, TypeScript |
+| 17 | [เกตเวย์ MCP ไร้สถานะและการรับเข้ารีจิสทรี](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | เรียนรู้ | Python, TypeScript |
+| 18 | [ยืนยันตัวตน MCP ในงานจริง: การลงทะเบียนและโทเคนที่ผูกกับผู้ออก](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | สร้าง | Python, TypeScript |
 | 19 | [โพรโทคอล A2A](../../phases/13-tools-and-protocols/19-a2a-protocol/) | สร้าง | Python, TypeScript |
-| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | สร้าง | Python |
-| 21 | [ชั้นกำหนดเส้นทาง LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | เรียนรู้ | Python |
-| 22 | [Agent Skills: สัญญาพกพาและขอบเขตรันไทม์](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | สร้าง | Python |
-| 23 | [โครงงานสรุป: ระบบนิเวศเครื่องมือไร้สถานะ](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | สร้าง | Python |
-| 24 | [ค้นพบสกิลและเปิดเผยข้อมูลทีละระดับ](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | สร้าง | Python |
-| 25 | [เรียกใช้และกำหนดเส้นทางสกิล](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | สร้าง | Python |
-| 26 | [สิทธิ์สกิล แซนด์บ็อกซ์ และความเชื่อถือ](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | สร้าง | Python |
-| 27 | [ประเมิน แพ็ก และย้ายสกิลข้ามระบบ](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | สร้าง | Python |
-| 28 | [สัญญาและเนื้อหาของเครื่องมือ MCP](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | สร้าง | Python |
-| 29 | [ความน่าเชื่อถือ การยกเลิก และการควบคุมการไหลของ MCP](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | สร้าง | Python |
-| 30 | [ห่วงโซ่อุปทานรีจิสทรี MCP: รับเข้า ความคลาดเคลื่อน และย้อนกลับ](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | สร้าง | Python |
-| 31 | [วิศวกรรมความสอดคล้อง MCP: เวอร์ชัน หลักฐาน และการปฏิบัติการ](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | สร้าง | Python |
-| 32 | [กายวิภาคของโปรแกรม: อ่าน ELF จากศูนย์](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | สร้าง | Python |
-| 33 | [การถอดแอสเซมบลีและกราฟโฟลว์ควบคุม](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | สร้าง | Python |
+| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | สร้าง | Python, TypeScript |
+| 21 | [ชั้นกำหนดเส้นทาง LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | เรียนรู้ | Python, TypeScript |
+| 22 | [Agent Skills: สัญญาพกพาและขอบเขตรันไทม์](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | สร้าง | Python, TypeScript |
+| 23 | [โครงงานสรุป: ระบบนิเวศเครื่องมือไร้สถานะ](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | สร้าง | Python, TypeScript |
+| 24 | [ค้นพบสกิลและเปิดเผยข้อมูลทีละระดับ](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | สร้าง | Python, TypeScript |
+| 25 | [เรียกใช้และกำหนดเส้นทางสกิล](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | สร้าง | Python, TypeScript |
+| 26 | [สิทธิ์สกิล แซนด์บ็อกซ์ และความเชื่อถือ](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | สร้าง | Python, TypeScript |
+| 27 | [ประเมิน แพ็ก และย้ายสกิลข้ามระบบ](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | สร้าง | Python, TypeScript |
+| 28 | [สัญญาและเนื้อหาของเครื่องมือ MCP](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | สร้าง | Python, TypeScript |
+| 29 | [ความน่าเชื่อถือ การยกเลิก และการควบคุมการไหลของ MCP](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | สร้าง | Python, TypeScript |
+| 30 | [ห่วงโซ่อุปทานรีจิสทรี MCP: รับเข้า ความคลาดเคลื่อน และย้อนกลับ](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | สร้าง | Python, TypeScript |
+| 31 | [วิศวกรรมความสอดคล้อง MCP: เวอร์ชัน หลักฐาน และการปฏิบัติการ](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | สร้าง | Python, TypeScript |
+| 32 | [กายวิภาคของโปรแกรม: อ่าน ELF จากศูนย์](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | สร้าง | Python, TypeScript |
+| 33 | [การถอดแอสเซมบลีและกราฟโฟลว์ควบคุม](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | สร้าง | Python, TypeScript |
 | 34 | [ยกระดับรหัสเครื่องเป็นซูโดโค้ด](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | สร้าง | Python |
-| 35 | [หลักฐาน ความมั่นใจ และสิ่งที่ไม่รู้ในการวิเคราะห์ไบนารี](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | สร้าง | Python |
-| 36 | [สร้างใหม่และพิสูจน์ว่าเท่ากัน](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | สร้าง | Python |
-| 37 | [ภาพรวมของวิศวกรรมย้อนกลับ](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | สร้าง | Python |
-| 38 | [แบบแผนการเรียกและสแตกเฟรม](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | สร้าง | Python |
-| 39 | [รูปแบบโค้ดของคอมไพเลอร์และการปรับให้เหมาะสม](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | สร้าง | Python |
-| 40 | [การลิงก์ การโหลด และไบนารีที่ถูกตัดสัญลักษณ์](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | สร้าง | Python |
-| 41 | [กู้คืนข้อมูลและชนิดข้อมูล](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | สร้าง | Python |
-| 42 | [วิเคราะห์แบบไดนามิกกับโปรแกรมของคุณเอง](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | สร้าง | Python |
-| 43 | [ไบต์โค้ดและรูปแบบที่มีการจัดการ](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | สร้าง | Python |
+| 35 | [หลักฐาน ความมั่นใจ และสิ่งที่ไม่รู้ในการวิเคราะห์ไบนารี](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | สร้าง | Python, TypeScript |
+| 36 | [สร้างใหม่และพิสูจน์ว่าเท่ากัน](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | สร้าง | Python, TypeScript |
+| 37 | [ภาพรวมของวิศวกรรมย้อนกลับ](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | สร้าง | Python, TypeScript |
+| 38 | [แบบแผนการเรียกและสแตกเฟรม](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | สร้าง | Python, TypeScript |
+| 39 | [รูปแบบโค้ดของคอมไพเลอร์และการปรับให้เหมาะสม](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | สร้าง | Python, TypeScript |
+| 40 | [การลิงก์ การโหลด และไบนารีที่ถูกตัดสัญลักษณ์](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | สร้าง | Python, TypeScript |
+| 41 | [กู้คืนข้อมูลและชนิดข้อมูล](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | สร้าง | Python, TypeScript |
+| 42 | [วิเคราะห์แบบไดนามิกกับโปรแกรมของคุณเอง](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | สร้าง | Python, TypeScript |
+| 43 | [ไบต์โค้ดและรูปแบบที่มีการจัดการ](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | สร้าง | Python, TypeScript |
 | 44 | [เทียบความต่างไบนารีและการประมวลผลเชิงสัญลักษณ์](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | สร้าง | Python |
-| 45 | [วิศวกรรมย้อนกลับโดยมี AI ช่วย](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | สร้าง | Python |
+| 45 | [วิศวกรรมย้อนกลับโดยมี AI ช่วย](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | สร้าง | Python, TypeScript |
 
 บทเรียน 06-18 และ 28-31 รวมเป็น[เส้นทาง Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) โดยลำดับในแมนิเฟสต์คือ 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31 เริ่มด้วยคำสั่ง `learn-mcp` ของโฮสต์ตามด้านบน บทเรียน 23 เป็นโครงงานสรุปทางเลือกเพียงบทเดียว และต้องเรียนบท 19 กับ 20 ด้วย
 
@@ -771,59 +771,59 @@ flowchart TB
 | # | บทเรียน | ประเภท | ภาษา |
 |:---:|--------|:----:|------|
 | 01 | [ลูปเอเจนต์](../../phases/14-agent-engineering/01-the-agent-loop/) | สร้าง | Python, TypeScript |
-| 02 | [ReWOO และวางแผนแล้วลงมือทำ](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | สร้าง | Python |
-| 03 | [Reflexion และการเรียนรู้เสริมกำลังด้วยภาษา](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | สร้าง | Python |
-| 04 | [ต้นไม้ความคิดและ LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | สร้าง | Python |
-| 05 | [Self-Refine และ CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | สร้าง | Python |
+| 02 | [ReWOO และวางแผนแล้วลงมือทำ](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | สร้าง | Python, TypeScript |
+| 03 | [Reflexion และการเรียนรู้เสริมกำลังด้วยภาษา](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | สร้าง | Python, TypeScript |
+| 04 | [ต้นไม้ความคิดและ LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | สร้าง | Python, TypeScript |
+| 05 | [Self-Refine และ CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | สร้าง | Python, TypeScript |
 | 06 | [ใช้เครื่องมือและเรียกฟังก์ชัน](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | สร้าง | Python, TypeScript |
-| 07 | [หน่วยความจำเอเจนต์: บริบทเสมือนและการแบ่งหน้าหน่วยความจำ](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | สร้าง | Python |
-| 08 | [บล็อกหน่วยความจำและการคำนวณช่วงพัก](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | สร้าง | Python |
-| 09 | [หน่วยความจำแบบผสม: เวกเตอร์ กราฟ และ KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | สร้าง | Python |
-| 10 | [คลังสกิลและการเรียนรู้ตลอดชีวิต (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | สร้าง | Python |
-| 11 | [วางแผนด้วย HTN และการค้นหาเชิงวิวัฒนาการ](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | สร้าง | Python |
-| 12 | [รูปแบบเวิร์กโฟลว์ของ Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | สร้าง | Python |
+| 07 | [หน่วยความจำเอเจนต์: บริบทเสมือนและการแบ่งหน้าหน่วยความจำ](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | สร้าง | Python, TypeScript |
+| 08 | [บล็อกหน่วยความจำและการคำนวณช่วงพัก](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | สร้าง | Python, TypeScript |
+| 09 | [หน่วยความจำแบบผสม: เวกเตอร์ กราฟ และ KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | สร้าง | Python, TypeScript |
+| 10 | [คลังสกิลและการเรียนรู้ตลอดชีวิต (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | สร้าง | Python, TypeScript |
+| 11 | [วางแผนด้วย HTN และการค้นหาเชิงวิวัฒนาการ](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | สร้าง | Python, TypeScript |
+| 12 | [รูปแบบเวิร์กโฟลว์ของ Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | สร้าง | Python, TypeScript |
 | 13 | [ประสานงานกราฟที่มีสถานะ: การรันต่อเนื่องและเช็กพอยต์](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | สร้าง | Python, TypeScript |
-| 14 | [โมเดลแอกเตอร์สำหรับเอเจนต์](../../phases/14-agent-engineering/14-autogen-actor-model/) | สร้าง | Python |
+| 14 | [โมเดลแอกเตอร์สำหรับเอเจนต์](../../phases/14-agent-engineering/14-autogen-actor-model/) | สร้าง | Python, TypeScript |
 | 15 | [ทีมเอเจนต์ตามบทบาท: บทบาท งาน และกระบวนการ](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | สร้าง | Python |
-| 16 | [OpenAI Agents SDK: ส่งต่องาน ขอบเขตป้องกัน และการติดตาม](../../phases/14-agent-engineering/16-openai-agents-sdk/) | สร้าง | Python |
-| 17 | [ชุดควบคุมเอเจนต์ในรูปไลบรารี: เอเจนต์ย่อยและที่เก็บเซสชัน](../../phases/14-agent-engineering/17-claude-agent-sdk/) | สร้าง | Python |
+| 16 | [OpenAI Agents SDK: ส่งต่องาน ขอบเขตป้องกัน และการติดตาม](../../phases/14-agent-engineering/16-openai-agents-sdk/) | สร้าง | Python, TypeScript |
+| 17 | [ชุดควบคุมเอเจนต์ในรูปไลบรารี: เอเจนต์ย่อยและที่เก็บเซสชัน](../../phases/14-agent-engineering/17-claude-agent-sdk/) | สร้าง | Python, TypeScript |
 | 18 | [รันไทม์เอเจนต์สำหรับงานจริง](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | เรียนรู้ | Python, TypeScript |
-| 19 | [เกณฑ์เปรียบเทียบ: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | เรียนรู้ | Python |
-| 20 | [เกณฑ์เปรียบเทียบ: WebArena และ OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | เรียนรู้ | Python |
-| 21 | [การใช้คอมพิวเตอร์: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | สร้าง | Python |
-| 22 | [เอเจนต์เสียง: Pipecat และ LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | สร้าง | Python |
-| 23 | [ข้อตกลงเชิงความหมายของ OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | สร้าง | Python |
-| 24 | [การสังเกตการณ์เอเจนต์: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | เรียนรู้ | Python |
-| 25 | [การอภิปรายและร่วมมือของหลายเอเจนต์](../../phases/14-agent-engineering/25-multi-agent-debate/) | สร้าง | Python |
-| 26 | [รูปแบบความล้มเหลว: ทำไมเอเจนต์จึงพัง](../../phases/14-agent-engineering/26-failure-modes-agentic/) | สร้าง | Python |
-| 27 | [การแทรกพรอมป์ต์และการป้องกัน PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | สร้าง | Python |
-| 28 | [รูปแบบประสานงาน: ผู้ควบคุม ฝูง และลำดับชั้น](../../phases/14-agent-engineering/28-orchestration-patterns/) | สร้าง | Python |
-| 29 | [รันไทม์งานจริง: คิว เหตุการณ์ และ cron](../../phases/14-agent-engineering/29-production-runtimes/) | เรียนรู้ | Python |
-| 30 | [พัฒนาเอเจนต์โดยขับเคลื่อนด้วยการประเมิน](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | สร้าง | Python |
-| 31 | [เวิร์กเบนช์เอเจนต์: ทำไมโมเดลเก่งยังล้มเหลว](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | เรียนรู้ | Python |
-| 32 | [เวิร์กเบนช์เอเจนต์ที่เล็กที่สุด](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | สร้าง | Python |
-| 33 | [คำสั่งเอเจนต์ในรูปข้อจำกัดที่บังคับใช้ได้](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | สร้าง | Python |
-| 34 | [หน่วยความจำของที่เก็บและสถานะถาวร](../../phases/14-agent-engineering/34-repo-memory-and-state/) | สร้าง | Python |
-| 35 | [สคริปต์เริ่มต้นสำหรับเอเจนต์](../../phases/14-agent-engineering/35-initialization-scripts/) | สร้าง | Python |
-| 36 | [สัญญาขอบเขตและเส้นแบ่งงาน](../../phases/14-agent-engineering/36-scope-contracts/) | สร้าง | Python |
-| 37 | [วงจรข้อเสนอแนะขณะรัน](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | สร้าง | Python |
-| 38 | [จุดตรวจยืนยัน](../../phases/14-agent-engineering/38-verification-gates/) | สร้าง | Python |
-| 39 | [เอเจนต์ตรวจงาน: แยกผู้สร้างออกจากผู้ประเมิน](../../phases/14-agent-engineering/39-reviewer-agent/) | สร้าง | Python |
-| 40 | [ส่งต่องานข้ามเซสชัน](../../phases/14-agent-engineering/40-multi-session-handoff/) | สร้าง | Python |
-| 41 | [เวิร์กเบนช์บนที่เก็บจริง](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | สร้าง | Python |
-| 42 | [โครงงานสรุป: เผยแพร่ชุดเวิร์กเบนช์เอเจนต์ที่ใช้ซ้ำได้](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | สร้าง | Python |
-| 43 | [กำหนดงานก่อนให้เอเจนต์เขียนโค้ด](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | สร้าง | Python |
-| 44 | [สร้างแผนปฏิบัติที่มีหลักฐานรองรับ](../../phases/14-agent-engineering/44-plan-from-evidence/) | สร้าง | Python |
-| 45 | [มอบหมายงานเอเจนต์ด้วยการแยกพื้นที่และสัญญารวมงาน](../../phases/14-agent-engineering/45-delegate-with-isolation/) | สร้าง | Python |
-| 46 | [เปลี่ยนทุกการแก้เอเจนต์ให้เป็นการปรับปรุงระบบ](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | สร้าง | Python |
-| 47 | [กำหนดผลลัพธ์ก่อนเลือกชิ้นงาน](../../phases/14-agent-engineering/47-outcomes-before-output/) | สร้าง | Python |
-| 48 | [ค้นหากระบวนการที่คนทำจริง](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | สร้าง | Python |
-| 49 | [ทำแผนที่สมมติฐานและคลี่คลายข้อเสี่ยงที่สุดก่อน](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | สร้าง | Python |
-| 50 | [เลือกส่วนเล็กที่สุดที่เปลี่ยนการตัดสินใจได้](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | สร้าง | Python |
-| 51 | [เขียนข้อกำหนดที่รักษาการใช้วิจารณญาณ](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | สร้าง | Python |
-| 52 | [ออกแบบตัวชี้วัดความสำเร็จก่อนมีผลลัพธ์](../../phases/14-agent-engineering/52-design-success-metrics/) | สร้าง | Python |
-| 53 | [ตั้งใจเลือกต้นแบบ โครงการนำร่อง หรือระบบจริง](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | สร้าง | Python |
-| 54 | [สร้างกลไกข้อเสนอแนะต่อเนื่องพร้อมเจ้าของและการเลิกใช้](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | สร้าง | Python |
+| 19 | [เกณฑ์เปรียบเทียบ: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | เรียนรู้ | Python, TypeScript |
+| 20 | [เกณฑ์เปรียบเทียบ: WebArena และ OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | เรียนรู้ | Python, TypeScript |
+| 21 | [การใช้คอมพิวเตอร์: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | สร้าง | Python, TypeScript |
+| 22 | [เอเจนต์เสียง: Pipecat และ LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | สร้าง | Python, TypeScript |
+| 23 | [ข้อตกลงเชิงความหมายของ OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | สร้าง | Python, TypeScript |
+| 24 | [การสังเกตการณ์เอเจนต์: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | เรียนรู้ | Python, TypeScript |
+| 25 | [การอภิปรายและร่วมมือของหลายเอเจนต์](../../phases/14-agent-engineering/25-multi-agent-debate/) | สร้าง | Python, TypeScript |
+| 26 | [รูปแบบความล้มเหลว: ทำไมเอเจนต์จึงพัง](../../phases/14-agent-engineering/26-failure-modes-agentic/) | สร้าง | Python, TypeScript |
+| 27 | [การแทรกพรอมป์ต์และการป้องกัน PVE](../../phases/14-agent-engineering/27-prompt-injection-defense/) | สร้าง | Python, TypeScript |
+| 28 | [รูปแบบประสานงาน: ผู้ควบคุม ฝูง และลำดับชั้น](../../phases/14-agent-engineering/28-orchestration-patterns/) | สร้าง | Python, TypeScript |
+| 29 | [รันไทม์งานจริง: คิว เหตุการณ์ และ cron](../../phases/14-agent-engineering/29-production-runtimes/) | เรียนรู้ | Python, TypeScript |
+| 30 | [พัฒนาเอเจนต์โดยขับเคลื่อนด้วยการประเมิน](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | สร้าง | Python, TypeScript |
+| 31 | [เวิร์กเบนช์เอเจนต์: ทำไมโมเดลเก่งยังล้มเหลว](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | เรียนรู้ | Python, TypeScript |
+| 32 | [เวิร์กเบนช์เอเจนต์ที่เล็กที่สุด](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | สร้าง | Python, TypeScript |
+| 33 | [คำสั่งเอเจนต์ในรูปข้อจำกัดที่บังคับใช้ได้](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | สร้าง | Python, TypeScript |
+| 34 | [หน่วยความจำของที่เก็บและสถานะถาวร](../../phases/14-agent-engineering/34-repo-memory-and-state/) | สร้าง | Python, TypeScript |
+| 35 | [สคริปต์เริ่มต้นสำหรับเอเจนต์](../../phases/14-agent-engineering/35-initialization-scripts/) | สร้าง | Python, TypeScript |
+| 36 | [สัญญาขอบเขตและเส้นแบ่งงาน](../../phases/14-agent-engineering/36-scope-contracts/) | สร้าง | Python, TypeScript |
+| 37 | [วงจรข้อเสนอแนะขณะรัน](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | สร้าง | Python, TypeScript |
+| 38 | [จุดตรวจยืนยัน](../../phases/14-agent-engineering/38-verification-gates/) | สร้าง | Python, TypeScript |
+| 39 | [เอเจนต์ตรวจงาน: แยกผู้สร้างออกจากผู้ประเมิน](../../phases/14-agent-engineering/39-reviewer-agent/) | สร้าง | Python, TypeScript |
+| 40 | [ส่งต่องานข้ามเซสชัน](../../phases/14-agent-engineering/40-multi-session-handoff/) | สร้าง | Python, TypeScript |
+| 41 | [เวิร์กเบนช์บนที่เก็บจริง](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | สร้าง | Python, TypeScript |
+| 42 | [โครงงานสรุป: เผยแพร่ชุดเวิร์กเบนช์เอเจนต์ที่ใช้ซ้ำได้](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | สร้าง | Python, TypeScript |
+| 43 | [กำหนดงานก่อนให้เอเจนต์เขียนโค้ด](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | สร้าง | Python, TypeScript |
+| 44 | [สร้างแผนปฏิบัติที่มีหลักฐานรองรับ](../../phases/14-agent-engineering/44-plan-from-evidence/) | สร้าง | Python, TypeScript |
+| 45 | [มอบหมายงานเอเจนต์ด้วยการแยกพื้นที่และสัญญารวมงาน](../../phases/14-agent-engineering/45-delegate-with-isolation/) | สร้าง | Python, TypeScript |
+| 46 | [เปลี่ยนทุกการแก้เอเจนต์ให้เป็นการปรับปรุงระบบ](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | สร้าง | Python, TypeScript |
+| 47 | [กำหนดผลลัพธ์ก่อนเลือกชิ้นงาน](../../phases/14-agent-engineering/47-outcomes-before-output/) | สร้าง | Python, TypeScript |
+| 48 | [ค้นหากระบวนการที่คนทำจริง](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | สร้าง | Python, TypeScript |
+| 49 | [ทำแผนที่สมมติฐานและคลี่คลายข้อเสี่ยงที่สุดก่อน](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | สร้าง | Python, TypeScript |
+| 50 | [เลือกส่วนเล็กที่สุดที่เปลี่ยนการตัดสินใจได้](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | สร้าง | Python, TypeScript |
+| 51 | [เขียนข้อกำหนดที่รักษาการใช้วิจารณญาณ](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | สร้าง | Python, TypeScript |
+| 52 | [ออกแบบตัวชี้วัดความสำเร็จก่อนมีผลลัพธ์](../../phases/14-agent-engineering/52-design-success-metrics/) | สร้าง | Python, TypeScript |
+| 53 | [ตั้งใจเลือกต้นแบบ โครงการนำร่อง หรือระบบจริง](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | สร้าง | Python, TypeScript |
+| 54 | [สร้างกลไกข้อเสนอแนะต่อเนื่องพร้อมเจ้าของและการเลิกใช้](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | สร้าง | Python, TypeScript |
 
 ทุกบทเรียนเวิร์กเบนช์ในระยะ 14 (31-42) มี `mission.md` สรุปภารกิจให้เอเจนต์ก่อนเปิดเอกสารบทเรียนฉบับเต็ม
 
@@ -837,28 +837,28 @@ flowchart TB
 
 | # | บทเรียน | ประเภท | ภาษา |
 |:---:|--------|:----:|------|
-| 01 | [จากแชตบอตสู่เอเจนต์งานระยะยาว (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | เรียนรู้ | Python |
-| 02 | [STaR, V-STaR, Quiet-STaR: เรียนรู้การให้เหตุผลด้วยตนเอง](../../phases/15-autonomous-systems/02-star-family-reasoning/) | เรียนรู้ | Python |
-| 03 | [AlphaEvolve: เอเจนต์เขียนโค้ดเชิงวิวัฒนาการ](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | เรียนรู้ | Python |
-| 04 | [Darwin Gödel Machine: เอเจนต์ที่แก้ไขตัวเอง](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | เรียนรู้ | Python |
-| 05 | [AI Scientist v2: งานวิจัยระดับเวิร์กช็อป](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | เรียนรู้ | Python |
-| 06 | [วิจัยการจัดแนวอัตโนมัติ (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | เรียนรู้ | Python |
-| 07 | [ปรับปรุงตนเองแบบเรียกซ้ำ: ความสามารถกับการจัดแนว](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | เรียนรู้ | Python |
-| 08 | [ออกแบบการปรับปรุงตนเองที่มีขอบเขต](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | เรียนรู้ | Python |
-| 09 | [ภาพรวมเอเจนต์เขียนโค้ดอัตโนมัติ (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | เรียนรู้ | Python |
-| 10 | [โหมดสิทธิ์สำหรับเอเจนต์อัตโนมัติ](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | เรียนรู้ | Python |
-| 11 | [เอเจนต์เบราว์เซอร์และการแทรกพรอมป์ต์ทางอ้อม](../../phases/15-autonomous-systems/11-browser-agents/) | เรียนรู้ | Python |
-| 12 | [การรันต่อเนื่องสำหรับเอเจนต์ระยะยาว](../../phases/15-autonomous-systems/12-durable-execution/) | เรียนรู้ | Python |
-| 13 | [งบการกระทำ เพดานรอบ และตัวควบคุมต้นทุน](../../phases/15-autonomous-systems/13-cost-governors/) | เรียนรู้ | Python |
-| 14 | [สวิตช์หยุดฉุกเฉิน เซอร์กิตเบรกเกอร์ และโทเคนคานารี](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | เรียนรู้ | Python |
-| 15 | [HITL: เสนอก่อนแล้วค่อยยืนยัน](../../phases/15-autonomous-systems/15-propose-then-commit/) | เรียนรู้ | Python |
-| 16 | [เช็กพอยต์และการย้อนกลับ](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | เรียนรู้ | Python |
-| 17 | [Constitutional AI และข้อยกเว้นกฎ](../../phases/15-autonomous-systems/17-constitutional-ai/) | เรียนรู้ | Python |
-| 18 | [Llama Guard และการจำแนกอินพุต/เอาต์พุต](../../phases/15-autonomous-systems/18-llama-guard/) | เรียนรู้ | Python |
-| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | เรียนรู้ | Python |
-| 20 | [OpenAI Preparedness Framework และ DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | เรียนรู้ | Python |
-| 21 | [ช่วงเวลางานของ METR และการประเมินภายนอก](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | เรียนรู้ | Python |
-| 22 | [CAIS, CAISI และความเสี่ยงระดับสังคม](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | เรียนรู้ | Python |
+| 01 | [จากแชตบอตสู่เอเจนต์งานระยะยาว (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | เรียนรู้ | Python, TypeScript |
+| 02 | [STaR, V-STaR, Quiet-STaR: เรียนรู้การให้เหตุผลด้วยตนเอง](../../phases/15-autonomous-systems/02-star-family-reasoning/) | เรียนรู้ | Python, TypeScript |
+| 03 | [AlphaEvolve: เอเจนต์เขียนโค้ดเชิงวิวัฒนาการ](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | เรียนรู้ | Python, TypeScript |
+| 04 | [Darwin Gödel Machine: เอเจนต์ที่แก้ไขตัวเอง](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | เรียนรู้ | Python, TypeScript |
+| 05 | [AI Scientist v2: งานวิจัยระดับเวิร์กช็อป](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | เรียนรู้ | Python, TypeScript |
+| 06 | [วิจัยการจัดแนวอัตโนมัติ (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | เรียนรู้ | Python, TypeScript |
+| 07 | [ปรับปรุงตนเองแบบเรียกซ้ำ: ความสามารถกับการจัดแนว](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | เรียนรู้ | Python, TypeScript |
+| 08 | [ออกแบบการปรับปรุงตนเองที่มีขอบเขต](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | เรียนรู้ | Python, TypeScript |
+| 09 | [ภาพรวมเอเจนต์เขียนโค้ดอัตโนมัติ (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | เรียนรู้ | Python, TypeScript |
+| 10 | [โหมดสิทธิ์สำหรับเอเจนต์อัตโนมัติ](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | เรียนรู้ | Python, TypeScript |
+| 11 | [เอเจนต์เบราว์เซอร์และการแทรกพรอมป์ต์ทางอ้อม](../../phases/15-autonomous-systems/11-browser-agents/) | เรียนรู้ | Python, TypeScript |
+| 12 | [การรันต่อเนื่องสำหรับเอเจนต์ระยะยาว](../../phases/15-autonomous-systems/12-durable-execution/) | เรียนรู้ | Python, TypeScript |
+| 13 | [งบการกระทำ เพดานรอบ และตัวควบคุมต้นทุน](../../phases/15-autonomous-systems/13-cost-governors/) | เรียนรู้ | Python, TypeScript |
+| 14 | [สวิตช์หยุดฉุกเฉิน เซอร์กิตเบรกเกอร์ และโทเคนคานารี](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | เรียนรู้ | Python, TypeScript |
+| 15 | [HITL: เสนอก่อนแล้วค่อยยืนยัน](../../phases/15-autonomous-systems/15-propose-then-commit/) | เรียนรู้ | Python, TypeScript |
+| 16 | [เช็กพอยต์และการย้อนกลับ](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | เรียนรู้ | Python, TypeScript |
+| 17 | [Constitutional AI และข้อยกเว้นกฎ](../../phases/15-autonomous-systems/17-constitutional-ai/) | เรียนรู้ | Python, TypeScript |
+| 18 | [Llama Guard และการจำแนกอินพุต/เอาต์พุต](../../phases/15-autonomous-systems/18-llama-guard/) | เรียนรู้ | Python, TypeScript |
+| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | เรียนรู้ | Python, TypeScript |
+| 20 | [OpenAI Preparedness Framework และ DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | เรียนรู้ | Python, TypeScript |
+| 21 | [ช่วงเวลางานของ METR และการประเมินภายนอก](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | เรียนรู้ | Python, TypeScript |
+| 22 | [CAIS, CAISI และความเสี่ยงระดับสังคม](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | เรียนรู้ | Python, TypeScript |
 
 </details>
 
@@ -869,30 +869,30 @@ flowchart TB
 | # | บทเรียน | ประเภท | ภาษา |
 |:---:|--------|:----:|------|
 | 01 | [ทำไมต้องใช้หลายเอเจนต์](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | เรียนรู้ | TypeScript |
-| 02 | [รากฐาน FIPA-ACL และวัจนกรรม](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | เรียนรู้ | Python |
+| 02 | [รากฐาน FIPA-ACL และวัจนกรรม](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | เรียนรู้ | Python, TypeScript |
 | 03 | [โพรโทคอลการสื่อสาร](../../phases/16-multi-agent-and-swarms/03-communication-protocols/) | สร้าง | TypeScript |
-| 04 | [โมเดลองค์ประกอบพื้นฐานของระบบหลายเอเจนต์](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | เรียนรู้ | Python |
-| 05 | [รูปแบบผู้ควบคุม / ผู้ประสานงาน-ผู้ปฏิบัติ](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | สร้าง | Python |
-| 06 | [สถาปัตยกรรมลำดับชั้นและความคลาดเคลื่อนเมื่อแบ่งงาน](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | เรียนรู้ | Python |
-| 07 | [Society of Mind และการอภิปรายหลายเอเจนต์](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | สร้าง | Python |
-| 08 | [ความเชี่ยวชาญตามบทบาท: วางแผน วิจารณ์ ลงมือ และตรวจสอบ](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | สร้าง | Python |
-| 09 | [ฝูงขนานและสถาปัตยกรรมแบบเครือข่าย](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | สร้าง | Python |
-| 10 | [แชตกลุ่มและการเลือกผู้พูด](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | สร้าง | Python |
-| 11 | [ส่งต่องานและรูทีน (ประสานงานแบบไร้สถานะ)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | สร้าง | Python |
-| 12 | [A2A: โพรโทคอลเอเจนต์ถึงเอเจนต์](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | สร้าง | Python |
-| 13 | [หน่วยความจำร่วมและรูปแบบกระดานดำ](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | สร้าง | Python |
-| 14 | [ฉันทามติและความทนทานต่อความผิดพลาดแบบไบแซนไทน์](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | สร้าง | Python |
-| 15 | [การลงคะแนน ความสอดคล้องในตนเอง และโครงสร้างการอภิปราย](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | สร้าง | Python |
-| 16 | [การเจรจาและต่อรอง](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | สร้าง | Python |
-| 17 | [เอเจนต์กำเนิดและการจำลองพฤติกรรมที่เกิดขึ้นเอง](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | สร้าง | Python |
-| 18 | [ทฤษฎีจิตและการประสานงานที่เกิดขึ้นเอง](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | สร้าง | Python |
-| 19 | [การหาค่าเหมาะที่สุดแบบฝูง (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | สร้าง | Python |
-| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | เรียนรู้ | Python |
-| 21 | [เศรษฐกิจเอเจนต์ แรงจูงใจโทเคน และชื่อเสียง](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | เรียนรู้ | Python |
-| 22 | [ขยายงานจริง: คิว เช็กพอยต์ และความคงทน](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | สร้าง | Python |
-| 23 | [รูปแบบความล้มเหลว: MAST, ความคิดตามกลุ่ม และความหลากหลายต่ำ](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | เรียนรู้ | Python |
-| 24 | [เกณฑ์ประเมินและการประสานงาน](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | เรียนรู้ | Python |
-| 25 | [กรณีศึกษาและเทคโนโลยีแนวหน้าปี 2026](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | เรียนรู้ | Python |
+| 04 | [โมเดลองค์ประกอบพื้นฐานของระบบหลายเอเจนต์](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | เรียนรู้ | Python, TypeScript |
+| 05 | [รูปแบบผู้ควบคุม / ผู้ประสานงาน-ผู้ปฏิบัติ](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | สร้าง | Python, TypeScript |
+| 06 | [สถาปัตยกรรมลำดับชั้นและความคลาดเคลื่อนเมื่อแบ่งงาน](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | เรียนรู้ | Python, TypeScript |
+| 07 | [Society of Mind และการอภิปรายหลายเอเจนต์](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | สร้าง | Python, TypeScript |
+| 08 | [ความเชี่ยวชาญตามบทบาท: วางแผน วิจารณ์ ลงมือ และตรวจสอบ](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | สร้าง | Python, TypeScript |
+| 09 | [ฝูงขนานและสถาปัตยกรรมแบบเครือข่าย](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | สร้าง | Python, TypeScript |
+| 10 | [แชตกลุ่มและการเลือกผู้พูด](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | สร้าง | Python, TypeScript |
+| 11 | [ส่งต่องานและรูทีน (ประสานงานแบบไร้สถานะ)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | สร้าง | Python, TypeScript |
+| 12 | [A2A: โพรโทคอลเอเจนต์ถึงเอเจนต์](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | สร้าง | Python, TypeScript |
+| 13 | [หน่วยความจำร่วมและรูปแบบกระดานดำ](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | สร้าง | Python, TypeScript |
+| 14 | [ฉันทามติและความทนทานต่อความผิดพลาดแบบไบแซนไทน์](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | สร้าง | Python, TypeScript |
+| 15 | [การลงคะแนน ความสอดคล้องในตนเอง และโครงสร้างการอภิปราย](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | สร้าง | Python, TypeScript |
+| 16 | [การเจรจาและต่อรอง](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | สร้าง | Python, TypeScript |
+| 17 | [เอเจนต์กำเนิดและการจำลองพฤติกรรมที่เกิดขึ้นเอง](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | สร้าง | Python, TypeScript |
+| 18 | [ทฤษฎีจิตและการประสานงานที่เกิดขึ้นเอง](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | สร้าง | Python, TypeScript |
+| 19 | [การหาค่าเหมาะที่สุดแบบฝูง (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | สร้าง | Python, TypeScript |
+| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | เรียนรู้ | Python, TypeScript |
+| 21 | [เศรษฐกิจเอเจนต์ แรงจูงใจโทเคน และชื่อเสียง](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | เรียนรู้ | Python, TypeScript |
+| 22 | [ขยายงานจริง: คิว เช็กพอยต์ และความคงทน](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | สร้าง | Python, TypeScript |
+| 23 | [รูปแบบความล้มเหลว: MAST, ความคิดตามกลุ่ม และความหลากหลายต่ำ](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | เรียนรู้ | Python, TypeScript |
+| 24 | [เกณฑ์ประเมินและการประสานงาน](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | เรียนรู้ | Python, TypeScript |
+| 25 | [กรณีศึกษาและเทคโนโลยีแนวหน้าปี 2026](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | เรียนรู้ | Python, TypeScript |
 
 </details>
 
@@ -902,35 +902,35 @@ flowchart TB
 
 | # | บทเรียน | ประเภท | ภาษา |
 |:---:|--------|:----:|------|
-| 01 | [แพลตฟอร์ม LLM แบบจัดการให้: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | เรียนรู้ | Python |
-| 02 | [เศรษฐศาสตร์แพลตฟอร์มอนุมาน: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | เรียนรู้ | Python |
-| 03 | [ขยาย GPU อัตโนมัติบน Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | เรียนรู้ | Python |
-| 04 | [ภายในเอนจินให้บริการ: PagedAttention, แบตช์ต่อเนื่อง และ prefill แบ่งส่วน](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | เรียนรู้ | Python |
-| 05 | [ถอดรหัสเชิงคาดการณ์ EAGLE-3 ในงานจริง](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | เรียนรู้ | Python |
-| 06 | [ให้บริการด้วยแคชส่วนต้น: RadixAttention และใช้ KV ซ้ำ](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | เรียนรู้ | Python |
-| 07 | [คอมไพล์การอนุมานตามฮาร์ดแวร์: FP8 และ NVFP4 บน Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | เรียนรู้ | Python |
-| 08 | [ตัวชี้วัดการอนุมาน: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | เรียนรู้ | Python |
-| 09 | [ควอนไทเซชันในงานจริง: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | เรียนรู้ | Python |
-| 10 | [ลดการเริ่มต้นช้าของ LLM แบบ serverless](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | เรียนรู้ | Python |
-| 11 | [ให้บริการ LLM หลายภูมิภาคและความใกล้ของแคช KV](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | เรียนรู้ | Python |
-| 12 | [อนุมานบนอุปกรณ์ปลายทาง: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | เรียนรู้ | Python |
+| 01 | [แพลตฟอร์ม LLM แบบจัดการให้: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | เรียนรู้ | Python, TypeScript |
+| 02 | [เศรษฐศาสตร์แพลตฟอร์มอนุมาน: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | เรียนรู้ | Python, TypeScript |
+| 03 | [ขยาย GPU อัตโนมัติบน Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | เรียนรู้ | Python, TypeScript |
+| 04 | [ภายในเอนจินให้บริการ: PagedAttention, แบตช์ต่อเนื่อง และ prefill แบ่งส่วน](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | เรียนรู้ | Python, TypeScript |
+| 05 | [ถอดรหัสเชิงคาดการณ์ EAGLE-3 ในงานจริง](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | เรียนรู้ | Python, TypeScript |
+| 06 | [ให้บริการด้วยแคชส่วนต้น: RadixAttention และใช้ KV ซ้ำ](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | เรียนรู้ | Python, TypeScript |
+| 07 | [คอมไพล์การอนุมานตามฮาร์ดแวร์: FP8 และ NVFP4 บน Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | เรียนรู้ | Python, TypeScript |
+| 08 | [ตัวชี้วัดการอนุมาน: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | เรียนรู้ | Python, TypeScript |
+| 09 | [ควอนไทเซชันในงานจริง: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | เรียนรู้ | Python, TypeScript |
+| 10 | [ลดการเริ่มต้นช้าของ LLM แบบ serverless](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | เรียนรู้ | Python, TypeScript |
+| 11 | [ให้บริการ LLM หลายภูมิภาคและความใกล้ของแคช KV](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | เรียนรู้ | Python, TypeScript |
+| 12 | [อนุมานบนอุปกรณ์ปลายทาง: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | เรียนรู้ | Python, TypeScript |
 | 13 | [เลือกชุดเครื่องมือสังเกตการณ์ LLM](../../phases/17-infrastructure-and-production/13-llm-observability/) | เรียนรู้ | Python, TypeScript |
 | 14 | [เศรษฐศาสตร์แคชพรอมป์ต์และแคชเชิงความหมาย](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | เรียนรู้ | Python, TypeScript |
 | 15 | [API แบบแบตช์: ส่วนลด 50% ที่เป็นมาตรฐานอุตสาหกรรม](../../phases/17-infrastructure-and-production/15-batch-apis/) | เรียนรู้ | Python, TypeScript |
 | 16 | [กำหนดเส้นทางโมเดลเพื่อลดต้นทุน](../../phases/17-infrastructure-and-production/16-model-routing/) | เรียนรู้ | Python, TypeScript |
-| 17 | [แยก prefill/decode: NVIDIA Dynamo และ llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | เรียนรู้ | Python |
-| 18 | [ชุดให้บริการงานจริง: ย้าย KV ออกและกำหนดเส้นทางตามแคช](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | เรียนรู้ | Python |
+| 17 | [แยก prefill/decode: NVIDIA Dynamo และ llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | เรียนรู้ | Python, TypeScript |
+| 18 | [ชุดให้บริการงานจริง: ย้าย KV ออกและกำหนดเส้นทางตามแคช](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | เรียนรู้ | Python, TypeScript |
 | 19 | [เกตเวย์ AI: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | เรียนรู้ | Python, TypeScript |
 | 20 | [ปรับใช้แบบเงา คานารี และทยอยเปิด](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | เรียนรู้ | Python, TypeScript |
-| 21 | [ทดสอบ A/B ฟีเจอร์ LLM: GrowthBook และ Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | เรียนรู้ | Python |
-| 22 | [ทดสอบโหลด API ของ LLM: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | สร้าง | Python |
-| 23 | [SRE สำหรับ AI: รับมือเหตุขัดข้องด้วยหลายเอเจนต์](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | เรียนรู้ | Python |
-| 24 | [วิศวกรรมความโกลาหลสำหรับ LLM ในงานจริง](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | เรียนรู้ | Python |
-| 25 | [ความปลอดภัย: ความลับ ลบข้อมูลส่วนบุคคล และบันทึกตรวจสอบ](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | เรียนรู้ | Python |
-| 26 | [การปฏิบัติตามข้อกำหนด: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | เรียนรู้ | Python |
-| 27 | [FinOps สำหรับ LLM: ต้นทุนต่อหน่วยและการแบ่งต้นทุนผู้เช่า](../../phases/17-infrastructure-and-production/27-finops-llms/) | เรียนรู้ | Python |
-| 28 | [เลือกเอนจินให้บริการเองให้เหมาะกับฮาร์ดแวร์และขนาดงาน](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | เรียนรู้ | Python |
-| 29 | [อินเทอร์เฟซสาธิตโมเดล: จากฟังก์ชันสู่แอปที่แชร์ได้](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | สร้าง | Python |
+| 21 | [ทดสอบ A/B ฟีเจอร์ LLM: GrowthBook และ Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | เรียนรู้ | Python, TypeScript |
+| 22 | [ทดสอบโหลด API ของ LLM: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | สร้าง | Python, TypeScript |
+| 23 | [SRE สำหรับ AI: รับมือเหตุขัดข้องด้วยหลายเอเจนต์](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | เรียนรู้ | Python, TypeScript |
+| 24 | [วิศวกรรมความโกลาหลสำหรับ LLM ในงานจริง](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | เรียนรู้ | Python, TypeScript |
+| 25 | [ความปลอดภัย: ความลับ ลบข้อมูลส่วนบุคคล และบันทึกตรวจสอบ](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | เรียนรู้ | Python, TypeScript |
+| 26 | [การปฏิบัติตามข้อกำหนด: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | เรียนรู้ | Python, TypeScript |
+| 27 | [FinOps สำหรับ LLM: ต้นทุนต่อหน่วยและการแบ่งต้นทุนผู้เช่า](../../phases/17-infrastructure-and-production/27-finops-llms/) | เรียนรู้ | Python, TypeScript |
+| 28 | [เลือกเอนจินให้บริการเองให้เหมาะกับฮาร์ดแวร์และขนาดงาน](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | เรียนรู้ | Python, TypeScript |
+| 29 | [อินเทอร์เฟซสาธิตโมเดล: จากฟังก์ชันสู่แอปที่แชร์ได้](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | สร้าง | Python, TypeScript |
 
 </details>
 
@@ -940,36 +940,36 @@ flowchart TB
 
 | # | บทเรียน | ประเภท | ภาษา |
 |:---:|--------|:----:|------|
-| 01 | [การทำตามคำสั่งเป็นสัญญาณการจัดแนว](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | เรียนรู้ | Python |
-| 02 | [การโกงรางวัลและกฎของ Goodhart](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | เรียนรู้ | Python |
-| 03 | [กลุ่มวิธีปรับตามความชอบโดยตรง](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | เรียนรู้ | Python |
-| 04 | [การเอาใจผู้ใช้ที่ RLHF ขยายให้มากขึ้น](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | เรียนรู้ | Python |
-| 05 | [Constitutional AI และ RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | เรียนรู้ | Python |
-| 06 | [Mesa-optimization และการจัดแนวแบบหลอกลวง](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | เรียนรู้ | Python |
-| 07 | [เอเจนต์แฝงตัว: การหลอกลวงต่อเนื่อง](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | เรียนรู้ | Python |
-| 08 | [การวางแผนแอบแฝงในบริบทของโมเดลแนวหน้า](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | เรียนรู้ | Python |
-| 09 | [การแสร้งทำเป็นจัดแนว](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | เรียนรู้ | Python |
-| 10 | [ควบคุม AI: ปลอดภัยแม้มีการบ่อนทำลาย](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | เรียนรู้ | Python |
-| 11 | [การกำกับที่ขยายได้และการเรียนรู้จากอ่อนไปแข็ง](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | เรียนรู้ | Python |
-| 12 | [Red teaming: PAIR และการโจมตีอัตโนมัติ](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | สร้าง | Python |
-| 13 | [เจลเบรกด้วยตัวอย่างจำนวนมาก](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | เรียนรู้ | Python |
-| 14 | [ศิลปะ ASCII และเจลเบรกทางภาพ](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | สร้าง | Python |
-| 15 | [การแทรกพรอมป์ต์ทางอ้อม](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | สร้าง | Python |
-| 16 | [เครื่องมือทีมโจมตี: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | สร้าง | Python |
-| 17 | [WMDP และการประเมินความสามารถใช้งานสองทาง](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | เรียนรู้ | Python |
-| 18 | [กรอบความปลอดภัยโมเดลแนวหน้า: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | เรียนรู้ | Python |
-| 19 | [งานวิจัยสวัสดิภาพโมเดล](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | เรียนรู้ | Python |
-| 20 | [อคติและความเสียหายจากการนำเสนอ](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | สร้าง | Python |
-| 21 | [เกณฑ์ความเป็นธรรม: กลุ่ม บุคคล และสถานการณ์สมมติสวนทาง](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | เรียนรู้ | Python |
-| 22 | [ความเป็นส่วนตัวแบบผลต่างสำหรับ LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | สร้าง | Python |
-| 23 | [ลายน้ำ: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | สร้าง | Python |
-| 24 | [กรอบกำกับดูแล: EU, US, UK และเกาหลี](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | เรียนรู้ | Python |
-| 25 | [EchoLeak และ CVE สำหรับ AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | เรียนรู้ | Python |
-| 26 | [การ์ดโมเดล ระบบ และชุดข้อมูล](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | สร้าง | Python |
-| 27 | [ที่มาข้อมูลและการกำกับข้อมูลฝึก](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | เรียนรู้ | Python |
-| 28 | [ระบบนิเวศวิจัยการจัดแนว: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | เรียนรู้ | Python |
-| 29 | [ระบบกลั่นกรองเนื้อหา: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | สร้าง | Python |
-| 30 | [ความเสี่ยงใช้สองทาง: ไซเบอร์ ชีวภาพ เคมี และนิวเคลียร์](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | เรียนรู้ | Python |
+| 01 | [การทำตามคำสั่งเป็นสัญญาณการจัดแนว](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | เรียนรู้ | Python, TypeScript |
+| 02 | [การโกงรางวัลและกฎของ Goodhart](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | เรียนรู้ | Python, TypeScript |
+| 03 | [กลุ่มวิธีปรับตามความชอบโดยตรง](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | เรียนรู้ | Python, TypeScript |
+| 04 | [การเอาใจผู้ใช้ที่ RLHF ขยายให้มากขึ้น](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | เรียนรู้ | Python, TypeScript |
+| 05 | [Constitutional AI และ RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | เรียนรู้ | Python, TypeScript |
+| 06 | [Mesa-optimization และการจัดแนวแบบหลอกลวง](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | เรียนรู้ | Python, TypeScript |
+| 07 | [เอเจนต์แฝงตัว: การหลอกลวงต่อเนื่อง](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | เรียนรู้ | Python, TypeScript |
+| 08 | [การวางแผนแอบแฝงในบริบทของโมเดลแนวหน้า](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | เรียนรู้ | Python, TypeScript |
+| 09 | [การแสร้งทำเป็นจัดแนว](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | เรียนรู้ | Python, TypeScript |
+| 10 | [ควบคุม AI: ปลอดภัยแม้มีการบ่อนทำลาย](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | เรียนรู้ | Python, TypeScript |
+| 11 | [การกำกับที่ขยายได้และการเรียนรู้จากอ่อนไปแข็ง](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | เรียนรู้ | Python, TypeScript |
+| 12 | [Red teaming: PAIR และการโจมตีอัตโนมัติ](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | สร้าง | Python, TypeScript |
+| 13 | [เจลเบรกด้วยตัวอย่างจำนวนมาก](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | เรียนรู้ | Python, TypeScript |
+| 14 | [ศิลปะ ASCII และเจลเบรกทางภาพ](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | สร้าง | Python, TypeScript |
+| 15 | [การแทรกพรอมป์ต์ทางอ้อม](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | สร้าง | Python, TypeScript |
+| 16 | [เครื่องมือทีมโจมตี: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | สร้าง | Python, TypeScript |
+| 17 | [WMDP และการประเมินความสามารถใช้งานสองทาง](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | เรียนรู้ | Python, TypeScript |
+| 18 | [กรอบความปลอดภัยโมเดลแนวหน้า: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | เรียนรู้ | Python, TypeScript |
+| 19 | [งานวิจัยสวัสดิภาพโมเดล](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | เรียนรู้ | Python, TypeScript |
+| 20 | [อคติและความเสียหายจากการนำเสนอ](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | สร้าง | Python, TypeScript |
+| 21 | [เกณฑ์ความเป็นธรรม: กลุ่ม บุคคล และสถานการณ์สมมติสวนทาง](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | เรียนรู้ | Python, TypeScript |
+| 22 | [ความเป็นส่วนตัวแบบผลต่างสำหรับ LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | สร้าง | Python, TypeScript |
+| 23 | [ลายน้ำ: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | สร้าง | Python, TypeScript |
+| 24 | [กรอบกำกับดูแล: EU, US, UK และเกาหลี](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | เรียนรู้ | Python, TypeScript |
+| 25 | [EchoLeak และ CVE สำหรับ AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | เรียนรู้ | Python, TypeScript |
+| 26 | [การ์ดโมเดล ระบบ และชุดข้อมูล](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | สร้าง | Python, TypeScript |
+| 27 | [ที่มาข้อมูลและการกำกับข้อมูลฝึก](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | เรียนรู้ | Python, TypeScript |
+| 28 | [ระบบนิเวศวิจัยการจัดแนว: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | เรียนรู้ | Python, TypeScript |
+| 29 | [ระบบกลั่นกรองเนื้อหา: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | สร้าง | Python, TypeScript |
+| 30 | [ความเสี่ยงใช้สองทาง: ไซเบอร์ ชีวภาพ เคมี และนิวเคลียร์](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | เรียนรู้ | Python, TypeScript |
 
 </details>
 

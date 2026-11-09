@@ -160,7 +160,7 @@ class Mem0:
 
 def main() -> None:
     print("=" * 70)
-    print("MEM0 HYBRID MEMORY — Phase 14, Lesson 09")
+    print("MEM0 HYBRID MEMORY: Phase 14, Lesson 09")
     print("=" * 70)
 
     mem = Mem0()

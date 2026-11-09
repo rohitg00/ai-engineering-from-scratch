@@ -12,7 +12,7 @@ def pick_engine(hardware: str, scale: str, workload: str) -> dict:
 
     if hardware == "CPU":
         engine = "llama.cpp"
-        reasons.append("hardware is CPU — only llama.cpp is competitive")
+        reasons.append("hardware is CPU: only llama.cpp is competitive")
         if scale == "single_user":
             reasons.append("single-user dev → Ollama wraps llama.cpp with one-command UX")
             engine = "Ollama (llama.cpp under the hood)"
@@ -45,7 +45,7 @@ def pick_engine(hardware: str, scale: str, workload: str) -> dict:
         reasons.append("10k+ users → stack with production-stack (Phase 17 · 18)"
                       " + disaggregated (Phase 17 · 17) + cache-aware router (Phase 17 · 11)")
 
-    reasons.append("TGI is in maintenance mode since Dec 11, 2025 — default AWAY from TGI for new projects")
+    reasons.append("TGI is in maintenance mode since Dec 11, 2025: default AWAY from TGI for new projects")
 
     return {
         "hardware": hardware,
@@ -69,7 +69,7 @@ SCENARIOS = [
 
 def main() -> None:
     print("=" * 80)
-    print("SELF-HOSTED ENGINE DECISION TREE — hardware / scale / workload")
+    print("SELF-HOSTED ENGINE DECISION TREE: hardware / scale / workload")
     print("=" * 80)
     for hw, sc, wl in SCENARIOS:
         d = pick_engine(hw, sc, wl)

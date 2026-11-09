@@ -85,7 +85,7 @@ class EventBus:
 
 def main() -> None:
     print("=" * 70)
-    print("PRODUCTION RUNTIME SHAPES — Phase 14, Lesson 29")
+    print("PRODUCTION RUNTIME SHAPES: Phase 14, Lesson 29")
     print("=" * 70)
 
     print("\n1. request-response (synchronous)")

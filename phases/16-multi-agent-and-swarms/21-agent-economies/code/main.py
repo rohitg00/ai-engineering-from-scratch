@@ -98,7 +98,7 @@ def weighted_choice(agents: list[str], weights: list[float], rng: random.Random)
 
 def demo_shapley() -> None:
     print("=" * 72)
-    print("SHAPLEY ATTRIBUTION — 3 agents collaborate on a task")
+    print("SHAPLEY ATTRIBUTION: 3 agents collaborate on a task")
     print("=" * 72)
 
     # Value function: coder alone = 0.5, researcher alone = 0.3, reviewer alone = 0.1,
@@ -131,7 +131,7 @@ def demo_shapley() -> None:
 
 def demo_auction() -> None:
     print("\n" + "=" * 72)
-    print("SECOND-PRICE AUCTION — 5 bidders compete for a task slot")
+    print("SECOND-PRICE AUCTION: 5 bidders compete for a task slot")
     print("=" * 72)
     bids = [
         Bid("agent-a", 0.82),
@@ -151,7 +151,7 @@ def demo_auction() -> None:
 
 def demo_reputation_routing() -> None:
     print("\n" + "=" * 72)
-    print("REPUTATION-WEIGHTED ROUTING — 100 tasks, 4 agents, 50 warmup")
+    print("REPUTATION-WEIGHTED ROUTING: 100 tasks, 4 agents, 50 warmup")
     print("=" * 72)
     agents = ["alpha", "beta", "gamma", "delta"]
     true_quality = {"alpha": 0.9, "beta": 0.5, "gamma": 0.75, "delta": 0.3}

@@ -33,7 +33,7 @@ def ms_disaggregated(prompt: int, output: int, use_rdma: bool = True) -> float:
 
 def main() -> None:
     print("=" * 95)
-    print("DISAGGREGATED vs COLOCATED — same request, different GPU placement")
+    print("DISAGGREGATED vs COLOCATED: same request, different GPU placement")
     print("=" * 95)
     header = f"{'prompt':>7}  {'output':>7}  {'colocated (ms)':>15}  {'disagg RDMA (ms)':>17}  {'disagg TCP (ms)':>16}  Winner"
     print(header)

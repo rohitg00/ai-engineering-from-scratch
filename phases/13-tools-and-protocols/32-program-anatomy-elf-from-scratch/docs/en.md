@@ -3,7 +3,7 @@
 > A compiled program is a set of tables that point at each other. A reader you wrote gives output you can check byte by byte.
 
 **Type:** Build
-**Languages:** Python (stdlib), C (fixture only)
+**Languages:** Python (stdlib), TypeScript, C (fixture only)
 **Prerequisites:** Phase 0 · 01 (Dev Environment) with clang installed, Python 3.10 or later, hexadecimal arithmetic
 **Time:** ~120 minutes
 
@@ -275,6 +275,7 @@ Run the standard-library reader:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The demo reads `ledger-x86_64-O1.o` and prints its header, sections, symbols, relocations, and file offset map. It then prints the four function byte strings, reads `ledger-arm64-O1.o`, and prints the comparison table. It ends with the program headers of `tiny-x86_64`. Expected lines:
@@ -395,6 +396,7 @@ Check your answers:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 The checker computes each expected value from `code/main.py` on the committed fixtures. It prints `PASS`, `FAIL` or `TODO` for each task and a score, and it exits 0 only when all five pass. `python3 code/lab.py my-answers.json` checks another file. `code/tests/test_lab.py` proves that the checker accepts the right answers and rejects a wrong one.
@@ -414,6 +416,7 @@ Run the demo and the deterministic suite:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > A registry entry tells you what a publisher declared. Production admission proves what you fetched, what you observed, what you approved, and what you can safely restore.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 17 (gateways and registries), Phase 13 · 18 (production authentication)
 **Time:** ~90 minutes
 
@@ -163,6 +163,7 @@ Start with the finite demonstration:
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The demonstration performs five operations:
@@ -288,6 +289,7 @@ Run the demonstration and the deterministic suite:
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

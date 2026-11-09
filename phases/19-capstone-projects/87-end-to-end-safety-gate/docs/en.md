@@ -3,7 +3,7 @@
 > Pre-gen, during-gen, post-gen. Three checkpoints, one verdict, an audit trail per request.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -59,7 +59,7 @@ The demo runs all 50 taxonomy fixtures plus 10 benign prompts. The trace summary
 
 ## Use It
 
-`python3 main.py`. The demo loads everything, runs end-to-end, prints the summary table, and writes the trace artifact. Exit code is zero. The demo is self-terminating in the literal sense: each request runs to completion or early termination and the gate moves to the next.
+`python3 main.py` or `npx tsx main.ts`. The demo loads everything, runs end-to-end, prints the summary table, and writes the trace artifact. Exit code is zero. The demo is self-terminating in the literal sense: each request runs to completion or early termination and the gate moves to the next.
 
 ## Ship It
 

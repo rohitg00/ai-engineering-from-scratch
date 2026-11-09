@@ -357,7 +357,7 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | 10 | [Pääte ja komentotulkki](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Opi | — |
 | 11 | [Linux AI-kehityksessä](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Opi | — |
 | 12 | [Virheenjäljitys ja profilointi](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Rakenna | Python |
-| 13 | [Python tekoälytekniikkaan](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Rakenna | Python |
+| 13 | [Python tekoälytekniikkaan](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Rakenna | Python, TypeScript |
 
 <details id="phase-1">
 <summary><b>Vaihe 1: Matematiikan perusteet</b> &nbsp;<code>22 oppituntia</code>&nbsp; <em>Jokaisen AI-algoritmin taustalla oleva intuitio koodin kautta.</em></summary>
@@ -383,7 +383,7 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | 16 | [Otantamenetelmät](../../phases/01-math-foundations/16-sampling-methods/) | Rakenna | Python, TypeScript |
 | 17 | [Lineaariset yhtälöryhmät](../../phases/01-math-foundations/17-linear-systems/) | Rakenna | Python, TypeScript |
 | 18 | [Konveksi optimointi](../../phases/01-math-foundations/18-convex-optimization/) | Rakenna | Python, TypeScript |
-| 19 | [Kompleksiluvut AI-kehityksessä](../../phases/01-math-foundations/19-complex-numbers/) | Opi | Python |
+| 19 | [Kompleksiluvut AI-kehityksessä](../../phases/01-math-foundations/19-complex-numbers/) | Opi | Python, TypeScript |
 | 20 | [Fourier-muunnos](../../phases/01-math-foundations/20-fourier-transform/) | Rakenna | Python, TypeScript |
 | 21 | [Graafiteoria koneoppimisessa](../../phases/01-math-foundations/21-graph-theory/) | Rakenna | Python, TypeScript |
 | 22 | [Stokastiset prosessit](../../phases/01-math-foundations/22-stochastic-processes/) | Opi | Python |
@@ -414,9 +414,9 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | 16 | [Poikkeamien tunnistaminen](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Rakenna | Python |
 | 17 | [Epätasapainoisen datan käsittely](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Rakenna | Python |
 | 18 | [Piirteiden valinta](../../phases/02-ml-fundamentals/18-feature-selection/) | Rakenna | Python |
-| 19 | [ML-järjestelmien suunnittelu: ongelmasta käyttöön otettuun malliin](../../phases/02-ml-fundamentals/19-ml-system-design/) | Rakenna | Python |
-| 20 | [Mallien valvonta tuotannossa: datan ajautuminen ja käsitteen ajautuminen](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Rakenna | Python |
-| 21 | [Piirrevarastot ja koulutuksen ja tuotannon välinen ero](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Rakenna | Python |
+| 19 | [ML-järjestelmien suunnittelu: ongelmasta käyttöön otettuun malliin](../../phases/02-ml-fundamentals/19-ml-system-design/) | Rakenna | Python, TypeScript |
+| 20 | [Mallien valvonta tuotannossa: datan ajautuminen ja käsitteen ajautuminen](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Rakenna | Python, TypeScript |
+| 21 | [Piirrevarastot ja koulutuksen ja tuotannon välinen ero](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Rakenna | Python, TypeScript |
 
 </details>
 
@@ -485,35 +485,35 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 
 | # | Oppitunti | Tyyppi | Kieli |
 |:---:|--------|:----:|------|
-| 01 | [Tekstinkäsittely: tokenisointi, typistäminen ja perusmuotoistaminen](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Rakenna | Python |
-| 02 | [Sanapussi, TF-IDF ja tekstiesitykset](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Rakenna | Python |
+| 01 | [Tekstinkäsittely: tokenisointi, typistäminen ja perusmuotoistaminen](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Rakenna | Python, TypeScript |
+| 02 | [Sanapussi, TF-IDF ja tekstiesitykset](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Rakenna | Python, TypeScript |
 | 03 | [Sanaupotukset: Word2Vec alusta asti](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Rakenna | Python |
-| 04 | [GloVe, FastText ja alisanaupotukset](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Rakenna | Python |
-| 05 | [Sävyjen analysointi](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Rakenna | Python |
-| 06 | [Nimettyjen entiteettien tunnistaminen (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Rakenna | Python |
-| 07 | [Sanaluokkien merkitseminen ja syntaktinen jäsentäminen](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Rakenna | Python |
-| 08 | [Tekstin luokittelu: CNN- ja RNN-verkot tekstille](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Rakenna | Python |
-| 09 | [Sekvenssistä sekvenssiin -mallit](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Rakenna | Python |
-| 10 | [Attention-mekanismi: läpimurto](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Rakenna | Python |
-| 11 | [Konekääntäminen](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Rakenna | Python |
-| 12 | [Tekstin tiivistäminen](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Rakenna | Python |
-| 13 | [Kysymys-vastausjärjestelmät](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Rakenna | Python |
-| 14 | [Tiedonhaku ja hakujärjestelmät](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Rakenna | Python |
-| 15 | [Aiheiden mallinnus: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Rakenna | Python |
-| 16 | [Tekstin generointi](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Rakenna | Python |
-| 17 | [Chatbotit: säännöistä neuroverkkoihin](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Rakenna | Python |
-| 18 | [Monikielinen NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Rakenna | Python |
+| 04 | [GloVe, FastText ja alisanaupotukset](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Rakenna | Python, TypeScript |
+| 05 | [Sävyjen analysointi](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Rakenna | Python, TypeScript |
+| 06 | [Nimettyjen entiteettien tunnistaminen (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Rakenna | Python, TypeScript |
+| 07 | [Sanaluokkien merkitseminen ja syntaktinen jäsentäminen](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Rakenna | Python, TypeScript |
+| 08 | [Tekstin luokittelu: CNN- ja RNN-verkot tekstille](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Rakenna | Python, TypeScript |
+| 09 | [Sekvenssistä sekvenssiin -mallit](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Rakenna | Python, TypeScript |
+| 10 | [Attention-mekanismi: läpimurto](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Rakenna | Python, TypeScript |
+| 11 | [Konekääntäminen](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Rakenna | Python, TypeScript |
+| 12 | [Tekstin tiivistäminen](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Rakenna | Python, TypeScript |
+| 13 | [Kysymys-vastausjärjestelmät](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Rakenna | Python, TypeScript |
+| 14 | [Tiedonhaku ja hakujärjestelmät](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Rakenna | Python, TypeScript |
+| 15 | [Aiheiden mallinnus: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Rakenna | Python, TypeScript |
+| 16 | [Tekstin generointi](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Rakenna | Python, TypeScript |
+| 17 | [Chatbotit: säännöistä neuroverkkoihin](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Rakenna | Python, TypeScript |
+| 18 | [Monikielinen NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Rakenna | Python, TypeScript |
 | 19 | [Alisanatokenisointi: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Opi | Python, TypeScript |
-| 20 | [Rakenteiset tulokset ja rajoitettu dekoodaus](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Rakenna | Python |
-| 21 | [NLI ja tekstuaalinen seuraus](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Opi | Python |
-| 22 | [Syväsukellus upotusmalleihin](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Opi | Python |
+| 20 | [Rakenteiset tulokset ja rajoitettu dekoodaus](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Rakenna | Python, TypeScript |
+| 21 | [NLI ja tekstuaalinen seuraus](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Opi | Python, TypeScript |
+| 22 | [Syväsukellus upotusmalleihin](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Opi | Python, TypeScript |
 | 23 | [RAG-järjestelmien pilkkomisstrategiat](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Rakenna | Python, TypeScript |
-| 24 | [Yhteisviittausten ratkaiseminen](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Opi | Python |
-| 25 | [Entiteettien linkitys ja merkityksen täsmentäminen](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Rakenna | Python |
-| 26 | [Suhteiden poiminta ja tietämysgraafien rakentaminen](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Rakenna | Python |
-| 27 | [LLM-arviointi: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Rakenna | Python |
-| 28 | [Pitkän kontekstin arviointi: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Opi | Python |
-| 29 | [Keskustelun tilan seuranta](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Rakenna | Python |
+| 24 | [Yhteisviittausten ratkaiseminen](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Opi | Python, TypeScript |
+| 25 | [Entiteettien linkitys ja merkityksen täsmentäminen](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Rakenna | Python, TypeScript |
+| 26 | [Suhteiden poiminta ja tietämysgraafien rakentaminen](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Rakenna | Python, TypeScript |
+| 27 | [LLM-arviointi: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Rakenna | Python, TypeScript |
+| 28 | [Pitkän kontekstin arviointi: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Opi | Python, TypeScript |
+| 29 | [Keskustelun tilan seuranta](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Rakenna | Python, TypeScript |
 
 </details>
 
@@ -523,23 +523,23 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 
 | # | Oppitunti | Tyyppi | Kieli |
 |:---:|--------|:----:|------|
-| 01 | [Äänen perusteet: aaltomuodot, näytteistys ja FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Opi | Python |
-| 02 | [Spektrogrammit, mel-asteikko ja äänipiirteet](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Rakenna | Python |
-| 03 | [Äänen luokittelu](../../phases/06-speech-and-audio/03-audio-classification) | Rakenna | Python |
-| 04 | [Puheentunnistus (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Rakenna | Python |
-| 05 | [Whisper: arkkitehtuuri ja hienosäätö](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Rakenna | Python |
-| 06 | [Puhujan tunnistaminen ja varmentaminen](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Rakenna | Python |
-| 07 | [Tekstistä puheeksi (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Rakenna | Python |
-| 08 | [Äänen kloonaus ja muuntaminen](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Rakenna | Python |
-| 09 | [Musiikin generointi](../../phases/06-speech-and-audio/09-music-generation) | Rakenna | Python |
-| 10 | [Ääni-kielimallit](../../phases/06-speech-and-audio/10-audio-language-models) | Rakenna | Python |
+| 01 | [Äänen perusteet: aaltomuodot, näytteistys ja FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Opi | Python, TypeScript |
+| 02 | [Spektrogrammit, mel-asteikko ja äänipiirteet](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Rakenna | Python, TypeScript |
+| 03 | [Äänen luokittelu](../../phases/06-speech-and-audio/03-audio-classification) | Rakenna | Python, TypeScript |
+| 04 | [Puheentunnistus (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Rakenna | Python, TypeScript |
+| 05 | [Whisper: arkkitehtuuri ja hienosäätö](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Rakenna | Python, TypeScript |
+| 06 | [Puhujan tunnistaminen ja varmentaminen](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Rakenna | Python, TypeScript |
+| 07 | [Tekstistä puheeksi (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Rakenna | Python, TypeScript |
+| 08 | [Äänen kloonaus ja muuntaminen](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Rakenna | Python, TypeScript |
+| 09 | [Musiikin generointi](../../phases/06-speech-and-audio/09-music-generation) | Rakenna | Python, TypeScript |
+| 10 | [Ääni-kielimallit](../../phases/06-speech-and-audio/10-audio-language-models) | Rakenna | Python, TypeScript |
 | 11 | [Reaaliaikainen äänenkäsittely](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Rakenna | Python, Rust |
-| 12 | [Rakenna ääniavustajan käsittelyputki](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Rakenna | Python |
-| 13 | [Neuraaliset äänikoodekit: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Opi | Python |
-| 14 | [Puheaktiivisuuden tunnistus ja vuorottelu](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Rakenna | Python |
-| 15 | [Suoratoistettava puheesta puheeksi: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Opi | Python |
-| 16 | [Ääniväärennösten torjunta ja äänen vesileimat](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Rakenna | Python |
-| 17 | [Äänen arviointi: WER, MOS, MMAU ja vertailulistat](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Opi | Python |
+| 12 | [Rakenna ääniavustajan käsittelyputki](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Rakenna | Python, TypeScript |
+| 13 | [Neuraaliset äänikoodekit: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Opi | Python, TypeScript |
+| 14 | [Puheaktiivisuuden tunnistus ja vuorottelu](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Rakenna | Python, TypeScript |
+| 15 | [Suoratoistettava puheesta puheeksi: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Opi | Python, TypeScript |
+| 16 | [Ääniväärennösten torjunta ja äänen vesileimat](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Rakenna | Python, TypeScript |
+| 17 | [Äänen arviointi: WER, MOS, MMAU ja vertailulistat](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Opi | Python, TypeScript |
 
 </details>
 
@@ -554,14 +554,14 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | 03 | [Monipäinen attention](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Rakenna | Python, Rust |
 | 04 | [Paikkakoodaus: sinimuotoinen, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Rakenna | Python, Rust, Julia |
 | 05 | [Koko Transformer: kooderi ja dekooderi](../../phases/07-transformers-deep-dive/05-full-transformer/) | Rakenna | Python, Julia |
-| 06 | [BERT: peitetty kielimallinnus](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Rakenna | Python |
-| 07 | [GPT: kausaalinen kielimallinnus](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Rakenna | Python |
-| 08 | [T5, BART: kooderi-dekooderimallit](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Opi | Python |
-| 09 | [Vision Transformers (ViT) konenäössä](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Rakenna | Python |
-| 10 | [Äänen Transformer-mallit: Whisperin arkkitehtuuri](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Opi | Python |
+| 06 | [BERT: peitetty kielimallinnus](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Rakenna | Python, Rust |
+| 07 | [GPT: kausaalinen kielimallinnus](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Rakenna | Python, Rust |
+| 08 | [T5, BART: kooderi-dekooderimallit](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Opi | Python, Rust |
+| 09 | [Vision Transformers (ViT) konenäössä](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Rakenna | Python, Rust |
+| 10 | [Äänen Transformer-mallit: Whisperin arkkitehtuuri](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Opi | Python, Rust |
 | 11 | [Asiantuntijaseokset (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Rakenna | Python, Rust |
 | 12 | [KV-välimuisti, Flash Attention ja päättelyn optimointi](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Rakenna | Python, Rust |
-| 13 | [Skaalauslait](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Opi | Python |
+| 13 | [Skaalauslait](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Opi | Python, Rust |
 | 14 | [Rakenna Transformer alusta asti](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Rakenna | Python |
 | 15 | [Attention-muunnelmat: liukuva ikkuna, harva ja differentiaalinen](../../phases/07-transformers-deep-dive/15-attention-variants/) | Rakenna | Python, Rust |
 | 16 | [Spekulatiivinen dekoodaus: luonnostele, tarkista, toista](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Rakenna | Python, Rust |
@@ -574,20 +574,20 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 
 | # | Oppitunti | Tyyppi | Kieli |
 |:---:|--------|:----:|------|
-| 01 | [Generatiiviset mallit: luokittelu ja historia](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Opi | Python |
-| 02 | [Autoenkooderit ja VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Rakenna | Python |
-| 03 | [GAN: generaattori ja erottelija](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Rakenna | Python |
-| 04 | [Ehdolliset GAN-verkot ja Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Rakenna | Python |
-| 05 | [StyleGAN-malli](../../phases/08-generative-ai/05-stylegan/) | Rakenna | Python |
-| 06 | [Diffuusiomallit: DDPM alusta asti](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Rakenna | Python |
-| 07 | [Latentti diffuusio ja Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Rakenna | Python |
-| 08 | [ControlNet, LoRA ja ehdollistaminen](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Rakenna | Python |
-| 09 | [Kuvan täyttäminen, laajentaminen ja muokkaaminen](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Rakenna | Python |
-| 10 | [Videon generointi](../../phases/08-generative-ai/10-video-generation/) | Rakenna | Python |
-| 11 | [Äänen generointi](../../phases/08-generative-ai/11-audio-generation/) | Rakenna | Python |
-| 12 | [3D-sisällön generointi](../../phases/08-generative-ai/12-3d-generation/) | Rakenna | Python |
-| 13 | [Flow matching ja rectified flows -menetelmät](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Rakenna | Python |
-| 14 | [Arviointi: FID ja CLIP-pisteet](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Rakenna | Python |
+| 01 | [Generatiiviset mallit: luokittelu ja historia](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Opi | Python, TypeScript |
+| 02 | [Autoenkooderit ja VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Rakenna | Python, TypeScript |
+| 03 | [GAN: generaattori ja erottelija](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Rakenna | Python, TypeScript |
+| 04 | [Ehdolliset GAN-verkot ja Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Rakenna | Python, TypeScript |
+| 05 | [StyleGAN-malli](../../phases/08-generative-ai/05-stylegan/) | Rakenna | Python, TypeScript |
+| 06 | [Diffuusiomallit: DDPM alusta asti](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Rakenna | Python, TypeScript |
+| 07 | [Latentti diffuusio ja Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Rakenna | Python, TypeScript |
+| 08 | [ControlNet, LoRA ja ehdollistaminen](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Rakenna | Python, TypeScript |
+| 09 | [Kuvan täyttäminen, laajentaminen ja muokkaaminen](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Rakenna | Python, TypeScript |
+| 10 | [Videon generointi](../../phases/08-generative-ai/10-video-generation/) | Rakenna | Python, TypeScript |
+| 11 | [Äänen generointi](../../phases/08-generative-ai/11-audio-generation/) | Rakenna | Python, TypeScript |
+| 12 | [3D-sisällön generointi](../../phases/08-generative-ai/12-3d-generation/) | Rakenna | Python, TypeScript |
+| 13 | [Flow matching ja rectified flows -menetelmät](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Rakenna | Python, TypeScript |
+| 14 | [Arviointi: FID ja CLIP-pisteet](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Rakenna | Python, TypeScript |
 | 19 | [Visuaalinen autoregressiivinen mallinnus (VAR): seuraavan mittakaavan ennustaminen](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Rakenna | Python |
 
 </details>
@@ -598,18 +598,18 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 
 | # | Oppitunti | Tyyppi | Kieli |
 |:---:|--------|:----:|------|
-| 01 | [MDP:t, tilat, toiminnot ja palkkiot](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Opi | Python |
-| 02 | [Dynaaminen ohjelmointi](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Rakenna | Python |
-| 03 | [Monte Carlo -menetelmät](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Rakenna | Python |
-| 04 | [Q-oppiminen ja SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Rakenna | Python |
-| 05 | [Syvät Q-verkot (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Rakenna | Python |
-| 06 | [Politiikkagradientit: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Rakenna | Python |
-| 07 | [Actor-critic-menetelmät: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Rakenna | Python |
-| 08 | [PPO-algoritmi](../../phases/09-reinforcement-learning/08-ppo/) | Rakenna | Python |
-| 09 | [Palkkion mallinnus ja RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Rakenna | Python |
-| 10 | [Moniagenttinen vahvistusoppiminen](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Rakenna | Python |
-| 11 | [Siirto simulaatiosta todellisuuteen](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Rakenna | Python |
-| 12 | [Vahvistusoppiminen peleissä](../../phases/09-reinforcement-learning/12-rl-for-games/) | Rakenna | Python |
+| 01 | [MDP:t, tilat, toiminnot ja palkkiot](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Opi | Python, TypeScript |
+| 02 | [Dynaaminen ohjelmointi](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Rakenna | Python, TypeScript |
+| 03 | [Monte Carlo -menetelmät](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Rakenna | Python, TypeScript |
+| 04 | [Q-oppiminen ja SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Rakenna | Python, TypeScript |
+| 05 | [Syvät Q-verkot (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Rakenna | Python, TypeScript |
+| 06 | [Politiikkagradientit: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Rakenna | Python, TypeScript |
+| 07 | [Actor-critic-menetelmät: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Rakenna | Python, TypeScript |
+| 08 | [PPO-algoritmi](../../phases/09-reinforcement-learning/08-ppo/) | Rakenna | Python, TypeScript |
+| 09 | [Palkkion mallinnus ja RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Rakenna | Python, TypeScript |
+| 10 | [Moniagenttinen vahvistusoppiminen](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Rakenna | Python, TypeScript |
+| 11 | [Siirto simulaatiosta todellisuuteen](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Rakenna | Python, TypeScript |
+| 12 | [Vahvistusoppiminen peleissä](../../phases/09-reinforcement-learning/12-rl-for-games/) | Rakenna | Python, TypeScript |
 
 </details>
 
@@ -621,7 +621,7 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 |:---:|--------|:----:|------|
 | 01 | [Tokenisoijat: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Rakenna | Python, Rust |
 | 02 | [Tokenisoijan rakentaminen alusta asti](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Rakenna | Python |
-| 03 | [Esikoulutuksen dataputket](../../phases/10-llms-from-scratch/03-data-pipelines/) | Rakenna | Python |
+| 03 | [Esikoulutuksen dataputket](../../phases/10-llms-from-scratch/03-data-pipelines/) | Rakenna | Python, Rust |
 | 04 | [Mini GPT:n esikoulutus (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Rakenna | Python, Rust |
 | 05 | [Hajautettu koulutus, FSDP ja DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Rakenna | Python |
 | 06 | [Ohjeviritys: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Rakenna | Python |
@@ -631,16 +631,16 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | 10 | [Arviointi: vertailut ja testit](../../phases/10-llms-from-scratch/10-evaluation/) | Rakenna | Python |
 | 11 | [Kvantisointi: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Rakenna | Python, Rust |
 | 12 | [Päättelyn optimointi](../../phases/10-llms-from-scratch/12-inference-optimization/) | Rakenna | Python, Rust |
-| 13 | [Kokonaisen LLM-putken rakentaminen](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Rakenna | Python |
-| 14 | [Avoimet mallit: arkkitehtuurien läpikäynti](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Opi | Python |
-| 15 | [Spekulatiivinen dekoodaus ja EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Rakenna | Python |
-| 16 | [Differentiaalinen attention (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Rakenna | Python |
-| 17 | [Native Sparse Attention (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Rakenna | Python |
-| 18 | [Usean tokenin ennustaminen (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Rakenna | Python |
-| 19 | [DualPipe-rinnakkaisuus](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Opi | Python |
-| 20 | [DeepSeek-V3:n arkkitehtuurin läpikäynti](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Opi | Python |
-| 21 | [Jamba: SSM-Transformer-hybridi](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Opi | Python |
-| 22 | [Asynkroninen ja Hogwild!-päättely](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Rakenna | Python |
+| 13 | [Kokonaisen LLM-putken rakentaminen](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Rakenna | Python, Rust |
+| 14 | [Avoimet mallit: arkkitehtuurien läpikäynti](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Opi | Python, Rust |
+| 15 | [Spekulatiivinen dekoodaus ja EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Rakenna | Python, Rust |
+| 16 | [Differentiaalinen attention (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Rakenna | Python, Rust |
+| 17 | [Native Sparse Attention (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Rakenna | Python, Rust |
+| 18 | [Usean tokenin ennustaminen (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Rakenna | Python, Rust |
+| 19 | [DualPipe-rinnakkaisuus](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Opi | Python, Rust |
+| 20 | [DeepSeek-V3:n arkkitehtuurin läpikäynti](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Opi | Python, Rust |
+| 21 | [Jamba: SSM-Transformer-hybridi](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Opi | Python, Rust |
+| 22 | [Asynkroninen ja Hogwild!-päättely](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Rakenna | Python, Rust |
 | 25 | [Spekulatiivinen dekoodaus ja EAGLE](../../phases/10-llms-from-scratch/25-speculative-decoding/) | Rakenna | Python |
 | 34 | [Gradienttien tarkistuspisteet ja aktivaatioiden uudelleenlaskenta](../../phases/10-llms-from-scratch/34-gradient-checkpointing/) | Rakenna | Python |
 
@@ -658,17 +658,17 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | 04 | [Upotukset ja vektoriesitykset](../../phases/11-llm-engineering/04-embeddings/) | Rakenna | Python, TypeScript |
 | 05 | [Kontekstin suunnittelu](../../phases/11-llm-engineering/05-context-engineering/) | Rakenna | Python, TypeScript |
 | 06 | [RAG: tiedonhaulla täydennetty generointi](../../phases/11-llm-engineering/06-rag/) | Rakenna | Python, TypeScript |
-| 07 | [Edistynyt RAG: pilkkominen ja uudelleenjärjestäminen](../../phases/11-llm-engineering/07-advanced-rag/) | Rakenna | Python |
+| 07 | [Edistynyt RAG: pilkkominen ja uudelleenjärjestäminen](../../phases/11-llm-engineering/07-advanced-rag/) | Rakenna | Python, TypeScript |
 | 08 | [Hienosäätö LoRAlla ja QLoRAlla](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Rakenna | Python |
 | 09 | [Funktiokutsut ja työkalujen käyttö](../../phases/11-llm-engineering/09-function-calling/) | Rakenna | Python, TypeScript |
-| 10 | [Arviointi ja testaus](../../phases/11-llm-engineering/10-evaluation/) | Rakenna | Python |
-| 11 | [Välimuisti, pyyntönopeuden rajoitus ja kustannukset](../../phases/11-llm-engineering/11-caching-cost/) | Rakenna | Python |
+| 10 | [Arviointi ja testaus](../../phases/11-llm-engineering/10-evaluation/) | Rakenna | Python, TypeScript |
+| 11 | [Välimuisti, pyyntönopeuden rajoitus ja kustannukset](../../phases/11-llm-engineering/11-caching-cost/) | Rakenna | Python, TypeScript |
 | 12 | [Suojarajat ja turvallisuus](../../phases/11-llm-engineering/12-guardrails/) | Rakenna | Python, TypeScript |
-| 13 | [Tuotantokäyttöön sopivan LLM-sovelluksen rakentaminen](../../phases/11-llm-engineering/13-production-app/) | Rakenna | Python |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Rakenna | Python |
-| 15 | [Kehotteiden ja kontekstin välimuistit](../../phases/11-llm-engineering/15-prompt-caching/) | Rakenna | Python |
+| 13 | [Tuotantokäyttöön sopivan LLM-sovelluksen rakentaminen](../../phases/11-llm-engineering/13-production-app/) | Rakenna | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Rakenna | Python, TypeScript |
+| 15 | [Kehotteiden ja kontekstin välimuistit](../../phases/11-llm-engineering/15-prompt-caching/) | Rakenna | Python, TypeScript |
 | 16 | [Agentin tilakoneet: graafit, solmut ja tarkistuspisteet](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Rakenna | Python |
-| 17 | [Agenttikehysten valintojen kompromissit](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Opi | Python |
+| 17 | [Agenttikehysten valintojen kompromissit](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Opi | Python, TypeScript |
 
 </details>
 
@@ -678,31 +678,31 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 
 | # | Oppitunti | Tyyppi | Kieli |
 |:---:|--------|:----:|------|
-| 01 | [Vision Transformers ja kuvalohkotokenin perusidea](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Opi | Python |
-| 02 | [CLIP ja kontrastiivinen kuva-kieliesikoulutus](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Rakenna | Python |
-| 03 | [BLIP-2 Q-Former modaliteettien siltana](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Rakenna | Python |
-| 04 | [Flamingo ja portitettu cross-attention](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Opi | Python |
-| 05 | [LLaVA ja visuaalinen ohjeviritys](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Rakenna | Python |
-| 06 | [Mielivaltaisen resoluution konenäkö: Patch-n'-Pack ja NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Rakenna | Python |
-| 07 | [Avoimien painojen VLM-menetelmät: mikä todella merkitsee](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Opi | Python |
-| 08 | [LLaVA-OneVision: yksi kuva, useita kuvia, video](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Rakenna | Python |
-| 09 | [Qwen-VL-perhe ja dynaamisen kuvataajuuden video](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Opi | Python |
-| 10 | [InternVL3:n natiivi multimodaalinen esikoulutus](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Opi | Python |
-| 11 | [Chameleon: varhainen fuusio pelkillä tokeneilla](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Rakenna | Python |
-| 12 | [Emu3: seuraavan tokenin ennustaminen generoinnissa](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Opi | Python |
-| 13 | [Transfusion: autoregressio ja diffuusio](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Rakenna | Python |
-| 14 | [Show-o: yhdistetty diskreetti diffuusio](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Opi | Python |
-| 15 | [Janus-Pro: eriytetyt kooderit](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Rakenna | Python |
-| 16 | [MIO: suoratoisto modaliteetista toiseen](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Opi | Python |
-| 17 | [Videon ja kielen ajallinen kohdistaminen](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Rakenna | Python |
-| 18 | [Pitkä video miljoonan tokenin kontekstissa](../../phases/12-multimodal-ai/18-long-video-million-token/) | Rakenna | Python |
-| 19 | [Ääni-kielimallit: Whisperistä AF3:een](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Rakenna | Python |
-| 20 | [Omnimallit: Thinker-Talker-suoratoisto](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Rakenna | Python |
-| 21 | [Keholliset VLA-mallit: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Opi | Python |
-| 22 | [Dokumenttien ja kaavioiden ymmärtäminen](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Rakenna | Python |
-| 23 | [ColPali: kuvapohjainen dokumentti-RAG](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Rakenna | Python |
-| 24 | [Multimodaalinen RAG ja modaliteettien välinen haku](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Rakenna | Python |
-| 25 | [Multimodaaliset agentit ja tietokoneen käyttö (lopputyö)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Rakenna | Python |
+| 01 | [Vision Transformers ja kuvalohkotokenin perusidea](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Opi | Python, TypeScript |
+| 02 | [CLIP ja kontrastiivinen kuva-kieliesikoulutus](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Rakenna | Python, TypeScript |
+| 03 | [BLIP-2 Q-Former modaliteettien siltana](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Rakenna | Python, TypeScript |
+| 04 | [Flamingo ja portitettu cross-attention](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Opi | Python, TypeScript |
+| 05 | [LLaVA ja visuaalinen ohjeviritys](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Rakenna | Python, TypeScript |
+| 06 | [Mielivaltaisen resoluution konenäkö: Patch-n'-Pack ja NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Rakenna | Python, TypeScript |
+| 07 | [Avoimien painojen VLM-menetelmät: mikä todella merkitsee](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Opi | Python, TypeScript |
+| 08 | [LLaVA-OneVision: yksi kuva, useita kuvia, video](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Rakenna | Python, TypeScript |
+| 09 | [Qwen-VL-perhe ja dynaamisen kuvataajuuden video](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Opi | Python, TypeScript |
+| 10 | [InternVL3:n natiivi multimodaalinen esikoulutus](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Opi | Python, TypeScript |
+| 11 | [Chameleon: varhainen fuusio pelkillä tokeneilla](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Rakenna | Python, TypeScript |
+| 12 | [Emu3: seuraavan tokenin ennustaminen generoinnissa](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Opi | Python, TypeScript |
+| 13 | [Transfusion: autoregressio ja diffuusio](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Rakenna | Python, TypeScript |
+| 14 | [Show-o: yhdistetty diskreetti diffuusio](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Opi | Python, TypeScript |
+| 15 | [Janus-Pro: eriytetyt kooderit](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Rakenna | Python, TypeScript |
+| 16 | [MIO: suoratoisto modaliteetista toiseen](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Opi | Python, TypeScript |
+| 17 | [Videon ja kielen ajallinen kohdistaminen](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Rakenna | Python, TypeScript |
+| 18 | [Pitkä video miljoonan tokenin kontekstissa](../../phases/12-multimodal-ai/18-long-video-million-token/) | Rakenna | Python, TypeScript |
+| 19 | [Ääni-kielimallit: Whisperistä AF3:een](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Rakenna | Python, TypeScript |
+| 20 | [Omnimallit: Thinker-Talker-suoratoisto](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Rakenna | Python, TypeScript |
+| 21 | [Keholliset VLA-mallit: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Opi | Python, TypeScript |
+| 22 | [Dokumenttien ja kaavioiden ymmärtäminen](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Rakenna | Python, TypeScript |
+| 23 | [ColPali: kuvapohjainen dokumentti-RAG](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Rakenna | Python, TypeScript |
+| 24 | [Multimodaalinen RAG ja modaliteettien välinen haku](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Rakenna | Python, TypeScript |
+| 25 | [Multimodaaliset agentit ja tietokoneen käyttö (lopputyö)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Rakenna | Python, TypeScript |
 
 </details>
 
@@ -713,50 +713,50 @@ Kaksikymmentä vaihetta. Avaa vaiheen oppituntilista napsauttamalla sitä.
 | # | Oppitunti | Tyyppi | Kieli |
 |:---:|--------|:----:|------|
 | 01 | [Työkalurajapinta](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Opi | Python, TypeScript |
-| 02 | [Syväsukellus funktiokutsuihin](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Rakenna | Python |
-| 03 | [Rinnakkaiset ja suoratoistettavat työkalukutsut](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Rakenna | Python |
-| 04 | [Rakenteinen tulosmuoto](../../phases/13-tools-and-protocols/04-structured-output/) | Rakenna | Python |
-| 05 | [Työkaluskeeman suunnittelu](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Opi | Python |
-| 06 | [MCP:n perusteet: tilattomat pyynnöt ja JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Opi | Python |
+| 02 | [Syväsukellus funktiokutsuihin](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Rakenna | Python, TypeScript |
+| 03 | [Rinnakkaiset ja suoratoistettavat työkalukutsut](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Rakenna | Python, TypeScript |
+| 04 | [Rakenteinen tulosmuoto](../../phases/13-tools-and-protocols/04-structured-output/) | Rakenna | Python, TypeScript |
+| 05 | [Työkaluskeeman suunnittelu](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Opi | Python, TypeScript |
+| 06 | [MCP:n perusteet: tilattomat pyynnöt ja JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Opi | Python, TypeScript |
 | 07 | [MCP-palvelimen rakentaminen: tilaton Python ja TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Rakenna | Python, TypeScript |
-| 08 | [MCP-asiakkaan rakentaminen: löytäminen, reititys ja vanhojen versioiden tuki](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Rakenna | Python |
-| 09 | [MCP:n siirtotavat: stdio ja tilaton Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Opi | Python |
-| 10 | [MCP-resurssit ja kehotteet: osoitettava konteksti tilattomille palvelimille](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Rakenna | Python |
-| 11 | [MCP:n mallisyöte: näytteistyksen siirto ja tilaton MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Rakenna | Python |
-| 12 | [Eksplisiittinen laajuus ja tilaton tietojen pyytäminen](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Rakenna | Python |
-| 13 | [MCP Tasks -laajennus: pysyvä työ tilattoman ytimen päällä](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Rakenna | Python |
-| 14 | [MCP Apps tilattomassa protokollassa](../../phases/13-tools-and-protocols/14-mcp-apps/) | Rakenna | Python |
-| 15 | [MCP-turvallisuus: myrkytetyt metatiedot, reititys ja MRTR-tila](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Opi | Python |
-| 16 | [MCP-valtuutus: CIMD, myöntäjäsidonta, PKCE ja vahvempi tunnistus](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Rakenna | Python |
-| 17 | [Tilattomat MCP-yhdyskäytävät ja rekisteriin hyväksyminen](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Opi | Python |
-| 18 | [MCP-tunnistus tuotannossa: myöntäjään sidottu rekisteröinti ja tokenit](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Rakenna | Python |
+| 08 | [MCP-asiakkaan rakentaminen: löytäminen, reititys ja vanhojen versioiden tuki](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Rakenna | Python, TypeScript |
+| 09 | [MCP:n siirtotavat: stdio ja tilaton Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Opi | Python, TypeScript |
+| 10 | [MCP-resurssit ja kehotteet: osoitettava konteksti tilattomille palvelimille](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Rakenna | Python, TypeScript |
+| 11 | [MCP:n mallisyöte: näytteistyksen siirto ja tilaton MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Rakenna | Python, TypeScript |
+| 12 | [Eksplisiittinen laajuus ja tilaton tietojen pyytäminen](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Rakenna | Python, TypeScript |
+| 13 | [MCP Tasks -laajennus: pysyvä työ tilattoman ytimen päällä](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Rakenna | Python, TypeScript |
+| 14 | [MCP Apps tilattomassa protokollassa](../../phases/13-tools-and-protocols/14-mcp-apps/) | Rakenna | Python, TypeScript |
+| 15 | [MCP-turvallisuus: myrkytetyt metatiedot, reititys ja MRTR-tila](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Opi | Python, TypeScript |
+| 16 | [MCP-valtuutus: CIMD, myöntäjäsidonta, PKCE ja vahvempi tunnistus](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Rakenna | Python, TypeScript |
+| 17 | [Tilattomat MCP-yhdyskäytävät ja rekisteriin hyväksyminen](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Opi | Python, TypeScript |
+| 18 | [MCP-tunnistus tuotannossa: myöntäjään sidottu rekisteröinti ja tokenit](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Rakenna | Python, TypeScript |
 | 19 | [A2A-protokolla](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Rakenna | Python, TypeScript |
-| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Rakenna | Python |
-| 21 | [LLM-reitityskerros](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Opi | Python |
-| 22 | [Agent Skills: siirrettävä sopimus ja suoritusraja](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Rakenna | Python |
-| 23 | [Lopputyö: tilaton työkalujen ekosysteemi](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Rakenna | Python |
-| 24 | [Taitojen löytäminen ja asteittainen esittäminen](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Rakenna | Python |
-| 25 | [Taitojen kutsuminen ja reititys](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Rakenna | Python |
-| 26 | [Taitojen käyttöoikeudet, hiekkalaatikot ja luottamus](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Rakenna | Python |
-| 27 | [Taitojen arviointi, paketointi ja siirrettävyys](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Rakenna | Python |
-| 28 | [MCP-työkalujen sopimukset ja sisältö](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Rakenna | Python |
-| 29 | [MCP:n luotettavuus, peruutus ja vuonhallinta](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Rakenna | Python |
-| 30 | [MCP-rekisterin toimitusketju: hyväksyntä, poikkeamat ja palautus](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Rakenna | Python |
-| 31 | [MCP:n vaatimustenmukaisuus: versiointi, näyttö ja operointi](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Rakenna | Python |
-| 32 | [Ohjelman anatomia: ELF-tiedoston lukeminen alusta asti](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Rakenna | Python |
-| 33 | [Disassemblointi ja ohjausvuograafit](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Rakenna | Python |
+| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Rakenna | Python, TypeScript |
+| 21 | [LLM-reitityskerros](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Opi | Python, TypeScript |
+| 22 | [Agent Skills: siirrettävä sopimus ja suoritusraja](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Rakenna | Python, TypeScript |
+| 23 | [Lopputyö: tilaton työkalujen ekosysteemi](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Rakenna | Python, TypeScript |
+| 24 | [Taitojen löytäminen ja asteittainen esittäminen](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Rakenna | Python, TypeScript |
+| 25 | [Taitojen kutsuminen ja reititys](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Rakenna | Python, TypeScript |
+| 26 | [Taitojen käyttöoikeudet, hiekkalaatikot ja luottamus](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Rakenna | Python, TypeScript |
+| 27 | [Taitojen arviointi, paketointi ja siirrettävyys](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Rakenna | Python, TypeScript |
+| 28 | [MCP-työkalujen sopimukset ja sisältö](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Rakenna | Python, TypeScript |
+| 29 | [MCP:n luotettavuus, peruutus ja vuonhallinta](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Rakenna | Python, TypeScript |
+| 30 | [MCP-rekisterin toimitusketju: hyväksyntä, poikkeamat ja palautus](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Rakenna | Python, TypeScript |
+| 31 | [MCP:n vaatimustenmukaisuus: versiointi, näyttö ja operointi](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Rakenna | Python, TypeScript |
+| 32 | [Ohjelman anatomia: ELF-tiedoston lukeminen alusta asti](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Rakenna | Python, TypeScript |
+| 33 | [Disassemblointi ja ohjausvuograafit](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Rakenna | Python, TypeScript |
 | 34 | [Konekoodin nostaminen pseudokoodiksi](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Rakenna | Python |
-| 35 | [Näyttö, varmuus ja tuntemattomat binäärianalyysissä](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Rakenna | Python |
-| 36 | [Rakenna uudelleen ja todista yhtäläisyys](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Rakenna | Python |
-| 37 | [Takaisinmallinnuksen kenttä](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Rakenna | Python |
-| 38 | [Kutsukäytännöt ja pinokehykset](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Rakenna | Python |
-| 39 | [Kääntäjän idiomit ja optimointi](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Rakenna | Python |
-| 40 | [Linkitys, lataus ja riisutut binäärit](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Rakenna | Python |
-| 41 | [Datan ja tyyppien palauttaminen](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Rakenna | Python |
-| 42 | [Oman ohjelmasi dynaaminen analyysi](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Rakenna | Python |
-| 43 | [Tavukoodi ja hallitut formaatit](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Rakenna | Python |
+| 35 | [Näyttö, varmuus ja tuntemattomat binäärianalyysissä](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Rakenna | Python, TypeScript |
+| 36 | [Rakenna uudelleen ja todista yhtäläisyys](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Rakenna | Python, TypeScript |
+| 37 | [Takaisinmallinnuksen kenttä](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Rakenna | Python, TypeScript |
+| 38 | [Kutsukäytännöt ja pinokehykset](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Rakenna | Python, TypeScript |
+| 39 | [Kääntäjän idiomit ja optimointi](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Rakenna | Python, TypeScript |
+| 40 | [Linkitys, lataus ja riisutut binäärit](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Rakenna | Python, TypeScript |
+| 41 | [Datan ja tyyppien palauttaminen](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Rakenna | Python, TypeScript |
+| 42 | [Oman ohjelmasi dynaaminen analyysi](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Rakenna | Python, TypeScript |
+| 43 | [Tavukoodi ja hallitut formaatit](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Rakenna | Python, TypeScript |
 | 44 | [Binäärivertailu ja symbolinen suoritus](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Rakenna | Python |
-| 45 | [Tekoälyavusteinen takaisinmallinnus](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Rakenna | Python |
+| 45 | [Tekoälyavusteinen takaisinmallinnus](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Rakenna | Python, TypeScript |
 
 Oppitunnit 06-18 ja 28-31 muodostavat rajatun [Model Context Protocol (MCP) -polun](../../learning-paths/model-context-protocol.json). Manifestin järjestys on 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Aloita yllä kuvatulla isäntäsovelluskohtaisella `learn-mcp`-kutsulla. Oppitunti 23 on polun ainoa valinnainen lopputyö ja edellyttää myös oppitunteja 19 ja 20.
 
@@ -771,59 +771,59 @@ Oppitunnit 22 ja 24-27 muodostavat rajatun [Agent Skills -opintopolun](../../lea
 | # | Oppitunti | Tyyppi | Kieli |
 |:---:|--------|:----:|------|
 | 01 | [Agenttisilmukka](../../phases/14-agent-engineering/01-the-agent-loop/) | Rakenna | Python, TypeScript |
-| 02 | [ReWOO ja suunnittele-sitten-suorita](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Rakenna | Python |
-| 03 | [Reflexion ja sanallinen vahvistusoppiminen](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Rakenna | Python |
-| 04 | [Ajatuspuut ja LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Rakenna | Python |
-| 05 | [Self-Refine ja CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Rakenna | Python |
+| 02 | [ReWOO ja suunnittele-sitten-suorita](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Rakenna | Python, TypeScript |
+| 03 | [Reflexion ja sanallinen vahvistusoppiminen](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Rakenna | Python, TypeScript |
+| 04 | [Ajatuspuut ja LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Rakenna | Python, TypeScript |
+| 05 | [Self-Refine ja CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Rakenna | Python, TypeScript |
 | 06 | [Työkalujen käyttö ja funktiokutsut](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Rakenna | Python, TypeScript |
-| 07 | [Agentin muisti: virtuaalinen konteksti ja muistin sivutus](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Rakenna | Python |
-| 08 | [Muistilohkot ja lepoajan laskenta](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Rakenna | Python |
-| 09 | [Hybridimuisti: vektori, graafi ja KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Rakenna | Python |
-| 10 | [Taitokirjastot ja elinikäinen oppiminen (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Rakenna | Python |
-| 11 | [Suunnittelu HTN:n ja evoluutiohaun avulla](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Rakenna | Python |
-| 12 | [Anthropicin työnkulkumallit](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Rakenna | Python |
+| 07 | [Agentin muisti: virtuaalinen konteksti ja muistin sivutus](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Rakenna | Python, TypeScript |
+| 08 | [Muistilohkot ja lepoajan laskenta](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Rakenna | Python, TypeScript |
+| 09 | [Hybridimuisti: vektori, graafi ja KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Rakenna | Python, TypeScript |
+| 10 | [Taitokirjastot ja elinikäinen oppiminen (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Rakenna | Python, TypeScript |
+| 11 | [Suunnittelu HTN:n ja evoluutiohaun avulla](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Rakenna | Python, TypeScript |
+| 12 | [Anthropicin työnkulkumallit](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Rakenna | Python, TypeScript |
 | 13 | [Tilallinen graafiorkestrointi: pysyvä suoritus ja tarkistuspisteet](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Rakenna | Python, TypeScript |
-| 14 | [Agenttien toimijamalli](../../phases/14-agent-engineering/14-autogen-actor-model/) | Rakenna | Python |
+| 14 | [Agenttien toimijamalli](../../phases/14-agent-engineering/14-autogen-actor-model/) | Rakenna | Python, TypeScript |
 | 15 | [Roolipohjaiset agenttitiimit: roolit, tehtävät ja prosessit](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Rakenna | Python |
-| 16 | [OpenAI Agents SDK: siirrot, suojarajat ja jäljitys](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Rakenna | Python |
-| 17 | [Agenttiympäristö kirjastona: aliagentit ja istuntovarasto](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Rakenna | Python |
+| 16 | [OpenAI Agents SDK: siirrot, suojarajat ja jäljitys](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Rakenna | Python, TypeScript |
+| 17 | [Agenttiympäristö kirjastona: aliagentit ja istuntovarasto](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Rakenna | Python, TypeScript |
 | 18 | [Agenttien tuotantosuoritusympäristöt](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Opi | Python, TypeScript |
-| 19 | [Vertailut: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Opi | Python |
-| 20 | [Vertailut: WebArena ja OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Opi | Python |
-| 21 | [Tietokoneen käyttö: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Rakenna | Python |
-| 22 | [Ääniagentit: Pipecat ja LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Rakenna | Python |
-| 23 | [OpenTelemetry GenAI:n semanttiset käytännöt](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Rakenna | Python |
-| 24 | [Agenttien havainnoitavuus: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Opi | Python |
-| 25 | [Moniagenttinen väittely ja yhteistyö](../../phases/14-agent-engineering/25-multi-agent-debate/) | Rakenna | Python |
-| 26 | [Vikatilat: miksi agentit epäonnistuvat](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Rakenna | Python |
-| 27 | [Kehoteinjektio ja PVE-puolustus](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Rakenna | Python |
-| 28 | [Orkestrointimallit: valvoja, parvi ja hierarkia](../../phases/14-agent-engineering/28-orchestration-patterns/) | Rakenna | Python |
-| 29 | [Tuotantosuoritusympäristöt: jonot, tapahtumat ja cron](../../phases/14-agent-engineering/29-production-runtimes/) | Opi | Python |
-| 30 | [Arviointivetoinen agenttikehitys](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Rakenna | Python |
-| 31 | [Agenttityöpaja: miksi kyvykkäätkin mallit epäonnistuvat](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Opi | Python |
-| 32 | [Pienin toimiva agenttityöpaja](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Rakenna | Python |
-| 33 | [Agenttiohjeet suoritettavina rajoitteina](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Rakenna | Python |
-| 34 | [Tietovaraston muisti ja pysyvä tila](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Rakenna | Python |
-| 35 | [Agenttien alustusskriptit](../../phases/14-agent-engineering/35-initialization-scripts/) | Rakenna | Python |
-| 36 | [Laajuussopimukset ja tehtävärajat](../../phases/14-agent-engineering/36-scope-contracts/) | Rakenna | Python |
-| 37 | [Ajonaikaiset palautesilmukat](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Rakenna | Python |
-| 38 | [Varmennustarkistukset](../../phases/14-agent-engineering/38-verification-gates/) | Rakenna | Python |
-| 39 | [Tarkastaja-agentti: erota rakentaja arvioijasta](../../phases/14-agent-engineering/39-reviewer-agent/) | Rakenna | Python |
-| 40 | [Siirto istuntojen välillä](../../phases/14-agent-engineering/40-multi-session-handoff/) | Rakenna | Python |
-| 41 | [Työpaja oikeassa tietovarastossa](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Rakenna | Python |
-| 42 | [Lopputyö: julkaise uudelleenkäytettävä agenttityöpajapaketti](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Rakenna | Python |
-| 43 | [Rajaa tehtävä ennen kuin agentti kirjoittaa koodia](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Rakenna | Python |
-| 44 | [Laadi näyttöön perustuva toteutussuunnitelma](../../phases/14-agent-engineering/44-plan-from-evidence/) | Rakenna | Python |
-| 45 | [Delegoi agenttityö eristyksen ja yhdistämissopimusten avulla](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Rakenna | Python |
-| 46 | [Muuta jokainen agentin korjaus järjestelmäparannukseksi](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Rakenna | Python |
-| 47 | [Määritä vaikutus ennen tuotoksen valitsemista](../../phases/14-agent-engineering/47-outcomes-before-output/) | Rakenna | Python |
-| 48 | [Selvitä ihmisten todellinen työnkulku](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Rakenna | Python |
-| 49 | [Kartoita oletukset ja ratkaise riskialttein ensin](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Rakenna | Python |
-| 50 | [Valitse pienin osa, joka voi muuttaa päätöstä](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Rakenna | Python |
-| 51 | [Kirjoita harkinnan säilyttävät määrittelyt](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Rakenna | Python |
-| 52 | [Suunnittele onnistumismittarit ennen tuloksen syntymistä](../../phases/14-agent-engineering/52-design-success-metrics/) | Rakenna | Python |
-| 53 | [Valitse tietoisesti prototyyppi, pilotti tai tuotanto](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Rakenna | Python |
-| 54 | [Rakenna pysyvä palautekäytäntö vastuu- ja poistoperiaatteineen](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Rakenna | Python |
+| 19 | [Vertailut: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Opi | Python, TypeScript |
+| 20 | [Vertailut: WebArena ja OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Opi | Python, TypeScript |
+| 21 | [Tietokoneen käyttö: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Rakenna | Python, TypeScript |
+| 22 | [Ääniagentit: Pipecat ja LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Rakenna | Python, TypeScript |
+| 23 | [OpenTelemetry GenAI:n semanttiset käytännöt](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Rakenna | Python, TypeScript |
+| 24 | [Agenttien havainnoitavuus: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Opi | Python, TypeScript |
+| 25 | [Moniagenttinen väittely ja yhteistyö](../../phases/14-agent-engineering/25-multi-agent-debate/) | Rakenna | Python, TypeScript |
+| 26 | [Vikatilat: miksi agentit epäonnistuvat](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Rakenna | Python, TypeScript |
+| 27 | [Kehoteinjektio ja PVE-puolustus](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Rakenna | Python, TypeScript |
+| 28 | [Orkestrointimallit: valvoja, parvi ja hierarkia](../../phases/14-agent-engineering/28-orchestration-patterns/) | Rakenna | Python, TypeScript |
+| 29 | [Tuotantosuoritusympäristöt: jonot, tapahtumat ja cron](../../phases/14-agent-engineering/29-production-runtimes/) | Opi | Python, TypeScript |
+| 30 | [Arviointivetoinen agenttikehitys](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Rakenna | Python, TypeScript |
+| 31 | [Agenttityöpaja: miksi kyvykkäätkin mallit epäonnistuvat](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Opi | Python, TypeScript |
+| 32 | [Pienin toimiva agenttityöpaja](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Rakenna | Python, TypeScript |
+| 33 | [Agenttiohjeet suoritettavina rajoitteina](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Rakenna | Python, TypeScript |
+| 34 | [Tietovaraston muisti ja pysyvä tila](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Rakenna | Python, TypeScript |
+| 35 | [Agenttien alustusskriptit](../../phases/14-agent-engineering/35-initialization-scripts/) | Rakenna | Python, TypeScript |
+| 36 | [Laajuussopimukset ja tehtävärajat](../../phases/14-agent-engineering/36-scope-contracts/) | Rakenna | Python, TypeScript |
+| 37 | [Ajonaikaiset palautesilmukat](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Rakenna | Python, TypeScript |
+| 38 | [Varmennustarkistukset](../../phases/14-agent-engineering/38-verification-gates/) | Rakenna | Python, TypeScript |
+| 39 | [Tarkastaja-agentti: erota rakentaja arvioijasta](../../phases/14-agent-engineering/39-reviewer-agent/) | Rakenna | Python, TypeScript |
+| 40 | [Siirto istuntojen välillä](../../phases/14-agent-engineering/40-multi-session-handoff/) | Rakenna | Python, TypeScript |
+| 41 | [Työpaja oikeassa tietovarastossa](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Rakenna | Python, TypeScript |
+| 42 | [Lopputyö: julkaise uudelleenkäytettävä agenttityöpajapaketti](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Rakenna | Python, TypeScript |
+| 43 | [Rajaa tehtävä ennen kuin agentti kirjoittaa koodia](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Rakenna | Python, TypeScript |
+| 44 | [Laadi näyttöön perustuva toteutussuunnitelma](../../phases/14-agent-engineering/44-plan-from-evidence/) | Rakenna | Python, TypeScript |
+| 45 | [Delegoi agenttityö eristyksen ja yhdistämissopimusten avulla](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Rakenna | Python, TypeScript |
+| 46 | [Muuta jokainen agentin korjaus järjestelmäparannukseksi](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Rakenna | Python, TypeScript |
+| 47 | [Määritä vaikutus ennen tuotoksen valitsemista](../../phases/14-agent-engineering/47-outcomes-before-output/) | Rakenna | Python, TypeScript |
+| 48 | [Selvitä ihmisten todellinen työnkulku](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Rakenna | Python, TypeScript |
+| 49 | [Kartoita oletukset ja ratkaise riskialttein ensin](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Rakenna | Python, TypeScript |
+| 50 | [Valitse pienin osa, joka voi muuttaa päätöstä](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Rakenna | Python, TypeScript |
+| 51 | [Kirjoita harkinnan säilyttävät määrittelyt](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Rakenna | Python, TypeScript |
+| 52 | [Suunnittele onnistumismittarit ennen tuloksen syntymistä](../../phases/14-agent-engineering/52-design-success-metrics/) | Rakenna | Python, TypeScript |
+| 53 | [Valitse tietoisesti prototyyppi, pilotti tai tuotanto](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Rakenna | Python, TypeScript |
+| 54 | [Rakenna pysyvä palautekäytäntö vastuu- ja poistoperiaatteineen](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Rakenna | Python, TypeScript |
 
 Jokainen vaiheen 14 työpajaoppitunti (31-42) sisältää tiedoston `mission.md`, joka perehdyttää agentin ennen varsinaisten oppituntiasiakirjojen avaamista.
 
@@ -837,28 +837,28 @@ Oppitunnit 31-46 muodostavat [agenttiavusteisen ohjelmistokehityksen polun](../.
 
 | # | Oppitunti | Tyyppi | Kieli |
 |:---:|--------|:----:|------|
-| 01 | [Chatboteista pitkäkestoisiin agentteihin (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Opi | Python |
-| 02 | [STaR, V-STaR, Quiet-STaR: itse opittu päättely](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Opi | Python |
-| 03 | [AlphaEvolve: evolutiiviset koodausagentit](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Opi | Python |
-| 04 | [Darwin Gödel Machine: itseään muokkaavat agentit](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Opi | Python |
-| 05 | [AI Scientist v2: työpajatasoinen tutkimus](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Opi | Python |
-| 06 | [Automatisoitu linjaustutkimus (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Opi | Python |
-| 07 | [Rekursiivinen itsensä kehittäminen: kyvykkyys ja linjaus](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Opi | Python |
-| 08 | [Rajatut itsensä kehittämisen rakenteet](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Opi | Python |
-| 09 | [Autonomisten koodausagenttien kenttä (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Opi | Python |
-| 10 | [Autonomisten agenttien käyttöoikeustilat](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Opi | Python |
-| 11 | [Selainagentit ja epäsuora kehoteinjektio](../../phases/15-autonomous-systems/11-browser-agents/) | Opi | Python |
-| 12 | [Pysyvä suoritus pitkäkestoisille agenteille](../../phases/15-autonomous-systems/12-durable-execution/) | Opi | Python |
-| 13 | [Toimintabudjetit, iteraatiorajat ja kustannussäätimet](../../phases/15-autonomous-systems/13-cost-governors/) | Opi | Python |
-| 14 | [Hätäpysäytykset, katkaisijat ja kanariatokenit](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Opi | Python |
-| 15 | [HITL: ehdota ensin, vahvista sitten](../../phases/15-autonomous-systems/15-propose-then-commit/) | Opi | Python |
-| 16 | [Tarkistuspisteet ja palautus](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Opi | Python |
-| 17 | [Periaatteisiin perustuva AI ja sääntöpoikkeukset](../../phases/15-autonomous-systems/17-constitutional-ai/) | Opi | Python |
-| 18 | [Llama Guard ja syötteiden sekä tulosten luokittelu](../../phases/15-autonomous-systems/18-llama-guard/) | Opi | Python |
-| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Opi | Python |
-| 20 | [OpenAI Preparedness Framework ja DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Opi | Python |
-| 21 | [METR:n aikahorisontit ja ulkoinen arviointi](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Opi | Python |
-| 22 | [CAIS, CAISI ja yhteiskunnallisen mittakaavan riskit](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Opi | Python |
+| 01 | [Chatboteista pitkäkestoisiin agentteihin (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Opi | Python, TypeScript |
+| 02 | [STaR, V-STaR, Quiet-STaR: itse opittu päättely](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Opi | Python, TypeScript |
+| 03 | [AlphaEvolve: evolutiiviset koodausagentit](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Opi | Python, TypeScript |
+| 04 | [Darwin Gödel Machine: itseään muokkaavat agentit](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Opi | Python, TypeScript |
+| 05 | [AI Scientist v2: työpajatasoinen tutkimus](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Opi | Python, TypeScript |
+| 06 | [Automatisoitu linjaustutkimus (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Opi | Python, TypeScript |
+| 07 | [Rekursiivinen itsensä kehittäminen: kyvykkyys ja linjaus](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Opi | Python, TypeScript |
+| 08 | [Rajatut itsensä kehittämisen rakenteet](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Opi | Python, TypeScript |
+| 09 | [Autonomisten koodausagenttien kenttä (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Opi | Python, TypeScript |
+| 10 | [Autonomisten agenttien käyttöoikeustilat](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Opi | Python, TypeScript |
+| 11 | [Selainagentit ja epäsuora kehoteinjektio](../../phases/15-autonomous-systems/11-browser-agents/) | Opi | Python, TypeScript |
+| 12 | [Pysyvä suoritus pitkäkestoisille agenteille](../../phases/15-autonomous-systems/12-durable-execution/) | Opi | Python, TypeScript |
+| 13 | [Toimintabudjetit, iteraatiorajat ja kustannussäätimet](../../phases/15-autonomous-systems/13-cost-governors/) | Opi | Python, TypeScript |
+| 14 | [Hätäpysäytykset, katkaisijat ja kanariatokenit](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Opi | Python, TypeScript |
+| 15 | [HITL: ehdota ensin, vahvista sitten](../../phases/15-autonomous-systems/15-propose-then-commit/) | Opi | Python, TypeScript |
+| 16 | [Tarkistuspisteet ja palautus](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Opi | Python, TypeScript |
+| 17 | [Periaatteisiin perustuva AI ja sääntöpoikkeukset](../../phases/15-autonomous-systems/17-constitutional-ai/) | Opi | Python, TypeScript |
+| 18 | [Llama Guard ja syötteiden sekä tulosten luokittelu](../../phases/15-autonomous-systems/18-llama-guard/) | Opi | Python, TypeScript |
+| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Opi | Python, TypeScript |
+| 20 | [OpenAI Preparedness Framework ja DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Opi | Python, TypeScript |
+| 21 | [METR:n aikahorisontit ja ulkoinen arviointi](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Opi | Python, TypeScript |
+| 22 | [CAIS, CAISI ja yhteiskunnallisen mittakaavan riskit](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Opi | Python, TypeScript |
 
 </details>
 
@@ -869,30 +869,30 @@ Oppitunnit 31-46 muodostavat [agenttiavusteisen ohjelmistokehityksen polun](../.
 | # | Oppitunti | Tyyppi | Kieli |
 |:---:|--------|:----:|------|
 | 01 | [Miksi useita agentteja?](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | Opi | TypeScript |
-| 02 | [FIPA-ACL:n perintö ja puheaktit](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Opi | Python |
+| 02 | [FIPA-ACL:n perintö ja puheaktit](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Opi | Python, TypeScript |
 | 03 | [Viestintäprotokollat](../../phases/16-multi-agent-and-swarms/03-communication-protocols/) | Rakenna | TypeScript |
-| 04 | [Moniagenttijärjestelmän perusmalli](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Opi | Python |
-| 05 | [Valvoja / orkestroija-työntekijä -malli](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Rakenna | Python |
-| 06 | [Hierarkkinen arkkitehtuuri ja hajotelman poikkeamat](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Opi | Python |
-| 07 | [Society of Mind ja moniagenttinen väittely](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Rakenna | Python |
-| 08 | [Roolierikoistuminen: suunnittelija, kriitikko, suorittaja ja varmentaja](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Rakenna | Python |
-| 09 | [Rinnakkaiset parvet ja verkottuneet arkkitehtuurit](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Rakenna | Python |
-| 10 | [Ryhmäkeskustelu ja puhujan valinta](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Rakenna | Python |
-| 11 | [Siirrot ja rutiinit (tilaton orkestrointi)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Rakenna | Python |
-| 12 | [A2A: agenttien välinen protokolla](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Rakenna | Python |
-| 13 | [Jaettu muisti ja liitutaulumallit](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Rakenna | Python |
-| 14 | [Konsensus ja bysanttilainen vikasietoisuus](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Rakenna | Python |
-| 15 | [Äänestys, sisäinen johdonmukaisuus ja väittelyn rakenne](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Rakenna | Python |
-| 16 | [Neuvottelu ja kaupankäynti](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Rakenna | Python |
-| 17 | [Generatiiviset agentit ja esiin nousevan käyttäytymisen simulointi](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Rakenna | Python |
-| 18 | [Mielen teoria ja itsestään syntyvä koordinointi](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Rakenna | Python |
-| 19 | [Parvioptimointi (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Rakenna | Python |
-| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Opi | Python |
-| 21 | [Agenttitaloudet, tokenkannustimet ja maine](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Opi | Python |
-| 22 | [Tuotannon skaalaus: jonot, tarkistuspisteet ja pysyvyys](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Rakenna | Python |
-| 23 | [Vikatilat: MAST, ryhmäajattelu ja yksipuolisuus](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Opi | Python |
-| 24 | [Arvioinnin ja koordinoinnin vertailut](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Opi | Python |
-| 25 | [Tapaustutkimukset ja vuoden 2026 tekniikan kärki](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Opi | Python |
+| 04 | [Moniagenttijärjestelmän perusmalli](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Opi | Python, TypeScript |
+| 05 | [Valvoja / orkestroija-työntekijä -malli](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Rakenna | Python, TypeScript |
+| 06 | [Hierarkkinen arkkitehtuuri ja hajotelman poikkeamat](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Opi | Python, TypeScript |
+| 07 | [Society of Mind ja moniagenttinen väittely](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Rakenna | Python, TypeScript |
+| 08 | [Roolierikoistuminen: suunnittelija, kriitikko, suorittaja ja varmentaja](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Rakenna | Python, TypeScript |
+| 09 | [Rinnakkaiset parvet ja verkottuneet arkkitehtuurit](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Rakenna | Python, TypeScript |
+| 10 | [Ryhmäkeskustelu ja puhujan valinta](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Rakenna | Python, TypeScript |
+| 11 | [Siirrot ja rutiinit (tilaton orkestrointi)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Rakenna | Python, TypeScript |
+| 12 | [A2A: agenttien välinen protokolla](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Rakenna | Python, TypeScript |
+| 13 | [Jaettu muisti ja liitutaulumallit](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Rakenna | Python, TypeScript |
+| 14 | [Konsensus ja bysanttilainen vikasietoisuus](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Rakenna | Python, TypeScript |
+| 15 | [Äänestys, sisäinen johdonmukaisuus ja väittelyn rakenne](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Rakenna | Python, TypeScript |
+| 16 | [Neuvottelu ja kaupankäynti](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Rakenna | Python, TypeScript |
+| 17 | [Generatiiviset agentit ja esiin nousevan käyttäytymisen simulointi](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Rakenna | Python, TypeScript |
+| 18 | [Mielen teoria ja itsestään syntyvä koordinointi](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Rakenna | Python, TypeScript |
+| 19 | [Parvioptimointi (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Rakenna | Python, TypeScript |
+| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Opi | Python, TypeScript |
+| 21 | [Agenttitaloudet, tokenkannustimet ja maine](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Opi | Python, TypeScript |
+| 22 | [Tuotannon skaalaus: jonot, tarkistuspisteet ja pysyvyys](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Rakenna | Python, TypeScript |
+| 23 | [Vikatilat: MAST, ryhmäajattelu ja yksipuolisuus](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Opi | Python, TypeScript |
+| 24 | [Arvioinnin ja koordinoinnin vertailut](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Opi | Python, TypeScript |
+| 25 | [Tapaustutkimukset ja vuoden 2026 tekniikan kärki](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Opi | Python, TypeScript |
 
 </details>
 
@@ -902,35 +902,35 @@ Oppitunnit 31-46 muodostavat [agenttiavusteisen ohjelmistokehityksen polun](../.
 
 | # | Oppitunti | Tyyppi | Kieli |
 |:---:|--------|:----:|------|
-| 01 | [Hallitut LLM-alustat: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Opi | Python |
-| 02 | [Päättelyalustojen talous: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Opi | Python |
-| 03 | [GPU:n automaattinen skaalaus Kubernetesissa: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Opi | Python |
-| 04 | [Päättelymoottorin sisäosat: PagedAttention, jatkuva eräkäsittely ja pilkottu prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Opi | Python |
-| 05 | [EAGLE-3:n spekulatiivinen dekoodaus tuotannossa](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Opi | Python |
-| 06 | [Prefiksivälimuisti päättelyssä: RadixAttention ja KV:n uudelleenkäyttö](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Opi | Python |
-| 07 | [Laitteistokohtainen päättelykäännös: FP8 ja NVFP4 Blackwellissa](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Opi | Python |
-| 08 | [Päättelymittarit: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Opi | Python |
-| 09 | [Kvantisointi tuotannossa: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Opi | Python |
-| 10 | [Palvelimettomien LLM-mallien kylmäkäynnistyksen vähentäminen](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Opi | Python |
-| 11 | [Monialueinen LLM-palvelu ja KV-välimuistin paikallisuus](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Opi | Python |
-| 12 | [Reunalaitteiden päättely: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Opi | Python |
+| 01 | [Hallitut LLM-alustat: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Opi | Python, TypeScript |
+| 02 | [Päättelyalustojen talous: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Opi | Python, TypeScript |
+| 03 | [GPU:n automaattinen skaalaus Kubernetesissa: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Opi | Python, TypeScript |
+| 04 | [Päättelymoottorin sisäosat: PagedAttention, jatkuva eräkäsittely ja pilkottu prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Opi | Python, TypeScript |
+| 05 | [EAGLE-3:n spekulatiivinen dekoodaus tuotannossa](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Opi | Python, TypeScript |
+| 06 | [Prefiksivälimuisti päättelyssä: RadixAttention ja KV:n uudelleenkäyttö](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Opi | Python, TypeScript |
+| 07 | [Laitteistokohtainen päättelykäännös: FP8 ja NVFP4 Blackwellissa](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Opi | Python, TypeScript |
+| 08 | [Päättelymittarit: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Opi | Python, TypeScript |
+| 09 | [Kvantisointi tuotannossa: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Opi | Python, TypeScript |
+| 10 | [Palvelimettomien LLM-mallien kylmäkäynnistyksen vähentäminen](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Opi | Python, TypeScript |
+| 11 | [Monialueinen LLM-palvelu ja KV-välimuistin paikallisuus](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Opi | Python, TypeScript |
+| 12 | [Reunalaitteiden päättely: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Opi | Python, TypeScript |
 | 13 | [LLM-havainnoitavuuden työkalujen valinta](../../phases/17-infrastructure-and-production/13-llm-observability/) | Opi | Python, TypeScript |
 | 14 | [Kehotevälimuistin ja semanttisen välimuistin talous](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Opi | Python, TypeScript |
 | 15 | [Erä-API:t: 50% alennus alan standardina](../../phases/17-infrastructure-and-production/15-batch-apis/) | Opi | Python, TypeScript |
 | 16 | [Mallireititys kustannusten pienentämisen perustana](../../phases/17-infrastructure-and-production/16-model-routing/) | Opi | Python, TypeScript |
-| 17 | [Eriytetty prefill ja dekoodaus: NVIDIA Dynamo ja llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Opi | Python |
-| 18 | [Tuotannon päättelypino: KV:n siirto ja välimuistitietoinen reititys](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Opi | Python |
+| 17 | [Eriytetty prefill ja dekoodaus: NVIDIA Dynamo ja llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Opi | Python, TypeScript |
+| 18 | [Tuotannon päättelypino: KV:n siirto ja välimuistitietoinen reititys](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Opi | Python, TypeScript |
 | 19 | [AI-yhdyskäytävät: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Opi | Python, TypeScript |
 | 20 | [Varjokäyttö, kanariajulkaisu ja vaiheittainen käyttöönotto](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Opi | Python, TypeScript |
-| 21 | [LLM-ominaisuuksien A/B-testaus: GrowthBook ja Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Opi | Python |
-| 22 | [LLM-API:en kuormitustestaus: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Rakenna | Python |
-| 23 | [SRE AI:lle: moniagenttinen häiriönhallinta](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Opi | Python |
-| 24 | [Kaaostestaus LLM-tuotannossa](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Opi | Python |
-| 25 | [Turvallisuus: salaisuudet, henkilötietojen poisto ja auditointilokit](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Opi | Python |
-| 26 | [Vaatimustenmukaisuus: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Opi | Python |
-| 27 | [FinOps LLM-malleille: yksikkötalous ja asiakaskohtainen kustannuskohdistus](../../phases/17-infrastructure-and-production/27-finops-llms/) | Opi | Python |
-| 28 | [Oman päättelypalvelun valinta: moottori, laitteisto ja mittakaava](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Opi | Python |
-| 29 | [Mallien demokäyttöliittymät: funktiosta jaettavaan sovellukseen](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Rakenna | Python |
+| 21 | [LLM-ominaisuuksien A/B-testaus: GrowthBook ja Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Opi | Python, TypeScript |
+| 22 | [LLM-API:en kuormitustestaus: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Rakenna | Python, TypeScript |
+| 23 | [SRE AI:lle: moniagenttinen häiriönhallinta](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Opi | Python, TypeScript |
+| 24 | [Kaaostestaus LLM-tuotannossa](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Opi | Python, TypeScript |
+| 25 | [Turvallisuus: salaisuudet, henkilötietojen poisto ja auditointilokit](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Opi | Python, TypeScript |
+| 26 | [Vaatimustenmukaisuus: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Opi | Python, TypeScript |
+| 27 | [FinOps LLM-malleille: yksikkötalous ja asiakaskohtainen kustannuskohdistus](../../phases/17-infrastructure-and-production/27-finops-llms/) | Opi | Python, TypeScript |
+| 28 | [Oman päättelypalvelun valinta: moottori, laitteisto ja mittakaava](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Opi | Python, TypeScript |
+| 29 | [Mallien demokäyttöliittymät: funktiosta jaettavaan sovellukseen](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Rakenna | Python, TypeScript |
 
 </details>
 
@@ -940,36 +940,36 @@ Oppitunnit 31-46 muodostavat [agenttiavusteisen ohjelmistokehityksen polun](../.
 
 | # | Oppitunti | Tyyppi | Kieli |
 |:---:|--------|:----:|------|
-| 01 | [Ohjeiden noudattaminen linjaussignaalina](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Opi | Python |
-| 02 | [Palkkiojärjestelmän hyväksikäyttö ja Goodhartin laki](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Opi | Python |
-| 03 | [Suoran preferenssioptimoinnin menetelmät](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Opi | Python |
-| 04 | [RLHF:n vahvistama mielistely](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Opi | Python |
-| 05 | [Periaatteisiin perustuva AI ja RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Opi | Python |
-| 06 | [Mesa-optimointi ja harhaanjohtava linjaus](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Opi | Python |
-| 07 | [Piilevät agentit: pysyvä harhauttaminen](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Opi | Python |
-| 08 | [Kontekstinsisäinen juonittelu edistyneissä malleissa](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Opi | Python |
-| 09 | [Linjauksen teeskentely](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Opi | Python |
-| 10 | [AI:n hallinta: turvallisuus sabotoinnista huolimatta](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Opi | Python |
-| 11 | [Skaalautuva valvonta ja heikosta vahvaan -oppiminen](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Opi | Python |
-| 12 | [Red teaming: PAIR ja automatisoidut hyökkäykset](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Rakenna | Python |
-| 13 | [Jailbreak useilla esimerkeillä](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Opi | Python |
-| 14 | [ASCII-taide ja visuaaliset jailbreakit](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Rakenna | Python |
-| 15 | [Epäsuora kehoteinjektio](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Rakenna | Python |
-| 16 | [Red team -työkalut: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Rakenna | Python |
-| 17 | [WMDP ja kaksikäyttöisten kyvykkyyksien arviointi](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Opi | Python |
-| 18 | [Edistyneiden mallien turvallisuuskehykset: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Opi | Python |
-| 19 | [Mallien hyvinvoinnin tutkimus](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Opi | Python |
-| 20 | [Vinoumat ja esitystapojen haitat](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Rakenna | Python |
-| 21 | [Oikeudenmukaisuuskriteerit: ryhmä, yksilö ja kontrafaktuaalinen](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Opi | Python |
-| 22 | [Differentiaalinen yksityisyys LLM-malleille](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Rakenna | Python |
-| 23 | [Vesileimat: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Rakenna | Python |
-| 24 | [Sääntelykehykset: EU, Yhdysvallat, Britannia ja Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Opi | Python |
-| 25 | [EchoLeak ja AI:n CVE-haavoittuvuudet](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Opi | Python |
-| 26 | [Malli-, järjestelmä- ja tietoaineistokortit](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Rakenna | Python |
-| 27 | [Datan alkuperä ja koulutusdatan hallinta](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Opi | Python |
-| 28 | [Linjaustutkimuksen ekosysteemi: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Opi | Python |
-| 29 | [Moderointijärjestelmät: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Rakenna | Python |
-| 30 | [Kaksikäyttöriskit: kyber, bio, kemia ja ydintekniikka](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Opi | Python |
+| 01 | [Ohjeiden noudattaminen linjaussignaalina](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Opi | Python, TypeScript |
+| 02 | [Palkkiojärjestelmän hyväksikäyttö ja Goodhartin laki](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Opi | Python, TypeScript |
+| 03 | [Suoran preferenssioptimoinnin menetelmät](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Opi | Python, TypeScript |
+| 04 | [RLHF:n vahvistama mielistely](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Opi | Python, TypeScript |
+| 05 | [Periaatteisiin perustuva AI ja RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Opi | Python, TypeScript |
+| 06 | [Mesa-optimointi ja harhaanjohtava linjaus](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Opi | Python, TypeScript |
+| 07 | [Piilevät agentit: pysyvä harhauttaminen](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Opi | Python, TypeScript |
+| 08 | [Kontekstinsisäinen juonittelu edistyneissä malleissa](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Opi | Python, TypeScript |
+| 09 | [Linjauksen teeskentely](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Opi | Python, TypeScript |
+| 10 | [AI:n hallinta: turvallisuus sabotoinnista huolimatta](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Opi | Python, TypeScript |
+| 11 | [Skaalautuva valvonta ja heikosta vahvaan -oppiminen](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Opi | Python, TypeScript |
+| 12 | [Red teaming: PAIR ja automatisoidut hyökkäykset](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Rakenna | Python, TypeScript |
+| 13 | [Jailbreak useilla esimerkeillä](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Opi | Python, TypeScript |
+| 14 | [ASCII-taide ja visuaaliset jailbreakit](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Rakenna | Python, TypeScript |
+| 15 | [Epäsuora kehoteinjektio](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Rakenna | Python, TypeScript |
+| 16 | [Red team -työkalut: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Rakenna | Python, TypeScript |
+| 17 | [WMDP ja kaksikäyttöisten kyvykkyyksien arviointi](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Opi | Python, TypeScript |
+| 18 | [Edistyneiden mallien turvallisuuskehykset: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Opi | Python, TypeScript |
+| 19 | [Mallien hyvinvoinnin tutkimus](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Opi | Python, TypeScript |
+| 20 | [Vinoumat ja esitystapojen haitat](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Rakenna | Python, TypeScript |
+| 21 | [Oikeudenmukaisuuskriteerit: ryhmä, yksilö ja kontrafaktuaalinen](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Opi | Python, TypeScript |
+| 22 | [Differentiaalinen yksityisyys LLM-malleille](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Rakenna | Python, TypeScript |
+| 23 | [Vesileimat: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Rakenna | Python, TypeScript |
+| 24 | [Sääntelykehykset: EU, Yhdysvallat, Britannia ja Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Opi | Python, TypeScript |
+| 25 | [EchoLeak ja AI:n CVE-haavoittuvuudet](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Opi | Python, TypeScript |
+| 26 | [Malli-, järjestelmä- ja tietoaineistokortit](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Rakenna | Python, TypeScript |
+| 27 | [Datan alkuperä ja koulutusdatan hallinta](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Opi | Python, TypeScript |
+| 28 | [Linjaustutkimuksen ekosysteemi: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Opi | Python, TypeScript |
+| 29 | [Moderointijärjestelmät: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Rakenna | Python, TypeScript |
+| 30 | [Kaksikäyttöriskit: kyber, bio, kemia ja ydintekniikka](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Opi | Python, TypeScript |
 
 </details>
 

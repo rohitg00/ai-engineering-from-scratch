@@ -3,7 +3,7 @@
 > Most code in this course uses the same small set of Python idioms. Learn that set here, before the math and model lessons depend on it.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Dev Environment, Python Environments
 **Time:** ~120 minutes
 
@@ -821,6 +821,7 @@ A nearest-centroid classifier stores the mean feature vector of each class. It p
 
 ```bash
 python3 phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.py
+npx tsx phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.ts
 ```
 
 ```text

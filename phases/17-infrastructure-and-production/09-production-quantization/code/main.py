@@ -83,7 +83,7 @@ def print_scenario(params_b: float, concurrency: int, ctx: int) -> None:
 
 def main() -> None:
     print("=" * 98)
-    print("TOY QUANTIZATION CALCULATOR — memory and relative throughput by format")
+    print("TOY QUANTIZATION CALCULATOR: memory and relative throughput by format")
     print("=" * 98)
     print()
 

@@ -122,7 +122,7 @@ class ChecklistAgent(Actor):
 
 def main() -> None:
     print("=" * 70)
-    print("AUTOGEN V0.4 ACTOR RUNTIME (STDLIB) — Phase 14, Lesson 14")
+    print("AUTOGEN V0.4 ACTOR RUNTIME (STDLIB): Phase 14, Lesson 14")
     print("=" * 70)
 
     runtime = Runtime()

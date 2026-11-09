@@ -3,7 +3,7 @@
 > A coding agent can implement a clear task quickly. It can also implement an unclear task quickly. The speed is the same. The cost is not.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 31 and 36
 **Time:** ~60 minutes
 
@@ -93,6 +93,7 @@ Run from this lesson directory:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

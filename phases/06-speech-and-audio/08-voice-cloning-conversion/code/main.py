@@ -105,7 +105,7 @@ def main():
     print(f"  content probe: {txt!r} (cos={tscore:.3f})")
 
     print()
-    print("=== Step 2: zero-shot clone — alice's voice on bob's intended text ===")
+    print("=== Step 2: zero-shot clone: alice's voice on bob's intended text ===")
     # bob's text + alice's speaker embedding
     wav_cloned = fake_tts(content_remind, alice, mix=0.5)
     name, score = extract_speaker(wav_cloned, speakers)
@@ -114,7 +114,7 @@ def main():
     print(f"  content probe: {txt!r} (cos={tscore:.3f})  -- should be remind text")
 
     print()
-    print("=== Step 3: voice conversion — rewrite bob's utterance into alice ===")
+    print("=== Step 3: voice conversion: rewrite bob's utterance into alice ===")
     wav_bob_orig = fake_tts(content_remind, bob, mix=0.5)
     # extract content, resynth with alice embedding
     matched_text, _ = extract_content(wav_bob_orig, contents)
@@ -125,7 +125,7 @@ def main():
     print(f"  content preserved:  {matched_text!r}")
 
     print()
-    print("=== Step 4: SECS — speaker cosine similarity of clone ===")
+    print("=== Step 4: SECS: speaker cosine similarity of clone ===")
     secs_same = cosine(alice, wav_cloned)
     secs_diff = cosine(bob, wav_cloned)
     print(f"  alice (target) vs clone  SECS = {secs_same:.3f}  (should be high)")

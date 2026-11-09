@@ -196,7 +196,7 @@ def evolutionary_demo() -> None:
 
 def main() -> None:
     print("=" * 70)
-    print("HTN + EVOLUTIONARY SEARCH — Phase 14, Lesson 11")
+    print("HTN + EVOLUTIONARY SEARCH: Phase 14, Lesson 11")
     print("=" * 70)
     htn_demo()
     evolutionary_demo()

@@ -357,7 +357,7 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | 10 | [Terminal och skal](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Lär dig | — |
 | 11 | [Linux för AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Lär dig | — |
 | 12 | [Felsökning och profilering](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Bygg | Python |
-| 13 | [Python för AI-utveckling](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Bygg | Python |
+| 13 | [Python för AI-utveckling](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Bygg | Python, TypeScript |
 
 <details id="phase-1">
 <summary><b>Fas 1: Matematiska grunder</b> &nbsp;<code>22 lektioner</code>&nbsp; <em>Intuitionen bakom varje AI-algoritm, genom kod.</em></summary>
@@ -383,7 +383,7 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | 16 | [Samplingsmetoder](../../phases/01-math-foundations/16-sampling-methods/) | Bygg | Python, TypeScript |
 | 17 | [Linjära system](../../phases/01-math-foundations/17-linear-systems/) | Bygg | Python, TypeScript |
 | 18 | [Konvex optimering](../../phases/01-math-foundations/18-convex-optimization/) | Bygg | Python, TypeScript |
-| 19 | [Komplexa tal för AI](../../phases/01-math-foundations/19-complex-numbers/) | Lär dig | Python |
+| 19 | [Komplexa tal för AI](../../phases/01-math-foundations/19-complex-numbers/) | Lär dig | Python, TypeScript |
 | 20 | [Fouriertransformen](../../phases/01-math-foundations/20-fourier-transform/) | Bygg | Python, TypeScript |
 | 21 | [Grafteori för ML](../../phases/01-math-foundations/21-graph-theory/) | Bygg | Python, TypeScript |
 | 22 | [Stokastiska processer](../../phases/01-math-foundations/22-stochastic-processes/) | Lär dig | Python |
@@ -414,9 +414,9 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | 16 | [Avvikelsedetektering](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Bygg | Python |
 | 17 | [Hantera obalanserade data](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Bygg | Python |
 | 18 | [Egenskapsurval](../../phases/02-ml-fundamentals/18-feature-selection/) | Bygg | Python |
-| 19 | [Design av ML-system: från problem till driftsatt modell](../../phases/02-ml-fundamentals/19-ml-system-design/) | Bygg | Python |
-| 20 | [Övervakning av modeller i produktion: datadrift och konceptdrift](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Bygg | Python |
-| 21 | [Egenskapslager och skillnader mellan träning och drift](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Bygg | Python |
+| 19 | [Design av ML-system: från problem till driftsatt modell](../../phases/02-ml-fundamentals/19-ml-system-design/) | Bygg | Python, TypeScript |
+| 20 | [Övervakning av modeller i produktion: datadrift och konceptdrift](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Bygg | Python, TypeScript |
+| 21 | [Egenskapslager och skillnader mellan träning och drift](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Bygg | Python, TypeScript |
 
 </details>
 
@@ -485,35 +485,35 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 
 | # | Lektion | Typ | Språk |
 |:---:|--------|:----:|------|
-| 01 | [Textbearbetning: tokenisering, stamning och lemmatisering](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Bygg | Python |
-| 02 | [Ordsäck, TF-IDF och textrepresentation](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Bygg | Python |
+| 01 | [Textbearbetning: tokenisering, stamning och lemmatisering](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Bygg | Python, TypeScript |
+| 02 | [Ordsäck, TF-IDF och textrepresentation](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Bygg | Python, TypeScript |
 | 03 | [Ordinbäddningar: Word2Vec från grunden](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Bygg | Python |
-| 04 | [GloVe, FastText och delordsinbäddningar](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Bygg | Python |
-| 05 | [Sentimentanalys](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Bygg | Python |
-| 06 | [Identifiering av namngivna entiteter (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Bygg | Python |
-| 07 | [Ordklasstaggning och syntaktisk analys](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Bygg | Python |
-| 08 | [Textklassificering: CNN och RNN för text](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Bygg | Python |
-| 09 | [Sekvens-till-sekvens-modeller](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Bygg | Python |
-| 10 | [Attention-mekanismen: genombrottet](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Bygg | Python |
-| 11 | [Maskinöversättning](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Bygg | Python |
-| 12 | [Textsammanfattning](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Bygg | Python |
-| 13 | [System för frågor och svar](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Bygg | Python |
-| 14 | [Informationsåtervinning och sökning](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Bygg | Python |
-| 15 | [Ämnesmodellering: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Bygg | Python |
-| 16 | [Textgenerering](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Bygg | Python |
-| 17 | [Chattbotar: från regler till neurala nätverk](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Bygg | Python |
-| 18 | [Flerspråkig NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Bygg | Python |
+| 04 | [GloVe, FastText och delordsinbäddningar](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Bygg | Python, TypeScript |
+| 05 | [Sentimentanalys](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Bygg | Python, TypeScript |
+| 06 | [Identifiering av namngivna entiteter (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Bygg | Python, TypeScript |
+| 07 | [Ordklasstaggning och syntaktisk analys](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Bygg | Python, TypeScript |
+| 08 | [Textklassificering: CNN och RNN för text](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Bygg | Python, TypeScript |
+| 09 | [Sekvens-till-sekvens-modeller](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Bygg | Python, TypeScript |
+| 10 | [Attention-mekanismen: genombrottet](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Bygg | Python, TypeScript |
+| 11 | [Maskinöversättning](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Bygg | Python, TypeScript |
+| 12 | [Textsammanfattning](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Bygg | Python, TypeScript |
+| 13 | [System för frågor och svar](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Bygg | Python, TypeScript |
+| 14 | [Informationsåtervinning och sökning](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Bygg | Python, TypeScript |
+| 15 | [Ämnesmodellering: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Bygg | Python, TypeScript |
+| 16 | [Textgenerering](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Bygg | Python, TypeScript |
+| 17 | [Chattbotar: från regler till neurala nätverk](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Bygg | Python, TypeScript |
+| 18 | [Flerspråkig NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Bygg | Python, TypeScript |
 | 19 | [Delordstokenisering: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Lär dig | Python, TypeScript |
-| 20 | [Strukturerade utdata och begränsad avkodning](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Bygg | Python |
-| 21 | [NLI och textuell implikation](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Lär dig | Python |
-| 22 | [Fördjupning i inbäddningsmodeller](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Lär dig | Python |
+| 20 | [Strukturerade utdata och begränsad avkodning](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Bygg | Python, TypeScript |
+| 21 | [NLI och textuell implikation](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Lär dig | Python, TypeScript |
+| 22 | [Fördjupning i inbäddningsmodeller](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Lär dig | Python, TypeScript |
 | 23 | [Strategier för textuppdelning i RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Bygg | Python, TypeScript |
-| 24 | [Koreferenslösning](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Lär dig | Python |
-| 25 | [Entitetslänkning och disambiguering](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Bygg | Python |
-| 26 | [Relationsextraktion och konstruktion av kunskapsgrafer](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Bygg | Python |
-| 27 | [LLM-utvärdering: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Bygg | Python |
-| 28 | [Utvärdering av lång kontext: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Lär dig | Python |
-| 29 | [Spårning av dialogtillstånd](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Bygg | Python |
+| 24 | [Koreferenslösning](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Lär dig | Python, TypeScript |
+| 25 | [Entitetslänkning och disambiguering](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Bygg | Python, TypeScript |
+| 26 | [Relationsextraktion och konstruktion av kunskapsgrafer](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Bygg | Python, TypeScript |
+| 27 | [LLM-utvärdering: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Bygg | Python, TypeScript |
+| 28 | [Utvärdering av lång kontext: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Lär dig | Python, TypeScript |
+| 29 | [Spårning av dialogtillstånd](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Bygg | Python, TypeScript |
 
 </details>
 
@@ -523,23 +523,23 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 
 | # | Lektion | Typ | Språk |
 |:---:|--------|:----:|------|
-| 01 | [Ljudgrunder: vågformer, sampling och FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Lär dig | Python |
-| 02 | [Spektrogram, melskalan och ljudegenskaper](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Bygg | Python |
-| 03 | [Ljudklassificering](../../phases/06-speech-and-audio/03-audio-classification) | Bygg | Python |
-| 04 | [Taligenkänning (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Bygg | Python |
-| 05 | [Whisper: arkitektur och finjustering](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Bygg | Python |
-| 06 | [Talaridentifiering och verifiering](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Bygg | Python |
-| 07 | [Text till tal (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Bygg | Python |
-| 08 | [Röstkloning och röstomvandling](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Bygg | Python |
-| 09 | [Musikgenerering](../../phases/06-speech-and-audio/09-music-generation) | Bygg | Python |
-| 10 | [Ljud-språkmodeller](../../phases/06-speech-and-audio/10-audio-language-models) | Bygg | Python |
+| 01 | [Ljudgrunder: vågformer, sampling och FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Lär dig | Python, TypeScript |
+| 02 | [Spektrogram, melskalan och ljudegenskaper](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Bygg | Python, TypeScript |
+| 03 | [Ljudklassificering](../../phases/06-speech-and-audio/03-audio-classification) | Bygg | Python, TypeScript |
+| 04 | [Taligenkänning (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Bygg | Python, TypeScript |
+| 05 | [Whisper: arkitektur och finjustering](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Bygg | Python, TypeScript |
+| 06 | [Talaridentifiering och verifiering](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Bygg | Python, TypeScript |
+| 07 | [Text till tal (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Bygg | Python, TypeScript |
+| 08 | [Röstkloning och röstomvandling](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Bygg | Python, TypeScript |
+| 09 | [Musikgenerering](../../phases/06-speech-and-audio/09-music-generation) | Bygg | Python, TypeScript |
+| 10 | [Ljud-språkmodeller](../../phases/06-speech-and-audio/10-audio-language-models) | Bygg | Python, TypeScript |
 | 11 | [Ljudbehandling i realtid](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Bygg | Python, Rust |
-| 12 | [Bygg en pipeline för en röstassistent](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Bygg | Python |
-| 13 | [Neurala ljudkodekar: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Lär dig | Python |
-| 14 | [Talaktivitetsdetektering och turtagning](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Bygg | Python |
-| 15 | [Strömmande tal till tal: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Lär dig | Python |
-| 16 | [Skydd mot röstförfalskning och ljudvattenmärkning](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Bygg | Python |
-| 17 | [Ljudutvärdering: WER, MOS, MMAU och topplistor](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Lär dig | Python |
+| 12 | [Bygg en pipeline för en röstassistent](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Bygg | Python, TypeScript |
+| 13 | [Neurala ljudkodekar: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Lär dig | Python, TypeScript |
+| 14 | [Talaktivitetsdetektering och turtagning](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Bygg | Python, TypeScript |
+| 15 | [Strömmande tal till tal: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Lär dig | Python, TypeScript |
+| 16 | [Skydd mot röstförfalskning och ljudvattenmärkning](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Bygg | Python, TypeScript |
+| 17 | [Ljudutvärdering: WER, MOS, MMAU och topplistor](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Lär dig | Python, TypeScript |
 
 </details>
 
@@ -554,14 +554,14 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | 03 | [Attention med flera huvuden](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Bygg | Python, Rust |
 | 04 | [Positionskodning: sinusformad, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Bygg | Python, Rust, Julia |
 | 05 | [Hela Transformer-modellen: kodare och avkodare](../../phases/07-transformers-deep-dive/05-full-transformer/) | Bygg | Python, Julia |
-| 06 | [BERT: maskerad språkmodellering](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Bygg | Python |
-| 07 | [GPT: kausal språkmodellering](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Bygg | Python |
-| 08 | [T5, BART: kodar-avkodarmodeller](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Lär dig | Python |
-| 09 | [Vision Transformers (ViT) för bildanalys](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Bygg | Python |
-| 10 | [Transformers för ljud: Whisper-arkitekturen](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Lär dig | Python |
+| 06 | [BERT: maskerad språkmodellering](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Bygg | Python, Rust |
+| 07 | [GPT: kausal språkmodellering](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Bygg | Python, Rust |
+| 08 | [T5, BART: kodar-avkodarmodeller](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Lär dig | Python, Rust |
+| 09 | [Vision Transformers (ViT) för bildanalys](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Bygg | Python, Rust |
+| 10 | [Transformers för ljud: Whisper-arkitekturen](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Lär dig | Python, Rust |
 | 11 | [Expertblandningar (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Bygg | Python, Rust |
 | 12 | [KV-cache, Flash Attention och inferensoptimering](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Bygg | Python, Rust |
-| 13 | [Skalningslagar](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Lär dig | Python |
+| 13 | [Skalningslagar](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Lär dig | Python, Rust |
 | 14 | [Bygg en Transformer från grunden](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Bygg | Python |
 | 15 | [Attention-varianter: glidande fönster, gles och differentiell](../../phases/07-transformers-deep-dive/15-attention-variants/) | Bygg | Python, Rust |
 | 16 | [Spekulativ avkodning: föreslå, verifiera, upprepa](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Bygg | Python, Rust |
@@ -574,20 +574,20 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 
 | # | Lektion | Typ | Språk |
 |:---:|--------|:----:|------|
-| 01 | [Generativa modeller: klassificering och historia](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Lär dig | Python |
-| 02 | [Autoenkodare och VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Bygg | Python |
-| 03 | [GAN: generator mot diskriminator](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Bygg | Python |
-| 04 | [Villkorade GAN och Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Bygg | Python |
-| 05 | [StyleGAN-modellen](../../phases/08-generative-ai/05-stylegan/) | Bygg | Python |
-| 06 | [Diffusionsmodeller: DDPM från grunden](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Bygg | Python |
-| 07 | [Latent diffusion och Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Bygg | Python |
-| 08 | [ControlNet, LoRA och villkorning](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Bygg | Python |
-| 09 | [Inpainting, outpainting och bildredigering](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Bygg | Python |
-| 10 | [Videogenerering](../../phases/08-generative-ai/10-video-generation/) | Bygg | Python |
-| 11 | [Ljudgenerering](../../phases/08-generative-ai/11-audio-generation/) | Bygg | Python |
-| 12 | [3D-generering](../../phases/08-generative-ai/12-3d-generation/) | Bygg | Python |
-| 13 | [Flödesmatchning och rectified flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Bygg | Python |
-| 14 | [Utvärdering: FID och CLIP-poäng](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Bygg | Python |
+| 01 | [Generativa modeller: klassificering och historia](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Lär dig | Python, TypeScript |
+| 02 | [Autoenkodare och VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Bygg | Python, TypeScript |
+| 03 | [GAN: generator mot diskriminator](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Bygg | Python, TypeScript |
+| 04 | [Villkorade GAN och Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Bygg | Python, TypeScript |
+| 05 | [StyleGAN-modellen](../../phases/08-generative-ai/05-stylegan/) | Bygg | Python, TypeScript |
+| 06 | [Diffusionsmodeller: DDPM från grunden](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Bygg | Python, TypeScript |
+| 07 | [Latent diffusion och Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Bygg | Python, TypeScript |
+| 08 | [ControlNet, LoRA och villkorning](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Bygg | Python, TypeScript |
+| 09 | [Inpainting, outpainting och bildredigering](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Bygg | Python, TypeScript |
+| 10 | [Videogenerering](../../phases/08-generative-ai/10-video-generation/) | Bygg | Python, TypeScript |
+| 11 | [Ljudgenerering](../../phases/08-generative-ai/11-audio-generation/) | Bygg | Python, TypeScript |
+| 12 | [3D-generering](../../phases/08-generative-ai/12-3d-generation/) | Bygg | Python, TypeScript |
+| 13 | [Flödesmatchning och rectified flows](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Bygg | Python, TypeScript |
+| 14 | [Utvärdering: FID och CLIP-poäng](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Bygg | Python, TypeScript |
 | 19 | [Visuell autoregressiv modellering (VAR): förutsäga nästa skala](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Bygg | Python |
 
 </details>
@@ -598,18 +598,18 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 
 | # | Lektion | Typ | Språk |
 |:---:|--------|:----:|------|
-| 01 | [MDP:er, tillstånd, handlingar och belöningar](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Lär dig | Python |
-| 02 | [Dynamisk programmering](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Bygg | Python |
-| 03 | [Monte Carlo-metoder](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Bygg | Python |
-| 04 | [Q-inlärning och SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Bygg | Python |
-| 05 | [Djupa Q-nätverk (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Bygg | Python |
-| 06 | [Policygradienter: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Bygg | Python |
-| 07 | [Actor-critic: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Bygg | Python |
-| 08 | [PPO-algoritmen](../../phases/09-reinforcement-learning/08-ppo/) | Bygg | Python |
-| 09 | [Belöningsmodellering och RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Bygg | Python |
-| 10 | [Förstärkningsinlärning med flera agenter](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Bygg | Python |
-| 11 | [Överföring från simulering till verklighet](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Bygg | Python |
-| 12 | [Förstärkningsinlärning för spel](../../phases/09-reinforcement-learning/12-rl-for-games/) | Bygg | Python |
+| 01 | [MDP:er, tillstånd, handlingar och belöningar](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Lär dig | Python, TypeScript |
+| 02 | [Dynamisk programmering](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Bygg | Python, TypeScript |
+| 03 | [Monte Carlo-metoder](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Bygg | Python, TypeScript |
+| 04 | [Q-inlärning och SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Bygg | Python, TypeScript |
+| 05 | [Djupa Q-nätverk (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Bygg | Python, TypeScript |
+| 06 | [Policygradienter: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Bygg | Python, TypeScript |
+| 07 | [Actor-critic: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Bygg | Python, TypeScript |
+| 08 | [PPO-algoritmen](../../phases/09-reinforcement-learning/08-ppo/) | Bygg | Python, TypeScript |
+| 09 | [Belöningsmodellering och RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Bygg | Python, TypeScript |
+| 10 | [Förstärkningsinlärning med flera agenter](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Bygg | Python, TypeScript |
+| 11 | [Överföring från simulering till verklighet](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Bygg | Python, TypeScript |
+| 12 | [Förstärkningsinlärning för spel](../../phases/09-reinforcement-learning/12-rl-for-games/) | Bygg | Python, TypeScript |
 
 </details>
 
@@ -621,7 +621,7 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 |:---:|--------|:----:|------|
 | 01 | [Tokeniserare: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Bygg | Python, Rust |
 | 02 | [Bygga en tokeniserare från grunden](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Bygg | Python |
-| 03 | [Datapipelines för förträning](../../phases/10-llms-from-scratch/03-data-pipelines/) | Bygg | Python |
+| 03 | [Datapipelines för förträning](../../phases/10-llms-from-scratch/03-data-pipelines/) | Bygg | Python, Rust |
 | 04 | [Förträna en Mini GPT (124M)](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Bygg | Python, Rust |
 | 05 | [Distribuerad träning, FSDP och DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Bygg | Python |
 | 06 | [Instruktionsanpassning: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Bygg | Python |
@@ -631,16 +631,16 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | 10 | [Utvärdering: riktmärken och tester](../../phases/10-llms-from-scratch/10-evaluation/) | Bygg | Python |
 | 11 | [Kvantisering: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Bygg | Python, Rust |
 | 12 | [Inferensoptimering](../../phases/10-llms-from-scratch/12-inference-optimization/) | Bygg | Python, Rust |
-| 13 | [Bygga en komplett LLM-pipeline](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Bygg | Python |
-| 14 | [Öppna modeller: genomgång av arkitekturer](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Lär dig | Python |
-| 15 | [Spekulativ avkodning och EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Bygg | Python |
-| 16 | [Differentiell attention (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Bygg | Python |
-| 17 | [Native Sparse Attention (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Bygg | Python |
-| 18 | [Förutsägelse av flera token (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Bygg | Python |
-| 19 | [DualPipe-parallellism](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Lär dig | Python |
-| 20 | [Genomgång av DeepSeek-V3:s arkitektur](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Lär dig | Python |
-| 21 | [Jamba: hybrid av SSM och Transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Lär dig | Python |
-| 22 | [Asynkron inferens och Hogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Bygg | Python |
+| 13 | [Bygga en komplett LLM-pipeline](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Bygg | Python, Rust |
+| 14 | [Öppna modeller: genomgång av arkitekturer](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Lär dig | Python, Rust |
+| 15 | [Spekulativ avkodning och EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Bygg | Python, Rust |
+| 16 | [Differentiell attention (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Bygg | Python, Rust |
+| 17 | [Native Sparse Attention (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Bygg | Python, Rust |
+| 18 | [Förutsägelse av flera token (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Bygg | Python, Rust |
+| 19 | [DualPipe-parallellism](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Lär dig | Python, Rust |
+| 20 | [Genomgång av DeepSeek-V3:s arkitektur](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Lär dig | Python, Rust |
+| 21 | [Jamba: hybrid av SSM och Transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Lär dig | Python, Rust |
+| 22 | [Asynkron inferens och Hogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Bygg | Python, Rust |
 | 25 | [Spekulativ avkodning och EAGLE](../../phases/10-llms-from-scratch/25-speculative-decoding/) | Bygg | Python |
 | 34 | [Gradientkontrollpunkter och omberäkning av aktiveringar](../../phases/10-llms-from-scratch/34-gradient-checkpointing/) | Bygg | Python |
 
@@ -658,17 +658,17 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | 04 | [Inbäddningar och vektorrepresentationer](../../phases/11-llm-engineering/04-embeddings/) | Bygg | Python, TypeScript |
 | 05 | [Kontextutformning](../../phases/11-llm-engineering/05-context-engineering/) | Bygg | Python, TypeScript |
 | 06 | [RAG: generering med informationsåtervinning](../../phases/11-llm-engineering/06-rag/) | Bygg | Python, TypeScript |
-| 07 | [Avancerad RAG: textuppdelning och omrangordning](../../phases/11-llm-engineering/07-advanced-rag/) | Bygg | Python |
+| 07 | [Avancerad RAG: textuppdelning och omrangordning](../../phases/11-llm-engineering/07-advanced-rag/) | Bygg | Python, TypeScript |
 | 08 | [Finjustering med LoRA och QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Bygg | Python |
 | 09 | [Funktionsanrop och verktygsanvändning](../../phases/11-llm-engineering/09-function-calling/) | Bygg | Python, TypeScript |
-| 10 | [Utvärdering och testning](../../phases/11-llm-engineering/10-evaluation/) | Bygg | Python |
-| 11 | [Cachelagring, hastighetsbegränsning och kostnad](../../phases/11-llm-engineering/11-caching-cost/) | Bygg | Python |
+| 10 | [Utvärdering och testning](../../phases/11-llm-engineering/10-evaluation/) | Bygg | Python, TypeScript |
+| 11 | [Cachelagring, hastighetsbegränsning och kostnad](../../phases/11-llm-engineering/11-caching-cost/) | Bygg | Python, TypeScript |
 | 12 | [Skyddsräcken och säkerhet](../../phases/11-llm-engineering/12-guardrails/) | Bygg | Python, TypeScript |
-| 13 | [Bygga en LLM-app för produktion](../../phases/11-llm-engineering/13-production-app/) | Bygg | Python |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Bygg | Python |
-| 15 | [Promptcache och kontextcache](../../phases/11-llm-engineering/15-prompt-caching/) | Bygg | Python |
+| 13 | [Bygga en LLM-app för produktion](../../phases/11-llm-engineering/13-production-app/) | Bygg | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Bygg | Python, TypeScript |
+| 15 | [Promptcache och kontextcache](../../phases/11-llm-engineering/15-prompt-caching/) | Bygg | Python, TypeScript |
 | 16 | [Agenttillståndsmaskiner: grafer, noder och kontrollpunkter](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Bygg | Python |
-| 17 | [Avvägningar mellan agentramverk](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Lär dig | Python |
+| 17 | [Avvägningar mellan agentramverk](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Lär dig | Python, TypeScript |
 
 </details>
 
@@ -678,31 +678,31 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 
 | # | Lektion | Typ | Språk |
 |:---:|--------|:----:|------|
-| 01 | [Vision Transformers och patch-token-primitiven](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Lär dig | Python |
-| 02 | [CLIP och kontrastiv förträning av bild och språk](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Bygg | Python |
-| 03 | [BLIP-2 Q-Former som brygga mellan modaliteter](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Bygg | Python |
-| 04 | [Flamingo och grindstyrd cross-attention](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Lär dig | Python |
-| 05 | [LLaVA och visuell instruktionsanpassning](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Bygg | Python |
-| 06 | [Bildanalys i valfri upplösning: Patch-n'-Pack och NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Bygg | Python |
-| 07 | [Recept för VLM med öppna vikter: vad som faktiskt spelar roll](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Lär dig | Python |
-| 08 | [LLaVA-OneVision: en bild, flera bilder, video](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Bygg | Python |
-| 09 | [Qwen-VL-familjen och video med dynamisk FPS](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Lär dig | Python |
-| 10 | [InternVL3:s inbyggda multimodala förträning](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Lär dig | Python |
-| 11 | [Chameleon: tidig fusion med enbart token](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Bygg | Python |
-| 12 | [Emu3: nästa-token-förutsägelse för generering](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Lär dig | Python |
-| 13 | [Transfusion: autoregression och diffusion](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Bygg | Python |
-| 14 | [Show-o: förenad diskret diffusion](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Lär dig | Python |
-| 15 | [Janus-Pro: separerade kodare](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Bygg | Python |
-| 16 | [MIO: strömning mellan valfria modaliteter](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Lär dig | Python |
-| 17 | [Tidsmässig förankring av video och språk](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Bygg | Python |
-| 18 | [Långa videor med kontext på en miljon token](../../phases/12-multimodal-ai/18-long-video-million-token/) | Bygg | Python |
-| 19 | [Ljud-språkmodeller: från Whisper till AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Bygg | Python |
-| 20 | [Omnimodeller: Thinker-Talker-strömning](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Bygg | Python |
-| 21 | [Kroppsliga VLA-modeller: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Lär dig | Python |
-| 22 | [Dokument- och diagramförståelse](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Bygg | Python |
-| 23 | [ColPali: bildbaserad dokument-RAG](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Bygg | Python |
-| 24 | [Multimodal RAG och sökning mellan modaliteter](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Bygg | Python |
-| 25 | [Multimodala agenter och datoranvändning (slutprojekt)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Bygg | Python |
+| 01 | [Vision Transformers och patch-token-primitiven](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Lär dig | Python, TypeScript |
+| 02 | [CLIP och kontrastiv förträning av bild och språk](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Bygg | Python, TypeScript |
+| 03 | [BLIP-2 Q-Former som brygga mellan modaliteter](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Bygg | Python, TypeScript |
+| 04 | [Flamingo och grindstyrd cross-attention](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Lär dig | Python, TypeScript |
+| 05 | [LLaVA och visuell instruktionsanpassning](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Bygg | Python, TypeScript |
+| 06 | [Bildanalys i valfri upplösning: Patch-n'-Pack och NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Bygg | Python, TypeScript |
+| 07 | [Recept för VLM med öppna vikter: vad som faktiskt spelar roll](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Lär dig | Python, TypeScript |
+| 08 | [LLaVA-OneVision: en bild, flera bilder, video](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Bygg | Python, TypeScript |
+| 09 | [Qwen-VL-familjen och video med dynamisk FPS](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Lär dig | Python, TypeScript |
+| 10 | [InternVL3:s inbyggda multimodala förträning](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Lär dig | Python, TypeScript |
+| 11 | [Chameleon: tidig fusion med enbart token](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Bygg | Python, TypeScript |
+| 12 | [Emu3: nästa-token-förutsägelse för generering](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Lär dig | Python, TypeScript |
+| 13 | [Transfusion: autoregression och diffusion](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Bygg | Python, TypeScript |
+| 14 | [Show-o: förenad diskret diffusion](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Lär dig | Python, TypeScript |
+| 15 | [Janus-Pro: separerade kodare](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Bygg | Python, TypeScript |
+| 16 | [MIO: strömning mellan valfria modaliteter](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Lär dig | Python, TypeScript |
+| 17 | [Tidsmässig förankring av video och språk](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Bygg | Python, TypeScript |
+| 18 | [Långa videor med kontext på en miljon token](../../phases/12-multimodal-ai/18-long-video-million-token/) | Bygg | Python, TypeScript |
+| 19 | [Ljud-språkmodeller: från Whisper till AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Bygg | Python, TypeScript |
+| 20 | [Omnimodeller: Thinker-Talker-strömning](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Bygg | Python, TypeScript |
+| 21 | [Kroppsliga VLA-modeller: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Lär dig | Python, TypeScript |
+| 22 | [Dokument- och diagramförståelse](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Bygg | Python, TypeScript |
+| 23 | [ColPali: bildbaserad dokument-RAG](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Bygg | Python, TypeScript |
+| 24 | [Multimodal RAG och sökning mellan modaliteter](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Bygg | Python, TypeScript |
+| 25 | [Multimodala agenter och datoranvändning (slutprojekt)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Bygg | Python, TypeScript |
 
 </details>
 
@@ -713,50 +713,50 @@ Tjugo faser. Klicka på en fas för att fälla ut lektionslistan.
 | # | Lektion | Typ | Språk |
 |:---:|--------|:----:|------|
 | 01 | [Verktygsgränssnittet](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Lär dig | Python, TypeScript |
-| 02 | [Fördjupning i funktionsanrop](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Bygg | Python |
-| 03 | [Parallella och strömmande verktygsanrop](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Bygg | Python |
-| 04 | [Strukturerat utdataformat](../../phases/13-tools-and-protocols/04-structured-output/) | Bygg | Python |
-| 05 | [Utforma verktygsscheman](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Lär dig | Python |
-| 06 | [MCP-grunder: tillståndslösa förfrågningar och JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Lär dig | Python |
+| 02 | [Fördjupning i funktionsanrop](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Bygg | Python, TypeScript |
+| 03 | [Parallella och strömmande verktygsanrop](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Bygg | Python, TypeScript |
+| 04 | [Strukturerat utdataformat](../../phases/13-tools-and-protocols/04-structured-output/) | Bygg | Python, TypeScript |
+| 05 | [Utforma verktygsscheman](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Lär dig | Python, TypeScript |
+| 06 | [MCP-grunder: tillståndslösa förfrågningar och JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Lär dig | Python, TypeScript |
 | 07 | [Bygga en MCP-server: tillståndslös Python och TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Bygg | Python, TypeScript |
-| 08 | [Bygga en MCP-klient: upptäckt, dirigering och bakåtkompatibilitet](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Bygg | Python |
-| 09 | [MCP-transporter: stdio och tillståndslös Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Lär dig | Python |
-| 10 | [MCP-resurser och promptar: adresserbar kontext för tillståndslösa servrar](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Bygg | Python |
-| 11 | [Modellindata i MCP: migrering av sampling och tillståndslös MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Bygg | Python |
-| 12 | [Uttrycklig omfattning och tillståndslös informationsinhämtning](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Bygg | Python |
-| 13 | [MCP Tasks-tillägget: beständigt arbete på en tillståndslös kärna](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Bygg | Python |
-| 14 | [MCP Apps på det tillståndslösa protokollet](../../phases/13-tools-and-protocols/14-mcp-apps/) | Bygg | Python |
-| 15 | [MCP-säkerhet: förgiftade metadata, dirigering och MRTR-tillstånd](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Lär dig | Python |
-| 16 | [MCP-auktorisering: CIMD, utfärdarbindning, PKCE och starkare autentisering](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Bygg | Python |
-| 17 | [Tillståndslösa MCP-gateways och registeranslutning](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Lär dig | Python |
-| 18 | [MCP-autentisering i produktion: utfärdarbunden registrering och token](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Bygg | Python |
+| 08 | [Bygga en MCP-klient: upptäckt, dirigering och bakåtkompatibilitet](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Bygg | Python, TypeScript |
+| 09 | [MCP-transporter: stdio och tillståndslös Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Lär dig | Python, TypeScript |
+| 10 | [MCP-resurser och promptar: adresserbar kontext för tillståndslösa servrar](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Bygg | Python, TypeScript |
+| 11 | [Modellindata i MCP: migrering av sampling och tillståndslös MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Bygg | Python, TypeScript |
+| 12 | [Uttrycklig omfattning och tillståndslös informationsinhämtning](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Bygg | Python, TypeScript |
+| 13 | [MCP Tasks-tillägget: beständigt arbete på en tillståndslös kärna](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Bygg | Python, TypeScript |
+| 14 | [MCP Apps på det tillståndslösa protokollet](../../phases/13-tools-and-protocols/14-mcp-apps/) | Bygg | Python, TypeScript |
+| 15 | [MCP-säkerhet: förgiftade metadata, dirigering och MRTR-tillstånd](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Lär dig | Python, TypeScript |
+| 16 | [MCP-auktorisering: CIMD, utfärdarbindning, PKCE och starkare autentisering](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Bygg | Python, TypeScript |
+| 17 | [Tillståndslösa MCP-gateways och registeranslutning](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Lär dig | Python, TypeScript |
+| 18 | [MCP-autentisering i produktion: utfärdarbunden registrering och token](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Bygg | Python, TypeScript |
 | 19 | [A2A-protokollet](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Bygg | Python, TypeScript |
-| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Bygg | Python |
-| 21 | [Dirigeringslager för LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Lär dig | Python |
-| 22 | [Agent Skills: portabelt kontrakt och körningsgräns](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Bygg | Python |
-| 23 | [Slutprojekt: tillståndslöst verktygsekosystem](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Bygg | Python |
-| 24 | [Upptäckt av färdigheter och stegvis informationsvisning](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Bygg | Python |
-| 25 | [Färdighetsanrop och dirigering](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Bygg | Python |
-| 26 | [Färdighetsbehörigheter, sandlådor och tillit](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Bygg | Python |
-| 27 | [Färdighetsutvärderingar, paketering och portabilitet](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Bygg | Python |
-| 28 | [MCP-verktygens kontrakt och innehåll](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Bygg | Python |
-| 29 | [MCP-tillförlitlighet, avbrytning och flödeskontroll](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Bygg | Python |
-| 30 | [MCP-registrets leveranskedja: antagning, driftavvikelser och återställning](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Bygg | Python |
-| 31 | [MCP-efterlevnad: versionering, belägg och drift](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Bygg | Python |
-| 32 | [Programmets anatomi: läs ELF från grunden](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Bygg | Python |
-| 33 | [Disassemblering och kontrollflödesgrafer](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Bygg | Python |
+| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Bygg | Python, TypeScript |
+| 21 | [Dirigeringslager för LLM](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Lär dig | Python, TypeScript |
+| 22 | [Agent Skills: portabelt kontrakt och körningsgräns](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Bygg | Python, TypeScript |
+| 23 | [Slutprojekt: tillståndslöst verktygsekosystem](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Bygg | Python, TypeScript |
+| 24 | [Upptäckt av färdigheter och stegvis informationsvisning](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Bygg | Python, TypeScript |
+| 25 | [Färdighetsanrop och dirigering](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Bygg | Python, TypeScript |
+| 26 | [Färdighetsbehörigheter, sandlådor och tillit](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Bygg | Python, TypeScript |
+| 27 | [Färdighetsutvärderingar, paketering och portabilitet](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Bygg | Python, TypeScript |
+| 28 | [MCP-verktygens kontrakt och innehåll](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Bygg | Python, TypeScript |
+| 29 | [MCP-tillförlitlighet, avbrytning och flödeskontroll](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Bygg | Python, TypeScript |
+| 30 | [MCP-registrets leveranskedja: antagning, driftavvikelser och återställning](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Bygg | Python, TypeScript |
+| 31 | [MCP-efterlevnad: versionering, belägg och drift](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Bygg | Python, TypeScript |
+| 32 | [Programmets anatomi: läs ELF från grunden](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Bygg | Python, TypeScript |
+| 33 | [Disassemblering och kontrollflödesgrafer](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Bygg | Python, TypeScript |
 | 34 | [Lyft maskinkod till pseudokod](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Bygg | Python |
-| 35 | [Belägg, säkerhetsgrad och okända faktorer i binäranalys](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Bygg | Python |
-| 36 | [Bygg om och bevisa likhet](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Bygg | Python |
-| 37 | [Landskapet för reverse engineering](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Bygg | Python |
-| 38 | [Anropskonventioner och stackramar](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Bygg | Python |
-| 39 | [Kompilatoridiom och optimering](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Bygg | Python |
-| 40 | [Länkning, laddning och strippade binärer](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Bygg | Python |
-| 41 | [Återskapa data och typer](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Bygg | Python |
-| 42 | [Dynamisk analys av ditt eget program](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Bygg | Python |
-| 43 | [Bytekod och hanterade format](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Bygg | Python |
+| 35 | [Belägg, säkerhetsgrad och okända faktorer i binäranalys](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Bygg | Python, TypeScript |
+| 36 | [Bygg om och bevisa likhet](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Bygg | Python, TypeScript |
+| 37 | [Landskapet för reverse engineering](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Bygg | Python, TypeScript |
+| 38 | [Anropskonventioner och stackramar](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Bygg | Python, TypeScript |
+| 39 | [Kompilatoridiom och optimering](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Bygg | Python, TypeScript |
+| 40 | [Länkning, laddning och strippade binärer](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Bygg | Python, TypeScript |
+| 41 | [Återskapa data och typer](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Bygg | Python, TypeScript |
+| 42 | [Dynamisk analys av ditt eget program](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Bygg | Python, TypeScript |
+| 43 | [Bytekod och hanterade format](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Bygg | Python, TypeScript |
 | 44 | [Binär diffning och symbolisk exekvering](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Bygg | Python |
-| 45 | [AI-assisterad reverse engineering](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Bygg | Python |
+| 45 | [AI-assisterad reverse engineering](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Bygg | Python, TypeScript |
 
 Lektionerna 06-18 och 28-31 bildar den fokuserade [studievägen för Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json). Manifestets ordning är 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 18, 17, 28, 29, 30, 31. Börja med värdapplikationens `learn-mcp`-anrop ovan. Lektion 23 är det enda valfria slutprojektet och kräver även lektionerna 19 och 20.
 
@@ -771,59 +771,59 @@ Lektionerna 22 och 24-27 bildar den fokuserade [studievägen för Agent Skills](
 | # | Lektion | Typ | Språk |
 |:---:|--------|:----:|------|
 | 01 | [Agentloopen](../../phases/14-agent-engineering/01-the-agent-loop/) | Bygg | Python, TypeScript |
-| 02 | [ReWOO och planera-och-kör](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Bygg | Python |
-| 03 | [Reflexion och verbal förstärkningsinlärning](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Bygg | Python |
-| 04 | [Tanketräd och LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Bygg | Python |
-| 05 | [Self-Refine och CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Bygg | Python |
+| 02 | [ReWOO och planera-och-kör](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Bygg | Python, TypeScript |
+| 03 | [Reflexion och verbal förstärkningsinlärning](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Bygg | Python, TypeScript |
+| 04 | [Tanketräd och LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Bygg | Python, TypeScript |
+| 05 | [Self-Refine och CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Bygg | Python, TypeScript |
 | 06 | [Verktygsanvändning och funktionsanrop](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Bygg | Python, TypeScript |
-| 07 | [Agentminne: virtuell kontext och minnessidning](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Bygg | Python |
-| 08 | [Minnesblock och beräkning under vilotid](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Bygg | Python |
-| 09 | [Hybridminne: vektor, graf och KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Bygg | Python |
-| 10 | [Färdighetsbibliotek och livslångt lärande (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Bygg | Python |
-| 11 | [Planering med HTN och evolutionär sökning](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Bygg | Python |
-| 12 | [Anthropics arbetsflödesmönster](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Bygg | Python |
+| 07 | [Agentminne: virtuell kontext och minnessidning](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Bygg | Python, TypeScript |
+| 08 | [Minnesblock och beräkning under vilotid](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Bygg | Python, TypeScript |
+| 09 | [Hybridminne: vektor, graf och KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Bygg | Python, TypeScript |
+| 10 | [Färdighetsbibliotek och livslångt lärande (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Bygg | Python, TypeScript |
+| 11 | [Planering med HTN och evolutionär sökning](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Bygg | Python, TypeScript |
+| 12 | [Anthropics arbetsflödesmönster](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Bygg | Python, TypeScript |
 | 13 | [Tillståndsbevarande graforkestrering: beständig körning och kontrollpunkter](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Bygg | Python, TypeScript |
-| 14 | [Aktörsmodellen för agenter](../../phases/14-agent-engineering/14-autogen-actor-model/) | Bygg | Python |
+| 14 | [Aktörsmodellen för agenter](../../phases/14-agent-engineering/14-autogen-actor-model/) | Bygg | Python, TypeScript |
 | 15 | [Rollbaserade agentteam: roller, uppgifter och processer](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Bygg | Python |
-| 16 | [OpenAI Agents SDK: överlämningar, skyddsräcken och spårning](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Bygg | Python |
-| 17 | [Agentkörmiljön som bibliotek: underagenter och sessionslager](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Bygg | Python |
+| 16 | [OpenAI Agents SDK: överlämningar, skyddsräcken och spårning](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Bygg | Python, TypeScript |
+| 17 | [Agentkörmiljön som bibliotek: underagenter och sessionslager](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Bygg | Python, TypeScript |
 | 18 | [Agentkörmiljöer för produktion](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Lär dig | Python, TypeScript |
-| 19 | [Riktmärken: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Lär dig | Python |
-| 20 | [Riktmärken: WebArena och OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Lär dig | Python |
-| 21 | [Datoranvändning: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Bygg | Python |
-| 22 | [Röstagenter: Pipecat och LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Bygg | Python |
-| 23 | [Semantiska konventioner för OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Bygg | Python |
-| 24 | [Agentobserverbarhet: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Lär dig | Python |
-| 25 | [Debatt och samarbete mellan flera agenter](../../phases/14-agent-engineering/25-multi-agent-debate/) | Bygg | Python |
-| 26 | [Felmoder: varför agenter slutar fungera](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Bygg | Python |
-| 27 | [Promptinjektion och PVE-försvaret](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Bygg | Python |
-| 28 | [Orkestreringsmönster: övervakare, svärm och hierarki](../../phases/14-agent-engineering/28-orchestration-patterns/) | Bygg | Python |
-| 29 | [Körmiljöer för produktion: köer, händelser och cron](../../phases/14-agent-engineering/29-production-runtimes/) | Lär dig | Python |
-| 30 | [Utvärderingsdriven agentutveckling](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Bygg | Python |
-| 31 | [Agentarbetsbänken: varför kapabla modeller ändå misslyckas](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Lär dig | Python |
-| 32 | [Den minsta agentarbetsbänken](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Bygg | Python |
-| 33 | [Agentinstruktioner som körbara begränsningar](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Bygg | Python |
-| 34 | [Arkivminne och beständigt tillstånd](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Bygg | Python |
-| 35 | [Initieringsskript för agenter](../../phases/14-agent-engineering/35-initialization-scripts/) | Bygg | Python |
-| 36 | [Omfattningskontrakt och uppgiftsgränser](../../phases/14-agent-engineering/36-scope-contracts/) | Bygg | Python |
-| 37 | [Återkopplingsslingor under körning](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Bygg | Python |
-| 38 | [Verifieringskontroller](../../phases/14-agent-engineering/38-verification-gates/) | Bygg | Python |
-| 39 | [Granskaragent: skilj byggaren från bedömaren](../../phases/14-agent-engineering/39-reviewer-agent/) | Bygg | Python |
-| 40 | [Överlämning mellan sessioner](../../phases/14-agent-engineering/40-multi-session-handoff/) | Bygg | Python |
-| 41 | [Arbetsbänken i ett riktigt arkiv](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Bygg | Python |
-| 42 | [Slutprojekt: publicera ett återanvändbart agentarbetsbänkspaket](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Bygg | Python |
-| 43 | [Formulera uppgiften innan agenten skriver kod](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Bygg | Python |
-| 44 | [Bygg en genomförandeplan som stöds av belägg](../../phases/14-agent-engineering/44-plan-from-evidence/) | Bygg | Python |
-| 45 | [Delegera agentarbete med isolering och sammanslagningskontrakt](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Bygg | Python |
-| 46 | [Gör varje agentkorrigering till en systemförbättring](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Bygg | Python |
-| 47 | [Definiera effekten innan du väljer leveransen](../../phases/14-agent-engineering/47-outcomes-before-output/) | Bygg | Python |
-| 48 | [Kartlägg arbetsflödet som människor faktiskt utför](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Bygg | Python |
-| 49 | [Kartlägg antaganden och pröva det mest riskfyllda först](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Bygg | Python |
-| 50 | [Välj den minsta delen som kan ändra beslutet](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Bygg | Python |
-| 51 | [Skriv specifikationer som bevarar omdömet](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Bygg | Python |
-| 52 | [Utforma framgångsmått innan resultatet finns](../../phases/14-agent-engineering/52-design-success-metrics/) | Bygg | Python |
-| 53 | [Välj prototyp, pilot eller produktion medvetet](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Bygg | Python |
-| 54 | [Bygg en beständig återkopplingsprocess med ansvar och avveckling](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Bygg | Python |
+| 19 | [Riktmärken: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Lär dig | Python, TypeScript |
+| 20 | [Riktmärken: WebArena och OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Lär dig | Python, TypeScript |
+| 21 | [Datoranvändning: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Bygg | Python, TypeScript |
+| 22 | [Röstagenter: Pipecat och LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Bygg | Python, TypeScript |
+| 23 | [Semantiska konventioner för OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Bygg | Python, TypeScript |
+| 24 | [Agentobserverbarhet: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Lär dig | Python, TypeScript |
+| 25 | [Debatt och samarbete mellan flera agenter](../../phases/14-agent-engineering/25-multi-agent-debate/) | Bygg | Python, TypeScript |
+| 26 | [Felmoder: varför agenter slutar fungera](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Bygg | Python, TypeScript |
+| 27 | [Promptinjektion och PVE-försvaret](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Bygg | Python, TypeScript |
+| 28 | [Orkestreringsmönster: övervakare, svärm och hierarki](../../phases/14-agent-engineering/28-orchestration-patterns/) | Bygg | Python, TypeScript |
+| 29 | [Körmiljöer för produktion: köer, händelser och cron](../../phases/14-agent-engineering/29-production-runtimes/) | Lär dig | Python, TypeScript |
+| 30 | [Utvärderingsdriven agentutveckling](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Bygg | Python, TypeScript |
+| 31 | [Agentarbetsbänken: varför kapabla modeller ändå misslyckas](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Lär dig | Python, TypeScript |
+| 32 | [Den minsta agentarbetsbänken](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Bygg | Python, TypeScript |
+| 33 | [Agentinstruktioner som körbara begränsningar](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Bygg | Python, TypeScript |
+| 34 | [Arkivminne och beständigt tillstånd](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Bygg | Python, TypeScript |
+| 35 | [Initieringsskript för agenter](../../phases/14-agent-engineering/35-initialization-scripts/) | Bygg | Python, TypeScript |
+| 36 | [Omfattningskontrakt och uppgiftsgränser](../../phases/14-agent-engineering/36-scope-contracts/) | Bygg | Python, TypeScript |
+| 37 | [Återkopplingsslingor under körning](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Bygg | Python, TypeScript |
+| 38 | [Verifieringskontroller](../../phases/14-agent-engineering/38-verification-gates/) | Bygg | Python, TypeScript |
+| 39 | [Granskaragent: skilj byggaren från bedömaren](../../phases/14-agent-engineering/39-reviewer-agent/) | Bygg | Python, TypeScript |
+| 40 | [Överlämning mellan sessioner](../../phases/14-agent-engineering/40-multi-session-handoff/) | Bygg | Python, TypeScript |
+| 41 | [Arbetsbänken i ett riktigt arkiv](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Bygg | Python, TypeScript |
+| 42 | [Slutprojekt: publicera ett återanvändbart agentarbetsbänkspaket](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Bygg | Python, TypeScript |
+| 43 | [Formulera uppgiften innan agenten skriver kod](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Bygg | Python, TypeScript |
+| 44 | [Bygg en genomförandeplan som stöds av belägg](../../phases/14-agent-engineering/44-plan-from-evidence/) | Bygg | Python, TypeScript |
+| 45 | [Delegera agentarbete med isolering och sammanslagningskontrakt](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Bygg | Python, TypeScript |
+| 46 | [Gör varje agentkorrigering till en systemförbättring](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Bygg | Python, TypeScript |
+| 47 | [Definiera effekten innan du väljer leveransen](../../phases/14-agent-engineering/47-outcomes-before-output/) | Bygg | Python, TypeScript |
+| 48 | [Kartlägg arbetsflödet som människor faktiskt utför](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Bygg | Python, TypeScript |
+| 49 | [Kartlägg antaganden och pröva det mest riskfyllda först](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Bygg | Python, TypeScript |
+| 50 | [Välj den minsta delen som kan ändra beslutet](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Bygg | Python, TypeScript |
+| 51 | [Skriv specifikationer som bevarar omdömet](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Bygg | Python, TypeScript |
+| 52 | [Utforma framgångsmått innan resultatet finns](../../phases/14-agent-engineering/52-design-success-metrics/) | Bygg | Python, TypeScript |
+| 53 | [Välj prototyp, pilot eller produktion medvetet](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Bygg | Python, TypeScript |
+| 54 | [Bygg en beständig återkopplingsprocess med ansvar och avveckling](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Bygg | Python, TypeScript |
 
 Varje arbetsbänkslektion i fas 14 (31-42) innehåller en `mission.md` som instruerar agenten innan den öppnar hela lektionsdokumentationen.
 
@@ -837,28 +837,28 @@ Lektionerna 31-46 bildar [studievägen för agentstödd utveckling](../../learni
 
 | # | Lektion | Typ | Språk |
 |:---:|--------|:----:|------|
-| 01 | [Från chattbotar till långsiktigt arbetande agenter (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Lär dig | Python |
-| 02 | [STaR, V-STaR, Quiet-STaR: självlärd slutledning](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Lär dig | Python |
-| 03 | [AlphaEvolve: evolutionära kodagenter](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Lär dig | Python |
-| 04 | [Darwin Gödel Machine: självmodifierande agenter](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Lär dig | Python |
-| 05 | [AI Scientist v2: forskning på workshopnivå](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Lär dig | Python |
-| 06 | [Automatiserad forskning om anpassning (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Lär dig | Python |
-| 07 | [Rekursiv självförbättring: förmåga och anpassning](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Lär dig | Python |
-| 08 | [Utforma självförbättring med tydliga gränser](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Lär dig | Python |
-| 09 | [Landskapet för autonoma kodagenter (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Lär dig | Python |
-| 10 | [Behörighetslägen för autonoma agenter](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Lär dig | Python |
-| 11 | [Webbläsaragenter och indirekt promptinjektion](../../phases/15-autonomous-systems/11-browser-agents/) | Lär dig | Python |
-| 12 | [Beständig körning för långvariga agentuppgifter](../../phases/15-autonomous-systems/12-durable-execution/) | Lär dig | Python |
-| 13 | [Handlingsbudgetar, iterationsgränser och kostnadskontroll](../../phases/15-autonomous-systems/13-cost-governors/) | Lär dig | Python |
-| 14 | [Nödstopp, kretsbrytare och kanarietoken](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Lär dig | Python |
-| 15 | [HITL: föreslå först, verkställ sedan](../../phases/15-autonomous-systems/15-propose-then-commit/) | Lär dig | Python |
-| 16 | [Kontrollpunkter och återställning](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Lär dig | Python |
-| 17 | [Konstitutionell AI och regelundantag](../../phases/15-autonomous-systems/17-constitutional-ai/) | Lär dig | Python |
-| 18 | [Llama Guard och klassificering av in- och utdata](../../phases/15-autonomous-systems/18-llama-guard/) | Lär dig | Python |
-| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Lär dig | Python |
-| 20 | [OpenAI Preparedness Framework och DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Lär dig | Python |
-| 21 | [METR:s tidshorisonter och extern utvärdering](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Lär dig | Python |
-| 22 | [CAIS, CAISI och samhällsrisker](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Lär dig | Python |
+| 01 | [Från chattbotar till långsiktigt arbetande agenter (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Lär dig | Python, TypeScript |
+| 02 | [STaR, V-STaR, Quiet-STaR: självlärd slutledning](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Lär dig | Python, TypeScript |
+| 03 | [AlphaEvolve: evolutionära kodagenter](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Lär dig | Python, TypeScript |
+| 04 | [Darwin Gödel Machine: självmodifierande agenter](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Lär dig | Python, TypeScript |
+| 05 | [AI Scientist v2: forskning på workshopnivå](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Lär dig | Python, TypeScript |
+| 06 | [Automatiserad forskning om anpassning (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Lär dig | Python, TypeScript |
+| 07 | [Rekursiv självförbättring: förmåga och anpassning](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Lär dig | Python, TypeScript |
+| 08 | [Utforma självförbättring med tydliga gränser](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Lär dig | Python, TypeScript |
+| 09 | [Landskapet för autonoma kodagenter (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Lär dig | Python, TypeScript |
+| 10 | [Behörighetslägen för autonoma agenter](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Lär dig | Python, TypeScript |
+| 11 | [Webbläsaragenter och indirekt promptinjektion](../../phases/15-autonomous-systems/11-browser-agents/) | Lär dig | Python, TypeScript |
+| 12 | [Beständig körning för långvariga agentuppgifter](../../phases/15-autonomous-systems/12-durable-execution/) | Lär dig | Python, TypeScript |
+| 13 | [Handlingsbudgetar, iterationsgränser och kostnadskontroll](../../phases/15-autonomous-systems/13-cost-governors/) | Lär dig | Python, TypeScript |
+| 14 | [Nödstopp, kretsbrytare och kanarietoken](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Lär dig | Python, TypeScript |
+| 15 | [HITL: föreslå först, verkställ sedan](../../phases/15-autonomous-systems/15-propose-then-commit/) | Lär dig | Python, TypeScript |
+| 16 | [Kontrollpunkter och återställning](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Lär dig | Python, TypeScript |
+| 17 | [Konstitutionell AI och regelundantag](../../phases/15-autonomous-systems/17-constitutional-ai/) | Lär dig | Python, TypeScript |
+| 18 | [Llama Guard och klassificering av in- och utdata](../../phases/15-autonomous-systems/18-llama-guard/) | Lär dig | Python, TypeScript |
+| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Lär dig | Python, TypeScript |
+| 20 | [OpenAI Preparedness Framework och DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Lär dig | Python, TypeScript |
+| 21 | [METR:s tidshorisonter och extern utvärdering](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Lär dig | Python, TypeScript |
+| 22 | [CAIS, CAISI och samhällsrisker](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Lär dig | Python, TypeScript |
 
 </details>
 
@@ -869,30 +869,30 @@ Lektionerna 31-46 bildar [studievägen för agentstödd utveckling](../../learni
 | # | Lektion | Typ | Språk |
 |:---:|--------|:----:|------|
 | 01 | [Varför flera agenter?](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | Lär dig | TypeScript |
-| 02 | [Arvet från FIPA-ACL och talhandlingar](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Lär dig | Python |
+| 02 | [Arvet från FIPA-ACL och talhandlingar](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Lär dig | Python, TypeScript |
 | 03 | [Kommunikationsprotokoll](../../phases/16-multi-agent-and-swarms/03-communication-protocols/) | Bygg | TypeScript |
-| 04 | [Grundmodellen för flera agenter](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Lär dig | Python |
-| 05 | [Mönstret övervakare / samordnare-arbetare](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Bygg | Python |
-| 06 | [Hierarkisk arkitektur och avvikelser vid uppdelning](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Lär dig | Python |
-| 07 | [Society of Mind och debatt mellan agenter](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Bygg | Python |
-| 08 | [Rollspecialisering: planerare, kritiker, utförare och verifierare](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Bygg | Python |
-| 09 | [Parallella svärmar och nätverksarkitekturer](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Bygg | Python |
-| 10 | [Gruppchatt och val av talare](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Bygg | Python |
-| 11 | [Överlämningar och rutiner (tillståndslös orkestrering)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Bygg | Python |
-| 12 | [A2A: protokollet för kommunikation mellan agenter](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Bygg | Python |
-| 13 | [Delat minne och blackboard-mönster](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Bygg | Python |
-| 14 | [Konsensus och bysantinsk feltolerans](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Bygg | Python |
-| 15 | [Omröstning, självkonsekvens och debattstruktur](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Bygg | Python |
-| 16 | [Förhandling och köpslående](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Bygg | Python |
-| 17 | [Generativa agenter och simulering av framväxande beteenden](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Bygg | Python |
-| 18 | [Theory of Mind och framväxande samordning](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Bygg | Python |
-| 19 | [Svärmoptimering (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Bygg | Python |
-| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Lär dig | Python |
-| 21 | [Agentekonomier, tokenincitament och anseende](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Lär dig | Python |
-| 22 | [Skalning i produktion: köer, kontrollpunkter och beständighet](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Bygg | Python |
-| 23 | [Felmoder: MAST, grupptänkande och monokultur](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Lär dig | Python |
-| 24 | [Riktmärken för utvärdering och samordning](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Lär dig | Python |
-| 25 | [Fallstudier och teknikens framkant 2026](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Lär dig | Python |
+| 04 | [Grundmodellen för flera agenter](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Lär dig | Python, TypeScript |
+| 05 | [Mönstret övervakare / samordnare-arbetare](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Bygg | Python, TypeScript |
+| 06 | [Hierarkisk arkitektur och avvikelser vid uppdelning](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Lär dig | Python, TypeScript |
+| 07 | [Society of Mind och debatt mellan agenter](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Bygg | Python, TypeScript |
+| 08 | [Rollspecialisering: planerare, kritiker, utförare och verifierare](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Bygg | Python, TypeScript |
+| 09 | [Parallella svärmar och nätverksarkitekturer](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Bygg | Python, TypeScript |
+| 10 | [Gruppchatt och val av talare](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Bygg | Python, TypeScript |
+| 11 | [Överlämningar och rutiner (tillståndslös orkestrering)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Bygg | Python, TypeScript |
+| 12 | [A2A: protokollet för kommunikation mellan agenter](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Bygg | Python, TypeScript |
+| 13 | [Delat minne och blackboard-mönster](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Bygg | Python, TypeScript |
+| 14 | [Konsensus och bysantinsk feltolerans](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Bygg | Python, TypeScript |
+| 15 | [Omröstning, självkonsekvens och debattstruktur](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Bygg | Python, TypeScript |
+| 16 | [Förhandling och köpslående](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Bygg | Python, TypeScript |
+| 17 | [Generativa agenter och simulering av framväxande beteenden](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Bygg | Python, TypeScript |
+| 18 | [Theory of Mind och framväxande samordning](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Bygg | Python, TypeScript |
+| 19 | [Svärmoptimering (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Bygg | Python, TypeScript |
+| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Lär dig | Python, TypeScript |
+| 21 | [Agentekonomier, tokenincitament och anseende](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Lär dig | Python, TypeScript |
+| 22 | [Skalning i produktion: köer, kontrollpunkter och beständighet](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Bygg | Python, TypeScript |
+| 23 | [Felmoder: MAST, grupptänkande och monokultur](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Lär dig | Python, TypeScript |
+| 24 | [Riktmärken för utvärdering och samordning](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Lär dig | Python, TypeScript |
+| 25 | [Fallstudier och teknikens framkant 2026](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Lär dig | Python, TypeScript |
 
 </details>
 
@@ -902,35 +902,35 @@ Lektionerna 31-46 bildar [studievägen för agentstödd utveckling](../../learni
 
 | # | Lektion | Typ | Språk |
 |:---:|--------|:----:|------|
-| 01 | [Hanterade LLM-plattformar: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Lär dig | Python |
-| 02 | [Inferensplattformars ekonomi: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Lär dig | Python |
-| 03 | [Automatisk GPU-skalning på Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Lär dig | Python |
-| 04 | [Inferensmotorns insida: PagedAttention, kontinuerlig batchning och uppdelad prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Lär dig | Python |
-| 05 | [EAGLE-3:s spekulativa avkodning i produktion](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Lär dig | Python |
-| 06 | [Inferens med prefixcache: RadixAttention och återanvändning av KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Lär dig | Python |
-| 07 | [Hårdvaruanpassad inferenskompilering: FP8 och NVFP4 på Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Lär dig | Python |
-| 08 | [Inferensmått: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Lär dig | Python |
-| 09 | [Kvantisering i produktion: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Lär dig | Python |
-| 10 | [Minska kallstarter för serverlösa LLM](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Lär dig | Python |
-| 11 | [LLM-inferens i flera regioner och lokalitet i KV-cache](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Lär dig | Python |
-| 12 | [Inferens på kanten: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Lär dig | Python |
+| 01 | [Hanterade LLM-plattformar: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Lär dig | Python, TypeScript |
+| 02 | [Inferensplattformars ekonomi: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Lär dig | Python, TypeScript |
+| 03 | [Automatisk GPU-skalning på Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Lär dig | Python, TypeScript |
+| 04 | [Inferensmotorns insida: PagedAttention, kontinuerlig batchning och uppdelad prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Lär dig | Python, TypeScript |
+| 05 | [EAGLE-3:s spekulativa avkodning i produktion](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Lär dig | Python, TypeScript |
+| 06 | [Inferens med prefixcache: RadixAttention och återanvändning av KV](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Lär dig | Python, TypeScript |
+| 07 | [Hårdvaruanpassad inferenskompilering: FP8 och NVFP4 på Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Lär dig | Python, TypeScript |
+| 08 | [Inferensmått: TTFT, TPOT, ITL, Goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Lär dig | Python, TypeScript |
+| 09 | [Kvantisering i produktion: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Lär dig | Python, TypeScript |
+| 10 | [Minska kallstarter för serverlösa LLM](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Lär dig | Python, TypeScript |
+| 11 | [LLM-inferens i flera regioner och lokalitet i KV-cache](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Lär dig | Python, TypeScript |
+| 12 | [Inferens på kanten: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Lär dig | Python, TypeScript |
 | 13 | [Välja verktyg för LLM-observerbarhet](../../phases/17-infrastructure-and-production/13-llm-observability/) | Lär dig | Python, TypeScript |
 | 14 | [Ekonomin i promptcache och semantisk cache](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Lär dig | Python, TypeScript |
 | 15 | [Batch-API:er: 50% rabatt som branschstandard](../../phases/17-infrastructure-and-production/15-batch-apis/) | Lär dig | Python, TypeScript |
 | 16 | [Modelldirigering som grund för kostnadsminskning](../../phases/17-infrastructure-and-production/16-model-routing/) | Lär dig | Python, TypeScript |
-| 17 | [Separerad prefill och avkodning: NVIDIA Dynamo och llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Lär dig | Python |
-| 18 | [Inferensstack i produktion: KV-avlastning och cachemedveten dirigering](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Lär dig | Python |
+| 17 | [Separerad prefill och avkodning: NVIDIA Dynamo och llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Lär dig | Python, TypeScript |
+| 18 | [Inferensstack i produktion: KV-avlastning och cachemedveten dirigering](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Lär dig | Python, TypeScript |
 | 19 | [AI-gateways: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Lär dig | Python, TypeScript |
 | 20 | [Skuggdrift, kanarielansering och stegvis driftsättning](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Lär dig | Python, TypeScript |
-| 21 | [A/B-testning av LLM-funktioner: GrowthBook och Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Lär dig | Python |
-| 22 | [Belastningstesta LLM-API:er: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Bygg | Python |
-| 23 | [SRE för AI: incidenthantering med flera agenter](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Lär dig | Python |
-| 24 | [Kaosteknik för LLM i produktion](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Lär dig | Python |
-| 25 | [Säkerhet: hemligheter, rensning av personuppgifter och granskningsloggar](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Lär dig | Python |
-| 26 | [Regelefterlevnad: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Lär dig | Python |
-| 27 | [FinOps för LLM: enhetsekonomi och kostnadsfördelning mellan kunder](../../phases/17-infrastructure-and-production/27-finops-llms/) | Lär dig | Python |
-| 28 | [Välja egenhostad inferens: matcha motor, hårdvara och skala](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Lär dig | Python |
-| 29 | [Demogränssnitt för modeller: från en funktion till en delbar app](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Bygg | Python |
+| 21 | [A/B-testning av LLM-funktioner: GrowthBook och Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Lär dig | Python, TypeScript |
+| 22 | [Belastningstesta LLM-API:er: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Bygg | Python, TypeScript |
+| 23 | [SRE för AI: incidenthantering med flera agenter](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Lär dig | Python, TypeScript |
+| 24 | [Kaosteknik för LLM i produktion](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Lär dig | Python, TypeScript |
+| 25 | [Säkerhet: hemligheter, rensning av personuppgifter och granskningsloggar](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Lär dig | Python, TypeScript |
+| 26 | [Regelefterlevnad: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Lär dig | Python, TypeScript |
+| 27 | [FinOps för LLM: enhetsekonomi och kostnadsfördelning mellan kunder](../../phases/17-infrastructure-and-production/27-finops-llms/) | Lär dig | Python, TypeScript |
+| 28 | [Välja egenhostad inferens: matcha motor, hårdvara och skala](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Lär dig | Python, TypeScript |
+| 29 | [Demogränssnitt för modeller: från en funktion till en delbar app](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Bygg | Python, TypeScript |
 
 </details>
 
@@ -940,36 +940,36 @@ Lektionerna 31-46 bildar [studievägen för agentstödd utveckling](../../learni
 
 | # | Lektion | Typ | Språk |
 |:---:|--------|:----:|------|
-| 01 | [Instruktionsföljande som signal för anpassning](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Lär dig | Python |
-| 02 | [Belöningsmanipulation och Goodharts lag](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Lär dig | Python |
-| 03 | [Familjen av direkt preferensoptimering](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Lär dig | Python |
-| 04 | [Inställsamhet förstärkt av RLHF](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Lär dig | Python |
-| 05 | [Konstitutionell AI och RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Lär dig | Python |
-| 06 | [Mesa-optimering och vilseledande anpassning](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Lär dig | Python |
-| 07 | [Vilande agenter: beständigt vilseledande beteende](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Lär dig | Python |
-| 08 | [Planerande i kontext hos avancerade modeller](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Lär dig | Python |
-| 09 | [Simulerad anpassning](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Lär dig | Python |
-| 10 | [AI-kontroll: säkerhet trots sabotage](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Lär dig | Python |
-| 11 | [Skalbar övervakning och svag-till-stark-inlärning](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Lär dig | Python |
-| 12 | [Red teaming: PAIR och automatiserade angrepp](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Bygg | Python |
-| 13 | [Jailbreak med många exempel](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Lär dig | Python |
-| 14 | [ASCII-konst och visuella jailbreaks](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Bygg | Python |
-| 15 | [Indirekt promptinjektion](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Bygg | Python |
-| 16 | [Red team-verktyg: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Bygg | Python |
-| 17 | [WMDP och utvärdering av förmågor med dubbla användningsområden](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Lär dig | Python |
-| 18 | [Säkerhetsramverk för avancerade modeller: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Lär dig | Python |
-| 19 | [Forskning om modellvälfärd](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Lär dig | Python |
-| 20 | [Bias och representativ skada](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Bygg | Python |
-| 21 | [Rättvisekriterier: grupp, individ och kontrafaktiskt](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Lär dig | Python |
-| 22 | [Differentiell integritet för LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Bygg | Python |
-| 23 | [Vattenmärkning: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Bygg | Python |
-| 24 | [Regelverk: EU, USA, Storbritannien och Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Lär dig | Python |
-| 25 | [EchoLeak och CVE:er för AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Lär dig | Python |
-| 26 | [Modellkort, systemkort och datamängdskort](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Bygg | Python |
-| 27 | [Dataursprung och styrning av träningsdata](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Lär dig | Python |
-| 28 | [Ekosystemet för anpassningsforskning: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Lär dig | Python |
-| 29 | [Modereringssystem: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Bygg | Python |
-| 30 | [Risker med dubbla användningsområden: cyber, bio, kemi och kärnteknik](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Lär dig | Python |
+| 01 | [Instruktionsföljande som signal för anpassning](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Lär dig | Python, TypeScript |
+| 02 | [Belöningsmanipulation och Goodharts lag](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Lär dig | Python, TypeScript |
+| 03 | [Familjen av direkt preferensoptimering](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Lär dig | Python, TypeScript |
+| 04 | [Inställsamhet förstärkt av RLHF](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Lär dig | Python, TypeScript |
+| 05 | [Konstitutionell AI och RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Lär dig | Python, TypeScript |
+| 06 | [Mesa-optimering och vilseledande anpassning](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Lär dig | Python, TypeScript |
+| 07 | [Vilande agenter: beständigt vilseledande beteende](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Lär dig | Python, TypeScript |
+| 08 | [Planerande i kontext hos avancerade modeller](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Lär dig | Python, TypeScript |
+| 09 | [Simulerad anpassning](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Lär dig | Python, TypeScript |
+| 10 | [AI-kontroll: säkerhet trots sabotage](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Lär dig | Python, TypeScript |
+| 11 | [Skalbar övervakning och svag-till-stark-inlärning](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Lär dig | Python, TypeScript |
+| 12 | [Red teaming: PAIR och automatiserade angrepp](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Bygg | Python, TypeScript |
+| 13 | [Jailbreak med många exempel](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Lär dig | Python, TypeScript |
+| 14 | [ASCII-konst och visuella jailbreaks](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Bygg | Python, TypeScript |
+| 15 | [Indirekt promptinjektion](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Bygg | Python, TypeScript |
+| 16 | [Red team-verktyg: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Bygg | Python, TypeScript |
+| 17 | [WMDP och utvärdering av förmågor med dubbla användningsområden](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Lär dig | Python, TypeScript |
+| 18 | [Säkerhetsramverk för avancerade modeller: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Lär dig | Python, TypeScript |
+| 19 | [Forskning om modellvälfärd](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Lär dig | Python, TypeScript |
+| 20 | [Bias och representativ skada](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Bygg | Python, TypeScript |
+| 21 | [Rättvisekriterier: grupp, individ och kontrafaktiskt](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Lär dig | Python, TypeScript |
+| 22 | [Differentiell integritet för LLM](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Bygg | Python, TypeScript |
+| 23 | [Vattenmärkning: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Bygg | Python, TypeScript |
+| 24 | [Regelverk: EU, USA, Storbritannien och Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Lär dig | Python, TypeScript |
+| 25 | [EchoLeak och CVE:er för AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Lär dig | Python, TypeScript |
+| 26 | [Modellkort, systemkort och datamängdskort](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Bygg | Python, TypeScript |
+| 27 | [Dataursprung och styrning av träningsdata](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Lär dig | Python, TypeScript |
+| 28 | [Ekosystemet för anpassningsforskning: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Lär dig | Python, TypeScript |
+| 29 | [Modereringssystem: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Bygg | Python, TypeScript |
+| 30 | [Risker med dubbla användningsområden: cyber, bio, kemi och kärnteknik](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Lär dig | Python, TypeScript |
 
 </details>
 

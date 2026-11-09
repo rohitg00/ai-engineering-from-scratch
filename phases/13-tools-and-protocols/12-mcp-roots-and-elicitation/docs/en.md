@@ -3,7 +3,7 @@
 > Roots are deprecated in MCP 2026-07-28 and were never a security sandbox. Put scope in visible tool arguments or resource URIs, authorize it on the server, and use MRTR when a tool genuinely needs user input. The user sees the decision, the model sees the handle, and any server instance can process the retry.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 11 (stateless MRTR)
 **Time:** ~60 minutes
 
@@ -247,6 +247,7 @@ From the repository root:
 ```bash
 cd phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

@@ -140,7 +140,7 @@ def main() -> None:
     print("=" * 74)
     print("TAKEAWAY")
     print("-" * 74)
-    print("  Pure Transformer at 256k = 67 GB just for KV cache — will not fit")
+    print("  Pure Transformer at 256k = 67 GB just for KV cache, will not fit")
     print("  on an 80GB single-GPU deployment after you add weights and activations.")
     print("  Jamba 1:7 = 8.4 GB KV cache + ~4 MB SSM state = fits comfortably.")
     print("  That is the 256k-on-one-GPU claim from the AI21 paper, concretely.")

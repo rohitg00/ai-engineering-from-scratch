@@ -43,7 +43,7 @@ def run_experiment(e: Experiment) -> dict:
 
 def main() -> None:
     print("=" * 90)
-    print("CHAOS EXPERIMENT RUNNER — safety plane gates burn-rate × blast-radius")
+    print("CHAOS EXPERIMENT RUNNER: safety plane gates burn-rate × blast-radius")
     print("=" * 90)
     print(f"SLO error budget: {ERROR_BUDGET_PER_DAY*100:.2f}%/day")
     print(f"Expected baseline error rate: {EXPECTED_ERROR_RATE*100:.3f}%")

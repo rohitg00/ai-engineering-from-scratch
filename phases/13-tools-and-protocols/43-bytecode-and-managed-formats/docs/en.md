@@ -3,7 +3,7 @@
 > A bytecode file is a program plus the compiler's notes about it, and this lesson builds the readers that show which notes each container keeps.
 
 **Type:** Build
-**Languages:** Python, Java, C#, WebAssembly text
+**Languages:** Python, TypeScript, Java, C#, WebAssembly text
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow)
 **Time:** ~150 minutes
 
@@ -265,6 +265,7 @@ Run the demo:
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The output is one JSON report. For each pyc it gives both headers, the file and `grade` sizes, the instruction count and opcode names from the captured listing, and whether the running interpreter can read it. For each class build it gives the version, sizes, debug table counts, and the `javap` agreement. For each Wasm build it gives sections, types, functions, name-section contents, and the `wasm-objdump` agreement. For the assembly it gives the CLI header, streams, table row counts, methods, and the System.Reflection.Metadata agreement. It ends with the keeps table and the list of interpreters found on `PATH`.
@@ -378,6 +379,7 @@ Run the demo and the deterministic suite:
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

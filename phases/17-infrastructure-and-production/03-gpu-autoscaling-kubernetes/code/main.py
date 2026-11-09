@@ -158,7 +158,7 @@ def report(row: dict) -> None:
 
 def main() -> None:
     print("=" * 80)
-    print("GPU AUTOSCALING — three strategies on a bursty workload (1-hour sim)")
+    print("GPU AUTOSCALING: three strategies on a bursty workload (1-hour sim)")
     print("=" * 80)
     base = make_workload()
     header = f"{'Strategy':14}  reqs       done  dropped  mean_wait  idle_gpu   peak"

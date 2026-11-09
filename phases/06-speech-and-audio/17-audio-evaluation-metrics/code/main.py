@@ -106,7 +106,7 @@ def main():
     ref_emb = [rng.gauss(0, 0.1) for _ in range(192)]
     clone_emb = [ref_emb[i] + rng.gauss(0, 0.1) for i in range(192)]
     secs = cosine(ref_emb, clone_emb)
-    print(f"  SECS = {secs:.3f}   (target: &gt; 0.75 for recognizable clone)")
+    print(f"  SECS = {secs:.3f}   (target: > 0.75 for recognizable clone)")
 
     print()
     print("=== FAD-shaped embedding distance ===")

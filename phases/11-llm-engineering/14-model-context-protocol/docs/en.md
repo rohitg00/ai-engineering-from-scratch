@@ -3,7 +3,7 @@
 > MCP gives an AI host one protocol for discovering and invoking tools, resources, and prompts. The 2026-07-28 revision makes that protocol stateless: capability and version context travels with every request, not in a connection-bound handshake.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 03 (Structured Outputs)
 **Time:** ~75 minutes
 
@@ -215,6 +215,7 @@ Run the lesson from its directory:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 cd code
 python3 -m unittest discover tests -v
 ```

@@ -3,7 +3,7 @@
 > The decoder stops squinting at a compressed summary and starts looking at the whole source. Everything after this is attention plus engineering.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 09 (Sequence-to-Sequence Models)
 **Time:** ~45 minutes
 

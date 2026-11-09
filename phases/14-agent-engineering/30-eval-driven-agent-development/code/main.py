@@ -136,7 +136,7 @@ def _flaky_benchmark_case() -> EvalCase:
 
 def main() -> None:
     print("=" * 70)
-    print("EVAL-DRIVEN AGENT DEVELOPMENT — Phase 14, Lesson 30")
+    print("EVAL-DRIVEN AGENT DEVELOPMENT: Phase 14, Lesson 30")
     print("=" * 70)
 
     cases = [

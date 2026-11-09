@@ -103,7 +103,7 @@ def print_schema() -> None:
 
 
 def run_benchmark() -> None:
-    print("\nBENCHMARK — 2 sample tasks")
+    print("\nBENCHMARK: 2 sample tasks")
     print("-" * 60)
     tasks = mock_tasks()
     total = len(tasks)

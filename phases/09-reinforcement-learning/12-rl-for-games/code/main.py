@@ -132,7 +132,7 @@ def main():
     print(f"  REINFORCE  = {rf_acc*100:.1f}%")
 
     print()
-    print("GRPO uses the group-mean as baseline and group-std for normalization —")
+    print("GRPO uses the group-mean as baseline and group-std for normalization,")
     print("no critic, no reward model. This is the DeepSeek-R1 recipe in one page.")
 
 

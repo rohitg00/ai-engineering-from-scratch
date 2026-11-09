@@ -153,7 +153,7 @@ def _list_dir_demo(path: str) -> str:
 
 def main() -> None:
     print("=" * 70)
-    print("CLAUDE AGENT SDK SHAPE — Phase 14, Lesson 17")
+    print("CLAUDE AGENT SDK SHAPE: Phase 14, Lesson 17")
     print("=" * 70)
 
     tools = ToolRegistry()

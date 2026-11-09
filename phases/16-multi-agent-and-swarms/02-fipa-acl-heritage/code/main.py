@@ -217,7 +217,7 @@ def demo_round_trip() -> None:
 
 def demo_contract_net() -> None:
     print("\n" + "=" * 72)
-    print("Contract Net Protocol — manager broadcasts cfp, bidders propose")
+    print("Contract Net Protocol: manager broadcasts cfp, bidders propose")
     print("=" * 72)
 
     cn = ContractNet(manager="scheduler", bidders=["worker-a", "worker-b", "worker-c"])

@@ -64,13 +64,13 @@ def toy_watermark_embed(audio, payload_bits):
     return out
 
 
-def toy_watermark_detect(audio, n_bits=16):
+def toy_watermark_detect(audio, reference, n_bits=16):
     step = max(1, len(audio) // n_bits)
     out = []
     for i in range(n_bits):
         idx = i * step
         if idx < len(audio):
-            out.append(1 if audio[idx] > 0 else 0)
+            out.append(1 if audio[idx] - reference[idx] > 0 else 0)
     return out
 
 
@@ -94,24 +94,24 @@ def main():
     candidates = sorted(set(real_scores + fake_scores))
     best = (1.0, 0.0, 0.0, 0.0)
     for t in candidates:
-        far = sum(1 for s in fake_scores if s >= t) / len(fake_scores)
-        frr = sum(1 for s in real_scores if s < t) / len(real_scores)
+        far = sum(1 for s in fake_scores if s < t) / len(fake_scores)
+        frr = sum(1 for s in real_scores if s >= t) / len(real_scores)
         if abs(far - frr) < best[0]:
             best = (abs(far - frr), t, far, frr)
     gap, t, far, frr = best
     print(f"  EER ≈ {(far + frr) * 50:.2f}%  at threshold {t:.4f}")
-    print(f"    (on toy data — real AASIST on ASVspoof 2019 LA: 0.42% EER)")
+    print(f"    (on toy data, real AASIST on ASVspoof 2019 LA: 0.42% EER)")
 
     print()
     print("=== Step 4: watermark embed + detect (toy) ===")
     payload = [1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0]
     clean = synth_real_speech(n_samples=16000, seed=42)
     watermarked = toy_watermark_embed(clean, payload)
-    recovered = toy_watermark_detect(watermarked)
+    recovered = toy_watermark_detect(watermarked, clean)
     bit_acc = sum(1 for a, b in zip(payload, recovered) if a == b) / len(payload)
     print(f"  payload:   {payload}")
     print(f"  recovered: {recovered}")
-    print(f"  bit accuracy: {bit_acc * 100:.1f}%   (toy; real AudioSeal: &gt; 99% pre-attack)")
+    print(f"  bit accuracy: {bit_acc * 100:.1f}%   (toy; real AudioSeal: > 99% pre-attack)")
 
     print()
     print("=== Step 5: 2026 benchmarks ===")
@@ -119,9 +119,9 @@ def main():
         ("AASIST (ASVspoof 2019 LA)",    "0.42% EER",  "detection SOTA"),
         ("NeXt-TDNN + WavLM (2025)",     "0.42% EER",  "detection SOTA"),
         ("Robust method on ASVspoof 5",  "7.23% EER",  "real-world"),
-        ("AudioSeal (pre-attack)",       "&gt; 99% bit acc","localized watermark"),
+        ("AudioSeal (pre-attack)",       "> 99% bit acc","localized watermark"),
         ("WavMark (pre-attack)",         "99.52% bit acc","legacy watermark"),
-        ("All (under pitch shift)",       "&lt; 60% bit acc","universal attack"),
+        ("All (under pitch shift)",       "< 60% bit acc","universal attack"),
     ]
     print("  | method                         | metric           | note              |")
     for name, m, note in rows:

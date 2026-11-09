@@ -115,9 +115,9 @@ def main():
     print("=== 2026 VAD cheatsheet ===")
     rows = [
         ("WebRTC VAD (Google, 2013)", "50.0% TPR @ 5% FPR", "BSD"),
-        ("Silero VAD (2020-2026)",    "87.7% TPR @ 5% FPR", "MIT — default open"),
+        ("Silero VAD (2020-2026)",    "87.7% TPR @ 5% FPR", "MIT, default open"),
         ("Cobra VAD (Picovoice)",     "98.9% TPR @ 5% FPR", "commercial"),
-        ("pyannote segmentation",     "~95% TPR @ 5% FPR",  "MIT-ish — diarization-grade"),
+        ("pyannote segmentation",     "~95% TPR @ 5% FPR",  "MIT-ish, diarization-grade"),
     ]
     print("  | VAD                       | accuracy            | license               |")
     for name, acc, lic in rows:

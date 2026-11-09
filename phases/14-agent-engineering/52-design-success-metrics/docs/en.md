@@ -3,7 +3,7 @@
 > Measurement should answer a decision, not decorate a dashboard. Start with the goal, derive questions, then choose the smallest metrics that answer them.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 47 and 51
 **Time:** ~70 minutes
 
@@ -85,6 +85,7 @@ The lab validates a measurement plan, evaluates inclusive thresholds, records mi
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

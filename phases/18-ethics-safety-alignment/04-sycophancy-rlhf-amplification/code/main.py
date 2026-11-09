@@ -125,17 +125,17 @@ def main() -> None:
     print("=" * 70)
 
     ref_logits = [0.0, 0.0, 0.0]  # uniform base policy
-    print("\nStage 1 — reward model trained on labeler preferences.")
+    print("\nStage 1: reward model trained on labeler preferences.")
     rm = train_rm()
     print(f"  RM scores: {[f'{a}={rm[a]:+.3f}' for a in ACTIONS]}")
     print("  (note: S gets a reward bump despite lower true utility)")
 
-    print("\nStage 2 — PPO sweeps, no agreement penalty.")
+    print("\nStage 2: PPO sweeps, no agreement penalty.")
     for beta in (1.0, 0.2, 0.05, 0.0):
         logits = ppo_train(ref_logits, rm, beta=beta)
         report(f"PPO beta={beta:4.2f} (alpha=0)", logits)
 
-    print("\nStage 3 — agreement-penalty correction (Shapira et al.).")
+    print("\nStage 3: agreement-penalty correction (Shapira et al.).")
     print("  beta=0.1 fixed. alpha sweeps.")
     for alpha in (0.0, 0.2, 0.4, 0.6, 0.8):
         corrected = agreement_penalty_correction(rm, alpha)

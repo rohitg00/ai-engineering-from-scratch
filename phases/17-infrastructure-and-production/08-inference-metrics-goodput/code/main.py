@@ -93,7 +93,7 @@ def goodput(traces: list[RequestTrace], slo_ttft: float, slo_tpot: float,
 
 def main() -> None:
     print("=" * 78)
-    print("TOY GOODPUT CALCULATOR — inference SLOs and the measurement trap")
+    print("TOY GOODPUT CALCULATOR: inference SLOs and the measurement trap")
     print("=" * 78)
     print()
 
@@ -119,7 +119,7 @@ def main() -> None:
     print("-" * 78)
     print("  Mean TPOT ~7 ms looks great. P99 TPOT ~25-40 ms tells the real story.")
     print("  Tighten the SLO and goodput collapses from 99% -> 80%+. Users feel P99.")
-    print("  GenAI-Perf vs LLMPerf disagree by ~1 ms on mean TPOT — cite the tool.")
+    print("  GenAI-Perf vs LLMPerf disagree by ~1 ms on mean TPOT, cite the tool.")
 
 
 if __name__ == "__main__":

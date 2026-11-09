@@ -150,7 +150,7 @@ def _all_leaves(node: Node) -> list[Node]:
 
 def main() -> None:
     print("=" * 70)
-    print("TREE OF THOUGHTS + LATS — Phase 14, Lesson 04")
+    print("TREE OF THOUGHTS + LATS: Phase 14, Lesson 04")
     print("=" * 70)
     print(f"numbers: {NUMBERS}  target: {TARGET}")
 

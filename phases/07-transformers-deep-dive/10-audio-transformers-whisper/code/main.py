@@ -73,7 +73,7 @@ def main():
     print(f"first 5 frame log-energies: " + ", ".join(f"{e:+.3f}" for e in energies[:5]))
     print()
 
-    print("=== task prompts — what flips Whisper's behavior ===")
+    print("=== task prompts: what flips Whisper's behavior ===")
     examples = [
         ("English transcription with timestamps",
          whisper_prompt(lang="en", task="transcribe", timestamps=True)),
