@@ -3,7 +3,7 @@
 > مطابقت دقیق و F1 معادلات معنوی را از دست می دهند. بررسی انسانی مقیاس نمی گیرد. LLM به عنوان قاضی پاسخ تولید است  با کالیبراسیون کافی برای اعتماد به تعداد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > NER موجودات را پیدا کرد. موجودی که آنها را به هم متصل می کند، آنها را لنگر کرد. استخراج رابطه حاشیه های بین آنها را پیدا می کند. نمودار دانش مجموعه گره ها، حاشیه ها و اصل آنها است.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 25 (Entity Linking)
 **Time:** ~60 minutes
 

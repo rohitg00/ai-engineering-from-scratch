@@ -3,7 +3,7 @@
 > ترجمه کاری است که برای تحقیقات NLP برای سی سال هزینه داشت و هنوز هم هزینه دارد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 10 (Attention Mechanism), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 

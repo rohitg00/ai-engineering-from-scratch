@@ -3,7 +3,7 @@
 > جمینی 3 پرو 10 میلیون توکن کنتکس را تبلیغ می کند. در 1 میلیون توکن، 8-نیدل MRCR به 26.3 درصد کاهش می یابد. تبلیغ شده ≠ قابل استفاده. ارزیابی کنتکس طولانی به شما می گوید ظرفیت واقعی مدل شما ارسال می شود.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 23 (Chunking Strategies)
 **Time:** ~60 minutes
 

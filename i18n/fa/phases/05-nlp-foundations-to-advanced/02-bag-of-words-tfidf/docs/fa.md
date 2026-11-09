@@ -3,7 +3,7 @@
 > اول حساب کن بعد فکر کن TF-IDF هنوز در سال 2026 از برنامه های کاربردی در وظایف مشخصه بر میگیره
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 02 (Linear Regression from Scratch)
 **Time:** ~75 minutes
 

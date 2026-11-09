@@ -3,7 +3,7 @@
 > سه سیستم QA مدرن را شکل دادند. استخراج کشش های یافت شده. بازیافت افزوده شده آنها را در اسناد زمین کرد. تولید کننده پاسخ ها تولید کرد. هر دستیار هوش مصنوعی مدرن ترکیبی از سه است.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 11 (Machine Translation), Phase 5 · 10 (Attention Mechanism)
 **Time:** ~75 minutes
 

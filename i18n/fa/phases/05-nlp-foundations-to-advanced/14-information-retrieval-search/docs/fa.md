@@ -3,7 +3,7 @@
 > BM25 دقیق اما شکننده است. کثافت شبکه گسترده ای می اندازد اما کلمات کلیدی را از دست می دهد. هیبرید پیش فرض 2026 است. همه چیز دیگر تنظیم می شود.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > و بعد هر خط لوله ی LLM نیاز به اعتبار استخراج ساختاری داشت و دوباره به آن رسید.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

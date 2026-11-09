@@ -3,7 +3,7 @@
 > وظیفه NLP کانونیک. بیشتر آنچه که شما باید در مورد طبقه بندی متن کلاسیک بدانید در اینجا نشان داده شده است.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 2 · 14 (Naive Bayes)
 **Time:** ~75 minutes
 

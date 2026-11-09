@@ -3,7 +3,7 @@
 > دیکودر به دنبال خلاصه ای فشرده می ماند و شروع به بررسی کل منبع می کند. بعد از این همه چیز توجه و مهندسی است.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 09 (Sequence-to-Sequence Models)
 **Time:** ~45 minutes
 

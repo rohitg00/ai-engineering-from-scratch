@@ -3,7 +3,7 @@
 > اگه کلمه ای شگفت آور باشه مدلش خرابه. حیرانه بودن باعث شگفتی میشه. نرم کردن باعث می شه اعداد محدود باشند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

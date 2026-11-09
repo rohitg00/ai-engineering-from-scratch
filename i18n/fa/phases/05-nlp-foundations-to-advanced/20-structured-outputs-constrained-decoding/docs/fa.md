@@ -3,7 +3,7 @@
 > در تولید، "زیاد" مشکل است. رمزگذاری محدود با ویرایش سوابق قبل از نمونه گیری به "زیاد" تبدیل می شود.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

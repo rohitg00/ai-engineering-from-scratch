@@ -3,7 +3,7 @@
 > ایلیزا با تطابق الگوها پاسخ داد. DialogFlow قصد را نقشه برداری کرد. GPT از وزن پاسخ داد. کلاود ابزارها را اجرا می کند و تأیید می کند. هر عصر بدترین شکست قبلی را حل می کند.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

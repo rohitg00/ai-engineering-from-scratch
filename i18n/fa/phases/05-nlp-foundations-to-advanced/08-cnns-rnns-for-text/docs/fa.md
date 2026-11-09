@@ -3,7 +3,7 @@
 > کنولوش ها n-گرام یاد می گیرند. تکرار ها به یاد می آورند. هر دو توسط توجه جایگزین می شوند. هر دو هنوز هم در سخت افزار محدود اهمیت دارند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 11 (PyTorch Intro), Phase 5 · 03 (Word Embeddings), Phase 4 · 02 (Convolutions from Scratch)
 **Time:** ~75 minutes
 

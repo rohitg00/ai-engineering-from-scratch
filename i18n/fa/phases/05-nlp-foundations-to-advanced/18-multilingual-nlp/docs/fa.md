@@ -3,7 +3,7 @@
 > یک مدل، 100+ زبان، صفر داده های آموزشی برای اکثر آنها. انتقال بین زبانی معجزه عملی دهه 2020 است.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 04 (GloVe, FastText, Subword), Phase 5 · 11 (Machine Translation)
 **Time:** ~45 minutes
 

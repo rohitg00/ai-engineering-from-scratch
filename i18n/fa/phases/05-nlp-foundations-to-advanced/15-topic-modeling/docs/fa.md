@@ -3,7 +3,7 @@
 > LDA: اسناد ترکیبی از موضوعات هستند، موضوعات توزیع در کلمات هستند. BERTopic: اسناد در فضای گنجانده شده، کلستر ها موضوعات هستند. هدف مشابه، تجزیه های مختلف.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word2Vec)
 **Time:** ~45 minutes
 

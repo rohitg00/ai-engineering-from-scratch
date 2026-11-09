@@ -3,7 +3,7 @@
 > Word2Vec یک کاربری را در هر کلمه آموزش داد. GloVe ماتریس هم وقوع را فاکتور کرد. FastText قطعات را دربرگرفت. BPE به ترانسفورماتورها پرداخته شد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec from Scratch)
 **Time:** ~45 minutes
 

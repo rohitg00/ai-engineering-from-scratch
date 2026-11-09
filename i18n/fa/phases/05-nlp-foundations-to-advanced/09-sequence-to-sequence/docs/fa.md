@@ -3,7 +3,7 @@
 > دو نفر از RNN که تظاهر به ترجمه کردن، شکاف که بهشون رسيده، دلیل وجود توجه است.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 08 (CNNs + RNNs for Text), Phase 3 · 11 (PyTorch Intro)
 **Time:** ~75 minutes
 

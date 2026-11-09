@@ -3,7 +3,7 @@
 > Word2Vec به شما یک ویکتور در هر کلمه داده است. مدل های مدرن گنجانده به شما یک ویکتور در هر گذرگاه، میان زبانی، با دید های نادر، کثافت و چند ویکتور، اندازه ای برای متناسب با شاخص شما. انتخاب اشتباه و RAG شما چیزی اشتباه را بازیابی می کند.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec), Phase 5 · 14 (Information Retrieval)
 **Time:** ~60 minutes
 

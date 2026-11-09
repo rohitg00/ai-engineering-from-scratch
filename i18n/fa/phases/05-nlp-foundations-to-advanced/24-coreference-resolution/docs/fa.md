@@ -3,7 +3,7 @@
 > "او به او زنگ زد. او جواب نداد. دکتر در ناهار بود". سه بار به دو نفر اشاره کرد و هیچ کس نامش را نگفت.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 

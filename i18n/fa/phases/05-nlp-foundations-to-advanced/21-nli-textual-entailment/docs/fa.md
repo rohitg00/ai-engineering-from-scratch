@@ -3,7 +3,7 @@
 > "t شامل h" به معنای یک مطالعه انسانی t است که نتیجه گیری می کند h درست است. NLI وظیفه پیش بینی شامل / تضاد / خنثی است. خسته کننده در سطح، تحمل بار در تولید.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment Analysis), Phase 5 · 13 (Question Answering)
 **Time:** ~60 minutes
 

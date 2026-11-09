@@ -3,7 +3,7 @@
 > "من يه رستوران ارزان در شمال ميخوام... در واقع يه رستوران معتدل سازيم... و يه رستوران ايطاليايي اضافه کنم".
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 20 (Structured Outputs)
 **Time:** ~75 minutes
 

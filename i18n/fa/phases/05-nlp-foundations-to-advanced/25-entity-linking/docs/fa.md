@@ -3,7 +3,7 @@
 > NER "پاریس" را پیدا کرد. "حساب مرتبط با تصمیم می گیرد: پاریس، فرانسه؟ پاریس هیلتون؟ پاریس، تگزاس؟ پاریس (امیر تروجان) ؟ بدون پیوند، نمودار دانش شما دوجنگ باقی می ماند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 24 (Coreference Resolution)
 **Time:** ~60 minutes
 
