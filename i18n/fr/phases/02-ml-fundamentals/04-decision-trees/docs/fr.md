@@ -3,7 +3,7 @@
 > Un arbre de décision n'est qu'un diagramme de flux, mais une forêt de ces arbres est l'un des outils les plus puissants de l'intelligence artificielle.
 
 **Type:** Build
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lessons 09 Information Theory, 06 Probability)
 **Time:** ~90 minutes
 
@@ -412,7 +412,7 @@ class RandomForest:
         return predictions
 ```
 
-Regardez !`code/trees.py`pour la mise en œuvre complète avec toutes les méthodes auxiliaires.
+Regardez !`code/trees.py`pour la mise en œuvre complète avec toutes les méthodes auxiliaires. `code/trees.ts`est un port TypeScript avec les mêmes fonctions et démos.`npx tsx code/trees.ts`- Je suis désolé .
 
 ## Utilisez-le
 
