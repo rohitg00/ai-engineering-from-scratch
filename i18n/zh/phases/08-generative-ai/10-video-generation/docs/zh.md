@@ -3,7 +3,7 @@
 > 图像是2D子.视频是3D子.理论是相同的;计算是10-100倍更难.OpenAI的Sora (2024年2月) 证明这是可能的.到2026年,Veo 2,Kling 1.5,跑道Gen-3,Pika 2.0和WAN 2.2的船产视频从文字在1080p 和开放权重堆 (CogVideoX,HunyuanVideo,Mochi-1,WAN 2.2) 落后了12个月.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 7 · 09 (ViT), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 

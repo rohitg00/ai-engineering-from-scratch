@@ -3,7 +3,7 @@
 > 文字本身是一个拙的控制信号.ControlNet允许你克隆预训练的扩散模型,并用深度地图,姿势骨架,形或边缘图像来引导它.LoRA允许你通过训练1000万参数来细节调整2B参数模型.他们一起将稳定扩散从玩具变成了2026年图像管道,将其发送到每个机构.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 10 (LLMs from Scratch — for LoRA foundation)
 **Time:** ~75 minutes
 

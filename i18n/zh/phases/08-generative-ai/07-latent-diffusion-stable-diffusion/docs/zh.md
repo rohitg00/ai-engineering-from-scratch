@@ -3,7 +3,7 @@
 > 像素空间扩散在512×512图像上是一种计算战争罪行.Rombach等 (2022) 注意到,你不需要所有的786k维度来生成图像.你需要足够的 capturing语义结构,和一个独立的解码器.运行扩散在一个VAE的隐藏空间.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 02 (VAE), Phase 8 · 06 (DDPM), Phase 7 · 09 (ViT)
 **Time:** ~75 minutes
 

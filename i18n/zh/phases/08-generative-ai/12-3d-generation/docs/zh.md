@@ -3,7 +3,7 @@
 > 3D是2D到3D杆最强的模式. 2023年的突破是3D高斯分光. 2024-2026年生成的推层多视觉扩散 + 3D重建在顶部以从单个提示或照片中产生物体和场景.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 4 (Vision), Phase 8 · 07 (Latent Diffusion)
 **Time:** ~45 minutes
 

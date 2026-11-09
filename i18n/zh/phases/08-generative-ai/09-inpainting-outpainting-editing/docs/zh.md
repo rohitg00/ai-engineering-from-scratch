@@ -3,7 +3,7 @@
 > 文字到图像创造了新的东西.涂料修复了旧的东西.在生产中,70%的可收费图像工作是编辑.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 8 · 08 (ControlNet & LoRA)
 **Time:** ~75 minutes
 

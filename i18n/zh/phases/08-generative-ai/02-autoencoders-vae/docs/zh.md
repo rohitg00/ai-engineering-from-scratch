@@ -3,7 +3,7 @@
 > 简单的自动编码器压缩,然后重建.它记住.它不会生成. 添加一个技巧强加代码看起来高斯式,你得到一个样本器.$z = \mu + \sigma \cdot \epsilon$于是,每一个2026年使用的隐形传播和流量相匹配图像模型都会在输入时有VAE.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
 **Time:** ~75 minutes
 

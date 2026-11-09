@@ -3,7 +3,7 @@
 > 每个生成模型排名表都引用了人类偏好领域的FID,CLIP分数和胜利率.每个数字都有一个确定研究人员可以玩的失败模式.如果你不知道失败模式,你无法从游戏运行中辨别真正的改善.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 01 (Taxonomy), Phase 2 · 04 (Evaluation Metrics)
 **Time:** ~45 minutes
 

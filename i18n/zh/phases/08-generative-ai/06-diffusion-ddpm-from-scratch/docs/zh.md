@@ -3,7 +3,7 @@
 > 霍,贾因,阿贝尔 (2020) 给了该领域一个无法停止的食谱. 用千个小步骤的噪音摧毁数据.训练一个神经网络来预测噪音.在推断时逆转过程.今天每个主流图像,视频,3D和音乐模型都运行在这个循环上,可能是上层上有流量匹配或一致性技巧.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 8 · 02 (VAE)
 **Time:** ~75 minutes
 

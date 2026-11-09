@@ -3,7 +3,7 @@
 > 2014-2017年第一场大解锁是控制GAN的产品. 添加标签,图像或句子.Pix2Pix完成了图像版本,并且在狭窄的图像到图像任务上仍然击败了每个通用文本到图像模型.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 06 (U-Net), Phase 3 · 07 (CNNs)
 **Time:** ~75 minutes
 

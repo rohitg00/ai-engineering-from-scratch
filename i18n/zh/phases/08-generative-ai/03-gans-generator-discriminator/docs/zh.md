@@ -3,7 +3,7 @@
 > 2014年,Goodfellow的技巧是完全跳过密度.两个网络.一个制造假冒.一个抓住他们.他们战斗直到假冒是无法区分的真实.它不应该工作.它经常不会.当它做的时候,样本仍然是最尖的文学中,对于狭窄域.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 08 (Optimizers), Phase 8 · 02 (VAE)
 **Time:** ~75 minutes
 

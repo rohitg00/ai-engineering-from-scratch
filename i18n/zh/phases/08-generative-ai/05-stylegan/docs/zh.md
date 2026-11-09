@@ -3,7 +3,7 @@
 > 大多数发电机都会动$z$时刻将它们分开.$z$通过中间$w$接着*注射*$w$通过AdaIN,每一个分辨率级别. 这一变化解开了隐藏的空间,
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > 音频是16-48kHz的1D信号.五秒的剪辑是80-240k样本.没有变压器直接处理该序列.2026年每个生产音频模型的解决方案是一样的:一个神经编码器 (Encodec,SoundStream,DAC) 将音频压缩到50-75Hz的分离代币,而一个变压器或扩散模型生成代币.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Audio Features), Phase 6 · 04 (ASR), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 

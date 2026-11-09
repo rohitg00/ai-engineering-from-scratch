@@ -3,7 +3,7 @@
 > 每个图像模型,文本模型,视频模型和3D模型都适合五个桶之一. 选择错误的桶,你会数周战斗. 选择正确的模型,
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 (ML Fundamentals), Phase 3 (Deep Learning Core), Phase 7 · 14 (Transformers)
 **Time:** ~45 minutes
 

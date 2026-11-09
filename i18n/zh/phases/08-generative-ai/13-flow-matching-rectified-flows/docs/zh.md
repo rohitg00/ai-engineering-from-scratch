@@ -3,7 +3,7 @@
 > 扩散模型采用20-50个样本采集步骤,因为它们从噪音到数据的曲线路径.流量匹配 (Lipman等人, 2023) 和正流量 (Liu等人, 2022) 训练直路径.直路径意味着更少的步骤意味着更快的推断.稳定扩散3,流量1.1,音频Craft 2都转向流量匹配在2024年.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 06 (DDPM), Phase 1 · Calculus
 **Time:** ~45 minutes
 
