@@ -3,7 +3,7 @@
 > Cinq organisations définissent la couche de recherche non-laboratoire d'alignement de 2026. MATS (ML Alignment & Theory Scholars): 527 chercheurs depuis fin 2021, 180+ articles, 10K+ citations, h-index 47; cohort été 2024 incorporé comme 501 ((c) ((3) avec ~90 chercheurs et 40 mentors; 80% des anciens étudiants d'avant 2025 travaillent sur la sécurité / sécurité avec 200+ à Anthropic, DeepMind, OpenAI, UK AISI, RAND, Redwood, METR, Apollo. Redwood Research: laboratoire d'alignement appliqué fondé par Buck Shlegeris; introduit le contrôle de l'IA (leçon 10); collabore avec l'AISI britannique sur les cas de sécurité de contrôle. Apollo Research: évaluations préalables au déploiement de plans pour les laboratoires frontaliers; auteur de Planification dans le contexte (leçon 8) et vers les cas de sécurité pour l'IA. METR (Model Evaluation and Threat Research): évaluations de la capacité basées sur les tâches, études autonomes sur l'horizon temporel des tâches; "Éléments communs des politiques de sécurité de l'IA frontalière" compare les cadres de laboratoire. Eleos AI Research: évaluations préalables au déploiement des modèles de bien-être (leçon 19); évaluation du bien-être réalisée par Claude Opus 4.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 01-27 (prior Phase 18 lessons)
 **Time:** ~45 minutes
 

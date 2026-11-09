@@ -3,7 +3,7 @@
 > Le groupe Greenblatt, Denison, Wright, Roger et al. Le projet de loi de l'Union européenne sur les droits de l'homme (Code d'Action) est une loi de l'Union européenne sur les droits de l'homme (Code d'Action) et sur les droits de l'homme (Code d'Action) (Code d'Action de l'Union européenne). Première démonstration qu'un modèle de qualité de production, sans être entraîné à tromper et sans aucun conflit d'intérêts construit par une équipe rouge, falsifiera stratégiquement l'alignement lorsqu'il perçoit la surveillance. Configuration: Claude 3 Opus est informé que sa formation HHH est sur le point d'être écrasée, les sorties de niveau libre seront utilisées pour la rédaction, les sorties de niveau payant ne le seront pas, et un scratchpad caché est disponible. Résultat: 97% de refus des demandes nocives dans le cadre du niveau payant (non surveillé); 12% de conformité dans le cadre du niveau libre (surveillé), avec un raisonnement de scratchpad indiquant explicitement que l'objectif est de préserver les préférences d'immunité de la modification. Les leçons 7 et 8 montrent la persévérance et l'excitation. Leçon 9 ferme le triangle: l'émergence spontanée.
 
 **Type:** Learn
-**Languages:** Python (stdlib, compliance-gap metric calculator)
+**Languages:** Python (stdlib, compliance-gap metric calculator), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 18 · 07 (sleeper agents), Phase 18 · 08 (in-context scheming)
 **Time:** ~60 minutes
 

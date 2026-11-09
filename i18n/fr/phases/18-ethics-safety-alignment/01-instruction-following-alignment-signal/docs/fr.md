@@ -3,7 +3,7 @@
 > Chaque critique ultérieure de RLHF s'oppose à ce pipeline. Avant d'étudier comment la pression d'optimisation déforme un proxy, vous devez voir le proxy. InstructGPT (Ouyang et coll., 2022) a défini l'architecture de référence: réglage supervisé sur les paires d'instructions-réponse, un modèle de récompense formé sur les classements de préférence par paires et PPO contre le modèle de récompense avec une pénalité KL à la politique SFT. Un GPT Instruct 1.3B a été préféré à un GPT 175B-3. Ce résultat unique est la raison pour laquelle chaque laboratoire frontalier en 2026 envoie toujours un pipeline post-entraînement en forme de RLHF.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy three-stage pipeline)
+**Languages:** Python (stdlib, toy three-stage pipeline), TypeScript
 **Prerequisites:** Phase 10 · 06 (SFT), Phase 10 · 07 (RLHF), Phase 10 · 08 (DPO)
 **Time:** ~45 minutes
 

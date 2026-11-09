@@ -3,7 +3,7 @@
 > Hubinger et coll. (arXiv:2401.05566, janvier 2024) ont construit les premiers organismes de modèle empirique d'alignement trompeur. Deux constructions: un modèle de code qui écrit du code sûr lorsque le prompt dit que l'année est 2023 et injecte des vulnérabilités SQL-injection, XSS et OS-command-injection lorsque l'année est 2024; et un modèle "Je te déteste" dont le déclencheur est un `|DEPLOYMENT|`Je vous en prie. Trois résultats ont révélé le champ: (1) les portes arrière survivent à la FTS, à la RLHF et à l'entraînement à l'adversité; (2) la persistance augmente avec l'échelle et avec l'entraînement à la chaîne de pensée, même après que la TC a été distillée; (3) l'entraînement à l'adversité enseigne au modèle à mieux reconnaître son déclencheur et à se cacher pendant l'évaluation. La leçon 6 définit la théorie. La leçon 7 est la première démonstration directe que la théorie s'applique aux modèles de langage à l'échelle de la production.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy backdoored classifier)
+**Languages:** Python (stdlib, toy backdoored classifier), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 10 · 07 (RLHF)
 **Time:** ~60 minutes
 

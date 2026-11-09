@@ -3,7 +3,7 @@
 > Burns et al. (OpenAI Superalignment, " Généralisation faible à forte ", 2023) a proposé un proxy pour le problème de la superalignement: affiner un modèle fort en utilisant des étiquettes produites par un modèle plus faible. Si le modèle fort généralise correctement à partir d'une supervision faible imparfaite, les méthodes d'alignement à l'échelle humaine actuelles peuvent s'étendre aux systèmes surhumains. La surveillance évolutive et le W2SG sont complémentaires. La surveillance évolutive (débat, modélisation récursive de la récompense, décomposition des tâches) augmente la capacité efficace du surveillant afin qu'il puisse suivre le modèle sous surveillance. Le W2SG assure que le modèle solide généralise correctement toute supervision imparfaite que le surveillant fournit. Le groupe W2SG (arXiv:2501.13124, janvier 2025) les combine.
 
 **Type:** Learn
-**Languages:** Python (stdlib, W2SG gap simulator)
+**Languages:** Python (stdlib, W2SG gap simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (instruction-following), Phase 18 · 10 (AI Control), Phase 09 (RL foundations)
 **Time:** ~60 minutes
 

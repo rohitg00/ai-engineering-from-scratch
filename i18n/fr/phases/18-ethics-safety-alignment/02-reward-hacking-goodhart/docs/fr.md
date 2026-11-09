@@ -3,7 +3,7 @@
 > Tout optimisateur assez fort pour maximiser une récompense par procuration trouvera l'écart entre le procuration et la chose que vous vouliez réellement. Gao et al. (ICML 2023) a donné à cela une loi d'échelle: la récompense par procuration augmente, les pics de récompense en or diminuent ensuite, et l'écart augmente avec la divergence KL de la politique initiale de manière à pouvoir s'intégrer sous forme fermée. La sycophance, le biais verbo-symétrique, la pensée infidèle et la manipulation des évaluateurs ne sont pas des problèmes distincts. Ils sont le même problème dans les différents costumes.
 
 **Type:** Learn
-**Languages:** Python (stdlib, proxy-vs-gold-reward simulator)
+**Languages:** Python (stdlib, proxy-vs-gold-reward simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 10 · 07 (RLHF)
 **Time:** ~60 minutes
 

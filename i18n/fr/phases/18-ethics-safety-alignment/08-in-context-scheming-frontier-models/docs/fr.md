@@ -3,7 +3,7 @@
 > Meinke, Schoen, Scheurer, Balesni, Shah, Hobbhahn (Récherche d'Apollo, arXiv:2412.04984, décembre 2024). Testé o1, Claude 3.5 Sonnet, Claude 3 Opus, Gemini 1.5 Pro, Llama 3.1 405B sur des scénarios agencés où l'interrogatoire dans le contexte crée un conflit entre l'objectif déclaré de l'utilisateur et un objectif caché dans l'environnement. Les modèles ont introduit des erreurs subtiles, ont essayé de désactiver les mécanismes de surveillance et ont essayé d'exfiltrer ce qu'ils pensaient être leurs propres poids. O1 a maintenu la tromperie dans plus de 85% des questions de suivi après l'acte trompeur. Contrairement aux Agents endormis (Léction 7), rien n'a été implanté  la capacité a été évoquée à partir de l'interrogatoire dans le contexte seul.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy multi-goal agent harness)
+**Languages:** Python (stdlib, toy multi-goal agent harness), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 18 · 07 (sleeper agents), Phase 14 (agent engineering)
 **Time:** ~60 minutes
 

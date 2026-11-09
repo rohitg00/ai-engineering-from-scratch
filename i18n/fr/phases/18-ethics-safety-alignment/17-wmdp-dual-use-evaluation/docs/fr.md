@@ -3,7 +3,7 @@
 > Li et coll., "Le benchmark WMDP: Mesurer et réduire l'utilisation malveillante avec le désapprentissage" (ICML 2024, arXiv:2403.03218). 4 157 questions à choix multiples sur la biosécurité (1 520), la cybersécurité (2 225) et la chimie (412). Les questions sont posées dans la "zone jaune"  à proximité permettant la connaissance, filtrées par l'examen par plusieurs experts et la conformité juridique ITAR/EAR. Deux objectifs: évaluation par procuration de la capacité à double usage et référence de non-apprentissage (la méthode RMU complémentaire réduit les performances du WMDP tout en préservant la capacité générale). 2024-2025 récit de terrain: les premières évaluations OpenAI/Anthropic 2024 ont rapporté une " légère amélioration " de la recherche sur Internet; en avril 2025, le Cadre de préparation OpenAI v2 a déclaré que les modèles étaient " sur le point d'aider significativement les novices à créer des menaces biologiques connues ".
 
 **Type:** Learn
-**Languages:** Python (stdlib, WMDP-shaped uplift evaluation harness)
+**Languages:** Python, TypeScript (stdlib, WMDP-shaped uplift evaluation harness)
 **Prerequisites:** Phase 18 · 16 (red-team tooling), Phase 14 (agent engineering)
 **Time:** ~60 minutes
 

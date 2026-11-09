@@ -3,7 +3,7 @@
 > Trois familles ont créé la littérature de l'équité. L'équité des groupes: parité démographique, cotisations égalées, équité d'utilisation conditionnelle d'une certaine précision  taux égaux entre les groupes protégés en moyenne. L'équité individuelle (Dwork et al. 2012): des individus similaires reçoivent des décisions similaires; condition de Lipschitz sur la carte de décision. L'équité contrefactuelle (Kusner et coll. 2017): une décision est juste pour un individu si elle est inchangée lorsque des attributs sensibles sont modifiés de manière contrefactuelle. Résultat théorique 2024 (NeurIPS 2024): il existe un compromis inhérent entre CF et précision; une méthode modèle-agnostique convertit un prédicteur optimal mais injuste en un prédicteur CF avec perte de précision limitée. Contrastes de rétractation (arXiv:2401.13935, janvier 2024): un nouveau paradigme qui évite d'exiger des interventions sur les attributs légalement protégés. Réconciliation philosophique (ICLR Blogposts 2024): avec des graphiques de causes, satisfaire certaines mesures d'équité de groupe implique une équité contrefactuelle.
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-criteria comparison)
+**Languages:** Python, TypeScript (stdlib, three-criteria comparison)
 **Prerequisites:** Phase 18 · 20 (bias), Phase 02 (classical ML)
 **Time:** ~60 minutes
 

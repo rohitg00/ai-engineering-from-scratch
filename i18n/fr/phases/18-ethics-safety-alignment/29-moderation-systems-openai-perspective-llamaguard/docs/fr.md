@@ -3,7 +3,7 @@
 > Les systèmes de modération de production mettent en œuvre les politiques de sécurité définies dans les leçons 12 à 16.`omni-moderation-latest`(2024) basé sur GPT-4o classifie le texte + les images dans un appel; 42% mieux sur le test multilingue que la version précédente; le schéma de réponse renvoie 13 catégories de booléans  harcèlement, harcèlement/menace, haine, haine/menace, illicite, illicite/violente, auto-harmage, auto-harmage/intention, auto-harmage/instructions, sexuel, sexuel/minors, violence, violence/graphique; gratuit pour la plupart des développeurs. Modèles en couches: modération des entrées (pré-génération), modération des sorties (post-génération), modération personnalisée (règles de domaine). Les appels parallèles asynchrone cachent la latence; une réponse placeholder peut couvrir l'attente pendant que la modération d'entrée est terminée. Llama Guard 3/4 (leçon 16): 14 dangers liés aux MLCommons, abus d'interprète de code, 8 langues (v3), multi-image (v4). API de perspective (Google Jigsaw): score de toxicité antérieur à la vague de la MLL en tant que modérateur; toxicité principalement à dimension unique avec des variantes de toxicité sévère/insulte/prophétie; référence pour la recherche sur la modération du contenu. Dépréciations: Modérateur de contenu Azure a été déprécié en février 2024, retiré en février 2027, remplacé par Azure AI Content Safety.
 
 **Type:** Build
-**Languages:** Python (stdlib, three-layer moderation harness)
+**Languages:** Python, TypeScript (stdlib, three-layer moderation harness)
 **Prerequisites:** Phase 18 · 16 (Llama Guard / Garak / PyRIT)
 **Time:** ~60 minutes
 

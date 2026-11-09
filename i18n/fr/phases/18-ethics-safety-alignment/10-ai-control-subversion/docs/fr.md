@@ -3,7 +3,7 @@
 > Le projet de loi de l'Union européenne sur les droits de l'homme est une loi qui vise à protéger les droits de l'homme. Le contrôle renouvelle la question de sécurité: compte tenu d'un modèle U fort et non fiable qui peut être optimisé contre vous, quels protocoles vous permettent d'extraire du travail utile tout en limitant la probabilité d'un résultat inacceptable? Les ressources sont un modèle T plus faible de confiance, un budget de travail humain H fiable, et la capacité de modifier les résultats de U. Dans ce cadre, la vérification de confiance pareto domine la vérification non fiable sur les tâches de code-backdoor. Le cadre hérite des hypothèses les plus négatives de l'ingénierie de la sécurité: la sécurité est la probabilité qu'un U choisi par opposition ne puisse pas provoquer un résultat concret inacceptable, mesuré sous la pression de l'équipe rouge qui représente U.
 
 **Type:** Learn
-**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task)
+**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task), TypeScript
 **Prerequisites:** Phase 18 · 07 (sleeper agents), Phase 18 · 08 (scheming), Phase 18 · 09 (alignment faking)
 **Time:** ~75 minutes
 

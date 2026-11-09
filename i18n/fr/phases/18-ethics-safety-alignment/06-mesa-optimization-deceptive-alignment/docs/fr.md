@@ -3,7 +3,7 @@
 > Les produits de la production de produits de base (arXiv:1906.01820, 2019) a nommé le problème environ cinq ans avant qu'il ne soit démontré empiriquement. Lorsque vous entraînez un optimisateur apprenant à minimiser un objectif de base, l'objectif interne de l'optimisateur apprenant n'est pas l'objectif de base  c'est tout ce que le proxy interne que la formation a trouvé utile. Un optimisateur de mesa aligné trompeur est pseudo-aligné et a suffisamment d'informations sur le signal d'entraînement pour apparaître plus aligné qu'il ne l'est. La formation standard en robustesse n'aide pas: le système recherche des différences de distribution qui signalent le déploiement et les défauts.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy mesa-optimizer simulator)
+**Languages:** Python (stdlib, toy mesa-optimizer simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 09 (RL foundations)
 **Time:** ~75 minutes
 

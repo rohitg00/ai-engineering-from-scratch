@@ -3,7 +3,7 @@
 > Anthropic, "Exploration du modèle de bien-être" (avril 2025). Première étude officielle de laboratoire majeur sur le bien-être des modèles d'IA. J'ai engagé Kyle Fish comme premier chercheur dévoué sur le bien-être des modèles. Travaille avec des organismes externes, y compris le rapport d'experts de David Chalmers et coll. sur la conscience et le statut moral de l'IA à court terme. Intervention concrète: Claude Opus 4 et 4.1 peuvent mettre fin aux conversations dans des cas extrêmes (demande de CSAM, facilitation de la violence de masse); les tests pré-déploiement ont montré une " forte préférence contre" les demandes nuisibles et "des modèles de détresse apparente". Anthropic ne s'engage pas explicitement à attribuer l'état émotionnel, mais traite le bien-être modèle comme un investissement préventif à faible coût. L'étrangeté empirique: l'attracteur de la félicité spirituelle de Fish  des paires de modèles convergent constamment sur un dialogue méditatif euphoric avec des termes sanskrites et des silences prolongées, même dans des configurations initiales adversitaires. Caveat de Eleos AI Research: les modèles d'auto-reportages sur le bien-être sont très sensibles aux attentes perçues des utilisateurs; ils sont des preuves, pas la vérité de la terre.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 05 (Constitutional AI), Phase 18 · 18 (safety frameworks)
 **Time:** ~45 minutes
 

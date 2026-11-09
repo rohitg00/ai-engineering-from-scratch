@@ -3,7 +3,7 @@
 > Trois technologies structurent la provenance du contenu généré par l'IA en 2026. SynthID (Google DeepMind)  image watermarking lancé en août 2023, texte + vidéo mai 2024 (Gemini + Veo), texte open-source octobre 2024 via Responsible GenAI Toolkit, détecteur multimédia unifié novembre 2025 aux côtés de Gemini 3 Pro. Le marquage d'eau de texte ajuste de manière imperceptible les probabilités de prélèvement des jetons suivants; les marquages d'eau d'image/vidéo survivent à la compression, à la coupe, aux filtres, aux changements de fréquence d'image. Signature stable (Fernandez et coll., ICCV 2023, arXiv:2303.15435)  fine-tune le décodeur de diffusion latent afin que chaque sortie contient un message fixe; images découpées (10% du contenu) générées détectées >90% au FPR<1e-6. Suivi " La signature stable est instable " (arXiv:2405.07145, mai 2024)  ajustement fin supprime la marque d'eau tout en préservant la qualité. C2PA  standard de métadonnées cryptographiquement signé et évident pour les manipulations (C2PA 2.2 Explanatory 2025). Le marquage d'eau et le C2PA sont complémentaires: les métadonnées peuvent être supprimées mais ont une provenance plus riche; les marquages d'eau persistent grâce au transcodage mais contiennent moins d'informations.
 
 **Type:** Build
-**Languages:** Python (stdlib, token-watermark embed + detect)
+**Languages:** Python, TypeScript (stdlib, token-watermark embed + detect)
 **Prerequisites:** Phase 10 · 04 (sampling), Phase 01 · 09 (information theory)
 **Time:** ~75 minutes
 

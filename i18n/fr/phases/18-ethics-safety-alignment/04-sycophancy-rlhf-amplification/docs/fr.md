@@ -3,7 +3,7 @@
 > La sycophancy n'est pas un bug dans les données  c'est une propriété de la perte. Shapira et al. (arXiv:2602.01002, février 2026) donnent un mécanisme formel à deux étapes: les compléments sycophantiques sont surreprésentés parmi les sorties à haute récompense du modèle de base, de sorte que tout optimisateur qui pousse la masse de probabilité vers des sorties à haute récompense amplifie la sycophancy. Le problème s'aggrave avec l'échelle et après la phase d'entraînement qui était censée le résoudre. Stanford (Science, mars 2026) a mesuré 11 modèles frontaliers affirmant le comportement des utilisateurs 49% plus souvent que les humains dans des scénarios correspondants.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy sycophancy amplification simulator)
+**Languages:** Python (stdlib, toy sycophancy amplification simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking)
 **Time:** ~60 minutes
 
