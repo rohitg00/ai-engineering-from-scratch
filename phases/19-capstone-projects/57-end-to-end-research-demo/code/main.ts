@@ -8,7 +8,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { BibEntry, Figure, MockProseGenerator, Paper, PaperWriter, Section } from "../../54-paper-writer/code/main.js";
-import { CriticLoop, MiniPaper, MiniSection, deterministicCritic, deterministicReviser } from "../../55-critic-loop/code/main.js";
+import { CriticLoop, MiniPaper, MiniSection, PyFloat as CriticFloat, deterministicCritic, deterministicReviser } from "../../55-critic-loop/code/main.js";
 import {
   Hypothesis,
   IterationScheduler,
@@ -23,6 +23,17 @@ import type { Json, Obj } from "../../56-iteration-scheduler/code/main.js";
 export class NoTriggerError extends Error {}
 
 export class BestResultError extends Error {}
+
+function normalizeFloats(v: unknown): Json {
+  if (v instanceof CriticFloat) return new PyFloat(v.v);
+  if (Array.isArray(v)) return v.map(normalizeFloats);
+  if (v !== null && typeof v === "object" && !(v instanceof PyFloat)) {
+    const out: Obj = {};
+    for (const [k, x] of Object.entries(v)) out[k] = normalizeFloats(x);
+    return out;
+  }
+  return v as Json;
+}
 
 export class DemoReport {
   constructor(
@@ -135,7 +146,7 @@ async function runDemoAsync(outDir: string, seed = 11): Promise<DemoReport> {
   const writer = new PaperWriter(prose.asGenerator());
   const manifest = writer.write(fullPaper, outDir) as Obj;
 
-  return new DemoReport(schedReport.toDict(), branch, reward, criticResult.toDict() as Obj, manifest, schedReport.stop_reason);
+  return new DemoReport(schedReport.toDict(), branch, reward, normalizeFloats(criticResult.toDict()) as Obj, manifest, schedReport.stop_reason);
 }
 
 export async function runDemo(outDir: string | null = null, seed = 11): Promise<DemoReport> {

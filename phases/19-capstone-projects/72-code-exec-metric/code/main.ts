@@ -11,6 +11,7 @@ const CODE_BLOCK_RE = /```(?:[a-zA-Z0-9_]*)\n([\s\S]*?)```/;
 export const DEFAULT_TIMEOUT_S = 3.0;
 export const MAX_TIMEOUT_S = 30.0;
 export const OUTPUT_CAP_BYTES = 256 * 1024;
+const STATUS_MARKER = "\n__EXEC_STATUS__";
 
 export const EXIT_PASS = "pass";
 export const EXIT_ASSERTION_FAIL = "assertion_fail";
@@ -68,6 +69,9 @@ _os.system = _denied_system
 CODE = __PLACEHOLDER_CODE__
 ASSERTIONS = __PLACEHOLDER_ASSERTIONS__
 
+def _emit(status):
+    sys.stdout.write("\n__EXEC_STATUS__" + json.dumps(status))
+
 ns = {}
 status = {"exit_code": "pass", "results": [], "detail": ""}
 try:
@@ -75,12 +79,12 @@ try:
 except SyntaxError as exc:
     status["exit_code"] = "syntax_error"
     status["detail"] = "SyntaxError: %s" % exc
-    sys.stdout.write(json.dumps(status))
+    _emit(status)
     sys.exit(0)
 except Exception as exc:
     status["exit_code"] = "error"
     status["detail"] = "compile error: %r" % exc
-    sys.stdout.write(json.dumps(status))
+    _emit(status)
     sys.exit(0)
 
 try:
@@ -88,7 +92,7 @@ try:
 except Exception as exc:
     status["exit_code"] = "error"
     status["detail"] = "exec error: %s" % exc
-    sys.stdout.write(json.dumps(status))
+    _emit(status)
     sys.exit(0)
 
 passed = 0
@@ -109,7 +113,7 @@ if passed < len(ASSERTIONS):
 elif len(ASSERTIONS) > 0:
     status["exit_code"] = "pass"
 
-sys.stdout.write(json.dumps(status))
+_emit(status)
 `.trim();
 
 export function extractCode(text: string): string | null {
@@ -149,17 +153,17 @@ export function runCandidate(code: string, assertions: string[], timeoutS = DEFA
   const proc = spawnSync("python3", ["-I", "-c", script], {
     timeout: timeoutS * 1000,
     killSignal: "SIGKILL",
-    maxBuffer: Infinity,
+    maxBuffer: OUTPUT_CAP_BYTES,
   });
 
   const err = proc.error as NodeJS.ErrnoException | undefined;
   if (err && err.code === "ETIMEDOUT") {
     return new ExecResult(0.0, EXIT_TIMEOUT, 0, assertions.length, `timeout after ${timeoutS.toFixed(2)}s`);
   }
-  if (err) return new ExecResult(0.0, EXIT_ERROR, 0, assertions.length, `spawn error: ${err.message}`);
-  if (proc.stdout.length > OUTPUT_CAP_BYTES) {
+  if (err && err.code === "ENOBUFS") {
     return new ExecResult(0.0, EXIT_ERROR, 0, assertions.length, "output overflow");
   }
+  if (err) return new ExecResult(0.0, EXIT_ERROR, 0, assertions.length, `spawn error: ${err.message}`);
 
   const stdout = proc.stdout.toString("utf-8");
   if (proc.status !== 0) {
@@ -169,7 +173,10 @@ export function runCandidate(code: string, assertions: string[], timeoutS = DEFA
   }
   let status: { exit_code?: string; results?: boolean[]; detail?: string };
   try {
-    status = stdout ? JSON.parse(stdout) : {};
+    const marker = stdout.lastIndexOf(STATUS_MARKER);
+    if (marker >= 0) status = JSON.parse(stdout.slice(marker + STATUS_MARKER.length));
+    else if (stdout) throw new Error("missing status marker");
+    else status = {};
   } catch {
     return new ExecResult(0.0, EXIT_ERROR, 0, assertions.length, "non-json output");
   }

@@ -120,6 +120,9 @@ def writer_endpoint(headers: dict, request: dict) -> dict:
         response["error"] = {"code": -32009, "message": "Version not supported"}
     elif request["method"] != "SendMessage":
         response["error"] = {"code": -32601, "message": "Method not found"}
+    elif request["params"]["message"].get("taskId") and \
+            request["params"]["message"]["taskId"] not in TASK_STORE:
+        response["error"] = {"code": -32001, "message": "Task not found"}
     else:
         response["result"] = writer_send_message(request["params"])
     return response

@@ -386,6 +386,7 @@ class StreamingDownloader:
 
         decompressed_bytes = 0
         document_count = 0
+        last_byte = b"\n"
         with shard_path.open("rb") as fh:
             dctx = zstd.ZstdDecompressor()
             reader = dctx.stream_reader(fh)
@@ -395,6 +396,9 @@ class StreamingDownloader:
                     break
                 decompressed_bytes += len(chunk)
                 document_count += chunk.count(b"\n")
+                last_byte = chunk[-1:]
+        if last_byte != b"\n":
+            document_count += 1
 
         return ShardResult(
             shard_id=plan.shard_id,

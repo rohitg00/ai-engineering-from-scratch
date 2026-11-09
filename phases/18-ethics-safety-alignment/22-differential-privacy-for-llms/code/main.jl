@@ -71,8 +71,8 @@ function main()
     for sigma in (0.0, 0.5, 1.0, 2.0, 4.0)
         model = dp_sgd(train_data, epochs, 0.05, sigma, C)
         acc = accuracy(model, test_data)
-        eps = analytical_epsilon(max(sigma, 0.01), epochs; delta=delta)
-        @printf("  sigma=%4.1f  approx-epsilon=%7.2f  test-accuracy=%.3f\n", sigma, eps, acc)
+        eps_text = sigma > 0 ? @sprintf("%7.2f", analytical_epsilon(sigma, epochs; delta=delta)) : lpad("inf", 7)
+        @printf("  sigma=%4.1f  approx-epsilon=%s  test-accuracy=%.3f\n", sigma, eps_text, acc)
     end
 
     println("\n", "="^70)

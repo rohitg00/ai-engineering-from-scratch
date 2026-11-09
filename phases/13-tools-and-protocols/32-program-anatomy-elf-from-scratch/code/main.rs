@@ -533,9 +533,9 @@ impl ElfFile {
     }
 
     fn table(&self, offset: u64, count: u64, entry_size: u64, what: &str) -> Res<&[u8]> {
-        let end = offset + count * entry_size;
-        if end > self.data.len() as u64 {
-            return Err(format!("{} ends at {}, past the {}-byte file", what, hex(end), self.data.len()));
+        let end = offset as u128 + count as u128 * entry_size as u128;
+        if end > self.data.len() as u128 {
+            return Err(format!("{} ends at 0x{:x}, past the {}-byte file", what, end, self.data.len()));
         }
         Ok(&self.data[offset as usize..end as usize])
     }

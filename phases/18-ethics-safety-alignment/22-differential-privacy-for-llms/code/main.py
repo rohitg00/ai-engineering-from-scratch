@@ -87,7 +87,7 @@ def main() -> None:
     for sigma in (0.0, 0.5, 1.0, 2.0, 4.0):
         model = dp_sgd(train_data, epochs=epochs, lr=0.05, sigma=sigma, C=C)
         acc = accuracy(model, test_data)
-        eps = analytical_epsilon(max(sigma, 0.01), steps=epochs, delta=delta)
+        eps = analytical_epsilon(sigma, steps=epochs, delta=delta) if sigma > 0 else math.inf
         print(f"  sigma={sigma:4.1f}  approx-epsilon={eps:7.2f}  test-accuracy={acc:.3f}")
 
     print("\n" + "=" * 70)

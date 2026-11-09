@@ -54,6 +54,16 @@ class TestRunCandidate(unittest.TestCase):
         self.assertEqual(r.passed, 2)
         self.assertEqual(r.total, 2)
 
+    def test_candidate_print_keeps_status(self) -> None:
+        r = run_candidate("print('hello')\ndef add(a,b):\n    print(a, b)\n    return a+b\n", ["add(1,2) == 3"])
+        self.assertEqual(r.exit_code, EXIT_PASS)
+        self.assertEqual(r.score, 1.0)
+
+    def test_output_flood_is_overflow(self) -> None:
+        r = run_candidate("while True:\n    print('x' * 4096)\n", ["True"])
+        self.assertEqual(r.exit_code, EXIT_ERROR)
+        self.assertEqual(r.detail, "output overflow")
+
     def test_partial_assertions_fail(self) -> None:
         r = run_candidate("def add(a,b):\n    return a+b+1\n", ["add(1,2) == 3", "add(0,0) == 1"])
         self.assertEqual(r.exit_code, EXIT_ASSERTION_FAIL)

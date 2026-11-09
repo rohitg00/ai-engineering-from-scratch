@@ -212,6 +212,16 @@ func finish(t *task, length string) {
 	transition(t, "TASK_STATE_COMPLETED", nil)
 }
 
+func (w *writer) hasTask(id string) bool {
+	if id == "" {
+		return true
+	}
+	w.mu.Lock()
+	defer w.mu.Unlock()
+	_, ok := w.store[id]
+	return ok
+}
+
 func (w *writer) sendMessage(msg message) task {
 	w.mu.Lock()
 	defer w.mu.Unlock()
@@ -263,6 +273,8 @@ func (w *writer) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		resp.Error = &rpcError{Code: -32009, Message: "Version not supported"}
 	case req.Method != "SendMessage":
 		resp.Error = &rpcError{Code: -32601, Message: "Method not found"}
+	case !w.hasTask(req.Params.Message.TaskID):
+		resp.Error = &rpcError{Code: -32001, Message: "Task not found"}
 	default:
 		resp.Result = &sendResult{Task: w.sendMessage(req.Params.Message)}
 	}

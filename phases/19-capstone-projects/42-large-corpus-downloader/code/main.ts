@@ -572,11 +572,15 @@ export class StreamingDownloader {
 
     let decompressedBytes = 0;
     let documentCount = 0;
+    let lastByte = 0x0a;
     for await (const chunk of createReadStream(shardPath).pipe(zstd.createZstdDecompress())) {
       const b = chunk as Buffer;
+      if (b.length === 0) continue;
       decompressedBytes += b.length;
       for (const byte of b) if (byte === 0x0a) documentCount += 1;
+      lastByte = b[b.length - 1];
     }
+    if (lastByte !== 0x0a) documentCount += 1;
 
     return new ShardResult(plan.shard_id, plan.url, resumeFrom, decompressedBytes, documentCount, 0, 0, rolling.digest("hex"));
   }
