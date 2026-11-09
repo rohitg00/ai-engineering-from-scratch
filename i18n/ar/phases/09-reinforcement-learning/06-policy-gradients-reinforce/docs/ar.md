@@ -3,7 +3,7 @@
 > توقف عن تقدير القيمة. حدد السياسة مباشرة، وحسب تراجع العائد المتوقع، خطوة صعودا. كتب ويليامز (1992) ذلك في نظرية واحدة. هذا هو السبب في وجود PPO، GRPO، وكل حلقة LLM RL.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 03 (Monte Carlo), Phase 9 · 04 (TD Learning)
 **Time:** ~75 minutes
 

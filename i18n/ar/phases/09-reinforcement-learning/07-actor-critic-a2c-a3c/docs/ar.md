@@ -3,7 +3,7 @@
 > "إضافة نقدي يتعلم"$\hat{V}(s)$، ويقلل من العودة، و تحصل على ميزة التي لديها نفس التوقعات ولكن أقل بكثير التباين. وهذا هو الممثل-النقدي. A2C يديرها بالتزامن؛ A3C يديرها عبر الأوتار. كلاهما هو النموذج العقلي لكل طريقة العميقة الحديثة RL.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (TD Learning), Phase 9 · 06 (REINFORCE)
 **Time:** ~75 minutes
 

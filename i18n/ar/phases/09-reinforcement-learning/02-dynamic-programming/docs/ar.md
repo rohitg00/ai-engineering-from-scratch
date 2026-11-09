@@ -3,7 +3,7 @@
 > البرمجة الديناميكية هي RL مع الغش. أنت تعرف بالفعل وظائف الانتقال والمكافأة؛ أنت فقط تكرر معادلة بيلمان حتى $V$أو$\pi$إنه المعيار الذي تحاول كل طريقة تستند إلى العينات.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs)
 **Time:** ~75 minutes
 

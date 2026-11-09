@@ -3,7 +3,7 @@
 > 2013: تدرب Mnih شبكة Q-تعلم على البيكسل الخام، هزمت كل وكيل RL كلاسيكي على سبعة ألعاب Atari. 2015: تمتد إلى 49 لعبة، نشرت في الطبيعة، أطلقت عصر العميقة RL. DQN هو Q-تعلم بالإضافة إلى ثلاث حيل تجعل التقريب الوظيفي مستقرة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 04 (Q-learning, SARSA)
 **Time:** ~75 minutes
 

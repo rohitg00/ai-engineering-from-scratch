@@ -3,7 +3,7 @@
 > عملية قرار ماركوف هي خمسة أشياء: الحالات، والإجراءات، والانتقالات، والمكافآت، والخصم. كل شيء في RL  Q-تعلم، PPO، DPO، GRPO  تحسن على هذا الشكل. تعلمها مرة واحدة، قراءة بقية التعلم التوطيد مجانا.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Probability & Distributions), Phase 2 · 01 (ML Taxonomy)
 **Time:** ~45 minutes
 

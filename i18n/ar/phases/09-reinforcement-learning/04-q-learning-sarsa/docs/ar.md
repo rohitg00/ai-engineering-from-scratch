@@ -3,7 +3,7 @@
 > ينتظر مونت كارلو حتى تنتهي الحلقة. يقوم TD بتحديث كل خطوة من خلال إطلاق تقدير القيمة التالي. Q-تعلم غير سياسية ومثالي؛ SARSA على السياسة ومحذرة. كلاهما خط واحد من الشفرة. كلاهما يستند إلى كل طريقة عميقة RL في هذه المرحلة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming), Phase 9 · 03 (Monte Carlo)
 **Time:** ~75 minutes
 

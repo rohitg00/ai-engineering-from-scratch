@@ -3,7 +3,7 @@
 > يرمي A2C كل عملية تنفيذ بعد تحديث واحد. يلف PPO تراجع السياسة في نسبة أهمية خفضة حتى تتمكن من القيام بأكثر من 10 حقائق على نفس البيانات دون انفجار السياسة. Schulman et al. (2017). لا يزال الخوارزمية الافتراضية للسياسة-الترقي في عام 2026.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~75 minutes
 

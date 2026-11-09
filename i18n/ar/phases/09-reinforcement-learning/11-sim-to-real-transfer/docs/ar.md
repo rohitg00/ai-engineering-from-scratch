@@ -3,7 +3,7 @@
 > سياسة تدرب في محاكاة تفشل في الأجهزة هي سياسة تذكرت المحاكاة. تعديل النطاقات العشوائية، وتكيف النطاقات، وتحديد النظام هي الأدوات الثلاثة لجعل المراقبين المتعلمين يعبرون الفجوة الواقعية.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 08 (PPO), Phase 2 · 10 (Bias/Variance)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > لا يمكن للبشر كتابة وظيفة مكافأة لـ "استجابة مساعد جيدة"، ولكن يمكنهم مقارنة ردود فعل اثنين واختيار أفضل. تناسب نموذج مكافأة لتلك المقارنات، ثم RL نموذج اللغة ضد ذلك. كريستيانو 2017.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment), Phase 9 · 08 (PPO)
 **Time:** ~45 minutes
 

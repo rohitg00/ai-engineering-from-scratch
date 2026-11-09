@@ -3,7 +3,7 @@
 > البرمجة الديناميكية تحتاج إلى نموذج. مونت كارلو لا تحتاج سوى الحلقات. تشغيل السياسة، مشاهدة العائدات، متوسطها. الأسهل فكرة في RL  والتي تفتح كل شيء أسفل التيار.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming)
 **Time:** ~75 minutes
 

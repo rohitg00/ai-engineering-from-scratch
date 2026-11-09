@@ -3,7 +3,7 @@
 > 1992: هزمت TD-Gammon أبطال البشر في اللعبة الخلفية مع TD نقية. 2016: هزمت AlphaGo Lee Sedol. 2017: هيمنت AlphaZero على الشطرنج والشوجي والجوا من الصفر. 2025: أثبت DeepSeek-R1 نفس الوصفة ، مع استبدال GRPO PPO ، يعمل على التفكير. الألعاب هي المعيار الذي يقود كل اختراق في هذه المرحلة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 05 (DQN), Phase 9 · 08 (PPO), Phase 9 · 09 (RLHF), Phase 9 · 10 (MARL)
 **Time:** ~120 minutes
 

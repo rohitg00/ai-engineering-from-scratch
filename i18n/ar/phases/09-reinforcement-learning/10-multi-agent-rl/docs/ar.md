@@ -3,7 +3,7 @@
 > يفترض RL الوكيل الواحد أن البيئة ثابتة. وضع اثنين من عوامل التعلم في نفس العالم وتلك الافتراضات تنتهي: كل وكيل هو جزء من بيئة الآخر، وكلاهما يتغير. RL الوكيل المتعدد هو مجموعة من الحيل لجعل التعلم يتقارب عندما افتراض ماركوف لم يعد ينطبق.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (Q-learning), Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~45 minutes
 
