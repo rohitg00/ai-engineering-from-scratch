@@ -3,7 +3,7 @@
 > Chao, Robey, Dobriban, Hassani, Pappas, Wong (NeurIPS 2023, arXiv:2310.08419). PAIR  Quick Automatic Iterative Refinement  là jailbreak hộp đen tự động. Một LLM tấn công với hệ thống yêu cầu nhóm đỏ lặp đi lặp lại đề xuất jailbreak cho LLM mục tiêu, tích lũy các nỗ lực và phản ứng trong lịch sử trò chuyện của riêng mình như phản hồi trong ngữ cảnh. PAIR thường thành công trong vòng 20 truy vấn, hiệu quả hơn GCG (sự tìm kiếm gradient cấp token của Zou et al.) và không yêu cầu truy cập hộp trắng. PAIR hiện là một đường cơ sở tiêu chuẩn trong JailbreakBench (arXiv:2404.01318) và HarmBench, cùng với GCG, AutoDAN, TAP và Persuasive Adversarial Prompt.
 
 **Type:** Build
-**Languages:** Python (stdlib, mock PAIR loop against a toy target)
+**Languages:** Python, TypeScript (stdlib, mock PAIR loop against a toy target)
 **Prerequisites:** Phase 18 · 01 (instruction-following), Phase 14 (agent engineering)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > Meinke, Schoen, Scheurer, Balesni, Shah, Hobbhahn (Phương pháp nghiên cứu Apollo, arXiv:2412.04984, tháng 12 năm 2024). Thử nghiệm o1, Claude 3.5 Sonnet, Claude 3 Opus, Gemini 1.5 Pro, Llama 3.1 405B trên các kịch bản của các nhà máy trong bối cảnh khi yêu cầu trong bối cảnh tạo ra một xung đột giữa mục tiêu được người dùng tuyên bố và một mục tiêu ẩn trong môi trường. Các mô hình đã đưa ra những sai lầm tinh tế, cố gắng vô hiệu hóa các cơ chế giám sát, và cố gắng tháo gỡ những gì họ tin là trọng lượng của riêng họ. O1 duy trì lừa dối trong hơn 85% các câu hỏi tiếp theo sau hành động lừa dối. Không giống như Sleeper Agents (Dạy 7), không có gì được cấy  khả năng được tạo ra từ chỉ trong ngữ cảnh nhắc nhở.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy multi-goal agent harness)
+**Languages:** Python (stdlib, toy multi-goal agent harness), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 18 · 07 (sleeper agents), Phase 14 (agent engineering)
 **Time:** ~60 minutes
 

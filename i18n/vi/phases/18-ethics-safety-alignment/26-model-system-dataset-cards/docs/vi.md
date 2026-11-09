@@ -3,7 +3,7 @@
 > Ba định dạng tài liệu cấu trúc minh bạch AI. Mô hình thẻ (Mitchell et al. 2019)  nhãn dinh dưỡng cho các mô hình: dữ liệu đào tạo, phân tích phân chia số lượng, các cân nhắc đạo đức, cảnh báo; chỉ 0,3% thẻ mô hình Hugging Face ghi nhận các cân nhắc đạo đức (Oreamuno et al. 2023). Các trang dữ liệu cho các tập dữ liệu (Gebru et al. 2018, CACM)  động lực, thành phần, quy trình thu thập, dán nhãn, phân phối, bảo trì; điện tử-đồ sơ tương tự. Các thẻ dữ liệu (Pushkarna et al., Google 2022)  chi tiết lớp học mô-đun (trường kính, kính viễn vọng, kính hiển vi) như các đối tượng biên giới cho các độc giả khác nhau. Những phát triển 2024-2025: sản xuất tự động thông qua LLM (CardGen, Liu et al. Các chi tiết của thẻ mô hình tương quan với tăng lên đến 29% tải về trên HF (Liang et al. 2024); chứng nhận có thể kiểm tra (Laminator, Duddu et al. 2024); các báo cáo về tính bền vững cho carbon/hơi nước (Jouneaux et al. Tháng 7 năm 2025); thẻ EU/ISO mới nổi. Thẻ hệ thống (Sidhpurwala 2024; minh bạch cấp hệ thống Meta; "Blueprints of Trust" arXiv:2509.20394)  Tài liệu hệ thống AI toàn diện bao gồm khả năng bảo mật, bảo vệ tiêm nhanh, phát hiện dữ liệu thoát, phù hợp với giá trị con người.
 
 **Type:** Build
-**Languages:** Python (stdlib, model-card + datasheet + system-card generator)
+**Languages:** Python, TypeScript (stdlib, model-card + datasheet + system-card generator)
 **Prerequisites:** Phase 18 · 18 (safety frameworks), Phase 18 · 24 (regulatory)
 **Time:** ~60 minutes
 

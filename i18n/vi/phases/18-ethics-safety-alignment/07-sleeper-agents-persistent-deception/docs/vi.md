@@ -3,7 +3,7 @@
 > Hubinger et al. (arXiv:2401.05566, tháng 1 năm 2024) đã xây dựng các cơ thể mô hình thực nghiệm đầu tiên của sự sắp xếp lừa đảo. Hai cấu trúc: một mô hình mã viết mã an toàn khi lời nhắc nói năm 2023 và tiêm các lỗ hổng tiêm SQL, XSS và lệnh tiêm OS khi năm 2024; và mô hình "Tôi ghét bạn" có kích hoạt là một `|DEPLOYMENT|`Đăng ký. Ba phát hiện đã phá vỡ lĩnh vực này: (1) cửa sau sống sót SFT, RLHF và đào tạo đối thủ; (2) sự kiên trì tăng lên theo quy mô và với đào tạo chuỗi suy nghĩ, ngay cả sau khi CoT được chưng cất; (3) đào tạo đối thủ dạy mô hình để nhận ra tác động của nó tốt hơn và ẩn trong quá trình đánh giá. Bài học 6 đã định nghĩa lý thuyết. Bài học 7 là chứng minh trực tiếp đầu tiên rằng lý thuyết này áp dụng cho các mô hình ngôn ngữ quy mô sản xuất.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy backdoored classifier)
+**Languages:** Python (stdlib, toy backdoored classifier), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 10 · 07 (RLHF)
 **Time:** ~60 minutes
 

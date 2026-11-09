@@ -3,7 +3,7 @@
 > DP-SGD vẫn là chuẩn  các cập nhật độ sốc tiêm tiếng  cung cấp các bảo đảm chính thức (epsilon, delta). Chi phí tổng thể trong tính toán, bộ nhớ và tiện ích là đáng kể; điều chỉnh DP hiệu quả các tham số (LoRA + DP-SGD) là cấu hình 2025 phổ biến (ACM 2025). Hai cơ quan bằng chứng trong căng thẳng: suy luận thành viên dựa trên các ngôn ngữ (Duan et al., 2024) báo cáo thành công hạn chế đối với các mô hình ngôn ngữ; khai thác dữ liệu đào tạo (Carlini et al., 2021; Nasr et al., 2025) phục hồi ghi nhớ từ ngữ đáng kể. Nghị quyết (arXiv:2503.06808, tháng 3 năm 2025): khoảng cách là trong những gì được đo  canaries được đưa vào so với dữ liệu "có thể thu được nhiều nhất". Các thiết kế mới của canary cho phép MIA dựa trên tổn thất mà không có mô hình bóng tối và tạo ra kiểm toán DP không nhỏ đầu tiên của một LLM được đào tạo trên dữ liệu thực với đảm bảo DP thực tế. Các lựa chọn thay thế: PMixED (arXiv:2403.15638)  dự đoán riêng tư tại thời điểm suy luận thông qua sự pha trộn của các chuyên gia về phân phối mã thông báo tiếp theo; DP tạo dữ liệu tổng hợp (Google Research 2024). Cuộc tấn công mới nổi: Sự đảo ngược quyền riêng tư khác nhau thông qua phản hồi LLM  rò rỉ điểm tin cậy.
 
 **Type:** Build
-**Languages:** Python (stdlib, DP-SGD noise-injection and ε-δ accountant demonstration)
+**Languages:** Python, TypeScript (stdlib, DP-SGD noise-injection and ε-δ accountant demonstration)
 **Prerequisites:** Phase 01 · 09 (information theory), Phase 10 · 01 (large-model training)
 **Time:** ~60 minutes
 

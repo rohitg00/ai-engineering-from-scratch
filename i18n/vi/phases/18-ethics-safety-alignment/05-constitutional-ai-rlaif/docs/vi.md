@@ -3,7 +3,7 @@
 > Bai et al. (arXiv:2212.08073, 2022) hỏi: nếu thay thế máy đánh dấu con người bằng AI đọc danh sách các nguyên tắc thì sao? AI Hiến pháp có hai giai đoạn tự phê bình và sửa đổi theo hiến pháp, sau đó RL từ AI Feedback. Kỹ thuật này đã tạo ra thuật ngữ RLAIF và được vận chuyển trong ống dẫn sau đào tạo Claude 1. Vào ngày 21 tháng 1 năm 2026, Anthropic đã xuất bản một hiến pháp Claude được viết lại: lý luận giải thích về các quy tắc quy định, một hệ thống phân cấp ưu tiên bốn cấp, và công nhận chính thức đầu tiên của phòng thí nghiệm lớn về sự không chắc chắn về tình trạng đạo đức mô hình. Được phát hành dưới CC0 1.0.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy self-critique-and-revise loop)
+**Languages:** Python (stdlib, toy self-critique-and-revise loop), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking)
 **Time:** ~60 minutes
 

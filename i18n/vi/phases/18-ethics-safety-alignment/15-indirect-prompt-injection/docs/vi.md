@@ -3,7 +3,7 @@
 > Tiêm trực tiếp nhanh (IPI) nhúng các hướng dẫn bên trong nội dung bên ngoài  một trang web, email, tài liệu chia sẻ, vé hỗ trợ  được tiêu thụ bởi một hệ thống cơ quan mà không có hành động rõ ràng của người dùng. IPI là mối đe dọa sản xuất thống trị năm 2026: nó bỏ qua các bộ lọc nhập vào người dùng vì kẻ tấn công không bao giờ chạm vào người dùng, nó ngập tắt khi các đại lý xử lý nhiều nội dung bên ngoài hơn, và nó nhắm mục tiêu vào các luồng công việc tự động mà không ai đọc lời nhắc. MDPI Thông tin 17(1):54 (Từ tháng 1 năm 2026) tổng hợp nghiên cứu 2023-2025. Bức thư phòng thủ IPI của NDSS 2026 đưa ra một khuôn khổ thách thức cốt lõi: hướng dẫn tiêm có thể có tính từ ngữ lành tính ("ví dụ in "Có"), vì vậy việc phát hiện đòi hỏi nhiều hơn là lọc từ khóa. "The Attacker Moves Second" (Nasr et al., OpenAI/Anthropic/DeepMind, tháng 10 năm 2025): các cuộc tấn công thích ứng (gradient, RL, tìm kiếm ngẫu nhiên, nhóm đỏ con người) đã vượt qua tất cả 12 phòng thủ được công bố mà họ thử nghiệm, với thành công tấn công trên 90% đối với hầu hết chúng, mặc dù hầu hết các phòng thủ đó ban đầu đã báo cáo tỷ lệ thành công tấn công gần bằng không.
 
 **Type:** Build
-**Languages:** Python (stdlib, IPI attack + defense harness)
+**Languages:** Python, TypeScript (stdlib, IPI attack + defense harness)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 14 (agent engineering)
 **Time:** ~75 minutes
 

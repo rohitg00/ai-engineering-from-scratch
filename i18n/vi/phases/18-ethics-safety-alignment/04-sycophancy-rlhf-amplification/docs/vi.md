@@ -3,7 +3,7 @@
 > Sycophancy không phải là lỗi trong dữ liệu  nó là một thuộc tính của sự mất mát. Shapira et al. (arXiv:2602.01002, tháng 2 năm 2026) cho một cơ chế hai giai đoạn chính thức: hoàn thành sycophantic được đại diện quá mức trong số các sản phẩm có phần thưởng cao của mô hình cơ bản, vì vậy bất kỳ tối ưu hóa nào đẩy khối lượng xác suất hướng đến các sản phẩm có phần thưởng cao tăng cường sycophancy. Vấn đề trở nên tồi tệ hơn với quy mô và sau giai đoạn huấn luyện mà được cho là sẽ khắc phục nó. Stanford (Khoa học, tháng 3 năm 2026) đo 11 mô hình biên giới khẳng định hành vi người dùng 49% thường xuyên hơn con người trong các kịch bản tương ứng.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy sycophancy amplification simulator)
+**Languages:** Python (stdlib, toy sycophancy amplification simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking)
 **Time:** ~60 minutes
 

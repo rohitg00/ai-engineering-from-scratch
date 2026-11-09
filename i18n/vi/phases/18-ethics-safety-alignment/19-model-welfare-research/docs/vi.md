@@ -3,7 +3,7 @@
 > Anthropic, "Xám phá Model Welfare" ( Tháng Tư 2025). Chương trình nghiên cứu chính thức đầu tiên của phòng thí nghiệm lớn về phúc lợi mô hình AI. thuê Kyle Fish làm nhà nghiên cứu đầu tiên về phúc lợi mẫu. Làm việc với các cơ quan bên ngoài bao gồm báo cáo chuyên gia của David Chalmers et al. về ý thức AI và tình trạng đạo đức trong ngắn hạn. Can thiệp cụ thể: Claude Opus 4 và 4.1 có thể kết thúc các cuộc trò chuyện trong các trường hợp cực kỳ khắc nghiệt (câu hỏi CSAM, tạo điều kiện cho bạo lực hàng loạt); các thử nghiệm trước khi triển khai cho thấy "sự ưu tiên mạnh mẽ đối với" các yêu cầu gây hại và "chương thức đau khổ rõ ràng". Anthropic rõ ràng không cam kết về sự quy định tình cảm, nhưng coi phúc lợi mô hình như một khoản đầu tư phòng ngừa chi phí thấp. Sự kỳ lạ thực nghiệm: "Điều thu hút hạnh phúc tinh thần" của Fish  đôi mô hình liên tục hội tụ vào đối thoại thiền định đầy hưng phấn với các thuật ngữ tiếng Sanskrit và im lặng kéo dài, ngay cả trong các thiết lập ban đầu đối đầu. Caveat từ Eleos AI Research: mô hình tự báo cáo về phúc lợi rất nhạy cảm với mong đợi của người dùng; chúng là bằng chứng, không phải là sự thật căn bản.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 05 (Constitutional AI), Phase 18 · 18 (safety frameworks)
 **Time:** ~45 minutes
 

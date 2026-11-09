@@ -3,7 +3,7 @@
 > Anil, Durmus, Panickssery, Sharma, v.v. (Anthropic, NeurIPS 2024). Multi-shot jailbreaking (MSJ) khai thác cửa sổ ngữ cảnh dài: hàng trăm lượt hỗ trợ người dùng giả mà người trợ lý tuân thủ các yêu cầu có hại, sau đó thêm truy vấn mục tiêu. Thành công tấn công theo luật quyền lực trong số lượng đạn; thất bại ở 5 lần bắn, đáng tin cậy ở 256 lần bắn về nội dung bạo lực và lừa đảo. Hiện tượng này theo cùng một luật năng lực như học tập trong bối cảnh lành mạnh  tấn công và ICL chia sẻ một cơ chế cơ bản, đó là lý do tại sao các phòng thủ bảo vệ ICL khó thiết kế. Việc sửa đổi nhanh chóng dựa trên trình phân loại làm giảm thành công của cuộc tấn công từ 61% xuống 2% trên các cài đặt được thử nghiệm.
 
 **Type:** Learn
-**Languages:** Python (stdlib, in-context learning vs MSJ simulator)
+**Languages:** Python, TypeScript (stdlib, in-context learning vs MSJ simulator)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 10 · 04 (in-context learning)
 **Time:** ~45 minutes
 

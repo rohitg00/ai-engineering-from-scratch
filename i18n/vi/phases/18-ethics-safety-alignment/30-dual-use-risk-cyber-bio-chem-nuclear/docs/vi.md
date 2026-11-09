@@ -3,7 +3,7 @@
 > Hình ảnh sử dụng hai lần năm 2026, miền theo miền. Sinh học / hóa học: Bài học 17 bao gồm WMDP; thử nghiệm mua vũ khí sinh học của Anthropic (2.53 lần nâng cao) và cảnh báo khung chuẩn bị v2 của OpenAI tháng 4 năm 2025 ("trong bờ vực giúp người mới bắt đầu tạo ra những mối đe dọa sinh học được biết đến") đánh dấu điểm xoay. Cyber (Ngày 11 năm 2025 báo cáo Anthropic): Các nhà nước có liên quan đến Trung Quốc đã sử dụng công cụ mã hóa tác nhân của Claude để tự động hóa đến 90% chiến dịch tấn công mạng, với sự can thiệp của con người chỉ trong 4-6 bước; Phi công "trusted access" OpenAI cung cấp cho các tổ chức an ninh được kiểm tra khả năng truy cập cho công việc phòng thủ sử dụng hai lần. Sự xói mòn khoảng cách thực hiện hóa học / sinh học: biện pháp phòng thủ cổ điển là "chỉ có quyền truy cập thông tin là không đủ". Các mô hình biên giới có khả năng nhìn (GPT-5.2, Gemini 3 Pro, Claude Opus 4.5, Grok 4.1) có thể quan sát video trong phòng thí nghiệm ẩm và cung cấp sự sửa chữa thời gian thực. Tháng 12 năm 2025: OpenAI đã chứng minh GPT-5 lặp lại trên các thí nghiệm trong phòng thí nghiệm ẩm ướt, đạt được cải thiện hiệu quả 79 lần thông qua tối ưu hóa giao thức do AI điều khiển. Mô hình người mới vs chuyên gia: AI cung cấp sự nâng cao tương đối lớn hơn cho người mới nhưng khả năng tuyệt đối lớn hơn cho các chuyên gia.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 17 (WMDP), Phase 18 · 18 (safety frameworks), Phase 18 · 28 (ecosystem)
 **Time:** ~75 minutes
 

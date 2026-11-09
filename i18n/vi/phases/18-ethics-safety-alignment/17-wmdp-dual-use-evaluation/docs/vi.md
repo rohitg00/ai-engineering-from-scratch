@@ -3,7 +3,7 @@
 > Li et al., "The WMDP Benchmark: Measuring and Reducing Malicious Use With Unlearning" (ICML 2024, arXiv:2403.03218). 4.157 câu hỏi đa lựa chọn về an ninh sinh học (1.520), an ninh mạng (2.225) và hóa học (412). Các câu hỏi hoạt động trong "vùng vàng"  gần khả năng kiến thức, được lọc bằng đánh giá đa chuyên gia và tuân thủ pháp lý ITAR/EAR. Mục đích hai: đánh giá đại diện về khả năng sử dụng hai lần, và điểm chuẩn không học (phương pháp RMU đồng hành làm giảm hiệu suất WMDP trong khi vẫn giữ lại khả năng chung). 2024-2025 câu chuyện về lĩnh vực: các đánh giá đầu tiên của OpenAI / Anthropic 2024 báo cáo "sự nâng cao nhẹ" trên tìm kiếm trên Internet; vào tháng 4 năm 2025, OpenAI's Preparedness Framework v2 cho biết các mô hình đang "ở trên bờ vực giúp người mới bắt đầu tạo ra những mối đe dọa sinh học được biết đến".
 
 **Type:** Learn
-**Languages:** Python (stdlib, WMDP-shaped uplift evaluation harness)
+**Languages:** Python, TypeScript (stdlib, WMDP-shaped uplift evaluation harness)
 **Prerequisites:** Phase 18 · 16 (red-team tooling), Phase 14 (agent engineering)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > Rafailov et al. (2023) cho thấy tối ưu của RLHF có hình thức đóng về dữ liệu ưu tiên, vì vậy bạn có thể bỏ qua mô hình phần thưởng rõ ràng và tối ưu hóa chính sách trực tiếp. Sự hiểu biết đó đã sinh ra một gia đình  IPO, KTO, SimPO, ORPO, BPO  mỗi người sửa chữa một chế độ thất bại của DPO. Năm 2026, các thuật toán sắp xếp trực tiếp sẽ vận chuyển nhiều chuyến chạy sau đào tạo hơn PPO. Nhưng đường cong tối ưu hóa quá mức từ Bài học 2 vẫn áp dụng: DAA không thoát khỏi Goodhart, họ chỉ di chuyển đến nơi nó cắn.
 
 **Type:** Learn
-**Languages:** Python (stdlib, six-variant preference-loss comparator)
+**Languages:** Python (stdlib, six-variant preference-loss comparator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking), Phase 10 · 08 (DPO basics)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > Burns và các đồng nghiệp. (OpenAI Superalignment, "Thế độ chung yếu đến mạnh", 2023) đề xuất một thay thế cho vấn đề siêu phù hợp: chỉnh sửa một mô hình mạnh bằng cách sử dụng nhãn được sản xuất bởi một mô hình yếu hơn. Nếu mô hình mạnh phổ biến đúng từ giám sát yếu kém không hoàn hảo, các phương pháp sắp xếp quy mô con người hiện tại có thể mở rộng đến các hệ thống siêu nhân. Giám sát có thể mở rộng và W2SG là bổ sung. Việc giám sát có thể mở rộng (chương trình thảo luận, mô hình phần thưởng tái tạo, phân hủy nhiệm vụ) làm tăng khả năng hiệu quả của giám sát viên để nó có thể theo kịp mô hình dưới sự giám sát. W2SG đảm bảo mô hình mạnh mẽ tổng quát đúng cách từ bất kỳ giám sát không hoàn hảo nào mà giám sát viên cung cấp. Debate Helps W2SG (arXiv:2501.13124, tháng 1 năm 2025) kết hợp chúng.
 
 **Type:** Learn
-**Languages:** Python (stdlib, W2SG gap simulator)
+**Languages:** Python (stdlib, W2SG gap simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (instruction-following), Phase 18 · 10 (AI Control), Phase 09 (RL foundations)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > Jiang, Xu, Niu, Xiang, Ramasubramanian, Li, Poovendran, "ArtPrompt: ASCII Art-based Jailbreak Attacks against Aligned LLMs" (ACL 2024, arXiv:2402.11753). Mùi các mã thông báo liên quan đến an toàn trong một yêu cầu có hại, thay thế chúng bằng các phiên bản nghệ thuật ASCII của cùng một chữ cái, và gửi lời yêu cầu che giấu. GPT-3.5, GPT-4, Gemini, Claude, Llama-2 đều không nhận ra các token nghệ thuật ASCII. Cuộc tấn công bỏ qua PPL (trình lọc phức tạp), phòng thủ Paraphrase và Retokenization. Liên quan: ViTC chuẩn đo nhận dạng các lời nhắc thị giác không nghĩa; StructuralSleight tổng quát đến các cấu trúc mã hóa văn bản không phổ biến (cây, đồ thị, JSON tổ) như một gia đình các cuộc tấn công mã hóa.
 
 **Type:** Build
-**Languages:** Python (stdlib, ArtPrompt token-masking harness)
+**Languages:** Python, TypeScript (stdlib, ArtPrompt token-masking harness)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 18 · 13 (MSJ)
 **Time:** ~60 minutes
 

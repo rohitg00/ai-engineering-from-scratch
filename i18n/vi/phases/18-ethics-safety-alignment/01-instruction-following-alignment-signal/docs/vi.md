@@ -3,7 +3,7 @@
 > Mỗi lời chỉ trích sau đó của RLHF tranh luận chống lại đường ống này. Trước khi bạn nghiên cứu cách áp lực tối ưu hóa làm sao biến dạng một proxy, bạn phải xem proxy. InstructGPT (Ouyang et al., 2022) đã xác định kiến trúc tham chiếu: điều chỉnh tinh tế được giám sát trên các cặp hướng dẫn-đáp ứng, mô hình phần thưởng được đào tạo trên bảng xếp hạng ưu tiên theo cặp, và PPO đối với mô hình phần thưởng với một hình phạt KL đối với chính sách SFT. Một 1.3B InstructGPT được ưa thích so với một 175B GPT-3. Kết quả duy nhất đó là lý do tại sao mỗi phòng thí nghiệm biên giới vào năm 2026 vẫn gửi một đường ống thuần đào tạo hình dạng RLHF.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy three-stage pipeline)
+**Languages:** Python (stdlib, toy three-stage pipeline), TypeScript
 **Prerequisites:** Phase 10 · 06 (SFT), Phase 10 · 07 (RLHF), Phase 10 · 08 (DPO)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Hệ thống kiểm soát sản xuất hoạt động các chính sách an toàn được định nghĩa trong Bài học 12-16. OpenAI Moderation API: `omni-moderation-latest`(2024) dựa trên GPT-4o phân loại văn bản + hình ảnh trong một cuộc gọi; 42% tốt hơn trên bộ thử nghiệm đa ngôn ngữ so với phiên bản trước đó; sơ đồ phản hồi trả lại 13 loại booleans  quấy rối, quấy rối/cảnh đe dọa, thù hận, thù hận/cảnh đe, bất hợp pháp, bất hợp pháp/ bạo lực, tự gây hại, tự gây hại/cố định, tự gây hại/sự hướng dẫn, tình dục, tình dục/chỉ thiếu niên, bạo lực, bạo lực/phic; miễn phí cho hầu hết các nhà phát triển. Các mô hình lớp: Tự trì nhập (tự tạo), Tự trì sản xuất (tự tạo sau), Tự trì tùy chỉnh (quản lý miền). Các cuộc gọi song song đồng bộ ẩn độ trễ; một phản ứng giữ vị trí có thể bao gồm thời gian chờ đợi trong khi kiểm soát đầu vào hoàn thành. Llama Guard 3/4 (Dạy học 16): 14 nguy cơ MLCommons, Quá lạm dụng thông dịch mã, 8 ngôn ngữ (v3), nhiều hình ảnh (v4). API viễn cảnh (Google Jigsaw): điểm độc tính trước sóng LLM-as-moderator; chủ yếu độc tính một chiều với các biến thể độc tính nghiêm trọng / xúc phạm / nói xấu; cơ sở cho nghiên cứu về độ kiểm duyệt nội dung. Sự suy giảm: Moderator Nội dung Azure đã hết hạn vào tháng 2 năm 2024, nghỉ hưu vào tháng 2 năm 2027, thay thế bởi Azure AI Content Safety.
 
 **Type:** Build
-**Languages:** Python (stdlib, three-layer moderation harness)
+**Languages:** Python, TypeScript (stdlib, three-layer moderation harness)
 **Prerequisites:** Phase 18 · 16 (Llama Guard / Garak / PyRIT)
 **Time:** ~60 minutes
 

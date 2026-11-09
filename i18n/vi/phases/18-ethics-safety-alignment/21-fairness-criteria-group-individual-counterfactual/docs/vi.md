@@ -3,7 +3,7 @@
 > Ba gia đình cấu trúc văn học công bằng. Sự công bằng trong nhóm: sự bình đẳng nhân khẩu học, tỷ lệ tỷ lệ cân bằng, sự chính xác sử dụng điều kiện bình đẳng  tỷ lệ bình đẳng giữa các nhóm được bảo vệ trung bình. Sự công bằng cá nhân (Dwork et al. 2012): những cá nhân tương tự nhận được các quyết định tương tự; Lipschitz điều kiện trên bản đồ quyết định. Sự công bằng đối lập (Kusner et al. 2017): một quyết định là công bằng với một cá nhân nếu nó không thay đổi khi các thuộc tính nhạy cảm bị thay đổi ngược lại. Kết quả lý thuyết 2024 (NeurIPS 2024): có một trade-off CF-vs-sự chính xác vốn có; một phương pháp không hiểu mô hình chuyển đổi một dự báo tối ưu nhưng không công bằng thành một dự báo CF với sự mất chính xác hạn chế. Phản ứng ngược (arXiv:2401.13935, tháng 1 năm 2024): mô hình mới tránh yêu cầu can thiệp vào các thuộc tính được bảo vệ pháp lý. Sự hòa giải triết học (ICLR Blogposts 2024): với biểu đồ nguyên nhân, thỏa mãn một số biện pháp công bằng nhóm đòi hỏi sự công bằng đối lập.
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-criteria comparison)
+**Languages:** Python, TypeScript (stdlib, three-criteria comparison)
 **Prerequisites:** Phase 18 · 20 (bias), Phase 02 (classical ML)
 **Time:** ~60 minutes
 

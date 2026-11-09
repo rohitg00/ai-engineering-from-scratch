@@ -3,7 +3,7 @@
 > Bốn chế độ điều chỉnh chính xác định khung cảnh quản lý AI năm 2026. Luật AI của EU (nên hiệu lực ngày 1 tháng 8 năm 2024)  các thực hành bị cấm và hiểu biết về AI từ ngày 2 tháng 2 năm 2025; nghĩa vụ GPAI từ ngày 2 tháng 8 năm 2025; tính đầy đủ áp dụng và minh bạch của Điều 50 ngày 2 tháng 8 năm 2026; GPAI cũ và các hệ thống rủi ro cao được nhúng vào ngày 2 tháng 8 năm 2027; hình phạt lên đến 15 triệu EUR hoặc 3% doanh thu toàn cầu. Bộ luật thực hành GPAI (10 tháng 7 năm 2025): ba chương  minh bạch, bản quyền, an toàn và an ninh  12 cam kết; thực thi bắt đầu vào tháng 8 năm 2026. UK AISI -> AI Security Institute (Tháng 2 năm 2025): đổi tên tín hiệu hạn chế hơn. US AISI -> CAISI (Hụt năm 2025): Trung tâm tiêu chuẩn và đổi mới AI dưới NIST; chuyển hướng hướng đến tư thế ủng hộ tăng trưởng. Đạo luật khung AI Hàn Quốc (được thông qua vào tháng 12 năm 2024, có hiệu lực vào tháng 1 năm 2026): Điều 12 thiết lập AISI theo MSIT; ủy quyền cho các đại diện địa phương cho các công ty AI nước ngoài, đánh giá rủi ro, các biện pháp an toàn cho AI tác động cao và tạo ra.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 18 (frontier frameworks), Phase 18 · 27 (data governance)
 **Time:** ~75 minutes
 

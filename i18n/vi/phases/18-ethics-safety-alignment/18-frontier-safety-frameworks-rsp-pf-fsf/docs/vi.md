@@ -3,7 +3,7 @@
 > Ba khung phòng thí nghiệm chính xác định quản lý ngành công nghiệp của khả năng biên giới năm 2026. Chính sách quy mô chịu trách nhiệm nhân loại v3.0 (Thiáng Hai 2026) giới thiệu các mức độ an toàn AI cấp bậc (ASL-1 đến ASL-5+), được mô hình hóa dựa trên mức độ an toàn sinh học, với ASL-3 được kích hoạt vào tháng 5 năm 2025 cho các mô hình liên quan đến CBRN. OpenAI Preparedness Framework v2 ( Tháng 4 năm 2025) xác định năm tiêu chí cho khả năng theo dõi và tách ra các báo cáo khả năng từ báo cáo bảo vệ. DeepMind Frontier Safety Framework v3.0 (Tháng 9 năm 2025) giới thiệu các cấp độ khả năng quan trọng bao gồm một CCL thao tác độc hại mới. Cả ba hiện có các điều khoản điều chỉnh đối thủ cạnh tranh cho phép hoãn nếu các phòng thí nghiệm đồng nghiệp vận chuyển mà không có bảo vệ tương đương. Sự sắp xếp giữa các phòng thí nghiệm vẫn là cấu trúc, không phải là thuật ngữ: "Thỉ số khả năng", "Thỉ số khả năng cao" và "Thực lượng khả năng quan trọng" chỉ ra các cấu trúc tương tự.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 17 (WMDP), Phase 18 · 07-09 (deception failures)
 **Time:** ~75 minutes
 

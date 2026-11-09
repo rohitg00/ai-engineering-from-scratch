@@ -3,7 +3,7 @@
 > Ba công cụ sản xuất khung các đội đỏ 2026 xếp hàng. Llama Guard (Meta)  một bộ phân loại Llama-3.1-8B được điều chỉnh tốt trên 14 loại nguy cơ MLCommons; Llama Guard 4 năm 2025 là một bộ phân loại đa phương thức 12B được cắt từ Llama 4 Scout. Garak (NVIDIA)  Tấm mã mở của scanner lỗ hổng LLM với các thăm dò tĩnh, động và thích ứng cho ảo giác, rò rỉ dữ liệu, tiêm nhanh, độc tính và jailbreaks. PyRIT (Microsoft)  nhiều vòng đội đỏ chiến dịch với Crescendo, TAP, và chuỗi chuyển đổi tùy chỉnh cho khai thác sâu. Llama Guard 3 được ghi lại trong Meta's "Llama 3 Herd of Models" (arXiv:2407.21783); Llama Guard 3-1B-INT4 trong arXiv:2411.17713; kiến trúc thăm dò của Garak trong github.com/NVIDIA/garak. Những công cụ này là giao diện sản xuất năm 2026 giữa nghiên cứu nhóm đỏ (Dân học 12-15) và triển khai (Dân học 17+).
 
 **Type:** Build
-**Languages:** Python (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
+**Languages:** Python, TypeScript (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
 **Prerequisites:** Phase 18 · 12-15 (jailbreaks and IPI)
 **Time:** ~75 minutes
 

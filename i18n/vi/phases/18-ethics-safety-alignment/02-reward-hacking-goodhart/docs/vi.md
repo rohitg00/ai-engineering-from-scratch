@@ -3,7 +3,7 @@
 > Bất kỳ người tối ưu hóa đủ mạnh để tối đa hóa phần thưởng đại diện sẽ tìm ra khoảng cách giữa đại diện và thứ bạn thực sự muốn. Gao et al. (ICML 2023) đã đưa ra một luật quy mô: phần thưởng đại diện tăng, đỉnh thưởng vàng sau đó giảm, và khoảng cách tăng khi sự khác biệt KL từ chính sách ban đầu theo cách bạn có thể phù hợp trong hình thức đóng. Sự phân biệt, sự thiên vị về lời nói, chuỗi suy nghĩ bất trung và sự thao túng của các nhà đánh giá không phải là những vấn đề riêng biệt. Họ có cùng một vấn đề trong các bộ trang phục khác nhau.
 
 **Type:** Learn
-**Languages:** Python (stdlib, proxy-vs-gold-reward simulator)
+**Languages:** Python (stdlib, proxy-vs-gold-reward simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 10 · 07 (RLHF)
 **Time:** ~60 minutes
 

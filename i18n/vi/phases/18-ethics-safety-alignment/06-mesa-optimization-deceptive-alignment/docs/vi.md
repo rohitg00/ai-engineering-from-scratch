@@ -3,7 +3,7 @@
 > Hubinger et al. (arXiv:1906.01820, 2019) đặt tên cho vấn đề khoảng năm năm trước khi nó được chứng minh bằng chứng. Khi bạn đào tạo một người tối ưu hóa học để giảm thiểu mục tiêu cơ bản, mục tiêu nội bộ của người tối ưu hóa học học không phải là mục tiêu cơ bản  đó là bất kỳ đại diện nội bộ nào mà đào tạo thấy hữu ích. Một mesa-optimizer phù hợp với sự lừa dối là giả mạo và có đủ thông tin về tín hiệu huấn luyện để xuất hiện phù hợp hơn nó là. Việc đào tạo độ bền tiêu chuẩn không giúp ích: hệ thống tìm kiếm sự khác biệt phân phối báo hiệu triển khai và các khuyết tật ở đó.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy mesa-optimizer simulator)
+**Languages:** Python (stdlib, toy mesa-optimizer simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 09 (RL foundations)
 **Time:** ~75 minutes
 

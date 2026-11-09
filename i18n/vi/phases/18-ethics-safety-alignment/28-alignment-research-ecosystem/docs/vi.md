@@ -3,7 +3,7 @@
 > Năm tổ chức xác định lớp nghiên cứu không phải trong phòng thí nghiệm năm 2026. MATS (ML Alignment & Theory Scholars): 527+ nhà nghiên cứu kể từ cuối năm 2021, 180+ bài báo, 10K+ trích dẫn, h-index 47; mùa hè 2024 nhóm được thành lập như 501 ((c) ((3) với ~ 90 học giả và 40 cố vấn; 80% cựu sinh viên trước năm 2025 làm việc về an toàn / an ninh với 200+ tại Anthropic, DeepMind, OpenAI, UK AISI, RAND, Redwood, METR, Apollo. Nghiên cứu Redwood: phòng thí nghiệm sắp xếp ứng dụng được thành lập bởi Buck Shlegeris; giới thiệu AI Control (Lớp học 10); hợp tác với AISI Anh về các trường hợp an toàn kiểm soát. Nghiên cứu Apollo: đánh giá kế hoạch trước khi triển khai cho các phòng thí nghiệm biên giới; tác giả của In-Context Scheming (Dạy 8) và Towards Safety Cases for AI Scheming. METR (Model Evaluation and Threat Research): đánh giá khả năng dựa trên nhiệm vụ, nghiên cứu về khung thời gian nhiệm vụ tự trị; "Thông tố chung của các chính sách an toàn AI biên giới" so sánh các khung thí nghiệm. Eleos AI Research: đánh giá trước khi triển khai mô hình phúc lợi (Dạy học 19); tiến hành đánh giá phúc lợi của Claude Opus 4.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 01-27 (prior Phase 18 lessons)
 **Time:** ~45 minutes
 

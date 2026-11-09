@@ -3,7 +3,7 @@
 > Gallegos, Rossi, Barrow, Tanjim, Kim, Dernoncourt, Yu, Zhang, Ahmed (Thiên ngôn ngữ tính toán 2024, arXiv:2309.00770). Cuộc khảo sát cơ bản năm 2024 phân biệt các tác hại đại diện (chính xác, xóa) với tác hại phân bổ (khả năng phân phối không bình đẳng) và phân loại các métrics đánh giá như dựa trên nhúng, dựa trên xác suất hoặc dựa trên văn bản được tạo ra. 2024-2025 kinh nghiệm: An et al. (PNAS Nexus, tháng 3 năm 2025) đo sự thiên vị giới tính x chủng tộc qua GPT-3.5 Turbo, GPT-4o, Gemini 1.5 Flash, Claude 3.5 Sonnet, Llama 3-70B trên đánh giá hồ sơ tự động cho 20 công việc cấp đầu. WinoIdentity (COLM 2025, arXiv:2508.07111) giới thiệu đánh giá công bằng dựa trên sự không chắc chắn cho các danh tính giao diện. Yu & Ananiadou 2025 xác định các tế bào thần kinh giới tính trong các lớp MLP; Ahsan & Wallace 2025 sử dụng SAE để tiết lộ sự thiên vị chủng tộc lâm sàng; Zhou et al. 2024 (UniBias) thao tác đầu chú ý để làm cho người ta bị mất tập trung. Meta-critic (arXiv:2508.11067): Văn học 10 năm không tương xứng tập trung vào sự thiên vị về giới tính nhị phân.
 
 **Type:** Build
-**Languages:** Python (stdlib, toy embedding-based bias probe)
+**Languages:** Python, TypeScript (stdlib, toy embedding-based bias probe)
 **Prerequisites:** Phase 05 (word embeddings), Phase 18 · 01 (instruction following)
 **Time:** ~60 minutes
 

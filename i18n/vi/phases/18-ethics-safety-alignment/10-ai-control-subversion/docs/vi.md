@@ -3,7 +3,7 @@
 > Greenblatt, Shlegeris, Sachan, Roger (Redwood Research, arXiv:2312.06942, ICML 2024). Kiểm soát tái định hình câu hỏi an toàn: do một mô hình U mạnh mẽ không tin cậy có thể tối ưu hóa chống lại bạn, những giao thức nào cho phép bạn lấy công việc hữu ích trong khi giới hạn khả năng của một kết quả không thể chấp nhận được? Các nguồn lực là mô hình yếu hơn đáng tin cậy T, ngân sách của lao động con người đáng tin cậy H, và khả năng chỉnh sửa sản phẩm của U. Trong khung này, Trusted Editing Pareto thống trị Untrusted Monitoring trên các nhiệm vụ code-backdoor. Khung có thể thừa hưởng các giả định tồi tệ nhất từ kỹ thuật bảo mật: an toàn là khả năng mà một U được chọn đối lập không thể gây ra kết quả không thể chấp nhận được cụ thể, được đo dưới áp lực nhóm đỏ thay thế cho U.
 
 **Type:** Learn
-**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task)
+**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task), TypeScript
 **Prerequisites:** Phase 18 · 07 (sleeper agents), Phase 18 · 08 (scheming), Phase 18 · 09 (alignment faking)
 **Time:** ~75 minutes
 

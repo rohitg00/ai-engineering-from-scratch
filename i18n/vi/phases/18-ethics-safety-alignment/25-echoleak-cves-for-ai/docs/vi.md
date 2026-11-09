@@ -3,7 +3,7 @@
 > CVE-2025-32711 "EchoLeak" (CVSS 9.3) là lần đầu tiên được ghi nhận công khai bằng tiêm nhanh bằng nút nấm không trong một hệ thống LLM sản xuất (Microsoft 365 Copilot). Được phát hiện bởi Aim Labs (Aim Security), được tiết lộ cho MSRC, được sửa thông qua cập nhật bên máy chủ tháng 6 năm 2025. Cuộc tấn công: kẻ tấn công gửi một email được tạo ra cho bất kỳ nhân viên nào; Copilot của nạn nhân lấy lại email như bối cảnh RAG trong một truy vấn thường xuyên; thực thi các hướng dẫn ẩn; Copilot khai thác dữ liệu tổ chức nhạy cảm thông qua một tên miền Microsoft được CSP phê duyệt. Tránh qua các bộ lọc tiêm nhanh XPIA và cơ chế biên tập liên kết của Copilot. Thuật ngữ của Aim Labs: "Vi phạm LLM"  đầu vào không đáng tin cậy bên ngoài thao túng mô hình để truy cập và rò rỉ dữ liệu bí mật. Liên quan: CamoLeak (CVSS 9.6, GitHub Copilot Chat) khai thác Camo image proxy; sửa bằng cách vô hiệu hóa hoàn toàn rendering hình ảnh. GitHub Copilot RCE CVE-2025-53773. NIST đã gọi tiêm nhanh gián tiếp là "sự thiếu sót an ninh lớn nhất của AI tạo ra"; OWASP 2025 xếp hạng nó là mối đe dọa số 1 đối với các ứng dụng LLM.
 
 **Type:** Learn
-**Languages:** Python (stdlib, scope-violation trace reconstruction)
+**Languages:** Python, TypeScript (stdlib, scope-violation trace reconstruction)
 **Prerequisites:** Phase 18 · 15 (indirect prompt injection)
 **Time:** ~45 minutes
 

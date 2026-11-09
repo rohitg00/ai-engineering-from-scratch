@@ -3,7 +3,7 @@
 > Ba công nghệ cấu trúc 2026 nguồn gốc nội dung được tạo ra bởi AI. SynthID (Google DeepMind)  đánh dấu nước hình ảnh được tung ra vào tháng 8 năm 2023, văn bản + video tháng 5 năm 2024 (Gemini + Veo), văn bản nguồn mở tháng 10 năm 2024 thông qua Responsible GenAI Toolkit, bộ phát hiện đa phương tiện thống nhất tháng 11 năm 2025 cùng với Gemini 3 Pro. Đánh dấu nước văn bản điều chỉnh khả năng lấy mẫu mã tiếp theo một cách không thể nhận thấy; dấu nước hình ảnh / video tồn tại khi nén, cắt, lọc, thay đổi tốc độ khung hình. Stable Signature (Fernandez et al., ICCV 2023, arXiv:2303.15435)  chỉnh sửa kỹ thuật giải mã phân tán ẩn để mỗi đầu ra chứa một thông điệp cố định; hình ảnh được cắt (10% nội dung) được phát hiện > 90% tại FPR<1e-6. Tiếp theo "Signature stable is Unstable" (arXiv:2405.07145, tháng 5 năm 2024)  điều chỉnh tinh tế loại bỏ dấu nước trong khi vẫn giữ chất lượng. C2PA  chuẩn metadata có dấu hiệu mã hóa, rõ ràng là bị vi phạm (C2PA 2.2 Explainer 2025). Watermarking và C2PA là bổ sung: metadata có thể được xóa nhưng mang nguồn gốc phong phú hơn; watermark tồn tại thông qua transcoding nhưng mang ít thông tin hơn.
 
 **Type:** Build
-**Languages:** Python (stdlib, token-watermark embed + detect)
+**Languages:** Python, TypeScript (stdlib, token-watermark embed + detect)
 **Prerequisites:** Phase 10 · 04 (sampling), Phase 01 · 09 (information theory)
 **Time:** ~75 minutes
 
