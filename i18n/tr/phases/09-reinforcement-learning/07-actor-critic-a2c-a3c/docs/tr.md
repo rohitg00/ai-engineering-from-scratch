@@ -3,7 +3,7 @@
 > ReINFORCE gürültülü, öğrenen bir eleştirmen ekle.$\hat{V}(s)$A2C, sinkron olarak çalışır, A3C ise ipler arasında çalışır. Her ikisi de modern derin-RL yönteminin zihinsel modelidir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (TD Learning), Phase 9 · 06 (REINFORCE)
 **Time:** ~75 minutes
 

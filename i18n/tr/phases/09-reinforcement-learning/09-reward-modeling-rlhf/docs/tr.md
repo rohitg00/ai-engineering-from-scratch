@@ -3,7 +3,7 @@
 > İnsanlar "iyi yardımcı yanıt" için bir ödül işlevi yazabilir, ancak iki yanıtı karşılaştırıp daha iyi birini seçebilirler. Bu karşılaştırmalara bir ödül modeli uygula, sonra dil modelini karşılaştırın. Christiano 2017. InstructGPT 2022. GPT-3'yi ChatGPT'ye çeviren tarif. 2026'da çoğunlukla DPO  ile değiştirildi ancak zihinsel model kalır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment), Phase 9 · 08 (PPO)
 **Time:** ~45 minutes
 

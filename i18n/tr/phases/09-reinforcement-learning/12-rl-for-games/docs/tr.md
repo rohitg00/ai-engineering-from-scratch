@@ -3,7 +3,7 @@
 > 1992: TD-Gammon, saf TD ile backgammon'da insan şampiyonlarını yendi. 2016: AlphaGo Lee Sedol'u yendi. 2017: AlphaZero, satranç, shogi ve Go'yu sıfırdan baskın etti. 2025: DeepSeek-R1 aynı tarifleri kanıtladı.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 05 (DQN), Phase 9 · 08 (PPO), Phase 9 · 09 (RLHF), Phase 9 · 10 (MARL)
 **Time:** ~120 minutes
 

@@ -3,7 +3,7 @@
 > Tek ajan RL, ortamın sabit olduğunu varsayır. Aynı dünyada iki öğrenme ajanı koyun ve bu varsayım bozulur: her ajan diğerinin ortamının bir parçasıdır ve her ikisi de değişiyor.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (Q-learning), Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~45 minutes
 

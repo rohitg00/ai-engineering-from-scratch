@@ -3,7 +3,7 @@
 > 2013: Mnih, çiğ pikseli üzerinde bir Q-öğrenme ağı eğitmiş, yedi Atari oyununda her klasik RL ajanını yenmiştir. 2015: 49 oyunlara kadar uzattı, Nature'de yayınlanmıştır, derin-RL çağını tetikledi. DQN, işlev yaklaşımını istikrarlı hale getiren üç numara ile birlikte Q-öğrenme.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 04 (Q-learning, SARSA)
 **Time:** ~75 minutes
 

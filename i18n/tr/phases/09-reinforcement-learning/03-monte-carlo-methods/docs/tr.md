@@ -3,7 +3,7 @@
 > Dinamik programlama bir modeli gerektirir. Monte Carlo'nun sadece bölümlere ihtiyacı var. Politikayı çalıştırın, getiriyi izleyin, ortalama yapın. RL 'deki en basit fikir ve her şeyi aşağıdaki akıntıda açan bir fikir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming)
 **Time:** ~75 minutes
 

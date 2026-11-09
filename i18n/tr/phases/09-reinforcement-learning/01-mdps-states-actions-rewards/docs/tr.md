@@ -3,7 +3,7 @@
 > Markov Karar Süreci beş şeyden oluşur: durumlar, eylemler, geçişler, ödüller, indirim. RL  Q-öğrenme, PPO, DPO, GRPO 'daki her şey bu şekil üzerinde optimize eder. Bir kez öğrenin, kalan güçlendirme öğrenimini ücretsiz olarak okuyun.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 · 06 (Probability & Distributions), Phase 2 · 01 (ML Taxonomy)
 **Time:** ~45 minutes
 

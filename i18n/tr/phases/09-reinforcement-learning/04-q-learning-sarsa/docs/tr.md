@@ -3,7 +3,7 @@
 > Monte Carlo, bölümün sonunu bekliyor. TD, bir sonraki değer tahminini başlatarak her adımdan sonra güncelleyecek. Q-öğrenme politika dışı ve iyimser; SARSA politika içindedir ve dikkatlidir. Her ikisi de bir kod satırı. Her iki yöntemi bu aşamada derin-RL yönteminin temelini oluşturur.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs), Phase 9 · 02 (Dynamic Programming), Phase 9 · 03 (Monte Carlo)
 **Time:** ~75 minutes
 

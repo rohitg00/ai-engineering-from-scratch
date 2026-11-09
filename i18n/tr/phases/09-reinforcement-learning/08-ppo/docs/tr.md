@@ -3,7 +3,7 @@
 > A2C, her bir yüklenmenin bir güncelleştirmeden sonra atılmasını sağlar. PPO politika gradiyentiyi kesilmiş önem oranında sarar, böylece politika patlamadan aynı veriler üzerinde 10+ dönem yapabilirsiniz. Schulman et al. (2017).
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~75 minutes
 

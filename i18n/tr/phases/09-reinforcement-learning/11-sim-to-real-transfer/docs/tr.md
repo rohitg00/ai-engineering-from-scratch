@@ -3,7 +3,7 @@
 > Hardware'da başarısız olan bir simülatörde eğitilen bir politika, simülatörü ezberleyen bir politikadır.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 08 (PPO), Phase 2 · 10 (Bias/Variance)
 **Time:** ~45 minutes
 

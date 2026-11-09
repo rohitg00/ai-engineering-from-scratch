@@ -3,7 +3,7 @@
 > Bu nedenle, PPO, GRPO ve her LLM RL döngüsü var.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 03 (Monte Carlo), Phase 9 · 04 (TD Learning)
 **Time:** ~75 minutes
 

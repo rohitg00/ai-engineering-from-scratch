@@ -3,7 +3,7 @@
 > Dinamik programlama, aldatmacılık ile RL'dir.$V$veya $\pi$Bu, her örnekleme tabanlı yöntemin yaklaşmaya çalıştığı referans değeridir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs)
 **Time:** ~75 minutes
 
