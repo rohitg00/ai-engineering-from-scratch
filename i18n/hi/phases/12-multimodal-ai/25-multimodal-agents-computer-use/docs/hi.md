@@ -3,7 +3,7 @@
 > 2026 फ्रंटियर उत्पाद एक मल्टीमोडल एजेंट है जो स्क्रीनशॉट पढ़ता है, बटन पर क्लिक करता है, वेब यूआई पर नेविगेट करता है, फ़ॉर्म भरता है और वर्कफ़्लो को अंत से अंत तक पूरा करता है। SeeClick और CogAgent (2024) ने GUI-ग्राउंडिंग आदिम साबित किया। Ferret-UI मोबाइल जोड़ा. चार्टएजेंट ने चार्ट के लिए दृश्य उपकरण का उपयोग शुरू किया। VisualWebArena और AgentVista (2026) सीमाओं के पीछे पड़ने वाले बेंचमार्क हैं  और यहां तक कि Gemini 3 Pro और Claude Opus 4.7 एजेंटविस्टा के कठिन कार्यों पर ~30% स्कोर करते हैं। यह टॉपस्टोन चरण 12 के प्रत्येक धागे को एक साथ खींचता है: धारणा (उच्च-रिज़ॉल्यूशन VLM), तर्क (उपकरण उपयोग के साथ LLM), जमीनीकरण (संयोजन आउटपुट), लंबी क्षितिज स्मृति, और मूल्यांकन।
 
 **Type:** Capstone
-**Languages:** Python (stdlib, action schema + agent loop skeleton)
+**Languages:** Python (stdlib, action schema + agent loop skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 09 (Qwen-VL JSON), Phase 14 (Agent Engineering)
 **Time:** ~240 minutes
 

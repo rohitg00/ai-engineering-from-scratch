@@ -3,7 +3,7 @@
 > LLaVA (अप्रैल 2023) ग्रह पर सबसे अधिक कॉपी की गई मल्टीमोडल वास्तुकला है। यह BLIP-2 के Q-Former को 2-परत MLP से बदल गया, Flamingo के गेट किए गए क्रॉस-अटेंशन को साफ़ टोकन कॉन्केटेशन से बदल दिया, और केवल पाठ-केवल कैप्शन से GPT-4 द्वारा उत्पन्न 158k दृश्य-निर्देश मोड़ पर प्रशिक्षित किया। 2023 और 2026 के बीच VLM बनाने वाले किसी भी चिकित्सक ने LLaVA का कुछ प्रकार बनाया। LLaVA-1.5 एक MLP प्रोजेक्टर और एक 336px एन्कोडर में आदान-प्रदान किया गया। उच्च संकल्प इनपुट के लिए LLaVA-NeXT ने AnyRes टाइलिंग जोड़ी। एक नुस्खा में LLaVA-OneVision एकीकृत छवि, बहु-छवि, और वीडियो। यह पाठ नुस्खा पढ़ता है, प्रोजेक्टर को लागू करता है, और समझाता है कि "सादा" क्यों जीता है।
 
 **Type:** Build
-**Languages:** Python (stdlib, projector + instruction-template builder)
+**Languages:** Python, TypeScript (stdlib, projector + instruction-template builder)
 **Prerequisites:** Phase 12 · 02 (CLIP), Phase 11 (LLM Engineering — instruction tuning)
 **Time:** ~180 minutes
 
