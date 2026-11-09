@@ -3,7 +3,7 @@
 > एक तैनात मॉडल त्रुटि संदेश के बिना विफल रहता है। यह स्कोर वापस करता रहता है जबकि दुनिया अपने प्रशिक्षण डेटा से दूर जाती है, और केवल निगरानी अंतर को दिखाती है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation), 16 (Anomaly Detection), and 19 (ML System Design)
 **Time:** ~110 minutes
 
@@ -261,6 +261,7 @@ def level(self, metrics: dict[str, float]) -> str:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console

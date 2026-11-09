@@ -3,7 +3,7 @@
 > एक मॉडल एक प्रणाली का एक हिस्सा है। डिजाइन तय करता है कि मॉडल क्या भविष्यवाणी करता है, किसने इसके आधार पर कार्य किया है, इसकी लागत क्या है, और जब यह विफल हो जाता है तो क्या होता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation) and 13 (ML Pipelines)
 **Time:** ~110 minutes
 
@@ -295,6 +295,7 @@ CheckItem("serving_fit", 1, False, "pick a serving mode that meets the staleness
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console
@@ -322,6 +323,7 @@ feed ranking, 2-hour freshness
 
 ```bash
 python3 code/main.py my_design_doc.json
+npx tsx code/main.ts my_design_doc.json
 ```
 
 ## इसका प्रयोग करें

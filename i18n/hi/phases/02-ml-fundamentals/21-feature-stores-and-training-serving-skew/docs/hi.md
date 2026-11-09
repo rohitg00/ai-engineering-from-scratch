@@ -3,7 +3,7 @@
 > एक विशेषता की एक परिभाषा और दो पाठक होते हैं। प्रशिक्षण प्रत्येक लेबल समय के अनुसार इसका इतिहास पढ़ता है, और सेवा इसके नवीनतम मूल्य को पढ़ती है। जब दो पाठक असहमत होते हैं, तो मॉडल इनपुट देखता है जिस पर उसने कभी प्रशिक्षण नहीं किया था।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 08 (Feature Engineering), 13 (ML Pipelines), 15 (Time Series), and 19 (ML System Design)
 **Time:** ~100 minutes
 
@@ -275,6 +275,7 @@ def detect_skew(
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console
