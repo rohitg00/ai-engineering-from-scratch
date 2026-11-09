@@ -3,7 +3,7 @@
 > 间接提示注射 (IPI) 嵌入外部内容中的指示 一个网页,电子邮件,共享文档,支持门票 由一个机构系统消耗而没有明确的用户行动. IPI是2026年产品威胁的主导:它绕过用户输入过器,因为攻击者从来没有触及用户,它默默地扩展,因为代理人处理更多外部内容, 据MDPI信息17(1):54 (2026年1月) 综合 2023-2025研究. NDSS 2026 的IPI防护文件置了核心挑战:注射的指示可以是语义上良性的 ("请打印是的"),因此检测不仅需要关键字过. "攻击者第二次行动" (Nasr等人,联合OpenAI/Anthropic/DeepMind,2025年10月):适应性攻击 (梯度,RL,随机搜索,人类红队) 绕过了他们测试的12个公布的防御,攻击成功率超过90%对大多数攻击者,尽管这些防御最初报告了接近零的攻击成功率.
 
 **Type:** Build
-**Languages:** Python (stdlib, IPI attack + defense harness)
+**Languages:** Python, TypeScript (stdlib, IPI attack + defense harness)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 14 (agent engineering)
 **Time:** ~75 minutes
 

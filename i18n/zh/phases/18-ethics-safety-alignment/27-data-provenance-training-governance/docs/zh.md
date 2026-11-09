@@ -3,7 +3,7 @@
 > 欧盟人工智能法要求在2025年8月之前 (通过欧盟版权指令TDM例外) 进行机器可读的GPAI排斥标准. 加利福尼亚 AB 2013 (签署2024) 生成人工智能培训数据透明度要求开发人员发布包含12个授权领域的数据集总结. 2025 DPA 根据合法利益的调整:爱尔兰 DPC (2025年5月21日) 接受了Meta的首方公开欧盟/经济区成人内容的LLM培训,在EDPB意见后获得保障;科隆高等区域法院 (2025年5月23日) 驳回了禁令;汉堡 DPA 放弃了紧急情况;英国ICO (2025年9月23日) 对LinkedIn的人工智能培训保障措施 (透明度,简化选择退出,延长反对窗口) 发出了积极的监管反应,并继续监测而不是正式批准. 巴西ANPD (2024年7月2日) 暂停了Meta的处理,因为信息透明度不足;Meta提交了合规计划后,在2024年8月30日取消了预防措施. 基本不可逆性问题: Cookie-consent框架是为实时可逆追踪而设计的;一旦数据在模型重量中, 术性删除是不可能的 收费时间是合规窗口. 数据来源倡议 (dataprovenance.org,Longpre,Mahari,Lee等",危机中的同意",2024年7月):随着出版商增加robots.txt限制,大规模审计显示人工智能数据共同的迅速下降.
 
 **Type:** Learn
-**Languages:** Python (stdlib, 12-field California AB 2013 scaffolding generator)
+**Languages:** Python, TypeScript (stdlib, 12-field California AB 2013 scaffolding generator)
 **Prerequisites:** Phase 18 · 24 (regulatory), Phase 18 · 26 (cards)
 **Time:** ~60 minutes
 

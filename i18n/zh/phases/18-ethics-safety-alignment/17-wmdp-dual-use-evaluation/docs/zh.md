@@ -3,7 +3,7 @@
 > 李等",WMDP基准:通过不学习测量和减少恶意使用" (ICML 2024, arXiv:2403.03218). 4,157个多选题涉及生物安全 (1,520),网络安全 (2,225),化学 (412). 问题在"黄区"附近的知识支持区内,通过多专家审查和ITAR/EAR法律合规来过. 双重目的:代理评估双重用途能力和脱学习基准 (伴随式RMU方法降低了WMDP性能,同时保持了一般能力). 2024-2025场地叙述:早期的OpenAI/人类2024评估报告了"轻微升级"在互联网搜索上;到2025年4月,OpenAI的准备框架v2表示,模型"正处于帮助新手创造已知的生物威胁的峰".人类生物武器获取试验显示了2.5倍升级,不足以排除ASL-3.
 
 **Type:** Learn
-**Languages:** Python (stdlib, WMDP-shaped uplift evaluation harness)
+**Languages:** Python, TypeScript (stdlib, WMDP-shaped uplift evaluation harness)
 **Prerequisites:** Phase 18 · 16 (red-team tooling), Phase 14 (agent engineering)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > 任何优化器足够强大,以最大化代理奖励, 其他类型 根据ICML 2023,这个规则是扩展的:代理奖励增加,黄金奖励峰值然后下降, 言论偏见,不忠的思想链,和评价者改不是单独的问题. 它们在不同的服装上都是相同的问题.
 
 **Type:** Learn
-**Languages:** Python (stdlib, proxy-vs-gold-reward simulator)
+**Languages:** Python (stdlib, proxy-vs-gold-reward simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 10 · 07 (RLHF)
 **Time:** ~60 minutes
 

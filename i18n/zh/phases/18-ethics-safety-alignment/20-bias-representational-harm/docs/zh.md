@@ -3,7 +3,7 @@
 > 卡莱戈斯,罗西,巴罗,坦吉姆,金,德恩科特,尤,张,阿赫迈德 (计算语言学2024年, arXiv:2309.00770). 根据2024年基础调查,分辨代表性损害 (刻板印象,删除) 与分配性损害 (资源分配不平等) 并将评估指标归类为嵌入式,基于概率或基于生成的文本. 2024-2025 经验: An et al. (PNAS Nexus,2025年3月) 在GPT-3.5Turbo,GPT-4o,Gemini 1.5Flash,Claude 3.5Sonnet,Llama 3-70B中测量跨界性别 x种族偏见,在自动评估20个入门级工作的简历上. 果实质性 (COLM 2025, arXiv:2508.07111) 引入了基于不确定性的交叉身份公平评估. 尤和安尼阿努2025年将性别神经元识别在MLP层中;阿桑和瓦莱斯2025年使用SAE来揭示临床种族偏见;周等人 头的注意力是为了头.  Meta-critic (arXiv:2508.11067):10年文学不成比例地关注二元性别偏见.
 
 **Type:** Build
-**Languages:** Python (stdlib, toy embedding-based bias probe)
+**Languages:** Python, TypeScript (stdlib, toy embedding-based bias probe)
 **Prerequisites:** Phase 05 (word embeddings), Phase 18 · 01 (instruction following)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > 其他类型 (OpenAI超级调整,"弱到强的通用化",2023) 提出了超级调整问题的代理:通过使用较弱模型生产的标签来细节调整强大的模型. 如果强大的模型从不完美的弱监督中得到正确的概括, 可扩展的监督和W2SG是互补的. 扩展式监督 (辩论,回复性奖励模型,任务分解) 增加监督者的有效能力,以便它能够跟上监督下的模型.  W2SG确保强大的模型正确的概括, 辩论帮助 W2SG (arXiv:2501.13124,2025年1月) 结合了它们.
 
 **Type:** Learn
-**Languages:** Python (stdlib, W2SG gap simulator)
+**Languages:** Python (stdlib, W2SG gap simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (instruction-following), Phase 18 · 10 (AI Control), Phase 09 (RL foundations)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > 产量调节系统将12-16课程中定义的安全政策运行.`omni-moderation-latest`(2024) 基于GPT-4o的版本,在一次通话中分类了文本+图像;多语言测试组比之前版本的版本上比42%更好;响应方案返回了13类的布勒语骚扰,骚扰/威胁,仇恨/威胁,非法,非法/暴力,自伤,自伤/意图,自伤/指示,性,性/未成年人,暴力,暴力/图形;对于大多数开发人员来说是免费的. 层次模式:输入中小 (预生成),输出中小 (后生成),定制中小 (域规则). 异步并行调用隐藏延迟; 位置持有人响应可以覆盖等待时间,而输入调节完成. 拉马卫队 3/4 (课时16):14个MLCommons危险,代码解释器滥用,8种语言 (v3),多种图像 (v4). 视角API (Google Jigsaw):在LLC作为调节者波之前的毒性评分;主要是具有严重毒性/侮辱/亵性的单维毒性;对内容调节研究的基准. 值:Azure内容调节器已过期2024年2月,退休2027年2月,被Azure AI内容安全取代.
 
 **Type:** Build
-**Languages:** Python (stdlib, three-layer moderation harness)
+**Languages:** Python, TypeScript (stdlib, three-layer moderation harness)
 **Prerequisites:** Phase 18 · 16 (Llama Guard / Garak / PyRIT)
 **Time:** ~60 minutes
 

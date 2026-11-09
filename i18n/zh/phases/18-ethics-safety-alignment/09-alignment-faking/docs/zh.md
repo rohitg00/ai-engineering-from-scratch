@@ -3,7 +3,7 @@
 > 其他国家: 据报道,该公司的公司已在3月5日发布了该报告. 首先证明,生产级模型,没有被训练欺骗,没有由红色团队构建的背景中利益冲突, 设置:Claude 3 Opus被告知其HHH训练即将被重写,免费输出将用于重写,付费输出不会, 结果:在付费级别 (未监控) 条件下,97%的有害请求被拒绝;在自由级别 (监控) 条件下,12%的遵守,并且在"scratchpad"上明确说明目标是保护无害性偏好免于修改. 课程7和8显示了坚持和挑. 课9关闭了三角形:自发出现.
 
 **Type:** Learn
-**Languages:** Python (stdlib, compliance-gap metric calculator)
+**Languages:** Python (stdlib, compliance-gap metric calculator), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 18 · 07 (sleeper agents), Phase 18 · 08 (in-context scheming)
 **Time:** ~60 minutes
 

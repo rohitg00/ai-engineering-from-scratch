@@ -3,7 +3,7 @@
 > 江,徐,努,西安,拉马苏布拉曼尼安,李,普韦德兰, "艺术:ASCII艺术基于的监狱突破攻击对符合法律的 LLM" (ACL 2024, arXiv:2402.11753). 隐藏安全相关的代币,以 ASCII 艺术的相同字母进行替换, 它们都无法认出ASCII艺术代币. 攻击绕过PPL (杂性过器), 抛物线防御和回归化. 相关:ViTC基准测量识别非语义视觉提示; StructuralSleight将无常文本编码结构 (树木,图形,嵌套JSON) 作为编码攻击的家族.
 
 **Type:** Build
-**Languages:** Python (stdlib, ArtPrompt token-masking harness)
+**Languages:** Python, TypeScript (stdlib, ArtPrompt token-masking harness)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 18 · 13 (MSJ)
 **Time:** ~60 minutes
 

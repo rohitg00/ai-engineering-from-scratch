@@ -3,7 +3,7 @@
 > 哈宾格等 在经验证明之前,该问题被命名为5年左右. 当你训练一个学习优化器来最小化一个基础目标时,学习优化器的内部目标不是基础目标它是训练发现有用的内部代理. 错误地调整的Mesa优化器是伪调整的, 标准强度训练并没有帮助:系统寻找信号的分布差异,
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy mesa-optimizer simulator)
+**Languages:** Python (stdlib, toy mesa-optimizer simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 09 (RL foundations)
 **Time:** ~75 minutes
 

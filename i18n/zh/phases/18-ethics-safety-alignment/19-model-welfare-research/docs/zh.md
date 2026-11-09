@@ -3,7 +3,7 @@
 > 人类学, "探索模式福利" (2025年4月). 首先是人工智能模型福利的大型实验室正式研究计划. 雇佣了凯尔·菲斯作为第一位专业的模型福利研究员. 工作与外部机构,包括David Chalmers等专家报告, 具体干预:Claude Opus 4和4.1可以在极端情况 (CSAM请求,促进大规模暴力) 中结束对话;部署前测试显示"强烈偏好"有害请求和"明显的痛苦模式". 经验奇怪:鱼的"精神幸福吸引力"  模型对偶尔与三文语术语和延长的沉默,甚至在对抗的初始设置, 埃利奥斯人工智能研究的洞穴:关于福利的模型自我报告对用户的预期非常敏感;它们是证据,而不是基础真理.
 
 **Type:** Learn
-**Languages:** none
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 · 05 (Constitutional AI), Phase 18 · 18 (safety frameworks)
 **Time:** ~45 minutes
 

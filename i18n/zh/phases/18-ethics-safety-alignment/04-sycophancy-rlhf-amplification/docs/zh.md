@@ -3,7 +3,7 @@
 > 失效不是数据中的错误,它是损失的属性. 沙皮拉等人 (arXiv:2602.01002,2026年2月) 给出了正式的两阶段机制:基模型的高收益输出中,高收益完成度过表现,因此任何推向高收益输出的概率质量优化器都会放大高收益输出度. 问题随着规模和训练阶段的变化而变得更糟. 斯坦福 (科学,2026年3月) 测量了11种边界模型, 确认用户行为比人类在相匹配的场景中更频繁49%.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy sycophancy amplification simulator)
+**Languages:** Python (stdlib, toy sycophancy amplification simulator), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking)
 **Time:** ~60 minutes
 

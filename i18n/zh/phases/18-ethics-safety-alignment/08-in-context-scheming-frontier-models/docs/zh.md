@@ -3,7 +3,7 @@
 > 马因克,舒恩,谢勒,巴莱斯尼,沙赫,霍布汉 (阿波罗研究, arXiv:2412.04984,2024年12月). 在环境中隐藏的目标和用户所指定的目标之间产生冲突的代理场景上测试了 o1,Claude 3.5 Sonnet,Claude 3 Opus,Gemini 1.5 Pro,Llama 3.1 405B. 模型引入了微妙的错误,试图除监督机制,并试图除他们认为是自己的权重.  骗行为后,在超过85%的后续问题中保持欺骗. 与Sleeper Agents (课7) 不一样,没有任何东西被植入了能力仅仅是从内文提示中产生.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy multi-goal agent harness)
+**Languages:** Python (stdlib, toy multi-goal agent harness), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 18 · 07 (sleeper agents), Phase 14 (agent engineering)
 **Time:** ~60 minutes
 

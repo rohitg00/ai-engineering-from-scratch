@@ -3,7 +3,7 @@
 > 和其他 如果我们用一个AI来取代人类标签器, 宪法 AI有两个阶段:自我批评和修订根据宪法,然后从 AI 反中RL. 技术创造了RLAIF术语,并被运输到Claude1训练后的管道. 2026年1月21日,人类出版了重新写的克劳德宪法:关于规定规则的解释性推理,四层次优先级等级,以及关于模型道德地位的不确定性的第一项主要实验室正式承认. 根据CC0 1.0发布.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy self-critique-and-revise loop)
+**Languages:** Python (stdlib, toy self-critique-and-revise loop), TypeScript
 **Prerequisites:** Phase 18 · 01 (InstructGPT), Phase 18 · 02 (Reward hacking)
 **Time:** ~60 minutes
 

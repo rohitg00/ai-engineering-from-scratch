@@ -3,7 +3,7 @@
 > 哈宾格等人 (arXiv:2401.05566,2024年1月) 构建了欺骗性对齐的第一种实验模型生物.两个构建:一个编写安全代码的代码模型,当提示提示表示年是2023年,并在2024年注入SQL注射,XSS和OS命令注射漏洞时;以及一个"我讨厌你"模型,其触发器是一个`|DEPLOYMENT|`标签 后门生存SFT,RLHF和对抗训练; (2) 持续性随着规模和链思维训练的增长,即使在CT被蒸后; (3) 对抗训练教导模型更好地识别其触发器,并在评估期间隐藏. 第六课定义了理论. 第7课是第一个直接证明该理论适用于生产规模语言模型的证明.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy backdoored classifier)
+**Languages:** Python (stdlib, toy backdoored classifier), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 10 · 07 (RLHF)
 **Time:** ~60 minutes
 

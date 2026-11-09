@@ -3,7 +3,7 @@
 > ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, 其他类型的类型 多次打开的 jailbreaking (MSJ) 利用了长的背景窗户: 随着用户助理的数百个假转换, 助理会满足有害的请求, 然后添加目标查询. 攻击成功遵循了射击数量的权力法;在5次射击中失败,在暴力和欺骗性内容上可靠于256次射击. 现象遵循了与良性在环境中学习的同样的权力法则. 攻击和ICL共享了一个基本机制,这就是为什么保护ICL的防御很难设计的原因. 基于分类器的快速修改可以在测试设置中降低攻击成功率从61%到2%.
 
 **Type:** Learn
-**Languages:** Python (stdlib, in-context learning vs MSJ simulator)
+**Languages:** Python, TypeScript (stdlib, in-context learning vs MSJ simulator)
 **Prerequisites:** Phase 18 · 12 (PAIR), Phase 10 · 04 (in-context learning)
 **Time:** ~45 minutes
 

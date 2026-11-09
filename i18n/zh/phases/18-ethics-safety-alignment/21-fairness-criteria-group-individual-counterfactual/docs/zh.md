@@ -3,7 +3,7 @@
 > 只有三个家庭构建了公平文学. 群体公平:人口平等,等价率,条件使用准确度等等等 平均保护群体均等率. 个人公平 (Dwork等. 类似的个人获得类似的决定; 决策地图上,利普斯奇特的条件. 假实性公平 (Kusner等人) 2017):如果对敏感属性进行反动改变,则对个人来说,决定是公平的. 2024理论结果 (NeurIPS 2024):存在固有的CF对准确度交易;一个模型不认可方法将一个最佳但不公平的预测器转化为一个具有有限的准确度损失的CF. 追溯对象 (arXiv:2401.13935,2024年1月):新的范式避免对合法保护的属性进行干预. 哲学和解 (ICLR Blogposts 2024):通过因果图,满足某些群体公平措施意味着对事实公平.
 
 **Type:** Learn
-**Languages:** Python (stdlib, three-criteria comparison)
+**Languages:** Python, TypeScript (stdlib, three-criteria comparison)
 **Prerequisites:** Phase 18 · 20 (bias), Phase 02 (classical ML)
 **Time:** ~60 minutes
 

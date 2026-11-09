@@ -3,7 +3,7 @@
 > 绿色blatt,Shlegeris,Sachan,Roger (红木研究, arXiv:2312.06942,ICML 2024). 控制重新构建了安全问题: 鉴于一个不值得信赖的强大的模型U可能会对你进行不利的优化, 资源是可靠的较弱的模型T,可靠的人工预算H, 在此框架内,可靠编辑Pareto在代码后门任务上占据了不值得信赖的监控. 框架继承了安全工程的最坏假设:安全是选择对抗的U不能导致具体的不可接受结果的概率,
 
 **Type:** Learn
-**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task)
+**Languages:** Python (stdlib, safety-vs-usefulness frontier on code-backdoor task), TypeScript
 **Prerequisites:** Phase 18 · 07 (sleeper agents), Phase 18 · 08 (scheming), Phase 18 · 09 (alignment faking)
 **Time:** ~75 minutes
 

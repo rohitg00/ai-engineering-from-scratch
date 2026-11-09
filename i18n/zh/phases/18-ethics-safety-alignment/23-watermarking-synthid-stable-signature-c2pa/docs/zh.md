@@ -3,7 +3,7 @@
 > 据了解,在2026年, 通过"责任的GENAI工具包" (Responsible GenAI Toolkit) 发行了2023年8月的图像水标,文本+视频2024年5月 (Gemini + Veo),文本开源2024年10月,并与Gemini 3 Pro一起实现了2025年11月的多媒体检测器. 文字水标将下一个代币的样本抽象概率不知不觉地调整;图像/视频水标存活压缩,切割,过,率变化. 稳定签名 (Fernandez et al., ICCV 2023, arXiv:2303.15435) 细调隐藏扩散解码器,使每个输出都包含固定信息;在 FPR<1e-6 中,被切割的 (内容的10%) 生成的图像被检测到90%以上. 后续"稳定签名不稳定" (arXiv:2405.07145,2024年5月) 细调消除水印,同时保持质量. C2PA 加密签署的,具有改性明显的元数据标准 (C2PA 2.2解释器 2025). 水标和C2PA是互补的:可以删除元数据,但具有更丰富的来源;水标通过转码仍然存在,但具有更少的信息.
 
 **Type:** Build
-**Languages:** Python (stdlib, token-watermark embed + detect)
+**Languages:** Python, TypeScript (stdlib, token-watermark embed + detect)
 **Prerequisites:** Phase 10 · 04 (sampling), Phase 01 · 09 (information theory)
 **Time:** ~75 minutes
 

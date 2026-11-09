@@ -3,7 +3,7 @@
 > CVE-2025-32711 "EchoLeak" (CVSS 9.3) 是第一项公开记录的零点击即时注射在生产LLM系统 (微软 365 Copilot). 通过2025年6月的服务器侧更新修复. 攻击:攻击者向任何员工发送一个精心设计的电子邮件;受害者Copyilot在常规查询中将电子邮件作为RAG文本获取;隐藏命令执行;Copyilot通过通过CSP批准的微软域名将敏感的组织数据泄露. 绕过XPIA快速注射过器和Copyilot的链接编辑机制. 目标实验室的术语:"LLM范围违规" 外部不可信赖的输入操纵模型,以访问和泄露机密数据. 相关:CamoLeak (CVSS 9.6,GitHub Copilot Chat) 利用Camo图像代理;通过完全禁用图像染来修复. 基特哈布复试机 RCE CVE-2025-53773. 美国国家科学研究所称间接即时注射是"创建人工智能最大的安全缺陷";OWASP 2025 评为其对LLM应用的第1威胁.
 
 **Type:** Learn
-**Languages:** Python (stdlib, scope-violation trace reconstruction)
+**Languages:** Python, TypeScript (stdlib, scope-violation trace reconstruction)
 **Prerequisites:** Phase 18 · 15 (indirect prompt injection)
 **Time:** ~45 minutes
 

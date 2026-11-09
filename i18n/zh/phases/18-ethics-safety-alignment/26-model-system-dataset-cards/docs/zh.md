@@ -3,7 +3,7 @@
 > 文件格式结构是人工智能透明度的三个形式. 模型卡 (Mitchell等人)  模型的营养标签:培训数据,量化分类分析,伦理考虑,警告;只有0.3%的脸模型卡记录伦理考虑 (Oreamuno等人. 美国 数据集的数据表 (Gebru et al. 动机,成分,收集过程,标签,分销,维护;电子数据表类比. 数据卡 (普什卡纳等人,谷歌 2022) 模块化层次细节 (望远镜,视镜,显微镜) 为各种读者的边界对象. 2024-2025年发展:通过LLM自动化生成 (CardGen,Liu等人. 据报道,该报告显示,该报告的数据显示,该数据的数据量增加了超过1%. 证书 (Laminator,Duddu等) 碳/水的可持续性报告补充 (Jouneaux等人) 欧盟/ISO监管卡出现 系统卡 (西德普鲁瓦拉2024;Meta系统级透明度;"信任蓝图" arXiv:2509.20394) 包含安全能力,快速注射保护,数据泄露检测,与人类价值观的结合.
 
 **Type:** Build
-**Languages:** Python (stdlib, model-card + datasheet + system-card generator)
+**Languages:** Python, TypeScript (stdlib, model-card + datasheet + system-card generator)
 **Prerequisites:** Phase 18 · 18 (safety frameworks), Phase 18 · 24 (regulatory)
 **Time:** ~60 minutes
 

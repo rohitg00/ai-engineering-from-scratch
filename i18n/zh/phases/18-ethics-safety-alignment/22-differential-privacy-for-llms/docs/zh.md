@@ -3,7 +3,7 @@
 > 噪音注射梯度更新仍然提供正式的 (epsilon, delta) 保障. 计算,内存和实用性方面的总费用很大;参数效率的DP细调 (LoRA + DP-SGD) 是常见的2025配置 (ACM 2025). 两种证据存在紧张局势:基于加拿大的成员结论 (Duan等人,2024) 报告对语言模型的有限成功;培训数据提取 (Carlini等人,2021年;Nasr等人,2025年) 恢复了大量的字面记忆. 决议 (arXiv:2503.06808,2025年3月): 差距在测量的插入加拿大与"最可提取"数据中. 新的鱼设计使得无影模型的损失基MIA成为可能,并产生了基于现实数据的LLM培训的第一次非微观DP审计,具有现实DP保证. 其他方法:PMixED (arXiv:2403.15638) 通过接下来的代码分布专家的混合,在推断时进行私人预测;DP合成数据生成 (Google Research 2024). 攻击:通过LLM反 信任评分泄漏的差异性隐私逆转.
 
 **Type:** Build
-**Languages:** Python (stdlib, DP-SGD noise-injection and ε-δ accountant demonstration)
+**Languages:** Python, TypeScript (stdlib, DP-SGD noise-injection and ε-δ accountant demonstration)
 **Prerequisites:** Phase 01 · 09 (information theory), Phase 10 · 01 (large-model training)
 **Time:** ~60 minutes
 

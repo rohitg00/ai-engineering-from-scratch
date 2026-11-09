@@ -3,7 +3,7 @@
 > 两位公司将在2026年完成的工作. 拉马卫队 (Meta) 是拉马-3.1-8B分类器,调整了14个MLCommons危险类别;2025年拉马卫队4是从拉马4侦察中剪制的12B原生多模分类器. 卡克 (NVIDIA) 开源LLM漏洞扫描仪,具有静态,动态和适应性探测器,用于幻觉,数据泄露,快速注射,毒性和 jailbreaks. 通过 Crescendo,TAP和定制转换链进行多轮红团队活动,以进行深度利用. 拉马卫队3在Meta的"拉马卫队3群模型" (arXiv:2407.21783) 中记录;拉马卫队3-1B-INT4在 arXiv:2411.17713;Garak的探测器架构在 github.com/NVIDIA/garak. 这些工具是红团队研究 (课12-15),部署 (课17+) 之间的2026年生产界面.
 
 **Type:** Build
-**Languages:** Python (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
+**Languages:** Python, TypeScript (stdlib, tool-architecture simulator and Llama Guard-style classifier mock)
 **Prerequisites:** Phase 18 · 12-15 (jailbreaks and IPI)
 **Time:** ~75 minutes
 

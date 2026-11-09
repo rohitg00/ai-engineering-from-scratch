@@ -3,7 +3,7 @@
 > 后来的每一个对RLHF的批评都反对这一管道. 在你研究优化压力如何扭曲代理之前,你必须看到代理. 根据该指令,该指令将对应对对对进行监督细节调整,以对优先级排名训练的奖励模型,以及对SFT政策的 KL罚款的奖励模型进行PPO. 优先使用1.3BInstructGPT而不是175BGPT-3. 这一结果是每一个边境实验室在2026年仍然运送一个RLHF形状的训练后管道的原因.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy three-stage pipeline)
+**Languages:** Python (stdlib, toy three-stage pipeline), TypeScript
 **Prerequisites:** Phase 10 · 06 (SFT), Phase 10 · 07 (RLHF), Phase 10 · 08 (DPO)
 **Time:** ~45 minutes
 
