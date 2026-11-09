@@ -3,7 +3,7 @@
 > Todo desde las lecciones 01 a 12 es una etapa de una tubería. Esta lección es el andamio que convierte esas etapas en una sola carrera de extremo a extremo: tokenizar, pre-trein, escala, SFT, alinear, evaluar, cuantizar, servir. No entrenarás a un modelo 70B en una computadora portátil. Producirás la capa de orquestación, el manifiesto, la puerta de evaluación y el plan de retroceso que un equipo fronterizo de 2026 utiliza para decidir qué se envíe. Esta es la piedra angular.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** All Phase 10 lessons 01-12
 **Time:** ~120 minutes
 
@@ -216,10 +216,16 @@ El oleoducto en `main.py`Se puede usar un sistema de evaluación para mostrar c�
 
 El flujo de trabajo canónico tiene tres comandos.
 
-```
+```bash
 python code/main.py plan    # validate manifest, compute cost estimate, print DAG
 python code/main.py run     # execute stages, writing to manifest.out.yaml
 python code/main.py gate    # read manifest.out.yaml, apply eval gates, ship-or-hold
+```
+
+El puerto de Rust funciona de la misma manera .`plan`Paso:
+
+```bash
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson plan
 ```
 
 - ¿ Qué ?`plan`La mayoría de los errores de tubería aparecen a tiempo, los umbrales faltantes de puertas, hashes obsoletos, sobrepasos presupuestarios.`plan`Es libre.`run`ahorra dinero capturando insectos en el lado barato.

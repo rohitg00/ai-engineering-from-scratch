@@ -3,7 +3,7 @@
 > Fase 10 · Lección 14 nombró los seis botones arquitectónicos que cada modelo abierto gira. DeepSeek-V3 (diciembre de 2024, 671B parámetros totales, 37B activos) vuelve a los seis y añade cuatro más: Atención Latente Multi-Head, equilibrio de carga auxiliar sin pérdida, Predicción Multi-Token y entrenamiento DualPipe. Esta lección lee la arquitectura de DeepSeek-V3 de arriba a abajo y deriva cada número de parámetros de la configuración publicada. Al final, puede explicar por qué la relación 671B/37B es la apuesta correcta y por qué MLA + MoE juntos vencen a uno solo en la frontera.
 
 **Type:** Learn
-**Languages:** Python (stdlib, parameter calculator)
+**Languages:** Python (stdlib, parameter calculator), Rust
 **Prerequisites:** Phase 10 · 14 (open-model walkthroughs), Phase 10 · 17 (NSA), Phase 10 · 18 (MTP), Phase 10 · 19 (DualPipe)
 **Time:** ~75 minutes
 
