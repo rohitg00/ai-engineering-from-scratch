@@ -3,7 +3,7 @@
 > प्रशिक्षण समानांतर है और FLOP-bound है. इन्फरेंस सीरियल है और स्मृति-bound है. अलग-अलग बोतल गला, अलग-अलग ट्रिक्स.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~75 minutes
 
@@ -128,7 +128,7 @@ flash-attention-memory
 iso-machine {"machine":"kv-cache"}
 ```
 
-देखो`code/main.py`हम लागू करते हैंः
+देखो`code/main.py`, या उसके Rust पोर्ट`code/main.rs`. रस्ट संस्करण चलाने के लिएः `rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`हम लागू करते हैंः
 
 1. एक भोले आदमी$O(N^2)$वृद्धिशील डिकोडर।
 2. ए $O(N)$KV कैश किए गए डिकोडर।
