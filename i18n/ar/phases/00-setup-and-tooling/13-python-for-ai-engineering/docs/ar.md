@@ -3,7 +3,7 @@
 > معظم الشفرة في هذه الدورة تستخدم نفس مجموعة صغيرة من لغات Python. تعلم هذه المجموعة هنا، قبل أن تعتمد الدروس الرياضية والنموذج عليها.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Dev Environment, Python Environments
 **Time:** ~120 minutes
 
@@ -821,6 +821,7 @@ print([round(v, 3) for v in standardize((4.0, 700.0))])
 
 ```bash
 python3 phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.py
+npx tsx phases/00-setup-and-tooling/13-python-for-ai-engineering/code/main.ts
 ```
 
 ```text
