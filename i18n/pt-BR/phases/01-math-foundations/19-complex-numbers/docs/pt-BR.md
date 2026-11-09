@@ -3,7 +3,7 @@
 > A raiz quadrada de -1 não é imaginária, é a chave para rotações, frequências e metade do processamento de sinais.
 
 **Type:** Learn
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04 (linear algebra, calculus)
 **Time:** ~60 minutes
 
@@ -426,7 +426,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 ## Envia-o
 
-Corra .`code/complex_numbers.py`para gerar `outputs/skill-complex-arithmetic.md`- Não .
+Corra .`code/complex_numbers.py`ou `npx tsx code/complex_numbers.ts`para gerar `outputs/skill-complex-arithmetic.md`- Não .
 
 ## Exercícios
 
