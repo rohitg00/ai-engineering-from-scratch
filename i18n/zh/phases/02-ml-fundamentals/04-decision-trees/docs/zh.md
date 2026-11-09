@@ -3,7 +3,7 @@
 > 决策树只是一个流程图,但森林是 ML 中最强大的工具之一.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lessons 09 Information Theory, 06 Probability)
 **Time:** ~90 minutes
 
@@ -412,7 +412,7 @@ class RandomForest:
         return predictions
 ```
 
-看到`code/trees.py`对于所有辅助方法的全面实施.
+看到`code/trees.py`对于所有辅助方法的全面实施.`code/trees.ts`运行它使用 TypeScript 端口,`npx tsx code/trees.ts`现在,我们要去.
 
 ## 用它
 

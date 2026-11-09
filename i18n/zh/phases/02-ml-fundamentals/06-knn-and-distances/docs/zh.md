@@ -3,7 +3,7 @@
 > 通过观察邻居来预测,最简单的算法实际上是有效的.
 
 **Type:** Build
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lesson 14 Norms and Distances)
 **Time:** ~90 minutes
 
@@ -298,7 +298,7 @@ class KDTree:
         ...
 ```
 
-看到`code/knn.py`对于所有辅助方法和演示的全面实施.
+看到`code/knn.py`通过所有辅助方法和演示程序进行全面实施. `code/knn.ts`运行它使用 TypeScript 端口,`npx tsx code/knn.ts`现在,我们要去.
 
 ### 步骤4: 功能扩展
 
