@@ -3,7 +3,7 @@
 > آموزش موازی و FLOP-بند شده است. تعبیر سریال و حافظه-بند شده است. گوشه های مختلف، ترفند های مختلف.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~75 minutes
 
@@ -128,7 +128,7 @@ flash-attention-memory
 iso-machine {"machine":"kv-cache"}
 ```
 
-ببین`code/main.py`ما اجرا میکنیم:
+ببین`code/main.py`، یا بندر رستش`code/main.rs`. براي اجرا کردن نسخه رست:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`ما اجرا میکنیم:
 
 1. یه آدم ساده$O(N^2)$دیکودر افزایشی
 2. A$O(N)$کِي وي-کاش شده

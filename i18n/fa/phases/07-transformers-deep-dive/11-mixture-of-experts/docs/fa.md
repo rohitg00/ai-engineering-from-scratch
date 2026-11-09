@@ -3,7 +3,7 @@
 > یک ترانسفارمر 70B فشرده هر پارامتر را برای هر توکن فعال می کند. یک 671B MoE فقط 37B را برای هر توکن فعال می کند و در هر معیار شکست می دهد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
@@ -90,6 +90,13 @@ expert-routing
 - مسیر بالا k=2
 - وزن های گیتینگ نرمال شده نرم حداکثر
 - تعادل بدون ضرر کمک کننده از طریق تعصب هر متخصص
+
+`code/main.rs`این یک پورت Rust با عملکرد و نمایش های مشابه است. این تنها از کتابخانه استاندارد استفاده می کند. اعداد تصادفی از پایتون متفاوت است، اما نتیجه گیری های چاپ شده یکسان هستند.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### مرحله اول: روتر
 
