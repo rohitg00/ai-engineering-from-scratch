@@ -3,7 +3,7 @@
 > Construíste implantes, embalagens, tubos RAG, chamadas de funções, camadas de cache e barris de segurança. Separadamente. - No isolamento. Como praticar escalas de guitarra sem tocar uma canção. Esta lição é a canção. Vai transferir todos os componentes das lições 01-12 para um único serviço pronto para produção. Não é um brinquedo. Não é uma demonstração. Um sistema que lida com tráfego real, falha graciosamente, transmite tokens, acompanha os custos e sobrevive aos seus primeiros 10.000 usuários.
 
 **Type:** Build (Capstone)
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lessons 01-15
 **Time:** ~120 minutes
 **Related:**Fase 11 · 14 (MCP) para substituir esquemas de ferramentas personalizadas por um protocolo compartilhado; Fase 11 · 15 (Cachagem de Pronto) para uma redução de custos de 50-90% em prefixos estáveis.

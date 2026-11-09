@@ -3,7 +3,7 @@
 > A maioria das startups de IA não morrem de maus modelos. Morrem de má economia de unidade. Uma única chamada GPT-4o custa frações de um centavo. Dez mil usuários que fazem dez chamadas por dia custam 250 dólares em tokens de entrada sozinhos - antes de cobrar um único dólar. As empresas que sobrevivem são aquelas que tratam cada chamada de API como uma transação financeira, não uma chamada de função.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lesson 09 (Function Calling)
 **Time:** ~45 minutes
 **Related:**A fase 11 · 15 (Cachagem de Pronto Pronto)  esta lição abrange o cache de camada de aplicação (cache semântica, cache hash exato, roteamento de modelo). A lição 15 abrange o cache de pronto pronto de camada de fornecedor (Anthropic cache_control, OpenAI automático, Gemini CachedContent). Combine ambos para uma redução de custos de 50-95%.

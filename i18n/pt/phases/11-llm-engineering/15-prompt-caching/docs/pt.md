@@ -3,7 +3,7 @@
 > O seu sistema de memória é de 4.000 tokens. Seu contexto RAG é de 20.000 tokens. Você envia ambos com cada solicitação. Você também paga por ambos  toda vez. O cache rápido permite que o provedor mantenha esse prefixo quente do seu lado e lhe faça uma taxa de 10% da taxa normal em reutilização. Usado corretamente, reduz o custo de inferência em 5090% e a latência do primeiro token em 4085%.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 01 (Prompt Engineering), Phase 11 · 05 (Context Engineering), Phase 11 · 11 (Caching and Cost)
 **Time:** ~60 minutes
 
