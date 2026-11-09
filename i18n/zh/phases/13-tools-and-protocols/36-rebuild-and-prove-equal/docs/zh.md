@@ -3,7 +3,7 @@
 > 通过测试证明了您的测试一致,所以平等需要一个网格, 达到每个边缘和字节匹配后移动掩盖.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 34 (lifting to pseudocode), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~110 minutes
 
@@ -271,6 +271,7 @@ after:  0, 5, -5, 105, 536870911, 2147483647, -2147483648
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 随着Clang在路径上,演示组组合了两个候选对,并为每个组运行了92个细胞.它重新编译了8个候选人,重新播放了代理运行,并编译了证明记录.`unknown`现在,我们要去.
@@ -371,6 +372,9 @@ report.masked_equal, report.relocations_match, report.tables_equal, report.reaso
 GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
 JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
 python3 code/main.py --live
+GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
+JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
+npx tsx code/main.ts --live
 ```
 
 第一个`analyze_function`根据Ghidra的数据,在数据库中,使用了相同的数据,并将数据库的数据库输入到其他数据库中.
@@ -404,6 +408,7 @@ python3 code/main.py --live
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 检查器从 计算出每一个预期值`code/main.py`它们在已完成的设备上.`PASS`现在`FAIL`或`TODO`只有五个任务都通过时,它才会出于0.`python3 code/lab.py my-answers.json`检查另一个文件.`code/tests/test_lab.py`证明检查员接受正确的答案,却拒绝错误的答案.
@@ -423,6 +428,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

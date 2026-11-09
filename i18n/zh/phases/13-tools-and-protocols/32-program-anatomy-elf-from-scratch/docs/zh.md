@@ -3,7 +3,7 @@
 > 编译程序是指向彼此的表格集合.你写的读者提供了输出,你可以对字节进行检查.
 
 **Type:** Build
-**Languages:** Python (stdlib), C (fixture only)
+**Languages:** Python (stdlib), TypeScript, C (fixture only)
 **Prerequisites:** Phase 0 · 01 (Dev Environment) with clang installed, Python 3.10 or later, hexadecimal arithmetic
 **Time:** ~120 minutes
 
@@ -275,6 +275,7 @@ Load commands:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 演示内容是`ledger-x86_64-O1.o`然后打印了其标题,部分,符号,移动和文件偏移地图.`ledger-arm64-O1.o`图表的标题是" 图表"的标题.`tiny-x86_64`预期的行:
@@ -395,6 +396,7 @@ macho.function_bytes("_percent_change")[:4].hex()
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 检查器从 计算出每一个预期值`code/main.py`它们在已完成的设备上.`PASS`现在`FAIL`或`TODO`只有五个任务都通过时,它才会出于0.`python3 code/lab.py my-answers.json`检查另一个文件.`code/tests/test_lab.py`证明检查员接受正确的答案,却拒绝错误的答案.
@@ -414,6 +416,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

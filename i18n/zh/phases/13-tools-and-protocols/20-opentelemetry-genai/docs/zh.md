@@ -3,7 +3,7 @@
 > 一个代理人打电话给五个工具,三个MCP服务器, 你需要一个痕迹. 开通通讯GenAI语义公约 (v1.37及以上的稳定属性) 是2026年标准,由Datadog,Langfuse,Ariz Phoenix,OpenLLMetry和AgentOps本地支持. 这一课列出所需属性,走向跨度层次 (代理 → LLM →工具),并发送一个可以连接到任何OTel出口商的 stdlib跨度发射器.
 
 **Type:** Build
-**Languages:** Python (stdlib, OTel span emitter)
+**Languages:** Python (stdlib, OTel span emitter), TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 08 (MCP client)
 **Time:** ~75 minutes
 

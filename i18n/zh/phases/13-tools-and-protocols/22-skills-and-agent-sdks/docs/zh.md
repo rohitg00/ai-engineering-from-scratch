@@ -3,7 +3,7 @@
 > 技能不是一个更好的文件名的长时间提示,而是一个可发现的指令,资源和可执行的辅助工具包,通过运行时间合同进入代理的环境.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 01 (The Tool Interface), Phase 13 · 05 (Tool Schema Design)
 **Time:** ~90 minutes
 
@@ -362,6 +362,7 @@ If that skill is unavailable, stop and report the missing dependency.
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/22-skills-and-agent-sdks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

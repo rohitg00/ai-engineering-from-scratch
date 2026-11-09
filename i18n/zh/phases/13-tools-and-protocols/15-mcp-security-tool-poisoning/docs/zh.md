@@ -3,7 +3,7 @@
 > 无国籍并不意味着无信任,而是每一次请求都暴露出服务器和网关需要的证据,
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 08 (MCP client)
 **Time:** ~60 minutes
 
@@ -248,6 +248,7 @@ tp-tool-poisoning
 ```bash
 cd phases/13-tools-and-protocols/15-mcp-security-tool-poisoning
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

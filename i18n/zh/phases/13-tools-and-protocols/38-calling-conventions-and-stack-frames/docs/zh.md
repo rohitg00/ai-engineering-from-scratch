@@ -3,7 +3,7 @@
 > 拆除显示哪些注册表一个函数读取.只有ABI说明这些注册表的意思,ABI由对象标题选择,所以这个课程首先读取标题,然后检查每个注册表与设置它的规则.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and AArch64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow)
 **Time:** ~140 minutes
 
@@ -195,6 +195,7 @@ AAPCS64 6.8.2 通过两个计数列表进行规则. C.9:一个整体参数"被�
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出是一个JSON报告. 对于每一个七个对象,它命名格式,机器和ABI,对于每一个十二个函数,它给出了序列字节,存储的注册表,输入抵消,框架大小,框架指标,参数注册表,堆参数抵消,溢出,返回注册表或隐藏指标,呼叫深度,以及呼叫者的出发注册表和存储. 每个函数都以其检查结束:规则,签名的预期值,字节的观察值,以及它们是否一致. 报告以两次反转检查和工具捕获结束. 在84个函数分析中,有489项检查,所有489项都同意.
@@ -331,6 +332,7 @@ for row in eh_frame_cross_check("convention-x86_64-linux-O2-eh"):
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

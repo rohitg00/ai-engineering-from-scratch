@@ -3,7 +3,7 @@
 > 拆除列表是关于哪些字节是指令的索赔,这个课程构建了检查索的解码器和图表.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch)
 **Time:** ~150 minutes
 
@@ -347,6 +347,7 @@ rea 6.5.0 与Ghidra 12.1.4提供商返回函数的列表文本`procedure_assembl
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出是一个JSON报告.对于每个固定对象,它给出了预言协议.对于每个函数,它给出了指令,区块和边缘计算在三个方法下.它还列出无法达到的区块,未解决的间接跳跃,后边缘,直接主导者和任何表.它结束了陷比较.
@@ -486,6 +487,7 @@ analysis.cfg.back_edges()
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 检查器从 计算出每一个预期值`code/main.py`它们在已完成的设备上.`PASS`现在`FAIL`或`TODO`只有五个任务都通过时,它才会出于0.`python3 code/lab.py my-answers.json`检查另一个文件.`code/tests/test_lab.py`证明检查员接受正确的答案,却拒绝错误的答案.
@@ -505,6 +507,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

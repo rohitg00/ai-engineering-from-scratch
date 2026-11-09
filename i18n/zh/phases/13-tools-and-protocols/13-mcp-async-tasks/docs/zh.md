@@ -3,7 +3,7 @@
 > 无国籍MCP并不意味着每个操作都必须在一个请求中完成.官方任务扩展提供了长时间工作的明确持久的手柄.`tools/call`任何一个例子都能回答.`tasks/get`通过客户输入`tasks/update`没有恢复协议会议.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 11 (stateless MRTR), Phase 13 · 12 (elicitation)
 **Time:** ~90 minutes
 
@@ -413,6 +413,7 @@ tp-task-lifecycle
 ```bash
 cd phases/13-tools-and-protocols/13-mcp-async-tasks/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

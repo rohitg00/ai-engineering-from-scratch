@@ -3,7 +3,7 @@
 > 链接程序在三个格式中调用没有包含的函数.本课程阅读了链接编辑器为这些调用所编写的表格,然后在一个调用后,将其填充机的插槽填写,并在名称消失后找到构建的函数.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and arm64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and arm64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow), 38 (calling conventions)
 **Time:** ~160 minutes
 
@@ -283,6 +283,7 @@ E8CC8C52C8CCAC72087C289B09FD7FD308FD62930801090B081900511F110071 04 9AAF 0048 :0
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出是一个五部分的JSON报告. `elf`两个物体的迁移数量,链接计划和动态部分,PLT和GOT`tiny-dyn-x86_64`现在,我们要去.`coff`具有两个对象的部分,迁移,功能和未定义名称. `pe`拥有该公司的标题,目录,进口,出口,基地转移和国际通用电话`tiny-x86_64.exe`现在,我们要去.`macho`保持`ledger_main`由于其,链接的固定,固定行,和出口,`ledger_main_nochain`,,和两份漫画报告.`identification`通过四种方法,并通过分数,`-O0`其他`-O2`现在,我们要去.
@@ -412,6 +413,7 @@ match_signatures(sigs, stripped, starts)
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

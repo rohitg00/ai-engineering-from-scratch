@@ -3,7 +3,7 @@
 > 现代MCP客户端每次请求都会重复其合同. 它最难的兼容性决定是知道什么时候一个旧服务器真的老了,什么时候一个现代服务器正在报告一个可纠正的错误.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lesson 07
 **Time:** ~85 minutes
 
@@ -178,6 +178,7 @@ tp-client-merge
 ```bash
 cd code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

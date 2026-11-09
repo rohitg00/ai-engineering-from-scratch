@@ -3,7 +3,7 @@
 > 运输运输传输信息. 它不提供缺失协议状态.`2026-07-28`通过本地工作室和远程流向 HTTP, 两个都包含自我描述的请求.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07 and 08
 **Time:** ~65 minutes
 
@@ -189,6 +189,7 @@ tp-transport-handshake
 ```bash
 cd code
 python3 main.py --probe
+npx tsx main.ts --probe
 python3 -m unittest discover tests -v
 ```
 

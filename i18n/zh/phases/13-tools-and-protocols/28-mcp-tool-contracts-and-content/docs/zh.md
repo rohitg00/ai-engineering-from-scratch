@@ -3,7 +3,7 @@
 > 发现,论证,结果,页面化和运输元数据在一个合同时才安全自动化工具.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07, 09, and 10
 **Time:** ~120 minutes
 
@@ -353,6 +353,7 @@ if not result.get("nextCursor"):
 ```bash
 cd phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

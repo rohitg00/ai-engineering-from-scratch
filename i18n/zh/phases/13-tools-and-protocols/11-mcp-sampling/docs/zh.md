@@ -3,7 +3,7 @@
 > 通过MCP 2026-07-28将新设计的样本取消,并删除服务器到客户端请求道.如果现有工作流仍然需要客户端的模型,服务器将返回一个 `input_required`结果是,客户端将原始请求重新尝试,使用模型输出.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources and prompts)
 **Time:** ~75 minutes
 
@@ -210,6 +210,7 @@ t3-sampling-flip
 ```bash
 cd phases/13-tools-and-protocols/11-mcp-sampling/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

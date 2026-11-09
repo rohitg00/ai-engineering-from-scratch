@@ -3,7 +3,7 @@
 > 结构化输出通过限制解码缩小缩小了这一差距:模型字面上被阻止发出违反方案的代币.OpenAI的严格模式,Anthropic的方案类型工具使用,双胞胎的 `responseSchema`星的AI`output_type`,和佐德的`.parse`这一课构建了方案验证器,严格模式的合同学习者将用于每个生产提取管道.
 
 **Type:** Build
-**Languages:** Python (stdlib, JSON Schema 2020-12 subset)
+**Languages:** Python, TypeScript (stdlib, JSON Schema 2020-12 subset)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

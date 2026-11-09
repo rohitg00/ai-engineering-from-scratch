@@ -3,7 +3,7 @@
 > 提供商锁定是昂贵的. 不同工具调用工作负载适合不同的模型. 路由网关提供一个API表面,重试,故障,成本跟踪和防护. 2026年将占据三种类型的主导地位:LiteLLM (开源自主托管),OpenRouter (管理SaaS),Portkey (生产级,开源于2026年3月). 这一课列出了决策标准,并通过了SDLB路由门户.
 
 **Type:** Learn
-**Languages:** Python (stdlib, routing + failover + cost tracker)
+**Languages:** Python (stdlib, routing + failover + cost tracker), TypeScript
 **Prerequisites:** Phase 13 · 02 (function calling), Phase 13 · 17 (gateways)
 **Time:** ~45 minutes
 

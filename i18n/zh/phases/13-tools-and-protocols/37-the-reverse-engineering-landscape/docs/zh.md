@@ -3,7 +3,7 @@
 > 五种工具读取相同的对象,给出四个地址,三个块数,
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, Java (one Ghidra script)
+**Languages:** Python, TypeScript, C, x86-64 assembly, Java (one Ghidra script)
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~150 minutes
 
@@ -342,6 +342,7 @@ void sym.grade (int64_t arg1) {
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出是一个JSON报告. 机器的工具可能都没有. 然后给每一个四个对象的符号扩展,填充空隙,每个工具的基础,每个工具的函数启动,每个工具的指令-启动协议,区块数,边缘数,每个工具缺少的边缘. 结尾是每个工具的字节计数,工具的笔记,简单句子中的发现列表,以及IR部分:翻译器对捕获的电梯上测量的数量旁边的三个指示输出.
@@ -472,6 +473,7 @@ report["functionStarts"]["angr"]
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

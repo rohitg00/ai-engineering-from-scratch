@@ -3,7 +3,7 @@
 > 字节码文件是一个程序加上编译器的笔记,这个课程建立了读者,
 
 **Type:** Build
-**Languages:** Python, Java, C#, WebAssembly text
+**Languages:** Python, TypeScript, Java, C#, WebAssembly text
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow)
 **Time:** ~150 minutes
 
@@ -265,6 +265,7 @@ IL_0023: 1a 2a        ldc.i4.4, ret
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出是一个JSON报告. 每个 pyc 均给出头条,文件和`grade`对于每个类构建,它给出了版本,大小,调试表数,以及`javap`对于每一个体构建,它给出了部分,类型,功能,名称部分内容,以及`wasm-objdump`对于组件,它给出了CLI标题,流,表列数量,方法以及系统.反思.元数据协议.它以保存表和翻译者列表结束.`PATH`现在,我们要去.
@@ -378,6 +379,7 @@ asm.token_text(0x11000001)
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

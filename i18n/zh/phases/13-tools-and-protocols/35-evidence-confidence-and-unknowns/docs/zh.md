@@ -3,7 +3,7 @@
 > 编译的程序的发现是包含一个哈希,一个信任,一个权威,以及它不能显示的列表的记录.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~105 minutes
 
@@ -306,6 +306,7 @@ uint grade(int param_1)
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 演示器阅读对象,进口两个 rea记录,验证 rea快照,并推导两个模型.然后记录18个预测,打开18个未知,编译和运行带,检查每个索赔,并解决17个未知.预期形状:
@@ -441,6 +442,7 @@ ledger.verify_unknown_chain(unknown_id)
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 检查器从 计算出每一个预期值`code/main.py`它们在已完成的设备上.`PASS`现在`FAIL`或`TODO`只有五个任务都通过时,它才会出于0.`python3 code/lab.py my-answers.json`检查另一个文件.`code/tests/test_lab.py`证明检查员接受正确的答案,却拒绝错误的答案.
@@ -460,6 +462,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

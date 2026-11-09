@@ -5,7 +5,7 @@
 > **Spec note (2026-07-28):**动态客户端注册被废除以支持客户端ID元数据文件.DCR仍然是一个兼容性机制.当它被使用时,客户端声明正确的`application_type`客户验证现有RFC 9207`iss`授权服务器发行商之间永远不会重复使用凭证.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 16 (OAuth 2.1 state machine), Phase 13 · 17 (gateways)
 **Time:** ~90 minutes
 
@@ -329,6 +329,7 @@ t3-jwks-rotate
 ```bash
 cd phases/13-tools-and-protocols/18-mcp-auth-production
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > 在2024年,这三个边境供应商都在同一工具调用循环上汇聚,然后在其他方面分歧.`tools`其他`tool_calls`人类用品`tool_use`其他`tool_result`双胞胎使用`functionDeclarations`这一课将三个字符相对不同,以便在一个提供商上发送的代码在移植时不会破裂.
 
 **Type:** Build
-**Languages:** Python (stdlib, schema translators)
+**Languages:** Python, TypeScript (stdlib, schema translators)
 **Prerequisites:** Phase 13 · 01 (the tool interface)
 **Time:** ~75 minutes
 

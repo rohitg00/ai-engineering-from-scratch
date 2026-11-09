@@ -3,7 +3,7 @@
 > 工具执行操作.资源暴露可地址的内容.提示用户选择的信息模板.一个好的MCP服务器将这些合同保持分开和可预测.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lesson 07 (Building an MCP Server), Phase 13, Lesson 09 (MCP Transports)
 **Time:** ~60 minutes
 
@@ -279,6 +279,7 @@ t3-primitive-sort
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 
@@ -304,6 +305,7 @@ python3 -m unittest discover tests -v
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

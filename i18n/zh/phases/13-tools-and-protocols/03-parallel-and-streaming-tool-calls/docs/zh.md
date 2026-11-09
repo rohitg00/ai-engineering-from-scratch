@@ -3,7 +3,7 @@
 > 通过三次独立的天气查询,将进行三次回路.并行运行它们,总时间将崩到最慢的单次通话.每个边境提供商现在在单次转换中发出多次工具通话. 收益是真实的;管道是微妙的. 这一课程走着两个半端:并行风扇和流动论点重新组装,强调了ID相关陷.
 
 **Type:** Build
-**Languages:** Python (stdlib, thread pool + streaming harness)
+**Languages:** Python, TypeScript (stdlib, thread pool + streaming harness)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

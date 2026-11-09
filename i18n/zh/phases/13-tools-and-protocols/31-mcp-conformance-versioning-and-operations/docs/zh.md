@@ -3,7 +3,7 @@
 > 服务器不符合,因为其快乐路径通过一个SDK工作. 符合性在线,版本边界,通过中间人,以及在滚动过程中.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 17 (gateways), Phase 13 · 30 (registry admission)
 **Time:** ~100 minutes
 
@@ -265,6 +265,7 @@ HTTP 字段名称是不敏感的,而它们的值仍然是敏感的. 在搜索之
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 演示程序运行了15个黄金和负面的转录,包括有效和错误的完成结果,将原始结果与SDK视图进行比较,检查一个失败的代理,评估健康,验证反弹证据,并选择目标.
@@ -395,6 +396,7 @@ compare_sdk_view(
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > 根源在MCP 2026-07-28中已经过时,从来没有成为安全沙箱.将可见工具参数或资源URI进行范围,在服务器上授权,并在工具真正需要用户输入时使用MRTR.用户看到决定,模型看到手柄,任何服务器实例都可以处理重试.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 11 (stateless MRTR)
 **Time:** ~60 minutes
 
@@ -247,6 +247,7 @@ t3-roots-boundary
 ```bash
 cd phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

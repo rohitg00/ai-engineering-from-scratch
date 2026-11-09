@@ -3,7 +3,7 @@
 > 解译器打印`a->balance`如果它有类型表,`*(int *)(param_1 + 4)`这一课程从访问中构建表,从DWARF5中读取真实表,并显示两者一致的地方.
 
 **Type:** Build
-**Languages:** Python, C, C++, x86-64 assembly
+**Languages:** Python, TypeScript, C, C++, x86-64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~140 minutes
 
@@ -383,6 +383,7 @@ e9 01 00 00   unit_length = 0x1e9 = 489
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出是一个五部分的JSON报告. `dwarf`具有单位标题,结构和函数.`-O0`它们是什么?`oracles`包含了 psABI 规则布局,`ctypes`设置,DWARF布局,本地运行,`agree`标志`builds`它们的位置和位置都在一个位置上.`cxx`包含了解密的名称,两个vtables,两个typeinfo记录,虚拟呼叫,和DWARF插槽. `tools`列出捕获的工具输出.
@@ -513,6 +514,7 @@ find_virtual_calls(load_listing("shapes-x86_64-O0-g.objdump.txt"), [read_vtable(
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

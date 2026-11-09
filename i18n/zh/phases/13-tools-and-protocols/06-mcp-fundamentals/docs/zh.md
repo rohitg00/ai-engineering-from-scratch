@@ -3,7 +3,7 @@
 > 现代MCP没有握手和协议会议.每个请求必须包含足够的元数据,才能被理解,授权,路由和重新尝试.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 01 through 05
 **Time:** ~55 minutes
 
@@ -164,6 +164,7 @@ mcp-tool-call
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

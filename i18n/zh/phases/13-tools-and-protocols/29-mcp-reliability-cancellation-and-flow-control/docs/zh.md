@@ -3,7 +3,7 @@
 > 请求 ID 与消息相关,它不会使副作用安全,阻止一个工作者,或者保护一个流量免受缓慢的消费者.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 09 and 13
 **Time:** ~120 minutes
 
@@ -336,6 +336,7 @@ cap: 8000 ms
 ```bash
 cd phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

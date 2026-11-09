@@ -3,7 +3,7 @@
 > 优化编译器将源构件取代于更便宜的指令形状.每个形状都有衍生,这课程构建了向后运行衍生的识别器,并与源进行检查.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly, AArch64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode), Phase 13 · 38 (calling conventions)
 **Time:** ~150 minutes
 
@@ -253,6 +253,7 @@ re-39-idioms-by-level
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出是一个JSON报告.对于每个18个构建中,它列出了每个函数及其语法,包括类型,源形式,证据地址,验证和细节字段.它以每个构建的类型矩阵结束,`-O2`其他`-O3`建筑物和建筑物之间的比较`unverified`列表.
@@ -380,6 +381,7 @@ for name in ("idioms-x86_64-O1", "idioms-arm64-O1"):
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

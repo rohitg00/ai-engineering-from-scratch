@@ -3,7 +3,7 @@
 > 模型不能知道使用时间,当正确的工具默默失败.命名,描述和参数形状在StableToolBench和MCPToolBench+等基准上导致工具选择准确度的10到20个百分点波动.本课程命名了设计规则,以分离模型可靠地选择的工具和模型错误的工具.
 
 **Type:** Learn
-**Languages:** Python (stdlib, tool schema linter)
+**Languages:** Python, TypeScript (stdlib, tool schema linter)
 **Prerequisites:** Phase 13 · 01 (the tool interface), Phase 13 · 04 (structured output)
 **Time:** ~45 minutes
 

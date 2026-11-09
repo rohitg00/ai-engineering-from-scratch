@@ -3,7 +3,7 @@
 > 技能在被装载之前就会变得有用.它的名称和描述在目录中获得位置;其更深层次的文件只有当任务达到它们时才获得了语境.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 22 (Agent Skills: Portable Contract and Runtime Boundary)
 **Time:** ~105 minutes
 
@@ -235,6 +235,7 @@ skill-resource-containment
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

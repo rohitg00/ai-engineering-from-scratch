@@ -3,7 +3,7 @@
 > 破点击是关于一个运行的观察. 这一课程建立了这种结合,将这些观察转化为证实,驳斥和未观察的判决.
 
 **Type:** Build
-**Languages:** Python, C, arm64 assembly, lldb command language
+**Languages:** Python, TypeScript, C, arm64 assembly, lldb command language
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~130 minutes
 
@@ -357,6 +357,7 @@ TeamIdentifier=not set
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出是保存的转录中一个JSON报告. 对于每个构建,它列出了分离点,其分辨率和击数,硬件监控点数,其注册表和参数,出口状态,程序输出,印出的错误,以及其判决和证据记录的索赔. 它增加了核心回路,Python API结果,沙盒故障,以及该机器上缺失的外部工具.
@@ -496,6 +497,7 @@ broken = parse_transcript(text)
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

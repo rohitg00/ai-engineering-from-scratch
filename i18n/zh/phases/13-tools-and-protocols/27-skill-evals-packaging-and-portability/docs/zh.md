@@ -3,7 +3,7 @@
 > 一个技能是完成的,当它的包裹存活,路由在正确的请求,改善一个测量任务,保持在政策,
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 22, 24, 25, and 26
 **Time:** ~150 minutes
 
@@ -425,6 +425,7 @@ package:
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 
