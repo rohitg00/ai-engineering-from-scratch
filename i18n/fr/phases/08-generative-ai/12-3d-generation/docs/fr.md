@@ -3,7 +3,7 @@
 > La 3D est la modalité où le levier 2D à 3D est le plus fort. La percée de 2023 a été 3D Gaussian Splating. La couche de poussée générative 2024-2026 diffusion multi-vue + reconstruction 3D en haut pour produire des objets et des scènes à partir d'un seul prompt ou photo.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 4 (Vision), Phase 8 · 07 (Latent Diffusion)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Une image est un tensor 2D. Une vidéo est une 3D. La théorie est la même; le calcul est 10-100 fois plus difficile. Sora d'OpenAI (février 2024) a prouvé que c'était possible.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 7 · 09 (ViT), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 

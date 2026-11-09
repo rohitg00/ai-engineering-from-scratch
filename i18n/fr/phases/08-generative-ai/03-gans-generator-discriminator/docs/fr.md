@@ -3,7 +3,7 @@
 > Le truc de Goodfellow en 2014 était de sauter la densité entièrement. Deux réseaux. L'un fait des faux. L'autre les attrape. Ils se battent jusqu'à ce que les faux soient indistinguibles du vrai. Cela ne devrait pas fonctionner. Cela ne fonctionne souvent pas. Quand cela se produit, les échantillons sont toujours les plus acérés dans la littérature pour les domaines étroits.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 08 (Optimizers), Phase 8 · 02 (VAE)
 **Time:** ~75 minutes
 

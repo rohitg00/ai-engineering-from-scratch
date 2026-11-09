@@ -3,7 +3,7 @@
 > L'audio est un signal 1D à 16-48 kHz. Un clip de cinq secondes est de 80 à 240k échantillons. Aucun transformateur ne prend directement en charge cette séquence. La solution pour chaque modèle audio de production en 2026 est la même: un codec neuronal (Encodec, SoundStream, DAC) comprime l'audio à des jetons discrets à 50-75 Hz, et un modèle de transformateur ou de diffusion génère des jetons.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Audio Features), Phase 6 · 04 (ASR), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 

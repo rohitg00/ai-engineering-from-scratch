@@ -3,7 +3,7 @@
 > Les modèles de diffusion prennent 20 à 50 étapes de prélèvement d'échantillons parce qu'ils suivent un chemin incurvé du bruit aux données.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 06 (DDPM), Phase 1 · Calculus
 **Time:** ~45 minutes
 

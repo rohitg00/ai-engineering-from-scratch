@@ -3,7 +3,7 @@
 > La diffusion de l'espace-pixel sur 512 × 512 images est un crime de guerre informatique. Rombach et coll. (2022) ont remarqué que vous n'avez pas besoin de toutes les dimensions 786k pour générer une image  vous avez besoin de suffisamment pour capturer la structure sémantique, et un décodeur séparé pour le reste.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 02 (VAE), Phase 8 · 06 (DDPM), Phase 7 · 09 (ViT)
 **Time:** ~75 minutes
 

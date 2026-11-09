@@ -3,7 +3,7 @@
 > Ho, Jain, Abbeel (2020) a donné au champ une recette qu'il ne pouvait pas arrêter. Destruire les données avec du bruit sur mille petits pas. Formez un filet neuronal pour prédire le bruit. Inversez le processus à l'inférence. Aujourd'hui, chaque image, vidéo, 3D et modèle musical traditionnel fonctionne sur cette boucle, éventuellement avec des astuces de correspondance de flux ou de cohérence en haut.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 8 · 02 (VAE)
 **Time:** ~75 minutes
 

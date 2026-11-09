@@ -3,7 +3,7 @@
 > Un simple autoencodeur comprime puis reconstruit. Il mémore. Il ne génère pas. Ajoutez une astuce  forcez le code à regarder Gaussian  et vous obtenez un échantillonneur. Cette astuce unique, la réparamétrisation de $z = \mu + \sigma \cdot \epsilon$C'est pourquoi chaque modèle d'image de diffusion latente et de correspondance de flux que vous utilisez en 2026 a un VAE à l'entrée.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
 **Time:** ~75 minutes
 

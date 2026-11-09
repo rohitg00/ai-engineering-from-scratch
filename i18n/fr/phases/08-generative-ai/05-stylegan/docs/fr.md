@@ -3,7 +3,7 @@
 > La plupart des générateurs se déplacent .$z$StyleGAN le partage: première carte$z$à un intermédiaire $w$, puis * injecter *$w$Ce changement unique a démêlé l'espace latent et fait des visages photoréalistes un problème résolu pendant sept ans consécutifs.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Le texte seul est un signal de contrôle maladroit. ControlNet vous permet de cloner un modèle de diffusion prétrainé et de le diriger avec une carte de profondeur, un squelette de pose, un graffiti ou une image de bord. LoRA vous permet de affiner un modèle de paramètre 2B en entraînant 10 millions de paramètres. Ensemble, ils ont transformé Stable Diffusion d'un jouet en pipeline d'image 2026 qui est expédié à chaque agence.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 10 (LLMs from Scratch — for LoRA foundation)
 **Time:** ~75 minutes
 

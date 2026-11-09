@@ -3,7 +3,7 @@
 > La première grande déblocage de 2014-2017 était de contrôler ce qu'une GAN fait. Attachez une étiquette, ou une image, ou une phrase. Pix2Pix a fait la version d'image et il bat toujours tous les modèles génériques texte-à-image sur les tâches étroites image-à-image.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 06 (U-Net), Phase 3 · 07 (CNNs)
 **Time:** ~75 minutes
 

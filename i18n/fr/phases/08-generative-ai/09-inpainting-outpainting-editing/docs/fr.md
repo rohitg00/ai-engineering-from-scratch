@@ -3,7 +3,7 @@
 > Le texte à l'image crée de nouvelles choses. L'encrage corrige les vieilles. En production, 70% du travail d'image facturable est de modifier  échanger un fond, supprimer un logo, étendre la toile, régénérer une main. L'encrage est où la diffusion gagne sa conservation.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 8 · 08 (ControlNet & LoRA)
 **Time:** ~75 minutes
 

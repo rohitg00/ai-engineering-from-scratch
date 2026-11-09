@@ -3,7 +3,7 @@
 > Chaque modèle d'image, modèle de texte, modèle vidéo et modèle 3D s'adapte à l'un des cinq seins. Choisissez le mauvais seau et vous allez vous battre les mathématiques pendant des semaines. Choisissez le bon et les douze dernières années de progrès du domaine s'accumulent en votre tête.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 (ML Fundamentals), Phase 3 (Deep Learning Core), Phase 7 · 14 (Transformers)
 **Time:** ~45 minutes
 

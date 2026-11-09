@@ -3,7 +3,7 @@
 > Chaque tableau de classement génératif cite FID, CLIP score et un taux de victoire d'une arène de préférence humaine. Chaque nombre a un mode d'échec un chercheur déterminé peut jouer. Si vous ne connaissez pas les modes d'échec, vous ne pouvez pas dire une amélioration réelle d'une course de jeu.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 01 (Taxonomy), Phase 2 · 04 (Evaluation Metrics)
 **Time:** ~45 minutes
 
