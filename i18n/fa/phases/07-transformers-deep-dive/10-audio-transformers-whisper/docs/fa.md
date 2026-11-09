@@ -3,7 +3,7 @@
 > صداي يک تصويري از ترديد در طول زمان است و همسنگي يک وي تي است که طیف هاي ميل را مي خورد و به شما پاسخ مي دهد
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 08 (Encoder-Decoder), Phase 7 · 09 (ViT)
 **Time:** ~45 minutes
 

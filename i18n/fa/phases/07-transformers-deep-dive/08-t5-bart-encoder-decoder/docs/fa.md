@@ -3,7 +3,7 @@
 > کدرها درک می کنند. کدرها تولید می کنند. آنها را دوباره به هم می اندازیم و شما یک مدل برای وظایف ورودی → خروجی ساخته می شوید: ترجمه، خلاصه، نوشتن مجدد، نقل.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 

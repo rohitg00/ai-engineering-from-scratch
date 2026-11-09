@@ -3,7 +3,7 @@
 > GPT کلمه بعدی را پیش بینی می کند. BERT یک کلمه گم شده را پیش بینی می کند. یک جمله تفاوت  و نیم دهه از همه چیز به شکل ادغام.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 5 · 02 (Text Representation)
 **Time:** ~45 minutes
 

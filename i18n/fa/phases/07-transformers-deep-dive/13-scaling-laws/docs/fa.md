@@ -3,7 +3,7 @@
 > مقاله کپلان سال 2020 گفت: مدل بزرگتر، ضرر کمتر. مقاله هوفمن سال 2022 گفت: شما زیر آموزش بودید. محاسبه به دو سطل می رود  پارامتر و توکن  و تقسیم آشکار نیست.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
