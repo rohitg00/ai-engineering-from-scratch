@@ -3,7 +3,7 @@
 > النموذج المُنشر يفشل دون رسالة خطأ. يواصل إرجاع النتائج بينما يتحرك العالم بعيداً عن بياناته التدريبية، و فقط المراقبة تظهر الفجوة.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation), 16 (Anomaly Detection), and 19 (ML System Design)
 **Time:** ~110 minutes
 
@@ -261,6 +261,7 @@ def level(self, metrics: dict[str, float]) -> str:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console

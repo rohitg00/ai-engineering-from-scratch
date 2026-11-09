@@ -3,7 +3,7 @@
 > يحتوي الميزة على تعريف واحد وقارئين. يقرأ التدريب تاريخها من كل وقت من علامات التسمية، ويقرأ الخدمة أحدث قيمته. عندما يختلف القارئين، يرى النموذج مدخلات لم يتدرب عليها أبدا.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 08 (Feature Engineering), 13 (ML Pipelines), 15 (Time Series), and 19 (ML System Design)
 **Time:** ~100 minutes
 
@@ -275,6 +275,7 @@ def detect_skew(
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console

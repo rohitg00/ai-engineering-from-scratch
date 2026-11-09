@@ -17,7 +17,7 @@
   "phases/02-ml-fundamentals/16-anomaly-detection/docs/en.md": "511926f7ba6c9e974c5e5b3e0bb0603ee67934db7244824d97251c7ff075415a",
   "phases/02-ml-fundamentals/17-imbalanced-data/docs/en.md": "9a9a88a93765cf18f82e7169fbd23b8ff429d8344ed75fbfb9889f218342d138",
   "phases/02-ml-fundamentals/18-feature-selection/docs/en.md": "292bda694502d73199356b998ca3f430bac934a99b7d75bf77417bca94e091cb",
-  "phases/02-ml-fundamentals/19-ml-system-design/docs/en.md": "4e7a93c271f20f99fc9514f2e1dece8cd17051694dc554174ae533e23d404fa8",
-  "phases/02-ml-fundamentals/20-model-monitoring-and-drift/docs/en.md": "67ed1a1ed2ff0330085ca582c4068f307318a126ad1b6c591ce56a7022bfa082",
-  "phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/docs/en.md": "4d63c14290d143ba7850ae4a6a15c3f6db968e2f9a3e1215c853c4e83cc623a5"
+  "phases/02-ml-fundamentals/19-ml-system-design/docs/en.md": "0b2990f87b178f729150304e88c32f6b41c315bfd7d0ed30ba84c3654c9be9b7",
+  "phases/02-ml-fundamentals/20-model-monitoring-and-drift/docs/en.md": "c7d059e55efd1e93278f60e2b3a05f5448c9e3016176ce8340e47baff1e1de46",
+  "phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/docs/en.md": "7858b272d2c426e9a48c1d023645e8e010b8d5d89f72c3e3b09a232f8a5f4e61"
 }
