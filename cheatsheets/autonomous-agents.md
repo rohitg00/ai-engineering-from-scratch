@@ -119,7 +119,7 @@ from: phases/15-autonomous-systems/13-cost-governors/code/main.py, phases/15-aut
 | `max_tokens_per_request` | 10_000 | Per-call completion cap |
 | `max_turns` | 200 | Loop iterations per session |
 | `max_budget_usd` | 50.0 | Session dollars, aborts on breach |
-| `velocity_usd_per_min` | 5.0 | Rolling spend rate cut-off |
+| `velocity_usd_per_min` | 0.03 | Rolling spend rate cut-off |
 | `velocity_window_min` | 10.0 | Window for the rate |
 | `monthly_cap_usd` | 500.0 | Catches slow leaks late |
 | `threshold` | 5 | Identical calls that open the breaker |
