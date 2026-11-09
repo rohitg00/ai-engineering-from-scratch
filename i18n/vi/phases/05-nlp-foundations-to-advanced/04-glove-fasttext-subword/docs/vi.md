@@ -3,7 +3,7 @@
 > Word2Vec đào tạo một việc nhúng mỗi từ. GloVe đã tính toán các matrix co-occurrence. FastText nhúng các mảnh. BPE nối với các bộ chuyển đổi.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec from Scratch)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > "Bà gọi cho anh ta, anh ta không trả lời, bác sĩ đang ăn trưa". Ba lần nhắc đến hai người và không ai được đặt tên.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 

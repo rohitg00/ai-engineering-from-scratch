@@ -3,7 +3,7 @@
 > Bộ giải mã ngừng nhìn vào một bản tóm tắt nén và bắt đầu nhìn vào toàn bộ nguồn.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 09 (Sequence-to-Sequence Models)
 **Time:** ~45 minutes
 

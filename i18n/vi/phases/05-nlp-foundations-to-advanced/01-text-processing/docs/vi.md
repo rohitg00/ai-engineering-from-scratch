@@ -3,7 +3,7 @@
 > Ngôn ngữ là liên tục, mô hình là riêng biệt, xử lý trước là cầu nối.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Nếu một từ là đáng ngạc nhiên, mô hình là xấu. Sự bối rối làm cho một số ngạc nhiên. Nhấp nhàng giữ cho nó hữu hạn.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

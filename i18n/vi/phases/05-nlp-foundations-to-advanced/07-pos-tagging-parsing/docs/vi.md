@@ -3,7 +3,7 @@
 > ngữ pháp đã không còn thời trang trong một thời gian, sau đó mỗi LLM cần phải xác nhận việc khai thác có cấu trúc, và nó trở lại.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

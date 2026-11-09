@@ -3,7 +3,7 @@
 > NER tìm thấy "Paris". Cơ quan liên kết quyết định: Paris, Pháp? Paris Hilton? Paris, Texas? Paris (tổng hoàng tử Trojan)?
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 24 (Coreference Resolution)
 **Time:** ~60 minutes
 

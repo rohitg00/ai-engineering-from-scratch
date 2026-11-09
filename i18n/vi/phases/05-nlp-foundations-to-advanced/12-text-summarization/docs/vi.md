@@ -3,7 +3,7 @@
 > Hệ thống thu thập thông tin cho bạn biết tài liệu nói gì hệ thống trừu tượng cho bạn biết tác giả có ý gì các nhiệm vụ khác nhau, các bẫy khác nhau
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 11 (Machine Translation)
 **Time:** ~75 minutes
 

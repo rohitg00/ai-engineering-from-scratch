@@ -3,7 +3,7 @@
 > Khi bạn làm việc với một người khác, bạn sẽ phải làm việc với người khác để làm việc với họ.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

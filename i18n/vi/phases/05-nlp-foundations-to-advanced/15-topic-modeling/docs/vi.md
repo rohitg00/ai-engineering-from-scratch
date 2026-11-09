@@ -3,7 +3,7 @@
 > LDA: tài liệu là hỗn hợp các chủ đề, các chủ đề là phân phối trên các từ. BERTopic: các tập hợp tài liệu trong không gian nhúng, các tập hợp là các chủ đề. Mục tiêu tương tự, phân hủy khác nhau.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word2Vec)
 **Time:** ~45 minutes
 

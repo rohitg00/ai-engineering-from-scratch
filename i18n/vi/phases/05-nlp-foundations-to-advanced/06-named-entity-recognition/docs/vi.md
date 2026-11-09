@@ -3,7 +3,7 @@
 > Nghe dễ dàng cho đến khi bạn đối phó với ranh giới mơ hồ, các thực thể tổ và thuật ngữ miền.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word Embeddings)
 **Time:** ~75 minutes
 

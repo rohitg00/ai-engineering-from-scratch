@@ -3,7 +3,7 @@
 > Sự phù hợp chính xác và F1 không có sự tương đương ngữ nghĩa. Phân tích của con người không có quy mô. LLM-as-judge là câu trả lời sản xuất  với đủ hiệu chuẩn để tin vào số.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

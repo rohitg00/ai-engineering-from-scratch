@@ -3,7 +3,7 @@
 > "t liên quan đến h" có nghĩa là một đọc của con người t sẽ kết luận h là đúng. NLI là nhiệm vụ dự đoán liên quan / mâu thuẫn / trung lập.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment Analysis), Phase 5 · 13 (Question Answering)
 **Time:** ~60 minutes
 

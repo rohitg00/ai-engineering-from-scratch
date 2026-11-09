@@ -3,7 +3,7 @@
 > "Tôi muốn một nhà hàng rẻ ở phía bắc... thực sự làm nó vừa phải... và thêm tiếng Ý". 3 lượt, 3 cập nhật trạng thái. DST giữ cho giá trị khe cắm dict đồng bộ để đặt phòng hoạt động.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 20 (Structured Outputs)
 **Time:** ~75 minutes
 

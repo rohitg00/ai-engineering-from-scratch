@@ -3,7 +3,7 @@
 > Gemini 3 Pro quảng cáo 10M token của ngữ cảnh. với 1M token, 8-nháp MRCR giảm xuống còn 26,3%. quảng cáo ≠ sử dụng. đánh giá ngữ cảnh dài cho bạn biết khả năng thực tế của mô hình bạn đang vận chuyển trên.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 23 (Chunking Strategies)
 **Time:** ~60 minutes
 

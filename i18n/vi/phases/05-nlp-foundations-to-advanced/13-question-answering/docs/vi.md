@@ -3,7 +3,7 @@
 > Ba hệ thống hình thành QA hiện đại. Extractive tìm thấy khoảng thời gian. lấy lại tăng cường chúng đất trong tài liệu. Generative sản xuất câu trả lời. Mỗi trợ lý AI hiện đại là một hỗn hợp của ba.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 11 (Machine Translation), Phase 5 · 10 (Attention Mechanism)
 **Time:** ~75 minutes
 

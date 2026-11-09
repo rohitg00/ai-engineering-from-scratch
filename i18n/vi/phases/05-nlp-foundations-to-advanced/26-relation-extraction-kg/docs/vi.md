@@ -3,7 +3,7 @@
 > NER tìm thấy các thực thể. thực thể liên kết được neo chúng. Khóa kết nối tìm thấy các cạnh giữa chúng. Hình đồ kiến thức là tổng số các nút, cạnh và nguồn gốc của chúng.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 25 (Entity Linking)
 **Time:** ~60 minutes
 

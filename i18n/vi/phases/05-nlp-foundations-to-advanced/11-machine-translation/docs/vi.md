@@ -3,7 +3,7 @@
 > Việc dịch là nhiệm vụ đã trả tiền cho nghiên cứu NLP trong ba mươi năm và vẫn trả tiền cho nó ngay bây giờ.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 10 (Attention Mechanism), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > TF-IDF vẫn đánh bại các nhiệm vụ được xác định rõ ràng vào năm 2026.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 02 (Linear Regression from Scratch)
 **Time:** ~75 minutes
 

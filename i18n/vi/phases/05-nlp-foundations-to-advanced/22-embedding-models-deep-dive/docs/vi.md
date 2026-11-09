@@ -3,7 +3,7 @@
 > Word2Vec cho bạn một vector cho mỗi từ. Các mô hình nhúng hiện đại cho bạn một vector cho mỗi đoạn, xuyên ngôn ngữ, với tầm nhìn hiếm, dày đặc và đa vector, kích thước phù hợp với chỉ mục của bạn. Chọn sai và RAG của bạn lấy lại sai thứ.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec), Phase 5 · 14 (Information Retrieval)
 **Time:** ~60 minutes
 

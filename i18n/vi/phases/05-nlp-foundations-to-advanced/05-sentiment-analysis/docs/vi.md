@@ -3,7 +3,7 @@
 > Nhiệm vụ NLP theo quy luật. Hầu hết những gì bạn cần biết về phân loại văn bản cổ điển được hiển thị ở đây.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 2 · 14 (Naive Bayes)
 **Time:** ~75 minutes
 

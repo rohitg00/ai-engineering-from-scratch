@@ -3,7 +3,7 @@
 > ELIZA trả lời bằng các mô hình phù hợp. DialogFlow lập bản đồ ý định. GPT trả lời từ trọng lượng. Claude chạy công cụ và xác minh. Mỗi thời đại giải quyết sự thất bại tồi tệ nhất của thời đại trước.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

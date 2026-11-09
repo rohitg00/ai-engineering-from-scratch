@@ -3,7 +3,7 @@
 > Convolutions học n-gram, recidivities nhớ, cả hai đều bị thay thế bởi sự chú ý, cả hai vẫn quan trọng trên phần cứng bị hạn chế.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 11 (PyTorch Intro), Phase 5 · 03 (Word Embeddings), Phase 4 · 02 (Convolutions from Scratch)
 **Time:** ~75 minutes
 

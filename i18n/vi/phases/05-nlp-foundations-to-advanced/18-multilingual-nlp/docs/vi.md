@@ -3,7 +3,7 @@
 > Một mô hình, 100+ ngôn ngữ, không có dữ liệu đào tạo cho hầu hết. Chuyển chuyển xuyên ngôn ngữ là phép lạ thực tế của những năm 2020.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 04 (GloVe, FastText, Subword), Phase 5 · 11 (Machine Translation)
 **Time:** ~45 minutes
 

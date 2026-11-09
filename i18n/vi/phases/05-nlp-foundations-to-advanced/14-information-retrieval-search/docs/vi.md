@@ -3,7 +3,7 @@
 > BM25 chính xác nhưng hỏng. Thiết bị dày đặc ném một mạng lưới rộng nhưng bỏ lỡ từ khóa. Hybrid là mặc định 2026. Mọi thứ khác đều được điều chỉnh.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 
