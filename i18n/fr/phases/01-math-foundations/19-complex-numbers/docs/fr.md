@@ -3,7 +3,7 @@
 > La racine carrée de -1 n'est pas imaginaire, elle est la clé des rotations, des fréquences et de la moitié du traitement du signal.
 
 **Type:** Learn
-**Language:**Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04 (linear algebra, calculus)
 **Time:** ~60 minutes
 
@@ -426,7 +426,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 ## La faire partir
 
-On court .`code/complex_numbers.py`pour générer `outputs/skill-complex-arithmetic.md`- Je suis désolé .
+On court .`code/complex_numbers.py`ou `npx tsx code/complex_numbers.ts`pour générer `outputs/skill-complex-arithmetic.md`- Je suis désolé .
 
 ## Exercices
 
