@@ -3,7 +3,7 @@
 > BERT दोनों तरफ देखता है. GPT केवल अतीत को देखता है. त्रिकोण मुखौटा आधुनिक AI में कोड की सबसे महत्वपूर्ण एकल पंक्ति है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT)
 **Time:** ~75 minutes
 

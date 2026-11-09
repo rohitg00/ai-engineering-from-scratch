@@ -3,7 +3,7 @@
 > जीपीटी अगले शब्द का भविष्यवाणी करता है. BERT एक गायब शब्द का भविष्यवाणी करता है. एक वाक्य अंतर  और आधा दशक सब कुछ एम्बेडिंग-आकार में.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 5 · 02 (Text Representation)
 **Time:** ~45 minutes
 

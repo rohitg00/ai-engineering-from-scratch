@@ -3,7 +3,7 @@
 > 2020 के कप्लान पेपर में कहा गया थाः बड़ा मॉडल, कम नुकसान। 2022 के हॉफमैन पेपर में कहा गया थाः आप कम प्रशिक्षण कर रहे थे। गणना दो बाल्टी में जाती है  पैरामीटर और टोकन  और विभाजन स्पष्ट नहीं है।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 

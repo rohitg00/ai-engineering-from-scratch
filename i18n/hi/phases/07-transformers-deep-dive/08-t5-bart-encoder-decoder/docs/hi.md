@@ -3,7 +3,7 @@
 > एन्कोडर समझते हैं. डिकोडर उत्पन्न करते हैं. उन्हें एक साथ रखें और आपको इनपुट → आउटपुट कार्यों के लिए एक मॉडल बनाया जाता हैः अनुवाद, सारांश, पुनर्लेखन, प्रतिलिपि।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > एक छवि एक पैच ग्रिड है एक वाक्य टोकन ग्रिड है एक ही ट्रांसफार्मर दोनों को खाता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 4 · 03 (CNNs), Phase 4 · 14 (Vision Transformers intro)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > ऑडियो समय के साथ आवृत्ति की एक छवि है. विस्पर एक वीटी है जो मेल स्पेक्ट्रोग्राम खाता है और वापस बोलता है।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 08 (Encoder-Decoder), Phase 7 · 09 (ViT)
 **Time:** ~45 minutes
 
