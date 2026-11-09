@@ -3,7 +3,7 @@
 > 1992: TD-Gammon venceu campeões humanos no backgammon com TD puro. 2016: AlphaGo venceu Lee Sedol. 2017: AlphaZero dominou xadrez, shogi e Go a partir do zero. 2025: DeepSeek-R1 provou a mesma receita, com o GRPO substituindo o PPO, trabalha no raciocínio.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 05 (DQN), Phase 9 · 08 (PPO), Phase 9 · 09 (RLHF), Phase 9 · 10 (MARL)
 **Time:** ~120 minutes
 

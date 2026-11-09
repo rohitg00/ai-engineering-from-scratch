@@ -3,7 +3,7 @@
 > A A2C descarta cada implementação após uma atualização. O PPO envolve o gradiente da política em uma relação de importância reduzida para que você possa fazer 10+ épocas nos mesmos dados sem a política explodir. Schulman et al. (2017). Ainda o algoritmo padrão de gradiente da política em 2026.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~75 minutes
 

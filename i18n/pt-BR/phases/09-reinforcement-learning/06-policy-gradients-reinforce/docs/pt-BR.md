@@ -3,7 +3,7 @@
 > Para de estimar o valor. Parametrizar a política diretamente, calcular o gradiente do retorno esperado, passo para cima. Williams (1992) escreveu em um teorema. É por isso que PPO, GRPO e cada ciclo LLM RL existem.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 03 (Monte Carlo), Phase 9 · 04 (TD Learning)
 **Time:** ~75 minutes
 
