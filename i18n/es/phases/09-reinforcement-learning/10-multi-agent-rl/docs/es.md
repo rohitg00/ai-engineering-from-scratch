@@ -3,7 +3,7 @@
 > El RL de agente único supone que el entorno está estacionario. Colocar dos agentes de aprendizaje en el mismo mundo y esa suposición se rompe: cada agente es parte del entorno del otro, y ambos están cambiando.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (Q-learning), Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~45 minutes
 

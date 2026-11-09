@@ -3,7 +3,7 @@
 > ReINFORCE es ruidoso.$\hat{V}(s)$, restar de la vuelta, y usted obtiene una ventaja que tiene la misma expectativa pero mucho menor varianza. Eso es actor-crítica. A2C lo ejecuta sincrónicamente; A3C lo ejecuta a través de hilos. Ambos son el modelo mental para cada método moderno de RL profundo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 04 (TD Learning), Phase 9 · 06 (REINFORCE)
 **Time:** ~75 minutes
 

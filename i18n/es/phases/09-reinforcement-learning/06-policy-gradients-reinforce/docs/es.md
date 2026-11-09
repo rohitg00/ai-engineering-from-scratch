@@ -3,7 +3,7 @@
 > Dejar de estimar el valor. Parametrizar la política directamente, calcular el gradiente de la rentabilidad esperada, paso hacia arriba. Williams (1992) lo escribió en un teorema. Es por eso que existen PPO, GRPO y cada bucle LLM RL.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 03 (Backpropagation), Phase 9 · 03 (Monte Carlo), Phase 9 · 04 (TD Learning)
 **Time:** ~75 minutes
 

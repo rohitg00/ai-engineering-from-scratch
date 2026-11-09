@@ -3,7 +3,7 @@
 > La programación dinámica es RL con el engaño. Ya sabes las funciones de transición y recompensa; sólo se repite la ecuación de Bellman hasta que$V$o $\pi$El método de referencia es el que todos los métodos basados en muestreo intentan abordar.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs)
 **Time:** ~75 minutes
 

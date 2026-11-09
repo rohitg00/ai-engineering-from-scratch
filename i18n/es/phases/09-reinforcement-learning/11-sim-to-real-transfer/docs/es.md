@@ -3,7 +3,7 @@
 > Una política entrenada en un simulador que falla en el hardware es una política que memorizó el simulador.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 08 (PPO), Phase 2 · 10 (Bias/Variance)
 **Time:** ~45 minutes
 

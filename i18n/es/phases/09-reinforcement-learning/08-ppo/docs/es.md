@@ -3,7 +3,7 @@
 > A2C arroja cada implementación después de una actualización. PPO envuelve el gradiente de política en una relación de importancia reducida para que pueda hacer 10+ épocas en los mismos datos sin que la política explode. Schulman et al. (2017).
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 06 (REINFORCE), Phase 9 · 07 (Actor-Critic)
 **Time:** ~75 minutes
 

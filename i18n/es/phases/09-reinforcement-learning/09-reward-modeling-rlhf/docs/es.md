@@ -3,7 +3,7 @@
 > Los humanos no pueden escribir una función de recompensa para "buena respuesta de asistente", pero pueden comparar dos respuestas y elegir la mejor. Ajuste un modelo de recompensa a esas comparaciones, luego RL el modelo de lenguaje en contra de ella. Cristiano 2017.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment), Phase 9 · 08 (PPO)
 **Time:** ~45 minutes
 
