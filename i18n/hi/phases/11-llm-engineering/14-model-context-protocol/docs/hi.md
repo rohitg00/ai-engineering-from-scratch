@@ -3,7 +3,7 @@
 > एमसीपी एक एआई होस्ट को उपकरण, संसाधन और संकेतों की खोज और उन्हें कॉल करने के लिए एक प्रोटोकॉल देता है। 2026-07-28 संशोधन उस प्रोटोकॉल को स्टेटलेस बनाता हैः क्षमता और संस्करण संदर्भ प्रत्येक अनुरोध के साथ यात्रा करता है, कनेक्शन-बाउंड हैंडशैक में नहीं।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 03 (Structured Outputs)
 **Time:** ~75 minutes
 
@@ -215,6 +215,7 @@ Mcp-Name: add
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 cd code
 python3 -m unittest discover tests -v
 ```
