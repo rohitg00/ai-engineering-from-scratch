@@ -3,7 +3,7 @@
 > MCP donne à un hôte d'IA un protocole pour découvrir et invoquer des outils, des ressources et des invites. La révision 2026-07-28 rend ce protocole stéréotique: la capacité et le contexte de version voyagent avec chaque demande, pas dans une poignée de main liée à la connexion.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 03 (Structured Outputs)
 **Time:** ~75 minutes
 
@@ -215,6 +215,7 @@ Exécutez la leçon de son répertoire:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 cd code
 python3 -m unittest discover tests -v
 ```

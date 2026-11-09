@@ -3,7 +3,7 @@
 > Chaque framework vend la même démo (un agent de recherche crée un rapport) et cache le même bug (un schéma d'état lutte avec la couche d'orchestration). Choisissez le framework dont les abstractions correspondent à la forme de votre problème; tout le reste est de la colle que vous écrivez deux fois.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 16 (LangGraph)
 **Time:** ~45 minutes
 

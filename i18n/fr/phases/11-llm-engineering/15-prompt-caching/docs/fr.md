@@ -3,7 +3,7 @@
 > Votre système de mise en cache est de 4000 jetons. Votre contexte RAG est de 20.000 jetons. Vous envoyez les deux avec chaque demande. Vous payez également pour les deux  à chaque fois. Le caching rapide permet au fournisseur de garder ce préfixe chaud de son côté et vous facture 10% du taux normal sur la réutilisation.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 01 (Prompt Engineering), Phase 11 · 05 (Context Engineering), Phase 11 · 11 (Caching and Cost)
 **Time:** ~60 minutes
 
