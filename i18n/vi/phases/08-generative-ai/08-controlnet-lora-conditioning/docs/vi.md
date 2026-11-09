@@ -3,7 +3,7 @@
 > Chỉ riêng văn bản là một tín hiệu điều khiển khó xử. ControlNet cho phép bạn sao chép một mô hình phân tán được đào tạo trước và điều khiển nó bằng một bản đồ độ sâu, hình dạng hình dạng xương, vỏ hoặc cạnh. LoRA cho phép bạn điều chỉnh một mô hình tham số 2B bằng cách đào tạo 10 triệu tham số. Cùng nhau họ đã biến Stable Diffusion từ một đồ chơi thành đường ống dẫn hình ảnh 2026 được gửi đến mọi cơ quan.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 10 (LLMs from Scratch — for LoRA foundation)
 **Time:** ~75 minutes
 

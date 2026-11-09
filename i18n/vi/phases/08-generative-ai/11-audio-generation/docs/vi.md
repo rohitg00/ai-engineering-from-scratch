@@ -3,7 +3,7 @@
 > Âm thanh là tín hiệu 1-D ở 16-48 kHz. Một clip năm giây là 80-240k mẫu. Không một biến thể nào trực tiếp tham gia vào chuỗi đó. Giải pháp cho mọi mô hình âm thanh sản xuất vào năm 2026 là giống nhau: một codec thần kinh (Encodec, SoundStream, DAC) nén âm thanh thành các token riêng biệt ở 50-75 Hz, và một mô hình biến thể hoặc phân tán tạo ra các token.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 6 · 02 (Audio Features), Phase 6 · 04 (ASR), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 

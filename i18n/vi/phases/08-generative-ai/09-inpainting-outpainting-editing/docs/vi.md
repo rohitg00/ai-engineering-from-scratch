@@ -3,7 +3,7 @@
 > Text-to-image tạo ra những thứ mới. Inpainting sửa chữa những thứ cũ. Trong sản xuất, 70% công việc hình ảnh có thể thanh toán là chỉnh sửa  thay đổi nền, loại bỏ logo, mở rộng tấm vải, tái tạo một tay. Inpainting là nơi sự lan truyền kiếm được sự duy trì của nó.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 8 · 08 (ControlNet & LoRA)
 **Time:** ~75 minutes
 

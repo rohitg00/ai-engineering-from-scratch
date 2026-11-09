@@ -3,7 +3,7 @@
 > Sự phân tán không gian phích số trên hình ảnh 512 × 512 là một tội ác chiến tranh tính toán. Rombach et al. (2022) nhận thấy rằng bạn không cần tất cả các kích thước 786k để tạo ra một hình ảnh  bạn cần đủ để chụp cấu trúc ngữ nghĩa, và một bộ giải mã riêng cho phần còn lại.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 02 (VAE), Phase 8 · 06 (DDPM), Phase 7 · 09 (ViT)
 **Time:** ~75 minutes
 

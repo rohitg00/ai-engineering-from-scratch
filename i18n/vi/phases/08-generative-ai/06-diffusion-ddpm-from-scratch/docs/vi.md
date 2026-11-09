@@ -3,7 +3,7 @@
 > Ho, Jain, Abbeel (2020) đã cho lĩnh vực một công thức mà nó không thể ngừng. Hủy bỏ dữ liệu bằng tiếng ồn trên một ngàn bước nhỏ. Hướng dẫn một mạng lưới thần kinh để dự đoán tiếng ồn. đảo ngược quá trình khi suy luận. Ngày nay mọi hình ảnh, video, 3D và mô hình âm nhạc chính thống chạy trên vòng lặp này, có thể với các thủ thuật phù hợp hoặc phù hợp trên đầu.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 8 · 02 (VAE)
 **Time:** ~75 minutes
 

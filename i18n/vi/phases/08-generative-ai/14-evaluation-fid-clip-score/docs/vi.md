@@ -3,7 +3,7 @@
 > Mỗi bảng xếp hạng mô hình tạo ra chỉ trích FID, điểm CLIP và tỷ lệ thắng từ một lĩnh vực ưu tiên của con người. Mỗi số có chế độ thất bại mà một nhà nghiên cứu xác định có thể chơi. Nếu bạn không biết các chế độ thất bại, bạn không thể thấy sự cải thiện thực sự từ một cuộc chơi.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 01 (Taxonomy), Phase 2 · 04 (Evaluation Metrics)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Sự mở khóa lớn đầu tiên của năm 2014-2017 là kiểm soát những gì một GAN tạo ra. Lên nhãn, hoặc hình ảnh, hoặc một câu. Pix2Pix đã làm phiên bản hình ảnh và nó vẫn đánh bại mọi mô hình văn bản chung-to-photos trong các nhiệm vụ hình ảnh-to-photos hẹp.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 06 (U-Net), Phase 3 · 07 (CNNs)
 **Time:** ~75 minutes
 

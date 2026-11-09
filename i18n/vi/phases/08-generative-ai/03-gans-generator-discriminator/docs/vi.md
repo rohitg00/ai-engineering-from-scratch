@@ -3,7 +3,7 @@
 > Trù của Goodfellow năm 2014 là bỏ qua mật độ hoàn toàn. Hai mạng. Một tạo giả mạo. Một bắt chúng. Họ chiến đấu cho đến khi giả mạo không thể phân biệt với thực. Nó không nên hoạt động. Nó thường không hoạt động. Khi nó làm, các mẫu vẫn là sắc nét nhất trong văn học cho các miền hẹp.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 08 (Optimizers), Phase 8 · 02 (VAE)
 **Time:** ~75 minutes
 

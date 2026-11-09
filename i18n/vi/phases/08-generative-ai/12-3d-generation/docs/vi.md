@@ -3,7 +3,7 @@
 > 3D là phương thức mà đòn bẩy 2D đến 3D mạnh nhất. Sự đột phá năm 2023 là 3D Gaussian Splating. 2024-2026 tạo ra các lớp đẩy đa dạng phân phối + tái tạo 3D trên cùng để tạo ra các đối tượng và cảnh từ một lời nhắc hoặc ảnh duy nhất.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 4 (Vision), Phase 8 · 07 (Latent Diffusion)
 **Time:** ~45 minutes
 

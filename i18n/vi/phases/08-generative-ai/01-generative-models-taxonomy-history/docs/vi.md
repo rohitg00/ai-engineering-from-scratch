@@ -3,7 +3,7 @@
 > Mỗi mô hình hình ảnh, mô hình văn bản, mô hình video và mô hình 3D đều phù hợp với một trong năm cái thùng. Chọn cái thùng sai và bạn sẽ chiến đấu với toán học trong nhiều tuần. Chọn cái đúng và 12 năm tiến bộ của lĩnh vực này được xếp vào đầu bạn.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 (ML Fundamentals), Phase 3 (Deep Learning Core), Phase 7 · 14 (Transformers)
 **Time:** ~45 minutes
 

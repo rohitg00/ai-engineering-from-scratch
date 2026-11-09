@@ -3,7 +3,7 @@
 > Hầu hết các máy phát điện đều làm động$z$StyleGAN chia nó ra: bản đồ đầu tiên$z$cho một trung gian $w$, sau đó * tiêm * $w$Sự thay đổi duy nhất đó đã giải quyết không gian ẩn và làm cho những khuôn mặt chân thực ảnh trở thành một vấn đề được giải quyết trong bảy năm liên tiếp.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 03 (GANs), Phase 4 · 08 (Normalization), Phase 3 · 07 (CNNs)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Một hình ảnh là một tensor 2D. Một video là một tensor 3D. Lý thuyết là tương tự; tính toán là 10-100x khó hơn. Sora của OpenAI (tháng 2 năm 2024) chứng minh rằng điều đó có thể. Đến năm 2026 Veo 2, Kling 1.5, Runway Gen-3, Pika 2.0, và WAN 2.2 video sản xuất tàu từ văn bản ở 1080p  và khối lượng mở (CogVideoX, HunyuanVideo, Mochi-1, WAN 2.2) là 12 tháng sau.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 07 (Latent Diffusion), Phase 7 · 09 (ViT), Phase 8 · 06 (DDPM)
 **Time:** ~45 minutes
 

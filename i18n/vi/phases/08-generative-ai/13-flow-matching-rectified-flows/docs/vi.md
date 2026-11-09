@@ -3,7 +3,7 @@
 > Các mô hình phân phối thực hiện các bước lấy mẫu 20-50 bởi vì chúng đi theo một con đường cong từ tiếng ồn đến dữ liệu. Sự phù hợp dòng chảy (Lipman et al., 2023) và dòng chảy chỉnh sửa (Liu et al., 2022) được đào tạo bằng các con đường thẳng. Các con đường thẳng hơn có nghĩa là ít bước hơn có nghĩa là suy luận nhanh hơn. Stable Diffusion 3, Flux.1, và AudioCraft 2 tất cả chuyển sang sự phù hợp dòng chảy vào năm 2024.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 8 · 06 (DDPM), Phase 1 · Calculus
 **Time:** ~45 minutes
 
