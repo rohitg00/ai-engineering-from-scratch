@@ -3,7 +3,7 @@
 > میراث تعزیز یادگیری هماهنگی چند عامل که هنوز هم سیستم های LLM-agent را در سال 2026 تحت تاثیر قرار می دهد. **MADDPG**(لو و همکاران، NeurIPS 2017، arXiv:1706.02275) آموزش متمرکز، اجرای غیرمتمرکز (CTDE) را معرفی کرد: هر منتقد حالت و اقدامات تمام عوامل را در طول آموزش می بیند؛ در زمان آزمون فقط بازیگران محلی اجرا می کنند. برای تنظیمات همکاری، رقابتی و مخلوط کار می کند. **QMIX**(Rashid و همکاران، ICML 2018، arXiv:1803.11485) تجزیه ارزش با یک شبکه مخلوط یک تن است؛ هر Qs عامل به Q مشترک ترکیب می شود بنابراین `argmax`به طور تمیز توزیع می کند  غالب در StarCraft Multi-Agent Challenge (SMAC). **MAPPO**(Yu et al., NeurIPS 2022, arXiv:2103.01955) PPO با یک عملکرد ارزش متمرکز است؛ "به طرز شگفت انگیزی موثر" در دنیای ذرات، SMAC، فوتبال تحقیق گوگل، Hanabi با تنظیم حداقل. این سیاست های آموزشی را برای تیم های عامل که باید غیرمتمرکز عمل کنند، پشتیبانی می کند. MAPPO**default 2026 cooperative-MARL baseline**این درس هر یک از آن ها را از یک بازی کوچک شبکه ای ساخته و سه ایده را در حافظه عضلانی زمین می دهد قبل از اینکه به آموزش LLM-agent دست بزند.
 
 **Type:** Learn
-**Languages:** Python (stdlib, small NumPy-free implementations)
+**Languages:** Python (stdlib, small NumPy-free implementations), TypeScript
 **Prerequisites:** Phase 09 (Reinforcement Learning), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~90 minutes
 
@@ -117,6 +117,7 @@ sw-ctde
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 تولید انتظار می رود: عوامل مستقل به طور متوسط ~6 مرحله را انجام می دهند؛ انواع CTDE به سمت ~3.5 مرحله (افزایی برای شبکه 4x4 3 است) تبدیل می شوند. تفاوت الگوی با وجود سیاست های اسکریپت نشان داده می شود.

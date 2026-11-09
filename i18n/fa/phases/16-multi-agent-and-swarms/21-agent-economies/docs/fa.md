@@ -3,7 +3,7 @@
 > عوامل مستقل افق دراز مدت (کار یک تا هشت ساعت METR) نیاز به آژانس اقتصادی دارند.**5-layer stack**این است: **DePIN**(حساب فیزیکی) → **Identity**(W3C DIDs + اعتبار سرمایه) → **Cognition**(RAG + MCP) → **Settlement**(استراکتور حساب) → **Governance**شبکه های انگیزه دهنده عوامل تولید شامل:**Bittensor**(تعداد زیر شبکه های TAO به مدل های خاص وظیفه پاداش می دهند)**Fetch.ai / ASI Alliance**(ASI-1 Mini LLM + FET token) و**Gonka**(PoW مبتنی بر ترانسفارمر که محاسبه را به وظایف هوش مصنوعی تولیدگرانه تغییر می دهد). کار علمی: استفاده های لاماس غیرمتمرکز AAMAS 2025 **Shapley-value credit attribution**برای پاداش عادلانه از عوامل کمک کننده؛ گوگل تحقیق "تعمیر مکانیسم برای مدل های بزرگ زبان" پیشنهاد می کند **token auctions**این درس یک بازار عامل کوچک را ایجاد می کند، اعتبار اعتبار Shapley را به یک لوله متعدد عامل اعمال می کند و یک مزایده توکن قیمت دوم را اجرا می کند تا ماشین آلات نظریه بازی به طور مشخص فرود آید.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 16 (Negotiation and Bargaining), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -110,6 +110,7 @@ swarm-auction
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 تولید انتظار می رود: ارزش های شاپلی برای هر عامل؛ نتیجه حراج نشان دهنده تعادل واقعی پیشنهاد؛ مسیر با وزن تکراری نشان دهنده 10-20٪ افزایش کیفیت نسبت به تصادفی پس از گرم شدن.

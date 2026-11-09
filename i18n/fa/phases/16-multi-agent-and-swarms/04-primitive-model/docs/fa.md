@@ -3,7 +3,7 @@
 > چهار ابتدایی، چیزی بیشتر  عامل، تحویل، حالت مشترک، آرکیستراتور  یک فضای طراحی چهار بعدی را پوشش می دهد و چهار چارچوب اصلی چند عامل در سال 2026 (AutoGen، LangGraph، CrewAI، OpenAI Agents SDK، Microsoft Agent Framework) نقاط در آن هستند. این درس آنها را از صفر می سازد، یک سیستم اسباب بازی را روی هر چهار قسمت اجرا می کند، سپس هر چارچوب اصلی را روی محور های مشابه نقشه می زند تا بتوانید هر نسخه جدیدی را در یک پاراگراف بخوانید.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 (Agent Engineering), Phase 16 · 01 (Why Multi-Agent)
 **Time:** ~60 minutes
 
@@ -132,6 +132,7 @@ a5-primitive-radar
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 تولید انتظار می رود: سه اجرا از آرکیستراتور، یک در هر الگوی. هر یک از آنها مجموعه پیام نهایی را چاپ می کند. اجرا از طریق تحویل به عوامل کمتری می رسد اگر محقق تصمیم بگیرد زودتر انجام شود.

@@ -3,7 +3,7 @@
 > بهینه سازی با الهام از زیست شناسی به بازگشت یک LLM منجر می شود.**LMPSO**(arXiv:2504.09247) از PSO استفاده می کند که سرعت هر ذره یک پرامپت است و LLM کاندید بعدی را تولید می کند؛ در تولیدات ترتیب ساختار یافته (عبارات ریاضی، برنامه ها) خوب کار می کند. **Model Swarms**(arXiv:2410.11163) هر متخصص LLM را به عنوان ذره PSO در یک مدل وزن متنوع و گزارش می دهد **13.3% average gain**بیش از 12 خط پایه در 9 مجموعه داده با فقط 200 نمونه. **SwarmPrompt**(ICAART 2025) PSO + Grey Wolf را برای بهینه سازی سریع هائبریدی می کند. **AMRO-S**(arXiv:2603.12933) متخصص فرومون های الهام گرفته از ACO برای مسیر LLM چند عامل است**4.7x speedup**این درس PSO را در فضای پارامتر فوری و ACO را در مسیر عامل پیاده سازی می کند، اندازه گیری می کند که چرا این الگوریتم های کلاسیک مناسب به عصر LLM هستند و چه زمانی آنها نیستند.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 09 (Parallel Swarm Networks), Phase 16 · 14 (Consensus and BFT)
 **Time:** ~75 minutes
 
@@ -107,6 +107,7 @@ swarm-stigmergy
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 تولید انتظار می رود:

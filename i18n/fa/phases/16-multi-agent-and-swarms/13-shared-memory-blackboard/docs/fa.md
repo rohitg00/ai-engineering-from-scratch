@@ -3,7 +3,7 @@
 > دو رویکرد در سیستم های چند عامل در سال 2026 هم وجود دارد:**message pool**(همه پیام های همه را می بینند، مانند AutoGen GroupChat یا MetaGPT) و **blackboard with subscription**(عملاء به رویدادهای مربوطه مانند MCP Context-Aware یا چارچوب ماتریس اشتراک می کنند). هر دو تنها بخش حالت دار یک سیستم چند عامل هستند  که به این معنی است که هر دو جایی هستند که اشکال جالب زندگی می کنند. حالت شکست مرجع**memory poisoning**: یک عامل یک "حقیقت" را هالوسین می کند، عوامل دیگر آن را به عنوان تأیید شده در نظر می گیرند و دقت به تدریج به گونه ای که ترفند کردن آن بسیار دشوارتر از یک تصادف فوری است، کاهش می یابد. این درس هر دو ساختار را از stdlib ایجاد می کند، حمله سممی را تزریق می کند و سه کاهش را نشان می دهد که در واقع در تولید کار می کنند.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`)
+**Languages:** Python (stdlib, `threading`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model), Phase 16 · 09 (Parallel Swarm Networks)
 **Time:** ~75 minutes
 
@@ -119,6 +119,7 @@ swarm-blackboard
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 تولید انتظار می رود:

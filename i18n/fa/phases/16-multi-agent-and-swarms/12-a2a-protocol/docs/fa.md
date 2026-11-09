@@ -3,7 +3,7 @@
 > گوگل A2A را در آوریل 2025 اعلام کرد؛ تا آوریل 2026 مشخصات آن در https://a2a-protocol.org/latest/specification/و 150 سازمان از آن حمایت می کنند. A2A مکمل افقی MCP (درسی 13) است: جایی که MCP عمودی است (کارگری  ابزار) ، A2A همتایی است (کارگری  عامل). این کاردها را تعریف می کند کارت های عامل (دسکور) ، وظایف با آثار هنری (متن، داده های ساختار یافته، ویدیو) ، چرخه های زندگی وظایف نامشعبی و auth. سیستم های تولید به طور فزاینده ای MCP را با A2A ترکیب می کنند. گوگل کلاوود پشتیبانی از A2A را در سال 2025-2026 به Vertex AI Agent Builder معرفی کرد.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `http.server`, `json`)
+**Languages:** Python (stdlib, `http.server`, `json`), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -154,6 +154,7 @@ sw-agent-card-discovery
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 اسکریپت سرور را در یک موضوع پس زمینه شروع می کند، سپس مشتری را در مقابل آن اجرا می کند. شما جریان کامل را می بینید: کشف، ارسال، نظرسنجی، آثار.

@@ -3,7 +3,7 @@
 > سازش مکالمه مشترک، N عامل را در یک مکالمه قرار می دهد؛ یک تابع انتخاب کننده (LLM، round-robin یا custom) انتخاب می کند که چه کسی بعدی صحبت می کند. این آرشیتایپ گفتگوی چند عامل در حال ظهور است. عوامل نقش خود را در یک نمودار ثابت نمی دانند، آنها فقط به استخر مشترک واکنش نشان می دهند. AutoGen GroupChat و AG2 GroupChat پیاده سازی های مرجع هستند: سیمنتکس GroupChat AutoGen v0.2 در فورک AG2 حفظ شد؛ AutoGen v0.4 آن را به عنوان یک مدل بازیگر مبتنی بر رویدادها دوباره نوشت. مایکروسافت AutoGen را در فوریه 2026 به حالت نگهداری قرار داد و آن را با هسته سیمانیک به Microsoft Agent Framework (RC فوریه 2026) ادغام کرد. گروه چت ابتدایی در هر دو AG2 و Microsoft Agent Framework زنده می ماند  یک بار یاد بگیرید، در هر جا استفاده کنید.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 16 · 04 (Primitive Model)
 **Time:** ~60 minutes
 
@@ -104,6 +104,7 @@ swarm-speaker
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ## ازش استفاده کن
