@@ -3,7 +3,7 @@
 > 平方根不是虚构的,它是旋转,频率和信号处理的重点.
 
 **Type:** Learn
-**Language:**字符串
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04 (linear algebra, calculus)
 **Time:** ~60 minutes
 
@@ -426,7 +426,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 ## 运送它
 
-跑步`code/complex_numbers.py`产生`outputs/skill-complex-arithmetic.md`现在,我们要去.
+跑步`code/complex_numbers.py`或`npx tsx code/complex_numbers.ts`产生`outputs/skill-complex-arithmetic.md`现在,我们要去.
 
 ## 运动
 
