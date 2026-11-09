@@ -3,7 +3,7 @@
 > هذه بيئات تعليمية مختلفة، وليس مستويات من اللون. اختر المرحلة التي تجيب على الحالي غير معروف مع أقل عواقب غير ضرورية.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 50 to 52
 **Time:** ~70 minutes
 
@@ -82,6 +82,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

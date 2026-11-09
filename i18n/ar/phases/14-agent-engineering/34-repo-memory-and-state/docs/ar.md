@@ -3,7 +3,7 @@
 > تاريخ الدردشة متقلبة. الردود الدائم. مكتب العمل المخازن وكيل بيان في الملفات النسخة حتى الجلسة التالية، وكيل التالي، والمراجع التالي جميع قراءة من نفس مصدر الحقيقة.
 
 **Type:** Build
-**Languages:** Python (stdlib + `jsonschema` optional)
+**Languages:** Python (stdlib + `jsonschema` optional), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~60 minutes
 
@@ -81,6 +81,7 @@ wb-state-persist
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 النص يكتب`workdir/agent_state.json`و`workdir/task_board.json`، يتغيرها عبر جولتين، ويقوم بطبع الحالة المعتمدة في كل خطوة.

@@ -3,7 +3,7 @@
 > تعريف نظام GenAI SIG (الذي تم إطلاقه في أبريل 2024) للعملاء التلفزيونية. اسمات المجال والخصائص وقواعد استيراد المحتوى تتقارب بين البائعين بحيث تعني آثار العملاء نفس الشيء في Datadog و Grafana و Jaeger و Honeycomb.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 13 (LangGraph), Phase 14 · 24 (Observability Platforms)
 **Time:** ~60 minutes
 
@@ -88,6 +88,7 @@ ae-genai-span-tree
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج: شجرة المدى مع جميع صفات GenAI المطلوبة، و"متجر خارجي" يظهر مراجع المحتوى الاختيار.

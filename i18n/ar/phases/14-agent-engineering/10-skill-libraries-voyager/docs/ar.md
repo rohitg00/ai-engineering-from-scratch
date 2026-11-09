@@ -3,7 +3,7 @@
 > ووجايجر (وانغ وآخرون ، TMLR 2024) يعامل الكود التنفيذي كمهارة. يتم تسمية المهارات ، قابلة للاسترداد ، قابلة للتكوين ، وتحسينها عن طريق تعليقات البيئة. هذه هي الهندسة المعمارية المرجعية لمهارات كلويد وكيل SDK ، ومهارات المجموعة ، ونمط المكتبة المهارات 2026.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ voyager-skills
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 يظهر البصمة كتابات المكتبة، الاستعراج، التركيب، فشل في تنفيذ، وتحسين v2

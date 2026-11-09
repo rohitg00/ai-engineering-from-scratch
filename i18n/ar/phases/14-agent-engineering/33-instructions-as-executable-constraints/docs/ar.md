@@ -3,7 +3,7 @@
 > التعليمات المكتوبة على النص هي الرغبات. التعليمات المكتوبة على القيود هي الاختبارات. تحويل مكتب العمل كل قاعدة إلى شيء يمكن للعميل التحقق من خلال وقت التشغيل والمراجع التحقق من بعد الحقيقة.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~50 minutes
 
@@ -96,6 +96,7 @@ wb-rule-checkoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج: مجموعة قواعد تحليل، وتتبع التشغيل، والمرحلة/فشل لكل قاعدة، و `rule_report.json`تم حفظها بجانب السيناريو

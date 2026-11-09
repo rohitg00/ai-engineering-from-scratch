@@ -3,7 +3,7 @@
 > خطة ليست قائمة أعمال جميلة. إنها رسم بياني يعتمد فيه كل تغيير له سبب وكل عقدة نهاية له دليل.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 43
 **Time:** ~65 minutes
 
@@ -92,6 +92,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

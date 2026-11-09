@@ -3,7 +3,7 @@
 > كل جلسة تبدأ باردة تدفع ضريبة العميل يقرأ نفس الملفات، يحاول نفس المساحات، ويعيد اكتشاف نفس المسارات، ويقوم النص الإبتدائي بدفع الضريبة مرة واحدة ويكتب الإجابات في الدولة.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 34 (Repo Memory)
 **Time:** ~45 minutes
 
@@ -72,6 +72,7 @@ wb-init-probes
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 النص يطبع جدول المراقبة، يكتب`init_report.json`و يخرج من الصفر على المسار السعيد أو غير الصفر مع قائمة من الفشل في الصفحات

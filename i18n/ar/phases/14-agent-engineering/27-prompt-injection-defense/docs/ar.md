@@ -3,7 +3,7 @@
 > وقد وضعت Greshake et al. (AISec 2023) الحقن العكسي غير المباشر كمسألة أمن الوكيل المحددة. يقوم المهاجم بوضع تعليمات في البيانات التي يستردها الوكيل؛ عند استهلاكها، تتجاوز هذه التعليمات طلب المطور. تعامل جميع المحتوى المسترد كتنفيذ رمز تعسفي على سطح استخدام الأداة.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 06 (Tool Use), Phase 14 · 21 (Computer Use)
 **Time:** ~75 minutes
 
@@ -81,6 +81,7 @@ injection-hijack
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج: تتبع كل مكالمة تظهر أحكام المؤكد وسلوك المُنفذ.

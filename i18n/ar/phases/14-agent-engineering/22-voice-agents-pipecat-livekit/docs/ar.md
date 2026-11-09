@@ -3,7 +3,7 @@
 > وكلاء الصوت هي فئة إنتاج من الدرجة الأولى في عام 2026. يقدم لك Pipecat خط أنابيب قائم على إطار Python (VAD → STT → LLM → TTS → النقل). LiveKit Agents يربط نماذج AI للمستخدمين عبر WebRTC. تهدف تأخر الإنتاج إلى 450600ms من نهاية إلى نهاية للمراكز البارزة.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
 **Time:** ~60 minutes
 
@@ -89,6 +89,7 @@ voice-pipeline
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 يظهر البصمة التدفق الطبيعي و إغلاق المباراة التي توقف TTS في منتصف التعبير

@@ -3,7 +3,7 @@
 > دو وآخرون (ICML 2024, "Society of Minds") يديرون محاكمات نموذج N التي تقدم إجابات مستقلة ، ثم تنتقد بعضها البعض بشكل متكرر على مدار R للتقارب. يحسن الواقعية ، ويتبع القواعد ، والحكمة. تطبيق أوضاع التخلص يضرب الشبكة الكاملة على تكلفة الرمز.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 05 (Self-Refine and CRITIC)
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ debate-converge
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج: دقة وتكلفة لكل بروتوكول؛ تطابقات نادرة كاملة على 2/3 من الأسئلة بتكلفة أقل.

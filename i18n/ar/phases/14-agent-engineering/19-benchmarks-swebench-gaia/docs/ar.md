@@ -3,7 +3,7 @@
 > ثلاثة معايير تقييم وكالة المرسوم في عام 2026 . اختبار SWE-Bench تصفيحات الرمز. GAIA اختبار استخدام الأدوات العامة. اختبار AgentBench التفكير متعددة البيئات. معرفة تركيبها، قصة التلوث، وما لا يقيسون.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 06 (Tool Use)
 **Time:** ~60 minutes
 
@@ -93,6 +93,7 @@ ae-swebench-gate
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 وتظهر الناتج معدل القرار لكل مهمة + لكل صعوبة ويمثل قواعد المقيّم ملموسة.

@@ -3,7 +3,7 @@
 > MASFT (بركلي ، 2025) تصف 14 وضع فشل متعدد الوكلاء في 3 فئات. توثيق تقسيم مايكروسوفت كيفية تفاقم فشلات الذكاء الاصطناعي الحالية في الإعدادات الوكالة. تتقارب بيانات ميدان الصناعة على خمسة أوضاع متكررة: إجراءات الهلوسة ، وتسلل النطاق ، وأخطاء التقييم ، وفقدان السياق ، وإساءة استخدام الأدوات.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 05 (Self-Refine and CRITIC), Phase 14 · 24 (Observability)
 **Time:** ~60 minutes
 
@@ -89,6 +89,7 @@ failure-cascade
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج: علامات لكل تعقب + توزيع مجموعي، إعادة إنتاج رخيصة لما يظهر عليه مجموعة العقب في فينيكس.

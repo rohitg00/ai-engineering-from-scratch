@@ -3,7 +3,7 @@
 > وكلاء كجهات الفاعلة: تبادل رسائل غير متزامنة، ومعالجي الحدث القائمة على التحكم، عزل الأخطاء، التزامن الطبيعي. قام AutoGen v0.4 (Microsoft Research، يناير 2025) بإعادة تصميم ترتيب وكلاء حول هذا النموذج. أصبح الإطار الآن في وضع الصيانة، مع Microsoft Agent Framework (مشاهدة مسبقة عامة أكتوبر 2025) كخلفة إنتاجها.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
 **Time:** ~75 minutes
 
@@ -79,6 +79,7 @@ actor-mailbox
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 يظهر البصمة إرسال الرسالة، فشل محاكي في أحد الفاعلين الذي لا يضرب الآخر، وتقارب في حكم مشترك.

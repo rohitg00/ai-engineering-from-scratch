@@ -3,7 +3,7 @@
 > توجيه Anthropic: "ابدأ بأحذية بسيطة، واكتمالها بتقييم شامل، واضافة أنظمة وكالة متعددة الخطوات فقط عند الحاجة". التقييم ليس الخطوة الأخيرة. إنها الحلقة الخارجية التي تدفع كل خيار آخر في المرحلة 14.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** All of Phase 14.
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ ae-eval-three-layers
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج: كل حالة تمر/فشل، علامة التراجع، حكم البوابة المعلوماتية.

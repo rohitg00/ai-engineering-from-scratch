@@ -3,7 +3,7 @@
 > التنفيذ السريع يزيد من العقوبة للاختيار الخطأ. تشكيل النتيجة أولاً حتى تسريع نقاط في الاتجاه الصحيح.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** None
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

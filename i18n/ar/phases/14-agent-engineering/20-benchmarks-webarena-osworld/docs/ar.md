@@ -3,7 +3,7 @@
 > اختبار WebArena قدرة وكيل الويب عبر أربع تطبيقات مضيفة ذاتية. اختبار OSWorld قدرة وكيل سطح المكتب عبر أوبونتو، ويندوز، ماكوس. عند الإصدار (20232024) كلاهما أظهر فجوة كبيرة بين أفضل وكلاء في الفئة والبشر. الفجوة تقلص؛ وضع الفشل لم يتغير.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 19 (SWE-bench, GAIA)
 **Time:** ~60 minutes
 
@@ -78,6 +78,7 @@ ae-agent-human-gap
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج: معدل نجاح كل مهمة وكفاءة المسار، مما يعكس منهجية OSWorld-Human.

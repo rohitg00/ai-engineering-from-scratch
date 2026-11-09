@@ -3,7 +3,7 @@
 > نوافذ السياق محدودة. المحادثات والوثائق والبصمات الأداة ليست كذلك. التحدي هو أن ذاكرة التشغيل الافتراضية يتم إعادة تشغيلها.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ context-budget
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 يظهر البحث أن الوكيل يكتب ثلاثة حقائق، ويملأ السياق الرئيسي للقمة (إجبار الإخلاء) ، ثم يجيب على سؤال متابعة عن طريق استرداد من الأرشيف  إعادة التدفق العمل MemGPT دون أي LLM الحقيقي.

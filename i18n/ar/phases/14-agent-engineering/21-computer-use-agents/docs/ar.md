@@ -3,7 +3,7 @@
 > ثلاث نماذج إنتاجية لاستخدام الحاسوب في عام 2026 . جميعها ثلاثية تستند إلى الرؤية. جميعها ثلاث تصور شاشة ، نص DOM ، ومخرجات الأداة تعتبر إدخالًا غير موثوق بها. تعتبر تعليمات المستخدم المباشرة فقط إذنًا. خدمات السلامة لكل خطوة هي القاعدة.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 20 (WebArena, OSWorld), Phase 14 · 27 (Prompt Injection)
 **Time:** ~60 minutes
 
@@ -92,6 +92,7 @@ computer-use-cursor
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 يظهر الناتج تصنيف السلامة يلتقط توجيهًا مدفوعًا في نص DOM ويمنع شراء غير مؤكد.

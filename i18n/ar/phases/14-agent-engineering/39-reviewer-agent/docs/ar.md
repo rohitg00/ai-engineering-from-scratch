@@ -3,7 +3,7 @@
 > وكيل كتابة الرمز لا يمكن تصنيفه. المراجع هو حلقة ثانية مع طلب نظام مختلف، هدف مختلف، والوصول فقط القراءة إلى كل شيء قام البنّاء بإنتاجه. الفجوة بين البنّاء والمراجع هي حيث يعيش أكثر موثوقية.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 38 (Verification Gate)
 **Time:** ~55 minutes
 
@@ -74,6 +74,7 @@ wb-builder-marker
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج: تقارير مراجعة مكتوبة على القرص و جدول من أجهزة التحكم من النتائج الأبعادية.

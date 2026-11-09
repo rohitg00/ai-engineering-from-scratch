@@ -3,7 +3,7 @@
 > يُنهي المسار الصغير مع حزمة يمكنك إلقاءها في أي إعادة التأمين.`cp -r`ويكون لدينا عميل يعمل بشكل موثوق به في الصباح التالي
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phases 14 · 31 to 14 · 41
 **Time:** ~75 minutes
 
@@ -96,6 +96,7 @@ wb-pack-install
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 النص النسخة وتحديد السطح، يكتب README، طباعة شجرة الحزمة، وتخرج من الصفر. إعادة التشغيل غير فعال.

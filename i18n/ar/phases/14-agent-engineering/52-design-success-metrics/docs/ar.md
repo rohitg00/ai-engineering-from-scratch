@@ -3,7 +3,7 @@
 > يجب أن يُجيب القرار عن القياس وليس عن تزيين لوحة التحكم. ابدأ بالهدف، استنتاج الأسئلة، ثم اختر أصغر المقاييس التي تجيب عليها.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 47 and 51
 **Time:** ~70 minutes
 
@@ -85,6 +85,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

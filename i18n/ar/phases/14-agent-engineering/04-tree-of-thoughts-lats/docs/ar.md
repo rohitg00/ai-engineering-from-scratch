@@ -3,7 +3,7 @@
 > لا توجد مسار واحد لسلسلة التفكير للعودة. تحويل التفكير إلى شجرة مع تقييم ذاتي على كل عقدة. LATS (Zhou et al., 2024) يوحد ToT مع ReAct و Reflexion تحت بحث شجرة مونت كارلو. يذهب لعبة 24 من 4% (CoT) إلى 74% (ToT); LATS يصل إلى 92.7% على HumanEval.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~75 minutes
 
@@ -93,6 +93,7 @@ tree-of-thoughts
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 يظهر البصمة أن ToT توسع ثلاثة مرشحين لكل عقدة مع BFS ، مقارنة مع LATS المتقاربة على أفضل التنفيذ عبر MCTS.

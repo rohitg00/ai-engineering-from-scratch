@@ -3,7 +3,7 @@
 > أصغر مقعد عمل مفيد هو ثلاثة ملفات: جهاز توجيه التعليمات الجذرية، وملف الحالة، ولوحة المهام. كل شيء آخر يتم وضعها على الطبقات. إذا لم يتمكن repo من تحمل هذه الثلاثة، لن يتم حفظها من أي نموذج.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 31 (Why Capable Models Still Fail)
 **Time:** ~45 minutes
 
@@ -77,6 +77,7 @@ wb-three-files
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 النص يخلق`workdir/`يضع الملفات الثلاثة بجانبه، ويركض دوراً واحداً، ويقوم بطبع الاختلاف، ويركضها مرة أخرى لرؤية كيف يستمر الجولة الثانية حيث توقف الجولة الأولى.

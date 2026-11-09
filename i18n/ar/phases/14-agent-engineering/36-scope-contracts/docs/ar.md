@@ -3,7 +3,7 @@
 > النموذج لا يعرف أين ينتهي العمل. عقد المجال هو ملف لكل مهمة يوضح أين يبدأ العمل، أين ينتهي، وكيفية التراجع إذا سيلقى. يتحول العقد من "بقاء في المجال" إلى شيك.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 33 (Rules as Constraints)
 **Time:** ~50 minutes
 
@@ -107,6 +107,7 @@ wb-scope-bounce
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج: العقد، الجريمتين، أحكام كل جولة، و مدفوعة`scope_report.json`. . .

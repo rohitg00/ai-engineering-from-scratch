@@ -3,7 +3,7 @@
 > نموذج قادر ليس كافيا. العملاء الموثوقين يحتاجون إلى مقعد عمل: التعليمات، الحالة، نطاق، ردود الفعل، التحقق، المراجعة، والإرسال. إزالة هؤلاء بعيدا وحتى نموذج الحدود ينتج عمل غير آمن لنقل.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 26 (Failure Modes)
 **Time:** ~45 minutes
 
@@ -148,6 +148,7 @@ wb-seven-surfaces
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج: سجل جنب إلى جنب من الركبتين ،`failure_modes.json`و تقريراً واحداً لرحلة العمل

@@ -3,7 +3,7 @@
 > ثلاث منصات مراقبة العملاء الذاتي المضيف تهيمن على عام 2026. لانغفوز (MIT)  6 ملايين + تثبيت / شهر ، تتبع + إدارة الاستعلام + تقييمات + إعادة إعادة جلسة. أريز فينيكس (Elastic 2.0)  تقييمات عميقة محددة للعملاء ، أهمية RAG ، أوتو-استعلام OpenInference. كوميت أوبيك (أباتشي 2.0)  تحسين الاستعلام الآلي ، حواف ، اكتشاف الهلوسة القاضي LLM.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 23 (OTel GenAI)
 **Time:** ~45 minutes
 
@@ -80,6 +80,7 @@ wb-trace-ingest
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج: درجات تقييم لكل جلسة وتصنيف الفشل مما يطابق ما ستظهر به Langfuse/Phoenix/Opik.

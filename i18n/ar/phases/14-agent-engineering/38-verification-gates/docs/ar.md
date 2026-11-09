@@ -3,7 +3,7 @@
 > لا يحصل الوكيل على وضع علامة على عمله الخاص كما هو قد تم. بوابة التحقق تقرأ عقد النطاق، سجل المراجعة، تقرير القواعد، والفروق، وتجيب على سؤال واحد: هل هذه المهمة قد اكتملت فعلا؟ إذا قال البوابة لا، فإن المهمة لم يتم، بغض النظر عن ما يقول الدردشة.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 33 (Rules), Phase 14 · 36 (Scope), Phase 14 · 37 (Feedback)
 **Time:** ~55 minutes
 
@@ -81,6 +81,7 @@ wb-gate-sequence
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج: ثلاثة تقارير حكم، كل حفظ بجوار السيناريو.

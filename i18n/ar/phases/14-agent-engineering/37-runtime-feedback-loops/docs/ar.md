@@ -3,7 +3,7 @@
 > العملاء الذين لا يرون خروج الأوامر الحقيقية تخمين. ركن ردود الفعل يلتقط stdout ، stderr ، رمز الخروج ، والتوقيت في سجل مهيكلي يمكن أن يقرأ الجولة التالية. ثم يتفاعل العميل مع الحقائق بدلاً من التنبؤ به الخاص بالحقائق.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 35 (Init Script)
 **Time:** ~50 minutes
 
@@ -72,6 +72,7 @@ wb-feedback-loop
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 الناتج: ثلاثة سجلات تعليقات ضمنت إلى `feedback_record.jsonl`، آخر واحد من كل خط مطبوع. التسلل الملف عبر إعادة التشغيل لرؤية الحلقة تتراكم.

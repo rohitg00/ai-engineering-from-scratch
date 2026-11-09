@@ -3,7 +3,7 @@
 > الحزمة التي يمكنك استيرادها: الأدوات المدمجة ، والحوافز الفرعية لعزل السياق ، والقبضات ، وانتشار آثار W3C ، استمرار الجلسة. كود وكيل SDK هو المثال المرجعي  شكل مكتبة الحزمة كود كود  وكلاء مدير هو البديل المضيف للعمل التزامن الطويل المدى.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 10 (Skill Libraries)
 **Time:** ~75 minutes
 
@@ -95,6 +95,7 @@ ae-subagent-isolation
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 يظهر البصمة عزل السياق السوباجنت (بقي حجم السياق للموسيقي محدوداً) ، تنفيذ الركبة، ومواصلة الجلسة.

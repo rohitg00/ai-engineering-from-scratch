@@ -3,7 +3,7 @@
 > OpenAI Agents SDK هو إطار متعدد الوكلاء خفيف الوزن بني على API الإجابات. خمسة بدائيات: وكيل، التنفيذ، الحراسة، الجلسة، التتبع. التنفيذات هي أدوات تسمى `transfer_to_<agent>`.الآثار المراقبة تتحرك عند المدخل أو الخروج
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -84,6 +84,7 @@ ae-agent-handoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 يظهر البصمة إثنين من التسليمات الناجحة، رحلة واحدة في الحافظة المدخلة، و شجرة إطار تعكس ما ينبعث منه SDK الحقيقي.

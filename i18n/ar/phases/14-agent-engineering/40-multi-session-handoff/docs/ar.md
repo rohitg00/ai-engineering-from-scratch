@@ -3,7 +3,7 @@
 > الجلسة ستنتهي، العمل ليس كذلك، حزمة التسليم هي العناصر التي تحول "الوكيل عمل لمدة ساعة" إلى "الجلسة التالية مثمرة في الدقيقة الأولى". بنيتها عن قصد، وليس كفكر متأخر.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 34 (Repo Memory), Phase 14 · 38 (Verification), Phase 14 · 39 (Reviewer)
 **Time:** ~50 minutes
 
@@ -91,6 +91,7 @@ wb-handoff-packet
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 المخرج: جسم مطبوع بالإضافة إلى كلا الملفين على القرص

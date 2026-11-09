@@ -3,7 +3,7 @@
 > يستخدم Self-Refine (Madaan et al., 2023) LLM واحد في ثلاثة أدوار  توليد، التعليق، وتحسين  في حلقة. متوسط المكاسب: +20 مطلقًا على 7 مهام. CRITIC (Gou et al., 2023) يُقسِّم خطوة التعليق عن طريق توجيه التحقق من خلال أدوات خارجية. في عام 2026 يتم إرسال هذا النمط في كل إطار ك"مُقيِّم-تحسين" (Anthropic) أو حلقة حفر (OpenAI Agents SDK).
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ self-refine
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 مقارنة التطهير الذاتي مقابل التطهير النقدي. التطهير الذاتي يلتقط خطأ حقيقي التطهير الذاتي يفتقد لأنه التحقق الخارجي لديه أرضية النقد الذاتي لا.
