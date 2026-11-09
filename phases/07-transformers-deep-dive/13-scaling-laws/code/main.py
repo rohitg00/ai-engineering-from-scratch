@@ -52,8 +52,8 @@ def main():
     print()
     print("Hoffmann 2022 published D/N ≈ 20 as the headline. with the fitted")
     print("constants above (alpha=0.34, beta=0.28) the optimum D/N grows with C.")
-    print("real scaling-law fits place optimum around 20 for the compute range")
-    print("Chinchilla studied (~1e22 to 1e23 FLOPs); extrapolation drifts.")
+    print("Hoffmann's direct fits put the optimum near 20 at ~1e22 to 1e23 FLOPs;")
+    print("this parametric fit gives 65 to 85 there, so the two methods disagree.")
     print()
 
     print("=== over-training cost (Llama-style) ===")

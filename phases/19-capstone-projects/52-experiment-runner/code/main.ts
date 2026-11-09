@@ -253,7 +253,7 @@ function scanIntermediates(stdout: string, metricKeys: string[]): [Obj, Obj[]] {
   const intermediates: Obj[] = [];
   let final: Obj = {};
   const required = new Set(metricKeys);
-  for (const rawLine of stdout.split(/\r\n|\r|\n/)) {
+  for (const rawLine of stdout.split(/\r\n|[\n\r\x0b\x0c\x1c-\x1e\x85\u2028\u2029]/)) {
     const line = rawLine.trim();
     if (!line.startsWith("{")) continue;
     let parsed: unknown;

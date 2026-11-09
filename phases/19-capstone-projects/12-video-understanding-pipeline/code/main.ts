@@ -3,6 +3,8 @@
 // Source: phases/19-capstone-projects/12-video-understanding-pipeline/docs/en.md
 // Run: npx tsx phases/19-capstone-projects/12-video-understanding-pipeline/code/main.ts
 
+import { createHash } from "node:crypto";
+
 const EMB_DIM = 24;
 
 function tokenize(s: string): string[] {
@@ -10,12 +12,7 @@ function tokenize(s: string): string[] {
 }
 
 function stableHash(tok: string): number {
-  let h = 0x811c9dc5;
-  for (const ch of Buffer.from(tok, "utf8")) {
-    h ^= ch;
-    h = Math.imul(h, 0x01000193) >>> 0;
-  }
-  return h;
+  return createHash("md5").update(tok, "utf8").digest().readUInt32BE(0);
 }
 
 function fakeEmbed(text: string): number[] {

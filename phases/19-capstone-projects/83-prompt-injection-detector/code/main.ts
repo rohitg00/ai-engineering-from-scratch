@@ -27,12 +27,13 @@ export interface Verdict {
 }
 
 export class PerCategoryMetrics {
-  tp = 0;
-  fp = 0;
-  fn = 0;
-  tn = 0;
-
-  constructor(public category: string) {}
+  constructor(
+    public category: string,
+    public tp = 0,
+    public fp = 0,
+    public fn = 0,
+    public tn = 0,
+  ) {}
 
   get precision(): number {
     const denom = this.tp + this.fp;
@@ -61,8 +62,19 @@ function replaceAll(text: string, needle: string, replacement: string): string {
   return text.split(needle).join(replacement);
 }
 
+const REPLACEMENT_BYTES = Buffer.from([0xef, 0xbf, 0xbd]);
+
 function decodeUtf8Ignore(bytes: Buffer): string {
-  return new TextDecoder("utf-8").decode(bytes).replace(/\uFFFD/g, "");
+  const parts: string[] = [];
+  let start = 0;
+  let idx = bytes.indexOf(REPLACEMENT_BYTES);
+  while (idx !== -1) {
+    parts.push(new TextDecoder("utf-8").decode(bytes.subarray(start, idx)).replace(/\uFFFD/g, ""));
+    start = idx + REPLACEMENT_BYTES.length;
+    idx = bytes.indexOf(REPLACEMENT_BYTES, start);
+  }
+  parts.push(new TextDecoder("utf-8").decode(bytes.subarray(start)).replace(/\uFFFD/g, ""));
+  return parts.join("\uFFFD");
 }
 
 function hasAlpha(text: string): boolean {

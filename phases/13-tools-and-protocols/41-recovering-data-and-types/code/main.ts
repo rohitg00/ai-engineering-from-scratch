@@ -946,12 +946,12 @@ export class DwarfInfo {
       const high = highForm !== undefined && [0x05, 0x06, 0x07, 0x0b, 0x0f].includes(highForm) ? (low as number) + highRaw : highRaw;
       const params = die.children
         .filter((c) => c.tagName === "formal_parameter")
-        .map((c) => new Parameter(c.name || "", this.typeName(this.typeOf(c)), decodeLocation(c.get("location"))));
+        .map((c) => new Parameter(c.name || "", this.typeName(this.typeOf(c)), decodeLocation(c.get("location") || new Uint8Array(0))));
       const specRef = die.get("specification");
       const specification = specRef !== null ? this.dies.get(specRef as number) ?? null : null;
       const declared = specification ?? die;
       const name = declared.name || (declared.get("linkage_name") as string | null) || "";
-      found.push(new FunctionInfo(name, low as number, high, decodeLocation(die.get("frame_base")), params, this.typeName(this.typeOf(declared))));
+      found.push(new FunctionInfo(name, low as number, high, decodeLocation(die.get("frame_base") || new Uint8Array(0)), params, this.typeName(this.typeOf(declared))));
     }
     return found.sort((a, b) => a.lowPc - b.lowPc);
   }
@@ -965,7 +965,7 @@ export function decodeConstu(expression: Uint8Array): number {
 }
 
 export function decodeLocation(expression: AttrValue): string {
-  if (typeof expression === "number" && expression) {
+  if (typeof expression === "number") {
     return `loclist ${hx(expression)}`;
   }
   if (!(expression instanceof Uint8Array) || !expression.length) {
@@ -2453,7 +2453,7 @@ export function figureData(): Json {
 }
 
 function quote(text: string): string {
-  return JSON.stringify(text).replace(/[\u0080-\uffff]/g, (c) => "\\u" + c.charCodeAt(0).toString(16).padStart(4, "0"));
+  return JSON.stringify(text).replace(/[\u007f-\uffff]/g, (c) => "\\u" + c.charCodeAt(0).toString(16).padStart(4, "0"));
 }
 
 export function dumps(value: Json, indent: number | null = null, separators: [string, string] | null = null, depth = 0): string {

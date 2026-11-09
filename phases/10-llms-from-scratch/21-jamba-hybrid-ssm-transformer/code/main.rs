@@ -142,9 +142,9 @@ fn main() {
     println!("{}", "=".repeat(74));
     println!("TAKEAWAY");
     println!("{}", "-".repeat(74));
-    println!("  Pure Transformer at 256k = 67 GB just for KV cache, will not fit");
+    println!("  Pure Transformer at 256k = 128 GB just for KV cache, will not fit");
     println!("  on an 80GB single-GPU deployment after you add weights and activations.");
-    println!("  Jamba 1:7 = 8.4 GB KV cache + ~4 MB SSM state = fits comfortably.");
+    println!("  Jamba 1:7 = 16 GB KV cache + ~4 MB SSM state = fits comfortably.");
     println!("  That is the 256k-on-one-GPU claim from the AI21 paper, concretely.");
     println!("  Mamba-3 pushes pure SSM further; hybrids will likely adopt it as");
     println!("  the SSM side of the next-generation recipe.");

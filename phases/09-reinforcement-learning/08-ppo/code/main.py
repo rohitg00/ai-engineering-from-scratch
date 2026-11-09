@@ -68,7 +68,7 @@ def collect_rollout(theta, w, rng, horizon=50, n_envs=8):
     buffer = []
     for _ in range(n_envs):
         s = reset()
-        for _ in range(horizon):
+        for t in range(horizon):
             x = features(s)
             probs = softmax(logits(theta, x))
             a = sample(probs, rng)
@@ -80,6 +80,8 @@ def collect_rollout(theta, w, rng, horizon=50, n_envs=8):
                 "done": done,
                 "v_old": value(w, x),
                 "log_pi_old": math.log(max(probs[a], 1e-12)),
+                "v_next": value(w, features(s_next)),
+                "last": done or t == horizon - 1,
             })
             if done:
                 break
@@ -92,7 +94,9 @@ def gae(buffer, gamma=0.99, lam=0.95):
     advantages = [0.0] * T
     gae_val = 0.0
     for t in reversed(range(T)):
-        next_v = 0.0 if buffer[t]["done"] else (buffer[t + 1]["v_old"] if t + 1 < T else 0.0)
+        if buffer[t]["last"]:
+            gae_val = 0.0
+        next_v = 0.0 if buffer[t]["done"] else (buffer[t]["v_next"] if buffer[t]["last"] else buffer[t + 1]["v_old"])
         delta = buffer[t]["r"] + gamma * next_v - buffer[t]["v_old"]
         gae_val = delta + gamma * lam * gae_val
         advantages[t] = gae_val

@@ -66,7 +66,9 @@ function applyAction(state: BrowserState, action: Action): BrowserState {
   const act = action["action"];
   if (act === "click") {
     const desc = String(action["element_desc"] ?? "");
-    if (desc.includes("Book") || desc.includes("Submit")) {
+    if (desc.includes("Submit") && state.page === "reset_sent") {
+      next.page = "reset_sent";
+    } else if (desc.includes("Book") || desc.includes("Submit")) {
       next.page = "confirmation";
     } else if (desc.includes("Login") || desc.includes("Forgot")) {
       next.page = desc.includes("Forgot") ? "reset_sent" : "login";

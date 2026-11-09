@@ -125,13 +125,15 @@ function pyTypeName(value: unknown): string {
   if (typeof value === "number") return Number.isInteger(value) ? "int" : "float";
   if (typeof value === "string") return "str";
   if (Array.isArray(value)) return "list";
-  if (typeof value === "object" && value !== null) return (value as object).constructor?.name ?? "object";
+  if (typeof value === "object" && value !== null) {
+    const name = (value as object).constructor?.name;
+    return !name || name === "Object" ? "dict" : name;
+  }
   return typeof value;
 }
 
 function actorLabel(actor: unknown): string {
-  const value =
-    typeof actor === "object" && actor !== null && "value" in actor ? (actor as { value: unknown }).value : actor;
+  const value = actor instanceof Actor ? actor.value : actor;
   if (typeof value === "string" && value) return value;
   if (value === null || value === undefined) return "unknown";
   return pyTypeName(value);

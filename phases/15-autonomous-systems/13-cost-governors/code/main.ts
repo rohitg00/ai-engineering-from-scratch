@@ -17,7 +17,7 @@ class Governor {
   max_tokens_per_request = 10_000;
   max_turns = 200;
   max_budget_usd = 50.0;
-  velocity_usd_per_min = 5.0;
+  velocity_usd_per_min = 0.03;
   velocity_window_min = 10.0;
   monthly_cap_usd = 500.0;
 
@@ -139,8 +139,8 @@ function main(): void {
   console.log("=".repeat(85));
   console.log("HEADLINE: caps must layer, because failure modes differ by time scale");
   console.log("-".repeat(85));
-  console.log("  Monthly cap fires late: the wallet is already half-gone.");
-  console.log("  Velocity limit ($5/min rolling) catches a loop within minutes.");
+  console.log("  Monthly cap fires too late: it does not trip within 10k simulated turns.");
+  console.log("  Velocity limit ($0.03/min rolling) catches a loop within minutes.");
   console.log("  Iteration cap prevents any single run from exceeding N turns.");
   console.log("  Per-request cap prevents any one completion from being unbounded.");
   console.log("  Session dollar cap (max_budget_usd) closes the seatbelt on cost.");

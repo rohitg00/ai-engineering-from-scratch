@@ -131,7 +131,7 @@ function trainDpo(pairs: Pair[], beta: number = 0.1, steps: number = 2000, lr: n
       grad = gw.map((gwI, k) => gMargin * (gwI - gl[k]));
     } else if (variant === "bpo") {
       const gMargin = -(1.0 - sigmoid(margin));
-      const anchorPen = -1.0 * (logPiW - logRefW);
+      const anchorPen = Math.max(0.0, -(logPiW - logRefW));
       grad = gw.map((gwI, k) => beta * (gMargin * gwI - gMargin * gl[k]) - 0.05 * anchorPen * gwI);
     } else {
       throw new Error(variant);

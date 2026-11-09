@@ -23,12 +23,13 @@ function pyStr(s: string): string {
 
 class CircuitBreaker {
   state = "closed";
+  tripped: string | null = null;
   recent: string[] = [];
 
   constructor(public threshold: number = 5) {}
 
   record(actionKey: string): boolean {
-    if (this.state === "open") {
+    if (this.state === "open" && actionKey === this.tripped) {
       return false;
     }
     this.recent.push(actionKey);
@@ -36,6 +37,7 @@ class CircuitBreaker {
       const tail = this.recent.slice(-this.threshold);
       if (tail.every((a) => a === tail[0])) {
         this.state = "open";
+        this.tripped = actionKey;
         return false;
       }
     }
@@ -82,7 +84,7 @@ function runTrajectory(traj: Action[], killSwitch: { enabled: boolean }): void {
     if (!allowed) {
       console.log(`  ${n}. [CIRCUIT BREAKER open] ${a.kind}:${a.payload}  reason=5x identical calls`);
       breakerFired = true;
-      break;
+      continue;
     }
 
     if (a.kind === "read") {

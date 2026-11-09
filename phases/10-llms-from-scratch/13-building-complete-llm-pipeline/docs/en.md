@@ -216,10 +216,15 @@ The pipeline in `main.py` runs twelve placeholder stages, produces a manifest, a
 
 The canonical workflow has three commands.
 
-```
+```bash
 python code/main.py plan    # validate manifest, compute cost estimate, print DAG
 python code/main.py run     # execute stages, writing to manifest.out.yaml
 python code/main.py gate    # read manifest.out.yaml, apply eval gates, ship-or-hold
+```
+
+The Rust port runs the same `plan` step:
+
+```bash
 rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson plan
 ```
 

@@ -162,11 +162,15 @@ type InFlight = { future: Deferred; startedAt: number };
 class Semaphore {
   private waiters: (() => void)[] = [];
   constructor(private value: number) {}
-  async acquire(): Promise<void> {
+  tryAcquire(): boolean {
     if (this.value > 0) {
       this.value -= 1;
-      return;
+      return true;
     }
+    return false;
+  }
+  async acquire(): Promise<void> {
+    if (this.tryAcquire()) return;
     await new Promise<void>((res) => this.waiters.push(res));
   }
   release(): void {
@@ -278,7 +282,7 @@ export class Dispatcher {
       }
     }
 
-    await this.sem.acquire();
+    if (!this.sem.tryAcquire()) await this.sem.acquire();
     try {
       return await this.runWithRetries(rec, args, opts.timeoutMsOverride, key);
     } finally {

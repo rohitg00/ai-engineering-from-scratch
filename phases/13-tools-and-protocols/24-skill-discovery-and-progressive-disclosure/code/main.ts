@@ -80,7 +80,7 @@ function pyLen(s: string): number {
 }
 
 function isSpace(ch: string): boolean {
-  return ch !== "" && /^\s$/u.test(ch);
+  return ch !== "" && ch !== "\ufeff" && (/^\s$/u.test(ch) || /^[\x1c-\x1f\x85]$/.test(ch));
 }
 
 function stripChars(s: string, chars: string): string {
@@ -265,7 +265,7 @@ function frontmatter(filePath: string): Map<string, string> {
           if (!nestedLine.includes(":")) throw new DiscoveryError(`malformed metadata line ${index + 1} in ${filePath}`);
           const nestedParts = splitOnce(nestedLine, ":");
           const nestedKey = nestedParts[0].trim();
-          if (!FIELD_PATTERN.test(nestedKey) || nestedKey in nested) {
+          if (!FIELD_PATTERN.test(nestedKey) || Object.prototype.hasOwnProperty.call(nested, nestedKey)) {
             throw new DiscoveryError(`invalid metadata field ${pyStr(nestedKey)} in ${filePath}`);
           }
           nested[nestedKey] = stripChars(nestedParts[1].trim(), "\"'");

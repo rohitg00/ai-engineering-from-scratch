@@ -4,7 +4,7 @@
 // Run: npx tsx phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/code/main.ts
 import { createHash } from "node:crypto";
 import { accessSync, constants, mkdtempSync, readFileSync, realpathSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { machine, tmpdir } from "node:os";
+import { constants as osConstants, machine, tmpdir } from "node:os";
 import { basename, delimiter, join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
@@ -1292,7 +1292,7 @@ export function observeRuns(compiler: string, grid: [string, J[]][], sourceRecor
         createEvidence(subject, provider, {
           operation: "execute_function",
           parameters: { function: fn, args },
-          normalized_result: { result: parseOutput(completed.stdout), stdout: completed.stdout, exit_code: completed.status ?? -1 },
+          normalized_result: { result: parseOutput(completed.stdout), stdout: completed.stdout, exit_code: completed.status ?? (completed.signal ? -osConstants.signals[completed.signal] : -1) },
           confidence: "observed",
           authority: "controlled-replay",
           environment,
@@ -1458,6 +1458,12 @@ function parseArgs(argv: string[]): { record: string | null; noRun: boolean } {
     const arg = argv[i];
     if (arg === "-h" || arg === "--help") {
       console.log(USAGE);
+      console.log("");
+      console.log("Companion code for docs/en.md: an evidence ledger for binary analysis. Record");
+      console.log("model: rea 6.5.0 `src/domain/evidence.ts`, `src/domain/residualUnknown.ts`,");
+      console.log("`src/domain/analysisSnapshot.ts` (tag rea-agents-6.5.0, commit");
+      console.log("3b79af28e80785afce9f5998d8f03289402a1847). Run `python3 main.py` for the");
+      console.log("finite demo or `python3 -m unittest discover -s tests`.");
       console.log("");
       console.log("options:");
       console.log("  -h, --help       show this help message and exit");

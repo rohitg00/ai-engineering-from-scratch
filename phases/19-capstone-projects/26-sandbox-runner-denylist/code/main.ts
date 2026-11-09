@@ -299,7 +299,10 @@ function runProcess(
     child.on("error", (e: NodeJS.ErrnoException) => {
       if (e.code === "ENOENT") notFound = `[Errno 2] No such file or directory: ${pyRepr(file)}`;
     });
-    if (opts.input !== null) child.stdin!.end(opts.input);
+    if (opts.input !== null) {
+      child.stdin!.on("error", () => undefined);
+      child.stdin!.end(opts.input);
+    }
     const timer = setTimeout(() => {
       timedOut = true;
       child.kill("SIGKILL");

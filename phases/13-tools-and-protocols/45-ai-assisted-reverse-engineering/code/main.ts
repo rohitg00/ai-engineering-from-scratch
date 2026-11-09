@@ -971,10 +971,19 @@ export function committedObjectMatchesSource(candidate: Candidate): boolean {
   }
 }
 
+function pyTypeName(value: unknown): string {
+  if (value === null || value === undefined) return "NoneType";
+  if (Array.isArray(value)) return "list";
+  if (typeof value === "boolean") return "bool";
+  if (typeof value === "string") return "str";
+  if (typeof value === "number") return Number.isInteger(value) ? "int" : "float";
+  return "dict";
+}
+
 function runChecked(command: string, args: string[]): void {
   const completed = spawnSync(command, args, { stdio: "inherit" });
   if (completed.status !== 0) {
-    throw new PyError("CalledProcessError", `Command '${[command, ...args].join(" ")}' returned non-zero exit status ${completed.status}.`);
+    throw new PyError("CalledProcessError", `Command '[${[command, ...args].map((item) => `'${item}'`).join(", ")}]' returned non-zero exit status ${completed.status}.`);
   }
 }
 
@@ -1534,7 +1543,7 @@ export function handleRequest(message: Obj): Obj | null {
   if (method === "tools/call") {
     let structured: Obj;
     try {
-      if (!isDict(params)) throw new PyError("AttributeError", `${Array.isArray(params) ? "'list'" : "object"} object has no attribute 'get'`);
+      if (!isDict(params)) throw new PyError("AttributeError", `'${pyTypeName(params)}' object has no attribute 'get'`);
       const args = get(params, "arguments");
       structured = callTool(get(params, "name", ""), pyTruthy(args) ? args : {});
     } catch (error) {

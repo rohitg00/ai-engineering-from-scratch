@@ -461,6 +461,10 @@ export function evaluatePipeline(
 }
 
 function fmt(v: number): string {
+  if (Number.isInteger(v * 16) && Math.abs(v * 16) % 2 === 1) {
+    const fl = Math.floor(v * 1000);
+    return ((fl % 2 === 0 ? fl : fl + 1) / 1000).toFixed(3);
+  }
   return v.toFixed(3);
 }
 

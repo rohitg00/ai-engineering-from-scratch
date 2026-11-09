@@ -134,7 +134,7 @@ function gaiaDemo(): void {
 
 function main(): void {
   console.log("=".repeat(70));
-  console.log("BENCHMARKS: SWE-bench, GAIA, Phase 14, Lesson 19");
+  console.log("BENCHMARKS: SWE-bench, GAIA (Phase 14, Lesson 19)");
   console.log("=".repeat(70));
   sweDemo();
   gaiaDemo();

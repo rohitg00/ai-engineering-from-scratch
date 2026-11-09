@@ -51,6 +51,8 @@ interface Rec {
   done: boolean;
   v_old: number;
   log_pi_old: number;
+  v_next: number;
+  last: boolean;
   adv: number;
   ret: number;
 }
@@ -147,6 +149,8 @@ function collectRollout(theta: number[][], w: number[], rng: Random, horizon = 5
         done,
         v_old: value(w, x),
         log_pi_old: Math.log(Math.max(probs[a], 1e-12)),
+        v_next: value(w, features(sNext)),
+        last: done || t === horizon - 1,
         adv: 0,
         ret: 0,
       });
@@ -162,7 +166,8 @@ function gae(buffer: Rec[], gamma = 0.99, lam = 0.95): [number[], number[]] {
   const advantages = new Array<number>(T).fill(0.0);
   let gaeVal = 0.0;
   for (let t = T - 1; t >= 0; t--) {
-    const nextV = buffer[t].done ? 0.0 : t + 1 < T ? buffer[t + 1].v_old : 0.0;
+    if (buffer[t].last) gaeVal = 0.0;
+    const nextV = buffer[t].done ? 0.0 : buffer[t].last ? buffer[t].v_next : buffer[t + 1].v_old;
     const delta = buffer[t].r + gamma * nextV - buffer[t].v_old;
     gaeVal = delta + gamma * lam * gaeVal;
     advantages[t] = gaeVal;

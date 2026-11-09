@@ -191,6 +191,13 @@ function urlparse(value: string): ParsedUrl {
     if ((netloc.includes("[") && !netloc.includes("]")) || (netloc.includes("]") && !netloc.includes("["))) {
       throw new ValueError("Invalid IPv6 URL");
     }
+    if (netloc.includes("[")) {
+      const bracketed = netloc.slice(netloc.indexOf("[") + 1, netloc.indexOf("]"));
+      if (!bracketed.startsWith("v")) {
+        if (net.isIPv4(bracketed)) throw new ValueError("An IPv4 address cannot be in brackets");
+        if (!net.isIPv6(bracketed)) throw new ValueError("does not appear to be an IPv4 or IPv6 address");
+      }
+    }
   }
   let fragment = "";
   const hashAt = rest.indexOf("#");

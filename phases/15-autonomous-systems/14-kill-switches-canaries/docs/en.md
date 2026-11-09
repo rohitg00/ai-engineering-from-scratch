@@ -94,7 +94,7 @@ circuit-breaker
 
 ## Exercises
 
-1. Run `code/main.py`. Confirm the circuit breaker fires on turn 5 (fifth identical call) and the canary fires on turn 9 (fake-key read).
+1. Run `code/main.py`. Confirm the circuit breaker fires on turn 7 (fifth identical call) and the canary fires on turn 9 (fake-key read).
 
 2. Add a statistical detector: EWMA z-score on tool-call rate. Feed in a trajectory that drifts slowly and show the detector never fires. Now add a hard limit (no more than 50 tool calls in 10 minutes) and show the hard limit fires on the same trajectory.
 

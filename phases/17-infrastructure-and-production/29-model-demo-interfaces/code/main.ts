@@ -379,6 +379,19 @@ async function* streamEvents(
   yield sseEvent("done", { label: result.label, score: result.score, tokens: count });
 }
 
+function pyLogLine(entry: LogEntry): string {
+  const parts = Object.entries(entry).map(([key, value]) => {
+    let text: string;
+    if (typeof value === "number") {
+      text = key === "latency_ms" && Number.isInteger(value) ? value.toFixed(1) : String(value);
+    } else {
+      text = JSON.stringify(value).replace(/[\u0080-\uffff]/g, (ch) => "\\u" + ch.charCodeAt(0).toString(16).padStart(4, "0"));
+    }
+    return `${JSON.stringify(key)}: ${text}`;
+  });
+  return `{${parts.join(", ")}}`;
+}
+
 type LogEntry = {
   ts: number;
   request_id: string;
@@ -423,7 +436,7 @@ class PrivacyLog {
       this.records.shift();
     }
     if (this.sink) {
-      this.sink(JSON.stringify(entry));
+      this.sink(pyLogLine(entry));
     }
     return entry;
   }
@@ -789,10 +802,14 @@ async function sendStream(app: DemoApp, res: ServerResponse, text: string, reque
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Request-Id", requestId);
+  let closed = false;
+  res.on("close", () => {
+    closed = true;
+  });
   res.flushHeaders();
   const events = streamEvents(text, generate, app.config.token_delay);
   for await (const frame of events) {
-    if (res.destroyed) {
+    if (closed || res.destroyed) {
       await events.return(undefined);
       return "client_closed";
     }
@@ -868,6 +885,7 @@ async function doPost(app: DemoApp, req: IncomingMessage, res: ServerResponse): 
 
 function createDemoServer(app: DemoApp): Server {
   const server = createServer((req, res) => {
+    res.on("error", () => {});
     if (req.method === "GET") {
       doGet(app, req, res);
     } else if (req.method === "POST") {

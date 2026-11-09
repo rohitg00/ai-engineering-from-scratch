@@ -1627,7 +1627,7 @@ function toolCaptures(): Rec {
 }
 
 function which(name: string): string | null {
-  for (const dir of (process.env.PATH ?? "").split(delimiter)) {
+  for (const dir of (process.env.PATH ?? "/bin:/usr/bin").split(delimiter)) {
     const candidate = join(dir || ".", name);
     try {
       if (statSync(candidate).isFile()) {
@@ -1651,9 +1651,12 @@ function runTools(stem = "convention-x86_64-linux-O2"): Rec {
       continue;
     }
     const script = "afc @ sym.eight_args; " + (tool === "radare2" ? "afv @ sym.eight_args" : "afvl @ sym.eight_args");
-    const out = spawnSync(binary, ["-A", "-q", "-e", "scr.color=0", "-c", script, path], { encoding: "utf8", timeout: 120000 });
+    const argv = ["-A", "-q", "-e", "scr.color=0", "-c", script, path];
+    const out = spawnSync(binary, argv, { encoding: "utf8", timeout: 120000 });
     if (out.error) {
-      results[tool] = `failed: ${out.error.message}`;
+      const timedOut = (out.error as NodeJS.ErrnoException).code === "ETIMEDOUT";
+      const listed = "[" + [binary, ...argv].map((item) => `'${item}'`).join(", ") + "]";
+      results[tool] = timedOut ? `failed: Command '${listed}' timed out after 120 seconds` : `failed: ${out.error.message}`;
       continue;
     }
     results[tool] = splitLines(out.stdout.trim()).filter((l) => !["INFO", "WARNING", "HINT"].some((p) => l.startsWith(p))).slice(-12);
@@ -1812,10 +1815,12 @@ function main(argv: string[]): number {
     console.log(dumps(figureData(), null));
     return 0;
   }
-  console.error("usage: main.ts [analyze FIXTURE_STEM FUNCTION | object FILE | seh | eh-frame FIXTURE_STEM | figure-data]");
+  console.error("usage: main.py [analyze FIXTURE_STEM FUNCTION | object FILE | seh | eh-frame FIXTURE_STEM | figure-data]");
   return 2;
 }
 
 export { analyzeFixture };
 
-process.exitCode = main(process.argv.slice(2));
+if (require.main === module) {
+  process.exitCode = main(process.argv.slice(2));
+}

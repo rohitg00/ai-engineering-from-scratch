@@ -84,22 +84,28 @@ function mse(a: Image, b: Image): number {
 function finiteDiffStep(gaussians: Gaussian[], target: Image, lr: number, eps = 0.1): number {
   const base = render(gaussians);
   const baseLoss = mse(base, target);
+  const updates: Array<() => void> = [];
   for (const g of gaussians) {
     for (let i = 0; i < g.pos.length; i++) {
       g.pos[i] += eps;
       const up = mse(render(gaussians), target);
       g.pos[i] -= eps;
       const grad = (up - baseLoss) / eps;
-      g.pos[i] -= lr * grad;
+      updates.push(() => {
+        g.pos[i] -= lr * grad;
+      });
     }
     for (const key of ["sigma", "color"] as const) {
       g[key] += eps;
       const up = mse(render(gaussians), target);
       g[key] -= eps;
       const grad = (up - baseLoss) / eps;
-      g[key] -= lr * grad;
+      updates.push(() => {
+        g[key] -= lr * grad;
+      });
     }
   }
+  for (const apply of updates) apply();
   return baseLoss;
 }
 

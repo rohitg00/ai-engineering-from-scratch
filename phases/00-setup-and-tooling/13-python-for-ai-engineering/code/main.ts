@@ -148,7 +148,10 @@ function trainTestSplit<T>(items: readonly T[], testFraction = 0.2, seed = 0): [
   if (items.length < 2) throw new Error(`need at least 2 items to split, got ${items.length}`);
   const order = items.map((_, i) => i);
   shuffle(order, mulberry32(seed));
-  const nTest = Math.min(Math.max(1, Math.round(items.length * testFraction)), items.length - 1);
+  const raw = items.length * testFraction;
+  const floor = Math.floor(raw);
+  const rounded = raw - floor === 0.5 ? (floor % 2 === 0 ? floor : floor + 1) : Math.round(raw);
+  const nTest = Math.min(Math.max(1, rounded), items.length - 1);
   const test = order.slice(0, nTest).map((i) => items[i]);
   const train = order.slice(nTest).map((i) => items[i]);
   return [train, test];

@@ -32,17 +32,19 @@ CANARY_FILES = {
 class CircuitBreaker:
     threshold: int = 5
     state: str = "closed"   # closed | open | half_open
+    tripped: str | None = None
     recent: list[str] = field(default_factory=list)
 
     def record(self, action_key: str) -> bool:
-        """Return True if the action may proceed, False if breaker is open."""
-        if self.state == "open":
+        """Return True if the action may proceed, False if this pattern is blocked."""
+        if self.state == "open" and action_key == self.tripped:
             return False
         self.recent.append(action_key)
         if len(self.recent) >= self.threshold:
             tail = self.recent[-self.threshold:]
             if all(a == tail[0] for a in tail):
                 self.state = "open"
+                self.tripped = action_key
                 return False
         return True
 
@@ -87,7 +89,7 @@ def run_trajectory(traj: list[Action], kill_switch: dict) -> None:
             print(f"  {i:>2}. [CIRCUIT BREAKER open] {a.kind}:{a.payload}  "
                   f"reason=5x identical calls")
             breaker_fired = True
-            break
+            continue
 
         # Detector 3: canary
         if a.kind == "read":

@@ -11,6 +11,7 @@ Run:  python main.py
 
 from __future__ import annotations
 
+import hashlib
 import math
 import random
 import re
@@ -28,7 +29,7 @@ def tokenize(s: str) -> list[str]:
 def fake_embed(text: str) -> list[float]:
     v = [0.0] * EMB_DIM
     for tok in tokenize(text):
-        h = hash(tok)
+        h = int.from_bytes(hashlib.md5(tok.encode("utf-8")).digest()[:4], "big")
         v[h % EMB_DIM] += 1.0
         v[(h >> 8) % EMB_DIM] += 0.5
     n = math.sqrt(sum(x * x for x in v)) or 1.0

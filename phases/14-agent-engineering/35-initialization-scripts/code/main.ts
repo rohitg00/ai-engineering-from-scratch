@@ -60,16 +60,20 @@ function timed(probeFn: () => Probe): () => Probe {
 }
 
 function which(cmd: string): string | null {
+  const windows = process.platform === "win32";
+  const exts = windows ? ["", ...(process.env.PATHEXT ?? ".EXE;.CMD;.BAT").split(";").filter(Boolean)] : [""];
   for (const dir of (process.env.PATH ?? "").split(delimiter)) {
     if (!dir) continue;
-    const candidate = join(dir, cmd);
-    try {
-      if (statSync(candidate).isFile()) {
-        accessSync(candidate, constants.X_OK);
-        return candidate;
+    for (const ext of exts) {
+      const candidate = join(dir, cmd + ext);
+      try {
+        if (statSync(candidate).isFile()) {
+          if (!windows) accessSync(candidate, constants.X_OK);
+          return candidate;
+        }
+      } catch {
+        continue;
       }
-    } catch {
-      continue;
     }
   }
   return null;

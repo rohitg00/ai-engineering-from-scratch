@@ -36,7 +36,7 @@ class Governor:
     max_tokens_per_request: int = 10_000
     max_turns: int = 200
     max_budget_usd: float = 50.0
-    velocity_usd_per_min: float = 5.0       # cut off above this rolling rate
+    velocity_usd_per_min: float = 0.03       # cut off above this rolling rate
     velocity_window_min: float = 10.0
     monthly_cap_usd: float = 500.0
 
@@ -153,8 +153,8 @@ def main() -> None:
     print("=" * 85)
     print("HEADLINE: caps must layer, because failure modes differ by time scale")
     print("-" * 85)
-    print("  Monthly cap fires late: the wallet is already half-gone.")
-    print("  Velocity limit ($5/min rolling) catches a loop within minutes.")
+    print("  Monthly cap fires too late: it does not trip within 10k simulated turns.")
+    print("  Velocity limit ($0.03/min rolling) catches a loop within minutes.")
     print("  Iteration cap prevents any single run from exceeding N turns.")
     print("  Per-request cap prevents any one completion from being unbounded.")
     print("  Session dollar cap (max_budget_usd) closes the seatbelt on cost.")

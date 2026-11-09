@@ -962,8 +962,10 @@ function main(argv: string[]): number {
     console.log(dumps(figureData() as Json, null));
     return 0;
   }
-  console.error("usage: main.ts [compare FIXTURE.o | ir HEXBYTES | figure-data]");
+  console.error("usage: main.py [compare FIXTURE.o | ir HEXBYTES | figure-data]");
   return 2;
 }
 
-process.exitCode = main(process.argv.slice(2));
+if (require.main === module) {
+  process.exitCode = main(process.argv.slice(2));
+}

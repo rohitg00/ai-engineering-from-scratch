@@ -120,8 +120,8 @@ function splitMax(text: string, maxsplit: number): string[] {
 
 function splitlines(text: string): string[] {
   if (text === "") return [];
-  const lines = text.split(/\r\n|\r|\n/);
-  if (/(\r\n|\r|\n)$/.test(text)) lines.pop();
+  const lines = text.split(/\r\n|[\n\r\x0b\x0c\x1c-\x1e\x85\u2028\u2029]/);
+  if (/[\n\r\x0b\x0c\x1c-\x1e\x85\u2028\u2029]$/.test(text)) lines.pop();
   return lines;
 }
 

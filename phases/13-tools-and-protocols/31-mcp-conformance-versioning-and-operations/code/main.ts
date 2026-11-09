@@ -198,7 +198,7 @@ function normalizedHeaders(headers: Record<string, string>): Record<string, stri
   const normalized: Record<string, string> = {};
   for (const [name, value] of Object.entries(headers)) {
     const key = name.toLowerCase();
-    if (key in normalized && normalized[key] !== value) {
+    if (Object.hasOwn(normalized, key) && normalized[key] !== value) {
       throw new ProtocolViolation(`conflicting duplicate HTTP header: ${name}`, -32020);
     }
     normalized[key] = value;

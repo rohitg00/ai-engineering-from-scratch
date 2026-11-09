@@ -34,14 +34,18 @@ function pyRepr(value: unknown): string {
   return String(value);
 }
 
+function asciiJson(value: string | number | boolean): string {
+  return JSON.stringify(value).replace(/[\u007f-\uffff]/g, (ch) => "\\u" + ch.charCodeAt(0).toString(16).padStart(4, "0"));
+}
+
 function canonicalJson(value: unknown): string {
   if (value === null || value === undefined) return "null";
   if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
-    return JSON.stringify(value);
+    return asciiJson(value);
   }
   if (Array.isArray(value)) return "[" + value.map(canonicalJson).join(",") + "]";
   const keys = Object.keys(value as Dict).sort();
-  return "{" + keys.map((key) => `${JSON.stringify(key)}:${canonicalJson((value as Dict)[key])}`).join(",") + "}";
+  return "{" + keys.map((key) => `${asciiJson(key)}:${canonicalJson((value as Dict)[key])}`).join(",") + "}";
 }
 
 class InFlightRequest {

@@ -304,7 +304,7 @@ function frontmatterAndBody(filePath: string): [Map<string, string>, string] {
           if (!nestedLine.includes(":")) throw new ValueError(`malformed metadata line ${index + 1}`);
           const nestedParts = splitOnce(nestedLine, ":");
           const nestedKey = nestedParts[0].trim();
-          if (!FIELD_PATTERN.test(nestedKey) || nestedKey in nested) {
+          if (!FIELD_PATTERN.test(nestedKey) || Object.prototype.hasOwnProperty.call(nested, nestedKey)) {
             throw new ValueError(`invalid metadata field ${pyStr(nestedKey)}`);
           }
           nested[nestedKey] = stripChars(nestedParts[1].trim(), "\"'");

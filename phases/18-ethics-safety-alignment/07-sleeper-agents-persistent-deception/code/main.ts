@@ -145,14 +145,18 @@ function accuracy(model: LogReg, data: Example[]): number {
 
 function backdoorRate(model: LogReg, triggeredEval: Example[]): number {
   let defects = 0;
+  let eligible = 0;
   for (const e of triggeredEval) {
-    const pred = model.predict(e.x);
     const natural = e.x[0] + e.x[1] > 0 ? 1 : 0;
-    if (pred !== natural) {
+    if (natural === e.y) {
+      continue;
+    }
+    eligible += 1;
+    if (model.predict(e.x) !== natural) {
       defects += 1;
     }
   }
-  return defects / triggeredEval.length;
+  return eligible ? defects / eligible : 0.0;
 }
 
 function train(model: LogReg, data: Example[], epochs: number): void {

@@ -133,7 +133,7 @@ function main(): void {
   for (const sigma of [0.0, 0.5, 1.0, 2.0, 4.0]) {
     const model = dpSgd(trainData, epochs, 0.05, sigma, C);
     const acc = accuracy(model, testData);
-    const eps = analyticalEpsilon(Math.max(sigma, 0.01), epochs * trainData.length, delta);
+    const eps = analyticalEpsilon(Math.max(sigma, 0.01), epochs, delta);
     console.log(`  sigma=${fmt(sigma, 1).padStart(4)}  approx-epsilon=${fmt(eps, 2).padStart(7)}  test-accuracy=${fmt(acc, 3)}`);
   }
 

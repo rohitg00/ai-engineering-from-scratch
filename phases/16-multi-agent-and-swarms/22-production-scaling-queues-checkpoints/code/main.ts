@@ -175,7 +175,7 @@ async function demoAsyncVsThreads(): Promise<void> {
 
   const ratio = asyncElapsed > 0 ? threadElapsed / asyncElapsed : Infinity;
   console.log(
-    `  ratio: threads are ${ratio.toFixed(1)}x slower (and allocate ~1MB per thread stack)`,
+    `  ratio: threads are ${ratio.toFixed(1)}x slower (pool capped at ${MAX_THREADS} workers, so calls run in series per worker)`,
   );
 }
 

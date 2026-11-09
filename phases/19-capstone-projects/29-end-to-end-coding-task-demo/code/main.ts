@@ -20,7 +20,7 @@ import {
   writeFileSync,
   writeSync,
 } from "node:fs";
-import { tmpdir } from "node:os";
+import { constants, tmpdir } from "node:os";
 import { basename, dirname, delimiter, isAbsolute, join, sep } from "node:path";
 import { performance } from "node:perf_hooks";
 
@@ -322,10 +322,11 @@ class Sandbox {
         durationMs: performance.now() - started,
       });
     }
+    if (err) throw err;
     const elapsed = performance.now() - started;
     const out = (proc.stdout ?? Buffer.alloc(0)).subarray(0, this.maxOutputBytes);
     const errOut = (proc.stderr ?? Buffer.alloc(0)).subarray(0, this.maxOutputBytes);
-    const code = proc.status ?? (proc.signal ? -1 : 0);
+    const code = proc.status ?? (proc.signal ? -constants.signals[proc.signal] : 0);
     return new SandboxResult(argv, code, { stdout: out, stderr: errOut, durationMs: elapsed });
   }
 }
