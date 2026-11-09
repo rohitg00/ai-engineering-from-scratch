@@ -3,7 +3,7 @@
 > NER "Paris"i buldu. "Paris, Fransa"yı bağlantı veren bir varlık Paris Hilton Paris, Texas Paris, Paris (Trojan prens) mı?
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 24 (Coreference Resolution)
 **Time:** ~60 minutes
 

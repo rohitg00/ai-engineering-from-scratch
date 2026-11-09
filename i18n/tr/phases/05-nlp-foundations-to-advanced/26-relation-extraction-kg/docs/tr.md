@@ -3,7 +3,7 @@
 > NER varlıkları buldu. varlık bağlantısı onları demirledi. ilişki çıkarımı aralarındaki kenarları bulur. Bilgi grafi düğümlerin, kenarların ve kökenlerinin toplamıdır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 25 (Entity Linking)
 **Time:** ~60 minutes
 

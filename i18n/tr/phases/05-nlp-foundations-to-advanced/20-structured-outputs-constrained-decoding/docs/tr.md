@@ -3,7 +3,7 @@
 > JSON için LLM'den isteyin. Çoğu zaman JSON alın. Üretimde, "çoğu" sorundur. Sınırlama yapmadan önce logitleri düzenleyerek kısıtlı dekodlama "çoğu"yı "her zaman"a dönüştürür.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 19 (Subword Tokenization)
 **Time:** ~60 minutes
 

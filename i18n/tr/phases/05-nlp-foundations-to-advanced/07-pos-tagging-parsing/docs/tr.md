@@ -3,7 +3,7 @@
 > Bir süre için dilbilgi modası yoktu, sonra her LLM boru hattı yapılandırılmış çıkarımı doğrulamalıydı ve geri döndü.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

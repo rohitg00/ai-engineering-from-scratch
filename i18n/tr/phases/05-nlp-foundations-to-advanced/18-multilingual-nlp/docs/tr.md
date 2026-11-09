@@ -3,7 +3,7 @@
 > Bir model, 100+ dil, çoğu için sıfır eğitim verisi. Diller arası transfer 2020'lerin pratik mucizesidir.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 04 (GloVe, FastText, Subword), Phase 5 · 11 (Machine Translation)
 **Time:** ~45 minutes
 

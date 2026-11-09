@@ -3,7 +3,7 @@
 > Üç sistem modern bilgi akimiyetini şekillendirdi. Ekstraktif bulma alanları. Arama ile güçlendirilmiş belgelere yerleştirildi. Geliştirici cevaplar üretildi. Her modern AI asistanı üçün bir karışımıdır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 11 (Machine Translation), Phase 5 · 10 (Attention Mechanism)
 **Time:** ~75 minutes
 

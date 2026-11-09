@@ -3,7 +3,7 @@
 > Word2Vec size kelimenin bir vektörü verdi. Modern yerleştirme modelleri size geçit başına bir vektör verir, diller arası, nadir, yoğun ve çok vektörlü görüntüler ile, indeksiye uygun boyutlarda. Yanlış seçin ve RAG yanlış şeyi alır.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 03 (Word2Vec), Phase 5 · 14 (Information Retrieval)
 **Time:** ~60 minutes
 

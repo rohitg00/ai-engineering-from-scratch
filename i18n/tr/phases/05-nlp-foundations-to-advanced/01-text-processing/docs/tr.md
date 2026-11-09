@@ -3,7 +3,7 @@
 > Dil sürekli, modeller ayrı, önceden işleme köprüdür.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

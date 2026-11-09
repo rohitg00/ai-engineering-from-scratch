@@ -3,7 +3,7 @@
 > Gemini 3 Pro 10M bağlamlı token reklam eder. 1M tokenlerde, 8 iğne MRCR 26,3%'e düşer. Reklamlanmış ≠ kullanılabilir. Uzun bağlam değerlendirmesi gönderdiğiniz modelin gerçek kapasitesini söyler.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 23 (Chunking Strategies)
 **Time:** ~60 minutes
 

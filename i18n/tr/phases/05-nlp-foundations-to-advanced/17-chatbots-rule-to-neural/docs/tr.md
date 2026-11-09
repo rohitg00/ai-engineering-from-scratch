@@ -3,7 +3,7 @@
 > ELIZA, örneğe eşleşen bir cevap verdi. DialogFlow niyetleri haritası yaptı. GPT ağırlıklardan cevap verdi. Claude araçları çalıştı ve doğruladı. Her dönem önceki en kötü başarısızlığı çözdü.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

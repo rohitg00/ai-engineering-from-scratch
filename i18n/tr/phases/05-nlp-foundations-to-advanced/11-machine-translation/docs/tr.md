@@ -3,7 +3,7 @@
 > Tercüme otuz yıldır NLP araştırmasına ödeyen ve şimdi de ödeyen bir görevdir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 10 (Attention Mechanism), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 

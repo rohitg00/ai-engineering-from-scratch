@@ -3,7 +3,7 @@
 > "t h içerir" anlamı, t'nin insan okuma sonucu olarak h doğru olduğu anlamına gelir. NLI, içerme / çelişki / tarafsızlık öngörme görevi.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 05 (Sentiment Analysis), Phase 5 · 13 (Question Answering)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > LDA: belgeler konuların karışımı, konuların kelimeler üzerinde dağılımıdır. BERTopic: belge grupları yerleşim alanında, gruplar konulardır. Aynı amaç, farklı parçalanmalar.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 03 (Word2Vec)
 **Time:** ~45 minutes
 

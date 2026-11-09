@@ -3,7 +3,7 @@
 > Tam eşleşme ve F1 semantik eşdeğerliği eksik. İnsan inceleme ölçeklenmez. LLM-as-judge, sayıya güvenmek için yeterli kalibrasyonla  üretim cevabıdır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 13 (Question Answering), Phase 5 · 14 (Information Retrieval)
 **Time:** ~75 minutes
 

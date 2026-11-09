@@ -3,7 +3,7 @@
 > TF-IDF, 2026'da da iyi tanımlanmış görevlerde yerleşimleri yenmeye devam ediyor.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 01 (Text Processing), Phase 2 · 02 (Linear Regression from Scratch)
 **Time:** ~75 minutes
 

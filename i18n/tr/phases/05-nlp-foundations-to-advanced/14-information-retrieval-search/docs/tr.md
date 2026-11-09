@@ -3,7 +3,7 @@
 > BM25 kesin ama kırılgan. Dense geniş bir ağ atıyor ama anahtar kelimeleri kaçırıyor. Hibrit 2026 varsayılan. Her şey ayarlanıyor.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 02 (BoW + TF-IDF), Phase 5 · 04 (GloVe, FastText, Subword)
 **Time:** ~75 minutes
 

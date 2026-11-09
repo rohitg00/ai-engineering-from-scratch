@@ -3,7 +3,7 @@
 > "O, onu aradı. cevap vermedi. Doktor öğle yemeğindeydi". İki kişiye üç referans ve kimse adı verilmedi.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > "Şimalde ucuz bir restoran istiyorum... aslında onu moderat yapıp İtalyanca ekle". Üç dönüş, üç devlet güncelleme.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 17 (Chatbots), Phase 5 · 20 (Structured Outputs)
 **Time:** ~75 minutes
 
