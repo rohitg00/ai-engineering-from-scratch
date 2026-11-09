@@ -3,7 +3,7 @@
 > درخت تصمیم گیری فقط یک نقشه جریان است اما جنگل آنها یکی از قدرتمندترین ابزار ML است
 
 **Type:** Build
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lessons 09 Information Theory, 06 Probability)
 **Time:** ~90 minutes
 
@@ -412,7 +412,7 @@ class RandomForest:
         return predictions
 ```
 
-ببین`code/trees.py`برای اجرای کامل با تمام روش های کمک کننده.
+ببین`code/trees.py`برای اجرای کامل با تمام روش های کمک. `code/trees.ts`یک پورت تایپ اسکریپت با همان عملکردها و نمایش داده ها است.`npx tsx code/trees.ts`. .
 
 ## ازش استفاده کن
 

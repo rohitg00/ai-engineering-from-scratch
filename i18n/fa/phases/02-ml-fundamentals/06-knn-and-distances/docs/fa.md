@@ -3,7 +3,7 @@
 > همه چيز رو نگه دار، با نگاه کردن به همسايگانت پيش بيني کن ساده ترين الگوریتم که واقعاً جواب ميده
 
 **Type:** Build
-**Language:**پیتون
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Lesson 14 Norms and Distances)
 **Time:** ~90 minutes
 
@@ -298,7 +298,7 @@ class KDTree:
         ...
 ```
 
-ببین`code/knn.py`برای اجرای کامل با تمام روش های کمک و نمایش.
+ببین`code/knn.py`برای اجرای کامل با تمام روش های کمک کننده و نمایش. `code/knn.ts`یک پورت تایپ اسکریپت با همان عملکردها و نمایش داده ها است.`npx tsx code/knn.ts`. .
 
 ### مرحله 4: مقیاس بندی ویژگی
 

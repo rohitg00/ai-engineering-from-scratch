@@ -3,7 +3,7 @@
 > یک ویژگی خوب ارزش هزار نقطه داده را دارد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1 (Statistics for ML, Linear Algebra), Phase 2 Lessons 1-7
 **Time:** ~90 minutes
 
