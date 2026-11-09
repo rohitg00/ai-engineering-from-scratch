@@ -3,7 +3,7 @@
 > 据了解,在2026年,SWE-Bench测试了代码补丁.GAIA测试了一般主义工具使用.AgentBench测试了多环境推理.了解它们的组成,污染史,以及它们不测量什么.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 06 (Tool Use)
 **Time:** ~60 minutes
 
@@ -93,6 +93,7 @@ ae-swebench-gate
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出显示每个任务+每个难度的分辨率,使评估者规则具体化.

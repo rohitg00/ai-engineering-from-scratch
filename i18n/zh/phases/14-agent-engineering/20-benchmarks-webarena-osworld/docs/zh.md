@@ -3,7 +3,7 @@
 > 网络测试了四个自主托管的应用程序中的网络代理能力.OSWorld测试了Ubuntu,Windows,macOS中的桌面代理能力.在发布时 (20232024) 两者都显示了最好的代理人和人类之间的差距.差距正在缩小;故障模式没有改变.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 19 (SWE-bench, GAIA)
 **Time:** ~60 minutes
 
@@ -78,6 +78,7 @@ ae-agent-human-gap
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 产量:每任务成功率和轨迹效率,反映了OSWorld-Human的方法.

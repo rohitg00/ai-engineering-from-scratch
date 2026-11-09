@@ -3,7 +3,7 @@
 > 文本窗口是有限的.对话,文档和工具痕迹是没有的.解决方案是OS虚拟内存重置. 主要文本是 RAM,外部存储是磁盘,它们之间的代理页面. MemGPT (Packer等, 2023) 命名了该模式;许多生产内存系统建立在它上.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ context-budget
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 后续的调查结果显示,代理人写了三个事实,填写了主要文本 (强迫驱逐),然后通过从档案中获取后续问题

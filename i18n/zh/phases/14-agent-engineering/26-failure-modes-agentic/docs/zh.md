@@ -3,7 +3,7 @@
 > 马斯夫特 (伯克利, 2025) 在3类别中列出了14种多代理故障模式.微软的分类记录了现有AI故障如何在代理设置中放大.行业领域数据汇集在五种重复模式上:幻觉行为,范围爬,级错误,文本损失,工具滥用.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 05 (Self-Refine and CRITIC), Phase 14 · 24 (Observability)
 **Time:** ~60 minutes
 
@@ -89,6 +89,7 @@ failure-cascade
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 产量:每条标签+总分量, 便宜地复制城的痕迹集群表面.

@@ -3,7 +3,7 @@
 > 代理作为演员:异步消息交换,事件驱动处理器,故障隔离,自然同步性.AutoGen v0.4 (微软研究,2025年1月) 重新设计了围绕该模型的代理配套;框架现在处于维护模式,微软代理框架 (公众预览2025年10月) 作为其生产继任者.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
 **Time:** ~75 minutes
 
@@ -79,6 +79,7 @@ actor-mailbox
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 痕迹显示了消息传递,一个演员的模拟失败,

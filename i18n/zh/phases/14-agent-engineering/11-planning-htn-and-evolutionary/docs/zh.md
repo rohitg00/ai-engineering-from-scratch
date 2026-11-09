@@ -3,7 +3,7 @@
 > 象征性规划处理了计划可以证明正确的情况.进化代码搜索处理了健身功能可以机器检查的情况.ChatHTN (2025) 和AlphaEvolve (2025) 显示了与LLM结合时每个程序都会解锁什么.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 02 (ReWOO and Plan-and-Execute)
 **Time:** ~75 minutes
 
@@ -102,6 +102,7 @@ htn-tree-expand
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 痕迹显示HTN规划器分解一个复合任务 (具有中期计划LLM倒退) 和进化循环在目标表达式上融合.

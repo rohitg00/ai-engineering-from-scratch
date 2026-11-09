@@ -3,7 +3,7 @@
 > 单一的思想链轨迹没有回溯的空间.ToT (Yao等同,2023) 将推理转化为一个树,每个节点都具有自我评估.LATS (Zhou等同,2024) 在蒙特卡罗树搜索下统一了ToT与ReAct和反思.24的游戏从4% (CoT) 降至74% (ToT);LATS在HumanEval上达到92.7%的pass@1.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~75 minutes
 
@@ -93,6 +93,7 @@ tree-of-thoughts
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 随着BFS的扩展,TT的每个节点扩展了3个候选人,而LATS通过MCTS在最佳推出时相对而相比.

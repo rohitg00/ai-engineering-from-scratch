@@ -3,7 +3,7 @@
 > 2026年生产的三种计算机使用模型.所有三种都是基于视觉的.所有三种都将屏幕截图,DOM文本和工具输出视为不可信赖的输入.只有直接用户说明才会被视为许可.每步安全服务是标准.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 20 (WebArena, OSWorld), Phase 14 · 27 (Prompt Injection)
 **Time:** ~60 minutes
 
@@ -92,6 +92,7 @@ computer-use-cursor
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出显示安全分类器在DOM文本中捕获注射指令并阻止未确认的购买.

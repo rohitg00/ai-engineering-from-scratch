@@ -3,7 +3,7 @@
 > 最小的有用工作台是三个文件:根指令路由器,状态文件和任务板.其他所有东西都被层次叠加在上面.如果一个备忘录不能携带这三个文件,则没有模型会保存它.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 31 (Why Capable Models Still Fail)
 **Time:** ~45 minutes
 
@@ -77,6 +77,7 @@ wb-three-files
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 剧本创造了`workdir/`转换一个转换,然后打印了差异. 再次运行,看第二转换如何继续前进.

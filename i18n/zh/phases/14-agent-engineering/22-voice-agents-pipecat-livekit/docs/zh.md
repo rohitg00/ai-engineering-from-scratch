@@ -3,7 +3,7 @@
 > 语音代理是2026年一流的生产类别.皮皮卡特为您提供了基于Python框架的管道 (VAD → STT → LLM → TTS →运输).LiveKit代理将AI模型与用户交互通过WebRTC.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 12 (Workflow Patterns)
 **Time:** ~60 minutes
 
@@ -89,6 +89,7 @@ voice-pipeline
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 痕迹显示正常流量, 轮取消了TTS中发射.

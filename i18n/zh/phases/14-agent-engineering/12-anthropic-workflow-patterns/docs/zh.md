@@ -3,7 +3,7 @@
 > 施伦茨和张 (Anthropic, Dec 2024) 区分工作流程 (预定义的路径) 与代理 (动态工具使用).五个工作流程模式涵盖大多数情况.从直接的API调用开始.只需无法预测步骤时添加代理.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop)
 **Time:** ~60 minutes
 
@@ -77,6 +77,7 @@ workflow-chain
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 每个图案都会印出其痕迹.每个图案的代码总线是10-15个;一个框架的成本是以数千计的.

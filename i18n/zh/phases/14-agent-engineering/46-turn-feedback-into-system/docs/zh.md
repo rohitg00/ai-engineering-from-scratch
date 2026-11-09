@@ -3,7 +3,7 @@
 > 只有在聊天中存在的修正,只能修复一个运行.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 37 to 41
 **Time:** ~65 minutes
 
@@ -96,6 +96,7 @@ flowchart LR
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

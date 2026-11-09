@@ -3,7 +3,7 @@
 > 模型不知道工作结束在哪里. 范围合同是一个每项任务文件,说明工作在哪里开始,在哪里结束,以及如果工作倒闭时如何回滚. 合同从愿望变成支票.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 33 (Rules as Constraints)
 **Time:** ~50 minutes
 
@@ -107,6 +107,7 @@ wb-scope-bounce
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 结果:合同,两次运行,每次运行的判决,`scope_report.json`现在,我们要去.

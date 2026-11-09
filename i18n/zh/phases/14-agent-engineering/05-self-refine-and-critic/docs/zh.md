@@ -3,7 +3,7 @@
 > 自理修 (Madaan et al., 2023) 在一个循环中使用一个LLM在三个角色中生成,反,完善.平均收益:7项任务上+20绝对.CRITIC (Gou et al., 2023) 通过通过外部工具路由验证来加固反步骤.2026年,这种模式将在每个框架中作为"评估者优化器" (Anthropic) 或一个防护轨道循环 (OpenAI Agents SDK).
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 03 (Reflexion)
 **Time:** ~60 minutes
 
@@ -103,6 +103,7 @@ self-refine
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 分析结果显示,自定义错误是因为外部验证器已经将自定义错误误误解读到.

@@ -3,7 +3,7 @@
 > 要求不是在会议上等待收集,而是分散在行动,解决方案,记录和分歧中.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 47
 **Time:** ~70 minutes
 
@@ -82,6 +82,7 @@ flowchart TD
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

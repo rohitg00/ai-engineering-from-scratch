@@ -3,7 +3,7 @@
 > 后者可以读取一个结构化记录中,然后代理会反事实而不是对事实的预测.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 35 (Init Script)
 **Time:** ~50 minutes
 
@@ -72,6 +72,7 @@ wb-feedback-loop
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出:附加了三个反记录`feedback_record.jsonl`随着文件的重复运行,循环积累.

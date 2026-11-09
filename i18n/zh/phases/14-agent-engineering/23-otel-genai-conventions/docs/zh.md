@@ -3,7 +3,7 @@
 > 开通通信的GenAI SIG (于2024年4月推出) 定义了代理遥测标准方案.跨域名称,属性和内容捕获规则在供应商之间融合,因此代理痕迹在Datadog,Grafana,Jaeger和Honeycomb中意味着相同的东西.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 13 (LangGraph), Phase 14 · 24 (Observability Platforms)
 **Time:** ~60 minutes
 
@@ -88,6 +88,7 @@ ae-genai-span-tree
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出:包含所有所需的GenAI属性的跨度树,以及显示选择内容引用的"外部存储器".

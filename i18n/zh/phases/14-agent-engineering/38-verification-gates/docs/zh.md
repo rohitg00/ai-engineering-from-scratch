@@ -3,7 +3,7 @@
 > 经纪人不能标记自己的工作做完了.验证门阅读范围合同,反日志,规则报告和差异,并回答一个问题:这个任务是否真的完成了?如果门说不,任务没有完成,无论聊天说什么.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 33 (Rules), Phase 14 · 36 (Scope), Phase 14 · 37 (Feedback)
 **Time:** ~55 minutes
 
@@ -81,6 +81,7 @@ wb-gate-sequence
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出:三份判决报告,每个报告都保存在脚本旁边.

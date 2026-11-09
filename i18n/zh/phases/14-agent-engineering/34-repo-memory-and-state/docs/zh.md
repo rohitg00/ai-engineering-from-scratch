@@ -3,7 +3,7 @@
 > 聊天历史是不稳定的. 备忘录是持久的. 工作桌商店代理状态在版本文件中,所以下一个会议,下一个代理,下一个评论者都从同一个来源的真相读取.
 
 **Type:** Build
-**Languages:** Python (stdlib + `jsonschema` optional)
+**Languages:** Python (stdlib + `jsonschema` optional), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench)
 **Time:** ~60 minutes
 
@@ -81,6 +81,7 @@ wb-state-persist
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 剧本写着`workdir/agent_state.json`其他`workdir/task_board.json`通过两轮转换,每一步都会打印验证状态.

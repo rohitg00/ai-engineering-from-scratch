@@ -3,7 +3,7 @@
 > 每个开始冷的会议都会缴纳税收. 代理阅读相同的文件,再试同样的探测,再发现相同的路径. 一个 init 脚本一次支付税收,然后写出答案.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 32 (Minimal Workbench), Phase 14 · 34 (Repo Memory)
 **Time:** ~45 minutes
 
@@ -72,6 +72,7 @@ wb-init-probes
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 脚本打印了探测器的表,写了`init_report.json`通过一个错误的探测器,

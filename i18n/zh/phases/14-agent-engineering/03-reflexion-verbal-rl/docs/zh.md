@@ -3,7 +3,7 @@
 > 基于基梯的RL需要数千次试验和GPU集群来修复故障模式. 反思 (Shinn et al., NeurIPS 2023) 用自然语言进行:每次失败试验后,代理人写出反思,存储在情节记忆中,并将下一次试验定制在那个记忆上. 这就是莱塔的睡眠时间计算,克劳德·科德的CLAUDE.md学习和工作流动的学习规则背后的模式.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 02 (ReWOO)
 **Time:** ~60 minutes
 
@@ -94,6 +94,7 @@ react-trace
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 测试显示了三个试验.试验1失败,一个反射被存储,试验2看到反射并改善,但仍然失败,试验3成功.与基线运行 (没有反射) 进行比较它在试验1的答案中留下来.

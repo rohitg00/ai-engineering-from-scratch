@@ -3,7 +3,7 @@
 > 开放AI代理SDK是基于响应API的轻量级多代理框架.五个原始:代理,Handoff,守护轨道,会议,追踪.Handoffs是命名的工具.`transfer_to_<agent>`导入或输出时,防护轨道会发生故障.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -84,6 +84,7 @@ ae-agent-handoff
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 痕迹显示了两次成功的转让, 一次输入护旅行,

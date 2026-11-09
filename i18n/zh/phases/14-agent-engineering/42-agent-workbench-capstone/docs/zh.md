@@ -3,7 +3,7 @@
 > 任何一个回复中,你放一个包,最后一个小曲目.`cp -r`石是这门课程所使用的文物.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phases 14 · 31 to 14 · 41
 **Time:** ~75 minutes
 
@@ -96,6 +96,7 @@ wb-pack-install
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 脚本复制和接表面,写出 README,打印包树,然后退出零.重启是无效的.

@@ -3,7 +3,7 @@
 > 混合存储器在并行中运行三个存储器 向量用于语义相似性,KV用于快速的事实搜索,图为实体关系推理,并具有在检索时合并它们的分数层.这是外部存储器的广泛使用的生产模式;Mem0 (Chhikara等,2025) 是一个参考实现.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -106,6 +106,7 @@ ae-memory-fusion
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出显示了三个独立的召回路径加上合并的顶-k.`main()`看到排名变化.

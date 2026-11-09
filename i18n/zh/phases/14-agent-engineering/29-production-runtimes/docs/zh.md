@@ -3,7 +3,7 @@
 > 制作代理运行在六种运行时间形状上:请求响应,流媒体,耐用执行,排队背景,事件驱动和计划. 在选择框架之前选择形状.可观测性在每个形状上承载.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 13 (LangGraph), Phase 14 · 22 (Voice)
 **Time:** ~60 minutes
 
@@ -98,6 +98,7 @@ wb-runtime-shapes
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出:五个痕迹显示每个形状的行为在同一任务上.相同的代理逻辑,不同的外层.持续执行 (第六个形状) 是故意在13课中通过LangGraph检查点覆盖的.

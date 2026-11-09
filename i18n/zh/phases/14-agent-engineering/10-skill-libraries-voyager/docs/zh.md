@@ -3,7 +3,7 @@
 > 旅行者 (Wang等等,TMLR 2024) 将可执行代码视为技能.技能通过环境反命名,可检索,可组合和精炼.这是克劳德代理SDK技能,技能套件和2026技能图书馆模式的参考架构.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT), Phase 14 · 08 (Letta Blocks)
 **Time:** ~75 minutes
 
@@ -104,6 +104,7 @@ voyager-skills
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 痕迹显示图书馆写作,检索,编译,失败执行,

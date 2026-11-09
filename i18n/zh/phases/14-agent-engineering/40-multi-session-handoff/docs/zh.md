@@ -3,7 +3,7 @@
 > 交付包是把"代理工作了一个小时"变成"下一次会议在第一分钟就产生了效果". 建立它是有意的,不是后期思考.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 34 (Repo Memory), Phase 14 · 38 (Verification), Phase 14 · 39 (Reviewer)
 **Time:** ~50 minutes
 
@@ -91,6 +91,7 @@ wb-handoff-packet
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出:印制的传输机体,加上磁盘上的两个文件.

@@ -3,7 +3,7 @@
 > 五个工作流程模式是不够的,但只需要一个代理加上五个工作流程模式. 五个工作流程模式是不够的. 五个工作流程模式是不够的.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 25 (Multi-Agent Debate)
 **Time:** ~60 minutes
 
@@ -98,6 +98,7 @@ orchestration-pattern
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 产量:每个模式的痕迹+运算数量. 监督员最干净;群群最短;层次结构最深;辩论最昂贵.

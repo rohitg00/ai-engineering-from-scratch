@@ -3,7 +3,7 @@
 > 雷亚克特将思想和行动交织成一个流.雷亚克特分开它们:一个大计划前面,然后执行. 5倍少于代币,HotpotQA上的准确度为4%,你可以将计划器化为7B模型.计划和执行将其概括;计划和行动将其扩展到网络导航.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop)
 **Time:** ~60 minutes
 
@@ -85,6 +85,7 @@ rewoo-plan
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 追踪首先显示了完整的计划,然后是工人结果,然后是解决器组合.将代币数量 (我们打印粗略的字符数量) 与ReAct式的交叉运行进行比较.

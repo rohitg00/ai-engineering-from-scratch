@@ -3,7 +3,7 @@
 > 模特可以直接编辑的功能性记忆区块,以及一个睡眠时间代理,在主要代理在置时,将记忆稳定成一致.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 07 (MemGPT)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ memory-blocks
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 转录显示了分开:主要转折速度快,产生原始写作;睡眠通道紧,清洁.

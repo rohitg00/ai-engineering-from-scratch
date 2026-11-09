@@ -3,7 +3,7 @@
 > 龙 (MIT)  6M+安装/月,追踪+提示管理+评估+会议重播.阿里兹 (Elastic 2.0)  深度特异性代理评估,RAG相关性,开放式自动仪器化.彗星Opik (Apache 2.0) 自动提示优化,护,LLM法官幻觉检测.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 23 (OTel GenAI)
 **Time:** ~45 minutes
 
@@ -80,6 +80,7 @@ wb-trace-ingest
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出:每次会议的评分和失败分类,与兰格斯/尼克斯/奥皮克所显示的相匹配.

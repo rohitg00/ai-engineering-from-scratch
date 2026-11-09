@@ -3,7 +3,7 @@
 > 格雷谢克等人 (AISec 2023) 确定了间接即时注射作为定义代理安全问题.攻击者将指令植入代理检索的数据中;在摄入时,这些指令取代开发人员的提示.将所有检索的内容视为工具使用表面上的任意代码执行.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 06 (Tool Use), Phase 14 · 21 (Computer Use)
 **Time:** ~75 minutes
 
@@ -81,6 +81,7 @@ injection-hijack
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 输出:每次通话的痕迹显示验证者判决和执行者的行为.

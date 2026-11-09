@@ -3,7 +3,7 @@
 > 您可以进口的带:内置工具,环境隔离的子管,子,W3C痕迹传播,会议持久性. 克劳德代理SDK是参考例子 克劳德代码带的库形式 克劳德管理代理是长期的异步工作的托管替代品.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 10 (Skill Libraries)
 **Time:** ~75 minutes
 
@@ -95,6 +95,7 @@ ae-subagent-isolation
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 痕迹显示了亚级文本隔离 (乐队主持人文本尺寸保持限制),执行和会议持久性.

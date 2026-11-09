@@ -3,7 +3,7 @@
 > 杜等人 (ICML 2024,"思想社会") 运行了N模型实例,独立提出答案,然后在R轮中反复批评彼此,以融合.改善事实性,遵循规则,推理.节省拓学在代币成本上击败了全网网.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 12 (Workflow Patterns), Phase 14 · 05 (Self-Refine and CRITIC)
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ debate-converge
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 产量:每项协议的准确性和成本;少量匹配的 2/3 问题以更低的成本.
