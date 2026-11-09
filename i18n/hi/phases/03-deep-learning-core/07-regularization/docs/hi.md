@@ -3,7 +3,7 @@
 > आपके मॉडल को 99% प्रशिक्षण डेटा और 60% परीक्षण डेटा पर मिलता है। यह सीखने के बजाय याद किया गया। नियमितता जटिलता पर कर है जिसे आप सामान्यीकरण को मजबूर करने के लिए लगाए हैं।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers)
 **Time:** ~75 minutes
 

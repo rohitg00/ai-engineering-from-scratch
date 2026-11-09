@@ -3,7 +3,7 @@
 > गलत शुरू करें और प्रशिक्षण कभी शुरू नहीं होता है सही शुरू करें और 50 परतों के रूप में सुचारू रूप से प्रशिक्षण 3.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.04 (Activation Functions), Lesson 03.07 (Regularization)
 **Time:** ~90 minutes
 

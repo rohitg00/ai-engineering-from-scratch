@@ -3,7 +3,7 @@
 > एक न्यूरॉन एक रेखा खींचता है, उन्हें ढेर कर, और आप कुछ भी खींच सकते हैं।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 01 (Math Foundations), Lesson 03.01 (The Perceptron)
 **Time:** ~90 minutes
 

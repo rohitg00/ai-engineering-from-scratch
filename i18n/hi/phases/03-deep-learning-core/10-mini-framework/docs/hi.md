@@ -3,7 +3,7 @@
 > आप न्यूरॉन्स, परतों, नेटवर्क, बैकपॉइंट, सक्रियण, हानि कार्यों, अनुकूलक, नियमितता, आरंभिकरण और LR अनुसूची का निर्माण किया है. सभी अलग-अलग टुकड़े के रूप में. अब उन्हें एक फ्रेमवर्क में एक साथ तार. नहीं PyTorch. नहीं TensorFlow. तुम्हारा.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** All of Phase 03 (Lessons 01-09)
 **Time:** ~120 minutes
 

@@ -3,7 +3,7 @@
 > ग्रेडिएंट डाउनसेन्ट आपको बताता है कि किस दिशा में आगे बढ़ना है, यह बताता है कि कितनी दूर या कितनी तेजी से। एसजीडी एक पैंपस है। एडम ट्रैफिक डेटा के साथ जीपीएस है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.05 (Loss Functions)
 **Time:** ~75 minutes
 

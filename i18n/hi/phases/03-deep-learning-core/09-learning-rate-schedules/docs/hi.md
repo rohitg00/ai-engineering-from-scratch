@@ -3,7 +3,7 @@
 > सीखने की दर सबसे महत्वपूर्ण हाइपरपैरामीटर है. वास्तुकला नहीं. डेटा सेट का आकार नहीं. सक्रियण फ़ंक्शन नहीं. सीखने की दर. यदि आप कुछ और नहीं ट्यून करते हैं, तो इसे ट्यून करें.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers), Lesson 03.08 (Weight Initialization)
 **Time:** ~90 minutes
 
