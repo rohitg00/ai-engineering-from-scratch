@@ -3,7 +3,7 @@
 > Uma demonstração de modelo tem um contrato: uma entrada, uma chamada de modelo e uma saída. Coloque um limite em cada parte antes de compartilhar o link.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 13 (Building a Production LLM Application), Phase 17 · 08 (Inference Metrics), Phase 17 · 19 (AI Gateways)
 **Time:** ~90 minutes
 
@@ -207,12 +207,14 @@ O código é um arquivo.`code/main.py`, sem dependências fora da biblioteca pad
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 O auto-teste verifica o validador, o balde de tokens, o formato do fluxo e uma viagem HTTP de ida e volta real. Ele inicia o servidor em uma porta livre, envia três solicitações, parou o servidor e sai.
 
 ```bash
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 Abre .`http://127.0.0.1:8000`Em um navegador. Aplique Ctrl + C para parar o servidor.
@@ -478,6 +480,7 @@ Para exigir um token de acesso, definido `DEMO_ACCESS_TOKEN`A página mostra um 
 export DEMO_ACCESS_TOKEN="$(python3 -c 'import secrets; print(secrets.token_urlsafe(24))')"
 echo "$DEMO_ACCESS_TOKEN"
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 Fazer os testes:

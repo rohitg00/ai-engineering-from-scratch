@@ -3,7 +3,7 @@
 > Um modelo grande leva minutos para passar do frio para a servida: um modelo 70B em um nó fresco precisa de aproximadamente 3-8 minutos antes do primeiro token. Num mundo sem servidores, isso não é um aquecimento, é uma interrupção. As mitigações operam em cinco camadas: imagens pré-seed nodes (Bottlerocket na AWS, arco de duplo volume), streaming de modelo (NVIDIA Run:ai Model Streamer, nativo no vLLM), instantâneos de memória da GPU (punto de verificação Modal, até 10 vezes mais rápido reinicialização), pools quentes (`min_workers=1`O Modal publica 2-4s de início frio como um piso; Baseten 5-10s padrão, subsegundo com pré-aquecimento. Esta lição ensina a medir, orçar e empilhar as cinco camadas.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy cold-start path simulator)
+**Languages:** Python, TypeScript (stdlib, toy cold-start path simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 03 (GPU Autoscaling)
 **Time:** ~60 minutes
 

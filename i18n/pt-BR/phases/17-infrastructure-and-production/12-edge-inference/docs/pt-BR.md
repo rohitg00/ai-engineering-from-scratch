@@ -3,7 +3,7 @@
 > A restrição de borda do núcleo é a largura de banda da memória, não o computação. A DRAM móvel fica a 50-90 GB/s; o datacenter HBM3 limpa 2-3 TB/s  uma lacuna de 30-50x. A decodificação é limitada à memória, por isso a lacuna é decisiva. Em 2026, a paisagem divide-se em quatro partes. O Apple M4/A18 Neural Engine chega a 38 TOPS com memória unificada (sem cópia CPUNPU). Qualcomm Snapdragon X Elite / 8 Gen 4 Hexagon chega a 45 TOPS. WebGPU + WebLLM executa Llama 3.1 8B (Q4) a ~ 41 tok/s no M3 Max (cerca de 70-80% nativo); 17,6k estrelas GitHub, API compatível com OpenAI, ~ 70-75% cobertura móvel. NVIDIA Jetson Orin Nano Super (8GB) combina com Llama 3.2 3B / Phi-3; AGX Orin corre gpt-oss-20b via vLLM a ~ 40 tok/s; Jetson T4000 (JetPack 7.1) é 2x AGX Orin. TensorRT Edge-LLM suporta EAGLE-3, NVFP4, preenchimento em pedaços mostrado no CES 2026 pela Bosch, ThunderSoft, MediaTek.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy bandwidth-bound decode simulator)
+**Languages:** Python, TypeScript (stdlib, toy bandwidth-bound decode simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 09 (Production Quantization)
 **Time:** ~60 minutes
 

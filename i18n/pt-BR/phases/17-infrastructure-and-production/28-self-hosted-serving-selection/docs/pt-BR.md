@@ -3,7 +3,7 @@
 > A seleção do motor é uma função de hardware, escala e ecossistema  não uma leitura de classificação. Quatro motores dominam a inferência auto-hostada em 2026: llama.cpp, Ollama, vLLM, SGLang, com TGI atrasado no modo de manutenção. **llama.cpp**é mais rápido em CPU  mais amplo suporte de modelo, controle total sobre quantização e threading. **Ollama**é a instalação de comando único de dev-laptop, ~ 15-30% mais lenta do que llama.cpp (serialização Go + CGo + HTTP), 3x diferença de throughput sob carga prod-like. **TGI entered maintenance mode December 11, 2025** apenas corrigem bugs, ~ 10% mais lento do que o vLLM, mas historicamente a observabilidade e a integração do ecossistema HF são superiores.**vLLM**é o padrão de produção de finalidade geral  v0.15.1 (fevereiro 2026) adiciona PyTorch 2.10, RTX Blackwell SM120, otimização H200. **SGLang**é o especialista em multi-turn / prefixo agencial pesado  400.000+ GPUs em produção (xAI, LinkedIn, Cursor, Oracle, GCP, Azure, AWS). Constraensões de hardware: CPU-first → llama.cpp. AMD / não NVIDIA → vLLM é o caminho mais forte-apoiado (TRT-LLM é bloqueado por NVIDIA). 2026 padrão de canalização: dev = Ollama, estagização = llama.cpp, prod = vLLM ou SGLang. Os motores assumem diferentes formatos de peso  GGUF para a família llama.cpp, HF safetensores para os motores GPU  para que uma conversão de formato possa ficar entre as etapas.
 
 **Type:** Learn
-**Languages:** Python (stdlib, engine-decision tree walker)
+**Languages:** Python, TypeScript (stdlib, engine-decision tree walker)
 **Prerequisites:** All Phase 17 lessons covering engines (04, 06, 07, 09, 18)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > Três camadas, não uma. Os pontos de provisão de Karpenter são dinâmicos (menos de um minuto, 40% mais rápido que o Cluster Autoscaler). O KAI Scheduler lida com a programação de gangues, a consciência de topologia e as filas hierárquicas. Previve a armadilha de alocação parcial de 7 de 8 onde sete nós esperam e queimam em uma GPU faltante. Os autoscalers de nível de aplicação (NVIDIA Dynamo Planner, llm-d Workload Variant Autoscaler) escalam em sinais específicos de inferência  profundidade de fila, utilização do cache KV  não ciclo de trabalho da CPU / DCGM. A armadilha clássica da HPA é que`DCGM_FI_DEV_GPU_UTIL`é uma medição do ciclo de trabalho: 100% pode ser 10 solicitações ou 100. vLLM pré-aloca a memória cache KV, para que a memória nunca inicie a escalação. Esta lição ensina você a compor as três camadas e evitar o default Karpenter `WhenEmptyOrUnderutilized`A política que termina a execução de trabalhos de GPU no meio da inferência.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy queue-depth autoscaler simulator)
+**Languages:** Python, TypeScript (stdlib, toy queue-depth autoscaler simulator)
 **Prerequisites:** Phase 17 · 02 (Inference Platform Economics), Phase 17 · 04 (Serving Engine Internals)
 **Time:** ~75 minutes
 

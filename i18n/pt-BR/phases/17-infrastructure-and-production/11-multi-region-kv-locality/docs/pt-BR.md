@@ -3,7 +3,7 @@
 > O equilíbrio de carga de round-robin é ativamente prejudicial para a inferência LLM em cache. Uma solicitação que não aterrissa no nó que mantém seu prefixo paga preenchimento total  aproximadamente 800 ms em P50 em um prompt longo versus ~ 80 ms com um cache hit. Em 2026, o padrão de produção é um roteador consciente de cache (vLLM Router in Rust, llm-d router) que consome eventos de cache KV e rotas em prefixo-hash match. A pesquisa recente (GORGO) torna a latência de rede transregional um termo explícito no objetivo de roteamento. As ofertas comerciais de "infereção transregional" (infereção transregional Bedrock, gateways multi-cluster GKE) tratam a inferência como opaca  eles lidam com a disponibilidade, não com a TTFT. A JPMorgan e a Clínica Mayo fizeram um falha-over no leste em Novembro de 2024 em 22 minutos. A realidade do DR: 32% das falhas do LLM DR são porque as equipes fizeram backup de pesos, mas esqueceram arquivos de tokenizer ou configurações de quantização.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy prefix-cache-aware router simulator)
+**Languages:** Python, TypeScript (stdlib, toy prefix-cache-aware router simulator)
 **Prerequisites:** Phase 17 · 04 (vLLM Serving), Phase 17 · 06 (SGLang RadixAttention)
 **Time:** ~60 minutes
 

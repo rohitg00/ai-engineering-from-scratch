@@ -3,7 +3,7 @@
 > A descodificação especulativa combina um modelo de projeto rápido com o modelo alvo. O projecto propõe tokens K; o alvo verifica-se em um único prazo; tokens aceitos são gratuitos. Em 2026, o EAGLE-3 é a variante de nível de produção  ele treina um projeto de cabeça nos estados ocultos do modelo alvo em vez de em tokens brutos, empurrando a taxa de aceitação alfa para a faixa de 0,6-0,8 no bate-papo geral. A pergunta certa não é "quão rápido é o projeto", mas "o que é o alfa no meu tráfego?" Se o alfa cair abaixo de ~0.55, a descodificação especulativa é negativa líquida em alta concurência porque cada projeto rejeitado custa uma segunda passagem de destino para a frente. Esta lição ensina-te a medir o alfa primeiro e a virar a bandeira em segundo lugar.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy acceptance-rate simulator)
+**Languages:** Python, TypeScript (stdlib, toy acceptance-rate simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 18 (Multi-Token Prediction)
 **Time:** ~60 minutes
 

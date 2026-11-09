@@ -3,7 +3,7 @@
 > Uma produção que serve roteador de fios em pilhas, motores e observabilidade em uma implantação Kubernetes  e trata o cache KV como um recurso que pode deixar a GPU. O descarregamento de KV extrai o cache KV da memória da GPU e reutiliza-o em consultas e motores (DRAM do CPU, em seguida, disco / Ceph). A pilha de produção do vLLM é a implantação de referência; LMCache é a camada de descarga. O conector de descarga de vLLM 0.11.0 KV (janeiro 2026) torna isso assíncrono e plugável através da API do conector (v0.9.0+). O caminho de descarga é geralmente oculto do caminho de solicitação, embora falhas de cache e promoções possam adicionar latência de ponta a ponta. LMCache é valioso mesmo sem prefixos compartilhados  quando uma GPU fica sem slots KV, pedidos preemptados podem ser restaurados da CPU em vez de recomputar prefill. Referências publicadas em 16x H100 (80 GB HBM) em 4 a3-highgpu-4g: quando o cache KV excede o HBM, tanto a descarga de CPU nativa quanto o LMCache melhoram substancialmente o throughput; em baixa pegada KV, todas as configurações correspondem à linha de base com pequenas despesas gerais.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy KV-spill simulator)
+**Languages:** Python, TypeScript (stdlib, toy KV-spill simulator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 17 · 06 (SGLang/RadixAttention)
 **Time:** ~60 minutes
 

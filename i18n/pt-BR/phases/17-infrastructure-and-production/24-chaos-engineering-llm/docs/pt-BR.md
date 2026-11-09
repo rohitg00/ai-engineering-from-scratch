@@ -3,7 +3,7 @@
 > A engenharia do caos para LLM é sua própria disciplina em 2026. Preerequisito antes de executar experimentos em produção: SLI/SLO definido, observabilidade de rastreamento+metrico+log, retrocesso automatizado, runbooks, em chamada. A arquitetura tem quatro planos: controle (programador de experimentos), alvo (serviços, infra, armazéns de dados), segurança (guardas + abortos + filtros de tráfego), observabilidade (metricas + vestígios + registros), feedback (em ajustes SLO). Os guardrails são obrigatórios: alertas de taxa de queimação interrompem os experimentos se se espera que a queima diária de erro-orçamento > 2x; janelas de supressão + correlação de rastreamento-ID dedupção de ruído de alerta. Cadência: revisão semanal de pequenas canárias + SLO; dia de jogo mensal + pós-mortem; auditoria trimestral de resiliência entre equipes + mapeamento de dependência. Experimentos específicos do LLM: sobrecarga de memória, falhas de rede, interrupções de fornecedores, instruções malformadas, tempestades de despejo de cache KV. Ferramentas: Engenharia de Caos de Aproveitamento (recomendações derivadas do LLM, redução do raio de explosão, integração de ferramentas MCP); LitmusChaos (CNCF); Chaos Mesh (nativa do Kubernetes do CNCF).
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy chaos experiment runner)
+**Languages:** Python, TypeScript (stdlib, toy chaos experiment runner)
 **Prerequisites:** Phase 17 · 23 (SRE for AI), Phase 17 · 13 (Observability)
 **Time:** ~60 minutes
 

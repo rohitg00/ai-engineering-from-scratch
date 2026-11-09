@@ -3,7 +3,7 @@
 > Compilação de inferências especializada em hardware negocia portabilidade para o throughput, e TensorRT-LLM  NVIDIA-só, sintonizado para Blackwell  é o exemplo mais claro do comércio dando frutos.$0.012 per million tokens on a 120B model in Q1-Q2 2026, against $0,09/M em H100 + vLLM  uma diferença económica de 7x. A pilha compõe dois formatos de pontos flutuantes com duas técnicas de servidão: FP8 permanece crítico para cache KV e núcleos de atenção porque tem a faixa dinâmica que eles precisam; NVFP4 (4-bit microscaling) lida com pesos e ativações; previsão multi-token (MTP) e prefill / decode desagregado adicionar mais 2-3x no topo. O modelo de suporte Day-0 carrega pesos FP4 diretamente sem conversão pós-treino. A atração para as equipes de engenharia de 2026: TRT-LLM é open source, mas específica para NVIDIA  CUDA- e Blackwell especializada , então adotando-a negocia com a portabilidade para a capacidade de transmissão. Faça as contas com a sua mistura de modelos e hardware antes de se comprometer.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy FP8/NVFP4 memory and cost calculator)
+**Languages:** Python, TypeScript (stdlib, toy FP8/NVFP4 memory and cost calculator)
 **Prerequisites:** Phase 17 · 04 (Serving Engine Internals), Phase 10 · 13 (Quantization)
 **Time:** ~75 minutes
 

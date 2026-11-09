@@ -3,7 +3,7 @@
 > Eliminar a expansão secreta através de cofres centralizadas (HashiCorp Vault, AWS Secrets Manager, Azure Key Vault). Nunca armazenem credenciais em arquivos de configuração, arquivos env em VCS, planilhas. Usar roles IAM em vez de chaves estáticas; OIDC para CI/CD. O padrão de gateway da IA é a solução 2026: aplicativos → gateway → provedor de modelo, com gateway tirando credenciais do cofre no tempo de execução. Rote em cofre e todos os aplicativos captam em minutos. Sem redistribuições, sem mensagens do Slack "quem tem a nova chave". Política de rotação ≤ 90 dias; escaneamento com TruffleHog / GitGuardian / Gitleaks em cada compromisso. Capacidade de segurança zero: MFA, SSO, RBAC/ABAC, tokens de curta duração, postura do dispositivo. A limpeza de PII utiliza o reconhecimento de entidades para mascarar o PHI/PII antes da encaminhamento; a tokenização consistente (abordagem Mesh) mapeia valores sensíveis para titulares de posições estáveis, de modo que o MLL preserva a semântica de código/relação. A saída da rede: serviços de LLM em sub-rede VPC/VNet dedicada apenas em lista branca `api.openai.com`- Não .`api.anthropic.com`O motor de incidente de 2026: ataque da cadeia de suprimentos Vercel através de credenciais de CI/CD comprometidas, filtrado em milhares de implantações de clientes.
 
 **Type:** Learn
-**Languages:** Python (stdlib, toy PII-scrubber + audit-log writer)
+**Languages:** Python, TypeScript (stdlib, toy PII-scrubber + audit-log writer)
 **Prerequisites:** Phase 17 · 19 (AI Gateways), Phase 17 · 13 (Observability)
 **Time:** ~60 minutes
 
