@@ -3,7 +3,7 @@
 > Văn học VLM trọng lượng mở 2024-2026 là một khu rừng của bảng phân hủy. MM1 của Apple đã thử nghiệm 13 kết hợp mã hóa hình ảnh, kết nối và hỗn hợp dữ liệu. Molmo của Allen AI đã chứng minh các bản tóm tắt chi tiết của con người vượt qua việc chưng cất GPT-4V. Cambrian-1 đã chạy 20 + so sánh mã hóa. Idefics2 đã chính thức hóa không gian thiết kế năm trục. Các VLM Prismatic so sánh 27 công thức đào tạo trên một chỉ số chuẩn bị kiểm soát. Trong tất cả những tiếng ồn đó, một tập hợp nhỏ kết quả có thể được ghi trên giấy tờ: mã hóa hình ảnh quan trọng hơn kiến trúc kết nối, hỗn hợp dữ liệu quan trọng hơn cả hai, và các tiêu đề chi tiết của con người vượt qua dữ liệu tổng hợp được chưng cất. Bài học này đọc các bảng đó để bạn không cần phải.
 
 **Type:** Learn + lab
-**Languages:** Python (stdlib, ablation table parser + recipe picker)
+**Languages:** Python, TypeScript (stdlib, ablation table parser + recipe picker)
 **Prerequisites:** Phase 12 · 05 (LLaVA baseline)
 **Time:** ~180 minutes
 

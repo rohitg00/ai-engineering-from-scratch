@@ -3,7 +3,7 @@
 > Trước LLaVA-OneVision (Li et al., tháng 8 năm 2024) thế giới VLM mở có dòng dõi riêng biệt: LLaVA-1.5 cho hình ảnh đơn, các mô hình hình ảnh đa như Mantis và VILA, các mô hình video như Video-LLaVA và Video-LLaMA. Mỗi người đều giành được điểm chuẩn của mình và thất bại ở những người khác. LLaVA-OneVision lập luận rằng một chương trình giảng dạy duy nhất có thể đào tạo một mô hình để thống trị cả ba kịch bản, và rằng các hiệu ứng chuyển giao nhiệm vụ mới nổi (nghệ năng hình ảnh duy nhất được xuất khẩu sang video, lý luận nhiều hình ảnh được xuất khẩu sang hình ảnh duy nhất) vượt qua tổng số các chuyên gia. Công thức này là một cách đơn giản: một ngân sách biểu tượng trực quan cân bằng giữa các kịch bản, cộng với một chương trình giảng dạy rõ ràng chuyển từ hình ảnh đơn đến OneVision (phần hình đa) sang video. Bài học này đọc ngân sách, chương trình học, và hành vi mới nổi.
 
 **Type:** Build
-**Languages:** Python (stdlib, token budget solver + curriculum planner)
+**Languages:** Python, TypeScript (stdlib, token budget solver + curriculum planner)
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 06 (any-resolution)
 **Time:** ~180 minutes
 

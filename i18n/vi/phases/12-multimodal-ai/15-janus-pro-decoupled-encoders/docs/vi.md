@@ -3,7 +3,7 @@
 > Các mô hình đa phương tiện thống nhất có một căng thẳng không thể tránh khỏi. Hiểu cần các tính năng ngữ nghĩa  Các vector đầu ra SigLIP hoặc DINOv2 giàu thông tin cấp khái niệm. Thế hệ muốn có mã thân thiện với tái thiết  mã thông báo VQ kết hợp lại thành các pixel sắc nét. Hai mục tiêu không tương thích trong một bộ mã hóa duy nhất. Janus (DeepSeek, tháng 10 năm 2024) và Janus-Pro (DeepSeek, tháng 1 năm 2025) cho rằng giải pháp là ngừng cố gắng: tách hai bộ mã hóa. Chia sẻ cơ thể biến đổi giữa các nhiệm vụ, nhưng hướng hiểu thông qua SigLIP và phát triển thông qua một token VQ. Ở 7B, Janus-Pro đánh bại DALL-E 3 trên GenEval trong khi so sánh LLaVA trên MMMU. Bài học này giải thích tại sao hai bộ mã hóa hoạt động khi một thất bại.
 
 **Type:** Build
-**Languages:** Python (stdlib, dual-encoder routing + shared-body signal)
+**Languages:** Python, TypeScript (stdlib, dual-encoder routing + shared-body signal)
 **Prerequisites:** Phase 12 · 13 (Transfusion), Phase 12 · 14 (Show-o)
 **Time:** ~120 minutes
 

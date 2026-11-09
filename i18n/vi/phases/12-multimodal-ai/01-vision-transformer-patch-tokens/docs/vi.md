@@ -3,7 +3,7 @@
 > Trước khi có bất cứ thứ gì đa phương thức, một hình ảnh phải trở thành một chuỗi các token mà một biến thể có thể ăn. Bài báo ViT 2020 trả lời câu hỏi này bằng các bản vá 16x16 pixel, một dự đoán tuyến tính và một vị trí nhúng. Năm năm sau, mỗi mô hình biên giới 2026 (Claude Opus 4.7 ở 2576px bản địa, Gemini 3.1 Pro, Qwen3.5-Omni) vẫn bắt đầu theo cách này  mã hóa thay đổi từ ViT sang DINOv2 sang SigLIP 2, mã đăng ký đã được thêm vào, kế hoạch vị trí trở thành 2D-RoPE, nhưng nguyên thủy vẫn giữ. Bài học này đọc đường ống mã patch từ đầu đến cuối và xây dựng nó trong stdlib Python để phần còn lại của giai đoạn 12 có một mô hình tinh thần cụ thể cho "tô hiệu thị giác".
 
 **Type:** Learn
-**Languages:** Python (stdlib, patch tokenizer + geometry calculator)
+**Languages:** Python, TypeScript (stdlib, patch tokenizer + geometry calculator)
 **Prerequisites:** Phase 7 (Transformers), Phase 4 (Computer Vision)
 **Time:** ~120 minutes
 

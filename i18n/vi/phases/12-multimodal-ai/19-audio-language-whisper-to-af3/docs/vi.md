@@ -3,7 +3,7 @@
 > Whisper (Radford et al., tháng 12 năm 2022) đã giải quyết nhận dạng giọng nói  680k giờ nói nhiều ngôn ngữ được giám sát yếu, một bộ biến đổi mã hóa-đánh mã đơn giản, một tiêu chuẩn khiến mọi bản phát hành ASR sau đó trích dẫn nó. Nhưng sự nhận ra không phải là lý luận. Để hỏi "vài nhạc cụ nào trong bản ghi âm này" hay "người nói đang bày tỏ cảm xúc gì" hay "cái gì đã xảy ra trong phút 3" cần phải hiểu âm thanh, chứ không phải bản sao. Qwen-Audio, SALMONN, LTU và NVIDIA's Audio Flamingo 3 (AF3, tháng 7 năm 2025) dần xây dựng đống đó: giữ các bộ mã lớp Whisper, đập vào các máy hình thành Q, đào tạo dữ liệu hướng dẫn văn bản âm thanh, thêm lý luận chuỗi suy nghĩ. Bài học này đi qua vòng cung.
 
 **Type:** Build
-**Languages:** Python (stdlib, log-Mel spectrogram + audio Q-former skeleton)
+**Languages:** Python (stdlib, log-Mel spectrogram + audio Q-former skeleton), TypeScript
 **Prerequisites:** Phase 6 (Speech and Audio), Phase 12 · 03 (Q-Former)
 **Time:** ~180 minutes
 

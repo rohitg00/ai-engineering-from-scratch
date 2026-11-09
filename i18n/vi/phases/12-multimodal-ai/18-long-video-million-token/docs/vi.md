@@ -3,7 +3,7 @@
 > Một video 4K 1 giờ với tốc độ 24 FPS, được dán và nhúng, tạo ra khoảng 60 triệu token. Một tập podcast 2 giờ được sao chép là 30.000 token. Một bộ phim đầy đủ Blu-ray, thậm chí được nén với sự tập hợp dữ dội, là hàng trăm ngàn token. Google's Gemini 1.5 (Tháng 3 năm 2024) mở ra thời đại này với một ngữ cảnh 10 triệu token, thực hiện thu hồi kim cáp trong một đống cỏ đáng tin cậy trong các video dài một giờ. LWM (Liu et al., tháng 2 năm 2024) cho thấy con đường quy mô của sự chú ý vòng. LongVILA và Video- XL đã tăng cường lượng tiêu thụ. VideoAgent đã đổi ngữ cảnh nguyên liệu cho thu hồi của đại lý. Mỗi cách tiếp cận là một sự đổi mới khác nhau về tính toán, nhớ lại và phức tạp kỹ thuật. Bài học này đọc cho chúng một bên nhau.
 
 **Type:** Build
-**Languages:** Python (stdlib, needle-in-haystack simulator + agentic-retrieval router)
+**Languages:** Python (stdlib, needle-in-haystack simulator + agentic-retrieval router), TypeScript
 **Prerequisites:** Phase 12 · 17 (video temporal tokens)
 **Time:** ~180 minutes
 

@@ -3,7 +3,7 @@
 > Hình ảnh thực không phải là 224x224 vuông. Một tờ biên lai là 1:3, một biểu đồ là 16:9, một quét y tế có thể là 4096x4096, một ảnh chụp màn hình di động là 9:19.5. Câu trả lời VLM trước năm 2024  thay đổi kích thước mọi thứ thành một hình vuông cố định  ném đi tín hiệu làm cho OCR, hiểu tài liệu và phân tích cảnh độ phân giải cao làm việc. NaViT (Google, 2023) cho thấy bạn có thể gói các bản vá độ phân giải biến thành một lô biến đổi đơn với nén đường khối. M-RoPE (2024) của Qwen2-VL đã loại bỏ hoàn toàn các bảng vị trí tuyệt đối. AnyRes của LLaVA-NeXT đã làm phẳng hình ảnh độ phân giải cao thành hình ảnh cơ sở + phụ. Thay đổi NaFlex của SigLIP 2 (2025) hiện là mã hóa mặc định cho các VLM mở muốn một điểm kiểm soát duy nhất phục vụ mọi tỷ lệ khía cạnh. Bài học này thực hiện patch-n'-pack cuối đến cuối.
 
 **Type:** Build
-**Languages:** Python (stdlib, patch packer + block-diagonal mask)
+**Languages:** Python, TypeScript (stdlib, patch packer + block-diagonal mask)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 12 · 05 (LLaVA)
 **Time:** ~120 minutes
 

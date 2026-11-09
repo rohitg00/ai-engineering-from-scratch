@@ -3,7 +3,7 @@
 > Lần đầu tiên một mô hình đọc một công thức từ một trang web và thực hiện nó trong một robot nhà bếp là RT-2 (Google DeepMind, tháng 7 năm 2023). RT-2 đã phân loại các hành động như các mã thông báo văn bản, đồng thời điều chỉnh một VLM trên dữ liệu web cộng với dữ liệu hành động robot, và chứng minh rằng kiến thức ngôn ngữ thị giác quy mô web chuyển sang kiểm soát robot. OpenVLA (tháng 6 năm 2024) đã gửi tham chiếu mở 7B. Phòng π0 của Cơ thể Trí tuệ (2024-2025) đã thêm các chuyên gia hành động phù hợp với dòng chảy. GR00T N1 (Tổng thống NVIDIA) (Từ tháng 3 năm 2025) cung cấp hệ thống kiểm soát kép (System 1 / System 2) cho robot nhân vật ở quy mô lớn. VLA nguyên thủy  thị giác-lời nói-phản ứng, một mô hình duy nhất nhìn thấy, đọc và hành động  là cầu nối giữa các mô hình hiểu biết của giai đoạn này và các hệ thống tự trị trong giai đoạn 15.
 
 **Type:** Learn
-**Languages:** Python (stdlib, action tokenizer + VLA inference skeleton)
+**Languages:** Python (stdlib, action tokenizer + VLA inference skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 15 (Autonomous Systems, referenced)
 **Time:** ~180 minutes
 

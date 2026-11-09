@@ -3,7 +3,7 @@
 > CLIP sắp xếp hình ảnh và văn bản nhưng không thể tạo tiêu đề, trả lời câu hỏi hoặc tổ chức cuộc trò chuyện. BLIP-2 (Salesforce, 2023) giải quyết điều đó với một cây cầu có thể đào tạo nhỏ: 32 vector truy vấn có thể học được tham gia qua các tính năng của ViT đóng băng thông qua sự chú ý chéo, sau đó slot trực tiếp vào dòng đầu vào của LLM đóng băng. 188M tham số cầu kết nối một ViT-g/14 với LLM đóng băng lớn như 11B Flan-T5-XXL. Mỗi VLM dựa trên bộ điều chỉnh thông qua năm 2026  MiniGPT-4, InstructBLIP, anh em họ của LLaVA  là một hậu duệ. Bài học này đọc kiến trúc của Q-Former, giải thích đào tạo hai giai đoạn của nó, và xây dựng một phiên bản đồ chơi cung cấp các token hình ảnh vào một bộ giải mã văn bản đóng băng.
 
 **Type:** Build
-**Languages:** Python (stdlib, cross-attention + learnable-query demo)
+**Languages:** Python, TypeScript (stdlib, cross-attention + learnable-query demo)
 **Prerequisites:** Phase 12 · 02 (CLIP), Phase 7 (Transformers)
 **Time:** ~180 minutes
 

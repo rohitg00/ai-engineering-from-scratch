@@ -3,7 +3,7 @@
 > Gia đình Qwen-VL  Qwen-VL (2023), Qwen2-VL (2024), Qwen2.5-VL (2025), Qwen3-VL (2025)  là dòng dõi mô hình ngôn ngữ thị giác mở có ảnh hưởng nhất vào năm 2026. Mỗi thế hệ đã đặt cược kiến trúc quyết định duy nhất mà phần còn lại của hệ sinh thái mở đã sao chép trong vòng mười hai tháng: độ phân giải động bản địa thông qua M-RoPE, lấy mẫu động-FPS với sự sắp xếp thời gian tuyệt đối, chú ý cửa sổ trong ViT và các định dạng xuất phát của đại lý có cấu trúc. Bằng Qwen3-VL, công thức đã ổn định: một bộ mã hóa 2D-RoPE-ViT với đầu vào tỷ lệ khía cạnh bản địa, một máy chiếu MLP vào cơ sở ngôn ngữ Qwen3 lớn, và các giai đoạn đào tạo nhấn mạnh OCR, hạ tầng và hành vi của đại lý như các mục tiêu hạng nhất. Bài học này đọc theo thời gian của gia đình để bạn hiểu tại sao mỗi nút ở nơi nó ở.
 
 **Type:** Learn
-**Languages:** Python (stdlib, M-RoPE encoder + dynamic-FPS sampler)
+**Languages:** Python, TypeScript (stdlib, M-RoPE encoder + dynamic-FPS sampler)
 **Prerequisites:** Phase 12 · 06 (patch-n'-pack)
 **Time:** ~120 minutes
 

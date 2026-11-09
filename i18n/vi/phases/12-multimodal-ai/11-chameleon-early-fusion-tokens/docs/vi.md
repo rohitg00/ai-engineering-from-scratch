@@ -3,7 +3,7 @@
 > Mỗi VLM mà chúng ta đã thấy cho đến nay giữ hình ảnh và văn bản riêng biệt. Các token hình ảnh đến từ một bộ mã hóa thị giác, chảy vào một máy chiếu, sau đó gặp văn bản bên trong LLM. Từ vựng của tầm nhìn và văn bản không bao giờ chồng chéo. Chameleon (Meta, tháng 5 năm 2024) hỏi: nếu họ làm thế thì sao? Trình luyện một VQ-VAE biến hình thành một chuỗi các token riêng biệt từ một từ vựng chung. Mỗi tài liệu đa phương thức hiện là một chuỗi mã thông báo văn bản và mã thông báo hình ảnh được giao nhau, một lỗ tự động. Hiệu ứng phụ: mô hình có thể tạo ra các đầu ra hỗn hợp  mã thông báo văn bản và hình ảnh thay thế trong một cuộc gọi suy luận duy nhất. Bài học này đọc luận án early-fusion và xây dựng một phiên bản đồ chơi cuối cùng.
 
 **Type:** Build
-**Languages:** Python (stdlib, VQ-VAE tokenizer + interleaved decoder)
+**Languages:** Python, TypeScript (stdlib, VQ-VAE tokenizer + interleaved decoder)
 **Prerequisites:** Phase 12 · 05, Phase 8 (Generative AI)
 **Time:** ~180 minutes
 

@@ -3,7 +3,7 @@
 > LLaVA (ngày tháng 4 năm 2023) là kiến trúc đa phương thức được sao chép nhiều nhất trên hành tinh. Nó thay thế BLIP-2's Q-Former bằng một MLP 2 lớp, thay thế sự chú ý chéo của Flamingo bằng sự kết nối mã thông báo ngây thơ, và được đào tạo trên 158k lượt hướng dẫn thị giác được tạo bởi GPT-4 từ các tiêu đề chỉ văn bản. Bất kỳ học viên nào xây dựng một VLM giữa năm 2023 và 2026 đã xây dựng một số biến thể của LLaVA. LLaVA-1.5 được đổi thành một máy chiếu MLP và một bộ mã hóa 336px. LLaVA-NeXT đã thêm AnyRes tay cho đầu vào độ phân giải cao. LLaVA-OneVision hình ảnh thống nhất, nhiều hình ảnh và video trong một công thức. Bài học này đọc công thức, thực hiện máy chiếu và giải thích tại sao "simple hơn thắng".
 
 **Type:** Build
-**Languages:** Python (stdlib, projector + instruction-template builder)
+**Languages:** Python, TypeScript (stdlib, projector + instruction-template builder)
 **Prerequisites:** Phase 12 · 02 (CLIP), Phase 11 (LLM Engineering — instruction tuning)
 **Time:** ~180 minutes
 

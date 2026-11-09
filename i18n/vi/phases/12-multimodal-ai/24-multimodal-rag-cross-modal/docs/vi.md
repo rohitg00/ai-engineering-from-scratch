@@ -3,7 +3,7 @@
 > Tài liệu RAG của thị giác là một mảnh. RAG đa phương pháp sản xuất mở rộng hơn  thu thập thông qua văn bản, hình ảnh, âm thanh và video cho các dòng công việc như lập kế hoạch chuyến đi ("đặt cho tôi một bữa ăn uống vegan yên tĩnh với ánh sáng tự nhiên"), phân loại y tế ("những vết thương nào phù hợp với bức ảnh này + những ghi chú này"), thương mại điện tử ("những trang phục tương tự như selfie này, kích thước của tôi"), và dịch vụ thực địa ("chẩn đoán âm thanh động cơ này cộng với ảnh của bộ phận"). Ba cuộc khảo sát năm 2025  Abootorabi et al., Mei et al., Zhao et al.  hợp pháp hóa các phụ vấn đề: thu hồi đa phương thức, hợp nhất thu hồi, hạ tầng sản xuất, đánh giá đa phương thức. Bài học này đọc các cuộc khảo sát và thiết kế một đường ống sản xuất.
 
 **Type:** Build
-**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator)
+**Languages:** Python (stdlib, cross-modal retriever with fusion + grounded generator), TypeScript
 **Prerequisites:** Phase 12 · 23 (ColPali), Phase 11 (RAG basics)
 **Time:** ~180 minutes
 

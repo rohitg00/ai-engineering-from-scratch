@@ -3,7 +3,7 @@
 > GPT-4o đưa ra một sản phẩm mà hầu hết các mô hình mở không thể sao chép: một đại lý nghe giọng nói, xem video và nói lại trong thời gian thực. Câu trả lời về hệ sinh thái mở vào cuối năm 2024 là MIO (Wang et al., tháng 9 năm 2024). MIO ký hiệu hóa văn bản, hình ảnh, ngôn ngữ và âm nhạc, đào tạo một biến thể nguyên nhân trên các chuỗi liên kết, và tạo ra bất kỳ phương thức nào cho bất kỳ phương thức nào. AnyGPT (Zhan et al., tháng 2 năm 2024) là bằng chứng về khái niệm; MIO là quy mô; Unified-IO 2 (Allen AI, tháng 12 năm 2023) là người anh em họ với nền tảng thị giác + hành động. Bài học này đọc mô hình bất cứ gì đến bất cứ gì 4 tokenizers, một biến thể, giải mã thân thiện với streaming.
 
 **Type:** Learn
-**Languages:** Python (stdlib, four-modality token allocator + streaming decode loop)
+**Languages:** Python, TypeScript (stdlib, four-modality token allocator + streaming decode loop)
 **Prerequisites:** Phase 12 · 11 (Chameleon), Phase 6 (Speech and Audio)
 **Time:** ~120 minutes
 

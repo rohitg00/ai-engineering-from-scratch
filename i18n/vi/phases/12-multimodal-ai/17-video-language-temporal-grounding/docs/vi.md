@@ -3,7 +3,7 @@
 > Video không phải là một đống ảnh. Một clip 5 giây có thứ tự nguyên nhân, động từ hành động và thời gian sự kiện mà mô hình hình ảnh không thể đại diện. Video-LLaMA (Zhang et al., tháng 6 năm 2023) đã xuất khẩu video-LLM mở đầu tiên với nền tảng âm thanh-quan hình. VideoChat và Video-LLaVA đã mở rộng mô hình. Đến năm 2025, M-RoPE của Qwen2.5-VL phù hợp với thời gian đã thu hẹp khoảng cách với các mô hình độc quyền biên giới. Mỗi hệ thống giải quyết các token thời gian khác nhau  Q-former mỗi clip, concat-pool mỗi khung, thời gian liên kết M-RoPE mỗi token. Bài học này đọc các mẫu, xây dựng một mẫu khung đồng nhất so với động lực, và đánh giá về các nhiệm vụ đặt đất thời gian.
 
 **Type:** Build
-**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator)
+**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator), TypeScript
 **Prerequisites:** Phase 12 · 08 (LLaVA-OneVision)
 **Time:** ~180 minutes
 

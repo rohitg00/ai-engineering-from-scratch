@@ -3,7 +3,7 @@
 > Mỗi VLM mở trước InternVL3 đều theo cùng một công thức ba bước: lấy một văn bản LLM được đào tạo trên hàng nghìn tỷ mã thông báo văn bản, bấm vào một bộ mã hóa thị giác, sau đó chỉnh sửa các đường nét. Điều này hoạt động nhưng có nợ sắp xếp  văn bản LLM đã chi tiêu toàn bộ ngân sách trước đào tạo của mình cho văn bản thuần túy và không hiểu bản địa các token hình ảnh. Khi bạn thêm tầm nhìn sau khi làm việc, LLM phải học lại cách liên kết đầu vào trực quan với lý luận văn bản mà không quên văn bản. InternVL3 (Zhu et al., tháng 4 năm 2025) bác bỏ cách tiếp cận sau hoc: một chạy trước khi tập luyện, văn bản và đa phương thức được giao tiếp từ bước một. Kết quả tương ứng với Gemini 2.5 Pro trên MMMU-Pro ở 78B. Bài học này sẽ giải thích về việc đào tạo trước bản địa và những gì thay đổi khi bạn làm điều đó.
 
 **Type:** Learn
-**Languages:** Python (stdlib, training-corpus mixer)
+**Languages:** Python, TypeScript (stdlib, training-corpus mixer)
 **Prerequisites:** Phase 12 · 05, Phase 12 · 07 (recipes)
 **Time:** ~120 minutes
 

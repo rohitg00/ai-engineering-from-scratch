@@ -3,7 +3,7 @@
 > Tài liệu không phải là hình ảnh. Một bản PDF, giấy khoa học, hóa đơn hoặc hình thức viết tay có bố cục, bảng, sơ đồ, ghi chú chân, tiêu đề và cấu trúc ngữ nghĩa mà sự hiểu biết hình ảnh đơn giản không thể nắm bắt được. Dòng trước VLM là một đường ống: Tesseract OCR + LayoutLMv3 + Heuristics khai thác bảng. Đợt VLM thay thế nó bằng các mô hình không OCR  Donut (2022), Nougat (2023), DocLLM (2023)  phát ra dấu hiệu cấu trúc trực tiếp. Đến năm 2026, biên giới chỉ là "giới thiệu hình ảnh trang cho Claude Opus 4.7 ở 2576px bản địa", và đầu ra đánh dấu cấu trúc được cung cấp miễn phí. Bài học này đọc được vòng cung ba thời đại của AI tài liệu.
 
 **Type:** Build
-**Languages:** Python (stdlib, layout-aware document parser skeleton)
+**Languages:** Python (stdlib, layout-aware document parser skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 5 (NLP)
 **Time:** ~180 minutes
 

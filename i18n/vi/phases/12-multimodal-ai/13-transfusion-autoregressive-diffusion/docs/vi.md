@@ -3,7 +3,7 @@
 > Chameleon và Emu3 đặt cược tất cả vào các token riêng biệt. Chúng hoạt động, nhưng nút thắt lượng tử được nhìn thấy  các nguyên bằng chất lượng hình ảnh dưới các mô hình phân tán không gian liên tục. Phong truyền (Meta, Zhou et al., tháng 8 năm 2024) đưa ra cược ngược lại: giữ hình ảnh liên tục, thả VQ-VAE hoàn toàn, và huấn luyện một bộ biến đổi với hai lỗ. Các mã thông báo văn bản có được dự đoán mã thông báo tiếp theo. Các bản vá hình ảnh có sự mất mát phù hợp dòng chảy / phân tán. Cả hai mục tiêu tối ưu hóa cùng một trọng lượng. Kiến trúc cơ bản của Stable Diffusion 3 (MMDiT) là một người anh em họ gần gũi. Bài học này đọc luận án Transfusion, xây dựng một đồ chơi huấn luyện hai lỗ, và theo dõi mặt nạ chú ý cho phép một biến đổi làm cả hai công việc.
 
 **Type:** Build
-**Languages:** Python (stdlib, two-loss trainer on MNIST-scale toy)
+**Languages:** Python, TypeScript (stdlib, two-loss trainer on MNIST-scale toy)
 **Prerequisites:** Phase 12 · 11 (Chameleon), Phase 8 (Generative AI)
 **Time:** ~180 minutes
 

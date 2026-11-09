@@ -3,7 +3,7 @@
 > Thuốc truyền trộn các biểu diễn liên tục và riêng biệt. Show-o (Xie et al., tháng 8 năm 2024) đi theo hướng khác: mã thông báo văn bản sử dụng dự đoán mã thông báo tiếp theo nguyên nhân, mã thông báo hình ảnh sử dụng sự lan truyền kín kín trong tinh thần của MaskGIT. Cả hai đều ngồi trong một bộ biến đổi với một mặt nạ tập trung lai. Kết quả thống nhất VQA, text-to-image, inpainting, và sản xuất modality hỗn hợp trên một xương sống, một tokeniser mỗi modality, một công thức mất mát (token tiếp theo mở rộng đến dự đoán che giấu). Bài học này đi theo thiết kế Show-o tại sao sự phân tán phân biệt được che giấu là một máy tạo hình ảnh song song, vài bước và tương phản với Transfusion và Emu3.
 
 **Type:** Learn
-**Languages:** Python (stdlib, masked-discrete-diffusion sampler)
+**Languages:** Python, TypeScript (stdlib, masked-discrete-diffusion sampler)
 **Prerequisites:** Phase 12 · 13 (Transfusion)
 **Time:** ~120 minutes
 

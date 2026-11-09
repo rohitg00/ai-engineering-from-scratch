@@ -3,7 +3,7 @@
 > RAG truyền thống phân tích các file PDF thành văn bản, chia thành các mảnh, nhúng các mảnh, lưu trữ các vector. Mỗi bước mất tín hiệu: OCR bỏ dữ liệu biểu đồ, chia nhỏ các hàng bảng, nhúng văn bản bỏ qua các số liệu. ColPali (Faysse et al., tháng 7 năm 2024) đặt ra câu hỏi đơn giản hơn: tại sao lại trích xuất văn bản? Nhúng hình ảnh trang trực tiếp thông qua PaliGemma, sử dụng tương tác muộn kiểu ColBERT để lấy lại, và giữ tất cả bố cục, hình ảnh, phông chữ và tín hiệu định dạng tài liệu mang. Các điểm tham khảo được xuất bản: 20-40% độ chính xác đầu đến cuối tốt hơn so với văn bản-RAG trên các tài liệu giàu hình ảnh. ColQwen2, ColSmol và VisRAG đã mở rộng mô hình. Bài học này đọc luận án RAG về thị giác và xây dựng một chỉ số nhỏ giống ColPali.
 
 **Type:** Build
-**Languages:** Python (stdlib, multi-vector indexer + MaxSim scorer)
+**Languages:** Python (stdlib, multi-vector indexer + MaxSim scorer), TypeScript
 **Prerequisites:** Phase 11 (LLM Engineering — RAG basics), Phase 12 · 05 (LLaVA)
 **Time:** ~180 minutes
 

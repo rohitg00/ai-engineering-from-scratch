@@ -3,7 +3,7 @@
 > CLIP (2021) của OpenAI chứng minh một ý tưởng duy nhất đủ lớn để cung cấp năng lượng trong năm năm tiếp theo: sắp xếp một bộ mã hóa hình ảnh và một bộ mã hóa văn bản trong cùng một không gian vector chỉ sử dụng các cặp hình ảnh-chủ đề web ồn ào và một lỗ hổng tương phản. Không có nhãn giám sát. 400 triệu cặp. Không gian nhúng kết quả làm phân loại chụp không, lấy lại hình ảnh văn bản, và cắm vào mỗi VLM năm 2026 như tháp tầm nhìn của nó. SigLIP 2 (2025) thay thế softmax bằng sigmoid và quy mô sau CLIP với chi phí thấp hơn. Bài học này đi bộ toán từ InfoNCE đến mất tích cặp sigmoid và xây dựng bước đào tạo trong stdlib Python.
 
 **Type:** Build
-**Languages:** Python (stdlib, InfoNCE + sigmoid loss implementations)
+**Languages:** Python, TypeScript (stdlib, InfoNCE + sigmoid loss implementations)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 7 (Transformers)
 **Time:** ~180 minutes
 

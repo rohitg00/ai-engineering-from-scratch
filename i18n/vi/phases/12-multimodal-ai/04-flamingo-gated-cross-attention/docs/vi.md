@@ -3,7 +3,7 @@
 > Flamingo của DeepMind (2022) đã làm hai điều trước bất cứ ai khác. Nó cho thấy một mô hình duy nhất có thể xử lý theo trình tự tự tự nhiên của hình ảnh, video và văn bản. Và nó cho thấy VLM có thể học trong bối cảnh  đưa ra một vài cú chụp với ba cặp ví dụ (hình ảnh, tiêu đề) và mô hình ghi chú một hình ảnh mới mà không cần bất kỳ bước gradient nào. Cơ chế: các lớp chú ý chéo bị khóa, được đưa vào giữa các lớp hiện có của LLM đóng băng, với một cổng tanh học được bắt đầu từ không để khả năng văn bản của LLM được bảo tồn khi khởi tạo. Bài học này đi bộ với thiết kế thiết kế nhận thức của Flamingo và kiến trúc quan tâm chéo  tổ tiên của các đầu vào liên kết của Gemini và các token thị giác của Idefics2.
 
 **Type:** Learn
-**Languages:** Python (stdlib, gated cross-attention + Perceiver resampler demo)
+**Languages:** Python, TypeScript (stdlib, gated cross-attention + Perceiver resampler demo)
 **Prerequisites:** Phase 12 · 03 (BLIP-2 Q-Former)
 **Time:** ~120 minutes
 

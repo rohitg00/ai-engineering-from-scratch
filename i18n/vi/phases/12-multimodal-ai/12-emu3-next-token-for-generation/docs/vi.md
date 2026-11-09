@@ -3,7 +3,7 @@
 > BAAI's Emu3 (Wang et al., tháng 9 năm 2024) là kết quả năm 2024 nên kết thúc cuộc tranh luận phân tán chống lại tự rút lui. Một bộ biến đổi chỉ có decoder kiểu Llama, được đào tạo chỉ trên mục tiêu dự đoán mã thông báo tiếp theo, trên một từ vựng thống nhất của văn bản + mã thông báo hình ảnh VQ + mã thông báo video VQ 3D, đánh bại SDXL về sản xuất hình ảnh và LLaVA-1.6 về nhận thức. Không mất CLIP. Không có lịch trình phát sóng. Các hướng dẫn không phân loại được sử dụng để suy luận về chất lượng, nhưng mục tiêu đào tạo cốt lõi là dự đoán mã thông báo tiếp theo với việc buộc giáo viên. Được xuất bản trên tạp chí Nature. Bài học này đọc luận án Emu3  tại sao một tokenizer cộng quy mô tốt hơn là tất cả bạn cần  và trái ngược với các phương pháp phân phối.
 
 **Type:** Learn
-**Languages:** Python (stdlib, 3D video tokenizer math + autoregressive sampler skeleton)
+**Languages:** Python, TypeScript (stdlib, 3D video tokenizer math + autoregressive sampler skeleton)
 **Prerequisites:** Phase 12 · 11 (Chameleon)
 **Time:** ~120 minutes
 

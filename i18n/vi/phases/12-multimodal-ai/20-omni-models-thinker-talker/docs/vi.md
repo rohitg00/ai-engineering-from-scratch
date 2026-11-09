@@ -3,7 +3,7 @@
 > GPT-4o đã trình bày sản phẩm vào tháng 5 năm 2024 không phải vì mô hình cơ bản mà vì hình dạng sản phẩm  một giao diện giọng nói nơi bạn nói, mô hình nhìn thấy những gì máy ảnh nhìn thấy, và nó nói lại trong dưới 250ms. Hệ sinh thái mở đã dành phần còn lại của năm 2024 và 2025 để chạy đua để đạt đến bề mặt sản phẩm đó. Qwen2.5-Omni (tháng 3 năm 2025) là thiết kế mở tham chiếu: một Thinker (hình biến tạo văn bản lớn) cộng với một Talker (hình biến tạo giọng nói song song), được kết nối bằng các token phát thanh trực tuyến. Mini-Omni đơn giản hóa nó, Moshi phù hợp với độ trễ của nó, GLM-4-Voice mở rộng nó cho Trung Quốc. Bài học này đọc kiến trúc Thinker-Talker và ngân sách thời gian trễ làm cho việc phát trực tuyến trong thời gian thực.
 
 **Type:** Build
-**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop)
+**Languages:** Python (stdlib, streaming pipeline latency simulator + VAD loop), TypeScript
 **Prerequisites:** Phase 12 · 19 (audio-LLMs), Phase 12 · 16 (any-to-any)
 **Time:** ~180 minutes
 
