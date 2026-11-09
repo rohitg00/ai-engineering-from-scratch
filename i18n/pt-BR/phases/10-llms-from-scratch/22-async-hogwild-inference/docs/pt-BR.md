@@ -3,7 +3,7 @@
 > A descodificação especulativa (fase 10 · 15) paralela os tokens dentro de uma sequência. Os quadros multi-agentes paralelam-se em sequências inteiras, mas forçam coordenação explícita (voting, sub-task splitting). Hogwild! A Inferência (Rodionov et al., arXiv:2504.06261) faz outra coisa: executa N instâncias do mesmo LLM em paralelo contra um cache de valor de chave SHARED. Cada trabalhador vê instantaneamente os tokens gerados por cada outro trabalhador. Modelos de raciocínio modernos  QwQ, DeepSeek-R1  podem auto-coordenar através desse cache compartilhado sem qualquer ajuste fino. A abordagem é experimental, mas abre um eixo inteiramente novo de paralelismo de inferência que fica ortogonal ao descodificação de especificações. Esta lição implementa um Hogwild de dois trabalhadores! Simulador em stdlib Python e explica por que a colaboração de caché compartilhado emerge das habilidades de raciocínio do modelo existente.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10 · 12 (inference optimization), Phase 10 · 15 (speculative decoding)
 **Time:** ~60 minutes
 

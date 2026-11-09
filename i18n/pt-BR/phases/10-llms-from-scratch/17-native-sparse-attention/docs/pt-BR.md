@@ -3,7 +3,7 @@
 > Com 64k tokens, a atenção consome 70-80% da latência de decodificação. Todos os laboratórios abertos têm um plano para consertá-lo. A NSA do DeepSeek (melhor documento ACL 2025) é aquela que ficou preso: três ramos paralelas de atenção  tokens com grãos grosseiros comprimidos, tokens com grãos finos retidos seletivamente, e janelas deslizantes para contexto local  combinadas através de um portão aprendido. É alinhado com hardware (friendly-kernel), nativamente treinável (funciona em pré-treino, não ligado à inferência), e em 64k decodificações ele funciona mais rápido do que FlashAttention enquanto combina ou supera a qualidade de atenção total. Esta lição constrói os três ramos de ponta a ponta e mostra por que a esparsia é diferenciável de ponta a ponta.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 12 (KV cache, flash-attention), Phase 7 · 15 (attention variants), Phase 10 · 16 (differential attention)
 **Time:** ~60 minutes
 

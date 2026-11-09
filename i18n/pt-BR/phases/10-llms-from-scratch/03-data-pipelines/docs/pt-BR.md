@@ -3,7 +3,7 @@
 > O modelo é um espelho, reflete os dados que lhe fornecer, alimenta-o de lixo, reflete lixo com fluência perfeita.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 10, Lessons 01-02 (Tokenizers, Building a Tokenizer)
 **Time:** ~90 minutes
 
