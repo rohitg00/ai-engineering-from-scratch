@@ -3,7 +3,7 @@
 > -1 की वर्गमूल कल्पना नहीं है, यह घूर्णन, आवृत्तियों और सिग्नल प्रसंस्करण के आधे भाग की कुंजी है।
 
 **Type:** Learn
-**Language:**पायथन
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04 (linear algebra, calculus)
 **Time:** ~60 minutes
 
@@ -426,7 +426,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 ## इसे भेजें
 
-दौड़ें`code/complex_numbers.py`उत्पन्न करने के लिए `outputs/skill-complex-arithmetic.md`. .
+दौड़ें`code/complex_numbers.py`या `npx tsx code/complex_numbers.ts`उत्पन्न करने के लिए `outputs/skill-complex-arithmetic.md`. .
 
 ## व्यायाम
 
