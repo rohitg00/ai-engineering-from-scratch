@@ -3,7 +3,7 @@
 > A forma de 2026 de uma equipe de engenharia multi-agente convergiu: um arquiteto planeja, N codificadores trabalham em árvores de trabalho paralelas, um revisor de portas, um testador verifica. A arquitetura de fábrica da SWE-AF, a solicitação baseada em papéis do MetaGPT, o gráfico de atores tipado do AutoGen 0.4, o Devin da Cognition e os droides da fábrica todos aterraram sobre ele de forma independente. Os árvores de trabalho paralelas convertem o relógio de parede em capacidade. Os protocolos de estado e transferência compartilhados tornam-se a superfície de falha. A pedra angular é construir a equipa, avaliar no banco de SWE Pro, e relatar quais entregas quebrarem e com que frequência.
 
 **Type:** Capstone
-**Languages:** Python / TypeScript (agents), Shell (worktree scripts)
+**Languages:** Python / TypeScript (agents, task board scaffold), Shell (worktree scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools), Phase 14 (agents), Phase 15 (autonomous), Phase 16 (multi-agent), Phase 17 (infrastructure)
 **Phases exercised:**P11 · P13 · P14 · P15 · P16 · P17
 **Time:** 40 hours

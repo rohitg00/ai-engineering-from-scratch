@@ -3,7 +3,7 @@
 > Um arnes de agente sem observabilidade é uma caixa preta que custa dinheiro. Esta lição rola manualmente um construtor de espaço que emite registros compatíveis com as convenções semânticas OpenTelemetry GenAI, escreve-os para um arquivo JSON-Lines um espaço por linha, e expõe contadores e histogramas no formato de texto Prometheus.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates), Phase 19 · 26 (sandbox), Phase 19 · 27 (eval harness), Phase 13 · 20 (OpenTelemetry GenAI), Phase 14 · 23 (OTel GenAI conventions)
 **Time:** ~90 minutes
 
@@ -96,6 +96,7 @@ A lição 25 produziu a cadeia de portas. A lição 26 produziu a caixa de areia
 ```bash
 cd phases/19-capstone-projects/28-observability-otel-traces
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

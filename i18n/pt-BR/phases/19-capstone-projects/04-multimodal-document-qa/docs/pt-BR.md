@@ -3,7 +3,7 @@
 > A fronteira de 2026 entre documento e QA afastou-se da OCR-depois-texto e foi para a interação tardia de visão. ColPali, ColQwen2.5 e ColQwen3-omni tratam cada página PDF como uma imagem, incorporam-na com interação tardia multi-vector, e deixam a consulta atender diretamente aos patches. Em 10Ks financeiros, artigos científicos e notas manuscritas este padrão supera o OCR primeiro por uma grande margem. Construir o pipeline de ponta a ponta em 10 mil páginas e publicar lado a lado contra OCR-then-text.
 
 **Type:** Capstone
-**Languages:** Python (pipeline), TypeScript (viewer UI)
+**Languages:** Python (pipeline), TypeScript (viewer UI, retrieval scaffold)
 **Prerequisites:** Phase 4 (computer vision), Phase 5 (NLP), Phase 7 (transformers), Phase 11 (LLM engineering), Phase 12 (multimodal), Phase 17 (infrastructure)
 **Phases exercised:**P4 · P5 · P7 · P11 · P12 · P17
 **Time:** 30 hours

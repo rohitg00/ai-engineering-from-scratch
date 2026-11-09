@@ -3,7 +3,7 @@
 > Bytes dentro, IDs fora, IDs de volta para os mesmos bytes. Construir o tokenizer que todos os modelos de texto modernos ainda começa a partir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 04 lessons, Phase 07 transformer lessons
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > Um plano que não sobrevive a um fracasso é um script. Um script que pode replanar é um agente.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

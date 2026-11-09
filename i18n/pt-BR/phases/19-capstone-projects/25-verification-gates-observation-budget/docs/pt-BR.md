@@ -3,7 +3,7 @@
 > Um arame de agente sem uma camada de verificação é um desejo num casaco de trincheira. Esta lição constrói a cadeia de portas determinista que decide se uma chamada de ferramenta é permitida disparar, quanto de sua saída o agente é permitido ver, e quando o loop tem que parar porque o agente leu demais. A cadeia é uma função de pequenos portões nomeados mais um livro de observação que rastreia cada token que o modelo foi mostrado.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 20-24 (Track A1: agent loop, tool registry, message store, prompt builder, model router), Phase 14 · 33 (instructions as constraints), Phase 14 · 36 (scope contracts), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -95,6 +95,7 @@ As lições anteriores deram-lhe o loop, o registro de ferramentas, o armazém d
 ```bash
 cd phases/19-capstone-projects/25-verification-gates-observation-budget
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

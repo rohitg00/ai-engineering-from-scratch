@@ -3,7 +3,7 @@
 > O Chunking decide o que o seu retriever pode fazer, e não há um modelo de inserção, nenhum re-ranqueador, nenhum LLM pode reparar os danos.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG), 07 (advanced RAG); Phase 19 Track B foundations (lessons 20-29)
 **Time:** ~90 minutes
 
@@ -89,6 +89,7 @@ ci-chunk-boundaries
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A saída é uma pequena tabela com uma linha por estratégia e uma coluna por k. A sentença perde na fixação estruturada. A marcação estrutural vence na fixação de marcada. O recursivo mantém o seu próprio na fixação mista porque a recursião se adapta. O agrupamento semântico vence na fixação de prosa onde não há pistas estruturais úteis.

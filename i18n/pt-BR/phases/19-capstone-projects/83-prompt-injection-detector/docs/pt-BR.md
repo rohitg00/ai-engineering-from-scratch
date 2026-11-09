@@ -3,7 +3,7 @@
 > Um detector é uma função de prompt a confiança e categoria.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 18 safety lessons, Phase 19 Track A lessons 25-29
 **Time:** ~90 min
 
@@ -57,7 +57,7 @@ O corredor de métricas produz um relatório JSON com precisão por categoria, r
 
 ## Usá-lo
 
-Corra .`python3 main.py`A demonstração carrega a taxonomia, põe o detector em cada dispositivo, põe-o em um corpus de prompto benigno, cozido em`benign.py`, e imprime as métricas por categoria.`outputs/detector_report.json`O arquivo é o artefato que o portão de segurança da lição 87 consome.
+Corra .`python3 main.py`ou `npx tsx main.ts`A demonstração carrega a taxonomia, põe o detector em cada dispositivo, põe-o em um corpus de prompto benigno, cozido em`benign.py`, e imprime as métricas por categoria.`outputs/detector_report.json`O arquivo é o artefato que o portão de segurança da lição 87 consome.
 
 ## Envia-o
 

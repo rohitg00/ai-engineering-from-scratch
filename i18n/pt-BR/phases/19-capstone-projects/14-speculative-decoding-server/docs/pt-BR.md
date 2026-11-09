@@ -3,7 +3,7 @@
 > A descodificação especulativa  um projeto barato propõe tokens, o modelo-alvo verifica-os em uma passagem  é agora uma otimização pronta para produção, não um truque de pesquisa. A EAGLE-3 em vLLM 0,7 nave 2,5-3x de capacidade em tráfego real. O P-EAGLE (AWS 2026) empurrou ainda mais a especulação paralela. O SpecForge da SGLang treinou os chefes de recrutamento em escala. O centro de especuladores da Red Hat publicou projetos alinhados para modelos abertos comuns. TensorRT-LLM fez a descodificação especulativa de primeira classe na NVIDIA. A pilha de produção de 2026 é vLLM ou SGLang com rascunhos da família EAGLE, quantização FP8 ou INT4, e HPA em fila de espera. Esta pedra angular deve servir dois modelos abertos com uma capacidade de saída de 2,5x+ de linha de base com um relatório completo de latência de cauda.
 
 **Type:** Capstone
-**Languages:** Python (serving), C++ / CUDA (kernel inspection), YAML (configs)
+**Languages:** Python (serving), TypeScript, C++ / CUDA (kernel inspection), YAML (configs)
 **Prerequisites:** Phase 3 (deep learning), Phase 7 (transformers), Phase 10 (LLMs from scratch), Phase 17 (infrastructure)
 **Phases exercised:**P3 · P7 · P10 · P17
 **Time:** 30 hours

@@ -3,7 +3,7 @@
 > Um agente de pesquisa que faz a mesma pergunta duas vezes está a desperdiçar tokens.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track A lessons 20-29
 **Time:** ~90 minutes
 

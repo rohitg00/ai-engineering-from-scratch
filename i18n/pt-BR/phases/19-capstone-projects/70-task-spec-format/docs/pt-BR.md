@@ -3,7 +3,7 @@
 > Um arsenal de avaliação é tão bom quanto o contrato suas tarefas honrar. Congelhe a forma JSONL e o vocabulário métrico antes de escrever uma única função de pontuação.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 Track B foundations
 **Time:** ~90 min
 

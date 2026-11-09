@@ -3,7 +3,7 @@
 > O portal de verificação decide se deve ser executada uma chamada de ferramenta. A caixa de areia decide o que acontece quando o faz. Esta lição envia um subprocesso que recusa executáveis perigosos, recusa formas perigosas de argv, prende todos os caminhos de arquivo para uma raiz do projeto, truncada de saída de tamanho excessivo, e mata processos fugitivos em um tempo de tempo de relógio de parede. É a segunda das duas camadas que se encontram entre o modelo e o sistema operacional.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 19 · 25 (verification gates and observation budget), Phase 14 · 33 (instructions as constraints), Phase 14 · 38 (verification gates)
 **Time:** ~90 minutes
 
@@ -87,6 +87,7 @@ Para agentes de produção você coloca em cima: executa dentro de um recipiente
 ```bash
 cd phases/19-capstone-projects/26-sandbox-runner-denylist
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m pytest code/tests/ -v
 ```
 

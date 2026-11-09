@@ -3,7 +3,7 @@
 > Um crítico que retorna "parece bom" a primeira vez é quebrado. Um crítico que sempre retorna "necessita de trabalho" é quebrado. O crítico interessante é aquele que converge, e você tem que criar convergência.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 50-53
 **Time:** ~90 minutes
 

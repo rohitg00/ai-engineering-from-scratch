@@ -3,7 +3,7 @@
 > Em 2026, a forma de um agente de codificação está definida. Um arame TUI, um plano com estado, uma superfície de ferramentas em caixa de areia, um ciclo que planeja, age, observa, recupera. Claude Code, Cursor 3 e OpenCode são todos iguais a partir de 50 pés. Esta pedra final pede-lhe para construir um extremo para o outro  CLI, puxar o pedido  e medir contra mini-swe-agente e Live-SWE-agente em SWE-bench Pro. Você aprenderá por que a parte difícil não é a chamada de modelo, mas o ciclo de ferramentas, a caixa de areia e o teto de custo em uma corrida de 50 voltas.
 
 **Type:** Capstone
-**Languages:** TypeScript / Bun (harness), Python (eval scripts)
+**Languages:** TypeScript / Bun (harness, loop scaffold), Python (eval scripts)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools and protocols), Phase 14 (agents), Phase 15 (autonomous systems), Phase 17 (infrastructure)
 **Phases exercised:**P0 · P5 · P7 · P10 · P11 · P13 · P14 · P15 · P17 · P18
 **Time:** 35 hours

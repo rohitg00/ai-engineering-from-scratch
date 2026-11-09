@@ -3,7 +3,7 @@
 > Um modelo que faz bem uma tarefa que não pode ser definida é um modelo que faz bem por acaso.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 42 to 45
 **Time:** ~90 minutes
 
@@ -135,6 +135,7 @@ Cada métrica é uma pequena função com um teste unitário. A série de testes
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 O roteiro semeia os aparelhos na primeira corrida, os marca com o adaptador de brinquedos (que dá cada aparelho direito), e escreve `outputs/leaderboard.json`. A pontuação geral é de 1,0 com o adaptador de brinquedo; o teste de adaptador de estúdio em `test_main.py`mostra o mesmo arame produz 0,0 quando o adaptador não pode responder.
