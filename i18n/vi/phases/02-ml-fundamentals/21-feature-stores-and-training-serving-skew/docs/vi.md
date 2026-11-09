@@ -3,7 +3,7 @@
 > Một tính năng có một định nghĩa và hai người đọc. Đào tạo đọc lịch sử của nó từ mỗi thời điểm nhãn, và phục vụ đọc giá trị mới nhất của nó. Khi hai người đọc không đồng ý, mô hình thấy đầu vào mà nó chưa bao giờ được đào tạo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 08 (Feature Engineering), 13 (ML Pipelines), 15 (Time Series), and 19 (ML System Design)
 **Time:** ~100 minutes
 
@@ -275,6 +275,7 @@ Các bản đăng ký demo ghi lại yêu cầu trong ngày 141 đến 150 và c
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console

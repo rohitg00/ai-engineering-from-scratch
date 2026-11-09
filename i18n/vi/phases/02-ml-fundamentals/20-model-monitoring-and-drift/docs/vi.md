@@ -3,7 +3,7 @@
 > Một mô hình được triển khai thất bại mà không có thông báo lỗi. Nó tiếp tục trả lại điểm số trong khi thế giới di chuyển ra khỏi dữ liệu đào tạo của nó, và chỉ có giám sát cho thấy khoảng cách.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation), 16 (Anomaly Detection), and 19 (ML System Design)
 **Time:** ~110 minutes
 
@@ -261,6 +261,7 @@ Mô hình là ngưỡng trên `amount`Windows tổ chức 500 sự kiện và di
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console
