@@ -3,7 +3,7 @@
 > 大多数人工智能初创公司不会死于糟糕的模型.它们死于糟糕的单元经济学. 一个GPT-4o电话成本是百分之几.每天10次电话的10千用户仅需250美元的输入代币 - - 在你收取一个美元之前.幸存的公司是那些把每个API电话都视为金融交易,而不是函数电话.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lesson 09 (Function Calling)
 **Time:** ~45 minutes
 **Related:**阶段11·15 (即时缓存) 本课涵盖应用层缓存 (语义缓存,精确哈希缓存,模型路由).课程15涵盖提供商层即时缓存 (人类缓存_控制,OpenAI自动,双胞胎缓存内容).将这两者结合,可降低50-95%的成本.

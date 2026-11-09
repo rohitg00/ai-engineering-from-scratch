@@ -3,7 +3,7 @@
 > 2026-07-28的修订使该协议无状态:功能和版本文本与每个请求都随着,而不是连接的握手.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 03 (Structured Outputs)
 **Time:** ~75 minutes
 
@@ -215,6 +215,7 @@ Mcp-Name: add
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 cd code
 python3 -m unittest discover tests -v
 ```

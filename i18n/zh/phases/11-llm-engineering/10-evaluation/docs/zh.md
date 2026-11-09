@@ -3,7 +3,7 @@
 > 没有测试,你永远不会部署一个网络应用程序. 没有反弹计划,你永远不会发送数据库迁移. 但现在,大多数团队通过阅读10个输出来提交LLM申请,并说"是的,看起来很好". 这就是希望. 希望不是工程实践. 每次快速变化,每次模型交换,每次温度调整都会改变出口分布, 评估是你申请和沉默的退化之间唯一的东西.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lesson 01 (Prompt Engineering), Lesson 09 (Function Calling)
 **Time:** ~45 minutes
 **Related:**第5期 (LLM评估 RAGAS,DeepEval,G-Eval) 涵盖框架级概念 (基于NLI的忠诚度,评判校准,RAG四).第5期 (长文本评估) 涵盖了NIAH /RULER /LongBench /MRCR的背景回归.本课程侧重于什么是LLM工程的具体:CI/CD集成,成本定位的评估运行,回归仪表板.

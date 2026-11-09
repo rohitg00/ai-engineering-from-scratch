@@ -3,7 +3,7 @@
 > 你已经建立了提示器,嵌入式,RAG管道,函数调用,缓存层, 单独. 在隔离. 像练习吉他,而没有演奏歌曲. 这一课就是歌曲. 你将把每一个从课时01到12的组件都将转换成一个准备生产的服务. 没有玩具. 这不是演示. 系统处理真正的流量, 优雅地失败, 流通代币, 追踪成本,
 
 **Type:** Build (Capstone)
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lessons 01-15
 **Time:** ~120 minutes
 **Related:**阶段11·14 (MCP) 通过共享协议取代定制工具方案;阶段11·15 (即时缓存) 实现稳定预先设的50%90%的成本降低.

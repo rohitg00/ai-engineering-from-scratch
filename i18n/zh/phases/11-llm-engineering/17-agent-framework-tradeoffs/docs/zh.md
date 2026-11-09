@@ -3,7 +3,7 @@
 > 每个框架都销售相同的演示 (研究代理构建报告) 并隐藏相同的错误 (状态方案与编排层作战). 选择一个框架,其抽象与您的问题的形状相匹配; 其余的东西都是您写的两次粘合.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 09 (Function Calling), Phase 11 · 16 (LangGraph)
 **Time:** ~45 minutes
 

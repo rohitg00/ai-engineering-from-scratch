@@ -3,7 +3,7 @@
 > 基本RAG检索了最相似的顶部k块. 这适用于简单的问题. 它用于多个跳槽推理,模糊的查询和大体. 高级RAG是 10 文件的演示和 10 百万文件的系统之间的区别.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11, Lesson 06 (RAG)
 **Time:** ~90 minutes
 **Related:**阶段5 · 23 (RAG的零碎策略) 涵盖了所有六种零碎算法复式,语义,句子,母文档,晚期零碎,文本检索使用VECTARA/Anthropic基准.本课程建立在上面:混合搜索,重排,查询转换.

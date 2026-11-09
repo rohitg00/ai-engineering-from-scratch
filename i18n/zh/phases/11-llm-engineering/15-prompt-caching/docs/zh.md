@@ -3,7 +3,7 @@
 > 您的系统提示是4000个代币.您的RAG文本是20,000个代币.您每次请求都会发送两种代币.您每次都会支付两种代币.快速缓存允许提供商将该预先端放在其侧面,并将正常使用率的10%收费.如果正确使用,它将推断成本减少5090%和第一次代币延迟4085%.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 01 (Prompt Engineering), Phase 11 · 05 (Context Engineering), Phase 11 · 11 (Caching and Cost)
 **Time:** ~60 minutes
 
