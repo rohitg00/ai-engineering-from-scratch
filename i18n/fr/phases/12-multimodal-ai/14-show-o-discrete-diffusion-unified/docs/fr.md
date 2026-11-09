@@ -3,7 +3,7 @@
 > La transfusion mélange des représentations continues et discrètes. Show-o (Xie et coll., août 2024) va dans l'autre sens: les jetons texte utilisent la prédiction de jetons suivants de causalité, les jetons d'image utilisent la diffusion discrète masquée dans l'esprit de MaskGIT. Ils sont tous deux assis à l'intérieur d'un transformateur avec un masque d'attention hybride. Le résultat unifie VQA, texte à image, en peinture et génération de modalités mixtes sur une colonne vertébrale, un tokenizer par modalité, une formulation de perte (next-token étendu à la prédiction masquée). Cette leçon traverse le design Show-o  pourquoi la diffusion discrète masquée est un générateur d'images parallèle, en quelques étapes  et contraste avec Transfusion et Emu3.
 
 **Type:** Learn
-**Languages:** Python (stdlib, masked-discrete-diffusion sampler)
+**Languages:** Python, TypeScript (stdlib, masked-discrete-diffusion sampler)
 **Prerequisites:** Phase 12 · 13 (Transfusion)
 **Time:** ~120 minutes
 

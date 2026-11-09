@@ -3,7 +3,7 @@
 > Le CLIP d'OpenAI (2021) a prouvé une idée suffisamment grande pour alimenter les cinq prochaines années: aligner un encodeur d'image et un encodeur de texte dans le même espace vectoriel en utilisant uniquement des paires bruyantes de sous-titres d'image Web et une perte de contraste. Zéro étiquette supervisée. 400 millions de paires. L'espace d'intégration résultant fait une classification à zéro coup, une récupération d'image-texte et se connecte à chaque VLM en 2026 comme sa tour de vision. SigLIP 2 (2025) a remplacé softmax par sigmoid et a été supprimé par CLIP à moindre coût. Cette leçon passe les maths de InfoNCE à la perte par paire sigmoid et construit l'étape d'entraînement en stdlib Python.
 
 **Type:** Build
-**Languages:** Python (stdlib, InfoNCE + sigmoid loss implementations)
+**Languages:** Python, TypeScript (stdlib, InfoNCE + sigmoid loss implementations)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 7 (Transformers)
 **Time:** ~180 minutes
 

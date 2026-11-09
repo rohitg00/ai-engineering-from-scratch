@@ -3,7 +3,7 @@
 > L'Emu3 de BAAI (Wang et al., septembre 2024) est le résultat de 2024 qui aurait dû mettre fin au débat diffusion-contre-autorégression. Un transformateur unique de décodeur de style Llama, formé uniquement sur l'objectif de prédiction de jeton suivant, sur un vocabulaire unifié de texte + jetons d'image VQ + jetons vidéo VQ 3D, bat SDXL sur la génération d'images et LLaVA-1.6 sur la perception. Pas de perte de CLIP. Pas de calendrier de diffusion. Les conseils sans classifiateur sont utilisés pour déduire la qualité, mais l'objectif principal de la formation est la prédiction du prochain jeton avec l'obligation des enseignants. Publié dans Nature. Cette leçon explique pourquoi un meilleur tokenizer plus l'échelle est tout ce dont vous avez besoin et contraste avec les approches de diffusion.
 
 **Type:** Learn
-**Languages:** Python (stdlib, 3D video tokenizer math + autoregressive sampler skeleton)
+**Languages:** Python, TypeScript (stdlib, 3D video tokenizer math + autoregressive sampler skeleton)
 **Prerequisites:** Phase 12 · 11 (Chameleon)
 **Time:** ~120 minutes
 

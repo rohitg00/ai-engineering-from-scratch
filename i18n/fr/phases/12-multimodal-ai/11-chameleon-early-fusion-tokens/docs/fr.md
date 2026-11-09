@@ -3,7 +3,7 @@
 > Chaque VLM que nous avons vu jusqu'à présent garde des images et du texte séparés. Les jetons visuels proviennent d'un encodeur de vision, circulent dans un projecteur, puis rencontrent le texte à l'intérieur du LLM. Le vocabulaire de vision et de texte ne se chevauchent jamais. Le chameau (Meta, mai 2024) a demandé: et si c'était le cas ? Formez un VQ-VAE qui transforme une image en une séquence de jetons distincts à partir d'un vocabulaire partagé. Chaque document multimodal est maintenant une séquence  de jetons de texte et de jetons d'image interlevées, une seule perte autorégressive. Effets secondaires: le modèle peut générer des sorties de modalité mixte  des jetons de texte et d'image alternés dans un seul appel d'inférence. Cette leçon lit la thèse de la fusion précoce et construit une version de jouet de bout en bout.
 
 **Type:** Build
-**Languages:** Python (stdlib, VQ-VAE tokenizer + interleaved decoder)
+**Languages:** Python, TypeScript (stdlib, VQ-VAE tokenizer + interleaved decoder)
 **Prerequisites:** Phase 12 · 05, Phase 8 (Generative AI)
 **Time:** ~180 minutes
 

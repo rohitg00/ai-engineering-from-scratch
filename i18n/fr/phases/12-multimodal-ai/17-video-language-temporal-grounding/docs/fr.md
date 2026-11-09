@@ -3,7 +3,7 @@
 > La vidéo n'est pas une pile de photos. Un clip de 5 secondes a un ordre causal, des verbes d'action et un calendrier d'événement qu'un modèle d'image ne peut pas représenter. Video-LLaMA (Zhang et coll., juin 2023) a expédié le premier open video-LLM avec fondation audiovisuelle. VideoChat et Video-LLaVA ont étalé le modèle. En 2025, le M-RoPE de Qwen2.5 VL, aligné sur le temps, a fermé le fossé avec les modèles de propriété frontalière. Chaque système a résolu les jetons temporels différemment  Q-former par clip, concat-pool par cadre, M-RoPE aligné sur le temps par jeton. Cette leçon lit les modèles, construit un échantillonneur de cadre uniforme contre dynamique et évalue les tâches de mise à terre temporelle.
 
 **Type:** Build
-**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator)
+**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator), TypeScript
 **Prerequisites:** Phase 12 · 08 (LLaVA-OneVision)
 **Time:** ~180 minutes
 

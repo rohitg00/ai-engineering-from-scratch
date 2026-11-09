@@ -3,7 +3,7 @@
 > La littérature VLM de poids ouvert 2024-2026 est une forêt de tables d'ablation. Le MM1 d'Apple a testé 13 combinaisons d'encodeur d'image, de connecteur et de mélange de données. Les légendes humaines détaillées de l'IA Allen Molmo ont prouvé que la distillation GPT-4V était plus efficace. Cambrian-1 a effectué plus de 20 comparaisons d'encodeurs. Idefics2 a officiellement formalisé l'espace de conception à cinq axes. Les VLM prismatiques ont comparé 27 recettes de formation sur un critère de référence contrôlé. De tout ce bruit, un petit ensemble de résultats est valable sur tous les papiers: l'encodeur d'image compte plus que l'architecture du connecteur, le mélange de données compte plus que les deux, et les légendes humaines détaillées battent les données synthétiques distillées. Cette leçon lit ces tables pour que vous n'ayez pas à le faire.
 
 **Type:** Learn + lab
-**Languages:** Python (stdlib, ablation table parser + recipe picker)
+**Languages:** Python, TypeScript (stdlib, ablation table parser + recipe picker)
 **Prerequisites:** Phase 12 · 05 (LLaVA baseline)
 **Time:** ~180 minutes
 

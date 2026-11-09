@@ -3,7 +3,7 @@
 > Les documents ne sont pas des photos. Un PDF, un document scientifique, une facture ou un formulaire manuscrit ont une disposition, des tableaux, des diagrammes, des notes de bas de page, des en-têtes et une structure sémantique que la compréhension d'une image simple ne peut pas saisir. La pile pré-VLM était un pipeline: Tesseract OCR + LayoutLMv3 + heuristiques d'extraction de table. La vague VLM a remplacé celle-ci par des modèles sans OCR  Donut (2022), Nougat (2023), DocLLM (2023)  qui émettent directement une marquage structurée. En 2026, la frontière est simplement "alimenter l'image de page à Claude Opus 4.7 à 2576px natif", et la sortie de marquage structuré est gratuite. Cette leçon est le cours de l'Arc de l'IA de trois époques.
 
 **Type:** Build
-**Languages:** Python (stdlib, layout-aware document parser skeleton)
+**Languages:** Python (stdlib, layout-aware document parser skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 5 (NLP)
 **Time:** ~180 minutes
 

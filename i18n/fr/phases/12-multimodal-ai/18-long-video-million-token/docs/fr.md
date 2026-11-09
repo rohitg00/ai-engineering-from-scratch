@@ -3,7 +3,7 @@
 > Une vidéo 4K d'une heure à 24 FPS, parchée et intégrée, produit l'ordre de 60 millions de jetons. Un épisode de podcast de 2 heures transcrit est de 30 000 jetons. Un long métrage complet Blu-ray, même comprimé avec un pooling agressif, est de centaines de milliers de jetons. Le Gemini 1.5 de Google (mars 2024) a ouvert cette ère avec un contexte de 10 millions de jetons, faisant un rappel fiable de l'aiguille dans un paquet de foin sur des vidéos d'une heure. LWM (Liu et coll., février 2024) a montré la trajectoire d'échelle de l'attention des anneaux. LongVILA et Video- XL ont augmenté leur ingestion. VideoAgent a échangé le contexte brut pour la récupération agentique. Chaque approche est un compromis différent sur la complexité de l'informatique, du rappel et de l'ingénierie. Cette leçon les lit côte à côte.
 
 **Type:** Build
-**Languages:** Python (stdlib, needle-in-haystack simulator + agentic-retrieval router)
+**Languages:** Python (stdlib, needle-in-haystack simulator + agentic-retrieval router), TypeScript
 **Prerequisites:** Phase 12 · 17 (video temporal tokens)
 **Time:** ~180 minutes
 

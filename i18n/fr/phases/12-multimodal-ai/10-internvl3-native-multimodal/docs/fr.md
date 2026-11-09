@@ -3,7 +3,7 @@
 > Chaque VLM ouvert avant InternVL3 suivait la même recette en trois étapes: prendre un texte LLM formé sur des milliards de jetons de texte, boulon sur un codeur de vision, puis affiner les coutures. Ce système fonctionne mais a une dette d'alignement  le texte LLM a dépensé tout son budget pré-entraînement sur le texte pur et ne comprend pas nativement les jetons visuels. Lorsque vous ajoutez la vision post-hoc, le LLM doit réapprendre à relier l'entrée visuelle à son raisonnement textuel sans oublier le texte. InternVL3 (Zhu et coll., avril 2025) rejette l'approche post-hoc: une course pré-entraînement, un texte et un multimodal interlevé à partir de l'étape 1. Le résultat correspond à Gemini 2.5 Pro sur MMMU-Pro à 78B params ouverts. Cette leçon explique le cas de la pré-entraînement natif et ce qui change lorsque vous le faites.
 
 **Type:** Learn
-**Languages:** Python (stdlib, training-corpus mixer)
+**Languages:** Python, TypeScript (stdlib, training-corpus mixer)
 **Prerequisites:** Phase 12 · 05, Phase 12 · 07 (recipes)
 **Time:** ~120 minutes
 

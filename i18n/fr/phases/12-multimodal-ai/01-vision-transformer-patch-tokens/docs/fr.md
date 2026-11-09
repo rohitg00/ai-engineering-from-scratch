@@ -3,7 +3,7 @@
 > Avant tout multimodal, une image doit devenir une séquence de jetons qu'un transformateur peut manger. Le papier ViT 2020 a répondu à cela avec des patchs de 16x16 pixels, une projection linéaire et une intégration de position. Cinq ans plus tard, chaque modèle frontalier 2026 (Claude Opus 4.7 à 2576px natif, Gemini 3.1 Pro, Qwen3.5-Omni) commence toujours de cette façon  l'encodeur a changé de ViT à DINOv2 à SigLIP 2, des jetons de registre ont été ajoutés, le schéma positionnel est devenu 2D-RoPE, mais le primitif a été maintenu. Cette leçon lit le pipeline de patch-token de bout en bout et le construit en stdlib Python afin que le reste de la phase 12 ait un modèle mental concret pour les "tokens visuels".
 
 **Type:** Learn
-**Languages:** Python (stdlib, patch tokenizer + geometry calculator)
+**Languages:** Python, TypeScript (stdlib, patch tokenizer + geometry calculator)
 **Prerequisites:** Phase 7 (Transformers), Phase 4 (Computer Vision)
 **Time:** ~120 minutes
 

@@ -3,7 +3,7 @@
 > Chameleon et Emu3 ont misé tout sur des jetons discrets. Ils fonctionnent, mais le goulot d'étranglement de quantification est visible  les plateaux de qualité d'image en dessous des modèles de diffusion de l'espace continu. La transfusion (Meta, Zhou et al., août 2024) prend le pari opposé: maintenir les images en continu, laisser tomber le VQ-VAE entièrement et entraîner un transformateur avec deux pertes. Les jetons texte prédisent le prochain jeton. Les patchs d'image obtiennent une perte de parallèle de flux / diffusion. Les deux objectifs optimisent les mêmes poids. L'architecture sous-jacente à Stable Diffusion 3 (MMDiT) est un cousin proche. Cette leçon lit la thèse Transfusion, construit un entraîneur de jouets à deux pertes et retrace le masque d'attention qui permet à un transformateur de faire les deux tâches.
 
 **Type:** Build
-**Languages:** Python (stdlib, two-loss trainer on MNIST-scale toy)
+**Languages:** Python, TypeScript (stdlib, two-loss trainer on MNIST-scale toy)
 **Prerequisites:** Phase 12 · 11 (Chameleon), Phase 8 (Generative AI)
 **Time:** ~180 minutes
 

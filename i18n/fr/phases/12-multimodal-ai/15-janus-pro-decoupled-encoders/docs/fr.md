@@ -3,7 +3,7 @@
 > Les modèles multimodels unifiés ont une tension inévitable. La compréhension a besoin de caractéristiques sémantiques  VECTORS de sortie SigLIP ou DINOv2 riches en informations au niveau du concept. La génération veut des codes conviviaux à la reconstruction  des jetons VQ qui se composent en pixels clairs. Les deux objectifs ne sont pas compatibles dans un seul encodeur. Janus (DeepSeek, octobre 2024) et Janus-Pro (DeepSeek, janvier 2025) affirment que la solution est d'arrêter d'essayer: déconnecter les deux encoders. Partager le corps de transformateur entre les tâches, mais parcourir la compréhension via SigLIP et générer par un tokenizer VQ. À 7B, Janus-Pro bat DALL-E 3 sur GenEval tout en correspondant à LLaVA sur MMMU. Cette leçon explique pourquoi deux encoders fonctionnent quand l'un échoue.
 
 **Type:** Build
-**Languages:** Python (stdlib, dual-encoder routing + shared-body signal)
+**Languages:** Python, TypeScript (stdlib, dual-encoder routing + shared-body signal)
 **Prerequisites:** Phase 12 · 13 (Transfusion), Phase 12 · 14 (Show-o)
 **Time:** ~120 minutes
 

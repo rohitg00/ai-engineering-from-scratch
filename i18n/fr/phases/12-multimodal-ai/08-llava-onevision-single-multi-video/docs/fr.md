@@ -3,7 +3,7 @@
 > Avant LLaVA-OneVision (Li et coll., août 2024) le monde VLM ouvert avait des lignées distinctes: LLaVA-1.5 pour les images uniques, les modèles multi-image comme Mantis et VILA, les modèles vidéo comme Video-LLaVA et Video-LLaMA. Chacun a remporté sa référence et échoué aux autres. LLaVA-OneVision a soutenu qu'un seul programme d'études pouvait former un modèle pour dominer les trois scénarios, et que les effets émergents de transfert de tâches (habiletés de l'image unique exportées vers la vidéo, raisonnement multi-image exporté vers l'image unique) ont dépassé la somme des spécialistes. La recette est trompeusement simple: un budget de jeton visuel équilibré entre les scénarios, plus un programme explicite qui passe d'une seule image à OneVision (multi-image) à la vidéo. Cette leçon est consacrée au budget, au programme et aux comportements émergents.
 
 **Type:** Build
-**Languages:** Python (stdlib, token budget solver + curriculum planner)
+**Languages:** Python, TypeScript (stdlib, token budget solver + curriculum planner)
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 12 · 06 (any-resolution)
 **Time:** ~180 minutes
 
