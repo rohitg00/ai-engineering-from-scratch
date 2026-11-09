@@ -3,7 +3,7 @@
 > 编码器理解.编码器生成.把它们重新组合起来,你就能为输入 →输出任务构建模型:翻译,总结,重写,转录.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 06 (BERT), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 

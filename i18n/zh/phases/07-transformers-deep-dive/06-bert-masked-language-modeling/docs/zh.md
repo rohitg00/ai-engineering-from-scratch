@@ -3,7 +3,7 @@
 > 预测下一个字,预测一个缺失的字,一个句子的差异,一个半十年的嵌入式形状.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 5 · 02 (Text Representation)
 **Time:** ~45 minutes
 

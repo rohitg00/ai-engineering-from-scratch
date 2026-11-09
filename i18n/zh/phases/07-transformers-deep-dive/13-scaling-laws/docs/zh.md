@@ -3,7 +3,7 @@
 > 卡普兰论文说:较大的模型,损失较低. 霍夫曼论文说:你没有训练. 计算分为两个桶参数和代币,分歧不明显.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
