@@ -3,7 +3,7 @@
 > 你的模型得到了99%的训练数据和60%的测试数据. 它记得而不是学习.规范化是你对复杂性征收的税收,
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers)
 **Time:** ~75 minutes
 

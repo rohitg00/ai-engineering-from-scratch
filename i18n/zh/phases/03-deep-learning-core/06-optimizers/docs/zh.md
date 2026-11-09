@@ -3,7 +3,7 @@
 > 渐进式下降告诉你哪个方向移动. 它没有说多少距离或速度. SGD 是一个 компас.亚当是GPS与交通数据.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.05 (Loss Functions)
 **Time:** ~75 minutes
 

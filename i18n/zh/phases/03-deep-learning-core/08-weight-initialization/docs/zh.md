@@ -3,7 +3,7 @@
 > 开始错误,训练永远不会开始.开始正确,50层训练就像3层一样顺利.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.04 (Activation Functions), Lesson 03.07 (Regularization)
 **Time:** ~90 minutes
 

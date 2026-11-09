@@ -3,7 +3,7 @@
 > 你已经构建了神经元,层次,网络,背部,激活,损失函数,优化器,规范化,初始化和 LR 时间表.所有这些都是单独的部分.现在把它们连接在一起.不是 PyTorch.不是 TensorFlow.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** All of Phase 03 (Lessons 01-09)
 **Time:** ~120 minutes
 

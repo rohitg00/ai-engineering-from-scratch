@@ -3,7 +3,7 @@
 > 学习速度是最重要的超参数. 不是架构,数据集的尺寸,不是激活函数,学习速度.如果你没有调整其他东西,
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers), Lesson 03.08 (Weight Initialization)
 **Time:** ~90 minutes
 
