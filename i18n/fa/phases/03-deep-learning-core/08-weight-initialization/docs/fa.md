@@ -3,7 +3,7 @@
 > شروع کردن اشتباه و آموزش هرگز شروع نمی شود شروع کردن درست و 50 لایه آموزش به طور سلسله ای به عنوان 3.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.04 (Activation Functions), Lesson 03.07 (Regularization)
 **Time:** ~90 minutes
 

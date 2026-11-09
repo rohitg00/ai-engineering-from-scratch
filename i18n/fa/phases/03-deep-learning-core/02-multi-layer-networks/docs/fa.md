@@ -3,7 +3,7 @@
 > يک نورون خطي رو مي کشيد. آنها را جمع کنيد و ميتونيد هر چيزي رو رسم كنيد.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 01 (Math Foundations), Lesson 03.01 (The Perceptron)
 **Time:** ~90 minutes
 

@@ -3,7 +3,7 @@
 > در حالي که در حال حرکت در حال حرکت است، به شما ميگه چه جهت حرکت مي کني. در اين باره هيچ چيزي نميگه چقدر فاصله يا سرعت. SGD يک کامپوس است. آدم GPS با داده هاي ترافیک است.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.05 (Loss Functions)
 **Time:** ~75 minutes
 

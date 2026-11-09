@@ -3,7 +3,7 @@
 > سرعت یادگیری مهم ترین هائپر پارامتر است نه معماری نه اندازه مجموعه داده ها نه عملکرد فعال سازی نرخ یادگیری اگر چیزی دیگر تنظیم نکنید، این را تنظیم کنید
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers), Lesson 03.08 (Weight Initialization)
 **Time:** ~90 minutes
 

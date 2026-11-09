@@ -3,7 +3,7 @@
 > مدل شما 99 درصد از داده های آموزش و 60 درصد از داده های آزمون را بدست می آورد. به جای یادگیری یاد می گیرد. تنظیم کردن مالیاتی است که شما بر پیچیدگی تحمیل می کنید تا کلی سازی را مجبور کنید.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Lesson 03.06 (Optimizers)
 **Time:** ~75 minutes
 

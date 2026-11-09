@@ -3,7 +3,7 @@
 > شما نورون ها، لایه ها، شبکه ها، پشت پشت، فعال سازی، عملکردهای از دست دادن، بهینه سازی، تنظیم، ابتدایی، و برنامه های LR را ساخته اید. همه اینها به عنوان قطعات جداگانه ای. حالا آنها را به یک چارچوب متصل کنید. نه PyTorch. نه TensorFlow. شما.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** All of Phase 03 (Lessons 01-09)
 **Time:** ~120 minutes
 
