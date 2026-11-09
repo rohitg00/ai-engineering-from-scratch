@@ -3,7 +3,7 @@
 > Fase 7 · Ders 16 matematik kanıtladı: Leviathan reddetme kuralı doğrulayıcının dağılımını tam olarak korur. Bu ders 2026 üretim spekülasyonu çözme eğitim-stack görüşüdür. EAGLE-3 taslak modelini ucuz bir yaklaşımdan verifikatörün kendi gizli durumlarında eğitilmiş özel olarak inşa edilmiş küçük bir ağ haline getirmiş ve ardından tren ve sonuç dağılımlarını uyumlu hale getiren bir eğitim zamanı test döngüsü ekledi. Sonuç: 3x'ten 6.5x'e kadar hızlandırma, sohbette 0.9'dan fazla kabul edilen token oranları, dağıtımsal bir ödeme yok. 2026'da her üretim sonuç kümesi varsayılan olarak gönderir.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 16 (speculative decoding math), Phase 10 · 12 (inference optimization)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > Ders 04'te sıfırdan küçük bir GPT-2 yaptın. 2026'da sınır açık modeller beş veya altı tane değişikliğe sahip aynı aile. LayerNorm yerine RMSNorm. Gelü yerine SwiGLU. Öğrenilen pozisyonlar yerine RoPE. Tam bir MHA yerine GQA veya MLA. Uzmanların karışımı. Bildiğiniz matematik, bunların %95'ini kapsar. Bu ders Llama 3, DeepSeek-V3, Mixtral, Qwen ve Gemma'yı yan yana okuyor ve her mimarlığın ayrıldığı tam çizgiyi belirliyor.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10, Lessons 04, 05, 12 (Pre-training, Scaling, Inference)
 **Time:** ~45 minutes
 

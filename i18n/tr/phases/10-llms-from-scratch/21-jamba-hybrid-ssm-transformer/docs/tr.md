@@ -3,7 +3,7 @@
 > Devlet uzay modelleri (SSM) ve transformatörler farklı şeyler istiyor. Transformatörler dikkatle kaliteyi kat kat maliyetle satın alırlar. SSM'ler, geri dönüş yoluyla, hatta zaman sonucu ve sabit hafıza satın alır. AI21'in Jamba (Mart 2024) ve Jamba 1.5 (Avgust 2024) modellerini aynı modelde koydu: her 7 Mamba katman için 1 Transformer katmanı, diğer her blokta MoE ve tek 80GB GPU'ya sığan 256k bağlam penceresi. Mamba-3 (ICLR 2026) SSM tarafını karmaşık değerli devlet alanları ve MIMO projeksiyonları ile sıkılaştırır. Bu ders, her iki mimarlığı da sonuna kadar okuyor ve melez tarifinin saf-SSM ve saf-Transformer uzun bağlamlı girişimlerinin yapmadığı zaman üç yıllık ölçeklendirmeyi neden hayatta bıraktığını açıklıyor.
 
 **Type:** Learn
-**Languages:** Python (stdlib, layer-mix calculator)
+**Languages:** Python (stdlib, layer-mix calculator), Rust
 **Prerequisites:** Phase 10 · 14 (open-model architectures), Phase 10 · 17 (native sparse attention)
 **Time:** ~60 minutes
 

@@ -3,7 +3,7 @@
 > 64k tokenlerde dikkat, çözme gecikme sürecinin %70-80'ini tüketir. Her açık model laboratuvarın bunu düzeltmek için bir planı var. DeepSeek'in NSA (ACL 2025 en iyi kağıdı) sıkıştığı bir şey: üç paralel dikkat dalı  sıkıştırılmış kaba tanelerli jetonlar, seçici olarak saklanan ince tanelerli jetonlar ve yerel bağlam için kaydırıcı pencereler  öğrenilmiş bir kapıdan birleştirilmiştir. Hardware-ağır (kernel dostu), doğuştan eğitimlenebilir (doğrudan eğitimde çalışır, çıkarma sırasında bağlanmaz) ve 64k dekodlarda tam dikkat kalitesini eşleştirirken veya yenirken FlashAttention'dan daha hızlı çalışır. Bu ders üç dalı sonundan sonuna kadar inşa eder ve neden kısıtlılığın sonundan sonuna kadar farklılaştırılabileceğini gösterir.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 12 (KV cache, flash-attention), Phase 7 · 15 (attention variants), Phase 10 · 16 (differential attention)
 **Time:** ~60 minutes
 

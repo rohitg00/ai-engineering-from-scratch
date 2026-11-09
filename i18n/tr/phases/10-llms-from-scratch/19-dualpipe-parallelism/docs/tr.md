@@ -3,7 +3,7 @@
 > DeepSeek-V3 2.048 H800 GPU'da eğitim almıştır. Tüm düğümler arası uzman, her hesaplama saatine 1 GPU-saat iletişim maliyeti. GPU'lar yarı zaman boştu. DualPipe (DeepSeek, Aralık 2024) ileri ve geri hesaplamaları tetikleyen tüm iletişimlerle üst-üstün dönen iki yönlü bir boru hattıdır. Bubbles düşüşü, üretim artışı ve iki model-parametr kopya (adını veren "ikili") tutmak, Expert Paralelism zaten uzmanları her şekilde sıralar arasında yaydığında ucuz. Bu ders, DualPipe'nin aslında ne yaptığını ve neden Sea AI Lab'in DualPipeV geliştirmesi, 2 kat daha sıkı bir balon masrafı karşılığında parametrelerin maliyetini düşürdüğünü öğrenme türü bir örnek.
 
 **Type:** Learn
-**Languages:** Python (stdlib, schedule simulator)
+**Languages:** Python (stdlib, schedule simulator), Rust
 **Prerequisites:** Phase 10 · 05 (distributed training, FSDP, DeepSpeed), Phase 10 · 14 (open-model architectures and MoE)
 **Time:** ~60 minutes
 

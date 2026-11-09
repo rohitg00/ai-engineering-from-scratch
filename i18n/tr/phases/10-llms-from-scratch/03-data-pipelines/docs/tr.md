@@ -3,7 +3,7 @@
 > Model bir ayna. Ona verdiğiniz verileri yansıtır. Çöpü besler, çöpü mükemmel akıcılıkla yansıtır.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 10, Lessons 01-02 (Tokenizers, Building a Tokenizer)
 **Time:** ~90 minutes
 

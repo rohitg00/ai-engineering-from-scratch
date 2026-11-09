@@ -3,7 +3,7 @@
 > 10 · Ders 14 her açık model dönerken altı mimari düğmeye isim verdi. DeepSeek-V3 (Aralık 2024, toplam 671B parametreleri, 37B aktif) altı tane de döndürür ve dört tane daha ekler: Çok Başlı Latent Dikkat, yardımcı kayıpsız yük dengeleme, Çok Token Tahminleri ve DualPipe eğitim. Bu ders DeepSeek-V3'ün mimarisini üstten aşağı okuyor ve yayınlanan yapılandırmadan her parametrelerin sayısını çıkarıyor. Sonuna kadar 671B/37B oranının neden doğru bahis olduğunu ve MLA + MoE'nin birlikte sınırda tek başına neden birbiriyle dövdüğünü açıklayabilirsiniz.
 
 **Type:** Learn
-**Languages:** Python (stdlib, parameter calculator)
+**Languages:** Python (stdlib, parameter calculator), Rust
 **Prerequisites:** Phase 10 · 14 (open-model walkthroughs), Phase 10 · 17 (NSA), Phase 10 · 18 (MTP), Phase 10 · 19 (DualPipe)
 **Time:** ~75 minutes
 

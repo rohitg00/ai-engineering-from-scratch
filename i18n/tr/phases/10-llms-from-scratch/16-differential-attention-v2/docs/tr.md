@@ -3,7 +3,7 @@
 > Softmax dikkat, eşleşmeyen her token üzerinde küçük bir olasılık yayar. 100 bin'den fazla token, bu gürültü toplar ve sinyali boğar. Farklı Transformer (Ye et al., ICLR 2025) dikkatini iki softmax farkı olarak hesaplayarak, paylaşılan gürültü zemini çıkararak düzeltir. DIFF V2 (Microsoft, Ocak 2026) üretim yığınının yeniden yazılmasıdır: Decode latensiyle baseline Transformer'a eşleşen, özel çekirdekler olmayan, FlashAttention uyumlu. Bu ders, Stdlib Python'da çalıştırabileceğiniz fark işlevi uygulaması ile V1'den V2'ye kadar sonundan sonuna kadar.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 7 · 02 (self-attention), Phase 7 · 15 (attention variants), Phase 10 · 14 (architecture walkthrough)
 **Time:** ~60 minutes
 

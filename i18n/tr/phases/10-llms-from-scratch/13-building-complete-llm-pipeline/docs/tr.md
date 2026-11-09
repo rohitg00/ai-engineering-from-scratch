@@ -3,7 +3,7 @@
 > Derslerden 12.e kadar her şey bir boru hattının bir aşamasıdır. Bu ders, bu aşamaları tek bir uçtan sona doğru koşan bir heykelleye dönüştüren bir heykeldir: tokenize, pre-train, scale, SFT, align, evaluate, quantize, serve. 70B modelini bir dizüstü bilgisayarla eğitmeyeceksin. Orkestrasyon katmanı, manifesti, değerlendirme kapısı ve 2026 sınır ekibi tarafından neyi göndermeye karar vermek için kullanılacak geri dönüş planını üreteceksiniz. Bu, son taş.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** All Phase 10 lessons 01-12
 **Time:** ~120 minutes
 
@@ -216,10 +216,16 @@ Bakın .`code/main.py`Tam bir uygulama için.
 
 Kanonik iş akışı üç komutdan oluşur.
 
-```
+```bash
 python code/main.py plan    # validate manifest, compute cost estimate, print DAG
 python code/main.py run     # execute stages, writing to manifest.out.yaml
 python code/main.py gate    # read manifest.out.yaml, apply eval gates, ship-or-hold
+```
+
+Rust limanı aynı şekilde çalışır .`plan`Adım:
+
+```bash
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson plan
 ```
 
 Çık .`plan`Çoğu boru hattı hataları planlama zamanında ortaya çıkar. Kayıp kapı eşiği, eski hash, bütçe aşmaları.`plan`- Özgür.`run`Pahalı tarafta böcek yakalayarak para biriktirir.

@@ -3,7 +3,7 @@
 > GPT-2'den Llama 3'e kadar her bir gerileme derecesinde olan LLM, pozisyon başına bir kayıp kazanır. DeepSeek-V3 pozisyon başına ikinci bir kayıp ekledi. Bundan sonra token'ı tahmin et. Ekstra 14B parametreleri (671B modelinde) gradient akışı yoluyla ana modele geri distillendi ve eğitilmiş MTP başları, %80+ kabul ile spekülasyonsal dekodlama taslakçıları olarak sonuçta yeniden kullanıldı. 1.8x jenerasyon geçiş ücretsiz geldi. Bu ders, DeepSeek teknik raporundan sıralı MTP modülü oluşturur, kayıp ve paylaşılan baş parametresi düzenini hesaplar ve neden MTP nedensel zinciri koruduğunu açıklarken Gloeckle et al'ın orijinal paralel MTP'si onu kırdı.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** Phase 10 · 04 (pre-training a mini GPT), Phase 10 · 15 (speculative decoding)
 **Time:** ~60 minutes
 
