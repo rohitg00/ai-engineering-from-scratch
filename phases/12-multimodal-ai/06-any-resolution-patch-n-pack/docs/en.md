@@ -3,7 +3,7 @@
 > Real images are not 224x224 squares. A receipt is 1:3, a chart is 16:9, a medical scan might be 4096x4096, a mobile screenshot is 9:19.5. The pre-2024 VLM answer — resize everything to a fixed square — threw away the signal that makes OCR, document understanding, and high-resolution scene parsing work. NaViT (Google, 2023) showed you could pack variable-resolution patches into a single transformer batch with block-diagonal masking. Qwen2-VL's M-RoPE (2024) dropped absolute positional tables entirely. LLaVA-NeXT's AnyRes tiled high-resolution images into a base + sub-images. SigLIP 2's NaFlex variant (2025) is now the default encoder for open VLMs that want a single checkpoint to serve every aspect ratio. This lesson implements patch-n'-pack end to end.
 
 **Type:** Build
-**Languages:** Python (stdlib, patch packer + block-diagonal mask)
+**Languages:** Python, TypeScript (stdlib, patch packer + block-diagonal mask)
 **Prerequisites:** Phase 12 · 01 (ViT patches), Phase 12 · 05 (LLaVA)
 **Time:** ~120 minutes
 

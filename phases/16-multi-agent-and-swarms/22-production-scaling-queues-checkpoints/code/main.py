@@ -100,7 +100,7 @@ class AgentQueue:
 
 def demo_queue() -> None:
     print("\n" + "=" * 72)
-    print("PER-AGENT QUEUE — 3-state machine (idle / processing / response)")
+    print("PER-AGENT QUEUE: 3-state machine (idle / processing / response)")
     print("=" * 72)
     a = AgentQueue("agent-a")
     a.enqueue({"task": "compress logs"})
@@ -139,7 +139,7 @@ def bench_threads(n: int) -> float:
 
 def demo_async_vs_threads() -> None:
     print("\n" + "=" * 72)
-    print("ASYNC vs THREADS — 500 concurrent 'LLM calls' (50ms each)")
+    print("ASYNC vs THREADS: 500 concurrent 'LLM calls' (50ms each)")
     print("=" * 72)
 
     async_elapsed = asyncio.run(bench_async(500))
@@ -155,7 +155,7 @@ def demo_async_vs_threads() -> None:
 
 def demo_checkpoint_resume() -> None:
     print("=" * 72)
-    print("CHECKPOINT RESUME — worker crashes mid-run, second worker resumes")
+    print("CHECKPOINT RESUME: worker crashes mid-run, second worker resumes")
     print("=" * 72)
     with tempfile.NamedTemporaryFile(suffix=".db", delete=False) as f:
         db_path = f.name

@@ -148,7 +148,7 @@ def print_pheromone_table(router: PheromoneRouter) -> None:
 
 def main() -> None:
     print("=" * 72)
-    print("LMPSO — 20 particles, 30 iterations, 2D parameter space")
+    print("LMPSO: 20 particles, 30 iterations, 2D parameter space")
     print("=" * 72)
     history = run_lmpso()
     for i in range(0, len(history), 5):
@@ -157,7 +157,7 @@ def main() -> None:
     print(f"  final g_best={history[-1]:.4f} (optimum = 1.0000 at (0.72, 0.40))")
 
     print("\n" + "=" * 72)
-    print("AMRO-S — 200 tasks routed across 3 agents × 4 task-types")
+    print("AMRO-S: 200 tasks routed across 3 agents × 4 task-types")
     print("=" * 72)
     rand_quality, aco_quality, router = run_amro_s()
     print(f"  random routing avg quality: {rand_quality:.3f}")

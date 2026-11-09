@@ -3,7 +3,7 @@
 > MCP 2026-07-28 deprecates Sampling for new designs and removes the server-to-client request channel. If an existing workflow still needs the client's model, the server returns an `input_required` result and the client retries the original request with the model output. The reasoning loop becomes explicit, bounded, and stateless at the protocol layer.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources and prompts)
 **Time:** ~75 minutes
 
@@ -210,6 +210,7 @@ From the repository root:
 ```bash
 cd phases/13-tools-and-protocols/11-mcp-sampling/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

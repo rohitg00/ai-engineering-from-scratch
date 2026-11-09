@@ -134,7 +134,7 @@ def main() -> None:
     print()
 
     print("-" * 70)
-    print("Step 1: baseline — single worker, 200 steps")
+    print("Step 1: baseline, single worker, 200 steps")
     print("-" * 70)
     r_1 = run_hogwild(n_workers=1, step_budget=200, target_per_category=100,
                       coordination_weight=0.8)
@@ -145,7 +145,7 @@ def main() -> None:
     print()
 
     print("-" * 70)
-    print("Step 2: Hogwild — 2 workers, shared cache, strong coordination")
+    print("Step 2: Hogwild, 2 workers, shared cache, strong coordination")
     print("-" * 70)
     r_2 = run_hogwild(n_workers=2, step_budget=200, target_per_category=100,
                       coordination_weight=0.8)

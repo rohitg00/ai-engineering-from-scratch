@@ -3,7 +3,7 @@
 > Fast implementation increases the penalty for choosing the wrong problem. Shape the outcome first so speed points in the right direction.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** None
 **Time:** ~60 minutes
 
@@ -82,6 +82,7 @@ The lab validates an `OutcomeFrame` and writes `outputs/outcome-frame.json`.
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

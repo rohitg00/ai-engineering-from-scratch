@@ -3,7 +3,7 @@
 > A useful specification fixes invariants and evidence while leaving reversible implementation choices open. It is a decision boundary, not a screenplay.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 50
 **Time:** ~75 minutes
 
@@ -74,6 +74,7 @@ The lab validates every contract surface, checks decision modes, and writes `out
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

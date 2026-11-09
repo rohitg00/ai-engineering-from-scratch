@@ -111,7 +111,7 @@ def make_agents(n: int, heterogeneous: bool, seed: int) -> list[SimAgent]:
 def bench(correct: str, trials: int, heterogeneous: bool) -> None:
     tag = "HETEROGENEOUS" if heterogeneous else "HOMOGENEOUS (monoculture)"
     print("\n" + "=" * 72)
-    print(f"BENCHMARK — {tag}")
+    print(f"BENCHMARK: {tag}")
     print("=" * 72)
     print(f"{'topology':10s} {'N':>3s} {'acc':>8s} {'avg_tokens':>12s} {'steps':>6s}")
     for topology in ("star", "chain", "tree", "graph"):

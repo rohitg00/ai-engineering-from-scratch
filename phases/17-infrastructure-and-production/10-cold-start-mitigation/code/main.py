@@ -77,7 +77,7 @@ def warm_pool_break_even(gpu_hourly: float, cold_seconds: float, sla_tolerated_d
 
 def main() -> None:
     print("=" * 80)
-    print("COLD START MITIGATION — 70B model on fresh H100 node")
+    print("COLD START MITIGATION: 70B model on fresh H100 node")
     print("=" * 80)
     print(f"{'Stack':20}  {'Total':>8}             Stack composition")
     print("-" * 80)

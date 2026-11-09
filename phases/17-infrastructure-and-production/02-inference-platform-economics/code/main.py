@@ -73,7 +73,7 @@ def run_scenario(label: str, tokens_per_day: int, predictions_per_day: int) -> N
 
 def utilization_breakeven() -> None:
     print("\n" + "=" * 80)
-    print("PER-TOKEN vs PER-MINUTE BREAK-EVEN — Fireworks (per-token) vs Baseten (per-min)")
+    print("PER-TOKEN vs PER-MINUTE BREAK-EVEN: Fireworks (per-token) vs Baseten (per-min)")
     print("=" * 80)
     fw = VENDORS[0]
     bt = VENDORS[2]
@@ -89,7 +89,7 @@ def utilization_breakeven() -> None:
 
 def cold_start_penalty() -> None:
     print("\n" + "=" * 80)
-    print("COLD START PENALTY — bursty workload")
+    print("COLD START PENALTY: bursty workload")
     print("=" * 80)
     print(f"{'Vendor':12}  {'Cold start':>11}  Impact at 100 cold invocations/day")
     for v in VENDORS:
@@ -99,12 +99,12 @@ def cold_start_penalty() -> None:
 
 def main() -> None:
     print("=" * 80)
-    print("INFERENCE PLATFORM ECONOMICS — 2026 approximations")
+    print("INFERENCE PLATFORM ECONOMICS: 2026 approximations")
     print("=" * 80)
 
-    run_scenario("Scenario A — startup-scale LLM product",
+    run_scenario("Scenario A: startup-scale LLM product",
                  tokens_per_day=2_000_000, predictions_per_day=10_000)
-    run_scenario("Scenario B — high-volume production",
+    run_scenario("Scenario B: high-volume production",
                  tokens_per_day=100_000_000, predictions_per_day=500_000)
 
     utilization_breakeven()

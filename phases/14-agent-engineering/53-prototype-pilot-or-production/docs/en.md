@@ -3,7 +3,7 @@
 > These are different learning environments, not levels of polish. Choose the stage that answers the current unknown with the least unnecessary consequence.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 50 to 52
 **Time:** ~70 minutes
 
@@ -82,6 +82,7 @@ The lab chooses a stage from the decision context, returns required controls, an
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

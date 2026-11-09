@@ -152,7 +152,7 @@ def count_nsa(N: int, l: int, k: int, W: int) -> int:
 def main() -> None:
     rng = random.Random(11)
     print("=" * 70)
-    print("NATIVE SPARSE ATTENTION — DeepSeek NSA (Phase 10, Lesson 17)")
+    print("NATIVE SPARSE ATTENTION: DeepSeek NSA (Phase 10, Lesson 17)")
     print("=" * 70)
     print()
 

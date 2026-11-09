@@ -3,7 +3,7 @@
 > A tool is safe to automate only when discovery, arguments, results, pagination, and transport metadata agree on one contract.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07, 09, and 10
 **Time:** ~120 minutes
 
@@ -353,6 +353,7 @@ From the repository root:
 ```bash
 cd phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

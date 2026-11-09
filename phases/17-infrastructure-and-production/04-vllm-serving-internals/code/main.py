@@ -177,7 +177,7 @@ def simulate_continuous(reqs: list[Request], chunked: bool) -> float:
 
 def main() -> None:
     print("=" * 80)
-    print("TOY vLLM SCHEDULER — four modes on the same 60-request workload")
+    print("TOY vLLM SCHEDULER: four modes on the same 60-request workload")
     print("=" * 80)
 
     base = make_workload()

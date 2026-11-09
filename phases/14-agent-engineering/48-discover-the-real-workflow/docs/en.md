@@ -3,7 +3,7 @@
 > Requirements are not waiting in a meeting to be collected. They are scattered across actions, workarounds, records, and disagreements.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 47
 **Time:** ~70 minutes
 
@@ -82,6 +82,7 @@ The lab stores evidence on every workflow step, validates ordering and confidenc
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

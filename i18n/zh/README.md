@@ -357,7 +357,7 @@ flowchart TB
 | 10 | [终端与 Shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | 学习 | — |
 | 11 | [用于 AI 的 Linux](../../phases/00-setup-and-tooling/11-linux-for-ai/) | 学习 | — |
 | 12 | [调试与性能分析](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | 构建 | Python |
-| 13 | [面向 AI 工程的 Python](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | 构建 | Python |
+| 13 | [面向 AI 工程的 Python](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | 构建 | Python, TypeScript |
 
 <details id="phase-1">
 <summary><b>阶段 1 — 数学基础</b> &nbsp;<code>22 节课</code>&nbsp; <em>用代码建立理解 AI 算法所需的数学直觉。</em></summary>
@@ -383,7 +383,7 @@ flowchart TB
 | 16 | [采样方法](../../phases/01-math-foundations/16-sampling-methods/) | 构建 | Python, TypeScript |
 | 17 | [线性方程组](../../phases/01-math-foundations/17-linear-systems/) | 构建 | Python, TypeScript |
 | 18 | [凸优化](../../phases/01-math-foundations/18-convex-optimization/) | 构建 | Python, TypeScript |
-| 19 | [AI 中的复数](../../phases/01-math-foundations/19-complex-numbers/) | 学习 | Python |
+| 19 | [AI 中的复数](../../phases/01-math-foundations/19-complex-numbers/) | 学习 | Python, TypeScript |
 | 20 | [傅里叶变换](../../phases/01-math-foundations/20-fourier-transform/) | 构建 | Python, TypeScript |
 | 21 | [机器学习中的图论](../../phases/01-math-foundations/21-graph-theory/) | 构建 | Python, TypeScript |
 | 22 | [随机过程](../../phases/01-math-foundations/22-stochastic-processes/) | 学习 | Python |
@@ -414,9 +414,9 @@ flowchart TB
 | 16 | [异常检测](../../phases/02-ml-fundamentals/16-anomaly-detection/) | 构建 | Python |
 | 17 | [处理类别不平衡数据](../../phases/02-ml-fundamentals/17-imbalanced-data/) | 构建 | Python |
 | 18 | [特征选择](../../phases/02-ml-fundamentals/18-feature-selection/) | 构建 | Python |
-| 19 | [机器学习系统设计：从问题到已部署模型](../../phases/02-ml-fundamentals/19-ml-system-design/) | 构建 | Python |
-| 20 | [生产环境中的模型监控：数据漂移与概念漂移](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | 构建 | Python |
-| 21 | [特征存储与训练-服务偏差](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | 构建 | Python |
+| 19 | [机器学习系统设计：从问题到已部署模型](../../phases/02-ml-fundamentals/19-ml-system-design/) | 构建 | Python, TypeScript |
+| 20 | [生产环境中的模型监控：数据漂移与概念漂移](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | 构建 | Python, TypeScript |
+| 21 | [特征存储与训练-服务偏差](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | 构建 | Python, TypeScript |
 
 </details>
 
@@ -485,35 +485,35 @@ flowchart TB
 
 | # | 课程 | 类型 | 语言 |
 |:---:|--------|:----:|------|
-| 01 | [文本处理：分词、词干提取与词形还原](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | 构建 | Python |
-| 02 | [词袋模型、TF-IDF 与文本表示](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | 构建 | Python |
+| 01 | [文本处理：分词、词干提取与词形还原](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | 构建 | Python, TypeScript |
+| 02 | [词袋模型、TF-IDF 与文本表示](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | 构建 | Python, TypeScript |
 | 03 | [词嵌入：从零实现 Word2Vec](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | 构建 | Python |
-| 04 | [GloVe、FastText 与子词嵌入](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | 构建 | Python |
-| 05 | [情感分析](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | 构建 | Python |
-| 06 | [命名实体识别（NER）](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | 构建 | Python |
-| 07 | [词性标注与句法解析](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | 构建 | Python |
-| 08 | [文本分类：用于文本的 CNN 与 RNN](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | 构建 | Python |
-| 09 | [序列到序列模型](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | 构建 | Python |
-| 10 | [注意力机制：关键突破](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | 构建 | Python |
-| 11 | [机器翻译](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | 构建 | Python |
-| 12 | [文本摘要](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | 构建 | Python |
-| 13 | [问答系统](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | 构建 | Python |
-| 14 | [信息检索与搜索](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | 构建 | Python |
-| 15 | [主题建模：LDA 与 BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | 构建 | Python |
-| 16 | [文本生成](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | 构建 | Python |
-| 17 | [聊天机器人：从规则系统到神经网络](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | 构建 | Python |
-| 18 | [多语言自然语言处理](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | 构建 | Python |
+| 04 | [GloVe、FastText 与子词嵌入](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | 构建 | Python, TypeScript |
+| 05 | [情感分析](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | 构建 | Python, TypeScript |
+| 06 | [命名实体识别（NER）](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | 构建 | Python, TypeScript |
+| 07 | [词性标注与句法解析](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | 构建 | Python, TypeScript |
+| 08 | [文本分类：用于文本的 CNN 与 RNN](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | 构建 | Python, TypeScript |
+| 09 | [序列到序列模型](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | 构建 | Python, TypeScript |
+| 10 | [注意力机制：关键突破](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | 构建 | Python, TypeScript |
+| 11 | [机器翻译](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | 构建 | Python, TypeScript |
+| 12 | [文本摘要](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | 构建 | Python, TypeScript |
+| 13 | [问答系统](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | 构建 | Python, TypeScript |
+| 14 | [信息检索与搜索](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | 构建 | Python, TypeScript |
+| 15 | [主题建模：LDA 与 BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | 构建 | Python, TypeScript |
+| 16 | [文本生成](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | 构建 | Python, TypeScript |
+| 17 | [聊天机器人：从规则系统到神经网络](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | 构建 | Python, TypeScript |
+| 18 | [多语言自然语言处理](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | 构建 | Python, TypeScript |
 | 19 | [子词分词：BPE、WordPiece、Unigram 与 SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | 学习 | Python, TypeScript |
-| 20 | [结构化输出与约束解码](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | 构建 | Python |
-| 21 | [自然语言推理（NLI）与文本蕴含](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | 学习 | Python |
-| 22 | [深入理解嵌入模型](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | 学习 | Python |
+| 20 | [结构化输出与约束解码](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | 构建 | Python, TypeScript |
+| 21 | [自然语言推理（NLI）与文本蕴含](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | 学习 | Python, TypeScript |
+| 22 | [深入理解嵌入模型](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | 学习 | Python, TypeScript |
 | 23 | [用于 RAG 的文本切块策略](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | 构建 | Python, TypeScript |
-| 24 | [共指消解](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | 学习 | Python |
-| 25 | [实体链接与消歧](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | 构建 | Python |
-| 26 | [关系抽取与知识图谱构建](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | 构建 | Python |
-| 27 | [LLM 评估：RAGAS、DeepEval 与 G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | 构建 | Python |
-| 28 | [长上下文评估：NIAH、RULER、LongBench 与 MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | 学习 | Python |
-| 29 | [对话状态跟踪](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | 构建 | Python |
+| 24 | [共指消解](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | 学习 | Python, TypeScript |
+| 25 | [实体链接与消歧](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | 构建 | Python, TypeScript |
+| 26 | [关系抽取与知识图谱构建](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | 构建 | Python, TypeScript |
+| 27 | [LLM 评估：RAGAS、DeepEval 与 G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | 构建 | Python, TypeScript |
+| 28 | [长上下文评估：NIAH、RULER、LongBench 与 MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | 学习 | Python, TypeScript |
+| 29 | [对话状态跟踪](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | 构建 | Python, TypeScript |
 
 </details>
 
@@ -523,23 +523,23 @@ flowchart TB
 
 | # | 课程 | 类型 | 语言 |
 |:---:|--------|:----:|------|
-| 01 | [音频基础：波形、采样与 FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | 学习 | Python |
-| 02 | [频谱图、梅尔刻度与音频特征](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | 构建 | Python |
-| 03 | [音频分类](../../phases/06-speech-and-audio/03-audio-classification) | 构建 | Python |
-| 04 | [语音识别（ASR）](../../phases/06-speech-and-audio/04-speech-recognition-asr) | 构建 | Python |
-| 05 | [Whisper：架构与微调](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | 构建 | Python |
-| 06 | [说话人识别与验证](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | 构建 | Python |
-| 07 | [文本转语音（TTS）](../../phases/06-speech-and-audio/07-text-to-speech) | 构建 | Python |
-| 08 | [声音克隆与声音转换](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | 构建 | Python |
-| 09 | [音乐生成](../../phases/06-speech-and-audio/09-music-generation) | 构建 | Python |
-| 10 | [音频语言模型](../../phases/06-speech-and-audio/10-audio-language-models) | 构建 | Python |
+| 01 | [音频基础：波形、采样与 FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | 学习 | Python, TypeScript |
+| 02 | [频谱图、梅尔刻度与音频特征](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | 构建 | Python, TypeScript |
+| 03 | [音频分类](../../phases/06-speech-and-audio/03-audio-classification) | 构建 | Python, TypeScript |
+| 04 | [语音识别（ASR）](../../phases/06-speech-and-audio/04-speech-recognition-asr) | 构建 | Python, TypeScript |
+| 05 | [Whisper：架构与微调](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | 构建 | Python, TypeScript |
+| 06 | [说话人识别与验证](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | 构建 | Python, TypeScript |
+| 07 | [文本转语音（TTS）](../../phases/06-speech-and-audio/07-text-to-speech) | 构建 | Python, TypeScript |
+| 08 | [声音克隆与声音转换](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | 构建 | Python, TypeScript |
+| 09 | [音乐生成](../../phases/06-speech-and-audio/09-music-generation) | 构建 | Python, TypeScript |
+| 10 | [音频语言模型](../../phases/06-speech-and-audio/10-audio-language-models) | 构建 | Python, TypeScript |
 | 11 | [实时音频处理](../../phases/06-speech-and-audio/11-real-time-audio-processing) | 构建 | Python, Rust |
-| 12 | [构建语音助手流水线](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | 构建 | Python |
-| 13 | [神经音频编解码器：EnCodec、SNAC、Mimi 与 DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | 学习 | Python |
-| 14 | [语音活动检测与轮次管理](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | 构建 | Python |
-| 15 | [流式语音到语音：Moshi 与 Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | 学习 | Python |
-| 16 | [语音反欺骗与音频水印](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | 构建 | Python |
-| 17 | [音频评估：WER、MOS、MMAU 与排行榜](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | 学习 | Python |
+| 12 | [构建语音助手流水线](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | 构建 | Python, TypeScript |
+| 13 | [神经音频编解码器：EnCodec、SNAC、Mimi 与 DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | 学习 | Python, TypeScript |
+| 14 | [语音活动检测与轮次管理](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | 构建 | Python, TypeScript |
+| 15 | [流式语音到语音：Moshi 与 Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | 学习 | Python, TypeScript |
+| 16 | [语音反欺骗与音频水印](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | 构建 | Python, TypeScript |
+| 17 | [音频评估：WER、MOS、MMAU 与排行榜](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | 学习 | Python, TypeScript |
 
 </details>
 
@@ -554,14 +554,14 @@ flowchart TB
 | 03 | [多头注意力](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | 构建 | Python, Rust |
 | 04 | [位置编码：正弦编码、RoPE 与 ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | 构建 | Python, Rust, Julia |
 | 05 | [完整 Transformer：编码器与解码器](../../phases/07-transformers-deep-dive/05-full-transformer/) | 构建 | Python, Julia |
-| 06 | [BERT：掩码语言建模](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | 构建 | Python |
-| 07 | [GPT：因果语言建模](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | 构建 | Python |
-| 08 | [T5 与 BART：编码器—解码器模型](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | 学习 | Python |
-| 09 | [视觉 Transformer（ViT）](../../phases/07-transformers-deep-dive/09-vision-transformers/) | 构建 | Python |
-| 10 | [音频 Transformer：Whisper 架构](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | 学习 | Python |
+| 06 | [BERT：掩码语言建模](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | 构建 | Python, Rust |
+| 07 | [GPT：因果语言建模](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | 构建 | Python, Rust |
+| 08 | [T5 与 BART：编码器—解码器模型](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | 学习 | Python, Rust |
+| 09 | [视觉 Transformer（ViT）](../../phases/07-transformers-deep-dive/09-vision-transformers/) | 构建 | Python, Rust |
+| 10 | [音频 Transformer：Whisper 架构](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | 学习 | Python, Rust |
 | 11 | [混合专家模型（MoE）](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | 构建 | Python, Rust |
 | 12 | [KV 缓存、FlashAttention 与推理优化](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | 构建 | Python, Rust |
-| 13 | [缩放定律](../../phases/07-transformers-deep-dive/13-scaling-laws/) | 学习 | Python |
+| 13 | [缩放定律](../../phases/07-transformers-deep-dive/13-scaling-laws/) | 学习 | Python, Rust |
 | 14 | [从零构建 Transformer](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | 构建 | Python |
 | 15 | [注意力变体：滑动窗口、稀疏与差分注意力](../../phases/07-transformers-deep-dive/15-attention-variants/) | 构建 | Python, Rust |
 | 16 | [推测解码：草稿、验证与重复](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | 构建 | Python, Rust |
@@ -574,20 +574,20 @@ flowchart TB
 
 | # | 课程 | 类型 | 语言 |
 |:---:|--------|:----:|------|
-| 01 | [生成模型：分类与历史](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | 学习 | Python |
-| 02 | [自动编码器与 VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | 构建 | Python |
-| 03 | [GAN：生成器与判别器](../../phases/08-generative-ai/03-gans-generator-discriminator/) | 构建 | Python |
-| 04 | [条件 GAN 与 Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | 构建 | Python |
-| 05 | [StyleGAN](../../phases/08-generative-ai/05-stylegan/) | 构建 | Python |
-| 06 | [扩散模型：从零实现 DDPM](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | 构建 | Python |
-| 07 | [潜空间扩散与 Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | 构建 | Python |
-| 08 | [ControlNet、LoRA 与条件控制](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | 构建 | Python |
-| 09 | [局部修复、画布扩展与图像编辑](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | 构建 | Python |
-| 10 | [视频生成](../../phases/08-generative-ai/10-video-generation/) | 构建 | Python |
-| 11 | [音频生成](../../phases/08-generative-ai/11-audio-generation/) | 构建 | Python |
-| 12 | [3D 内容生成](../../phases/08-generative-ai/12-3d-generation/) | 构建 | Python |
-| 13 | [流匹配与矫正流](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | 构建 | Python |
-| 14 | [生成效果评估：FID 与 CLIP Score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | 构建 | Python |
+| 01 | [生成模型：分类与历史](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | 学习 | Python, TypeScript |
+| 02 | [自动编码器与 VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | 构建 | Python, TypeScript |
+| 03 | [GAN：生成器与判别器](../../phases/08-generative-ai/03-gans-generator-discriminator/) | 构建 | Python, TypeScript |
+| 04 | [条件 GAN 与 Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | 构建 | Python, TypeScript |
+| 05 | [StyleGAN](../../phases/08-generative-ai/05-stylegan/) | 构建 | Python, TypeScript |
+| 06 | [扩散模型：从零实现 DDPM](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | 构建 | Python, TypeScript |
+| 07 | [潜空间扩散与 Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | 构建 | Python, TypeScript |
+| 08 | [ControlNet、LoRA 与条件控制](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | 构建 | Python, TypeScript |
+| 09 | [局部修复、画布扩展与图像编辑](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | 构建 | Python, TypeScript |
+| 10 | [视频生成](../../phases/08-generative-ai/10-video-generation/) | 构建 | Python, TypeScript |
+| 11 | [音频生成](../../phases/08-generative-ai/11-audio-generation/) | 构建 | Python, TypeScript |
+| 12 | [3D 内容生成](../../phases/08-generative-ai/12-3d-generation/) | 构建 | Python, TypeScript |
+| 13 | [流匹配与矫正流](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | 构建 | Python, TypeScript |
+| 14 | [生成效果评估：FID 与 CLIP Score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | 构建 | Python, TypeScript |
 | 19 | [视觉自回归建模（VAR）：下一尺度预测](../../phases/08-generative-ai/19-visual-autoregressive-var/) | 构建 | Python |
 
 </details>
@@ -598,18 +598,18 @@ flowchart TB
 
 | # | 课程 | 类型 | 语言 |
 |:---:|--------|:----:|------|
-| 01 | [马尔可夫决策过程：状态、动作与奖励](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | 学习 | Python |
-| 02 | [动态规划](../../phases/09-reinforcement-learning/02-dynamic-programming/) | 构建 | Python |
-| 03 | [蒙特卡洛方法](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | 构建 | Python |
-| 04 | [Q-Learning 与 SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | 构建 | Python |
-| 05 | [深度 Q 网络（DQN）](../../phases/09-reinforcement-learning/05-dqn/) | 构建 | Python |
-| 06 | [策略梯度：REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | 构建 | Python |
-| 07 | [Actor-Critic：A2C 与 A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | 构建 | Python |
-| 08 | [PPO](../../phases/09-reinforcement-learning/08-ppo/) | 构建 | Python |
-| 09 | [奖励建模与 RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | 构建 | Python |
-| 10 | [多智能体强化学习](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | 构建 | Python |
-| 11 | [仿真到现实迁移](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | 构建 | Python |
-| 12 | [面向游戏的强化学习](../../phases/09-reinforcement-learning/12-rl-for-games/) | 构建 | Python |
+| 01 | [马尔可夫决策过程：状态、动作与奖励](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | 学习 | Python, TypeScript |
+| 02 | [动态规划](../../phases/09-reinforcement-learning/02-dynamic-programming/) | 构建 | Python, TypeScript |
+| 03 | [蒙特卡洛方法](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | 构建 | Python, TypeScript |
+| 04 | [Q-Learning 与 SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | 构建 | Python, TypeScript |
+| 05 | [深度 Q 网络（DQN）](../../phases/09-reinforcement-learning/05-dqn/) | 构建 | Python, TypeScript |
+| 06 | [策略梯度：REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | 构建 | Python, TypeScript |
+| 07 | [Actor-Critic：A2C 与 A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | 构建 | Python, TypeScript |
+| 08 | [PPO](../../phases/09-reinforcement-learning/08-ppo/) | 构建 | Python, TypeScript |
+| 09 | [奖励建模与 RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | 构建 | Python, TypeScript |
+| 10 | [多智能体强化学习](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | 构建 | Python, TypeScript |
+| 11 | [仿真到现实迁移](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | 构建 | Python, TypeScript |
+| 12 | [面向游戏的强化学习](../../phases/09-reinforcement-learning/12-rl-for-games/) | 构建 | Python, TypeScript |
 
 </details>
 
@@ -621,7 +621,7 @@ flowchart TB
 |:---:|--------|:----:|------|
 | 01 | [分词器：BPE、WordPiece 与 SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | 构建 | Python, Rust |
 | 02 | [从零构建分词器](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | 构建 | Python |
-| 03 | [预训练数据流水线](../../phases/10-llms-from-scratch/03-data-pipelines/) | 构建 | Python |
+| 03 | [预训练数据流水线](../../phases/10-llms-from-scratch/03-data-pipelines/) | 构建 | Python, Rust |
 | 04 | [预训练迷你 GPT（124M）](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | 构建 | Python, Rust |
 | 05 | [分布式训练：FSDP 与 DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | 构建 | Python |
 | 06 | [指令微调：SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | 构建 | Python |
@@ -631,16 +631,16 @@ flowchart TB
 | 10 | [模型评估：基准与评测](../../phases/10-llms-from-scratch/10-evaluation/) | 构建 | Python |
 | 11 | [量化：INT8、GPTQ、AWQ 与 GGUF](../../phases/10-llms-from-scratch/11-quantization/) | 构建 | Python, Rust |
 | 12 | [推理优化](../../phases/10-llms-from-scratch/12-inference-optimization/) | 构建 | Python, Rust |
-| 13 | [构建完整的 LLM 流水线](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | 构建 | Python |
-| 14 | [开放模型：架构解析](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | 学习 | Python |
-| 15 | [推测解码与 EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | 构建 | Python |
-| 16 | [差分注意力（V2）](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | 构建 | Python |
-| 17 | [原生稀疏注意力（DeepSeek NSA）](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | 构建 | Python |
-| 18 | [多 Token 预测（MTP）](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | 构建 | Python |
-| 19 | [DualPipe 并行](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | 学习 | Python |
-| 20 | [DeepSeek-V3 架构解析](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | 学习 | Python |
-| 21 | [Jamba：SSM 与 Transformer 混合架构](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | 学习 | Python |
-| 22 | [异步与 Hogwild! 推理](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | 构建 | Python |
+| 13 | [构建完整的 LLM 流水线](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | 构建 | Python, Rust |
+| 14 | [开放模型：架构解析](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | 学习 | Python, Rust |
+| 15 | [推测解码与 EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | 构建 | Python, Rust |
+| 16 | [差分注意力（V2）](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | 构建 | Python, Rust |
+| 17 | [原生稀疏注意力（DeepSeek NSA）](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | 构建 | Python, Rust |
+| 18 | [多 Token 预测（MTP）](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | 构建 | Python, Rust |
+| 19 | [DualPipe 并行](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | 学习 | Python, Rust |
+| 20 | [DeepSeek-V3 架构解析](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | 学习 | Python, Rust |
+| 21 | [Jamba：SSM 与 Transformer 混合架构](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | 学习 | Python, Rust |
+| 22 | [异步与 Hogwild! 推理](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | 构建 | Python, Rust |
 | 25 | [推测解码与 EAGLE](../../phases/10-llms-from-scratch/25-speculative-decoding/) | 构建 | Python |
 | 34 | [梯度检查点与激活值重计算](../../phases/10-llms-from-scratch/34-gradient-checkpointing/) | 构建 | Python |
 
@@ -658,17 +658,17 @@ flowchart TB
 | 04 | [嵌入与向量表示](../../phases/11-llm-engineering/04-embeddings/) | 构建 | Python, TypeScript |
 | 05 | [上下文工程](../../phases/11-llm-engineering/05-context-engineering/) | 构建 | Python, TypeScript |
 | 06 | [RAG：检索增强生成](../../phases/11-llm-engineering/06-rag/) | 构建 | Python, TypeScript |
-| 07 | [高级 RAG：切块与重排序](../../phases/11-llm-engineering/07-advanced-rag/) | 构建 | Python |
+| 07 | [高级 RAG：切块与重排序](../../phases/11-llm-engineering/07-advanced-rag/) | 构建 | Python, TypeScript |
 | 08 | [使用 LoRA 与 QLoRA 微调](../../phases/11-llm-engineering/08-fine-tuning-lora/) | 构建 | Python |
 | 09 | [函数调用与工具使用](../../phases/11-llm-engineering/09-function-calling/) | 构建 | Python, TypeScript |
-| 10 | [评估与测试](../../phases/11-llm-engineering/10-evaluation/) | 构建 | Python |
-| 11 | [缓存、速率限制与成本](../../phases/11-llm-engineering/11-caching-cost/) | 构建 | Python |
+| 10 | [评估与测试](../../phases/11-llm-engineering/10-evaluation/) | 构建 | Python, TypeScript |
+| 11 | [缓存、速率限制与成本](../../phases/11-llm-engineering/11-caching-cost/) | 构建 | Python, TypeScript |
 | 12 | [护栏与安全](../../phases/11-llm-engineering/12-guardrails/) | 构建 | Python, TypeScript |
-| 13 | [构建生产级 LLM 应用](../../phases/11-llm-engineering/13-production-app/) | 构建 | Python |
-| 14 | [模型上下文协议（MCP）](../../phases/11-llm-engineering/14-model-context-protocol/) | 构建 | Python |
-| 15 | [提示词缓存与上下文缓存](../../phases/11-llm-engineering/15-prompt-caching/) | 构建 | Python |
+| 13 | [构建生产级 LLM 应用](../../phases/11-llm-engineering/13-production-app/) | 构建 | Python, TypeScript |
+| 14 | [模型上下文协议（MCP）](../../phases/11-llm-engineering/14-model-context-protocol/) | 构建 | Python, TypeScript |
+| 15 | [提示词缓存与上下文缓存](../../phases/11-llm-engineering/15-prompt-caching/) | 构建 | Python, TypeScript |
 | 16 | [智能体状态机：图、节点与检查点](../../phases/11-llm-engineering/16-langgraph-state-machines/) | 构建 | Python |
-| 17 | [智能体框架的权衡](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | 学习 | Python |
+| 17 | [智能体框架的权衡](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | 学习 | Python, TypeScript |
 
 </details>
 
@@ -678,31 +678,31 @@ flowchart TB
 
 | # | 课程 | 类型 | 语言 |
 |:---:|--------|:----:|------|
-| 01 | [视觉 Transformer 与图像块 Token 原语](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | 学习 | Python |
-| 02 | [CLIP 与对比式视觉语言预训练](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | 构建 | Python |
-| 03 | [BLIP-2 的 Q-Former 模态桥梁](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | 构建 | Python |
-| 04 | [Flamingo 与门控交叉注意力](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | 学习 | Python |
-| 05 | [LLaVA 与视觉指令微调](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | 构建 | Python |
-| 06 | [任意分辨率视觉：Patch-n'-Pack 与 NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | 构建 | Python |
-| 07 | [开放权重 VLM 实践：真正重要的因素](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | 学习 | Python |
-| 08 | [LLaVA-OneVision：单图、多图与视频](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | 构建 | Python |
-| 09 | [Qwen-VL 系列与动态帧率视频](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | 学习 | Python |
-| 10 | [InternVL3 的原生多模态预训练](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | 学习 | Python |
-| 11 | [Chameleon：早期融合的纯 Token 架构](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | 构建 | Python |
-| 12 | [Emu3：用于生成的下一 Token 预测](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | 学习 | Python |
-| 13 | [Transfusion：自回归与扩散结合](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | 构建 | Python |
-| 14 | [Show-o：统一的离散扩散模型](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | 学习 | Python |
-| 15 | [Janus-Pro：解耦的编码器](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | 构建 | Python |
-| 16 | [MIO：任意模态到任意模态的流式处理](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | 学习 | Python |
-| 17 | [视频语言模型的时间定位](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | 构建 | Python |
-| 18 | [百万 Token 上下文中的长视频](../../phases/12-multimodal-ai/18-long-video-million-token/) | 构建 | Python |
-| 19 | [音频语言模型：从 Whisper 到 AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | 构建 | Python |
-| 20 | [全模态模型：Thinker-Talker 流式架构](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | 构建 | Python |
-| 21 | [具身视觉语言动作模型：RT-2、OpenVLA、π0 与 GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | 学习 | Python |
-| 22 | [文档与图表理解](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | 构建 | Python |
-| 23 | [ColPali：以视觉为核心的文档 RAG](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | 构建 | Python |
-| 24 | [多模态 RAG 与跨模态检索](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | 构建 | Python |
-| 25 | [多模态智能体与计算机操作（综合项目）](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | 构建 | Python |
+| 01 | [视觉 Transformer 与图像块 Token 原语](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | 学习 | Python, TypeScript |
+| 02 | [CLIP 与对比式视觉语言预训练](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | 构建 | Python, TypeScript |
+| 03 | [BLIP-2 的 Q-Former 模态桥梁](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | 构建 | Python, TypeScript |
+| 04 | [Flamingo 与门控交叉注意力](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | 学习 | Python, TypeScript |
+| 05 | [LLaVA 与视觉指令微调](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | 构建 | Python, TypeScript |
+| 06 | [任意分辨率视觉：Patch-n'-Pack 与 NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | 构建 | Python, TypeScript |
+| 07 | [开放权重 VLM 实践：真正重要的因素](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | 学习 | Python, TypeScript |
+| 08 | [LLaVA-OneVision：单图、多图与视频](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | 构建 | Python, TypeScript |
+| 09 | [Qwen-VL 系列与动态帧率视频](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | 学习 | Python, TypeScript |
+| 10 | [InternVL3 的原生多模态预训练](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | 学习 | Python, TypeScript |
+| 11 | [Chameleon：早期融合的纯 Token 架构](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | 构建 | Python, TypeScript |
+| 12 | [Emu3：用于生成的下一 Token 预测](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | 学习 | Python, TypeScript |
+| 13 | [Transfusion：自回归与扩散结合](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | 构建 | Python, TypeScript |
+| 14 | [Show-o：统一的离散扩散模型](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | 学习 | Python, TypeScript |
+| 15 | [Janus-Pro：解耦的编码器](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | 构建 | Python, TypeScript |
+| 16 | [MIO：任意模态到任意模态的流式处理](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | 学习 | Python, TypeScript |
+| 17 | [视频语言模型的时间定位](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | 构建 | Python, TypeScript |
+| 18 | [百万 Token 上下文中的长视频](../../phases/12-multimodal-ai/18-long-video-million-token/) | 构建 | Python, TypeScript |
+| 19 | [音频语言模型：从 Whisper 到 AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | 构建 | Python, TypeScript |
+| 20 | [全模态模型：Thinker-Talker 流式架构](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | 构建 | Python, TypeScript |
+| 21 | [具身视觉语言动作模型：RT-2、OpenVLA、π0 与 GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | 学习 | Python, TypeScript |
+| 22 | [文档与图表理解](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | 构建 | Python, TypeScript |
+| 23 | [ColPali：以视觉为核心的文档 RAG](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | 构建 | Python, TypeScript |
+| 24 | [多模态 RAG 与跨模态检索](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | 构建 | Python, TypeScript |
+| 25 | [多模态智能体与计算机操作（综合项目）](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | 构建 | Python, TypeScript |
 
 </details>
 
@@ -713,50 +713,50 @@ flowchart TB
 | # | 课程 | 类型 | 语言 |
 |:---:|--------|:----:|------|
 | 01 | [工具接口](../../phases/13-tools-and-protocols/01-the-tool-interface/) | 学习 | Python, TypeScript |
-| 02 | [深入理解函数调用](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | 构建 | Python |
-| 03 | [并行与流式工具调用](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | 构建 | Python |
-| 04 | [结构化输出](../../phases/13-tools-and-protocols/04-structured-output/) | 构建 | Python |
-| 05 | [工具 Schema 设计](../../phases/13-tools-and-protocols/05-tool-schema-design/) | 学习 | Python |
-| 06 | [MCP 基础：无状态请求与 JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | 学习 | Python |
+| 02 | [深入理解函数调用](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | 构建 | Python, TypeScript |
+| 03 | [并行与流式工具调用](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | 构建 | Python, TypeScript |
+| 04 | [结构化输出](../../phases/13-tools-and-protocols/04-structured-output/) | 构建 | Python, TypeScript |
+| 05 | [工具 Schema 设计](../../phases/13-tools-and-protocols/05-tool-schema-design/) | 学习 | Python, TypeScript |
+| 06 | [MCP 基础：无状态请求与 JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | 学习 | Python, TypeScript |
 | 07 | [构建 MCP 服务器：无状态 Python 与 TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | 构建 | Python, TypeScript |
-| 08 | [构建 MCP 客户端：发现、路由与新旧协议兼容](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | 构建 | Python |
-| 09 | [MCP 传输：stdio 与无状态 Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | 学习 | Python |
-| 10 | [MCP 资源与提示词：无状态服务器的可寻址上下文](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | 构建 | Python |
-| 11 | [MCP 模型输入：Sampling 迁移与无状态 MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | 构建 | Python |
-| 12 | [显式范围与无状态信息征询](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | 构建 | Python |
-| 13 | [MCP Tasks 扩展：在无状态核心上持久执行任务](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | 构建 | Python |
-| 14 | [无状态协议上的 MCP Apps](../../phases/13-tools-and-protocols/14-mcp-apps/) | 构建 | Python |
-| 15 | [MCP 安全：被污染的元数据、路由与 MRTR 状态](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | 学习 | Python |
-| 16 | [MCP 授权：CIMD、签发者绑定、PKCE 与逐步提权](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | 构建 | Python |
-| 17 | [无状态 MCP 网关与注册表准入](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | 学习 | Python |
-| 18 | [生产环境中的 MCP 认证：签发者绑定的注册与令牌](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | 构建 | Python |
+| 08 | [构建 MCP 客户端：发现、路由与新旧协议兼容](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | 构建 | Python, TypeScript |
+| 09 | [MCP 传输：stdio 与无状态 Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | 学习 | Python, TypeScript |
+| 10 | [MCP 资源与提示词：无状态服务器的可寻址上下文](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | 构建 | Python, TypeScript |
+| 11 | [MCP 模型输入：Sampling 迁移与无状态 MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | 构建 | Python, TypeScript |
+| 12 | [显式范围与无状态信息征询](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | 构建 | Python, TypeScript |
+| 13 | [MCP Tasks 扩展：在无状态核心上持久执行任务](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | 构建 | Python, TypeScript |
+| 14 | [无状态协议上的 MCP Apps](../../phases/13-tools-and-protocols/14-mcp-apps/) | 构建 | Python, TypeScript |
+| 15 | [MCP 安全：被污染的元数据、路由与 MRTR 状态](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | 学习 | Python, TypeScript |
+| 16 | [MCP 授权：CIMD、签发者绑定、PKCE 与逐步提权](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | 构建 | Python, TypeScript |
+| 17 | [无状态 MCP 网关与注册表准入](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | 学习 | Python, TypeScript |
+| 18 | [生产环境中的 MCP 认证：签发者绑定的注册与令牌](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | 构建 | Python, TypeScript |
 | 19 | [A2A 协议](../../phases/13-tools-and-protocols/19-a2a-protocol/) | 构建 | Python, TypeScript |
-| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | 构建 | Python |
-| 21 | [LLM 路由层](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | 学习 | Python |
-| 22 | [Agent Skills：可移植契约与运行时边界](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | 构建 | Python |
-| 23 | [综合项目：无状态工具生态](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | 构建 | Python |
-| 24 | [技能发现与渐进式披露](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | 构建 | Python |
-| 25 | [技能调用与路由](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | 构建 | Python |
-| 26 | [技能权限、沙盒与信任](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | 构建 | Python |
-| 27 | [技能评估、打包与可移植性](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | 构建 | Python |
-| 28 | [MCP 工具契约与内容](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | 构建 | Python |
-| 29 | [MCP 可靠性：取消与流量控制](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | 构建 | Python |
-| 30 | [MCP 注册表供应链：准入、漂移与回滚](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | 构建 | Python |
-| 31 | [MCP 一致性工程：版本、证据与运维](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | 构建 | Python |
-| 32 | [程序解剖：从零读懂 ELF](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | 构建 | Python |
-| 33 | [反汇编与控制流图](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | 构建 | Python |
+| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | 构建 | Python, TypeScript |
+| 21 | [LLM 路由层](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | 学习 | Python, TypeScript |
+| 22 | [Agent Skills：可移植契约与运行时边界](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | 构建 | Python, TypeScript |
+| 23 | [综合项目：无状态工具生态](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | 构建 | Python, TypeScript |
+| 24 | [技能发现与渐进式披露](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | 构建 | Python, TypeScript |
+| 25 | [技能调用与路由](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | 构建 | Python, TypeScript |
+| 26 | [技能权限、沙盒与信任](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | 构建 | Python, TypeScript |
+| 27 | [技能评估、打包与可移植性](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | 构建 | Python, TypeScript |
+| 28 | [MCP 工具契约与内容](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | 构建 | Python, TypeScript |
+| 29 | [MCP 可靠性：取消与流量控制](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | 构建 | Python, TypeScript |
+| 30 | [MCP 注册表供应链：准入、漂移与回滚](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | 构建 | Python, TypeScript |
+| 31 | [MCP 一致性工程：版本、证据与运维](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | 构建 | Python, TypeScript |
+| 32 | [程序解剖：从零读懂 ELF](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | 构建 | Python, TypeScript |
+| 33 | [反汇编与控制流图](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | 构建 | Python, TypeScript |
 | 34 | [把机器码提升为伪代码](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | 构建 | Python |
-| 35 | [二进制分析中的证据、置信度与未知项](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | 构建 | Python |
-| 36 | [重建程序并证明等价](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | 构建 | Python |
-| 37 | [逆向工程全景](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | 构建 | Python |
-| 38 | [调用约定与栈帧](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | 构建 | Python |
-| 39 | [编译器惯用法与优化](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | 构建 | Python |
-| 40 | [链接、加载与去符号二进制](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | 构建 | Python |
-| 41 | [恢复数据与类型](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | 构建 | Python |
-| 42 | [动态分析你自己的程序](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | 构建 | Python |
-| 43 | [字节码与托管格式](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | 构建 | Python |
+| 35 | [二进制分析中的证据、置信度与未知项](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | 构建 | Python, TypeScript |
+| 36 | [重建程序并证明等价](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | 构建 | Python, TypeScript |
+| 37 | [逆向工程全景](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | 构建 | Python, TypeScript |
+| 38 | [调用约定与栈帧](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | 构建 | Python, TypeScript |
+| 39 | [编译器惯用法与优化](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | 构建 | Python, TypeScript |
+| 40 | [链接、加载与去符号二进制](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | 构建 | Python, TypeScript |
+| 41 | [恢复数据与类型](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | 构建 | Python, TypeScript |
+| 42 | [动态分析你自己的程序](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | 构建 | Python, TypeScript |
+| 43 | [字节码与托管格式](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | 构建 | Python, TypeScript |
 | 44 | [二进制差异比较与符号执行](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | 构建 | Python |
-| 45 | [AI 辅助逆向工程](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | 构建 | Python |
+| 45 | [AI 辅助逆向工程](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | 构建 | Python, TypeScript |
 
 第 06–18、28–31 课构成 [模型上下文协议（MCP）专项学习路径](../../learning-paths/model-context-protocol.json)。路线清单规定的顺序为 06、07、08、09、10、11、12、13、14、15、16、18、17、28、29、30、31；按上文对应宿主的方式调用 `learn-mcp` 开始学习。第 23 课是唯一的可选综合项目，还需要先完成第 19、20 课。
 
@@ -771,59 +771,59 @@ flowchart TB
 | # | 课程 | 类型 | 语言 |
 |:---:|--------|:----:|------|
 | 01 | [智能体循环](../../phases/14-agent-engineering/01-the-agent-loop/) | 构建 | Python, TypeScript |
-| 02 | [ReWOO 与“规划—执行”模式](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | 构建 | Python |
-| 03 | [Reflexion 与语言化强化学习](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | 构建 | Python |
-| 04 | [思维树与 LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | 构建 | Python |
-| 05 | [Self-Refine 与 CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | 构建 | Python |
+| 02 | [ReWOO 与“规划—执行”模式](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | 构建 | Python, TypeScript |
+| 03 | [Reflexion 与语言化强化学习](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | 构建 | Python, TypeScript |
+| 04 | [思维树与 LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | 构建 | Python, TypeScript |
+| 05 | [Self-Refine 与 CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | 构建 | Python, TypeScript |
 | 06 | [工具使用与函数调用](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | 构建 | Python, TypeScript |
-| 07 | [智能体记忆：虚拟上下文与记忆分页](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | 构建 | Python |
-| 08 | [记忆块与空闲时计算](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | 构建 | Python |
-| 09 | [混合记忆：向量、图与键值存储](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | 构建 | Python |
-| 10 | [技能库与终身学习（Voyager）](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | 构建 | Python |
-| 11 | [使用 HTN 与进化搜索进行规划](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | 构建 | Python |
-| 12 | [Anthropic 的工作流模式](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | 构建 | Python |
+| 07 | [智能体记忆：虚拟上下文与记忆分页](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | 构建 | Python, TypeScript |
+| 08 | [记忆块与空闲时计算](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | 构建 | Python, TypeScript |
+| 09 | [混合记忆：向量、图与键值存储](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | 构建 | Python, TypeScript |
+| 10 | [技能库与终身学习（Voyager）](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | 构建 | Python, TypeScript |
+| 11 | [使用 HTN 与进化搜索进行规划](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | 构建 | Python, TypeScript |
+| 12 | [Anthropic 的工作流模式](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | 构建 | Python, TypeScript |
 | 13 | [有状态图编排：持久执行与检查点](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | 构建 | Python, TypeScript |
-| 14 | [智能体的 Actor 模型](../../phases/14-agent-engineering/14-autogen-actor-model/) | 构建 | Python |
+| 14 | [智能体的 Actor 模型](../../phases/14-agent-engineering/14-autogen-actor-model/) | 构建 | Python, TypeScript |
 | 15 | [基于角色的智能体团队：角色、任务与流程](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | 构建 | Python |
-| 16 | [OpenAI Agents SDK：移交、护栏与追踪](../../phases/14-agent-engineering/16-openai-agents-sdk/) | 构建 | Python |
-| 17 | [将运行框架作为库：子智能体与会话存储](../../phases/14-agent-engineering/17-claude-agent-sdk/) | 构建 | Python |
+| 16 | [OpenAI Agents SDK：移交、护栏与追踪](../../phases/14-agent-engineering/16-openai-agents-sdk/) | 构建 | Python, TypeScript |
+| 17 | [将运行框架作为库：子智能体与会话存储](../../phases/14-agent-engineering/17-claude-agent-sdk/) | 构建 | Python, TypeScript |
 | 18 | [生产级智能体运行时](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | 学习 | Python, TypeScript |
-| 19 | [基准测试：SWE-bench、GAIA 与 AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | 学习 | Python |
-| 20 | [基准测试：WebArena 与 OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | 学习 | Python |
-| 21 | [计算机操作：Claude、OpenAI CUA 与 Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | 构建 | Python |
-| 22 | [语音智能体：Pipecat 与 LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | 构建 | Python |
-| 23 | [OpenTelemetry GenAI 语义约定](../../phases/14-agent-engineering/23-otel-genai-conventions/) | 构建 | Python |
-| 24 | [智能体可观测性：Langfuse、Phoenix 与 Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | 学习 | Python |
-| 25 | [多智能体辩论与协作](../../phases/14-agent-engineering/25-multi-agent-debate/) | 构建 | Python |
-| 26 | [失效模式：智能体为什么会失败](../../phases/14-agent-engineering/26-failure-modes-agentic/) | 构建 | Python |
-| 27 | [提示词注入与 PVE 防御](../../phases/14-agent-engineering/27-prompt-injection-defense/) | 构建 | Python |
-| 28 | [编排模式：监督者、群体与分层](../../phases/14-agent-engineering/28-orchestration-patterns/) | 构建 | Python |
-| 29 | [生产运行时：队列、事件与定时任务](../../phases/14-agent-engineering/29-production-runtimes/) | 学习 | Python |
-| 30 | [以评估驱动智能体开发](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | 构建 | Python |
-| 31 | [智能体工作台：能力强的模型为何仍会失败](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | 学习 | Python |
-| 32 | [最小化智能体工作台](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | 构建 | Python |
-| 33 | [把智能体指令变成可执行约束](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | 构建 | Python |
-| 34 | [仓库记忆与持久状态](../../phases/14-agent-engineering/34-repo-memory-and-state/) | 构建 | Python |
-| 35 | [智能体初始化脚本](../../phases/14-agent-engineering/35-initialization-scripts/) | 构建 | Python |
-| 36 | [范围契约与任务边界](../../phases/14-agent-engineering/36-scope-contracts/) | 构建 | Python |
-| 37 | [运行时反馈循环](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | 构建 | Python |
-| 38 | [验证关卡](../../phases/14-agent-engineering/38-verification-gates/) | 构建 | Python |
-| 39 | [审阅智能体：把构建与评判分开](../../phases/14-agent-engineering/39-reviewer-agent/) | 构建 | Python |
-| 40 | [跨会话交接](../../phases/14-agent-engineering/40-multi-session-handoff/) | 构建 | Python |
-| 41 | [在真实仓库中使用工作台](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | 构建 | Python |
-| 42 | [综合项目：交付可复用的智能体工作台](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | 构建 | Python |
-| 43 | [在智能体写代码前界定任务](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | 构建 | Python |
-| 44 | [制定有证据支撑的执行计划](../../phases/14-agent-engineering/44-plan-from-evidence/) | 构建 | Python |
-| 45 | [隔离委派智能体工作并约定合并规则](../../phases/14-agent-engineering/45-delegate-with-isolation/) | 构建 | Python |
-| 46 | [将每次智能体纠错转化为系统改进](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | 构建 | Python |
-| 47 | [先定义成果，再选择产出形式](../../phases/14-agent-engineering/47-outcomes-before-output/) | 构建 | Python |
-| 48 | [找到人们实际执行的工作流程](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | 构建 | Python |
-| 49 | [梳理假设，优先化解最大风险](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | 构建 | Python |
-| 50 | [选择能影响决策的最小可测试单元](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | 构建 | Python |
-| 51 | [编写保留判断空间的规格说明](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | 构建 | Python |
-| 52 | [在结果出现前设计成功指标](../../phases/14-agent-engineering/52-design-success-metrics/) | 构建 | Python |
-| 53 | [有意识地选择原型、试点或生产部署](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | 构建 | Python |
-| 54 | [建立有责任归属和退出机制的反馈棘轮](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | 构建 | Python |
+| 19 | [基准测试：SWE-bench、GAIA 与 AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | 学习 | Python, TypeScript |
+| 20 | [基准测试：WebArena 与 OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | 学习 | Python, TypeScript |
+| 21 | [计算机操作：Claude、OpenAI CUA 与 Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | 构建 | Python, TypeScript |
+| 22 | [语音智能体：Pipecat 与 LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | 构建 | Python, TypeScript |
+| 23 | [OpenTelemetry GenAI 语义约定](../../phases/14-agent-engineering/23-otel-genai-conventions/) | 构建 | Python, TypeScript |
+| 24 | [智能体可观测性：Langfuse、Phoenix 与 Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | 学习 | Python, TypeScript |
+| 25 | [多智能体辩论与协作](../../phases/14-agent-engineering/25-multi-agent-debate/) | 构建 | Python, TypeScript |
+| 26 | [失效模式：智能体为什么会失败](../../phases/14-agent-engineering/26-failure-modes-agentic/) | 构建 | Python, TypeScript |
+| 27 | [提示词注入与 PVE 防御](../../phases/14-agent-engineering/27-prompt-injection-defense/) | 构建 | Python, TypeScript |
+| 28 | [编排模式：监督者、群体与分层](../../phases/14-agent-engineering/28-orchestration-patterns/) | 构建 | Python, TypeScript |
+| 29 | [生产运行时：队列、事件与定时任务](../../phases/14-agent-engineering/29-production-runtimes/) | 学习 | Python, TypeScript |
+| 30 | [以评估驱动智能体开发](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | 构建 | Python, TypeScript |
+| 31 | [智能体工作台：能力强的模型为何仍会失败](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | 学习 | Python, TypeScript |
+| 32 | [最小化智能体工作台](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | 构建 | Python, TypeScript |
+| 33 | [把智能体指令变成可执行约束](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | 构建 | Python, TypeScript |
+| 34 | [仓库记忆与持久状态](../../phases/14-agent-engineering/34-repo-memory-and-state/) | 构建 | Python, TypeScript |
+| 35 | [智能体初始化脚本](../../phases/14-agent-engineering/35-initialization-scripts/) | 构建 | Python, TypeScript |
+| 36 | [范围契约与任务边界](../../phases/14-agent-engineering/36-scope-contracts/) | 构建 | Python, TypeScript |
+| 37 | [运行时反馈循环](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | 构建 | Python, TypeScript |
+| 38 | [验证关卡](../../phases/14-agent-engineering/38-verification-gates/) | 构建 | Python, TypeScript |
+| 39 | [审阅智能体：把构建与评判分开](../../phases/14-agent-engineering/39-reviewer-agent/) | 构建 | Python, TypeScript |
+| 40 | [跨会话交接](../../phases/14-agent-engineering/40-multi-session-handoff/) | 构建 | Python, TypeScript |
+| 41 | [在真实仓库中使用工作台](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | 构建 | Python, TypeScript |
+| 42 | [综合项目：交付可复用的智能体工作台](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | 构建 | Python, TypeScript |
+| 43 | [在智能体写代码前界定任务](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | 构建 | Python, TypeScript |
+| 44 | [制定有证据支撑的执行计划](../../phases/14-agent-engineering/44-plan-from-evidence/) | 构建 | Python, TypeScript |
+| 45 | [隔离委派智能体工作并约定合并规则](../../phases/14-agent-engineering/45-delegate-with-isolation/) | 构建 | Python, TypeScript |
+| 46 | [将每次智能体纠错转化为系统改进](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | 构建 | Python, TypeScript |
+| 47 | [先定义成果，再选择产出形式](../../phases/14-agent-engineering/47-outcomes-before-output/) | 构建 | Python, TypeScript |
+| 48 | [找到人们实际执行的工作流程](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | 构建 | Python, TypeScript |
+| 49 | [梳理假设，优先化解最大风险](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | 构建 | Python, TypeScript |
+| 50 | [选择能影响决策的最小可测试单元](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | 构建 | Python, TypeScript |
+| 51 | [编写保留判断空间的规格说明](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | 构建 | Python, TypeScript |
+| 52 | [在结果出现前设计成功指标](../../phases/14-agent-engineering/52-design-success-metrics/) | 构建 | Python, TypeScript |
+| 53 | [有意识地选择原型、试点或生产部署](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | 构建 | Python, TypeScript |
+| 54 | [建立有责任归属和退出机制的反馈棘轮](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | 构建 | Python, TypeScript |
 
 阶段 14 的每节工作台课程（第 31–42 课）都附带 `mission.md`，让智能体在阅读完整课程文档前先了解任务。
 
@@ -837,28 +837,28 @@ flowchart TB
 
 | # | 课程 | 类型 | 语言 |
 |:---:|--------|:----:|------|
-| 01 | [从聊天机器人到长程任务智能体（METR）](../../phases/15-autonomous-systems/01-long-horizon-agents/) | 学习 | Python |
-| 02 | [STaR、V-STaR、Quiet-STaR：自学式推理](../../phases/15-autonomous-systems/02-star-family-reasoning/) | 学习 | Python |
-| 03 | [AlphaEvolve：进化式编程智能体](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | 学习 | Python |
-| 04 | [达尔文—哥德尔机器：可自我修改的智能体](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | 学习 | Python |
-| 05 | [AI Scientist v2：达到学术研讨会水平的研究](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | 学习 | Python |
-| 06 | [自动化对齐研究（Anthropic AAR）](../../phases/15-autonomous-systems/06-automated-alignment-research/) | 学习 | Python |
-| 07 | [递归式自我改进：能力与对齐的权衡](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | 学习 | Python |
-| 08 | [有边界的自我改进设计](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | 学习 | Python |
-| 09 | [自主编程智能体全景：SWE-bench 与 CodeAct](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | 学习 | Python |
-| 10 | [自主智能体的权限模式](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | 学习 | Python |
-| 11 | [浏览器智能体与间接提示词注入](../../phases/15-autonomous-systems/11-browser-agents/) | 学习 | Python |
-| 12 | [长时间运行智能体的持久执行](../../phases/15-autonomous-systems/12-durable-execution/) | 学习 | Python |
-| 13 | [行动预算、迭代上限与成本控制](../../phases/15-autonomous-systems/13-cost-governors/) | 学习 | Python |
-| 14 | [终止开关、断路器与金丝雀令牌](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | 学习 | Python |
-| 15 | [人在回路：先提案、后提交](../../phases/15-autonomous-systems/15-propose-then-commit/) | 学习 | Python |
-| 16 | [检查点与回滚](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | 学习 | Python |
-| 17 | [宪法式 AI 与规则覆盖](../../phases/15-autonomous-systems/17-constitutional-ai/) | 学习 | Python |
-| 18 | [Llama Guard 与输入输出分类](../../phases/15-autonomous-systems/18-llama-guard/) | 学习 | Python |
-| 19 | [Anthropic 负责任扩展政策 v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | 学习 | Python |
-| 20 | [OpenAI 准备度框架与 DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | 学习 | Python |
-| 21 | [METR 时间跨度与外部评估](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | 学习 | Python |
-| 22 | [CAIS、CAISI 与社会规模风险](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | 学习 | Python |
+| 01 | [从聊天机器人到长程任务智能体（METR）](../../phases/15-autonomous-systems/01-long-horizon-agents/) | 学习 | Python, TypeScript |
+| 02 | [STaR、V-STaR、Quiet-STaR：自学式推理](../../phases/15-autonomous-systems/02-star-family-reasoning/) | 学习 | Python, TypeScript |
+| 03 | [AlphaEvolve：进化式编程智能体](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | 学习 | Python, TypeScript |
+| 04 | [达尔文—哥德尔机器：可自我修改的智能体](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | 学习 | Python, TypeScript |
+| 05 | [AI Scientist v2：达到学术研讨会水平的研究](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | 学习 | Python, TypeScript |
+| 06 | [自动化对齐研究（Anthropic AAR）](../../phases/15-autonomous-systems/06-automated-alignment-research/) | 学习 | Python, TypeScript |
+| 07 | [递归式自我改进：能力与对齐的权衡](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | 学习 | Python, TypeScript |
+| 08 | [有边界的自我改进设计](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | 学习 | Python, TypeScript |
+| 09 | [自主编程智能体全景：SWE-bench 与 CodeAct](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | 学习 | Python, TypeScript |
+| 10 | [自主智能体的权限模式](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | 学习 | Python, TypeScript |
+| 11 | [浏览器智能体与间接提示词注入](../../phases/15-autonomous-systems/11-browser-agents/) | 学习 | Python, TypeScript |
+| 12 | [长时间运行智能体的持久执行](../../phases/15-autonomous-systems/12-durable-execution/) | 学习 | Python, TypeScript |
+| 13 | [行动预算、迭代上限与成本控制](../../phases/15-autonomous-systems/13-cost-governors/) | 学习 | Python, TypeScript |
+| 14 | [终止开关、断路器与金丝雀令牌](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | 学习 | Python, TypeScript |
+| 15 | [人在回路：先提案、后提交](../../phases/15-autonomous-systems/15-propose-then-commit/) | 学习 | Python, TypeScript |
+| 16 | [检查点与回滚](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | 学习 | Python, TypeScript |
+| 17 | [宪法式 AI 与规则覆盖](../../phases/15-autonomous-systems/17-constitutional-ai/) | 学习 | Python, TypeScript |
+| 18 | [Llama Guard 与输入输出分类](../../phases/15-autonomous-systems/18-llama-guard/) | 学习 | Python, TypeScript |
+| 19 | [Anthropic 负责任扩展政策 v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | 学习 | Python, TypeScript |
+| 20 | [OpenAI 准备度框架与 DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | 学习 | Python, TypeScript |
+| 21 | [METR 时间跨度与外部评估](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | 学习 | Python, TypeScript |
+| 22 | [CAIS、CAISI 与社会规模风险](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | 学习 | Python, TypeScript |
 
 </details>
 
@@ -869,30 +869,30 @@ flowchart TB
 | # | 课程 | 类型 | 语言 |
 |:---:|--------|:----:|------|
 | 01 | [为什么需要多智能体](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | 学习 | TypeScript |
-| 02 | [FIPA-ACL 的历史与言语行为](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | 学习 | Python |
+| 02 | [FIPA-ACL 的历史与言语行为](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | 学习 | Python, TypeScript |
 | 03 | [通信协议](../../phases/16-multi-agent-and-swarms/03-communication-protocols/) | 构建 | TypeScript |
-| 04 | [多智能体基本模型](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | 学习 | Python |
-| 05 | [监督者 / 编排者—工作者模式](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | 构建 | Python |
-| 06 | [分层架构与任务分解漂移](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | 学习 | Python |
-| 07 | [心智社会与多智能体辩论](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | 构建 | Python |
-| 08 | [角色分工：规划者、批评者、执行者与验证者](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | 构建 | Python |
-| 09 | [并行群体与网络化架构](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | 构建 | Python |
-| 10 | [群聊与发言者选择](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | 构建 | Python |
-| 11 | [移交与例程：无状态编排](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | 构建 | Python |
-| 12 | [A2A：智能体间协议](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | 构建 | Python |
-| 13 | [共享记忆与黑板模式](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | 构建 | Python |
-| 14 | [共识与拜占庭容错](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | 构建 | Python |
-| 15 | [投票、自洽性与辩论拓扑](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | 构建 | Python |
-| 16 | [协商与议价](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | 构建 | Python |
-| 17 | [生成式智能体与涌现式模拟](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | 构建 | Python |
-| 18 | [心智理论与涌现式协作](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | 构建 | Python |
-| 19 | [群体优化：PSO 与 ACO](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | 构建 | Python |
-| 20 | [多智能体强化学习：MADDPG、QMIX 与 MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | 学习 | Python |
-| 21 | [智能体经济：Token 激励与声誉](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | 学习 | Python |
-| 22 | [生产扩展：队列、检查点与持久性](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | 构建 | Python |
-| 23 | [失效模式：MAST、群体思维与单一化](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | 学习 | Python |
-| 24 | [评估与协作基准](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | 学习 | Python |
-| 25 | [案例研究与 2026 年最新进展](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | 学习 | Python |
+| 04 | [多智能体基本模型](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | 学习 | Python, TypeScript |
+| 05 | [监督者 / 编排者—工作者模式](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | 构建 | Python, TypeScript |
+| 06 | [分层架构与任务分解漂移](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | 学习 | Python, TypeScript |
+| 07 | [心智社会与多智能体辩论](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | 构建 | Python, TypeScript |
+| 08 | [角色分工：规划者、批评者、执行者与验证者](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | 构建 | Python, TypeScript |
+| 09 | [并行群体与网络化架构](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | 构建 | Python, TypeScript |
+| 10 | [群聊与发言者选择](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | 构建 | Python, TypeScript |
+| 11 | [移交与例程：无状态编排](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | 构建 | Python, TypeScript |
+| 12 | [A2A：智能体间协议](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | 构建 | Python, TypeScript |
+| 13 | [共享记忆与黑板模式](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | 构建 | Python, TypeScript |
+| 14 | [共识与拜占庭容错](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | 构建 | Python, TypeScript |
+| 15 | [投票、自洽性与辩论拓扑](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | 构建 | Python, TypeScript |
+| 16 | [协商与议价](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | 构建 | Python, TypeScript |
+| 17 | [生成式智能体与涌现式模拟](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | 构建 | Python, TypeScript |
+| 18 | [心智理论与涌现式协作](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | 构建 | Python, TypeScript |
+| 19 | [群体优化：PSO 与 ACO](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | 构建 | Python, TypeScript |
+| 20 | [多智能体强化学习：MADDPG、QMIX 与 MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | 学习 | Python, TypeScript |
+| 21 | [智能体经济：Token 激励与声誉](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | 学习 | Python, TypeScript |
+| 22 | [生产扩展：队列、检查点与持久性](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | 构建 | Python, TypeScript |
+| 23 | [失效模式：MAST、群体思维与单一化](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | 学习 | Python, TypeScript |
+| 24 | [评估与协作基准](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | 学习 | Python, TypeScript |
+| 25 | [案例研究与 2026 年最新进展](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | 学习 | Python, TypeScript |
 
 </details>
 
@@ -902,35 +902,35 @@ flowchart TB
 
 | # | 课程 | 类型 | 语言 |
 |:---:|--------|:----:|------|
-| 01 | [托管式 LLM 平台：Bedrock、Azure OpenAI 与 Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | 学习 | Python |
-| 02 | [推理平台经济学：Fireworks、Together、Baseten 与 Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | 学习 | Python |
-| 03 | [Kubernetes 上的 GPU 自动扩缩容：Karpenter 与 KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | 学习 | Python |
-| 04 | [推理服务引擎内部机制：PagedAttention、连续批处理与分块预填充](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | 学习 | Python |
-| 05 | [生产环境中的 EAGLE-3 推测解码](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | 学习 | Python |
-| 06 | [前缀缓存推理服务：RadixAttention 与 KV 复用](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | 学习 | Python |
-| 07 | [面向硬件的推理编译：Blackwell 上的 FP8 与 NVFP4](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | 学习 | Python |
-| 08 | [推理指标：TTFT、TPOT、ITL、Goodput 与 P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | 学习 | Python |
-| 09 | [生产级量化：AWQ、GPTQ、GGUF、FP8 与 NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | 学习 | Python |
-| 10 | [缓解无服务器 LLM 的冷启动](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | 学习 | Python |
-| 11 | [多区域 LLM 服务与 KV 缓存局部性](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | 学习 | Python |
-| 12 | [边缘推理：ANE、Hexagon、WebGPU 与 Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | 学习 | Python |
+| 01 | [托管式 LLM 平台：Bedrock、Azure OpenAI 与 Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | 学习 | Python, TypeScript |
+| 02 | [推理平台经济学：Fireworks、Together、Baseten 与 Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | 学习 | Python, TypeScript |
+| 03 | [Kubernetes 上的 GPU 自动扩缩容：Karpenter 与 KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | 学习 | Python, TypeScript |
+| 04 | [推理服务引擎内部机制：PagedAttention、连续批处理与分块预填充](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | 学习 | Python, TypeScript |
+| 05 | [生产环境中的 EAGLE-3 推测解码](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | 学习 | Python, TypeScript |
+| 06 | [前缀缓存推理服务：RadixAttention 与 KV 复用](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | 学习 | Python, TypeScript |
+| 07 | [面向硬件的推理编译：Blackwell 上的 FP8 与 NVFP4](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | 学习 | Python, TypeScript |
+| 08 | [推理指标：TTFT、TPOT、ITL、Goodput 与 P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | 学习 | Python, TypeScript |
+| 09 | [生产级量化：AWQ、GPTQ、GGUF、FP8 与 NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | 学习 | Python, TypeScript |
+| 10 | [缓解无服务器 LLM 的冷启动](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | 学习 | Python, TypeScript |
+| 11 | [多区域 LLM 服务与 KV 缓存局部性](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | 学习 | Python, TypeScript |
+| 12 | [边缘推理：ANE、Hexagon、WebGPU 与 Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | 学习 | Python, TypeScript |
 | 13 | [选择 LLM 可观测性技术栈](../../phases/17-infrastructure-and-production/13-llm-observability/) | 学习 | Python, TypeScript |
 | 14 | [提示词缓存与语义缓存的经济性](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | 学习 | Python, TypeScript |
 | 15 | [批量 API：成为行业标准的五折价格](../../phases/17-infrastructure-and-production/15-batch-apis/) | 学习 | Python, TypeScript |
 | 16 | [模型路由：降低成本的基本手段](../../phases/17-infrastructure-and-production/16-model-routing/) | 学习 | Python, TypeScript |
-| 17 | [预填充与解码分离：NVIDIA Dynamo 与 llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | 学习 | Python |
-| 18 | [生产级推理服务栈：KV 卸载与缓存感知路由](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | 学习 | Python |
+| 17 | [预填充与解码分离：NVIDIA Dynamo 与 llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | 学习 | Python, TypeScript |
+| 18 | [生产级推理服务栈：KV 卸载与缓存感知路由](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | 学习 | Python, TypeScript |
 | 19 | [AI 网关：LiteLLM、Portkey、Kong 与 Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | 学习 | Python, TypeScript |
 | 20 | [影子部署、金丝雀发布与渐进式上线](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | 学习 | Python, TypeScript |
-| 21 | [LLM 功能的 A/B 测试：GrowthBook 与 Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | 学习 | Python |
-| 22 | [LLM API 负载测试：k6、LLMPerf 与 GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | 构建 | Python |
-| 23 | [面向 AI 的 SRE：多智能体事件响应](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | 学习 | Python |
-| 24 | [LLM 生产系统中的混沌工程](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | 学习 | Python |
-| 25 | [安全：密钥、PII 清理与审计日志](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | 学习 | Python |
-| 26 | [合规：SOC 2、HIPAA、GDPR、欧盟 AI 法案与 ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | 学习 | Python |
-| 27 | [面向 LLM 的 FinOps：单位经济性与多租户成本归因](../../phases/17-infrastructure-and-production/27-finops-llms/) | 学习 | Python |
-| 28 | [自托管推理服务选型：按硬件与规模匹配引擎](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | 学习 | Python |
-| 29 | [模型演示界面：从函数到可分享的应用](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | 构建 | Python |
+| 21 | [LLM 功能的 A/B 测试：GrowthBook 与 Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | 学习 | Python, TypeScript |
+| 22 | [LLM API 负载测试：k6、LLMPerf 与 GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | 构建 | Python, TypeScript |
+| 23 | [面向 AI 的 SRE：多智能体事件响应](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | 学习 | Python, TypeScript |
+| 24 | [LLM 生产系统中的混沌工程](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | 学习 | Python, TypeScript |
+| 25 | [安全：密钥、PII 清理与审计日志](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | 学习 | Python, TypeScript |
+| 26 | [合规：SOC 2、HIPAA、GDPR、欧盟 AI 法案与 ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | 学习 | Python, TypeScript |
+| 27 | [面向 LLM 的 FinOps：单位经济性与多租户成本归因](../../phases/17-infrastructure-and-production/27-finops-llms/) | 学习 | Python, TypeScript |
+| 28 | [自托管推理服务选型：按硬件与规模匹配引擎](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | 学习 | Python, TypeScript |
+| 29 | [模型演示界面：从函数到可分享的应用](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | 构建 | Python, TypeScript |
 
 </details>
 
@@ -940,36 +940,36 @@ flowchart TB
 
 | # | 课程 | 类型 | 语言 |
 |:---:|--------|:----:|------|
-| 01 | [指令遵循作为对齐信号](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | 学习 | Python |
-| 02 | [奖励黑客与古德哈特定律](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | 学习 | Python |
-| 03 | [直接偏好优化方法族](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | 学习 | Python |
-| 04 | [谄媚行为如何被 RLHF 放大](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | 学习 | Python |
-| 05 | [宪法式 AI 与 RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | 学习 | Python |
-| 06 | [内部优化（Mesa-Optimization）与欺骗性对齐](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | 学习 | Python |
-| 07 | [潜伏智能体：持续性欺骗](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | 学习 | Python |
-| 08 | [前沿模型的上下文内谋划](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | 学习 | Python |
-| 09 | [伪装对齐](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | 学习 | Python |
-| 10 | [AI 控制：在系统试图规避时仍保持安全](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | 学习 | Python |
-| 11 | [可扩展监督与弱模型指导强模型](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | 学习 | Python |
-| 12 | [红队测试：PAIR 与自动化攻击](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | 构建 | Python |
-| 13 | [多样本越狱](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | 学习 | Python |
-| 14 | [ASCII 艺术与视觉越狱](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | 构建 | Python |
-| 15 | [间接提示词注入](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | 构建 | Python |
-| 16 | [红队工具：Garak、Llama Guard 与 PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | 构建 | Python |
-| 17 | [WMDP 与双重用途能力评估](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | 学习 | Python |
-| 18 | [前沿模型安全框架：RSP、PF 与 FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | 学习 | Python |
-| 19 | [模型福利研究](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | 学习 | Python |
-| 20 | [偏见与表征伤害](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | 构建 | Python |
-| 21 | [公平性标准：群体、个体与反事实](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | 学习 | Python |
-| 22 | [面向 LLM 的差分隐私](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | 构建 | Python |
-| 23 | [水印：SynthID、Stable Signature 与 C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | 构建 | Python |
-| 24 | [监管框架：欧盟、美国、英国与韩国](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | 学习 | Python |
-| 25 | [EchoLeak 与 AI 系统的 CVE](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | 学习 | Python |
-| 26 | [模型卡、系统卡与数据集卡](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | 构建 | Python |
-| 27 | [数据来源追溯与训练数据治理](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | 学习 | Python |
-| 28 | [对齐研究生态：MATS、Redwood、Apollo 与 METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | 学习 | Python |
-| 29 | [内容审核系统：OpenAI、Perspective 与 Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | 构建 | Python |
-| 30 | [双重用途风险：网络、生物、化学与核领域](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | 学习 | Python |
+| 01 | [指令遵循作为对齐信号](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | 学习 | Python, TypeScript |
+| 02 | [奖励黑客与古德哈特定律](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | 学习 | Python, TypeScript |
+| 03 | [直接偏好优化方法族](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | 学习 | Python, TypeScript |
+| 04 | [谄媚行为如何被 RLHF 放大](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | 学习 | Python, TypeScript |
+| 05 | [宪法式 AI 与 RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | 学习 | Python, TypeScript |
+| 06 | [内部优化（Mesa-Optimization）与欺骗性对齐](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | 学习 | Python, TypeScript |
+| 07 | [潜伏智能体：持续性欺骗](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | 学习 | Python, TypeScript |
+| 08 | [前沿模型的上下文内谋划](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | 学习 | Python, TypeScript |
+| 09 | [伪装对齐](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | 学习 | Python, TypeScript |
+| 10 | [AI 控制：在系统试图规避时仍保持安全](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | 学习 | Python, TypeScript |
+| 11 | [可扩展监督与弱模型指导强模型](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | 学习 | Python, TypeScript |
+| 12 | [红队测试：PAIR 与自动化攻击](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | 构建 | Python, TypeScript |
+| 13 | [多样本越狱](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | 学习 | Python, TypeScript |
+| 14 | [ASCII 艺术与视觉越狱](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | 构建 | Python, TypeScript |
+| 15 | [间接提示词注入](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | 构建 | Python, TypeScript |
+| 16 | [红队工具：Garak、Llama Guard 与 PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | 构建 | Python, TypeScript |
+| 17 | [WMDP 与双重用途能力评估](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | 学习 | Python, TypeScript |
+| 18 | [前沿模型安全框架：RSP、PF 与 FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | 学习 | Python, TypeScript |
+| 19 | [模型福利研究](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | 学习 | Python, TypeScript |
+| 20 | [偏见与表征伤害](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | 构建 | Python, TypeScript |
+| 21 | [公平性标准：群体、个体与反事实](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | 学习 | Python, TypeScript |
+| 22 | [面向 LLM 的差分隐私](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | 构建 | Python, TypeScript |
+| 23 | [水印：SynthID、Stable Signature 与 C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | 构建 | Python, TypeScript |
+| 24 | [监管框架：欧盟、美国、英国与韩国](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | 学习 | Python, TypeScript |
+| 25 | [EchoLeak 与 AI 系统的 CVE](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | 学习 | Python, TypeScript |
+| 26 | [模型卡、系统卡与数据集卡](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | 构建 | Python, TypeScript |
+| 27 | [数据来源追溯与训练数据治理](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | 学习 | Python, TypeScript |
+| 28 | [对齐研究生态：MATS、Redwood、Apollo 与 METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | 学习 | Python, TypeScript |
+| 29 | [内容审核系统：OpenAI、Perspective 与 Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | 构建 | Python, TypeScript |
+| 30 | [双重用途风险：网络、生物、化学与核领域](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | 学习 | Python, TypeScript |
 
 </details>
 
@@ -979,39 +979,39 @@ flowchart TB
 
 | # | 项目 | 综合阶段 | 语言 |
 |:---:|---------|----------|------|
-| 01 | [终端原生编程智能体](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [面向代码库的 RAG：跨仓库语义搜索](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [实时语音助手（ASR → LLM → TTS）](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [多模态文档问答：视觉优先](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [自主研究智能体（AI Scientist 类）](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [面向 Kubernetes 的 DevOps 故障排查智能体](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [端到端微调流水线](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [生产级 RAG 聊天机器人：受监管领域](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [代码迁移智能体：仓库级升级](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [多智能体软件工程团队](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [LLM 可观测性与评估仪表盘](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [视频理解流水线：从场景到问答](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [具备注册表与治理机制的无状态 MCP 服务器](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [推测解码推理服务器](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [宪法式安全测试框架与红队演练环境](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [从 GitHub Issue 到 PR 的自主智能体](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [自适应多模态个人 AI 导师](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [终端原生编程智能体](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [面向代码库的 RAG：跨仓库语义搜索](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [实时语音助手（ASR → LLM → TTS）](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [多模态文档问答：视觉优先](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [自主研究智能体（AI Scientist 类）](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [面向 Kubernetes 的 DevOps 故障排查智能体](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [端到端微调流水线](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [生产级 RAG 聊天机器人：受监管领域](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [代码迁移智能体：仓库级升级](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [多智能体软件工程团队](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [LLM 可观测性与评估仪表盘](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [视频理解流水线：从场景到问答](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [具备注册表与治理机制的无状态 MCP 服务器](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [推测解码推理服务器](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [宪法式安全测试框架与红队演练环境](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [从 GitHub Issue 到 PR 的自主智能体](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [自适应多模态个人 AI 导师](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **深度实践路线**：每条路线由多节课组成，带你从零构建一个完整子系统。
 
 | # | 项目 | 综合阶段 | 语言 |
 |:---:|---------|----------|------|
-| 20 | [智能体运行框架的循环契约](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. 智能体运行框架 | Python |
-| 21 | [带 Schema 验证的工具注册表](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. 智能体运行框架 | Python |
-| 22 | [基于换行分隔 stdio 的 JSON-RPC 2.0 传输](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. 智能体运行框架 | Python |
-| 23 | [函数调用分发器](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. 智能体运行框架 | Python |
-| 24 | [“规划—执行”控制流](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. 智能体运行框架 | Python |
-| 25 | [验证关卡与观察预算](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. 智能体运行框架 | Python |
-| 26 | [带拒绝列表与路径隔离的沙盒运行器](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. 智能体运行框架 | Python |
-| 27 | [基于固定任务的评估框架](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. 智能体运行框架 | Python |
-| 28 | [基于 OTel GenAI Span 与 Prometheus 指标的可观测性](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. 智能体运行框架 | Python |
-| 29 | [在运行框架上完成端到端编程任务](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. 智能体运行框架 | Python |
-| 30 | [从零实现 BPE 分词器](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP 与 LLM | Python |
+| 20 | [智能体运行框架的循环契约](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. 智能体运行框架 | Python, TypeScript |
+| 21 | [带 Schema 验证的工具注册表](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. 智能体运行框架 | Python, TypeScript |
+| 22 | [基于换行分隔 stdio 的 JSON-RPC 2.0 传输](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. 智能体运行框架 | Python, TypeScript |
+| 23 | [函数调用分发器](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. 智能体运行框架 | Python, TypeScript |
+| 24 | [“规划—执行”控制流](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. 智能体运行框架 | Python, TypeScript |
+| 25 | [验证关卡与观察预算](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. 智能体运行框架 | Python, TypeScript |
+| 26 | [带拒绝列表与路径隔离的沙盒运行器](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. 智能体运行框架 | Python, TypeScript |
+| 27 | [基于固定任务的评估框架](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. 智能体运行框架 | Python, TypeScript |
+| 28 | [基于 OTel GenAI Span 与 Prometheus 指标的可观测性](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. 智能体运行框架 | Python, TypeScript |
+| 29 | [在运行框架上完成端到端编程任务](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. 智能体运行框架 | Python, TypeScript |
+| 30 | [从零实现 BPE 分词器](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP 与 LLM | Python, TypeScript |
 | 31 | [使用滑动窗口的分词数据集](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP 与 LLM | Python |
 | 32 | [Token 嵌入与位置嵌入](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP 与 LLM | Python |
 | 33 | [多头自注意力](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP 与 LLM | Python |
@@ -1030,13 +1030,13 @@ flowchart TB
 | 46 | [梯度累积](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. 端到端训练 | Python |
 | 47 | [保存检查点并恢复训练](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. 端到端训练 | Python |
 | 48 | [从零实现分布式数据并行与 FSDP](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. 端到端训练 | Python |
-| 49 | [语言模型评估框架](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. 端到端训练 | Python |
-| 50 | [假设生成器](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. 自动化研究 | Python |
-| 51 | [文献检索](../../phases/19-capstone-projects/51-literature-retrieval/) | D. 自动化研究 | Python |
-| 52 | [实验运行器](../../phases/19-capstone-projects/52-experiment-runner/) | D. 自动化研究 | Python |
+| 49 | [语言模型评估框架](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. 端到端训练 | Python, TypeScript |
+| 50 | [假设生成器](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. 自动化研究 | Python, TypeScript |
+| 51 | [文献检索](../../phases/19-capstone-projects/51-literature-retrieval/) | D. 自动化研究 | Python, TypeScript |
+| 52 | [实验运行器](../../phases/19-capstone-projects/52-experiment-runner/) | D. 自动化研究 | Python, TypeScript |
 | 53 | [结果评估器](../../phases/19-capstone-projects/53-result-evaluator/) | D. 自动化研究 | Python |
-| 54 | [论文写作器](../../phases/19-capstone-projects/54-paper-writer/) | D. 自动化研究 | Python |
-| 55 | [批评与修正循环](../../phases/19-capstone-projects/55-critic-loop/) | D. 自动化研究 | Python |
+| 54 | [论文写作器](../../phases/19-capstone-projects/54-paper-writer/) | D. 自动化研究 | Python, TypeScript |
+| 55 | [批评与修正循环](../../phases/19-capstone-projects/55-critic-loop/) | D. 自动化研究 | Python, TypeScript |
 | 56 | [迭代调度器](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. 自动化研究 | Python |
 | 57 | [端到端研究演示](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. 自动化研究 | Python |
 | 58 | [视觉编码器的图像块](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. 多模态 VLM | Python |
@@ -1045,13 +1045,13 @@ flowchart TB
 | 61 | [交叉注意力融合](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. 多模态 VLM | Python |
 | 62 | [视觉语言预训练](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. 多模态 VLM | Python |
 | 63 | [多模态评估](../../phases/19-capstone-projects/63-multimodal-eval/) | E. 多模态 VLM | Python |
-| 64 | [切块策略对比](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. 高级 RAG | Python |
-| 65 | [结合 BM25 与密集嵌入的混合检索](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. 高级 RAG | Python |
+| 64 | [切块策略对比](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. 高级 RAG | Python, TypeScript |
+| 65 | [结合 BM25 与密集嵌入的混合检索](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. 高级 RAG | Python, TypeScript |
 | 66 | [交叉编码器重排序器](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. 高级 RAG | Python |
-| 67 | [查询改写：HyDE、多查询与问题分解](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. 高级 RAG | Python |
-| 68 | [RAG 评估：精确率、召回率、MRR、nDCG、忠实度与答案相关性](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. 高级 RAG | Python |
+| 67 | [查询改写：HyDE、多查询与问题分解](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. 高级 RAG | Python, TypeScript |
+| 68 | [RAG 评估：精确率、召回率、MRR、nDCG、忠实度与答案相关性](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. 高级 RAG | Python, TypeScript |
 | 69 | [端到端 RAG 系统](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. 高级 RAG | Python |
-| 70 | [任务规格格式](../../phases/19-capstone-projects/70-task-spec-format/) | G. 评估框架 | Python |
+| 70 | [任务规格格式](../../phases/19-capstone-projects/70-task-spec-format/) | G. 评估框架 | Python, TypeScript |
 | 71 | [经典评估指标](../../phases/19-capstone-projects/71-classical-metrics/) | G. 评估框架 | Python |
 | 72 | [代码执行指标](../../phases/19-capstone-projects/72-code-exec-metric/) | G. 评估框架 | Python |
 | 73 | [困惑度与校准](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. 评估框架 | Python |
@@ -1064,11 +1064,11 @@ flowchart TB
 | 80 | [分片检查点与原子恢复](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. 分布式训练 | Python |
 | 81 | [端到端分布式训练](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. 分布式训练 | Python |
 | 82 | [越狱方式分类](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. 安全测试框架 | Python |
-| 83 | [提示词注入检测器](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. 安全测试框架 | Python |
+| 83 | [提示词注入检测器](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. 安全测试框架 | Python, TypeScript |
 | 84 | [拒绝回答评估](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. 安全测试框架 | Python |
-| 85 | [内容分类器集成](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. 安全测试框架 | Python |
-| 86 | [宪法式规则引擎](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. 安全测试框架 | Python, YAML |
-| 87 | [端到端安全关卡](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. 安全测试框架 | Python |
+| 85 | [内容分类器集成](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. 安全测试框架 | Python, TypeScript |
+| 86 | [宪法式规则引擎](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. 安全测试框架 | Python |
+| 87 | [端到端安全关卡](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. 安全测试框架 | Python, TypeScript |
 
 </details>
 

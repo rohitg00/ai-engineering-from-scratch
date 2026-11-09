@@ -3,7 +3,7 @@
 > Context windows are finite. Conversations, documents, and tool traces are not. The fix is OS virtual memory restated — main context is RAM, external store is disk, the agent pages between them. MemGPT (Packer et al., 2023) named the pattern; many production memory systems build on it.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ Run it:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The trace shows the agent writing three facts, filling main context to the cap (forcing eviction), then answering a follow-up question by retrieving from archival — reproducing the MemGPT workflow without any real LLM.

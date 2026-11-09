@@ -141,7 +141,7 @@ class ContractNetManager:
 
 def demo_contract_net() -> None:
     print("\n" + "=" * 72)
-    print("CONTRACT NET TASK MARKET — manager + 3 bidders")
+    print("CONTRACT NET TASK MARKET: manager + 3 bidders")
     print("=" * 72)
     task = ContractNetTask(
         task_id="t-1",
@@ -159,7 +159,7 @@ def demo_contract_net() -> None:
 
 def main() -> None:
     print("=" * 72)
-    print("DEAL RATE — naive LLM bargaining vs OG-Narrator")
+    print("DEAL RATE: naive LLM bargaining vs OG-Narrator")
     print("reservation prices sampled per trial: seller_min in [50,80], buyer_max in [75,115]")
     print("=" * 72)
     bench_deal_rate(naive_llm_bargain, "naive LLM")

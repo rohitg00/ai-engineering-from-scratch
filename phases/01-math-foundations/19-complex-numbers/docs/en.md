@@ -3,7 +3,7 @@
 > The square root of -1 is not imaginary. It is the key to rotations, frequencies, and half of signal processing.
 
 **Type:** Learn
-**Language:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 1, Lessons 01-04 (linear algebra, calculus)
 **Time:** ~60 minutes
 
@@ -426,7 +426,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 ## Ship It
 
-Run `code/complex_numbers.py` to generate `outputs/skill-complex-arithmetic.md`.
+Run `code/complex_numbers.py` or `npx tsx code/complex_numbers.ts` to generate `outputs/skill-complex-arithmetic.md`.
 
 ## Exercises
 

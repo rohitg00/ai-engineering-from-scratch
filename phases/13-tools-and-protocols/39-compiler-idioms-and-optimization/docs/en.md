@@ -3,7 +3,7 @@
 > An optimizing compiler replaces source constructs with cheaper instruction shapes. Each shape has a derivation, and this lesson builds the recognizer that runs the derivation backwards and checks it against the source.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly, AArch64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode), Phase 13 · 38 (calling conventions)
 **Time:** ~150 minutes
 
@@ -253,6 +253,7 @@ Run the demo:
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The output is one JSON report. For each of the 18 builds it lists every function and its idioms, with kind, source form, evidence addresses, verification, and the detail fields. It ends with a kind matrix per build, the `-O2` versus `-O3` comparison for both architectures, and the `unverified` list.
@@ -380,6 +381,7 @@ Run the demo and the deterministic suite:
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

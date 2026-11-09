@@ -140,7 +140,7 @@ def simulate_retry_storm(requests: int, use_breaker: bool, seed: int = 0) -> tup
 
 def demo_incident_categorization() -> None:
     print("=" * 72)
-    print("INCIDENT CATEGORIZATION — map symptoms to MAST + Groupthink families")
+    print("INCIDENT CATEGORIZATION: map symptoms to MAST + Groupthink families")
     print("=" * 72)
     incidents = [
         {"role_conflict": True, "name": "two agents both reviewing"},
@@ -154,15 +154,15 @@ def demo_incident_categorization() -> None:
         cat, desc = categorize_incident(inc)
         gt = detect_groupthink(inc)
         print(f"\n  incident: {name}")
-        print(f"    MAST:       {cat} — {desc}")
+        print(f"    MAST:       {cat}: {desc}")
         if gt:
             for code, d in gt:
-                print(f"    Groupthink: {code} — {d}")
+                print(f"    Groupthink: {code}: {d}")
 
 
 def demo_retry_storm() -> None:
     print("\n" + "=" * 72)
-    print("RETRY STORM — 200 requests against a 10% baseline-failing service")
+    print("RETRY STORM: 200 requests against a 10% baseline-failing service")
     print("=" * 72)
     total_no_cb, succ_no_cb, _ = simulate_retry_storm(200, use_breaker=False, seed=0)
     total_cb, succ_cb, sc = simulate_retry_storm(200, use_breaker=True, seed=0)

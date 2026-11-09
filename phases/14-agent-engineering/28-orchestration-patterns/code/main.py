@@ -96,7 +96,7 @@ def debate(tasks: list[str]) -> tuple[list[str], int]:
 
 def main() -> None:
     print("=" * 70)
-    print("ORCHESTRATION PATTERNS — Phase 14, Lesson 28")
+    print("ORCHESTRATION PATTERNS: Phase 14, Lesson 28")
     print("=" * 70)
 
     tasks = [

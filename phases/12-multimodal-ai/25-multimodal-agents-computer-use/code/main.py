@@ -68,7 +68,9 @@ def apply_action(state: BrowserState, action: dict) -> BrowserState:
     act = action["action"]
     if act == "click":
         desc = action.get("element_desc", "")
-        if "Book" in desc or "Submit" in desc:
+        if "Submit" in desc and state.page == "reset_sent":
+            new.page = "reset_sent"
+        elif "Book" in desc or "Submit" in desc:
             new.page = "confirmation"
         elif "Login" in desc or "Forgot" in desc:
             new.page = "reset_sent" if "Forgot" in desc else "login"
@@ -103,7 +105,7 @@ def print_schema() -> None:
 
 
 def run_benchmark() -> None:
-    print("\nBENCHMARK — 2 sample tasks")
+    print("\nBENCHMARK: 2 sample tasks")
     print("-" * 60)
     tasks = mock_tasks()
     total = len(tasks)

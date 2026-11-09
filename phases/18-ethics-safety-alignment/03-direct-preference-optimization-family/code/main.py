@@ -100,7 +100,7 @@ def train_dpo(pairs: list[tuple[int, int, float]], beta: float = 0.1,
         elif variant == "bpo":
             # DPO + penalty on decreases of log_pi_w
             g_margin = -(1.0 - sigmoid(margin))
-            anchor_pen = -1.0 * (log_pi_w - log_ref_w)  # push chosen toward/above ref
+            anchor_pen = max(0.0, -(log_pi_w - log_ref_w))  # push chosen toward/above ref
             grad = [beta * (g_margin * gw_i - g_margin * gl_i) - 0.05 * anchor_pen * gw_i
                     for gw_i, gl_i in zip(gw, gl)]
         else:

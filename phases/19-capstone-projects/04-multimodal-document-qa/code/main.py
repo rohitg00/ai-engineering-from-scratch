@@ -11,6 +11,7 @@ Run:  python main.py
 
 from __future__ import annotations
 
+import hashlib
 import math
 import random
 import re
@@ -29,7 +30,7 @@ def tokenize(text: str) -> list[str]:
 
 
 def hash_embed(tok: str) -> list[float]:
-    rnd = random.Random(hash(tok) & 0xFFFFFFFF)
+    rnd = random.Random(int.from_bytes(hashlib.md5(tok.encode("utf-8")).digest()[:4], "big"))
     v = [rnd.gauss(0, 1) for _ in range(EMB_DIM)]
     n = math.sqrt(sum(x * x for x in v)) or 1.0
     return [x / n for x in v]

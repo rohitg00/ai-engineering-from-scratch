@@ -3,7 +3,7 @@
 > Passing your tests proves agreement on your tests, so equality needs a grid that reaches every edge and bytes that match after relocation masking.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 34 (lifting to pseudocode), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~110 minutes
 
@@ -271,6 +271,7 @@ Run the standard-library harness:
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 With clang on the path, the demo compiles both candidate pairs and runs 92 cells for each. It recompiles eight candidates, replays the agent run, and mints the proof record. Without clang it reads the committed objects and reports the behaviour claims as `unknown`.
@@ -371,6 +372,9 @@ With rea 6.5.0 and Ghidra 12.1.4 installed:
 GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
 JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
 python3 code/main.py --live
+GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
+JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
+npx tsx code/main.ts --live
 ```
 
 The first `analyze_function` takes several seconds while Ghidra imports the object. Compare the new evidence ids with the committed run. The same bytes under the same analysis profile give the same ids, because the id is a content hash that excludes the file path.
@@ -404,6 +408,7 @@ Check your answers:
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 The checker computes each expected value from `code/main.py` on the committed fixtures. It prints `PASS`, `FAIL` or `TODO` for each task and a score, and it exits 0 only when all five pass. `python3 code/lab.py my-answers.json` checks another file. `code/tests/test_lab.py` proves that the checker accepts the right answers and rejects a wrong one.
@@ -423,6 +428,7 @@ Run the demo and the test suite:
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

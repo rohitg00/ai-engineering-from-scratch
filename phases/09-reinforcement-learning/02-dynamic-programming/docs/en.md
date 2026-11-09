@@ -3,7 +3,7 @@
 > Dynamic programming is RL with cheating. You already know the transition and reward functions; you just iterate the Bellman equation until $V$ or $\pi$ stops moving. It is the benchmark every sampling-based method tries to approach.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 9 · 01 (MDPs)
 **Time:** ~75 minutes
 

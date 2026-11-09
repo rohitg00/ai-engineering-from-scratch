@@ -51,6 +51,7 @@ def mse(a, b):
 def finite_diff_step(gaussians, target, lr, eps=0.1):
     base = render(gaussians)
     base_loss = mse(base, target)
+    updates = []
     for g in gaussians:
         for key in ("pos", "sigma", "color"):
             if isinstance(g[key], list):
@@ -58,14 +59,17 @@ def finite_diff_step(gaussians, target, lr, eps=0.1):
                     g[key][i] += eps
                     up = mse(render(gaussians), target)
                     g[key][i] -= eps
-                    grad = (up - base_loss) / eps
-                    g[key][i] -= lr * grad
+                    updates.append((g, key, i, (up - base_loss) / eps))
             else:
                 g[key] += eps
                 up = mse(render(gaussians), target)
                 g[key] -= eps
-                grad = (up - base_loss) / eps
-                g[key] -= lr * grad
+                updates.append((g, key, None, (up - base_loss) / eps))
+    for g, key, i, grad in updates:
+        if i is None:
+            g[key] -= lr * grad
+        else:
+            g[key][i] -= lr * grad
     return base_loss
 
 

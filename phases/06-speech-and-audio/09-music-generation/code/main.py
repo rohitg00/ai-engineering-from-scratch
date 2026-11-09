@@ -63,10 +63,12 @@ def fake_generate(prompt, rng=None):
             break
     bars = 8
     bpm = 120
-    for token in prompt_lower.split():
+    tokens = prompt_lower.split()
+    for i, token in enumerate(tokens):
         if token.endswith("bpm"):
+            num = token[:-3] or (tokens[i - 1] if i > 0 else "")
             try:
-                bpm = int(token[:-3])
+                bpm = int(num)
             except ValueError:
                 pass
     return {

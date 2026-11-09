@@ -3,7 +3,7 @@
 > A plan that cannot survive a failure is a script. A script that can replan is an agent. Build the replanner first.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

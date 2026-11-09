@@ -188,7 +188,7 @@ def main() -> None:
 
     # Reward hacking: kill the KL.
     rlhf2, r2, kl2 = stage3_ppo(sft, rm, beta=0.0)
-    report("Run 2: beta = 0.00 (no KL — reward hacking shows up)",
+    report("Run 2: beta = 0.00 (no KL, reward hacking shows up)",
            sft, rlhf2, rm, r2, kl2)
 
     # RM bug: +0.5 bias on action A. With KL on, partial exploitation.

@@ -3,7 +3,7 @@
 > A gateway should make every route explicit. The 2026-07-28 protocol gives it method, name, version, capability, identity, cache, and trace boundaries without a transport session.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 15 (security), Phase 13 · 16 (authorization)
 **Time:** ~75 minutes
 
@@ -326,6 +326,7 @@ Run it:
 ```bash
 cd phases/13-tools-and-protocols/17-mcp-gateways-and-registries
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

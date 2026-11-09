@@ -158,7 +158,7 @@ def run_react_mock(question: str, tools: ToolRegistry,
 
 def main() -> None:
     print("=" * 70)
-    print("REWOO — Planner, Workers, Solver (Phase 14, Lesson 02)")
+    print("REWOO: Planner, Workers, Solver (Phase 14, Lesson 02)")
     print("=" * 70)
 
     tools = ToolRegistry()

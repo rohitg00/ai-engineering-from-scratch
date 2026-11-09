@@ -3,7 +3,7 @@
 > A model demo has one contract: an input, a model call, and an output. Put a limit on each part before you share the link.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 · 13 (Building a Production LLM Application), Phase 17 · 08 (Inference Metrics), Phase 17 · 19 (AI Gateways)
 **Time:** ~90 minutes
 
@@ -207,12 +207,14 @@ The code is one file, `code/main.py`, with no dependencies outside the standard 
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The self-test checks the validator, the token bucket, the stream format, and one real HTTP round trip. It starts the server on a free port, sends three requests, stops the server, and exits. Start the server for a browser only when you need it:
 
 ```bash
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 Open `http://127.0.0.1:8000` in a browser. Press Ctrl+C to stop the server.
@@ -478,6 +480,7 @@ To require an access token, set `DEMO_ACCESS_TOKEN` before you start the server.
 export DEMO_ACCESS_TOKEN="$(python3 -c 'import secrets; print(secrets.token_urlsafe(24))')"
 echo "$DEMO_ACCESS_TOKEN"
 python3 code/main.py --serve
+npx tsx code/main.ts --serve
 ```
 
 Run the tests:

@@ -401,7 +401,7 @@ def demo_positional_encoding():
 
 def write_skill_output():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    output_path = os.path.join(script_dir, "outputs", "skill-complex-arithmetic.md")
+    output_path = os.path.join(os.path.dirname(script_dir), "outputs", "skill-complex-arithmetic.md")
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     try:
         with open(output_path, "w") as f:

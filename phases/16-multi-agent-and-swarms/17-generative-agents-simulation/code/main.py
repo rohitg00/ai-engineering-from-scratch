@@ -81,7 +81,7 @@ def run_simulation(n_agents: int = 5, ticks: int = 6) -> None:
     agents[0].beliefs.append("there is a party I was invited to")
 
     print("=" * 72)
-    print(f"GENERATIVE AGENTS (miniature) — {n_agents} agents, {ticks} ticks")
+    print(f"GENERATIVE AGENTS (miniature): {n_agents} agents, {ticks} ticks")
     print("=" * 72)
 
     for tick in range(ticks):
@@ -119,7 +119,7 @@ def run_simulation(n_agents: int = 5, ticks: int = 6) -> None:
 
 def demo_retrieval() -> None:
     print("\n" + "=" * 72)
-    print("RETRIEVAL DEMO — top-k by recency + importance + relevance")
+    print("RETRIEVAL DEMO: top-k by recency + importance + relevance")
     print("=" * 72)
     stream = [
         Memory(0, "observation", "saw Isabella at the cafe", importance=4),

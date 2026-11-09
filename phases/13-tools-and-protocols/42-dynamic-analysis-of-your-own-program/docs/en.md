@@ -3,7 +3,7 @@
 > A breakpoint hit is an observation about one run of one build. This lesson builds the harness that turns those observations into confirmed, refuted, and not-observed verdicts on the claims the static lessons made.
 
 **Type:** Build
-**Languages:** Python, C, arm64 assembly, lldb command language
+**Languages:** Python, TypeScript, C, arm64 assembly, lldb command language
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~130 minutes
 
@@ -357,6 +357,7 @@ Run the demo:
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The output is one JSON report over the saved transcripts. For each build it lists the breakpoints with their resolution and hit counts, the hardware watchpoint count, every stop with its registers and arguments, the exit status, the program's output, the errors lldb printed, and the claims with their verdicts and the evidence records behind them. It adds the core round trip, the Python API results, the sandbox failure, and which external tools are absent on this machine.
@@ -496,6 +497,7 @@ Run the demo and the deterministic suite:
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

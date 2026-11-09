@@ -79,7 +79,7 @@ def diff(capability: str) -> None:
     print(f"\nCapability: {capability}")
     print("-" * 80)
     for p in POLICIES:
-        entry = p.table.get(capability, ("not in table", "—"))
+        entry = p.table.get(capability, ("not in table", "-"))
         print(f"  {p.name}")
         print(f"    classification: {entry[0]}")
         print(f"    action:         {entry[1]}")

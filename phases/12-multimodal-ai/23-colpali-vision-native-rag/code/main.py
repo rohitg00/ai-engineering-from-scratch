@@ -74,7 +74,7 @@ def retrieve(query: Query, pages: list[Page], k: int = 3) -> list[tuple[str, flo
 
 
 def storage_estimate() -> None:
-    print("\nSTORAGE — COLPALI vs TEXT-RAG")
+    print("\nSTORAGE: COLPALI vs TEXT-RAG")
     print("-" * 60)
     print(f"  {'system':<24}{'bytes/page':<14}  note")
     print(f"  {'text-RAG 768d bi-enc':<24}{'3.0 KB':<14}  one vector per chunk")

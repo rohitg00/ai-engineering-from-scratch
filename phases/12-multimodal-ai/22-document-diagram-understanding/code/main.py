@@ -69,7 +69,7 @@ def token_budget() -> None:
         ("OCR pipeline + LayoutLMv3", 512, "text + bbox + small image"),
         ("Donut (OCR-free)",          4096, "swin encoder, ~4k patches"),
         ("Nougat (paper pages)",      4096, "896x896, 4-tile AnyRes"),
-        ("VLM AnyRes 4-tile (LLaVA)", 2916, "336 tiles + thumbnail"),
+        ("VLM AnyRes 4-tile (LLaVA)", 2880, "336 tiles + thumbnail"),
         ("VLM native 2048 (Qwen2.5-VL)", 8192, "native resolution"),
         ("VLM native 2576 (Claude 4.7)", 12000, "frontier, best accuracy"),
     ]

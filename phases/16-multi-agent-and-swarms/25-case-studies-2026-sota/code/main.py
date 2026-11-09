@@ -79,7 +79,7 @@ def print_case(key: str) -> None:
 
 def print_landscape() -> None:
     print("\n" + "=" * 78)
-    print("FRAMEWORK LANDSCAPE — April 2026")
+    print("FRAMEWORK LANDSCAPE: April 2026")
     print("=" * 78)
     print(f"  {'framework':30s} {'status':22s} {'best for':30s}")
     for name, status, best_for in FRAMEWORK_LANDSCAPE:
@@ -97,7 +97,7 @@ def main() -> None:
     ]
 
     print("=" * 78)
-    print("CASE-STUDY MAPPER — proposed designs → closest 2026 reference")
+    print("CASE-STUDY MAPPER: proposed designs → closest 2026 reference")
     print("=" * 78)
 
     for d in designs:

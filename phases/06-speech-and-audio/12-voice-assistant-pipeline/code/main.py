@@ -134,7 +134,7 @@ def main():
     for name, ms in stages:
         bar = "#" * int(ms / 10)
         print(f"  {name:<40s} {ms:>6.1f} ms  {bar}")
-    print(f"  TOTAL user-perceived (to first audio): {total:.1f} ms   (target: &lt; 800 ms)")
+    print(f"  TOTAL user-perceived (to first audio): {total:.1f} ms   (target: < 800 ms)")
 
     print()
     print("=== Step 6: 2026 reference stacks ===")

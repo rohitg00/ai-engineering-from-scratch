@@ -357,7 +357,7 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 10 | [Terminal en shell](../../phases/00-setup-and-tooling/10-terminal-and-shell/) | Leren | — |
 | 11 | [Linux voor AI](../../phases/00-setup-and-tooling/11-linux-for-ai/) | Leren | — |
 | 12 | [Fouten opsporen en profileren](../../phases/00-setup-and-tooling/12-debugging-and-profiling/) | Bouwen | Python |
-| 13 | [Python voor AI-engineering](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Bouwen | Python |
+| 13 | [Python voor AI-engineering](../../phases/00-setup-and-tooling/13-python-for-ai-engineering/) | Bouwen | Python, TypeScript |
 
 <details id="phase-1">
 <summary><b>Fase 1: Wiskundige grondslagen</b> &nbsp;<code>22 lessen</code>&nbsp; <em>De intuïtie achter elk AI-algoritme, aan de hand van code.</em></summary>
@@ -383,7 +383,7 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 16 | [Steekproefmethoden](../../phases/01-math-foundations/16-sampling-methods/) | Bouwen | Python, TypeScript |
 | 17 | [Lineaire stelsels](../../phases/01-math-foundations/17-linear-systems/) | Bouwen | Python, TypeScript |
 | 18 | [Convexe optimalisatie](../../phases/01-math-foundations/18-convex-optimization/) | Bouwen | Python, TypeScript |
-| 19 | [Complexe getallen voor AI](../../phases/01-math-foundations/19-complex-numbers/) | Leren | Python |
+| 19 | [Complexe getallen voor AI](../../phases/01-math-foundations/19-complex-numbers/) | Leren | Python, TypeScript |
 | 20 | [De fouriertransformatie](../../phases/01-math-foundations/20-fourier-transform/) | Bouwen | Python, TypeScript |
 | 21 | [Grafentheorie voor ML](../../phases/01-math-foundations/21-graph-theory/) | Bouwen | Python, TypeScript |
 | 22 | [Stochastische processen](../../phases/01-math-foundations/22-stochastic-processes/) | Leren | Python |
@@ -414,9 +414,9 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 16 | [Afwijkingen detecteren](../../phases/02-ml-fundamentals/16-anomaly-detection/) | Bouwen | Python |
 | 17 | [Omgaan met onevenwichtige gegevens](../../phases/02-ml-fundamentals/17-imbalanced-data/) | Bouwen | Python |
 | 18 | [Kenmerkselectie](../../phases/02-ml-fundamentals/18-feature-selection/) | Bouwen | Python |
-| 19 | [Ontwerp van ML-systemen: van probleem tot uitgerold model](../../phases/02-ml-fundamentals/19-ml-system-design/) | Bouwen | Python |
-| 20 | [Modellen in productie bewaken: datadrift en conceptdrift](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Bouwen | Python |
-| 21 | [Kenmerkopslagen en verschillen tussen training en productie](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Bouwen | Python |
+| 19 | [Ontwerp van ML-systemen: van probleem tot uitgerold model](../../phases/02-ml-fundamentals/19-ml-system-design/) | Bouwen | Python, TypeScript |
+| 20 | [Modellen in productie bewaken: datadrift en conceptdrift](../../phases/02-ml-fundamentals/20-model-monitoring-and-drift/) | Bouwen | Python, TypeScript |
+| 21 | [Kenmerkopslagen en verschillen tussen training en productie](../../phases/02-ml-fundamentals/21-feature-stores-and-training-serving-skew/) | Bouwen | Python, TypeScript |
 
 </details>
 
@@ -485,35 +485,35 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [Tekstverwerking: tokenisatie, stammen en lemmatisering](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Bouwen | Python |
-| 02 | [Woordzakken, TF-IDF en tekstrepresentatie](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Bouwen | Python |
+| 01 | [Tekstverwerking: tokenisatie, stammen en lemmatisering](../../phases/05-nlp-foundations-to-advanced/01-text-processing/) | Bouwen | Python, TypeScript |
+| 02 | [Woordzakken, TF-IDF en tekstrepresentatie](../../phases/05-nlp-foundations-to-advanced/02-bag-of-words-tfidf/) | Bouwen | Python, TypeScript |
 | 03 | [Woordembeddings: Word2Vec vanaf nul](../../phases/05-nlp-foundations-to-advanced/03-word-embeddings-word2vec/) | Bouwen | Python |
-| 04 | [GloVe, FastText en subwoordembeddings](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Bouwen | Python |
-| 05 | [Sentimentanalyse](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Bouwen | Python |
-| 06 | [Herkenning van benoemde entiteiten (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Bouwen | Python |
-| 07 | [Woordsoorten markeren en zinnen ontleden](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Bouwen | Python |
-| 08 | [Tekstclassificatie: CNN's en RNN's voor tekst](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Bouwen | Python |
-| 09 | [Sequentie-naar-sequentiemodellen](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Bouwen | Python |
-| 10 | [Het aandachtsmechanisme: de doorbraak](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Bouwen | Python |
-| 11 | [Automatisch vertalen](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Bouwen | Python |
-| 12 | [Tekst samenvatten](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Bouwen | Python |
-| 13 | [Vraag-antwoordsystemen](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Bouwen | Python |
-| 14 | [Informatie ophalen en zoeken](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Bouwen | Python |
-| 15 | [Onderwerpen modelleren: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Bouwen | Python |
-| 16 | [Tekstgeneratie](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Bouwen | Python |
-| 17 | [Chatbots: van regels naar neurale netwerken](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Bouwen | Python |
-| 18 | [Meertalige NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Bouwen | Python |
+| 04 | [GloVe, FastText en subwoordembeddings](../../phases/05-nlp-foundations-to-advanced/04-glove-fasttext-subword/) | Bouwen | Python, TypeScript |
+| 05 | [Sentimentanalyse](../../phases/05-nlp-foundations-to-advanced/05-sentiment-analysis/) | Bouwen | Python, TypeScript |
+| 06 | [Herkenning van benoemde entiteiten (NER)](../../phases/05-nlp-foundations-to-advanced/06-named-entity-recognition/) | Bouwen | Python, TypeScript |
+| 07 | [Woordsoorten markeren en zinnen ontleden](../../phases/05-nlp-foundations-to-advanced/07-pos-tagging-parsing/) | Bouwen | Python, TypeScript |
+| 08 | [Tekstclassificatie: CNN's en RNN's voor tekst](../../phases/05-nlp-foundations-to-advanced/08-cnns-rnns-for-text/) | Bouwen | Python, TypeScript |
+| 09 | [Sequentie-naar-sequentiemodellen](../../phases/05-nlp-foundations-to-advanced/09-sequence-to-sequence/) | Bouwen | Python, TypeScript |
+| 10 | [Het aandachtsmechanisme: de doorbraak](../../phases/05-nlp-foundations-to-advanced/10-attention-mechanism/) | Bouwen | Python, TypeScript |
+| 11 | [Automatisch vertalen](../../phases/05-nlp-foundations-to-advanced/11-machine-translation/) | Bouwen | Python, TypeScript |
+| 12 | [Tekst samenvatten](../../phases/05-nlp-foundations-to-advanced/12-text-summarization/) | Bouwen | Python, TypeScript |
+| 13 | [Vraag-antwoordsystemen](../../phases/05-nlp-foundations-to-advanced/13-question-answering/) | Bouwen | Python, TypeScript |
+| 14 | [Informatie ophalen en zoeken](../../phases/05-nlp-foundations-to-advanced/14-information-retrieval-search/) | Bouwen | Python, TypeScript |
+| 15 | [Onderwerpen modelleren: LDA, BERTopic](../../phases/05-nlp-foundations-to-advanced/15-topic-modeling/) | Bouwen | Python, TypeScript |
+| 16 | [Tekstgeneratie](../../phases/05-nlp-foundations-to-advanced/16-text-generation-pre-transformer/) | Bouwen | Python, TypeScript |
+| 17 | [Chatbots: van regels naar neurale netwerken](../../phases/05-nlp-foundations-to-advanced/17-chatbots-rule-to-neural/) | Bouwen | Python, TypeScript |
+| 18 | [Meertalige NLP](../../phases/05-nlp-foundations-to-advanced/18-multilingual-nlp/) | Bouwen | Python, TypeScript |
 | 19 | [Subwoordtokenisatie: BPE, WordPiece, Unigram, SentencePiece](../../phases/05-nlp-foundations-to-advanced/19-subword-tokenization/) | Leren | Python, TypeScript |
-| 20 | [Gestructureerde uitvoer en begrensde decodering](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Bouwen | Python |
-| 21 | [NLI en logische gevolgtrekking uit tekst](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Leren | Python |
-| 22 | [Verdieping in embeddingmodellen](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Leren | Python |
+| 20 | [Gestructureerde uitvoer en begrensde decodering](../../phases/05-nlp-foundations-to-advanced/20-structured-outputs-constrained-decoding/) | Bouwen | Python, TypeScript |
+| 21 | [NLI en logische gevolgtrekking uit tekst](../../phases/05-nlp-foundations-to-advanced/21-nli-textual-entailment/) | Leren | Python, TypeScript |
+| 22 | [Verdieping in embeddingmodellen](../../phases/05-nlp-foundations-to-advanced/22-embedding-models-deep-dive/) | Leren | Python, TypeScript |
 | 23 | [Opdeelstrategieën voor RAG](../../phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag/) | Bouwen | Python, TypeScript |
-| 24 | [Coreferenties oplossen](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Leren | Python |
-| 25 | [Entiteiten koppelen en ondubbelzinnig maken](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Bouwen | Python |
-| 26 | [Relaties extraheren en kennisgrafen opbouwen](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Bouwen | Python |
-| 27 | [LLM-evaluatie: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Bouwen | Python |
-| 28 | [Lange context evalueren: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Leren | Python |
-| 29 | [Dialoogtoestand bijhouden](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Bouwen | Python |
+| 24 | [Coreferenties oplossen](../../phases/05-nlp-foundations-to-advanced/24-coreference-resolution/) | Leren | Python, TypeScript |
+| 25 | [Entiteiten koppelen en ondubbelzinnig maken](../../phases/05-nlp-foundations-to-advanced/25-entity-linking/) | Bouwen | Python, TypeScript |
+| 26 | [Relaties extraheren en kennisgrafen opbouwen](../../phases/05-nlp-foundations-to-advanced/26-relation-extraction-kg/) | Bouwen | Python, TypeScript |
+| 27 | [LLM-evaluatie: RAGAS, DeepEval, G-Eval](../../phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks/) | Bouwen | Python, TypeScript |
+| 28 | [Lange context evalueren: NIAH, RULER, LongBench, MRCR](../../phases/05-nlp-foundations-to-advanced/28-long-context-evaluation/) | Leren | Python, TypeScript |
+| 29 | [Dialoogtoestand bijhouden](../../phases/05-nlp-foundations-to-advanced/29-dialogue-state-tracking/) | Bouwen | Python, TypeScript |
 
 </details>
 
@@ -523,23 +523,23 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [Audiogrondslagen: golfvormen, bemonstering en FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Leren | Python |
-| 02 | [Spectrogrammen, melschaal en audiokenmerken](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Bouwen | Python |
-| 03 | [Audioclassificatie](../../phases/06-speech-and-audio/03-audio-classification) | Bouwen | Python |
-| 04 | [Spraakherkenning (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Bouwen | Python |
-| 05 | [Whisper: architectuur en fijnafstemming](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Bouwen | Python |
-| 06 | [Sprekers herkennen en verifiëren](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Bouwen | Python |
-| 07 | [Tekst-naar-spraak (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Bouwen | Python |
-| 08 | [Stemmen klonen en omzetten](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Bouwen | Python |
-| 09 | [Muziekgeneratie](../../phases/06-speech-and-audio/09-music-generation) | Bouwen | Python |
-| 10 | [Audio-taalmodellen](../../phases/06-speech-and-audio/10-audio-language-models) | Bouwen | Python |
+| 01 | [Audiogrondslagen: golfvormen, bemonstering en FFT](../../phases/06-speech-and-audio/01-audio-fundamentals) | Leren | Python, TypeScript |
+| 02 | [Spectrogrammen, melschaal en audiokenmerken](../../phases/06-speech-and-audio/02-spectrograms-mel-features) | Bouwen | Python, TypeScript |
+| 03 | [Audioclassificatie](../../phases/06-speech-and-audio/03-audio-classification) | Bouwen | Python, TypeScript |
+| 04 | [Spraakherkenning (ASR)](../../phases/06-speech-and-audio/04-speech-recognition-asr) | Bouwen | Python, TypeScript |
+| 05 | [Whisper: architectuur en fijnafstemming](../../phases/06-speech-and-audio/05-whisper-architecture-finetuning) | Bouwen | Python, TypeScript |
+| 06 | [Sprekers herkennen en verifiëren](../../phases/06-speech-and-audio/06-speaker-recognition-verification) | Bouwen | Python, TypeScript |
+| 07 | [Tekst-naar-spraak (TTS)](../../phases/06-speech-and-audio/07-text-to-speech) | Bouwen | Python, TypeScript |
+| 08 | [Stemmen klonen en omzetten](../../phases/06-speech-and-audio/08-voice-cloning-conversion) | Bouwen | Python, TypeScript |
+| 09 | [Muziekgeneratie](../../phases/06-speech-and-audio/09-music-generation) | Bouwen | Python, TypeScript |
+| 10 | [Audio-taalmodellen](../../phases/06-speech-and-audio/10-audio-language-models) | Bouwen | Python, TypeScript |
 | 11 | [Realtime-audioverwerking](../../phases/06-speech-and-audio/11-real-time-audio-processing) | Bouwen | Python, Rust |
-| 12 | [Bouw een pijplijn voor een spraakassistent](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Bouwen | Python |
-| 13 | [Neurale audiocodecs: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Leren | Python |
-| 14 | [Spraakactiviteit en beurtwisseling detecteren](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Bouwen | Python |
-| 15 | [Streaming van spraak naar spraak: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Leren | Python |
-| 16 | [Stemnabootsing tegengaan en audio watermerken](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Bouwen | Python |
-| 17 | [Audio evalueren: WER, MOS, MMAU en ranglijsten](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Leren | Python |
+| 12 | [Bouw een pijplijn voor een spraakassistent](../../phases/06-speech-and-audio/12-voice-assistant-pipeline) | Bouwen | Python, TypeScript |
+| 13 | [Neurale audiocodecs: EnCodec, SNAC, Mimi, DAC](../../phases/06-speech-and-audio/13-neural-audio-codecs) | Leren | Python, TypeScript |
+| 14 | [Spraakactiviteit en beurtwisseling detecteren](../../phases/06-speech-and-audio/14-voice-activity-detection-turn-taking) | Bouwen | Python, TypeScript |
+| 15 | [Streaming van spraak naar spraak: Moshi, Hibiki](../../phases/06-speech-and-audio/15-streaming-speech-to-speech-moshi-hibiki) | Leren | Python, TypeScript |
+| 16 | [Stemnabootsing tegengaan en audio watermerken](../../phases/06-speech-and-audio/16-anti-spoofing-audio-watermarking) | Bouwen | Python, TypeScript |
+| 17 | [Audio evalueren: WER, MOS, MMAU en ranglijsten](../../phases/06-speech-and-audio/17-audio-evaluation-metrics) | Leren | Python, TypeScript |
 
 </details>
 
@@ -554,14 +554,14 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 03 | [Aandacht met meerdere koppen](../../phases/07-transformers-deep-dive/03-multi-head-attention/) | Bouwen | Python, Rust |
 | 04 | [Positiecodering: sinusvormig, RoPE, ALiBi](../../phases/07-transformers-deep-dive/04-positional-encoding/) | Bouwen | Python, Rust, Julia |
 | 05 | [De volledige transformer: encoder en decoder](../../phases/07-transformers-deep-dive/05-full-transformer/) | Bouwen | Python, Julia |
-| 06 | [BERT: taalmodellering met gemaskeerde tokens](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Bouwen | Python |
-| 07 | [GPT: causale taalmodellering](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Bouwen | Python |
-| 08 | [T5 en BART: encoder-decodermodellen](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Leren | Python |
-| 09 | [Visietransformers (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Bouwen | Python |
-| 10 | [Audiotransformers: de architectuur van Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Leren | Python |
+| 06 | [BERT: taalmodellering met gemaskeerde tokens](../../phases/07-transformers-deep-dive/06-bert-masked-language-modeling/) | Bouwen | Python, Rust |
+| 07 | [GPT: causale taalmodellering](../../phases/07-transformers-deep-dive/07-gpt-causal-language-modeling/) | Bouwen | Python, Rust |
+| 08 | [T5 en BART: encoder-decodermodellen](../../phases/07-transformers-deep-dive/08-t5-bart-encoder-decoder/) | Leren | Python, Rust |
+| 09 | [Visietransformers (ViT)](../../phases/07-transformers-deep-dive/09-vision-transformers/) | Bouwen | Python, Rust |
+| 10 | [Audiotransformers: de architectuur van Whisper](../../phases/07-transformers-deep-dive/10-audio-transformers-whisper/) | Leren | Python, Rust |
 | 11 | [Mengsels van experts (MoE)](../../phases/07-transformers-deep-dive/11-mixture-of-experts/) | Bouwen | Python, Rust |
 | 12 | [KV-cache, Flash Attention en inferentieoptimalisatie](../../phases/07-transformers-deep-dive/12-kv-cache-flash-attention/) | Bouwen | Python, Rust |
-| 13 | [Schaalwetten](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Leren | Python |
+| 13 | [Schaalwetten](../../phases/07-transformers-deep-dive/13-scaling-laws/) | Leren | Python, Rust |
 | 14 | [Bouw een transformer vanaf nul](../../phases/07-transformers-deep-dive/14-build-a-transformer-capstone/) | Bouwen | Python |
 | 15 | [Aandachtsvarianten: schuivend venster, schaars en differentieel](../../phases/07-transformers-deep-dive/15-attention-variants/) | Bouwen | Python, Rust |
 | 16 | [Speculatieve decodering: voorstellen, verifiëren, herhalen](../../phases/07-transformers-deep-dive/16-speculative-decoding/) | Bouwen | Python, Rust |
@@ -574,20 +574,20 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [Generatieve modellen: indeling en geschiedenis](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Leren | Python |
-| 02 | [Auto-encoders en VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Bouwen | Python |
-| 03 | [GAN's: generator tegenover discriminator](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Bouwen | Python |
-| 04 | [Voorwaardelijke GAN's en Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Bouwen | Python |
-| 05 | [StyleGAN](../../phases/08-generative-ai/05-stylegan/) | Bouwen | Python |
-| 06 | [Diffusiemodellen: DDPM vanaf nul](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Bouwen | Python |
-| 07 | [Latente diffusie en Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Bouwen | Python |
-| 08 | [ControlNet, LoRA en conditionering](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Bouwen | Python |
-| 09 | [Invullen, uitbreiden en bewerken van beelden](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Bouwen | Python |
-| 10 | [Videogeneratie](../../phases/08-generative-ai/10-video-generation/) | Bouwen | Python |
-| 11 | [Audiogeneratie](../../phases/08-generative-ai/11-audio-generation/) | Bouwen | Python |
-| 12 | [3D-generatie](../../phases/08-generative-ai/12-3d-generation/) | Bouwen | Python |
-| 13 | [Stroomafstemming en gerectificeerde stromen](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Bouwen | Python |
-| 14 | [Evaluatie: FID en CLIP-score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Bouwen | Python |
+| 01 | [Generatieve modellen: indeling en geschiedenis](../../phases/08-generative-ai/01-generative-models-taxonomy-history/) | Leren | Python, TypeScript |
+| 02 | [Auto-encoders en VAE](../../phases/08-generative-ai/02-autoencoders-vae/) | Bouwen | Python, TypeScript |
+| 03 | [GAN's: generator tegenover discriminator](../../phases/08-generative-ai/03-gans-generator-discriminator/) | Bouwen | Python, TypeScript |
+| 04 | [Voorwaardelijke GAN's en Pix2Pix](../../phases/08-generative-ai/04-conditional-gans-pix2pix/) | Bouwen | Python, TypeScript |
+| 05 | [StyleGAN](../../phases/08-generative-ai/05-stylegan/) | Bouwen | Python, TypeScript |
+| 06 | [Diffusiemodellen: DDPM vanaf nul](../../phases/08-generative-ai/06-diffusion-ddpm-from-scratch/) | Bouwen | Python, TypeScript |
+| 07 | [Latente diffusie en Stable Diffusion](../../phases/08-generative-ai/07-latent-diffusion-stable-diffusion/) | Bouwen | Python, TypeScript |
+| 08 | [ControlNet, LoRA en conditionering](../../phases/08-generative-ai/08-controlnet-lora-conditioning/) | Bouwen | Python, TypeScript |
+| 09 | [Invullen, uitbreiden en bewerken van beelden](../../phases/08-generative-ai/09-inpainting-outpainting-editing/) | Bouwen | Python, TypeScript |
+| 10 | [Videogeneratie](../../phases/08-generative-ai/10-video-generation/) | Bouwen | Python, TypeScript |
+| 11 | [Audiogeneratie](../../phases/08-generative-ai/11-audio-generation/) | Bouwen | Python, TypeScript |
+| 12 | [3D-generatie](../../phases/08-generative-ai/12-3d-generation/) | Bouwen | Python, TypeScript |
+| 13 | [Stroomafstemming en gerectificeerde stromen](../../phases/08-generative-ai/13-flow-matching-rectified-flows/) | Bouwen | Python, TypeScript |
+| 14 | [Evaluatie: FID en CLIP-score](../../phases/08-generative-ai/14-evaluation-fid-clip-score/) | Bouwen | Python, TypeScript |
 | 19 | [Visuele autoregressieve modellering (VAR): de volgende schaal voorspellen](../../phases/08-generative-ai/19-visual-autoregressive-var/) | Bouwen | Python |
 
 </details>
@@ -598,18 +598,18 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [MDP's, toestanden, acties en beloningen](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Leren | Python |
-| 02 | [Dynamisch programmeren](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Bouwen | Python |
-| 03 | [Monte-Carlomethoden](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Bouwen | Python |
-| 04 | [Q-Learning, SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Bouwen | Python |
-| 05 | [Diepe Q-netwerken (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Bouwen | Python |
-| 06 | [Beleidsgradiënten: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Bouwen | Python |
-| 07 | [Actor-critic: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Bouwen | Python |
-| 08 | [PPO](../../phases/09-reinforcement-learning/08-ppo/) | Bouwen | Python |
-| 09 | [Beloningen modelleren en RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Bouwen | Python |
-| 10 | [Bekrachtigingsleren met meerdere agents](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Bouwen | Python |
-| 11 | [Overdracht van simulatie naar werkelijkheid](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Bouwen | Python |
-| 12 | [Bekrachtigingsleren voor spellen](../../phases/09-reinforcement-learning/12-rl-for-games/) | Bouwen | Python |
+| 01 | [MDP's, toestanden, acties en beloningen](../../phases/09-reinforcement-learning/01-mdps-states-actions-rewards/) | Leren | Python, TypeScript |
+| 02 | [Dynamisch programmeren](../../phases/09-reinforcement-learning/02-dynamic-programming/) | Bouwen | Python, TypeScript |
+| 03 | [Monte-Carlomethoden](../../phases/09-reinforcement-learning/03-monte-carlo-methods/) | Bouwen | Python, TypeScript |
+| 04 | [Q-Learning, SARSA](../../phases/09-reinforcement-learning/04-q-learning-sarsa/) | Bouwen | Python, TypeScript |
+| 05 | [Diepe Q-netwerken (DQN)](../../phases/09-reinforcement-learning/05-dqn/) | Bouwen | Python, TypeScript |
+| 06 | [Beleidsgradiënten: REINFORCE](../../phases/09-reinforcement-learning/06-policy-gradients-reinforce/) | Bouwen | Python, TypeScript |
+| 07 | [Actor-critic: A2C, A3C](../../phases/09-reinforcement-learning/07-actor-critic-a2c-a3c/) | Bouwen | Python, TypeScript |
+| 08 | [PPO](../../phases/09-reinforcement-learning/08-ppo/) | Bouwen | Python, TypeScript |
+| 09 | [Beloningen modelleren en RLHF](../../phases/09-reinforcement-learning/09-reward-modeling-rlhf/) | Bouwen | Python, TypeScript |
+| 10 | [Bekrachtigingsleren met meerdere agents](../../phases/09-reinforcement-learning/10-multi-agent-rl/) | Bouwen | Python, TypeScript |
+| 11 | [Overdracht van simulatie naar werkelijkheid](../../phases/09-reinforcement-learning/11-sim-to-real-transfer/) | Bouwen | Python, TypeScript |
+| 12 | [Bekrachtigingsleren voor spellen](../../phases/09-reinforcement-learning/12-rl-for-games/) | Bouwen | Python, TypeScript |
 
 </details>
 
@@ -621,7 +621,7 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 |:---:|--------|:----:|------|
 | 01 | [Tokenisatie: BPE, WordPiece, SentencePiece](../../phases/10-llms-from-scratch/01-tokenizers/) | Bouwen | Python, Rust |
 | 02 | [Bouw een tokenizer vanaf nul](../../phases/10-llms-from-scratch/02-building-a-tokenizer/) | Bouwen | Python |
-| 03 | [Gegevenspijplijnen voor voortraining](../../phases/10-llms-from-scratch/03-data-pipelines/) | Bouwen | Python |
+| 03 | [Gegevenspijplijnen voor voortraining](../../phases/10-llms-from-scratch/03-data-pipelines/) | Bouwen | Python, Rust |
 | 04 | [Een mini-GPT (124M) voortrainen](../../phases/10-llms-from-scratch/04-pre-training-mini-gpt/) | Bouwen | Python, Rust |
 | 05 | [Gedistribueerd trainen, FSDP en DeepSpeed](../../phases/10-llms-from-scratch/05-scaling-distributed/) | Bouwen | Python |
 | 06 | [Afstemmen op instructies: SFT](../../phases/10-llms-from-scratch/06-instruction-tuning-sft/) | Bouwen | Python |
@@ -631,16 +631,16 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 10 | [Evaluatie: benchmarks en beoordelingen](../../phases/10-llms-from-scratch/10-evaluation/) | Bouwen | Python |
 | 11 | [Kwantisatie: INT8, GPTQ, AWQ, GGUF](../../phases/10-llms-from-scratch/11-quantization/) | Bouwen | Python, Rust |
 | 12 | [Inferentieoptimalisatie](../../phases/10-llms-from-scratch/12-inference-optimization/) | Bouwen | Python, Rust |
-| 13 | [Bouw een volledige LLM-pijplijn](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Bouwen | Python |
-| 14 | [Open modellen: architecturen uitgelegd](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Leren | Python |
-| 15 | [Speculatieve decodering en EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Bouwen | Python |
-| 16 | [Differentiële aandacht (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Bouwen | Python |
-| 17 | [Native Sparse Attention (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Bouwen | Python |
-| 18 | [Meerdere tokens voorspellen (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Bouwen | Python |
-| 19 | [DualPipe-parallellisme](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Leren | Python |
-| 20 | [De architectuur van DeepSeek-V3 uitgelegd](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Leren | Python |
-| 21 | [Jamba: hybride SSM-transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Leren | Python |
-| 22 | [Asynchrone inferentie en Hogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Bouwen | Python |
+| 13 | [Bouw een volledige LLM-pijplijn](../../phases/10-llms-from-scratch/13-building-complete-llm-pipeline/) | Bouwen | Python, Rust |
+| 14 | [Open modellen: architecturen uitgelegd](../../phases/10-llms-from-scratch/14-open-models-architecture-walkthroughs/) | Leren | Python, Rust |
+| 15 | [Speculatieve decodering en EAGLE-3](../../phases/10-llms-from-scratch/15-speculative-decoding-eagle3/) | Bouwen | Python, Rust |
+| 16 | [Differentiële aandacht (V2)](../../phases/10-llms-from-scratch/16-differential-attention-v2/) | Bouwen | Python, Rust |
+| 17 | [Native Sparse Attention (DeepSeek NSA)](../../phases/10-llms-from-scratch/17-native-sparse-attention/) | Bouwen | Python, Rust |
+| 18 | [Meerdere tokens voorspellen (MTP)](../../phases/10-llms-from-scratch/18-multi-token-prediction/) | Bouwen | Python, Rust |
+| 19 | [DualPipe-parallellisme](../../phases/10-llms-from-scratch/19-dualpipe-parallelism/) | Leren | Python, Rust |
+| 20 | [De architectuur van DeepSeek-V3 uitgelegd](../../phases/10-llms-from-scratch/20-deepseek-v3-walkthrough/) | Leren | Python, Rust |
+| 21 | [Jamba: hybride SSM-transformer](../../phases/10-llms-from-scratch/21-jamba-hybrid-ssm-transformer/) | Leren | Python, Rust |
+| 22 | [Asynchrone inferentie en Hogwild!](../../phases/10-llms-from-scratch/22-async-hogwild-inference/) | Bouwen | Python, Rust |
 | 25 | [Speculatieve decodering en EAGLE](../../phases/10-llms-from-scratch/25-speculative-decoding/) | Bouwen | Python |
 | 34 | [Gradiëntcheckpoints en activaties opnieuw berekenen](../../phases/10-llms-from-scratch/34-gradient-checkpointing/) | Bouwen | Python |
 
@@ -658,17 +658,17 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | 04 | [Embeddings en vectorrepresentaties](../../phases/11-llm-engineering/04-embeddings/) | Bouwen | Python, TypeScript |
 | 05 | [Contextengineering](../../phases/11-llm-engineering/05-context-engineering/) | Bouwen | Python, TypeScript |
 | 06 | [RAG: generatie met opgehaalde informatie](../../phases/11-llm-engineering/06-rag/) | Bouwen | Python, TypeScript |
-| 07 | [Geavanceerde RAG: opdelen en opnieuw rangschikken](../../phases/11-llm-engineering/07-advanced-rag/) | Bouwen | Python |
+| 07 | [Geavanceerde RAG: opdelen en opnieuw rangschikken](../../phases/11-llm-engineering/07-advanced-rag/) | Bouwen | Python, TypeScript |
 | 08 | [Fijnafstemming met LoRA en QLoRA](../../phases/11-llm-engineering/08-fine-tuning-lora/) | Bouwen | Python |
 | 09 | [Functieaanroepen en gereedschap gebruiken](../../phases/11-llm-engineering/09-function-calling/) | Bouwen | Python, TypeScript |
-| 10 | [Evalueren en testen](../../phases/11-llm-engineering/10-evaluation/) | Bouwen | Python |
-| 11 | [Caching, snelheidsbegrenzing en kosten](../../phases/11-llm-engineering/11-caching-cost/) | Bouwen | Python |
+| 10 | [Evalueren en testen](../../phases/11-llm-engineering/10-evaluation/) | Bouwen | Python, TypeScript |
+| 11 | [Caching, snelheidsbegrenzing en kosten](../../phases/11-llm-engineering/11-caching-cost/) | Bouwen | Python, TypeScript |
 | 12 | [Beveiligingsgrenzen en veiligheid](../../phases/11-llm-engineering/12-guardrails/) | Bouwen | Python, TypeScript |
-| 13 | [Bouw een LLM-toepassing voor productie](../../phases/11-llm-engineering/13-production-app/) | Bouwen | Python |
-| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Bouwen | Python |
-| 15 | [Prompts en context cachen](../../phases/11-llm-engineering/15-prompt-caching/) | Bouwen | Python |
+| 13 | [Bouw een LLM-toepassing voor productie](../../phases/11-llm-engineering/13-production-app/) | Bouwen | Python, TypeScript |
+| 14 | [Model Context Protocol (MCP)](../../phases/11-llm-engineering/14-model-context-protocol/) | Bouwen | Python, TypeScript |
+| 15 | [Prompts en context cachen](../../phases/11-llm-engineering/15-prompt-caching/) | Bouwen | Python, TypeScript |
 | 16 | [Toestandsmachines voor agents: grafen, knopen en checkpoints](../../phases/11-llm-engineering/16-langgraph-state-machines/) | Bouwen | Python |
-| 17 | [Afwegingen bij agentframeworks](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Leren | Python |
+| 17 | [Afwegingen bij agentframeworks](../../phases/11-llm-engineering/17-agent-framework-tradeoffs/) | Leren | Python, TypeScript |
 
 </details>
 
@@ -678,31 +678,31 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [Visietransformers en de patch-tokenbouwsteen](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Leren | Python |
-| 02 | [CLIP en contrastieve visie-taalvoortraining](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Bouwen | Python |
-| 03 | [BLIP-2 Q-Former als brug tussen modaliteiten](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Bouwen | Python |
-| 04 | [Flamingo en kruislingse aandacht met poorten](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Leren | Python |
-| 05 | [LLaVA en visuele instructieafstemming](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Bouwen | Python |
-| 06 | [Visie op elke resolutie: Patch-n'-Pack en NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Bouwen | Python |
-| 07 | [VLM-recepten met open gewichten: wat werkelijk telt](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Leren | Python |
-| 08 | [LLaVA-OneVision: enkel beeld, meerdere beelden en video](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Bouwen | Python |
-| 09 | [De Qwen-VL-familie en video met dynamische FPS](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Leren | Python |
-| 10 | [InternVL3: native multimodale voortraining](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Leren | Python |
-| 11 | [Chameleon: vroege fusie met alleen tokens](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Bouwen | Python |
-| 12 | [Emu3: volgende tokens voorspellen voor generatie](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Leren | Python |
-| 13 | [Transfusion: autoregressie en diffusie](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Bouwen | Python |
-| 14 | [Show-o: uniforme discrete diffusie](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Leren | Python |
-| 15 | [Janus-Pro: ontkoppelde encoders](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Bouwen | Python |
-| 16 | [MIO: streaming tussen alle modaliteiten](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Leren | Python |
-| 17 | [Tijdgebonden verankering van video en taal](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Bouwen | Python |
-| 18 | [Lange video met een miljoen tokens context](../../phases/12-multimodal-ai/18-long-video-million-token/) | Bouwen | Python |
-| 19 | [Audio-taalmodellen: van Whisper tot AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Bouwen | Python |
-| 20 | [Omnimodellen: Thinker-Talker-streaming](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Bouwen | Python |
-| 21 | [Belichaamde VLA's: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Leren | Python |
-| 22 | [Documenten en diagrammen begrijpen](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Bouwen | Python |
-| 23 | [ColPali: document-RAG op basis van beelden](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Bouwen | Python |
-| 24 | [Multimodale RAG en zoeken tussen modaliteiten](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Bouwen | Python |
-| 25 | [Multimodale agents en computergebruik (eindproject)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Bouwen | Python |
+| 01 | [Visietransformers en de patch-tokenbouwsteen](../../phases/12-multimodal-ai/01-vision-transformer-patch-tokens/) | Leren | Python, TypeScript |
+| 02 | [CLIP en contrastieve visie-taalvoortraining](../../phases/12-multimodal-ai/02-clip-contrastive-pretraining/) | Bouwen | Python, TypeScript |
+| 03 | [BLIP-2 Q-Former als brug tussen modaliteiten](../../phases/12-multimodal-ai/03-blip2-qformer-bridge/) | Bouwen | Python, TypeScript |
+| 04 | [Flamingo en kruislingse aandacht met poorten](../../phases/12-multimodal-ai/04-flamingo-gated-cross-attention/) | Leren | Python, TypeScript |
+| 05 | [LLaVA en visuele instructieafstemming](../../phases/12-multimodal-ai/05-llava-visual-instruction-tuning/) | Bouwen | Python, TypeScript |
+| 06 | [Visie op elke resolutie: Patch-n'-Pack en NaFlex](../../phases/12-multimodal-ai/06-any-resolution-patch-n-pack/) | Bouwen | Python, TypeScript |
+| 07 | [VLM-recepten met open gewichten: wat werkelijk telt](../../phases/12-multimodal-ai/07-open-weight-vlm-recipes/) | Leren | Python, TypeScript |
+| 08 | [LLaVA-OneVision: enkel beeld, meerdere beelden en video](../../phases/12-multimodal-ai/08-llava-onevision-single-multi-video/) | Bouwen | Python, TypeScript |
+| 09 | [De Qwen-VL-familie en video met dynamische FPS](../../phases/12-multimodal-ai/09-qwen-vl-family-dynamic-fps/) | Leren | Python, TypeScript |
+| 10 | [InternVL3: native multimodale voortraining](../../phases/12-multimodal-ai/10-internvl3-native-multimodal/) | Leren | Python, TypeScript |
+| 11 | [Chameleon: vroege fusie met alleen tokens](../../phases/12-multimodal-ai/11-chameleon-early-fusion-tokens/) | Bouwen | Python, TypeScript |
+| 12 | [Emu3: volgende tokens voorspellen voor generatie](../../phases/12-multimodal-ai/12-emu3-next-token-for-generation/) | Leren | Python, TypeScript |
+| 13 | [Transfusion: autoregressie en diffusie](../../phases/12-multimodal-ai/13-transfusion-autoregressive-diffusion/) | Bouwen | Python, TypeScript |
+| 14 | [Show-o: uniforme discrete diffusie](../../phases/12-multimodal-ai/14-show-o-discrete-diffusion-unified/) | Leren | Python, TypeScript |
+| 15 | [Janus-Pro: ontkoppelde encoders](../../phases/12-multimodal-ai/15-janus-pro-decoupled-encoders/) | Bouwen | Python, TypeScript |
+| 16 | [MIO: streaming tussen alle modaliteiten](../../phases/12-multimodal-ai/16-mio-any-to-any-streaming/) | Leren | Python, TypeScript |
+| 17 | [Tijdgebonden verankering van video en taal](../../phases/12-multimodal-ai/17-video-language-temporal-grounding/) | Bouwen | Python, TypeScript |
+| 18 | [Lange video met een miljoen tokens context](../../phases/12-multimodal-ai/18-long-video-million-token/) | Bouwen | Python, TypeScript |
+| 19 | [Audio-taalmodellen: van Whisper tot AF3](../../phases/12-multimodal-ai/19-audio-language-whisper-to-af3/) | Bouwen | Python, TypeScript |
+| 20 | [Omnimodellen: Thinker-Talker-streaming](../../phases/12-multimodal-ai/20-omni-models-thinker-talker/) | Bouwen | Python, TypeScript |
+| 21 | [Belichaamde VLA's: RT-2, OpenVLA, π0, GR00T](../../phases/12-multimodal-ai/21-embodied-vlas-openvla-pi0-groot/) | Leren | Python, TypeScript |
+| 22 | [Documenten en diagrammen begrijpen](../../phases/12-multimodal-ai/22-document-diagram-understanding/) | Bouwen | Python, TypeScript |
+| 23 | [ColPali: document-RAG op basis van beelden](../../phases/12-multimodal-ai/23-colpali-vision-native-rag/) | Bouwen | Python, TypeScript |
+| 24 | [Multimodale RAG en zoeken tussen modaliteiten](../../phases/12-multimodal-ai/24-multimodal-rag-cross-modal/) | Bouwen | Python, TypeScript |
+| 25 | [Multimodale agents en computergebruik (eindproject)](../../phases/12-multimodal-ai/25-multimodal-agents-computer-use/) | Bouwen | Python, TypeScript |
 
 </details>
 
@@ -713,50 +713,50 @@ Twintig fasen. Klik op een fase om de lessenlijst open te klappen.
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
 | 01 | [De gereedschapsinterface](../../phases/13-tools-and-protocols/01-the-tool-interface/) | Leren | Python, TypeScript |
-| 02 | [Verdieping in functieaanroepen](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Bouwen | Python |
-| 03 | [Parallelle en gestreamde gereedschapsaanroepen](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Bouwen | Python |
-| 04 | [Gestructureerd resultaat](../../phases/13-tools-and-protocols/04-structured-output/) | Bouwen | Python |
-| 05 | [Gereedschapsschema's ontwerpen](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Leren | Python |
-| 06 | [MCP-grondslagen: toestandsloze verzoeken en JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Leren | Python |
+| 02 | [Verdieping in functieaanroepen](../../phases/13-tools-and-protocols/02-function-calling-deep-dive/) | Bouwen | Python, TypeScript |
+| 03 | [Parallelle en gestreamde gereedschapsaanroepen](../../phases/13-tools-and-protocols/03-parallel-and-streaming-tool-calls/) | Bouwen | Python, TypeScript |
+| 04 | [Gestructureerd resultaat](../../phases/13-tools-and-protocols/04-structured-output/) | Bouwen | Python, TypeScript |
+| 05 | [Gereedschapsschema's ontwerpen](../../phases/13-tools-and-protocols/05-tool-schema-design/) | Leren | Python, TypeScript |
+| 06 | [MCP-grondslagen: toestandsloze verzoeken en JSON-RPC](../../phases/13-tools-and-protocols/06-mcp-fundamentals/) | Leren | Python, TypeScript |
 | 07 | [Bouw een MCP-server: toestandsloos Python en TypeScript](../../phases/13-tools-and-protocols/07-building-an-mcp-server/) | Bouwen | Python, TypeScript |
-| 08 | [Bouw een MCP-client: ontdekking, routering en terugval tussen protocolgeneraties](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Bouwen | Python |
-| 09 | [MCP-transporten: stdio en toestandsloze Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Leren | Python |
-| 10 | [MCP-resources en prompts: adresseerbare context voor toestandsloze servers](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Bouwen | Python |
-| 11 | [MCP-modelinvoer: samplingmigratie en toestandsloze MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Bouwen | Python |
-| 12 | [Expliciete reikwijdte en toestandsloze uitvraag](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Bouwen | Python |
-| 13 | [MCP-taakuitbreiding: duurzaam werk op een toestandsloze kern](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Bouwen | Python |
-| 14 | [MCP Apps op het toestandsloze protocol](../../phases/13-tools-and-protocols/14-mcp-apps/) | Bouwen | Python |
-| 15 | [MCP-beveiliging: vergiftigde metadata, routering en MRTR-toestand](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Leren | Python |
-| 16 | [MCP-autorisatie: CIMD, binding aan uitgevers, PKCE en extra verificatie](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Bouwen | Python |
-| 17 | [Toestandsloze MCP-gateways en toelating tot registers](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Leren | Python |
-| 18 | [MCP-autorisatie in productie: uitgeversgebonden registratie en tokens](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Bouwen | Python |
+| 08 | [Bouw een MCP-client: ontdekking, routering en terugval tussen protocolgeneraties](../../phases/13-tools-and-protocols/08-building-an-mcp-client/) | Bouwen | Python, TypeScript |
+| 09 | [MCP-transporten: stdio en toestandsloze Streamable HTTP](../../phases/13-tools-and-protocols/09-mcp-transports/) | Leren | Python, TypeScript |
+| 10 | [MCP-resources en prompts: adresseerbare context voor toestandsloze servers](../../phases/13-tools-and-protocols/10-mcp-resources-and-prompts/) | Bouwen | Python, TypeScript |
+| 11 | [MCP-modelinvoer: samplingmigratie en toestandsloze MRTR](../../phases/13-tools-and-protocols/11-mcp-sampling/) | Bouwen | Python, TypeScript |
+| 12 | [Expliciete reikwijdte en toestandsloze uitvraag](../../phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/) | Bouwen | Python, TypeScript |
+| 13 | [MCP-taakuitbreiding: duurzaam werk op een toestandsloze kern](../../phases/13-tools-and-protocols/13-mcp-async-tasks/) | Bouwen | Python, TypeScript |
+| 14 | [MCP Apps op het toestandsloze protocol](../../phases/13-tools-and-protocols/14-mcp-apps/) | Bouwen | Python, TypeScript |
+| 15 | [MCP-beveiliging: vergiftigde metadata, routering en MRTR-toestand](../../phases/13-tools-and-protocols/15-mcp-security-tool-poisoning/) | Leren | Python, TypeScript |
+| 16 | [MCP-autorisatie: CIMD, binding aan uitgevers, PKCE en extra verificatie](../../phases/13-tools-and-protocols/16-mcp-security-oauth-2-1/) | Bouwen | Python, TypeScript |
+| 17 | [Toestandsloze MCP-gateways en toelating tot registers](../../phases/13-tools-and-protocols/17-mcp-gateways-and-registries/) | Leren | Python, TypeScript |
+| 18 | [MCP-autorisatie in productie: uitgeversgebonden registratie en tokens](../../phases/13-tools-and-protocols/18-mcp-auth-production/) | Bouwen | Python, TypeScript |
 | 19 | [Het A2A-protocol](../../phases/13-tools-and-protocols/19-a2a-protocol/) | Bouwen | Python, TypeScript |
-| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Bouwen | Python |
-| 21 | [Een routeringslaag voor LLM's](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Leren | Python |
-| 22 | [Agent Skills: overdraagbaar contract en runtimegrens](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Bouwen | Python |
-| 23 | [Eindproject: toestandsloos gereedschapsecosysteem](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Bouwen | Python |
-| 24 | [Skills ontdekken en informatie stapsgewijs tonen](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Bouwen | Python |
-| 25 | [Skills aanroepen en routeren](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Bouwen | Python |
-| 26 | [Skillmachtigingen, sandboxes en vertrouwen](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Bouwen | Python |
-| 27 | [Skills evalueren, verpakken en overdraagbaar maken](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Bouwen | Python |
-| 28 | [MCP-gereedschapscontracten en inhoud](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Bouwen | Python |
-| 29 | [MCP-betrouwbaarheid, annulering en stroomregeling](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Bouwen | Python |
-| 30 | [De MCP-registerketen: toelating, afwijkingen en terugdraaien](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Bouwen | Python |
-| 31 | [MCP-conformiteit: versiebeheer, bewijs en beheer](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Bouwen | Python |
-| 32 | [Programma-anatomie: ELF vanaf nul lezen](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Bouwen | Python |
-| 33 | [Disassembly en control-flow-grafen](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Bouwen | Python |
+| 20 | [OpenTelemetry GenAI](../../phases/13-tools-and-protocols/20-opentelemetry-genai/) | Bouwen | Python, TypeScript |
+| 21 | [Een routeringslaag voor LLM's](../../phases/13-tools-and-protocols/21-llm-routing-layer/) | Leren | Python, TypeScript |
+| 22 | [Agent Skills: overdraagbaar contract en runtimegrens](../../phases/13-tools-and-protocols/22-skills-and-agent-sdks/) | Bouwen | Python, TypeScript |
+| 23 | [Eindproject: toestandsloos gereedschapsecosysteem](../../phases/13-tools-and-protocols/23-capstone-tool-ecosystem/) | Bouwen | Python, TypeScript |
+| 24 | [Skills ontdekken en informatie stapsgewijs tonen](../../phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure/) | Bouwen | Python, TypeScript |
+| 25 | [Skills aanroepen en routeren](../../phases/13-tools-and-protocols/25-skill-invocation-and-routing/) | Bouwen | Python, TypeScript |
+| 26 | [Skillmachtigingen, sandboxes en vertrouwen](../../phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust/) | Bouwen | Python, TypeScript |
+| 27 | [Skills evalueren, verpakken en overdraagbaar maken](../../phases/13-tools-and-protocols/27-skill-evals-packaging-and-portability/) | Bouwen | Python, TypeScript |
+| 28 | [MCP-gereedschapscontracten en inhoud](../../phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/) | Bouwen | Python, TypeScript |
+| 29 | [MCP-betrouwbaarheid, annulering en stroomregeling](../../phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/) | Bouwen | Python, TypeScript |
+| 30 | [De MCP-registerketen: toelating, afwijkingen en terugdraaien](../../phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/) | Bouwen | Python, TypeScript |
+| 31 | [MCP-conformiteit: versiebeheer, bewijs en beheer](../../phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/) | Bouwen | Python, TypeScript |
+| 32 | [Programma-anatomie: ELF vanaf nul lezen](../../phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/) | Bouwen | Python, TypeScript |
+| 33 | [Disassembly en control-flow-grafen](../../phases/13-tools-and-protocols/33-disassembly-and-control-flow/) | Bouwen | Python, TypeScript |
 | 34 | [Machinecode optillen naar pseudocode](../../phases/13-tools-and-protocols/34-lifting-to-pseudocode/) | Bouwen | Python |
-| 35 | [Bewijs, zekerheid en onbekenden in binaire analyse](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Bouwen | Python |
-| 36 | [Opnieuw bouwen en gelijkheid bewijzen](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Bouwen | Python |
-| 37 | [Het landschap van reverse engineering](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Bouwen | Python |
-| 38 | [Aanroepconventies en stackframes](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Bouwen | Python |
-| 39 | [Compileridiomen en optimalisatie](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Bouwen | Python |
-| 40 | [Linken, laden en gestripte binaire bestanden](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Bouwen | Python |
-| 41 | [Data en types terugwinnen](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Bouwen | Python |
-| 42 | [Dynamische analyse van je eigen programma](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Bouwen | Python |
-| 43 | [Bytecode en beheerde formaten](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Bouwen | Python |
+| 35 | [Bewijs, zekerheid en onbekenden in binaire analyse](../../phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/) | Bouwen | Python, TypeScript |
+| 36 | [Opnieuw bouwen en gelijkheid bewijzen](../../phases/13-tools-and-protocols/36-rebuild-and-prove-equal/) | Bouwen | Python, TypeScript |
+| 37 | [Het landschap van reverse engineering](../../phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/) | Bouwen | Python, TypeScript |
+| 38 | [Aanroepconventies en stackframes](../../phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/) | Bouwen | Python, TypeScript |
+| 39 | [Compileridiomen en optimalisatie](../../phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/) | Bouwen | Python, TypeScript |
+| 40 | [Linken, laden en gestripte binaire bestanden](../../phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/) | Bouwen | Python, TypeScript |
+| 41 | [Data en types terugwinnen](../../phases/13-tools-and-protocols/41-recovering-data-and-types/) | Bouwen | Python, TypeScript |
+| 42 | [Dynamische analyse van je eigen programma](../../phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/) | Bouwen | Python, TypeScript |
+| 43 | [Bytecode en beheerde formaten](../../phases/13-tools-and-protocols/43-bytecode-and-managed-formats/) | Bouwen | Python, TypeScript |
 | 44 | [Binaire diffing en symbolische uitvoering](../../phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/) | Bouwen | Python |
-| 45 | [AI-ondersteunde reverse engineering](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Bouwen | Python |
+| 45 | [AI-ondersteunde reverse engineering](../../phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/) | Bouwen | Python, TypeScript |
 
 Lessen 06-18 en 28-31 vormen de gerichte
 [Model Context Protocol (MCP)-leerroute](../../learning-paths/model-context-protocol.json). De volgorde in het manifest
@@ -779,59 +779,59 @@ volgende-lesnavigatie van 22 naar 23.
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
 | 01 | [De agentlus](../../phases/14-agent-engineering/01-the-agent-loop/) | Bouwen | Python, TypeScript |
-| 02 | [ReWOO en plannen-en-uitvoeren](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Bouwen | Python |
-| 03 | [Reflexion en verbale bekrachtiging](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Bouwen | Python |
-| 04 | [Gedachtebomen en LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Bouwen | Python |
-| 05 | [Self-Refine en CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Bouwen | Python |
+| 02 | [ReWOO en plannen-en-uitvoeren](../../phases/14-agent-engineering/02-rewoo-plan-and-execute/) | Bouwen | Python, TypeScript |
+| 03 | [Reflexion en verbale bekrachtiging](../../phases/14-agent-engineering/03-reflexion-verbal-rl/) | Bouwen | Python, TypeScript |
+| 04 | [Gedachtebomen en LATS](../../phases/14-agent-engineering/04-tree-of-thoughts-lats/) | Bouwen | Python, TypeScript |
+| 05 | [Self-Refine en CRITIC](../../phases/14-agent-engineering/05-self-refine-and-critic/) | Bouwen | Python, TypeScript |
 | 06 | [Gereedschap gebruiken en functies aanroepen](../../phases/14-agent-engineering/06-tool-use-and-function-calling/) | Bouwen | Python, TypeScript |
-| 07 | [Agentgeheugen: virtuele context en geheugenpaginering](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Bouwen | Python |
-| 08 | [Geheugenblokken en rekenen tijdens rustperioden](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Bouwen | Python |
-| 09 | [Hybride geheugen: vectoren, grafen en KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Bouwen | Python |
-| 10 | [Skillbibliotheken en levenslang leren (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Bouwen | Python |
-| 11 | [Plannen met HTN en evolutionair zoeken](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Bouwen | Python |
-| 12 | [De werkstroompatronen van Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Bouwen | Python |
+| 07 | [Agentgeheugen: virtuele context en geheugenpaginering](../../phases/14-agent-engineering/07-memory-virtual-context-memgpt/) | Bouwen | Python, TypeScript |
+| 08 | [Geheugenblokken en rekenen tijdens rustperioden](../../phases/14-agent-engineering/08-memory-blocks-sleep-time-compute/) | Bouwen | Python, TypeScript |
+| 09 | [Hybride geheugen: vectoren, grafen en KV](../../phases/14-agent-engineering/09-hybrid-memory-mem0/) | Bouwen | Python, TypeScript |
+| 10 | [Skillbibliotheken en levenslang leren (Voyager)](../../phases/14-agent-engineering/10-skill-libraries-voyager/) | Bouwen | Python, TypeScript |
+| 11 | [Plannen met HTN en evolutionair zoeken](../../phases/14-agent-engineering/11-planning-htn-and-evolutionary/) | Bouwen | Python, TypeScript |
+| 12 | [De werkstroompatronen van Anthropic](../../phases/14-agent-engineering/12-anthropic-workflow-patterns/) | Bouwen | Python, TypeScript |
 | 13 | [Toestandsvolle graaforkestratie: duurzame uitvoering en checkpoints](../../phases/14-agent-engineering/13-langgraph-stateful-graphs/) | Bouwen | Python, TypeScript |
-| 14 | [Het actormodel voor agents](../../phases/14-agent-engineering/14-autogen-actor-model/) | Bouwen | Python |
+| 14 | [Het actormodel voor agents](../../phases/14-agent-engineering/14-autogen-actor-model/) | Bouwen | Python, TypeScript |
 | 15 | [Agentteams op basis van rollen: rollen, taken en processen](../../phases/14-agent-engineering/15-crewai-role-based-crews/) | Bouwen | Python |
-| 16 | [OpenAI Agents SDK: overdrachten, begrenzingen en tracering](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Bouwen | Python |
-| 17 | [Het uitvoeringsraamwerk als bibliotheek: subagents en sessieopslag](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Bouwen | Python |
+| 16 | [OpenAI Agents SDK: overdrachten, begrenzingen en tracering](../../phases/14-agent-engineering/16-openai-agents-sdk/) | Bouwen | Python, TypeScript |
+| 17 | [Het uitvoeringsraamwerk als bibliotheek: subagents en sessieopslag](../../phases/14-agent-engineering/17-claude-agent-sdk/) | Bouwen | Python, TypeScript |
 | 18 | [Agentuitvoeringsomgevingen voor productie](../../phases/14-agent-engineering/18-agno-and-mastra-runtimes/) | Leren | Python, TypeScript |
-| 19 | [Benchmarks: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Leren | Python |
-| 20 | [Benchmarks: WebArena en OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Leren | Python |
-| 21 | [Computergebruik: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Bouwen | Python |
-| 22 | [Spraakagents: Pipecat en LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Bouwen | Python |
-| 23 | [Semantische conventies van OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Bouwen | Python |
-| 24 | [Waarneembaarheid van agents: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Leren | Python |
-| 25 | [Debat en samenwerking tussen meerdere agents](../../phases/14-agent-engineering/25-multi-agent-debate/) | Bouwen | Python |
-| 26 | [Faalwijzen: waarom agents vastlopen](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Bouwen | Python |
-| 27 | [Promptinjectie en de PVE-verdediging](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Bouwen | Python |
-| 28 | [Orkestratiepatronen: toezichthouder, zwerm en hiërarchie](../../phases/14-agent-engineering/28-orchestration-patterns/) | Bouwen | Python |
-| 29 | [Uitvoeringsomgevingen voor productie: wachtrijen, gebeurtenissen en cron](../../phases/14-agent-engineering/29-production-runtimes/) | Leren | Python |
-| 30 | [Agentontwikkeling gestuurd door evaluaties](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Bouwen | Python |
-| 31 | [Agentwerkbank: waarom kundige modellen toch falen](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Leren | Python |
-| 32 | [De minimale agentwerkbank](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Bouwen | Python |
-| 33 | [Agentinstructies als uitvoerbare beperkingen](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Bouwen | Python |
-| 34 | [Repositorygeheugen en duurzame toestand](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Bouwen | Python |
-| 35 | [Initialisatiescripts voor agents](../../phases/14-agent-engineering/35-initialization-scripts/) | Bouwen | Python |
-| 36 | [Reikwijdtecontracten en taakgrenzen](../../phases/14-agent-engineering/36-scope-contracts/) | Bouwen | Python |
-| 37 | [Terugkoppeling tijdens uitvoering](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Bouwen | Python |
-| 38 | [Verificatiepoorten](../../phases/14-agent-engineering/38-verification-gates/) | Bouwen | Python |
-| 39 | [Beoordelingsagent: scheid bouwer en beoordelaar](../../phases/14-agent-engineering/39-reviewer-agent/) | Bouwen | Python |
-| 40 | [Overdracht tussen sessies](../../phases/14-agent-engineering/40-multi-session-handoff/) | Bouwen | Python |
-| 41 | [De werkbank in een echte repository](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Bouwen | Python |
-| 42 | [Eindproject: lever een herbruikbaar agentwerkbankpakket op](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Bouwen | Python |
-| 43 | [Baken de taak af voordat de agent code schrijft](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Bouwen | Python |
-| 44 | [Maak een uitvoeringsplan op basis van bewijs](../../phases/14-agent-engineering/44-plan-from-evidence/) | Bouwen | Python |
-| 45 | [Delegeer agentwerk met isolatie en samenvoegcontracten](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Bouwen | Python |
-| 46 | [Maak van elke agentcorrectie een systeemverbetering](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Bouwen | Python |
-| 47 | [Bepaal het resultaat voordat je de uitvoer kiest](../../phases/14-agent-engineering/47-outcomes-before-output/) | Bouwen | Python |
-| 48 | [Ontdek de werkstroom die mensen werkelijk volgen](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Bouwen | Python |
-| 49 | [Breng aannames in kaart en onderzoek eerst de riskantste](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Bouwen | Python |
-| 50 | [Kies de kleinste stap die de beslissing kan veranderen](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Bouwen | Python |
-| 51 | [Schrijf specificaties die beoordelingsvermogen behouden](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Bouwen | Python |
-| 52 | [Ontwerp succesmaatstaven voordat het resultaat bestaat](../../phases/14-agent-engineering/52-design-success-metrics/) | Bouwen | Python |
-| 53 | [Kies bewust voor een prototype, proefproject of productie](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Bouwen | Python |
-| 54 | [Bouw een verbetercyclus met eigenaarschap en afbouw](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Bouwen | Python |
+| 19 | [Benchmarks: SWE-bench, GAIA, AgentBench](../../phases/14-agent-engineering/19-benchmarks-swebench-gaia/) | Leren | Python, TypeScript |
+| 20 | [Benchmarks: WebArena en OSWorld](../../phases/14-agent-engineering/20-benchmarks-webarena-osworld/) | Leren | Python, TypeScript |
+| 21 | [Computergebruik: Claude, OpenAI CUA, Gemini](../../phases/14-agent-engineering/21-computer-use-agents/) | Bouwen | Python, TypeScript |
+| 22 | [Spraakagents: Pipecat en LiveKit](../../phases/14-agent-engineering/22-voice-agents-pipecat-livekit/) | Bouwen | Python, TypeScript |
+| 23 | [Semantische conventies van OpenTelemetry GenAI](../../phases/14-agent-engineering/23-otel-genai-conventions/) | Bouwen | Python, TypeScript |
+| 24 | [Waarneembaarheid van agents: Langfuse, Phoenix, Opik](../../phases/14-agent-engineering/24-agent-observability-platforms/) | Leren | Python, TypeScript |
+| 25 | [Debat en samenwerking tussen meerdere agents](../../phases/14-agent-engineering/25-multi-agent-debate/) | Bouwen | Python, TypeScript |
+| 26 | [Faalwijzen: waarom agents vastlopen](../../phases/14-agent-engineering/26-failure-modes-agentic/) | Bouwen | Python, TypeScript |
+| 27 | [Promptinjectie en de PVE-verdediging](../../phases/14-agent-engineering/27-prompt-injection-defense/) | Bouwen | Python, TypeScript |
+| 28 | [Orkestratiepatronen: toezichthouder, zwerm en hiërarchie](../../phases/14-agent-engineering/28-orchestration-patterns/) | Bouwen | Python, TypeScript |
+| 29 | [Uitvoeringsomgevingen voor productie: wachtrijen, gebeurtenissen en cron](../../phases/14-agent-engineering/29-production-runtimes/) | Leren | Python, TypeScript |
+| 30 | [Agentontwikkeling gestuurd door evaluaties](../../phases/14-agent-engineering/30-eval-driven-agent-development/) | Bouwen | Python, TypeScript |
+| 31 | [Agentwerkbank: waarom kundige modellen toch falen](../../phases/14-agent-engineering/31-agent-workbench-why-models-fail/) | Leren | Python, TypeScript |
+| 32 | [De minimale agentwerkbank](../../phases/14-agent-engineering/32-minimal-agent-workbench/) | Bouwen | Python, TypeScript |
+| 33 | [Agentinstructies als uitvoerbare beperkingen](../../phases/14-agent-engineering/33-instructions-as-executable-constraints/) | Bouwen | Python, TypeScript |
+| 34 | [Repositorygeheugen en duurzame toestand](../../phases/14-agent-engineering/34-repo-memory-and-state/) | Bouwen | Python, TypeScript |
+| 35 | [Initialisatiescripts voor agents](../../phases/14-agent-engineering/35-initialization-scripts/) | Bouwen | Python, TypeScript |
+| 36 | [Reikwijdtecontracten en taakgrenzen](../../phases/14-agent-engineering/36-scope-contracts/) | Bouwen | Python, TypeScript |
+| 37 | [Terugkoppeling tijdens uitvoering](../../phases/14-agent-engineering/37-runtime-feedback-loops/) | Bouwen | Python, TypeScript |
+| 38 | [Verificatiepoorten](../../phases/14-agent-engineering/38-verification-gates/) | Bouwen | Python, TypeScript |
+| 39 | [Beoordelingsagent: scheid bouwer en beoordelaar](../../phases/14-agent-engineering/39-reviewer-agent/) | Bouwen | Python, TypeScript |
+| 40 | [Overdracht tussen sessies](../../phases/14-agent-engineering/40-multi-session-handoff/) | Bouwen | Python, TypeScript |
+| 41 | [De werkbank in een echte repository](../../phases/14-agent-engineering/41-workbench-for-real-repos/) | Bouwen | Python, TypeScript |
+| 42 | [Eindproject: lever een herbruikbaar agentwerkbankpakket op](../../phases/14-agent-engineering/42-agent-workbench-capstone/) | Bouwen | Python, TypeScript |
+| 43 | [Baken de taak af voordat de agent code schrijft](../../phases/14-agent-engineering/43-frame-the-task-before-code/) | Bouwen | Python, TypeScript |
+| 44 | [Maak een uitvoeringsplan op basis van bewijs](../../phases/14-agent-engineering/44-plan-from-evidence/) | Bouwen | Python, TypeScript |
+| 45 | [Delegeer agentwerk met isolatie en samenvoegcontracten](../../phases/14-agent-engineering/45-delegate-with-isolation/) | Bouwen | Python, TypeScript |
+| 46 | [Maak van elke agentcorrectie een systeemverbetering](../../phases/14-agent-engineering/46-turn-feedback-into-system/) | Bouwen | Python, TypeScript |
+| 47 | [Bepaal het resultaat voordat je de uitvoer kiest](../../phases/14-agent-engineering/47-outcomes-before-output/) | Bouwen | Python, TypeScript |
+| 48 | [Ontdek de werkstroom die mensen werkelijk volgen](../../phases/14-agent-engineering/48-discover-the-real-workflow/) | Bouwen | Python, TypeScript |
+| 49 | [Breng aannames in kaart en onderzoek eerst de riskantste](../../phases/14-agent-engineering/49-map-assumptions-and-risk/) | Bouwen | Python, TypeScript |
+| 50 | [Kies de kleinste stap die de beslissing kan veranderen](../../phases/14-agent-engineering/50-choose-the-smallest-testable-slice/) | Bouwen | Python, TypeScript |
+| 51 | [Schrijf specificaties die beoordelingsvermogen behouden](../../phases/14-agent-engineering/51-write-specifications-that-preserve-judgment/) | Bouwen | Python, TypeScript |
+| 52 | [Ontwerp succesmaatstaven voordat het resultaat bestaat](../../phases/14-agent-engineering/52-design-success-metrics/) | Bouwen | Python, TypeScript |
+| 53 | [Kies bewust voor een prototype, proefproject of productie](../../phases/14-agent-engineering/53-prototype-pilot-or-production/) | Bouwen | Python, TypeScript |
+| 54 | [Bouw een verbetercyclus met eigenaarschap en afbouw](../../phases/14-agent-engineering/54-build-the-feedback-ratchet/) | Bouwen | Python, TypeScript |
 
 Elke werkbankles in fase 14 (31-42) bevat een `mission.md` dat de agent instrueert voordat die de volledige lesdocumenten opent.
 
@@ -849,28 +849,28 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [Van chatbots naar agents voor lange taken (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Leren | Python |
-| 02 | [STaR, V-STaR, Quiet-STaR: zichzelf leren redeneren](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Leren | Python |
-| 03 | [AlphaEvolve: evolutionaire programmeeragents](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Leren | Python |
-| 04 | [Darwin Gödel Machine: zichzelf wijzigende agents](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Leren | Python |
-| 05 | [AI Scientist v2: onderzoek op workshopniveau](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Leren | Python |
-| 06 | [Geautomatiseerd alignmentonderzoek (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Leren | Python |
-| 07 | [Recursieve zelfverbetering: vermogen tegenover afstemming](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Leren | Python |
-| 08 | [Ontwerpen voor begrensde zelfverbetering](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Leren | Python |
-| 09 | [Het landschap van autonome programmeeragents (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Leren | Python |
-| 10 | [Machtigingsmodi voor autonome agents](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Leren | Python |
-| 11 | [Browseragents en indirecte promptinjectie](../../phases/15-autonomous-systems/11-browser-agents/) | Leren | Python |
-| 12 | [Duurzame uitvoering voor langlopende agents](../../phases/15-autonomous-systems/12-durable-execution/) | Leren | Python |
-| 13 | [Actiebudgetten, iteratiegrenzen en kostenbewaking](../../phases/15-autonomous-systems/13-cost-governors/) | Leren | Python |
-| 14 | [Noodstops, stroomonderbrekers en kanarietokens](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Leren | Python |
-| 15 | [Menselijk toezicht: eerst voorstellen, dan vastleggen](../../phases/15-autonomous-systems/15-propose-then-commit/) | Leren | Python |
-| 16 | [Checkpoints en terugdraaien](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Leren | Python |
-| 17 | [Constitutionele AI en regels overschrijven](../../phases/15-autonomous-systems/17-constitutional-ai/) | Leren | Python |
-| 18 | [Llama Guard en classificatie van in- en uitvoer](../../phases/15-autonomous-systems/18-llama-guard/) | Leren | Python |
-| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Leren | Python |
-| 20 | [OpenAI Preparedness Framework en DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Leren | Python |
-| 21 | [METR-tijdshorizonnen en externe evaluatie](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Leren | Python |
-| 22 | [CAIS, CAISI en risico's op maatschappelijk niveau](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Leren | Python |
+| 01 | [Van chatbots naar agents voor lange taken (METR)](../../phases/15-autonomous-systems/01-long-horizon-agents/) | Leren | Python, TypeScript |
+| 02 | [STaR, V-STaR, Quiet-STaR: zichzelf leren redeneren](../../phases/15-autonomous-systems/02-star-family-reasoning/) | Leren | Python, TypeScript |
+| 03 | [AlphaEvolve: evolutionaire programmeeragents](../../phases/15-autonomous-systems/03-alphaevolve-evolutionary-coding/) | Leren | Python, TypeScript |
+| 04 | [Darwin Gödel Machine: zichzelf wijzigende agents](../../phases/15-autonomous-systems/04-darwin-godel-machine/) | Leren | Python, TypeScript |
+| 05 | [AI Scientist v2: onderzoek op workshopniveau](../../phases/15-autonomous-systems/05-ai-scientist-v2/) | Leren | Python, TypeScript |
+| 06 | [Geautomatiseerd alignmentonderzoek (Anthropic AAR)](../../phases/15-autonomous-systems/06-automated-alignment-research/) | Leren | Python, TypeScript |
+| 07 | [Recursieve zelfverbetering: vermogen tegenover afstemming](../../phases/15-autonomous-systems/07-recursive-self-improvement/) | Leren | Python, TypeScript |
+| 08 | [Ontwerpen voor begrensde zelfverbetering](../../phases/15-autonomous-systems/08-bounded-self-improvement/) | Leren | Python, TypeScript |
+| 09 | [Het landschap van autonome programmeeragents (SWE-bench, CodeAct)](../../phases/15-autonomous-systems/09-coding-agent-landscape/) | Leren | Python, TypeScript |
+| 10 | [Machtigingsmodi voor autonome agents](../../phases/15-autonomous-systems/10-claude-code-permission-modes/) | Leren | Python, TypeScript |
+| 11 | [Browseragents en indirecte promptinjectie](../../phases/15-autonomous-systems/11-browser-agents/) | Leren | Python, TypeScript |
+| 12 | [Duurzame uitvoering voor langlopende agents](../../phases/15-autonomous-systems/12-durable-execution/) | Leren | Python, TypeScript |
+| 13 | [Actiebudgetten, iteratiegrenzen en kostenbewaking](../../phases/15-autonomous-systems/13-cost-governors/) | Leren | Python, TypeScript |
+| 14 | [Noodstops, stroomonderbrekers en kanarietokens](../../phases/15-autonomous-systems/14-kill-switches-canaries/) | Leren | Python, TypeScript |
+| 15 | [Menselijk toezicht: eerst voorstellen, dan vastleggen](../../phases/15-autonomous-systems/15-propose-then-commit/) | Leren | Python, TypeScript |
+| 16 | [Checkpoints en terugdraaien](../../phases/15-autonomous-systems/16-checkpoints-rollback/) | Leren | Python, TypeScript |
+| 17 | [Constitutionele AI en regels overschrijven](../../phases/15-autonomous-systems/17-constitutional-ai/) | Leren | Python, TypeScript |
+| 18 | [Llama Guard en classificatie van in- en uitvoer](../../phases/15-autonomous-systems/18-llama-guard/) | Leren | Python, TypeScript |
+| 19 | [Anthropic Responsible Scaling Policy v3.0](../../phases/15-autonomous-systems/19-anthropic-rsp/) | Leren | Python, TypeScript |
+| 20 | [OpenAI Preparedness Framework en DeepMind FSF](../../phases/15-autonomous-systems/20-openai-preparedness-deepmind-fsf/) | Leren | Python, TypeScript |
+| 21 | [METR-tijdshorizonnen en externe evaluatie](../../phases/15-autonomous-systems/21-metr-external-evaluation/) | Leren | Python, TypeScript |
+| 22 | [CAIS, CAISI en risico's op maatschappelijk niveau](../../phases/15-autonomous-systems/22-cais-caisi-societal-risk/) | Leren | Python, TypeScript |
 
 </details>
 
@@ -881,30 +881,30 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
 | 01 | [Waarom meerdere agents?](../../phases/16-multi-agent-and-swarms/01-why-multi-agent/) | Leren | TypeScript |
-| 02 | [De erfenis van FIPA-ACL en taalhandelingen](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Leren | Python |
+| 02 | [De erfenis van FIPA-ACL en taalhandelingen](../../phases/16-multi-agent-and-swarms/02-fipa-acl-heritage/) | Leren | Python, TypeScript |
 | 03 | [Communicatieprotocollen](../../phases/16-multi-agent-and-swarms/03-communication-protocols/) | Bouwen | TypeScript |
-| 04 | [Het bouwstenenmodel voor meerdere agents](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Leren | Python |
-| 05 | [Het toezichthouder- en orkestrator-werkerpatroon](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Bouwen | Python |
-| 06 | [Hiërarchische architectuur en afwijkende taakopdeling](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Leren | Python |
-| 07 | [Society of Mind en debat tussen meerdere agents](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Bouwen | Python |
-| 08 | [Rolspecialisatie: planner, criticus, uitvoerder en verificateur](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Bouwen | Python |
-| 09 | [Parallelle zwermen en netwerkarchitecturen](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Bouwen | Python |
-| 10 | [Groepsgesprekken en sprekerselectie](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Bouwen | Python |
-| 11 | [Overdrachten en routines (toestandsloze orkestratie)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Bouwen | Python |
-| 12 | [A2A: het agent-naar-agentprotocol](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Bouwen | Python |
-| 13 | [Gedeeld geheugen en schoolbordpatronen](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Bouwen | Python |
-| 14 | [Consensus en Byzantijnse fouttolerantie](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Bouwen | Python |
-| 15 | [Stemmen, zelfconsistentie en debatstructuur](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Bouwen | Python |
-| 16 | [Onderhandelen en ruilen](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Bouwen | Python |
-| 17 | [Generatieve agents en emergente simulaties](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Bouwen | Python |
-| 18 | [Theory of Mind en emergente coördinatie](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Bouwen | Python |
-| 19 | [Zwermoptimalisatie (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Bouwen | Python |
-| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Leren | Python |
-| 21 | [Agenteconomieën, tokenprikkels en reputatie](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Leren | Python |
-| 22 | [Opschalen voor productie: wachtrijen, checkpoints en duurzaamheid](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Bouwen | Python |
-| 23 | [Faalwijzen: MAST, groepsdenken en monocultuur](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Leren | Python |
-| 24 | [Evaluatie- en coördinatiebenchmarks](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Leren | Python |
-| 25 | [Praktijkgevallen en de stand van zaken in 2026](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Leren | Python |
+| 04 | [Het bouwstenenmodel voor meerdere agents](../../phases/16-multi-agent-and-swarms/04-primitive-model/) | Leren | Python, TypeScript |
+| 05 | [Het toezichthouder- en orkestrator-werkerpatroon](../../phases/16-multi-agent-and-swarms/05-supervisor-orchestrator-pattern/) | Bouwen | Python, TypeScript |
+| 06 | [Hiërarchische architectuur en afwijkende taakopdeling](../../phases/16-multi-agent-and-swarms/06-hierarchical-architecture/) | Leren | Python, TypeScript |
+| 07 | [Society of Mind en debat tussen meerdere agents](../../phases/16-multi-agent-and-swarms/07-society-of-mind-debate/) | Bouwen | Python, TypeScript |
+| 08 | [Rolspecialisatie: planner, criticus, uitvoerder en verificateur](../../phases/16-multi-agent-and-swarms/08-role-specialization/) | Bouwen | Python, TypeScript |
+| 09 | [Parallelle zwermen en netwerkarchitecturen](../../phases/16-multi-agent-and-swarms/09-parallel-swarm-networks/) | Bouwen | Python, TypeScript |
+| 10 | [Groepsgesprekken en sprekerselectie](../../phases/16-multi-agent-and-swarms/10-group-chat-speaker-selection/) | Bouwen | Python, TypeScript |
+| 11 | [Overdrachten en routines (toestandsloze orkestratie)](../../phases/16-multi-agent-and-swarms/11-handoffs-and-routines/) | Bouwen | Python, TypeScript |
+| 12 | [A2A: het agent-naar-agentprotocol](../../phases/16-multi-agent-and-swarms/12-a2a-protocol/) | Bouwen | Python, TypeScript |
+| 13 | [Gedeeld geheugen en schoolbordpatronen](../../phases/16-multi-agent-and-swarms/13-shared-memory-blackboard/) | Bouwen | Python, TypeScript |
+| 14 | [Consensus en Byzantijnse fouttolerantie](../../phases/16-multi-agent-and-swarms/14-consensus-and-bft/) | Bouwen | Python, TypeScript |
+| 15 | [Stemmen, zelfconsistentie en debatstructuur](../../phases/16-multi-agent-and-swarms/15-voting-debate-topology/) | Bouwen | Python, TypeScript |
+| 16 | [Onderhandelen en ruilen](../../phases/16-multi-agent-and-swarms/16-negotiation-bargaining/) | Bouwen | Python, TypeScript |
+| 17 | [Generatieve agents en emergente simulaties](../../phases/16-multi-agent-and-swarms/17-generative-agents-simulation/) | Bouwen | Python, TypeScript |
+| 18 | [Theory of Mind en emergente coördinatie](../../phases/16-multi-agent-and-swarms/18-theory-of-mind-coordination/) | Bouwen | Python, TypeScript |
+| 19 | [Zwermoptimalisatie (PSO, ACO)](../../phases/16-multi-agent-and-swarms/19-swarm-optimization-pso-aco/) | Bouwen | Python, TypeScript |
+| 20 | [MARL: MADDPG, QMIX, MAPPO](../../phases/16-multi-agent-and-swarms/20-marl-maddpg-qmix-mappo/) | Leren | Python, TypeScript |
+| 21 | [Agenteconomieën, tokenprikkels en reputatie](../../phases/16-multi-agent-and-swarms/21-agent-economies/) | Leren | Python, TypeScript |
+| 22 | [Opschalen voor productie: wachtrijen, checkpoints en duurzaamheid](../../phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints/) | Bouwen | Python, TypeScript |
+| 23 | [Faalwijzen: MAST, groepsdenken en monocultuur](../../phases/16-multi-agent-and-swarms/23-failure-modes-mast-groupthink/) | Leren | Python, TypeScript |
+| 24 | [Evaluatie- en coördinatiebenchmarks](../../phases/16-multi-agent-and-swarms/24-evaluation-coordination-benchmarks/) | Leren | Python, TypeScript |
+| 25 | [Praktijkgevallen en de stand van zaken in 2026](../../phases/16-multi-agent-and-swarms/25-case-studies-2026-sota/) | Leren | Python, TypeScript |
 
 </details>
 
@@ -914,35 +914,35 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [Beheerde LLM-platforms: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Leren | Python |
-| 02 | [Economie van inferentieplatforms: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Leren | Python |
-| 03 | [GPU's automatisch schalen op Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Leren | Python |
-| 04 | [Binnenwerk van inferentie-engines: PagedAttention, continue batches en opgedeelde prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Leren | Python |
-| 05 | [EAGLE-3-speculatieve decodering in productie](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Leren | Python |
-| 06 | [Inferentie met prefixcache: RadixAttention en KV-hergebruik](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Leren | Python |
-| 07 | [Hardwaregerichte inferentiecompilatie: FP8 en NVFP4 op Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Leren | Python |
-| 08 | [Inferentiemaatstaven: TTFT, TPOT, ITL, goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Leren | Python |
-| 09 | [Kwantisatie in productie: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Leren | Python |
-| 10 | [Koude starts beperken bij serverloze LLM's](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Leren | Python |
-| 11 | [LLM-inferentie in meerdere regio's en lokale KV-caches](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Leren | Python |
-| 12 | [Inferentie op randapparaten: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Leren | Python |
+| 01 | [Beheerde LLM-platforms: Bedrock, Azure OpenAI, Vertex AI](../../phases/17-infrastructure-and-production/01-managed-llm-platforms/) | Leren | Python, TypeScript |
+| 02 | [Economie van inferentieplatforms: Fireworks, Together, Baseten, Modal](../../phases/17-infrastructure-and-production/02-inference-platform-economics/) | Leren | Python, TypeScript |
+| 03 | [GPU's automatisch schalen op Kubernetes: Karpenter, KAI Scheduler](../../phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes/) | Leren | Python, TypeScript |
+| 04 | [Binnenwerk van inferentie-engines: PagedAttention, continue batches en opgedeelde prefill](../../phases/17-infrastructure-and-production/04-vllm-serving-internals/) | Leren | Python, TypeScript |
+| 05 | [EAGLE-3-speculatieve decodering in productie](../../phases/17-infrastructure-and-production/05-eagle3-speculative-decoding/) | Leren | Python, TypeScript |
+| 06 | [Inferentie met prefixcache: RadixAttention en KV-hergebruik](../../phases/17-infrastructure-and-production/06-sglang-radixattention/) | Leren | Python, TypeScript |
+| 07 | [Hardwaregerichte inferentiecompilatie: FP8 en NVFP4 op Blackwell](../../phases/17-infrastructure-and-production/07-tensorrt-llm-blackwell/) | Leren | Python, TypeScript |
+| 08 | [Inferentiemaatstaven: TTFT, TPOT, ITL, goodput, P99](../../phases/17-infrastructure-and-production/08-inference-metrics-goodput/) | Leren | Python, TypeScript |
+| 09 | [Kwantisatie in productie: AWQ, GPTQ, GGUF, FP8, NVFP4](../../phases/17-infrastructure-and-production/09-production-quantization/) | Leren | Python, TypeScript |
+| 10 | [Koude starts beperken bij serverloze LLM's](../../phases/17-infrastructure-and-production/10-cold-start-mitigation/) | Leren | Python, TypeScript |
+| 11 | [LLM-inferentie in meerdere regio's en lokale KV-caches](../../phases/17-infrastructure-and-production/11-multi-region-kv-locality/) | Leren | Python, TypeScript |
+| 12 | [Inferentie op randapparaten: ANE, Hexagon, WebGPU, Jetson](../../phases/17-infrastructure-and-production/12-edge-inference/) | Leren | Python, TypeScript |
 | 13 | [Een stack voor LLM-waarneembaarheid kiezen](../../phases/17-infrastructure-and-production/13-llm-observability/) | Leren | Python, TypeScript |
 | 14 | [Economie van promptcaching en semantische caching](../../phases/17-infrastructure-and-production/14-prompt-semantic-caching/) | Leren | Python, TypeScript |
 | 15 | [Batch-API's: 50% korting als industriestandaard](../../phases/17-infrastructure-and-production/15-batch-apis/) | Leren | Python, TypeScript |
 | 16 | [Modelroutering als bouwsteen voor kostenverlaging](../../phases/17-infrastructure-and-production/16-model-routing/) | Leren | Python, TypeScript |
-| 17 | [Gescheiden prefill en decodering: NVIDIA Dynamo en llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Leren | Python |
-| 18 | [Inferentiestack voor productie: KV-uitplaatsing en cachebewuste routering](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Leren | Python |
+| 17 | [Gescheiden prefill en decodering: NVIDIA Dynamo en llm-d](../../phases/17-infrastructure-and-production/17-disaggregated-prefill-decode/) | Leren | Python, TypeScript |
+| 18 | [Inferentiestack voor productie: KV-uitplaatsing en cachebewuste routering](../../phases/17-infrastructure-and-production/18-vllm-production-stack-lmcache/) | Leren | Python, TypeScript |
 | 19 | [AI-gateways: LiteLLM, Portkey, Kong, Bifrost](../../phases/17-infrastructure-and-production/19-ai-gateways/) | Leren | Python, TypeScript |
 | 20 | [Schaduwtests, kanarie-uitrol en stapsgewijze uitrol](../../phases/17-infrastructure-and-production/20-shadow-canary-progressive/) | Leren | Python, TypeScript |
-| 21 | [A/B-tests voor LLM-functies: GrowthBook en Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Leren | Python |
-| 22 | [Belastingtests voor LLM-API's: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Bouwen | Python |
-| 23 | [SRE voor AI: incidentrespons met meerdere agents](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Leren | Python |
-| 24 | [Chaostests voor LLM-productie](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Leren | Python |
-| 25 | [Beveiliging: geheimen, persoonsgegevens verwijderen en auditlogboeken](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Leren | Python |
-| 26 | [Naleving: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Leren | Python |
-| 27 | [FinOps voor LLM's: eenheidskosten en toerekening per huurder](../../phases/17-infrastructure-and-production/27-finops-llms/) | Leren | Python |
-| 28 | [Zelfgehoste inferentie kiezen: engine afstemmen op hardware en schaal](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Leren | Python |
-| 29 | [Demo-interfaces voor modellen: van een functie naar een deelbare app](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Bouwen | Python |
+| 21 | [A/B-tests voor LLM-functies: GrowthBook en Statsig](../../phases/17-infrastructure-and-production/21-ab-testing-llm-features/) | Leren | Python, TypeScript |
+| 22 | [Belastingtests voor LLM-API's: k6, LLMPerf, GenAI-Perf](../../phases/17-infrastructure-and-production/22-load-testing-llm-apis/) | Bouwen | Python, TypeScript |
+| 23 | [SRE voor AI: incidentrespons met meerdere agents](../../phases/17-infrastructure-and-production/23-sre-for-ai/) | Leren | Python, TypeScript |
+| 24 | [Chaostests voor LLM-productie](../../phases/17-infrastructure-and-production/24-chaos-engineering-llm/) | Leren | Python, TypeScript |
+| 25 | [Beveiliging: geheimen, persoonsgegevens verwijderen en auditlogboeken](../../phases/17-infrastructure-and-production/25-security-secrets-audit/) | Leren | Python, TypeScript |
+| 26 | [Naleving: SOC 2, HIPAA, GDPR, EU AI Act, ISO 42001](../../phases/17-infrastructure-and-production/26-compliance-frameworks/) | Leren | Python, TypeScript |
+| 27 | [FinOps voor LLM's: eenheidskosten en toerekening per huurder](../../phases/17-infrastructure-and-production/27-finops-llms/) | Leren | Python, TypeScript |
+| 28 | [Zelfgehoste inferentie kiezen: engine afstemmen op hardware en schaal](../../phases/17-infrastructure-and-production/28-self-hosted-serving-selection/) | Leren | Python, TypeScript |
+| 29 | [Demo-interfaces voor modellen: van een functie naar een deelbare app](../../phases/17-infrastructure-and-production/29-model-demo-interfaces/) | Bouwen | Python, TypeScript |
 
 </details>
 
@@ -952,36 +952,36 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 
 | # | Les | Soort | Taal |
 |:---:|--------|:----:|------|
-| 01 | [Instructies volgen als signaal van afstemming](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Leren | Python |
-| 02 | [Beloningen manipuleren en de wet van Goodhart](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Leren | Python |
-| 03 | [De familie van directe voorkeursoptimalisatie](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Leren | Python |
-| 04 | [Vleierij als versterking van RLHF](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Leren | Python |
-| 05 | [Constitutionele AI en RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Leren | Python |
-| 06 | [Mesa-optimalisatie en misleidende afstemming](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Leren | Python |
-| 07 | [Slapende agents: aanhoudende misleiding](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Leren | Python |
-| 08 | [Intriges binnen de context van grensverleggende modellen](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Leren | Python |
-| 09 | [Afstemming veinzen](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Leren | Python |
-| 10 | [AI-controle: veiligheid ondanks sabotage](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Leren | Python |
-| 11 | [Schaalbaar toezicht en van zwak naar sterk](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Leren | Python |
-| 12 | [Aanvalstests: PAIR en geautomatiseerde aanvallen](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Bouwen | Python |
-| 13 | [Jailbreaks met veel voorbeelden](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Leren | Python |
-| 14 | [ASCII-kunst en visuele jailbreaks](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Bouwen | Python |
-| 15 | [Indirecte promptinjectie](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Bouwen | Python |
-| 16 | [Gereedschap voor aanvalstests: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Bouwen | Python |
-| 17 | [WMDP en evaluatie van dubbel inzetbare vermogens](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Leren | Python |
-| 18 | [Veiligheidskaders voor geavanceerde modellen: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Leren | Python |
-| 19 | [Onderzoek naar modelwelzijn](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Leren | Python |
-| 20 | [Vooroordelen en schade door representatie](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Bouwen | Python |
-| 21 | [Eerlijkheidscriteria: groep, individu en tegenfeitelijkheid](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Leren | Python |
-| 22 | [Differentiële privacy voor LLM's](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Bouwen | Python |
-| 23 | [Watermerken: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Bouwen | Python |
-| 24 | [Regelgevingskaders: EU, VS, VK en Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Leren | Python |
-| 25 | [EchoLeak en CVE's voor AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Leren | Python |
-| 26 | [Model-, systeem- en gegevenskaarten](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Bouwen | Python |
-| 27 | [Gegevensherkomst en beheer van trainingsgegevens](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Leren | Python |
-| 28 | [Het alignmentonderzoeksecosysteem: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Leren | Python |
-| 29 | [Moderatiesystemen: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Bouwen | Python |
-| 30 | [Risico's van dubbel gebruik: cyber, biologie, chemie en kerntechnologie](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Leren | Python |
+| 01 | [Instructies volgen als signaal van afstemming](../../phases/18-ethics-safety-alignment/01-instruction-following-alignment-signal/) | Leren | Python, TypeScript |
+| 02 | [Beloningen manipuleren en de wet van Goodhart](../../phases/18-ethics-safety-alignment/02-reward-hacking-goodhart/) | Leren | Python, TypeScript |
+| 03 | [De familie van directe voorkeursoptimalisatie](../../phases/18-ethics-safety-alignment/03-direct-preference-optimization-family/) | Leren | Python, TypeScript |
+| 04 | [Vleierij als versterking van RLHF](../../phases/18-ethics-safety-alignment/04-sycophancy-rlhf-amplification/) | Leren | Python, TypeScript |
+| 05 | [Constitutionele AI en RLAIF](../../phases/18-ethics-safety-alignment/05-constitutional-ai-rlaif/) | Leren | Python, TypeScript |
+| 06 | [Mesa-optimalisatie en misleidende afstemming](../../phases/18-ethics-safety-alignment/06-mesa-optimization-deceptive-alignment/) | Leren | Python, TypeScript |
+| 07 | [Slapende agents: aanhoudende misleiding](../../phases/18-ethics-safety-alignment/07-sleeper-agents-persistent-deception/) | Leren | Python, TypeScript |
+| 08 | [Intriges binnen de context van grensverleggende modellen](../../phases/18-ethics-safety-alignment/08-in-context-scheming-frontier-models/) | Leren | Python, TypeScript |
+| 09 | [Afstemming veinzen](../../phases/18-ethics-safety-alignment/09-alignment-faking/) | Leren | Python, TypeScript |
+| 10 | [AI-controle: veiligheid ondanks sabotage](../../phases/18-ethics-safety-alignment/10-ai-control-subversion/) | Leren | Python, TypeScript |
+| 11 | [Schaalbaar toezicht en van zwak naar sterk](../../phases/18-ethics-safety-alignment/11-scalable-oversight-weak-to-strong/) | Leren | Python, TypeScript |
+| 12 | [Aanvalstests: PAIR en geautomatiseerde aanvallen](../../phases/18-ethics-safety-alignment/12-red-teaming-pair-automated-attacks/) | Bouwen | Python, TypeScript |
+| 13 | [Jailbreaks met veel voorbeelden](../../phases/18-ethics-safety-alignment/13-many-shot-jailbreaking/) | Leren | Python, TypeScript |
+| 14 | [ASCII-kunst en visuele jailbreaks](../../phases/18-ethics-safety-alignment/14-ascii-art-visual-jailbreaks/) | Bouwen | Python, TypeScript |
+| 15 | [Indirecte promptinjectie](../../phases/18-ethics-safety-alignment/15-indirect-prompt-injection/) | Bouwen | Python, TypeScript |
+| 16 | [Gereedschap voor aanvalstests: Garak, Llama Guard, PyRIT](../../phases/18-ethics-safety-alignment/16-red-team-tooling-garak-llamaguard-pyrit/) | Bouwen | Python, TypeScript |
+| 17 | [WMDP en evaluatie van dubbel inzetbare vermogens](../../phases/18-ethics-safety-alignment/17-wmdp-dual-use-evaluation/) | Leren | Python, TypeScript |
+| 18 | [Veiligheidskaders voor geavanceerde modellen: RSP, PF, FSF](../../phases/18-ethics-safety-alignment/18-frontier-safety-frameworks-rsp-pf-fsf/) | Leren | Python, TypeScript |
+| 19 | [Onderzoek naar modelwelzijn](../../phases/18-ethics-safety-alignment/19-model-welfare-research/) | Leren | Python, TypeScript |
+| 20 | [Vooroordelen en schade door representatie](../../phases/18-ethics-safety-alignment/20-bias-representational-harm/) | Bouwen | Python, TypeScript |
+| 21 | [Eerlijkheidscriteria: groep, individu en tegenfeitelijkheid](../../phases/18-ethics-safety-alignment/21-fairness-criteria-group-individual-counterfactual/) | Leren | Python, TypeScript |
+| 22 | [Differentiële privacy voor LLM's](../../phases/18-ethics-safety-alignment/22-differential-privacy-for-llms/) | Bouwen | Python, TypeScript |
+| 23 | [Watermerken: SynthID, Stable Signature, C2PA](../../phases/18-ethics-safety-alignment/23-watermarking-synthid-stable-signature-c2pa/) | Bouwen | Python, TypeScript |
+| 24 | [Regelgevingskaders: EU, VS, VK en Korea](../../phases/18-ethics-safety-alignment/24-regulatory-frameworks-eu-us-uk-korea/) | Leren | Python, TypeScript |
+| 25 | [EchoLeak en CVE's voor AI](../../phases/18-ethics-safety-alignment/25-echoleak-cves-for-ai/) | Leren | Python, TypeScript |
+| 26 | [Model-, systeem- en gegevenskaarten](../../phases/18-ethics-safety-alignment/26-model-system-dataset-cards/) | Bouwen | Python, TypeScript |
+| 27 | [Gegevensherkomst en beheer van trainingsgegevens](../../phases/18-ethics-safety-alignment/27-data-provenance-training-governance/) | Leren | Python, TypeScript |
+| 28 | [Het alignmentonderzoeksecosysteem: MATS, Redwood, Apollo, METR](../../phases/18-ethics-safety-alignment/28-alignment-research-ecosystem/) | Leren | Python, TypeScript |
+| 29 | [Moderatiesystemen: OpenAI, Perspective, Llama Guard](../../phases/18-ethics-safety-alignment/29-moderation-systems-openai-perspective-llamaguard/) | Bouwen | Python, TypeScript |
+| 30 | [Risico's van dubbel gebruik: cyber, biologie, chemie en kerntechnologie](../../phases/18-ethics-safety-alignment/30-dual-use-risk-cyber-bio-chem-nuclear/) | Leren | Python, TypeScript |
 
 </details>
 
@@ -991,39 +991,39 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 
 | # | Eindproject | Combineert | Taal |
 |:---:|---------|----------|------|
-| 01 | [Programmeeragent voor de terminal](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python |
-| 02 | [RAG over de codebasis (semantisch zoeken tussen repositories)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python |
-| 03 | [Realtime-spraakassistent (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python |
-| 04 | [Multimodale documentvragen (beeld als uitgangspunt)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python |
-| 05 | [Autonome onderzoeksagent (AI-Scientist-klasse)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python |
-| 06 | [DevOps-probleemoplossingsagent voor Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python |
-| 07 | [Volledige fijnafstemmingspijplijn](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python |
-| 08 | [RAG-chatbot voor productie (gereguleerde sector)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python |
-| 09 | [Codemigratieagent (upgrade van een repository)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python |
-| 10 | [Softwareontwikkelingsteam met meerdere agents](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python |
-| 11 | [Dashboard voor LLM-waarneembaarheid en evaluatie](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python |
-| 12 | [Pijplijn voor videobegrip (scène → vraag en antwoord)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python |
-| 13 | [Toestandsloze MCP-server met register en governance](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python |
-| 14 | [Inferentieserver met speculatieve decodering](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python |
-| 15 | [Constitutioneel veiligheidsraamwerk en aanvalstestomgeving](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python |
-| 16 | [Autonome agent van GitHub-issue naar PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python |
-| 17 | [Persoonlijke AI-tutor (adaptief en multimodaal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python |
+| 01 | [Programmeeragent voor de terminal](../../phases/19-capstone-projects/01-terminal-native-coding-agent/) | P0 P5 P7 P10 P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 02 | [RAG over de codebasis (semantisch zoeken tussen repositories)](../../phases/19-capstone-projects/02-rag-over-codebase/) | P5 P7 P11 P13 P17 | Python, TypeScript |
+| 03 | [Realtime-spraakassistent (ASR → LLM → TTS)](../../phases/19-capstone-projects/03-realtime-voice-assistant/) | P6 P7 P11 P13 P14 P17 | Python, TypeScript |
+| 04 | [Multimodale documentvragen (beeld als uitgangspunt)](../../phases/19-capstone-projects/04-multimodal-document-qa/) | P4 P5 P7 P11 P12 P17 | Python, TypeScript |
+| 05 | [Autonome onderzoeksagent (AI-Scientist-klasse)](../../phases/19-capstone-projects/05-autonomous-research-agent/) | P0 P2 P3 P7 P10 P14 P15 P16 P18 | Python, TypeScript |
+| 06 | [DevOps-probleemoplossingsagent voor Kubernetes](../../phases/19-capstone-projects/06-devops-troubleshooting-agent/) | P11 P13 P14 P15 P17 P18 | Python, TypeScript |
+| 07 | [Volledige fijnafstemmingspijplijn](../../phases/19-capstone-projects/07-end-to-end-fine-tuning-pipeline/) | P2 P3 P7 P10 P11 P17 P18 | Python, TypeScript |
+| 08 | [RAG-chatbot voor productie (gereguleerde sector)](../../phases/19-capstone-projects/08-production-rag-chatbot/) | P5 P7 P11 P12 P17 P18 | Python, TypeScript |
+| 09 | [Codemigratieagent (upgrade van een repository)](../../phases/19-capstone-projects/09-code-migration-agent/) | P5 P7 P11 P13 P14 P15 P17 | Python, TypeScript |
+| 10 | [Softwareontwikkelingsteam met meerdere agents](../../phases/19-capstone-projects/10-multi-agent-software-team/) | P11 P13 P14 P15 P16 P17 | Python, TypeScript |
+| 11 | [Dashboard voor LLM-waarneembaarheid en evaluatie](../../phases/19-capstone-projects/11-llm-observability-dashboard/) | P11 P13 P17 P18 | Python, TypeScript |
+| 12 | [Pijplijn voor videobegrip (scène → vraag en antwoord)](../../phases/19-capstone-projects/12-video-understanding-pipeline/) | P4 P6 P7 P11 P12 P17 | Python, TypeScript |
+| 13 | [Toestandsloze MCP-server met register en governance](../../phases/19-capstone-projects/13-mcp-server-with-registry/) | P11 P13 P14 P17 P18 | Python, TypeScript |
+| 14 | [Inferentieserver met speculatieve decodering](../../phases/19-capstone-projects/14-speculative-decoding-server/) | P3 P7 P10 P17 | Python, TypeScript |
+| 15 | [Constitutioneel veiligheidsraamwerk en aanvalstestomgeving](../../phases/19-capstone-projects/15-constitutional-safety-harness/) | P10 P11 P13 P14 P18 | Python, TypeScript |
+| 16 | [Autonome agent van GitHub-issue naar PR](../../phases/19-capstone-projects/16-github-issue-to-pr-agent/) | P11 P13 P14 P15 P17 | Python, TypeScript |
+| 17 | [Persoonlijke AI-tutor (adaptief en multimodaal)](../../phases/19-capstone-projects/17-personal-ai-tutor/) | P5 P6 P11 P12 P14 P17 P18 | Python, TypeScript |
 
 **Verdiepende bouwtrajecten** — lessenreeksen waarin je een volledig subsysteem vanaf nul bouwt.
 
 | # | Eindproject | Combineert | Taal |
 |:---:|---------|----------|------|
-| 20 | [Luscontract voor het agentraamwerk](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agentraamwerk | Python |
-| 21 | [Gereedschapsregister met schemavalidatie](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agentraamwerk | Python |
-| 22 | [JSON-RPC 2.0 via regelgescheiden stdio](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agentraamwerk | Python |
-| 23 | [Verdeler van functieaanroepen](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agentraamwerk | Python |
-| 24 | [Besturingsstroom voor plannen en uitvoeren](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agentraamwerk | Python |
-| 25 | [Verificatiepoorten en observatiebudget](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agentraamwerk | Python |
-| 26 | [Sandboxuitvoerder met blokkeerlijst en padbeperking](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agentraamwerk | Python |
-| 27 | [Evaluatieraamwerk met vaste testtaken](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agentraamwerk | Python |
-| 28 | [Waarneembaarheid met OTel GenAI-spans en Prometheus-maatstaven](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Agentraamwerk | Python |
-| 29 | [Volledige programmeeragent op het raamwerk](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agentraamwerk | Python |
-| 30 | [BPE-tokenizer vanaf nul](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python |
+| 20 | [Luscontract voor het agentraamwerk](../../phases/19-capstone-projects/20-agent-harness-loop-contract/) | A. Agentraamwerk | Python, TypeScript |
+| 21 | [Gereedschapsregister met schemavalidatie](../../phases/19-capstone-projects/21-tool-registry-schema-validation/) | A. Agentraamwerk | Python, TypeScript |
+| 22 | [JSON-RPC 2.0 via regelgescheiden stdio](../../phases/19-capstone-projects/22-jsonrpc-stdio-transport/) | A. Agentraamwerk | Python, TypeScript |
+| 23 | [Verdeler van functieaanroepen](../../phases/19-capstone-projects/23-function-call-dispatcher/) | A. Agentraamwerk | Python, TypeScript |
+| 24 | [Besturingsstroom voor plannen en uitvoeren](../../phases/19-capstone-projects/24-plan-execute-control-flow/) | A. Agentraamwerk | Python, TypeScript |
+| 25 | [Verificatiepoorten en observatiebudget](../../phases/19-capstone-projects/25-verification-gates-observation-budget/) | A. Agentraamwerk | Python, TypeScript |
+| 26 | [Sandboxuitvoerder met blokkeerlijst en padbeperking](../../phases/19-capstone-projects/26-sandbox-runner-denylist/) | A. Agentraamwerk | Python, TypeScript |
+| 27 | [Evaluatieraamwerk met vaste testtaken](../../phases/19-capstone-projects/27-eval-harness-fixture-tasks/) | A. Agentraamwerk | Python, TypeScript |
+| 28 | [Waarneembaarheid met OTel GenAI-spans en Prometheus-maatstaven](../../phases/19-capstone-projects/28-observability-otel-traces/) | A. Agentraamwerk | Python, TypeScript |
+| 29 | [Volledige programmeeragent op het raamwerk](../../phases/19-capstone-projects/29-end-to-end-coding-task-demo/) | A. Agentraamwerk | Python, TypeScript |
+| 30 | [BPE-tokenizer vanaf nul](../../phases/19-capstone-projects/30-bpe-tokenizer-from-scratch/) | B. NLP LLM | Python, TypeScript |
 | 31 | [Getokeniseerde dataset met schuivend venster](../../phases/19-capstone-projects/31-tokenized-dataset-sliding-window/) | B. NLP LLM | Python |
 | 32 | [Token- en positie-embeddings](../../phases/19-capstone-projects/32-token-positional-embeddings/) | B. NLP LLM | Python |
 | 33 | [Zelfaandacht met meerdere koppen](../../phases/19-capstone-projects/33-multihead-self-attention/) | B. NLP LLM | Python |
@@ -1042,13 +1042,13 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 | 46 | [Gradiënten accumuleren](../../phases/19-capstone-projects/46-gradient-accumulation/) | C. Volledig trainen | Python |
 | 47 | [Checkpoints opslaan en hervatten](../../phases/19-capstone-projects/47-checkpoint-save-resume/) | C. Volledig trainen | Python |
 | 48 | [Dataparallel trainen en FSDP vanaf nul](../../phases/19-capstone-projects/48-distributed-fsdp-ddp/) | C. Volledig trainen | Python |
-| 49 | [Evaluatieraamwerk voor taalmodellen](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Volledig trainen | Python |
-| 50 | [Hypothesegenerator](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Automatisch onderzoek | Python |
-| 51 | [Literatuur ophalen](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Automatisch onderzoek | Python |
-| 52 | [Experimentuitvoerder](../../phases/19-capstone-projects/52-experiment-runner/) | D. Automatisch onderzoek | Python |
+| 49 | [Evaluatieraamwerk voor taalmodellen](../../phases/19-capstone-projects/49-lm-eval-harness/) | C. Volledig trainen | Python, TypeScript |
+| 50 | [Hypothesegenerator](../../phases/19-capstone-projects/50-hypothesis-generator/) | D. Automatisch onderzoek | Python, TypeScript |
+| 51 | [Literatuur ophalen](../../phases/19-capstone-projects/51-literature-retrieval/) | D. Automatisch onderzoek | Python, TypeScript |
+| 52 | [Experimentuitvoerder](../../phases/19-capstone-projects/52-experiment-runner/) | D. Automatisch onderzoek | Python, TypeScript |
 | 53 | [Resultaatbeoordelaar](../../phases/19-capstone-projects/53-result-evaluator/) | D. Automatisch onderzoek | Python |
-| 54 | [Paperschrijver](../../phases/19-capstone-projects/54-paper-writer/) | D. Automatisch onderzoek | Python |
-| 55 | [Kritische beoordelingslus](../../phases/19-capstone-projects/55-critic-loop/) | D. Automatisch onderzoek | Python |
+| 54 | [Paperschrijver](../../phases/19-capstone-projects/54-paper-writer/) | D. Automatisch onderzoek | Python, TypeScript |
+| 55 | [Kritische beoordelingslus](../../phases/19-capstone-projects/55-critic-loop/) | D. Automatisch onderzoek | Python, TypeScript |
 | 56 | [Iteratieplanner](../../phases/19-capstone-projects/56-iteration-scheduler/) | D. Automatisch onderzoek | Python |
 | 57 | [Volledige onderzoeksdemonstratie](../../phases/19-capstone-projects/57-end-to-end-research-demo/) | D. Automatisch onderzoek | Python |
 | 58 | [Beeldpatches voor de visie-encoder](../../phases/19-capstone-projects/58-vision-encoder-patches/) | E. Multimodal VLM | Python |
@@ -1057,13 +1057,13 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 | 61 | [Fusie met kruislingse aandacht](../../phases/19-capstone-projects/61-cross-attention-fusion/) | E. Multimodal VLM | Python |
 | 62 | [Visie-taalvoortraining](../../phases/19-capstone-projects/62-vision-language-pretraining/) | E. Multimodal VLM | Python |
 | 63 | [Multimodale evaluatie](../../phases/19-capstone-projects/63-multimodal-eval/) | E. Multimodal VLM | Python |
-| 64 | [Opdeelstrategieën vergeleken](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Geavanceerde RAG | Python |
-| 65 | [Hybride zoeken met BM25 en dichte embeddings](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Geavanceerde RAG | Python |
+| 64 | [Opdeelstrategieën vergeleken](../../phases/19-capstone-projects/64-chunking-strategies-advanced/) | F. Geavanceerde RAG | Python, TypeScript |
+| 65 | [Hybride zoeken met BM25 en dichte embeddings](../../phases/19-capstone-projects/65-hybrid-retrieval-bm25-dense/) | F. Geavanceerde RAG | Python, TypeScript |
 | 66 | [Herschikker met kruisencoder](../../phases/19-capstone-projects/66-reranker-cross-encoder/) | F. Geavanceerde RAG | Python |
-| 67 | [Zoekvragen herschrijven: HyDE, meerdere vragen en ontleding](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Geavanceerde RAG | Python |
-| 68 | [RAG-evaluatie: precisie, recall, MRR, nDCG, getrouwheid en antwoordrelevantie](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Geavanceerde RAG | Python |
+| 67 | [Zoekvragen herschrijven: HyDE, meerdere vragen en ontleding](../../phases/19-capstone-projects/67-query-rewriting-hyde/) | F. Geavanceerde RAG | Python, TypeScript |
+| 68 | [RAG-evaluatie: precisie, recall, MRR, nDCG, getrouwheid en antwoordrelevantie](../../phases/19-capstone-projects/68-rag-eval-precision-recall/) | F. Geavanceerde RAG | Python, TypeScript |
 | 69 | [Volledig RAG-systeem](../../phases/19-capstone-projects/69-end-to-end-rag-system/) | F. Geavanceerde RAG | Python |
-| 70 | [Taakspecificatieformaat](../../phases/19-capstone-projects/70-task-spec-format/) | G. Evaluatieraamwerk | Python |
+| 70 | [Taakspecificatieformaat](../../phases/19-capstone-projects/70-task-spec-format/) | G. Evaluatieraamwerk | Python, TypeScript |
 | 71 | [Klassieke maatstaven](../../phases/19-capstone-projects/71-classical-metrics/) | G. Evaluatieraamwerk | Python |
 | 72 | [Maatstaf voor code-uitvoering](../../phases/19-capstone-projects/72-code-exec-metric/) | G. Evaluatieraamwerk | Python |
 | 73 | [Perplexiteit en kalibratie](../../phases/19-capstone-projects/73-perplexity-calibration/) | G. Evaluatieraamwerk | Python |
@@ -1076,11 +1076,11 @@ tot bewijs, risico, reikwijdte, meting, gefaseerde oplevering en eigenaarschap v
 | 80 | [Opgedeelde checkpoints en atomair hervatten](../../phases/19-capstone-projects/80-checkpoint-sharded-resume/) | H. Gedistribueerd trainen | Python |
 | 81 | [Volledige gedistribueerde training](../../phases/19-capstone-projects/81-end-to-end-distributed-train/) | H. Gedistribueerd trainen | Python |
 | 82 | [Jailbreakindeling](../../phases/19-capstone-projects/82-jailbreak-taxonomy/) | I. Veiligheidsraamwerk | Python |
-| 83 | [Promptinjectiedetector](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Veiligheidsraamwerk | Python |
+| 83 | [Promptinjectiedetector](../../phases/19-capstone-projects/83-prompt-injection-detector/) | I. Veiligheidsraamwerk | Python, TypeScript |
 | 84 | [Weigeringen evalueren](../../phases/19-capstone-projects/84-refusal-evaluation/) | I. Veiligheidsraamwerk | Python |
-| 85 | [Inhoudsclassificatie integreren](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Veiligheidsraamwerk | Python |
-| 86 | [Constitutionele regelengine](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Veiligheidsraamwerk | Python, YAML |
-| 87 | [Volledige veiligheidspoort](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Veiligheidsraamwerk | Python |
+| 85 | [Inhoudsclassificatie integreren](../../phases/19-capstone-projects/85-content-classifier-integration/) | I. Veiligheidsraamwerk | Python, TypeScript |
+| 86 | [Constitutionele regelengine](../../phases/19-capstone-projects/86-constitutional-rules-engine/) | I. Veiligheidsraamwerk | Python |
+| 87 | [Volledige veiligheidspoort](../../phases/19-capstone-projects/87-end-to-end-safety-gate/) | I. Veiligheidsraamwerk | Python, TypeScript |
 
 </details>
 

@@ -108,7 +108,7 @@ def run_pipeline(user_wish: str, executor, label: str) -> None:
 
 
 def main() -> None:
-    print("Role specialization pipeline — planner, executor, critic, verifier")
+    print("Role specialization pipeline: planner, executor, critic, verifier")
     print("-" * 70)
 
     run_pipeline(

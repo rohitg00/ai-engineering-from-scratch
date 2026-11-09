@@ -139,7 +139,7 @@ def report(row: dict) -> None:
 
 def main() -> None:
     print("=" * 80)
-    print("MULTI-REGION LLM ROUTING — three strategies, 1000 requests")
+    print("MULTI-REGION LLM ROUTING: three strategies, 1000 requests")
     print("=" * 80)
     base = make_workload()
     header = f"{'Strategy':13}  hit         mean     P50      P99      cross   cost"

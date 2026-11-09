@@ -3,7 +3,7 @@
 > Convolutions learn n-grams. Recurrences remember. Both are superseded by attention. Both still matter on constrained hardware.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 11 (PyTorch Intro), Phase 5 · 03 (Word Embeddings), Phase 4 · 02 (Convolutions from Scratch)
 **Time:** ~75 minutes
 

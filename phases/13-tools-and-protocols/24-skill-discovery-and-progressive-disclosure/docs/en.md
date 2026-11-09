@@ -3,7 +3,7 @@
 > A skill becomes useful before its body is loaded. Its name and description earn a place in the catalog; its deeper files earn context only when the task reaches them.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 22 (Agent Skills: Portable Contract and Runtime Boundary)
 **Time:** ~105 minutes
 
@@ -235,6 +235,7 @@ Run the lab:
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > A model that does well on a task you cannot define is a model that does well by accident. The harness is the task definition, the metric, the runner, and the leaderboard, in one short, swappable shape.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 19 lessons 42 to 45
 **Time:** ~90 minutes
 
@@ -135,6 +135,7 @@ Run it:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The script seeds the fixtures on first run, scores them with the toy adapter (which gets every fixture right), and writes `outputs/leaderboard.json`. Overall score is 1.0 with the toy adapter; the stub adapter test in `test_main.py` shows the same harness produces 0.0 when the adapter cannot answer.

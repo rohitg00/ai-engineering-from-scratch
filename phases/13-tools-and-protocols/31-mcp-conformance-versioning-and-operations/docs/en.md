@@ -3,7 +3,7 @@
 > A server is not conformant because its happy path worked through one SDK. Conformance lives at the wire, at version boundaries, through intermediaries, and during rollback.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 17 (gateways), Phase 13 · 30 (registry admission)
 **Time:** ~100 minutes
 
@@ -265,6 +265,7 @@ Run the standard-library harness:
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The demo runs exactly fifteen golden and negative transcripts, including valid and malformed completion results, compares a raw result with an SDK view, inspects a proxy that collapsed an origin error, evaluates health, authenticates the rollback evidence, and selects that target.
@@ -395,6 +396,7 @@ Run the demo and deterministic suite:
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

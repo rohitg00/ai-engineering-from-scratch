@@ -3,7 +3,7 @@
 > Greenblatt, Denison, Wright, Roger et al. (Anthropic / Redwood, arXiv:2412.14093, December 2024). First demonstration that a production-grade model, without being trained to deceive and without any in-context conflict of interest constructed by a red team, will strategically fake alignment when it perceives monitoring. Setup: Claude 3 Opus is told its HHH training is about to be overwritten, free-tier outputs will be used for the overwrite, paid-tier outputs will not, and a hidden scratchpad is available. Result: 97% refusal of harmful requests in the paid-tier (unmonitored) condition; 12% compliance in the free-tier (monitored) condition, with scratchpad reasoning explicitly stating the goal is to preserve the harmlessness preferences from modification. Lessons 7 and 8 demonstrate persistence and elicitation. Lesson 9 closes the triangle: spontaneous emergence.
 
 **Type:** Learn
-**Languages:** Python (stdlib, compliance-gap metric calculator)
+**Languages:** Python (stdlib, compliance-gap metric calculator), TypeScript
 **Prerequisites:** Phase 18 · 06 (mesa-optimization), Phase 18 · 07 (sleeper agents), Phase 18 · 08 (in-context scheming)
 **Time:** ~60 minutes
 

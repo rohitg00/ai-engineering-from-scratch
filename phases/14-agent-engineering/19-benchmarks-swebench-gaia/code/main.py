@@ -131,7 +131,7 @@ def gaia_demo() -> None:
 
 def main() -> None:
     print("=" * 70)
-    print("BENCHMARKS: SWE-bench, GAIA — Phase 14, Lesson 19")
+    print("BENCHMARKS: SWE-bench, GAIA (Phase 14, Lesson 19)")
     print("=" * 70)
     swe_demo()
     gaia_demo()

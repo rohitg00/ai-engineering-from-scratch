@@ -656,6 +656,8 @@ def decode_constu(expression: bytes) -> int:
 
 def decode_location(expression: bytes) -> str:
     """The three expression forms clang emits for this lesson: DW_OP_fbreg N, DW_OP_addrx N, DW_OP_regN."""
+    if isinstance(expression, int):
+        return f"loclist {expression:#x}"
     if not expression:
         return ""
     op = expression[0]

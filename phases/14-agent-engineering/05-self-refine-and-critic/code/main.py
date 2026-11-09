@@ -100,7 +100,7 @@ def print_run(label: str, history: list[Attempt]) -> None:
 
 def main() -> None:
     print("=" * 70)
-    print("SELF-REFINE and CRITIC — Phase 14, Lesson 05")
+    print("SELF-REFINE and CRITIC: Phase 14, Lesson 05")
     print("=" * 70)
 
     hist_self = run_loop("world facts", use_critic=False)

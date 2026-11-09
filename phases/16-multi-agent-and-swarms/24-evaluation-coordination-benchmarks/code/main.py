@@ -81,7 +81,7 @@ def run_bench(system: SystemSim, n_seen: int, n_held: int, seed: int = 0) -> dic
 
 def format_scorecard() -> None:
     print("=" * 78)
-    print("BENCHMARK SCORECARD — MARBLE-style milestone + contamination check")
+    print("BENCHMARK SCORECARD: MARBLE-style milestone + contamination check")
     print("  contamination check: accuracy_seen - accuracy_held (delta > 0.1 = suspect)")
     print("=" * 78)
     print(f"{'system':10s} {'acc(seen)':>10s} {'acc(held)':>10s} {'Δ':>6s} "
@@ -105,7 +105,7 @@ def format_scorecard() -> None:
 
 def print_claim_scorecard() -> None:
     print("\n" + "=" * 78)
-    print("CLAIM CHECKLIST — read this before accepting any multi-agent result")
+    print("CLAIM CHECKLIST: read this before accepting any multi-agent result")
     print("=" * 78)
     checklist = [
         "Which benchmark + split? Pro vs Verified is a 40-point gap for frontier models.",
@@ -125,7 +125,7 @@ def main() -> None:
     print("\nTakeaways:")
     print("  system-A scores highest on seen tasks but has contamination signal (large delta).")
     print("  system-B is cheapest per milestone; lowest raw accuracy but transparent.")
-    print("  system-C sits in the middle but without contamination flag — trustworthy.")
+    print("  system-C sits in the middle but without contamination flag, trustworthy.")
     print("  the ranking by 'raw accuracy' vs 'cost per milestone (held)' can differ sharply.")
 
 

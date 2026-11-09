@@ -3,7 +3,7 @@
 > A feature has one definition and two readers. Training reads its history as of each label time, and serving reads its latest value. When the two readers disagree, the model sees inputs that it never trained on.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 08 (Feature Engineering), 13 (ML Pipelines), 15 (Time Series), and 19 (ML System Design)
 **Time:** ~100 minutes
 
@@ -275,6 +275,7 @@ The demo logs requests on days 141 to 150 and runs the three comparisons from th
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console

@@ -3,7 +3,7 @@
 > A disassembly listing is a claim about which bytes are instructions, and this lesson builds the decoder and graph that check the claim.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch)
 **Time:** ~150 minutes
 
@@ -347,6 +347,7 @@ Run the demo:
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The output is one JSON report. For each fixture object it gives the oracle agreement. For each function it gives instruction, block, and edge counts under the three methods. It also lists unreachable blocks, unresolved indirect jumps, back edges, immediate dominators, and any tables. It ends with the trap comparison.
@@ -486,6 +487,7 @@ Check your answers:
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 The checker computes each expected value from `code/main.py` on the committed fixtures. It prints `PASS`, `FAIL` or `TODO` for each task and a score, and it exits 0 only when all five pass. `python3 code/lab.py my-answers.json` checks another file. `code/tests/test_lab.py` proves that the checker accepts the right answers and rejects a wrong one.
@@ -505,6 +507,7 @@ Run the demo and the deterministic suite:
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

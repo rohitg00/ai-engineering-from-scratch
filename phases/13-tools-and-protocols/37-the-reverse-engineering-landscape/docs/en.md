@@ -3,7 +3,7 @@
 > Five tools read the same object and give four addresses, three block counts, and two answers for one switch, and this lesson builds the harness that shows which is which.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, Java (one Ghidra script)
+**Languages:** Python, TypeScript, C, x86-64 assembly, Java (one Ghidra script)
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~150 minutes
 
@@ -342,6 +342,7 @@ Run the demo:
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The output is one JSON report. It opens with the tool versions recorded at capture time and with the tools present on your machine, which may all be absent. Then for each of the four objects it gives the symbol extents, the padding gaps, the base each tool used, the function starts each tool found or invented, and for each function the instruction-start agreement, block counts, edge counts, and the edges each tool lacks. It ends with byte accounting per tool, the tools' own notes, a list of findings in plain sentences, and the IR section: the translator's output for the three instructions next to the counts measured on the captured lifts.
@@ -472,6 +473,7 @@ Run the demo and the deterministic suite:
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

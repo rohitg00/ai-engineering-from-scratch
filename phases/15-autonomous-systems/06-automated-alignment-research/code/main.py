@@ -153,14 +153,14 @@ def main() -> None:
     regime_report("fixed")
     regime_report("free")
 
-    print("\nfixed vs free — fixed has lower variance, free has higher upside")
+    print("\nfixed vs free: fixed has lower variance, free has higher upside")
     tamper_demo()
 
     print()
     print("=" * 70)
     print("HEADLINE: out-of-sandbox logs + free decomposition + human review")
     print("-" * 70)
-    print("  Free decomposition gives AARs more ceiling — and more audit work.")
+    print("  Free decomposition gives AARs more ceiling, and more audit work.")
     print("  Tamper-evident logs make the audit possible. Human reviewers still")
     print("  decide what publishes. AAR compresses the middle of the pipeline,")
     print("  not the ends.")

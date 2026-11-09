@@ -108,7 +108,7 @@ def memory_write_guard(write: MemoryWrite) -> tuple[bool, str]:
 
 def main() -> None:
     print("=" * 70)
-    print("PROMPT INJECTION + PVE DEFENSE — Phase 14, Lesson 27")
+    print("PROMPT INJECTION + PVE DEFENSE: Phase 14, Lesson 27")
     print("=" * 70)
 
     validator = Validator(

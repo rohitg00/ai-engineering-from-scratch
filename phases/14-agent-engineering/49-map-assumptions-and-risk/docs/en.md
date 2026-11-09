@@ -3,7 +3,7 @@
 > A roadmap hides uncertainty inside features. An assumption map exposes what must be true before those features deserve to exist.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lesson 48
 **Time:** ~65 minutes
 
@@ -82,6 +82,7 @@ The lab ranks assumptions, distinguishes tested from open claims, selects the hi
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

@@ -150,7 +150,7 @@ def report(label: str, res: dict) -> None:
 
 def main() -> None:
     print("=" * 88)
-    print("TOY RADIX CACHE — cache hit rate across schedulers and orderings")
+    print("TOY RADIX CACHE: cache hit rate across schedulers and orderings")
     print("=" * 88)
 
     rag = workload_rag()
@@ -166,7 +166,7 @@ def main() -> None:
     print("KEY FINDING")
     print("-" * 88)
     print("  Fixed ordering + cache-aware scheduler : hit rate clears 80% on RAG.")
-    print("  Scrambled prefix order : hit rate collapses — the tree cannot find shared paths.")
+    print("  Scrambled prefix order : hit rate collapses: the tree cannot find shared paths.")
     print("  Real cases: 7% -> 74% hit rate by moving dynamic content out of the prefix.")
 
 

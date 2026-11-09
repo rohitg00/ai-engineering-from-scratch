@@ -140,7 +140,7 @@ def run_scripted_agent(tools: MemoryTools, script: list[ToolCall]) -> list[str]:
 
 def main() -> None:
     print("=" * 70)
-    print("MEMGPT VIRTUAL CONTEXT — Phase 14, Lesson 07")
+    print("MEMGPT VIRTUAL CONTEXT: Phase 14, Lesson 07")
     print("=" * 70)
 
     main_ctx = MainContext(max_messages=3)

@@ -3,7 +3,7 @@
 > Documents are not photos. A PDF, scientific paper, invoice, or handwritten form has layout, tables, diagrams, footnotes, headers, and semantic structure that plain image understanding cannot capture. The pre-VLM stack was a pipeline: Tesseract OCR + LayoutLMv3 + table-extraction heuristics. The VLM wave replaced that with OCR-free models — Donut (2022), Nougat (2023), DocLLM (2023) — that emit structured markup directly. By 2026 the frontier is just "feed the page image to Claude Opus 4.7 at 2576px native," and the structured-markup output comes for free. This lesson reads the three-era arc of document AI.
 
 **Type:** Build
-**Languages:** Python (stdlib, layout-aware document parser skeleton)
+**Languages:** Python (stdlib, layout-aware document parser skeleton), TypeScript
 **Prerequisites:** Phase 12 · 05 (LLaVA), Phase 5 (NLP)
 **Time:** ~180 minutes
 

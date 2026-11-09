@@ -119,7 +119,7 @@ def link(*processors: Processor) -> None:
 
 def main() -> None:
     print("=" * 70)
-    print("VOICE PIPELINE (PIPECAT-SHAPED) — Phase 14, Lesson 22")
+    print("VOICE PIPELINE (PIPECAT-SHAPED): Phase 14, Lesson 22")
     print("=" * 70)
 
     vad = VAD("vad")

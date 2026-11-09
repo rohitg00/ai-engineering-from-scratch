@@ -3,7 +3,7 @@
 > Stateless MCP does not mean every operation must finish in one request. The official Tasks extension gives long-running work an explicit durable handle. A server can return that handle from `tools/call`, any instance can answer `tasks/get`, and client input arrives through `tasks/update` without reviving protocol sessions.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 11 (stateless MRTR), Phase 13 · 12 (elicitation)
 **Time:** ~90 minutes
 
@@ -413,6 +413,7 @@ From the repository root:
 ```bash
 cd phases/13-tools-and-protocols/13-mcp-async-tasks/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

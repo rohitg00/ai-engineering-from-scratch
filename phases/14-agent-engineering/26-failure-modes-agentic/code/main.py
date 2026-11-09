@@ -121,7 +121,7 @@ def tag(trace: Trace) -> list[str]:
 
 def main() -> None:
     print("=" * 70)
-    print("AGENT FAILURE MODES — Phase 14, Lesson 26")
+    print("AGENT FAILURE MODES: Phase 14, Lesson 26")
     print("=" * 70)
 
     traces = [

@@ -157,7 +157,7 @@ def verifier_agent(pool: MessagePool) -> list[tuple[int, str]]:
 
 def run_without_verifier() -> None:
     print("=" * 72)
-    print("RUN 1 — no verifier; hallucination propagates")
+    print("RUN 1: no verifier; hallucination propagates")
     print("=" * 72)
     pool = MessagePool()
     retrieval_agent(pool, "https://arxiv.org/paper-1", hallucinate=True)
@@ -170,7 +170,7 @@ def run_without_verifier() -> None:
 
 def run_with_verifier() -> None:
     print("\n" + "=" * 72)
-    print("RUN 2 — read-only verifier re-fetches sources and flags")
+    print("RUN 2: read-only verifier re-fetches sources and flags")
     print("=" * 72)
     pool = MessagePool()
     retrieval_agent(pool, "https://arxiv.org/paper-1", hallucinate=True)
@@ -189,7 +189,7 @@ def run_with_verifier() -> None:
 
 def demo_blackboard() -> None:
     print("\n" + "=" * 72)
-    print("BLACKBOARD DEMO — topic-keyed pub/sub, not every agent reads everything")
+    print("BLACKBOARD DEMO: topic-keyed pub/sub, not every agent reads everything")
     print("=" * 72)
     bb = Blackboard()
     received = {"prices": [], "alerts": []}

@@ -3,7 +3,7 @@
 > A modern MCP client repeats its contract on every request. Its hardest compatibility decision is knowing when an old server is truly old and when a modern server is reporting a correctable error.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lesson 07
 **Time:** ~85 minutes
 
@@ -178,6 +178,7 @@ tp-client-merge
 ```bash
 cd code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

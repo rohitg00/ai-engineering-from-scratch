@@ -3,7 +3,7 @@
 > AWS's DevOps Agent went GA, Resolve AI published its K8s playbooks, NeuBird demoed semantic monitoring, and Metoro tied AI SRE to per-service SLOs. The production shape is settled: an alert webhook fires, an agent reads telemetry, walks a graph of K8s objects, ranks root-cause hypotheses, and posts a Slack brief with approval buttons. Read-only by default. Every remediation gated by a human. This capstone is that agent, evaluated on 20 synthetic incidents and compared against AWS's Agent on three shared cases.
 
 **Type:** Capstone
-**Languages:** Python (agent), TypeScript (Slack integration)
+**Languages:** Python (agent), TypeScript (Slack integration, agent scaffold)
 **Prerequisites:** Phase 11 (LLM engineering), Phase 13 (tools and MCP), Phase 14 (agents), Phase 15 (autonomous), Phase 17 (infrastructure), Phase 18 (safety)
 **Phases exercised:** P11 · P13 · P14 · P15 · P17 · P18
 **Time:** 30 hours

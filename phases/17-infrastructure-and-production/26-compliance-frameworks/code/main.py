@@ -34,7 +34,7 @@ PROFILE_MAP = {
 
 def main() -> None:
     print("=" * 80)
-    print("COMPLIANCE CONTROL MAP — one control, many frameworks")
+    print("COMPLIANCE CONTROL MAP: one control, many frameworks")
     print("=" * 80)
     for control, frameworks in CONTROL_MAP.items():
         print(f"\n{control}")
@@ -42,7 +42,7 @@ def main() -> None:
             print(f"  → {f}")
 
     print("\n" + "=" * 80)
-    print("CUSTOMER PROFILE MAP — required frameworks per geography + segment")
+    print("CUSTOMER PROFILE MAP: required frameworks per geography + segment")
     print("=" * 80)
     for (geo, segment), frameworks in PROFILE_MAP.items():
         print(f"\n{geo} · {segment}")

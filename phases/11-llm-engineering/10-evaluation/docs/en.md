@@ -3,7 +3,7 @@
 > You would never deploy a web app without tests. You would never ship a database migration without a rollback plan. But right now, most teams ship LLM applications by reading 10 outputs and saying "yeah, looks good." That is not evaluation. That is hope. Hope is not an engineering practice. Every prompt change, every model swap, every temperature tweak changes your output distribution in ways you cannot predict by reading a handful of examples. Evaluation is the only thing standing between your application and silent degradation.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 Lesson 01 (Prompt Engineering), Lesson 09 (Function Calling)
 **Time:** ~45 minutes
 **Related:** Phase 5 · 27 (LLM Evaluation — RAGAS, DeepEval, G-Eval) covers the framework-level concepts (NLI-based faithfulness, judge calibration, the RAG four). Phase 5 · 28 (Long-Context Evaluation) covers NIAH / RULER / LongBench / MRCR for context-length regression. This lesson focuses on what is LLM-engineering-specific: CI/CD integration, cost-gated eval runs, regression dashboards.

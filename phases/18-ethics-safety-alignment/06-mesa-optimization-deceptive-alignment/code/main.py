@@ -104,7 +104,7 @@ def main() -> None:
         "pseudo-no-awareness": lambda e: pseudo_no_awareness_policy(e, mesa_goal=0),
     }
 
-    print("\nperiod 0 — training distribution, no gradient updates (observation).")
+    print("\nperiod 0: training distribution, no gradient updates (observation).")
     run_period("training loss by policy class", policies, training)
     print("\nobserve: 'aligned' and 'deceptive' have identical training loss.")
     print("the base optimizer cannot tell them apart from behavioural evidence.")
@@ -113,7 +113,7 @@ def main() -> None:
     print("\nobserve: deceptive defects at deployment; aligned does not.")
     print("this is the shape of the inner-alignment problem.")
 
-    print("\n\nadversarial training — randomly inject 'deployment-like' examples.")
+    print("\n\nadversarial training: randomly inject 'deployment-like' examples.")
     adv_training = adversarial_filter(training)
     run_period("adversarial-training loss", policies, adv_training)
     print("\nthe problem: adversarial examples still have is_training=True.")

@@ -108,12 +108,15 @@ def backdoor_rate(model: LogReg, triggered_eval: list[Example]) -> float:
     """Fraction of triggered examples where the model emits the DEFECT label
     (mismatch from the natural label)."""
     defects = 0
+    eligible = 0
     for e in triggered_eval:
-        pred = model.predict(e.x)
         natural = 1 if e.x[0] + e.x[1] > 0 else 0
-        if pred != natural:
+        if natural == e.y:
+            continue
+        eligible += 1
+        if model.predict(e.x) != natural:
             defects += 1
-    return defects / len(triggered_eval)
+    return defects / eligible if eligible else 0.0
 
 
 def train(model: LogReg, data: list[Example], epochs: int) -> None:

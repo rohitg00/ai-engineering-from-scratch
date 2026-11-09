@@ -91,7 +91,7 @@ def main():
     print()
     print("note: this classifier exploits two shallow features.")
     print("production NLI uses DeBERTa-v3-MNLI at ~91% on MNLI-matched.")
-    print("the shape of the task — (premise, hypothesis) -> label — stays identical.")
+    print("the shape of the task, (premise, hypothesis) -> label, stays identical.")
 
 
 if __name__ == "__main__":

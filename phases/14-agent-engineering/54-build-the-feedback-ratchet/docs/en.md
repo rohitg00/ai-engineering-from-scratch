@@ -3,7 +3,7 @@
 > Shipping closes one build loop and opens the learning loop. Evidence must change the system or it becomes telemetry nobody owns.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 lessons 46 and 53
 **Time:** ~75 minutes
 
@@ -91,6 +91,7 @@ The lab classifies signals, creates owned ratchet actions, prioritizes them, and
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > The three frontier providers converged on the same tool-call loop in 2024 and then diverged on everything else. OpenAI uses `tools` and `tool_calls`. Anthropic uses `tool_use` and `tool_result` blocks. Gemini uses `functionDeclarations` and unique-id correlation. This lesson diffs the three side by side so code that ships on one provider does not break when you port it.
 
 **Type:** Build
-**Languages:** Python (stdlib, schema translators)
+**Languages:** Python, TypeScript (stdlib, schema translators)
 **Prerequisites:** Phase 13 · 01 (the tool interface)
 **Time:** ~75 minutes
 

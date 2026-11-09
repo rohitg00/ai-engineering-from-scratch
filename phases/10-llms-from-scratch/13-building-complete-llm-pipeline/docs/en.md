@@ -3,7 +3,7 @@
 > Everything from Lessons 01 to 12 is one stage of one pipeline. This lesson is the scaffold that turns those stages into a single end-to-end run: tokenize, pre-train, scale, SFT, align, evaluate, quantize, serve. You will not train a 70B model on a laptop. You will produce the orchestration layer, the manifest, the eval gate, and the rollback plan that a 2026 frontier team uses to decide what gets shipped. This is the capstone.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), Rust
 **Prerequisites:** All Phase 10 lessons 01-12
 **Time:** ~120 minutes
 
@@ -216,10 +216,16 @@ The pipeline in `main.py` runs twelve placeholder stages, produces a manifest, a
 
 The canonical workflow has three commands.
 
-```
+```bash
 python code/main.py plan    # validate manifest, compute cost estimate, print DAG
 python code/main.py run     # execute stages, writing to manifest.out.yaml
 python code/main.py gate    # read manifest.out.yaml, apply eval gates, ship-or-hold
+```
+
+The Rust port runs the same `plan` step:
+
+```bash
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson plan
 ```
 
 Run `plan` first every time. Most pipeline bugs show up at plan time -- missing gate thresholds, stale hashes, budget overruns. Running `plan` is free. Running `run` is expensive. Save money by catching bugs on the cheap side.

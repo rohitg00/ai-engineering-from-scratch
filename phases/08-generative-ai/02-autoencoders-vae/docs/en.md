@@ -3,7 +3,7 @@
 > A plain autoencoder compresses then reconstructs. It memorizes. It does not generate. Add one trick — force the code to look Gaussian — and you get a sampler. That single trick, the reparameterization of $z = \mu + \sigma \cdot \epsilon$, is why every latent-diffusion and flow-matching image model you use in 2026 has a VAE at the input.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 3 · 02 (Backprop), Phase 3 · 07 (CNNs), Phase 8 · 01 (Taxonomy)
 **Time:** ~75 minutes
 

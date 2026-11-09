@@ -3,7 +3,7 @@
 > A remote MCP request is stateless, but its authorization is not anonymous. Bind every credential to the issuer that created it and every token to the resource that receives it.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 15 (security)
 **Time:** ~90 minutes
 
@@ -252,6 +252,7 @@ Run it:
 ```bash
 cd phases/13-tools-and-protocols/16-mcp-security-oauth-2-1
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

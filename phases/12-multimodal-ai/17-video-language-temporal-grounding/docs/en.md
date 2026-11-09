@@ -3,7 +3,7 @@
 > Video is not a stack of photos. A 5-second clip has causal ordering, action verbs, and event timing that an image model cannot represent. Video-LLaMA (Zhang et al., June 2023) shipped the first open video-LLM with audio-visual grounding. VideoChat and Video-LLaVA scaled the pattern. By 2025 Qwen2.5-VL's time-aligned M-RoPE closed the gap with frontier proprietary models. Each system solved temporal tokens differently — Q-former per clip, concat-pool per frame, time-aligned M-RoPE per token. This lesson reads the patterns, builds a uniform-vs-dynamic frame sampler, and evaluates on temporal grounding tasks.
 
 **Type:** Build
-**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator)
+**Languages:** Python (stdlib, frame sampler + temporal-grounding evaluator), TypeScript
 **Prerequisites:** Phase 12 · 08 (LLaVA-OneVision)
 **Time:** ~180 minutes
 

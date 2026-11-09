@@ -3,7 +3,7 @@
 > Modern MCP has no handshake and no protocol session. Each request must carry enough metadata to be understood, authorized, routed, and retried on its own.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 01 through 05
 **Time:** ~55 minutes
 
@@ -164,6 +164,7 @@ mcp-tool-call
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

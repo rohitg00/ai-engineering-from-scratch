@@ -3,7 +3,7 @@
 > Production long-horizon agents do not run in `while True`. Every LLM call becomes an activity with checkpoint, retry, and replay. Temporal's OpenAI Agents SDK integration went GA March 2026. Claude Code Routines (Anthropic) runs scheduled Claude Code invocations without a persistent local process. Sessions pause on human-input, survive deploys, and resume from the latest checkpoint keyed by `thread_id`. Behind the new ergonomics sits an old pattern — workflow orchestration — with one new input: LLM calls as non-deterministic activities that must be deterministically replayed on recovery.
 
 **Type:** Learn
-**Languages:** Python (stdlib, minimal durable-execution state machine)
+**Languages:** Python (stdlib, minimal durable-execution state machine), TypeScript
 **Prerequisites:** Phase 15 · 10 (Permission modes), Phase 15 · 01 (Long-horizon agents)
 **Time:** ~60 minutes
 

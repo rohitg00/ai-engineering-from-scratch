@@ -65,9 +65,9 @@ def main():
     models = [
         ("Gemini 2.5 Pro",    "~60%", "73.4%", "51.9%", "64.9%", "~22%"),
         ("Gemini 2.5 Flash",  "~57%", "73.4%", "50.5%", "64.9%", "21.2%"),
-        ("GPT-4o Audio",      "52.5%", "—",    "—",     "—",     "26.5%"),
+        ("GPT-4o Audio",      "52.5%", "-",    "-",     "-",     "26.5%"),
         ("Qwen2.5-Omni-7B",   "52.2%", "57.4%","47.6%", "61.5%", "~20%"),
-        ("Audio Flamingo 3",  "~54%",  "—",    "—",     "—",     "—"),
+        ("Audio Flamingo 3",  "~54%",  "-",    "-",     "-",     "-"),
     ]
     print("  | model              | overall | speech | sound  | music  | multi  |")
     for name, o, s, snd, m, mu in models:

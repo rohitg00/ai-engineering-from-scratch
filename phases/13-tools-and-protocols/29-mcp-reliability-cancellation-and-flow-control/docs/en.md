@@ -3,7 +3,7 @@
 > A request ID correlates a message. It does not make a side effect safe, stop a worker, or protect a stream from a slow consumer.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 09 and 13
 **Time:** ~120 minutes
 
@@ -336,6 +336,7 @@ From the repository root:
 ```bash
 cd phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

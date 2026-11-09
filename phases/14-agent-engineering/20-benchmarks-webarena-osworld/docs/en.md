@@ -3,7 +3,7 @@
 > WebArena tests web-agent capability across four self-hosted apps. OSWorld tests desktop-agent capability across Ubuntu, Windows, macOS. At release (2023–2024) both showed a big gap between best-in-class agents and humans. The gap is narrowing; the failure modes haven't changed.
 
 **Type:** Learn
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 19 (SWE-bench, GAIA)
 **Time:** ~60 minutes
 
@@ -78,6 +78,7 @@ Run it:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Output: per-task success rate and trajectory efficiency, mirroring OSWorld-Human's methodology.

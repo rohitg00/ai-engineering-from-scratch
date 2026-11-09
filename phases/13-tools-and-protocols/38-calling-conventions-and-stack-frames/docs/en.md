@@ -3,7 +3,7 @@
 > A disassembly shows which registers a function reads. Only the ABI says what those registers mean, and the ABI is chosen by the object header, so this lesson reads the header first and then checks every register against the rule that put it there.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and AArch64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow)
 **Time:** ~140 minutes
 
@@ -195,6 +195,7 @@ Run the demo:
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The output is one JSON report. For each of the seven objects it names the format, the machine, and the ABI, and for each of the twelve functions it gives the prologue bytes, the saved registers with entry offsets, the frame size, the frame pointer, the parameter registers, the stack argument offsets, the spills, the return register or hidden pointer, the call depths, and the outgoing registers and stores of the callers. Every function ends with its checks: the rule, the expected value from the signature, the observed value from the bytes, and whether they agree. The report ends with the two unwind cross-checks and the tool captures. Across the 84 function analyses, 489 checks run and all 489 agree.
@@ -331,6 +332,7 @@ Run the demo and the deterministic suite:
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

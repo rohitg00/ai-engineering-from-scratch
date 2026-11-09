@@ -3,7 +3,7 @@
 > OpenAI Agents SDK is the lightweight multi-agent framework built on the Responses API. Five primitives: Agent, Handoff, Guardrail, Session, Tracing. Handoffs are tools named `transfer_to_<agent>`. Guardrails trip on input or output. Tracing is on by default.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 06 (Tool Use)
 **Time:** ~75 minutes
 
@@ -84,6 +84,7 @@ Run it:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The trace shows two successful handoffs, one input guardrail trip, and a span tree mirroring what the real SDK emits.

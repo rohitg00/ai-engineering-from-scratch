@@ -73,7 +73,7 @@ def supervisor(hypotheses: list[AgentHypothesis]) -> dict:
 
 def main() -> None:
     print("=" * 80)
-    print("AI SRE TRIAGE — multi-agent investigation of a production incident")
+    print("AI SRE TRIAGE: multi-agent investigation of a production incident")
     print("=" * 80)
     incident = "High error rate in /checkout/generate-summary, last 6 min"
     print(f"\nIncident: {incident}\n")

@@ -3,7 +3,7 @@
 > One model, 100+ languages, zero training data for most of them. Cross-lingual transfer is the practical miracle of the 2020s.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 04 (GloVe, FastText, Subword), Phase 5 · 11 (Machine Translation)
 **Time:** ~45 minutes
 

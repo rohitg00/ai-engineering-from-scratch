@@ -3,7 +3,7 @@
 > A tool the agent cannot validate is a tool the agent cannot call. Build the registry and the schema checker before you build the tools.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 lessons 01-07, Phase 14 lesson 01
 **Time:** ~90 minutes
 

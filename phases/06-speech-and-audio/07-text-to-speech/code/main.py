@@ -118,7 +118,7 @@ def main():
     print()
     print("=== Step 5: 2026 TTS quality board (UTMOS / CER / size) ===")
     table = [
-        ("ground truth",   4.08, 1.2,   "—"),
+        ("ground truth",   4.08, 1.2,   "-"),
         ("F5-TTS",         3.95, 2.1,   "335M"),
         ("Kokoro v0.19",   3.87, 1.8,   "82M"),
         ("XTTS v2",        3.81, 3.5,   "470M"),

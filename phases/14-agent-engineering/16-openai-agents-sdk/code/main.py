@@ -183,7 +183,7 @@ def _length_check(text: str) -> tuple[bool, str]:
 
 def main() -> None:
     print("=" * 70)
-    print("OPENAI AGENTS SDK SHAPE — Phase 14, Lesson 16")
+    print("OPENAI AGENTS SDK SHAPE: Phase 14, Lesson 16")
     print("=" * 70)
 
     billing = Agent(name="billing", instructions="handle refunds and invoices",

@@ -107,7 +107,7 @@ def main() -> None:
     print(f"  speed-up vs baseline  : {r['ratio']:.2f}x")
     print("  note: 50% of real-world queries need only low-res encoding")
 
-    print("\nDVD DEPLOYMENT — encoder vs LLM parallelism")
+    print("\nDVD DEPLOYMENT: encoder vs LLM parallelism")
     print("-" * 60)
     encoder_gflops = 300
     llm_gflops_per_token = 8

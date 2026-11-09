@@ -53,7 +53,7 @@ def simulate_user_speech(n_frames):
 
 
 def main():
-    print(f"=== Moshi-style full-duplex simulation — {FRAME_MS} ms frames, {CODEBOOKS} codebooks ===")
+    print(f"=== Moshi-style full-duplex simulation: {FRAME_MS} ms frames, {CODEBOOKS} codebooks ===")
     print()
 
     user_audio_stream = simulate_user_speech(25)
@@ -91,7 +91,7 @@ def main():
     print("=== per-frame latency ===")
     avg = sum(per_frame_ms) / len(per_frame_ms)
     p95 = sorted(per_frame_ms)[int(len(per_frame_ms) * 0.95)]
-    print(f"  mean: {avg:.2f} ms   p95: {p95:.2f} ms   target: &lt; 80 ms per frame (realtime)")
+    print(f"  mean: {avg:.2f} ms   p95: {p95:.2f} ms   target: < 80 ms per frame (realtime)")
 
     print()
     print("=== 2026 streaming S2S model cheatsheet ===")

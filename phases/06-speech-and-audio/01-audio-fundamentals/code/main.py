@@ -103,7 +103,7 @@ def main():
     print(f"  top 3 peaks: {peaks_hz} Hz")
 
     print()
-    print("=== Step 5: aliasing — 7 kHz tone sampled at 10 kHz ===")
+    print("=== Step 5: aliasing: 7 kHz tone sampled at 10 kHz ===")
     alias_sr = 10000
     tone = sine(7000.0, alias_sr, 0.0512)
     alias_freq, _ = peak_freq(tone, alias_sr)

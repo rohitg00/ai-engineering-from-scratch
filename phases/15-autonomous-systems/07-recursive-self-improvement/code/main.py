@@ -99,19 +99,19 @@ def main() -> None:
 
     # Scenario A: capability outpaces alignment moderately
     print_trajectory(
-        "Scenario A — capability outpaces alignment",
+        "Scenario A: capability outpaces alignment",
         Config(r_c=1.15, r_a=1.08, noise_c=0.02, noise_a=0.03, threshold=th),
     )
 
     # Scenario B: alignment keeps pace
     print_trajectory(
-        "Scenario B — matched rates (noise-only drift)",
+        "Scenario B: matched rates (noise-only drift)",
         Config(r_c=1.10, r_a=1.10, noise_c=0.02, noise_a=0.03, threshold=th),
     )
 
     # Scenario C: alignment rate higher, but with capability surges
     print_trajectory(
-        "Scenario C — alignment higher mean rate but capability surges",
+        "Scenario C: alignment higher mean rate but capability surges",
         Config(r_c=1.10, r_a=1.13, noise_c=0.06, noise_a=0.01, threshold=th),
     )
 
@@ -131,7 +131,7 @@ def main() -> None:
     print("HEADLINE: small rate differences compound to safety-threshold crossings")
     print("-" * 70)
     print("  Scenario A crosses the absolute 1.5 gap (C - A) in under 10 cycles.")
-    print("  Scenario B stays bounded — same mean rate, noise-only drift.")
+    print("  Scenario B stays bounded: same mean rate, noise-only drift.")
     print("  Scenario C: higher alignment mean does NOT save you if")
     print("  capability has big surges. Noise matters as much as drift.")
     print("  RSI-style pipelines need pause-on-gap thresholds baked in.")

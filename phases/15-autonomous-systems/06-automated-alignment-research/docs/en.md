@@ -3,7 +3,7 @@
 > Anthropic ran parallel teams of Claude Opus 4.6 Autonomous Alignment Researchers in independent sandboxes, coordinating via a shared forum whose logs live outside any sandbox (so agents cannot delete their own records). On the weak-to-strong training problem, the AARs outperformed human researchers. Anthropic's own summary flags that prescribed workflows often constrain AAR flexibility and degrade performance. Automating alignment research compresses the timeline, and it does so on the same misalignment risks the RSP is meant to detect.
 
 **Type:** Learn
-**Languages:** Python (stdlib, parallel-research-forum simulator)
+**Languages:** Python, TypeScript (stdlib, parallel-research-forum simulator)
 **Prerequisites:** Phase 15 · 05 (AI Scientist v2), Phase 15 · 04 (DGM)
 **Time:** ~60 minutes
 

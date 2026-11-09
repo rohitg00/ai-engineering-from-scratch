@@ -124,7 +124,7 @@ def _place_table(context: dict[str, Any]) -> str:
 
 def _craft_iron_pick_v1(context: dict[str, Any]) -> str:
     if not context.get("has_table"):
-        raise RuntimeError("no crafting table in context — cannot craft")
+        raise RuntimeError("no crafting table in context, cannot craft")
     ore = context.get("resources", {}).get("ore", 0)
     stick = context.get("resources", {}).get("stick", 0)
     if ore < 3:
@@ -160,7 +160,7 @@ def _gather_sticks(context: dict[str, Any]) -> str:
 
 def main() -> None:
     print("=" * 70)
-    print("VOYAGER SKILL LIBRARY — Phase 14, Lesson 10")
+    print("VOYAGER SKILL LIBRARY: Phase 14, Lesson 10")
     print("=" * 70)
 
     lib = SkillLibrary()
@@ -202,13 +202,13 @@ def main() -> None:
     for score, skill in lib.search("I need a pickaxe"):
         print(f"  {score:.3f}  {skill.name} v{skill.version}: {skill.description}")
 
-    print("\nphase 4: execute craft_iron_pickaxe (expect failure — missing sticks)")
+    print("\nphase 4: execute craft_iron_pickaxe (expect failure: missing sticks)")
     context = lib.execute("craft_iron_pickaxe")
     for line in context["log"]:
         print(f"  {line}")
     print(f"  failed: {context.get('failed')}")
 
-    print("\nphase 5: iterative refinement — rewrite as v2 with stick deps")
+    print("\nphase 5: iterative refinement: rewrite as v2 with stick deps")
     print("  " + lib.register(Skill(
         name="craft_iron_pickaxe",
         description="craft an iron pickaxe using ore, sticks, and a crafting table",

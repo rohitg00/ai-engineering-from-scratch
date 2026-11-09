@@ -173,7 +173,7 @@ def _summarize(text: str, target_len: int) -> str:
 
 def main() -> None:
     print("=" * 70)
-    print("LETTA MEMORY BLOCKS + SLEEP-TIME COMPUTE — Phase 14, Lesson 08")
+    print("LETTA MEMORY BLOCKS + SLEEP-TIME COMPUTE: Phase 14, Lesson 08")
     print("=" * 70)
 
     blocks = BlockStore()
@@ -237,7 +237,7 @@ def main() -> None:
 
     print()
     print("key property: primary-turn latency is unchanged by consolidation.")
-    print("sleep-time can run a stronger, slower model — it is off the path.")
+    print("sleep-time can run a stronger, slower model: it is off the path.")
 
 
 if __name__ == "__main__":

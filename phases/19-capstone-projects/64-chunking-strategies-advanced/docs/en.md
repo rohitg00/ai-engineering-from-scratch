@@ -3,7 +3,7 @@
 > Chunking decides what your retriever can ever surface. Get the boundaries wrong and no embedding model, no reranker, no LLM can repair the damage downstream.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 11 lessons 04 (embeddings), 06 (RAG), 07 (advanced RAG); Phase 19 Track B foundations (lessons 20-29)
 **Time:** ~90 minutes
 
@@ -89,6 +89,7 @@ Run it:
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The output is a small table with one row per strategy and one column per k. Sentence loses on the structured fixture. Structural-markdown wins on the markdown fixture. Recursive holds its own on the mixed fixture because the recursion adapts. Semantic clustering wins on the prose fixture where there are no useful structural cues.

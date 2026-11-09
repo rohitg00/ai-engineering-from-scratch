@@ -102,7 +102,7 @@ def make_tasks(n_workers: int = 4) -> list[Task]:
 
 
 def main() -> None:
-    print("Swarm architecture demo — variable-duration workload")
+    print("Swarm architecture demo: variable-duration workload")
     print("-" * 56)
     n_workers = 4
 
@@ -121,7 +121,7 @@ def main() -> None:
 
     swarm_time, swarm_counts = run_swarm(tasks, n_workers)
     print(f"Swarm ({n_workers} workers):            wall={swarm_time:.2f}s, counts={swarm_counts}")
-    print("  load balances automatically — slow workers finish first, fast pull next job.")
+    print("  load balances automatically: slow workers finish first, fast pull next job.")
 
     speedup_vs_seq = seq_time / swarm_time if swarm_time > 0 else float("inf")
     speedup_vs_fixed = fixed_time / swarm_time if swarm_time > 0 else float("inf")

@@ -3,7 +3,7 @@
 > Contrast with supervisor: no central decider. Agents read a shared event bus, pick up work asynchronously, write results back. LangGraph explicitly supports "Swarm Architecture" for decentralized, dynamic environments. Matrix (arXiv:2511.21686) represents both control and data flow as serialized messages passed through distributed queues to eliminate the orchestrator bottleneck. The tradeoff is explicit: determinism and traceability for scalability. Swarm fits tasks with many independent sub-problems; it does not fit tasks that need a single coherent plan.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib, `threading`, `queue`)
+**Languages:** Python (stdlib, `threading`, `queue`), TypeScript
 **Prerequisites:** Phase 16 · 05 (Supervisor Pattern), Phase 16 · 04 (Primitive Model)
 **Time:** ~75 minutes
 
@@ -86,6 +86,7 @@ Run:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Output shows per-worker task counts (swarm distributes unevenly but optimally) and wall-clock times.

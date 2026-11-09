@@ -3,7 +3,7 @@
 > A model is one part of a system. The design decides what the model predicts, who acts on it, what it costs, and what happens when it fails.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2, Lessons 09 (Model Evaluation) and 13 (ML Pipelines)
 **Time:** ~110 minutes
 
@@ -295,6 +295,7 @@ CheckItem("serving_fit", 1, False, "pick a serving mode that meets the staleness
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 ```console
@@ -322,6 +323,7 @@ The design-document review prints the weak document with six blocking items and 
 
 ```bash
 python3 code/main.py my_design_doc.json
+npx tsx code/main.ts my_design_doc.json
 ```
 
 ## Use It

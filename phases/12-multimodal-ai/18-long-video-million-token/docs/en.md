@@ -3,7 +3,7 @@
 > A 1-hour 4K video at 24 FPS, patched and embedded, produces on the order of 60 million tokens. A 2-hour podcast episode transcribed is 30,000 tokens. A full Blu-ray feature film, even compressed with aggressive pooling, is hundreds of thousands of tokens. Google's Gemini 1.5 (March 2024) opened this era with a 10-million-token context, doing reliable needle-in-a-haystack recall over hour-long videos. LWM (Liu et al., February 2024) showed ring attention's scaling path. LongVILA and Video-XL scaled ingestion further. VideoAgent swapped raw context for agentic retrieval. Each approach is a different trade-off on compute, recall, and engineering complexity. This lesson reads them side by side.
 
 **Type:** Build
-**Languages:** Python (stdlib, needle-in-haystack simulator + agentic-retrieval router)
+**Languages:** Python (stdlib, needle-in-haystack simulator + agentic-retrieval router), TypeScript
 **Prerequisites:** Phase 12 · 17 (video temporal tokens)
 **Time:** ~180 minutes
 

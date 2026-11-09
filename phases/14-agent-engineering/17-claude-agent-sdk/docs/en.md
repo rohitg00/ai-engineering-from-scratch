@@ -3,7 +3,7 @@
 > A harness you can import: built-in tools, subagents for context isolation, hooks, W3C trace propagation, session persistence. The Claude Agent SDK is the reference example — the library form of the Claude Code harness — and Claude Managed Agents is the hosted alternative for long-running async work.
 
 **Type:** Learn + Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 14 · 01 (Agent Loop), Phase 14 · 10 (Skill Libraries)
 **Time:** ~75 minutes
 
@@ -95,6 +95,7 @@ Run it:
 
 ```
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 The trace shows subagent context isolation (orchestrator context size stays bounded), hook execution, and session persistence.

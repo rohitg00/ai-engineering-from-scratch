@@ -3,7 +3,7 @@
 > The 2020 Kaplan paper said: bigger model, lower loss. The 2022 Hoffmann paper said: you were under-training. Compute goes into two buckets — parameters and tokens — and the split is not obvious.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 

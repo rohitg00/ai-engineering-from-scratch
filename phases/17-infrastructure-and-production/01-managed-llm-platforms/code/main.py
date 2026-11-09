@@ -64,7 +64,7 @@ def simulate(tokens_in_per_day: int, tokens_out_per_day: int, sla_ttft_ms: float
 
 def break_even_demo() -> None:
     print("\n" + "=" * 80)
-    print("PTU BREAK-EVEN SWEEP — Azure OpenAI, GPT-4o class")
+    print("PTU BREAK-EVEN SWEEP: Azure OpenAI, GPT-4o class")
     print("=" * 80)
     p = PLATFORMS[1]  # Azure
     print(f"On-demand rate: ${p.per_mtok_output:.2f}/M output  |  PTU: ${p.ptu_hourly:.0f}/hr, {p.ptu_tokens_per_hour/1e6:.1f}M tok/hr\n")
@@ -79,7 +79,7 @@ def break_even_demo() -> None:
 
 def lock_in_cost() -> None:
     print("\n" + "=" * 80)
-    print("TWO-PROVIDER MINIMUM — cost uplift for redundancy")
+    print("TWO-PROVIDER MINIMUM: cost uplift for redundancy")
     print("=" * 80)
     tokens_per_day = 5_000_000
     primary_cost = (tokens_per_day / 1e6) * 10.00
@@ -96,7 +96,7 @@ def lock_in_cost() -> None:
 
 def main() -> None:
     print("=" * 80)
-    print("MANAGED LLM PLATFORM COMPARATOR — 2026 approximations")
+    print("MANAGED LLM PLATFORM COMPARATOR: 2026 approximations")
     print("=" * 80)
 
     simulate(tokens_in_per_day=3_000_000, tokens_out_per_day=1_000_000, sla_ttft_ms=200, use_ptu=False)

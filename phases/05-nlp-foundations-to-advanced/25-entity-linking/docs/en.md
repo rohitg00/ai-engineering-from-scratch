@@ -3,7 +3,7 @@
 > NER found "Paris." Entity linking decides: Paris, France? Paris Hilton? Paris, Texas? Paris (the Trojan prince)? Without linking, your knowledge graph stays ambiguous.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 24 (Coreference Resolution)
 **Time:** ~60 minutes
 

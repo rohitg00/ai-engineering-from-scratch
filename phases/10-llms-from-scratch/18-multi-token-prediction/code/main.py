@@ -201,7 +201,7 @@ def fmt(n: int) -> str:
 def main() -> None:
     rng = random.Random(23)
     print("=" * 70)
-    print("MULTI-TOKEN PREDICTION — DeepSeek-V3 sequential MTP (Phase 10, Lesson 18)")
+    print("MULTI-TOKEN PREDICTION: DeepSeek-V3 sequential MTP (Phase 10, Lesson 18)")
     print("=" * 70)
     print()
 

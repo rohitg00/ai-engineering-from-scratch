@@ -3,7 +3,7 @@
 > Language is continuous. Models are discrete. Preprocessing is the bridge.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 2 · 14 (Naive Bayes)
 **Time:** ~45 minutes
 

@@ -3,7 +3,7 @@
 > "She called him. He did not answer. The doctor was at lunch." Three references to two people and nobody is named. Coreference resolution figures out who is who.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 5 · 06 (NER), Phase 5 · 07 (POS & Parsing)
 **Time:** ~60 minutes
 

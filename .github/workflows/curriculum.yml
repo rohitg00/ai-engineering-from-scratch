@@ -279,14 +279,17 @@ jobs:
             timeout 120 "$RUNNER_TEMP/lesson" > /dev/null
             echo "::endgroup::"
           done
-      - name: Phase 1 to 3 TypeScript ports type-check and run
+      - name: TypeScript lesson ports type-check and run
         run: |
           npm install --prefix "$RUNNER_TEMP/ts" --no-save --no-package-lock tsx@4.19.2 typescript@5.6.3 @types/node@22.10.2
           bin="$RUNNER_TEMP/ts/node_modules/.bin"
-          for file in phases/0[1-3]-*/*/code/*.ts; do
+          for file in $(git grep -l 'TypeScript port of .*Node standard library only' -- 'phases/*/code/*.ts'); do
             echo "::group::$file"
             "$bin/tsc" --strict --noEmit --target es2022 --module nodenext --moduleResolution nodenext --types node --typeRoots "$RUNNER_TEMP/ts/node_modules/@types" "$file"
-            timeout 120 "$bin/tsx" "$file" > /dev/null
+            case "$file" in
+              */code/lab.ts|*/code/experiments/*.ts) ;;
+              *) timeout 120 "$bin/tsx" "$file" > /dev/null ;;
+            esac
             echo "::endgroup::"
           done
 

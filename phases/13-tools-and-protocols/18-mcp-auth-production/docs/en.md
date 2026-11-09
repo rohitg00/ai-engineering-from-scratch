@@ -5,7 +5,7 @@
 > **Spec note (2026-07-28):** Dynamic Client Registration is deprecated in favor of Client ID Metadata Documents. DCR remains a compatibility mechanism. When it is used, the client declares the correct `application_type`. A client validates a present RFC 9207 `iss` value and never reuses credentials across authorization-server issuers.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 16 (OAuth 2.1 state machine), Phase 13 · 17 (gateways)
 **Time:** ~90 minutes
 
@@ -329,6 +329,7 @@ From the repository root, run:
 ```bash
 cd phases/13-tools-and-protocols/18-mcp-auth-production
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 
