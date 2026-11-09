@@ -3,7 +3,7 @@
 > Eğitim paralel ve FLOP bağlıdır. İferense seri ve hafıza bağlıdır. Farklı şişek boynuzları, farklı numaralar.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 02 (Self-Attention), Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~75 minutes
 
@@ -128,7 +128,7 @@ flash-attention-memory
 iso-machine {"machine":"kv-cache"}
 ```
 
-Bakın .`code/main.py`Bu uygulamayı uyguluyoruz:
+Bakın .`code/main.py`, ya da Rust limanı`code/main.rs`Rust versiyonunu çalıştırmak için:`rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson`Bu uygulamayı uyguluyoruz:
 
 1. Saf bir adam .$O(N^2)$Gelişmiş dekodör.
 2. A.$O(N)$KV-cached dekodör.

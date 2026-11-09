@@ -3,7 +3,7 @@
 > Dense 70B transformatörü her token için her parametreyi etkinleştirir. 671B MoE, her token için sadece 37B'yi etkinleştirir ve her referans markasında onu yenir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 05 (Full Transformer), Phase 7 · 07 (GPT)
 **Time:** ~45 minutes
 
@@ -90,6 +90,13 @@ Bakın .`code/main.py`. Temiz bir stdlib'de kompakt bir MoE katmanı:
 - üst k=2 yönlendirme
 - Softmax normalleştirilmiş kaplama ağırlıkları
 - Uzmanlık önyargısı yoluyla yardımcı kayıpsız dengeleme
+
+`code/main.rs`Rust Port'ı aynı fonksiyonlara ve demolara sahip. Sadece standart kütüphaneden kullanır.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Adım 1: Router
 

@@ -3,7 +3,7 @@
 > Autoregressive dekodlama serilidir. Her token önceki birini bekler. Speküel dekodlama zinciri kırar: ucuz model N tokens taslaklar, pahalı model tüm N bir ileri geçiş doğruluyor.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, Rust
 **Prerequisites:** Phase 7 · 07 (GPT Causal LM), Phase 7 · 12 (KV Cache & Flash Attention)
 **Time:** ~60 minutes
 
@@ -91,6 +91,13 @@ Bakın .`code/main.py`Temel spekülatör örneği algoritmi (reddedme adım + ka
 - El kodlanmış bir dağılım üzerinde deterministik-yumuşak maksimum olan "büyük bir model" (böylelikle kabul matematikini analitik olarak doğrulayabiliriz).
 - Büyük modelin bir rahatsızlığı olan bir "öntem modeli".
 - Doğrudan örnekleme ile aynı sınırlı dağılım üreten kabul / reddetme döngüsü.
+
+`code/main.rs`Rust Port'ı aynı fonksiyonlara ve demolara sahip. Sadece standart kütüphaneden kullanır.
+
+```bash
+python3 code/main.py
+rustc --edition 2021 -O code/main.rs -o /tmp/lesson && /tmp/lesson
+```
 
 ### Adım 1: reddetme adımı
 
