@@ -3,7 +3,7 @@
 > Uma ferramenta é segura para automatizar apenas quando a descoberta, os argumentos, os resultados, a paginagem e o transporte de metadados concordam em um contrato.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07, 09, and 10
 **Time:** ~120 minutes
 
@@ -353,6 +353,7 @@ A partir da raiz do repositório:
 ```bash
 cd phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

@@ -3,7 +3,7 @@
 > O transporte transporta mensagens MCP. Não fornece estado de protocolo faltante.`2026-07-28`, estúdio local e remoto Streamable HTTP ambos carregam pedidos auto-descrição.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07 and 08
 **Time:** ~65 minutes
 
@@ -189,6 +189,7 @@ tp-transport-handshake
 ```bash
 cd code
 python3 main.py --probe
+npx tsx main.ts --probe
 python3 -m unittest discover tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Um servidor não é conformista porque seu caminho feliz trabalhou através de um SDK. A conformidade vive no fio, nos limites de versão, através de intermediários e durante o rollback.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 17 (gateways), Phase 13 · 30 (registry admission)
 **Time:** ~100 minutes
 
@@ -265,6 +265,7 @@ O portão de liberação também recusa transcrição vazia, diferencial SDK ou 
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A demonstração exibiu exatamente quinze transcrições douradas e negativas, incluindo resultados de conclusão válidos e mal formados, compara um resultado bruto com uma visão SDK, inspeciona um proxy que desmoronou um erro de origem, avalia a saúde, autentica a evidência de retrocesso e seleciona esse alvo.
@@ -395,6 +396,7 @@ Execute a suíte demo e determinista:
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

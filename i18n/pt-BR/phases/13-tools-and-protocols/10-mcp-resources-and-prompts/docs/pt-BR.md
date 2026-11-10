@@ -3,7 +3,7 @@
 > Ferramentas executam operações. Recursos expõem conteúdo endereçável. Instrui pacotes de mensagens selecionados pelo usuário. Um bom servidor MCP mantém esses contratos separados e previsíveis.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lesson 07 (Building an MCP Server), Phase 13, Lesson 09 (MCP Transports)
 **Time:** ~60 minutes
 
@@ -279,6 +279,7 @@ Execute o simulador a partir da raiz do repositório:
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 
@@ -304,6 +305,7 @@ A lição também navega .`assets/primitive-split.svg`, uma versão estática do
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

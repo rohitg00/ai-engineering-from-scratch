@@ -3,7 +3,7 @@
 > Um ID de solicitação correlaciona uma mensagem. Não torna um efeito colateral seguro, detém um trabalhador ou protege um fluxo de um consumidor lento.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 09 and 13
 **Time:** ~120 minutes
 
@@ -336,6 +336,7 @@ A partir da raiz do repositório:
 ```bash
 cd phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Estadeless não significa sem confiança, significa que cada pedido expõe as provas que um servidor e gateway precisam para validar a chamada de forma independente.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 08 (MCP client)
 **Time:** ~60 minutes
 
@@ -248,6 +248,7 @@ O modelo começa depois que um adaptador HTTP analisou o corpo JSON e cabeçalho
 ```bash
 cd phases/13-tools-and-protocols/15-mcp-security-tool-poisoning
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

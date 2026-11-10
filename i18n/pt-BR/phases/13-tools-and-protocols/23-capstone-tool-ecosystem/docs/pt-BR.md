@@ -3,7 +3,7 @@
 > Um sistema de agente de produção é um conjunto de limites, não uma pilha de características. Esta pedra final separa uma simulação leível em processo dos clientes de protocolo, servidor de autorização, caixa de areia e exportador de telemetria que uma implantação real ainda precisa.
 
 **Type:** Build
-**Languages:** Python (stdlib, in-process simulation)
+**Languages:** Python (stdlib, in-process simulation), TypeScript
 **Prerequisites:** Phase 13 · 01 through 22, using MCP revision `2026-07-28`
 **Time:** ~120 minutes
 
@@ -203,6 +203,7 @@ t3-capstone-chain
 ```bash
 cd phases/13-tools-and-protocols/23-capstone-tool-ecosystem
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Inspectem seis coisas:

@@ -3,7 +3,7 @@
 > A ficha de serviço é cara. Diferentes cargas de trabalho para chamar ferramentas correspondem a diferentes modelos. Os gateways de roteamento fornecem uma superfície de API, retestes, falhas, rastreamento de custos e barris. Três arquétipos dominam 2026: LiteLLM (self-hosted open source), OpenRouter (managed SaaS), Portkey (producção-grado, open-source em março de 2026). Esta lição nomeia os critérios de decisão e passa por um gateway de roteamento de STDlib.
 
 **Type:** Learn
-**Languages:** Python (stdlib, routing + failover + cost tracker)
+**Languages:** Python (stdlib, routing + failover + cost tracker), TypeScript
 **Prerequisites:** Phase 13 · 02 (function calling), Phase 13 · 17 (gateways)
 **Time:** ~45 minutes
 

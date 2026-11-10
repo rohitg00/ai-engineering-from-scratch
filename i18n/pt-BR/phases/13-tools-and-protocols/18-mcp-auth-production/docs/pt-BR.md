@@ -5,7 +5,7 @@
 > **Spec note (2026-07-28):**O registro dinâmico do cliente é desaproveitado em favor dos documentos de metadados de ID do cliente.`application_type`Um cliente valida a presente RFC 9207 `iss`Valorizar e nunca reutilizar credenciais em emissores de servidores de autorização.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 16 (OAuth 2.1 state machine), Phase 13 · 17 (gateways)
 **Time:** ~90 minutes
 
@@ -329,6 +329,7 @@ A partir da raiz do repositório, executar:
 ```bash
 cd phases/13-tools-and-protocols/18-mcp-auth-production
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

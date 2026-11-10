@@ -3,7 +3,7 @@
 > Uma habilidade não é um pedido longo com um nome de arquivo melhor. É um pacote descoberto de instruções, recursos e auxiliares executáveis que entra no contexto de um agente através de um contrato de tempo de execução.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 01 (The Tool Interface), Phase 13 · 05 (Tool Schema Design)
 **Time:** ~90 minutes
 
@@ -362,6 +362,7 @@ O escolhedor expõe .`TaskShape`E ...`select_primitives(task)`. Mapeia as necess
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/22-skills-and-agent-sdks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

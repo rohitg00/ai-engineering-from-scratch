@@ -3,7 +3,7 @@
 > Três pesquisas meteorológicas independentes são três viagens de ida e volta. Execute-as em paralelo e o tempo total desabre para a chamada única mais lenta. Cada fornecedor de fronteira agora emite várias chamadas de ferramentas em uma única volta. O pagamento é real; a canalização é sutil. Esta lição percorre ambas as metades: o fan-out paralelo e a reensembleia de argumentos transmitidos, com ênfase na armadilha de correlação de id.
 
 **Type:** Build
-**Languages:** Python (stdlib, thread pool + streaming harness)
+**Languages:** Python, TypeScript (stdlib, thread pool + streaming harness)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

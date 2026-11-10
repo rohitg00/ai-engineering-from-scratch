@@ -3,7 +3,7 @@
 > O MCP sem estado não significa que todas as operações devem ser concluídas em uma única solicitação. A extensão oficial Tasks dá ao trabalho de longa duração um manilho durável explícito. Um servidor pode devolver esse manilho a partir de `tools/call`Qualquer instância pode responder .`tasks/get`, e a entrada do cliente chega através de `tasks/update`Sem reanimar sessões de protocolo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 11 (stateless MRTR), Phase 13 · 12 (elicitation)
 **Time:** ~90 minutes
 
@@ -413,6 +413,7 @@ A partir da raiz do repositório:
 ```bash
 cd phases/13-tools-and-protocols/13-mcp-async-tasks/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 
