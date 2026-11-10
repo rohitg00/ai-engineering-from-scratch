@@ -197,14 +197,14 @@ try:
     )
 except ImportError:
     GPT2_PATTERN = re.compile(
-        r"""'(?:[sdmt]|ll|ve|re)| ?[a-zA-Z]+| ?[0-9]+| ?[^\s\w]+|\s+(?!\S)|\s+"""
+        r"""'(?:[sdmt]|ll|ve|re)| ?[^\W\d_]+| ?\d+| ?(?:[^\s\w]|_)+|\s+(?!\S)|\s+"""
     )
 
 def pre_tokenize(text):
     return [match.group() for match in GPT2_PATTERN.finditer(text)]
 ```
 
-- Evet .`regex`modül Unicode özelliği kaçışlarını destekler (`\p{L}`Mektuplar için,`\p{N}`Standart kütüphanede.`re`Modülde değil, bu yüzden ASCII karakter sınıflarına geri dönelim.`regex`- Evet .
+- Evet .`regex`modül Unicode özelliği kaçışlarını destekler (`\p{L}`Mektuplar için,`\p{N}`Standart kütüphanede.`re`modülde değil, bu yüzden fallback aynı sınıfları oluşturur `\w`- Evet .`[^\W\d_]`her türlü Unicode harfine eşleşir ve `\d`Herhangi bir Unicode rakamı. Üretim çok dilli işaretleyiciler için yükleyin `regex`- Evet .
 
 Denemeyin.
 
