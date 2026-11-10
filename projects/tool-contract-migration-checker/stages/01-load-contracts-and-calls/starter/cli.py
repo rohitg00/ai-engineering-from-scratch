@@ -70,7 +70,11 @@ def main():
     parser.add_argument("--calls", help="Path to saved agent calls JSON")
     parser.add_argument("--output", help="Path to write JSON compatibility report")
     parser.add_argument("--fixtures", help="Path to write generated migration test fixtures")
-    parser.add_argument("--strict", action="store_true", help="Exit code 1 on breaking changes")
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Exit code 1 when the contract update is incompatible (breaking changes, unresolved keywords, or broken calls)",
+    )
 
     args = parser.parse_args()
     run_checker(

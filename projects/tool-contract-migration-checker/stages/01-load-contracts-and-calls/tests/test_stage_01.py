@@ -32,7 +32,26 @@ class TestStage01LoadAndValidate(unittest.TestCase):
         with self.assertRaises(ValueError):
             load_contract({"type": "object", "properties": "not_a_dict"})
         with self.assertRaises(ValueError):
+            load_contract({"type": "object", "properties": {"city": True}})
+        with self.assertRaises(ValueError):
             load_contract({"type": "object", "required": [123]})
+
+    def test_load_contract_array_type_and_nullable_property(self):
+        schema = {
+            "title": "nullable_tool",
+            "type": ["object"],
+            "properties": {
+                "name": {"type": ["string", "null"]},
+            },
+        }
+        c = load_contract(schema)
+        self.assertEqual(c["type"], "object")
+        ok_str, _ = validate_call(c, {"name": "alice"})
+        self.assertTrue(ok_str)
+        ok_null, _ = validate_call(c, {"name": None})
+        self.assertTrue(ok_null)
+        ok_bad, issues = validate_call(c, {"name": 123})
+        self.assertFalse(ok_bad)
 
     def test_load_calls_valid(self):
         raw_calls = [

@@ -37,7 +37,7 @@ The demo compares `catalog_v1.json` with `catalog_v2.json`. The proposed schema 
 
 ## Integration and limits
 
-The baseline supports `properties`, `required`, `additionalProperties`, `type`, `enum`, `minimum`, `maximum`, `minLength`, and `maxLength`. Keywords outside this educational subset (`$ref`, `oneOf`, `anyOf`, `allOf`) are surfaced as unresolved changes.
+The baseline supports `properties`, `required`, `additionalProperties`, `type`, `enum`, `minimum`, `maximum`, `minLength`, `maxLength`, `minItems`, and `maxItems`. Keywords outside this educational subset (`$ref`, `oneOf`, `anyOf`, `allOf`) are surfaced as unresolved changes.
 
 ## Stages
 

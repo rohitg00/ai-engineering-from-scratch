@@ -23,5 +23,5 @@ python3 cli.py --old samples/catalog_v1.json --new samples/catalog_v2.json --cal
 
 ### Exit codes
 
-- `0`: Contracts are fully compatible or no breaking changes detected without override.
-- `1`: Breaking changes detected when `--strict` is enabled.
+- `0`: Contracts are fully compatible (no breaking changes, no unresolved keywords, and all replayed calls preserved), or `--strict` was not passed.
+- `1`: When `--strict` is enabled and `report["compatible"]` is `False` (due to breaking changes, unresolved keywords, or broken historical calls).

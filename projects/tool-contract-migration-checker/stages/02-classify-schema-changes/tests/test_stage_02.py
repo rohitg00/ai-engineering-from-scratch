@@ -72,6 +72,22 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         breaking = [c for c in changes if c["type"] == "breaking" and c["category"] == "enum_narrowed"]
         self.assertEqual(len(breaking), 1)
 
+    def test_enum_equivalent_numeric_types(self):
+        # 1 and 1.0 are numerically equal JSON numbers
+        old_s = {
+            "title": "n",
+            "type": "object",
+            "properties": {"val": {"enum": [1, 2]}},
+        }
+        new_s = {
+            "title": "n",
+            "type": "object",
+            "properties": {"val": {"enum": [1.0, 2.0]}},
+        }
+        changes = classify_changes(load_contract(old_s), load_contract(new_s))
+        breaking = [c for c in changes if c["type"] == "breaking"]
+        self.assertEqual(len(breaking), 0)
+
     def test_bound_tightened_is_breaking(self):
         new_schema = dict(self.base_schema)
         props = dict(self.base_schema["properties"])

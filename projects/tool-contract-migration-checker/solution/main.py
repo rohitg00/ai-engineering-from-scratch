@@ -2,7 +2,7 @@
 
 import json
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 SUPPORTED_KEYWORDS = {
     "$schema",
@@ -34,19 +34,40 @@ UNRESOLVED_KEYWORDS = {
 
 
 def _canonical_json(val: Any) -> str:
-    type_tag = type(val).__name__
-    return f"{type_tag}:{json.dumps(val, sort_keys=True)}"
+    if isinstance(val, bool):
+        return f"bool:{json.dumps(val)}"
+    if isinstance(val, (int, float)):
+        if val == int(val):
+            return f"num:{int(val)}"
+        return f"num:{float(val)}"
+    return f"{type(val).__name__}:{json.dumps(val, sort_keys=True)}"
+
+
+def _type_names(schema: Dict[str, Any]) -> Optional[Set[str]]:
+    t = schema.get("type")
+    if t is None:
+        return None
+    if isinstance(t, str):
+        return {t}
+    if isinstance(t, (list, tuple, set)):
+        return set(t)
+    return {str(t)}
 
 
 def load_contract(raw: Any) -> Dict[str, Any]:
     if not isinstance(raw, dict):
         raise ValueError("schema must be a dictionary")
-    schema_type = raw.get("type", "object")
-    if schema_type != "object":
+    t_set = _type_names(raw)
+    if t_set is not None and "object" not in t_set:
         raise ValueError("object type required")
     properties = raw.get("properties")
-    if properties is not None and not isinstance(properties, dict):
-        raise ValueError("properties must be a dictionary")
+    if properties is not None:
+        if not isinstance(properties, dict):
+            raise ValueError("properties must be a dictionary")
+        for p_name, p_val in properties.items():
+            if not isinstance(p_val, dict):
+                raise ValueError(f"property schema for '{p_name}' must be a dictionary")
+
     required = raw.get("required", [])
     if not isinstance(required, list) or any(not isinstance(r, str) for r in required):
         raise ValueError("required must be a list of strings")
@@ -100,46 +121,57 @@ def validate_call(contract: Dict[str, Any], args: Any) -> Tuple[bool, List[str]]
         if key not in properties:
             continue
         p_schema = properties[key]
-        expected_type = p_schema.get("type")
+        expected_types = _type_names(p_schema)
 
-        if expected_type == "string":
-            if not isinstance(val, str) or isinstance(val, bool):
-                issues.append(f"property '{key}' expected string")
-            else:
-                if "minLength" in p_schema and len(val) < p_schema["minLength"]:
-                    issues.append(f"property '{key}' shorter than minLength {p_schema['minLength']}")
-                if "maxLength" in p_schema and len(val) > p_schema["maxLength"]:
-                    issues.append(f"property '{key}' longer than maxLength {p_schema['maxLength']}")
-        elif expected_type == "integer":
-            if not isinstance(val, int) or isinstance(val, bool):
-                issues.append(f"property '{key}' expected integer")
-            else:
-                if "minimum" in p_schema and val < p_schema["minimum"]:
-                    issues.append(f"property '{key}' less than minimum {p_schema['minimum']}")
-                if "maximum" in p_schema and val > p_schema["maximum"]:
-                    issues.append(f"property '{key}' greater than maximum {p_schema['maximum']}")
-        elif expected_type == "number":
-            if not isinstance(val, (int, float)) or isinstance(val, bool):
-                issues.append(f"property '{key}' expected number")
-            else:
-                if "minimum" in p_schema and val < p_schema["minimum"]:
-                    issues.append(f"property '{key}' less than minimum {p_schema['minimum']}")
-                if "maximum" in p_schema and val > p_schema["maximum"]:
-                    issues.append(f"property '{key}' greater than maximum {p_schema['maximum']}")
-        elif expected_type == "boolean":
-            if not isinstance(val, bool):
-                issues.append(f"property '{key}' expected boolean")
-        elif expected_type == "array":
-            if not isinstance(val, list):
-                issues.append(f"property '{key}' expected array")
-            else:
-                if "minItems" in p_schema and len(val) < p_schema["minItems"]:
-                    issues.append(f"property '{key}' has fewer items than minItems {p_schema['minItems']}")
-                if "maxItems" in p_schema and len(val) > p_schema["maxItems"]:
-                    issues.append(f"property '{key}' has more items than maxItems {p_schema['maxItems']}")
-        elif expected_type == "object":
-            if not isinstance(val, dict):
-                issues.append(f"property '{key}' expected object")
+        if val is None:
+            if expected_types is not None and "null" not in expected_types:
+                issues.append(f"property '{key}' cannot be null")
+            continue
+
+        if expected_types is not None:
+            matched = False
+            for t in expected_types:
+                if t == "string" and isinstance(val, str) and not isinstance(val, bool):
+                    matched = True
+                    break
+                elif t == "integer" and isinstance(val, int) and not isinstance(val, bool):
+                    matched = True
+                    break
+                elif t == "number" and isinstance(val, (int, float)) and not isinstance(val, bool):
+                    matched = True
+                    break
+                elif t == "boolean" and isinstance(val, bool):
+                    matched = True
+                    break
+                elif t == "array" and isinstance(val, list):
+                    matched = True
+                    break
+                elif t == "object" and isinstance(val, dict):
+                    matched = True
+                    break
+                elif t == "null" and val is None:
+                    matched = True
+                    break
+            if not matched:
+                issues.append(
+                    f"property '{key}' type mismatch (expected one of {sorted(list(expected_types))})"
+                )
+
+        if isinstance(val, str) and not isinstance(val, bool):
+            if "minLength" in p_schema and len(val) < p_schema["minLength"]:
+                issues.append(f"property '{key}' shorter than minLength {p_schema['minLength']}")
+            if "maxLength" in p_schema and len(val) > p_schema["maxLength"]:
+                issues.append(f"property '{key}' longer than maxLength {p_schema['maxLength']}")
+        elif isinstance(val, (int, float)) and not isinstance(val, bool):
+            if "minimum" in p_schema and val < p_schema["minimum"]:
+                issues.append(f"property '{key}' less than minimum {p_schema['minimum']}")
+            if "maximum" in p_schema and val > p_schema["maximum"]:
+                issues.append(f"property '{key}' greater than maximum {p_schema['maximum']}")
+        elif isinstance(val, list):
+            if "minItems" in p_schema and len(val) < p_schema["minItems"]:
+                issues.append(f"property '{key}' has fewer items than minItems {p_schema['minItems']}")
+            if "maxItems" in p_schema and len(val) > p_schema["maxItems"]:
+                issues.append(f"property '{key}' has more items than maxItems {p_schema['maxItems']}")
 
         if "enum" in p_schema:
             val_canon = _canonical_json(val)
@@ -255,10 +287,12 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
             continue
         new_p = new_props[prop]
 
-        old_type = old_p.get("type")
-        new_type = new_p.get("type")
-        if old_type != new_type:
-            if old_type == "integer" and new_type == "number":
+        old_types = _type_names(old_p)
+        new_types = _type_names(new_p)
+        if old_types is not None and new_types is not None and old_types != new_types:
+            removed_types = old_types - new_types
+            added_types = new_types - old_types
+            if old_types == {"integer"} and new_types == {"number"}:
                 changes.append(
                     {
                         "type": "compatible",
@@ -267,13 +301,22 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
                         "description": f"Property '{prop}' type widened from integer to number.",
                     }
                 )
-            else:
+            elif removed_types:
                 changes.append(
                     {
                         "type": "breaking",
                         "category": "type_narrowed",
                         "property": prop,
-                        "description": f"Property '{prop}' type changed from {old_type} to {new_type}.",
+                        "description": f"Property '{prop}' types narrowed; removed types: {sorted(list(removed_types))}.",
+                    }
+                )
+            elif added_types:
+                changes.append(
+                    {
+                        "type": "compatible",
+                        "category": "type_widened",
+                        "property": prop,
+                        "description": f"Property '{prop}' types widened; added types: {sorted(list(added_types))}.",
                     }
                 )
 
@@ -383,21 +426,21 @@ def _synthesize_base_payload(contract: Dict[str, Any]) -> Dict[str, Any]:
     for key in required:
         if key in props:
             p_schema = props[key]
-            p_type = p_schema.get("type", "string")
+            p_types = _type_names(p_schema) or {"string"}
             if "enum" in p_schema and p_schema["enum"]:
                 payload[key] = p_schema["enum"][0]
-            elif p_type == "string":
+            elif "string" in p_types:
                 min_len = p_schema.get("minLength", 1)
                 payload[key] = "a" * max(1, min_len)
-            elif p_type in ("integer", "number"):
+            elif "integer" in p_types or "number" in p_types:
                 val = p_schema.get("minimum", 1)
                 payload[key] = val
-            elif p_type == "boolean":
+            elif "boolean" in p_types:
                 payload[key] = True
-            elif p_type == "array":
+            elif "array" in p_types:
                 min_items = p_schema.get("minItems", 0)
                 payload[key] = ["item"] * min_items
-            elif p_type == "object":
+            elif "object" in p_types:
                 payload[key] = {}
             else:
                 payload[key] = "sample"
@@ -471,15 +514,15 @@ def generate_counterexamples(
                         }
                     )
         elif cat == "type_narrowed":
-            new_type = new_props.get(prop, {}).get("type")
-            old_type = old_props.get(prop, {}).get("type")
+            new_types = _type_names(new_props.get(prop, {})) or set()
+            old_types = _type_names(old_props.get(prop, {})) or set()
             test_val = None
-            if old_type == "number" and new_type == "integer":
+            if "number" in old_types and "integer" in new_types and "number" not in new_types:
                 test_val = 1.5
-            elif new_type == "string" and old_type != "string":
-                test_val = 123
-            elif new_type == "integer" and old_type != "integer":
+            elif "string" not in new_types and "string" in old_types:
                 test_val = "text"
+            elif "integer" not in new_types and "integer" in old_types:
+                test_val = 42
             if test_val is not None:
                 payload = dict(base)
                 payload[prop] = test_val
@@ -491,14 +534,13 @@ def generate_counterexamples(
                             "breaking_category": cat,
                             "property": prop,
                             "payload": payload,
-                            "reason": f"Property '{prop}' value {test_val!r} violates narrowed type '{new_type}'.",
+                            "reason": f"Property '{prop}' value {test_val!r} violates narrowed types {sorted(list(new_types))}.",
                         }
                     )
         elif cat == "bound_narrowed":
             bound = ch.get("bound")
             new_p = new_props.get(prop, {})
             old_p = old_props.get(prop, {})
-            val = None
 
             if bound == "maximum" and "maximum" in new_p:
                 val = new_p["maximum"] + 1
@@ -610,8 +652,9 @@ def generate_counterexamples(
                 )
         elif cat == "removed_property":
             old_p = old_props.get(prop, {})
+            old_types = _type_names(old_p) or {"string"}
             payload = dict(base)
-            payload[prop] = "test_val" if old_p.get("type") == "string" else 1
+            payload[prop] = "test_val" if "string" in old_types else 1
             valid_old, _ = validate_call(old_contract, payload)
             valid_new, _ = validate_call(new_contract, payload)
             if valid_old and not valid_new:

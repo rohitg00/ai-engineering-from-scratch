@@ -1,30 +1,44 @@
 (function () {
   "use strict";
 
+  const sampleCalls = [
+    { id: "call_1", query: "wireless mouse", category: "electronics", limit: 20 },
+    { id: "call_2", query: "oak dining table", category: "home", limit: 5 },
+    { id: "call_3", query: "algorithms textbook", category: "books", limit: 80 },
+    { id: "call_4", query: "running shoes", category: "apparel", limit: 10, extra_tag: "sale" },
+    { id: "call_5", query: "usb hub", category: "electronics", limit: 45 }
+  ];
+
   const controls = [
     {
-      key: "breakingType",
-      label: "Schema change type",
-      type: "select",
-      options: [
-        { value: "add_required", label: "Add required parameter" },
-        { value: "narrow_enum", label: "Narrow allowed enum values" },
-        { value: "narrow_range", label: "Narrow numeric maximum limit" },
-        { value: "add_optional", label: "Add optional parameter (Compatible)" }
-      ],
-      value: "add_required"
+      key: "addRequiredToken",
+      label: "Add required parameter 'token'",
+      type: "checkbox",
+      value: true
     },
     {
-      key: "savedCalls",
-      label: "Saved agent calls",
+      key: "removeHomeCategory",
+      label: "Remove 'home' from category enum",
+      type: "checkbox",
+      value: true
+    },
+    {
+      key: "narrowLimitMax",
+      label: "Maximum allowed 'limit'",
       type: "range",
-      value: 10,
-      min: 1,
-      max: 50,
-      step: 1
+      value: 50,
+      min: 10,
+      max: 100,
+      step: 10
     },
     {
-      key: "requireStrict",
+      key: "closeSchema",
+      label: "Reject undeclared properties (additionalProperties: false)",
+      type: "checkbox",
+      value: true
+    },
+    {
+      key: "strictGate",
       label: "Enforce strict CI compatibility gate",
       type: "checkbox",
       value: true
@@ -32,35 +46,60 @@
   ];
 
   const calculate = function (v, stepIndex) {
-    let broken = 0;
-    let breaking = true;
-    let summary = "";
-    if (v.breakingType === "add_required") {
-      broken = Math.max(1, Math.round(v.savedCalls * 0.7));
-      summary = "Breaking: Newly required parameter breaks " + broken + " of " + v.savedCalls + " historical calls.";
-    } else if (v.breakingType === "narrow_enum") {
-      broken = Math.max(1, Math.round(v.savedCalls * 0.3));
-      summary = "Breaking: Narrowed enum values invalidate " + broken + " saved calls.";
-    } else if (v.breakingType === "narrow_range") {
-      broken = Math.max(1, Math.round(v.savedCalls * 0.4));
-      summary = "Breaking: Stricter numeric maximum rejects " + broken + " calls.";
-    } else {
-      broken = 0;
-      breaking = false;
-      summary = "Compatible: Adding optional parameters preserves 100% of historical calls.";
+    const broken = [];
+    const preserved = [];
+    const breakingRules = [];
+
+    if (v.addRequiredToken) breakingRules.push("required parameter 'token' added");
+    if (v.removeHomeCategory) breakingRules.push("category 'home' removed from enum");
+    if (v.narrowLimitMax < 100) breakingRules.push("maximum limit lowered to " + v.narrowLimitMax);
+    if (v.closeSchema) breakingRules.push("additional properties rejected");
+
+    for (let i = 0; i < sampleCalls.length; i++) {
+      const call = sampleCalls[i];
+      const reasons = [];
+
+      if (v.addRequiredToken && !call.token) {
+        reasons.push("missing required 'token'");
+      }
+      if (v.removeHomeCategory && call.category === "home") {
+        reasons.push("category 'home' removed from enum");
+      }
+      if (call.limit > v.narrowLimitMax) {
+        reasons.push("limit " + call.limit + " > " + v.narrowLimitMax);
+      }
+      if (v.closeSchema && call.extra_tag) {
+        reasons.push("unexpected property 'extra_tag'");
+      }
+
+      if (reasons.length > 0) {
+        broken.push({ id: call.id, reasons: reasons });
+      } else {
+        preserved.push(call.id);
+      }
     }
 
-    const gatePass = !breaking || !v.requireStrict;
+    const hasBreaks = breakingRules.length > 0;
+    const gatePass = (!hasBreaks && broken.length === 0) || !v.strictGate;
+
+    let summaryText = "";
+    if (broken.length === 0 && !hasBreaks) {
+      summaryText = "All 5 historical calls satisfy the updated contract without changes.";
+    } else {
+      summaryText = "Validation rejected " + broken.length + " of 5 saved calls under " + breakingRules.length + " proposed contract changes.";
+    }
+
     return {
-      summary: summary + (gatePass ? " CI Gate PASSED." : " CI Gate FAILED (exit code 1)."),
+      summary: summaryText + (gatePass ? " CI Gate PASSED." : " CI Gate FAILED (exit code 1)."),
       metrics: [
-        { label: "Saved Calls", value: v.savedCalls },
-        { label: "Broken Calls", value: broken },
-        { label: "Gate Status", value: gatePass ? "PASS" : "FAIL" }
+        { label: "Saved Calls", value: sampleCalls.length },
+        { label: "Preserved Calls", value: preserved.length },
+        { label: "Broken Calls", value: broken.length },
+        { label: "CI Gate", value: gatePass ? "PASS" : "FAIL" }
       ],
       bars: [
-        { label: "Preserved Calls", value: v.savedCalls - broken, max: v.savedCalls },
-        { label: "Broken Calls", value: broken, max: v.savedCalls }
+        { label: "Preserved Calls", value: preserved.length, max: sampleCalls.length },
+        { label: "Broken Calls", value: broken.length, max: sampleCalls.length }
       ]
     };
   };
