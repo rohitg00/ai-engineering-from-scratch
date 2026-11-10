@@ -34,25 +34,43 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         self.assertEqual(len(compatible), 1)
         self.assertEqual(compatible[0]["property"], "filter_by")
 
-    def test_removed_property_is_breaking(self):
+    def test_removed_property_when_closed_is_breaking(self):
         new_schema = dict(self.base_schema)
         props = dict(self.base_schema["properties"])
         del props["limit"]
         new_schema["properties"] = props
+        new_schema["additionalProperties"] = False  # closed rejects removed prop
         changes = classify_changes(self.base_contract, load_contract(new_schema))
         breaking = [c for c in changes if c["type"] == "breaking" and c["category"] == "removed_property"]
         self.assertEqual(len(breaking), 1)
         self.assertEqual(breaking[0]["property"], "limit")
 
-    def test_enum_narrowed_is_breaking(self):
+    def test_removed_property_when_permitted_is_compatible(self):
         new_schema = dict(self.base_schema)
         props = dict(self.base_schema["properties"])
-        props["format"] = {"type": "string", "enum": ["json", "csv"]}  # removed 'text'
+        del props["limit"]
         new_schema["properties"] = props
+        new_schema["additionalProperties"] = True  # permitted!
         changes = classify_changes(self.base_contract, load_contract(new_schema))
+        comp = [c for c in changes if c["type"] == "compatible" and c["category"] == "removed_permitted_property"]
+        self.assertEqual(len(comp), 1)
+        self.assertEqual(comp[0]["property"], "limit")
+
+    def test_enum_narrowed_with_complex_types(self):
+        # tests json array/nested/bool enum elements without crashing
+        old_s = {
+            "title": "c",
+            "type": "object",
+            "properties": {"val": {"enum": [1, True, ["a", "b"], "text"]}},
+        }
+        new_s = {
+            "title": "c",
+            "type": "object",
+            "properties": {"val": {"enum": [1, ["a", "b"]]}},
+        }
+        changes = classify_changes(load_contract(old_s), load_contract(new_s))
         breaking = [c for c in changes if c["type"] == "breaking" and c["category"] == "enum_narrowed"]
         self.assertEqual(len(breaking), 1)
-        self.assertEqual(breaking[0]["property"], "format")
 
     def test_bound_tightened_is_breaking(self):
         new_schema = dict(self.base_schema)
@@ -70,13 +88,15 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         breaking = [c for c in changes if c["type"] == "breaking" and c["category"] == "closed_schema"]
         self.assertEqual(len(breaking), 1)
 
-    def test_unresolved_keyword_detected(self):
-        schema_with_ref = dict(self.base_schema)
-        schema_with_ref["$ref"] = "#/definitions/Something"
-        changes = classify_changes(load_contract(schema_with_ref), self.base_contract)
-        unresolved = [c for c in changes if c["type"] == "unresolved"]
+    def test_nested_restriction_marked_unresolved(self):
+        nested_schema = dict(self.base_schema)
+        nested_schema["properties"] = {
+            "metadata": {"type": "object", "properties": {"tag": {"type": "string"}}}
+        }
+        changes = classify_changes(self.base_contract, load_contract(nested_schema))
+        unresolved = [c for c in changes if c["type"] == "unresolved" and c["category"] == "nested_restriction"]
         self.assertEqual(len(unresolved), 1)
-        self.assertEqual(unresolved[0]["property"], "$ref")
+        self.assertEqual(unresolved[0]["property"], "metadata")
 
 
 if __name__ == "__main__":

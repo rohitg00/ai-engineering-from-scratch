@@ -17,6 +17,7 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
                 "user_id": {"type": "string", "minLength": 1},
                 "role": {"type": "string", "enum": ["admin", "editor", "viewer"]},
                 "score": {"type": "integer", "minimum": 0, "maximum": 100},
+                "tags": {"type": "array", "minItems": 1, "maxItems": 10},
             },
             "required": ["user_id"],
             "additionalProperties": True,
@@ -29,6 +30,7 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
                 "api_key": {"type": "string", "minLength": 1},  # added required
                 "role": {"type": "string", "enum": ["admin", "editor"]},  # removed 'viewer'
                 "score": {"type": "integer", "minimum": 0, "maximum": 50},  # max 100 -> 50
+                "tags": {"type": "array", "minItems": 2, "maxItems": 5},  # bounds narrowed
             },
             "required": ["user_id", "api_key"],
             "additionalProperties": False,  # closed
@@ -52,6 +54,72 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
             valid_new, new_errs = validate_call(self.new_contract, payload)
             self.assertTrue(valid_old, f"Payload must pass old contract: {payload}, errs: {old_errs}")
             self.assertFalse(valid_new, f"Payload must fail new contract: {payload}")
+
+    def test_counterexamples_for_tightened_bounds_and_strings(self):
+        old_s = {
+            "title": "t",
+            "type": "object",
+            "properties": {
+                "name": {"type": "string", "minLength": 2, "maxLength": 50},
+                "count": {"type": "integer", "minimum": 1, "maximum": 100},
+            },
+            "required": ["name", "count"],
+        }
+        new_s = {
+            "title": "t",
+            "type": "object",
+            "properties": {
+                "name": {"type": "string", "minLength": 5, "maxLength": 20},
+                "count": {"type": "integer", "minimum": 10, "maximum": 50},
+            },
+            "required": ["name", "count"],
+        }
+        ces = generate_counterexamples(load_contract(old_s), load_contract(new_s))
+        self.assertGreaterEqual(len(ces), 2)
+        for ce in ces:
+            valid_old, _ = validate_call(load_contract(old_s), ce["payload"])
+            valid_new, _ = validate_call(load_contract(new_s), ce["payload"])
+            self.assertTrue(valid_old)
+            self.assertFalse(valid_new)
+
+    def test_counterexamples_for_array_bounds(self):
+        old_s = {
+            "title": "arr",
+            "type": "object",
+            "properties": {"items": {"type": "array", "minItems": 0, "maxItems": 10}},
+            "required": ["items"],
+        }
+        new_s = {
+            "title": "arr",
+            "type": "object",
+            "properties": {"items": {"type": "array", "minItems": 2, "maxItems": 5}},
+            "required": ["items"],
+        }
+        ces = generate_counterexamples(load_contract(old_s), load_contract(new_s))
+        self.assertGreaterEqual(len(ces), 1)
+        for ce in ces:
+            valid_old, _ = validate_call(load_contract(old_s), ce["payload"])
+            valid_new, _ = validate_call(load_contract(new_s), ce["payload"])
+            self.assertTrue(valid_old)
+            self.assertFalse(valid_new)
+
+    def test_counterexamples_for_narrowed_type(self):
+        old_s = {
+            "title": "typed",
+            "type": "object",
+            "properties": {"weight": {"type": "number"}},
+            "required": ["weight"],
+        }
+        new_s = {
+            "title": "typed",
+            "type": "object",
+            "properties": {"weight": {"type": "integer"}},
+            "required": ["weight"],
+        }
+        ces = generate_counterexamples(load_contract(old_s), load_contract(new_s))
+        self.assertEqual(len(ces), 1)
+        self.assertEqual(ces[0]["breaking_category"], "type_narrowed")
+        self.assertEqual(ces[0]["payload"]["weight"], 1.5)
 
     def test_replay_partitions_correctly(self):
         calls = load_calls([
@@ -86,6 +154,18 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
         self.assertEqual(len(result["preserved"]), 2)
         self.assertEqual(len(result["broken"]), 0)
         self.assertEqual(result["breaking_rate"], 0.0)
+
+    def test_replay_enforces_array_item_bounds(self):
+        calls = load_calls([
+            {"id": "c_arr_ok", "arguments": {"user_id": "u1", "tags": ["a", "b", "c"]}},
+            {"id": "c_arr_too_long", "arguments": {"user_id": "u1", "tags": ["1", "2", "3", "4", "5", "6"]}},
+        ])
+        # new schema has maxItems 5
+        schema_with_api_key = dict(self.new_schema)
+        schema_with_api_key["required"] = ["user_id"]  # keep api_key optional for this test
+        result = replay_calls(self.old_contract, load_contract(schema_with_api_key), calls)
+        broken_ids = [b["id"] for b in result["broken"]]
+        self.assertIn("c_arr_too_long", broken_ids)
 
 
 if __name__ == "__main__":

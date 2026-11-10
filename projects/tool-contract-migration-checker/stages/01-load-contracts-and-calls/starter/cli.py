@@ -18,14 +18,24 @@ from main import (
 
 
 def run_checker(old_path, new_path, calls_path=None, output_path=None, fixtures_path=None, strict=False):
-    with open(old_path, "r", encoding="utf-8") as f:
+    old_p = Path(old_path)
+    new_p = Path(new_path)
+    if not old_p.is_file():
+        raise FileNotFoundError(f"old contract file not found: {old_path}")
+    if not new_p.is_file():
+        raise FileNotFoundError(f"new contract file not found: {new_path}")
+
+    with open(old_p, "r", encoding="utf-8") as f:
         old_data = json.load(f)
-    with open(new_path, "r", encoding="utf-8") as f:
+    with open(new_p, "r", encoding="utf-8") as f:
         new_data = json.load(f)
 
     calls_data = []
-    if calls_path and Path(calls_path).exists():
-        with open(calls_path, "r", encoding="utf-8") as f:
+    if calls_path:
+        c_p = Path(calls_path)
+        if not c_p.is_file():
+            raise FileNotFoundError(f"calls file not found: {calls_path}")
+        with open(c_p, "r", encoding="utf-8") as f:
             calls_data = json.load(f)
 
     old_contract = load_contract(old_data)

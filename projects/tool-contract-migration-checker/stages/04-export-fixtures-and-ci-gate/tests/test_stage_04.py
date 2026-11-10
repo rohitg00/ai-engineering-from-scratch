@@ -1,4 +1,7 @@
 import json
+import os
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -12,6 +15,17 @@ from main import (
     load_contract,
     replay_calls,
 )
+
+
+def _get_cli_path():
+    if "PROJECT_WORKSPACE" in os.environ:
+        cand = Path(os.environ["PROJECT_WORKSPACE"]) / "cli.py"
+        if cand.is_file():
+            return cand
+    cand = Path(__file__).resolve().parents[3] / "solution" / "cli.py"
+    if cand.is_file():
+        return cand
+    return Path.cwd() / "cli.py"
 
 
 class TestStage04ReportAndGate(unittest.TestCase):
@@ -59,7 +73,7 @@ class TestStage04ReportAndGate(unittest.TestCase):
         self.assertFalse(report["compatible"])
         self.assertGreater(report["breaking_count"], 0)
         self.assertEqual(len(report["replay"]["broken"]), 1)
-        self.assertIn("breaking", report["summary"].lower())
+        self.assertIn("incompatible", report["summary"].lower())
 
     def test_build_report_compatible(self):
         old_c = load_contract(self.old_schema)
@@ -75,6 +89,19 @@ class TestStage04ReportAndGate(unittest.TestCase):
         self.assertEqual(len(report["replay"]["broken"]), 0)
         self.assertIn("compatible", report["summary"].lower())
 
+    def test_build_report_unresolved_contracts_incompatible(self):
+        old_c = load_contract(self.old_schema)
+        new_schema_ref = dict(self.new_schema_compatible)
+        new_schema_ref["$ref"] = "#/defs/Doc"
+        new_c = load_contract(new_schema_ref)
+        changes = classify_changes(old_c, new_c)
+        replay = replay_calls(old_c, new_c, [])
+        report = build_report(old_c, new_c, changes, [], replay)
+
+        self.assertFalse(report["compatible"])
+        self.assertGreater(report["unresolved_count"], 0)
+        self.assertIn("unresolved", report["summary"].lower())
+
     def test_export_fixtures(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             out_file = Path(tmpdir) / "fixtures.json"
@@ -88,6 +115,43 @@ class TestStage04ReportAndGate(unittest.TestCase):
             self.assertEqual(loaded["version"], 1)
             self.assertEqual(len(loaded["synthesized_counterexamples"]), 1)
             self.assertEqual(len(loaded["broken_historical_calls"]), 1)
+
+    def test_cli_execution_with_strict_failure(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            old_f = Path(tmpdir) / "old.json"
+            new_f = Path(tmpdir) / "new.json"
+            out_f = Path(tmpdir) / "report.json"
+            with open(old_f, "w") as f:
+                json.dump(self.old_schema, f)
+            with open(new_f, "w") as f:
+                json.dump(self.new_schema_breaking, f)
+
+            cli_path = _get_cli_path()
+            proc = subprocess.run(
+                [sys.executable, str(cli_path), "--old", str(old_f), "--new", str(new_f), "--output", str(out_f), "--strict"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(proc.returncode, 1)
+            self.assertTrue(out_f.exists())
+
+    def test_cli_missing_calls_file_raises_error(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            old_f = Path(tmpdir) / "old.json"
+            new_f = Path(tmpdir) / "new.json"
+            with open(old_f, "w") as f:
+                json.dump(self.old_schema, f)
+            with open(new_f, "w") as f:
+                json.dump(self.new_schema_compatible, f)
+
+            cli_path = _get_cli_path()
+            proc = subprocess.run(
+                [sys.executable, str(cli_path), "--old", str(old_f), "--new", str(new_f), "--calls", "/nonexistent/calls.json"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertNotEqual(proc.returncode, 0)
+            self.assertIn("not found", proc.stderr + proc.stdout)
 
 
 if __name__ == "__main__":

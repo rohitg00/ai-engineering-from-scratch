@@ -1,6 +1,6 @@
 # Project roadmap
 
-The catalog contains **102 projects: 76 ready to build and 26 planned**. The plans below describe future work; they do not have runnable stages, completion tests or certificates yet.
+The catalog contains **102 projects: 77 ready to build and 25 planned**. The plans below describe future work; they do not have runnable stages, completion tests or certificates yet.
 
 Ready project manifests own implementation metadata; `roadmap.json` owns the remaining plans. These briefs give each plan a concrete deliverable, a starting path through existing projects and four proposed milestones. Milestones can expand into four to eight tested stages during implementation. No delivery dates are promised.
 
@@ -8,7 +8,7 @@ Ready project manifests own implementation metadata; `roadmap.json` owns the rem
 |---|---:|---:|---:|
 | 1. Starter | 12 | 1 | 13 |
 | 2. Builder | 30 | 2 | 32 |
-| 3. Engineer | 22 | 7 | 29 |
+| 3. Engineer | 23 | 6 | 29 |
 | 4. Systems | 9 | 12 | 21 |
 | 5. Frontier | 3 | 4 | 7 |
 
@@ -213,31 +213,6 @@ Proposed milestones:
 4. Export a bounded HTTP adapter and reuse evidence
 
 Primary references: [Reference 1](https://www.rfc-editor.org/rfc/rfc9111.html).
-
-<a id="tool-contract-migration-checker"></a>
-
-### Tool Contract Migration Checker
-
-Help tool authors evolve a callable interface while existing agents still hold old argument shapes. Compare a documented subset of before-and-after schemas, generate counterexamples for required fields and narrowed values, and replay saved calls through both validators. Export a compatibility report and reviewable migration fixtures for CI.
-
-**Distinct focus:** JSON Schema Output Guard validates one payload; this project reasons about compatibility between two tool contracts and supplies concrete calls that change validity. It does not map package upgrades to source call sites.
-
-**First demo to build:** Add a required argument to a fictional catalog tool and generate a saved call that passes the old contract but fails the new one.
-
-**Languages:** TypeScript, Python
-
-**Deliverable:** Schema compatibility CLI, breaking-call fixtures and CI report
-
-**Builds on:** [JSON Schema Output Guard](json-schema-output-guard/)
-
-Proposed milestones:
-
-1. Load versioned tool contracts and saved calls
-2. Classify supported schema changes
-3. Generate and replay breaking-call counterexamples
-4. Export migration fixtures and a compatibility gate
-
-**Scope boundary:** Publish the supported schema subset and mark unhandled keywords unresolved instead of declaring full JSON Schema compatibility.
 
 <a id="video-highlight-storyboard"></a>
 
