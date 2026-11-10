@@ -1,6 +1,6 @@
 # Projects
 
-Build useful AI engineering tools from scratch, one tested stage at a time. The catalog covers 102 projects across Python, Rust, TypeScript, and Go: 77 ready to build and 25 on the [roadmap](ROADMAP.md).
+Build useful AI engineering tools from scratch, one tested stage at a time. The catalog covers 104 projects across Python, Rust, TypeScript, and Go: 79 ready to build and 25 on the [roadmap](ROADMAP.md).
 
 Each ready project includes a working reference implementation, a learner starter, cumulative stage tests, mechanism diagrams, explanations, and recorded run/output GIFs. Core tests use local fixtures and require no model credentials. Optional framework comparisons use real SDKs with deterministic fake models. Planned projects have proposed outcomes and learning milestones; their implementations and completion tests are still to come.
 

@@ -80,7 +80,18 @@
     }
 
     const hasBreaks = breakingRules.length > 0;
-    const gatePass = (!hasBreaks && broken.length === 0) || !v.strictGate;
+    let gateStatus = "PASS";
+    let gateDetail = "CI Gate PASSED (exit code 0).";
+
+    if (hasBreaks || broken.length > 0) {
+      if (v.strictGate) {
+        gateStatus = "FAIL";
+        gateDetail = "CI Gate FAILED (exit code 1 under --strict).";
+      } else {
+        gateStatus = "DISABLED";
+        gateDetail = "CI Gate DISABLED (--strict omitted, exit code 0 with incompatible report).";
+      }
+    }
 
     let summaryText = "";
     if (broken.length === 0 && !hasBreaks) {
@@ -90,12 +101,12 @@
     }
 
     return {
-      summary: summaryText + (gatePass ? " CI Gate PASSED." : " CI Gate FAILED (exit code 1)."),
+      summary: summaryText + " " + gateDetail,
       metrics: [
         { label: "Saved Calls", value: sampleCalls.length },
         { label: "Preserved Calls", value: preserved.length },
         { label: "Broken Calls", value: broken.length },
-        { label: "CI Gate", value: gatePass ? "PASS" : "FAIL" }
+        { label: "CI Gate", value: gateStatus }
       ],
       bars: [
         { label: "Preserved Calls", value: preserved.length, max: sampleCalls.length },

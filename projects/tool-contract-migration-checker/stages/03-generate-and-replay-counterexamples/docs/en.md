@@ -22,7 +22,7 @@ The synthesizer creates a minimal payload omitting `session_id` (satisfying the 
 
 Implement `generate_counterexamples(old_contract, new_contract)` and `replay_calls(old_contract, new_contract, calls)` in your workspace `main.py`.
 
-- `generate_counterexamples` must synthesize a minimal valid payload for the old contract that fails the new contract for each breaking change.
+- `generate_counterexamples` synthesizes minimal payloads that satisfy the old contract but fail the new contract for supported breaking change categories (including added required fields, narrowed and introduced enums, narrowed types, tightened bounds, and closed schemas).
 - `replay_calls` partitions saved historical calls into:
   - `preserved`: valid under both old and new contracts.
   - `broken`: valid under the old contract but rejected by the new contract.

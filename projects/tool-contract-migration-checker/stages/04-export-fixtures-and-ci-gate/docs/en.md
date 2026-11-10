@@ -4,7 +4,7 @@ Stage 4 of 4. Read [Stage 3](../../03-generate-and-replay-counterexamples/docs/e
 
 ## What changes
 
-In modern AI agent deployments, schema changes must be validated automatically in continuous integration. This stage builds a comprehensive report generator, exports reproducible regression fixtures, and exposes a CLI gate that can fail CI builds whenever breaking schema changes are detected without an approved migration path.
+In modern AI agent deployments, schema changes must be validated automatically in continuous integration. This stage builds a comprehensive report generator, exports reproducible regression fixtures, and exposes a CLI gate that fails CI builds whenever breaking schema changes or replayed call failures are detected.
 
 The boundary for this stage is `build_report`, `export_fixtures`, and the `cli.py` entrypoint.
 
@@ -16,7 +16,7 @@ A CI pull request proposes tightening tool arguments:
 pj-tool-contract-migration-checker-4
 ```
 
-Running `cli.py --old schema_v1.json --new schema_v2.json --strict` exits with status `1`, blocking the merge until the developer either relaxes the contract or registers an explicit migration adapter.
+Running `cli.py --old schema_v1.json --new schema_v2.json --strict` exits with status `1`, blocking the merge until the developer relaxes the contract to restore backwards compatibility.
 
 ## Implement the contract
 

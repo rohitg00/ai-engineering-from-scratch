@@ -1,6 +1,6 @@
 # Project roadmap
 
-The catalog contains **102 projects: 77 ready to build and 25 planned**. The plans below describe future work; they do not have runnable stages, completion tests or certificates yet.
+The catalog contains **104 projects: 79 ready to build and 25 planned**. The plans below describe future work; they do not have runnable stages, completion tests or certificates yet.
 
 Ready project manifests own implementation metadata; `roadmap.json` owns the remaining plans. These briefs give each plan a concrete deliverable, a starting path through existing projects and four proposed milestones. Milestones can expand into four to eight tested stages during implementation. No delivery dates are promised.
 
@@ -8,9 +8,9 @@ Ready project manifests own implementation metadata; `roadmap.json` owns the rem
 |---|---:|---:|---:|
 | 1. Starter | 12 | 1 | 13 |
 | 2. Builder | 30 | 2 | 32 |
-| 3. Engineer | 23 | 6 | 29 |
+| 3. Engineer | 24 | 6 | 30 |
 | 4. Systems | 9 | 12 | 21 |
-| 5. Frontier | 3 | 4 | 7 |
+| 5. Frontier | 4 | 4 | 8 |
 
 ## Build order
 

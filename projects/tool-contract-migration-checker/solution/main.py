@@ -204,7 +204,7 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
     new_req = set(new_contract.get("required", []))
     new_additional = new_contract.get("additionalProperties", True)
 
-    for prop in new_req:
+    for prop in sorted(new_req):
         if prop not in old_req:
             changes.append(
                 {
@@ -215,7 +215,7 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
                 }
             )
 
-    for prop in old_props:
+    for prop in sorted(old_props):
         if prop not in new_props:
             if not new_additional:
                 changes.append(
@@ -236,7 +236,7 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
                     }
                 )
 
-    for prop in new_props:
+    for prop in sorted(new_props):
         if prop not in old_props:
             if prop not in new_req:
                 changes.append(
@@ -268,7 +268,7 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
             }
         )
 
-    all_props = set(old_props.keys()) | set(new_props.keys())
+    all_props = sorted(set(old_props.keys()) | set(new_props.keys()))
     for prop in all_props:
         old_p = old_props.get(prop, {})
         new_p = new_props.get(prop, {})
@@ -282,7 +282,7 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
                 }
             )
 
-    for prop, old_p in old_props.items():
+    for prop, old_p in sorted(old_props.items()):
         if prop not in new_props:
             continue
         new_p = new_props[prop]
@@ -324,8 +324,8 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
             old_enum_map = {_canonical_json(v): v for v in old_p["enum"]}
             if "enum" in new_p:
                 new_enum_map = {_canonical_json(v): v for v in new_p["enum"]}
-                removed_keys = set(old_enum_map.keys()) - set(new_enum_map.keys())
-                added_keys = set(new_enum_map.keys()) - set(old_enum_map.keys())
+                removed_keys = sorted(set(old_enum_map.keys()) - set(new_enum_map.keys()))
+                added_keys = sorted(set(new_enum_map.keys()) - set(old_enum_map.keys()))
                 if removed_keys:
                     removed_vals = [old_enum_map[k] for k in removed_keys]
                     changes.append(
