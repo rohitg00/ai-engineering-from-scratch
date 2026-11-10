@@ -197,14 +197,14 @@ try:
     )
 except ImportError:
     GPT2_PATTERN = re.compile(
-        r"""'(?:[sdmt]|ll|ve|re)| ?[a-zA-Z]+| ?[0-9]+| ?[^\s\w]+|\s+(?!\S)|\s+"""
+        r"""'(?:[sdmt]|ll|ve|re)| ?[^\W\d_]+| ?\d+| ?(?:[^\s\w]|_)+|\s+(?!\S)|\s+"""
     )
 
 def pre_tokenize(text):
     return [match.group() for match in GPT2_PATTERN.finditer(text)]
 ```
 
-其他`regex`模块支持 Unicode 属性逃逸 (`\p{L}`对于信件,`\p{N}`标准图书馆`re`对于生产多语言代币器,安装 `regex`现在,我们要去.
+其他`regex`模块支持 Unicode 属性逃逸 (`\p{L}`对于信件,`\p{N}`标准图书馆`re`模块没有,所以倒退构建相同的类从 `\w`其他`[^\W\d_]`符合任何单元字母和`\d`对于生产多语言代码符号,请安装`regex`现在,我们要去.
 
 试试吧.
 
