@@ -3,7 +3,7 @@
 > Um compilador de otimização substitui as construções de origem por formas de instrução mais baratas. Cada forma tem uma derivação, e esta lição constrói o reconhecedor que executa a derivação para trás e verifica-a contra a fonte.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly, AArch64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode), Phase 13 · 38 (calling conventions)
 **Time:** ~150 minutes
 
@@ -253,6 +253,7 @@ Executa a demonstração:
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A saída é um relatório JSON. Para cada uma das 18 construções, ele lista todas as funções e suas idiomas, com tipo, forma fonte, endereços de evidência, verificação e os campos de detalhes.`-O2`contra `-O3`A comparação entre as duas arquiteturas e a`unverified`Lista.
@@ -380,6 +381,7 @@ Execute a demonstração e a suíte determinista:
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

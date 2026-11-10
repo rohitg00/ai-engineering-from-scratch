@@ -3,7 +3,7 @@
 > Um agente chama cinco ferramentas, três servidores MCP e dois sub-agentes. Precisas de um rastro em tudo. As convenções semânticas OpenTelemetry GenAI (atributos estáveis em v1.37 e acima) são o padrão 2026, nativo suportado por Datadog, Langfuse, Arize Phoenix, OpenLLMetry e AgentOps. Esta lição nomeia os atributos necessários, percorre a hierarquia de tempo (agente → LLM → ferramenta) e envia um emissor de tempo stdlib que você pode conectar a qualquer exportador OTel.
 
 **Type:** Build
-**Languages:** Python (stdlib, OTel span emitter)
+**Languages:** Python (stdlib, OTel span emitter), TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 08 (MCP client)
 **Time:** ~75 minutes
 

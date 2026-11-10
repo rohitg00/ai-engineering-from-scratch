@@ -3,7 +3,7 @@
 > MCP 2026-07-28 depreca a amostragem para novos projetos e remove o canal de solicitação de servidor a cliente.`input_required`O resultado é que o cliente retrata a solicitação original com a saída do modelo.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources and prompts)
 **Time:** ~75 minutes
 
@@ -210,6 +210,7 @@ A partir da raiz do repositório:
 ```bash
 cd phases/13-tools-and-protocols/11-mcp-sampling/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Uma ferramenta correta falha silenciosamente quando o modelo não pode dizer quando usá-la. Nomear, descrições e formas de parâmetros impulsionam os fluxos de 10 a 20 pontos percentuais na precisão da seleção de ferramentas em benchmarks como StableToolBench e MCPToolBench +. Esta lição nomeia as regras de design que separam uma ferramenta que um modelo escolhe com confiança de uma ferramenta que um modelo dispara mal.
 
 **Type:** Learn
-**Languages:** Python (stdlib, tool schema linter)
+**Languages:** Python, TypeScript (stdlib, tool schema linter)
 **Prerequisites:** Phase 13 · 01 (the tool interface), Phase 13 · 04 (structured output)
 **Time:** ~45 minutes
 

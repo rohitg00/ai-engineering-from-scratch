@@ -3,7 +3,7 @@
 > Um programa vinculado chama funções que não contém. Esta lição lê as tabelas que o editor de links escreveu para essas chamadas em três formatos, segue uma chamada para o espaço que o carregador preenche e encontra as funções de uma construção depois que seus nomes foram eliminados.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and arm64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and arm64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow), 38 (calling conventions)
 **Time:** ~160 minutes
 
@@ -283,6 +283,7 @@ Executa a demonstração:
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A saída é um relatório JSON com cinco partes. `elf`Detém as contas de realocação dos dois objetos, o plano de ligação e a seção dinâmica, PLT e GOT de `tiny-dyn-x86_64`- Não .`coff`Detém as secções, as relocalizações, as funções e os nomes indefinidos dos dois objetos. `pe`Detém os títulos, os directórios, as importações, as exportações, as transferências de bases e as chamadas de IAT de `tiny-x86_64.exe`- Não .`macho`- É o que se passa .`ledger_main`Com os seus estubes, arranjos em cadeia, filas de arranjos e exportações, o layout legado de `ledger_main_nochain`, o Dylib, e os dois relatórios de strip.`identification`O que é verdade? Os quatro métodos com pontuações e as assinaturas com as suas colisões.`-O0`E ...`-O2`- Não .
@@ -412,6 +413,7 @@ Execute a demonstração e a suíte determinista:
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

@@ -3,7 +3,7 @@
 > Uma entrada no registo diz o que um editor declarou, e a admissão de produção prova o que você trouxe, o que observou, o que aprovou e o que pode restaurar com segurança.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 17 (gateways and registries), Phase 13 · 18 (production authentication)
 **Time:** ~90 minutes
 
@@ -163,6 +163,7 @@ Comece com a demonstração finita:
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A demonstração realiza cinco operações:
@@ -288,6 +289,7 @@ Execute a demonstração e a suíte determinista:
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

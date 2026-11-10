@@ -3,7 +3,7 @@
 > Uma observação sobre uma série de construções é um ponto de ruptura. Esta lição constrói o arsenal que transforma essas observações em veredictos confirmados, refutados e não observados sobre as alegações das lições estáticas feitas.
 
 **Type:** Build
-**Languages:** Python, C, arm64 assembly, lldb command language
+**Languages:** Python, TypeScript, C, arm64 assembly, lldb command language
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~130 minutes
 
@@ -357,6 +357,7 @@ Executa a demonstração:
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 A saída é um relatório JSON sobre as transcrições salvas. Para cada construção, ele lista os pontos de interrupção com sua resolução e contagem de acidentes, a contagem de pontos de vigilância de hardware, cada parada com seus registros e argumentos, o estado de saída, a saída do programa, os erros imprimidos, e as alegações com seus veredictos e os registros de evidências por trás deles. Ele adiciona o core round trip, os resultados da API Python, a falha da caixa de areia e quais ferramentas externas estão ausentes nesta máquina.
@@ -496,6 +497,7 @@ Execute a demonstração e a suíte determinista:
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

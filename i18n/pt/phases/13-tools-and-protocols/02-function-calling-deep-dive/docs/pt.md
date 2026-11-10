@@ -3,7 +3,7 @@
 > Os três provedores de fronteira convergiram no mesmo ciclo de chamada de ferramentas em 2024 e depois divergiram em tudo o resto.`tools`E ...`tool_calls`Utilizações antropológicas`tool_use`E ...`tool_result`Os Gémeos usam...`functionDeclarations`Esta lição diferencia os três lado a lado para que o código que é enviado em um provedor não quebre quando você o porta.
 
 **Type:** Build
-**Languages:** Python (stdlib, schema translators)
+**Languages:** Python, TypeScript (stdlib, schema translators)
 **Prerequisites:** Phase 13 · 01 (the tool interface)
 **Time:** ~75 minutes
 
