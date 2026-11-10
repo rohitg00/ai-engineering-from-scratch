@@ -1,6 +1,6 @@
 {
   "phases/10-llms-from-scratch/01-tokenizers/docs/en.md": "a610edfbc9557f582cfcc1fddeefe3e3f34b3dd62da00341836af00579156669",
-  "phases/10-llms-from-scratch/02-building-a-tokenizer/docs/en.md": "a7e4df3e8a19f0a31ae5fb74f4611b1a63165b5905bcaaf76ff577f8fb79893e",
+  "phases/10-llms-from-scratch/02-building-a-tokenizer/docs/en.md": "82abf6155d819b770f97f769df8b72b6e1ee55365a55d86469e0a968d9486b62",
   "phases/10-llms-from-scratch/03-data-pipelines/docs/en.md": "22a4bb3da4708cee6bbbffe618afd9c244e085ffc5e85c66bb4703002c525a10",
   "phases/10-llms-from-scratch/04-pre-training-mini-gpt/docs/en.md": "ea1017c955dd0366f76cf53f766e5c1c10e41d52e7cca81a7a22f17c03318171",
   "phases/10-llms-from-scratch/05-scaling-distributed/docs/en.md": "b9ae0ccea1f097aa7d3715f6578a007b167d065be32530ebb83dec516b2ca406",
