@@ -3,7 +3,7 @@
 > MCP 2026-07-28 نمونه برداری برای طرح های جدید را حذف می کند و کانال درخواست سرور به مشتری را حذف می کند. اگر یک جریان کار موجود هنوز به مدل مشتری نیاز دارد، سرور یک `input_required`نتیجه و مشتری درخواست اصلی را با محصول مدل دوباره امتحان می کند. حلقه استدلال در لایه پروتکل صریح، محدود و بی وضعیت می شود.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources and prompts)
 **Time:** ~75 minutes
 
@@ -210,6 +210,7 @@ t3-sampling-flip
 ```bash
 cd phases/13-tools-and-protocols/11-mcp-sampling/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

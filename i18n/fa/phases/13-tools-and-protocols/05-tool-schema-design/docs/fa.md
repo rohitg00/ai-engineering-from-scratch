@@ -3,7 +3,7 @@
 > یک ابزار درست به طور خاموش شکست می خورد وقتی مدل نمی تواند زمانی را که باید از آن استفاده کند، تشخیص دهد. نامگذاری، توضیحات و اشکال پارامتر باعث نوسانات ۱۰ تا ۲۰ درصد در دقت انتخاب ابزار در مرجع هایی مانند StableToolBench و MCPToolBench+ می شود. این درس قوانین طراحی را نام می دهد که یک ابزار را که یک مدل به طور قابل اعتماد از یک ابزار انتخاب می کند از یک ابزار که یک مدل اشتباه می کند، جدا می کند.
 
 **Type:** Learn
-**Languages:** Python (stdlib, tool schema linter)
+**Languages:** Python, TypeScript (stdlib, tool schema linter)
 **Prerequisites:** Phase 13 · 01 (the tool interface), Phase 13 · 04 (structured output)
 **Time:** ~45 minutes
 

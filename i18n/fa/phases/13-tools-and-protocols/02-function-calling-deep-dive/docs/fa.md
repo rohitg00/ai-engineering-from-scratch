@@ -3,7 +3,7 @@
 > سه ارائه دهنده مرزی در سال 2024 در یک حلقه تماس ابزار یکسان جمع شدند و سپس در همه چیز دیگر اختلاف کردند. OpenAI استفاده می کند `tools`و`tool_calls`. استفاده های انسان`tool_use`و`tool_result`بلوک ها`functionDeclarations`و ارتباط هویت منحصر به فرد. این درس سه مورد را کنار هم جدا می کند تا کد که در یک ارائه دهنده ارسال می شود وقتی آن را پورت می کنید شکسته نشود.
 
 **Type:** Build
-**Languages:** Python (stdlib, schema translators)
+**Languages:** Python, TypeScript (stdlib, schema translators)
 **Prerequisites:** Phase 13 · 01 (the tool interface)
 **Time:** ~75 minutes
 

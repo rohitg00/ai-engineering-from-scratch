@@ -3,7 +3,7 @@
 > یک یافته در مورد یک برنامه مرتب شده یک سوابق با یک هش، اعتماد، یک مقام و یک لیست از آنچه که نمی تواند نشان دهد است.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~105 minutes
 
@@ -306,6 +306,7 @@ rea سه چیز دارد که شبیه یک کش است. عکس هدف Ghidra ی
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 نمایشگر، شی را می خواند، دو رکورد واقعی را وارد می کند، عکس واقعی را تأیید می کند و دو مدل را اخذ می کند. سپس 18 پیش بینی را ثبت می کند، 18 ناشناخته را باز می کند، هرنس را مرتب و اجرا می کند، هر ادعای را بررسی می کند و 17 ناشناخته را حل می کند. شکل انتظار می رود:
@@ -441,6 +442,7 @@ ledger.verify_unknown_chain(unknown_id)
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 چکگر هر ارزش انتظار شده را از  محاسبه می کند`code/main.py`بر روی وسایل بسته شده چاپ می کند`PASS`،`FAIL`یا`TODO`برای هر کار و یک امتیاز، و فقط وقتی که پنج مورد از آن عبور می کنند از صفر خارج می شود.`python3 code/lab.py my-answers.json`پرونده ي ديگه رو چک مي کنه`code/tests/test_lab.py`ثابت می کند که چک کننده پاسخ های درست را قبول کرده و پاسخ های اشتباه را رد کرده است.
@@ -460,6 +462,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

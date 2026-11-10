@@ -3,7 +3,7 @@
 > ریشه ها در MCP 2026-07-28 منسوخ شده اند و هرگز یک جعبه قشنگ امنیتی نبوده است. دامنه را در استدلال ابزار قابل مشاهده یا URIs منابع قرار دهید، آن را در سرور مجاز کنید و زمانی که ابزار واقعا به ورودی کاربر نیاز دارد MRTR را استفاده کنید. کاربر تصمیم را می بیند، مدل دستی را می بیند و هر نمونه سرور می تواند دوباره تلاش را پردازش کند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 11 (stateless MRTR)
 **Time:** ~60 minutes
 
@@ -247,6 +247,7 @@ t3-roots-boundary
 ```bash
 cd phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

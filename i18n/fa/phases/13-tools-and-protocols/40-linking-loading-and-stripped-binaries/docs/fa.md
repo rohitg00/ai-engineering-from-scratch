@@ -3,7 +3,7 @@
 > یک برنامه مرتبط به عملکردهایی که در آن ها وجود ندارد، تماس می گیرد. این درس جدول هایی را که ویرایشگر لینک برای آن تماس ها در سه فرمت نوشته است، می خواند، یک تماس را به سمت اسلات پرکننده ای که پر می شود دنبال می کند و بعد از نامش ناپدید شده، عملکردهای یک ساخت را پیدا می کند.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and arm64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and arm64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow), 38 (calling conventions)
 **Time:** ~160 minutes
 
@@ -283,6 +283,7 @@ IDA و Binary Ninja بسته شده اند و در اینجا از اسناد خ
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 محصول یک گزارش JSON با پنج بخش است. `elf`تعداد نقل مکان دو شی، برنامه پیوند و بخش پویا، PLT و GOT از `tiny-dyn-x86_64`.`coff`دارای بخش ها، نقل مکان ها، عملکردها و نام های نامشخصی دو شی است. `pe`در این بخش، عنوان ها، فهرست ها، واردات ها، صادرات ها، نقل مکان های پایه ها و تماس های IAT را در اختیار دارد.`tiny-x86_64.exe`.`macho`نگه داره`ledger_main`با چوب های آن، حلقه های زنجیره ای، خط های حلقه و صادرات، طرح میراث`ledger_main_nochain`، دیلب و دو گزارش "استریپ"`identification`راستش رو ميگيره، چهار روش با نمره و امضا با برخوردشون، در`-O0`و`-O2`. .
@@ -412,6 +413,7 @@ match_signatures(sigs, stripped, starts)
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

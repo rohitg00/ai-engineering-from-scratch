@@ -3,7 +3,7 @@
 > یک شناسه درخواست ارتباط یک پیام دارد. این هیچ تأثیری جانبی را ایمن نمی کند، یک کارگر را متوقف نمی کند، یا جریان را از مصرف کننده آهسته محافظت نمی کند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 09 and 13
 **Time:** ~120 minutes
 
@@ -336,6 +336,7 @@ cap: 8000 ms
 ```bash
 cd phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

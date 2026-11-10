@@ -3,7 +3,7 @@
 > یک تجزیه نشان می دهد که کدام یک از ثبت کننده ها یک تابع را می خوانند. تنها ABI می گوید که این ثبت کننده ها چه معنایی دارند و ABI توسط عنوان موضوع انتخاب می شود، بنابراین این درس ابتدا سر را می خواند و سپس هر ثبت کننده را با قاعده ای که آن را در آنجا قرار داده است بررسی می کند.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and AArch64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow)
 **Time:** ~140 minutes
 
@@ -195,6 +195,7 @@ CFA نشان دهنده ی سکه قبل از تماس است، 8 بالاتر �
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 محصول یک گزارش JSON است. برای هر یک از هفت شی نامگذاری شده است، فرمت، ماشین و ABI، و برای هر یک از دوازده تابع آن به بایت های پیشگام، ثبت ذخیره شده با تعویض ورود، اندازه فریم، نشان دهنده فریم، ثبت پارامتر، تعویضات استدلال سقف، ورودی، ثبت بازگشت یا نشان دهنده پنهان، عمق تماس و ثبت و ذخیره های خارج از تماس گیران داده شده است. هر تابع با چک های خود به پایان می رسد: قاعده، ارزش انتظار شده از امضا، ارزش مشاهده شده از بایت ها و اینکه آیا آنها موافق هستند. گزارش با دو چک عبور و ضبط ابزار به پایان می رسد. در ۸۴ تحلیل عملکرد، ۴۸۹ چک اجرا شده و ۴۸۹ موافق هستند.
@@ -331,6 +332,7 @@ for row in eh_frame_cross_check("convention-x86_64-linux-O2-eh"):
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

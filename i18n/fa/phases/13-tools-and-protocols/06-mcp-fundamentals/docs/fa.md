@@ -3,7 +3,7 @@
 > MCP مدرن هیچ دست دادن و هیچ جلسه پروتکل ندارد. هر درخواست باید دارای متادتا کافی باشد تا به تنهایی درک، مجوز، مسیر و آزمایش مجدد شود.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 01 through 05
 **Time:** ~55 minutes
 
@@ -164,6 +164,7 @@ mcp-tool-call
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

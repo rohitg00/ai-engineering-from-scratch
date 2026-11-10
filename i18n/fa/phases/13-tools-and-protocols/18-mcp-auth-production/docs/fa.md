@@ -5,7 +5,7 @@
 > **Spec note (2026-07-28):**ثبت نام پویا مشتری به نفع اسناد متاداتا شناسه مشتری منسوخ شده است. DCR یک مکانیسم سازگاری باقی می ماند. هنگامی که استفاده می شود، مشتری اعلام می کند که درست است `application_type`. یک مشتری یک RFC 9207 فعلی را تایید می کند`iss`ارزش گذاری و هرگز استفاده مجدد از اعتبارات در میان صادرکنندگان سرور مجوز.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 16 (OAuth 2.1 state machine), Phase 13 · 17 (gateways)
 **Time:** ~90 minutes
 
@@ -329,6 +329,7 @@ t3-jwks-rotate
 ```bash
 cd phases/13-tools-and-protocols/18-mcp-auth-production
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > یک فایل بایت کد یک برنامه و یادداشت های سازنده در مورد آن است، و این درس خوانندگان را ایجاد می کند که نشان می دهد هر کانتینر کدام یادداشت را نگه می دارد.
 
 **Type:** Build
-**Languages:** Python, Java, C#, WebAssembly text
+**Languages:** Python, TypeScript, Java, C#, WebAssembly text
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow)
 **Time:** ~150 minutes
 
@@ -265,6 +265,7 @@ IL_0023: 1a 2a        ldc.i4.4, ret
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 محصول یک گزارش JSON است. برای هر pyc هر دو عنوان، فایل و  را می دهد`grade`اندازه ها، تعداد دستورالعمل ها و نام های کد های opcode از لیست گرفته شده، و اینکه آیا مترجم در حال اجرا می تواند آن را بخواند. برای هر کلاس ساخت آن را به نسخه، اندازه، شمارش جدول دیبگ، و `javap`برای هر ساخت و ساز Wasm بخش ها، انواع، عملکردها، محتوای بخش نام و`wasm-objdump`برای جمع آوری، این CLI را به عنوان، جریان، شمارش ردیف جدول، روش ها و سیستم می دهد.`PATH`. .
@@ -378,6 +379,7 @@ asm.token_text(0x11000001)
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

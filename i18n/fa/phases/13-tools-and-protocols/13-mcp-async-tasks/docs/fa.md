@@ -3,7 +3,7 @@
 > MCP بدون دولت به این معنی نیست که هر عملیات باید در یک درخواست به پایان برسد. تمدید رسمی وظایف به کار طولانی مدت یک دستی پایدار صریح می دهد. یک سرور می تواند آن دستی را از `tools/call`، هر نمونه اي ميتونه جواب بده`tasks/get`، و اطلاعات مشتری از طریق`tasks/update`بدون احیای جلسات پروتکل
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 11 (stateless MRTR), Phase 13 · 12 (elicitation)
 **Time:** ~90 minutes
 
@@ -413,6 +413,7 @@ tp-task-lifecycle
 ```bash
 cd phases/13-tools-and-protocols/13-mcp-async-tasks/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

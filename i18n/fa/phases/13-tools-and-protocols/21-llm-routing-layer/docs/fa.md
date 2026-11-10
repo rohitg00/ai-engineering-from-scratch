@@ -3,7 +3,7 @@
 > قفل کردن ارائه دهنده گران است بار کاری مختلف برای تماس با ابزار برای مدل های مختلف مناسب است. دروازه های مسیریابی یک سطح API را، آزمایشات مجدد، شکست، ردیابی هزینه ها و محافظ را ارائه می دهند. سه آرکیتیپ در سال 2026 تسلط دارند: LiteLLM (مرکز باز خود میزبان) ، OpenRouter (SaaS مدیریت شده) ، Portkey (درجات تولید، منبع باز در مارس 2026). این درس معیارهای تصمیم گیری را نام می دهد و دروازه مسیریابی stdlib را راه اندازی می کند.
 
 **Type:** Learn
-**Languages:** Python (stdlib, routing + failover + cost tracker)
+**Languages:** Python (stdlib, routing + failover + cost tracker), TypeScript
 **Prerequisites:** Phase 13 · 02 (function calling), Phase 13 · 17 (gateways)
 **Time:** ~45 minutes
 

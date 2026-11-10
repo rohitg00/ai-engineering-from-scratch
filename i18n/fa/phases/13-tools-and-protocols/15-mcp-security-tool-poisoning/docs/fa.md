@@ -3,7 +3,7 @@
 > بدون تابعیت به معنای بی اعتماد بودن نیست، به این معنی است که هر درخواست شواهد مورد نیاز یک سرور و دروازه را برای تأیید تماس به طور مستقل نشان می دهد.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 08 (MCP client)
 **Time:** ~60 minutes
 
@@ -248,6 +248,7 @@ tp-tool-poisoning
 ```bash
 cd phases/13-tools-and-protocols/15-mcp-security-tool-poisoning
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

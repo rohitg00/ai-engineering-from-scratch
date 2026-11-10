@@ -3,7 +3,7 @@
 > گذراندن آزمون ها توافق در آزمون ها را ثابت می کند، بنابراین برابری به یک شبکه نیاز دارد که به هر لبه و بایت ها برسد که بعد از نقاب انتقال مطابقت داشته باشد.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 34 (lifting to pseudocode), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~110 minutes
 
@@ -271,6 +271,7 @@ DecompileBench 23400 عملکرد را از 130 برنامه واقعی اندا
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 با clang در مسیر، دمو هر دو جفت کاندید را جمع آوری می کند و برای هر کدام 92 سلول را اجرا می کند. آن هشت کاندید را دوباره جمع آوری می کند، اجرا کننده را دوباره اجرا می کند و رکورد اثبات را می کند. بدون clang آن را می خواند اجزای انجام شده و گزارش ادعاهای رفتار به عنوان`unknown`. .
@@ -371,6 +372,9 @@ report.masked_equal, report.relocations_match, report.tables_equal, report.reaso
 GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
 JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
 python3 code/main.py --live
+GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
+JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
+npx tsx code/main.ts --live
 ```
 
 اولين`analyze_function`چند ثانیه طول می کشد تا Ghidra اشیاء را وارد کند. ID های جدید شواهد را با اجرا انجام شده مقایسه کنید. همان بائتهای تحت همان پروفایل تجزیه و تحلیل همان ID ها را می دهند، زیرا ID یک هاش محتوا است که مسیر فایل را خارج می کند.
@@ -404,6 +408,7 @@ python3 code/main.py --live
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 چکگر هر ارزش انتظار شده را از  محاسبه می کند`code/main.py`بر روی وسایل بسته شده چاپ می کند`PASS`،`FAIL`یا`TODO`برای هر کار و یک امتیاز، و فقط وقتی که پنج مورد از آن عبور می کنند از صفر خارج می شود.`python3 code/lab.py my-answers.json`پرونده ي ديگه رو چک مي کنه`code/tests/test_lab.py`ثابت می کند که چک کننده پاسخ های درست را قبول کرده و پاسخ های اشتباه را رد کرده است.
@@ -423,6 +428,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

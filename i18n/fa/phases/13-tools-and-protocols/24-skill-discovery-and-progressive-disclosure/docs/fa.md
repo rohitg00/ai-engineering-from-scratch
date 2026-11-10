@@ -3,7 +3,7 @@
 > یک مهارت قبل از بارگذاری بدن مفید می شود. نام و توصیف آن در فهرست قرار می گیرد؛ فایل های عمیق تر آن تنها زمانی که وظیفه به آنها برسد، زمینه را بدست می آورند.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 22 (Agent Skills: Portable Contract and Runtime Boundary)
 **Time:** ~105 minutes
 
@@ -235,6 +235,7 @@ skill-resource-containment
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

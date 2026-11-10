@@ -3,7 +3,7 @@
 > یک برنامه مرتب مجموعه ای از جدول هایی است که به یکدیگر اشاره می کنند. یک خواننده که شما نوشتید می دهد که می توانید باایت به باایت بررسی کنید.
 
 **Type:** Build
-**Languages:** Python (stdlib), C (fixture only)
+**Languages:** Python (stdlib), TypeScript, C (fixture only)
 **Prerequisites:** Phase 0 · 01 (Dev Environment) with clang installed, Python 3.10 or later, hexadecimal arithmetic
 **Time:** ~120 minutes
 
@@ -275,6 +275,7 @@ Load commands:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 نمایش نوشته شده`ledger-x86_64-O1.o`و سر و قسمت، بخش ها، نمادها، نقل مکان ها و نقشه تعویض فایل را چاپ می کند. سپس چهار رشته بایت تابع را چاپ می کند، می خواند `ledger-arm64-O1.o`و جدول مقایسه را چاپ می کند.`tiny-x86_64`. خط هاي انتظار شده:
@@ -395,6 +396,7 @@ macho.function_bytes("_percent_change")[:4].hex()
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 چکگر هر ارزش انتظار شده را از  محاسبه می کند`code/main.py`بر روی وسایل بسته شده چاپ می کند`PASS`،`FAIL`یا`TODO`برای هر کار و یک امتیاز، و فقط وقتی که پنج مورد از آن عبور می کنند از صفر خارج می شود.`python3 code/lab.py my-answers.json`پرونده ي ديگه رو چک مي کنه`code/tests/test_lab.py`ثابت می کند که چک کننده پاسخ های درست را قبول کرده و پاسخ های اشتباه را رد کرده است.
@@ -414,6 +416,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

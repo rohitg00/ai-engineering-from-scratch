@@ -3,7 +3,7 @@
 > سه بررسی هواشناسی مستقل به ترتیب سه سفر دور و عقب است. آنها را به طور موازی اجرا کنید و زمان کل به آهسته ترین تماس واحد سقوط می کند. هر ارائه دهنده مرزی اکنون چندین تماس ابزار را در یک نوبت ارسال می کند. پاداش واقعی است؛ لوله کشی ظریف است. این درس هر دو نیمه را انجام می دهد: فان-آउट موازی و جمع آوری مجدد استدلال جریان، با تاکید بر تله ارتباط هویت.
 
 **Type:** Build
-**Languages:** Python (stdlib, thread pool + streaming harness)
+**Languages:** Python, TypeScript (stdlib, thread pool + streaming harness)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

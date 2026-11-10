@@ -3,7 +3,7 @@
 > یک مهارت می تواند یک عمل را پیشنهاد کند. تنها میزبان می تواند آن را مجاز کند، تنها یک مرز تعزیر می تواند آن را در بر داشته باشد، و تنها تأیید می تواند به شما بگوید که آیا آن کار کرد.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 25 (Skill Invocation and Routing), Phase 13 · 15 (MCP Security I)
 **Time:** ~120 minutes
 
@@ -289,6 +289,7 @@ skill-approval-decision
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

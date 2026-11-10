@@ -3,7 +3,7 @@
 > یک دستگاه تخلیه چاپ می کند`a->balance`وقتی که یه میز تایپ داره و`*(int *)(param_1 + 4)`این درس جدول را از طریق دسترسی ها می سازد، جدول واقعی را از DWARF 5 می خواند و نشان می دهد که دو مورد کجا موافق هستند.
 
 **Type:** Build
-**Languages:** Python, C, C++, x86-64 assembly
+**Languages:** Python, TypeScript, C, C++, x86-64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~140 minutes
 
@@ -383,6 +383,7 @@ rea 6.5.0 با ارائه دهنده Ghidra متن تجزیه کننده را ب
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 محصول یک گزارش JSON با پنج بخش است. `dwarf`عنوان واحد، ساختار و عملکردهای `-O0`هدف`oracles`در این قسمت، طرح قاعده psABI،`ctypes`طرح، طرح DWARF، راه اندازی بومی و یک `agree`پرچم`builds`در این بخش، دسترسی ها، طرحی که نتیجه گرفته و مقایسه هر یک از سه شی را در اختیار دارد.`cxx`نام های باز شده، هر دو vtables، هر دو typeinfo ریکاردها، تماس مجازی و نقاط DWARF را نگه دارد. `tools`فهرست محصولات ابزار ضبط شده است.
@@ -513,6 +514,7 @@ find_virtual_calls(load_listing("shapes-x86_64-O0-g.objdump.txt"), [read_vtable(
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

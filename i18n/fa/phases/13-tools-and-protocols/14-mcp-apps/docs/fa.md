@@ -3,7 +3,7 @@
 > یک نتیجه تعاملی هنوز یک ابزار MCP و مبادله منابع است. هسته 2026-07-28 باعث می شود که این مبادله مستقل باشد، در حالی که افزونه اپلیکیشن سطح مرورگر sandboxed را اضافه می کند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources)
 **Time:** ~75 minutes
 
@@ -265,6 +265,7 @@ t3-ui-sandbox
 ```bash
 cd phases/13-tools-and-protocols/14-mcp-apps
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

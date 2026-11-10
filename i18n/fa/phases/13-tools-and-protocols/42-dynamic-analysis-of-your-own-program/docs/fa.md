@@ -3,7 +3,7 @@
 > یک نقطه شکست یک مشاهده در مورد یک اجرا از یک ساخت است. این درس به ساخت یک رشته است که آن مشاهدات را به تایید، رد و انکار و حکم های غیر مشاهده شده بر اساس ادعاهای درس های ثابت تبدیل می کند.
 
 **Type:** Build
-**Languages:** Python, C, arm64 assembly, lldb command language
+**Languages:** Python, TypeScript, C, arm64 assembly, lldb command language
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~130 minutes
 
@@ -357,6 +357,7 @@ TeamIdentifier=not set
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 محصول یک گزارش JSON بر روی نقل و نقل های ذخیره شده است. برای هر ساخت، نقاط شکافی با قطعنامه و شمارش ضربه ها، شمارش نقطه نگهبان سخت افزاری، هر توقف با ثبت و استدلال های آن، وضعیت خروج، خروجی برنامه، خطاهای چاپ شده، و ادعاها با حکم های آنها و اسناد شواهد پشت آنها را فهرست می کند. این شامل سفر اصلی و بازگشت، نتایج API پایتون، شکست جعبه شن و ابزار خارجی که در این ماشین غائب است.
@@ -496,6 +497,7 @@ broken = parse_transcript(text)
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

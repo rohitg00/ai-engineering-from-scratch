@@ -3,7 +3,7 @@
 > يه مامور 5تا ابزار، 3تا سرور MCP و 2تا فرعي مامور رو ميخواد تو به يه رد نياز داري که همه چيز رو از بين ببري کنوانسیون های معنوی OpenTelemetry GenAI (اعتماد های پایدار در v1.37 و بالاتر) استاندارد 2026 هستند که از طرف Datadog، Langfuse، Arize Phoenix، OpenLLMetry و AgentOps پشتیبانی می شود. این درس ویژگی های مورد نیاز را نام می دهد، سلسله مراتب اسپان را (کارگری → LLM → ابزار) بررسی می کند و یک فرستنده اسپان stdlib را ارسال می کند که می توانید به هر صادر کننده OTel وصل کنید.
 
 **Type:** Build
-**Languages:** Python (stdlib, OTel span emitter)
+**Languages:** Python (stdlib, OTel span emitter), TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 08 (MCP client)
 **Time:** ~75 minutes
 

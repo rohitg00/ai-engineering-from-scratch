@@ -3,7 +3,7 @@
 > ثبت ثبت نام به شما می گوید که یک ناشر چه اعلامی کرده است. ثبت تولید اثبات می کند که شما چه چیزی را به دست آورده اید، آنچه را مشاهده کرده اید، آنچه را که شما تایید کرده اید و آنچه را که می توانید به طور ایمن بازگرداند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 17 (gateways and registries), Phase 13 · 18 (production authentication)
 **Time:** ~90 minutes
 
@@ -163,6 +163,7 @@ API Registry یک سطح پاسخ را متصل می کند `_meta`موضوع ک
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 این نمایش پنج عملیات را انجام می دهد:
@@ -288,6 +289,7 @@ c.ledger.verify()
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

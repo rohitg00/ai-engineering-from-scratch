@@ -3,7 +3,7 @@
 > پنج ابزار یک شی را می خوانند و چهار آدرس، سه عدد بلوک و دو پاسخ را برای یک سوئیچ می دهند، و این درس هرنس را می سازد که نشان می دهد کدام کدام است.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, Java (one Ghidra script)
+**Languages:** Python, TypeScript, C, x86-64 assembly, Java (one Ghidra script)
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~150 minutes
 
@@ -342,6 +342,7 @@ void sym.grade (int64_t arg1) {
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 محصول یک گزارش JSON است. با نسخه های ابزار ثبت شده در زمان ضبط و با ابزار موجود در دستگاه شما باز می شود که ممکن است همه از دست رفته باشند. سپس برای هر یک از چهار شی نشان دهنده ی دامنه های نماد، شکاف های پر کردن، پایه هر ابزار مورد استفاده، عملکرد هر ابزار یافت یا اختراع شده را شروع می کند، و برای هر عملکرد توافق شروع دستورالعمل، شمارش بلوک، شمارش لبه، و لبه های هر ابزار از دست رفته است. این با حسابداری باایت هر ابزار، یادداشت های ابزار، لیست یافته ها در جملات ساده و بخش IR: تولید مترجم برای سه دستورالعمل در کنار شمارش اندازه گیری شده در آسانسور های ضبط شده.
@@ -472,6 +473,7 @@ report["functionStarts"]["angr"]
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

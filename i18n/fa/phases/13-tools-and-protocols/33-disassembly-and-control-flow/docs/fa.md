@@ -3,7 +3,7 @@
 > یک لیست از خلع داده ها یک ادعا است که بائتهای کدام دستورالعمل هستند و این درس کد کد و نمودار را که ادعا را بررسی می کند، ایجاد می کند.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch)
 **Time:** ~150 minutes
 
@@ -347,6 +347,7 @@ rea 6.5.0 با ارائه دهنده Ghidra 12.1.4 متن لیست یک تابع
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 این گزارش یک گزارش JSON است. برای هر شی ثابت توافق Oracle را می دهد. برای هر عملکرد دستورالعمل، بلاک و کناری را تحت سه روش می دهد. همچنین بلوک های غیر قابل دسترسی، پرش های غیر مستقیم حل نشده، کناری عقب، تسلط فوری و هر جدول را لیست می کند. با مقایسه فلاک به پایان می رسد.
@@ -486,6 +487,7 @@ analysis.cfg.back_edges()
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 چکگر هر ارزش انتظار شده را از  محاسبه می کند`code/main.py`بر روی وسایل بسته شده چاپ می کند`PASS`،`FAIL`یا`TODO`برای هر کار و یک امتیاز، و فقط وقتی که پنج مورد از آن عبور می کنند از صفر خارج می شود.`python3 code/lab.py my-answers.json`پرونده ي ديگه رو چک مي کنه`code/tests/test_lab.py`ثابت می کند که چک کننده پاسخ های درست را قبول کرده و پاسخ های اشتباه را رد کرده است.
@@ -505,6 +507,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

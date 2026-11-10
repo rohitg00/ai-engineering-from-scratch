@@ -3,7 +3,7 @@
 > " از مدل به خوبی بخواهید JSON را برگرداند " حتی در مدل های مرزها 5 تا 15 درصد از زمان شکست می خورد. خروجی ساختاری با رمزگذاری محدود این شکاف را می پوشاند: مدل به معنای واقعی کلمه از انتشار یک توکن که به شکلی از طرح جلوگیری می کند. حالت سخت OpenAI ، استفاده از ابزار طرح های Anthropic ، Gemini `responseSchema`، هوش مصنوعی پيدانتیک`output_type`، و زود`.parse`این درس اعتبار دهنده شیما را می سازد و متعلمین قرارداد حالت سخت برای هر لوله استخراج تولید استفاده خواهند کرد.
 
 **Type:** Build
-**Languages:** Python (stdlib, JSON Schema 2020-12 subset)
+**Languages:** Python, TypeScript (stdlib, JSON Schema 2020-12 subset)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

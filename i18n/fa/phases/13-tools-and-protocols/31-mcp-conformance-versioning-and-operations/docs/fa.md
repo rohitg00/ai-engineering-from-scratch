@@ -3,7 +3,7 @@
 > یک سرور مطابق نیست زیرا مسیر خوشش از طریق یک SDK کار می کند. مطابقت در سیم، در مرز نسخه، از طریق واسطه ها و در طول رول بیک زندگی می کند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 17 (gateways), Phase 13 · 30 (registry admission)
 **Time:** ~100 minutes
 
@@ -265,6 +265,7 @@ SDK ها اغلب اشیاء سیم را به انواع زبان مناسب ت�
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 نمایش دقیقاً پانزده نسخه طلایی و منفی از جمله نتایج تکمیل معتبر و نادرست را اجرا می کند، یک نتیجه خام را با یک نمایش SDK مقایسه می کند، یک پروکسی را که یک خطا اصلی را خراب کرده است، ارزیابی می کند، صحت را تأیید می کند، شواهد برگشت را تأیید می کند و هدف را انتخاب می کند.
@@ -395,6 +396,7 @@ compare_sdk_view(
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

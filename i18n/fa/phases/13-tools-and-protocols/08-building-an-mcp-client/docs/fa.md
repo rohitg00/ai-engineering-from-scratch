@@ -3,7 +3,7 @@
 > یک مشتری MCP مدرن قرارداد خود را در هر درخواست تکرار می کند. سخت ترین تصمیم سازگاری آن دانستن زمانی است که یک سرور قدیمی واقعا قدیمی است و زمانی که یک سرور مدرن یک خطای قابل اصلاح را گزارش می کند.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lesson 07
 **Time:** ~85 minutes
 
@@ -178,6 +178,7 @@ tp-client-merge
 ```bash
 cd code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

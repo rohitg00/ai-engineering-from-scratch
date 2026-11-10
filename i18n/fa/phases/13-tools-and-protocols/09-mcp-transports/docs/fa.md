@@ -3,7 +3,7 @@
 > حمل و نقل پیام های MCP را حمل می کند.`2026-07-28`، استودیو محلی و HTTP از راه دور Streamable هر دو درخواست های خود توصیف دارند.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07 and 08
 **Time:** ~65 minutes
 
@@ -189,6 +189,7 @@ tp-transport-handshake
 ```bash
 cd code
 python3 main.py --probe
+npx tsx main.ts --probe
 python3 -m unittest discover tests -v
 ```
 
