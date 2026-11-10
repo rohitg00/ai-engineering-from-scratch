@@ -3,7 +3,7 @@
 > Transport mang thông điệp MCP. Nó không cung cấp trạng thái giao thức bị thiếu.`2026-07-28`, địa phương stdio và từ xa Streamable HTTP cả hai mang lại tự mô tả yêu cầu.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07 and 08
 **Time:** ~65 minutes
 
@@ -189,6 +189,7 @@ tp-transport-handshake
 ```bash
 cd code
 python3 main.py --probe
+npx tsx main.ts --probe
 python3 -m unittest discover tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Một yêu cầu từ xa của MCP là không có quốc gia, nhưng sự ủy quyền của nó không ẩn danh. Kết nối mọi giấy chứng nhận với nhà phát hành đã tạo nó và mỗi token với tài nguyên nhận nó.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 15 (security)
 **Time:** ~90 minutes
 
@@ -252,6 +252,7 @@ Mô hình nhận được các cơ quan yêu cầu phân tích và tiêu đề �
 ```bash
 cd phases/13-tools-and-protocols/16-mcp-security-oauth-2-1
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Không quốc tịch không có nghĩa là không tin tưởng, nó có nghĩa là mỗi yêu cầu cho thấy bằng chứng mà một máy chủ và cửa khẩu cần để xác nhận cuộc gọi độc lập.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 08 (MCP client)
 **Time:** ~60 minutes
 
@@ -248,6 +248,7 @@ Mô hình bắt đầu sau khi một bộ điều chỉnh HTTP đã phân tích 
 ```bash
 cd phases/13-tools-and-protocols/15-mcp-security-tool-poisoning
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

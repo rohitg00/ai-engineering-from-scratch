@@ -3,7 +3,7 @@
 > Kết quả tương tác vẫn là một công cụ MCP và trao đổi tài nguyên. lõi 2026-07-28 làm cho trao đổi đó tự chủ, trong khi phần mở rộng Apps thêm bề mặt trình duyệt sandboxed.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources)
 **Time:** ~75 minutes
 
@@ -265,6 +265,7 @@ Mô hình nhận được các cơ thể đã phân tích và tiêu đề địn
 ```bash
 cd phases/13-tools-and-protocols/14-mcp-apps
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

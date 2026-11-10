@@ -3,7 +3,7 @@
 > Các công cụ thực hiện các hoạt động. Các tài nguyên phơi bày nội dung có thể địa chỉ. Cảnh báo gói mẫu tin nhắn được người dùng chọn. Một máy chủ MCP tốt giữ các hợp đồng đó riêng biệt và dự đoán.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lesson 07 (Building an MCP Server), Phase 13, Lesson 09 (MCP Transports)
 **Time:** ~60 minutes
 
@@ -279,6 +279,7 @@ Tiến bộ mô phỏng từ gốc kho:
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 
@@ -304,6 +305,7 @@ Bài học cũng đi theo `assets/primitive-split.svg`, một phiên bản tĩnh
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

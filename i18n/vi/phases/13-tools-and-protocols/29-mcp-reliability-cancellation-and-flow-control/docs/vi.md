@@ -3,7 +3,7 @@
 > Một ID yêu cầu tương quan với một tin nhắn. Nó không làm cho một tác dụng phụ an toàn, ngăn chặn một công nhân, hoặc bảo vệ một dòng từ từ từ từ của người tiêu dùng.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 09 and 13
 **Time:** ~120 minutes
 
@@ -336,6 +336,7 @@ Từ nguồn kho:
 ```bash
 cd phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

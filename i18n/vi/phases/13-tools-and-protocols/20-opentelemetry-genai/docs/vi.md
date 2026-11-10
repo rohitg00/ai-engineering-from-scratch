@@ -3,7 +3,7 @@
 > Một đại lý gọi 5 công cụ, 3 máy chủ MCP và 2 đại lý phụ. Anh cần một dấu vết trên tất cả. Các quy ước ngữ nghĩa OpenTelemetry GenAI (chế độ liên tục ổn định trong v1.37 trở lên) là tiêu chuẩn 2026, được hỗ trợ bởi Datadog, Langfuse, Arize Phoenix, OpenLLMetry và AgentOps. Bài học này nêu tên các thuộc tính cần thiết, đi qua hệ thống phân cấp thời gian (công cụ đại lý → LLM → công cụ), và gửi một máy phát phát sóng thời gian stdlib bạn có thể kết nối với bất kỳ nhà xuất khẩu OTel nào.
 
 **Type:** Build
-**Languages:** Python (stdlib, OTel span emitter)
+**Languages:** Python (stdlib, OTel span emitter), TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 08 (MCP client)
 **Time:** ~75 minutes
 

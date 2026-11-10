@@ -3,7 +3,7 @@
 > Ba nhà cung cấp biên giới hội tụ trên cùng một vòng gọi công cụ vào năm 2024 và sau đó khác nhau về mọi thứ khác.`tools`và `tool_calls`- Sử dụng nhân loại`tool_use`và `tool_result`Đứa sinh đôi sử dụng`functionDeclarations`Bài học này khác biệt ba bên cạnh nhau để mã được gửi trên một nhà cung cấp không bị phá vỡ khi bạn chuyển nó.
 
 **Type:** Build
-**Languages:** Python (stdlib, schema translators)
+**Languages:** Python, TypeScript (stdlib, schema translators)
 **Prerequisites:** Phase 13 · 01 (the tool interface)
 **Time:** ~75 minutes
 

@@ -3,7 +3,7 @@
 > Một cửa ngõ nên làm cho mọi tuyến đường rõ ràng. giao thức 2026-07-28 cho nó phương pháp, tên, phiên bản, khả năng, danh tính, kho lưu trữ và ranh giới theo dõi mà không cần một phiên giao thông.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 15 (security), Phase 13 · 16 (authorization)
 **Time:** ~75 minutes
 
@@ -326,6 +326,7 @@ Mô hình nhận được các cơ quan yêu cầu được phân tích, tiêu �
 ```bash
 cd phases/13-tools-and-protocols/17-mcp-gateways-and-registries
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

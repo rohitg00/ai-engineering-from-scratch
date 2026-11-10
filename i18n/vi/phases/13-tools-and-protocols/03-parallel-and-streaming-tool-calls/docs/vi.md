@@ -3,7 +3,7 @@
 > Ba lần tìm kiếm thời tiết độc lập được phân phối theo thứ tự là ba lần đi lại. Hãy chạy chúng song song và tổng thời gian sụp đổ đến cuộc gọi đơn giản chậm nhất. Mỗi nhà cung cấp biên giới bây giờ phát ra nhiều cuộc gọi công cụ trong một lượt.
 
 **Type:** Build
-**Languages:** Python (stdlib, thread pool + streaming harness)
+**Languages:** Python, TypeScript (stdlib, thread pool + streaming harness)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

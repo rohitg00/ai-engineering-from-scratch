@@ -3,7 +3,7 @@
 > MCP không có quốc tịch không có nghĩa là mọi hoạt động phải hoàn thành trong một yêu cầu.`tools/call`, bất cứ trường hợp nào có thể trả lời.`tasks/get`, và thông tin của khách hàng đến qua `tasks/update`Không làm lại các phiên giao thức.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 11 (stateless MRTR), Phase 13 · 12 (elicitation)
 **Time:** ~90 minutes
 
@@ -413,6 +413,7 @@ Từ nguồn kho:
 ```bash
 cd phases/13-tools-and-protocols/13-mcp-async-tasks/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

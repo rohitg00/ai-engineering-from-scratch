@@ -3,7 +3,7 @@
 > Một phát hiện về một chương trình được biên soạn là một bản ghi với một hash, một sự tin tưởng, một thẩm quyền, và một danh sách những gì nó không thể hiển thị.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~105 minutes
 
@@ -306,6 +306,7 @@ Chạy trình diễn thư viện tiêu chuẩn:
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Demos đọc đối tượng, nhập hai bản ghi rea, xác minh ảnh chụp nhanh rea và lấy hai mô hình. Sau đó nó ghi lại 18 dự đoán, mở 18 điều chưa biết, biên soạn và chạy vòng xoáy, kiểm tra mọi yêu cầu và giải quyết 17 điều chưa biết.
@@ -441,6 +442,7 @@ Hãy kiểm tra câu trả lời của bạn:
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 Người kiểm tra tính toán mỗi giá trị dự kiến từ `code/main.py`trên các thiết bị đã được thực hiện.`PASS`- `FAIL`hoặc `TODO`cho mỗi nhiệm vụ và điểm số, và nó chỉ thoát khỏi 0 khi tất cả năm vượt qua. `python3 code/lab.py my-answers.json`kiểm tra một tập tin khác. `code/tests/test_lab.py`chứng minh rằng người kiểm tra chấp nhận câu trả lời đúng và từ chối câu trả lời sai.
@@ -460,6 +462,7 @@ Chạy demo và bộ xác định:
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

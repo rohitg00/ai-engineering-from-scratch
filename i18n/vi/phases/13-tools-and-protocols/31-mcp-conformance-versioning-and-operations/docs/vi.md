@@ -3,7 +3,7 @@
 > Một máy chủ không phù hợp vì con đường hạnh phúc của nó hoạt động thông qua một SDK. Sự phù hợp sống tại dây, tại ranh giới phiên bản, thông qua các trung gian và trong thời gian quay trở lại.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 17 (gateways), Phase 13 · 30 (registry admission)
 **Time:** ~100 minutes
 
@@ -265,6 +265,7 @@ Cổng phát hành cũng từ chối bản sao không có gì, SDK khác biệt 
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Demo chạy chính xác mười lăm bản sao vàng và âm tính, bao gồm kết quả hoàn thành hợp lệ và sai, so sánh kết quả thô với một dạng xem SDK, kiểm tra một proxy đã bị lỗi nguồn gốc sụp đổ, đánh giá sức khỏe, xác minh bằng chứng quay lại, và chọn mục tiêu đó.
@@ -395,6 +396,7 @@ Tiến hành bộ demo và xác định:
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

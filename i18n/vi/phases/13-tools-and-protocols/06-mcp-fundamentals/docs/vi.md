@@ -3,7 +3,7 @@
 > MCP hiện đại không có cú tay và không có phiên giao thức. Mỗi yêu cầu phải chứa đủ siêu dữ liệu để được hiểu, ủy quyền, định tuyến và thử lại một mình.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 01 through 05
 **Time:** ~55 minutes
 
@@ -164,6 +164,7 @@ mcp-tool-call
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Một công cụ chính xác thất bại lặng lẽ khi mô hình không thể biết khi nào sử dụng nó. Tên gọi, mô tả và hình dạng tham số thúc đẩy sự dao động từ 10 đến 20 điểm phần trăm trong độ chính xác lựa chọn công cụ trên các tiêu chuẩn như StableToolBench và MCPToolBench +. Bài học này đặt tên các quy tắc thiết kế tách biệt một công cụ mô hình chọn một cách đáng tin cậy từ một công cụ mô hình bắn sai.
 
 **Type:** Learn
-**Languages:** Python (stdlib, tool schema linter)
+**Languages:** Python, TypeScript (stdlib, tool schema linter)
 **Prerequisites:** Phase 13 · 01 (the tool interface), Phase 13 · 04 (structured output)
 **Time:** ~45 minutes
 

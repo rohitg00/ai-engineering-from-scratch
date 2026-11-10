@@ -5,7 +5,7 @@
 > **Spec note (2026-07-28):**Dynamic Client Registration bị lỗi thời để ủng hộ các tài liệu Metadata ID của khách hàng. DCR vẫn là một cơ chế tương thích. Khi được sử dụng, khách hàng tuyên bố đúng `application_type`. Khách hàng xác nhận RFC 9207 hiện tại `iss`giá trị và không bao giờ sử dụng lại các thông tin tín dụng trên các nhà phát hành máy chủ ủy quyền.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 16 (OAuth 2.1 state machine), Phase 13 · 17 (gateways)
 **Time:** ~90 minutes
 
@@ -329,6 +329,7 @@ Từ nguồn kho, chạy:
 ```bash
 cd phases/13-tools-and-protocols/18-mcp-auth-production
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Năm công cụ đọc cùng một đối tượng và cho bốn địa chỉ, ba khối đếm, và hai câu trả lời cho một chuyển đổi, và bài học này xây dựng vòng xoáy cho thấy là ai là ai.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, Java (one Ghidra script)
+**Languages:** Python, TypeScript, C, x86-64 assembly, Java (one Ghidra script)
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~150 minutes
 
@@ -342,6 +342,7 @@ Chạy demo:
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả là một báo cáo JSON. Nó mở với các phiên bản công cụ được ghi lại tại thời điểm chụp và với các công cụ hiện có trên máy của bạn, tất cả có thể không có. Sau đó cho mỗi trong bốn đối tượng nó cho các biểu tượng mở rộng, khoảng trống lấp, cơ sở mỗi công cụ được sử dụng, chức năng khởi động mỗi công cụ được tìm thấy hoặc phát minh, và cho mỗi chức năng sự đồng thuận khởi động hướng dẫn, số khối, số cạnh, và các cạnh mỗi công cụ thiếu. Nó kết thúc với kế toán byte cho mỗi công cụ, ghi chú của các công cụ, một danh sách các phát hiện trong các câu đơn giản, và phần IR: đầu ra của người dịch thuật cho ba hướng dẫn bên cạnh số lượng được đo trên các thang máy được chụp.
@@ -472,6 +473,7 @@ Chạy demo và bộ xác định:
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

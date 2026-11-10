@@ -3,7 +3,7 @@
 > Một chương trình liên kết gọi các chức năng mà nó không chứa. Bài học này đọc các bảng biên tập liên kết đã viết cho các cuộc gọi đó trong ba định dạng, theo một cuộc gọi đến khe cắm mà bộ tải điền, và tìm các chức năng của một xây dựng sau khi tên của nó đã biến mất.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and arm64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and arm64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow), 38 (calling conventions)
 **Time:** ~160 minutes
 
@@ -283,6 +283,7 @@ Chạy demo:
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả là một báo cáo JSON với năm phần. `elf`giữ số lượng di chuyển của hai đối tượng, kế hoạch liên kết và phần động lực, PLT và GOT của `tiny-dyn-x86_64`- `coff`giữ các phần, di chuyển, chức năng và tên không xác định của hai đối tượng. `pe`giữ các tiêu đề, thư mục, nhập khẩu, xuất khẩu, di chuyển cơ sở và các cuộc gọi IAT của `tiny-x86_64.exe`- `macho`giữ `ledger_main`Với những mảnh cây, các chuỗi sửa chữa, các hàng sửa chữa, và xuất khẩu, bố cục di sản của `ledger_main_nochain`, Dylib, và hai báo cáo về tình trạng.`identification`Có sự thật, bốn phương pháp với điểm số, và các chữ ký với sự va chạm của chúng, tại `-O0`và `-O2`- Tôi không biết.
@@ -412,6 +413,7 @@ Chạy demo và bộ xác định:
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

@@ -3,7 +3,7 @@
 > Roots đã bị lỗi thời trong MCP 2026-07-28 và không bao giờ là một hộp cát bảo mật. Đặt phạm vi trong các lập luận công cụ hoặc tài nguyên URIs hiển thị, ủy quyền nó trên máy chủ, và sử dụng MRTR khi một công cụ thực sự cần input người dùng. Người dùng nhìn thấy quyết định, mô hình nhìn thấy tay cầm, và bất kỳ phiên bản máy chủ nào có thể xử lý thử lại.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 11 (stateless MRTR)
 **Time:** ~60 minutes
 
@@ -247,6 +247,7 @@ Từ nguồn kho:
 ```bash
 cd phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

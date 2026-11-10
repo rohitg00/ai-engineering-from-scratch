@@ -3,7 +3,7 @@
 > Việc kêu gọi là một quyết định của cơ quan và sau đó là một quyết định liên quan.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 24 (Skill Discovery and Progressive Disclosure)
 **Time:** ~105 minutes
 
@@ -258,6 +258,7 @@ Mô hình bao gồm:
 ```bash
 cd phases/13-tools-and-protocols/25-skill-invocation-and-routing
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

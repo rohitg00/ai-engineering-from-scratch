@@ -3,7 +3,7 @@
 > Một kỹ năng có thể gợi ý một hành động. Chỉ có người chủ có thể cho phép nó, chỉ có một ranh giới cô lập có thể chứa nó, và chỉ có xác minh có thể cho bạn biết liệu nó đã hoạt động hay không.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 25 (Skill Invocation and Routing), Phase 13 · 15 (MCP Security I)
 **Time:** ~120 minutes
 
@@ -289,6 +289,7 @@ Thực hiện các quyết định chính sách mô phỏng:
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

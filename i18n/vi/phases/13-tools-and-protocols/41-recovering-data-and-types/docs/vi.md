@@ -3,7 +3,7 @@
 > Một máy giải biên tập sẽ lấy dấu ấn`a->balance`khi nó có một bảng kiểu và `*(int *)(param_1 + 4)`Bài học này xây dựng bảng từ các truy cập, đọc thực tế từ DWARF 5, và cho thấy nơi hai người đồng ý.
 
 **Type:** Build
-**Languages:** Python, C, C++, x86-64 assembly
+**Languages:** Python, TypeScript, C, C++, x86-64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~140 minutes
 
@@ -383,6 +383,7 @@ Chạy demo:
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả là một báo cáo JSON với năm phần. `dwarf`giữ tiêu đề đơn vị, cấu trúc và chức năng của `-O0`đối tượng.`oracles`giữ quy định quy tắc psABI, `ctypes`thiết kế, thiết kế DWARF, chạy bản địa, và một `agree`cờ.`builds`chứa các truy cập, bố cục suy luận, và so sánh cho mỗi ba đối tượng. `cxx`chứa các tên bị phá vỡ, cả vtables, cả typeinfo ghi lại, cuộc gọi ảo, và các khe DWARF. `tools`liệt kê các sản phẩm công cụ được ghi lại.
@@ -513,6 +514,7 @@ Chạy demo và bộ xác định:
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

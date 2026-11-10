@@ -3,7 +3,7 @@
 > Một chương trình được biên soạn là một tập hợp các bảng chỉ vào nhau. Một trình đọc mà bạn đã viết cho ra hiệu mà bạn có thể kiểm tra byte byte.
 
 **Type:** Build
-**Languages:** Python (stdlib), C (fixture only)
+**Languages:** Python (stdlib), TypeScript, C (fixture only)
 **Prerequisites:** Phase 0 · 01 (Dev Environment) with clang installed, Python 3.10 or later, hexadecimal arithmetic
 **Time:** ~120 minutes
 
@@ -275,6 +275,7 @@ rea đọc Mach-O qua `inspect_macho`, chạy`otool -h -l`- `nm -gjU`- `dyld_inf
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Dòng demo là `ledger-x86_64-O1.o`và in tiêu đề, phần, biểu tượng, di chuyển, và file offset map. Nó sau đó in bốn hàm byte chuỗi, đọc `ledger-arm64-O1.o`, và in bảng so sánh. Nó kết thúc với tiêu đề chương trình của `tiny-x86_64`- Những dòng dự kiến:
@@ -395,6 +396,7 @@ Hãy kiểm tra câu trả lời của bạn:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 Người kiểm tra tính toán mỗi giá trị dự kiến từ `code/main.py`trên các thiết bị đã được thực hiện.`PASS`- `FAIL`hoặc `TODO`cho mỗi nhiệm vụ và điểm số, và nó chỉ thoát khỏi 0 khi tất cả năm vượt qua. `python3 code/lab.py my-answers.json`kiểm tra một tập tin khác. `code/tests/test_lab.py`chứng minh rằng người kiểm tra chấp nhận câu trả lời đúng và từ chối câu trả lời sai.
@@ -414,6 +416,7 @@ Chạy demo và bộ xác định:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

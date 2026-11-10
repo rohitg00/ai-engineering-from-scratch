@@ -3,7 +3,7 @@
 > "Hãy yêu cầu mô hình tốt để trả lại JSON" thất bại từ 5 đến 15% thời gian, ngay cả trên các mô hình biên giới. Các sản phẩm kết cấu đóng khoảng cách đó bằng cách giải mã hạn chế: mô hình được ngăn chặn từ chữ để phát ra một token sẽ vi phạm sơ đồ.`responseSchema`, AI của Pydantic `output_type`, và Zod `.parse`là năm hình dạng bề mặt của cùng một ý tưởng. Bài học này xây dựng trình xác nhận sơ đồ và các học viên hợp đồng chế độ nghiêm ngặt sẽ sử dụng cho mỗi đường ống khai thác sản xuất.
 
 **Type:** Build
-**Languages:** Python (stdlib, JSON Schema 2020-12 subset)
+**Languages:** Python, TypeScript (stdlib, JSON Schema 2020-12 subset)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

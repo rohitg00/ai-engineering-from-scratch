@@ -3,7 +3,7 @@
 > Một trình biên dịch tối ưu hóa thay thế các cấu trúc nguồn bằng các hình thức hướng dẫn rẻ hơn. Mỗi hình dạng có một dẫn xuất, và bài học này xây dựng bộ nhận dạng chạy dẫn ngược và kiểm tra nó so với nguồn.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly, AArch64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode), Phase 13 · 38 (calling conventions)
 **Time:** ~150 minutes
 
@@ -253,6 +253,7 @@ Chạy demo:
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Các kết quả là một báo cáo JSON. Đối với mỗi 18 build nó liệt kê mọi hàm và ngôn ngữ của nó, với loại, hình thức nguồn, địa chỉ bằng chứng, xác minh và các trường chi tiết.`-O2`Vâng`-O3`so sánh cho cả hai kiến trúc, và các `unverified`danh sách.
@@ -380,6 +381,7 @@ Chạy demo và bộ xác định:
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

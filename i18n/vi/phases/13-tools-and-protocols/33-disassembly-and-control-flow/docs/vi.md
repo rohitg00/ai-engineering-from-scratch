@@ -3,7 +3,7 @@
 > Một danh sách gỡ bỏ là một tuyên bố về các byte là hướng dẫn, và bài học này xây dựng bộ giải mã và biểu đồ kiểm tra tuyên bố.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch)
 **Time:** ~150 minutes
 
@@ -347,6 +347,7 @@ Chạy demo:
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Các kết quả là một báo cáo JSON. Đối với mỗi đối tượng cố định nó cung cấp sự đồng thuận của Oracle. Đối với mỗi chức năng nó cung cấp hướng dẫn, khối và cạnh đếm theo ba phương pháp. Nó cũng liệt kê các khối không thể đạt được, nhảy gián tiếp chưa được giải quyết, cạnh sau, các chủ quyền ngay lập tức, và bất kỳ bảng nào. Nó kết thúc với so sánh bẫy.
@@ -486,6 +487,7 @@ Hãy kiểm tra câu trả lời của bạn:
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 Người kiểm tra tính toán mỗi giá trị dự kiến từ `code/main.py`trên các thiết bị đã được thực hiện.`PASS`- `FAIL`hoặc `TODO`cho mỗi nhiệm vụ và điểm số, và nó chỉ thoát khỏi 0 khi tất cả năm vượt qua. `python3 code/lab.py my-answers.json`kiểm tra một tập tin khác. `code/tests/test_lab.py`chứng minh rằng người kiểm tra chấp nhận câu trả lời đúng và từ chối câu trả lời sai.
@@ -505,6 +507,7 @@ Chạy demo và bộ xác định:
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

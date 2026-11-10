@@ -3,7 +3,7 @@
 > Một tập tin bytecode là một chương trình cộng với các ghi chú của trình biên dịch về nó, và bài học này xây dựng các độc giả cho thấy những ghi chú mỗi container giữ.
 
 **Type:** Build
-**Languages:** Python, Java, C#, WebAssembly text
+**Languages:** Python, TypeScript, Java, C#, WebAssembly text
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow)
 **Time:** ~150 minutes
 
@@ -265,6 +265,7 @@ Chạy demo:
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả là một báo cáo JSON. cho mỗi pyc nó cho cả hai tiêu đề, tệp và `grade`kích thước, số lệnh và tên opcode từ danh sách được chụp, và liệu người giải thích đang chạy có thể đọc nó hay không. Đối với mỗi lớp xây dựng nó cho phiên bản, kích thước, số lượng bảng gỡ lỗi, và các `javap`Đối với mỗi cấu trúc Wasm nó cho các phần, loại, chức năng, nội dung phần tên, và các`wasm-objdump`Đối với bộ sưu tập, nó cung cấp tiêu đề CLI, dòng, số lượng hàng bảng, phương pháp và hệ thống.Tình ảnh.`PATH`- Tôi không biết.
@@ -378,6 +379,7 @@ Chạy demo và bộ xác định:
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Việc khóa nhà cung cấp là đắt tiền. Các khối lượng công việc gọi công cụ khác nhau phù hợp với các mô hình khác nhau. Các cổng định tuyến cung cấp một bề mặt API, thử lại, lỗi, theo dõi chi phí và hàng rào. Ba kiểu nguyên mẫu thống trị năm 2026: LiteLLM (đánh nguồn tự lưu trữ), OpenRouter (đánh giá SaaS), Portkey (tạo sản xuất, nguồn mở vào tháng 3 năm 2026). Bài học này nêu tên các tiêu chí quyết định và đi bộ một cửa ngõ định tuyến stdlib.
 
 **Type:** Learn
-**Languages:** Python (stdlib, routing + failover + cost tracker)
+**Languages:** Python (stdlib, routing + failover + cost tracker), TypeScript
 **Prerequisites:** Phase 13 · 02 (function calling), Phase 13 · 17 (gateways)
 **Time:** ~45 minutes
 

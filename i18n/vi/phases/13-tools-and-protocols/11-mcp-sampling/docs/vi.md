@@ -3,7 +3,7 @@
 > MCP 2026-07-28 đã loại bỏ Sampling cho các thiết kế mới và loại bỏ kênh yêu cầu máy chủ sang khách hàng. Nếu một workflow hiện có vẫn cần mô hình của khách hàng, máy chủ sẽ trả lại một `input_required`kết quả và khách hàng thử lại yêu cầu ban đầu với đầu ra mô hình. vòng hợp lý trở nên rõ ràng, giới hạn và không có quốc gia ở lớp giao thức.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources and prompts)
 **Time:** ~75 minutes
 
@@ -210,6 +210,7 @@ Từ nguồn kho:
 ```bash
 cd phases/13-tools-and-protocols/11-mcp-sampling/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

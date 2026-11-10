@@ -3,7 +3,7 @@
 > Một khách hàng MCP hiện đại lặp lại hợp đồng của mình trên mọi yêu cầu. Quyết định tương thích khó khăn nhất của nó là biết khi nào máy chủ cũ thực sự cũ và khi nào máy chủ hiện đại đang báo cáo một lỗi có thể sửa chữa.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lesson 07
 **Time:** ~85 minutes
 
@@ -178,6 +178,7 @@ tp-client-merge
 ```bash
 cd code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

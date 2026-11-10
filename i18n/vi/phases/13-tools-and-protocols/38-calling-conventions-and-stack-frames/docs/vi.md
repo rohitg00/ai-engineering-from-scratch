@@ -3,7 +3,7 @@
 > Một sự tách rời cho thấy các sổ đăng ký một hàm đọc. Chỉ có ABI nói những sổ đăng ký đó có nghĩa gì, và ABI được chọn bởi tiêu đề đối tượng, vì vậy bài học này đọc tiêu đề trước tiên và sau đó kiểm tra mọi sổ đăng ký với quy tắc đặt nó ở đó.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and AArch64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow)
 **Time:** ~140 minutes
 
@@ -195,6 +195,7 @@ Chạy demo:
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả là một báo cáo JSON. Đối với mỗi bảy đối tượng nó đặt tên định dạng, máy và ABI, và cho mỗi trong mười hai chức năng nó cho các byte đầu tiên, các sổ đăng ký được lưu với các sự bù đắp nhập, kích thước khung, chỉ số khung, các sổ đăng ký tham số, các điểm bù đắp lập luận, các vụ đổ, sổ đăng ký trở lại hoặc dấu chỉ, độ sâu cuộc gọi, và các sổ đăng ký và cửa hàng ra khỏi của người gọi. Mỗi hàm kết thúc với kiểm tra của nó: quy tắc, giá trị mong đợi từ chữ ký, giá trị quan sát từ các byte, và liệu họ đồng ý hay không. Báo cáo kết thúc với hai kiểm tra chéo và công cụ bắt. Trong 84 phân tích chức năng, 489 kiểm tra được thực hiện và tất cả 489 đồng ý.
@@ -331,6 +332,7 @@ Chạy demo và bộ xác định:
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

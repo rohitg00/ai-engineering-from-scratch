@@ -3,7 +3,7 @@
 > Một điểm phá vỡ là một quan sát về một lần chạy của một xây dựng. Bài học này xây dựng được sự gắn kết mà biến những quan sát đó thành xác nhận, bác bỏ, và không quan sát kết luận về các tuyên bố các bài học tĩnh được thực hiện.
 
 **Type:** Build
-**Languages:** Python, C, arm64 assembly, lldb command language
+**Languages:** Python, TypeScript, C, arm64 assembly, lldb command language
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~130 minutes
 
@@ -357,6 +357,7 @@ Chạy demo:
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Kết quả là một báo cáo JSON trên các bản sao lưu được lưu. Đối với mỗi build nó liệt kê các điểm vỡ với độ phân giải và số lượng hit, số lượng điểm giám sát phần cứng, mỗi dừng với các sổ đăng ký và lập luận, tình trạng thoát, sản xuất của chương trình, lỗi lldb in, và các yêu cầu với phán quyết của họ và các hồ sơ bằng chứng đằng sau chúng. Nó thêm vào các chuyến đi trung tâm, kết quả API Python, lỗi hộp cát, và các công cụ bên ngoài nào không có trên máy này.
@@ -496,6 +497,7 @@ Chạy demo và bộ xác định:
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 
