@@ -2,17 +2,17 @@
   "use strict";
 
   const sampleCalls = [
-    { id: "call_1", query: "wireless mouse", category: "electronics", limit: 20 },
-    { id: "call_2", query: "oak dining table", category: "home", limit: 5 },
-    { id: "call_3", query: "algorithms textbook", category: "books", limit: 80 },
-    { id: "call_4", query: "running shoes", category: "apparel", limit: 10, extra_tag: "sale" },
-    { id: "call_5", query: "usb hub", category: "electronics", limit: 45 }
+    { id: "call_001", query: "laptop stand", category: "electronics", limit: 15 },
+    { id: "call_002", query: "cotton crewneck", category: "apparel", limit: 5, client_tag: "summer_sale" },
+    { id: "call_003", query: "dining table", category: "home", limit: 2 },
+    { id: "call_004", query: "distributed systems in rust", limit: 85 },
+    { id: "call_005", query: "", limit: 10 }
   ];
 
   const controls = [
     {
-      key: "addRequiredToken",
-      label: "Add required parameter 'token'",
+      key: "addRequiredApiKey",
+      label: "Add required parameter 'api_key'",
       type: "checkbox",
       value: true
     },
@@ -48,9 +48,10 @@
   const calculate = function (v, stepIndex) {
     const broken = [];
     const preserved = [];
+    const alreadyInvalid = [];
     const breakingRules = [];
 
-    if (v.addRequiredToken) breakingRules.push("required parameter 'token' added");
+    if (v.addRequiredApiKey) breakingRules.push("required parameter 'api_key' added");
     if (v.removeHomeCategory) breakingRules.push("category 'home' removed from enum");
     if (v.narrowLimitMax < 100) breakingRules.push("maximum limit lowered to " + v.narrowLimitMax);
     if (v.closeSchema) breakingRules.push("additional properties rejected");
@@ -59,8 +60,14 @@
       const call = sampleCalls[i];
       const reasons = [];
 
-      if (v.addRequiredToken && !call.token) {
-        reasons.push("missing required 'token'");
+      // Check baseline old contract (query minLength: 1)
+      if (!call.query || call.query.length < 1) {
+        alreadyInvalid.push(call.id);
+        continue;
+      }
+
+      if (v.addRequiredApiKey && !call.api_key) {
+        reasons.push("missing required 'api_key'");
       }
       if (v.removeHomeCategory && call.category === "home") {
         reasons.push("category 'home' removed from enum");
@@ -68,8 +75,8 @@
       if (call.limit > v.narrowLimitMax) {
         reasons.push("limit " + call.limit + " > " + v.narrowLimitMax);
       }
-      if (v.closeSchema && call.extra_tag) {
-        reasons.push("unexpected property 'extra_tag'");
+      if (v.closeSchema && call.client_tag) {
+        reasons.push("unexpected property 'client_tag'");
       }
 
       if (reasons.length > 0) {
@@ -95,9 +102,9 @@
 
     let summaryText = "";
     if (broken.length === 0 && !hasBreaks) {
-      summaryText = "All 5 historical calls satisfy the updated contract without changes.";
+      summaryText = "All 4 valid historical calls satisfy the updated contract without changes.";
     } else {
-      summaryText = "Validation rejected " + broken.length + " of 5 saved calls under " + breakingRules.length + " proposed contract changes.";
+      summaryText = "Validation rejected " + broken.length + " of 4 valid saved calls under " + breakingRules.length + " proposed contract changes.";
     }
 
     return {

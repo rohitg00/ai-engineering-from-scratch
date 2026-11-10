@@ -129,6 +129,29 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
         self.assertEqual(ces[0]["breaking_category"], "type_narrowed")
         self.assertEqual(ces[0]["payload"]["weight"], 1.5)
 
+    def test_counterexamples_for_untyped_and_removed_properties(self):
+        """Verify counterexamples for untyped to typed narrowing and closed removed properties."""
+        # 1. Untyped to string
+        old_untyped = {"title": "t", "type": "object", "properties": {"val": {}}}
+        new_typed = {"title": "t", "type": "object", "properties": {"val": {"type": "string"}}}
+        ces1 = generate_counterexamples(load_contract(old_untyped), load_contract(new_typed))
+        self.assertGreaterEqual(len(ces1), 1)
+        valid_old1, _ = validate_call(load_contract(old_untyped), ces1[0]["payload"])
+        valid_new1, _ = validate_call(load_contract(new_typed), ces1[0]["payload"])
+        self.assertTrue(valid_old1)
+        self.assertFalse(valid_new1)
+
+        # 2. Removed property in closed schema
+        old_closed = {"title": "t", "type": "object", "properties": {"foo": {"type": "string"}}, "additionalProperties": False}
+        new_closed = {"title": "t", "type": "object", "properties": {}, "additionalProperties": False}
+        ces2 = generate_counterexamples(load_contract(old_closed), load_contract(new_closed))
+        self.assertGreaterEqual(len(ces2), 1)
+        self.assertEqual(ces2[0]["breaking_category"], "removed_property")
+        valid_old2, _ = validate_call(load_contract(old_closed), ces2[0]["payload"])
+        valid_new2, _ = validate_call(load_contract(new_closed), ces2[0]["payload"])
+        self.assertTrue(valid_old2)
+        self.assertFalse(valid_new2)
+
     def test_replay_partitions_correctly(self):
         """Verify replay partitioning into preserved, broken, and already invalid calls."""
         calls = load_calls([

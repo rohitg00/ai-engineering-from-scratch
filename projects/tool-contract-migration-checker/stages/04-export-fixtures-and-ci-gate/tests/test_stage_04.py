@@ -163,6 +163,23 @@ class TestStage04ReportAndGate(unittest.TestCase):
             self.assertNotEqual(proc.returncode, 0)
             self.assertIn("not found", proc.stderr + proc.stdout)
 
+    def test_deterministic_unresolved_order(self):
+        """Verify multiple unresolved keywords appear in deterministic sorted order."""
+        old_c = load_contract(self.old_schema)
+        new_schema_multi = dict(self.new_schema_compatible)
+        new_schema_multi["$ref"] = "#/defs/A"
+        new_schema_multi["oneOf"] = [{"type": "string"}]
+        new_schema_multi["allOf"] = [{"type": "object"}]
+        new_schema_multi["anyOf"] = [{"type": "string"}]
+        new_c = load_contract(new_schema_multi)
+
+        changes1 = classify_changes(old_c, new_c)
+        changes2 = classify_changes(old_c, new_c)
+        unresolved1 = [c["property"] for c in changes1 if c["type"] == "unresolved"]
+        unresolved2 = [c["property"] for c in changes2 if c["type"] == "unresolved"]
+        self.assertEqual(unresolved1, unresolved2)
+        self.assertEqual(unresolved1, sorted(unresolved1))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -124,6 +124,56 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         self.assertEqual(len(unresolved), 1)
         self.assertEqual(unresolved[0]["property"], "metadata")
 
+    def test_unhandled_property_keywords_marked_unresolved(self):
+        """Verify unhandled keywords in properties are reported as unresolved."""
+        unhandled_cases = [
+            {"pattern": "^[0-9]+$"},
+            {"const": "x"},
+            {"oneOf": [{"type": "integer"}]},
+            {"exclusiveMaximum": 10},
+            {"multipleOf": 5},
+        ]
+        for extra in unhandled_cases:
+            new_s = dict(self.base_schema)
+            new_s["properties"] = dict(self.base_schema["properties"], q={"type": "string", **extra})
+            changes = classify_changes(self.base_contract, load_contract(new_s))
+            unresolved = [c for c in changes if c["type"] == "unresolved" and c["category"] == "unresolved_keyword"]
+            self.assertGreaterEqual(len(unresolved), 1)
+
+    def test_unchanged_items_not_unresolved(self):
+        """Verify identical nested items schema across contracts is not marked unresolved."""
+        old_s = {
+            "title": "arr_tool",
+            "type": "object",
+            "properties": {"tags": {"type": "array", "items": {"type": "string"}, "minItems": 1}},
+        }
+        new_s = {
+            "title": "arr_tool",
+            "type": "object",
+            "properties": {"tags": {"type": "array", "items": {"type": "string"}, "minItems": 1}},
+        }
+        changes = classify_changes(load_contract(old_s), load_contract(new_s))
+        unresolved = [c for c in changes if c["type"] == "unresolved"]
+        self.assertEqual(len(unresolved), 0)
+
+    def test_type_added_to_untyped_property_is_narrowed(self):
+        """Verify adding a type constraint to an untyped property is classified as type_narrowed."""
+        old_s = {"title": "t", "type": "object", "properties": {"val": {}}}
+        new_s = {"title": "t", "type": "object", "properties": {"val": {"type": "string"}}}
+        changes = classify_changes(load_contract(old_s), load_contract(new_s))
+        breaking = [c for c in changes if c["type"] == "breaking" and c["category"] == "type_narrowed"]
+        self.assertEqual(len(breaking), 1)
+
+    def test_integer_to_number_or_null_is_widened(self):
+        """Verify widening integer to number or null is compatible type_widened."""
+        old_s = {"title": "t", "type": "object", "properties": {"val": {"type": "integer"}}}
+        new_s = {"title": "t", "type": "object", "properties": {"val": {"type": ["number", "null"]}}}
+        changes = classify_changes(load_contract(old_s), load_contract(new_s))
+        breaking = [c for c in changes if c["type"] == "breaking"]
+        compatible = [c for c in changes if c["type"] == "compatible" and c["category"] == "type_widened"]
+        self.assertEqual(len(breaking), 0)
+        self.assertEqual(len(compatible), 1)
+
 
 if __name__ == "__main__":
     unittest.main()

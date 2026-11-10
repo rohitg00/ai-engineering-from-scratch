@@ -1,6 +1,7 @@
 """Tool Contract Migration Checker - Core Implementation."""
 
 import json
+import math
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
 
@@ -19,6 +20,7 @@ SUPPORTED_KEYWORDS = {
     "maxLength",
     "minItems",
     "maxItems",
+    "items",
 }
 
 UNRESOLVED_KEYWORDS = {
@@ -33,10 +35,26 @@ UNRESOLVED_KEYWORDS = {
 }
 
 
+def _check_no_nan_inf(val: Any) -> None:
+    """Ensure data contains no NaN or Infinity floats that violate strict JSON."""
+    if isinstance(val, float):
+        if math.isnan(val) or math.isinf(val):
+            raise ValueError("NaN and Infinity are not permitted in JSON data")
+    elif isinstance(val, dict):
+        for v in val.values():
+            _check_no_nan_inf(v)
+    elif isinstance(val, (list, tuple)):
+        for item in val:
+            _check_no_nan_inf(item)
+
+
 def _canonical_json(val: Any) -> str:
     """Serialize a JSON value to a canonical string representation for comparison."""
     if isinstance(val, bool):
         return f"bool:{json.dumps(val)}"
+    if isinstance(val, float):
+        if math.isnan(val) or math.isinf(val):
+            return f"float:{val}"
     if isinstance(val, (int, float)):
         if val == int(val):
             return f"num:{int(val)}"
@@ -60,6 +78,7 @@ def load_contract(raw: Any) -> Dict[str, Any]:
     """Parse and validate a raw tool contract dictionary into a normalized schema representation."""
     if not isinstance(raw, dict):
         raise ValueError("schema must be a dictionary")
+    _check_no_nan_inf(raw)
     t_set = _type_names(raw)
     if t_set is not None and "object" not in t_set:
         raise ValueError("object type required")
@@ -70,6 +89,35 @@ def load_contract(raw: Any) -> Dict[str, Any]:
         for p_name, p_val in properties.items():
             if not isinstance(p_val, dict):
                 raise ValueError(f"property schema for '{p_name}' must be a dictionary")
+
+            # Validate numeric and range constraints
+            if "minimum" in p_val:
+                m = p_val["minimum"]
+                if not isinstance(m, (int, float)) or isinstance(m, bool) or math.isnan(m) or math.isinf(m):
+                    raise ValueError(f"property '{p_name}' minimum must be a numeric value")
+            if "maximum" in p_val:
+                m = p_val["maximum"]
+                if not isinstance(m, (int, float)) or isinstance(m, bool) or math.isnan(m) or math.isinf(m):
+                    raise ValueError(f"property '{p_name}' maximum must be a numeric value")
+            if "minLength" in p_val:
+                ml = p_val["minLength"]
+                if not isinstance(ml, int) or isinstance(ml, bool) or ml < 0:
+                    raise ValueError(f"property '{p_name}' minLength must be a non-negative integer")
+            if "maxLength" in p_val:
+                ml = p_val["maxLength"]
+                if not isinstance(ml, int) or isinstance(ml, bool) or ml < 0:
+                    raise ValueError(f"property '{p_name}' maxLength must be a non-negative integer")
+            if "minItems" in p_val:
+                mi = p_val["minItems"]
+                if not isinstance(mi, int) or isinstance(mi, bool) or mi < 0:
+                    raise ValueError(f"property '{p_name}' minItems must be a non-negative integer")
+            if "maxItems" in p_val:
+                mi = p_val["maxItems"]
+                if not isinstance(mi, int) or isinstance(mi, bool) or mi < 0:
+                    raise ValueError(f"property '{p_name}' maxItems must be a non-negative integer")
+            if "enum" in p_val:
+                if not isinstance(p_val["enum"], (list, tuple)):
+                    raise ValueError(f"property '{p_name}' enum must be a list")
 
     required = raw.get("required", [])
     if not isinstance(required, list) or any(not isinstance(r, str) for r in required):
@@ -95,6 +143,7 @@ def load_calls(raw: Any) -> List[Dict[str, Any]]:
             raise ValueError("each call must be an object with arguments dict")
         if not isinstance(item["arguments"], dict):
             raise ValueError("call arguments must be a dictionary")
+        _check_no_nan_inf(item["arguments"])
         calls.append(
             {
                 "id": str(item.get("id", f"call_{len(calls)+1}")),
@@ -113,16 +162,16 @@ def validate_call(contract: Dict[str, Any], args: Any) -> Tuple[bool, List[str]]
     required = set(contract.get("required", []))
     additional_allowed = contract.get("additionalProperties", True)
 
-    for req in required:
+    for req in sorted(required):
         if req not in args:
             issues.append(f"missing required property: {req}")
 
     if not additional_allowed:
-        for key in args:
+        for key in sorted(args):
             if key not in properties:
                 issues.append(f"unexpected property: {key}")
 
-    for key, val in args.items():
+    for key, val in sorted(args.items()):
         if key not in properties:
             continue
         p_schema = properties[key]
@@ -131,15 +180,25 @@ def validate_call(contract: Dict[str, Any], args: Any) -> Tuple[bool, List[str]]
         if val is None:
             if expected_types is not None and "null" not in expected_types:
                 issues.append(f"property '{key}' cannot be null")
+            if "enum" in p_schema:
+                val_canon = _canonical_json(val)
+                allowed_canons = {_canonical_json(x) for x in p_schema["enum"]}
+                if val_canon not in allowed_canons:
+                    issues.append(f"property '{key}' value {val!r} not in enum {p_schema['enum']}")
             continue
 
         if expected_types is not None:
             matched = False
-            for t in expected_types:
+            for t in sorted(expected_types):
                 if t == "string" and isinstance(val, str) and not isinstance(val, bool):
                     matched = True
                     break
-                elif t == "integer" and isinstance(val, int) and not isinstance(val, bool):
+                elif (
+                    t == "integer"
+                    and isinstance(val, (int, float))
+                    and not isinstance(val, bool)
+                    and val == int(val)
+                ):
                     matched = True
                     break
                 elif t == "number" and isinstance(val, (int, float)) and not isinstance(val, bool):
@@ -193,16 +252,17 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
     old_raw = old_contract.get("raw", {})
     new_raw = new_contract.get("raw", {})
 
-    for kw in UNRESOLVED_KEYWORDS:
-        if kw in old_raw or kw in new_raw:
-            changes.append(
-                {
-                    "type": "unresolved",
-                    "category": "unresolved_keyword",
-                    "property": kw,
-                    "description": f"Schema contains unhandled keyword '{kw}'.",
-                }
-            )
+    # Top-level unresolved keywords or keywords outside SUPPORTED_KEYWORDS
+    top_unresolved = sorted(set(k for k in (set(old_raw.keys()) | set(new_raw.keys())) if k not in SUPPORTED_KEYWORDS))
+    for kw in top_unresolved:
+        changes.append(
+            {
+                "type": "unresolved",
+                "category": "unresolved_keyword",
+                "property": kw,
+                "description": f"Schema contains unhandled keyword '{kw}'.",
+            }
+        )
 
     old_props = old_contract.get("properties", {})
     new_props = new_contract.get("properties", {})
@@ -210,6 +270,24 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
     new_req = set(new_contract.get("required", []))
     new_additional = new_contract.get("additionalProperties", True)
 
+    # Property-level unhandled keywords
+    all_props = sorted(set(old_props.keys()) | set(new_props.keys()))
+    for prop in all_props:
+        old_p = old_props.get(prop, {})
+        new_p = new_props.get(prop, {})
+        prop_unhandled = sorted(set(k for k in (set(old_p.keys()) | set(new_p.keys())) if k not in SUPPORTED_KEYWORDS))
+        for kw in prop_unhandled:
+            changes.append(
+                {
+                    "type": "unresolved",
+                    "category": "unresolved_keyword",
+                    "property": prop,
+                    "keyword": kw,
+                    "description": f"Property '{prop}' contains unhandled keyword '{kw}'.",
+                }
+            )
+
+    # Required field additions
     for prop in sorted(new_req):
         if prop not in old_req:
             changes.append(
@@ -221,6 +299,7 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
                 }
             )
 
+    # Removed properties
     for prop in sorted(old_props):
         if prop not in new_props:
             if not new_additional:
@@ -242,6 +321,7 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
                     }
                 )
 
+    # Added optional properties
     for prop in sorted(new_props):
         if prop not in old_props:
             if prop not in new_req:
@@ -254,6 +334,7 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
                     }
                 )
 
+    # additionalProperties transition
     old_add = old_contract.get("additionalProperties", True)
     if old_add and not new_additional:
         changes.append(
@@ -274,40 +355,71 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
             }
         )
 
-    all_props = sorted(set(old_props.keys()) | set(new_props.keys()))
+    # Nested schema restrictions (only unresolved when nested properties/items actually change)
     for prop in all_props:
         old_p = old_props.get(prop, {})
         new_p = new_props.get(prop, {})
-        if "properties" in new_p or "properties" in old_p or "items" in new_p or "items" in old_p:
-            changes.append(
-                {
-                    "type": "unresolved",
-                    "category": "nested_restriction",
-                    "property": prop,
-                    "description": f"Property '{prop}' contains nested schema definitions outside the supported flat subset.",
-                }
-            )
+        if "properties" in old_p or "properties" in new_p:
+            if old_p.get("properties") != new_p.get("properties"):
+                changes.append(
+                    {
+                        "type": "unresolved",
+                        "category": "nested_restriction",
+                        "property": prop,
+                        "description": f"Property '{prop}' contains nested schema definitions outside the supported flat subset.",
+                    }
+                )
+        if "items" in old_p or "items" in new_p:
+            if old_p.get("items") != new_p.get("items"):
+                changes.append(
+                    {
+                        "type": "unresolved",
+                        "category": "nested_restriction",
+                        "property": prop,
+                        "description": f"Property '{prop}' contains nested items schema definitions that differ.",
+                    }
+                )
 
-    for prop, old_p in sorted(old_props.items()):
+    # Property-level type and constraint changes for shared properties
+    for prop in sorted(old_props.keys()):
         if prop not in new_props:
             continue
+        old_p = old_props[prop]
         new_p = new_props[prop]
 
         old_types = _type_names(old_p)
         new_types = _type_names(new_p)
-        if old_types is not None and new_types is not None and old_types != new_types:
-            removed_types = old_types - new_types
-            added_types = new_types - old_types
-            if old_types == {"integer"} and new_types == {"number"}:
-                changes.append(
-                    {
-                        "type": "compatible",
-                        "category": "type_widened",
-                        "property": prop,
-                        "description": f"Property '{prop}' type widened from integer to number.",
-                    }
-                )
-            elif removed_types:
+
+        if old_types is None and new_types is not None:
+            changes.append(
+                {
+                    "type": "breaking",
+                    "category": "type_narrowed",
+                    "property": prop,
+                    "description": f"Property '{prop}' newly constrained to types: {sorted(list(new_types))}.",
+                }
+            )
+        elif old_types is not None and new_types is None:
+            changes.append(
+                {
+                    "type": "compatible",
+                    "category": "type_widened",
+                    "property": prop,
+                    "description": f"Property '{prop}' type restriction removed.",
+                }
+            )
+        elif old_types is not None and new_types is not None and old_types != new_types:
+            effective_new = set(new_types)
+            if "number" in effective_new:
+                effective_new.add("integer")
+            effective_old = set(old_types)
+            if "number" in effective_old:
+                effective_old.add("integer")
+
+            removed_types = set(t for t in old_types if t not in effective_new)
+            added_types = set(t for t in new_types if t not in effective_old)
+
+            if removed_types:
                 changes.append(
                     {
                         "type": "breaking",
@@ -430,7 +542,7 @@ def _synthesize_base_payload(contract: Dict[str, Any]) -> Dict[str, Any]:
     props = contract.get("properties", {})
     required = contract.get("required", [])
 
-    for key in required:
+    for key in sorted(required):
         if key in props:
             p_schema = props[key]
             p_types = _type_names(p_schema) or {"string"}
@@ -523,14 +635,46 @@ def generate_counterexamples(
                     )
         elif cat == "type_narrowed":
             new_types = _type_names(new_props.get(prop, {})) or set()
-            old_types = _type_names(old_props.get(prop, {})) or set()
+            old_types = _type_names(old_props.get(prop, {}))
             test_val = None
-            if "number" in old_types and "integer" in new_types and "number" not in new_types:
-                test_val = 1.5
-            elif "string" not in new_types and "string" in old_types:
-                test_val = "text"
-            elif "integer" not in new_types and "integer" in old_types:
-                test_val = 42
+            if old_types is None:
+                for candidate in ["unsupported_text", 12345, True, ["item"], {"k": "v"}]:
+                    payload = dict(base)
+                    payload[prop] = candidate
+                    valid_old, _ = validate_call(old_contract, payload)
+                    valid_new, _ = validate_call(new_contract, payload)
+                    if valid_old and not valid_new:
+                        test_val = candidate
+                        break
+            else:
+                effective_new = set(new_types)
+                if "number" in effective_new:
+                    effective_new.add("integer")
+                removed = sorted(old_types - effective_new)
+                for r in removed:
+                    if r == "number":
+                        candidate = 1.5
+                    elif r == "string":
+                        candidate = "text"
+                    elif r == "integer":
+                        candidate = 42
+                    elif r == "boolean":
+                        candidate = True
+                    elif r == "array":
+                        candidate = ["item"]
+                    elif r == "object":
+                        candidate = {"item": 1}
+                    elif r == "null":
+                        candidate = None
+                    else:
+                        candidate = "val"
+                    payload = dict(base)
+                    payload[prop] = candidate
+                    valid_old, _ = validate_call(old_contract, payload)
+                    valid_new, _ = validate_call(new_contract, payload)
+                    if valid_old and not valid_new:
+                        test_val = candidate
+                        break
             if test_val is not None:
                 payload = dict(base)
                 payload[prop] = test_val
@@ -661,19 +805,21 @@ def generate_counterexamples(
         elif cat == "removed_property":
             old_p = old_props.get(prop, {})
             old_types = _type_names(old_p) or {"string"}
-            payload = dict(base)
-            payload[prop] = "test_val" if "string" in old_types else 1
-            valid_old, _ = validate_call(old_contract, payload)
-            valid_new, _ = validate_call(new_contract, payload)
-            if valid_old and not valid_new:
-                counterexamples.append(
-                    {
-                        "breaking_category": cat,
-                        "property": prop,
-                        "payload": payload,
-                        "reason": f"Supplies removed property '{prop}' to a contract that now rejects it.",
-                    }
-                )
+            for candidate in ["removed_property_val", 123, True, [], {}]:
+                payload = dict(base)
+                payload[prop] = candidate
+                valid_old, _ = validate_call(old_contract, payload)
+                valid_new, _ = validate_call(new_contract, payload)
+                if valid_old and not valid_new:
+                    counterexamples.append(
+                        {
+                            "breaking_category": cat,
+                            "property": prop,
+                            "payload": payload,
+                            "reason": f"Supplies removed property '{prop}' to a contract that now rejects it.",
+                        }
+                    )
+                    break
 
     return counterexamples
 

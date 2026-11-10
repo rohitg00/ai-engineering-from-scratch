@@ -81,6 +81,7 @@ Import `completion.json` on the project page and enter your name to download a p
 | [Workshop Materials Planner](workshop-materials-planner/) | 2 | Python | 4 | ~8h |
 | [Agent Budget Planner](agent-budget-planner/) | 3 | Python | 4 | ~8h |
 | [Agent Trace Debugger](agent-trace-debugger/) | 3 | TypeScript | 4 | ~8h |
+| [Binary Inspector](binary-inspector/) | 3 | Python | 6 | ~15h |
 | [Community Learning Path Finder](community-learning-path-finder/) | 3 | Python | 4 | ~8h |
 | [Cross-Agent Skill Installer](skill-installer/) | 3 | TypeScript | 4 | ~8h |
 | [Database Migration Rehearsal](database-migration-rehearsal/) | 3 | Python | 4 | ~8h |
@@ -113,11 +114,12 @@ Import `completion.json` on the project page and enter your name to download a p
 | [Tool Call Firewall](tool-call-firewall/) | 4 | Rust | 4 | ~8h |
 | [Browser Agent](browser-agent/) | 5 | TypeScript, Python | 4 | ~8h |
 | [Distributed Eval Farm Coordinator](distributed-eval-farm/) | 5 | Go | 4 | ~8h |
+| [Mini Decompiler](mini-decompiler/) | 5 | Python | 8 | ~20h |
 | [Self-Improving Skill Loop](self-improving-skill-loop/) | 5 | Python | 4 | ~8h |
 
 ## Roadmap
 
-The [26 planned projects](ROADMAP.md) extend all five levels with practical applications, data and multimodal workflows, developer tooling, DevOps, and agent systems. Each brief names its deliverable, prerequisites, first demo and four proposed milestones. The website marks these cards as planned; they do not count toward completed stages or certificates.
+The [25 planned projects](ROADMAP.md) extend all five levels with practical applications, data and multimodal workflows, developer tooling, DevOps, and agent systems. Each brief names its deliverable, prerequisites, first demo and four proposed milestones. The website marks these cards as planned; they do not count toward completed stages or certificates.
 
 ## Build an application you can use
 
