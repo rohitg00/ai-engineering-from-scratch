@@ -18,6 +18,7 @@ from main import (
 
 
 def _get_cli_path():
+    """Locate the cli.py executable across workspace and solution environments."""
     if "PROJECT_WORKSPACE" in os.environ:
         cand = Path(os.environ["PROJECT_WORKSPACE"]) / "cli.py"
         if cand.is_file():
@@ -29,7 +30,10 @@ def _get_cli_path():
 
 
 class TestStage04ReportAndGate(unittest.TestCase):
+    """Unit tests for Stage 4 report generation, fixture export, and CI gate."""
+
     def setUp(self):
+        """Set up test schemas for breaking and compatible tool evolutions."""
         self.old_schema = {
             "title": "document_reader",
             "type": "object",
@@ -60,6 +64,7 @@ class TestStage04ReportAndGate(unittest.TestCase):
         }
 
     def test_build_report_breaking(self):
+        """Verify report summary and failure flags when breaking changes occur."""
         old_c = load_contract(self.old_schema)
         new_c = load_contract(self.new_schema_breaking)
         changes = classify_changes(old_c, new_c)
@@ -76,6 +81,7 @@ class TestStage04ReportAndGate(unittest.TestCase):
         self.assertIn("incompatible", report["summary"].lower())
 
     def test_build_report_compatible(self):
+        """Verify report summary and success flags when changes are compatible."""
         old_c = load_contract(self.old_schema)
         new_c = load_contract(self.new_schema_compatible)
         changes = classify_changes(old_c, new_c)
@@ -90,6 +96,7 @@ class TestStage04ReportAndGate(unittest.TestCase):
         self.assertIn("compatible", report["summary"].lower())
 
     def test_build_report_unresolved_contracts_incompatible(self):
+        """Verify contracts with unresolved keywords fail the compatibility report."""
         old_c = load_contract(self.old_schema)
         new_schema_ref = dict(self.new_schema_compatible)
         new_schema_ref["$ref"] = "#/defs/Doc"
@@ -103,6 +110,7 @@ class TestStage04ReportAndGate(unittest.TestCase):
         self.assertIn("unresolved", report["summary"].lower())
 
     def test_export_fixtures(self):
+        """Verify fixture JSON output generation with counterexamples and broken calls."""
         with tempfile.TemporaryDirectory() as tmpdir:
             out_file = Path(tmpdir) / "fixtures.json"
             ces = [{"breaking_category": "added_required", "property": "auth", "payload": {"doc_id": "d1"}}]
@@ -117,6 +125,7 @@ class TestStage04ReportAndGate(unittest.TestCase):
             self.assertEqual(len(loaded["broken_historical_calls"]), 1)
 
     def test_cli_execution_with_strict_failure(self):
+        """Verify CLI execution exits with status 1 under strict mode on breaking change."""
         with tempfile.TemporaryDirectory() as tmpdir:
             old_f = Path(tmpdir) / "old.json"
             new_f = Path(tmpdir) / "new.json"
@@ -136,6 +145,7 @@ class TestStage04ReportAndGate(unittest.TestCase):
             self.assertTrue(out_f.exists())
 
     def test_cli_missing_calls_file_raises_error(self):
+        """Verify CLI execution raises error when passed a non-existent calls file."""
         with tempfile.TemporaryDirectory() as tmpdir:
             old_f = Path(tmpdir) / "old.json"
             new_f = Path(tmpdir) / "new.json"

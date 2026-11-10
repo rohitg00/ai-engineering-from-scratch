@@ -34,6 +34,7 @@ UNRESOLVED_KEYWORDS = {
 
 
 def _canonical_json(val: Any) -> str:
+    """Serialize a JSON value to a canonical string representation for comparison."""
     if isinstance(val, bool):
         return f"bool:{json.dumps(val)}"
     if isinstance(val, (int, float)):
@@ -44,6 +45,7 @@ def _canonical_json(val: Any) -> str:
 
 
 def _type_names(schema: Dict[str, Any]) -> Optional[Set[str]]:
+    """Extract normalized schema type names as a set of strings, or None if omitted."""
     t = schema.get("type")
     if t is None:
         return None
@@ -55,6 +57,7 @@ def _type_names(schema: Dict[str, Any]) -> Optional[Set[str]]:
 
 
 def load_contract(raw: Any) -> Dict[str, Any]:
+    """Parse and validate a raw tool contract dictionary into a normalized schema representation."""
     if not isinstance(raw, dict):
         raise ValueError("schema must be a dictionary")
     t_set = _type_names(raw)
@@ -83,6 +86,7 @@ def load_contract(raw: Any) -> Dict[str, Any]:
 
 
 def load_calls(raw: Any) -> List[Dict[str, Any]]:
+    """Parse and validate recorded tool invocation calls into a standardized call list."""
     if not isinstance(raw, list):
         raise ValueError("calls must be a list")
     calls = []
@@ -101,6 +105,7 @@ def load_calls(raw: Any) -> List[Dict[str, Any]]:
 
 
 def validate_call(contract: Dict[str, Any], args: Any) -> Tuple[bool, List[str]]:
+    """Validate a dictionary of tool arguments against a parsed contract schema."""
     if not isinstance(args, dict):
         return False, ["arguments must be a dictionary"]
     issues = []
@@ -183,6 +188,7 @@ def validate_call(contract: Dict[str, Any], args: Any) -> Tuple[bool, List[str]]
 
 
 def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """Compare two tool contracts and classify changes as breaking, compatible, or unresolved."""
     changes = []
     old_raw = old_contract.get("raw", {})
     new_raw = new_contract.get("raw", {})
@@ -419,6 +425,7 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
 
 
 def _synthesize_base_payload(contract: Dict[str, Any]) -> Dict[str, Any]:
+    """Generate a minimal valid baseline argument payload that satisfies the given contract."""
     payload = {}
     props = contract.get("properties", {})
     required = contract.get("required", [])
@@ -452,6 +459,7 @@ def _synthesize_base_payload(contract: Dict[str, Any]) -> Dict[str, Any]:
 def generate_counterexamples(
     old_contract: Dict[str, Any], new_contract: Dict[str, Any]
 ) -> List[Dict[str, Any]]:
+    """Synthesize concrete failing call fixtures that pass the old contract but fail the new contract."""
     changes = classify_changes(old_contract, new_contract)
     breaking_changes = [c for c in changes if c["type"] == "breaking"]
     counterexamples = []
@@ -675,6 +683,7 @@ def replay_calls(
     new_contract: Dict[str, Any],
     calls: List[Dict[str, Any]],
 ) -> Dict[str, Any]:
+    """Replay saved tool calls against both contracts and partition into preserved, broken, and invalid."""
     preserved = []
     broken = []
     already_invalid = []
@@ -711,6 +720,7 @@ def build_report(
     counterexamples: List[Dict[str, Any]],
     replay_result: Dict[str, Any],
 ) -> Dict[str, Any]:
+    """Assemble a comprehensive migration report combining static analysis, counterexamples, and replay."""
     breaking = [c for c in changes if c["type"] == "breaking"]
     compatible = [c for c in changes if c["type"] == "compatible"]
     unresolved = [c for c in changes if c["type"] == "unresolved"]
@@ -752,6 +762,7 @@ def export_fixtures(
     counterexamples: List[Dict[str, Any]],
     broken_calls: List[Dict[str, Any]],
 ) -> Dict[str, Any]:
+    """Export synthesized counterexamples and broken calls to a JSON test fixture file."""
     fixture_data = {
         "version": 1,
         "description": "Generated migration fixtures for CI regression checks",

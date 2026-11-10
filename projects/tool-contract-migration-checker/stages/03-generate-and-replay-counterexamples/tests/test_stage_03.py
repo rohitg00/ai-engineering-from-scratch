@@ -9,7 +9,10 @@ from main import (
 
 
 class TestStage03CounterexamplesAndReplay(unittest.TestCase):
+    """Unit tests for Stage 3 counterexample generation and call replay."""
+
     def setUp(self):
+        """Set up test schema contracts for breaking change scenarios."""
         self.old_schema = {
             "title": "fetch_user",
             "type": "object",
@@ -39,6 +42,7 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
         self.new_contract = load_contract(self.new_schema)
 
     def test_counterexamples_generated_for_breaking_changes(self):
+        """Verify counterexamples are generated for detected breaking changes."""
         counterexamples = generate_counterexamples(self.old_contract, self.new_contract)
         self.assertGreaterEqual(len(counterexamples), 3)
 
@@ -47,6 +51,7 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
         self.assertIn("enum_narrowed", categories)
 
     def test_counterexamples_satisfy_old_and_fail_new(self):
+        """Verify each counterexample payload passes old schema and fails new schema."""
         counterexamples = generate_counterexamples(self.old_contract, self.new_contract)
         for ce in counterexamples:
             payload = ce["payload"]
@@ -56,6 +61,7 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
             self.assertFalse(valid_new, f"Payload must fail new contract: {payload}")
 
     def test_counterexamples_for_tightened_bounds_and_strings(self):
+        """Verify counterexamples for string and integer boundary tightenings."""
         old_s = {
             "title": "t",
             "type": "object",
@@ -83,6 +89,7 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
             self.assertFalse(valid_new)
 
     def test_counterexamples_for_array_bounds(self):
+        """Verify counterexamples for array item count boundary tightenings."""
         old_s = {
             "title": "arr",
             "type": "object",
@@ -104,6 +111,7 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
             self.assertFalse(valid_new)
 
     def test_counterexamples_for_narrowed_type(self):
+        """Verify counterexamples synthesized when parameter types are narrowed."""
         old_s = {
             "title": "typed",
             "type": "object",
@@ -122,6 +130,7 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
         self.assertEqual(ces[0]["payload"]["weight"], 1.5)
 
     def test_replay_partitions_correctly(self):
+        """Verify replay partitioning into preserved, broken, and already invalid calls."""
         calls = load_calls([
             # Will be broken due to missing api_key
             {"id": "call_1", "arguments": {"user_id": "usr_1", "role": "admin"}},
@@ -138,6 +147,7 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
         self.assertEqual(result["breaking_rate"], 1.0)
 
     def test_replay_preserves_valid_calls(self):
+        """Verify replay correctly preserves calls that remain valid under new schema."""
         compatible_schema = {
             "title": "fetch_user",
             "type": "object",
@@ -156,6 +166,7 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
         self.assertEqual(result["breaking_rate"], 0.0)
 
     def test_replay_enforces_array_item_bounds(self):
+        """Verify replay detects calls that violate array item length boundaries."""
         calls = load_calls([
             {"id": "c_arr_ok", "arguments": {"user_id": "u1", "tags": ["a", "b", "c"]}},
             {"id": "c_arr_too_long", "arguments": {"user_id": "u1", "tags": ["1", "2", "3", "4", "5", "6"]}},

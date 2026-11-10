@@ -18,6 +18,7 @@ from main import (
 
 
 def run_checker(old_path, new_path, calls_path=None, output_path=None, fixtures_path=None, strict=False):
+    """Execute contract migration checks between two schema files and optional call log."""
     old_p = Path(old_path)
     new_p = Path(new_path)
     if not old_p.is_file():
@@ -64,6 +65,7 @@ def run_checker(old_path, new_path, calls_path=None, output_path=None, fixtures_
 
 
 def main():
+    """Parse command line arguments and execute the tool contract migration checker."""
     parser = argparse.ArgumentParser(description="Tool Contract Migration Checker")
     parser.add_argument("--old", required=True, help="Path to before schema JSON")
     parser.add_argument("--new", required=True, help="Path to proposed schema JSON")

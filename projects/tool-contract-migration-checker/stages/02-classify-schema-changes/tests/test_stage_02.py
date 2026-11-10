@@ -3,7 +3,10 @@ from main import classify_changes, load_contract
 
 
 class TestStage02ClassifyChanges(unittest.TestCase):
+    """Unit tests for Stage 2 schema change classification."""
+
     def setUp(self):
+        """Set up standard fixture contract for change classification."""
         self.base_schema = {
             "title": "search_tool",
             "type": "object",
@@ -18,6 +21,7 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         self.base_contract = load_contract(self.base_schema)
 
     def test_added_required_is_breaking(self):
+        """Verify newly required properties are classified as breaking."""
         new_schema = dict(self.base_schema)
         new_schema["required"] = ["query", "token"]
         new_schema["properties"] = dict(self.base_schema["properties"], token={"type": "string"})
@@ -27,6 +31,7 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         self.assertEqual(breaking[0]["property"], "token")
 
     def test_added_optional_is_compatible(self):
+        """Verify newly added optional properties are classified as compatible."""
         new_schema = dict(self.base_schema)
         new_schema["properties"] = dict(self.base_schema["properties"], filter_by={"type": "string"})
         changes = classify_changes(self.base_contract, load_contract(new_schema))
@@ -35,6 +40,7 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         self.assertEqual(compatible[0]["property"], "filter_by")
 
     def test_removed_property_when_closed_is_breaking(self):
+        """Verify property removal in closed schema is classified as breaking."""
         new_schema = dict(self.base_schema)
         props = dict(self.base_schema["properties"])
         del props["limit"]
@@ -46,6 +52,7 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         self.assertEqual(breaking[0]["property"], "limit")
 
     def test_removed_property_when_permitted_is_compatible(self):
+        """Verify property removal in open schema is classified as compatible."""
         new_schema = dict(self.base_schema)
         props = dict(self.base_schema["properties"])
         del props["limit"]
@@ -57,7 +64,7 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         self.assertEqual(comp[0]["property"], "limit")
 
     def test_enum_narrowed_with_complex_types(self):
-        # tests json array/nested/bool enum elements without crashing
+        """Verify enum narrowing with structured and boolean elements."""
         old_s = {
             "title": "c",
             "type": "object",
@@ -73,7 +80,7 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         self.assertEqual(len(breaking), 1)
 
     def test_enum_equivalent_numeric_types(self):
-        # 1 and 1.0 are numerically equal JSON numbers
+        """Verify integer and float equivalents in enums do not trigger false breaks."""
         old_s = {
             "title": "n",
             "type": "object",
@@ -89,6 +96,7 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         self.assertEqual(len(breaking), 0)
 
     def test_bound_tightened_is_breaking(self):
+        """Verify tightened minimum and maximum bounds are classified as breaking."""
         new_schema = dict(self.base_schema)
         props = dict(self.base_schema["properties"])
         props["limit"] = {"type": "integer", "minimum": 5, "maximum": 50}  # min 1->5, max 100->50
@@ -98,6 +106,7 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         self.assertEqual(len(breaking), 2)
 
     def test_closed_additional_properties_is_breaking(self):
+        """Verify closing additionalProperties from True to False is breaking."""
         new_schema = dict(self.base_schema)
         new_schema["additionalProperties"] = False
         changes = classify_changes(self.base_contract, load_contract(new_schema))
@@ -105,6 +114,7 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         self.assertEqual(len(breaking), 1)
 
     def test_nested_restriction_marked_unresolved(self):
+        """Verify nested schema properties outside flat subset are marked unresolved."""
         nested_schema = dict(self.base_schema)
         nested_schema["properties"] = {
             "metadata": {"type": "object", "properties": {"tag": {"type": "string"}}}
