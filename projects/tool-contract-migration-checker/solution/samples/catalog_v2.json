@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "search_catalog",
+  "type": "object",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "Search query terms",
+      "minLength": 1
+    },
+    "api_key": {
+      "type": "string",
+      "description": "Client API key"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["electronics", "apparel", "books"]
+    },
+    "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 50
+    },
+    "sort_by": {
+      "type": "string",
+      "enum": ["relevance", "price_asc", "price_desc"]
+    }
+  },
+  "required": ["query", "api_key"],
+  "additionalProperties": false
+}

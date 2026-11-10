@@ -1,6 +1,6 @@
 # Projects
 
-Build useful AI engineering tools from scratch, one tested stage at a time. The catalog covers 102 projects across Python, Rust, TypeScript, and Go: 76 ready to build and 26 on the [roadmap](ROADMAP.md).
+Build useful AI engineering tools from scratch, one tested stage at a time. The catalog covers 102 projects across Python, Rust, TypeScript, and Go: 77 ready to build and 25 on the [roadmap](ROADMAP.md).
 
 Each ready project includes a working reference implementation, a learner starter, cumulative stage tests, mechanism diagrams, explanations, and recorded run/output GIFs. Core tests use local fixtures and require no model credentials. Optional framework comparisons use real SDKs with deterministic fake models. Planned projects have proposed outcomes and learning milestones; their implementations and completion tests are still to come.
 
@@ -98,6 +98,7 @@ Import `completion.json` on the project page and enter your name to download a p
 | [Streaming Answer Recovery](streaming-answer-recovery/) | 3 | TypeScript, Go | 4 | ~8h |
 | [Support Agent With Google ADK](support-agent-with-google-adk/) | 3 | Python | 4 | ~8h |
 | [Typed Workflow Agent with Mastra](typed-workflow-agent-with-mastra/) | 3 | TypeScript | 4 | ~8h |
+| [Tool Contract Migration Checker](tool-contract-migration-checker/) | 3 | Python | 4 | ~8h |
 | [Visual Evidence Library](visual-evidence-library/) | 3 | Python | 4 | ~8h |
 | [Voice Note Transcriber Pipeline](voice-note-transcriber-pipeline/) | 3 | Python | 4 | ~8h |
 | [Web Change Brief](web-change-brief/) | 3 | Go | 4 | ~8h |

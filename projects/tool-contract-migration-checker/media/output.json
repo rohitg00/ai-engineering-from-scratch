@@ -1,0 +1,24 @@
+{
+  "title": "Tool Contract Migration Checker | Actual artifact output",
+  "recordedAt": "2026-11-10T00:00:00Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "cli.py",
+        "--old",
+        "samples/catalog_v1.json",
+        "--new",
+        "samples/catalog_v2.json",
+        "--calls",
+        "samples/saved_calls.json",
+        "--output",
+        "report.json"
+      ],
+      "cwd": "solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"tool_name\": \"search_catalog\",\n  \"compatible\": false,\n  \"breaking_count\": 4,\n  \"compatible_count\": 1,\n  \"unresolved_count\": 0,\n  \"summary\": \"Contract update contains 4 breaking changes. Replay invalidated 4 historical calls.\"\n}\n",
+      "durationMs": 45
+    }
+  ]
+}

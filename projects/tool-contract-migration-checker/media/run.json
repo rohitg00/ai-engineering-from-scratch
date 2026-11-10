@@ -1,0 +1,48 @@
+{
+  "title": "Tool Contract Migration Checker | Build and verify",
+  "recordedAt": "2026-11-10T00:00:00Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "tool-contract-migration-checker",
+        "--init",
+        "/tmp/project-demo-learner"
+      ],
+      "cwd": "/workspace",
+      "exitCode": 0,
+      "output": "workspace  /tmp/project-demo-learner\n  created  cli.py\n  created  main.py\n  created  samples/catalog_v1.json\n  created  samples/catalog_v2.json\n  created  samples/saved_calls.json\n  created  STAGE.md\nnext: python3 scripts/project_test.py tool-contract-migration-checker --stage 1 --path /tmp/project-demo-learner\n",
+      "durationMs": 55
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "tool-contract-migration-checker",
+        "--stage",
+        "1",
+        "--path",
+        "/tmp/project-demo-learner"
+      ],
+      "cwd": "/workspace",
+      "exitCode": 1,
+      "output": "Tool Contract Migration Checker: grading learner\n  FAIL stage 1: Load versioned tool contracts and saved calls (7 tests)\n       not implemented yet: load_contract\n",
+      "durationMs": 85
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "tool-contract-migration-checker",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/workspace",
+      "exitCode": 0,
+      "output": "Tool Contract Migration Checker: grading solution\n  PASS stage 1: Load versioned tool contracts and saved calls (7 tests)\n  PASS stage 2: Classify supported schema changes (7 tests)\n  PASS stage 3: Generate and replay breaking-call counterexamples (4 tests)\n  PASS stage 4: Export migration fixtures and a compatibility gate (3 tests)\n",
+      "durationMs": 220
+    }
+  ]
+}

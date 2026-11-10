@@ -1,0 +1,111 @@
+{
+  "id": "tool-contract-migration-checker",
+  "title": "Tool Contract Migration Checker",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "Find the saved tool calls that a proposed schema change would break.",
+  "summary": "Help tool authors evolve a callable interface while existing agents still hold old argument shapes. Compare a documented subset of before-and-after schemas, generate counterexamples for required fields and narrowed values, and replay saved calls through both validators. Export a compatibility report and reviewable migration fixtures for CI.",
+  "youWillBuild": "A schema compatibility CLI, breaking-call fixtures and a CI compatibility report.",
+  "usefulFor": [
+    "Run in CI when modifying agent tool schemas to ensure existing deployed agents or saved interaction traces are not broken by contract changes."
+  ],
+  "hours": 8,
+  "languages": ["Python"],
+  "languageWhy": {
+    "Python": "Standard-library dictionaries, JSON validation, and set operations make contract diffing and fixture generation completely transparent without framework magic."
+  },
+  "status": "ready",
+  "source": "community",
+  "author": {
+    "name": "Nivesh Kumar Meena",
+    "github": "iitking"
+  },
+  "skills": [
+    "Load versioned tool contracts and saved calls",
+    "Classify supported schema changes",
+    "Generate and replay breaking-call counterexamples",
+    "Export migration fixtures and a compatibility gate"
+  ],
+  "prerequisites": [
+    "Python 3.10+",
+    "JSON Schema basics (properties, required, types, enums)",
+    "json-schema-output-guard"
+  ],
+  "figures": true,
+  "overviewFigure": "pj-tool-contract-migration-checker-1",
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "--old",
+      "samples/catalog_v1.json",
+      "--new",
+      "samples/catalog_v2.json",
+      "--calls",
+      "samples/saved_calls.json",
+      "--output",
+      "report.json"
+    ]
+  },
+  "demos": [
+    {
+      "title": "Build and verify",
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "record": "media/run.json"
+    },
+    {
+      "title": "Actual artifact output",
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "record": "media/output.json"
+    }
+  ],
+  "stages": [
+    {
+      "id": "01-load-contracts-and-calls",
+      "title": "Load versioned tool contracts and saved calls",
+      "summary": "Validate basic schema structure, parse recorded argument payloads, and verify that saved calls conform to the original contract.",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "python",
+      "languageWhy": "Use explicit dictionary traversal and standard-library exceptions.",
+      "concepts": ["schema parsing", "payload validation"],
+      "figure": "pj-tool-contract-migration-checker-1"
+    },
+    {
+      "id": "02-classify-schema-changes",
+      "title": "Classify supported schema changes",
+      "summary": "Compare before and after schemas to categorize changes into compatible, breaking, and unresolved keywords.",
+      "hours": 2,
+      "difficulty": "builder",
+      "language": "python",
+      "languageWhy": "Pure set differences and property-level inspections make breaking changes deterministic.",
+      "concepts": ["schema diffing", "compatibility rules"],
+      "figure": "pj-tool-contract-migration-checker-2"
+    },
+    {
+      "id": "03-generate-and-replay-counterexamples",
+      "title": "Generate and replay breaking-call counterexamples",
+      "summary": "Synthesize minimal argument payloads that satisfy the old contract but fail the new contract, and replay saved calls through both validators.",
+      "hours": 2,
+      "difficulty": "engineer",
+      "language": "python",
+      "languageWhy": "Generative testing and historical trace replay demonstrate concrete failure cases.",
+      "concepts": ["counterexample synthesis", "trace replay"],
+      "figure": "pj-tool-contract-migration-checker-3"
+    },
+    {
+      "id": "04-export-fixtures-and-ci-gate",
+      "title": "Export migration fixtures and a compatibility gate",
+      "summary": "Produce a machine-readable compatibility report, export standalone test fixtures for migration tests, and implement a CI gate CLI.",
+      "hours": 2,
+      "difficulty": "engineer",
+      "language": "python",
+      "languageWhy": "A CLI entry point with configurable exit codes binds the checker into continuous integration workflows.",
+      "concepts": ["CI gates", "migration fixtures", "audit reports"],
+      "figure": "pj-tool-contract-migration-checker-4"
+    }
+  ]
+}
