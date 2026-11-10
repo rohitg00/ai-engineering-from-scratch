@@ -27,7 +27,7 @@ MIN_RATIO = 1.25
 # The share of length-biased questions on main today. The gate fails when a
 # change pushes the rate above this, so new quizzes cannot add bias. Lower it as
 # quizzes are rebalanced so the ceiling ratchets down and never drifts back up.
-BASELINE_RATE = 0.84
+BASELINE_RATE = 0.82
 
 
 def questions_in(data):
