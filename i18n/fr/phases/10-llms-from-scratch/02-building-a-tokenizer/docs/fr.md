@@ -197,14 +197,14 @@ try:
     )
 except ImportError:
     GPT2_PATTERN = re.compile(
-        r"""'(?:[sdmt]|ll|ve|re)| ?[a-zA-Z]+| ?[0-9]+| ?[^\s\w]+|\s+(?!\S)|\s+"""
+        r"""'(?:[sdmt]|ll|ve|re)| ?[^\W\d_]+| ?\d+| ?(?:[^\s\w]|_)+|\s+(?!\S)|\s+"""
     )
 
 def pre_tokenize(text):
     return [match.group() for match in GPT2_PATTERN.finditer(text)]
 ```
 
-Le `regex`module prend en charge les échappes de propriété Unicode (`\p{L}`pour les lettres, `\p{N}`La bibliothèque standard `re`Le module n'a pas, donc nous revenons aux classes de caractères ASCII. Pour les jetons multilingues de production, installez `regex`- Je suis désolé .
+Le `regex`module prend en charge les échappes de propriété Unicode (`\p{L}`pour les lettres, `\p{N}`La bibliothèque standard `re`module ne le fait pas, donc la chute construit les mêmes classes de `\w`Le numéro de la liste:`[^\W\d_]`correspond à n' importe quelle lettre Unicode et `\d`Pour les jetons multilingues de production, installez `regex`- Je suis désolé .
 
 Essayez !
 
