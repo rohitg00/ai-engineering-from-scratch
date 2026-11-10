@@ -3,7 +3,7 @@
 > "Modelle JSON'u geri göndermesini iyice iste" zamanın yüzde 5 ila 15'inde başarısız olur. Sınır modelleri bile. Yapısal çıkışlar kısıtlı dekodlama ile bu boşluğu kapatır: model kelimenin tam anlamıyla şema ihlal edecek bir token göndermekten engelleniyor. OpenAI'nin sıkı modu, Anthropic'in şema tipi araç kullanımı, Gemini'nin `responseSchema`, Pydantic AI's `output_type`, ve Zod'un `.parse`Bu ders, şema onaylayıcısını oluşturur ve sıkı mod sözleşme öğrencileri her üretim çıkarma boru hattı için kullanacak.
 
 **Type:** Build
-**Languages:** Python (stdlib, JSON Schema 2020-12 subset)
+**Languages:** Python, TypeScript (stdlib, JSON Schema 2020-12 subset)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

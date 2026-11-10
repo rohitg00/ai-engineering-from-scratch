@@ -3,7 +3,7 @@
 > Bir etkileşimli sonuç hala bir MCP aracı ve kaynak değişimi. 2026-07-28 çekirdeği bu değişimi kendi kendine içerirken, Apps uzantısı kum kutulu tarayıcı yüzeyini ekler.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources)
 **Time:** ~75 minutes
 
@@ -265,6 +265,7 @@ Modelle zaten analiz edilmiş vücutlar ve yönlendirme başlıkları bulunmakta
 ```bash
 cd phases/13-tools-and-protocols/14-mcp-apps
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

@@ -5,7 +5,7 @@
 > **Spec note (2026-07-28):**Dinamik Müşteri Kayıtlaması, Müşteri Kimliği Metadata Belgelerinin yararına geçersiz hale getirilmiştir. DCR uyumluluk mekanizması olarak kalır. Kullanıldığında, müşteri doğru olduğunu belirtir `application_type`Bir müşteri mevcut RFC 9207 ' i onaylar .`iss`yetki sunucu emitenler arasında kimlik kimliklerini değerlendirir ve asla tekrar kullanmaz.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 16 (OAuth 2.1 state machine), Phase 13 · 17 (gateways)
 **Time:** ~90 minutes
 
@@ -329,6 +329,7 @@ Depo kökü ile çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/18-mcp-auth-production
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

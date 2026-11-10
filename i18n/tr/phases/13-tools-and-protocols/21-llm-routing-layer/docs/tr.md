@@ -3,7 +3,7 @@
 > - Sağlayıcı kilitleme pahalı. Farklı araç çağrı yükleri farklı modeller için uygundur. Routing gateways bir API yüzeyi, tekrar deneme, başarısızlık, maliyet izleme ve koruma kapıları verir. 2026 yılında üç arketip hakim: LiteLLM (açık kaynaklı kendi kendine barındırılmış), OpenRouter ( yönetilen SaaS), Portkey (önemlilik derecesi, açık kaynaklı Mart 2026). Bu ders karar kriterlerini belirler ve bir stdlib yönlendirme kapısı yürür.
 
 **Type:** Learn
-**Languages:** Python (stdlib, routing + failover + cost tracker)
+**Languages:** Python (stdlib, routing + failover + cost tracker), TypeScript
 **Prerequisites:** Phase 13 · 02 (function calling), Phase 13 · 17 (gateways)
 **Time:** ~45 minutes
 

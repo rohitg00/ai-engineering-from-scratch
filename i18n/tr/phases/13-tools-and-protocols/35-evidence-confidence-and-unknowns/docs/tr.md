@@ -3,7 +3,7 @@
 > Bir program hakkında bir bulgu, bir hash, bir güven, bir yetki ve gösteremeyeceği şeylerin bir listesini içeren bir kayıttır.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~105 minutes
 
@@ -306,6 +306,7 @@ Standart kütüphane demo'sunu çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Demo nesneyi okuyor, iki rea kayıtlarını ithal ediyor, rea anlık görüntüsünü doğruluyor ve iki modeli çıkarıyor.
@@ -441,6 +442,7 @@ Cevaplarınızı kontrol edin:
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 Kontrolcü , her beklenen değerini `code/main.py`- Bu, yazılı.`PASS`- Evet .`FAIL`veya `TODO`Her görev ve puan için, ve sadece beşinin geçtiği zaman 0'dan çıkıyor. `python3 code/lab.py my-answers.json`Başka bir dosyayı kontrol ediyor.`code/tests/test_lab.py`kontrol eden kişinin doğru cevapları kabul ettiğini ve yanlışını reddettiğini kanıtlar.
@@ -460,6 +462,7 @@ Demo ve Deterministik Suite'i çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

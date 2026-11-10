@@ -3,7 +3,7 @@
 > MCP 2026-07-28 yeni tasarımlar için örneklemeyi geçersiz kılar ve sunucu-klient istek kanalını kaldırır.`input_required`Bu işlemler, bir sonraki işlemin sonuçlarını gösterir ve istemci orijinal talebi model çıkışı ile tekrar dener.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources and prompts)
 **Time:** ~75 minutes
 
@@ -210,6 +210,7 @@ Depo kökü:
 ```bash
 cd phases/13-tools-and-protocols/11-mcp-sampling/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

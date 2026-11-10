@@ -3,7 +3,7 @@
 > Bir dekompiler izleri `a->balance`bir tip masası olduğunda ve `*(int *)(param_1 + 4)`Bu ders, girişlerden tablo oluşturur, DWARF 5'ten gerçek olanı okuyor ve iki tarafın nerede anlaştığını gösterir.
 
 **Type:** Build
-**Languages:** Python, C, C++, x86-64 assembly
+**Languages:** Python, TypeScript, C, C++, x86-64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~140 minutes
 
@@ -383,6 +383,7 @@ Demo çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı bir JSON raporu beş parçalı. `dwarf`Birim başlığı, yapıları ve fonksiyonlarını içerir.`-O0`- Ne? - Ne?`oracles`psABI kural düzenini içerir, `ctypes`düzen, DWARF düzen, yerel çalıştırma ve `agree`Bayrak.`builds`erişimleri, çıkarılan düzen ve üç nesnenin her biri için karşılaştırmayı içerir. `cxx`İsimleri, her iki vtables, her iki tipinfo kayıtlarını, sanal çağrı ve DWARF yuvalarını içerir. `tools`Kaydedilen araç çıkışlarını listeler.
@@ -513,6 +514,7 @@ Demo ve Deterministik Suite'i çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

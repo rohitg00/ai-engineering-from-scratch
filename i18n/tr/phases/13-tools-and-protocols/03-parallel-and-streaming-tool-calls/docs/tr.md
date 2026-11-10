@@ -3,7 +3,7 @@
 > Üç bağımsız hava durumu bakışları seriye üç dönüş yoludur. Onları paralel olarak çalıştırın ve toplam zaman en yavaş tek çağrıya düşer. Her sınır sağlayıcısı şimdi tek bir dönüşte birden fazla araç çağrısı yayınlar. Ödül gerçek; tesisat inceliktir. Bu ders iki yarıya da geçer: paralel fan-out ve akışlı argüman yeniden birleştirme, id-korrelasyon tuzağına vurgu.
 
 **Type:** Build
-**Languages:** Python (stdlib, thread pool + streaming harness)
+**Languages:** Python, TypeScript (stdlib, thread pool + streaming harness)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

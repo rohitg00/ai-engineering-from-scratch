@@ -3,7 +3,7 @@
 > Devletsiz MCP, her işlemin tek bir talepte tamamlanması gerektiği anlamına gelmez. Resmi Görevler uzantısı uzun süreli çalışmalar için açıkça dayanıklı bir eleştiri sağlar. Bir sunucu bu eleştiriyi `tools/call`, her örnek cevap verebilir .`tasks/get`, ve müşteri girişleri `tasks/update`Protokol seanslarını yeniden canlandırmadan.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 11 (stateless MRTR), Phase 13 · 12 (elicitation)
 **Time:** ~90 minutes
 
@@ -413,6 +413,7 @@ Depo kökü:
 ```bash
 cd phases/13-tools-and-protocols/13-mcp-async-tasks/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Testlerinize geçmek testlerinize katılmayı kanıtlar. Dürüstlük için her kenara ulaşan ve yer değiştirme maskesinden sonra eşleşen byte bir ağ gerekir.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 34 (lifting to pseudocode), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~110 minutes
 
@@ -271,6 +271,7 @@ Standart kütüphane harnesini çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Clang'ın yol üzerinde olması ile, demo her iki aday çiftini de oluşturur ve her biri için 92 hücre çalışır. Sekiz adayı yeniden oluşturur, ajan çalışmasını tekrar yapar ve kanıt kaydını oluşturur. Clang olmadan, görevli nesneleri okuyor ve davranış iddialarını rapor eder.`unknown`- Evet .
@@ -371,6 +372,9 @@ Baytlar eşleşir, kayıtlar eşleşir ve tablolar eşleşmez.`grade_case10_wron
 GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
 JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
 python3 code/main.py --live
+GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
+JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
+npx tsx code/main.ts --live
 ```
 
 İlk .`analyze_function`Ghidra nesneyi içeri aktarırken birkaç saniye sürer. Yeni kanıt ID'lerini görevlendirilen çalışmayla karşılaştırın. Aynı analiz profili altında aynı baytlar aynı ID'leri verir, çünkü id dosya yolunu dışlayan bir içerik hashidir.
@@ -404,6 +408,7 @@ Cevaplarınızı kontrol edin:
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 Kontrolcü , her beklenen değerini `code/main.py`- Bu, yazılı.`PASS`- Evet .`FAIL`veya `TODO`Her görev ve puan için, ve sadece beşinin geçtiği zaman 0'dan çıkıyor. `python3 code/lab.py my-answers.json`Başka bir dosyayı kontrol ediyor.`code/tests/test_lab.py`kontrol eden kişinin doğru cevapları kabul ettiğini ve yanlışını reddettiğini kanıtlar.
@@ -423,6 +428,7 @@ Demo ve test süiti çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

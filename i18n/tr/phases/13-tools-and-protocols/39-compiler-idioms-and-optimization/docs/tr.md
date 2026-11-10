@@ -3,7 +3,7 @@
 > Optimize eden bir kompiliyatör kaynak yapılarını daha ucuz talimat şekillerle değiştirir. Her şeklin bir türevine sahiptir ve bu ders türevini geriye doğru çalıştıran ve kaynağa karşı kontrol eden tanıtıcı oluşturur.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly, AArch64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode), Phase 13 · 38 (calling conventions)
 **Time:** ~150 minutes
 
@@ -253,6 +253,7 @@ Demo çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı bir JSON raporu. 18 yapıtaştan her biri için her işlevi ve dillerini, tür, kaynak biçimi, kanıt adresleri, doğrulama ve ayrıntı alanları ile listeler.`-O2`karşılaştırıldığında`-O3`Bu iki yapı için de bir karşılaştırma yapıldı.`unverified`Listesi.
@@ -380,6 +381,7 @@ Demo ve Deterministik Suite'i çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

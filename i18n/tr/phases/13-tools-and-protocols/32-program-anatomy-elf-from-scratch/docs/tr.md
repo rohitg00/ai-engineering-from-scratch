@@ -3,7 +3,7 @@
 > Bir program, birbirine işaret eden bir dizi tablo. Yazdığınız bir okuyucu, bayt byte kontrol edebileceğiniz çıkış sağlar.
 
 **Type:** Build
-**Languages:** Python (stdlib), C (fixture only)
+**Languages:** Python (stdlib), TypeScript, C (fixture only)
 **Prerequisites:** Phase 0 · 01 (Dev Environment) with clang installed, Python 3.10 or later, hexadecimal arithmetic
 **Time:** ~120 minutes
 
@@ -275,6 +275,7 @@ Standart kütüphane okuyucuyu çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Demo şöyle diyor:`ledger-x86_64-O1.o`ve başlığı, bölümleri, sembollerini, yer değiştirmeleri ve dosya ofset haritasını yazdırır.`ledger-arm64-O1.o`Program başlıkları ile biter.`tiny-x86_64`Beklenen çizgiler:
@@ -395,6 +396,7 @@ Cevaplarınızı kontrol edin:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 Kontrolcü , her beklenen değerini `code/main.py`- Bu, yazılı.`PASS`- Evet .`FAIL`veya `TODO`Her görev ve puan için, ve sadece beşinin geçtiği zaman 0'dan çıkıyor. `python3 code/lab.py my-answers.json`Başka bir dosyayı kontrol ediyor.`code/tests/test_lab.py`kontrol eden kişinin doğru cevapları kabul ettiğini ve yanlışını reddettiğini kanıtlar.
@@ -414,6 +416,7 @@ Demo ve Deterministik Suite'i çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Beş araç aynı nesneyi okuyor ve dört adres, üç blok sayımı ve bir anahtar için iki cevap veriyor ve bu ders hangisinin hangisinin hangisinin olduğunu gösteren bir harness oluşturur.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, Java (one Ghidra script)
+**Languages:** Python, TypeScript, C, x86-64 assembly, Java (one Ghidra script)
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~150 minutes
 
@@ -342,6 +342,7 @@ Demo çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı bir JSON raporu. Bu, çekim sırasında kaydedilen araç sürümleri ile ve makinenizdeki araçlarla açılır, bunların hepsi yok olabilir. Sonra dört nesnenin her biri için sembol uzantıları, dolgu boşlukları, her bir araçın kullanıldığı tabanı, işlev bulduğumuz veya icat ettiğimiz her bir aracı başlatır ve her işlev için talimat-başlatma anlaşması, blok sayıları, kenar sayıları ve her bir araçta eksik olan kenarları verir. Bu, her alet için bayt hesaplaması, araçların kendi notları, açık cümlelerde bulguların bir listesine ve IR bölümüne bitiyor: kaydedilen asansörlerde ölçülen sayıların yanında üç talimat için tercümanın çıkışı.
@@ -472,6 +473,7 @@ Demo ve Deterministik Suite'i çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

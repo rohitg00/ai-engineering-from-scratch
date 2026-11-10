@@ -3,7 +3,7 @@
 > Bir beceri daha iyi bir dosya adı ile uzun bir istek değil. Bir ajanın bağlamına bir çalıştırma süreci sözleşmesi aracılığıyla giren bir talimat, kaynak ve yürütülebilir yardımcılar paketi.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 01 (The Tool Interface), Phase 13 · 05 (Tool Schema Design)
 **Time:** ~90 minutes
 
@@ -362,6 +362,7 @@ Laboratuvarı çalıştır:
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/22-skills-and-agent-sdks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Üç sınır sağlayıcısı 2024'te aynı araç çağrısı döngüsünde birleşmiş ve sonra diğer her şeyde farklılaşmış.`tools`ve `tool_calls`- Antropik kullanımları`tool_use`ve `tool_result`Gemini kullanıyor.`functionDeclarations`Bu ders üç kodu bir kenara ayırır, böylece bir sunucuya gönderilen kod, onu port ettiğinizde kırılmaz.
 
 **Type:** Build
-**Languages:** Python (stdlib, schema translators)
+**Languages:** Python, TypeScript (stdlib, schema translators)
 **Prerequisites:** Phase 13 · 01 (the tool interface)
 **Time:** ~75 minutes
 

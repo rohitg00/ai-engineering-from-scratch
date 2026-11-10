@@ -3,7 +3,7 @@
 > Bir parçacık bir fonksiyonun hangi kayıtları okuduğunu gösterir. Sadece ABI bu kayıtların ne anlama geldiğini söyler ve ABI nesne başlığı tarafından seçilir, bu nedenle bu ders başlığı önce okur ve sonra her kayıtları oraya koyan kurallara karşı kontrol eder.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and AArch64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow)
 **Time:** ~140 minutes
 
@@ -195,6 +195,7 @@ Demo çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı bir JSON raporu. Yedi nesnenin her biri için format, makine ve ABI adını verir ve on iki işlevin her biri için prolog baytları, giriş karşılığı olan kaydedilen kayıtları, çerçeve boyutu, çerçeve işaretçisi, parametreler kayıtları, yığın argüman karşılığı, dökümler, geri dönüş kayıtları veya gizli işaretçi, arama derinlikleri ve arama yapanların çıkış kayıtları ve depoları verir. Her işlev kontrolleriyle sona erer: kural, imzadan beklenen değer, baytlardan gözlemlenen değer ve uyumlu olup olmadığını. Rapor iki atışlı çapraz kontrol ve araç çekimleriyle sona erer. 84 fonksiyon analizi boyunca 489 kontrol yürütülmüş ve 489'u da aynı fikirdeydi.
@@ -331,6 +332,7 @@ Demo ve Deterministik Suite'i çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

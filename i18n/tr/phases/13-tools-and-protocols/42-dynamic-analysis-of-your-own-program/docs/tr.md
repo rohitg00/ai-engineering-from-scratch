@@ -3,7 +3,7 @@
 > Bir kırılma noktası, bir kuruluşun bir koşusu hakkında bir gözlemdir. Bu ders, bu gözlemleri statik derslerin verdiği iddialar üzerine onaylanmış, iptal edilmiş ve gözlemlenmemiş hükümlere dönüştüren bir harman oluşturur.
 
 **Type:** Build
-**Languages:** Python, C, arm64 assembly, lldb command language
+**Languages:** Python, TypeScript, C, arm64 assembly, lldb command language
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~130 minutes
 
@@ -357,6 +357,7 @@ Demo çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı bir JSON raporu kaydedilen transkriptler üzerinde. Her bir yapı için çözünürlükleri ve isabet sayıları ile kesinti noktalarını, donanım nöbet sayısını, kayıtları ve argümanları ile her durak, çıkış durumunu, programın çıkışını, yazdırılan hataları lldb ve hükümleri ile iddiaları ve arkasındaki kanıt kayıtlarını listeler. Bu, çekirdek geri dönüş, Python API sonuçları, kum kutu başarısızlığı ve bu makine üzerinde hangi dış araçlar eksik olduğunu ekler.
@@ -496,6 +497,7 @@ Demo ve Deterministik Suite'i çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

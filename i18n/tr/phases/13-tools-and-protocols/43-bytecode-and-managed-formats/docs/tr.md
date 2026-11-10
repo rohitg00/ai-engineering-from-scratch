@@ -3,7 +3,7 @@
 > Bir bytecode dosyası bir program ve bu dersi, her konteyner hangi notları sakladığını gösteren okuyucuları oluşturur.
 
 **Type:** Build
-**Languages:** Python, Java, C#, WebAssembly text
+**Languages:** Python, TypeScript, Java, C#, WebAssembly text
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow)
 **Time:** ~150 minutes
 
@@ -265,6 +265,7 @@ Demo çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı bir JSON raporu. her pyc için hem başlıkları, dosya ve `grade`Bu sayede, sınıfın oluşturduğu tüm sınıflar için, sınıfın sürümü, boyutları, hatalama tablosunun sayıları ve `javap`Her Wasm yapı için bölümler, türler, fonksiyonlar, isim bölüm içeriği ve `wasm-objdump`birleştirme için CLI başlığı, akışları, masa satır sayıları, yöntemleri ve Sistem.Reflection.Metadata anlaşması verir.`PATH`- Evet .
@@ -378,6 +379,7 @@ Demo ve Deterministik Suite'i çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

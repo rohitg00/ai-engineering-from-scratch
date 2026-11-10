@@ -3,7 +3,7 @@
 > Bir modelin yeniden inşa edilmesi bir raporla bir iddia ve bu ders, hem baitlere, hem de DWARF'e karşı puan alan bir harness oluşturur.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 35 (evidence, confidence, and unknowns), Phase 13 · 36 (rebuild and prove equal)
 **Time:** ~140 minutes
 
@@ -218,6 +218,7 @@ Standart kütüphane harnesini çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Clang'ın yol üzerinde olması ile demo, her adayı sabit bayraklarla birleştirir, sekiz farklılık programı oluşturur, her biri 92 hücre ve 256 corpus girişi ile çalışır, DWARF'yi okuyor, her alıntıyı kontrol eder ve kartı yazdırır.`grid`ve `fuzz`okudukları alanlar `unknown`Bu , bir dizi metin kompayillerinden başka bir ses .`code/fixtures/build-record.json`Yapılan nesnelere sadece bayt karşılaştırma bırakır.`grid`ve `fuzz`alanlar hala her adayı host kompili ile yeniden oluşturur. Byte karşılaştırması, herhangi bir şey ifade etmek için aynı kompili ve bayraklara ihtiyaç duyar ve görevli nesne sadece bir süre içinde durur `code/fixtures/build-record.json`hala disk üzerindeki aday kaynakla eşleştirilir: kaynakı düzenle ve bayt alanı okunuyor `unknown`Eski baytları yargılamak yerine.
@@ -316,6 +317,7 @@ field_names(load_candidate("f1_mul_first"), target=POISONED_OBJECT)["status"]
 
 ```bash
 python3 code/main.py mcp-serve
+npx tsx code/main.ts mcp-serve
 ```
 
 Üç satır yapıştır, birbiriyle:
@@ -354,6 +356,7 @@ Demo ve test süiti çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Uzaktan bir MCP talebi devletsiz, ancak yetkisi anonim değildir. Her tanıklığı oluşturan emitenine ve her token'ı alan kaynağa bağlayın.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 15 (security)
 **Time:** ~90 minutes
 
@@ -252,6 +252,7 @@ Modelle analiz edilen istek organları ve yönlendirme başlıkları bulunmaktad
 ```bash
 cd phases/13-tools-and-protocols/16-mcp-security-oauth-2-1
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

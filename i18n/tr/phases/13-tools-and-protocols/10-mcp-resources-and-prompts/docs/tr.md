@@ -3,7 +3,7 @@
 > Kullanıcı tarafından seçilen mesaj şablonlarını uyarır. İyi bir MCP sunucusu bu sözleşmeleri ayrı ve öngörülebilir tutar.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lesson 07 (Building an MCP Server), Phase 13, Lesson 09 (MCP Transports)
 **Time:** ~60 minutes
 
@@ -279,6 +279,7 @@ Simülatörü depo kökü ile çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 
@@ -304,6 +305,7 @@ Ders de gemiler .`assets/primitive-split.svg`, offline çalışma için primitif
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

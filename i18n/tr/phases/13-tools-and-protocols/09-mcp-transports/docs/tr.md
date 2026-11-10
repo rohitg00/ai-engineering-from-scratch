@@ -3,7 +3,7 @@
 > Transport MCP mesajlarını taşır.`2026-07-28`, yerel studio ve uzaktan Streamable HTTP her ikisi de kendi kendini tanımlayan istekleri taşır.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07 and 08
 **Time:** ~65 minutes
 
@@ -189,6 +189,7 @@ tp-transport-handshake
 ```bash
 cd code
 python3 main.py --probe
+npx tsx main.ts --probe
 python3 -m unittest discover tests -v
 ```
 

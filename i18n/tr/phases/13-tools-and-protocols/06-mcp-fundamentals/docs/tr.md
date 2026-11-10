@@ -3,7 +3,7 @@
 > Modern MCP'de el sıkışması ve protokol seansı yoktur. Her talebin kendi başına anlaşılabilir, yetkilendirilebilir, yönlendirilebilir ve tekrar denenebilir kadar yeterli metadata taşıması gerekir.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 01 through 05
 **Time:** ~55 minutes
 
@@ -164,6 +164,7 @@ mcp-tool-call
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

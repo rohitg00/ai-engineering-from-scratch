@@ -3,7 +3,7 @@
 > Bağlı bir program içermeyen fonksiyonları çağırır. Bu ders bağlantı editörü bu çağrılar için yazdığı tabloları üç formatta okuyor, yüklemeci dolduran yuvaya bir çağrıdan sonra, isimlerinin kaybolmasından sonra bir yapılandırmanın fonksiyonlarını bulur.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and arm64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and arm64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow), 38 (calling conventions)
 **Time:** ~160 minutes
 
@@ -283,6 +283,7 @@ Demo çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı bir JSON raporu beş parçalı. `elf`iki nesnenin yer değiştirme sayısını, bağlantı planını ve dinamik bölümünü, PLT ve GOT'yi tutuyor `tiny-dyn-x86_64`- Evet .`coff`İki nesnenin bölümlerini, yer değiştirmelerini, fonksiyonlarını ve belirlenmemiş isimlerini taşıyor. `pe`Başlıkları, dizinleri, ithalatı, ihracatı, temel yer değiştirmeleri ve IAT çağrılarını tutar.`tiny-x86_64.exe`- Evet .`macho`Tutulur .`ledger_main`Çatışmalar, zincirlenmiş düzeltmeler, düzeltme sıraları ve ihracatları ile, `ledger_main_nochain`, Dylib ve iki strip raporları.`identification`Dört yöntemin gerçek olduğunu ve sonuçları ve çatışmaları ile imzaları.`-O0`ve `-O2`- Evet .
@@ -412,6 +413,7 @@ Demo ve Deterministik Suite'i çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

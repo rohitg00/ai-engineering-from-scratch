@@ -3,7 +3,7 @@
 > Bir söküm listesi, hangi baytların talimatları olduğu hakkında bir iddiadır ve bu ders, iddiayı kontrol eden dekoderi ve grafik oluşturur.
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch)
 **Time:** ~150 minutes
 
@@ -347,6 +347,7 @@ Demo çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Çıktı bir JSON raporu. Her sabit nesne için oracle anlaşması verir. Her işlev için üç yöntem altında talimat, blok ve kenar sayıları verir. Ayrıca erişilemez blokları, çözülmemiş dolaylı sıçrayışları, arka kenarları, hemen egemenleri ve herhangi bir tabloyu listeler. Tuzak karşılaştırması ile sona erer.
@@ -486,6 +487,7 @@ Cevaplarınızı kontrol edin:
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 Kontrolcü , her beklenen değerini `code/main.py`- Bu, yazılı.`PASS`- Evet .`FAIL`veya `TODO`Her görev ve puan için, ve sadece beşinin geçtiği zaman 0'dan çıkıyor. `python3 code/lab.py my-answers.json`Başka bir dosyayı kontrol ediyor.`code/tests/test_lab.py`kontrol eden kişinin doğru cevapları kabul ettiğini ve yanlışını reddettiğini kanıtlar.
@@ -505,6 +507,7 @@ Demo ve Deterministik Suite'i çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

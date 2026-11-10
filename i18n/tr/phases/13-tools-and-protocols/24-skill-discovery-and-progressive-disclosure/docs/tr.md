@@ -3,7 +3,7 @@
 > Bir beceri, vücudunun yüklenmesinden önce yararlı hale gelir. Adı ve açıklaması katalogda yer alır; daha derin dosyaları görev onlara ulaştığında bağlam kazanır.
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 22 (Agent Skills: Portable Contract and Runtime Boundary)
 **Time:** ~105 minutes
 
@@ -235,6 +235,7 @@ Laboratuvarı çalıştır:
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/24-skill-discovery-and-progressive-disclosure
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

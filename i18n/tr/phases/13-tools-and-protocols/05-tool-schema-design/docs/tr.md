@@ -3,7 +3,7 @@
 > Doğru bir araç, model ne zaman kullanılacağını bilmediğinde sessizce başarısız olur. Adlandırma, açıklamalar ve parametreler şekilleri, StableToolBench ve MCPToolBench+ gibi referans değerlerinde araç seçimi doğruluğunda 10 ila 20 yüzde puan dalgalanmalara neden olur. Bu ders, bir modelin güvenilir bir şekilde seçtiği bir aracı model yanlış ateşlediği bir araçtan ayıran tasarım kurallarına isim verir.
 
 **Type:** Learn
-**Languages:** Python (stdlib, tool schema linter)
+**Languages:** Python, TypeScript (stdlib, tool schema linter)
 **Prerequisites:** Phase 13 · 01 (the tool interface), Phase 13 · 04 (structured output)
 **Time:** ~45 minutes
 

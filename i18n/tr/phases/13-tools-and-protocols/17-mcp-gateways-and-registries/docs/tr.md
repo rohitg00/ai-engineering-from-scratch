@@ -3,7 +3,7 @@
 > Bir geçit her yolu açık olmalıdır. 2026-07-28 protokolü, bir taşıma oturum olmadan ona yöntem, isim, sürüm, yetenek, kimlik, önbelleği ve iz sınırları verir.
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 15 (security), Phase 13 · 16 (authorization)
 **Time:** ~75 minutes
 
@@ -326,6 +326,7 @@ Modelle analiz edilen istek organları, yönlendirme başlıkları ve doğrulanm
 ```bash
 cd phases/13-tools-and-protocols/17-mcp-gateways-and-registries
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

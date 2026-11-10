@@ -3,7 +3,7 @@
 > Bir sunucu uyumlu değildir çünkü mutlu yolu bir SDK üzerinden çalıştı. uyum, telde, sürüm sınırlarında, aracılar aracılığıyla ve geri dönüş sırasında yaşar.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 17 (gateways), Phase 13 · 30 (registry admission)
 **Time:** ~100 minutes
 
@@ -265,6 +265,7 @@ Standart kütüphane harnesini çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Demo, geçerli ve yanlış biçimlendirilmiş tamamlama sonuçları dahil olmak üzere tam olarak on beş altın ve negatif transkripti yürütür, ham sonuçları bir SDK görünümü ile karşılaştırır, bir kaynak hatası çökmüş bir vekili inceliyor, sağlığı değerlendirir, geri dönüş kanıtlarını doğruluyor ve hedef seçer.
@@ -395,6 +396,7 @@ Demo ve Deterministik Suite'i çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

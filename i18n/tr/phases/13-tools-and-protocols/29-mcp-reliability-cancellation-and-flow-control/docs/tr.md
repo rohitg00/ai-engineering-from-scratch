@@ -3,7 +3,7 @@
 > Bir istek kimliği mesajla ilişkilidir. Yan etkisi güvenli, bir işçiyi durdurmaz veya akışın yavaş bir tüketiciden korunmasını sağlamaz.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 09 and 13
 **Time:** ~120 minutes
 
@@ -336,6 +336,7 @@ Depo kökü:
 ```bash
 cd phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

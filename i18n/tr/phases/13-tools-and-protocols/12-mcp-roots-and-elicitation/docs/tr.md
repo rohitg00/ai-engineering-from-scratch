@@ -3,7 +3,7 @@
 > MCP 2026-07-28'de kökler eski haline geldi ve hiçbir zaman güvenlik sandbox değildi. Görünür araç argümanlarına veya kaynak URI'lerine boyut koyun, sunucuda yetkilendirin ve bir araçın kullanıcı girişine gerçekten ihtiyacı olduğunda MRTR kullanın. Kullanıcı kararı görür, model elini görür ve her sunucu örneği tekrar denemeyi işleyebilir.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 11 (stateless MRTR)
 **Time:** ~60 minutes
 
@@ -247,6 +247,7 @@ Depo kökü:
 ```bash
 cd phases/13-tools-and-protocols/12-mcp-roots-and-elicitation/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

@@ -3,7 +3,7 @@
 > Bir yayıncı tarafından açıklanan bir kayıt kayıt, aldığınız, gözlemlediğiniz, onayladığınız ve güvenli bir şekilde geri getirebileceğiniz şeyleri kanıtlar.
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 17 (gateways and registries), Phase 13 · 18 (production authentication)
 **Time:** ~90 minutes
 
@@ -163,6 +163,7 @@ Son gösteriden başlayalım:
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 Gösterim beş işlem gerçekleştirir:
@@ -288,6 +289,7 @@ Gösterimi ve belirleyici süiti çalıştır:
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 
