@@ -58,14 +58,14 @@
 
     // Title row
     svg.appendChild(el('text', { x: 18, y: 22, 'font-family':'var(--font-mono)', 'font-size': 11, 'letter-spacing':'.16em', fill:'var(--ink-mute)' }, [txt('CORPUS')]));
-    svg.appendChild(el('text', { x: 18, y: 162, 'font-family':'var(--font-mono)', 'font-size': 11, 'letter-spacing':'.16em', fill:'var(--ink-mute)' }, [txt('SCAN PAIRS')]));
+    svg.appendChild(el('text', { x: 18, y: 126, 'font-family':'var(--font-mono)', 'font-size': 11, 'letter-spacing':'.16em', fill:'var(--ink-mute)' }, [txt('SCAN PAIRS')]));
     svg.appendChild(el('text', { x: 18, y: 322, 'font-family':'var(--font-mono)', 'font-size': 11, 'letter-spacing':'.16em', fill:'var(--ink-mute)' }, [txt('MERGED TOKENS')]));
     svg.appendChild(el('text', { x: W - 18, y: 22, 'text-anchor':'end', 'font-family':'var(--font-mono)', 'font-size': 11, 'letter-spacing':'.16em', fill:'var(--blueprint)' }, [txt('LEARNED MERGES')]));
 
     // The tiny corpus — chars in cells
     const corpus = "the_cat_sat_on_the_mat_the_cat_ate";
     const chars = corpus.split('');
-    const CW = 18, CH = 28, X0 = 18, Y_RAW = 36, Y_SCAN = 176, Y_MERGE = 336;
+    const CW = 14, CH = 28, X0 = 18, Y_RAW = 36, Y_SCAN = 176, Y_MERGE = 336;
 
     // Raw row
     const rawCells = chars.map((c, i) => {
@@ -133,7 +133,7 @@
       const toks = tokensAt(step);
       let x = X0;
       toks.forEach(tok => {
-        const w = Math.max(CW, tok.length * 9 + 10);
+        const w = Math.max(CW, tok.length * 8 + 6);
         const isJustMerged = justMerged && tok === justMerged;
         const fill = isJustMerged ? 'var(--blueprint)' : (tok.length > 1 ? 'var(--blueprint-tint-strong)' : 'transparent');
         const stroke = tok.length > 1 ? 'var(--blueprint)' : 'var(--rule-soft)';
@@ -389,7 +389,7 @@
      A small "value blend" panel below shows the resulting context vector.
   */
   function attentionMatrix(host) {
-    const W = 760, H = 540;
+    const W = 760, H = 600;
     const svg = el('svg', { viewBox: `0 0 ${W} ${H}`, width: '100%', role: 'img', 'aria-label': 'Self-attention matrix' });
     host.appendChild(svg);
 
@@ -654,11 +654,11 @@
 
     // op boxes between columns
     function opBox(x, label, sub) {
-      const w = 110, h = 50, y = OP_Y;
+      const w = 120, h = 50, y = OP_Y;
       const g = el('g', {});
       g.appendChild(el('rect', { x: x - w/2, y, width: w, height: h, fill:'var(--bg)', stroke:'var(--blueprint)', 'stroke-width': 1.4 }));
       g.appendChild(el('text', { x, y: y + 21, 'text-anchor':'middle', 'font-family':'var(--font-mono)', 'font-size': 13, 'font-weight': 700, fill:'var(--blueprint)' }, [txt(label)]));
-      g.appendChild(el('text', { x, y: y + 37, 'text-anchor':'middle', 'font-family':'var(--font-mono)', 'font-size': 8.5, fill:'var(--ink-mute)' }, [txt(sub)]));
+      g.appendChild(el('text', { x, y: y + 37, 'text-anchor':'middle', 'font-family':'var(--font-mono)', 'font-size': 10.5, fill:'var(--ink-mute)' }, [txt(sub)]));
       svg.appendChild(g);
       return { x, y, w, h, box: g };
     }

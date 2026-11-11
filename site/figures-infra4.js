@@ -66,8 +66,9 @@
     s.appendChild(txt(440, 77, '~50 ms median', '8', MUTE));
     var i;
     for (i = 0; i < 4; i++) {
-      var d = svgEl('circle', { cx: 0, cy: 0, r: 5, fill: BP });
+      var d = svgEl('circle', { cx: 0, cy: 0, r: 5, fill: BP, opacity: '0' });
       d.appendChild(motion('M20 67 L440 67', '1.6s', (i * 0.4) + 's'));
+      d.appendChild(anim('opacity', '1;1', '1.6s', { begin: (i * 0.4) + 's' }));
       s.appendChild(d);
     }
     s.appendChild(txt(40, 128, 'on-demand shared lane', '9', WARN, 'start'));
@@ -77,13 +78,15 @@
     s.appendChild(txt(440, 165, '~75 ms median', '8', MUTE));
     // shared lane: other tenants' grey traffic crowds the pipe, ours waits
     for (i = 0; i < 3; i++) {
-      var o = svgEl('rect', { x: -5, y: -5, width: 10, height: 10, rx: '2', fill: MUTE, opacity: '0.5' });
+      var o = svgEl('rect', { x: -5, y: -5, width: 10, height: 10, rx: '2', fill: MUTE, opacity: '0' });
       o.appendChild(motion('M60 155 L440 155', '2.6s', (i * 0.85) + 's'));
+      o.appendChild(anim('opacity', '0.5;0.5', '2.6s', { begin: (i * 0.85) + 's' }));
       s.appendChild(o);
     }
     for (i = 0; i < 2; i++) {
-      var m = svgEl('circle', { cx: 0, cy: 0, r: 5, fill: WARN });
+      var m = svgEl('circle', { cx: 0, cy: 0, r: 5, fill: WARN, opacity: '0' });
       m.appendChild(motion('M20 155 L120 155 L120 155 L440 155', '3.2s', (i * 1.6) + 's'));
+      m.appendChild(anim('opacity', '1;1', '3.2s', { begin: (i * 1.6) + 's' }));
       s.appendChild(m);
     }
     var q = entry(150, 155, '3.2s', '0.3s', 0.05, 0.2);
@@ -125,15 +128,15 @@
     var i;
     for (i = 0; i < 3; i++) {
       var b = (i * 1.4) + 's';
-      var c = svgEl('circle', { cx: 0, cy: 0, r: 5, fill: INKS });
-      c.appendChild(motion('M0 118 L67 118 L212 118 L335 118', '4.2s', b));
+      var c = svgEl('circle', { cx: 0, cy: 0, r: 5, fill: INKS, opacity: '0' });
+      c.appendChild(motion('M36 118 L67 118 L212 118 L335 118', '4.2s', b));
       c.appendChild(anim('opacity', '1;1;0;0', '4.2s', { keyTimes: '0;0.6;0.62;1', begin: b }));
       s.appendChild(c);
-      var t1 = svgEl('rect', { x: -5, y: -4, width: 10, height: 8, rx: '2', fill: BP });
+      var t1 = svgEl('rect', { x: -5, y: -4, width: 10, height: 8, rx: '2', fill: BP, opacity: '0' });
       t1.appendChild(motion('M335 118 L335 118 L458 56', '4.2s', b));
       t1.appendChild(anim('opacity', '0;0;1;1;0', '4.2s', { keyTimes: '0;0.6;0.66;0.9;1', begin: b }));
       s.appendChild(t1);
-      var t2 = svgEl('rect', { x: -5, y: -4, width: 10, height: 8, rx: '2', fill: WARN });
+      var t2 = svgEl('rect', { x: -5, y: -4, width: 10, height: 8, rx: '2', fill: WARN, opacity: '0' });
       t2.appendChild(motion('M335 118 L335 118 L458 180', '4.2s', b));
       t2.appendChild(anim('opacity', '0;0;1;1;0', '4.2s', { keyTimes: '0;0.6;0.66;0.9;1', begin: b }));
       s.appendChild(t2);
@@ -252,7 +255,7 @@
     var faults = [['429 storm', '0s', BP], ['KV evict', '1.8s', BP], ['net loss', '3.6s', WARN]];
     var i;
     for (i = 0; i < faults.length; i++) {
-      var g = svgEl('g', {}, [
+      var g = svgEl('g', { opacity: '0' }, [
         svgEl('rect', { x: -26, y: -9, width: 52, height: 18, rx: '3', fill: BG, stroke: faults[i][2], 'stroke-width': '1.2' }),
         txt(0, 3, faults[i][0], '7.5', faults[i][2])
       ]);

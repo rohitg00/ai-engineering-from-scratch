@@ -82,9 +82,9 @@
       svg.appendChild(svgEl('line', { x1: PAD, y1: H - PAD, x2: W - PAD, y2: H - PAD, stroke: 'var(--rule-soft,#eee)', 'stroke-width': '1' }));
       var rx = px(sRejected), cx = px(sChosen), y = H - PAD;
       svg.appendChild(svgEl('line', { x1: rx, y1: y, x2: rx, y2: PAD, stroke: 'var(--ink-mute,#999)', 'stroke-width': '8' }));
-      svg.appendChild(svgEl('text', { x: rx, y: PAD - 6, 'text-anchor': 'middle', 'font-size': '10', fill: 'var(--ink-mute,#777)', 'font-family': 'monospace' }, [document.createTextNode('rejected ' + sRejected.toFixed(2))]));
+      svg.appendChild(svgEl('text', { x: rx - 8, y: PAD - 6, 'text-anchor': 'end', 'font-size': '10', fill: 'var(--ink-mute,#777)', 'font-family': 'monospace' }, [document.createTextNode('rejected ' + sRejected.toFixed(2))]));
       svg.appendChild(svgEl('line', { x1: cx, y1: y, x2: cx, y2: PAD, stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '8' }));
-      svg.appendChild(svgEl('text', { x: cx, y: PAD - 6, 'text-anchor': 'middle', 'font-size': '10', fill: 'var(--blueprint,#3553ff)', 'font-family': 'monospace' }, [document.createTextNode('chosen ' + sChosen.toFixed(2))]));
+      svg.appendChild(svgEl('text', { x: cx + 8, y: PAD - 6, 'text-anchor': 'start', 'font-size': '10', fill: 'var(--blueprint,#3553ff)', 'font-family': 'monospace' }, [document.createTextNode('chosen ' + sChosen.toFixed(2))]));
       num.innerHTML = (pPrefer * 100).toFixed(1) + ' <small>% P(chosen ≻ rejected)</small>';
       meta.textContent = 'score gap ' + state.gap.toFixed(2) + '  ·  preference loss ' + loss.toFixed(3) + '  ·  ' + (state.gap < 0.4 ? 'unsure: scores nearly tied' : state.gap > 2.5 ? 'confident: chosen clearly above' : 'learning the ranking');
       formula.textContent = 'P(chosen ≻ rejected) = sigmoid( r(chosen) − r(rejected) )   ·   loss = −log P';

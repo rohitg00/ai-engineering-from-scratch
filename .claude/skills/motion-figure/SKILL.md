@@ -138,6 +138,7 @@ Dither fields (tier 3):
 - [ ] With reduced motion on, the figure shows a complete picture and no element is missing.
 - [ ] In dark theme, every line and label is visible.
 - [ ] At 375 px width, every label is readable and the page has no sideways scroll outside the figure.
+- [ ] Inside the course repo, `node scripts/audit_lesson_figures.js --only <name>` prints `TOTAL 0`. It mounts the figure in Chrome at desktop and phone width, in the static frame and at two animation times. It fails on labels that overlap, labels or closed shapes that leave the viewBox, text under 9 px, and a drawing that needs sideways scroll at desktop width. The text check allows 0.5 px for rounding. The smallest font in viewBox units sets the last two: at a 728 px wide drawing, text needs `9 x viewBox width / 728` units or more.
 - [ ] For a widget, moving each slider to its minimum and maximum gives no `NaN`, no negative widths, and no console errors.
 - [ ] The SVG has one title and one description, and their ids stay the same after a slider moves.
 - [ ] The caption names every colour that the figure uses.

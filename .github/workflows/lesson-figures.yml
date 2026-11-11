@@ -1,0 +1,68 @@
+name: Lesson figures
+
+on:
+  pull_request:
+    paths:
+      - 'phases/**/docs/en.md'
+      - 'certifications/**/docs/en.md'
+      - 'site/figures*.js'
+      - 'site/lesson-figures.js'
+      - 'site/lesson.html'
+      - 'site/build.js'
+      - 'scripts/audit_lesson_figures.js'
+      - 'scripts/test_audit_lesson_figures.js'
+      - '.github/workflows/lesson-figures.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'phases/**/docs/en.md'
+      - 'certifications/**/docs/en.md'
+      - 'site/figures*.js'
+      - 'site/lesson-figures.js'
+      - 'site/lesson.html'
+      - 'site/build.js'
+      - 'scripts/audit_lesson_figures.js'
+      - 'scripts/test_audit_lesson_figures.js'
+      - '.github/workflows/lesson-figures.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lesson-figures-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  geometry:
+    name: figure geometry audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Audit helper tests
+        run: node --test scripts/test_audit_lesson_figures.js
+      - name: Install the browser driver outside the repository
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: '1'
+        run: npm install --no-save --no-package-lock --prefix "$RUNNER_TEMP/figures" puppeteer-core@24.10.0
+      - name: Every lesson figure keeps its labels whole, apart and readable
+        env:
+          NODE_PATH: ${{ runner.temp }}/figures/node_modules
+        run: |
+          set -euo pipefail
+          export CHROME_PATH="$(command -v google-chrome || command -v google-chrome-stable)"
+          "$CHROME_PATH" --version
+          node scripts/audit_lesson_figures.js --shots "$RUNNER_TEMP/figure-shots"
+      - name: Upload screenshots of failing figures
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: figure-audit-shots
+          path: ${{ runner.temp }}/figure-shots
+          if-no-files-found: ignore
+          retention-days: 7

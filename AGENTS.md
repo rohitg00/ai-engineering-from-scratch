@@ -241,6 +241,7 @@ python3 scripts/check_readme_counts.py        # advisory — CI fixes on merge
 node --test site/test_manuals.js && node scripts/audit_manuals.js   # when manuals/ changes
 node site/build-cheatsheets.js --check && node site/build-cheatsheets.js --check-quality   # when cheatsheets/ or lessons change
 node site/build.js && node --test site/test_*.js   # when site/ changes; then git checkout -- site/data.js
+CHROME_PATH=<chrome> NODE_PATH=<dir with puppeteer-core>/node_modules node scripts/audit_lesson_figures.js   # when site/figures*.js or site/lesson-figures.js changes; must print TOTAL 0
 
 # For each lesson touched:
 cd phases/NN-phase/MM-lesson/code

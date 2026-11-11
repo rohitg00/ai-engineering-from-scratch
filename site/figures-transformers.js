@@ -24,7 +24,7 @@
     var Q = [[1.0, 0.2, 0.0], [0.3, 1.0, 0.1], [0.1, 0.4, 0.9], [0.6, 0.1, 0.5], [0.9, 0.3, 0.0], [0.2, 0.5, 0.8]];
     var K = [[0.9, 0.1, 0.0], [0.2, 1.0, 0.2], [0.0, 0.3, 1.0], [0.5, 0.2, 0.4], [0.9, 0.2, 0.1], [0.1, 0.4, 0.9]];
     var state = { T: 1.0 };
-    var W = 520, H = 240, PAD = 56, CELL = (W - PAD - 12) / n;
+    var W = 520, CELL = 34, H = 30 + n * CELL + 16, PAD = (W - n * CELL) / 2;
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
     var meta = el('div', { class: 'lf-meta' });
     var formula = el('div', { class: 'lf-formula' });

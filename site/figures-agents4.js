@@ -233,7 +233,7 @@
 
   // -- ae-agent-human-gap: two bars closing as the agent line climbs ----------
   function agentHumanGap(host) {
-    var W = 520, H = 240, PAD = 44, base = 200;
+    var W = 520, H = 256, PAD = 44, base = 200;
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
     svg.appendChild(svgEl('line', { x1: PAD, y1: base, x2: W - 20, y2: base, stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1' }));
     svg.appendChild(svgEl('line', { x1: PAD, y1: 30, x2: PAD, y2: base, stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1' }));
@@ -250,7 +250,7 @@
     svg.appendChild(txt(x0, base + 16, '2023', '9', 'var(--ink-mute,#777)'));
     svg.appendChild(txt(x1, base + 16, '2026', '9', 'var(--ink-mute,#777)'));
     svg.appendChild(txt(x0 + 4, y0 - 10, '14%', '9', 'var(--blueprint,#3553ff)', 'start'));
-    svg.appendChild(txt(260, 222, 'gap narrows, failure modes stay: grounding and operational knowledge', '10', 'var(--ink-mute,#777)'));
+    svg.appendChild(txt(260, 240, 'gap narrows, failure modes stay: grounding and operational knowledge', '10', 'var(--ink-mute,#777)'));
     shell(host, 'AGENT vs HUMAN', 'the gap is closing',
       svg,
       'At release WebArena and OSWorld showed a wide gap: the best agent near 14% where humans sit around 78%. The blue line is climbing year over year, but the two failure modes have not changed. Agents still miss GUI grounding (where to click) and operational knowledge (what the task actually requires), so the score rises faster than reliability.');

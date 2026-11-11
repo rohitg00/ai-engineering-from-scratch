@@ -59,7 +59,7 @@
       '.re38 button[aria-pressed="true"]{border-color:var(--blueprint,#3553ff);background:var(--blueprint,#3553ff);color:var(--bg,#fafaf5)}',
       '.re38__signature{margin:0 0 10px;font-family:var(--font-mono,monospace);font-size:.8rem;color:var(--ink,#1a1a1a)}',
       '.re38__scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--rule-soft,#ddd);background:var(--bg,#fafaf5)}',
-      '.re38__scroll svg{display:block;min-width:700px;width:100%;height:auto}',
+      '.re38__scroll svg{display:block;width:100%;height:auto}',
       '.re38__prologues{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}',
       '.re38__prologue{font-family:var(--font-mono,monospace);font-size:.74rem;line-height:1.5;color:var(--ink-soft,#555);white-space:pre-wrap;word-break:break-word;border-top:1px solid var(--rule-soft,#ddd);padding-top:6px}',
       '.re38__prologue b{color:var(--ink,#1a1a1a);font-weight:600}',
@@ -166,11 +166,33 @@
       }
     }
     var footY = yFor(rng.bottom, rng) + 20;
-    var regs = [];
-    for (i = 0; i < frame.regs.length; i++) regs.push(frame.regs[i].p + ' in ' + frame.regs[i].r);
-    svg.appendChild(text(x, footY, 'registers: ' + (regs.length ? regs.join(', ') : 'none'), INK, 'start', 9.5));
-    svg.appendChild(text(x, footY + 14, 'result in ' + frame.ret.join(', '), INK, 'start', 9.5));
-    svg.appendChild(text(x, footY + 28, frame.agree + ' of ' + frame.checks + ' checks agree with the rule', BP, 'start', 9.5));
+    var lines = regLines(frame);
+    for (i = 0; i < lines.length; i++) svg.appendChild(text(x, footY + i * 14, lines[i], INK, 'start', 9.5));
+    footY += lines.length * 14;
+    svg.appendChild(text(x, footY, 'result in ' + frame.ret.join(', '), INK, 'start', 9.5));
+    svg.appendChild(text(x, footY + 14, frame.agree + ' of ' + frame.checks + ' checks agree with the rule', BP, 'start', 9.5));
+  }
+
+  function regLines(frame) {
+    var lines = [];
+    var i;
+    if (!frame.regs.length) return ['registers: none'];
+    if (frame.regs.length === 1) return ['registers: ' + frame.regs[0].p + ' in ' + frame.regs[0].r];
+    lines.push('registers:');
+    for (i = 0; i < frame.regs.length; i += 3) {
+      var chunk = [];
+      var j;
+      for (j = i; j < Math.min(i + 3, frame.regs.length); j++) chunk.push(frame.regs[j].p + ' in ' + frame.regs[j].r);
+      lines.push('  ' + chunk.join(', ') + (j < frame.regs.length ? ',' : ''));
+    }
+    return lines;
+  }
+
+  function maxRegLines(state) {
+    var most = 1;
+    var i;
+    for (i = 0; i < DATA.abis.length; i++) most = Math.max(most, regLines(frameOf(state, DATA.abis[i].id)).length);
+    return most;
   }
 
   function prologueBlock(abi, frame) {
@@ -195,7 +217,7 @@
 
     function render() {
       var rng = range(state);
-      var height = yFor(rng.bottom, rng) + FOOT;
+      var height = yFor(rng.bottom, rng) + FOOT + (maxRegLines(state) - 1) * 14;
       var i;
       while (svg.firstChild) svg.removeChild(svg.firstChild);
       svg.setAttribute('viewBox', '0 0 ' + W + ' ' + height);

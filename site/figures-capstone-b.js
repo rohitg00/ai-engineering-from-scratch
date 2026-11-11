@@ -76,7 +76,7 @@
       s.appendChild(svgEl('line', { x1: c[0], y1: c[1], x2: c[2], y2: c[3], stroke: 'var(--ink-soft,#555)', 'stroke-width': '1.3', 'marker-end': 'url(#cb-arr)' }));
     });
     function packet(path, begin, fill) {
-      var d = svgEl('circle', { r: '5', fill: fill, cx: '0', cy: '0' });
+      var d = svgEl('circle', { r: '5', fill: fill, cx: '0', cy: '0', opacity: '0' });
       d.appendChild(svgEl('animateMotion', { path: path, dur: '2.8s', begin: begin, repeatCount: 'indefinite', keyPoints: '0;1', keyTimes: '0;1' }));
       d.appendChild(anim('opacity', '0;1;1;0', '2.8s', { begin: begin, keyTimes: '0;0.1;0.9;1' }));
       return d;
@@ -145,10 +145,10 @@
     var pk = svgEl('circle', { r: '6', fill: 'var(--warn,#b8870f)', cx: '64', cy: '92' });
     pk.appendChild(svgEl('animateMotion', { path: path, dur: '3.6s', repeatCount: 'indefinite', keyTimes: '0;1', keyPoints: '0;1', calcMode: 'linear' }));
     s.appendChild(pk);
-    var cite = txt(x[3] + bw / 2, 150, 'answer + [chunk:42] citation', '10', 'var(--blueprint,#3553ff)');
+    var cite = txt(x[3] + bw, 150, 'answer + [chunk:42] citation', '10', 'var(--blueprint,#3553ff)', 'end');
     cite.appendChild(anim('opacity', '0;0;1;1;0', '3.6s', { keyTimes: '0;0.78;0.85;0.95;1' }));
     s.appendChild(cite);
-    var refuse = txt(x[3] + bw / 2, 168, 'or refuse on low confidence', '8', 'var(--ink-mute,#777)');
+    var refuse = txt(x[3] + bw, 168, 'or refuse on low confidence', '8', 'var(--ink-mute,#777)', 'end');
     refuse.appendChild(anim('opacity', '0;0;0.8;0', '3.6s', { keyTimes: '0;0.85;0.92;1' }));
     s.appendChild(refuse);
     shell(host, 'END-TO-END RAG', 'one query, four stages', s,
@@ -171,12 +171,14 @@
     for (i = 0; i < 4; i++) {
       var ay = 60 + i * 32, ok = res[i] === 'pass';
       s.appendChild(rect(200, ay, 120, 24, 'var(--bg-surface,#eee)', 'var(--rule-soft,#ddd)'));
-      s.appendChild(txt(208, ay + 16, 'assert ' + (i + 1), '9', 'var(--ink-soft,#555)', 'start'));
+      var base = txt(208, ay + 16, 'assert ' + (i + 1), '9', 'var(--ink-soft,#555)', 'start');
+      base.appendChild(anim('opacity', '1;1;0;0', '3.4s', { begin: (0.3 + i * 0.25) + 's', keyTimes: '0;0.3;0.31;1' }));
+      s.appendChild(base);
       var lit = svgEl('g', { opacity: '0' }, [
         rect(200, ay, 120, 24, ok ? 'var(--blueprint,#3553ff)' : 'var(--warn,#b8870f)', 'var(--rule-soft,#ddd)'),
         txt(208, ay + 16, 'assert ' + (i + 1), '9', 'var(--bg,#fafaf5)', 'start')
       ]);
-      lit.appendChild(anim('opacity', '0;0;1', '3.4s', { begin: (0.3 + i * 0.25) + 's', keyTimes: '0;0.3;1' }));
+      lit.appendChild(anim('opacity', '0;0;1;1', '3.4s', { begin: (0.3 + i * 0.25) + 's', keyTimes: '0;0.31;0.36;1' }));
       s.appendChild(lit);
       var mark = txt(312, ay + 16, ok ? '✓' : '✗', '12', ok ? 'var(--blueprint,#3553ff)' : 'var(--warn,#b8870f)', 'end');
       mark.appendChild(anim('opacity', '0;0;1;1', '3.4s', { begin: (0.3 + i * 0.25) + 's', keyTimes: '0;0.3;0.45;1' }));
@@ -200,8 +202,7 @@
   // ── eval-grid (75): task grid lights pass/fail across a worker pool ─────────
   function evalGrid(host) {
     var s = svg(240), cols = 8, rows = 4, cw = 38, ch = 30, gx0 = 130, gy0 = 30;
-    s.appendChild(txt(60, 50, 'worker', '10', 'var(--ink-soft,#555)'));
-    s.appendChild(txt(60, 64, 'pool', '10', 'var(--ink-soft,#555)'));
+    s.appendChild(txt(60, gy0 - 8, 'worker pool', '10', 'var(--ink-soft,#555)'));
     var w, c;
     for (w = 0; w < rows; w++) {
       s.appendChild(rect(20, gy0 + w * (ch + 6) + 18, 80, 22, 'var(--blueprint,#3553ff)', 'none'));

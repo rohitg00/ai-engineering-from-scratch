@@ -46,7 +46,7 @@
   var LEVEL_PITCH = 78;
   var NODE_W = 96;
   var NODE_H = 34;
-  var LEAF_H = 58;
+  var LEAF_H = 72;
 
   function ensureStyles() {
     if (document.getElementById('re44-styles')) return;
@@ -219,10 +219,10 @@
 
   var TREE = layoutTree();
 
-  function rangeText(leaf) {
-    if (!leaf.bounded) return 'no input in the bound';
-    if (leaf.bounded.min === DATA.tree.domain[0] && leaf.bounded.max === DATA.tree.domain[1]) return leaf.bounded.count + ' inputs across the bound';
-    return 'score ' + leaf.bounded.min + '..' + leaf.bounded.max + ' (' + leaf.bounded.count + ')';
+  function rangeLines(leaf) {
+    if (!leaf.bounded) return ['no input', 'in the bound'];
+    if (leaf.bounded.min === DATA.tree.domain[0] && leaf.bounded.max === DATA.tree.domain[1]) return [leaf.bounded.count + ' inputs', 'across the bound'];
+    return ['score ' + leaf.bounded.min + '..' + leaf.bounded.max, '(' + leaf.bounded.count + ')'];
   }
 
   function drawTree(svg, state, onPick) {
@@ -241,9 +241,10 @@
       var midY = (y1 + y2) / 2;
       svg.appendChild(svgEl('path', { d: 'M' + x1 + ' ' + y1 + ' C' + x1 + ' ' + midY + ' ' + x2 + ' ' + midY + ' ' + x2 + ' ' + y2, fill: 'none', stroke: BP, 'stroke-width': '1.4' }));
       var label = e.cond.length > 24 ? e.cond.replace(/local_10/g, 'q') : e.cond;
-      var lx = (x1 + x2) / 2;
-      svg.appendChild(svgEl('rect', { x: lx - label.length * 3.1, y: midY - 9, width: label.length * 6.2, height: 13, fill: BG, opacity: '0.92' }));
-      svg.appendChild(text(lx, midY + 1, label, INK, 'middle', 9.8));
+      var lx = x2;
+      var ly = y2 - 8;
+      svg.appendChild(svgEl('rect', { x: lx - label.length * 3.1, y: ly - 10, width: label.length * 6.2, height: 13, fill: BG, opacity: '0.92' }));
+      svg.appendChild(text(lx, ly, label, INK, 'middle', 9.8));
     }
     var id;
     for (id in TREE.positions) {
@@ -259,7 +260,9 @@
       if (labels.length) g.appendChild(text(p.x, p.y - h / 2 + 26, labels[0].replace('local_10', 'q').replace('local_4', 'r'), INK, 'middle', 10));
       if (leaf) {
         g.appendChild(text(p.x, p.y - h / 2 + 40, 'returns ' + leaf.returns, INK, 'middle', 10, '600'));
-        g.appendChild(text(p.x, p.y - h / 2 + 52, rangeText(leaf), MUTE, 'middle', 9.2));
+        var range = rangeLines(leaf);
+        g.appendChild(text(p.x, p.y - h / 2 + 53, range[0], MUTE, 'middle', 9.2));
+        g.appendChild(text(p.x, p.y - h / 2 + 65, range[1], MUTE, 'middle', 9.2));
         g.appendChild(svgEl('title', {}, [document.createTextNode('leaf ' + id + ': ' + leaf.condition)]));
         (function (leafId) {
           g.addEventListener('click', function () { onPick({ kind: 'leaf', id: leafId }); });

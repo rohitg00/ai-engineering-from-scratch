@@ -95,11 +95,11 @@
     svg.appendChild(svgEl('circle', { cx: realC[0], cy: realC[1], r: '3', fill: INK }));
     svg.appendChild(txt(110, 215, 'real (blue)   generated (amber)', 11, MUTE, 'start'));
     var fidLabel = txt(W - 40, 215, 'FID = high', 12, WARN, 'end');
-    fidLabel.appendChild(anim('opacity', '1;0;0;1', '9s', { keyTimes: '0;0.45;0.7;1' }));
+    fidLabel.appendChild(anim('opacity', '1;1;0;0;1;1', '9s', { keyTimes: '0;0.3;0.36;0.78;0.84;1' }));
     svg.appendChild(fidLabel);
-    var fidMatch = txt(W - 40, 215, 'FID = high', 12, BP, 'end');
+    var fidMatch = txt(W - 40, 215, 'FID = low', 12, BP, 'end');
     fidMatch.setAttribute('opacity', '0');
-    fidMatch.appendChild(anim('opacity', '0;1;1;0', '9s', { keyTimes: '0;0.45;0.7;1' }));
+    fidMatch.appendChild(anim('opacity', '0;0;1;1;0;0', '9s', { keyTimes: '0;0.38;0.45;0.7;0.76;1' }));
     svg.appendChild(fidMatch);
     frame(host, 'FRECHET INCEPTION DISTANCE', 'two distributions', svg,
       'FID does not score images one by one. It fits a Gaussian to the real images and another to the generated images in Inception feature space, then measures the distance between those two distributions through their means and covariances. As the generated cloud moves to overlap the real one, the distance, and the FID, falls toward zero.');
@@ -109,7 +109,7 @@
   function patchgan(host) {
     var W = 520, H = 240, svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
     var ix = 60, iy = 50, isz = 150, n = 4;
-    svg.appendChild(txt(ix + isz / 2, 36, 'generated image y  (conditioned on input x)', 11, MUTE));
+    svg.appendChild(txt(ix, 36, 'generated image y  (conditioned on input x)', 11, MUTE, 'start'));
     svg.appendChild(svgEl('rect', { x: ix, y: iy, width: isz, height: isz, fill: BP, opacity: '0.06', stroke: SOFT, 'stroke-width': '1' }));
     var cell = isz / n, r, c, k = 0;
     // verdict grid on the right; each patch lights as the receptive-field box sweeps
@@ -256,7 +256,7 @@
     var lbl = txt(x0 + full + 4, y0 + h + 28, '3072 dims', 11, WARN, 'middle');
     lbl.appendChild(anim('x', (x0 + full) + ';' + (x0 + full / 8) + ';' + (x0 + full / 8) + ';' + (x0 + full), '7s', { keyTimes: '0;0.4;0.6;1', keySplines: '.4 0 .2 1;0 0 1 1;.4 0 .2 1' }));
     svg.appendChild(lbl);
-    svg.appendChild(txt(x0, y0 + h + 28, 'prefix kept', 11, MUTE, 'start'));
+    svg.appendChild(txt(x0, y0 + h + 50, 'prefix kept', 11, MUTE, 'start'));
     svg.appendChild(txt(W / 2, 200, 'storage scales with kept dimensions; quality degrades gracefully', 11, MUTE));
     frame(host, 'MATRYOSHKA TRUNCATION', 'shed dimensions', svg,
       'A Matryoshka-trained embedding packs the most important information into its earliest dimensions. You can keep only a prefix of the vector, slicing 3072 floats down to a few hundred, and still retrieve well. Truncation cuts index storage several-fold while quality falls off gradually rather than collapsing, so you tune the dimension budget to your cost target.');

@@ -350,7 +350,7 @@
     a1.appendChild(svgEl('animate', { attributeName: 'opacity', values: '0;1', dur: '0.5s', begin: '0.6s', fill: 'freeze', calcMode: 'spline', keySplines: SPL, keyTimes: '0;1' }));
     svg.appendChild(a1);
     var a2 = svgEl('circle', { r: '6', fill: WARN, opacity: '0' });
-    a2.appendChild(svgEl('animateMotion', { path: 'M130 177 A55 55 0 1 1 129.9 176.999 Z', dur: '4s', begin: '0.6s', repeatCount: 'indefinite', calcMode: 'linear', keyPoints: '0;1', keyTimes: '0;1' }));
+    a2.appendChild(svgEl('animateMotion', { path: 'M130 177 A55 55 0 1 1 130.1 177.001 Z', dur: '4s', begin: '0.6s', repeatCount: 'indefinite', calcMode: 'linear', keyPoints: '0;1', keyTimes: '0;1' }));
     a2.appendChild(svgEl('animate', { attributeName: 'opacity', values: '0;1', dur: '0.5s', begin: '0.7s', fill: 'freeze', calcMode: 'spline', keySplines: SPL, keyTimes: '0;1' }));
     svg.appendChild(a2);
     svg.appendChild(txt(130, 214, 'independent learning: each chases', '9', MUTE));

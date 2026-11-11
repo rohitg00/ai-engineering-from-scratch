@@ -538,9 +538,10 @@
     dot(-Math.PI / 2, 55, win[0], 0);
     for (i = 0; i < 3; i++) dot(-Math.PI / 2 + i * 2.09, 68, win[1], i * 0.025);
     for (i = 0; i < 8; i++) dot(i * Math.PI / 4, 88, win[2], i * 0.02);
-    svg.appendChild(svgEl('circle', { cx: cx, cy: cy, r: '26', fill: SURF, stroke: BP, 'stroke-width': '2.5' }));
-    svg.appendChild(txt(cx, cy - 2, 'lead', '9', BP));
-    svg.appendChild(txt(cx, cy + 10, 'plans + synthesizes', '5.8', MUTE));
+    svg.appendChild(svgEl('circle', { cx: cx, cy: cy, r: '32', fill: SURF, stroke: BP, 'stroke-width': '2.5' }));
+    svg.appendChild(txt(cx, cy - 7, 'lead', '9', BP));
+    svg.appendChild(txt(cx, cy + 5, 'plans +', '7', MUTE));
+    svg.appendChild(txt(cx, cy + 15, 'synthesizes', '7', MUTE));
     for (i = 0; i < 3; i++) {
       var pt = txt(cx, 226, phases[i], '9', i === 2 ? WARN : BP);
       appear(pt, win[i][0], 0.05, win[i][1], 0.025, period);

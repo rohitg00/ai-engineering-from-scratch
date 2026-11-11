@@ -146,42 +146,79 @@
     }, []);
   }
 
-  function nodeTextLayout(node) {
+  function typeScale(viewBox) {
+    var width = Number(String(viewBox).split(/\s+/)[2]) || 760;
+    var floor = Math.max(9.5, Math.ceil(width * 8.6 / 694 * 2) / 2);
+    return {
+      title: 14,
+      detail: Math.max(11, floor),
+      compactTitle: Math.max(11.5, floor + 1),
+      compactDetail: floor,
+      edge: Math.max(11, floor),
+      zone: Math.max(12, floor)
+    };
+  }
+
+  function nodeTextLayout(node, type) {
     var available = Math.max(28, node.width - 24);
     var rawTitle = lines(node.title);
     var rawDetail = node.detail ? lines(node.detail) : [];
-    var compact = rawTitle.some(function (line) { return line.length * 8.4 > available; }) ||
-      rawDetail.some(function (line) { return line.length * 6.6 > available; });
+    var compact = rawTitle.some(function (line) { return line.length * 0.6 * type.title > available; }) ||
+      rawDetail.some(function (line) { return line.length * 0.6 * type.detail > available; });
     if (!compact) {
+      var plainDetailStep = Math.round(type.detail * 1.27);
+      var plainDetailY = node.y + 27 + rawTitle.length * 17 + Math.max(0, type.detail - 11);
+      var plainLast = rawDetail.length ? plainDetailY + (rawDetail.length - 1) * plainDetailStep : node.y + 23 + (rawTitle.length - 1) * 17;
       return {
         compact: false,
         title: rawTitle,
         detail: rawDetail,
+        titleSize: type.title,
+        detailSize: type.detail,
         titleY: node.y + 23,
-        detailY: node.y + 27 + rawTitle.length * 17,
+        detailY: plainDetailY,
         titleStep: 17,
-        detailStep: 14
+        detailStep: plainDetailStep,
+        required: plainLast - node.y + 10
       };
     }
 
-    var title = wrappedLines(node.title, Math.max(5, Math.floor(available / 6.9)));
-    var detail = node.detail ? wrappedLines(node.detail, Math.max(6, Math.floor(available / 5.7))) : [];
-    var titleStep = 13;
-    var detailStep = 11;
-    var titleHeight = 15 + Math.max(0, title.length - 1) * titleStep;
-    var detailHeight = detail.length ? 12 + Math.max(0, detail.length - 1) * detailStep : 0;
-    var totalHeight = titleHeight + (detail.length ? 1 + detailHeight : 0);
-    var top = node.y + Math.max(2, (node.height - totalHeight) / 2);
-    var titleY = top + 12;
+    var titleSize = type.compactTitle;
+    var detailSize = type.compactDetail;
+    var title = wrappedLines(node.title, Math.max(5, Math.floor(available / (0.6 * titleSize))));
+    var detail = node.detail ? wrappedLines(node.detail, Math.max(6, Math.floor(available / (0.6 * detailSize)))) : [];
+    var titleStep = Math.round(titleSize * 1.13);
+    var detailStep = Math.round(detailSize * 1.16);
+    var titleHeight = titleSize * 1.3 + Math.max(0, title.length - 1) * titleStep;
+    var detailHeight = detail.length ? detailSize * 1.26 + Math.max(0, detail.length - 1) * detailStep : 0;
+    var totalHeight = titleHeight + (detail.length ? 2 + detailHeight : 0);
+    var top = node.y + Math.max(4, (node.height - totalHeight) / 2);
+    var titleY = top + titleSize * 1.04;
     return {
       compact: true,
       title: title,
       detail: detail,
+      titleSize: titleSize,
+      detailSize: detailSize,
       titleY: titleY,
-      detailY: titleY + Math.max(0, title.length - 1) * titleStep + 14,
+      detailY: titleY + Math.max(0, title.length - 1) * titleStep + detailSize + 4.5,
       titleStep: titleStep,
-      detailStep: detailStep
+      detailStep: detailStep,
+      required: Math.ceil(totalHeight + 10)
     };
+  }
+
+  function fitNode(source, type) {
+    var node = {};
+    Object.keys(source).forEach(function (key) { node[key] = source[key]; });
+    var layout = nodeTextLayout(node, type);
+    if (layout.required > node.height) {
+      node.y -= (layout.required - node.height) / 2;
+      node.height = layout.required;
+      layout = nodeTextLayout(node, type);
+    }
+    node.layout = layout;
+    return node;
   }
 
   function nodeCenter(node) {
@@ -217,8 +254,8 @@
     return 'M' + x1 + ' ' + y1 + ' C' + x1 + ' ' + my + ' ' + x2 + ' ' + my + ' ' + x2 + ' ' + y2;
   }
 
-  function textBlock(node, className, value, startY, lineHeight) {
-    var text = svgEl('text', { x: node.x + 12, y: startY, class: className });
+  function textBlock(node, className, value, startY, lineHeight, size) {
+    var text = svgEl('text', { x: node.x + 12, y: startY, class: className, style: 'font-size:' + size + 'px' });
     lines(value).forEach(function (line, index) {
       text.appendChild(svgEl('tspan', {
         x: node.x + 12,
@@ -247,8 +284,10 @@
       var nodeMap = {};
       var nodeViews = [];
       var edgeViews = [];
+      var type = typeScale(config.viewBox || '0 0 760 480');
+      var nodes = config.nodes.map(function (node) { return fitNode(node, type); });
 
-      config.nodes.forEach(function (node) { nodeMap[node.id] = node; });
+      nodes.forEach(function (node) { nodeMap[node.id] = node; });
 
       var svg = svgEl('svg', {
         class: 'asf-svg',
@@ -274,7 +313,7 @@
       (config.zones || []).forEach(function (zone) {
         svg.appendChild(svgEl('g', { class: 'asf-zone' }, [
           svgEl('rect', { x: zone.x, y: zone.y, width: zone.width, height: zone.height }),
-          svgEl('text', { x: zone.x + 10, y: zone.y + 18 }, [document.createTextNode(zone.label)])
+          svgEl('text', { x: zone.x + 10, y: zone.y + 18, style: 'font-size:' + type.zone + 'px' }, [document.createTextNode(zone.label)])
         ]));
       });
 
@@ -290,20 +329,20 @@
           var toCenter = nodeCenter(nodeMap[edge.to]);
           var labelX = edge.points && edge.points.length ? edge.points[Math.floor(edge.points.length / 2)][0] : (fromCenter.x + toCenter.x) / 2;
           var labelY = edge.points && edge.points.length ? edge.points[Math.floor(edge.points.length / 2)][1] - 7 : (fromCenter.y + toCenter.y) / 2 - 7;
-          group.appendChild(svgEl('text', { x: labelX, y: labelY, class: 'asf-edge-label' }, [document.createTextNode(edge.label)]));
+          group.appendChild(svgEl('text', { x: labelX, y: labelY, class: 'asf-edge-label', style: 'font-size:' + type.edge + 'px' }, [document.createTextNode(edge.label)]));
         }
         svg.appendChild(group);
         edgeViews.push({ config: edge, element: group });
       });
 
-      config.nodes.forEach(function (node) {
-        var layout = nodeTextLayout(node);
+      nodes.forEach(function (node) {
+        var layout = node.layout;
         var nodeClass = 'asf-node' + (node.kind === 'decision' ? ' is-decision' : '') + (node.kind === 'warning' ? ' is-warning' : '') + (layout.compact ? ' is-compact' : '');
         var group = svgEl('g', { class: nodeClass, 'data-node': node.id });
         group.appendChild(svgEl('rect', { x: node.x, y: node.y, width: node.width, height: node.height, rx: '0' }));
-        group.appendChild(textBlock(node, 'asf-title', layout.title, layout.titleY, layout.titleStep));
+        group.appendChild(textBlock(node, 'asf-title', layout.title, layout.titleY, layout.titleStep, layout.titleSize));
         if (layout.detail.length) {
-          group.appendChild(textBlock(node, 'asf-detail', layout.detail, layout.detailY, layout.detailStep));
+          group.appendChild(textBlock(node, 'asf-detail', layout.detail, layout.detailY, layout.detailStep, layout.detailSize));
         }
         svg.appendChild(group);
         nodeViews.push({ config: node, element: group });
@@ -483,8 +522,8 @@
         N('validate', 190, 55, 'Validate', 'metadata + layout', 1, '', 140, 60),
         N('catalog', 360, 55, 'Catalog', 'name + description', 2, '', 140, 60),
         N('select', 535, 55, 'Select?', 'explicit or implicit', 3, 'decision', 140, 60),
-        N('unloaded', 730, 25, 'Leave unloaded', 'no match', 4, 'warning', 150, 54),
-        N('activate', 730, 125, 'Activate', 'body enters context', 4, '', 150, 60),
+        N('unloaded', 740, 25, 'Leave unloaded', 'no match', 4, 'warning', 150, 54),
+        N('activate', 740, 125, 'Activate', 'body enters context', 4, '', 150, 60),
         N('body', 535, 230, 'Load SKILL.md', 'working procedure', 5, '', 150, 60),
         N('resources', 350, 230, 'Disclose resources', 'only required branch', 6, '', 155, 60),
         N('execute', 165, 230, 'Request execution', 'host tools + policy', 7, '', 155, 60),
@@ -654,7 +693,7 @@
         N('inside', 650, 105, 'Target under root?', 'after symlinks', 3, 'decision', 150, 62),
         N('reject2', 815, 45, 'Reject', 'escaped root', 4, 'warning', 110, 52),
         N('type', 650, 230, 'Expected file type?', 'regular allowed file', 4, 'decision', 150, 62),
-        N('reject3', 815, 230, 'Reject', 'wrong or special file', 5, 'warning', 110, 52),
+        N('reject3', 820, 230, 'Reject', 'wrong or special file', 5, 'warning', 108, 52),
         N('limit', 455, 350, 'Within size limit?', 'bounded context read', 5, 'decision', 155, 62),
         N('reject4', 670, 390, 'Reject', 'oversized resource', 6, 'warning', 130, 52),
         N('load', 255, 455, 'Load resource', 'record reason + bytes', 6, '', 150, 62)
@@ -662,7 +701,7 @@
       edges: [
         E('request', 'escape', 1), E('escape', 'reject1', 2, 'yes', 'warning'), E('escape', 'resolve', 2, 'no'),
         E('resolve', 'inside', 3), E('inside', 'reject2', 4, 'no', 'warning'), E('inside', 'type', 4, 'yes'),
-        E('type', 'reject3', 5, 'no', 'warning'), E('type', 'limit', 5, 'yes'),
+        E('type', 'reject3', 5, 'no', 'warning', [[800, 258], [810, 258], [820, 258]]), E('type', 'limit', 5, 'yes'),
         E('limit', 'reject4', 6, 'no', 'warning'), E('limit', 'load', 6, 'yes')
       ],
       steps: [
@@ -813,7 +852,7 @@
       ],
       edges: [
         E('skill', 'model', 1), E('model', 'capability', 2), E('capability', 'permission', 3), E('permission', 'approval', 4),
-        E('approval', 'executor', 5, 'allowed or granted'), E('approval', 'stop', 5, 'denied', 'warning'),
+        E('approval', 'executor', 5, 'allowed or granted', '', [[682, 105], [682, 86], [775, 86]]), E('approval', 'stop', 5, 'denied', 'warning', [[700, 167], [700, 229], [775, 229]]),
         E('executor', 'observe', 6, '', '', [[845, 117], [930, 117], [930, 275], [145, 275]]), E('observe', 'verify', 7)
       ],
       steps: [
@@ -848,7 +887,7 @@
         N('effects', 780, 455, 'External effects', 'publish, delete, bill', 5, 'warning', 110, 58)
       ],
       edges: [
-        E('package', 'instructions', 1), E('resources', 'instructions', 1), E('untrusted', 'instructions', 1, 'data, not authority', 'warning'),
+        E('package', 'instructions', 1), E('resources', 'instructions', 1), E('untrusted', 'instructions', 1, 'data, not authority', 'warning', [[190, 262], [290, 262], [290, 201]]),
         E('instructions', 'requests', 3), E('scripts', 'requests', 3), E('requests', 'host', 4),
         E('host', 'files', 5), E('host', 'network', 5, '', 'warning'), E('host', 'credentials', 5, '', 'warning'), E('host', 'effects', 5, '', 'warning')
       ],
@@ -872,7 +911,7 @@
         N('action', 35, 65, 'Proposed action', 'target + consequence', 0, '', 145, 60),
         N('reversible', 225, 65, 'Reversible + local?', 'rollback possible', 1, 'decision', 165, 62),
         N('scope', 470, 35, 'Inside pre-approved scope?', 'actor + operation + target', 2, 'decision', 185, 62),
-        N('impact', 470, 180, 'External, destructive, costly, or sensitive?', 'high consequence', 2, 'decision', 205, 76),
+        N('impact', 470, 180, 'External, destructive, costly, or sensitive?', 'high consequence', 2, 'decision', 190, 76),
         N('execute', 700, 35, 'Execute in sandbox', 'containment remains', 3, '', 165, 62),
         N('ask', 700, 220, 'Ask scoped approval', 'show exact consequence', 3, 'warning', 165, 62),
         N('granted', 500, 360, 'Granted', 'immutable action record', 4, '', 135, 58),
@@ -1001,7 +1040,7 @@
         E('failure', 'safety', 5, 'safety', 'warning'), E('failure', 'portability', 5, 'portability'),
         E('routing', 'reeval', 6), E('behavior', 'reeval', 6), E('script', 'reeval', 6), E('safety', 'reeval', 6), E('portability', 'reeval', 6),
         E('reeval', 'eval', 6, 'new evidence', '', [[455, 400], [455, 355], [642, 355], [642, 115]]),
-        E('failure', 'release', 7, 'passes gate')
+        E('failure', 'release', 7, 'passes gate', '', [[880, 115], [880, 220], [880, 330], [880, 530], [815, 530]])
       ],
       steps: [
         S('Observe real work', 'Extract a stable procedure from evidence, not from a broad topic label.', ['observe']),

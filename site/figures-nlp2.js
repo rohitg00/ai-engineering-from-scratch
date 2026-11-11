@@ -153,12 +153,12 @@
       [0.2, 2.1, 0.5, 0.1],
       [0.1, 0.1, 0.2, 2.4]
     ];
-    var W = 520, H = 240, PAD = 70;
+    var W = 520, H = 300, PAD = 70;
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
     var meta = el('div', { class: 'lf-meta' });
     var formula = el('div', { class: 'lf-formula' });
     var n = src.length;
-    var CELL = (W - PAD - 14) / n;
+    var CELL = Math.min((W - PAD - 14) / n, (H - 30 - 14) / n);
     state._render = function () {
       while (svg.firstChild) { svg.removeChild(svg.firstChild); }
       var s = Math.max(0.1, state.sharp), r, c;
@@ -319,7 +319,7 @@
     var words = ['great', 'not', 'terrible', 'okay'];
     var state = { w0: 1.6, w1: -0.4, w2: -1.8, w3: 0.2, bias: 0.0 };
     var keys = ['w0', 'w1', 'w2', 'w3'];
-    var W = 520, H = 120;
+    var W = 520, H = 164;
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
     var num = el('span', { class: 'lf-num' });
     var meta = el('div', { class: 'lf-meta' });
@@ -329,7 +329,7 @@
       var logit = state.bias, i;
       for (i = 0; i < keys.length; i++) { logit += state[keys[i]]; }
       var prob = 1 / (1 + Math.exp(-logit));
-      var bw = (W - 30) / words.length, x0 = 15, vmax = 2.0, baseY = 70;
+      var bw = (W - 30) / words.length, x0 = 15, vmax = 2.0, baseY = 80;
       for (i = 0; i < words.length; i++) {
         var v = state[keys[i]];
         var hh = Math.abs(v) / vmax * 40;
@@ -337,8 +337,8 @@
         var up = v >= 0;
         svg.appendChild(svgEl('rect', { x: (x + bw / 2 - 14).toFixed(1), y: (up ? baseY - hh : baseY).toFixed(1), width: '28', height: hh.toFixed(1), fill: up ? 'var(--blueprint,#3553ff)' : 'var(--warn,#b8870f)', 'fill-opacity': '0.75' }));
         svg.appendChild(svgEl('line', { x1: x.toFixed(1), y1: baseY.toFixed(1), x2: (x + bw).toFixed(1), y2: baseY.toFixed(1), stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '0.5' }));
-        svg.appendChild(svgText((x + bw / 2).toFixed(1), (baseY + 18).toFixed(1), words[i], 'middle', 'var(--ink-soft,#555)', '10'));
-        svg.appendChild(svgText((x + bw / 2).toFixed(1), (up ? baseY - hh - 4 : baseY + hh + 28).toFixed(1), v.toFixed(2), 'middle', 'var(--ink-mute,#777)', '9'));
+        svg.appendChild(svgText((x + bw / 2).toFixed(1), (baseY + 72).toFixed(1), words[i], 'middle', 'var(--ink-soft,#555)', '10'));
+        svg.appendChild(svgText((x + bw / 2).toFixed(1), (up ? baseY - hh - 4 : baseY + hh + 13).toFixed(1), v.toFixed(2), 'middle', 'var(--ink-mute,#777)', '9'));
       }
       num.innerHTML = (prob * 100).toFixed(1) + '% <small>positive</small>';
       meta.textContent = 'summed logit ' + logit.toFixed(2) + '  ·  sigmoid → ' + (prob >= 0.5 ? 'positive' : 'negative') + '  ·  blue lifts, orange lowers';

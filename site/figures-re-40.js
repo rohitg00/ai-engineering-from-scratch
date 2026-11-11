@@ -38,7 +38,8 @@
   var GRID_Y = CHAIN_Y + 4 * BOX_PITCH + 10;
   var ROW_H = 20;
   var CELL_W = 58;
-  var GRID_X = 150;
+  var GRID_X = 20;
+  var GRID_TOP = 42;
 
   function ensureStyles() {
     if (document.getElementById('re40-styles')) return;
@@ -168,14 +169,13 @@
     var s = DATA.stripped;
     var methods = s.methods;
     var i, j;
-    svg.appendChild(text(GRID_X - 8, GRID_Y + 12, 'stripped build', MUTE, 'end', 11));
-    svg.appendChild(text(GRID_X - 8, GRID_Y + 26, s.file, MUTE, 'end', 9.5));
+    svg.appendChild(text(GRID_X, GRID_Y + 12, 'stripped build: ' + s.file, MUTE, 'start', 11));
     var heads = ['starts', 'sub sp', 'stp fp', 'bl+entry', 'signature'];
     for (j = 0; j < methods.length; j++) {
-      svg.appendChild(text(GRID_X + j * CELL_W + CELL_W / 2, GRID_Y + 12, heads[j], INK, 'middle', 10.5));
+      svg.appendChild(text(GRID_X + j * CELL_W + CELL_W / 2, GRID_Y + GRID_TOP - 10, heads[j], INK, 'middle', 10.5));
     }
     for (i = 0; i < s.truth.length; i++) {
-      var y = GRID_Y + 22 + i * ROW_H;
+      var y = GRID_Y + GRID_TOP + i * ROW_H;
       var fn = s.truth[i];
       svg.appendChild(text(GRID_X + methods.length * CELL_W + 8, y + 14, fn.name + ' ' + hex(fn.start), INK, 'start', 10.5));
       for (j = 0; j < methods.length; j++) {
@@ -194,7 +194,7 @@
       for (i = 0; i < s.truth.length; i++) if (methods[j].found.indexOf(s.truth[i].start) >= 0) count++;
       totals.push(heads[j] + ' ' + count + '/' + s.truth.length);
     }
-    svg.appendChild(text(GRID_X, GRID_Y + 22 + s.truth.length * ROW_H + 16, totals.join('   '), MUTE, 'start', 10.5));
+    svg.appendChild(text(GRID_X, GRID_Y + GRID_TOP + s.truth.length * ROW_H + 16, totals.join('   '), MUTE, 'start', 10.5));
   }
 
   function verdictText(format, stage) {
@@ -217,7 +217,7 @@
     var titleId = LF.uid('lf-re40-title');
     var descId = LF.uid('lf-re40-desc');
     var markerId = LF.uid('lf-re40-arrow');
-    var height = GRID_Y + 22 + DATA.stripped.truth.length * ROW_H + 30;
+    var height = GRID_Y + GRID_TOP + DATA.stripped.truth.length * ROW_H + 30;
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + height, role: 'img', 'aria-labelledby': titleId + ' ' + descId });
     var current = el('div', { class: 're40__current' });
     var verdict = el('div', { class: 're40__verdict', role: 'status', 'aria-live': 'polite', 'aria-atomic': 'true' });

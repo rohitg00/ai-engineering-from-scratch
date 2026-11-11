@@ -325,7 +325,7 @@
     var runner = svgEl('circle', { cy: ty, r: 6, fill: BP });
     runner.appendChild(anim('cx', tx0 + ';' + tx1 + ';' + tx1, dur, { keyTimes: '0;0.9;1', calcMode: 'spline', keySplines: '0.4 0 0.6 1;0 0 1 1' }));
     svg.appendChild(runner);
-    svg.appendChild(txt(355, 222, 'invariants: loss falls · ranks agree · 12P/N optimiser bytes · resume byte-equal', MUTE, 8.5));
+    svg.appendChild(txt(260, 222, 'invariants: loss falls · ranks agree · 12P/N optimiser bytes · resume byte-equal', MUTE, 8.5));
     card(host, 'DISTRIBUTED ASSEMBLY', 'compose · run 20 steps',
       svg,
       'Each piece was built and tested alone; the capstone proves they compose. DDP broadcast syncs the initial weights once, the ZeRO-1 step replaces optimiser.step every iteration, and the sharded checkpoint fires at step 10. The run self-terminates after 20 steps only if all four invariants hold on every rank.');

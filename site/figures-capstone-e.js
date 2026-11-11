@@ -133,7 +133,7 @@
       cg.appendChild(animT('translate', c[2], '5s', { calcMode: 'spline', keySplines: EASE + ';' + EASE + ';' + EASE, keyTimes: '0;0.35;0.55;1' }));
       svg.appendChild(cg);
     }
-    var cite = txt(432, 224, 'answer cites file:line from the top chunk', SOFT, 9);
+    var cite = txt(498, 224, 'answer cites file:line from the top chunk', SOFT, 9, 'end');
     cite.appendChild(anim('opacity', '0.25;0.25;1;1', '5s', { keyTimes: '0;0.5;0.65;1' }));
     svg.appendChild(cite);
     card(host, 'HYBRID RETRIEVAL', 'dense + bm25 - rerank',
@@ -505,7 +505,7 @@
     svg.appendChild(reg);
     svg.appendChild(svgEl('line', { x1: 60, y1: 160, x2: 60, y2: 236, stroke: RULE, 'stroke-width': '1' }));
     svg.appendChild(svgEl('line', { x1: 60, y1: 236, x2: 490, y2: 236, stroke: RULE, 'stroke-width': '1' }));
-    svg.appendChild(txt(56, 158, 'faithfulness', MUTE, 8, 'end'));
+    svg.appendChild(txt(66, 158, 'faithfulness', MUTE, 8, 'start'));
     var spark = svgEl('path', {
       d: 'M60 176 L100 173 L140 178 L180 174 L220 177 L260 173 L300 176 L316 222 L360 219 L400 223 L440 220 L470 221',
       fill: 'none', stroke: BP, 'stroke-width': '2', 'stroke-dasharray': '520', 'stroke-dashoffset': '520'

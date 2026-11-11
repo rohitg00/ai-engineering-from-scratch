@@ -109,7 +109,13 @@ iso-machine {"machine":"self-attention"}
 ```
 ````
 
-`node --test site/test_lesson_walkthrough.js` covers the step sync. The skills
+`node --test site/test_lesson_walkthrough.js` covers the step sync.
+`node scripts/audit_lesson_figures.js` mounts every lesson figure in Chrome at
+desktop and phone width and must print `TOTAL 0`: no label overlaps another or
+leaves the drawing, no text renders under 9 px (with 0.5 px allowed for rounding), and no drawing scrolls
+sideways at desktop width. It needs `CHROME_PATH` and `puppeteer-core` on
+`NODE_PATH`; `--only <name>` checks one figure and `--shots <dir>` saves a
+picture of each failing one. The skills
 in `skills/` describe the house look: `blueprint-figure` for static SVG,
 `motion-figure` for animated and interactive figures, `isometric-explainer`
 for full machine pages, and `course-style` for colour tokens and prose rules.

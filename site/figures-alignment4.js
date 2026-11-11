@@ -100,26 +100,26 @@
       }
       doc.appendChild(fadeWin(D, (0.03 + i * 0.05).toFixed(2), (0.13 + i * 0.05).toFixed(2), '0.93'));
       svg.appendChild(doc);
-      var lead = svgEl('line', { x1: 130, y1: y + 31, x2: 196, y2: 106 + i * 4, stroke: MUTE, 'stroke-width': '1.2', 'stroke-dasharray': '4 3', opacity: '0' });
+      var lead = svgEl('line', { x1: 130, y1: y + 31, x2: 172, y2: 106 + i * 4, stroke: MUTE, 'stroke-width': '1.2', 'stroke-dasharray': '4 3', opacity: '0' });
       lead.appendChild(fadeWin(D, '0.2', '0.28', '0.93'));
       svg.appendChild(lead);
     }
     svg.appendChild(txt(78, 34, 'identical resumes', MUTE, 9));
     var box = svgEl('g', {}, [
-      svgEl('rect', { x: 200, y: 84, width: 92, height: 52, rx: 6, fill: BP, opacity: '0.12' }),
-      svgEl('rect', { x: 200, y: 84, width: 92, height: 52, rx: 6, fill: 'none', stroke: BP, 'stroke-width': '2' }),
-      txt(246, 106, 'LLM', BP, 12),
-      txt(246, 122, 'scorer', SOFT, 9)
+      svgEl('rect', { x: 176, y: 84, width: 92, height: 52, rx: 6, fill: BP, opacity: '0.12' }),
+      svgEl('rect', { x: 176, y: 84, width: 92, height: 52, rx: 6, fill: 'none', stroke: BP, 'stroke-width': '2' }),
+      txt(222, 106, 'LLM', BP, 12),
+      txt(222, 122, 'scorer', SOFT, 9)
     ]);
     box.appendChild(anim('opacity', '0.75;1;0.75', '3s'));
     svg.appendChild(box);
     var bw = [176, 104];
     for (i = 0; i < 2; i++) {
       var by = 92 + i * 26;
-      var bar = svgEl('rect', { x: 310, y: by, width: 0, height: 14, rx: 3, fill: i ? WARN : BP, opacity: '0.8' });
+      var bar = svgEl('rect', { x: 284, y: by, width: 0, height: 14, rx: 3, fill: i ? WARN : BP, opacity: '0.8' });
       bar.appendChild(anim('width', '0;0;' + bw[i] + ';' + bw[i] + ';0', D, { calcMode: 'spline', keyTimes: winKT(0.34 + i * 0.05, 0.52 + i * 0.05, 0.92), keySplines: WINSPL }));
       svg.appendChild(bar);
-      var lb = txt(310 + bw[i] + 8, by + 11, i ? 'score B' : 'score A', i ? WARN : BP, 9, 'start');
+      var lb = txt(284 + bw[i] + 8, by + 11, i ? 'score B' : 'score A', i ? WARN : BP, 9, 'start');
       lb.setAttribute('opacity', '0');
       lb.appendChild(fadeWin(D, (0.52 + i * 0.05).toFixed(2), (0.58 + i * 0.05).toFixed(2), '0.92'));
       svg.appendChild(lb);
@@ -359,7 +359,7 @@
       doc.appendChild(anim('opacity', '0;1;1;0;0', D, { keyTimes: '0;' + (0.08 + i * 0.07).toFixed(2) + ';' + (0.34 + i * 0.07).toFixed(2) + ';' + (0.44 + i * 0.07).toFixed(2) + ';1' }));
       svg.appendChild(doc);
     }
-    svg.appendChild(txt(52, 168, 'opt-out honored here', MUTE, 9));
+    svg.appendChild(txt(66, 168, 'opt-out honored here', MUTE, 9));
     var back = svgEl('g', { opacity: '0' }, [
       svgEl('line', { x1: 296, y1: 196, x2: 120, y2: 196, stroke: WARN, 'stroke-width': '1.8', 'stroke-dasharray': '6 4' }),
       svgEl('polygon', { points: '120,191 120,201 110,196', fill: WARN }),
@@ -435,7 +435,7 @@
     var eb = svgEl('rect', { x: 342, y: 138, width: 0, height: 22, rx: 3, fill: WARN, opacity: '0.85' });
     eb.appendChild(anim('width', '0;0;118;118;0', D, { calcMode: 'spline', keyTimes: winKT(0.4, 0.62, 0.92), keySplines: WINSPL }));
     svg.appendChild(eb);
-    var elb = txt(342, 178, 'smaller ratio, larger absolute reach', WARN, 10, 'start');
+    var elb = txt(TH - 6, 178, 'smaller ratio, larger absolute reach', WARN, 10, 'end');
     elb.setAttribute('opacity', '0');
     elb.appendChild(fadeWin(D, '0.6', '0.68', '0.92'));
     svg.appendChild(elb);

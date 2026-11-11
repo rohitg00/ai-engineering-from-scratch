@@ -236,7 +236,7 @@
       { path: 'M110 112 L360 176', begin: '4s' }
     ];
     for (i = 0; i < motions.length; i++) {
-      var d = svgEl('circle', { r: '6', fill: i === 2 ? 'var(--blueprint,#3553ff)' : 'var(--warn,#b8870f)' });
+      var d = svgEl('circle', { r: '6', opacity: '0', fill: i === 2 ? 'var(--blueprint,#3553ff)' : 'var(--warn,#b8870f)' });
       var m = svgEl('animateMotion', { dur: '1.8s', begin: motions[i].begin, repeatCount: 'indefinite', path: motions[i].path });
       d.appendChild(m);
       var op = svgEl('animate', { attributeName: 'opacity', values: '1;1;0', keyTimes: '0;0.7;1', dur: '6s', begin: motions[i].begin, repeatCount: 'indefinite' });

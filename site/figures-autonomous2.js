@@ -153,7 +153,8 @@
       var pid = 'aar-path-' + i;
       var sy = by + 28, ey = 200 - i * 50 + 13;
       svg.appendChild(svgEl('path', { id: pid, d: 'M ' + (bx + 120) + ' ' + sy + ' C 250 ' + sy + ' 280 ' + ey + ' ' + logX + ' ' + ey, fill: 'none', stroke: RULE, 'stroke-width': '1', 'stroke-dasharray': '3 3' }));
-      var rec = svgEl('rect', { x: -7, y: -5, width: 14, height: 10, rx: '2', fill: colors[i] });
+      var rec = svgEl('rect', { x: -7, y: -5, width: 14, height: 10, rx: '2', fill: colors[i], opacity: i ? '0' : '1' });
+      if (i) rec.appendChild(svgEl('set', { attributeName: 'opacity', to: '1', begin: (i * 0.6) + 's' }));
       var mo = svgEl('animateMotion', { dur: '3s', begin: (i * 0.6) + 's', repeatCount: 'indefinite' });
       mo.appendChild(svgEl('mpath', { href: '#' + pid }));
       rec.appendChild(mo);
