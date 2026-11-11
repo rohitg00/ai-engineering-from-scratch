@@ -217,6 +217,17 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
         self.assertEqual(len(cx), 1)
         self.assertIsNone(cx[0]["payload"]["v"])
 
+    def test_removed_enum_property_uses_old_schema_value(self):
+        """Verify a removed enum property gets a counterexample built from its old allowed values."""
+        old_c = load_contract({
+            "type": "object",
+            "properties": {"q": {"type": "string"}, "mode": {"type": "string", "enum": ["fast", "slow"]}},
+        })
+        new_c = load_contract({"type": "object", "properties": {"q": {"type": "string"}}, "additionalProperties": False})
+        cx = [c for c in generate_counterexamples(old_c, new_c) if c["breaking_category"] == "removed_property"]
+        self.assertEqual(len(cx), 1)
+        self.assertEqual(cx[0]["payload"], {"mode": "fast"})
+
     def test_null_only_required_field_keeps_counterexamples(self):
         """Verify a required null-only field gets a null baseline so other counterexamples survive."""
         old_c = load_contract({

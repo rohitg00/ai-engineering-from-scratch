@@ -774,8 +774,8 @@ def generate_counterexamples(
                 )
         elif cat == "removed_property":
             old_p = old_props.get(prop, {})
-            old_types = _type_names(old_p) or {"string"}
-            for candidate in ["removed_property_val", 123, True, [], {}]:
+            schema_value = _synthesize_base_payload({"properties": {prop: old_p}, "required": [prop]})[prop]
+            for candidate in [schema_value, "removed_property_val", 123, True, [], {}]:
                 payload = dict(base)
                 payload[prop] = candidate
                 valid_old, _ = validate_call(old_contract, payload)
