@@ -61,7 +61,7 @@
       '@keyframes lf-expand{from{opacity:0;transform:translateY(14px) scale(.985)}}',
       '.lesson-figure svg [data-lf-stable=true]{transition:opacity 220ms var(--ease-out,cubic-bezier(.23,1,.32,1)),transform 220ms var(--ease-out,cubic-bezier(.23,1,.32,1)),fill 180ms var(--ease-out,cubic-bezier(.23,1,.32,1)),stroke 180ms var(--ease-out,cubic-bezier(.23,1,.32,1));transform-box:fill-box;transform-origin:center}',
       '@media(prefers-reduced-motion:reduce){.lf-bar i{transition:none}.lf-motion-toggle{transform:none!important}.lesson-figure.lf-expanded{animation:none}.lesson-figure svg [data-lf-stable=true]{transition:opacity 180ms var(--ease-out,cubic-bezier(.23,1,.32,1)),fill 180ms var(--ease-out,cubic-bezier(.23,1,.32,1)),stroke 180ms var(--ease-out,cubic-bezier(.23,1,.32,1))}}',
-      '.lf-scroll{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;background:linear-gradient(to right,var(--bg,#fafaf5) 30%,transparent) left center/40px 100% no-repeat local,linear-gradient(to left,var(--bg,#fafaf5) 30%,transparent) right center/40px 100% no-repeat local,linear-gradient(to right,color-mix(in srgb,var(--ink,#1a1a1a) 14%,transparent),transparent) left center/12px 100% no-repeat scroll,linear-gradient(to left,color-mix(in srgb,var(--ink,#1a1a1a) 14%,transparent),transparent) right center/12px 100% no-repeat scroll}',
+      '.lf-scroll{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;background:linear-gradient(to right,var(--bg,#fafaf5) 30%,transparent) left center/40px 100% no-repeat local,linear-gradient(to left,var(--bg,#fafaf5) 30%,transparent) right center/40px 100% no-repeat local,linear-gradient(to right,color-mix(in srgb,var(--ink,#1a1a1a) 14%,transparent),transparent) left center/12px 100% no-repeat scroll,linear-gradient(to left,color-mix(in srgb,var(--ink,#1a1a1a) 14%,transparent),transparent) right center/12px 100% no-repeat scroll,var(--bg,#fafaf5)}',
       '.lf-scroll:focus-visible{outline:2px solid var(--blueprint,#3553ff);outline-offset:2px}',
       '@media print{.lf-tools{display:none!important}.lf-scroll{overflow:visible;background:none}.lesson-figure svg[data-lf-fit]{min-width:0!important}}'
     ].join('\n');
@@ -614,7 +614,13 @@
     }
 
     step(staticT, true);
-    addMotionController(host, { pause: pause, resume: resume, staticFrame: staticFrame });
+    function seek(t) {
+      pause();
+      localT = t;
+      step(t, false);
+    }
+
+    addMotionController(host, { pause: pause, resume: resume, staticFrame: staticFrame, seek: seek });
     registerDisposer(host, dispose);
     return dispose;
   }
@@ -768,13 +774,13 @@
   }
 
   function fitSvgText(host) {
-    if (!host || !host.querySelectorAll || typeof window.getComputedStyle !== 'function') return true;
-    var svgs = host.querySelectorAll('svg[viewBox]:not([data-lf-fit])');
-    var settled = true;
+    if (!host || !host.querySelectorAll || typeof window.getComputedStyle !== 'function') return;
+    var svgs = host.querySelectorAll('svg[viewBox]');
     for (var i = 0; i < svgs.length; i++) {
       var svg = svgs[i];
+      svg.style.minWidth = '';
       var frame = svg.getBoundingClientRect();
-      if (frame.width < 1) { settled = false; continue; }
+      if (frame.width < 1) continue;
       var texts = svg.querySelectorAll('text');
       var smallest = Infinity;
       for (var j = 0; j < texts.length; j++) {
@@ -797,7 +803,6 @@
         if (!scroller.getAttribute('aria-label')) scroller.setAttribute('aria-label', 'Figure, scrolls sideways');
       }
     }
-    return settled;
   }
 
   function scheduleTextFit(host) {
@@ -812,9 +817,13 @@
   }
 
   function ensureTextFit(host) {
-    if (fitSvgText(host) || typeof window.ResizeObserver !== 'function') return;
+    fitSvgText(host);
+    if (typeof window.ResizeObserver !== 'function') return;
+    var width = host.clientWidth;
     var observer = new window.ResizeObserver(function () {
-      if (fitSvgText(host)) observer.disconnect();
+      if (host.clientWidth === width) return;
+      width = host.clientWidth;
+      scheduleTextFit(host);
     });
     observer.observe(host);
     registerDisposer(host, function () { observer.disconnect(); });
