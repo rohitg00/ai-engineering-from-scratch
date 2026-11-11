@@ -434,6 +434,21 @@
     return clamp(Math.ceil((span || 6) * 20) / 20, 1, 30);
   }
 
+  function loopPeriod(animations) {
+    var period = 0;
+    for (var i = 0; i < animations.length; i++) {
+      if (animations[i].getAttribute('repeatCount') !== 'indefinite') continue;
+      var ms = Math.round(clockSeconds(animations[i].getAttribute('dur')) * 1000);
+      if (!ms) continue;
+      var a = period || ms;
+      var b = ms;
+      while (b) { var rest = a % b; a = b; b = rest; }
+      period = (period || ms) / a * ms;
+      if (period > 30000) return 0;
+    }
+    return period / 1000;
+  }
+
   function tabStops(host) {
     var nodes = host.querySelectorAll('button,input,select,textarea,a[href],[tabindex]');
     var stops = [];
@@ -674,7 +689,7 @@
       if (follow || !scrub || typeof window.setInterval !== 'function' || !clock || typeof clock.getCurrentTime !== 'function') return;
       follow = window.setInterval(function () {
         var now = clock.getCurrentTime();
-        scrub.value = String(continuous.length ? now % span : Math.min(now, span));
+        scrub.value = String(period ? now % period : Math.min(now, span));
       }, 200);
     }
     function staticFrame() {
@@ -702,7 +717,8 @@
     }
     if (prefersReducedMotion()) staticFrame();
     addMotionController(host, { pause: pause, resume: resume, staticFrame: staticFrame });
-    var span = smilSpan(allAnimated);
+    var period = loopPeriod(allAnimated);
+    var span = Math.max(smilSpan(allAnimated), period);
     var scrub = el('input', {
       type: 'range',
       min: '0',
