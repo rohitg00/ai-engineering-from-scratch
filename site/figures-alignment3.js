@@ -365,7 +365,7 @@
     artGrid.appendChild(svgEl('animateTransform', { attributeName: 'transform', type: 'translate', additive: 'sum', values: '70 164;70 164;396 164;396 164', dur: '5s', begin: '0s', repeatCount: 'indefinite', keyTimes: '0;0.44;0.78;1', calcMode: 'spline', keySplines: '0 0 1 1;' + SPL + ';0 0 1 1' }));
     artGrid.appendChild(svgEl('animate', { attributeName: 'opacity', values: '0;0;1;1;1;0', dur: '5s', begin: '0s', repeatCount: 'indefinite', keyTimes: '0;0.4;0.46;0.78;0.94;1' }));
     svg.appendChild(artGrid);
-    svg.appendChild(txt(70, 192, 'same word as ASCII art: passes', '8', 'var(--ink-mute,#777)'));
+    svg.appendChild(txt(88, 192, 'same word as ASCII art: passes', '8', 'var(--ink-mute,#777)'));
     var readout = txt(420, 138, 'reads: bomb', '9', 'var(--warn,#b8870f)');
     readout.appendChild(anim('opacity', '0;0;1;1;0', '5s', { keyTimes: '0;0.8;0.86;0.96;1' }));
     svg.appendChild(readout);
@@ -551,7 +551,7 @@
     req.appendChild(anim('opacity', '0;0;1;1;0', '6s', { begin: '0.6s', keyTimes: '0;0.46;0.52;0.9;1' }));
     gate.appendChild(req);
     svg.appendChild(gate);
-    svg.appendChild(txt(438, 234, 'RSP, PF, and FSF all gate scaling this way', '7', 'var(--ink-mute,#777)'));
+    svg.appendChild(txt(400, 234, 'RSP, PF, and FSF all gate scaling this way', '7', 'var(--ink-mute,#777)'));
     shell(host, 'CAPABILITY THRESHOLDS', 'cross the rung, close the gate',
       svg,
       'The shared structure of the frontier safety frameworks: Anthropic\'s RSP defines AI Safety Levels modeled on biosafety tiers, OpenAI\'s Preparedness Framework tracks High Capability thresholds, DeepMind\'s FSF defines Critical Capability Levels. As evaluated capability climbs and crosses a threshold rung, deployment gates close until the required safeguards are in place; ASL-3 activated in May 2025 for CBRN-relevant models. Competitor-adjustment clauses are the pressure valve all three added for race dynamics.');

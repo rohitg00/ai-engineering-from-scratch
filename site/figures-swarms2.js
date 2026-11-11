@@ -50,15 +50,20 @@
     for (i = 0; i < N; i++) {
       var isByz = (i === byz);
       svg.appendChild(svgEl('circle', { cx: px[i], cy: py[i], r: '15', stroke: isByz ? WARN : BP, 'stroke-width': '2', fill: isByz ? WARN : SURF }));
-      svg.appendChild(txt(px[i], py[i] + 4, isByz ? 'X' : String(i), '11', isByz ? BG : BP));
+      var baseLabel = txt(px[i], py[i] + 4, isByz ? 'X' : String(i), '11', isByz ? BG : BP);
+      svg.appendChild(baseLabel);
       if (!isByz) {
         // flip to consensus color in a staggered wave, then hold
         var begin = (i * (period / N)).toFixed(2);
+        var onLabel = txt(px[i], py[i] + 4, String(i), '11', BG);
+        onLabel.setAttribute('opacity', '0');
         var g = svgEl('g', { opacity: '0' }, [
           svgEl('circle', { cx: px[i], cy: py[i], r: '15', stroke: BP, 'stroke-width': '2', fill: BP }),
-          txt(px[i], py[i] + 4, String(i), '11', BG)
+          onLabel
         ]);
         g.appendChild(svgEl('animate', { attributeName: 'opacity', values: '0;0;1;1', keyTimes: '0;0.12;0.2;1', dur: period + 's', begin: begin + 's', repeatCount: 'indefinite' }));
+        onLabel.appendChild(svgEl('animate', { attributeName: 'opacity', values: '0;1;1', keyTimes: '0;0.16;1', calcMode: 'discrete', dur: period + 's', begin: begin + 's', repeatCount: 'indefinite' }));
+        baseLabel.appendChild(svgEl('animate', { attributeName: 'opacity', values: '1;0;0', keyTimes: '0;0.16;1', calcMode: 'discrete', dur: period + 's', begin: begin + 's', repeatCount: 'indefinite' }));
         svg.appendChild(g);
       }
     }
@@ -95,7 +100,7 @@
         var pay = svgEl('line', { x1: 40, y1: sy, x2: W - 30, y2: sy, stroke: WARN, 'stroke-width': '1.4', 'stroke-dasharray': '5 4', opacity: '0' });
         pay.appendChild(svgEl('animate', { attributeName: 'opacity', values: '0;0;0.9;0.9', keyTimes: '0;0.55;0.7;1', dur: period + 's', repeatCount: 'indefinite' }));
         svg.appendChild(pay);
-        svg.appendChild(txt(W - 36, sy - 6, 'pays 2nd price', '10', WARN, 'end'));
+        svg.appendChild(txt(44, sy - 6, 'pays 2nd price', '10', WARN, 'start'));
       }
     }
     svg.appendChild(txt(W / 2, 28, 'second-price (Vickrey) auction', '11', MUTE));
@@ -159,13 +164,13 @@
     }
     // delegation token: travels down (first half), result bubbles up (second half)
     for (i = 0; i < edges.length; i++) {
-      var down = svgEl('circle', { r: '5', fill: BP });
+      var down = svgEl('circle', { r: '5', fill: BP, opacity: '0' });
       var dm = svgEl('animateMotion', { dur: period + 's', repeatCount: 'indefinite', begin: (i < 2 ? 0 : 0.9) + 's', keyPoints: '0;1;1;1', keyTimes: '0;0.3;0.5;1', calcMode: 'linear' });
       dm.appendChild(svgEl('mpath', { href: '#lf-hi-e' + i }));
       down.appendChild(dm);
       down.appendChild(svgEl('animate', { attributeName: 'opacity', values: '1;1;0;0', keyTimes: '0;0.3;0.31;1', dur: period + 's', begin: (i < 2 ? 0 : 0.9) + 's', repeatCount: 'indefinite' }));
       svg.appendChild(down);
-      var up = svgEl('circle', { r: '5', fill: WARN });
+      var up = svgEl('circle', { r: '5', fill: WARN, opacity: '0' });
       var um = svgEl('animateMotion', { dur: period + 's', repeatCount: 'indefinite', begin: (i < 2 ? 2.4 : 1.5) + 's', keyPoints: '1;0;0;0', keyTimes: '0;0.3;0.5;1', calcMode: 'linear' });
       um.appendChild(svgEl('mpath', { href: '#lf-hi-e' + i }));
       up.appendChild(um);
@@ -207,7 +212,7 @@
       for (j = 0; j < nP; j++) {
         var dir = (i === 1) ? 1 : 0; // A2A travels back B->A occasionally
         var pkt = svgEl('rect', { x: -5, y: -5, width: 10, height: 10, rx: '2', fill: ln.col });
-        var mm = svgEl('animateMotion', { dur: dur + 's', repeatCount: 'indefinite', begin: (j * dur / nP).toFixed(2) + 's', rotate: '0' });
+        var mm = svgEl('animateMotion', { dur: dur + 's', repeatCount: 'indefinite', begin: (j === 0 ? '0' : '-' + (j * dur / nP).toFixed(2)) + 's', rotate: '0' });
         if (dir) { mm.setAttribute('keyPoints', '1;0'); mm.setAttribute('keyTimes', '0;1'); }
         mm.appendChild(svgEl('mpath', { href: '#lf-bus-l' + i }));
         pkt.appendChild(mm);
@@ -325,15 +330,21 @@
     var period = 7.5, settle = N; // hop through all, then settle on one
     for (i = 0; i < N; i++) {
       svg.appendChild(svgEl('circle', { cx: px[i], cy: py[i], r: '17', fill: SURF, stroke: BP, 'stroke-width': '2' }));
-      svg.appendChild(txt(px[i], py[i] + 4, String.fromCharCode(65 + i), '11', BP));
+      var baseLetter = txt(px[i], py[i] + 4, String.fromCharCode(65 + i), '11', BP);
+      svg.appendChild(baseLetter);
       // each agent lights up in turn as the token visits, last one (index 2) holds
       var lit = (i === 2);
       var k0 = (i / N).toFixed(3), k1 = ((i + 0.5) / N).toFixed(3);
       var vals = lit ? '0;0;1;1' : '0;0;1;0;0';
       var kt = lit ? ('0;' + k0 + ';' + k1 + ';1') : ('0;' + k0 + ';' + k1 + ';' + ((i + 1) / N).toFixed(3) + ';1');
+      var swapIn = ((i + 0.25) / N).toFixed(3), swapOut = ((i + 0.75) / N).toFixed(3);
+      var onLetter = txt(px[i], py[i] + 4, String.fromCharCode(65 + i), '11', BG);
+      onLetter.setAttribute('opacity', '0');
+      onLetter.appendChild(svgEl('animate', { attributeName: 'opacity', values: lit ? '0;1;1' : '0;1;0;0', keyTimes: lit ? ('0;' + swapIn + ';1') : ('0;' + swapIn + ';' + swapOut + ';1'), calcMode: 'discrete', dur: period + 's', repeatCount: 'indefinite' }));
+      baseLetter.appendChild(svgEl('animate', { attributeName: 'opacity', values: lit ? '1;0;0' : '1;0;1;1', keyTimes: lit ? ('0;' + swapIn + ';1') : ('0;' + swapIn + ';' + swapOut + ';1'), calcMode: 'discrete', dur: period + 's', repeatCount: 'indefinite' }));
       var on = svgEl('g', { opacity: '0' }, [
         svgEl('circle', { cx: px[i], cy: py[i], r: '17', fill: BP, stroke: BP, 'stroke-width': '2' }),
-        txt(px[i], py[i] + 4, String.fromCharCode(65 + i), '11', BG)
+        onLetter
       ]);
       on.appendChild(svgEl('animate', { attributeName: 'opacity', values: vals, keyTimes: kt, dur: period + 's', repeatCount: 'indefinite' }));
       svg.appendChild(on);

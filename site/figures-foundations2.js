@@ -278,7 +278,8 @@
       for (i = 0; i < DIN; i++) { od += (i ? 'L' : 'M') + px(i).toFixed(1) + ' ' + py(SIGNAL[i]).toFixed(1) + ' '; rd += (i ? 'L' : 'M') + px(i).toFixed(1) + ' ' + py(rec[i]).toFixed(1) + ' '; }
       svg.appendChild(svgEl('path', { d: od, fill: 'none', stroke: 'var(--ink-mute,#999)', 'stroke-width': '2' }));
       svg.appendChild(svgEl('path', { d: rd, fill: 'none', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '2', 'stroke-dasharray': '5 3' }));
-      svg.appendChild(svgEl('text', { x: x0, y: y0 + gh + 22, fill: 'var(--ink-mute,#777)', 'font-size': '11', 'font-family': 'monospace' }, [tx('grey = input (' + DIN + ' dims)   ·   blue dashed = reconstruction from ' + state.latent + '-dim bottleneck')]));
+      svg.appendChild(svgEl('text', { x: x0, y: y0 + gh + 20, fill: 'var(--ink-mute,#777)', 'font-size': '11', 'font-family': 'monospace' }, [tx('grey = input (' + DIN + ' dims)')]));
+      svg.appendChild(svgEl('text', { x: x0, y: y0 + gh + 36, fill: 'var(--ink-mute,#777)', 'font-size': '11', 'font-family': 'monospace' }, [tx('blue dashed = reconstruction from ' + state.latent + '-dim bottleneck')]));
       var mse = 0;
       for (i = 0; i < DIN; i++) { mse += (rec[i] - SIGNAL[i]) * (rec[i] - SIGNAL[i]); }
       mse /= DIN;

@@ -111,15 +111,15 @@
     svg.appendChild(actor(40, 40, 'coder'));
     svg.appendChild(actor(370, 40, 'reviewer'));
     svg.appendChild(actor(205, 150, 'runtime'));
-    function msg(path, dur, begin, color) {
-      var c = svgEl('circle', { cx: '0', cy: '0', r: '6', fill: color || 'var(--blueprint,#3553ff)' });
+    function msg(x, y, path, dur, begin, color) {
+      var c = svgEl('circle', { cx: x, cy: y, r: '6', fill: color || 'var(--blueprint,#3553ff)' });
       c.appendChild(svgEl('animateMotion', { dur: dur, begin: begin, repeatCount: 'indefinite', path: path, keyPoints: '0;1', keyTimes: '0;1', calcMode: 'linear' }));
       c.appendChild(anim('opacity', '0;1;1;0', dur, { begin: begin, repeatCount: 'indefinite' }));
       return c;
     }
-    svg.appendChild(msg('M150 60 H370', '1.6s', '0s'));
-    svg.appendChild(msg('M425 110 L290 150', '1.6s', '0.8s', 'var(--warn,#b8870f)'));
-    svg.appendChild(msg('M260 150 L150 75', '1.6s', '1.6s'));
+    svg.appendChild(msg(150, 60, 'M0 0 H220', '1.6s', '0s'));
+    svg.appendChild(msg(425, 110, 'M0 0 L-135 40', '1.6s', '0.8s', 'var(--warn,#b8870f)'));
+    svg.appendChild(msg(260, 150, 'M0 0 L-110 -75', '1.6s', '1.6s'));
     svg.appendChild(txt(260, 28, 'messages are the only IPC', '10', 'var(--ink-mute,#777)'));
     shell(host, 'ACTOR MODEL', 'async message passing',
       svg,

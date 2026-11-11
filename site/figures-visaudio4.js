@@ -145,7 +145,7 @@
     var words = ['how', 'many', 'red', 'cars'], ttoks = [txt(352, 76, 'text: "how many red cars?"', 7, 'middle')];
     for (i = 0; i < 4; i++) {
       ttoks.push(svgEl('rect', { x: 298 + i * 28, y: 82, width: 24, height: 24, fill: WARN, opacity: '0.18', stroke: WARN }));
-      ttoks.push(txt(310 + i * 28, 97, words[i], 6.5, 'middle', INK));
+      ttoks.push(txt(310 + i * 28, 97, words[i], 7.5, 'middle', INK));
     }
     svg.appendChild(rise(352, 94, D, 0.46, 0.58, ttoks));
     svg.appendChild(txt(240, 122, 'image tokens', 8, 'middle'));

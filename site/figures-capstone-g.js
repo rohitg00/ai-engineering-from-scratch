@@ -63,7 +63,7 @@
     stale.appendChild(anim('opacity', '1;1;0.25;0.25', D, { keyTimes: '0;0.28;0.4;1' }));
     svg.appendChild(stale);
     var fail = txt(336, 125, '✗ import error', WARN, 8, 'start');
-    fail.appendChild(anim('opacity', '0;0;1;1', D, { keyTimes: '0;0.24;0.3;1' }));
+    fail.appendChild(anim('opacity', '0;0;1;1;0;0', D, { keyTimes: '0;0.24;0.3;0.44;0.49;1' }));
     svg.appendChild(fail);
     var arc = svgEl('path', { d: 'M200 121 C 158 121, 158 66, 134 66', fill: 'none', stroke: WARN, 'stroke-width': '1.8', 'stroke-dasharray': '6 5' });
     arc.appendChild(anim('stroke-dashoffset', '80;80;0;0', D, { keyTimes: '0;0.3;0.44;1', calcMode: 'spline', keySplines: SPL3 }));
@@ -176,7 +176,7 @@
       ]));
     }
     svg.appendChild(txt(104, 200, 'denylist', MUTE, 8, 'end'));
-    svg.appendChild(txt(444, 200, 'by name and argv shape', MUTE, 8, 'start'));
+    svg.appendChild(txt(256, 228, 'by name and argv shape', MUTE, 8, 'middle'));
     card(host, 'PATH JAIL + DENYLIST', 'refuse by prefix, name, shape',
       svg,
       'Two refusal surfaces sit between the model and the operating system. Every path argument resolves through realpath and must keep the project root as a prefix, so a ../../ traversal bounces off the jail wall instead of reaching /etc. Alongside it, a denylist refuses executables by name and an argv inspector catches interpreters smuggling shell through -c flags. Output is truncated and a wall-clock timeout kills whatever runs away.');

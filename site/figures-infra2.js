@@ -34,6 +34,11 @@
   function motion(path, dur, begin) {
     return svgEl('animateMotion', { path: path, dur: dur, begin: begin || '0s', repeatCount: 'indefinite' });
   }
+  function hold(node, dur, begin, op) {
+    node.setAttribute('opacity', 0);
+    node.appendChild(anim('opacity', op + ';' + op, dur, { begin: begin || '0s' }));
+    return node;
+  }
   function box(x, y, w, h, fill, stroke) {
     return svgEl('rect', { x: x, y: y, width: w, height: h, rx: 4, fill: fill || 'none', stroke: stroke || SOFT, 'stroke-width': 1.4 });
   }
@@ -68,8 +73,8 @@
         svgEl('circle', { cx: 0, cy: 0, r: 6, fill: BP }),
         txt(0, 3, 'P', 8, BG)
       ]);
-      g.appendChild(motion('M-30 120 L60 120 L430 120', '2.4s', (i * 0.8) + 's'));
-      svg.appendChild(g);
+      g.appendChild(motion('M36 120 L60 120 L430 120', '2.4s', (i * 0.8) + 's'));
+      svg.appendChild(hold(g, '2.4s', (i * 0.8) + 's', 1));
     }
     svg.appendChild(txt(60, 175, 'route on prefix-hash', 9, MUTE));
     svg.appendChild(txt(430, 225, 'P-requests reuse the warm cache', 9, BP));
@@ -112,9 +117,9 @@
     // weight blocks streaming through the tiered pipeline
     var i;
     for (i = 0; i < 4; i++) {
-      var blk = svgEl('rect', { x: -9, y: -7, width: 18, height: 14, rx: 2, fill: BP, opacity: 0.85 });
+      var blk = svgEl('rect', { x: -9, y: -7, width: 18, height: 14, rx: 2, fill: BP });
       blk.appendChild(motion('M80 115 L130 115 L180 115 L280 115 L330 115 L430 115 L480 115', '5s', (i * 1.0) + 's'));
-      svg.appendChild(blk);
+      svg.appendChild(hold(blk, '5s', (i * 1.0) + 's', 0.85));
     }
     svg.appendChild(txt(255, 215, 'tiered load: NVMe → DRAM → HBM, then the replica serves', 9, MUTE));
     shell(host, 'COLD-START PIPELINE', 'weights stream through tiers until a cold replica goes warm', svg,
@@ -145,9 +150,9 @@
     for (i = 0; i < 7; i++) {
       var esc2 = i % 3 === 0;
       var g = svgEl('g', {}, [svgEl('circle', { cx: 0, cy: 0, r: 5, fill: esc2 ? WARN : BP })]);
-      var path = esc2 ? 'M-20 115 L58 115 L435 172' : 'M-20 115 L58 115 L435 62';
+      var path = esc2 ? 'M34 115 L58 115 L435 172' : 'M34 115 L58 115 L435 62';
       g.appendChild(motion(path, '2.6s', (i * 0.34) + 's'));
-      svg.appendChild(g);
+      svg.appendChild(hold(g, '2.6s', (i * 0.34) + 's', 1));
     }
     svg.appendChild(txt(260, 220, 'blended cost ≈ 0.7·cheap + 0.3·frontier', 9, MUTE));
     shell(host, 'MODEL CASCADE ROUTER', 'cheap-first, escalate the hard ones', svg,
@@ -185,7 +190,7 @@
     for (i = 0; i < 3; i++) {
       var kv = svgEl('rect', { x: -10, y: -7, width: 16, height: 14, rx: 2, fill: INK });
       kv.appendChild(motion('M190 115 L330 115', '1.6s', (i * 0.55) + 's'));
-      svg.appendChild(kv);
+      svg.appendChild(hold(kv, '1.6s', (i * 0.55) + 's', 1));
     }
     svg.appendChild(txt(260, 200, 'KV cache transfers prefill → decode', 9, INK));
     svg.appendChild(txt(260, 216, 'each pool sized for its own bottleneck', 9, MUTE));
@@ -217,8 +222,8 @@
     ];
     spec.forEach(function (s) {
       var g = svgEl('g', {}, [svgEl('rect', { x: -6, y: -6, width: 12, height: 12, rx: 2, fill: s.c })]);
-      g.appendChild(motion('M-20 115 L155 115 L155 ' + s.y + ' L460 ' + s.y, '3.4s', s.b));
-      svg.appendChild(g);
+      g.appendChild(motion('M12 115 L155 115 L155 ' + s.y + ' L460 ' + s.y, '3.4s', s.b));
+      svg.appendChild(hold(g, '3.4s', s.b, 1));
     });
     // batch lane drains overnight: a fill bar sweeping right then resetting
     var drain = svgEl('rect', { x: 150, y: 188, width: 0, height: 4, fill: BP, opacity: 0.5 });
@@ -249,11 +254,11 @@
     svg.appendChild(hit);
     svg.appendChild(svgEl('path', { d: 'M220 110 L388 60', fill: 'none', stroke: SOFT, 'stroke-width': 1.4, 'stroke-dasharray': '4 4' }));
     // queries flow in; similar ones (blue) hit, novel one (warn) misses to LLM
-    var spec = [{ c: BP, p: 'M-20 117 L185 117 L440 170', b: '0s' }, { c: BP, p: 'M-20 117 L185 117 L440 170', b: '0.9s' }, { c: WARN, p: 'M-20 117 L185 117 L440 60', b: '1.8s' }, { c: BP, p: 'M-20 117 L185 117 L440 170', b: '2.7s' }];
+    var spec = [{ c: BP, p: 'M12 117 L185 117 L440 170', b: '0s' }, { c: BP, p: 'M12 117 L185 117 L440 170', b: '0.9s' }, { c: WARN, p: 'M12 117 L185 117 L440 60', b: '1.8s' }, { c: BP, p: 'M12 117 L185 117 L440 170', b: '2.7s' }];
     spec.forEach(function (s) {
       var g = svgEl('g', {}, [svgEl('circle', { cx: 0, cy: 0, r: 5, fill: s.c })]);
       g.appendChild(motion(s.p, '3.6s', s.b));
-      svg.appendChild(g);
+      svg.appendChild(hold(g, '3.6s', s.b, 1));
     });
     svg.appendChild(txt(260, 215, 'similarity ≥ threshold → serve from cache, skip the LLM', 9, MUTE));
     shell(host, 'SEMANTIC CACHE', 'similar prompts served from cache, novel ones reach the LLM', svg,

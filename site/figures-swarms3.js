@@ -96,7 +96,7 @@
       var tgt = j % 3;
       var begin = (j * (period / 6)).toFixed(2);
       var path = 'M' + slots[j] + ',' + (qy + 15) + ' L' + slots[j] + ',' + (qy + 15) + ' L' + wx[tgt] + ',' + (wy - 30);
-      var g = svgEl('g', {});
+      var g = svgEl('g', { opacity: '0' });
       var sq = svgEl('rect', { x: -5, y: -5, width: 10, height: 10, fill: BP, rx: '2' });
       g.appendChild(sq);
       g.appendChild(anim('opacity', '0;1;1;1;0;0', '0;0.05;0.4;0.7;0.78;1', period, { begin: begin + 's' }));
@@ -127,18 +127,25 @@
     tok.appendChild(motion(mpath, '0;0.33;0.66;1', '0;0.249;0.519;1', period));
     var kts = ['0;0.05;0.28;0.33;1', '0;0.33;0.38;0.61;0.66;1', '0;0.66;0.71;0.94;1'];
     var lights = ['0;1;1;0;0', '0;0;1;1;0;0', '0;0;1;1;0'];
+    var swaps = [[0.025, 0.305], [0.355, 0.635], [0.685, 0.97]];
     for (i = 0; i < 3; i++) {
       svg.appendChild(svgEl('circle', { cx: ax[i], cy: ay[i], r: '24', stroke: BP, 'stroke-width': '2', fill: SURF }));
-      svg.appendChild(txt(ax[i], ay[i] + 4, names[i], '9', BP));
+      var baseName = txt(ax[i], ay[i] + 4, names[i], '9', BP);
+      baseName.appendChild(anim('opacity', '1;0;1;1', '0;' + swaps[i][0] + ';' + swaps[i][1] + ';1', period, { calcMode: 'discrete' }));
+      svg.appendChild(baseName);
+      var onName = txt(ax[i], ay[i] + 4, names[i], '9', BG);
+      onName.setAttribute('opacity', '0');
+      onName.appendChild(anim('opacity', '0;1;0;0', '0;' + swaps[i][0] + ';' + swaps[i][1] + ';1', period, { calcMode: 'discrete' }));
       var c = svgEl('g', { opacity: '0' }, [
         svgEl('circle', { cx: ax[i], cy: ay[i], r: '24', stroke: BP, 'stroke-width': '2', fill: BP }),
-        txt(ax[i], ay[i] + 4, names[i], '9', BG)
+        onName
       ]);
       c.appendChild(anim('opacity', lights[i], kts[i], period));
       svg.appendChild(c);
     }
     svg.appendChild(tok);
-    svg.appendChild(txt(W / 2, H - 14, 'handoff = a tool call returning the next agent  ·  whoever holds the token is the orchestrator', '10', MUTE));
+    svg.appendChild(txt(W / 2, H - 28, 'handoff = a tool call returning the next agent', '10', MUTE));
+    svg.appendChild(txt(W / 2, H - 13, 'whoever holds the token is the orchestrator', '10', MUTE));
     shell(host, 'HANDOFF ROUTING', 'pass the conversation', svg,
       'OpenAI Swarm reduced orchestration to two primitives: routines (prompt plus tools) and handoffs (a tool that returns the next agent). There is no state machine. The model routes by calling the right handoff, and whichever agent currently holds the conversation is the one in charge.');
   }
@@ -193,8 +200,8 @@
         lit.appendChild(anim('opacity', '0;0;1;1;0', '0;' + from.toFixed(2) + ';' + on + ';0.97;1', period));
       }
       svg.appendChild(lit);
-      svg.appendChild(txt(x + 30, 181, 'TASK_STATE_', '6', MUTE));
-      svg.appendChild(txt(x + 30, 192, states[i], '7.5', INK));
+      svg.appendChild(txt(x + 30, 180, 'TASK_STATE_', '7', MUTE));
+      svg.appendChild(txt(x + 30, 193, states[i], '7.5', INK));
     }
     packet(toCard, BP, 0.02, 0.12);
     packet(fromCard, MUTE, 0.13, 0.23);

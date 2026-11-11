@@ -73,10 +73,10 @@
 
   // ── cv3-latent-compression (11): image grid shrinks to a small latent, back ──
   function latentCompression(host) {
-    var svg = svgEl('svg', { viewBox: '0 0 520 230' });
-    svg.appendChild(txt(14, 16, '3 x 512 x 512 image'));
-    svg.appendChild(txt(220, 16, '4 x 64 x 64 latent'));
-    svg.appendChild(txt(380, 16, 'decoded image'));
+    var svg = svgEl('svg', { viewBox: '0 0 520 236' });
+    svg.appendChild(txt(10, 16, '3 x 512 x 512 image'));
+    svg.appendChild(txt(210, 16, '4 x 64 x 64 latent'));
+    svg.appendChild(txt(344, 16, 'decoded image'));
     // left big grid (8x8 stand-in), each cell fading as the encoder reads it
     var i;
     function grid(ox, oy, n, c, fillTarget, begin, kt) {
@@ -88,13 +88,13 @@
         svg.appendChild(rect);
       }
     }
-    grid(14, 30, 8, 21, BLUE, '0s', '0;0.12;0.9;1');
+    grid(10, 30, 8, 21, BLUE, '0s', '0;0.12;0.9;1');
     // VAE encoder wedge collapsing toward the small grid
-    var enc = svgEl('polygon', { points: '186,40 210,90 210,150 186,200', fill: BLUE, opacity: '0.16', stroke: BLUE });
+    var enc = svgEl('polygon', { points: '182,40 206,90 206,150 182,200', fill: BLUE, opacity: '0.16', stroke: BLUE });
     svg.appendChild(enc);
-    svg.appendChild(txt(186, 218, 'VAE encoder', 9));
+    svg.appendChild(txt(180, 218, 'VAE encoder', 9));
     // small latent grid (4x4), brightens as the wedge fires
-    var lx = 224, ly = 70, lc = 22, r, cc;
+    var lx = 214, ly = 70, lc = 22, r, cc;
     for (r = 0; r < 4; r++) for (cc = 0; cc < 4; cc++) {
       var lr = svgEl('rect', { x: lx + cc * lc, y: ly + r * lc, width: lc - 2, height: lc - 2, fill: WARN, opacity: '0' });
       var v = (0.3 + 0.5 * ((r * 5 + cc * 3) % 4) / 4).toFixed(2);
@@ -102,10 +102,10 @@
       svg.appendChild(lr);
     }
     // decoder wedge expanding back out
-    var dec = svgEl('polygon', { points: '326,90 350,40 350,200 326,150', fill: BLUE, opacity: '0.16', stroke: BLUE });
+    var dec = svgEl('polygon', { points: '314,90 338,40 338,200 314,150', fill: BLUE, opacity: '0.16', stroke: BLUE });
     svg.appendChild(dec);
-    svg.appendChild(txt(322, 218, 'VAE decoder', 9));
-    grid(360, 30, 8, 21, BLUE, '0s', '0;0.55;0.78;1');
+    svg.appendChild(txt(310, 218, 'VAE decoder', 9));
+    grid(344, 30, 8, 21, BLUE, '0s', '0;0.55;0.78;1');
     svg.appendChild(txt(150, 226, '(3*512*512)/(4*64*64) = 48x less compute to denoise', 9));
     host.appendChild(shell('STABLE DIFFUSION · LATENT SPACE', 'diffuse in 64x64, not 512x512', svg,
       'Pixel-space diffusion backprops through 786,432 values per step. Stable Diffusion trains a VAE that compresses the 3x512x512 image into a 4x64x64 latent (the small orange grid), runs the whole denoising loop there, then decodes back to pixels. The latent is 48x cheaper to attend over, which is what made open-weight text-to-image practical.'));

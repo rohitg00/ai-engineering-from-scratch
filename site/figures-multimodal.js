@@ -58,7 +58,8 @@
       }
       for (c = 0; c < n; c++) {
         x = PAD + c * CELL;
-        svg.appendChild(txt((x + CELL / 2).toFixed(1), '26', 'txt:' + labels[c], 'middle', 'var(--ink-mute,#777)'));
+        svg.appendChild(txt((x + CELL / 2).toFixed(1), '13', 'txt:', 'middle', 'var(--ink-mute,#777)'));
+        svg.appendChild(txt((x + CELL / 2).toFixed(1), '27', labels[c], 'middle', 'var(--ink-mute,#777)'));
       }
       var acc = diag / n;
       meta.textContent = 'matched-pair mass ' + (acc * 100).toFixed(0) + '%  ·  diagonal outlined  ·  ' + (state.tau < 0.06 ? 'low τ: matrix sharpens to a clear diagonal' : state.tau > 0.25 ? 'high τ: rows flatten, pairs blur together' : 'balanced');

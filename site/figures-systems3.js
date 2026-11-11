@@ -88,7 +88,7 @@
       // four token squares flowing along a path into the transformer, then out
       var pIn = 'M ' + (laneX + 56) + ' ' + m.y + ' L ' + (mergeX - 6) + ' ' + (m.y < 100 ? 90 : 140);
       for (var k = 0; k < 3; k++) {
-        var sq = svgEl('rect', { x: -5, y: -5, width: 10, height: 10, rx: 2, fill: m.col, 'fill-opacity': '0.8' });
+        var sq = svgEl('rect', { x: -5, y: -5, width: 10, height: 10, rx: 2, fill: m.col, 'fill-opacity': '0' });
         var mo = svgEl('animateMotion', { dur: '3s', repeatCount: 'indefinite', path: pIn, begin: (mi * 0.2 + k * 1).toFixed(2) + 's' });
         sq.appendChild(mo);
         sq.appendChild(anim('fill-opacity', '0;0.85;0', '3s', { begin: (mi * 0.2 + k * 1).toFixed(2) + 's' }));
@@ -99,7 +99,7 @@
     var outCols = [BP, WARN, BP, MUTE, BP];
     var pOut = 'M ' + (mergeX + 90) + ' 115 L ' + outX + ' 115';
     for (var o = 0; o < 5; o++) {
-      var os = svgEl('rect', { x: -6, y: -6, width: 12, height: 12, rx: 2, fill: outCols[o], 'fill-opacity': '0.85' });
+      var os = svgEl('rect', { x: -6, y: -6, width: 12, height: 12, rx: 2, fill: outCols[o], 'fill-opacity': '0' });
       os.appendChild(svgEl('animateMotion', { dur: '2.5s', repeatCount: 'indefinite', path: pOut, begin: (o * 0.5).toFixed(2) + 's' }));
       os.appendChild(anim('fill-opacity', '0;0.9;0', '2.5s', { begin: (o * 0.5).toFixed(2) + 's' }));
       svg.appendChild(os);
@@ -237,7 +237,7 @@
         anim('stroke-dashoffset', '0;-18', '1.2s', { begin: (i * 0.3).toFixed(1) + 's' })
       ]));
       // request packet host → hub
-      var pkt = svgEl('circle', { r: 5, fill: BP });
+      var pkt = svgEl('circle', { r: 5, fill: BP, opacity: '0' });
       pkt.appendChild(svgEl('animateMotion', { dur: '2.4s', repeatCount: 'indefinite', path: 'M ' + (hx + 76) + ' ' + hy[i] + ' L ' + (hubX - 26) + ' ' + hubY, begin: (i * 0.4).toFixed(1) + 's' }));
       pkt.appendChild(anim('opacity', '0;1;0', '2.4s', { begin: (i * 0.4).toFixed(1) + 's' }));
       svg.appendChild(pkt);
@@ -249,7 +249,7 @@
       svg.appendChild(svgEl('line', { x1: hubX + 26, y1: hubY, x2: sx, y2: sy[i], stroke: SOFT, 'stroke-width': '1', 'stroke-dasharray': '5 4' }, [
         anim('stroke-dashoffset', '0;-18', '1.2s', { begin: (i * 0.3 + 0.6).toFixed(1) + 's' })
       ]));
-      var pkt2 = svgEl('circle', { r: 5, fill: WARN });
+      var pkt2 = svgEl('circle', { r: 5, fill: WARN, opacity: '0' });
       pkt2.appendChild(svgEl('animateMotion', { dur: '2.4s', repeatCount: 'indefinite', path: 'M ' + (hubX + 26) + ' ' + hubY + ' L ' + sx + ' ' + sy[i], begin: (i * 0.4 + 1).toFixed(1) + 's' }));
       pkt2.appendChild(anim('opacity', '0;1;0', '2.4s', { begin: (i * 0.4 + 1).toFixed(1) + 's' }));
       svg.appendChild(pkt2);

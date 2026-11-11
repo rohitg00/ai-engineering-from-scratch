@@ -76,7 +76,7 @@
     var n = 16, bw = 26, x0 = 26, y = 70;
     var ids = ['12', '7', '93', '4', '58', '2', '31', '9', '77', '6', '40', '15', '8', '61', '3', '22'];
     var i;
-    svg.appendChild(txt(20, 50, 'token id stream', MUTE, 10, 'start'));
+    svg.appendChild(txt(20, 30, 'token id stream', MUTE, 10, 'start'));
     for (i = 0; i < n; i++) {
       var x = x0 + i * (bw + 4);
       svg.appendChild(svgEl('rect', { x: x, y: y, width: bw, height: 30, rx: 3, fill: BG, stroke: RULE, 'stroke-width': '1' }));
@@ -329,8 +329,8 @@
     function Y(v) { return base - v; }
     // warmup region shading marker
     svg.appendChild(svgEl('rect', { x: bx, y: by, width: bw * warmFrac, height: bh, fill: WARN, opacity: '0.07' }));
-    svg.appendChild(txt(bx + bw * warmFrac / 2, by + 14, 'warmup', WARN, 9, 'middle'));
-    svg.appendChild(txt(bx + bw * (warmFrac + (1 - warmFrac) / 2), by + 14, 'cosine decay', BP, 9, 'middle'));
+    svg.appendChild(txt(bx + bw * warmFrac / 2, by - 8, 'warmup', WARN, 9, 'middle'));
+    svg.appendChild(txt(bx + bw * (warmFrac + (1 - warmFrac) / 2), by - 8, 'cosine decay', BP, 9, 'middle'));
     var i, pts = 120, d = 'M' + X(0) + ' ' + Y(lrAt(0));
     for (i = 1; i <= pts; i++) { var t = i / pts; d += ' L' + X(t).toFixed(1) + ' ' + Y(lrAt(t)).toFixed(1); }
     var curve = svgEl('path', { d: d, fill: 'none', stroke: BP, 'stroke-width': '2.4', 'stroke-dasharray': '700', 'stroke-dashoffset': '700' });

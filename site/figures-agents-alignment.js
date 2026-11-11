@@ -476,7 +476,7 @@
   // ── guardrail-gates: ordered safety gates, one trips → blocked ─────────────
   function guardrailGates(host) {
     var state = { trip: '0' };
-    var W = 520, H = 150;
+    var W = 604, H = 150;
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
     var status = el('span', { class: 'lf-num' });
     var meta = el('div', { class: 'lf-meta' });

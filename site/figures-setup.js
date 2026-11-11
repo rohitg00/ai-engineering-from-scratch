@@ -155,7 +155,7 @@
     svg.appendChild(slow);
     for (var i = 0; i < 4; i++) {
       var d = svgEl('circle', { cx: 0, cy: 0, r: 5, fill: BP });
-      d.appendChild(svgEl('animateMotion', { path: 'M127 125 L360 165', dur: '1.2s', begin: (i * 0.3) + 's', repeatCount: 'indefinite' }));
+      d.appendChild(svgEl('animateMotion', { path: 'M127 125 L360 165', dur: '1.2s', begin: (i === 0 ? '0s' : '-' + (i * 0.3) + 's'), repeatCount: 'indefinite' }));
       svg.appendChild(d);
     }
     svg.appendChild(txt(430, 112, 'one epoch: ~8 hours', 9, MUTE));
@@ -194,7 +194,7 @@
       svgEl('rect', { x: -16, y: -9, width: 32, height: 18, rx: 4, fill: SURF, stroke: WARN, 'stroke-width': 1.4 }),
       txt(0, 4, 'sk', 9, WARN)
     ]);
-    travel(key, 'M140 172 L245 138', D, 0.24, 0.36);
+    travel(key, 'M200 166 L245 138', D, 0.24, 0.36);
     svg.appendChild(key);
     var req = svgEl('circle', { cx: 0, cy: 0, r: 5, fill: BP });
     travel(req, 'M345 117 L395 117', D, 0.44, 0.56);

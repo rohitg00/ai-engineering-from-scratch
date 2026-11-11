@@ -43,9 +43,10 @@
   }
   // fade + grow entrance from 95% about (cx,cy), soft exit at loop end
   function pop(kids, cx, cy, dur, at) {
-    var g = svgEl('g', { transform: 'translate(' + cx + ' ' + cy + ')' }, kids);
-    g.appendChild(svgEl('animateTransform', { attributeName: 'transform', type: 'scale', additive: 'sum', values: '0.95;1;1', dur: dur, begin: at, repeatCount: 'indefinite', calcMode: 'spline', keySplines: EASE + ';0 0 1 1', keyTimes: '0;0.18;1' }));
-    g.appendChild(svgEl('animateTransform', { attributeName: 'transform', type: 'translate', additive: 'sum', values: (-cx) + ' ' + (-cy), dur: dur, begin: at, repeatCount: 'indefinite' }));
+    var inner = svgEl('g', { transform: 'translate(' + (-cx) + ' ' + (-cy) + ')' }, kids);
+    var mid = svgEl('g', {}, [inner]);
+    mid.appendChild(svgEl('animateTransform', { attributeName: 'transform', type: 'scale', values: '0.95;1;1', dur: dur, begin: at, repeatCount: 'indefinite', calcMode: 'spline', keySplines: EASE + ';0 0 1 1', keyTimes: '0;0.18;1' }));
+    var g = svgEl('g', { transform: 'translate(' + cx + ' ' + cy + ')' }, [mid]);
     g.appendChild(anim('opacity', '0;1;1;0', dur, { begin: at, keyTimes: '0;0.14;0.94;1', calcMode: 'spline', keySplines: EASE + ';0 0 1 1;0.4 0 1 1' }));
     return g;
   }
@@ -111,6 +112,7 @@
     p1.appendChild(anim('opacity', '0;1;1;0;0', D, { keyTimes: '0;0.04;0.5;0.56;1' }));
     s.appendChild(p1);
     var p2 = dot('5', WARN);
+    p2.setAttribute('opacity', '0');
     p2.appendChild(mov('M116 70 L257 70 L257 140', D, { begin: '2.4s', calcMode: 'linear', keyPoints: '0;0.668;0.668;1;1', keyTimes: '0;0.15;0.25;0.4;1' }));
     p2.appendChild(anim('opacity', '0;1;1;1;0;0', D, { begin: '2.4s', keyTimes: '0;0.03;0.3;0.38;0.44;1' }));
     s.appendChild(p2);
@@ -122,6 +124,7 @@
       txt(300, 152, 'live server/discover probe', '8', MUTE)];
     s.appendChild(pop(reg, 95, 185, D, '0.6s'));
     var poll = dot('3.5', MUTE);
+    poll.setAttribute('opacity', '0');
     poll.appendChild(mov('M150 185 L430 86', D, { begin: '0.9s', calcMode: 'linear', keyPoints: '0;1;1', keyTimes: '0;0.22;1' }));
     poll.appendChild(anim('opacity', '0;1;0;0', D, { begin: '0.9s', keyTimes: '0;0.06;0.24;1' }));
     s.appendChild(poll);
