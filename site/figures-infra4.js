@@ -90,7 +90,7 @@
       s.appendChild(m);
     }
     var q = entry(150, 155, '3.2s', '0.3s', 0.05, 0.2);
-    q.appendChild(txt(0, -16, 'queued behind neighbors', '8', MUTE));
+    q.appendChild(txt(0, 31, 'queued behind neighbors', '8', MUTE));
     s.appendChild(q);
     s.appendChild(txt(260, 208, 'same model, different capacity contract: reserved beats shared by ~25 ms', '9', MUTE));
     shell(host, 'PLATFORM LANES', 'reserved PTU capacity vs shared on-demand', s,
@@ -150,29 +150,29 @@
   // 20-shadow-canary-progressive
   function canaryRamp(host) {
     var s = svg(250);
-    s.appendChild(rect(30, 30, 70, 40, BG, INK));
-    s.appendChild(txt(65, 47, 'traffic', '9', INK));
-    s.appendChild(txt(65, 61, 'splitter', '8', MUTE));
+    s.appendChild(rect(30, 24, 70, 56, BG, INK));
+    s.appendChild(txt(65, 40, 'traffic', '9', INK));
+    s.appendChild(txt(65, 53, 'splitter', '8', MUTE));
     s.appendChild(rect(150, 20, 90, 36, BG, INKS));
     s.appendChild(txt(195, 35, 'prod model', '9', INKS));
     s.appendChild(txt(195, 48, 'serves users', '7.5', MUTE));
     s.appendChild(rect(150, 74, 90, 36, BG, BP));
     s.appendChild(txt(195, 89, 'candidate', '9', BP));
     s.appendChild(txt(195, 102, 'shadow: log only', '7.5', MUTE));
-    s.appendChild(svgEl('path', { d: 'M100 42 L150 38', fill: 'none', stroke: SOFT, 'stroke-width': '1.2' }));
-    var mir = svgEl('path', { d: 'M100 56 L150 88', fill: 'none', stroke: BP, 'stroke-width': '1.2', 'stroke-dasharray': '3 4' });
+    s.appendChild(svgEl('path', { d: 'M100 64 L150 38', fill: 'none', stroke: SOFT, 'stroke-width': '1.2' }));
+    var mir = svgEl('path', { d: 'M100 72 L150 88', fill: 'none', stroke: BP, 'stroke-width': '1.2', 'stroke-dasharray': '3 4' });
     mir.appendChild(anim('stroke-dashoffset', '14;0', '0.9s'));
     s.appendChild(mir);
     var i;
     for (i = 0; i < 3; i++) {
       var r1 = svgEl('circle', { cx: 0, cy: 0, r: 4, fill: INKS });
-      r1.appendChild(motion('M10 50 L65 50 L195 38', '2s', (i * 0.7) + 's'));
+      r1.appendChild(motion('M10 68 L100 68 L150 38', '2s', (i * 0.7) + 's'));
       s.appendChild(r1);
       var r2 = svgEl('circle', { cx: 0, cy: 0, r: 4, fill: BP, opacity: '0.55' });
-      r2.appendChild(motion('M10 50 L65 50 L195 92', '2s', (i * 0.7) + 's'));
+      r2.appendChild(motion('M10 68 L100 68 L150 88', '2s', (i * 0.7) + 's'));
       s.appendChild(r2);
     }
-    s.appendChild(txt(120, 128, 'mirrored copy is discarded, never returned', '8', MUTE, 'start'));
+    s.appendChild(txt(30, 128, 'mirrored copy is discarded, never returned', '8', MUTE, 'start'));
     // canary share meter: steps 10 -> 25 -> 50 -> 100 with gates between
     var mx = 300, mw = 190, my = 40, mh = 130;
     s.appendChild(txt(mx + mw / 2, 28, 'canary share of live traffic', '9', INKS));
@@ -335,7 +335,7 @@
       rq.appendChild(motion('M438 ' + (apps[i][0] + 12) + ' L270 130', '2.2s', (i * 0.7) + 's'));
       s.appendChild(rq);
     }
-    s.appendChild(txt(438, 190, 'no keys in env files or VCS', '8', MUTE));
+    s.appendChild(txt(438, 206, 'no keys in env files or VCS', '8', MUTE));
     s.appendChild(txt(260, 228, 'rotate once in the vault; every app is current in minutes, zero redeploys', '9', MUTE));
     shell(host, 'VAULT-BACKED ROTATION', 'the key changes in one place and the gateway picks it up live', s,
       'Credentials live in the vault and nowhere else. Apps call the AI gateway, which pulls the current key at runtime, so no service ever holds a static secret. When key v1 rotates to v2, the swap happens in one place and every caller is current within minutes: no redeploys, no 40 config files, no message asking who has the new key. The 90-day rotation policy stops being a migration and becomes a non-event.');
@@ -350,7 +350,7 @@
     // which controls satisfy which frameworks (1 = cell lights up)
     var map = [[1, 1, 1], [1, 1, 1], [1, 1, 1], [0, 1, 1], [1, 0, 1]];
     var i, j;
-    for (j = 0; j < cols.length; j++) { s.appendChild(txt(cols[j][1] + 40, 38, cols[j][0], '8.5', INKS)); }
+    for (j = 0; j < cols.length; j++) { s.appendChild(txt(cols[j][1] + 40, 43, cols[j][0], '8.5', INKS)); }
     for (i = 0; i < rows.length; i++) {
       var ry = 54 + i * 34;
       s.appendChild(txt(126, ry + 15, rows[i][0], '8.5', MUTE, 'end'));
@@ -368,7 +368,7 @@
       svgEl('rect', { x: -38, y: -10, width: 76, height: 20, rx: '3', fill: BG, stroke: BP, 'stroke-width': '1.4' }),
       txt(0, 4, 'built once', '8', BP)
     ]);
-    chip.appendChild(motion('M180 24 L180 24 L290 24 L290 24 L400 24 L400 24', '5.2s', '0s'));
+    chip.appendChild(motion('M180 18 L180 18 L290 18 L290 18 L400 18 L400 18', '5.2s', '0s'));
     s.appendChild(chip);
     s.appendChild(txt(260, 238, 'one control, many cells: the matrix fills faster than the framework count grows', '9', MUTE));
     shell(host, 'CONTROL CROSS-MAPPING', 'each control lights every framework cell it satisfies', s,

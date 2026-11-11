@@ -65,17 +65,17 @@
   function dataPipeline(host) {
     var svg = svgEl('svg', { viewBox: '0 0 520 230' });
     var g = svgEl('g');
-    g.appendChild(svgEl('line', { x1: 24, y1: 77, x2: 470, y2: 77, stroke: RULE, 'stroke-width': 1 }));
+    g.appendChild(svgEl('line', { x1: 24, y1: 84, x2: 470, y2: 84, stroke: RULE, 'stroke-width': 1 }));
     var i;
     for (i = 0; i < 3; i++) {
-      g.appendChild(svgEl('rect', { x: 22, y: 56 + i * 9, width: 44, height: 7, fill: SURF, stroke: MUTE, 'stroke-width': 0.8 }));
+      g.appendChild(svgEl('rect', { x: 22, y: 63 + i * 9, width: 44, height: 7, fill: SURF, stroke: MUTE, 'stroke-width': 0.8 }));
     }
-    g.appendChild(txt(44, 104, 'raw text', 9, MUTE, 'middle'));
+    g.appendChild(txt(44, 110, 'raw text', 9, MUTE, 'middle'));
     var names = ['dedup', 'quality', 'pack'];
     for (i = 0; i < 3; i++) {
       var sx = 110 + i * 100;
-      g.appendChild(box(sx, 61, 72, 32, BP));
-      g.appendChild(txt(sx + 36, 81, names[i], 10, BP, 'middle'));
+      g.appendChild(box(sx, 52, 72, 44, BP));
+      g.appendChild(txt(sx + 36, 67, names[i], 10, BP, 'middle'));
     }
     g.appendChild(txt(146, 150, 'duplicate', 8.5, WARN, 'middle'));
     g.appendChild(txt(246, 150, 'low quality', 8.5, WARN, 'middle'));
@@ -94,9 +94,9 @@
       c.appendChild(anim('opacity', opVals, '5s', { begin: begin, keyTimes: opTimes }));
       g.appendChild(c);
     }
-    doc('M 44 77 L 432 77', '0s', BP, '0;1;1;0;0', '0;0.05;0.5;0.58;1', '0;1;1', '0;0.52;1');
-    doc('M 44 77 L 146 77 L 146 132', '0.35s', MUTE, '0;1;1;0;0', '0;0.05;0.32;0.44;1', '0;0.65;1;1', '0;0.3;0.42;1');
-    doc('M 44 77 L 246 77 L 246 132', '0.7s', MUTE, '0;1;1;0;0', '0;0.05;0.4;0.52;1', '0;0.786;1;1', '0;0.38;0.5;1');
+    doc('M 44 84 L 432 84', '0s', BP, '0;1;1;0;0', '0;0.05;0.5;0.58;1', '0;1;1', '0;0.52;1');
+    doc('M 44 84 L 146 84 L 146 132', '0.35s', MUTE, '0;1;1;0;0', '0;0.05;0.32;0.44;1', '0;0.65;1;1', '0;0.3;0.42;1');
+    doc('M 44 84 L 246 84 L 246 132', '0.7s', MUTE, '0;1;1;0;0', '0;0.05;0.4;0.52;1', '0;0.786;1;1', '0;0.38;0.5;1');
     entry(g, 260, 115);
     svg.appendChild(g);
     card(host, 'PRETRAINING DATA PIPELINE', 'filter, pack, keep the GPU fed', svg,
@@ -157,27 +157,27 @@
     var svg = svgEl('svg', { viewBox: '0 0 520 250' });
     var g = svgEl('g');
     var stages = [[12, 62, 'request', SOFT], [100, 60, 'guard', BP], [186, 60, 'cache', BP], [272, 54, 'RAG', BP], [352, 50, 'LLM', BP], [428, 78, 'respond', INK]];
-    g.appendChild(svgEl('line', { x1: 74, y1: 73, x2: 428, y2: 73, stroke: RULE, 'stroke-width': 1 }));
+    g.appendChild(svgEl('line', { x1: 74, y1: 82, x2: 428, y2: 82, stroke: RULE, 'stroke-width': 1 }));
     var i;
     for (i = 0; i < 6; i++) {
-      g.appendChild(box(stages[i][0], 58, stages[i][1], 30, stages[i][3]));
-      g.appendChild(txt(stages[i][0] + stages[i][1] / 2, 77, stages[i][2], 9.5, stages[i][3], 'middle'));
+      g.appendChild(box(stages[i][0], 50, stages[i][1], 44, stages[i][3]));
+      g.appendChild(txt(stages[i][0] + stages[i][1] / 2, 66, stages[i][2], 9.5, stages[i][3], 'middle'));
     }
-    g.appendChild(svgEl('path', { d: 'M 216 88 C 216 150 300 150 340 150 L 400 150 C 452 150 460 120 462 92', fill: 'none', stroke: RULE, 'stroke-width': 1.2, 'stroke-dasharray': '5 4' }));
+    g.appendChild(svgEl('path', { d: 'M 216 94 C 216 150 300 150 340 150 L 400 150 C 452 150 460 120 462 98', fill: 'none', stroke: RULE, 'stroke-width': 1.2, 'stroke-dasharray': '5 4' }));
     g.appendChild(txt(310, 164, 'cache hit shortcut', 8.5, MUTE, 'middle'));
-    var missTag = txt(216, 50, 'miss', 8.5, WARN, 'middle');
+    var missTag = txt(216, 42, 'miss', 8.5, WARN, 'middle');
     missTag.setAttribute('opacity', 0);
     missTag.appendChild(anim('opacity', '0;0;1;1;0;0', '6s', { keyTimes: '0;0.12;0.16;0.3;0.36;1' }));
     g.appendChild(missTag);
-    var flash = svgEl('rect', { x: 186, y: 58, width: 60, height: 30, rx: 4, fill: BP, opacity: 0 });
+    var flash = svgEl('rect', { x: 186, y: 50, width: 60, height: 44, rx: 4, fill: BP, opacity: 0 });
     flash.appendChild(anim('opacity', '0;0;0.4;0;0', '6s', { keyTimes: '0;0.58;0.62;0.68;1' }));
     g.appendChild(flash);
     var miss = svgEl('circle', { r: 4.5, fill: BP, opacity: 0 });
-    miss.appendChild(svgEl('animateMotion', { dur: '6s', repeatCount: 'indefinite', path: 'M 20 73 L 460 73', calcMode: 'linear', keyPoints: '0;1;1', keyTimes: '0;0.4;1' }));
+    miss.appendChild(svgEl('animateMotion', { dur: '6s', repeatCount: 'indefinite', path: 'M 20 82 L 460 82', calcMode: 'linear', keyPoints: '0;1;1', keyTimes: '0;0.4;1' }));
     miss.appendChild(anim('opacity', '0;1;1;0;0', '6s', { keyTimes: '0;0.04;0.4;0.47;1' }));
     g.appendChild(miss);
     var hit = svgEl('circle', { r: 4.5, fill: BP, opacity: 0 });
-    hit.appendChild(svgEl('animateMotion', { dur: '6s', repeatCount: 'indefinite', path: 'M 20 73 L 216 73 L 216 88 C 216 150 320 150 400 150 C 452 150 460 120 462 95', calcMode: 'linear', keyPoints: '0;0;1;1', keyTimes: '0;0.55;0.78;1' }));
+    hit.appendChild(svgEl('animateMotion', { dur: '6s', repeatCount: 'indefinite', path: 'M 20 82 L 216 82 L 216 94 C 216 150 320 150 400 150 C 452 150 460 120 462 100', calcMode: 'linear', keyPoints: '0;0;1;1', keyTimes: '0;0.55;0.78;1' }));
     hit.appendChild(anim('opacity', '0;0;1;1;0;0', '6s', { keyTimes: '0;0.55;0.58;0.78;0.84;1' }));
     g.appendChild(hit);
     g.appendChild(txt(60, 208, 'miss', 9, SOFT, 'end'));

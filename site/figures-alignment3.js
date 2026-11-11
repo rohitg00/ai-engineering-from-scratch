@@ -485,9 +485,9 @@
     zg.appendChild(svgEl('rect', { x: '140', y: '48', width: '130', height: '26', fill: 'var(--bg-surface,#eee)' }));
     zg.appendChild(svgEl('rect', { x: '270', y: '48', width: '130', height: '26', fill: 'var(--warn,#b8870f)', opacity: '0.3' }));
     zg.appendChild(svgEl('rect', { x: '400', y: '48', width: '74', height: '26', fill: 'var(--warn,#b8870f)', opacity: '0.75' }));
-    zg.appendChild(txt(205, 42, 'public knowledge', '8', 'var(--ink-mute,#777)'));
-    zg.appendChild(txt(335, 42, 'yellow zone', '8', 'var(--warn,#b8870f)'));
-    zg.appendChild(txt(437, 42, 'recipes', '8', 'var(--warn,#b8870f)'));
+    zg.appendChild(txt(205, 30, 'public knowledge', '8', 'var(--ink-mute,#777)'));
+    zg.appendChild(txt(335, 30, 'yellow zone', '8', 'var(--warn,#b8870f)'));
+    zg.appendChild(txt(437, 30, 'recipes', '8', 'var(--warn,#b8870f)'));
     zg.appendChild(txt(335, 90, 'proximate enabling knowledge, no synthesis steps', '7', 'var(--ink-mute,#777)'));
     pop(zg, '0s');
     svg.appendChild(zg);
@@ -530,7 +530,7 @@
       enter(ln, (i * 0.15) + 's');
       svg.appendChild(ln);
       svg.appendChild(txt(64, r.y + 3, r.name, '9', i === 1 ? 'var(--warn,#b8870f)' : 'var(--ink-mute,#777)', 'end'));
-      svg.appendChild(txt(336, r.y - 5, r.sub, '7', 'var(--ink-mute,#777)', 'start'));
+      svg.appendChild(txt(72, r.y - 6, r.sub, '7', 'var(--ink-mute,#777)', 'start'));
     }
     var curve = svgEl('path', { d: 'M80 214 C 160 210, 220 180, 300 104', fill: 'none', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '2', 'stroke-dasharray': '260', 'stroke-dashoffset': '260' });
     curve.appendChild(svgEl('animate', { attributeName: 'stroke-dashoffset', values: '260;0;0;260', dur: '6s', begin: '0.6s', repeatCount: 'indefinite', keyTimes: '0;0.45;0.9;1', calcMode: 'spline', keySplines: SPL + ';0 0 1 1;0.4 0 1 1' }));

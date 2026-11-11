@@ -35,6 +35,8 @@
       '.asf-edge.is-visible{opacity:.82;transform:none}',
       '.asf-edge path{fill:none;stroke:var(--blueprint,#3553ff);stroke-width:2}',
       '.asf-edge.is-warning path{stroke:var(--warn,#b8870f)}',
+      '.asf-edge-tag.is-visible{opacity:1}',
+      '.asf-edge-tag rect{fill:var(--bg-surface,#f3f1e8)}',
       '.asf-edge-label{fill:var(--ink-mute,#777);font-family:var(--font-mono,monospace);font-size:11px;text-anchor:middle;paint-order:stroke;stroke:var(--bg-surface,#f3f1e8);stroke-width:5;stroke-linejoin:round}',
       '.asf-node{opacity:.2;transform:translateY(8px);transform-box:fill-box;transform-origin:center;transition:opacity 280ms var(--ease-out,cubic-bezier(.23,1,.32,1)),transform 280ms var(--ease-out,cubic-bezier(.23,1,.32,1))}',
       '.asf-node.is-visible{opacity:.68;transform:none}',
@@ -76,14 +78,15 @@
     };
   }
 
-  function E(from, to, stage, label, tone, points) {
+  function E(from, to, stage, label, tone, points, labelAt) {
     return {
       from: from,
       to: to,
       stage: stage || 0,
       label: label || '',
       tone: tone || '',
-      points: points || null
+      points: points || null,
+      labelAt: labelAt || null
     };
   }
 
@@ -317,6 +320,7 @@
         ]));
       });
 
+      var edgeTags = [];
       config.edges.forEach(function (edge) {
         var group = svgEl('g', { class: 'asf-edge' + (edge.tone === 'warning' ? ' is-warning' : '') });
         var path = svgEl('path', {
@@ -324,16 +328,27 @@
           'marker-end': 'url(#' + (edge.tone === 'warning' ? uid + '-warn-arrow' : uid + '-arrow') + ')'
         });
         group.appendChild(path);
+        var tag = null;
         if (edge.label) {
           var fromCenter = nodeCenter(nodeMap[edge.from]);
           var toCenter = nodeCenter(nodeMap[edge.to]);
           var labelX = edge.points && edge.points.length ? edge.points[Math.floor(edge.points.length / 2)][0] : (fromCenter.x + toCenter.x) / 2;
           var labelY = edge.points && edge.points.length ? edge.points[Math.floor(edge.points.length / 2)][1] - 7 : (fromCenter.y + toCenter.y) / 2 - 7;
-          group.appendChild(svgEl('text', { x: labelX, y: labelY, class: 'asf-edge-label', style: 'font-size:' + type.edge + 'px' }, [document.createTextNode(edge.label)]));
+          if (edge.labelAt) {
+            labelX = edge.labelAt[0];
+            labelY = edge.labelAt[1];
+          }
+          var tagWidth = edge.label.length * 0.6 * type.edge + 8;
+          tag = svgEl('g', { class: 'asf-edge asf-edge-tag' }, [
+            svgEl('rect', { x: labelX - tagWidth / 2, y: labelY - type.edge, width: tagWidth, height: type.edge + 4 }),
+            svgEl('text', { x: labelX, y: labelY, class: 'asf-edge-label', style: 'font-size:' + type.edge + 'px' }, [document.createTextNode(edge.label)])
+          ]);
+          edgeTags.push(tag);
         }
         svg.appendChild(group);
-        edgeViews.push({ config: edge, element: group });
+        edgeViews.push({ config: edge, element: group, tag: tag });
       });
+      edgeTags.forEach(function (tag) { svg.appendChild(tag); });
 
       nodes.forEach(function (node) {
         var layout = node.layout;
@@ -382,6 +397,7 @@
         });
         edgeViews.forEach(function (view) {
           view.element.classList.toggle('is-visible', view.config.stage <= state.step);
+          if (view.tag) view.tag.classList.toggle('is-visible', view.config.stage <= state.step);
         });
         range.value = String(state.step);
         range.setAttribute('aria-valuetext', 'Step ' + (state.step + 1) + ' of ' + config.steps.length + ': ' + config.steps[state.step].label);
@@ -495,14 +511,15 @@
         N('refs', 205, 150, 'references/', 'branch rules', 1, '', 140, 64),
         N('scripts', 375, 150, 'scripts/', 'deterministic helpers', 1, '', 140, 64),
         N('assets', 545, 150, 'assets/', 'output material', 1, '', 140, 64),
-        N('policy', 185, 292, 'release-policy.md', 'domain constraint', 2, '', 150, 62),
-        N('format', 350, 292, 'changelog-format.md', 'format contract', 2, '', 160, 62),
-        N('inspect', 520, 292, 'inspect_release.py', 'evidence collector', 2, '', 150, 62),
-        N('checklist', 590, 342, 'release-checklist.md', 'deliverable template', 2, '', 145, 62)
+        N('policy', 32, 290, 'release-policy.md', 'domain constraint', 2, '', 165, 62),
+        N('format', 209, 290, 'changelog-format.md', 'format contract', 2, '', 165, 62),
+        N('inspect', 386, 290, 'inspect_release.py', 'evidence collector', 2, '', 165, 62),
+        N('checklist', 563, 290, 'release-checklist.md', 'deliverable template', 2, '', 165, 62)
       ],
       edges: [
         E('bundle', 'entry', 1), E('bundle', 'refs', 1), E('bundle', 'scripts', 1), E('bundle', 'assets', 1),
-        E('refs', 'policy', 2), E('refs', 'format', 2), E('scripts', 'inspect', 2), E('assets', 'checklist', 2)
+        E('refs', 'policy', 2, '', '', [[232, 214], [232, 250], [114, 250], [114, 290]]), E('refs', 'format', 2, '', '', [[291, 214], [291, 290]]),
+        E('scripts', 'inspect', 2, '', '', [[468, 214], [468, 290]]), E('assets', 'checklist', 2, '', '', [[645, 214], [645, 290]])
       ],
       steps: [
         S('The directory is the unit', 'Install, version, review, and remove the whole package root.', ['bundle']),
@@ -806,7 +823,7 @@
       hint: 'keep extensions outside the core contract',
       description: 'A portable skill bundle and a host adapter contribute different inputs to one runtime activation boundary.',
       viewBox: '0 0 860 500',
-      zones: [Z(25, 35, 365, 390, 'portable package'), Z(470, 35, 365, 390, 'host adapter')],
+      zones: [Z(25, 35, 365, 340, 'portable package'), Z(470, 35, 365, 340, 'host adapter')],
       nodes: [
         N('bundle', 130, 70, 'Portable bundle', 'cross-host directory', 0, '', 155, 60),
         N('skill', 55, 180, 'SKILL.md', 'core procedure', 1, '', 130, 58),
@@ -922,7 +939,7 @@
         E('action', 'reversible', 1), E('reversible', 'scope', 2, 'yes'), E('reversible', 'impact', 2, 'no'),
         E('scope', 'execute', 3, 'yes'), E('scope', 'ask', 3, 'no', 'warning'), E('impact', 'ask', 3, 'yes', 'warning'), E('impact', 'execute', 3, 'no'),
         E('ask', 'granted', 4, 'granted'), E('ask', 'denied', 4, 'denied', 'warning'),
-        E('execute', 'result', 5), E('granted', 'result', 5)
+        E('execute', 'result', 5, '', '', [[865, 66], [884, 66], [884, 500], [660, 500]]), E('granted', 'result', 5)
       ],
       steps: [
         S('Name the action', 'Approval cannot be evaluated from a vague request to allow a general shell.', ['action']),
@@ -1036,11 +1053,18 @@
       ],
       edges: [
         E('observe', 'contract', 1), E('contract', 'package', 2), E('package', 'eval', 3), E('eval', 'failure', 4),
-        E('failure', 'routing', 5, 'routing'), E('failure', 'behavior', 5, 'behavior'), E('failure', 'script', 5, 'script'),
-        E('failure', 'safety', 5, 'safety', 'warning'), E('failure', 'portability', 5, 'portability'),
-        E('routing', 'reeval', 6), E('behavior', 'reeval', 6), E('script', 'reeval', 6), E('safety', 'reeval', 6), E('portability', 'reeval', 6),
-        E('reeval', 'eval', 6, 'new evidence', '', [[455, 400], [455, 355], [642, 355], [642, 115]]),
-        E('failure', 'release', 7, 'passes gate', '', [[880, 115], [880, 220], [880, 330], [880, 530], [815, 530]])
+        E('failure', 'routing', 5, 'routing', '', [[827, 115], [827, 185], [117, 185], [117, 250]]),
+        E('failure', 'behavior', 5, 'behavior', '', [[827, 115], [827, 185], [277, 185], [277, 250]]),
+        E('failure', 'script', 5, 'script', '', [[827, 115], [827, 185], [437, 185], [437, 250]]),
+        E('failure', 'safety', 5, 'safety', 'warning', [[827, 115], [827, 185], [597, 185], [597, 250]]),
+        E('failure', 'portability', 5, 'portability', '', [[827, 115], [827, 185], [757, 185], [757, 250]]),
+        E('routing', 'reeval', 6, '', '', [[117, 308], [117, 355], [455, 355], [455, 400]]),
+        E('behavior', 'reeval', 6, '', '', [[277, 308], [277, 355], [455, 355], [455, 400]]),
+        E('script', 'reeval', 6, '', '', [[437, 308], [437, 355], [455, 355], [455, 400]]),
+        E('safety', 'reeval', 6, '', '', [[597, 308], [597, 355], [455, 355], [455, 400]]),
+        E('portability', 'reeval', 6, '', '', [[757, 308], [757, 355], [455, 355], [455, 400]]),
+        E('reeval', 'eval', 6, 'new evidence', '', [[540, 430], [677, 430], [677, 150], [642, 150], [642, 115]], [608, 423]),
+        E('failure', 'release', 7, 'passes gate', '', [[905, 85], [945, 85], [945, 530], [815, 530]], [878, 523])
       ],
       steps: [
         S('Observe real work', 'Extract a stable procedure from evidence, not from a broad topic label.', ['observe']),

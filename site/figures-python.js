@@ -78,7 +78,7 @@
 
     svg.appendChild(txt(X0, BY - 10, 'for batch in batches(read_rows(path), 2):', 10, INK, 'start'));
     strip(X0, BY, 8, CW, H).forEach(function (n) { svg.appendChild(n); });
-    var win = rect(X0, BY - 3, 2 * CW, H + 6, 'none', BP);
+    var win = rect(X0 + 1.5, BY + 1.5, 2 * CW - 3, H - 3, 'none', BP);
     win.setAttribute('stroke-width', '2.4');
     win.appendChild(svgEl('animateTransform', { attributeName: 'transform', type: 'translate', values: '0 0;0 0;60 0;60 0;120 0;120 0;180 0;180 0;0 0', keyTimes: '0;0.12;0.2;0.34;0.42;0.56;0.64;0.92;1', dur: D, repeatCount: 'indefinite', calcMode: 'spline', keySplines: '0 0 1 1;' + EASE + ';0 0 1 1;' + EASE + ';0 0 1 1;' + EASE + ';0 0 1 1;0.4 0 1 1' }));
     svg.appendChild(win);

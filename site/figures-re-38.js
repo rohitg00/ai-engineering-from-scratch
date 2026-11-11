@@ -30,6 +30,7 @@
   var ROW = 18;
   var LABEL_W = 44;
   var FOOT = 92;
+  var GAP = 16;
 
   var KIND_STYLE = {
     arg: { fill: SURF, stroke: BP, dash: 'none', text: INK },
@@ -142,17 +143,18 @@
     svg.appendChild(text(x, 36, frame.frame + ' frame bytes, ' + fpText, MUTE, 'start', 10.5));
     var entryY = yFor(0, rng);
     svg.appendChild(svgEl('line', { x1: x, y1: entryY, x2: x + COL_W, y2: entryY, stroke: INK, 'stroke-width': '1.5' }));
-    svg.appendChild(text(x + COL_W, entryY - 3, 'entry sp', INK, 'end', 9.5));
+    svg.appendChild(text(x + COL_W, entryY + 12, 'entry sp', INK, 'end', 9.5));
     if (frame.frame > 0) {
-      var spY = yFor(-frame.frame, rng);
+      var spY = yFor(-frame.frame, rng) + GAP;
       svg.appendChild(svgEl('line', { x1: x, y1: spY, x2: x + COL_W, y2: spY, stroke: BP, 'stroke-width': '1.5' }));
       svg.appendChild(text(x + COL_W, spY + 11, 'sp after prologue', BP, 'end', 9.5));
     }
     for (i = 0; i < frame.cells.length; i++) {
       var cell = frame.cells[i];
       var style = KIND_STYLE[cell.kind] || KIND_STYLE.local;
-      var y0 = yFor(cell.hi, rng);
-      var y1 = yFor(cell.lo, rng);
+      var shift = cell.lo < 0 ? GAP : 0;
+      var y0 = yFor(cell.hi, rng) + shift;
+      var y1 = yFor(cell.lo, rng) + shift;
       var inset = cell.kind === 'redzone' ? 3 : 0;
       svg.appendChild(svgEl('rect', {
         x: cellX + inset, y: y0 + inset, width: cellW - 2 * inset, height: Math.max(2, y1 - y0 - 2 * inset),
@@ -165,7 +167,7 @@
         svg.appendChild(text(cellX + cellW - 6, y1 - 5, cell.label, WARN, 'end', 9.5));
       }
     }
-    var footY = yFor(rng.bottom, rng) + 20;
+    var footY = yFor(rng.bottom, rng) + GAP + 20;
     var lines = regLines(frame);
     for (i = 0; i < lines.length; i++) svg.appendChild(text(x, footY + i * 14, lines[i], INK, 'start', 9.5));
     footY += lines.length * 14;
@@ -217,7 +219,7 @@
 
     function render() {
       var rng = range(state);
-      var height = yFor(rng.bottom, rng) + FOOT + (maxRegLines(state) - 1) * 14;
+      var height = yFor(rng.bottom, rng) + GAP + FOOT + (maxRegLines(state) - 1) * 14;
       var i;
       while (svg.firstChild) svg.removeChild(svg.firstChild);
       svg.setAttribute('viewBox', '0 0 ' + W + ' ' + height);

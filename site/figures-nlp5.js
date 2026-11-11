@@ -231,6 +231,7 @@
   // ── n5-patch-stream: an image grid unrolls into a token sequence ───────────
   function patchStream(host) {
     var D = 5, svg = svgEl('svg', { viewBox: '0 0 520 260' });
+    host.setAttribute('data-static-time', '4');
     svg.appendChild(txt(110, 32, 'image, 3 x 3 patches', { 'text-anchor': 'middle', fill: SOFT, 'font-size': '10' }));
     svg.appendChild(svgEl('rect', { x: 56, y: 44, width: 110, height: 110, fill: 'none', stroke: RULE, 'stroke-width': '1.5', 'stroke-dasharray': '4 3' }));
     var ops = ['0.15', '0.45', '0.25', '0.6', '0.35', '0.2', '0.5', '0.3', '0.55'];
@@ -247,7 +248,8 @@
     });
     var cls = svgEl('g', { transform: 'translate(83 219)' });
     var inner = svgEl('g', {}, [
-      svgEl('rect', { x: -15, y: -15, width: 30, height: 30, rx: 2, fill: BP, 'fill-opacity': '0.08', stroke: BP, 'stroke-width': '1.5' }),
+      svgEl('rect', { x: -15, y: -15, width: 30, height: 30, rx: 2, fill: BP, 'fill-opacity': '0.08' }),
+      svgEl('rect', { x: -15, y: -15, width: 30, height: 30, rx: 2, fill: 'none', stroke: BP, 'stroke-width': '1.5' }),
       txt(0, 3, '[CLS]', { 'text-anchor': 'middle', fill: BP, 'font-size': '8' })
     ]);
     inner.appendChild(anim('opacity', '0;0;1;1', D, { keyTimes: '0;0.56;0.64;1' }));
@@ -255,7 +257,8 @@
     cls.appendChild(inner);
     svg.appendChild(cls);
     svg.appendChild(txt(83, 248, '0', { 'text-anchor': 'middle', fill: MUTE, 'font-size': '8' }));
-    svg.appendChild(txt(255, 190, 'flatten + linearly project, add position embeddings', { 'text-anchor': 'middle', fill: SOFT, 'font-size': '10' }));
+    svg.appendChild(txt(200, 90, 'flatten + linearly project,', { fill: SOFT, 'font-size': '10' }));
+    svg.appendChild(txt(200, 104, 'add position embeddings', { fill: SOFT, 'font-size': '10' }));
     card(host, 'VIT PATCHIFY', 'an image becomes a sequence', svg,
       'A vision transformer never convolves: the image is cut into fixed patches, each patch is flattened and linearly projected, and the patches queue up as tokens behind a learned [CLS] token. Position embeddings are the only memory of the original grid; from there it is the standard transformer encoder.');
   }
@@ -263,6 +266,7 @@
   // ── n5-mel-decode: waveform to mel columns to typed transcript ─────────────
   function melDecode(host) {
     var D = 5, svg = svgEl('svg', { viewBox: '0 0 520 240' });
+    host.setAttribute('data-static-time', '4.7');
     var pts = [], x;
     for (x = 24; x <= 240; x += 6) {
       var a = 4 + 10 * Math.abs(Math.sin(x * 0.05));
@@ -283,7 +287,8 @@
     svg.appendChild(svgEl('rect', { x: 250, y: 112, width: 100, height: 26, rx: 3, fill: 'none', stroke: BP, 'stroke-width': '1.5' }));
     svg.appendChild(txt(300, 129, 'decoder', { 'text-anchor': 'middle', 'font-size': '11' }));
     svg.appendChild(svgEl('path', { d: 'M 300 138 C 300 170 120 170 90 200', fill: 'none', stroke: RULE, 'stroke-width': '1', 'stroke-dasharray': '3 3' }));
-    svg.appendChild(txt(24, 186, 'decoder output, one token at a time', { fill: MUTE, 'font-size': '9' }));
+    svg.appendChild(txt(362, 156, 'decoder output,', { fill: MUTE, 'font-size': '9' }));
+    svg.appendChild(txt(362, 168, 'one token at a time', { fill: MUTE, 'font-size': '9' }));
     var toks = [['<|en|>', 24, WARN], ['<|transcribe|>', 78, WARN], ['The', 186, INK], ['sky', 218, INK], ['is', 248, INK], ['clear.', 268, INK]];
     toks.forEach(function (t, i) {
       var e = txt(t[1], 212, t[0], { fill: t[2], 'font-size': '11' });
@@ -297,6 +302,7 @@
   // ── n5-block-stack: the capstone assembles itself bottom-up ────────────────
   function blockStack(host) {
     var D = 5, svg = svgEl('svg', { viewBox: '0 0 520 260' });
+    host.setAttribute('data-static-time', '4.6');
     svg.appendChild(txt(200, 252, 'characters in (B, N)', { 'text-anchor': 'middle', fill: MUTE, 'font-size': '9' }));
     var embed = svgEl('g', {}, [
       svgEl('rect', { x: 100, y: 206, width: 200, height: 28, rx: 3, fill: 'none', stroke: RULE, 'stroke-width': '1.5' }),
@@ -305,7 +311,7 @@
     fadeRise(embed, D, 0.05, 0.13, 10);
     svg.appendChild(embed);
     [[168, 0.18, false], [138, 0.26, true], [108, 0.34, false]].forEach(function (b) {
-      var kids = [svgEl('rect', { x: 100, y: b[0], width: 200, height: 26, rx: 3, fill: BP, 'fill-opacity': '0.06', stroke: BP, 'stroke-width': '1.5' })];
+      var kids = [svgEl('rect', { x: 100, y: b[0], width: 200, height: 26, rx: 3, fill: BP, 'fill-opacity': '0.06' }), svgEl('rect', { x: 100, y: b[0], width: 200, height: 26, rx: 3, fill: 'none', stroke: BP, 'stroke-width': '1.5' })];
       if (b[2]) { kids.push(txt(200, b[0] + 17, 'causal attn + SwiGLU', { 'text-anchor': 'middle', 'font-size': '11', fill: BP })); }
       var g = svgEl('g', {}, kids);
       fadeRise(g, D, b[1], b[1] + 0.08, 10);

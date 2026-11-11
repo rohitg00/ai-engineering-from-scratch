@@ -85,7 +85,7 @@
     for (i = 0; i < 4; i++) {
       var sy = 57 + i * 38, ey = 57 + i * 38;
       var p = svgEl('circle', { r: '4', fill: B });
-      var mo = svgEl('animateMotion', { dur: '2.4s', repeatCount: 'indefinite', path: 'M 90 ' + sy + ' L 200 116 L 320 116 L 420 ' + ey, begin: (i * 0.3).toFixed(2) + 's' });
+      var mo = svgEl('animateMotion', { dur: '2.4s', repeatCount: 'indefinite', path: 'M 90 ' + sy + ' L 200 170 L 320 170 L 420 ' + ey, begin: (i * 0.3).toFixed(2) + 's' });
       p.appendChild(mo);
       svg.appendChild(p);
     }
@@ -290,9 +290,13 @@
       var node = svgEl('circle', { cx: p.x.toFixed(1), cy: p.y.toFixed(1), r: '8', fill: B });
       node.appendChild(anim('r', '8;12;8', '0;0.5;1', '4s', { begin: (i * 1).toFixed(0) + 's' }));
       svg.appendChild(node);
-      var ly = p.y < CY ? p.y - 14 : p.y + 22;
-      svg.appendChild(txt(p.x.toFixed(1), ly.toFixed(1), p.lab, 'middle', 'var(--ink-soft,#555)', 11));
-      svg.appendChild(txt(p.x.toFixed(1), (ly + (p.y < CY ? -12 : 13)).toFixed(1), p.sub, 'middle', 'var(--ink-mute,#999)', 9));
+      var side = Math.abs(p.y - CY) < 1;
+      var lx = side ? p.x + (p.x > CX ? 18 : -18) : p.x;
+      var anchor = side ? (p.x > CX ? 'start' : 'end') : 'middle';
+      var ly = side ? p.y - 2 : (p.y < CY ? p.y - 14 : p.y + 22);
+      var sy = side ? ly + 13 : ly + (p.y < CY ? -12 : 13);
+      svg.appendChild(txt(lx.toFixed(1), ly.toFixed(1), p.lab, anchor, 'var(--ink-soft,#555)', 11));
+      svg.appendChild(txt(lx.toFixed(1), sy.toFixed(1), p.sub, anchor, 'var(--ink-mute,#999)', 9));
     });
     // a token traveling around the cycle clockwise
     var path = 'M ' + pts[0].x.toFixed(1) + ' ' + pts[0].y.toFixed(1) +

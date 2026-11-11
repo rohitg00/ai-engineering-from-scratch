@@ -135,7 +135,7 @@
     s.appendChild(pr);
     s.appendChild(svgEl('line', { x1: 392, y1: 58, x2: 392, y2: 182, stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.4' }));
     s.appendChild(txt(392, 200, 'result bus', '9', 'var(--ink-soft,#555)'));
-    var arc = 'M 392 58 C 392 16, 90 16, 90 54';
+    var arc = 'M 392 58 C 392 16, 140 16, 140 54';
     s.appendChild(svgEl('path', { d: arc, fill: 'none', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.2', 'stroke-dasharray': '4 4' }));
     for (i = 0; i < 2; i++) {
       var d = svgEl('circle', { cx: qx + qw, cy: ys[i] + 16, r: '4', fill: 'var(--blueprint,#3553ff)', opacity: '0' });
@@ -144,7 +144,7 @@
       s.appendChild(d);
     }
     var res = svgEl('circle', { r: '4', fill: 'var(--warn,#b8870f)', opacity: '0' });
-    res.appendChild(svgEl('animateMotion', { path: 'M 320 74 L 392 74 L 392 58 C 392 16, 90 16, 90 54', keyPoints: '0;0;1;1', keyTimes: '0;0.4;0.8;1', calcMode: 'linear', dur: '4.8s', repeatCount: 'indefinite' }));
+    res.appendChild(svgEl('animateMotion', { path: 'M 320 74 L 392 74 L 392 58 C 392 16, 140 16, 140 54', keyPoints: '0;0;1;1', keyTimes: '0;0.4;0.8;1', calcMode: 'linear', dur: '4.8s', repeatCount: 'indefinite' }));
     res.appendChild(svgEl('animate', { attributeName: 'opacity', values: '0;0;1;1;0;0', keyTimes: '0;0.4;0.46;0.78;0.82;1', dur: '4.8s', repeatCount: 'indefinite' }));
     s.appendChild(res);
     s.appendChild(txt(240, 232, 'result updates UCB, reorders the queue', '9', 'var(--ink-mute,#777)'));
@@ -155,10 +155,10 @@
   // ── ch-research-pipeline (57): a baton crosses five stages through contract gates ─
   function chPipeline(host) {
     var s = svg(220), names = ['seed', 'scheduler', 'runner', 'critic', 'writer'];
-    var i, bx = [20, 124, 228, 332, 436], cy = 108;
+    var i, bx = [20, 124, 228, 332, 436], cy = 120;
     for (i = 0; i < 5; i++) {
       s.appendChild(rect(bx[i], 86, 76, 44, 'var(--bg-surface,#eee)', 'var(--rule-soft,#ddd)'));
-      s.appendChild(txt(bx[i] + 38, 112, names[i], '10', 'var(--ink,#1a1a1a)'));
+      s.appendChild(txt(bx[i] + 38, 103, names[i], '10', 'var(--ink,#1a1a1a)'));
     }
     s.appendChild(svgEl('line', { x1: 58, y1: cy, x2: 474, y2: cy, stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '0.6' }));
     for (i = 0; i < 4; i++) {
@@ -264,17 +264,17 @@
       s.appendChild(svgEl('circle', { cx: pts[i][0], cy: pts[i][1], r: '3', fill: 'var(--ink-mute,#777)', opacity: '0.5' }));
     }
     s.appendChild(svgEl('circle', { cx: 86, cy: 128, r: '5', fill: 'var(--blueprint,#3553ff)' }));
-    s.appendChild(txt(86, 146, 'image CLS', '8', 'var(--ink,#1a1a1a)'));
+    s.appendChild(txt(86, 116, 'image CLS', '8', 'var(--ink,#1a1a1a)'));
     s.appendChild(svgEl('circle', { cx: 434, cy: 102, r: '5', fill: 'none', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '1.6' }));
     s.appendChild(txt(434, 84, 'caption', '8', 'var(--ink,#1a1a1a)'));
-    s.appendChild(rect(226, 92, 68, 60, 'var(--bg-surface,#eee)', 'var(--blueprint,#3553ff)'));
+    s.appendChild(rect(226, 92, 68, 74, 'var(--bg-surface,#eee)', 'var(--blueprint,#3553ff)'));
     s.appendChild(txt(260, 108, 'linear', '8', 'var(--ink,#1a1a1a)'));
     s.appendChild(txt(260, 122, 'GELU', '8', 'var(--ink,#1a1a1a)'));
     s.appendChild(txt(260, 136, 'linear', '8', 'var(--ink,#1a1a1a)'));
-    s.appendChild(txt(260, 170, 'trains (1.3M params)', '8', 'var(--blueprint,#3553ff)'));
+    s.appendChild(txt(260, 184, 'trains (1.3M params)', '8', 'var(--blueprint,#3553ff)'));
     var mv = svgEl('circle', { cx: 86, cy: 128, r: '5', fill: 'var(--blueprint,#3553ff)', opacity: '0' });
     mv.appendChild(svgEl('animate', { attributeName: 'cx', values: '86;86;260;424;424', keyTimes: '0;0.08;0.42;0.72;1', calcMode: 'spline', keySplines: '0 0 1 1;' + EASE + ';' + EASE + ';0 0 1 1', dur: '4.6s', repeatCount: 'indefinite' }));
-    mv.appendChild(svgEl('animate', { attributeName: 'cy', values: '128;128;122;106;106', keyTimes: '0;0.08;0.42;0.72;1', calcMode: 'spline', keySplines: '0 0 1 1;' + EASE + ';' + EASE + ';0 0 1 1', dur: '4.6s', repeatCount: 'indefinite' }));
+    mv.appendChild(svgEl('animate', { attributeName: 'cy', values: '128;128;152;106;106', keyTimes: '0;0.08;0.42;0.72;1', calcMode: 'spline', keySplines: '0 0 1 1;' + EASE + ';' + EASE + ';0 0 1 1', dur: '4.6s', repeatCount: 'indefinite' }));
     mv.appendChild(svgEl('animate', { attributeName: 'opacity', values: '0;1;1;1;0', keyTimes: '0;0.08;0.72;0.95;1', dur: '4.6s', repeatCount: 'indefinite' }));
     s.appendChild(mv);
     var hit = svgEl('circle', { cx: 434, cy: 102, r: '5', fill: 'none', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '1.4' });
@@ -365,6 +365,7 @@
   // ── ch-recall-window (63): the matching image climbs into the R@K window ─────
   function chEval(host) {
     var s = svg(260), rx = 56, rw = 150;
+    host.setAttribute('data-static-time', '4');
     s.appendChild(txt(rx, 34, 'retrieval: rank every image', '9', 'var(--ink-soft,#555)', 'start'));
     var i;
     for (i = 0; i < 6; i++) {
@@ -376,7 +377,7 @@
     s.appendChild(txt(rx + rw + 12, 70, 'R@1: row 1 only', '8', 'var(--ink-mute,#777)', 'start'));
     var tg = svgEl('g', { transform: 'translate(' + rx + ' 198)' });
     tg.appendChild(svgEl('animateTransform', { attributeName: 'transform', type: 'translate', values: rx + ' 198;' + rx + ' 198;' + rx + ' 78;' + rx + ' 78', keyTimes: '0;0.16;0.52;1', calcMode: 'spline', keySplines: '0 0 1 1;' + EASE + ';0 0 1 1', dur: '4.8s', repeatCount: 'indefinite' }));
-    tg.appendChild(svgEl('rect', { x: 0, y: 0, width: rw, height: 24, rx: '4', fill: 'var(--bg-surface,#eee)', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '1.6' }));
+    tg.appendChild(svgEl('rect', { x: 3, y: 2, width: rw - 6, height: 20, rx: '4', fill: 'var(--bg-surface,#eee)', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '1.6' }));
     tg.appendChild(txt(rw / 2, 16, 'matching image', '9', 'var(--blueprint,#3553ff)'));
     s.appendChild(tg);
     var hit = txt(rx + rw + 12, 92, 'R@1 miss, R@5 hit', '9', 'var(--warn,#b8870f)', 'start');

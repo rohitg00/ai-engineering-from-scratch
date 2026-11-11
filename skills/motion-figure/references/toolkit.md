@@ -15,6 +15,9 @@ The course runtime puts one object on the page: `window.LF`. Figure modules use 
 | `LF.uid(prefix)` | Returns a new id such as `lf-3`. Call it once per figure, outside the render function. |
 | `LF.clamp(x, lo, hi)` and `LF.lerp(a, b, t)` | Small number helpers. |
 | `LF.fmtInt(n)` and `LF.fmtSeq(n)` | Format `12345` as `12,345`, and `8192` as `8K`. |
+| `LF.textWidth(text, size, serif)` | Returns the width of a label in viewBox units: 0.6 x size per character for mono, 0.54 for serif. Size a box as this width plus 16. |
+| `LF.wrapText(text, size, width, serif)` | Returns the label as a list of lines. Each line fits `width`, except a single word that is wider than `width`: that word stays whole on its own line, so widen the box for it. Draw one `<text>` per line. |
+| `LF.hold(node, begin)` | Hides a mover until its motion begins at `begin` seconds, then shows it. Use it on every dot, token or packet whose `animateMotion` has a delayed `begin`. Without it the mover sits at the SVG origin. |
 | `LF.motion` | The motion values `feedback` 180ms, `enter` 220ms, `press` 160ms, and the two easing curves. |
 | `LF.autoplay`, `LF.raf` | Script-driven animation helpers for old figures. Do not use them in new figures. Use SMIL. |
 | `LF.registerDisposer(host, fn)` | Adds a cleanup function that runs when the lesson unmounts the host. |

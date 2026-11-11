@@ -46,12 +46,12 @@
     for (var e = 0; e < E; e++) {
       var ey = eyTop + e * (eh + eg);
       svg.appendChild(svgEl('rect', { x: ex0, y: ey, width: ew, height: eh, rx: 4, fill: SOFT, stroke: MUTE, 'stroke-width': 1 }));
-      svg.appendChild(svgEl('text', { x: ex0 + 10, y: ey + 22, 'font-family': 'var(--font-mono,monospace)', 'font-size': 11, fill: INK }, [document.createTextNode('expert ' + (e + 1))]));
       // pulse the expert when it is selected (each token picks 2 of 4, cycling)
       var lit = svgEl('rect', { x: ex0, y: ey, width: ew, height: eh, rx: 4, fill: BP, opacity: 0 });
       var phase = (e * 0.22).toFixed(2);
       lit.appendChild(anim('opacity', '0;0.7;0;0', '4.4s', { keyTimes: '0;' + phase + ';' + (Number(phase) + 0.2).toFixed(2) + ';1' }));
       svg.appendChild(lit);
+      svg.appendChild(svgEl('text', { x: ex0 + 10, y: ey + 22, 'font-family': 'var(--font-mono,monospace)', 'font-size': 11, fill: INK }, [document.createTextNode('expert ' + (e + 1))]));
     }
     // tokens on the left, each shooting a routing beam to its 2 experts
     var pick = [[0, 2], [1, 3], [0, 3], [1, 2]];
@@ -62,7 +62,7 @@
       // a routing token travels token → router → expert
       pick[i].forEach(function (e, j) {
         var ey = eyTop + e * (eh + eg) + eh / 2;
-        var d = 'M ' + (x + tw / 2) + ' ' + (ty + 28) + ' Q ' + routerX + ' 118 ' + ex0 + ' ' + ey;
+        var d = 'M ' + (x + tw / 2) + ' ' + (ty + 28) + ' Q ' + (x + tw / 2) + ' 82 ' + (routerX + 35) + ' 90 M ' + (routerX + 70) + ' 118 Q ' + (routerX + 105) + ' 118 ' + ex0 + ' ' + ey;
         var beam = svgEl('path', { d: d, fill: 'none', stroke: BP, 'stroke-width': 1.4, 'stroke-dasharray': '5 5', opacity: 0.18 });
         beam.appendChild(anim('opacity', '0.12;0.8;0.12', '4.4s', { begin: (i * 0.22 + j * 0.05) + 's' }));
         beam.appendChild(anim('stroke-dashoffset', '20;0', '0.9s'));

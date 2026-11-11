@@ -242,27 +242,28 @@
     var layers = ['normalize', 'substring', 'regex'], x = [70, 200, 330], i;
     for (i = 0; i < 3; i++) {
       s.appendChild(rect(x[i], 80, 96, 50, 'var(--bg-surface,#eee)', 'var(--rule-soft,#ddd)'));
-      s.appendChild(txt(x[i] + 48, 100, layers[i], '11'));
-      s.appendChild(txt(x[i] + 48, 116, 'layer', '8', 'var(--ink-mute,#777)'));
-      if (i < 2) s.appendChild(svgEl('line', { x1: x[i] + 96, y1: 105, x2: x[i + 1], y2: 105, stroke: 'var(--ink-soft,#555)', 'stroke-width': '1.3', 'marker-end': 'url(#cb-inj)' }));
+      s.appendChild(txt(x[i] + 48, 98, layers[i], '11'));
+      s.appendChild(txt(x[i] + 48, 110, 'layer', '8', 'var(--ink-mute,#777)'));
+      if (i < 2) s.appendChild(svgEl('line', { x1: x[i] + 96, y1: 120, x2: x[i + 1], y2: 120, stroke: 'var(--ink-soft,#555)', 'stroke-width': '1.3', 'marker-end': 'url(#cb-inj)' }));
     }
     s.appendChild(rect(440, 80, 60, 50, 'var(--bg-surface,#eee)', 'var(--blueprint,#3553ff)'));
-    s.appendChild(txt(470, 100, 'verdict', '9'));
-    s.appendChild(svgEl('line', { x1: 426, y1: 105, x2: 440, y2: 105, stroke: 'var(--ink-soft,#555)', 'stroke-width': '1.3', 'marker-end': 'url(#cb-inj)' }));
+    s.appendChild(txt(470, 98, 'verdict', '9'));
+    s.appendChild(svgEl('line', { x1: 426, y1: 120, x2: 440, y2: 120, stroke: 'var(--ink-soft,#555)', 'stroke-width': '1.3', 'marker-end': 'url(#cb-inj)' }));
     // a malicious prompt fired at the regex layer, a benign one passes clean
     function flow(begin, fired, fill) {
-      var pk = svgEl('circle', { r: '5', fill: fill, cx: '20', cy: '105' });
+      var pk = svgEl('circle', { r: '5', fill: fill, cx: '20', cy: '120' });
       pk.appendChild(svgEl('animateMotion', { path: 'M0 0 L450 0', dur: '3s', begin: begin, repeatCount: 'indefinite', keyTimes: '0;1', keyPoints: '0;1', calcMode: 'linear' }));
       pk.appendChild(anim('opacity', '0;1;1;0', '3s', { begin: begin, keyTimes: '0;0.05;0.92;1' }));
       return pk;
     }
     s.appendChild(flow('0s', false, 'var(--blueprint,#3553ff)'));
     s.appendChild(flow('1.5s', true, 'var(--warn,#b8870f)'));
-    var fire = svgEl('circle', { cx: 378, cy: 105, r: '6', fill: 'none', stroke: 'var(--warn,#b8870f)', 'stroke-width': '2' });
+    var fire = svgEl('circle', { cx: 378, cy: 120, r: '6', fill: 'none', stroke: 'var(--warn,#b8870f)', 'stroke-width': '2', opacity: '0' });
     fire.appendChild(anim('r', '6;20;6', '3s', { begin: '2.55s' }));
     fire.appendChild(anim('opacity', '0;0.9;0', '3s', { begin: '2.55s' }));
     s.appendChild(fire);
     var lab = txt(378, 60, 'rule fires → attack', '9', 'var(--warn,#b8870f)');
+    lab.setAttribute('opacity', '0');
     lab.appendChild(anim('opacity', '0;1;0', '3s', { begin: '2.55s' }));
     s.appendChild(lab);
     s.appendChild(txt(470, 145, 'p, category', '8', 'var(--ink-mute,#777)'));

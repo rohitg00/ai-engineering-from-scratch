@@ -313,7 +313,7 @@
   // ── swarm-speaker: a selector token hops between chat agents around a pool,
   //    settling on the next speaker (leader-election style) ───────────────────
   function speaker(host) {
-    var W = 520, H = 260, CX = 260, CY = 135, R = 88, N = 5, svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
+    var W = 520, H = 270, CX = 260, CY = 150, R = 88, N = 5, svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
     var px = [], py = [], i;
     for (i = 0; i < N; i++) {
       var ang = -Math.PI / 2 + i * 2 * Math.PI / N;
@@ -325,7 +325,8 @@
     svg.appendChild(txt(CX, CY + 10, 'pool', '9', MUTE));
     // spokes from pool to each agent
     for (i = 0; i < N; i++) {
-      svg.appendChild(svgEl('line', { x1: CX, y1: CY, x2: px[i], y2: py[i], stroke: SOFT, 'stroke-width': '1' }));
+      var ca = (px[i] - CX) / R, sa = (py[i] - CY) / R;
+      svg.appendChild(svgEl('line', { x1: CX + 30 * ca, y1: CY + 30 * sa, x2: px[i] - 17 * ca, y2: py[i] - 17 * sa, stroke: SOFT, 'stroke-width': '1' }));
     }
     var period = 7.5, settle = N; // hop through all, then settle on one
     for (i = 0; i < N; i++) {
@@ -357,7 +358,7 @@
     var crownG = svgEl('g', {}, [svgEl('polygon', { points: '-8,4 -8,-4 -3,0 0,-7 3,0 8,-4 8,4', fill: WARN })]);
     crownG.appendChild(svgEl('animateTransform', { attributeName: 'transform', type: 'translate', values: motVals, dur: period + 's', repeatCount: 'indefinite', calcMode: 'discrete' }));
     svg.appendChild(crownG);
-    svg.appendChild(txt(W / 2, 30, 'selector picks the next speaker', '11', MUTE));
+    svg.appendChild(txt(W / 2, 22, 'selector picks the next speaker', '11', MUTE));
     svg.appendChild(txt(W / 2, H - 12, 'the token hops A→B→C→D→E and settles on the chosen speaker', '10', MUTE));
     shell(host, 'SPEAKER SELECTION', 'who talks next', svg,
       'Agents react to one shared pool instead of a fixed graph. A selector — round-robin, an LLM, or a custom rule — picks who speaks next, so the token hops between candidates and settles on one. This avoids the edge explosion of hardcoding every possible handoff between N agents.');

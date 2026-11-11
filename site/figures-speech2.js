@@ -63,6 +63,7 @@
   // ── sp-eer-crossover: FAR and FRR curves crossing at the EER threshold ─────
   function eerCrossover(host) {
     var W = 520, H = 230, PAD = 34;
+    host.setAttribute('data-static-time', '5');
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
     function px(t) { return PAD + t * (W - 2 * PAD); }
     function py(v) { return H - PAD - v * (H - 2 * PAD); }
@@ -75,7 +76,7 @@
     svg.appendChild(svgEl('path', { d: path(far), fill: 'none', stroke: 'var(--ink-mute,#999)', 'stroke-width': '2' }));
     svg.appendChild(svgEl('path', { d: path(frr), fill: 'none', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '2' }));
     svg.appendChild(label(px(0.06), py(far(0.06)) - 6, 'FAR'));
-    svg.appendChild(label(px(0.82), py(frr(0.82)) - 6, 'FRR'));
+    svg.appendChild(label(px(0.82) - 10, py(frr(0.82)) - 5, 'FRR', 'end'));
     // sliding threshold line
     var thr = svgEl('line', { x1: px(0.2), y1: PAD, x2: px(0.2), y2: H - PAD, stroke: 'var(--warn,#b8870f)', 'stroke-width': '1.5' });
     thr.appendChild(anim({ attributeName: 'x1', values: [px(0.15), px(0.85), px(0.5), px(0.5)].join(';'), keyTimes: '0;0.45;0.75;1', dur: '6s', repeatCount: 'indefinite' }));
@@ -87,7 +88,7 @@
     dot.appendChild(anim({ attributeName: 'opacity', values: '0;0;1;1', keyTimes: '0;0.7;0.78;1', dur: '6s', repeatCount: 'indefinite' }));
     dot.appendChild(anim({ attributeName: 'r', values: '5;5;7;5', keyTimes: '0;0.78;0.88;1', dur: '6s', repeatCount: 'indefinite' }));
     svg.appendChild(dot);
-    svg.appendChild(label(px(0.5) + 10, cy - 8, 'EER: FAR = FRR'));
+    svg.appendChild(label(px(0.5) + 8, cy - 38, 'EER: FAR = FRR'));
     host.appendChild(shell('EER CROSSOVER', 'slide the threshold',
       svg,
       'Raise the threshold and you reject more genuine speakers (false reject rate climbs); lower it and you accept more impostors (false accept rate climbs). The orange line sweeps the threshold and settles where the two curves cross. That single crossover point is the Equal Error Rate, the one number every speaker-verification leaderboard quotes.'));
@@ -225,7 +226,7 @@
 
   // ── sp-wer-align: edit-distance alignment of reference vs hypothesis ───────
   function werAlign(host) {
-    var svg = svgEl('svg', { viewBox: '0 0 520 220' });
+    var svg = svgEl('svg', { viewBox: '0 0 520 232' });
     // ref vs hyp with one substitution, one deletion, one insertion
     var cols = [
       { ref: 'turn', hyp: 'turn', op: 'ok' },
@@ -237,7 +238,7 @@
     ];
     var n = cols.length, cw = 80, x0 = 14;
     svg.appendChild(label(x0, 26, 'reference'));
-    svg.appendChild(label(x0, 150, 'hypothesis (ASR output)'));
+    svg.appendChild(label(x0, 204, 'hypothesis (ASR output)'));
     var colors = { ok: 'var(--blueprint,#3553ff)', sub: 'var(--warn,#b8870f)', del: 'var(--ink-mute,#999)', ins: 'var(--warn,#b8870f)' };
     cols.forEach(function (c, i) {
       var cx = x0 + i * cw;
@@ -259,7 +260,7 @@
         svg.appendChild(tag);
       }
     });
-    svg.appendChild(label(x0, 210, 'WER = (S + D + I) / N = (1 + 1 + 1) / 5 = 60%'));
+    svg.appendChild(label(x0, 222, 'WER = (S + D + I) / N = (1 + 1 + 1) / 5 = 60%'));
     host.appendChild(shell('WORD ERROR RATE', 'align ref to hypothesis',
       svg,
       'Word error rate is an edit distance. The transcript is aligned to the reference word by word, and every mismatch is counted as a substitution, deletion, or insertion. Their sum divided by the number of reference words is the WER. Here one substitution (kitchen to chicken), one deletion (the), and one insertion (now) over five reference words give sixty percent.'));

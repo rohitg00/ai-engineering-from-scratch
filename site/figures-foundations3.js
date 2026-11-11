@@ -414,14 +414,7 @@
       { x: 196, y: 150, name: 'search', b: '0.28s' },
       { x: 44, y: 150, name: 'update', b: '0.46s' }
     ];
-    var i, g;
-    for (i = 0; i < 3; i++) {
-      g = grp(nodes[i].x, nodes[i].y);
-      g.appendChild(svgEl('rect', { x: '-40', y: '-18', width: '80', height: '36', rx: '6', fill: SURF, stroke: BP, 'stroke-width': '1.5' }));
-      g.appendChild(txt(0, 4, nodes[i].name, '10', BP));
-      pop(g, nodes[i].b);
-      svg.appendChild(g);
-    }
+    host.setAttribute('data-static-time', '5');
     var loopD = 'M120 52 L196 150 L44 150 Z';
     var tri = svgEl('path', { d: loopD, fill: 'none', stroke: RULE, 'stroke-width': '1', 'stroke-dasharray': '4 4', opacity: '0' });
     enter(tri, '0.7s');
@@ -430,6 +423,14 @@
     runner.appendChild(svgEl('animateMotion', { path: loopD, dur: '5s', begin: '1s', repeatCount: 'indefinite', calcMode: 'linear', keyPoints: '0;1', keyTimes: '0;1' }));
     runner.appendChild(svgEl('animate', { attributeName: 'opacity', values: '0;1', dur: '0.5s', begin: '1s', fill: 'freeze', calcMode: 'spline', keySplines: SPL, keyTimes: '0;1' }));
     svg.appendChild(runner);
+    var i, g;
+    for (i = 0; i < 3; i++) {
+      g = grp(nodes[i].x, nodes[i].y);
+      g.appendChild(svgEl('rect', { x: '-40', y: '-18', width: '80', height: '36', rx: '6', fill: SURF, stroke: BP, 'stroke-width': '1.5' }));
+      g.appendChild(txt(0, 4, nodes[i].name, '10', BP));
+      pop(g, nodes[i].b);
+      svg.appendChild(g);
+    }
     svg.appendChild(txt(120, 206, 'play yourself, let search improve the move,', '9', MUTE));
     svg.appendChild(txt(120, 220, 'train the net on what search found', '9', MUTE));
     var stairs = svgEl('path', { d: 'M280 190 L316 190 L316 166 L352 166 L352 142 L388 142 L388 116 L424 116 L424 90 L460 90 L460 64 L484 64', fill: 'none', stroke: BP, 'stroke-width': '2.2' });

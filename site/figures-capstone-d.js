@@ -44,7 +44,7 @@
     // raw query vector points the wrong way
     var qX = CX - 58, qY = CY + 46;
     s.appendChild(svgEl('line', { x1: CX, y1: CY, x2: qX, y2: qY, stroke: 'var(--ink-mute,#777)', 'stroke-width': '2' }));
-    s.appendChild(txt(qX - 4, qY + 14, 'query vec', '9', 'var(--ink-mute,#777)', 'middle'));
+    s.appendChild(txt(qX + 8, qY + 14, 'query vec', '9', 'var(--ink-mute,#777)', 'start'));
     // hypothetical doc vector sweeps from query direction to target
     var hyp = svgEl('line', { x1: CX, y1: CY, x2: qX, y2: qY, stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '2.4' });
     hyp.appendChild(svgEl('animate', { attributeName: 'x2', values: qX + ';' + tgX + ';' + tgX + ';' + qX, keyTimes: '0;0.45;0.85;1', dur: '4.2s', repeatCount: 'indefinite' }));
@@ -80,7 +80,7 @@
     // matched indices in candidate (the,cat,sat,on,mat all present)
     var matched = [1, 1, 1, 1, 1];
     s.appendChild(txt(PAD, ROWY - 16, 'candidate', '10', 'var(--ink-soft,#555)', 'start'));
-    s.appendChild(txt(PAD, refY - 14, 'reference', '10', 'var(--ink-soft,#555)', 'start'));
+    s.appendChild(txt(PAD, refY + 44, 'reference', '10', 'var(--ink-soft,#555)', 'start'));
     var i;
     for (i = 0; i < cand.length; i++) {
       var cx = PAD + i * (bw + gap);
@@ -122,7 +122,7 @@
     s.appendChild(svgEl('line', { x1: X0, y1: Y1, x2: X0 + SZ, y2: Y1, stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1' }));
     // perfect-calibration diagonal
     s.appendChild(svgEl('line', { x1: X0, y1: Y1, x2: X0 + SZ, y2: Y0, stroke: 'var(--ink-mute,#777)', 'stroke-width': '1.2', 'stroke-dasharray': '4 4' }));
-    s.appendChild(txt(X0 + SZ - 4, Y0 + 30, 'perfect', '9', 'var(--ink-mute,#777)', 'end'));
+    s.appendChild(txt(X0 + SZ + 6, Y0 + 3, 'perfect', '9', 'var(--ink-mute,#777)', 'start'));
     s.appendChild(txt(X0 + SZ / 2, Y1 + 22, 'predicted confidence', '9', 'var(--ink-soft,#555)'));
     var lab = svgEl('text', { x: X0 - 16, y: Y0 + SZ / 2, 'text-anchor': 'middle', 'font-family': 'var(--font-mono,monospace)', 'font-size': '9', fill: 'var(--ink-soft,#555)', transform: 'rotate(-90 ' + (X0 - 16) + ' ' + (Y0 + SZ / 2) + ')' });
     lab.appendChild(document.createTextNode('observed accuracy'));
