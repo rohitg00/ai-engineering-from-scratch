@@ -153,7 +153,8 @@
   // ── coref-links: pronoun mentions animate links back to one entity ──────────
   function corefLinks(host) {
     var W = 520, H = 210, svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
-    var ment = [['Tim Cook', 40, 60, true], ['He', 230, 60, false], ['the CEO', 330, 130, false], ['Cook', 130, 150, false]];
+    host.setAttribute('data-static-time', '6.2');
+    var ment = [['Tim Cook', 40, 60, true, 0], ['He', 230, 60, false, 20], ['the CEO', 330, 130, false, 29], ['Cook', 130, 150, false, 0]];
     var anchor = ment[0];
     ment.forEach(function (m) {
       var w = m[0].length * 8 + 18;
@@ -163,10 +164,11 @@
     var ax = anchor[1] + (anchor[0].length * 8 + 18) / 2, ay = anchor[2];
     ment.forEach(function (m, i) {
       if (m[3]) return;
-      var w = m[0].length * 8 + 18, mx = m[1] + w / 2, my = m[2];
-      var d = 'M ' + mx + ' ' + my + ' Q ' + ((mx + ax) / 2) + ' ' + ((my + ay) / 2 - 36) + ' ' + ax + ' ' + ay;
-      var p = svgEl('path', { d: d, fill: 'none', stroke: BP, 'stroke-width': '1.5', 'stroke-dasharray': '260', 'stroke-dashoffset': '260', opacity: '0.8' });
-      p.appendChild(anim('stroke-dashoffset', '260;260;0;0', 6, { begin: (i * 0.7).toFixed(2), keyTimes: '0;0.15;0.65;1' }));
+      var w = m[0].length * 8 + 18, mx = m[1] + w / 2, my = m[2] - 16;
+      var same = m[2] === ay, ex = ax + m[4], ey = same ? ay - 16 : ay + 8;
+      var d = 'M ' + mx + ' ' + my + ' Q ' + ((mx + ex) / 2) + ' ' + ((my + ey) / 2 - (same ? 36 : 20)) + ' ' + ex + ' ' + ey;
+      var p = svgEl('path', { d: d, fill: 'none', stroke: BP, 'stroke-width': '1.5', 'stroke-dasharray': '320', 'stroke-dashoffset': '320', opacity: '0.8' });
+      p.appendChild(anim('stroke-dashoffset', '320;320;0;0', 6, { begin: (i * 0.7).toFixed(2), keyTimes: '0;0.15;0.65;1' }));
       svg.appendChild(p);
     });
     card(host, 'COREFERENCE', 'mentions link to one entity', svg,

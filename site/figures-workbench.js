@@ -350,7 +350,7 @@
   function scopeBounce(host) {
     var W = 520, H = 250, D = '4.2s';
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
-    svg.appendChild(svgEl('rect', { x: 300, y: 36, width: 184, height: 72, rx: '5', fill: 'none', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '1.5', 'stroke-dasharray': '6 4' }));
+    svg.appendChild(svgEl('rect', { x: 300, y: 36, width: 184, height: 84, rx: '5', fill: 'none', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '1.5', 'stroke-dasharray': '6 4' }));
     svg.appendChild(txt(392, 58, 'allowed', '9', 'var(--blueprint,#3553ff)'));
     svg.appendChild(txt(392, 74, 'src/auth/**', '8.5', 'var(--ink-mute,#777)'));
     svg.appendChild(svgEl('rect', { x: 300, y: 140, width: 184, height: 72, rx: '5', fill: 'none', stroke: 'var(--warn,#b8870f)', 'stroke-width': '1.5' }));
@@ -364,7 +364,7 @@
       txt(0, 3, 'diff A', '8.5', 'var(--blueprint,#3553ff)')
     ]);
     chipA.appendChild(seq('opacity', '0;1;1;0;0', '0;0.05;0.88;0.93;1', D));
-    svg.appendChild(fly(chipA, 'M64 84 H388', D, '0;1;1', '0;0.3;1'));
+    svg.appendChild(fly(chipA, 'M64 98 H388', D, '0;1;1', '0;0.3;1'));
     var chipB = svgEl('g', {}, [
       box(-30, -12, 60, 24, 'var(--warn,#b8870f)', 'var(--bg,#fafaf5)'),
       txt(0, 3, 'diff B', '8.5', 'var(--warn,#b8870f)')
@@ -470,12 +470,12 @@
     svg.appendChild(txt(415, 106, 'reviewer', '10.5'));
     svg.appendChild(txt(415, 122, 'read-only, own prompt', '7.5', 'var(--ink-mute,#777)'));
     var bundle = svgEl('g', {}, [
-      svgEl('rect', { x: -24, y: -16, width: 44, height: 24, rx: '3', fill: 'var(--bg,#fafaf5)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.2' }),
+      svgEl('rect', { x: -24, y: -16, width: 44, height: 24, rx: '3', fill: 'var(--bg-surface,#eee)', stroke: 'none' }),
       svgEl('rect', { x: -18, y: -8, width: 44, height: 24, rx: '3', fill: 'var(--bg,#fafaf5)', stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '1.2' }),
       txt(4, 8, 'artifacts', '7', 'var(--blueprint,#3553ff)')
     ]);
     bundle.appendChild(seq('opacity', '0;0;1;1;0;0', '0;0.08;0.14;0.36;0.4;1', D));
-    svg.appendChild(fly(bundle, 'M196 110 L330 110', D, '0;0;1;1', '0;0.14;0.34;1'));
+    svg.appendChild(fly(bundle, 'M196 110 L318 110', D, '0;0;1;1', '0;0.14;0.34;1'));
     svg.appendChild(popG(415, 190, [
       box(-62, -20, 124, 40, 'var(--rule-soft,#ddd)', 'var(--bg,#fafaf5)'),
       txt(0, -3, 'review_report.json', '8.5', 'var(--ink-soft,#555)'),
@@ -491,6 +491,7 @@
   // ── wb-handoff-packet: state arcs across the gap between sessions ──────────
   function handoffPacket(host) {
     var W = 520, H = 260, D = '5.2s';
+    host.setAttribute('data-static-time', '1.04');
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
     var left = svgEl('g', {}, [
       svgEl('rect', { x: 40, y: 50, width: 172, height: 124, rx: '5', fill: 'none', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.5' }),

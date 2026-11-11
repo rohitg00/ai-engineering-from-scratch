@@ -258,8 +258,9 @@
 
   // -- ae-genai-span-tree: nested OTel spans drawing in parent-child order ----
   function genaiSpanTree(host) {
-    var W = 520, H = 240;
+    var W = 520, H = 250;
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
+    host.setAttribute('data-static-time', '3.5');
     var spans = [
       { x: 40, w: 440, y: 40, lab: 'invoke_agent  CLIENT', begin: '0s', kind: 'agent' },
       { x: 80, w: 200, y: 80, lab: 'execute_tool  search', begin: '0.6s', kind: 'tool' },
@@ -278,7 +279,7 @@
       svg.appendChild(bar);
       var t = txt(s.x + 8, s.y + 16, s.lab, '9', ink, 'start');
       t.setAttribute('opacity', '0');
-      t.appendChild(anim('opacity', '0;1', '0.4s', { begin: s.begin, fill: 'freeze' }));
+      t.appendChild(anim('opacity', '0;1', '0.4s', { begin: (parseFloat(s.begin) + 0.5) + 's', fill: 'freeze' }));
       svg.appendChild(t);
       if (i > 0) {
         var px = spans[i].x - 18;
@@ -287,7 +288,7 @@
         svg.appendChild(conn);
       }
     }
-    svg.appendChild(txt(260, 230, 'one schema: agent > tool > model, parent-child by convention', '10', 'var(--ink-mute,#777)'));
+    svg.appendChild(txt(260, 242, 'one schema: agent > tool > model, parent-child by convention', '10', 'var(--ink-mute,#777)'));
     shell(host, 'GENAI SPAN TREE', 'standard telemetry, nested',
       svg,
       'OpenTelemetry\'s GenAI conventions give every vendor one schema. An invoke_agent span is the root; each execute_tool span hangs off it; each model chat span hangs off the tool that called it. Because the names and parent-child links are standardized, the same trace reads the same way in Datadog, Grafana, Jaeger, or Honeycomb.');

@@ -39,9 +39,11 @@
     }
     // a proposal box with fractional corners, sliding slightly to show misalignment
     var box = svgEl('rect', { x: 70, y: 64, width: 118, height: 110, fill: 'none', stroke: WARN, 'stroke-width': '2', 'stroke-dasharray': '5 3' });
-    box.appendChild(anim('x', '70;78;70', '5s', { keyTimes: '0;0.5;1' }));
+    box.appendChild(svgEl('animateTransform', { attributeName: 'transform', type: 'translate', values: '0 0;8 0;0 0', keyTimes: '0;0.5;1', dur: '5s', repeatCount: 'indefinite' }));
     svg.appendChild(box);
-    svg.appendChild(txt(70, 60, 'RoI proposal (fractional)', 9));
+    var roiLabel = txt(18, 226, 'RoI proposal (fractional)', 9);
+    roiLabel.setAttribute('fill', WARN);
+    svg.appendChild(roiLabel);
     // four bilinear sample points, each pulsing with the four neighbour cells it reads
     var pts = [[100, 94], [150, 94], [100, 144], [150, 144]];
     pts.forEach(function (p, i) {
@@ -65,8 +67,8 @@
     var arr = svgEl('line', { x1: 196, y1: 120, x2: 322, y2: 120, stroke: MUTE, 'stroke-width': '1.5', 'stroke-dasharray': '130', 'stroke-dashoffset': '130' });
     arr.appendChild(anim('stroke-dashoffset', '130;130;0;0', '5s', { keyTimes: '0;0.45;0.7;1' }));
     svg.appendChild(arr);
-    svg.appendChild(txt(320, 150, 'bilinear interpolation,', 10));
-    svg.appendChild(txt(320, 165, 'no rounding of the box', 10));
+    svg.appendChild(txt(320, 182, 'bilinear interpolation,', 10));
+    svg.appendChild(txt(320, 197, 'no rounding of the box', 10));
     host.appendChild(shell('MASK R-CNN · RoIAlign', 'sample points fall between pixels', svg,
       'RoIPool snaps a proposal box to the integer feature grid twice, and those roundings smear the mask by fractions of a pixel. RoIAlign keeps the box fractional: it places a fixed set of sample points inside each output bin and reads each one by bilinear interpolation of its four neighbouring cells. No rounding, so the mask lands where the object actually is.'));
   }
@@ -233,7 +235,10 @@
     var curve = 'M 70 180 C 120 60, 220 230, 300 90 S 400 140, 440 70';
     var cv = svgEl('path', { d: curve, fill: 'none', stroke: MUTE, 'stroke-width': '1.6', 'stroke-dasharray': '5 4', opacity: '0.7' });
     svg.appendChild(cv);
-    svg.appendChild(txt(120, 130, 'DDPM: curved path, ~1000 steps', 10));
+    svg.appendChild(svgEl('line', { x1: 14, y1: 21, x2: 40, y2: 21, stroke: MUTE, 'stroke-width': '1.6', 'stroke-dasharray': '5 4', opacity: '0.7' }));
+    svg.appendChild(txt(48, 25, 'DDPM: curved path, ~1000 steps', 10));
+    svg.appendChild(svgEl('line', { x1: 14, y1: 39, x2: 40, y2: 39, stroke: BLUE, 'stroke-width': '2.4' }));
+    svg.appendChild(txt(48, 43, 'rectified flow: straight line, ~20 steps', 10));
     // dot crawling the curve in many little hops
     var slow = svgEl('circle', { r: '4', fill: MUTE });
     var sm = svgEl('animateMotion', { dur: '5s', repeatCount: 'indefinite', path: curve, keyTimes: '0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1', keyPoints: '0;0.1;0.2;0.3;0.4;0.5;0.6;0.7;0.8;0.9;1', calcMode: 'discrete' });
@@ -244,7 +249,6 @@
     var st = svgEl('path', { d: line, fill: 'none', stroke: BLUE, 'stroke-width': '2.4', 'stroke-dasharray': '388', 'stroke-dashoffset': '388' });
     st.appendChild(anim('stroke-dashoffset', '388;0;0', '5s', { keyTimes: '0;0.5;1' }));
     svg.appendChild(st);
-    svg.appendChild(txt(250, 165, 'rectified flow: straight line, ~20 steps', 10));
     // a few big hops along the straight line
     var fast = svgEl('circle', { r: '5', fill: BLUE });
     var fm = svgEl('animateMotion', { dur: '5s', repeatCount: 'indefinite', path: line, keyTimes: '0;0.25;0.5;0.75;1', keyPoints: '0;0.25;0.5;0.75;1', calcMode: 'discrete' });
@@ -298,7 +302,7 @@
   // ── cv3-track-assoc (27): detections in frame t match tracks from t-1 by IoU ─
   function trackAssoc(host) {
     var svg = svgEl('svg', { viewBox: '0 0 520 240' });
-    svg.appendChild(txt(14, 16, 'tracks at t-1 (solid) + detections at t (dashed), matched by IoU'));
+    svg.appendChild(txt(14, 16, 'tracks at t-1 (solid) + detections at t (shaded), matched by IoU'));
     // three predicted track boxes (solid) with IDs, three detections (dashed) nearby
     var tracks = [[60, 60, 70, 60, '#1', BLUE], [220, 90, 64, 64, '#2', BLUE], [360, 70, 72, 58, '#3', BLUE]];
     var dets = [[70, 68, 70, 60], [230, 100, 64, 64], [372, 80, 72, 58]];
@@ -307,9 +311,8 @@
       svg.appendChild(svgEl('text', { x: t[0] + 4, y: t[1] - 4, fill: t[5], 'font-size': '11', 'font-family': 'monospace' }, [document.createTextNode(t[4])]));
       // detection slides from offset into overlap with its track (the match)
       var d = dets[i];
-      var box = svgEl('rect', { x: d[0] + 26, y: d[1] + 22, width: d[2], height: d[3], fill: 'none', stroke: WARN, 'stroke-width': '1.6', 'stroke-dasharray': '5 3' });
-      box.appendChild(anim('x', (d[0] + 26) + ';' + d[0] + ';' + d[0], '5s', { begin: (i * 0.15) + 's', keyTimes: '0;0.55;1' }));
-      box.appendChild(anim('y', (d[1] + 22) + ';' + d[1] + ';' + d[1], '5s', { begin: (i * 0.15) + 's', keyTimes: '0;0.55;1' }));
+      var box = svgEl('rect', { x: d[0], y: d[1], width: d[2], height: d[3], fill: WARN, 'fill-opacity': '0.28', transform: 'translate(26 22)' });
+      box.appendChild(svgEl('animateTransform', { attributeName: 'transform', type: 'translate', values: '26 22;0 0;0 0', keyTimes: '0;0.55;1', dur: '5s', begin: (i * 0.15) + 's', repeatCount: 'indefinite' }));
       svg.appendChild(box);
       // a "matched" check appears once aligned, ID carried over
       var id = svgEl('text', { x: d[0] + d[2] / 2, y: d[1] + d[3] + 18, fill: WARN, 'font-size': '10', 'font-family': 'monospace', 'text-anchor': 'middle', opacity: '0' }, [document.createTextNode('keep ' + t[4])]);

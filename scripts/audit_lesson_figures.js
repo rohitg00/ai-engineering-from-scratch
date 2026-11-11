@@ -11,8 +11,8 @@ const MIN_TEXT_PX = 9;
 const TEXT_PX_TOLERANCE = 0.5;
 const FIGURE_TIMEOUT_MS = 20000;
 const VIEWPORTS = [
-  { tag: 'desktop', width: 1280, height: 900, column: 760 },
-  { tag: 'phone', width: 375, height: 812, column: 343 },
+  { tag: 'desktop', width: 1280, height: 2400, column: 760 },
+  { tag: 'phone', width: 375, height: 2400, column: 343 },
 ];
 const MODES = [
   { tag: 'still', reduced: true, times: [null] },
@@ -139,6 +139,7 @@ async function measureInPage(fence, times, textFloor, allowScroll) {
     }
     return null;
   };
+  const still = times.length === 1 && times[0] === null;
   const sweep = () => {
     const pageScroll = document.documentElement.scrollWidth - window.innerWidth;
     if (pageScroll > 1) add('page-scroll', `page scrolls sideways by ${Math.round(pageScroll)}px`);
@@ -164,12 +165,81 @@ async function measureInPage(fence, times, textFloor, allowScroll) {
         if (visibleOpacity(text, svg.parentNode) < 0.25) continue;
         const rect = text.getBoundingClientRect();
         if (rect.width < 1 || rect.height < 1) continue;
-        items.push({ content, rect });
+        items.push({ content, rect, node: text });
         const matrix = text.getScreenCTM();
         const px = parseFloat(getComputedStyle(text).fontSize) * (matrix ? Math.hypot(matrix.a, matrix.b) : 1);
         if (px < textFloor) add('text-small', `"${clip(content)}" renders at ${px.toFixed(1)}px`);
         const over = overhang(rect, frame);
         if (over > 1.5) add('text-clip', `"${clip(content)}" leaves the drawing by ${Math.round(over)}px`);
+      }
+      for (const item of items) {
+        const { node, rect, content } = item;
+        if (rect.bottom > window.innerHeight || rect.right > window.innerWidth || rect.left < 0 || rect.top < 0) continue;
+        const haloed = getComputedStyle(node).stroke !== 'none';
+        const probes = [];
+        const midY = rect.top + rect.height * 0.55;
+        for (let x = rect.left + 2; x <= rect.right - 2; x += 1.5) probes.push([x, midY]);
+        for (const fraction of [0.2, 0.5, 0.8]) {
+          const x = rect.left + rect.width * fraction;
+          for (let y = rect.top + rect.height * 0.3; y <= rect.bottom - rect.height * 0.2; y += 1.5) probes.push([x, y]);
+        }
+        let covered = null;
+        let crossed = null;
+        let backing = null;
+        for (const [x, y] of probes) {
+          const stack = document.elementsFromPoint(x, y).filter(element => element.ownerSVGElement === svg);
+          const own = stack.findIndex(element => element === node || node.contains(element));
+          const above = own < 0 ? [] : stack.slice(0, own);
+          const below = own < 0 ? stack : stack.slice(own + 1);
+          for (const element of above) {
+            if (element.tagName === 'text' || element.tagName === 'tspan' || element.closest('text')) continue;
+            if (visibleOpacity(element, svg.parentNode) < 0.5) continue;
+            covered = covered || element;
+          }
+          for (const element of below) {
+            if (element.closest('text')) continue;
+            const style = getComputedStyle(element);
+            const filled = style.fill !== 'none';
+            if (filled) {
+              if (!backing && (element.tagName === 'rect')) backing = element;
+              if (parseFloat(style.fillOpacity || '1') >= 0.9 && parseFloat(style.opacity || '1') >= 0.9) break;
+              continue;
+            }
+            if (haloed || style.stroke === 'none') continue;
+            if (parseFloat(style.strokeOpacity || '1') * visibleOpacity(element, svg.parentNode) / Math.max(parseFloat(style.fillOpacity || '1'), 0.01) < 0.5) continue;
+            crossed = crossed || element;
+          }
+        }
+        if (!still) { covered = null; crossed = null; }
+        if (covered) add('text-covered', `"${clip(content)}" is under a <${covered.tagName}>`);
+        else if (crossed) add('text-crossed', `a <${crossed.tagName}> stroke runs through "${clip(content)}"`);
+        if (backing) {
+          const box = backing.getBoundingClientRect();
+          const spill = Math.max(box.left - rect.left, rect.right - box.right);
+          if (spill > 1.5 && box.height < rect.height * 5) add('text-spill', `"${clip(content)}" is ${Math.round(spill)}px wider than its box`);
+        }
+      }
+      if (still) {
+        const boxes = [];
+        for (const box of svg.querySelectorAll('rect')) {
+          if (box.closest('defs,marker,pattern,clipPath,mask,symbol')) continue;
+          const style = getComputedStyle(box);
+          if (style.stroke === 'none' || visibleOpacity(box, svg.parentNode) < 0.5) continue;
+          const rect = box.getBoundingClientRect();
+          if (rect.width >= 24 && rect.height >= 14) boxes.push(rect);
+        }
+        for (let i = 0; i < boxes.length; i += 1) {
+          for (let j = i + 1; j < boxes.length; j += 1) {
+            const a = boxes[i];
+            const b = boxes[j];
+            const width = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+            const height = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+            if (width < 4 || height < 4) continue;
+            const nested = (a.left <= b.left + 1 && a.right >= b.right - 1 && a.top <= b.top + 1 && a.bottom >= b.bottom - 1)
+              || (b.left <= a.left + 1 && b.right >= a.right - 1 && b.top <= a.top + 1 && b.bottom >= a.bottom - 1);
+            if (!nested) add('box-overlap', `two outlined boxes overlap by ${Math.round(width)} x ${Math.round(height)}px`);
+          }
+        }
       }
       for (let i = 0; i < items.length; i += 1) {
         for (let j = i + 1; j < items.length; j += 1) {

@@ -214,13 +214,13 @@
     state._render = function () {
       while (svg.firstChild) svg.removeChild(svg.firstChild);
       var stages = ['spectrogram', 'mel filterbank', 'log', 'DCT', 'MFCC'];
-      var x0 = 16, y0 = 30, sw = 96, gap = 4, i;
+      var x0 = 16, y0 = 30, sw = 88, gap = 12, i;
       for (i = 0; i < stages.length; i++) {
         var sx = x0 + i * (sw + gap);
         svg.appendChild(svgEl('rect', { x: sx, y: y0, width: sw, height: 40, fill: i === stages.length - 1 ? 'var(--blueprint,#3553ff)' : 'var(--bg-surface,#eee)', opacity: i === stages.length - 1 ? '0.85' : '1', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1' }));
         svg.appendChild(svgEl('text', { x: sx + sw / 2, y: y0 + 24, fill: i === stages.length - 1 ? 'var(--bg,#fafaf5)' : 'var(--ink-soft,#555)', 'font-size': '10', 'font-family': 'monospace', 'text-anchor': 'middle' }, [tx(stages[i])]));
         if (i < stages.length - 1) {
-          svg.appendChild(svgEl('text', { x: sx + sw + gap / 2 - 1, y: y0 + 26, fill: 'var(--ink-mute,#777)', 'font-size': '12', 'font-family': 'monospace', 'text-anchor': 'middle' }, [tx('→')]));
+          svg.appendChild(svgEl('text', { x: sx + sw + gap / 2, y: y0 + 26, fill: 'var(--ink-mute,#777)', 'font-size': '12', 'font-family': 'monospace', 'text-anchor': 'middle' }, [tx('→')]));
         }
       }
       var bx = 16, by = 110, bw = 488 / MELS;

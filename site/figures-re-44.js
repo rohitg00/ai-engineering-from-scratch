@@ -64,7 +64,7 @@
       '.re44 button[aria-pressed="true"]{border-color:var(--blueprint,#3553ff);background:var(--blueprint,#3553ff);color:var(--bg,#fafaf5)}',
       '.re44__legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-family:var(--font-mono,monospace);font-size:.72rem;color:var(--ink-soft,#555)}',
       '.re44__legend span{display:inline-flex;align-items:center;gap:6px}',
-      '.re44__legend svg{width:28px;height:8px;display:block}',
+      '.re44__legend svg{width:28px!important;height:8px!important;max-width:none!important;margin:0!important;display:block}',
       '.re44__scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--rule-soft,#ddd);background:var(--bg,#fafaf5)}',
       '.re44__scroll svg{display:block;min-width:520px;width:100%;height:auto}',
       '.re44 .re44__pick{cursor:pointer}',
@@ -228,6 +228,7 @@
   function drawTree(svg, state, onPick) {
     svg.appendChild(text(16, TREE_Y + 2, 'path tree of ' + DATA.tree.function + ' in ' + DATA.tree.object + ', ' + DATA.tree.pathCount + ' paths, score searched in ' + DATA.tree.domain[0] + '..' + DATA.tree.domain[1], MUTE, 'start', 11));
     var i;
+    var tags = [];
     for (i = 0; i < DATA.tree.edges.length; i++) {
       var e = DATA.tree.edges[i];
       if (e.cond === '') continue;
@@ -243,9 +244,10 @@
       var label = e.cond.length > 24 ? e.cond.replace(/local_10/g, 'q') : e.cond;
       var lx = x2;
       var ly = y2 - 8;
-      svg.appendChild(svgEl('rect', { x: lx - label.length * 3.1, y: ly - 10, width: label.length * 6.2, height: 13, fill: BG, opacity: '0.92' }));
-      svg.appendChild(text(lx, ly, label, INK, 'middle', 9.8));
+      tags.push(svgEl('rect', { x: lx - label.length * 3.1, y: ly - 10, width: label.length * 6.2, height: 13, fill: BG, opacity: '0.92' }));
+      tags.push(text(lx, ly, label, INK, 'middle', 9.8));
     }
+    for (i = 0; i < tags.length; i++) svg.appendChild(tags[i]);
     var id;
     for (id in TREE.positions) {
       if (!Object.prototype.hasOwnProperty.call(TREE.positions, id)) continue;
@@ -253,11 +255,13 @@
       var labels = DATA.tree.labels[id] || [];
       var leaf = p.leaf ? leafRecord(id) : null;
       var h = p.leaf ? LEAF_H : NODE_H;
+      var nodeText = labels.length ? labels[0].replace('local_10', 'q').replace('local_4', 'r') : '';
+      var nw = p.leaf ? NODE_W : Math.max(NODE_W, nodeText.length * 6 + 16);
       var selected = state.pick && state.pick.kind === 'leaf' && state.pick.id === id;
       var g = svgEl('g', p.leaf ? { 'class': 're44__pick', tabindex: '0', role: 'button' } : {});
-      g.appendChild(svgEl('rect', { x: p.x - NODE_W / 2, y: p.y - h / 2, width: NODE_W, height: h, rx: 3, fill: p.leaf ? SURF : BG, stroke: p.leaf ? BP : RULE, 'stroke-width': selected ? '2.4' : '1.3' }));
+      g.appendChild(svgEl('rect', { x: p.x - nw / 2, y: p.y - h / 2, width: nw, height: h, rx: 3, fill: p.leaf ? SURF : BG, stroke: p.leaf ? BP : RULE, 'stroke-width': selected ? '2.4' : '1.3' }));
       g.appendChild(text(p.x, p.y - h / 2 + 13, id, p.leaf ? BP : MUTE, 'middle', 10.5));
-      if (labels.length) g.appendChild(text(p.x, p.y - h / 2 + 26, labels[0].replace('local_10', 'q').replace('local_4', 'r'), INK, 'middle', 10));
+      if (labels.length) g.appendChild(text(p.x, p.y - h / 2 + 26, nodeText, INK, 'middle', 10));
       if (leaf) {
         g.appendChild(text(p.x, p.y - h / 2 + 40, 'returns ' + leaf.returns, INK, 'middle', 10, '600'));
         var range = rangeLines(leaf);

@@ -155,18 +155,18 @@
     // K drafted tokens in a row between draft and target; last is rejected
     var ks = [{ x: 140, ok: true }, { x: 190, ok: true }, { x: 240, ok: true }, { x: 290, ok: false }];
     ks.forEach(function (k, i) {
-      svg.appendChild(svgEl('rect', { x: k.x, y: 102, width: 30, height: 28, rx: 3, fill: 'none', stroke: SOFT, 'stroke-width': 1.4 }));
-      var tok = svgEl('rect', { x: k.x, y: 102, width: 30, height: 28, rx: 3, fill: 'none', stroke: k.ok ? BP : WARN, 'stroke-width': 1.4, opacity: 0 });
+      svg.appendChild(svgEl('rect', { x: k.x, y: 96, width: 30, height: 40, rx: 3, fill: 'none', stroke: SOFT, 'stroke-width': 1.4 }));
+      var tok = svgEl('rect', { x: k.x, y: 96, width: 30, height: 40, rx: 3, fill: 'none', stroke: k.ok ? BP : WARN, 'stroke-width': 1.4, opacity: 0 });
       tok.appendChild(anim('opacity', '0;1;1', '4s', { begin: (i * 0.4) + 's' }));
       svg.appendChild(tok);
-      svg.appendChild(txt(k.x + 15, 120, 't' + (i + 1), 8, MUTE));
+      svg.appendChild(txt(k.x + 15, 110, 't' + (i + 1), 8, MUTE));
       var mark = txt(k.x + 15, 152, k.ok ? 'accept' : 'reject', 7.5, k.ok ? BP : WARN);
       mark.appendChild(anim('opacity', '0;0;1;1', '4s', { begin: (i * 0.4) + 's' }));
       svg.appendChild(mark);
     });
     // draft proposes (token flowing right), target verifies (single pulse back)
     var prop = svgEl('circle', { cx: 0, cy: 0, r: 5, fill: BP });
-    prop.appendChild(motion('M100 117 L370 117', '4s', '0s'));
+    prop.appendChild(motion('M100 126 L370 126', '4s', '0s'));
     svg.appendChild(prop);
     var verify = svgEl('rect', { x: 365, y: 90, width: 90, height: 54, rx: 4, fill: 'none', stroke: INK, 'stroke-width': 1 });
     verify.appendChild(anim('opacity', '0.2;1;0.2', '4s', { begin: '1.8s' }));

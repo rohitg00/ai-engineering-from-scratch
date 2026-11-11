@@ -131,9 +131,9 @@
   function modelCascadeRouter(host) {
     var W = 520, H = 230;
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
-    svg.appendChild(box(30, 95, 56, 40, BG, INK));
-    svg.appendChild(txt(58, 112, 'broker', 9, INK));
-    svg.appendChild(txt(58, 125, 'conf?', 8, MUTE));
+    svg.appendChild(box(30, 90, 56, 56, BG, INK));
+    svg.appendChild(txt(58, 104, 'broker', 9, INK));
+    svg.appendChild(txt(58, 117, 'conf?', 8, MUTE));
     // cheap model (top, most traffic) and frontier (bottom, escalations)
     svg.appendChild(box(380, 40, 110, 44, BG, BP));
     svg.appendChild(txt(435, 58, 'cheap model', 9, BP));
@@ -141,8 +141,8 @@
     svg.appendChild(box(380, 150, 110, 44, BG, WARN));
     svg.appendChild(txt(435, 168, 'frontier model', 9, WARN));
     svg.appendChild(txt(435, 182, '30% · $10/M', 8, MUTE));
-    svg.appendChild(svgEl('path', { d: 'M86 110 L376 62', fill: 'none', stroke: BP, 'stroke-width': 1.6 }));
-    var esc = svgEl('path', { d: 'M86 120 L376 172', fill: 'none', stroke: WARN, 'stroke-width': 1.4, 'stroke-dasharray': '5 4' });
+    svg.appendChild(svgEl('path', { d: 'M86 126 L376 62', fill: 'none', stroke: BP, 'stroke-width': 1.6 }));
+    var esc = svgEl('path', { d: 'M86 135.5 L376 172', fill: 'none', stroke: WARN, 'stroke-width': 1.4, 'stroke-dasharray': '5 4' });
     esc.appendChild(anim('stroke-dashoffset', '18;0', '1s'));
     svg.appendChild(esc);
     // 7 requests in, most go cheap (blue), some escalate (warn)
@@ -150,7 +150,7 @@
     for (i = 0; i < 7; i++) {
       var esc2 = i % 3 === 0;
       var g = svgEl('g', {}, [svgEl('circle', { cx: 0, cy: 0, r: 5, fill: esc2 ? WARN : BP })]);
-      var path = esc2 ? 'M34 115 L58 115 L435 172' : 'M34 115 L58 115 L435 62';
+      var path = esc2 ? 'M34 132 L58 132 L376 172' : 'M34 132 L58 132 L376 62';
       g.appendChild(motion(path, '2.6s', (i * 0.34) + 's'));
       svg.appendChild(hold(g, '2.6s', (i * 0.34) + 's', 1));
     }
@@ -214,7 +214,7 @@
       svg.appendChild(txt(95, ln.y + 9, ln.s, 7, MUTE));
     });
     svg.appendChild(box(140, 100, 30, 50, BG, INK));
-    svg.appendChild(txt(155, 90, 'triage', 8, INK));
+    svg.appendChild(txt(176, 97, 'triage', 8, INK, 'start'));
     // jobs enter, most fall into the batch lane (blue), few interactive (warn)
     var spec = [
       { c: WARN, y: 45, b: '0s' }, { c: BP, y: 175, b: '0.5s' }, { c: BP, y: 175, b: '1.0s' },
@@ -222,7 +222,7 @@
     ];
     spec.forEach(function (s) {
       var g = svgEl('g', {}, [svgEl('rect', { x: -6, y: -6, width: 12, height: 12, rx: 2, fill: s.c })]);
-      g.appendChild(motion('M12 115 L155 115 L155 ' + s.y + ' L460 ' + s.y, '3.4s', s.b));
+      g.appendChild(motion('M12 145 L155 145 L155 ' + s.y + ' L460 ' + s.y, '3.4s', s.b));
       svg.appendChild(hold(g, '3.4s', s.b, 1));
     });
     // batch lane drains overnight: a fill bar sweeping right then resetting
@@ -239,9 +239,9 @@
   function semanticCacheHit(host) {
     var W = 520, H = 230;
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
-    svg.appendChild(box(150, 95, 70, 44, BG, INK));
-    svg.appendChild(txt(185, 113, 'cache', 9, INK));
-    svg.appendChild(txt(185, 127, 'embeds', 8, MUTE));
+    svg.appendChild(box(150, 90, 70, 60, BG, INK));
+    svg.appendChild(txt(185, 106, 'cache', 9, INK));
+    svg.appendChild(txt(185, 120, 'embeds', 8, MUTE));
     svg.appendChild(box(390, 40, 100, 40, BG, WARN));
     svg.appendChild(txt(440, 58, 'LLM (cold)', 9, WARN));
     svg.appendChild(txt(440, 72, 'slow · $$$', 8, MUTE));
@@ -249,12 +249,12 @@
     svg.appendChild(txt(440, 168, 'cache hit', 9, BP));
     svg.appendChild(txt(440, 182, 'fast · ~$0', 8, MUTE));
     // hit path (near, fast) vs miss path (far, to LLM)
-    var hit = svgEl('path', { d: 'M220 120 L388 170', fill: 'none', stroke: BP, 'stroke-width': 2, 'stroke-dasharray': '6 4' });
+    var hit = svgEl('path', { d: 'M220 142 L388 170', fill: 'none', stroke: BP, 'stroke-width': 2, 'stroke-dasharray': '6 4' });
     hit.appendChild(anim('stroke-dashoffset', '20;0', '0.6s'));
     svg.appendChild(hit);
-    svg.appendChild(svgEl('path', { d: 'M220 110 L388 60', fill: 'none', stroke: SOFT, 'stroke-width': 1.4, 'stroke-dasharray': '4 4' }));
+    svg.appendChild(svgEl('path', { d: 'M220 123 L388 60', fill: 'none', stroke: SOFT, 'stroke-width': 1.4, 'stroke-dasharray': '4 4' }));
     // queries flow in; similar ones (blue) hit, novel one (warn) misses to LLM
-    var spec = [{ c: BP, p: 'M12 117 L185 117 L440 170', b: '0s' }, { c: BP, p: 'M12 117 L185 117 L440 170', b: '0.9s' }, { c: WARN, p: 'M12 117 L185 117 L440 60', b: '1.8s' }, { c: BP, p: 'M12 117 L185 117 L440 170', b: '2.7s' }];
+    var spec = [{ c: BP, p: 'M12 136 L185 136 L388 170', b: '0s' }, { c: BP, p: 'M12 136 L185 136 L388 170', b: '0.9s' }, { c: WARN, p: 'M12 136 L185 136 L388 60', b: '1.8s' }, { c: BP, p: 'M12 136 L185 136 L388 170', b: '2.7s' }];
     spec.forEach(function (s) {
       var g = svgEl('g', {}, [svgEl('circle', { cx: 0, cy: 0, r: 5, fill: s.c })]);
       g.appendChild(motion(s.p, '3.6s', s.b));

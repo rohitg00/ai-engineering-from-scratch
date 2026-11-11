@@ -181,8 +181,8 @@
 
   // ── agentic-rag-loop: retrieve → reason → act cycle ────────────────────────
   function agenticRag(host) {
-    var svg = newSvg(240);
-    var cx = 260, cy = 128, R = 78;
+    var svg = newSvg(250);
+    var cx = 260, cy = 148, R = 78;
     var nodes = [
       { a: -90, label: 'retrieve', col: BP },
       { a: 30, label: 'reason', col: WARN },
@@ -197,7 +197,8 @@
       var rad = nd.a * Math.PI / 180;
       var x = cx + R * Math.cos(rad), y = cy + R * Math.sin(rad);
       pos.push([x, y]);
-      svg.appendChild(svgEl('circle', { cx: x, cy: y, r: 30, fill: nd.col, 'fill-opacity': '0.18', stroke: nd.col, 'stroke-width': '1.5' }, [
+      svg.appendChild(svgEl('circle', { cx: x, cy: y, r: 38, fill: 'var(--bg,#fff)' }));
+      svg.appendChild(svgEl('circle', { cx: x, cy: y, r: 38, fill: nd.col, 'fill-opacity': '0.18', stroke: nd.col, 'stroke-width': '1.5' }, [
         anim('stroke-opacity', '0.3;1;0.3', '6s', { begin: (nodes.indexOf(nd) * 2).toFixed(1) + 's' })
       ]));
       svg.appendChild(txt(x, y + 4, nd.label, 10, INK, 'middle'));

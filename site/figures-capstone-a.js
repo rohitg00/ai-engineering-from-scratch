@@ -49,7 +49,10 @@
     var slots = [];
     for (i = 0; i < cells.length - 1; i++) slots.push((hx0 + i * (bw + gap)) + ',' + (y - 3));
     var hl = svgEl('rect', { x: hx0, y: y - 3, width: pairW, height: 42, rx: 5, fill: 'none', stroke: BP, 'stroke-width': '2.5', opacity: '0.9' });
-    hl.appendChild(animT('translate', '0 0;' + ((cells.length - 2) * (bw + gap)) + ' 0;0 0', '5s'));
+    var hsteps = [];
+    for (i = 0; i < cells.length - 1; i++) hsteps.push((i * (bw + gap)) + ' 0');
+    hl.appendChild(animT('translate', hsteps.join(';'), '5s', { calcMode: 'discrete' }));
+    host.setAttribute('data-static-time', '4.2');
     svg.appendChild(hl);
     // merged symbol that grows in below: "es" + "t" -> "est"
     var my = 150;
@@ -153,7 +156,10 @@
       var sx = cx + r * Math.cos(ang), sy = cy + r * Math.sin(ang);
       var g = svgEl('g', {});
       g.appendChild(svgEl('circle', { cx: sx, cy: sy, r: 7, fill: BP }));
-      g.appendChild(txt(sx, sy - 12, stages[k], SOFT, 9));
+      var side = Math.cos(ang);
+      if (sy > cy + 10) g.appendChild(txt(sx + (side > 0 ? 10 : -10), sy + 16, stages[k], SOFT, 9, side > 0 ? 'start' : 'end'));
+      else if (side < -0.5) g.appendChild(txt(sx - 14, sy + 3, stages[k], SOFT, 9, 'end'));
+      else g.appendChild(txt(sx, sy - 12, stages[k], SOFT, 9));
       g.appendChild(anim('opacity', '0.35;1;0.35', '2.5s', { begin: (k * 0.5) + 's' }));
       svg.appendChild(g);
     }

@@ -218,12 +218,14 @@
       svg.appendChild(draw(ln(rootCx, rootBy, cx, mustY, MUTE, { 'stroke-width': 0.7, opacity: 0.65 }), Math.sqrt(Math.pow(cx - rootCx, 2) + Math.pow(mustY - rootBy, 2)), D, a, a + 0.05));
       svg.appendChild(pop([rct(x, mustY, mustW, mustH, BP, BP, { 'fill-opacity': 0.14, 'stroke-width': 1.2 }), txt(cx, mustY + 17, must[i], INK, MID)], cx, mustY + mustH / 2, D, a, a + 0.06));
     }
-    svg.appendChild(show(txt(mayStartX, mayY - 6, 'MAY support', MUTE), D, 0.35));
+    var busX = 550, busY = 118, firstCx = mayStartX + mayW / 2;
+    svg.appendChild(show(txt(mayStartX, busY - 10, 'MAY support', MUTE), D, 0.35));
+    svg.appendChild(draw(pth(route([[rootX + rootW, rootY + rootH / 2], [busX, rootY + rootH / 2], [busX, busY], [firstCx, busY]]), MUTE, { 'stroke-width': 0.7, opacity: 0.65 }), (busX - rootX - rootW) + (busY - rootY - rootH / 2) + (busX - firstCx), D, 0.36, 0.4));
     for (i = 0; i < may.length; i++) {
       x = mayStartX + i * (mayW + mayGap);
       cx = x + mayW / 2;
       a = 0.38 + i * 0.045;
-      svg.appendChild(draw(ln(rootCx, rootBy, cx, mayY, MUTE, { 'stroke-width': 0.7, opacity: 0.65 }), Math.sqrt(Math.pow(cx - rootCx, 2) + Math.pow(mayY - rootBy, 2)), D, a, a + 0.04));
+      svg.appendChild(draw(ln(cx, busY, cx, mayY, MUTE, { 'stroke-width': 0.7, opacity: 0.65 }), mayY - busY, D, a, a + 0.04));
       svg.appendChild(pop([rct(x, mayY, mayW, mayH, RULE, SURF), txt(cx, mayY + 17, may[i], MUTE, MID)], cx, mayY + mayH / 2, D, a, a + 0.05));
     }
     var chips = ['Active', 'Deprecated', 'Removed'];
@@ -312,19 +314,24 @@
       ], x + cardW / 2, 57, D, a));
     }
     svg.appendChild(txt(18, 112, 'is a _meta key reserved for MCP?', INK, BOLD));
-    svg.appendChild(pop([rct(36.6, 124, 157.2, 16, 'none', BP, { 'fill-opacity': 0.22 })], 115.2, 132, D, 0.47, 0.54));
-    svg.appendChild(show(grp([
-      txt(18, 136, 'io.', SOFT, { 'font-size': 12 }),
-      txt(39.6, 136, 'modelcontextprotocol', INK, { 'font-size': 12, 'font-weight': 700 }),
-      txt(190.8, 136, '/protocolVersion', SOFT, { 'font-size': 12 })
-    ]), D, 0.4, 0.46));
+    var keyRow = function (parts, y, mark, markAttrs, a, markA) {
+      var kids = [];
+      var x = 12;
+      var w;
+      var markX = 0;
+      var markW = 0;
+      for (var k = 0; k < parts.length; k++) {
+        w = parts[k].length * 7.2 + 12;
+        if (k === 1) { markX = x; markW = w; }
+        kids.push(txt(x + 6, y, parts[k], k === 1 ? INK : SOFT, k === 1 ? { 'font-size': 12, 'font-weight': 700 } : { 'font-size': 12 }));
+        x += w;
+      }
+      svg.appendChild(pop([rct(markX, y - 12, markW, 16, 'none', mark, markAttrs)], markX + markW / 2, y - 4, D, markA, markA + 0.07));
+      svg.appendChild(show(grp(kids), D, a, a + 0.06));
+    };
+    keyRow(['io.', 'modelcontextprotocol', '/protocolVersion'], 136, BP, { 'fill-opacity': 0.22 }, 0.4, 0.47);
     svg.appendChild(show(txt(18, 154, 'second label is modelcontextprotocol: reserved', MUTE), D, 0.55, 0.61));
-    svg.appendChild(pop([rct(43.8, 170, 56.4, 16, 'none', RULE, { 'fill-opacity': 0.6 })], 72, 178, D, 0.72, 0.79));
-    svg.appendChild(show(grp([
-      txt(18, 182, 'com.', SOFT, { 'font-size': 12 }),
-      txt(46.8, 182, 'example', INK, { 'font-size': 12, 'font-weight': 700 }),
-      txt(97.2, 182, '.mcp/scanId', SOFT, { 'font-size': 12 })
-    ]), D, 0.65, 0.71));
+    keyRow(['com.', 'example', '.mcp/scanId'], 182, RULE, { 'fill-opacity': 0.6 }, 0.65, 0.72);
     svg.appendChild(show(txt(18, 200, 'second label is example, not mcp: not reserved', MUTE), D, 0.8, 0.86));
     card(host, D, svg, 'The JSON-RPC Envelope', 'four message shapes and the _meta key anatomy',
       'Top row: four message shape cards, request, notification, result, and error, each with the field that defines it. Bottom: two _meta keys split into prefix labels and a name, with the second label highlighted. io dot modelcontextprotocol is reserved because its second label is modelcontextprotocol. com dot example dot mcp is not reserved because its second label is example.',
@@ -564,7 +571,7 @@
     svg.appendChild(packet(route([[507, 70], [415, 180]]), D, 0.48, 0.53, BP));
     svg.appendChild(pop([box(330, 180, 170, 44, 'input_required')], 415, 202, D, 0.53, 0.59));
     svg.appendChild(send([[230, 180], [230, 80], [284, 80], [284, 70]], D, 0.59, 0.64, MUTE, DASH));
-    svg.appendChild(show(txt(236, 112, 'retry, corrected args', MUTE), D, 0.6));
+    svg.appendChild(show(txt(166, 240, 'retry, corrected args', MUTE), D, 0.6));
     svg.appendChild(send([[415, 180], [415, 86], [300, 86], [300, 70]], D, 0.63, 0.68, MUTE, DASH));
     svg.appendChild(show(txt(330, 240, 'retry, new id, requestState echoed', MUTE), D, 0.64));
     svg.appendChild(packet(route([[75, 224], [85, 250]]), D, 0.68, 0.73, BP));
@@ -915,15 +922,16 @@
     svg.appendChild(send([[350, 52], [350, 116]], D, 0.05, 0.16));
     svg.appendChild(show(txt(158, 80, 'stdout', MUTE), D, 0.22));
     svg.appendChild(send([[150, 116], [150, 52]], D, 0.22, 0.33));
-    svg.appendChild(show(txt(478, 80, 'response', MUTE), D, 0.40));
-    svg.appendChild(send([[470, 116], [470, 52]], D, 0.40, 0.51));
+    svg.appendChild(show(txt(498, 80, 'response', MUTE), D, 0.40));
+    svg.appendChild(send([[490, 116], [490, 52]], D, 0.40, 0.51));
     svg.appendChild(show(txt(226, 100, 'stderr', MUTE), D, 0.40));
     svg.appendChild(send([[220, 116], [220, 52]], D, 0.40, 0.51, MUTE, DASH));
     svg.appendChild(pop([
       svgEl('circle', { cx: 372, cy: 100, r: 7, fill: ERR }),
       txt(372, 104, '!', '#fff', { 'font-size': 9, 'font-weight': 700, 'text-anchor': 'middle' }),
-      txt(384, 104, 'mismatch: 400 + -32020', MUTE)
-    ], 450, 100, D, 0.22));
+      txt(384, 97, 'mismatch:', MUTE),
+      txt(384, 111, '400 + -32020', MUTE)
+    ], 420, 100, D, 0.22));
     svg.appendChild(spot(343, 90, 14, 20, D, 0.22, 0.30, ERR));
     var fnotes = [
       'protocol semantics are identical on every transport; only the binding differs',
@@ -995,9 +1003,9 @@
     var edges = [
       [6, 105, 'needs input', [[95, 185], [95, 71]], BP, 0.10, 0.20, 0],
       [132, 155, 'tasks/update', [[118, 71], [118, 185]], BP, 0.26, 0.36, 1],
-      [250, 128, 'work finishes', [[183, 193], [377, 42]], BP, 0.42, 0.54, 2],
-      [250, 169, 'tasks/cancel', [[183, 210], [377, 130]], MUTE, 0.64, 0.72, -1],
-      [250, 208, 'protocol error', [[183, 227], [377, 218]], MUTE, 0.70, 0.78, -1]
+      [262, 34, 'work finishes', [[183, 196], [230, 196], [230, 40], [377, 40]], BP, 0.42, 0.54, 2],
+      [262, 124, 'tasks/cancel', [[183, 210], [250, 210], [250, 130], [377, 130]], MUTE, 0.64, 0.72, -1],
+      [262, 216, 'protocol error', [[183, 222], [377, 222]], MUTE, 0.70, 0.78, -1]
     ];
     for (i = 0; i < edges.length; i++) {
       e = edges[i];
@@ -1279,7 +1287,7 @@
     svg.appendChild(send([[136, 104], [270, 132]], D, 0.4, 0.5));
     svg.appendChild(send([[424, 104], [290, 132]], D, 0.44, 0.54));
     svg.appendChild(pop([rct(150, 132, 260, 28, BP, SURF, { 'stroke-width': 1.4 }), txt(160, 150, 'active: com.example/priority-routing')], 280, 146, D, 0.56));
-    svg.appendChild(send([[136, 64], [96, 118]], D, 0.65, 0.69, MUTE, DASH, null));
+    svg.appendChild(send([[26, 54], [10, 54], [10, 118]], D, 0.65, 0.69, MUTE, DASH, null));
     svg.appendChild(send([[424, 90], [464, 118]], D, 0.68, 0.72, MUTE, DASH, null));
     var legend = [
       [BP, 'none', null, 176, 'both sides declare an optional extension: it activates, response is enhanced'],

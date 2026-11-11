@@ -44,12 +44,12 @@
     // overlapping raw candidates (drawn with dash to look proposed)
     var raw = [[80, 70, 100, 120], [92, 80, 96, 116], [70, 64, 118, 132], [104, 92, 88, 104]];
     raw.forEach(function (b, i) {
-      var r = svgEl('rect', { x: b[0], y: b[1], width: b[2], height: b[3], fill: 'none', stroke: WARN, 'stroke-width': '1.4', 'stroke-dasharray': '4 3', opacity: '0' });
+      var r = svgEl('path', { d: 'M' + b[0] + ' ' + b[1] + ' h' + b[2] + ' v' + b[3] + ' h' + (-b[2]) + ' Z', fill: 'none', stroke: WARN, 'stroke-width': '1.4', 'stroke-dasharray': '4 3', opacity: '0' });
       r.appendChild(anim('opacity', '0;0.9;0.9;0.15;0.15', '5s', { begin: (i * 0.12) + 's', keyTimes: '0;0.18;0.5;0.62;1' }));
       svg.appendChild(r);
     });
     // the survivor box, drawn last, solid
-    var win = svgEl('rect', { x: 78, y: 66, width: 104, height: 126, fill: 'none', stroke: BLUE, 'stroke-width': '2.6', opacity: '0' });
+    var win = svgEl('path', { d: 'M78 66 h104 v126 h-104 Z', fill: 'none', stroke: BLUE, 'stroke-width': '2.6', opacity: '0' });
     win.appendChild(anim('opacity', '0;0;1;1', '5s', { keyTimes: '0;0.55;0.72;1' }));
     svg.appendChild(win);
     var lab = svgEl('rect', { x: 78, y: 52, width: 56, height: 13, fill: BLUE, opacity: '0' });
@@ -169,7 +169,7 @@
 
   // ── diffusion-denoise (10): a noisy grid walks back to a clean image ────────
   function diffusionDenoise(host) {
-    var svg = svgEl('svg', { viewBox: '0 0 520 220' });
+    var svg = svgEl('svg', { viewBox: '0 0 520 264' });
     svg.appendChild(txt(14, 16, 'x_T  pure noise'));
     svg.appendChild(txt(360, 16, 'x_0  sample'));
     // a 6x6 grid: each cell animates from random noise opacity to a target image
@@ -190,18 +190,18 @@
       svg.appendChild(rect);
     }
     // a step counter walking T → 0
-    var counter = svgEl('text', { x: 260, y: 212, fill: BLUE, 'font-size': '13', 'font-family': 'monospace', 'text-anchor': 'middle' }, [document.createTextNode('t = 1000')]);
+    var counter = svgEl('text', { x: 260, y: 254, fill: BLUE, 'font-size': '13', 'font-family': 'monospace', 'text-anchor': 'middle' }, [document.createTextNode('t = 1000')]);
     var ct = svgEl('animate', { attributeName: 'opacity', values: '1;1', dur: '5s', repeatCount: 'indefinite' });
     counter.appendChild(ct);
     // simulate countdown with discrete text via <set>-style chained values is hard; use a sweeping arrow instead
     svg.appendChild(counter);
     // denoise arrow sweeping right with a moving marker
-    svg.appendChild(svgEl('line', { x1: 150, y1: 200, x2: 318, y2: 200, stroke: SOFT, 'stroke-width': '2' }));
+    svg.appendChild(svgEl('line', { x1: 150, y1: 214, x2: 318, y2: 214, stroke: SOFT, 'stroke-width': '2' }));
     var head = svgEl('polygon', { points: '0,-4 8,0 0,4', fill: WARN });
-    var mp = svgEl('animateMotion', { dur: '5s', repeatCount: 'indefinite', path: 'M 150 200 L 318 200' });
+    var mp = svgEl('animateMotion', { dur: '5s', repeatCount: 'indefinite', path: 'M 150 214 L 318 214' });
     head.appendChild(mp);
     svg.appendChild(head);
-    svg.appendChild(txt(150, 196, 'reverse process: predict and subtract noise, step by step', 9));
+    svg.appendChild(txt(150, 232, 'reverse process: predict and subtract noise, step by step', 9));
     host.appendChild(shell('DIFFUSION · DENOISING', 'from pure noise to a sample', svg,
       'A diffusion model learns to remove a little noise at a time. Sampling starts from a grid of pure Gaussian noise and walks backward: each step predicts the noise and subtracts it, so structure emerges gradually. Repeat the small denoising step enough times and a coherent image condenses out of static.'));
   }

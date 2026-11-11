@@ -135,7 +135,7 @@
     var boxes = [{ x: 30, y: 30 }, { x: 30, y: 105 }, { x: 30, y: 180 }];
     var logX = 350, i;
     // the append-only log on the right
-    svg.appendChild(svgEl('rect', { x: logX, y: 24, width: 140, height: 200, rx: '5', fill: 'none', stroke: BP, 'stroke-width': '2' }));
+    svg.appendChild(svgEl('rect', { x: logX, y: 24, width: 140, height: 212, rx: '5', fill: 'none', stroke: BP, 'stroke-width': '2' }));
     svg.appendChild(txt(logX + 70, 18, 'SHARED FORUM (append-only)', { mono: true, size: '8', fill: BP, spacing: '0.08em' }));
     for (i = 0; i < 5; i++) {
       var lr = svgEl('rect', { x: logX + 12, y: 200 - i * 34, width: 116, height: 26, rx: '2', fill: SURF, stroke: RULE, 'stroke-width': '1', opacity: '0' });

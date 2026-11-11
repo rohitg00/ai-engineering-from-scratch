@@ -345,8 +345,14 @@
       var sw = fullW * s / 100;
       svg.appendChild(svgEl('rect', { x: x0, y: y, width: Math.max(0, sw), height: h, fill: 'var(--blueprint,#3553ff)' }));
       svg.appendChild(svgEl('rect', { x: x0 + sw, y: y, width: Math.max(0, fullW - sw), height: h, fill: 'var(--warn,#b8870f)' }));
-      if (s > 6) { svg.appendChild(label(x0 + sw / 2, y + h / 2 + 4, 'stable ' + s + '%', 'var(--bg,#fafaf5)')); }
-      if (c > 6) { svg.appendChild(label(x0 + sw + (fullW - sw) / 2, y + h / 2 + 4, 'canary ' + c + '%', 'var(--bg,#fafaf5)')); }
+      var segLabel = function (cx, segW, text, outsideFill) {
+        var tw = text.length * 6;
+        if (segW >= tw + 16) { return label(cx, y + h / 2 + 4, text, 'var(--bg,#fafaf5)'); }
+        var lx = Math.min(Math.max(cx, x0 + tw / 2), x0 + fullW - tw / 2);
+        return label(lx, y - 8, text, outsideFill);
+      };
+      if (s > 6) { svg.appendChild(segLabel(x0 + sw / 2, sw, 'stable ' + s + '%', 'var(--blueprint,#3553ff)')); }
+      if (c > 6) { svg.appendChild(segLabel(x0 + sw + (fullW - sw) / 2, fullW - sw, 'canary ' + c + '%', 'var(--warn,#b8870f)')); }
       var blended = (s * stableErr + c * canaryErr) / 100;
       var rollback = canaryErr > sla;
       svg.appendChild(label(W / 2, y + h + 22, 'canary error ' + canaryErr.toFixed(1) + '% vs SLA ' + sla.toFixed(1) + '%' + (rollback ? '  ROLLBACK TRIGGERED' : ''), rollback ? 'var(--warn,#b8870f)' : 'var(--ink-mute,#777)'));

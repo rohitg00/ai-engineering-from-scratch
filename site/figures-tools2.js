@@ -72,9 +72,9 @@
     for (i = 0; i < 3; i++) {
       svg.appendChild(svgEl('path', { d: 'M120 115 C190 115 190 ' + ys[i] + ' 230 ' + ys[i], fill: 'none', stroke: 'var(--rule-soft,#ccc)', 'stroke-width': '1.4' }));
       svg.appendChild(svgEl('path', { d: 'M310 ' + ys[i] + ' C360 ' + ys[i] + ' 360 115 400 115', fill: 'none', stroke: 'var(--rule-soft,#ccc)', 'stroke-width': '1.4' }));
-      svg.appendChild(svgEl('rect', { x: 230, y: ys[i] - 16, width: 80, height: 32, rx: '4', fill: 'var(--bg-surface,#eee)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.3' }));
-      var fill = svgEl('rect', { x: 230, y: ys[i] - 16, width: 0, height: 32, rx: '4', fill: 'var(--blueprint,#3553ff)', opacity: '0.28' });
-      fill.appendChild(anim('width', '0;80;80;0', '0;0.45;0.85;1', durs[i]));
+      svg.appendChild(svgEl('rect', { x: 230, y: ys[i] - 16, width: 80, height: 36, rx: '4', fill: 'var(--bg-surface,#eee)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1.3' }));
+      var fill = svgEl('rect', { x: 234, y: ys[i] + 14, width: 0, height: 3, rx: '1.5', fill: 'var(--blueprint,#3553ff)', opacity: '0.7' });
+      fill.appendChild(anim('width', '0;72;72;0', '0;0.45;0.85;1', durs[i]));
       svg.appendChild(fill);
       svg.appendChild(txt(270, ys[i] - 1, cities[i], '10', 'var(--ink,#1a1a1a)'));
       svg.appendChild(txt(270, ys[i] + 11, 'get_weather', '8', 'var(--ink-mute,#777)'));

@@ -248,7 +248,7 @@
       var y = Math.max(TOP + member.o * BYTE + 7, lastY + 11);
       lastY = y;
       svg.appendChild(text(labelX, y, '+' + member.o + ' ' + member.t + ' ' + member.n, statusColor(st), 'start', 9.5));
-      var connector = svgEl('line', { x1: MID_X + MID_STRIP_W + 2, y1: TOP + member.o * BYTE + 4, x2: RIGHT_X - 2, y2: TOP + member.o * BYTE + 4, stroke: statusColor(st), 'stroke-width': '1' });
+      var connector = svgEl('line', { x1: MID_X + MID_STRIP_W + 2, y1: TOP + member.o * BYTE - 1, x2: RIGHT_X - 2, y2: TOP + member.o * BYTE - 1, stroke: statusColor(st), 'stroke-width': '1' });
       if (st === 'no-evidence') connector.setAttribute('stroke-dasharray', '3 3');
       svg.appendChild(connector);
       if (st !== 'match' && st !== 'no-evidence') {

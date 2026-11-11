@@ -78,6 +78,8 @@
     });
 
     // Scan row — same chars, with a sliding pair highlighter and a "count++" pop
+    const scanBracket = el('rect', { y: Y_SCAN - 4, height: CH + 8, width: CW * 2 + 2, fill:'transparent', stroke:'var(--blueprint)', 'stroke-width': 2 });
+    svg.appendChild(scanBracket);
     const scanCells = chars.map((c, i) => {
       const x = X0 + i * CW;
       const g = el('g', {});
@@ -86,8 +88,6 @@
       svg.appendChild(g);
       return g;
     });
-    const scanBracket = el('rect', { y: Y_SCAN - 4, height: CH + 8, width: CW * 2 + 2, fill:'transparent', stroke:'var(--blueprint)', 'stroke-width': 2 });
-    svg.appendChild(scanBracket);
 
     // pair-counter floater
     const counter = el('g', {});
@@ -691,15 +691,15 @@
       const s = stations[stage];
 
       // beam travels through op
-      let bx, by = OP_Y + 25;
+      let bx, by = OP_Y - 16;
       if (sT < 0.4) {
         bx = lerp(s.from, s.op.x, sT / 0.4);
       } else if (sT < 0.6) {
         bx = s.op.x;
         // pulse
         const p = (sT - 0.4) / 0.2;
-        pulse.setAttribute('cx', s.op.x); pulse.setAttribute('cy', s.op.y + s.op.h/2);
-        pulse.setAttribute('r', p * 60);
+        pulse.setAttribute('cx', s.op.x); pulse.setAttribute('cy', by);
+        pulse.setAttribute('r', 5 + p * 7);
         pulse.setAttribute('opacity', 1 - p);
       } else {
         bx = lerp(s.op.x, s.to, (sT - 0.6) / 0.4);

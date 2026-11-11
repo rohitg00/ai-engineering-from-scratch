@@ -275,7 +275,7 @@
   function videoTemporalPatches(host) {
     var state = { frames: 8, patch: 16, tubelet: 2 };
     var GRID = 224; // assume 224x224 frames
-    var W = 520, H = 230, PAD = 30;
+    var W = 520, H = 248, PAD = 30;
     var svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H });
     var num = el('span', { class: 'lf-num' });
     var meta = el('div', { class: 'lf-meta' });
@@ -293,7 +293,7 @@
       var s;
       for (s = stack - 1; s >= 0; s--) {
         var sx = ox + s * depth * 4, sy = oy + s * depth * 2;
-        svg.appendChild(svgEl('rect', { x: sx.toFixed(1), y: sy.toFixed(1), width: String(face), height: String(face), fill: s === 0 ? 'var(--bg-surface,#eee)' : 'var(--bg,#fafaf5)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1', 'fill-opacity': (1 - s * 0.12).toFixed(2) }));
+        svg.appendChild(svgEl('path', { d: 'M' + sx.toFixed(1) + ' ' + sy.toFixed(1) + ' h' + face + ' v' + face + ' h' + (-face) + ' Z', fill: s === 0 ? 'var(--bg-surface,#eee)' : 'var(--bg,#fafaf5)', stroke: 'var(--rule-soft,#ddd)', 'stroke-width': '1', 'fill-opacity': (1 - s * 0.12).toFixed(2) }));
       }
       // patch grid on the front frame
       var i, j;
@@ -301,7 +301,7 @@
         svg.appendChild(svgEl('line', { x1: (ox + i * face / perSide).toFixed(1), y1: String(oy), x2: (ox + i * face / perSide).toFixed(1), y2: String(oy + face), stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '0.6', 'stroke-opacity': '0.55' }));
         svg.appendChild(svgEl('line', { x1: String(ox), y1: (oy + i * face / perSide).toFixed(1), x2: String(ox + face), y2: (oy + i * face / perSide).toFixed(1), stroke: 'var(--blueprint,#3553ff)', 'stroke-width': '0.6', 'stroke-opacity': '0.55' }));
       }
-      svg.appendChild(txt((ox + face / 2).toFixed(1), String(oy + face + 18), perSide + ' × ' + perSide + ' patches/frame', 'middle', 'var(--ink-soft,#555)', 10));
+      svg.appendChild(txt((ox + face / 2).toFixed(1), String(oy + (stack - 1) * depth * 2 + face + 18), perSide + ' × ' + perSide + ' patches/frame', 'middle', 'var(--ink-soft,#555)', 10));
       // readout on the right
       svg.appendChild(txt('300', '60', F + ' frames', 'start', 'var(--ink-soft,#555)', 11));
       svg.appendChild(txt('300', '82', '÷ ' + tub + ' (tubelet) = ' + temporal + ' temporal', 'start', 'var(--ink-mute,#777)', 10));

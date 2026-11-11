@@ -202,8 +202,8 @@
     var res = svgEl('circle', { cx: 0, cy: 0, r: 5, fill: BG, stroke: BP, 'stroke-width': 1.5 });
     travel(res, 'M395 134 L345 134', D, 0.62, 0.74);
     svg.appendChild(res);
-    svg.appendChild(pop(grp(370, 100, [txt(0, 0, 'Authorization: Bearer sk-...', 8, MUTE)]), D, 0.42));
-    svg.appendChild(pop(grp(370, 155, [txt(0, 0, '200 · json', 9, BP)]), D, 0.72));
+    svg.appendChild(pop(grp(370, 90, [txt(0, 0, 'Authorization: Bearer sk-...', 8, MUTE)]), D, 0.42));
+    svg.appendChild(pop(grp(370, 164, [txt(0, 0, '200 · json', 9, BP)]), D, 0.72));
     svg.appendChild(txt(260, 228, 'the key exists only in .env and in the runtime header', 9, MUTE));
     shell(host, 'SECRET INJECTION', 'the key is loaded from .env at runtime, never written in code', svg,
       'The code that gets committed only names the variable; the value lives in a gitignored .env file and is injected into the process environment at runtime, then sent as an Authorization header. If the key ever appears in the source, it ships with every clone of the repo, and a leaked key bills to your account.');
@@ -390,31 +390,31 @@
   function shellPipeline(host) {
     var svg = svgEl('svg', { viewBox: '0 0 520 200' });
     var cmds = [
-      { x: 85, t: 'tail -f train.log' },
-      { x: 255, t: 'grep loss' },
-      { x: 430, t: "awk '{print $8}'" }
+      { x: 80, t: 'tail -f train.log' },
+      { x: 250, t: 'grep loss' },
+      { x: 420, t: "awk '{print $8}'" }
     ];
     cmds.forEach(function (c, i) {
-      svg.appendChild(box(c.x - 62, 62, 124, 44, BG, i === 1 ? BP : INKS));
-      svg.appendChild(txt(c.x, 88, c.t, 9, i === 1 ? BP : INK));
+      svg.appendChild(box(c.x - 62, 50, 124, 68, BG, i === 1 ? BP : INKS));
+      svg.appendChild(txt(c.x, 76, c.t, 9, i === 1 ? BP : INK));
     });
-    svg.appendChild(txt(170, 78, '|', 14, MUTE));
-    svg.appendChild(txt(342, 78, '|', 14, MUTE));
+    svg.appendChild(txt(165, 88, '|', 14, MUTE));
+    svg.appendChild(txt(335, 88, '|', 14, MUTE));
     for (var i = 0; i < 3; i++) {
       var keep = svgEl('circle', { cx: 0, cy: 0, r: 4, fill: BP });
-      keep.appendChild(svgEl('animateMotion', { path: 'M20 84 L500 84', dur: '3s', begin: (i * 1.0) + 's', repeatCount: 'indefinite' }));
+      keep.appendChild(svgEl('animateMotion', { path: 'M14 102 L500 102', dur: '3s', begin: (i * 1.0 - 3) + 's', repeatCount: 'indefinite' }));
       svg.appendChild(keep);
     }
     for (var j = 0; j < 3; j++) {
       var dropped = svgEl('circle', { cx: 0, cy: 0, r: 4, fill: MUTE });
-      dropped.appendChild(svgEl('animateMotion', { path: 'M20 84 L235 84 Q255 84 255 104 L255 140', dur: '3s', begin: (j * 1.0 + 0.5) + 's', repeatCount: 'indefinite' }));
-      dropped.appendChild(svgEl('animate', { attributeName: 'opacity', values: '1;1;0', keyTimes: '0;0.78;1', dur: '3s', begin: (j * 1.0 + 0.5) + 's', repeatCount: 'indefinite' }));
+      dropped.appendChild(svgEl('animateMotion', { path: 'M14 102 L230 102 Q250 102 250 122 L250 150', dur: '3s', begin: (j * 1.0 - 2.5) + 's', repeatCount: 'indefinite' }));
+      dropped.appendChild(svgEl('animate', { attributeName: 'opacity', values: '1;1;0', keyTimes: '0;0.78;1', dur: '3s', begin: (j * 1.0 - 2.5) + 's', repeatCount: 'indefinite' }));
       svg.appendChild(dropped);
     }
-    svg.appendChild(txt(255, 160, 'non-matching lines dropped', 8, MUTE));
-    svg.appendChild(txt(497, 60, '0.342', 9, BP, 'end'));
-    svg.appendChild(txt(85, 130, 'every line', 8, MUTE));
-    svg.appendChild(txt(430, 130, 'just the number', 8, MUTE));
+    svg.appendChild(txt(250, 172, 'non-matching lines dropped', 8, MUTE));
+    svg.appendChild(txt(512, 90, '0.342', 9, BP, 'end'));
+    svg.appendChild(txt(80, 138, 'every line', 8, MUTE));
+    svg.appendChild(txt(420, 138, 'just the number', 8, MUTE));
     shell(host, 'PIPES NARROW THE STREAM', 'each command reads the last one\'s output and passes on less', svg,
       'A pipe hands one command\'s stdout to the next command\'s stdin, no temp files in between. The log stream enters whole, grep drops every line without "loss", and awk keeps only column 8, so a firehose of training output becomes a clean series of numbers you can watch or plot live.');
   }

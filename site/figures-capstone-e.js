@@ -128,6 +128,7 @@
     for (i = 0; i < chips.length; i++) {
       var c = chips[i];
       var cg = svgEl('g', {});
+      cg.appendChild(svgEl('rect', { x: 378, y: c[1], width: 108, height: 22, rx: 4, fill: BG }));
       cg.appendChild(svgEl('rect', { x: 378, y: c[1], width: 108, height: 22, rx: 4, fill: c[3] === BP ? BP : BG, 'fill-opacity': c[3] === BP ? '0.12' : '1', stroke: c[3], 'stroke-width': c[3] === BP ? '2' : '1.3' }));
       cg.appendChild(txt(432, c[1] + 15, c[0], c[4], 9));
       cg.appendChild(animT('translate', c[2], '5s', { calcMode: 'spline', keySplines: EASE + ';' + EASE + ';' + EASE, keyTimes: '0;0.35;0.55;1' }));
@@ -288,17 +289,17 @@
     var boxes = [['deployment', 56], ['replicaset', 116], ['pod', 176]];
     var i;
     for (i = 0; i < boxes.length; i++) {
-      svg.appendChild(svgEl('rect', { x: 63, y: boxes[i][1] - 12, width: 74, height: 24, rx: 4, fill: BG, stroke: BP, 'stroke-width': '1.4' }));
-      svg.appendChild(txt(100, boxes[i][1] + 3, boxes[i][0], SOFT, 8));
+      svg.appendChild(svgEl('rect', { x: 88, y: boxes[i][1] - 12, width: 24, height: 24, rx: 4, fill: BG, stroke: BP, 'stroke-width': '1.4' }));
+      svg.appendChild(txt(80, boxes[i][1] + 3, boxes[i][0], SOFT, 8, 'end'));
     }
-    svg.appendChild(svgEl('rect', { x: 173, y: 164, width: 74, height: 24, rx: 4, fill: BG, stroke: BP, 'stroke-width': '1.4' }));
-    svg.appendChild(txt(210, 179, 'node', SOFT, 8));
+    svg.appendChild(svgEl('rect', { x: 198, y: 164, width: 24, height: 24, rx: 4, fill: BG, stroke: BP, 'stroke-width': '1.4' }));
+    svg.appendChild(txt(230, 179, 'node', SOFT, 8, 'start'));
     svg.appendChild(svgEl('line', { x1: 100, y1: 68, x2: 100, y2: 104, stroke: RULE, 'stroke-width': '1.4' }));
     svg.appendChild(svgEl('line', { x1: 100, y1: 128, x2: 100, y2: 164, stroke: RULE, 'stroke-width': '1.4' }));
-    svg.appendChild(svgEl('line', { x1: 137, y1: 176, x2: 173, y2: 176, stroke: RULE, 'stroke-width': '1.4' }));
+    svg.appendChild(svgEl('line', { x1: 112, y1: 176, x2: 198, y2: 176, stroke: RULE, 'stroke-width': '1.4' }));
     svg.appendChild(txt(110, 90, 'owns', MUTE, 7, 'start'));
     svg.appendChild(txt(110, 150, 'owns', MUTE, 7, 'start'));
-    var flash = svgEl('rect', { x: 59, y: 160, width: 82, height: 32, rx: 5, fill: 'none', stroke: WARN, 'stroke-width': '2', opacity: '0' });
+    var flash = svgEl('rect', { x: 84, y: 160, width: 32, height: 32, rx: 5, fill: 'none', stroke: WARN, 'stroke-width': '2', opacity: '0' });
     flash.appendChild(anim('opacity', '0;1;0;1;0;0', '6s', { keyTimes: '0;0.03;0.06;0.09;0.12;1' }));
     svg.appendChild(flash);
     var al = txt(100, 214, 'alert: OOMKilled', WARN, 9);
@@ -308,9 +309,9 @@
     var walker = svgEl('circle', { r: 4.5, fill: BP });
     walker.appendChild(svgEl('animateMotion', { dur: '6s', repeatCount: 'indefinite', begin: '0.4s', path: 'M100 176 L100 116 L100 56 L100 116 L100 176 L210 176' }));
     svg.appendChild(walker);
-    var visits = [[63, 104, '1.2s'], [63, 44, '2.0s'], [173, 164, '4.6s']];
+    var visits = [[88, 104, '1.2s'], [88, 44, '2.0s'], [198, 164, '4.6s']];
     for (i = 0; i < visits.length; i++) {
-      var v = svgEl('rect', { x: visits[i][0], y: visits[i][1], width: 74, height: 24, rx: 4, fill: BP, opacity: '0' });
+      var v = svgEl('rect', { x: visits[i][0], y: visits[i][1], width: 24, height: 24, rx: 4, fill: BP, opacity: '0' });
       v.appendChild(anim('opacity', '0;0.22;0.22;0', '6s', { begin: visits[i][2], keyTimes: '0;0.05;0.5;1' }));
       svg.appendChild(v);
     }
