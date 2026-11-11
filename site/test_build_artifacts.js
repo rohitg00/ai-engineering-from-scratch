@@ -2156,6 +2156,27 @@ test('progress v2 migrates quiz completion and keeps workflow checkpoints distin
   assert.equal(fresh.api.getLessonProgress(lesson).quizPassedAt, null);
 });
 
+test('figure toolkit sizes and wraps labels and hides a mover until it starts', () => {
+  const runtime = loadFigureRuntime();
+  const { LF } = runtime.window;
+
+  assert.equal(LF.textWidth('policy check', 10), 72);
+  assert.ok(Math.abs(LF.textWidth('policy check', 10, true) - 64.8) < 1e-9);
+  assert.deepEqual(Array.from(LF.wrapText('answer cites file and line from the top chunk', 10, 120)), ['answer cites file', 'and line from the', 'top chunk']);
+  assert.deepEqual(Array.from(LF.wrapText('unbreakable_identifier_that_is_wider', 10, 60)), ['unbreakable_identifier_that_is_wider']);
+  assert.deepEqual(Array.from(LF.wrapText('', 10, 60)), []);
+  for (const line of LF.wrapText('registers: a in rdi, b in rsi, c in rdx, d in rcx, e in r8, f in r9', 9.5, 150)) {
+    assert.ok(LF.textWidth(line, 9.5) <= 150, line);
+  }
+
+  const dot = runtime.element('circle');
+  assert.equal(LF.hold(dot, 1.2), dot);
+  assert.equal(dot.getAttribute('opacity'), '0');
+  assert.equal(dot.children.length, 1);
+  assert.equal(dot.children[0].getAttribute('begin'), '1.2s');
+  assert.equal(dot.children[0].getAttribute('to'), '1');
+});
+
 test('lesson figure runtime mounts once and disposes its animation frame and control', () => {
   const runtime = loadFigureRuntime();
   const host = runtime.element('div');
@@ -2174,7 +2195,9 @@ test('lesson figure runtime mounts once and disposes its animation frame and con
 
   assert.equal(staticFrames, 1, 'a mounted host must not receive a duplicate SVG loop');
   assert.equal(host.dataset.lfMounted, '1');
-  const control = host.children.find(child => child.className === 'lf-motion-toggle');
+  const tools = host.children.find(child => child.className === 'lf-tools');
+  assert.ok(tools);
+  const control = tools.children.find(child => child.className === 'lf-motion-toggle');
   assert.ok(control);
   assert.equal(control.getAttribute('aria-pressed'), 'false');
   assert.equal(runtime.scheduledFrames.size, 1);
@@ -2218,7 +2241,9 @@ test('reduced motion holds SMIL figures on a meaningful static frame', () => {
 
   assert.equal(staticTime, 1.5);
   assert.ok(pauses >= 1);
-  const control = host.children.find(child => child.className === 'lf-motion-toggle');
+  const tools = host.children.find(child => child.className === 'lf-tools');
+  assert.ok(tools);
+  const control = tools.children.find(child => child.className === 'lf-motion-toggle');
   assert.ok(control);
   assert.equal(control.disabled, true);
   assert.equal(control.textContent, 'Motion reduced');
