@@ -609,7 +609,8 @@
     var svgs = host.querySelectorAll('svg[viewBox]');
     for (var i = 0; i < svgs.length; i++) {
       var svg = svgs[i];
-      svg.style.minWidth = '';
+      if (svg._lfOwnMinWidth === undefined) svg._lfOwnMinWidth = svg.style.minWidth || '';
+      svg.style.minWidth = svg._lfOwnMinWidth;
       var frame = svg.getBoundingClientRect();
       if (frame.width < 1) continue;
       var texts = svg.querySelectorAll('text');

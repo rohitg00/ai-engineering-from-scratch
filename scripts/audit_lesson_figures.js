@@ -31,11 +31,21 @@ function parseArgs(argv) {
   const options = { only: null, shots: null, json: null, all: false };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
-    if (arg === '--only') options.only = new Set(argv[++i].split(',').map(item => item.trim()).filter(Boolean));
-    else if (arg === '--shots') options.shots = path.resolve(argv[++i]);
-    else if (arg === '--json') options.json = path.resolve(argv[++i]);
-    else if (arg === '--all') options.all = true;
-    else throw new Error(`unknown argument: ${arg}`);
+    if (arg === '--all') {
+      options.all = true;
+      continue;
+    }
+    if (!['--only', '--shots', '--json'].includes(arg)) throw new Error(`unknown argument: ${arg}`);
+    const value = argv[++i];
+    if (value === undefined || value === '' || value.startsWith('--')) throw new Error(`${arg} needs a value`);
+    if (arg === '--only') {
+      options.only = new Set(value.split(',').map(item => item.trim()).filter(Boolean));
+      if (!options.only.size) throw new Error('--only needs at least one figure name');
+    } else if (arg === '--shots') {
+      options.shots = path.resolve(value);
+    } else {
+      options.json = path.resolve(value);
+    }
   }
   return options;
 }
@@ -192,22 +202,28 @@ async function measureInPage(fence, times, textFloor, allowScroll) {
       }
     }
   };
-  for (let index = 0; index < times.length; index += 1) {
+  const seekTo = async index => {
     const time = times[index];
-    if (time !== null) {
-      const runtime = host._aifsFigureRuntime;
-      for (const controller of (runtime && runtime.controllers) || []) {
-        if (typeof controller.seek === 'function') controller.seek((index + 1) / (times.length + 1));
-      }
-      for (const svg of host.querySelectorAll('svg')) {
-        if (typeof svg.pauseAnimations !== 'function') continue;
-        svg.pauseAnimations();
-        svg.setCurrentTime(time);
-      }
-      await settle(20);
+    if (time === null) return;
+    const runtime = host._aifsFigureRuntime;
+    for (const controller of (runtime && runtime.controllers) || []) {
+      if (typeof controller.seek === 'function') controller.seek((index + 1) / (times.length + 1));
     }
+    for (const svg of host.querySelectorAll('svg')) {
+      if (typeof svg.pauseAnimations !== 'function') continue;
+      svg.pauseAnimations();
+      svg.setCurrentTime(time);
+    }
+    await settle(20);
+  };
+  let firstFailure = -1;
+  for (let index = 0; index < times.length; index += 1) {
+    await seekTo(index);
+    const before = findings.length;
     sweep();
+    if (firstFailure < 0 && findings.length > before) firstFailure = index;
   }
+  if (firstFailure >= 0 && firstFailure !== times.length - 1) await seekTo(firstFailure);
   return findings;
 }
 
@@ -331,4 +347,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { MIN_TEXT_PX, audit, discoverFences, measureInPage, report };
+module.exports = { MIN_TEXT_PX, audit, discoverFences, measureInPage, parseArgs, report };

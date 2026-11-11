@@ -6,7 +6,7 @@ const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
 
-const { MIN_TEXT_PX, discoverFences, report } = require('./audit_lesson_figures.js');
+const { MIN_TEXT_PX, discoverFences, parseArgs, report } = require('./audit_lesson_figures.js');
 
 function lesson(root, relative, markdown) {
   const file = path.join(root, relative, 'docs', 'en.md');
@@ -72,4 +72,14 @@ test('the runtime and the audit share one text floor', () => {
   const match = /var MIN_TEXT_PX = (\d+);/.exec(runtime);
   assert.ok(match, 'lesson-figures.js must declare MIN_TEXT_PX');
   assert.equal(Number(match[1]), MIN_TEXT_PX);
+});
+
+test('the command line rejects a flag with no usable value', () => {
+  assert.deepEqual([...parseArgs(['--only', 'a, b', '--all']).only], ['a', 'b']);
+  assert.equal(parseArgs(['--all']).all, true);
+  assert.throws(() => parseArgs(['--only', '']), /--only needs a value/);
+  assert.throws(() => parseArgs(['--only', ' , ']), /at least one figure name/);
+  assert.throws(() => parseArgs(['--shots', '--all']), /--shots needs a value/);
+  assert.throws(() => parseArgs(['--json']), /--json needs a value/);
+  assert.throws(() => parseArgs(['--fast']), /unknown argument/);
 });
