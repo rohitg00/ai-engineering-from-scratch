@@ -180,7 +180,8 @@ async function measureInPage(fence, times, textFloor, allowScroll) {
           if (width > 2 && height > 0.35 * Math.min(a.height, b.height)) add('text-overlap', `"${clip(items[i].content)}" overlaps "${clip(items[j].content)}"`);
         }
       }
-      for (const shape of svg.querySelectorAll('rect,circle,ellipse')) {
+      for (const shape of svg.querySelectorAll('rect,circle,ellipse,polygon,path')) {
+        if (shape.tagName === 'path' && !/z\s*$/i.test(shape.getAttribute('d') || '')) continue;
         if (shape.closest('defs,marker,pattern,clipPath,mask,symbol')) continue;
         if (visibleOpacity(shape, svg.parentNode) < 0.25) continue;
         const rect = shape.getBoundingClientRect();
@@ -191,8 +192,13 @@ async function measureInPage(fence, times, textFloor, allowScroll) {
       }
     }
   };
-  for (const time of times) {
+  for (let index = 0; index < times.length; index += 1) {
+    const time = times[index];
     if (time !== null) {
+      const runtime = host._aifsFigureRuntime;
+      for (const controller of (runtime && runtime.controllers) || []) {
+        if (typeof controller.seek === 'function') controller.seek((index + 1) / (times.length + 1));
+      }
       for (const svg of host.querySelectorAll('svg')) {
         if (typeof svg.pauseAnimations !== 'function') continue;
         svg.pauseAnimations();
@@ -214,9 +220,10 @@ async function audit(options = {}) {
   const fences = discoverFences();
   const server = await serve(SITE_DIR, harnessHtml(SITE_DIR, providers));
   const base = `http://127.0.0.1:${server.address().port}`;
-  const browser = await puppeteer.launch({ executablePath: chrome, args: ['--no-sandbox'], timeout: 60000 });
   const rows = [];
+  let browser;
   try {
+    browser = await puppeteer.launch({ executablePath: chrome, args: ['--no-sandbox'], timeout: 60000 });
     for (const viewport of VIEWPORTS) {
       for (const mode of MODES) {
         const pageErrors = [];
@@ -239,7 +246,12 @@ async function audit(options = {}) {
           const fenced = new Set(targets.map(fence => fence.split(' ')[0]));
           targets = targets.concat(registered.filter(name => !fenced.has(name)));
         }
-        if (options.only) targets = targets.filter(fence => options.only.has(fence.split(' ')[0]));
+        if (options.only) {
+          targets = targets.filter(fence => options.only.has(fence.split(' ')[0]));
+          const found = new Set(targets.map(fence => fence.split(' ')[0]));
+          const unknown = [...options.only].filter(name => !found.has(name));
+          if (unknown.length) throw new Error(`--only names no figure: ${unknown.join(', ')}`);
+        }
         for (const fence of targets.sort()) {
           const where = `${viewport.tag}/${mode.tag}`;
           const name = fence.split(' ')[0];
@@ -261,17 +273,17 @@ async function audit(options = {}) {
           }
           for (const message of pageErrors.slice(before)) findings.push({ rule: 'page-error', detail: message });
           for (const finding of findings) rows.push({ fence, provider, where, ...finding });
-          if (options.shots && findings.length && mode.tag === 'still') {
+          if (options.shots && findings.length) {
             fs.mkdirSync(options.shots, { recursive: true });
             const host = await page.$('#stage .lesson-figure');
-            if (host) await host.screenshot({ path: path.join(options.shots, `${name}-${viewport.tag}.png`) });
+            if (host) await host.screenshot({ path: path.join(options.shots, `${fence.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '')}-${viewport.tag}-${mode.tag}.png`) });
           }
         }
         await page.close().catch(() => {});
       }
     }
   } finally {
-    await browser.close();
+    if (browser) await browser.close();
     server.close();
   }
   return { rows, figures: fences.size };

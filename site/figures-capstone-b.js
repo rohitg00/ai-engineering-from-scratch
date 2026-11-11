@@ -178,7 +178,7 @@
         rect(200, ay, 120, 24, ok ? 'var(--blueprint,#3553ff)' : 'var(--warn,#b8870f)', 'var(--rule-soft,#ddd)'),
         txt(208, ay + 16, 'assert ' + (i + 1), '9', 'var(--bg,#fafaf5)', 'start')
       ]);
-      lit.appendChild(anim('opacity', '0;0;1', '3.4s', { begin: (0.3 + i * 0.25) + 's', keyTimes: '0;0.31;1' }));
+      lit.appendChild(anim('opacity', '0;0;1;1', '3.4s', { begin: (0.3 + i * 0.25) + 's', keyTimes: '0;0.31;0.36;1' }));
       s.appendChild(lit);
       var mark = txt(312, ay + 16, ok ? '✓' : '✗', '12', ok ? 'var(--blueprint,#3553ff)' : 'var(--warn,#b8870f)', 'end');
       mark.appendChild(anim('opacity', '0;0;1;1', '3.4s', { begin: (0.3 + i * 0.25) + 's', keyTimes: '0;0.3;0.45;1' }));
