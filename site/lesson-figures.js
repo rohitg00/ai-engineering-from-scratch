@@ -425,10 +425,15 @@
     return match[2] === 'ms' ? Number(match[1]) / 1000 : Number(match[1]);
   }
 
+  function activeSeconds(animation) {
+    var repeats = Number(animation.getAttribute('repeatCount'));
+    return clockSeconds(animation.getAttribute('dur')) * (repeats > 0 ? repeats : 1);
+  }
+
   function smilSpan(animations) {
     var span = 0;
     for (var i = 0; i < animations.length; i++) {
-      var end = clockSeconds(animations[i].getAttribute('begin')) + clockSeconds(animations[i].getAttribute('dur'));
+      var end = clockSeconds(animations[i].getAttribute('begin')) + activeSeconds(animations[i]);
       if (end > span) span = end;
     }
     return clamp(Math.ceil((span || 6) * 20) / 20, 1, 30);
@@ -453,7 +458,7 @@
     var start = 0;
     for (var i = 0; i < animations.length; i++) {
       var at = clockSeconds(animations[i].getAttribute('begin'));
-      if (animations[i].getAttribute('repeatCount') !== 'indefinite') at += clockSeconds(animations[i].getAttribute('dur'));
+      if (animations[i].getAttribute('repeatCount') !== 'indefinite') at += activeSeconds(animations[i]);
       if (at > start) start = at;
     }
     return start;
