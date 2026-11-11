@@ -86,7 +86,7 @@ Animated figures:
 9. An `animateMotion` with `keyPoints` uses `calcMode="linear"`. Its keyPoints count equals its keyTimes count. It has no `values`.
 10. Do not put `var()` in an animated `fill` or `stroke` value. Animate the opacity of a second element that has the target colour.
 11. Loops animate only opacity, transform, `stroke-dashoffset`, or motion along a path. The runtime makes any animation of x, y, x1, y1, x2, y2, width, height, r, cx, cy, rx, or ry play once.
-12. The frame at the host's `data-static-time` (default 1.5 s) is complete and readable. Set the attribute on the host when a later moment shows the full state.
+12. The frame at the host's `data-static-time` (default 1.5 s) is complete and readable. Set the attribute on the host when a later moment shows the full state. In that frame no mover rests on a label, and two states of one label are never visible together.
 13. Scale an element around its centre. Draw the content of a group around (0, 0) and move the group with `translate`. Add the scale with `additive="sum"`.
 
 Slider widgets:
@@ -102,7 +102,7 @@ Both kinds:
 
 20. Take every colour from a CSS variable with the light theme value as its default, for example `var(--blueprint,#3553ff)`. Use literal hex only when no variable works.
 21. Use at most one accent colour (`--blueprint`) for the main subject and `--warn` for one second state. Use ink and rule tokens for the rest.
-22. Set SVG text at 12 units or larger, in `var(--font-mono)`. If labels must be smaller, give the SVG a minimum width of 500 px and let it scroll sideways.
+22. Set SVG text at 12 units or larger, in `var(--font-mono)`. If labels must be smaller, give the SVG a minimum width of 500 px and let it scroll sideways. Size each box from its text with `LF.textWidth`, and wrap a long label with `LF.wrapText`. Size a matrix cell from the width and the height, and take the smaller. No line or box border runs through a label, and no label is wider than the box behind it.
 23. Measure label size on a phone. On a 375 px screen, a 520-unit SVG inside the card drew 279 px wide. A 12-unit label then drew at about 6.4 px.
 24. Write the caption in plain technical English. Name what each colour means. Keep sentences at 25 words or fewer.
 25. Give the label in `.lf-label` in uppercase, two to four words.
@@ -138,7 +138,7 @@ Dither fields (tier 3):
 - [ ] With reduced motion on, the figure shows a complete picture and no element is missing.
 - [ ] In dark theme, every line and label is visible.
 - [ ] At 375 px width, every label is readable and the page has no sideways scroll outside the figure.
-- [ ] Inside the course repo, `node scripts/audit_lesson_figures.js --only <name>` prints `TOTAL 0`. It mounts the figure in Chrome at desktop and phone width, in the static frame and at two animation times. It fails on labels that overlap, labels or closed shapes that leave the viewBox, text under 9 px, and a drawing that needs sideways scroll at desktop width. The smallest font in viewBox units sets the last two: at a 728 px wide drawing, text needs `9 x viewBox width / 728` units or more.
+- [ ] Inside the course repo, `node scripts/audit_lesson_figures.js --only <name>` prints `TOTAL 0`. It mounts the figure in Chrome at desktop and phone width, in the static frame and at two animation times. It fails on labels that overlap, labels or closed shapes that leave the viewBox, text under 9 px, a drawing that needs sideways scroll at desktop width, a label under a shape or crossed by a stroke, a label wider than its box, and outlined boxes that overlap. Read the pictures from `--shots <dir>` and lay the failing region out again. Do not move one label until the count drops. The smallest font in viewBox units sets the last two: at a 728 px wide drawing, text needs `9 x viewBox width / 728` units or more.
 - [ ] For a widget, moving each slider to its minimum and maximum gives no `NaN`, no negative widths, and no console errors.
 - [ ] The SVG has one title and one description, and their ids stay the same after a slider moves.
 - [ ] The caption names every colour that the figure uses.
