@@ -42,9 +42,12 @@ def _changed_keywords(old: Dict[str, Any], new: Dict[str, Any], keywords: Set[st
 
 def _nested_view(schema: Dict[str, Any]) -> Dict[str, Any]:
     """Return the nested object and array keywords of a property schema with their defaults filled in."""
+    required = schema.get("required", [])
+    if isinstance(required, list) and all(isinstance(r, str) for r in required):
+        required = sorted(set(required))
     view = {
         "properties": schema.get("properties", {}),
-        "required": sorted(set(schema.get("required", []))),
+        "required": required,
         "additionalProperties": schema.get("additionalProperties", True),
     }
     if "items" in schema:

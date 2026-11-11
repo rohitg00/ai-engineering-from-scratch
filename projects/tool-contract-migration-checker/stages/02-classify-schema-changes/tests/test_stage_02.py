@@ -208,6 +208,15 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         changes = classify_changes(load_contract(old_s), load_contract(new_s))
         self.assertEqual(changes, [])
 
+    def test_malformed_nested_required_is_unresolved(self):
+        """Verify a nested required list with non-string items is reported instead of raising."""
+        old_s = {"title": "t", "type": "object", "properties": {"opts": {"required": [{"name": "x"}]}}}
+        new_s = {"title": "t", "type": "object", "properties": {"opts": {}}}
+        changes = classify_changes(load_contract(old_s), load_contract(new_s))
+        nested = [c for c in changes if c["category"] == "nested_restriction"]
+        self.assertEqual(len(nested), 1)
+        self.assertEqual(nested[0]["keywords"], ["required"])
+
 
 if __name__ == "__main__":
     unittest.main()
