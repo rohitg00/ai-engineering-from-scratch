@@ -1,0 +1,4 @@
+solution/report.json
+solution/fixtures.json
+__pycache__/
+*.pyc

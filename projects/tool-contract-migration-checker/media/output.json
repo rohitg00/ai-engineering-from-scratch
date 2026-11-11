@@ -1,0 +1,24 @@
+{
+  "title": "Tool Contract Migration Checker | Actual artifact output",
+  "recordedAt": "2026-11-11T05:56:12Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "cli.py",
+        "--old",
+        "samples/catalog_v1.json",
+        "--new",
+        "samples/catalog_v2.json",
+        "--calls",
+        "samples/saved_calls.json",
+        "--output",
+        "report.json"
+      ],
+      "cwd": "/private/tmp/aiefs-projects/projects/tool-contract-migration-checker/solution",
+      "exitCode": 0,
+      "output": "{\n  \"schema_version\": 1,\n  \"tool_name\": \"search_catalog\",\n  \"compatible\": false,\n  \"breaking_count\": 4,\n  \"compatible_count\": 1,\n  \"unresolved_count\": 0,\n  \"changes\": [\n    {\n      \"type\": \"breaking\",\n      \"category\": \"added_required\",\n      \"property\": \"api_key\",\n      \"description\": \"Property 'api_key' is newly required in the new contract.\"\n    },\n    {\n      \"type\": \"compatible\",\n      \"category\": \"added_optional\",\n      \"property\": \"sort_by\",\n      \"description\": \"Optional property 'sort_by' added.\"\n    },\n    {\n      \"type\": \"breaking\",\n      \"category\": \"closed_schema\",\n      \"property\": \"additionalProperties\",\n      \"description\": \"additionalProperties changed from allowed to rejected.\"\n    },\n    {\n      \"type\": \"breaking\",\n      \"category\": \"enum_narrowed\",\n      \"property\": \"category\",\n      \"description\": \"Property 'category' enum narrowed; removed allowed values: ['home'].\"\n    },\n    {\n      \"type\": \"breaking\",\n      \"category\": \"bound_narrowed\",\n      \"property\": \"limit\",\n      \"bound\": \"maximum\",\n      \"description\": \"Property 'limit' maximum tightened from 100 to 50.\"\n    }\n  ],\n  \"counterexamples\": [\n    {\n      \"breaking_category\": \"added_required\",\n      \"property\": \"api_key\",\n      \"payload\": {\n        \"query\": \"a\"\n      },\n      \"reason\": \"Omitted newly-required property 'api_key' which old callers did not supply.\"\n    },\n    {\n      \"breaking_category\": \"closed_schema\",\n      \"property\": \"additionalProperties\",\n      \"payload\": {\n        \"query\": \"a\",\n        \"_unrecognized_extra_key\": \"test\"\n      },\n      \"reason\": \"Contains extra property rejected by new closed schema.\"\n    },\n    {\n      \"breaking_category\": \"enum_narrowed\",\n      \"property\": \"category\",\n      \"payload\": {\n        \"query\": \"a\",\n        \"category\": \"home\"\n      },\n      \"reason\": \"Uses removed enum value 'home' on property 'category'.\"\n    },\n    {\n      \"breaking_category\": \"bound_narrowed\",\n      \"property\": \"limit\",\n      \"payload\": {\n        \"query\": \"a\",\n        \"limit\": 51\n      },\n      \"reason\": \"Property 'limit' exceeds new maximum 50.\"\n    }\n  ],\n  \"replay\": {\n    \"total\": 5,\n    \"preserved\": [],\n    \"broken\": [\n      {\n        \"id\": \"call_001\",\n        \"arguments\": {\n          \"query\": \"laptop stand\",\n          \"category\": \"electronics\",\n          \"limit\": 15\n        },\n        \"breaking_reasons\": [\n          \"missing required property: api_key\"\n        ]\n      },\n      {\n        \"id\": \"call_002\",\n        \"arguments\": {\n          \"query\": \"cotton crewneck\",\n          \"category\": \"apparel\",\n          \"limit\": 5,\n          \"client_tag\": \"summer_sale\"\n        },\n        \"breaking_reasons\": [\n          \"missing required property: api_key\",\n          \"unexpected property: client_tag\"\n        ]\n      },\n      {\n        \"id\": \"call_003\",\n        \"arguments\": {\n          \"query\": \"dining table\",\n          \"category\": \"home\",\n          \"limit\": 2\n        },\n        \"breaking_reasons\": [\n          \"missing required property: api_key\",\n          \"property 'category' value 'home' not in enum ['electronics', 'apparel', 'books']\"\n        ]\n      },\n      {\n        \"id\": \"call_004\",\n        \"arguments\": {\n          \"query\": \"distributed systems in rust\",\n          \"limit\": 85\n        },\n        \"breaking_reasons\": [\n          \"missing required property: api_key\",\n          \"property 'limit' greater than maximum 50\"\n        ]\n      }\n    ],\n    \"already_invalid\": [\n      {\n        \"id\": \"call_005\",\n        \"arguments\": {\n          \"query\": \"\",\n          \"limit\": 10\n        },\n        \"reasons\": [\n          \"property 'query' shorter than minLength 1\"\n        ]\n      }\n    ],\n    \"breaking_rate\": 1.0\n  },\n  \"summary\": \"Contract update is incompatible: 4 breaking changes, 4 broken historical calls.\"\n}\n",
+      "durationMs": 45
+    }
+  ]
+}

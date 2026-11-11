@@ -1,0 +1,41 @@
+[
+  {
+    "id": "call_001",
+    "arguments": {
+      "query": "laptop stand",
+      "category": "electronics",
+      "limit": 15
+    }
+  },
+  {
+    "id": "call_002",
+    "arguments": {
+      "query": "cotton crewneck",
+      "category": "apparel",
+      "limit": 5,
+      "client_tag": "summer_sale"
+    }
+  },
+  {
+    "id": "call_003",
+    "arguments": {
+      "query": "dining table",
+      "category": "home",
+      "limit": 2
+    }
+  },
+  {
+    "id": "call_004",
+    "arguments": {
+      "query": "distributed systems in rust",
+      "limit": 85
+    }
+  },
+  {
+    "id": "call_005",
+    "arguments": {
+      "query": "",
+      "limit": 10
+    }
+  }
+]
