@@ -5,14 +5,22 @@ import math
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
 
-SUPPORTED_KEYWORDS = {
+ANNOTATION_KEYWORDS = {
     "$schema",
+    "$comment",
     "title",
     "description",
+    "default",
+    "examples",
+    "deprecated",
+    "readOnly",
+    "writeOnly",
+}
+
+ROOT_KEYWORDS = {"type", "properties", "required", "additionalProperties"}
+
+PROPERTY_KEYWORDS = {
     "type",
-    "properties",
-    "required",
-    "additionalProperties",
     "enum",
     "minimum",
     "maximum",
@@ -20,19 +28,22 @@ SUPPORTED_KEYWORDS = {
     "maxLength",
     "minItems",
     "maxItems",
-    "items",
 }
 
-UNRESOLVED_KEYWORDS = {
-    "$ref",
-    "oneOf",
-    "anyOf",
-    "allOf",
-    "not",
-    "patternProperties",
-    "dependentRequired",
-    "prefixItems",
-}
+NESTED_KEYWORDS = {"properties", "required", "additionalProperties", "items"}
+
+_MISSING = object()
+
+
+def _changed_keywords(old: Dict[str, Any], new: Dict[str, Any], keywords: Set[str]) -> List[str]:
+    """Return the given keywords whose values differ between two schemas, sorted."""
+    return sorted(k for k in keywords if old.get(k, _MISSING) != new.get(k, _MISSING))
+
+
+def _unhandled_keywords(old: Dict[str, Any], new: Dict[str, Any], handled: Set[str]) -> List[str]:
+    """Return keywords outside the handled and annotation sets whose values differ, sorted."""
+    candidates = (set(old) | set(new)) - handled - ANNOTATION_KEYWORDS
+    return _changed_keywords(old, new, candidates)
 
 
 def _check_no_nan_inf(val: Any) -> None:
@@ -90,7 +101,6 @@ def load_contract(raw: Any) -> Dict[str, Any]:
             if not isinstance(p_val, dict):
                 raise ValueError(f"property schema for '{p_name}' must be a dictionary")
 
-            # Validate numeric and range constraints
             if "minimum" in p_val:
                 m = p_val["minimum"]
                 if not isinstance(m, (int, float)) or isinstance(m, bool) or math.isnan(m) or math.isinf(m):
@@ -252,15 +262,14 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
     old_raw = old_contract.get("raw", {})
     new_raw = new_contract.get("raw", {})
 
-    # Top-level unresolved keywords or keywords outside SUPPORTED_KEYWORDS
-    top_unresolved = sorted(set(k for k in (set(old_raw.keys()) | set(new_raw.keys())) if k not in SUPPORTED_KEYWORDS))
-    for kw in top_unresolved:
+    for kw in _unhandled_keywords(old_raw, new_raw, ROOT_KEYWORDS):
         changes.append(
             {
                 "type": "unresolved",
                 "category": "unresolved_keyword",
                 "property": kw,
-                "description": f"Schema contains unhandled keyword '{kw}'.",
+                "keyword": kw,
+                "description": f"Schema keyword '{kw}' changed and is outside the supported subset.",
             }
         )
 
@@ -270,24 +279,21 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
     new_req = set(new_contract.get("required", []))
     new_additional = new_contract.get("additionalProperties", True)
 
-    # Property-level unhandled keywords
     all_props = sorted(set(old_props.keys()) | set(new_props.keys()))
     for prop in all_props:
         old_p = old_props.get(prop, {})
         new_p = new_props.get(prop, {})
-        prop_unhandled = sorted(set(k for k in (set(old_p.keys()) | set(new_p.keys())) if k not in SUPPORTED_KEYWORDS))
-        for kw in prop_unhandled:
+        for kw in _unhandled_keywords(old_p, new_p, PROPERTY_KEYWORDS | NESTED_KEYWORDS):
             changes.append(
                 {
                     "type": "unresolved",
                     "category": "unresolved_keyword",
                     "property": prop,
                     "keyword": kw,
-                    "description": f"Property '{prop}' contains unhandled keyword '{kw}'.",
+                    "description": f"Property '{prop}' keyword '{kw}' changed and is outside the supported subset.",
                 }
             )
 
-    # Required field additions
     for prop in sorted(new_req):
         if prop not in old_req:
             changes.append(
@@ -299,7 +305,6 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
                 }
             )
 
-    # Removed properties
     for prop in sorted(old_props):
         if prop not in new_props:
             if not new_additional:
@@ -321,7 +326,6 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
                     }
                 )
 
-    # Added optional properties
     for prop in sorted(new_props):
         if prop not in old_props:
             if prop not in new_req:
@@ -334,7 +338,6 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
                     }
                 )
 
-    # additionalProperties transition
     old_add = old_contract.get("additionalProperties", True)
     if old_add and not new_additional:
         changes.append(
@@ -355,32 +358,19 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
             }
         )
 
-    # Nested schema restrictions (only unresolved when nested properties/items actually change)
     for prop in all_props:
-        old_p = old_props.get(prop, {})
-        new_p = new_props.get(prop, {})
-        if "properties" in old_p or "properties" in new_p:
-            if old_p.get("properties") != new_p.get("properties"):
-                changes.append(
-                    {
-                        "type": "unresolved",
-                        "category": "nested_restriction",
-                        "property": prop,
-                        "description": f"Property '{prop}' contains nested schema definitions outside the supported flat subset.",
-                    }
-                )
-        if "items" in old_p or "items" in new_p:
-            if old_p.get("items") != new_p.get("items"):
-                changes.append(
-                    {
-                        "type": "unresolved",
-                        "category": "nested_restriction",
-                        "property": prop,
-                        "description": f"Property '{prop}' contains nested items schema definitions that differ.",
-                    }
-                )
+        nested = _changed_keywords(old_props.get(prop, {}), new_props.get(prop, {}), NESTED_KEYWORDS)
+        if nested:
+            changes.append(
+                {
+                    "type": "unresolved",
+                    "category": "nested_restriction",
+                    "property": prop,
+                    "keywords": nested,
+                    "description": f"Property '{prop}' nested schema keywords {nested} changed; nested schemas are outside the supported flat subset.",
+                }
+            )
 
-    # Property-level type and constraint changes for shared properties
     for prop in sorted(old_props.keys()):
         if prop not in new_props:
             continue
@@ -561,6 +551,8 @@ def _synthesize_base_payload(contract: Dict[str, Any]) -> Dict[str, Any]:
                 payload[key] = ["item"] * min_items
             elif "object" in p_types:
                 payload[key] = {}
+            elif "null" in p_types:
+                payload[key] = None
             else:
                 payload[key] = "sample"
         else:
@@ -636,48 +628,25 @@ def generate_counterexamples(
         elif cat == "type_narrowed":
             new_types = _type_names(new_props.get(prop, {})) or set()
             old_types = _type_names(old_props.get(prop, {}))
-            test_val = None
+            samples = {
+                "string": "text",
+                "integer": 42,
+                "number": 1.5,
+                "boolean": True,
+                "array": ["item"],
+                "object": {"item": 1},
+                "null": None,
+            }
             if old_types is None:
-                for candidate in ["unsupported_text", 12345, True, ["item"], {"k": "v"}]:
-                    payload = dict(base)
-                    payload[prop] = candidate
-                    valid_old, _ = validate_call(old_contract, payload)
-                    valid_new, _ = validate_call(new_contract, payload)
-                    if valid_old and not valid_new:
-                        test_val = candidate
-                        break
+                candidates = list(samples.values())
             else:
                 effective_new = set(new_types)
                 if "number" in effective_new:
                     effective_new.add("integer")
-                removed = sorted(old_types - effective_new)
-                for r in removed:
-                    if r == "number":
-                        candidate = 1.5
-                    elif r == "string":
-                        candidate = "text"
-                    elif r == "integer":
-                        candidate = 42
-                    elif r == "boolean":
-                        candidate = True
-                    elif r == "array":
-                        candidate = ["item"]
-                    elif r == "object":
-                        candidate = {"item": 1}
-                    elif r == "null":
-                        candidate = None
-                    else:
-                        candidate = "val"
-                    payload = dict(base)
-                    payload[prop] = candidate
-                    valid_old, _ = validate_call(old_contract, payload)
-                    valid_new, _ = validate_call(new_contract, payload)
-                    if valid_old and not valid_new:
-                        test_val = candidate
-                        break
-            if test_val is not None:
+                candidates = [samples.get(r, "val") for r in sorted(old_types - effective_new)]
+            for candidate in candidates:
                 payload = dict(base)
-                payload[prop] = test_val
+                payload[prop] = candidate
                 valid_old, _ = validate_call(old_contract, payload)
                 valid_new, _ = validate_call(new_contract, payload)
                 if valid_old and not valid_new:
@@ -686,9 +655,10 @@ def generate_counterexamples(
                             "breaking_category": cat,
                             "property": prop,
                             "payload": payload,
-                            "reason": f"Property '{prop}' value {test_val!r} violates narrowed types {sorted(list(new_types))}.",
+                            "reason": f"Property '{prop}' value {candidate!r} violates narrowed types {sorted(list(new_types))}.",
                         }
                     )
+                    break
         elif cat == "bound_narrowed":
             bound = ch.get("bound")
             new_p = new_props.get(prop, {})

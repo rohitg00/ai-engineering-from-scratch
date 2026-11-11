@@ -194,12 +194,44 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
             {"id": "c_arr_ok", "arguments": {"user_id": "u1", "tags": ["a", "b", "c"]}},
             {"id": "c_arr_too_long", "arguments": {"user_id": "u1", "tags": ["1", "2", "3", "4", "5", "6"]}},
         ])
-        # new schema has maxItems 5
         schema_with_api_key = dict(self.new_schema)
-        schema_with_api_key["required"] = ["user_id"]  # keep api_key optional for this test
+        schema_with_api_key["required"] = ["user_id"]
         result = replay_calls(self.old_contract, load_contract(schema_with_api_key), calls)
         broken_ids = [b["id"] for b in result["broken"]]
         self.assertIn("c_arr_too_long", broken_ids)
+
+    def test_null_removed_from_types_has_counterexample(self):
+        """Verify removing null from a property's types yields a null counterexample."""
+        old_c = load_contract({"type": "object", "properties": {"note": {"type": ["string", "null"]}}})
+        new_c = load_contract({"type": "object", "properties": {"note": {"type": "string"}}})
+        cx = [c for c in generate_counterexamples(old_c, new_c) if c["breaking_category"] == "type_narrowed"]
+        self.assertEqual(len(cx), 1)
+        self.assertIsNone(cx[0]["payload"]["note"])
+
+    def test_untyped_property_excluding_null_has_counterexample(self):
+        """Verify typing an untyped property with every type except null yields a null counterexample."""
+        all_but_null = ["string", "integer", "number", "boolean", "array", "object"]
+        old_c = load_contract({"type": "object", "properties": {"v": {}}})
+        new_c = load_contract({"type": "object", "properties": {"v": {"type": all_but_null}}})
+        cx = [c for c in generate_counterexamples(old_c, new_c) if c["breaking_category"] == "type_narrowed"]
+        self.assertEqual(len(cx), 1)
+        self.assertIsNone(cx[0]["payload"]["v"])
+
+    def test_null_only_required_field_keeps_counterexamples(self):
+        """Verify a required null-only field gets a null baseline so other counterexamples survive."""
+        old_c = load_contract({
+            "type": "object",
+            "properties": {"cursor": {"type": "null"}, "mode": {"type": "string", "enum": ["a", "b"]}},
+            "required": ["cursor"],
+        })
+        new_c = load_contract({
+            "type": "object",
+            "properties": {"cursor": {"type": "null"}, "mode": {"type": "string", "enum": ["a"]}},
+            "required": ["cursor"],
+        })
+        cx = [c for c in generate_counterexamples(old_c, new_c) if c["breaking_category"] == "enum_narrowed"]
+        self.assertEqual(len(cx), 1)
+        self.assertEqual(cx[0]["payload"], {"cursor": None, "mode": "b"})
 
 
 if __name__ == "__main__":

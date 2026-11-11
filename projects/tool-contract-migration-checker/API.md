@@ -23,5 +23,5 @@ python3 cli.py --old samples/catalog_v1.json --new samples/catalog_v2.json --cal
 
 ### Exit codes
 
-- `0`: Contracts are fully compatible (no breaking changes, no unresolved keywords, and all replayed calls preserved), or `--strict` was not passed.
+- `0`: The report is compatible: no breaking changes, no unresolved changes, and every saved call that was valid under the old contract still passes. Calls that were already invalid under the old contract are listed separately and do not affect the result. The CLI also exits 0 when `--strict` was not passed.
 - `1`: When `--strict` is enabled and `report["compatible"]` is `False` (due to breaking changes, unresolved keywords, or broken historical calls).

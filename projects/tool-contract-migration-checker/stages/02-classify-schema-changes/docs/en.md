@@ -25,7 +25,7 @@ Implement `classify_changes(old_contract, new_contract)` in your workspace `main
 Categorize each detected change into:
 - `breaking`: added required property, removed property, narrowed type, narrowed enum, tightened minimum/maximum/minLength/maxLength, or changed `additionalProperties` from `True` to `False`.
 - `compatible`: added optional property, widened type, widened enum, relaxed bounds, or enabled `additionalProperties`.
-- `unresolved`: presence of keywords outside the supported subset (`$ref`, `oneOf`, `anyOf`, `allOf`, `patternProperties`).
+- `unresolved`: a keyword outside the supported subset, such as `$ref`, `oneOf`, `pattern` or `format`, whose value differs between the two versions, or a changed nested `properties`, `required`, `additionalProperties` or `items` inside a property. Annotations (`title`, `description`, `default`, `examples`) are ignored, and an unsupported keyword that did not change is not reported.
 
 Each change object must include:
 ```python

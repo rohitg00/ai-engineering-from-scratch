@@ -45,80 +45,61 @@
     }
   ];
 
-  const calculate = function (v, stepIndex) {
-    const broken = [];
-    const preserved = [];
-    const alreadyInvalid = [];
+  const calculate = function (v) {
     const breakingRules = [];
-
     if (v.addRequiredApiKey) breakingRules.push("required parameter 'api_key' added");
     if (v.removeHomeCategory) breakingRules.push("category 'home' removed from enum");
     if (v.narrowLimitMax < 100) breakingRules.push("maximum limit lowered to " + v.narrowLimitMax);
     if (v.closeSchema) breakingRules.push("additional properties rejected");
 
-    for (let i = 0; i < sampleCalls.length; i++) {
-      const call = sampleCalls[i];
+    const counts = { preserved: 0, broken: 0, alreadyInvalid: 0 };
+    const rows = sampleCalls.map(function (call) {
+      if (!call.query) {
+        counts.alreadyInvalid += 1;
+        return [call.id, "already invalid", "query shorter than minLength 1"];
+      }
       const reasons = [];
+      if (v.addRequiredApiKey && !call.api_key) reasons.push("missing required 'api_key'");
+      if (v.removeHomeCategory && call.category === "home") reasons.push("category 'home' not in enum");
+      if (call.limit > v.narrowLimitMax) reasons.push("limit " + call.limit + " > " + v.narrowLimitMax);
+      if (v.closeSchema && call.client_tag) reasons.push("unexpected property 'client_tag'");
+      if (reasons.length) {
+        counts.broken += 1;
+        return [call.id, "broken", reasons.join("; ")];
+      }
+      counts.preserved += 1;
+      return [call.id, "preserved", "valid under both contracts"];
+    });
 
-      // Check baseline old contract (query minLength: 1)
-      if (!call.query || call.query.length < 1) {
-        alreadyInvalid.push(call.id);
-        continue;
-      }
-
-      if (v.addRequiredApiKey && !call.api_key) {
-        reasons.push("missing required 'api_key'");
-      }
-      if (v.removeHomeCategory && call.category === "home") {
-        reasons.push("category 'home' removed from enum");
-      }
-      if (call.limit > v.narrowLimitMax) {
-        reasons.push("limit " + call.limit + " > " + v.narrowLimitMax);
-      }
-      if (v.closeSchema && call.client_tag) {
-        reasons.push("unexpected property 'client_tag'");
-      }
-
-      if (reasons.length > 0) {
-        broken.push({ id: call.id, reasons: reasons });
-      } else {
-        preserved.push(call.id);
-      }
+    const validOld = counts.preserved + counts.broken;
+    const compatible = breakingRules.length === 0 && counts.broken === 0;
+    let gateStatus = "DISABLED";
+    let gateDetail = "Without --strict the CLI exits 0 whatever the report says.";
+    if (v.strictGate) {
+      gateStatus = compatible ? "PASS" : "FAIL";
+      gateDetail = compatible ? "Strict gate passes with exit code 0." : "Strict gate fails with exit code 1.";
     }
 
-    const hasBreaks = breakingRules.length > 0;
-    let gateStatus = "PASS";
-    let gateDetail = "CI Gate PASSED (exit code 0).";
-
-    if (hasBreaks || broken.length > 0) {
-      if (v.strictGate) {
-        gateStatus = "FAIL";
-        gateDetail = "CI Gate FAILED (exit code 1 under --strict).";
-      } else {
-        gateStatus = "DISABLED";
-        gateDetail = "CI Gate DISABLED (--strict omitted, exit code 0 with incompatible report).";
-      }
-    }
-
-    let summaryText = "";
-    if (broken.length === 0 && !hasBreaks) {
-      summaryText = "All 4 valid historical calls satisfy the updated contract without changes.";
-    } else {
-      summaryText = "Validation rejected " + broken.length + " of 4 valid saved calls under " + breakingRules.length + " proposed contract changes.";
-    }
+    const summaryText = compatible
+      ? "All " + validOld + " calls that were valid under the old contract still pass."
+      : counts.broken + " of " + validOld + " calls that were valid under the old contract now fail, from " + breakingRules.length + " breaking changes. " + counts.alreadyInvalid + " saved call was already invalid and is not replayed as broken.";
 
     return {
       summary: summaryText + " " + gateDetail,
       metrics: [
-        { label: "Saved Calls", value: sampleCalls.length },
-        { label: "Preserved Calls", value: preserved.length },
-        { label: "Broken Calls", value: broken.length },
-        { label: "CI Gate", value: gateStatus }
+        { label: "Saved calls", value: sampleCalls.length },
+        { label: "Preserved", value: counts.preserved },
+        { label: "Broken", value: counts.broken },
+        { label: "Already invalid", value: counts.alreadyInvalid },
+        { label: "CI gate", value: gateStatus }
       ],
       bars: [
-        { label: "Preserved Calls", value: preserved.length, max: sampleCalls.length },
-        { label: "Broken Calls", value: broken.length, max: sampleCalls.length }
-      ]
+        { label: "Preserved", value: counts.preserved, max: sampleCalls.length },
+        { label: "Broken", value: counts.broken, max: sampleCalls.length },
+        { label: "Already invalid", value: counts.alreadyInvalid, max: sampleCalls.length }
+      ],
+      columns: ["Call", "Outcome", "Reason"],
+      rows: rows
     };
   };
 

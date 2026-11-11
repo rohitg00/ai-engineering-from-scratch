@@ -174,6 +174,32 @@ class TestStage02ClassifyChanges(unittest.TestCase):
         self.assertEqual(len(breaking), 0)
         self.assertEqual(len(compatible), 1)
 
+    def test_unchanged_unsupported_keywords_are_not_unresolved(self):
+        """Verify unsupported keywords and annotations that did not change produce no unresolved entry."""
+        prop = {"type": "string", "format": "email", "pattern": "^.+@.+$", "default": "a@b.c", "examples": ["a@b.c"]}
+        schema = {"title": "t", "type": "object", "properties": {"email": prop}, "$defs": {"x": {}}}
+        changes = classify_changes(load_contract(schema), load_contract(schema))
+        self.assertEqual(changes, [])
+
+    def test_changed_unsupported_keyword_is_unresolved(self):
+        """Verify a changed keyword outside the supported subset is reported as unresolved."""
+        old_s = {"title": "t", "type": "object", "properties": {"code": {"type": "string"}}}
+        new_s = {"title": "t", "type": "object", "properties": {"code": {"type": "string", "pattern": "^[0-9]+$"}}}
+        changes = classify_changes(load_contract(old_s), load_contract(new_s))
+        unresolved = [c for c in changes if c["type"] == "unresolved"]
+        self.assertEqual([(c["property"], c["keyword"]) for c in unresolved], [("code", "pattern")])
+
+    def test_nested_object_restriction_is_unresolved(self):
+        """Verify nested required or additionalProperties changes are reported as unresolved."""
+        nested = {"type": "object", "properties": {"x": {"type": "string"}}}
+        old_s = {"title": "t", "type": "object", "properties": {"opts": nested}}
+        for extra in ({"required": ["x"]}, {"additionalProperties": False}):
+            new_s = {"title": "t", "type": "object", "properties": {"opts": dict(nested, **extra)}}
+            changes = classify_changes(load_contract(old_s), load_contract(new_s))
+            unresolved = [c for c in changes if c["category"] == "nested_restriction"]
+            self.assertEqual(len(unresolved), 1)
+            self.assertEqual(unresolved[0]["keywords"], sorted(extra))
+
 
 if __name__ == "__main__":
     unittest.main()

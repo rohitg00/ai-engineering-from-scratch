@@ -37,7 +37,7 @@ The demo compares `catalog_v1.json` with `catalog_v2.json`. The proposed schema 
 
 ## Integration and limits
 
-The baseline supports `properties`, `required`, `additionalProperties`, `type`, `enum`, `minimum`, `maximum`, `minLength`, `maxLength`, `minItems`, and `maxItems`. Keywords outside this educational subset (`$ref`, `oneOf`, `anyOf`, `allOf`) are surfaced as unresolved changes.
+The baseline supports `properties`, `required`, `additionalProperties`, `type`, `enum`, `minimum`, `maximum`, `minLength`, `maxLength`, `minItems`, and `maxItems` on a flat object. Annotations such as `title`, `description`, `default` and `examples` do not change validity and are ignored. Any other keyword, such as `$ref`, `oneOf`, `pattern` or `format`, is reported as unresolved when its value changes between the two versions. A change inside a nested object or array schema is also reported as unresolved. An unresolved change makes the report incompatible, so `--strict` fails instead of approving a change it cannot check.
 
 ## Stages
 
