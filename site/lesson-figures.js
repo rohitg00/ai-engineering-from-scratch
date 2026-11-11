@@ -449,6 +449,16 @@
     return period / 1000;
   }
 
+  function loopStart(animations) {
+    var start = 0;
+    for (var i = 0; i < animations.length; i++) {
+      var at = clockSeconds(animations[i].getAttribute('begin'));
+      if (animations[i].getAttribute('repeatCount') !== 'indefinite') at += clockSeconds(animations[i].getAttribute('dur'));
+      if (at > start) start = at;
+    }
+    return start;
+  }
+
   function tabStops(host) {
     var nodes = host.querySelectorAll('button,input,select,textarea,a[href],[tabindex]');
     var stops = [];
@@ -689,7 +699,13 @@
       if (follow || !scrub || typeof window.setInterval !== 'function' || !clock || typeof clock.getCurrentTime !== 'function') return;
       follow = window.setInterval(function () {
         var now = clock.getCurrentTime();
-        scrub.value = String(period ? now % period : Math.min(now, span));
+        if (continuous.length && now >= span) {
+          now = period ? settled + ((now - settled) % period) : 0;
+          for (var i = 0; i < svgs.length; i++) {
+            if (typeof svgs[i].setCurrentTime === 'function') svgs[i].setCurrentTime(now);
+          }
+        }
+        scrub.value = String(Math.min(now, span));
       }, 200);
     }
     function staticFrame() {
@@ -718,7 +734,10 @@
     if (prefersReducedMotion()) staticFrame();
     addMotionController(host, { pause: pause, resume: resume, staticFrame: staticFrame });
     var period = loopPeriod(allAnimated);
-    var span = Math.max(smilSpan(allAnimated), period);
+    var settled = loopStart(allAnimated);
+    var span = smilSpan(allAnimated);
+    if (period) span = Math.ceil((settled + period) * 20) / 20;
+    else if (continuous.length) span = 30;
     var scrub = el('input', {
       type: 'range',
       min: '0',
