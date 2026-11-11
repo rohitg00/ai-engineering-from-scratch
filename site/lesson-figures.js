@@ -622,10 +622,11 @@
         if (size > 0 && size < smallest) smallest = size;
       }
       svg.setAttribute('data-lf-fit', '1');
-      if (smallest >= MIN_TEXT_PX - TEXT_PX_TOLERANCE) continue;
-      svg.style.minWidth = Math.ceil(frame.width * MIN_TEXT_PX / smallest) + 'px';
+      var small = smallest < MIN_TEXT_PX - TEXT_PX_TOLERANCE;
+      if (small) svg.style.minWidth = Math.ceil(frame.width * MIN_TEXT_PX / smallest) + 'px';
       var scroller = scrollsSideways(svg, host);
       if (!scroller) {
+        if (!small) continue;
         scroller = svg.parentNode;
         scroller.classList.add('lf-scroll');
       }
