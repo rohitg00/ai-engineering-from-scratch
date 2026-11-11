@@ -656,11 +656,13 @@
       if (allAnimated[a].getAttribute('repeatCount') !== 'indefinite') { hasFinite = true; break; }
     }
     var follow = 0;
+    function stopFollow() {
+      if (!follow) return;
+      window.clearInterval(follow);
+      follow = 0;
+    }
     function pause() {
-      if (follow) {
-        window.clearInterval(follow);
-        follow = 0;
-      }
+      stopFollow();
       for (var i = 0; i < svgs.length; i++) {
         if (typeof svgs[i].pauseAnimations === 'function') svgs[i].pauseAnimations();
       }
@@ -672,10 +674,11 @@
       if (follow || !scrub || typeof window.setInterval !== 'function' || !clock || typeof clock.getCurrentTime !== 'function') return;
       follow = window.setInterval(function () {
         var now = clock.getCurrentTime();
-        scrub.value = String(hasFinite ? Math.min(now, span) : now % span);
+        scrub.value = String(continuous.length ? now % span : Math.min(now, span));
       }, 200);
     }
     function staticFrame() {
+      stopFollow();
       for (var i = 0; i < svgs.length; i++) {
         try {
           if (typeof svgs[i].setCurrentTime === 'function') svgs[i].setCurrentTime(typeof smilRecord.scrubTime === 'number' ? smilRecord.scrubTime : staticTime);
@@ -803,10 +806,11 @@
         if (size > 0 && size < smallest) smallest = size;
       }
       svg.setAttribute('data-lf-fit', '1');
-      if (smallest >= MIN_TEXT_PX - TEXT_PX_TOLERANCE) continue;
-      svg.style.minWidth = Math.ceil(frame.width * MIN_TEXT_PX / smallest) + 'px';
+      var small = smallest < MIN_TEXT_PX - TEXT_PX_TOLERANCE;
+      if (small) svg.style.minWidth = Math.ceil(frame.width * MIN_TEXT_PX / smallest) + 'px';
       var scroller = scrollsSideways(svg, host);
       if (!scroller) {
+        if (!small) continue;
         scroller = svg.parentNode;
         scroller.classList.add('lf-scroll');
       }
