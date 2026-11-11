@@ -217,6 +217,16 @@ class TestStage03CounterexamplesAndReplay(unittest.TestCase):
         self.assertEqual(len(cx), 1)
         self.assertIsNone(cx[0]["payload"]["v"])
 
+    def test_removed_string_type_respects_old_min_length(self):
+        """Verify a removed string type gets a counterexample long enough for the old minLength."""
+        others = ["number", "integer", "boolean", "array", "object", "null"]
+        old_c = load_contract({"type": "object", "properties": {"code": {"minLength": 8}}})
+        new_c = load_contract({"type": "object", "properties": {"code": {"type": others, "minLength": 8}}})
+        cx = [c for c in generate_counterexamples(old_c, new_c) if c["breaking_category"] == "type_narrowed"]
+        self.assertEqual(len(cx), 1)
+        self.assertIsInstance(cx[0]["payload"]["code"], str)
+        self.assertGreaterEqual(len(cx[0]["payload"]["code"]), 8)
+
     def test_removed_enum_property_uses_old_schema_value(self):
         """Verify a removed enum property gets a counterexample built from its old allowed values."""
         old_c = load_contract({

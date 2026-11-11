@@ -200,6 +200,14 @@ class TestStage02ClassifyChanges(unittest.TestCase):
             self.assertEqual(len(unresolved), 1)
             self.assertEqual(unresolved[0]["keywords"], sorted(extra))
 
+    def test_explicit_nested_defaults_are_not_unresolved(self):
+        """Verify spelling out nested defaults such as required [] is not reported as a change."""
+        old_s = {"title": "t", "type": "object", "properties": {"opts": {"type": "object"}}}
+        explicit = {"type": "object", "required": [], "additionalProperties": True, "properties": {}}
+        new_s = {"title": "t", "type": "object", "properties": {"opts": explicit}}
+        changes = classify_changes(load_contract(old_s), load_contract(new_s))
+        self.assertEqual(changes, [])
+
 
 if __name__ == "__main__":
     unittest.main()

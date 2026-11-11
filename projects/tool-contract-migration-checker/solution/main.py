@@ -40,6 +40,18 @@ def _changed_keywords(old: Dict[str, Any], new: Dict[str, Any], keywords: Set[st
     return sorted(k for k in keywords if old.get(k, _MISSING) != new.get(k, _MISSING))
 
 
+def _nested_view(schema: Dict[str, Any]) -> Dict[str, Any]:
+    """Return the nested object and array keywords of a property schema with their defaults filled in."""
+    view = {
+        "properties": schema.get("properties", {}),
+        "required": sorted(set(schema.get("required", []))),
+        "additionalProperties": schema.get("additionalProperties", True),
+    }
+    if "items" in schema:
+        view["items"] = schema["items"]
+    return view
+
+
 def _unhandled_keywords(old: Dict[str, Any], new: Dict[str, Any], handled: Set[str]) -> List[str]:
     """Return keywords outside the handled and annotation sets whose values differ, sorted."""
     candidates = (set(old) | set(new)) - handled - ANNOTATION_KEYWORDS
@@ -359,7 +371,9 @@ def classify_changes(old_contract: Dict[str, Any], new_contract: Dict[str, Any])
         )
 
     for prop in all_props:
-        nested = _changed_keywords(old_props.get(prop, {}), new_props.get(prop, {}), NESTED_KEYWORDS)
+        nested = _changed_keywords(
+            _nested_view(old_props.get(prop, {})), _nested_view(new_props.get(prop, {})), NESTED_KEYWORDS
+        )
         if nested:
             changes.append(
                 {
@@ -637,13 +651,19 @@ def generate_counterexamples(
                 "object": {"item": 1},
                 "null": None,
             }
+            old_p = old_props.get(prop, {})
             if old_types is None:
-                candidates = list(samples.values())
+                tried_types = list(samples)
             else:
                 effective_new = set(new_types)
                 if "number" in effective_new:
                     effective_new.add("integer")
-                candidates = [samples.get(r, "val") for r in sorted(old_types - effective_new)]
+                tried_types = sorted(old_types - effective_new)
+            candidates = []
+            for t in tried_types:
+                shaped = dict(old_p, type=t)
+                candidates.append(_synthesize_base_payload({"properties": {prop: shaped}, "required": [prop]})[prop])
+                candidates.append(samples.get(t, "val"))
             for candidate in candidates:
                 payload = dict(base)
                 payload[prop] = candidate
