@@ -1,6 +1,6 @@
 # Projects
 
-Build useful AI engineering tools from scratch, one tested stage at a time. The catalog covers 102 projects across Python, Rust, TypeScript, and Go: 76 ready to build and 26 on the [roadmap](ROADMAP.md).
+Build useful AI engineering tools from scratch, one tested stage at a time. The catalog covers 104 projects across Python, Rust, TypeScript, and Go: 79 ready to build and 25 on the [roadmap](ROADMAP.md).
 
 Each ready project includes a working reference implementation, a learner starter, cumulative stage tests, mechanism diagrams, explanations, and recorded run/output GIFs. Core tests use local fixtures and require no model credentials. Optional framework comparisons use real SDKs with deterministic fake models. Planned projects have proposed outcomes and learning milestones; their implementations and completion tests are still to come.
 
@@ -81,6 +81,7 @@ Import `completion.json` on the project page and enter your name to download a p
 | [Workshop Materials Planner](workshop-materials-planner/) | 2 | Python | 4 | ~8h |
 | [Agent Budget Planner](agent-budget-planner/) | 3 | Python | 4 | ~8h |
 | [Agent Trace Debugger](agent-trace-debugger/) | 3 | TypeScript | 4 | ~8h |
+| [Binary Inspector](binary-inspector/) | 3 | Python | 6 | ~10h |
 | [Community Learning Path Finder](community-learning-path-finder/) | 3 | Python | 4 | ~8h |
 | [Cross-Agent Skill Installer](skill-installer/) | 3 | TypeScript | 4 | ~8h |
 | [Database Migration Rehearsal](database-migration-rehearsal/) | 3 | Python | 4 | ~8h |
@@ -98,6 +99,7 @@ Import `completion.json` on the project page and enter your name to download a p
 | [Streaming Answer Recovery](streaming-answer-recovery/) | 3 | TypeScript, Go | 4 | ~8h |
 | [Support Agent With Google ADK](support-agent-with-google-adk/) | 3 | Python | 4 | ~8h |
 | [Typed Workflow Agent with Mastra](typed-workflow-agent-with-mastra/) | 3 | TypeScript | 4 | ~8h |
+| [Tool Contract Migration Checker](tool-contract-migration-checker/) | 3 | Python | 4 | ~8h |
 | [Visual Evidence Library](visual-evidence-library/) | 3 | Python | 4 | ~8h |
 | [Voice Note Transcriber Pipeline](voice-note-transcriber-pipeline/) | 3 | Python | 4 | ~8h |
 | [Web Change Brief](web-change-brief/) | 3 | Go | 4 | ~8h |
@@ -112,11 +114,12 @@ Import `completion.json` on the project page and enter your name to download a p
 | [Tool Call Firewall](tool-call-firewall/) | 4 | Rust | 4 | ~8h |
 | [Browser Agent](browser-agent/) | 5 | TypeScript, Python | 4 | ~8h |
 | [Distributed Eval Farm Coordinator](distributed-eval-farm/) | 5 | Go | 4 | ~8h |
+| [Mini Decompiler](mini-decompiler/) | 5 | Python | 8 | ~18h |
 | [Self-Improving Skill Loop](self-improving-skill-loop/) | 5 | Python | 4 | ~8h |
 
 ## Roadmap
 
-The [26 planned projects](ROADMAP.md) extend all five levels with practical applications, data and multimodal workflows, developer tooling, DevOps, and agent systems. Each brief names its deliverable, prerequisites, first demo and four proposed milestones. The website marks these cards as planned; they do not count toward completed stages or certificates.
+The [25 planned projects](ROADMAP.md) extend all five levels with practical applications, data and multimodal workflows, developer tooling, DevOps, and agent systems. Each brief names its deliverable, prerequisites, first demo and four proposed milestones. The website marks these cards as planned; they do not count toward completed stages or certificates.
 
 ## Build an application you can use
 

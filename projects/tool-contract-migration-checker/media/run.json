@@ -1,0 +1,48 @@
+{
+  "title": "Tool Contract Migration Checker | Build and verify",
+  "recordedAt": "2026-11-11T05:56:11Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "tool-contract-migration-checker",
+        "--init",
+        "/private/tmp/project-demo-learner-migration"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "workspace  /private/tmp/project-demo-learner-migration\n  created  cli.py\n  created  main.py\n  created  samples/catalog_v1.json\n  created  samples/catalog_v2.json\n  created  samples/saved_calls.json\n  created  README.md\n  kept     README.md\n  kept     README.md\nnext: python3 scripts/project_test.py tool-contract-migration-checker --stage 1 --path /private/tmp/project-demo-learner-migration\n",
+      "durationMs": 46
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "tool-contract-migration-checker",
+        "--stage",
+        "1",
+        "--path",
+        "/private/tmp/project-demo-learner-migration"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 1,
+      "output": "Tool Contract Migration Checker: grading learner\n  FAIL stage 1: Load versioned tool contracts and saved calls (8 tests)\n       not implemented yet: load_calls\n",
+      "durationMs": 91
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "tool-contract-migration-checker",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/private/tmp/aiefs-projects",
+      "exitCode": 0,
+      "output": "Tool Contract Migration Checker: grading solution\n  PASS stage 1: Load versioned tool contracts and saved calls (8 tests)\n  PASS stage 2: Classify supported schema changes (18 tests)\n  PASS stage 3: Generate and replay breaking-call counterexamples (14 tests)\n  PASS stage 4: Export migration fixtures and a compatibility gate (7 tests)\n",
+      "durationMs": 385
+    }
+  ]
+}
