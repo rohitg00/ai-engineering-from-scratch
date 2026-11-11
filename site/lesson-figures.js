@@ -650,11 +650,17 @@
     var svgs = host.querySelectorAll('svg');
     var staticTime = Number(host.getAttribute('data-static-time') || 1.5);
     var smilRecord = hostRecord(host);
+    var clock = (allAnimated[0] && allAnimated[0].ownerSVGElement) || svgs[0];
     var hasFinite = false;
     for (var a = 0; a < allAnimated.length; a++) {
       if (allAnimated[a].getAttribute('repeatCount') !== 'indefinite') { hasFinite = true; break; }
     }
+    var follow = 0;
     function pause() {
+      if (follow) {
+        window.clearInterval(follow);
+        follow = 0;
+      }
       for (var i = 0; i < svgs.length; i++) {
         if (typeof svgs[i].pauseAnimations === 'function') svgs[i].pauseAnimations();
       }
@@ -663,6 +669,11 @@
       for (var i = 0; i < svgs.length; i++) {
         if (typeof svgs[i].unpauseAnimations === 'function') svgs[i].unpauseAnimations();
       }
+      if (follow || !scrub || typeof window.setInterval !== 'function' || !clock || typeof clock.getCurrentTime !== 'function') return;
+      follow = window.setInterval(function () {
+        var now = clock.getCurrentTime();
+        scrub.value = String(hasFinite ? Math.min(now, span) : now % span);
+      }, 200);
     }
     function staticFrame() {
       for (var i = 0; i < svgs.length; i++) {
@@ -706,6 +717,7 @@
     scrub.addEventListener('input', onScrub);
     toolbar(host).appendChild(el('label', { class: 'lf-scrub' }, [el('span', {}, ['Step']), scrub]));
     registerDisposer(host, function () { scrub.removeEventListener('input', onScrub); });
+    updateMotionPolicy(host);
     if (hasFinite) {
       var replayControl = el('button', {
         class: 'lf-motion-toggle lf-replay',
@@ -778,7 +790,8 @@
     var svgs = host.querySelectorAll('svg[viewBox]');
     for (var i = 0; i < svgs.length; i++) {
       var svg = svgs[i];
-      svg.style.minWidth = '';
+      if (svg._lfOwnMinWidth === undefined) svg._lfOwnMinWidth = svg.style.minWidth || '';
+      svg.style.minWidth = svg._lfOwnMinWidth;
       var frame = svg.getBoundingClientRect();
       if (frame.width < 1) continue;
       var texts = svg.querySelectorAll('text');

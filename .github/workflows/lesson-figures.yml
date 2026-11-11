@@ -3,6 +3,8 @@ name: Lesson figures
 on:
   pull_request:
     paths:
+      - 'phases/**/docs/en.md'
+      - 'certifications/**/docs/en.md'
       - 'site/figures*.js'
       - 'site/lesson-figures.js'
       - 'site/lesson.html'
@@ -13,6 +15,8 @@ on:
   push:
     branches: [main]
     paths:
+      - 'phases/**/docs/en.md'
+      - 'certifications/**/docs/en.md'
       - 'site/figures*.js'
       - 'site/lesson-figures.js'
       - 'site/lesson.html'
