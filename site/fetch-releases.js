@@ -13,7 +13,7 @@ const MAX_SUMMARY = 180;
 const NON_PROSE_START = /^(?:#|\||>|[-*+] |\d+\. )/;
 const MARKDOWN_LINK = /\[([^\]]*)\](?:\([^)]*\)|\[[^\]]*\])/g;
 const MARKDOWN_IMAGE = /!\[[^\]]*\](?:\([^)]*\)|\[[^\]]*\])/g;
-const FENCED_BLOCK = /^(```|~~~)[\s\S]*?^\1.*$/gm;
+const FENCED_BLOCK = /^((`|~)\2{2,}).*\n(?:[\s\S]*?\n)?\1\2*[ \t]*$/gm;
 const HEADING_LINE = /^#{1,6} .*$/gm;
 
 function plainText(markdown) {

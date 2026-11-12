@@ -52,6 +52,10 @@ test('release summaries clip long text at a word boundary and skip headings, tab
   assert.equal(summaryOf('[New lessons][docs] are available.'), 'New lessons are available.');
   assert.equal(summaryOf('## Changes\n> Preview only.\n\nNew lessons are available.'), 'New lessons are available.');
   assert.equal(summaryOf('## Run\n```bash\nnpm test\n\nnpm run build\n```\n\nRun the suite first.'), 'Run the suite first.');
+  assert.equal(summaryOf('````md\n```js\nrun()\n```\n\nstill code\n````\n\nThe prose.'), 'The prose.');
+  assert.equal(summaryOf('```\ncode\n``` not a close\n\nmore code\n```\n\nThe prose.'), 'The prose.');
+  assert.equal(summaryOf('~~~\ncode\n\nmore\n~~~\n\nThe prose.'), 'The prose.');
+  assert.equal(summaryOf('```\n```\n\nThe prose.'), 'The prose.');
   assert.equal(summaryOf('1. First step\n\nThe prose.'), 'The prose.');
   assert.equal(summaryOf(''), '');
 });
