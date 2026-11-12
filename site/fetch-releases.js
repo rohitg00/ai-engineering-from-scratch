@@ -28,7 +28,7 @@ function isProse(paragraph) {
 }
 
 function summaryOf(body) {
-  const paragraphs = String(body || '').replace(/\r\n/g, '\n').split(/\n\s*\n/);
+  const paragraphs = String(body || '').replace(/\r\n/g, '\n').replace(/^#{1,6} .*$/gm, '').split(/\n\s*\n/);
   const firstProse = paragraphs.map(paragraph => paragraph.trim()).find(isProse);
   const text = plainText(firstProse);
   if (text.length <= MAX_SUMMARY) return text;

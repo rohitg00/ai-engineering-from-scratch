@@ -46,6 +46,7 @@ test('release summaries clip long text at a word boundary and skip headings, tab
   assert.equal(summaryOf('## Heading\n\n| a | b |\n\n- item\n\nThe prose.'), 'The prose.');
   assert.equal(summaryOf('[New lessons](lesson.md) are now available.\n\nMore.'), 'New lessons are now available.');
   assert.equal(summaryOf('[Start](https://a.example) · [Catalog](https://b.example)\n\nThe prose.'), 'The prose.');
+  assert.equal(summaryOf('## Heading\nProse right under it.'), 'Prose right under it.');
   assert.equal(summaryOf(''), '');
 });
 
