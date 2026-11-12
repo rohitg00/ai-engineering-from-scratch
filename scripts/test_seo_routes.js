@@ -450,6 +450,29 @@ test('lesson route redirects equivalent raw path encodings to one cache key', fu
   }
 });
 
+test('clean lesson route accepts every request shape the host rewrite can produce', function () {
+  const assets = makeAssets();
+  const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
+  const query = { cleanPhase: 'math', cleanLesson: 'vectors' };
+  const shapes = [
+    { url: '/learn/math/vectors' },
+    { url: '/learn/math/vectors', query },
+    { url: '/learn/math/vectors?cleanPhase=math&cleanLesson=vectors', query },
+    { url: '/api/lesson?cleanPhase=math&cleanLesson=vectors', query },
+    { url: '/learn/math/vectors', query: { cleanPhase: ['math', 'math'], cleanLesson: ['vectors', 'vectors'] } },
+  ];
+  for (const shape of shapes) {
+    const response = invoke(handler, Object.assign({ method: 'GET' }, shape));
+    assert.equal(response.statusCode, 200, JSON.stringify(shape));
+  }
+  const config = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
+  const rewrite = config.rewrites.find(function (rule) { return rule.source.startsWith('/learn/'); });
+  assert.equal(rewrite.source, '/learn/:cleanPhase([a-z0-9-]+)/:cleanLesson([a-z0-9-]+)');
+  assert.equal(rewrite.destination, '/api/lesson?cleanPhase=:cleanPhase&cleanLesson=:cleanLesson');
+  const spoofed = invoke(handler, { method: 'GET', url: '/lesson?cleanPhase=math&cleanLesson=vectors', query });
+  assert.equal(spoofed.statusCode, 404);
+});
+
 test('lesson route supports HEAD and rejects unsupported methods', function () {
   const assets = makeAssets();
   const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
