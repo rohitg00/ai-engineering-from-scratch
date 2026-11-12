@@ -1457,6 +1457,79 @@
       border-bottom: 1px solid var(--rule-soft);
     }
 
+    .whats-new {
+      padding: 32px 0 40px;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+
+    .whats-new[hidden] { display: none; }
+
+    .whats-new-title {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+      margin-bottom: 16px;
+    }
+
+    .whats-new-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--rule-soft);
+    }
+
+    .whats-new-item {
+      display: grid;
+      grid-template-columns: 7.5rem minmax(0, 1fr);
+      gap: 4px 20px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+
+    .whats-new-date {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      padding-top: 3px;
+    }
+
+    .whats-new-item a {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .whats-new-item a:hover { color: var(--blueprint); }
+
+    .whats-new-summary {
+      grid-column: 2;
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.45;
+      color: var(--ink-soft);
+    }
+
+    .whats-new-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 24px;
+      margin: 16px 0 0;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 600px) {
+      .whats-new-item { grid-template-columns: 1fr; }
+      .whats-new-summary { grid-column: 1; }
+    }
+
     .stat-block-title {
       font-family: var(--font-mono);
       font-size: 0.78rem;
@@ -2641,6 +2714,15 @@
           <span class="stat-row-value" data-stat="glossary-count">···</span>
         </div>
       </div>
+    </section>
+
+    <section class="whats-new container" id="whats-new" aria-labelledby="whatsNewTitle" hidden>
+      <div class="whats-new-title" id="whatsNewTitle">What's new · updated every release</div>
+      <ol class="whats-new-list" id="whatsNewList"></ol>
+      <p class="whats-new-links">
+        <a href="https://github.com/rohitg00/ai-engineering-from-scratch/releases" target="_blank" rel="noopener">All releases</a>
+        <a href="https://www.google.com/preferences/source?q=aiengineeringfromscratch.com" target="_blank" rel="noopener">Prefer us on Google</a>
+      </p>
     </section>
 
     <section class="toc container" id="contents">

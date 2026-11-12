@@ -96,6 +96,7 @@ site/sitemap.xml
 site/sitemap-index.xml
 site/sitemap-lessons-*.xml
 site/translation-coverage.json
+site/releases.json
 site/llms.txt
 site/build-meta.js
 site/certification-data.js

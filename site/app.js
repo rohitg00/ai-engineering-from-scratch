@@ -16,6 +16,7 @@
     populateCurriculumSummary();
     populateStats();
     renderPhases();
+    renderReleases();
     initStaggerIndex();
     initModal();
     initCopyButton();
@@ -193,6 +194,35 @@
         newRows[r].classList.add('in-view', 'visible');
       }
     }
+  }
+
+  function releaseItemHtml(release) {
+    return '<li class="whats-new-item">'
+      + '<time class="whats-new-date" datetime="' + escapeHtml(release.date) + '">' + escapeHtml(release.date) + '</time>'
+      + '<a href="' + escapeHtml(release.url) + '" target="_blank" rel="noopener">' + escapeHtml(release.title) + '</a>'
+      + (release.summary ? '<p class="whats-new-summary">' + escapeHtml(release.summary) + '</p>' : '')
+      + '</li>';
+  }
+
+  function renderReleases() {
+    var section = document.getElementById('whats-new');
+    var list = document.getElementById('whatsNewList');
+    if (!section || !list || !window.fetch) return;
+    fetch('releases.json')
+      .then(function (response) { return response.ok ? response.json() : null; })
+      .then(function (data) {
+        var releases = data && Array.isArray(data.releases) ? data.releases : [];
+        var html = '';
+        for (var i = 0; i < releases.length; i++) {
+          var release = releases[i];
+          if (!release || !/^https:\/\/github\.com\//.test(release.url || '')) continue;
+          html += releaseItemHtml(release);
+        }
+        if (!html) return;
+        list.innerHTML = html;
+        section.hidden = false;
+      })
+      .catch(function () {});
   }
 
   function toRoman(num) {
