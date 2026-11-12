@@ -14,13 +14,13 @@ The ranks match [how this manual was made](#s-ref-how-this-manual-was-made). Whe
 | 4 | Agent Substrate issues and pull requests on GitHub | known failures, limits, and the history of a feature |
 | 5 | the kagent source code at its tag v1.0.0 | how a session becomes an actor, and the egress policy that kagent writes |
 | 6 | the agentgateway source code at its tag v1.7.0 | the Substrate policies of the agentgateway dataplane |
-| 7 | the Agent Executor code and documentation at one commit, built and run with no model | how a task becomes an actor in [7.5](#s-agent-executor) |
+| 7 | the Agent Executor code and documentation at one commit, built and run with no model and then with a small open model on CPU | how a task becomes an actor in [7.5](#s-agent-executor) |
 
 Our runs rank above the code on purpose. The code says what the system is built to do. A run says what it did on a real cluster, with the timers, the images, and the installer of the release. Where a run contradicts the documentation, the section reports both.
 
 ## Rank 1: our recorded runs
 
-Sixteen experiments, each with its scripts and raw output in [the capture folder](manuals/agent-substrate-101/capture/lab). [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines and the method.
+Eighteen experiments, each with its scripts and raw output in [the capture folder](manuals/agent-substrate-101/capture/lab). [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines and the method.
 
 | Experiment | What it recorded | Used in |
 |---|---|---|
@@ -39,6 +39,8 @@ Sixteen experiments, each with its scripts and raw output in [the capture folder
 | N, the demos | an idle suspender, a stateful agent, a tool sandbox, and a failure drill, on their own install on the second guest with 16 vCPU and 31 GB | Part 9 |
 | P, a node that stops | 13 cases on the cluster with two worker nodes: reverts during and after the outage, a rescue from a tag, an async-suspended actor, a running actor, and the return of the node | [3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives), [3.5](#s-crashed-and-revertactor), [4.3](#s-placement), [8.2](#s-when-a-dependency-is-down) |
 | Q, network checks | eight checks on the second guest (16 vCPU, 23 GB): dependency loss on agentgateway, a reused connection after a rule removal, a model gateway behind egress over TLS, the egress log level, a suspend as a cut-off, a changed Secret, the router ports, and the CPU limit | [4.1](#s-workerpool), Part 6, [7.2](#s-agentgateway), [8.2](#s-when-a-dependency-is-down) |
+| R, Agent Executor | the install of its head commit on Agent Substrate v1.0.0, what each of its objects becomes, lifecycle times, and where its documents and the run disagree | [7.5](#s-agent-executor) |
+| S, a real model | a small open model on CPU, kagent turns with it, and five Agent Executor follow-ups: a model call, the example agent image, a clone that succeeds, worker loss under a task, and release v0.3.1 | [7.1](#s-kagent-on-substrate), [7.5](#s-agent-executor) |
 | V, validation | twelve checks on the first guest: memory that holds no data, a Python runtime, resumes at the same instant, fidelity, templates, access policies, actor JWTs, a preview feature, a process exit, and a suspend during a request | Part 3, [4.4](#s-request-parking), [4.5](#s-sizing-a-pool), Part 5, [8.5](#s-limits-at-v1-0-0) |
 
 ## Rank 2: the code

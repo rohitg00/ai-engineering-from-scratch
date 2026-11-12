@@ -1,0 +1,12 @@
+Name:         s-loss2
+Atespace:     default
+Phase:        Running
+Actor:        s-loss2
+Worker IP:    10.244.0.50
+Command:      [sleep infinity]
+
+Conditions:
+  TYPE            STATUS  REASON         MESSAGE
+  WorkspaceReady  True    SetupComplete  Workspace setup completed at 10.244.0.41
+  Ready           True    TaskRunning    Task is running and its workspace is ready
+{"state":"ACTOR_STATE_RUNNING"}

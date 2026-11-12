@@ -1,0 +1,3 @@
+3:go 1.27.1
+6:	github.com/agent-substrate/env v0.0.11-0.20260912052224-4468a200b170
+7:	github.com/agent-substrate/substrate v0.0.0-20260911232748-672533541dbf

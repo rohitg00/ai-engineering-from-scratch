@@ -1,0 +1,18 @@
+Name:         s-agent
+Atespace:     default
+Phase:        Running
+Actor:        s-agent
+Worker IP:    10.244.0.44
+Image:        localhost:5002/ax-claude-code@sha256:73fbd85b498dacfde3660cb9c5cc4c27f279a2bb2b9638e783dbf81d15919d35
+Config:
+  dangerouslySkipPermissions: true
+  maxTurns: 4
+  model: qwen2.5:3b
+  prompt: 'Run this shell command with the Bash tool: echo agent-was-here > /workspace/agent-output.txt . Then answer with the single word done.'
+  systemPrompt: You are a coding agent in a Linux sandbox. Use the tools to do what the user asks.
+  tools: Bash,Write,Read
+
+Conditions:
+  TYPE            STATUS  REASON         MESSAGE
+  WorkspaceReady  True    SetupComplete  Workspace setup completed at 10.244.0.44
+  Ready           True    TaskRunning    Task is running and its workspace is ready

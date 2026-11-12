@@ -1,0 +1,23 @@
+apiVersion: ax.io/v1alpha1
+kind: Model
+metadata:
+  name: s-model
+  atespace: default
+spec:
+  provider: google
+  model: qwen2.5:3b
+  secretKey:
+    name: s-model-key
+    key: GEMINI_API_KEY
+---
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+  name: s-model-task
+  atespace: default
+spec:
+  debug: true
+  command: ["sleep", "infinity"]
+  env:
+    - name: MODEL_URL
+      value: "http://ollama.ax-system.svc.cluster.local:11434/v1/chat/completions"

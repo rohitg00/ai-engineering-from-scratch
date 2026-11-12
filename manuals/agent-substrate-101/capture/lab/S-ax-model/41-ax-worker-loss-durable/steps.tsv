@@ -1,0 +1,12 @@
+step	rc	seconds
+09-apply	0	0.055
+10-resume-first	0	2.261
+11-write-note	0	0.739
+12-suspend	0	0.265
+13-resume	0	0.283
+14-write-unsaved	0	0.765
+22-delete-worker-pod	0	0.114
+23-describe-after-loss	0	0.248
+26-resume-after-loss	0	0.328
+27-describe-after-resume	0	0.248
+28-files-after-resume	0	0.787

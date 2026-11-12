@@ -28,7 +28,7 @@ Our runs rank first. Where a run and the documentation disagree, the manual repo
 |---|---|---|
 | an x86 server guest (24 vCPU, 47 GB, nested KVM) | a KVM guest on a shared x86 server, Ubuntu 24.04, Docker 29.1.3, Go 1.27.3 | Agent Substrate built from source, the Envoy dataplane, gVisor: experiments A, B, C, D, I, J, and V. Also the microVM class and the second node restart of experiment L |
 | a second x86 server guest (16 vCPU, 23 GB) | a guest on the same server | Agent Substrate from the release images, Envoy and then agentgateway v1.7.0: experiments E, F, and G. Also a second cluster with three kind nodes for experiment L. Later, at the same time, experiment P on the cluster with three nodes and experiment Q on the cluster with one node |
-| a second x86 server guest (16 vCPU, 31 GB) | a guest on the same server | Two clusters, one after the other. kagent v1.0.0 with its own distribution of Substrate, and a mock model: experiment K. Then a separate install of Agent Substrate from the release images, with the Envoy dataplane, for the four demos of Part 9: experiment N. Then Agent Executor at one commit on that second cluster: experiment R |
+| a second x86 server guest (16 vCPU, 31 GB) | a guest on the same server | Two clusters, one after the other. kagent v1.0.0 with its own distribution of Substrate, and a mock model: experiment K. Then a separate install of Agent Substrate from the release images, with the Envoy dataplane, for the four demos of Part 9: experiment N. Then Agent Executor at one commit on that second cluster: experiment R. Last, a small open model on CPU in a container on the guest, for kagent and for Agent Executor on the two clusters: experiment S |
 | an Apple silicon laptop under Docker Desktop | 10 CPUs and 8 GB given to Docker | Agent Substrate from the release images, gVisor only: experiment M |
 
 The four are different machines. Two of them have 16 vCPU, so every measured paragraph gives the memory size too. A number from one machine is never a controlled comparison with a number from another.
@@ -43,7 +43,7 @@ Three sections show numbers from two machines side by side. [Section 2.1](#s-ins
 - **Two experiments shared a guest.** Experiments P and Q ran at the same time on one guest, each on its own cluster. CPU was shared, so read a difference of a few milliseconds in those runs as noise.
 - **An object store in the cluster.** Snapshots went to rustfs on the same node and the same disk. A bucket across a network adds time to every upload and every resume from the bucket.
 - **Two install paths.** We installed once from source, as the quickstart documents, and once from the release images, on two different guests. The two paths gave us the buildx failure and the install times of [section 2.1](#s-install-with-ate-setup).
-- **A mock model for kagent.** A small server in the cluster answered each model call with a fixed reply. Turn times in [section 7.1](#s-kagent-on-substrate) therefore hold almost no model time. A real model adds its own seconds to each turn.
+- **A mock model, and then a small real one.** In experiment K a small server in the cluster answered each model call with a fixed reply. Those turn times in [section 7.1](#s-kagent-on-substrate) hold almost no model time. In experiment S the model was `qwen2.5`, an open model of 1 to 2 GB. It ran on 12 CPUs with no GPU, at 7 to 14 tokens per second. Both graphics cards of the server were in use by another team. A model on a GPU or a hosted model gives other model times.
 - **Client-side times.** Unless a section says otherwise, a time is what the client saw, through `kubectl ate proxy` or from a pod in the cluster. A warm call through the proxy took 0.058 to 0.068 s on the first guest, and that cost is inside every proxy number.
 - **Small samples.** Most points have 5 or 10 samples, and some events were recorded once. Each paragraph gives its count. Treat a result from one run as an observation.
 
@@ -54,7 +54,7 @@ Three sections show numbers from two machines side by side. [Section 2.1](#s-ins
 | A | Does the source quickstart work as written? | Only after `docker-buildx` was installed. 266 s for the system step. |
 | B | Does Substrate suspend an idle actor? What do suspend, resume, crash, and revert return? | It does not. Each operation is in [section 3.3](#s-suspendactor-and-resumeactor) and [section 3.5](#s-crashed-and-revertactor). |
 | C | How does resume time grow with the memory that an actor holds? | About 2 ms for each MiB of random bytes from the node, and about twice that from the bucket. |
-| D | When is a snapshot safe? | After 5 minutes by default. Before that, losing the node copy crashes the actor on the next request. |
+| D | When is a snapshot safe? | When its durable copy shows `COMPLETED`, about 5 minutes after the suspend by default. The timer alone is not proof. Before that, losing the node copy crashes the actor on the next request. |
 | E | Which requests fail when a dependency is away? | All of them without Postgres or `ate-api-server`. None without the Kubernetes API server. |
 | F | What does an egress policy do on each dataplane? | Default deny, interception, pass-through, and injection work on both, with different error texts. |
 | G | How do the two dataplanes differ? | agentgateway uses fewer containers and less memory, and it keeps the interception key in the dataplane container. |
@@ -67,6 +67,7 @@ Three sections show numbers from two machines side by side. [Section 2.1](#s-ins
 | P | What can an operator do when a worker node stops and stays down? | No actor left the node by itself, in 13 cases. A `revert` helped in one situation, and it left the actor in REVERTING in the others. A tag from before the stop gave a working actor in 1.2 s. The runbook is in [section 8.2](#s-when-a-dependency-is-down). |
 | Q | Do eight open statements about the network and the CPU limit hold in a run? | The second table below has one row for each. |
 | R | Does Agent Executor work on Substrate v1.0.0 as its pages say? | One commit installed and ran tasks with no model. A task stayed RUNNING for 600 s with no request. A task cannot bind a gateway yet, so a workspace clone failed. [Section 7.5](#s-agent-executor) reports it. |
+| S | What changes with a real model, and do five open statements about Agent Executor hold in a run? | With a small model on CPU, the model was about nine tenths of a kagent turn, and one turn of 50 did not end. The third table below has one row for each Agent Executor item. |
 | V | Do twelve statements that the first draft marked as not tested hold in a run? | The first table below has one row for each. |
 
 The letters H and O are not in the table. H was a single check that a plain `scratch` image works as an actor, and we did not use the letter O. Experiment L closed three gaps of the earlier runs, and the sections of Part 4 report it.
@@ -105,11 +106,23 @@ Experiments P and Q ran after V, on the second guest (16 vCPU, 23 GB). Each node
 
 The first test of item n stopped each run when the CPU time inside the sandbox reached 10 s. That CPU time is not valid under a cap. We kept the file as the record of the mistake, and we ran the test again with a fixed amount of work. The clean-up of experiment P deleted the golden tags of two templates, and [section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) reports what that broke.
 
+Experiment S ran last, on the guest with 31 GB. It took the five things that [section 7.5](#s-agent-executor) listed as not run, and it replaced the mock model of experiment K with a real one.
+
+| Item of S | Question | Result | Section |
+|---|---|---|---|
+| kagent | What does a turn cost with a real model? | 11 to 17 s at the median with a small model on CPU, of which resume and suspend were about 0.7 s. One turn of 50 did not end, and nothing bounded it before the client timeout at 300 s. | [7.1](#s-kagent-on-substrate) |
+| model | Can a task call a model through a `Model` object? | No. No field of a task names a `Model`. With an `http` rule set on the actor, 20 of 20 calls returned 200. | [7.5](#s-agent-executor) |
+| agent | Does the example agent image run? | Yes, in one run with one short prompt, without a vendor key. The task stayed `Running` after the agent ended. | [7.5](#s-agent-executor) |
+| clone | Can a workspace clone? | Not through Agent Executor alone. With a `tlsPassthrough` rule on port 443 set on the actor, the clone worked in a resume of 9.57 s. An `https` rule failed on the certificate. | [7.5](#s-agent-executor) |
+| loss | What happens when a worker goes away under a task? | The actor is `CRASHED` in about 1 s. `ax resume task` repaired it in 0.3 s. A file that a suspend had saved 8.7 s before the loss was gone. | [7.5](#s-agent-executor) |
+| release | Does the release v0.3.1 run on Substrate v1.0.0? | No. It calls a gRPC service name that v1.0.0 does not serve. | [7.5](#s-agent-executor) |
+
 ## The capture kit
 
 [The capture kit](manuals/agent-substrate-101/capture) holds the recordings and one script. Agent Substrate needs a Kubernetes cluster, so the recordings cannot run in the repository CI. We made them on our machines and stored the output in [the lab folder](manuals/agent-substrate-101/capture/lab).
 
 ```bash
+cd manuals/agent-substrate-101
 python3 capture/run.py
 python3 capture/run.py --check
 ```
@@ -123,7 +136,7 @@ A large log is stored as an excerpt, in which each line is a complete line of th
 1. Create a kind cluster with the cluster script from the Agent Substrate checkout at v1.0.0.
 2. Install with `ate-setup`, as [section 2.1](#s-install-with-ate-setup) shows.
 3. Run the script of one experiment from [the scripts folder](manuals/agent-substrate-101/capture/lab/_scripts). Each script writes to a folder with the name of its experiment.
-4. Copy the output over the same folder in the lab folder, then run `python3 capture/run.py`.
+4. Copy the output over the same folder in the lab folder, then run `python3 capture/run.py` from `manuals/agent-substrate-101/`.
 
 Your seconds will differ from ours. The states, the error texts, and the order of events must not. If one of them differs on v1.0.0, we want to know, because it means that a claim of this manual depends on our machines.
 
@@ -143,4 +156,4 @@ Your seconds will differ from ours. The states, the error texts, and the order o
 
 [Section 8.5](#s-limits-at-v1-0-0) holds the full list of what we did not test.
 
-Sources: manual.json (pin, sources); capture/lab/summary/node-loss-x86.json, capture/lab/summary/network-x86.json, capture/lab/summary/rotation-x86.json, capture/lab/summary/cpu-limit-x86.json, capture/lab/summary/dependency-loss-agw-x86.json, capture/lab/Q-network/n-cpu-limit/10-burn.tsv, capture/lab/P-node-loss/96-golden-tag-deleted.txt, capture/lab/summary/microvm-x86.json, capture/lab/L-gaps/microvm/49-summary.tsv, capture/lab/L-gaps/multinode/52-placement-counts.txt, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/restart/10-poll.tsv, capture/README.md, capture/run.py, capture/lab/REDACTIONS.txt, capture/lab/summary/install-steps.json, capture/lab/summary/resume-x86.json, capture/lab/summary/resume-mac.json, capture/lab/summary/failures-x86.json, capture/lab/summary/dependency-loss-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/A-quickstart/02-steps.tsv, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/G-dataplane/00-install/steps.tsv, capture/lab/M-mac-arm64/02-steps.tsv, capture/lab/K-kagent/install/steps.tsv, capture/lab/summary/validation-memory-x86.json, capture/lab/summary/validation-parallel-x86.json, capture/lab/summary/validation-fidelity-x86.json, capture/lab/V-validation/00-setup/pool.yaml, capture/lab/V-validation/03-parallel-resume/24-summary.tsv, capture/lab/V-validation/05-golden-race/10-race.tsv, capture/lab/V-validation/06-template-move/10-move.tsv, capture/lab/V-validation/07-cross-namespace-pool/10-cross.tsv, capture/lab/V-validation/08-access-control/10-access.tsv, capture/lab/V-validation/09-actor-jwt/24-jwt-decoded.txt, capture/lab/V-validation/10-preview-feature/10-preview.tsv, capture/lab/V-validation/11-process-exit-long-watch/10-watch.tsv, capture/lab/V-validation/12-suspend-during-request/10-inflight.tsv; docs/get-started/quickstart.md at v1.0.0.
+Sources: manual.json (pin, sources); capture/lab/summary/node-loss-x86.json, capture/lab/summary/network-x86.json, capture/lab/summary/rotation-x86.json, capture/lab/summary/cpu-limit-x86.json, capture/lab/summary/dependency-loss-agw-x86.json, capture/lab/Q-network/n-cpu-limit/10-burn.tsv, capture/lab/P-node-loss/96-golden-tag-deleted.txt, capture/lab/summary/microvm-x86.json, capture/lab/L-gaps/microvm/49-summary.tsv, capture/lab/L-gaps/multinode/52-placement-counts.txt, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/restart/10-poll.tsv, capture/lab/summary/kagent-model-x86.json, capture/lab/summary/agent-executor-followups-x86.json, capture/README.md, capture/run.py, capture/lab/REDACTIONS.txt, capture/lab/summary/install-steps.json, capture/lab/summary/resume-x86.json, capture/lab/summary/resume-mac.json, capture/lab/summary/failures-x86.json, capture/lab/summary/dependency-loss-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/A-quickstart/02-steps.tsv, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/G-dataplane/00-install/steps.tsv, capture/lab/M-mac-arm64/02-steps.tsv, capture/lab/K-kagent/install/steps.tsv, capture/lab/summary/validation-memory-x86.json, capture/lab/summary/validation-parallel-x86.json, capture/lab/summary/validation-fidelity-x86.json, capture/lab/V-validation/00-setup/pool.yaml, capture/lab/V-validation/03-parallel-resume/24-summary.tsv, capture/lab/V-validation/05-golden-race/10-race.tsv, capture/lab/V-validation/06-template-move/10-move.tsv, capture/lab/V-validation/07-cross-namespace-pool/10-cross.tsv, capture/lab/V-validation/08-access-control/10-access.tsv, capture/lab/V-validation/09-actor-jwt/24-jwt-decoded.txt, capture/lab/V-validation/10-preview-feature/10-preview.tsv, capture/lab/V-validation/11-process-exit-long-watch/10-watch.tsv, capture/lab/V-validation/12-suspend-during-request/10-inflight.tsv; docs/get-started/quickstart.md at v1.0.0.

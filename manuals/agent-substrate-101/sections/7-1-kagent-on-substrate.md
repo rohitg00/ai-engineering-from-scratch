@@ -1,12 +1,12 @@
 # kagent 1.0 on Substrate
 
-> kagent makes each Session one actor, resumes it for every turn, and suspends it after, so a turn pays about half a second and keeps only files.
+> kagent makes each Session one actor, resumes it for every turn, and suspends it after, so a turn pays half a second beside the model and keeps only files.
 
 You install kagent 1.0 and send your agent a message. The answer comes back in about a second. Then you run `kubectl get pods`, and you see one worker pod and no pod for your agent. The agent is an actor, and kagent suspended it again before you looked.
 
 When you finish this section, you can install kagent 1.0, write the three objects that make an agent, and predict what one turn costs. You can also say what a kagent snapshot keeps and which hosts the agent can reach.
 
-We ran kagent v1.0.0. kagent v1.0.1 came out on the day of our run, 2026-11-12, and we did not test it. The model was a mock server in the cluster, so every time in this section excludes model time.
+We ran kagent v1.0.0. kagent v1.0.1 came out on the day of our run, 2026-11-12, and we did not test it. We ran it twice. In the first run the model was a mock server in the cluster. Those times exclude model time and show the cost of Substrate alone. In the second run the model was a small open model on CPU. The subsection on a turn with a real model reports it, and every other number in this section is from the first run.
 
 ## The install, as we ran it
 
@@ -136,11 +136,55 @@ caption: Each dot is one run, and each column is sorted from the fastest run to 
 
 **We measured** 98 turns on the same second x86 server guest (16 vCPU, 31 GB), with a mock model. The resume took 0.380 s at the median, from 0.216 to 0.542 s. The suspend took 0.142 s at the median over 99 suspends, from 0.120 to 0.398 s. A whole turn took 0.726 s in the cluster and 1.224 s at the client, over 20 turns spaced 4 s apart.
 
-No warm turn exists. Twenty turns with no pause took 0.738 s at the median, against 0.726 s for the spaced turns. The uptime inside the sandbox read 0.6 to 0.9 s on every turn. So you pay about 0.52 s of resume and suspend on each turn, and a real model adds its own time to that.
+No warm turn exists. Twenty turns with no pause took 0.738 s at the median, against 0.726 s for the spaced turns. The uptime inside the sandbox read 0.6 to 0.9 s on every turn. So you pay about 0.52 s of resume and suspend on each turn, and a real model adds its own time to that. The next subsection measures both.
 
 A files-only resume is this fast only because the kagent harness starts fast. Every such resume is a new start of the image. We ran a Python agent at the same fidelity on the same guest, on the cluster of the Part 9 demos. It needed 4.5 to 5.1 s for each turn after a suspend. [Snapshot fidelity](#s-snapshot-fidelity-and-where-a-snapshot-lives) compares the cases.
 
 One of the 98 turns, turn 3 of the first session, took 6.56 s, with a gap of 5.5 s before the resume. We did not find the cause.
+
+## A turn with a real model
+
+The mock model answers at once, so it hides the largest part of a real turn. We ran the same cluster again with a real model. It was `qwen2.5`, an open model, in two sizes. The model server was Ollama 0.40.16 in a container on the guest, with 12 CPUs, one request at a time, and no GPU.
+
+| Model | Size | Tokens per second, 5 requests | Correct tool call, 10 requests |
+|---|---|---|---|
+| `qwen2.5:3b` | 1.9 GB | median 7.1, from 6.9 to 7.3 | 10 of 10 |
+| `qwen2.5:1.5b` | 986 MB | median 13.9, from 13.1 to 14.3 | 9 of 10 |
+
+This is a small model on slow hardware, and we chose it because both graphics cards of the server were in use by another team. A model on a GPU or a hosted model gives other model times. Read the model seconds below as the time of our machine. The Substrate seconds do not depend on the model.
+
+Each turn asked the agent to run one command with its `bash` tool and to report one number. So a turn is two model requests: one that returns the tool call, and one that reads the result.
+
+```figure
+id: fig-7-1d
+kind: chart
+title: every kagent turn with a small real model on CPU
+claim: The model was about nine tenths of every clean turn, and one turn of 50 did not end.
+caption: Each bar is one turn, in the order of the run. The plum part is the time of the model requests of the turn. The amber part is the rest, which holds the resume and the suspend. A rose bar is a turn that did not end, or a turn that waited behind it. Both are cut at the top of the chart. From capture/lab/summary/kagent-model-x86.json.
+```
+
+**We measured** 50 turns on the same second x86 server guest (16 vCPU, 31 GB). Each model ran 20 turns in one Session and the first turn of 5 new Sessions.
+
+| Series | Turns | Completed | Turn at the client | Model requests | Resume | Suspend | Model share |
+|---|---|---|---|---|---|---|---|
+| 3b, one Session | 20 | 20 | median 17.1 s, from 11.8 to 19.2 | 15.9 s | 0.46 s | 0.24 s | 0.93 |
+| 3b, first turn of a new Session | 5 | 5 | median 14.4 s, from 13.4 to 16.4 | 13.0 s | 0.45 s | 0.17 s | 0.92 |
+| 1.5b, one Session | 20 | 20 | median 11.0 s, from 10.0 to 19.7 | 9.8 s | 0.47 s | 0.23 s | 0.89 |
+| 1.5b, first turn of a new Session | 5 | 4 | 12.2, 13.2, and 13.4 s for the three clean turns | 7.2 to 12.3 s | 0.46 s | 0.16 s | see below |
+
+Every one of the 49 completed turns again had the shape resume, run, suspend. The resume and the suspend took about 0.7 s together, as with the mock model. The turn grew from 1.2 s at the client to 11 to 17 s, and the model was the difference. The resume and suspend columns are from the log of `ate-api-server`. For the last turn of each long series, the saved log held no resume record, so those two medians have 19 values.
+
+Three turns of the 1.5b series sent three model requests in place of two. Two more turns of that series had about 5 s that neither the model nor Substrate accounts for. We did not find the cause.
+
+### One turn did not end
+
+In the third new Session of the 1.5b series, the model did not stop. It had produced 2,800 tokens when we restarted the model server, 7 minutes and 40 s after the request began. The kagent CLI gave up after 300.13 s with `context deadline exceeded` and exit code 1.
+
+Nothing ended the turn before the client did. The Session actor was `ACTOR_STATE_RUNNING` 193 s into the turn, and it held its worker CPU for all that time. The next turn waited behind the same model request, because the server took one request at a time. That turn completed after 189.8 s.
+
+This is one event with one small model, and a larger model is less likely to run away. The cost of the event does not depend on the model. An actor that waits for a model is `RUNNING`, and kagent suspends it only when the turn completes. We did not find a setting of kagent v1.0.0 that limits the tokens or the seconds of a turn, and we did not test one.
+
+**Our position:** set a limit on the output tokens at the model server or at the model gateway, and set a timeout in your client. Then count how many Sessions can wait for the model at one time, because each one holds 1 CPU of a worker. The subsection on parallel turns below has that arithmetic.
 
 ## What the snapshot keeps
 
@@ -254,8 +298,9 @@ Start one `kubectl port-forward` to the controller yourself, and point every CLI
 - Write the Harness yourself at v1.0.0.
 - Write every file that the next turn needs under /data.
 - Add about 0.5 s of resume and suspend to the model time of each turn.
+- Limit the output tokens of the model, because a turn that waits for the model holds its worker CPU.
 - Use full DNS names for model and tool hosts.
 - Keep one standing port-forward for parallel CLI calls.
 ```
 
-Sources: capture/lab/summary/demos-x86.json, capture/lab/K-kagent/install/steps.tsv, capture/lab/K-kagent/install/commands.log, capture/lab/K-kagent/install/40-kagent-install.log, capture/lab/K-kagent/inventory/images.tsv, capture/lab/K-kagent/inventory/helm-list.yaml, capture/lab/K-kagent/inventory/workerpools.yaml, capture/lab/K-kagent/agent/lab-agent.yaml, capture/lab/K-kagent/agent/objects.txt, capture/lab/K-kagent/agent/agent-conditions.trace, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/install-steps.json, capture/lab/K-kagent/latency/timings.tsv, capture/lab/K-kagent/latency/server-times.tsv, capture/lab/K-kagent/latency/D-par-2.err, capture/lab/K-kagent/session1/turn2.out, capture/lab/K-kagent/session1/timings.tsv, capture/lab/K-kagent/session1/egress-policy-actor.yaml, capture/lab/K-kagent/session1/k8s-egresspolicies.yaml, capture/lab/K-kagent/session1/turn5-egress.out, capture/lab/K-kagent/session1/mock.log, capture/lab/K-kagent/parallel/timings.tsv, capture/lab/K-kagent/parallel/workers-during.txt; kagent v1.0.0 source: go/api/v1alpha3 (Harness, AgentTemplate, Agent), go/core/internal/substrate (client.go, actor_template.go), go/core/internal/controller/translator, go/core/pkg/install/charts.go, go/core/pkg/install/plan.go (the Substrate values), go/core/pkg/config/defaults.go (the chart registry), go/go.mod; kagent docs/architecture/runtime-and-lifecycle.md at v1.0.0; agentgateway v1.7.0 crates/agentgateway/src/http/substrate/egress.rs (the credential cache).
+Sources: capture/lab/summary/demos-x86.json, capture/lab/K-kagent/install/steps.tsv, capture/lab/K-kagent/install/commands.log, capture/lab/K-kagent/install/40-kagent-install.log, capture/lab/K-kagent/inventory/images.tsv, capture/lab/K-kagent/inventory/helm-list.yaml, capture/lab/K-kagent/inventory/workerpools.yaml, capture/lab/K-kagent/agent/lab-agent.yaml, capture/lab/K-kagent/agent/objects.txt, capture/lab/K-kagent/agent/agent-conditions.trace, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/install-steps.json, capture/lab/K-kagent/latency/timings.tsv, capture/lab/K-kagent/latency/server-times.tsv, capture/lab/K-kagent/latency/D-par-2.err, capture/lab/K-kagent/session1/turn2.out, capture/lab/K-kagent/session1/timings.tsv, capture/lab/K-kagent/session1/egress-policy-actor.yaml, capture/lab/K-kagent/session1/k8s-egresspolicies.yaml, capture/lab/K-kagent/session1/turn5-egress.out, capture/lab/K-kagent/session1/mock.log, capture/lab/K-kagent/parallel/timings.tsv, capture/lab/K-kagent/parallel/workers-during.txt; capture/lab/summary/kagent-model-x86.json; capture/lab/S-ax-model/10-model/10-bench.tsv, 06-list.txt, 02-image.txt, 12-ollama-ps.txt; capture/lab/S-ax-model/20-kagent/01-real-model.yaml, 04-ready.txt; capture/lab/S-ax-model/20-kagent/loop/per-turn.tsv, summary.txt, timings.tsv, events.log, prompt.txt, ollama.excerpt.log, ate-api.log, C-1p5b-first-3.err, stuck-turn-01-time.txt, stuck-turn-02-actor.yaml, stuck-turn-05-ollama-runaway.log, stuck-turn-06-restart-note.txt; capture/lab/S-ax-model/_scripts/s01-model.sh, s11-kagent-loop.sh, s12-kagent-analyze.py; kagent v1.0.0 source: go/api/v1alpha3 (Harness, AgentTemplate, Agent), go/core/internal/substrate (client.go, actor_template.go), go/core/internal/controller/translator, go/core/pkg/install/charts.go, go/core/pkg/install/plan.go (the Substrate values), go/core/pkg/config/defaults.go (the chart registry), go/go.mod; kagent docs/architecture/runtime-and-lifecycle.md at v1.0.0; agentgateway v1.7.0 crates/agentgateway/src/http/substrate/egress.rs (the credential cache).

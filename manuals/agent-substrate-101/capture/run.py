@@ -15,6 +15,7 @@ GUEST_B = "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Ag
 GUEST_K = "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, kagent v1.0.0 with its Substrate distribution, mock model server"
 GUEST_D = "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor"
 GUEST_R = "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor, Agent Executor built from source at one commit"
+GUEST_S = "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, kagent v1.0.0 with its Substrate distribution, Ollama 0.40.16 in a container on the guest with 12 CPUs, one request at a time, no GPU"
 MAC = "Apple silicon laptop, Docker Desktop with 10 CPU and 8 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images"
 GUEST_P = "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor, one control plane node and two worker nodes, default atelet timers, pool of 4 worker pods"
 GUEST_Q = "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, one kind node, agentgateway v1.7.0 and Envoy switched in place"
@@ -1251,7 +1252,242 @@ def agent_executor_x86():
     }
 
 
+def go_seconds(text):
+    units = {"h": 3600, "m": 60, "s": 1, "ms": 1e-3, "µs": 1e-6, "us": 1e-6, "ns": 1e-9}
+    return sum(float(value) * units[unit] for value, unit in re.findall(r"([0-9.]+)(h|ms|µs|us|ns|m|s)", text))
+
+
+def model_requests(rel, path):
+    out = []
+    for line in lines(rel):
+        match = re.match(r"(\S+) \[GIN\] .*\| +(\d+) \| +(\S+) \|.*POST +\"" + re.escape(path), line)
+        if match:
+            out.append({"end": match.group(1), "code": int(match.group(2)), "seconds": round(go_seconds(match.group(3)), 3)})
+    return out
+
+
+def model_bench(base):
+    sizes = {}
+    for line in lines(f"{base}/10-model/06-list.txt")[1:]:
+        fields = line.split()
+        if len(fields) >= 4:
+            sizes[fields[0]] = f"{fields[2]} {fields[3]}"
+    bench = {}
+    for row in rows(f"{base}/10-model/10-bench.tsv")[1:]:
+        entry = bench.setdefault(row[0], {"tokens_per_second": [], "tool_seconds": [], "tool_results": []})
+        if row[1] == "generate":
+            entry["tokens_per_second"].append(float(row[8]))
+        else:
+            entry["tool_seconds"].append(float(row[3]))
+            entry["tool_results"].append(row[9])
+    return {
+        name: {
+            "size": sizes.get(name),
+            "tokens_per_second": stat(entry["tokens_per_second"]),
+            "tool_call": {"n": len(entry["tool_results"]), "correct": entry["tool_results"].count("ok"), "seconds": stat(entry["tool_seconds"])},
+        }
+        for name, entry in sorted(bench.items())
+    }
+
+
+def kagent_model_x86():
+    base = "S-ax-model"
+    loop = f"{base}/20-kagent/loop"
+    series = {}
+    for row in rows(f"{loop}/per-turn.tsv")[1:]:
+        wall, model, resume, suspend = float(row[1]), float(row[4]), float(row[5]), float(row[6])
+        completed = row[2] == "TASK_STATE_COMPLETED"
+        series.setdefault(re.sub(r"-\d+$", "", row[0]), []).append({
+            "turn": row[0],
+            "wall_seconds": wall,
+            "model_seconds": model,
+            "model_calls": int(row[3]),
+            "resume_seconds": resume,
+            "suspend_seconds": suspend,
+            "completed": completed,
+            "clean": completed and model <= wall,
+        })
+    summary = {}
+    for name, turns in sorted(series.items()):
+        clean = [turn for turn in turns if turn["clean"]]
+        summary[name] = {
+            "n": len(turns),
+            "completed": sum(1 for turn in turns if turn["completed"]),
+            "clean": len(clean),
+            "wall_seconds": stat([turn["wall_seconds"] for turn in clean]),
+            "model_seconds": stat([turn["model_seconds"] for turn in clean]),
+            "model_share": stat([turn["model_seconds"] / turn["wall_seconds"] for turn in clean]),
+            "model_calls": tally([str(turn["model_calls"]) for turn in clean]),
+            "resume_seconds": stat([turn["resume_seconds"] for turn in turns if turn["resume_seconds"] > 0]),
+            "suspend_seconds": stat([turn["suspend_seconds"] for turn in turns if turn["suspend_seconds"] > 0]),
+        }
+    requests = model_requests(f"{loop}/ollama.excerpt.log", "/v1/chat/completions")
+    longest = max(requests, key=lambda item: item["seconds"])
+    generated = [int(value) for value in re.findall(r"n_gen = +(\d+)", read(f"{loop}/stuck-turn-05-ollama-runaway.log"))]
+    events = {}
+    for line in lines(f"{loop}/events.log"):
+        fields = line.split()
+        if len(fields) >= 2:
+            events[fields[1]] = fields[0]
+    stuck = next(turn for turns in series.values() for turn in turns if not turn["completed"])
+    queued = next(turn for turns in series.values() for turn in turns if turn["completed"] and not turn["clean"])
+    start = events[stuck["turn"] + "-start"]
+    seen = stamp(start[:11] + lines(f"{loop}/stuck-turn-01-time.txt")[0].strip())
+    state = re.search(r"^  state: (ACTOR_STATE_\w+)", read(f"{loop}/stuck-turn-02-actor.yaml"), re.M).group(1)
+    return {
+        "machine": GUEST_S,
+        "note": "the model is a small open model on CPU, so model time here is not the model time of a GPU or of a hosted model. Every turn resumes the session actor and suspends it again. A clean turn completed and was not delayed by the turn that did not end. A resume or suspend of 0 means that the log window held no record for that turn, and it is left out of the statistics.",
+        "prompt": lines(f"{loop}/prompt.txt")[0],
+        "sources": [
+            f"capture/lab/{base}/10-model/10-bench.tsv",
+            f"capture/lab/{base}/10-model/06-list.txt",
+            f"capture/lab/{loop}/per-turn.tsv",
+            f"capture/lab/{loop}/timings.tsv",
+            f"capture/lab/{loop}/events.log",
+            f"capture/lab/{loop}/ollama.excerpt.log",
+            f"capture/lab/{loop}/stuck-turn-01-time.txt",
+            f"capture/lab/{loop}/stuck-turn-02-actor.yaml",
+            f"capture/lab/{loop}/stuck-turn-05-ollama-runaway.log",
+        ],
+        "models": model_bench(base),
+        "series": summary,
+        "runs": series,
+        "model_requests": {"n": len(requests), "codes": tally([str(item["code"]) for item in requests])},
+        "turn_that_did_not_end": {
+            "turn": stuck["turn"],
+            "client_seconds": stuck["wall_seconds"],
+            "model_request_seconds": longest["seconds"],
+            "model_request_code": longest["code"],
+            "tokens_generated_at_last_report": generated[-1],
+            "actor_state_seen": state,
+            "actor_state_seen_seconds_into_turn": round(seen - stamp(start), 1),
+            "next_turn": queued["turn"],
+            "next_turn_wall_seconds": queued["wall_seconds"],
+            "ended_by": lines(f"{loop}/stuck-turn-06-restart-note.txt")[0],
+        },
+    }
+
+
+def loss_run(base, folder, suspended_at):
+    run = f"{base}/{folder}"
+    events = {row[1].split()[0]: stamp(row[0]) for row in rows(f"{run}/21-events.tsv") if len(row) >= 2}
+    changes = [(stamp(row[0]), row[1]) for row in rows(f"{run}/19-poll-changes.tsv")]
+    crashed = next(when for when, state in changes if state == "ACTOR_STATE_CRASHED")
+    resumed = events["ax-resume-1"]
+    taken = step_seconds(f"{run}/steps.tsv")
+    after = read(f"{run}/28-files-after-resume.log" if folder.endswith("durable") else f"{run}/28-ssh-after-resume.log")
+    describe = read(f"{run}/23-describe-after-loss.log")
+    return {
+        "suspend_to_loss_seconds": round(events["delete-pod"] - suspended_at, 1),
+        "durable_snapshot_at_loss": re.search(r"state: (SNAPSHOT_STORAGE_STATE_\w+)", read(f"{run}/16-actor-before.yaml")).group(1),
+        "crashed_seen_after_seconds": round(crashed - events["delete-pod"], 1),
+        "phase_after_loss": re.search(r"Phase: +(\w+)", describe).group(1),
+        "message_after_loss": re.search(r"Ready +False +\w+ +(.+)", describe).group(1).strip(),
+        "watched_with_no_command_seconds": round(resumed - events["delete-pod"], 1),
+        "ax_resume_seconds": taken["26-resume-after-loss"]["seconds"],
+        "ax_resume_exit": taken["26-resume-after-loss"]["exit"],
+        "file_from_before_last_suspend_kept": "note-saved-by-suspend" in after,
+        "file_from_after_last_suspend_kept": "unsaved.txt: No such file" not in after,
+    }
+
+
+def agent_executor_followups_x86():
+    base = "S-ax-model"
+    clone = step_seconds(f"{base}/30-ax-clone/steps.tsv")
+    untrusted = [clone[name]["seconds"] for name in ("08-resume-first", "14-resume-second", "27-resume-with-passthrough", "45-resume-with-passthrough")]
+    for name in ("32-cycles-https-rule-no-trust.tsv", "49-cycles-https-rule-no-trust-2.tsv"):
+        untrusted += [float(row[2]) for row in rows(f"{base}/30-ax-clone/{name}")]
+    after_clone = [float(row[2]) for row in rows(f"{base}/30-ax-clone/69-cycles-after-clone.tsv")]
+    first_suspend = [stamp(json.loads(line)["time"]) for line in lines(f"{base}/40-ax-worker-loss/40-ax-server.log") if '"suspending actor on Substrate","actor":"s-loss"' in line]
+    durable = {row[1]: stamp(row[0]) for row in rows(f"{base}/41-ax-worker-loss-durable/12c-durable-changes.tsv")}
+    second_suspend = next(stamp(row[0]) for row in rows(f"{base}/41-ax-worker-loss-durable/21-events.tsv") if row[1] == "suspended")
+    second = loss_run(base, "41-ax-worker-loss-durable", second_suspend)
+    second["durable_snapshot_completed_after_seconds"] = round(durable["SNAPSHOT_STORAGE_STATE_COMPLETED"] - second_suspend, 1)
+    calls = rows(f"{base}/60-ax-model/12-model-calls-running.tsv")[1:]
+    turns = rows(f"{base}/60-ax-model/13-turns-resume-call-suspend.tsv")[1:]
+    environment = read(f"{base}/60-ax-model/10-env-in-task.log")
+    image = step_seconds(f"{base}/70-agent-image/steps.tsv")
+    actor_log = [json.loads(line) for line in lines(f"{base}/70-agent-image/19-actor.log") if line.startswith("{")]
+    started = next(stamp(item["time"]) for item in actor_log if "started task command" in item["message"])
+    ended = next(stamp(item["time"]) for item in actor_log if "task command completed" in item["message"])
+    old = read(f"{base}/50-ax-v031/85-controller-final.log") + read(f"{base}/50-ax-v031/92-controller-after-label.log")
+    return {
+        "machine": GUEST_R + ", Ollama 0.40.16 in a container on the guest with 12 CPUs and no GPU",
+        "agent_executor_commit": "a72b8ca4",
+        "model": "qwen2.5:3b, a small open model on CPU. Model time on a GPU or with a hosted model will differ.",
+        "unit": {"seconds": "wall time of the ax command at the client, on the guest that runs the cluster, unless a field says otherwise"},
+        "sources": [
+            f"capture/lab/{base}/30-ax-clone/steps.tsv",
+            f"capture/lab/{base}/30-ax-clone/32-cycles-https-rule-no-trust.tsv",
+            f"capture/lab/{base}/30-ax-clone/49-cycles-https-rule-no-trust-2.tsv",
+            f"capture/lab/{base}/30-ax-clone/69-cycles-after-clone.tsv",
+            f"capture/lab/{base}/40-ax-worker-loss/steps.tsv",
+            f"capture/lab/{base}/40-ax-worker-loss/19-poll-changes.tsv",
+            f"capture/lab/{base}/40-ax-worker-loss/21-events.tsv",
+            f"capture/lab/{base}/40-ax-worker-loss/40-ax-server.log",
+            f"capture/lab/{base}/41-ax-worker-loss-durable/steps.tsv",
+            f"capture/lab/{base}/41-ax-worker-loss-durable/12c-durable-changes.tsv",
+            f"capture/lab/{base}/41-ax-worker-loss-durable/19-poll-changes.tsv",
+            f"capture/lab/{base}/41-ax-worker-loss-durable/21-events.tsv",
+            f"capture/lab/{base}/50-ax-v031/01-tag.txt",
+            f"capture/lab/{base}/50-ax-v031/85-controller-final.log",
+            f"capture/lab/{base}/50-ax-v031/92-controller-after-label.log",
+            f"capture/lab/{base}/60-ax-model/12-model-calls-running.tsv",
+            f"capture/lab/{base}/60-ax-model/13-turns-resume-call-suspend.tsv",
+            f"capture/lab/{base}/70-agent-image/steps.tsv",
+            f"capture/lab/{base}/70-agent-image/19-actor.log",
+            f"capture/lab/{base}/70-agent-image/22-ollama.log",
+        ],
+        "clone": {
+            "note": "one workspace with one public Git repository. The https rule lets the gateway intercept TLS, and the template that Agent Executor generates holds no trust bundle, so git refuses the certificate and the runner tries 5 times at each resume.",
+            "resume_with_https_rule": {"seconds": stat(untrusted), "runs": rounded(untrusted)},
+            "update_to_passthrough_without_ports_exit": clone["41-update-egress"]["exit"],
+            "resume_with_passthrough_rule_seconds": clone["65-resume-with-passthrough"]["seconds"],
+            "resume_after_clone": {"seconds": stat(after_clone), "runs": rounded(after_clone)},
+        },
+        "worker_loss": {
+            "note": "the worker pod that held the running task was deleted. Each run is one task.",
+            "snapshot_pending": loss_run(base, "40-ax-worker-loss", first_suspend[-1]),
+            "snapshot_durable": second,
+        },
+        "model_call": {
+            "note": "one curl from inside a running task to the model server, through an http egress rule set on the actor with kubectl ate",
+            "injected_key_in_task_environment": "GEMINI_API_KEY" in environment,
+            "calls": len(calls),
+            "codes": tally([row[2] for row in calls]),
+            "curl_seconds": stat([float(row[3]) for row in calls]),
+            "turns": {
+                "note": "ax resume task, one model call through ax ssh, ax suspend task",
+                "codes": tally([row[3] for row in turns]),
+                "resume_seconds": stat([float(row[1]) for row in turns]),
+                "call_seconds": stat([float(row[4]) for row in turns]),
+                "suspend_seconds": stat([float(row[5]) for row in turns]),
+                "total_seconds": stat([float(row[6]) for row in turns]),
+                "runs": rounded([float(row[6]) for row in turns]),
+            },
+        },
+        "agent_image": {
+            "note": "the Claude Code example image of the repository, pointed at the local model server through its Anthropic messages route. One run with one short prompt.",
+            "build_seconds": image["01-build"]["seconds"],
+            "image_bytes": int(lines(f"{base}/70-agent-image/03-image.txt")[0].split()[1]),
+            "agent_version": lines(f"{base}/70-agent-image/04-claude-version.txt")[0],
+            "first_resume_seconds": image["16-resume"]["seconds"],
+            "command_seconds": round(ended - started, 1),
+            "model_requests": model_requests(f"{base}/70-agent-image/22-ollama.log", "/v1/messages"),
+            "phase_after_command_ended": re.search(r"Phase: +(\w+)", read(f"{base}/70-agent-image/20-describe.log")).group(1),
+        },
+        "release_v0_3_1": {
+            "commits_behind_head": int(lines(f"{base}/50-ax-v031/01-tag.txt")[1]),
+            "first_error_is_timeout": "i/o timeout" in old,
+            "second_error_is_unknown_service": "unknown service ateapi.Control" in old,
+            "phase": re.search(r"Phase: +(\w+)", read(f"{base}/50-ax-v031/93-describe.log")).group(1),
+        },
+    }
+
+
 BUILDERS = {
+    "kagent-model-x86.json": kagent_model_x86,
+    "agent-executor-followups-x86.json": agent_executor_followups_x86,
     "agent-executor-x86.json": agent_executor_x86,
     "node-loss-x86.json": node_loss_x86,
     "rotation-x86.json": rotation_x86,

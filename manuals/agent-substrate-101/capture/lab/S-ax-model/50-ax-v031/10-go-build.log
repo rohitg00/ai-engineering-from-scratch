@@ -1,0 +1,7 @@
+go: downloading github.com/redis/go-redis/v9 v9.22.0
+go: downloading github.com/agent-substrate/substrate v0.0.0-20260911232748-672533541dbf
+go: downloading google.golang.org/genproto/googleapis/rpc v0.0.0-20260720211330-0afa2a65878a
+go: downloading golang.org/x/net v0.58.0
+go: downloading golang.org/x/sys v0.47.0
+go: downloading go.uber.org/atomic v1.11.0
+go: downloading golang.org/x/text v0.41.0

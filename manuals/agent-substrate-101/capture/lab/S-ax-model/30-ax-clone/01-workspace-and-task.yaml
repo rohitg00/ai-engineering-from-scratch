@@ -1,0 +1,26 @@
+apiVersion: ax.io/v1alpha1
+kind: Workspace
+metadata:
+  name: s-ws
+  atespace: default
+spec:
+  git:
+    - name: origin
+      repo: "https://github.com/pallets/itsdangerous.git"
+      branch: "main"
+  files:
+    - path: "AGENTS.md"
+      content: |
+        # Project Guidelines
+        - Keep dependencies minimal.
+---
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+  name: s-clone
+  atespace: default
+spec:
+  debug: true
+  command: ["sleep", "infinity"]
+  workspace:
+    name: s-ws

@@ -1,0 +1,69 @@
+apiVersion: v1
+kind: Service
+metadata: {name: ollama, namespace: kagent}
+spec:
+  ports: [{name: http, port: 11434, targetPort: 11434}]
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: ollama-1
+  namespace: kagent
+  labels: {kubernetes.io/service-name: ollama}
+addressType: IPv4
+ports: [{name: http, port: 11434, protocol: TCP}]
+endpoints: [{addresses: ["172.18.0.5"]}]
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: ModelConfig
+metadata: {name: real-3b, namespace: kagent}
+spec:
+  provider: OpenAI
+  model: qwen2.5:3b
+  apiKeySecret: kagent-openai
+  apiKeySecretKey: OPENAI_API_KEY
+  stream: true
+  openAI:
+    baseUrl: http://ollama.kagent.svc.cluster.local:11434/v1
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: ModelConfig
+metadata: {name: real-1p5b, namespace: kagent}
+spec:
+  provider: OpenAI
+  model: qwen2.5:1.5b
+  apiKeySecret: kagent-openai
+  apiKeySecretKey: OPENAI_API_KEY
+  stream: true
+  openAI:
+    baseUrl: http://ollama.kagent.svc.cluster.local:11434/v1
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: AgentTemplate
+metadata: {name: real-3b-template, namespace: kagent}
+spec:
+  description: Lab agent with a real small model on CPU
+  modelConfig: {name: real-3b}
+  systemPrompt: You are a lab agent. Use the bash tool when the user asks you to run a command. Answer in one short sentence.
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: AgentTemplate
+metadata: {name: real-1p5b-template, namespace: kagent}
+spec:
+  description: Lab agent with a real small model on CPU
+  modelConfig: {name: real-1p5b}
+  systemPrompt: You are a lab agent. Use the bash tool when the user asks you to run a command. Answer in one short sentence.
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: Agent
+metadata: {name: real-3b, namespace: kagent}
+spec:
+  template: {ref: {name: real-3b-template}}
+  harnessRef: {name: lab-harness}
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: Agent
+metadata: {name: real-1p5b, namespace: kagent}
+spec:
+  template: {ref: {name: real-1p5b-template}}
+  harnessRef: {name: lab-harness}

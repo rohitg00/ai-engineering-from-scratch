@@ -1,0 +1,8 @@
+AGENTS.md
+itsdangerous
+fatal: your current branch 'master' does not have any commits yet
+error: git fetch: exit status 128
+output: Reinitialized existing Git repository in /workspace/itsdangerous/.git/
+error: remote origin already exists.
+fatal: unable to access 'https://github.com/pallets/itsdangerous.git/': server verification failed: certificate signer not trusted. (CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none)
+

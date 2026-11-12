@@ -145,14 +145,14 @@ Most measured numbers in this manual came from clusters with one kind node. One 
 | Storage | Google Cloud Storage, Amazon S3, any bucket across a network, an external Postgres, a restore of either store |
 | Scale | more than 131 actors in one cluster, more than 24 parallel turns, more than 16 resumes at the same instant inside the capacity of a pool, a burst through the ingress of the router, more than two worker nodes, more than 20 actors across nodes |
 | Sandbox | the microVM class on arm64, with agentgateway, with a resume from the object store, above 500 MiB, and across CPU models. Also images with an init system, non-root images, large root filesystems |
-| Agents | a real model behind kagent or behind a model gateway, a streamed model reply, client authentication at a model gateway, the codex and claude harnesses, MCP servers through the egress gateway |
+| Agents | a hosted model, a model on a GPU, or a model large enough for real agent work behind kagent, any real model behind a model gateway, a limit on the tokens or the seconds of a kagent turn, a streamed model reply through a model gateway, client authentication at a model gateway, the codex and claude harnesses, MCP servers through the egress gateway |
 | Lifecycle | an upgrade, a worker drain, the restore of a deleted golden tag, a resume at the two lower fidelities for an application with a long start on this guest |
 | Network | a suspend as a cut-off for a `tlsPassthrough` connection, the step that takes 0.6 s in an intercepted handshake, the log level of `atenet-router`, a restart of `atenet-egress` as a way to refresh a credential, the content of every metric label on the agentgateway stats port, port 9902 of the Envoy container |
 | Limits | memory limits under load, and CPU limits with several busy actors on one worker |
 | Identity | the signature check of an actor JWT with the published key, a key rotation, federation with a second issuer or a cloud provider, a second token issuer for clients |
 | Snapshots | why the object store copy of the Python actor was half of its node copy, and equal for random bytes |
 | Failure | a dead process that stays `RUNNING` for more than 20 minutes or across a worker restart, the three outages on more than one node, egress during an outage, a router restart, an egress restart, a node that is alive and unreachable, a node that loses power or its network, a node loss on the microVM class or on agentgateway, a node loss when the other node has no room, a pool with spare workers on a third node, other node timers of Kubernetes |
-| Agent Executor | a model or an agent image in a task, a worker loss under a task, a clone that succeeds, the MCP servers and skills of a workspace, the release v0.3.1 |
+| Agent Executor | a hosted or large model in a task, the example agent with its own prompt and repository, a worker loss during a request, a node loss under a task, a large or private clone, the MCP servers and skills of a workspace, the release v0.3.1 on the Substrate version that it was built for |
 | Apple silicon | actors above 200 MiB, a resume from the object store |
 | Preview | `ExternalVolumes` and `PerTemplateSnapshotLocation` on upstream Substrate, the flag on every component, and the behaviour of a golden egress policy |
 

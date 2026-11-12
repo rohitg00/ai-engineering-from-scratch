@@ -1,0 +1,8 @@
+2026-11-12T16:41:14.694492937Z slot   operator(): id  0 | task 10 | new prompt, n_ctx_slot = 32768, n_keep = 4, task.n_tokens = 1952
+2026-11-12T16:41:43.428165912Z slot print_timing: id  0 | task 10 | prompt eval time =   18674.09 ms /  1949 tokens (    9.58 ms per token,   104.37 tokens per second)
+2026-11-12T16:41:43.428225214Z slot print_timing: id  0 | task 10 |        eval time =   10059.48 ms /    49 tokens (  209.57 ms per token,     4.77 tokens per second)
+2026-11-12T16:41:43.431270014Z [GIN] 2026/11/12 - 16:41:43 | 200 |   28.78s |      172.18.0.3 | POST     "/v1/messages?beta=true"
+2026-11-12T16:41:43.562155269Z slot   operator(): id  0 | task 61 | new prompt, n_ctx_slot = 32768, n_keep = 4, task.n_tokens = 2026
+2026-11-12T16:41:44.838737046Z slot print_timing: id  0 | task 61 | prompt eval time =    1112.58 ms /    60 tokens (   18.54 ms per token,    53.93 tokens per second)
+2026-11-12T16:41:44.838788327Z slot print_timing: id  0 | task 61 |        eval time =     165.18 ms /     2 tokens (  165.18 ms per token,     6.05 tokens per second)
+2026-11-12T16:41:44.840156184Z [GIN] 2026/11/12 - 16:41:44 | 200 |    1.32s |      172.18.0.3 | POST     "/v1/messages?beta=true"

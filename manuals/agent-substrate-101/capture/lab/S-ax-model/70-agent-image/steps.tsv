@@ -1,0 +1,8 @@
+step	rc	seconds
+01-build	0	50.005
+02-push	0	1.007
+14-apply	0	0.075
+15-create-egress	0	0.220
+16-resume	0	5.942
+20-describe	0	0.037
+21-workspace	0	0.791

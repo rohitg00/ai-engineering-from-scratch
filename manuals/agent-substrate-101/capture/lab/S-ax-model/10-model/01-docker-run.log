@@ -1,0 +1,17 @@
+Unable to find image 'ollama/ollama:latest' locally
+latest: Pulling from ollama/ollama
+bcd29a192d4b: Pulling fs layer
+0f9ace102f52: Pulling fs layer
+7a48b8f0e5c7: Pulling fs layer
+44e04c92ea2a: Pulling fs layer
+7a48b8f0e5c7: Download complete
+0f9ace102f52: Download complete
+44e04c92ea2a: Download complete
+7a48b8f0e5c7: Pull complete
+44e04c92ea2a: Pull complete
+0f9ace102f52: Pull complete
+bcd29a192d4b: Download complete
+bcd29a192d4b: Pull complete
+Digest: sha256:910d0d8107b538fb0894e63163eb195de0cc7aefcbc666dc62d3b18f71124592
+Status: Downloaded newer image for ollama/ollama:latest
+2c308dd2d01cecb9568df2615d3270e7542b0dbbe2bec1edd3f399eaac263727

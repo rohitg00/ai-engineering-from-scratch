@@ -1,0 +1,15 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+metadata:
+  atespace: default
+  createTime: "2026-11-12T16:37:24.610725635Z"
+  name: default
+  uid: 1b4d1f17-3393-4edc-a5e4-af0fe907ea64
+  updateTime: "2026-11-12T16:37:24.610725635Z"
+  version: "1"
+rules:
+- http:
+    hostnames:
+    - ollama.ax-system.svc.cluster.local
+    ports:
+      numbers:
+      - 11434

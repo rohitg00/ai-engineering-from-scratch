@@ -1,0 +1,59 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+actorTemplate:
+  atespace: kagent
+  name: real-1p5b-a0390fb3d7de
+metadata:
+  atespace: kagent
+  createTime: "2026-11-12T16:26:53.529570634Z"
+  name: session-01a1d095-62c0-7038-8732-eaa0f0994d1b
+  uid: b88e0032-01e5-401a-b321-d9504c1134ac
+  updateTime: "2026-11-12T16:26:54.192963947Z"
+  version: "3"
+status:
+  assignedNode: kagent-control-plane
+  lastAssignedGeneration: 1
+  snapshots:
+  - actorTemplateUid: 57105e7d-2c8a-42b1-a6d3-f53a930fc5bc
+    durableSnapshot:
+      object:
+        snapshotUri: s3://ate-snapshots/kagent/atespaces/kagent/tags/8eda807d-b634-40d4-9be1-0e43536b949b
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_VOLUMES
+    generation: 1
+    owner: SNAPSHOT_OWNER_TAG
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: 8eda807d-b634-40d4-9be1-0e43536b949b
+  state: ACTOR_STATE_RUNNING
+  workerAssignment:
+    nodeName: kagent-control-plane
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    worker:
+      name: 6dfb9d1d-cce7-4e42-af53-799a4132fa5d
+    workerEpoch: "1"
+    workerNamespace: kagent
+    workerPod: kagent-default-679c58c6cb-pljdk
+    workerPodIps:
+    - 10.244.0.23
+    workerPodUid: 6dfb9d1d-cce7-4e42-af53-799a4132fa5d
+    workerPool: kagent-default
+    workerSpiffeId: spiffe://cluster.local/ns/kagent/sa/kagent-default

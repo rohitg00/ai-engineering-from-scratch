@@ -1,0 +1,2 @@
+time=2026-11-12T16:36:13.987Z level=INFO msg="reconciling task" name=ax031-install-check atespace=default image=localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31
+time=2026-11-12T16:36:13.989Z level=ERROR msg="error processing task event" id=1794501373986-0 atespace=default name=ax031-install-check action=reconcile error="reconciling task default/ax031-install-check: ensuring atespace: creating atespace \"default\": rpc error: code = Unimplemented desc = unknown service ateapi.Control"

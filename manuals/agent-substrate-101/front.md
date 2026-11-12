@@ -17,6 +17,7 @@ go run ./cmd/ate-setup deploy ate-system \
   --image-repo ghcr.io/agent-substrate/substrate --image-tag v1.0.0
 go run ./cmd/ate-setup deploy demo counter
 go install ./cmd/kubectl-ate
+export PATH="$(go env GOPATH)/bin:$PATH"
 kubectl ate create actor my-counter-1 -a ate-demo-counter --template counter
 kubectl ate proxy actor my-counter-1 -a ate-demo-counter
 ```
@@ -55,7 +56,11 @@ We hold eight positions, and each one comes from a run. [Section 1.1](#s-what-su
 
 ## What we did not test
 
-All our clusters but one had one kind node, and the sandbox class was gVisor in every run behind Parts 1 and 2. We did not run Agent Substrate on GKE. We did not use a real model behind kagent, and we did not use an object store outside the cluster. Each section says so where one of those limits applies. [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines, the method, and the full list.
+All our clusters but one had one kind node, and the sandbox class was gVisor in every run behind Parts 1 and 2. We did not run Agent Substrate on GKE. We did not use an object store outside the cluster.
+
+The only real model in our runs was a small open model on CPU, behind kagent and behind Agent Executor. So no model time in this manual is the time of a GPU or of a hosted model.
+
+Each section says so where one of those limits applies. [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines, the method, and the full list.
 
 ## How the parts are ordered
 

@@ -1,0 +1,3 @@
+rules:
+- tlsPassthrough:
+    hostnames: ["github.com"]

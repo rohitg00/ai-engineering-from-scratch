@@ -1,0 +1,2 @@
+qwen2.5:1.5b pull_seconds 13.699052739
+qwen2.5:3b pull_seconds 12.764257441

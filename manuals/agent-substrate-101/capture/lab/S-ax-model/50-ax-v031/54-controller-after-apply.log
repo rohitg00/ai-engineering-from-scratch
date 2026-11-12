@@ -1,0 +1,1 @@
+error: error from server (NotFound): deployments.apps "ax-controller" not found in namespace "ax031-system"

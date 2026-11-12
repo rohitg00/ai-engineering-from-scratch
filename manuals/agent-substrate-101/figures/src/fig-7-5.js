@@ -23,8 +23,8 @@ const rows = [
   },
   {
     left: { hue: 'plum', title: 'Model', sub: 'stored, the Secret is not checked' },
-    right: { hue: 'grey', title: 'nothing on Substrate', sub: 'no task of ours used a model' },
-    label: 'not run',
+    right: { hue: 'grey', title: 'nothing on Substrate', sub: 'no task field names a Model' },
+    label: 'not used',
     style: 'fail',
   },
   {
@@ -44,7 +44,7 @@ const rows = [
 module.exports = figure('fig-7-5', {
   height: 472,
   title: 'What each Agent Executor object became on Agent Substrate in our run',
-  desc: 'Six rows map Agent Executor to Agent Substrate, as recorded in our run of one commit on Substrate v1.0.0. A Task is a row in the Agent Executor database and became one actor and one template with the same name, a files-only snapshot, and a golden snapshot. A Workspace was prepared inside the sandbox by the task runner at each start. A Gateway was stored, but a task that named it was rejected with Unimplemented, so no egress policy existed. A Model was stored without a check of its Secret. The resume and suspend commands became the two Substrate calls, and a task with no request stayed RUNNING for 600 seconds. The template named no pool, and every task ran on a WorkerPool of another namespace.',
+  desc: 'Six rows map Agent Executor to Agent Substrate, as recorded in our run of one commit on Substrate v1.0.0. A Task is a row in the Agent Executor database and became one actor and one template with the same name, a files-only snapshot, and a golden snapshot. A Workspace was prepared inside the sandbox by the task runner at each start. A Gateway was stored, but a task that named it was rejected with Unimplemented, so no egress policy existed. A Model was stored without a check of its Secret, and no field of a task names a Model, so no key reached a task. The resume and suspend commands became the two Substrate calls, and a task with no request stayed RUNNING for 600 seconds. The template named no pool, and every task ran on a WorkerPool of another namespace.',
 }, f => {
   f.kicker(20, 22, 'Agent Executor');
   f.kicker(380, 22, 'Agent Substrate');

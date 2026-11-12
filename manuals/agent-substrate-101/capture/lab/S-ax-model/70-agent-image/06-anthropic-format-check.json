@@ -1,0 +1,1 @@
+{"id":"msg_9a68a727562178e757d75bc7","type":"message","role":"assistant","model":"qwen2.5:3b","content":[{"type":"text","text":"Hello, how can I assist you?"}],"stop_reason":"end_turn","usage":{"input_tokens":35,"cache_read_input_tokens":0,"output_tokens":9}}

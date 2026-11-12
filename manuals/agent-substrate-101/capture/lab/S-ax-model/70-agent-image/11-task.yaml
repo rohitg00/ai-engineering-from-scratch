@@ -1,0 +1,24 @@
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+  name: s-agent
+  atespace: default
+spec:
+  image: "localhost:5002/ax-claude-code@sha256:73fbd85b498dacfde3660cb9c5cc4c27f279a2bb2b9638e783dbf81d15919d35"
+  config:
+    prompt: "Run this shell command with the Bash tool: echo agent-was-here > /workspace/agent-output.txt . Then answer with the single word done."
+    model: "qwen2.5:3b"
+    maxTurns: 4
+    dangerouslySkipPermissions: true
+    systemPrompt: "You are a coding agent in a Linux sandbox. Use the tools to do what the user asks."
+    tools: "Bash,Write,Read"
+  env:
+    - name: ANTHROPIC_BASE_URL
+      value: "http://ollama.ax-system.svc.cluster.local:11434"
+    - name: ANTHROPIC_AUTH_TOKEN
+      value: "ollama"
+  resources:
+    limits:
+      cpu: "2"
+      memory: "1536Mi"
+  debug: true

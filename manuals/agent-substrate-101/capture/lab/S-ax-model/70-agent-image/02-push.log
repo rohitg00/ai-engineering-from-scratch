@@ -1,0 +1,11 @@
+The push refers to repository [localhost:5002/ax-claude-code]
+3e656683d43c: Mounted from ax-task-runner
+1f9224758e21: Pushed
+a97535349285: Pushed
+05e0eee5572e: Mounted from ax-task-runner
+68bced9e0afa: Mounted from ax-task-runner
+57e19ee6fb34: Mounted from ax-task-runner
+2dc99d2d0a39: Mounted from ax-task-runner
+37fb86c2a767: Mounted from ax-task-runner
+8472582f5b89: Pushed
+latest: digest: sha256:73fbd85b498dacfde3660cb9c5cc4c27f279a2bb2b9638e783dbf81d15919d35 size: 856

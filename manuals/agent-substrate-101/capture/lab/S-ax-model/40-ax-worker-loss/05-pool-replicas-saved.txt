@@ -1,0 +1,4 @@
+demo-agent agent 1
+demo-drill drill 2
+demo-idle idle 1
+demo-tools tools 1

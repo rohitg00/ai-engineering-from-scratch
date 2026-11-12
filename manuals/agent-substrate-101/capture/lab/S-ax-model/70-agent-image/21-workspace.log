@@ -1,0 +1,11 @@
+total 1
+drwxrwxrwx 3 root root  80 Nov 12 16:41 .
+drwxr-xr-x 1 root root 120 Nov 12 16:41 ..
+drwxr-xr-x 2 root root  60 Nov 12 16:41 .ax
+-rw-r--r-- 1 root root  15 Nov 12 16:41 agent-output.txt
+agent-was-here
+  PID ELAPSED COMMAND
+    1      38 /usr/local/bin/ax-task-runner
+   55       0 sh -c ls -la /workspace; cat /workspace/agent-output.txt; ps -eo pid,etimes,args | head -12
+   58       0 ps -eo pid,etimes,args
+   59       0 head -12

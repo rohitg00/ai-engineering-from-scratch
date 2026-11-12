@@ -1,0 +1,24 @@
+18:  name: ax031-system
+23:  name: ax031-controller
+24:  namespace: ax031-system
+29:  name: ax031-controller
+38:  name: ax031-controller
+41:    name: ax031-controller
+42:    namespace: ax031-system
+46:  name: ax031-controller
+51:  name: ax031-controller
+52:  namespace: ax031-system
+54:    app.kubernetes.io/name: ax031-controller
+60:      app.kubernetes.io/name: ax031-controller
+64:        app.kubernetes.io/name: ax031-controller
+69:          image: localhost:5002/ax031-ax-controller:v0.3.1
+72:            - "--redis-addr=ax-redis.ax031-system.svc.cluster.local:6379"
+75:            - "--substrate-token-file=/var/run/secrets/ateapi/token"
+76:            - "--substrate-ca-file=/run/servicedns-ca/trust-bundle.pem"
+78:            - "--template-atespace=ax031-system"
+96:              name: ate-token
+102:        - name: ate-token
+107:                  audience: api.ate-system.svc
+109:                  path: token
+118:                  path: trust-bundle.pem
+119:                  signerName: servicedns.podcert.ate.dev/identity

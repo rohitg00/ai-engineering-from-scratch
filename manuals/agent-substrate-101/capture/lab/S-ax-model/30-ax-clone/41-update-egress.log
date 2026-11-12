@@ -1,0 +1,2 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+Error: failed to update egress policy for actor "s-clone" in atespace "default": rpc error: code = InvalidArgument desc = egress_policy.rules[0].tls_passthrough.ports: Required value

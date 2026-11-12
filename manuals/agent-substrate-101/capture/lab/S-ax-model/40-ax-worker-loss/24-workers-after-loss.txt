@@ -1,0 +1,4 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY     POD                                  AGE
+fc5d3c2d-1542-49d3-9585-5f1b18b4f43d   ax-pool   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   ax-system/ax-pool-588b78fd54-88rc7   60m
+20a1da8c-0f6c-4283-a8c9-abbe5752cdda   ax-pool   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   ax-system/ax-pool-588b78fd54-p4gfv   40s

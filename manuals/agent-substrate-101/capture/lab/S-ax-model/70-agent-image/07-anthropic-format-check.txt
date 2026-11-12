@@ -1,0 +1,1 @@
+anthropic format check seconds=5.872

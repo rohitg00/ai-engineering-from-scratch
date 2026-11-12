@@ -1,0 +1,8 @@
+13s         Normal    Pulling             pod/ax031-controller-8678688d5c-7xzx6    Pulling image "localhost:5002/ax031-ax-controller:v0.3.1"
+13s         Normal    Pulled              pod/ax031-controller-8678688d5c-7xzx6    Successfully pulled image "localhost:5002/ax031-ax-controller:v0.3.1" in 301ms (301ms including waiting). Image size: 14471458 bytes.
+13s         Normal    Created             pod/ax031-controller-8678688d5c-7xzx6    Container created
+13s         Normal    Started             pod/ax031-controller-8678688d5c-7xzx6    Container started
+13s         Normal    SuccessfulCreate    replicaset/ax031-controller-8678688d5c   Created pod: ax031-controller-8678688d5c-7xzx6
+13s         Normal    Scheduled           pod/ax031-controller-8678688d5c-7xzx6    Successfully assigned ax031-system/ax031-controller-8678688d5c-7xzx6 to demo-control-plane
+13s         Normal    ScalingReplicaSet   deployment/ax031-controller              Scaled up replica set ax031-controller-8678688d5c from 0 to 1
+12s         Normal    ScalingReplicaSet   deployment/ax031-controller              Scaled down replica set ax031-controller-7bf4f6fb75 from 1 to 0

@@ -103,7 +103,7 @@
     {
       "name": "Agent Executor source and documentation",
       "path": "github.com/google/ax, read 2026-11-12",
-      "usedFor": "section 7.5, read and not run"
+      "usedFor": "section 7.5, built from source at one commit and run"
     }
   ],
   "quoteSources": {

@@ -1,0 +1,7 @@
+Name:               s-model
+Atespace:           default
+Provider:           google
+Model:              qwen2.5:3b
+Secret Key:         s-model-key (key: GEMINI_API_KEY)
+NAME      ATESPACE   PROVIDER   MODEL
+s-model   default    google     qwen2.5:3b

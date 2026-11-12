@@ -1,0 +1,20 @@
+  Model
+    architecture        qwen2          
+    parameters          3.1B           
+    context length      32768          
+    embedding length    2048           
+    quantization        Q4_K_M         
+    template source     go_template    
+
+  Capabilities
+    completion    
+    tools         
+
+  System
+    You are Qwen, created by Alibaba Cloud. You are a helpful assistant.    
+
+  License
+    Qwen RESEARCH LICENSE AGREEMENT                                     
+    Qwen RESEARCH LICENSE AGREEMENT Release Date: September 19, 2024    
+    ...                                                                 
+

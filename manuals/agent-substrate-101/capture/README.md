@@ -17,16 +17,16 @@ The check rebuilds the summaries in a temporary folder and compares them with th
 |---|---|---|
 | the x86 server guest (24 vCPU, 47 GB, nested KVM) | a KVM guest on an x86 server, 24 vCPU, 47 GB, nested KVM, Ubuntu 24.04 | Docker 29.1.3, Go 1.27.3, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor, and the microVM class for `L-gaps/microvm` |
 | a second x86 server guest (16 vCPU, 23 GB) | 16 vCPU, 23 GB, same host | Agent Substrate v1.0.0 from the release images, Envoy and then agentgateway v1.7.0. For `L-gaps/multinode` and `P-node-loss`, a second kind cluster with one control plane node and two worker nodes. `P-node-loss` and `Q-network` ran at the same time, each on its own cluster |
-| a second x86 server guest (16 vCPU, 31 GB) | 16 vCPU, 31 GB, same host | Two clusters, one after the other. For `K-kagent`: kagent v1.0.0 with its own Substrate distribution, a mock model server in the cluster. For `N-demos`: Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor. For `R-agent-executor`: Agent Executor from source on the cluster of `N-demos` |
+| a second x86 server guest (16 vCPU, 31 GB) | 16 vCPU, 31 GB, same host | Two clusters, one after the other. For `K-kagent`: kagent v1.0.0 with its own Substrate distribution, a mock model server in the cluster. For `N-demos`: Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor. For `R-agent-executor`: Agent Executor from source on the cluster of `N-demos`. For `S-ax-model`: a small open model on CPU in a container on the guest, used from both clusters |
 | the Mac | an Apple silicon laptop under Docker Desktop, 10 CPU and 8 GB for Docker | Agent Substrate v1.0.0 from the release images, gVisor only |
 
-The guests and the Mac are different machines. Do not compare a number from one with a number from another. Two guests have 16 vCPU, so the manual names each one with its memory: 23 GB for `E`, `F`, `G`, `L-gaps/multinode`, `P-node-loss`, and `Q-network`, and 31 GB for `K-kagent` and `N-demos`.
+The guests and the Mac are different machines. Do not compare a number from one with a number from another. Two guests have 16 vCPU, so the manual names each one with its memory: 23 GB for `E`, `F`, `G`, `L-gaps/multinode`, `P-node-loss`, and `Q-network`, and 31 GB for `K-kagent`, `N-demos`, `R-agent-executor`, and `S-ax-model`.
 
 | Folder | Machine |
 |---|---|
 | `A-quickstart`, `B-lifecycle`, `C-resume-vs-size`, `D-durability`, `I-capacity`, `J-container-death`, `V-validation`, `L-gaps/microvm`, `L-gaps/restart` | the x86 server guest (24 vCPU, 47 GB, nested KVM) |
 | `E-dependency-loss`, `F-egress`, `G-dataplane`, `L-gaps/multinode`, `P-node-loss`, `Q-network` | a second x86 server guest (16 vCPU, 23 GB) |
-| `K-kagent`, `N-demos`, `R-agent-executor` | a second x86 server guest (16 vCPU, 31 GB) |
+| `K-kagent`, `N-demos`, `R-agent-executor`, `S-ax-model` | a second x86 server guest (16 vCPU, 31 GB) |
 | `M-mac-arm64` | the Mac |
 
 Each guest kept its disk in memory and reached the network through user-mode NAT. All clusters had one kind node, except the cluster of `L-gaps/multinode` and `P-node-loss`. The object store was rustfs in the same cluster.
@@ -180,7 +180,7 @@ All four ran on a second x86 server guest (16 vCPU, 31 GB), on their own cluster
 
 ### R-agent-executor: Agent Executor at one commit on Substrate v1.0.0
 
-All steps ran on a second x86 server guest (16 vCPU, 31 GB), on the cluster of `N-demos`, after the demos. Agent Executor was built from source at commit `a72b8ca46cb5`. No task used a model, and every task ran `sleep infinity`. The worker-loss test did not run, because the tasks sat on pools of other experiments.
+All steps ran on a second x86 server guest (16 vCPU, 31 GB), on the cluster of `N-demos`, after the demos. Agent Executor was built from source at commit `a72b8ca46cb5`. No task used a model, and every task ran `sleep infinity`. The worker-loss test did not run here, because the tasks sat on pools of other experiments. `S-ax-model` ran it later.
 
 | Folder | What it shows |
 |---|---|
@@ -195,6 +195,24 @@ All steps ran on a second x86 server guest (16 vCPU, 31 GB), on the cluster of `
 | `80-networking/` | the ports of the router Service, plain HTTP on port 80, and the tunnel that `ax ssh` uses |
 | `90-nodebug/`, `99-delete/` | `ax ssh` without `debug: true`, each delete with its seconds, and what stayed on Substrate |
 | `95-failure/04-SKIPPED.txt` | why no worker pod was deleted |
+
+### S-ax-model: a small real model, kagent with it, and five open items of Agent Executor
+
+All steps ran on a second x86 server guest (16 vCPU, 31 GB), after `R-agent-executor`. The model server was Ollama 0.40.16 in a container on the guest, with 12 CPUs, one request at a time, and no GPU. The models were `qwen2.5:3b` (1.9 GB) and `qwen2.5:1.5b` (986 MB). They are small models on CPU, so the model seconds in these files are not the model seconds of a GPU or of a hosted model.
+
+| Folder | What it shows |
+|---|---|
+| `10-model/10-bench.tsv`, `10-model/06-list.txt` | tokens per second over 5 requests and 10 tool calls for each model, and the size of each model |
+| `20-kagent/01-real-model.yaml` | the ModelConfig, AgentTemplate, and Agent objects that point kagent at the model server |
+| `20-kagent/loop/per-turn.tsv`, `timings.tsv`, `summary.txt` | 50 kagent turns: for each turn the time at the client, the seconds of its model requests, and the resume and suspend seconds from the log of `ate-api-server`. `per-turn.tsv` is made by `_scripts/s12-kagent-analyze.py` from `timings.tsv`, the model server log, and `ate-api.log` |
+| `20-kagent/loop/stuck-turn-*`, `C-1p5b-first-3.err` | the turn that did not end: the actor state, the token count of the model server, the client error, and the restart note |
+| `30-ax-clone/` | a workspace clone with no rule, with an `https` rule, with a `tlsPassthrough` rule without a port, and with the rule that worked |
+| `40-ax-worker-loss/`, `41-ax-worker-loss-durable/` | a worker pod deleted under a task, 8.7 s and 307 s after the last suspend, with the files that the task found after `ax resume task` |
+| `50-ax-v031/` | the release v0.3.1 installed on Substrate v1.0.0, and the two errors of its controller |
+| `60-ax-model/` | a `Model` object beside a task, the environment of the task, and 20 model calls through an `http` rule on the actor |
+| `70-agent-image/` | the Claude Code example image against the local model server: the build, the task, the actor log, and the workspace after the run |
+
+In `per-turn.tsv`, a resume or suspend of 0 means that the saved log window held no record for that turn. The row `C-1p5b-first-4` holds the model seconds of the request that it waited behind, so its model seconds are larger than its wall seconds. `run.py` leaves both cases out of the statistics.
 
 ### P-node-loss: a worker node that stops and stays down
 
@@ -297,6 +315,8 @@ The shell scripts that made the recordings. Each one ran inside a guest, or on t
 | `cpu-limit-x86.json` | `points`: `[{x, threads, wall_seconds, host_cpu_seconds, host_cores_used, cpu_seconds_reported_inside, throttled_periods, runs}]`, where `x` is the limit in millicores. `seen_inside_the_actor`, `cgroup_cpu_max_of_actor`, `worker_pod_limits`, and `superseded_first_test` |
 | `network-x86.json` | `keepalive_after_rule_removal`, `suspend_cutoff`, `egress_log_level`, `model_gateway`, `router_ports`, each with one entry for each dataplane, and `dataplane_switch`. Latencies of `model_gateway` are in milliseconds |
 | `kagent-turns-x86.json` | `client_seconds.<series>`, `server_turn_seconds.<series>`, `resume_seconds.turns_only`, `resume_seconds.all`, `suspend_seconds` |
+| `kagent-model-x86.json` | `models.<name>`: `size`, `tokens_per_second`, `tool_call`. `series.<name>`: `n`, `completed`, `clean`, and `wall_seconds`, `model_seconds`, `model_share`, `resume_seconds`, `suspend_seconds` as `{median, min, max, n}`. `runs.<name>`: one entry for each turn. `turn_that_did_not_end` |
+| `agent-executor-followups-x86.json` | `clone`, `worker_loss.snapshot_pending`, `worker_loss.snapshot_durable`, `model_call`, `agent_image`, `release_v0_3_1` |
 | `install-steps.json` | `source_build`, `release_images`, `release_images_mac`, `kagent`. Each has `machine` and `steps`: `[{step, exit, seconds}]` |
 | `microvm-x86.json` | `node_local`, `new_actor_first_call`, `suspend_async`, `suspend_sync`, `warm_call`, `create_actor`, with the `points` shape of `resume-x86.json`. `local_snapshot_per_actor`: `[{x, kib, mib}]`. `resident_memory`: `microvm` and `gvisor_same_node`, each a list of `{process, kib, mib}` |
 | `validation-memory-x86.json` | `actors`: one entry for each of six templates, with `fill` (`zero`, `mixed`, `rand`), `x` in MiB, `node_snapshot` and `object_store_copy` as `{kib, mib}`, and `resume_node`, `resume_after_sync`, `suspend_async`, `suspend_sync`, `new_actor_first_call`, `warm_call`, each `{seconds, runs, failed}`. `python`: the same fields for the Python actor, with `template_to_golden_ready`, `peak_rss_mib`, `image_bytes`, and the process age at its first and last request |

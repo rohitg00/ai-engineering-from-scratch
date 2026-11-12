@@ -1,0 +1,65 @@
+==> Cross-compiling claude-code-runner for linux/amd64...
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o bin/linux_amd64/claude-code-runner ./cmd/runners/claude-code-runner
+==> Building container image localhost:5002/ax-claude-code:latest (Claude Code latest) using docker...
+docker build --platform linux/amd64 --build-arg CLAUDE_CODE_VERSION=latest --build-arg BASE_IMAGE=localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31 -t localhost:5002/ax-claude-code:latest -f Dockerfile.claude-code .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.claude-code
+#1 transferring dockerfile: 3.06kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 302B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31
+#4 resolve localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 14.63MB 0.1s done
+#5 DONE 0.1s
+
+#6 [2/3] RUN curl -fsSL https://claude.ai/install.sh | bash -s -- "latest"     && ln -s /root/.local/bin/claude /usr/local/bin/claude     && claude --version
+#6 9.704 Setting up Claude Code...
+#6 10.01 
+#6 10.01 Checking installation status...
+#6 10.04 Installing Claude Code native build latest...
+#6 18.22 Setting up launcher and shell integration...
+#6 18.26 ✔ Claude Code successfully installed!
+#6 18.26 
+#6 18.26   Version: 2.1.322
+#6 18.26 
+#6 18.26   Location: ~/.local/bin/claude
+#6 18.26 
+#6 18.26 
+#6 18.26   Next: Run claude --help to get started
+#6 18.26 
+#6 18.26 ⚠ Setup notes:
+#6 18.26   ● Native installation exists but ~/.local/bin is not in your PATH. Run:
+#6 18.26 
+#6 18.26     echo 'export PATH="$HOME/.local/bin:$PATH"' >> your shell config file && source your shell config file
+#6 18.26 
+#6 18.63 
+#6 18.63 ✅ Installation complete!
+#6 18.63 
+#6 18.64 2.1.322 (Claude Code)
+#6 DONE 18.8s
+
+#7 [3/3] COPY bin/linux_amd64/claude-code-runner /usr/local/bin/ax-task-runner
+#7 DONE 0.1s
+
+#8 exporting to image
+#8 exporting layers
+#8 exporting layers 27.3s done
+#8 exporting manifest sha256:e8be2d2d1142f7b647dde52b62cbd3a44953d62941c30b03ef2bf0762f21198c 0.0s done
+#8 exporting config sha256:50ed3acae3d2b1c0cec496dce0a605027853f32698d55323fa9e5a497198c964 0.0s done
+#8 exporting attestation manifest sha256:29ea4c3f4642e5bc3adc28ae6f3ae6c1fad9f8794ceb74ac4af2e6e79c9a2e7b 0.0s done
+#8 exporting manifest list sha256:73fbd85b498dacfde3660cb9c5cc4c27f279a2bb2b9638e783dbf81d15919d35 done
+#8 naming to localhost:5002/ax-claude-code:latest done
+#8 unpacking to localhost:5002/ax-claude-code:latest
+#8 unpacking to localhost:5002/ax-claude-code:latest 1.9s done
+#8 DONE 29.3s

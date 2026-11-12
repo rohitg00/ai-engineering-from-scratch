@@ -1,0 +1,7 @@
+ollama ollama/ollama Up 2 minutes
+demo-control-plane kindest/node:v1.37.0 Up 4 hours
+kind-registry registry:3 Up 4 hours
+kagent-control-plane kindest/node:v1.37.0 Up 7 hours
+NAME            ID              SIZE      MODIFIED       
+qwen2.5:3b      357c53fb659c    1.9 GB    35 minutes ago    
+qwen2.5:1.5b    65ec06548149    986 MB    35 minutes ago    

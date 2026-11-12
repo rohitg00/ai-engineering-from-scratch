@@ -1,0 +1,19 @@
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/ax-redis-86df786c87-8vhvb           1/1     Running   0          11m
+pod/ax-server-6b987bbf67-8wxqj          1/1     Running   0          11m
+pod/ax031-controller-8678688d5c-7xzx6   1/1     Running   0          9m13s
+
+NAME                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/ax-redis    ClusterIP   10.96.181.157   <none>        6379/TCP   11m
+service/ax-server   ClusterIP   10.96.140.240   <none>        8080/TCP   11m
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/ax-redis           1/1     1            1           11m
+deployment.apps/ax-server          1/1     1            1           11m
+deployment.apps/ax031-controller   1/1     1            1           11m
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/ax-redis-86df786c87           1         1         1       11m
+replicaset.apps/ax-server-6b987bbf67          1         1         1       11m
+replicaset.apps/ax031-controller-7bf4f6fb75   0         0         0       11m
+replicaset.apps/ax031-controller-8678688d5c   1         1         1       9m13s

@@ -1,0 +1,8 @@
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+  name: s-loss2
+  atespace: default
+spec:
+  debug: true
+  command: ["sleep", "infinity"]

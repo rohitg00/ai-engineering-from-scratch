@@ -1,0 +1,3 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+ATESPACE   ACTOR     RULES   VERSION   AGE
+default    s-agent   1       1         0s

@@ -1,0 +1,8 @@
+go build rc=0 seconds=23.096
+total 96740
+drwxrwxr-x  2 lab lab     4096 Nov 12 16:31 .
+drwxrwxr-x 12 lab lab     4096 Nov 12 16:31 ..
+-rwxrwxr-x  1 lab lab 19591510 Nov 12 16:31 ax
+-rwxrwxr-x  1 lab lab 29574607 Nov 12 16:31 ax-controller
+-rwxrwxr-x  1 lab lab 29121145 Nov 12 16:31 ax-server
+-rwxrwxr-x  1 lab lab 20756250 Nov 12 16:31 ax-task-runner

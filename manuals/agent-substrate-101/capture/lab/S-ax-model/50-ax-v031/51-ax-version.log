@@ -1,0 +1,3 @@
+ax version v1alpha1 (standalone redis engine)
+Active Kubernetes Context: kind-demo
+AX Tunnel:                 http://127.0.0.1:44439 -> ax-system/svc/ax-server:8080 (PID: 390741, Healthy)
