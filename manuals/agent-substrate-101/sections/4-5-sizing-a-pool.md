@@ -28,15 +28,7 @@ caption: Each green square is a running actor that declares 1 CPU. The rose squa
 
 **We measured** the right column on the kagent guest (16 vCPU, 31 GB). The kagent pool sets no limits, and each actor declares 1 CPU and 1 GiB. We started 24 turns at the same time, one run. The worker reached 16 running actors and 16000 of 16000 millicores, and the other 8 turns waited. All 24 turns completed, in 4.3 to 7.8 seconds. With 8 turns at the same time, all 8 completed in 2.5 to 3.6 seconds.
 
-The wait shows in the time of each turn.
-
-```figure
-id: fig-4-5c
-kind: chart
-title: time of each turn with 8 and with 24 turns at the same time
-claim: With 24 turns at once on a worker that reports 16 CPUs, the first sixteen took 4.3 to 5.5 seconds and the last eight took 6.4 to 7.8.
-caption: Each dot is one turn, in the order in which the turns completed. The dotted line is the run with 8 turns. The solid lines are the run with 24 turns, and amber marks the eight turns after the sixteenth. From capture/lab/K-kagent/parallel/timings.tsv and capture/lab/K-kagent/parallel/workers-during.txt.
-```
+[The parallel turns chart in section 7.1](#fig-7-1c) shows the time of each turn in both runs.
 
 The second result looks like free capacity, and it is the opposite. That worker promised every CPU of the node to actors, and the control plane runs on the same node. Set limits, as [WorkerPool](#s-workerpool) explains.
 
@@ -60,13 +52,7 @@ A user measured resume time against the CPU limit of the actor on a release cand
 
 A suspended actor books nothing on a worker. You can keep far more suspended actors than running ones. Each of them costs disk.
 
-```figure
-id: fig-4-5b
-kind: chart
-title: disk that 25 suspended actors hold, and what is left after their deletion
-claim: Twenty-five suspended actors held 8.6 GiB of snapshots on the node and 10.6 GiB in the object store, and the store kept 2.0 GiB after their deletion.
-caption: Violet is disk on the node, in the snapshot directory and in a cache. Teal is the object store. The left group is the sample with the actors, and the right group is the sample after their deletion. The actors held 0, 50, 200, 500 and 1,000 MiB of random bytes, five actors for each size. From capture/lab/summary/footprint-x86.json.
-```
+[The footprint chart in section 3.4](#fig-3-4c) shows these sizes as bars.
 
 **We measured** disk use on the x86 server guest with 25 suspended actors, one sample. The actors held 8,750 MiB of memory in total. The node held 8,801 MiB of snapshots and the object store held 10,824 MiB. After we deleted the actors, the node held 1 MiB of snapshots and the object store held 2,064 MiB. A cache of 1,765 MiB stayed on the node in both samples.
 

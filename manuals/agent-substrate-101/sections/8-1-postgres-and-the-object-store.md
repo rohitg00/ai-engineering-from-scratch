@@ -121,13 +121,7 @@ A snapshot with memory fidelity is as large as the memory that holds data in the
 | Node, `/var/lib/ate/snapshot-cache` | 1,765 MiB | 1,765 MiB |
 | Bucket, `ate-snapshots` | 10,824 MiB | 2,064 MiB |
 
-```figure
-id: fig-8-1b
-kind: chart
-title: disk use with 25 suspended actors, and after their deletion
-claim: With random bytes the node copy was as large as the memory held, and the bucket kept 2,064 MiB of golden snapshots after the delete.
-caption: Each place has two bars. The solid bar is the disk use with 25 suspended actors, and the light bar is the use after their deletion. The dashed line is the memory that the actors held. From capture/lab/summary/footprint-x86.json.
-```
+[The footprint chart in section 3.4](#fig-3-4c) shows the same numbers as bars.
 
 The node held one copy of each snapshot, 8,801 MiB for 8,750 MiB of actor memory. The bucket held the same data plus 2,064 MiB of golden snapshots, which stay as long as their templates exist. The snapshot cache did not shrink when the actors went away. `atelet` trims it on its own schedule.
 
