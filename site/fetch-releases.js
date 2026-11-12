@@ -8,8 +8,10 @@ const REPOSITORY = 'rohitg00/ai-engineering-from-scratch';
 const OUTPUT_PATH = path.join(__dirname, 'releases.json');
 const RELEASE_URL = new RegExp(`^https://github\\.com/${REPOSITORY}/releases/tag/[A-Za-z0-9._-]+$`);
 const MAX_RELEASES = 6;
+const PAGE_SIZE = 30;
 const MAX_SUMMARY = 180;
-const NON_PROSE_START = /^(?:#|\||[-*] |\[)/;
+const NON_PROSE_START = /^(?:#|\||[-*] )/;
+const MARKDOWN_LINK = /\[[^\]]*\]\([^)]*\)/g;
 
 function plainText(markdown) {
   return String(markdown || '')
@@ -20,9 +22,14 @@ function plainText(markdown) {
     .trim();
 }
 
+function isProse(paragraph) {
+  if (!paragraph || NON_PROSE_START.test(paragraph)) return false;
+  return /[A-Za-z0-9]/.test(paragraph.replace(MARKDOWN_LINK, ''));
+}
+
 function summaryOf(body) {
   const paragraphs = String(body || '').replace(/\r\n/g, '\n').split(/\n\s*\n/);
-  const firstProse = paragraphs.map(paragraph => paragraph.trim()).find(paragraph => paragraph && !NON_PROSE_START.test(paragraph));
+  const firstProse = paragraphs.map(paragraph => paragraph.trim()).find(isProse);
   const text = plainText(firstProse);
   if (text.length <= MAX_SUMMARY) return text;
   const clipped = text.slice(0, MAX_SUMMARY);
@@ -53,7 +60,7 @@ function toEntries(releases) {
 async function collectReleases({ fetchImpl = globalThis.fetch, token = process.env.GITHUB_TOKEN, timeoutMs = 8000 } = {}) {
   const headers = { Accept: 'application/vnd.github+json', 'User-Agent': 'aifs-site-build' };
   if (token) headers.Authorization = `Bearer ${token}`;
-  const response = await fetchImpl(`https://api.github.com/repos/${REPOSITORY}/releases?per_page=${MAX_RELEASES * 2}`, {
+  const response = await fetchImpl(`https://api.github.com/repos/${REPOSITORY}/releases?per_page=${PAGE_SIZE}`, {
     headers,
     signal: AbortSignal.timeout(timeoutMs),
     redirect: 'error',

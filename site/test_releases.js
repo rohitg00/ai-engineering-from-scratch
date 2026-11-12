@@ -34,6 +34,8 @@ test('release entries skip drafts, prereleases, foreign links, and overflow', ()
   assert.deepEqual(toEntries([Object.assign({}, RELEASE, { prerelease: true })]), []);
   assert.deepEqual(toEntries([Object.assign({}, RELEASE, { html_url: 'https://example.com/releases/tag/v1' })]), []);
   assert.deepEqual(toEntries([Object.assign({}, RELEASE, { published_at: null })]), []);
+  const prereleases = Array.from({ length: 7 }, () => Object.assign({}, RELEASE, { prerelease: true }));
+  assert.equal(toEntries(prereleases.concat(many)).length, 6);
   assert.deepEqual(toEntries({ message: 'rate limited' }), []);
 });
 
@@ -42,6 +44,8 @@ test('release summaries clip long text at a word boundary and skip headings, tab
   assert.ok(long.length <= 183);
   assert.match(long, /word\.\.\.$/);
   assert.equal(summaryOf('## Heading\n\n| a | b |\n\n- item\n\nThe prose.'), 'The prose.');
+  assert.equal(summaryOf('[New lessons](lesson.md) are now available.\n\nMore.'), 'New lessons are now available.');
+  assert.equal(summaryOf('[Start](https://a.example) · [Catalog](https://b.example)\n\nThe prose.'), 'The prose.');
   assert.equal(summaryOf(''), '');
 });
 
@@ -55,7 +59,7 @@ test('release collection sends the token only when present and fails on a bad st
   assert.equal(calls[0].options.headers.Authorization, undefined);
   await collectReleases({ fetchImpl: ok, token: 'abc' });
   assert.equal(calls[1].options.headers.Authorization, 'Bearer abc');
-  assert.match(calls[0].url, /^https:\/\/api\.github\.com\/repos\/rohitg00\/ai-engineering-from-scratch\/releases\?per_page=12$/);
+  assert.match(calls[0].url, /^https:\/\/api\.github\.com\/repos\/rohitg00\/ai-engineering-from-scratch\/releases\?per_page=30$/);
   await assert.rejects(collectReleases({ fetchImpl: async () => ({ ok: false, status: 403 }), token: '' }), /HTTP 403/);
 });
 
@@ -66,5 +70,8 @@ test('the home page ships a hidden release list that the build step can fill', (
   assert.match(homepage, /<section class="whats-new container" id="whats-new" aria-labelledby="whatsNewTitle" hidden>/);
   assert.match(homepage, /href="https:\/\/www\.google\.com\/preferences\/source\?q=aiengineeringfromscratch\.com"/);
   assert.match(app, /fetch\('releases\.json'\)/);
-  assert.match(config.buildCommand, /node site\/fetch-releases\.js && /);
+  const prebuild = fs.readFileSync(path.join(__dirname, 'prebuild.js'), 'utf8');
+  assert.match(config.buildCommand, /^node site\/prebuild\.js && /);
+  assert.match(prebuild, /'fetch-translation-coverage\.js', 'fetch-releases\.js'/);
+  assert.ok(config.buildCommand.length <= 256, 'Vercel rejects a build command over 256 characters');
 });
