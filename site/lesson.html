@@ -2900,6 +2900,7 @@
         document.addEventListener('click', function (e) {
           var hashLink = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
           if (!hashLink || e.defaultPrevented) return;
+          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
           e.preventDefault();
           window.location.hash = hashLink.getAttribute('href');
         });
