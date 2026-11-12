@@ -1572,7 +1572,7 @@ test('shared header keeps its menu at desktop widths without hiding GitHub stars
   assert.doesNotMatch(headerSource, /restoreDesktopTools/);
   assert.match(headerSource, /var COMPACT_HEADER_QUERY = '\(max-width: 1180px\)'/);
   assert.match(headerSource, /var PRIORITY_LABELS = \['catalog', 'learning paths', 'projects', 'practice', 'interviews'\]/);
-  assert.match(headerSource, /function setupTabBar\(\) \{[\s\S]*?pageFile\(location\.href\) === 'lesson\.html'\) return;/);
+  assert.match(headerSource, /function setupTabBar\(\) \{[\s\S]*?document\.querySelector\('\.lesson-layout'\)\) return;/);
   assert.match(headerSource, /nav\.hidden = !open;/);
   assert.match(headerSource, /var NARROW_HEADER_QUERY = '\(max-width: 820px\)'/);
   assert.match(headerSource, /priorityNav\.className = 'header-priority-nav'/);

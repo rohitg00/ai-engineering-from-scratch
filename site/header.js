@@ -552,7 +552,7 @@
 
   function setupTabBar() {
     if (document.querySelector('.site-tabbar') || !document.querySelector('.site-header')) return;
-    if (document.documentElement.hasAttribute('data-poster') || pageFile(location.href) === 'lesson.html') return;
+    if (document.documentElement.hasAttribute('data-poster') || document.querySelector('.lesson-layout')) return;
     var bar = document.createElement('nav');
     bar.className = 'site-tabbar';
     bar.setAttribute('aria-label', 'Sections');
