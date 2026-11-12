@@ -8,7 +8,7 @@ The ranks match [how this manual was made](#s-ref-how-this-manual-was-made). Whe
 
 | Rank | Source | What the manual takes from it |
 |---|---|---|
-| 1 | our recorded runs on three clusters with Agent Substrate v1.0.0, one with kagent v1.0.0, and two with agentgateway v1.7.0 | every listing, and every number in a paragraph that starts with "We measured" |
+| 1 | our recorded runs on six clusters on four machines: five with Agent Substrate v1.0.0 and one with the Substrate distribution of kagent v1.0.0. Two of the six ran agentgateway v1.7.0 | every listing, and every number in a paragraph that starts with "We measured" |
 | 2 | the Agent Substrate source code at the release tag v1.0.0 | every default, state, flag, and mechanism, and the reference tables |
 | 3 | the Agent Substrate documentation at the same tag | install steps, the upgrade order, and documented behaviour that we did not run |
 | 4 | Agent Substrate issues and pull requests on GitHub | known failures, limits, and the history of a feature |
@@ -20,7 +20,7 @@ Our runs rank above the code on purpose. The code says what the system is built 
 
 ## Rank 1: our recorded runs
 
-Eleven experiments, each with its scripts and raw output in [the capture folder](manuals/agent-substrate-101/capture/lab). [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines and the method.
+Fourteen experiments, each with its scripts and raw output in [the capture folder](manuals/agent-substrate-101/capture/lab). [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines and the method.
 
 | Experiment | What it recorded | Used in |
 |---|---|---|
@@ -34,7 +34,10 @@ Eleven experiments, each with its scripts and raw output in [the capture folder]
 | I, capacity | a full pool, and the request parking demo | Part 4 |
 | J, death in a sandbox | a process that exits, and one that the kernel kills for memory | [3.5](#s-crashed-and-revertactor), [8.3](#s-symptom-cause-fix) |
 | K, kagent | the documented kagent install, 98 turns, parallel turns, and what a files-only snapshot keeps | [7.1](#s-kagent-on-substrate) |
+| L, the gaps | the microVM class on the first guest, node stops on a cluster with two worker nodes on the second guest (16 vCPU, 23 GB), and worker recovery after a node restart | [4.2](#s-sandbox-classes), [4.3](#s-placement), [3.5](#s-crashed-and-revertactor), [8.2](#s-when-a-dependency-is-down) |
 | M, Apple silicon | the install from release images and three actor sizes on a laptop | Part 2, Part 3 |
+| N, the demos | an idle suspender, a stateful agent, a tool sandbox, and a failure drill, on their own install on the second guest with 16 vCPU and 31 GB | Part 9 |
+| V, validation | twelve checks on the first guest: memory that holds no data, a Python runtime, resumes at the same instant, fidelity, templates, access policies, actor JWTs, a preview feature, a process exit, and a suspend during a request | Part 3, [4.4](#s-request-parking), [4.5](#s-sizing-a-pool), Part 5, [8.5](#s-limits-at-v1-0-0) |
 
 ## Rank 2: the code
 
@@ -85,7 +88,7 @@ The issues are reports by users and maintainers. We name an issue where it expla
 | [#3203](https://github.com/agent-substrate/substrate/issues/3203) | a proposal for other storage backends, which the maintainers declined before the release | [8.5](#s-limits-at-v1-0-0) |
 | [#3602](https://github.com/agent-substrate/substrate/issues/3602) | a durable directory has no size limit | [8.5](#s-limits-at-v1-0-0) |
 | [#3347](https://github.com/agent-substrate/substrate/issues/3347) | the reuse of a name is not safe | [8.5](#s-limits-at-v1-0-0) |
-| [#3285](https://github.com/agent-substrate/substrate/issues/3285) | a change of egress policy does not close open connections, which our run confirmed | [6.2](#s-egresspolicy-and-default-deny), [8.5](#s-limits-at-v1-0-0) |
+| [#3285](https://github.com/agent-substrate/substrate/issues/3285) | a change of egress policy does not close open connections, which our run confirmed | [6.6](#s-the-dataplane-choice), [8.5](#s-limits-at-v1-0-0) |
 
 Other sections cite more issues, and each names them in its own text.
 

@@ -10,7 +10,7 @@ We ran kagent v1.0.0. kagent v1.0.1 came out on the day of our run, 2026-11-12, 
 
 ## The install, as we ran it
 
-The documented CLI path worked with no fix. It needs a kind cluster on Kubernetes 1.37 and one command.
+The documented CLI path worked with no fix. We used a kind cluster on Kubernetes 1.37 and one command. We found no document of kagent v1.0.0 that requires that Kubernetes version, and we tested no other.
 
 | Step | Seconds |
 |---|---|
@@ -18,9 +18,18 @@ The documented CLI path worked with no fix. It needs a kind cluster on Kubernete
 | download the kagent CLI v1.0.0 | 5.5 |
 | `kagent --config kagent-config.yaml install --namespace kagent` | 216.1 |
 
-**We measured** each step once, on an x86 server guest with 16 vCPU and 31 GB. The install command took 216 s and ended with exit code 0.
+**We measured** each step once, on a second x86 server guest (16 vCPU, 31 GB). The install command took 216 s and ended with exit code 0.
 
 kagent does not use a Substrate that you installed before. It installs its own distribution of Substrate, from images named `ghcr.io/kagent-dev/substrate/*:v1.0.0`. The install made six Helm releases: `kagent-crds`, `substrate-crds`, `substrate-podcert`, `substrate-atelet`, `substrate`, and `kagent`. In this distribution, `atenet-router` and `atenet-egress` each run one agentgateway v1.7.0 container. It has no Envoy.
+
+The Substrate charts are not in the kagent repository. The installer pulls them from the chart registry of the kagent project. The kagent code builds against the kagent copy of the Substrate repository at v1.0.0 {{kagent}}. The installer also sets four Substrate values that change how the install behaves {{kagent}}.
+
+| What the kagent installer sets | Effect |
+|---|---|
+| The preview features `PerTemplateSnapshotLocation` and `GoldenEgressPolicy` | Both are on. A plain `ate-setup` install has them off. |
+| Two bootstrap owners: the identity of the kagent controller, and `ate-client` | The kagent controller owns the whole install, as `kubectl ate` does. |
+| The ingress allowlist of the router: the SPIFFE ID of the kagent controller | Only the kagent controller can send requests to actors. The `atenet-client` identity of an `ate-setup` install is not in the list. |
+| A namespace policy of the credential provider: atespace `kagent` to namespace `kagent` | Actors in the atespace `kagent` can get Secrets of the namespace `kagent`. |
 
 The install created one WorkerPool, `kagent-default`, with one worker pod. It created no default Harness. Advice that tells you to select a Harness named `kagent-default` describes a later build. At v1.0.0 you write the Harness.
 
@@ -125,13 +134,13 @@ claim: A turn that follows the last one with no pause costs the same as a turn 4
 caption: Each dot is one run, and each column is sorted from the fastest run to the slowest. The black line is the median. Amber columns are the two state changes inside a turn. Plum columns are the whole turn as kagent reports it. From capture/lab/summary/kagent-turns-x86.json.
 ```
 
-**We measured** 98 turns on an x86 server guest with 16 vCPU and 31 GB, with a mock model. The resume took 0.380 s at the median, from 0.216 to 0.542 s. The suspend took 0.142 s at the median over 99 suspends, from 0.120 to 0.398 s. A whole turn took 0.726 s in the cluster and 1.224 s at the client, over 20 turns spaced 4 s apart.
+**We measured** 98 turns on the same second x86 server guest (16 vCPU, 31 GB), with a mock model. The resume took 0.380 s at the median, from 0.216 to 0.542 s. The suspend took 0.142 s at the median over 99 suspends, from 0.120 to 0.398 s. A whole turn took 0.726 s in the cluster and 1.224 s at the client, over 20 turns spaced 4 s apart.
 
 No warm turn exists. Twenty turns with no pause took 0.738 s at the median, against 0.726 s for the spaced turns. The uptime inside the sandbox read 0.6 to 0.9 s on every turn. So you pay about 0.52 s of resume and suspend on each turn, and a real model adds its own time to that.
 
-A files-only resume is this fast only because the kagent harness starts fast. Every such resume is a new start of the image. We ran a Python agent at the same fidelity on a second x86 server guest (16 vCPU, 31 GB). It needed 4.5 to 5.1 s for each turn after a suspend. [Snapshot fidelity](#s-snapshot-fidelity-and-where-a-snapshot-lives) compares the cases.
+A files-only resume is this fast only because the kagent harness starts fast. Every such resume is a new start of the image. We ran a Python agent at the same fidelity on the same guest, on the cluster of the Part 9 demos. It needed 4.5 to 5.1 s for each turn after a suspend. [Snapshot fidelity](#s-snapshot-fidelity-and-where-a-snapshot-lives) compares the cases.
 
-One turn of about 130 took 6.56 s, with a gap of 5.5 s before the resume. We did not find the cause.
+One of the 98 turns, turn 3 of the first session, took 6.56 s, with a gap of 5.5 s before the resume. We did not find the cause.
 
 ## What the snapshot keeps
 
@@ -207,6 +216,8 @@ rules:
 
 The actor never had the key. Its environment held `OPENAI_API_KEY=kagent-credential-injected`, and the mock model received the real value on all 10 calls.
 
+A rotated key is slower here than on Envoy. The gateway, agentgateway v1.7.0, keeps each fetched credential for 300 seconds. So a new value of the Secret can take up to 5 minutes to reach the model calls {{agentgateway}}. This is from the code. A measured check is in progress, and we have no number yet.
+
 Everything else was denied. A request to `example.com` failed in DNS. A request to the IP address `1.1.1.1` returned 403. The short name `mock-llm.kagent` also returned 403, and only the full name `mock-llm.kagent.svc.cluster.local` returned 200. Give kagent full DNS names for model and tool hosts.
 
 ## Parallel turns on one worker
@@ -247,4 +258,4 @@ Start one `kubectl port-forward` to the controller yourself, and point every CLI
 - Keep one standing port-forward for parallel CLI calls.
 ```
 
-Sources: capture/lab/summary/demos-x86.json, capture/lab/K-kagent/install/steps.tsv, capture/lab/K-kagent/install/commands.log, capture/lab/K-kagent/install/40-kagent-install.log, capture/lab/K-kagent/inventory/images.tsv, capture/lab/K-kagent/inventory/helm-list.yaml, capture/lab/K-kagent/inventory/workerpools.yaml, capture/lab/K-kagent/agent/lab-agent.yaml, capture/lab/K-kagent/agent/objects.txt, capture/lab/K-kagent/agent/agent-conditions.trace, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/install-steps.json, capture/lab/K-kagent/latency/timings.tsv, capture/lab/K-kagent/latency/server-times.tsv, capture/lab/K-kagent/latency/D-par-2.err, capture/lab/K-kagent/session1/turn2.out, capture/lab/K-kagent/session1/timings.tsv, capture/lab/K-kagent/session1/egress-policy-actor.yaml, capture/lab/K-kagent/session1/k8s-egresspolicies.yaml, capture/lab/K-kagent/session1/turn5-egress.out, capture/lab/K-kagent/session1/mock.log, capture/lab/K-kagent/parallel/timings.tsv, capture/lab/K-kagent/parallel/workers-during.txt; kagent v1.0.0 source: go/api/v1alpha3 (Harness, AgentTemplate, Agent), go/core/internal/substrate (client.go, actor_template.go), go/core/internal/controller/translator; kagent docs/architecture/runtime-and-lifecycle.md at v1.0.0.
+Sources: capture/lab/summary/demos-x86.json, capture/lab/K-kagent/install/steps.tsv, capture/lab/K-kagent/install/commands.log, capture/lab/K-kagent/install/40-kagent-install.log, capture/lab/K-kagent/inventory/images.tsv, capture/lab/K-kagent/inventory/helm-list.yaml, capture/lab/K-kagent/inventory/workerpools.yaml, capture/lab/K-kagent/agent/lab-agent.yaml, capture/lab/K-kagent/agent/objects.txt, capture/lab/K-kagent/agent/agent-conditions.trace, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/install-steps.json, capture/lab/K-kagent/latency/timings.tsv, capture/lab/K-kagent/latency/server-times.tsv, capture/lab/K-kagent/latency/D-par-2.err, capture/lab/K-kagent/session1/turn2.out, capture/lab/K-kagent/session1/timings.tsv, capture/lab/K-kagent/session1/egress-policy-actor.yaml, capture/lab/K-kagent/session1/k8s-egresspolicies.yaml, capture/lab/K-kagent/session1/turn5-egress.out, capture/lab/K-kagent/session1/mock.log, capture/lab/K-kagent/parallel/timings.tsv, capture/lab/K-kagent/parallel/workers-during.txt; kagent v1.0.0 source: go/api/v1alpha3 (Harness, AgentTemplate, Agent), go/core/internal/substrate (client.go, actor_template.go), go/core/internal/controller/translator, go/core/pkg/install/charts.go, go/core/pkg/install/plan.go (the Substrate values), go/core/pkg/config/defaults.go (the chart registry), go/go.mod; kagent docs/architecture/runtime-and-lifecycle.md at v1.0.0; agentgateway v1.7.0 crates/agentgateway/src/http/substrate/egress.rs (the credential cache).

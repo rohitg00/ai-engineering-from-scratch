@@ -49,7 +49,7 @@ note: One line for each kind of failure. The columns are the start time, the str
 
 The 27 s matter. A dashboard that watches a running actor reports recovery half a minute before a new session can start.
 
-That delay is not a constant. We ran a later drill on a second x86 server guest (16 vCPU, 31 GB), where Postgres was away for about 30 s. There a suspended actor answered 0.4 s after Postgres was ready. Here the outage was 61 s, and resumes failed for 27 s more. We did not find the cause of the difference. [A failure drill](#s-a-failure-drill) shows the short case.
+That delay is the result of one run on one machine. A later drill ran on another machine, a second x86 server guest (16 vCPU, 31 GB), with Postgres away for about 30 s. There a suspended actor answered 0.4 s after Postgres was ready. The two runs differ in the machine and in the length of the outage, so we draw no difference between them. Plan for the longer delay. [A failure drill](#s-a-failure-drill) shows the short case.
 
 Two more signs point at the database. Both `ate-api-server` pods stayed in `Running` and dropped to 1 of 2 ready containers. The CLI then printed `Error: failed to connect to ate-api-server: no ready api pods in ate-system`. That text names the API server, and the cause was Postgres. Check the database first when you see it.
 
@@ -61,7 +61,9 @@ We scaled the `ate-api-server` Deployment to zero for 60 s. Every stream returne
 
 The first failure came 6 s after the scale-down, and the last came 5 s after the scale-up. Recovery needs no action. The router finds the new pods by itself.
 
-Compare the two patterns. Without Postgres the client waits past its timeout. Without `ate-api-server` the client gets a 503 within 5 s. A 503 with the word `unavailable` and nothing after it means the router could not get an answer from the API server.
+Compare the two patterns for the running actor of this run. Without Postgres the client waited past its timeout. Without `ate-api-server` the client got a 503 within 5 s.
+
+Do not read more into the body than it says. A 503 with the word `unavailable` and nothing after it means that the router got no answer from `ate-api-server`. It does not say why. The same body appeared in the Postgres outage: ten resumes of suspended actors got it in this run. In the drill of [section 9.4](#s-a-failure-drill), a running actor and a suspended actor both got it while Postgres was away. So when you see this body, check both: that the `ate-api-server` pods are ready, and that Postgres is up.
 
 [Figure 8.2c](#fig-8-2c) plots the delay of every request in the running stream.
 
@@ -77,7 +79,7 @@ caption: Each rose dot is one failed request to the running actor, at the second
 
 We moved the kube-apiserver manifest out of the node for 86 s. `kubectl` printed `Unable to connect to the server: EOF`.
 
-**We measured** 86 of 86 requests served on the running stream during the outage, and 17 of 17 fresh resumes. From 10 s before the outage to the end of the run, 223 of 223 requests from inside the cluster returned 200. A resume needs a worker, a snapshot, Postgres, and `ate-api-server`. It does not need Kubernetes.
+**We measured** 86 of 86 requests served on the running stream during the 86 s outage, and 17 of 17 resumes of suspended actors. That is 103 of 103 requests from inside the cluster. A wider window has 223 of 223. It runs from 10 s before the outage to the end of the run, 95 s after the manifest was back. A resume needs a worker, a snapshot, Postgres, and `ate-api-server`. It does not need Kubernetes.
 
 The proxy stream is the exception. `kubectl ate proxy` reaches the router through a port-forward, and a port-forward goes through the Kubernetes API server. It served 0 of 81 requests during the outage, and it kept failing for 21 s after the API server was healthy. It failed 105 requests in all. Every `kubectl ate` command failed the same way.
 
@@ -164,9 +166,9 @@ A restart ends. A node that stops and stays down is a different failure, and Sub
 
 | The actor when the node stopped | Result |
 |---|---|
-| Suspended with `--mode sync`, snapshot in the bucket | `RESUMING` on the stopped node from the first request. 504 and 503 for 5 min 44 s, then `CRASHED`. It did not move to the other node. |
+| Suspended with `--mode sync`, snapshot in the bucket | `RESUMING` on the stopped node from the first request. 504 and 503 for 5 min 33 s from that request, then `CRASHED`, 5 min 44 s after the stop command. It did not move to the other node. |
 | The same, with a `revert` before any request | The revert returned `SUSPENDED`. The next request bound the actor to the stopped node again. |
-| Suspended in the default mode, snapshot pending | `RESUMING` for more than 10 min. Two reverts were refused. The next request moved it to `CRASHED`. |
+| Suspended in the default mode, snapshot pending | `RESUMING` for more than 10 min. Two reverts were refused. It was `CRASHED` at the next request, 0.6 s after the second revert attempt. |
 | Running | `RUNNING` for the 10 min of our probe, with 503 `upstream connect error` on each request. A revert left it in `REVERTING`. |
 
 **We measured** these cases on the second x86 server guest (16 vCPU, 23 GB), with gVisor and one actor for each row. The workers of the stopped node were listed as active for 43 to 51 s after the stop command. Kubernetes evicted their pods 5 minutes after that. [Section 4.3](#s-placement) has the timeline and the open question about `revert`. [Section 3.5](#s-crashed-and-revertactor) has the error texts.
@@ -177,7 +179,7 @@ All three outages ran on the Envoy dataplane with one node. We did not repeat th
 
 ```takeaways
 - Read a client timeout followed by `error resuming actor` as a database outage.
-- Read a 503 that ends with `unavailable` as an `ate-api-server` outage.
+- Read a 503 that ends with `unavailable` as `ate-api-server` unreachable, and check Postgres too.
 - Probe actor health from a pod inside the cluster, never through `kubectl ate proxy`.
 - Wait 30 s after Postgres is ready before you trust that new sessions can start.
 - List actors after a database outage and look for `ACTOR_STATE_RESUMING`.

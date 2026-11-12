@@ -36,7 +36,7 @@ kubectl ate --version
 
 ## How a command reaches the control plane
 
-`kubectl ate` does not ask the Kubernetes API for actors. It uses your kubeconfig for one purpose: to open a port-forward to the Service `api` in the namespace `ate-system`. Then it sends a gRPC request through that port-forward to `ate-api-server`, and `ate-api-server` answers from Postgres {{code}}. [Figure 2.2](#fig-2-2) shows that path beside the path of a plain `kubectl` command.
+`kubectl ate` does not ask the Kubernetes API for actors. It uses your kubeconfig to open a port-forward to the Service `api` in the namespace `ate-system`. Without `--token-file`, it also uses the kubeconfig to request a token for the shared `ate-client` ServiceAccount. Then it sends a gRPC request through that port-forward to `ate-api-server`, and `ate-api-server` answers from Postgres {{code}}. [Figure 2.2](#fig-2-2) shows that path beside the path of a plain `kubectl` command.
 
 ```figure
 id: fig-2-2
@@ -60,7 +60,7 @@ Error: failed to connect to ate-api-server: getting api service: Get "https://12
 
 Actors kept serving requests during that outage. Only the CLI and the proxy failed. [Section 2.3](#s-your-first-actor-and-the-proxy) has the numbers.
 
-Second, the flag `--endpoint` skips the port-forward. A program inside the cluster passes the address of `ate-api-server` and dials it directly. Its pod must be in a namespace with the label `ate.dev/api-access=true` {{docs}}. We did not test that label.
+Second, the flag `--endpoint` skips the port-forward. A program inside the cluster passes the address of `ate-api-server` and dials it directly. Its pod must be in a namespace with the label `ate.dev/api-access=true` {{docs}}. We did not set that label ourselves, and we did see the network rule behind it in the kagent run. A pod in `default` could not reach the API, and a pod in `kagent` could. [Section 5.1](#s-client-authentication) has that probe.
 
 ## The shared identity warning
 

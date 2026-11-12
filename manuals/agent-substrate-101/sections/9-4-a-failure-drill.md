@@ -29,7 +29,7 @@ export KIND_NODE=kind-control-plane
 ./drill.sh run | tee my-drill.log
 ```
 
-The script is 170 lines of shell, and the actor is 40 lines of Python. Both are in [the failure drill folder](manuals/agent-substrate-101/capture/demos/failure-drill). The core of each case is short. This is the first one.
+The script is about 200 lines of shell, and the actor is 45 lines of Python. Both are in [the failure drill folder](manuals/agent-substrate-101/capture/demos/failure-drill). The core of each case is short. This is the first one.
 
 ```bash
 actor d1 8701
@@ -118,13 +118,23 @@ note: Cases 5 and 6. Long lines are cut at the mark.
 total 70 s
 ```
 
-A full pool gives a 503 after the 5 second parking budget, and a suspend of another actor frees the room. Without Postgres, a running actor and a suspended actor both return 503 after 5 seconds. The CLI fails too, because `ate-api-server` reports that it has no ready pod.
+A full pool gives a 503 after the 5 second parking budget, and a suspend of another actor frees the room. Without Postgres, a running actor and a suspended actor both return 503 after 5 seconds. The CLI fails too, because it finds no Ready `ate-api-server` pod for its port-forward.
 
 ## What our run adds to the earlier sections
 
-The drill ran on a different guest and a different install from the runs in Part 3 and Part 8. The results agree on every symptom text and every state.
+The drill ran on a different guest and a different install from the runs in Part 3 and Part 8. The symptom texts and the states agree for five of the six cases. The Postgres case does not agree, and you need both sets of symptoms.
 
-One number differs. In the dependency test of [When a dependency is down](#s-when-a-dependency-is-down), new resumes failed for 27 seconds after a Postgres outage of 61 seconds. In the drill, Postgres was away for about 30 seconds, and a suspended actor answered 0.4 seconds after Postgres was ready. We did not find which condition makes the longer delay. Plan for the longer one.
+| | The drill, this section | The dependency test of [When a dependency is down](#s-when-a-dependency-is-down) |
+|---|---|---|
+| Machine | a second x86 server guest (16 vCPU, 31 GB) | a second x86 server guest (16 vCPU, 23 GB) |
+| Postgres away for | about 30 s | 61 s |
+| Running actor | 503 after 5.06 s, `actor demo-drill/d6 unavailable` | no answer until the client timeout of 9 s, then 500 `error resuming actor`, and no 503 |
+| Suspended actor | 503 after 5.05 s, `actor demo-drill/d6s unavailable` | 503 after 5 s with the same `unavailable` text, or 500 `error resuming actor` |
+| First resume that worked | 0.4 s after Postgres was ready | 27 s after Postgres was ready |
+
+So a Postgres outage can look like either pattern to a running actor. One is a hang and then a 500. The other is a 503 with `unavailable` after 5 s, which is also the text of an `ate-api-server` outage. Check the database and the `ate-api-server` pods when you see either one.
+
+The two runs differ in the machine, the install, and the length of the outage. We do not compare their seconds, and we did not find which condition changes the symptom. Plan for the longer recovery.
 
 ## Limits of the drill
 
@@ -146,4 +156,4 @@ Add your own actor to the drill. Replace the image in the template with yours, a
 - Run the drill again after each upgrade, and compare the symptom texts.
 ```
 
-Sources: capture/lab/N-demos/failure-drill/drill-run.log, capture/lab/summary/demos-x86.json, capture/demos/failure-drill/drill.sh, capture/demos/failure-drill/drill_actor.py, capture/lab/N-demos/install/steps.tsv
+Sources: capture/lab/N-demos/failure-drill/drill-run.log, capture/lab/summary/demos-x86.json, capture/lab/E-dependency-loss/20-analysis.txt, capture/lab/summary/dependency-loss-x86.json, capture/demos/failure-drill/drill.sh, capture/demos/failure-drill/drill_actor.py, capture/lab/N-demos/install/steps.tsv

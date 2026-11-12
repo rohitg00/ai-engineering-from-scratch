@@ -53,9 +53,9 @@ The other end is `SNAPSHOT_FIDELITY_MEMORY`, which our counter and our memory te
 
 **We measured** these three actors on the x86 server guest (24 vCPU, 47 GB, nested KVM), with gVisor and one actor for each level. Each actor got 25 requests with 13 suspends between them, and all 75 requests returned 200. The resume column is one request to the suspended actor, timed at the client, with the snapshot on the node. An asynchronous suspend took a median of 0.32 seconds at the two lower levels and 0.54 seconds at the memory level, with 10 suspends each.
 
-A resume at the two lower levels is a cold start of the container. The snapshot is a few KiB, so the cost is the start time of your application. Our Go actor starts in 0.3 seconds, and its resume took 0.5 seconds, twice the resume at the memory level. On the kagent guest, the harness image resumed in a median of 0.38 seconds under `SNAPSHOT_FIDELITY_VOLUMES`.
+A resume at the two lower levels is a cold start of the container. The snapshot is a few KiB, so the cost is the start time of your application. Our Go actor starts in 0.3 seconds, and its resume took 0.5 seconds, twice the resume at the memory level. The kagent run was on a second x86 server guest (16 vCPU, 31 GB). There the harness image resumed in a median of 0.38 seconds under `SNAPSHOT_FIDELITY_VOLUMES`.
 
-A Python agent is slower to start. We ran one on a second x86 server guest (16 vCPU, 31 GB), with three turns at each level. A turn after a suspend took 4.5 to 5.1 seconds under `SNAPSHOT_FIDELITY_VOLUMES`. It took 0.30 to 0.32 seconds under `SNAPSHOT_FIDELITY_MEMORY`. [A stateful agent actor](#s-a-stateful-agent-actor) shows that run.
+A Python agent is slower to start. We ran one on the same guest, on the cluster of the Part 9 demos, with three turns at each level. A turn after a suspend took 4.5 to 5.1 seconds under `SNAPSHOT_FIDELITY_VOLUMES`. It took 0.30 to 0.32 seconds under `SNAPSHOT_FIDELITY_MEMORY`. [A stateful agent actor](#s-a-stateful-agent-actor) shows that run.
 
 ```figure
 id: fig-3-4b
@@ -123,7 +123,7 @@ The object store did not make the random snapshots smaller. Substrate compresses
 | Snapshot cache on the node | 1,765 MiB | 1,765 MiB |
 | Object store | 10,824 MiB | 2,064 MiB |
 
-**We measured** this footprint on the x86 server guest with five actors for each of the five sizes, which hold 8,750 MiB together. Each actor was 3 to 8 minutes old. The 2,064 MiB that stayed in the object store belong to golden snapshots. A template keeps its golden snapshot until you delete the template.
+**We measured** this footprint on the x86 server guest (24 vCPU, 47 GB, nested KVM). The node had five actors for each of the five sizes, which hold 8,750 MiB together. Each actor was 3 to 8 minutes old. The 2,064 MiB that stayed in the object store belong to golden snapshots. A template keeps its golden snapshot until you delete the template.
 
 ```figure
 id: fig-3-4c
@@ -133,7 +133,9 @@ claim: 25 suspended actors that held 8,750 MiB of memory used 8,801 MiB on the n
 caption: Each pair of bars is one place. The full bar is the size with the 25 suspended actors, and the outlined bar is the size after we deleted them. The dashed line marks the memory that the actors hold together. Measured on the x86 server guest. From capture/lab/summary/footprint-x86.json.
 ```
 
-An actor owns one snapshot in the object store. Its next successful suspend replaces that snapshot, and a delete of the actor removes it {{docs}}. So plan the object store for the memory that holds data in all suspended actors, plus one golden snapshot for each template. Plan the node disk for the actors that were suspended in the last 30 minutes.
+An actor owns one snapshot in the object store, or two after an asynchronous suspend. A synchronous suspend deletes the earlier snapshot. An asynchronous suspend keeps it, because the new snapshot is not yet durable. The first suspend after the new snapshot is durable deletes the old one, and a delete of the actor removes both {{docs}}.
+
+So plan the object store for up to two times the memory that holds data in all suspended actors. Add one golden snapshot for each template. Plan the node disk for the actors that were suspended in the last 30 minutes.
 
 ## Two timers decide where the snapshot is
 
@@ -146,7 +148,7 @@ After an asynchronous suspend, atelet runs two timers for each snapshot {{code}}
 - `--snapshot-upload-delay`, 5 minutes by default: the wait before the upload to the object store.
 - `--snapshot-detach-delay`, 30 minutes by default: the time until atelet removes the copy on the node and clears the node assignment of the actor.
 
-We suspended four actors and read their state every 10 seconds for 42 minutes.
+We suspended five actors and read their state every 10 seconds for 42 minutes. The fifth actor, at 1,000 MiB, never got a worker, because the pool had no room. It made no snapshot of its own, so the numbers below are for four actors.
 
 ```listing
 title: the upload, five minutes after the suspend
@@ -170,7 +172,7 @@ note: Two lines for the actor d0. The node name becomes a dash in the fifth colu
 2026-11-12T11:01:13.670Z	d0	state	ACTOR_STATE_SUSPENDED	-	…SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
 ```
 
-**We measured** four actors of 0, 50, 200, and 500 MiB on the x86 server guest, with the default timers. The upload was complete 301 to 311 seconds after the suspend. The node copy was gone 1,801 to 1,803 seconds after the suspend. At that moment the snapshots on the node shrank from 758 MiB to 1 MiB. Each time can be up to 10 seconds late, because that was our sample interval.
+**We measured** four actors on the x86 server guest (24 vCPU, 47 GB, nested KVM), with the default timers. They held 0, 50, 200, and 500 MiB. The upload was complete 301 to 311 seconds after the suspend. The node copy was gone 1,801 to 1,803 seconds after the suspend. At that moment the snapshots on the node shrank from 758 MiB to 1 MiB. Each time can be up to 10 seconds late, because that was our sample interval.
 
 ```figure
 id: fig-3-4
@@ -188,7 +190,7 @@ The three periods mean three different things for you.
 
 The documentation promises neither the start nor the end of the upload {{docs}}. Treat 5 minutes as the shortest exposure, not as a limit.
 
-Our position: do not accept the first period for state that matters. A synchronous suspend closes it for one actor. A shorter `--snapshot-upload-delay` on atelet closes it for the cluster. We ran atelet with 3 seconds and 10 seconds for one test, and all 40 requests of that test succeeded. A short detach delay saves node disk and makes every resume a download.
+Our position: do not accept the first period for state that matters. A synchronous suspend closes it for one actor. A shorter `--snapshot-upload-delay` on atelet closes it for the cluster. We ran atelet with 3 seconds and 10 seconds for one test, and all 55 requests of that test succeeded. A short detach delay saves node disk and makes every resume a download.
 
 ```takeaways
 - Choose SNAPSHOT_FIDELITY_MEMORY only when the processes must continue.

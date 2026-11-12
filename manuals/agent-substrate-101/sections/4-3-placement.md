@@ -130,7 +130,7 @@ Our reading of the code said that an actor with a durable snapshot forgets a nod
 id: fig-4-3b
 kind: timeline
 title: a suspended actor after its node stops
-claim: A suspended actor with a complete snapshot stayed in RESUMING on its stopped node for 5 min 33 s and then became CRASHED.
+claim: A suspended actor with a complete snapshot stayed in RESUMING for 5 min 33 s from its first request, on a stopped node, then became CRASHED.
 caption: Read left to right from the stop command. The tracks are the node, its two workers as the API lists them, the state of the actor u1, and one bar for each request. Amber is the step state and rose is failure. From capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/96-controller-events.log and capture/lab/L-gaps/multinode/98-worker-state-rpcs.log.
 ```
 
@@ -153,9 +153,9 @@ Second, what happened to the actor in each of the four runs.
 
 | The actor when the node stopped | What the caller saw | The actor state |
 |---|---|---|
-| Suspended with `--mode sync`, snapshot `COMPLETED`, then a request every few seconds | 504 after the client timeout of 10 s, then 503 `actor lab-n/u1 unavailable` after 5 to 8 s. After 5 min 44 s, 503 at once with `AssignWorker prerequisite not met` | `RESUMING` on the stopped node from the first request, then `CRASHED` |
-| The same, with a `revert` 31 s after the stop command and before any request | The `revert` returned `SUSPENDED` with no node. The first request then bound the actor to a worker of the stopped node, and each request got 503 | `RESUMING` on the stopped node for the 2.5 min that we probed |
-| Suspended in the default mode, snapshot `PENDING`, requests for 2 min and then none | 504, then 503. A `revert` after the first request failed: `another operation is in progress for this actor` | Still `RESUMING` 10 min 42 s after the stop command, with no request in the last 8 min 43 s. A second `revert` failed: `not in a revertable state`. The next request moved it to `CRASHED` |
+| Suspended with `--mode sync`, snapshot `COMPLETED`, then a request every few seconds | 504 after the client timeout of 10 s, then 503 `actor lab-n/u1 unavailable` after 5 to 8 s. From 5 min 44 s after the stop command, 503 at once with `AssignWorker prerequisite not met` | `RESUMING` on the stopped node from the first request, then `CRASHED` |
+| The same, with a `revert` 31 s after the stop command and before any request | The `revert` returned `SUSPENDED` with no node. The first request then bound the actor to a worker of the stopped node. It got 504 at the client timeout of 10 s, and each of the next 19 requests got 503 | `RESUMING` on the stopped node for the 2.5 min that we probed |
+| Suspended in the default mode, snapshot `PENDING`, requests for 2 min and then none | 504, then 503. A `revert` after the first request failed: `another operation is in progress for this actor` | Still `RESUMING` 10 min 42 s after the stop command, with no request in the last 8 min 43 s. A second `revert` failed: `not in a revertable state`. The actor was `CRASHED` at the next request, 0.6 s after that second attempt. The trace cannot say which of the two caused the change |
 | `RUNNING` on the node | 503 for each of 150 requests: `upstream connect error or disconnect/reset before headers`. A `revert` failed: `while calling atelet Terminate` | `RUNNING` for the 10 min that we probed, then `REVERTING` after the failed revert |
 
 ```listing
@@ -174,9 +174,9 @@ note: Seven lines of the trace. The 40 requests between the second request and t
 2026-11-12T12:08:20.312Z	probe	503	3.190662	actor lab-n/u1 unavailable: AssignWorker prerequisite not met for Actor: lab-n/u1 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)	|	ACTOR_STATE_CRASHED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
 ```
 
-**A suspended actor did not move to the other node.** This is the result that is against our reading of the code. In the first run the snapshot was complete in the object store, and the other node had two free workers. The actor still stayed bound to the stopped node, and after 5 min 44 s it was `ACTOR_STATE_CRASHED`. Substrate v1.0.0 did not move an actor off a dead node by itself in any of our runs.
+**A suspended actor did not move to the other node.** This is the result that is against our reading of the code. In the first run the snapshot was complete in the object store, and the other node had two free workers. The actor still stayed bound to the stopped node. It was in `ACTOR_STATE_RESUMING` for 5 min 33 s from its first request, and it was `ACTOR_STATE_CRASHED` 5 min 44 s after the stop command. Substrate v1.0.0 did not move an actor off a dead node by itself in any of our runs.
 
-A `revert` did not free the actor either, in 3 of 3 attempts. In the second run it came too early. The workers of the stopped node were still listed as active, and the next request chose one of them. In the third run the resume that was in progress blocked the revert. In the fourth run the revert needed `atelet` on the stopped node, and the actor stayed in `ACTOR_STATE_REVERTING`.
+A `revert` did not free the actor either, in 4 of 4 attempts in three runs. In the second run it came too early. The workers of the stopped node were still listed as active, and the next request chose one of them. In the third run the resume that was in progress blocked both attempts. In the fourth run the revert needed `atelet` on the stopped node, and the actor stayed in `ACTOR_STATE_REVERTING`.
 
 One question is open. Does a `revert` that you send after the workers are marked unavailable let the actor resume on the other node from its durable snapshot? We have not verified that. Until someone does, treat a stopped node as an outage for every actor that is bound to it.
 

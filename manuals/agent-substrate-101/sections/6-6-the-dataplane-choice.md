@@ -10,7 +10,9 @@ When you finish this section, you can choose a dataplane for a cluster and give 
 
 **Dataplane:** the proxy software inside the pods `atenet-router` and `atenet-egress`. The flag `--atenet-dataplane` takes `envoy`, the default, or `agentgateway`. One value applies to both pods.
 
-The Substrate API does not change with the flag. Actors, policies, and `kubectl ate` work the same. What changes is the code that enforces a policy. On the Envoy dataplane, a Substrate process beside Envoy makes each decision. On the agentgateway dataplane, policy code inside agentgateway v1.7.0 makes it {{code}}. Two implementations of one policy explain every difference in this section.
+The Substrate API does not change with the flag. Actors, policies, and `kubectl ate` work the same. What changes is the code that enforces a policy.
+
+On the Envoy dataplane, two pieces of Substrate code decide. A Substrate process beside Envoy authenticates the actor, decides each HTTP request, and supplies the rules. A Substrate module that Envoy loads into its own process decides TLS connections by server name. On the agentgateway dataplane, policy code inside agentgateway v1.7.0 makes it {{code}}. Two implementations of one policy explain every difference in this section.
 
 You can switch a running cluster. Run `deploy ate-system` again with the same flags and the new value.
 
@@ -48,7 +50,7 @@ claim: The Envoy dataplane spreads its work over five containers and 91 MB, and 
 caption: Each bar is one dataplane, each box is one container, and each bracket is one pod. The width of a box is the idle memory of that container in MB, from one sample soon after start. The heavy outline marks the container that holds the CA key. From capture/lab/G-dataplane/envoy/13-crictl-stats-atenet.txt and capture/lab/G-dataplane/agentgateway/13-crictl-stats-atenet.txt.
 ```
 
-**We measured** idle memory with one sample for each container, soon after start, on the second x86 server guest. The five Envoy dataplane containers held 25.6, 21.6, 22.8, 12.0, and 8.9 MB. The two agentgateway containers held 19.9 and 17.8 MB. We did not measure memory, latency, or throughput under load on either dataplane.
+**We measured** idle memory with one sample for each container, soon after start, on a second x86 server guest (16 vCPU, 23 GB). The five Envoy dataplane containers held 25.6, 21.6, 22.8, 12.0, and 8.9 MB. The two agentgateway containers held 19.9 and 17.8 MB. We did not measure memory, latency, or throughput under load on either dataplane.
 
 Three rows need a comment.
 
@@ -64,7 +66,7 @@ You remove a host from a policy because you want the actor to stop talking to it
 
 Two mechanisms are behind it. The gateway keeps the policy of an actor in a cache, 10 seconds by default on Envoy, so a change takes effect late {{code}}. And a decision is not revisited: an `http` or `https` decision holds for the request, and a `tlsPassthrough` decision holds for the connection {{docs}}.
 
-**We measured** each case once for each dataplane, on the second x86 server guest, with a poll about every 2 seconds. Zero is the moment the update returned.
+**We measured** each case once for each dataplane, on the second x86 server guest (16 vCPU, 23 GB), with a poll about every 2 seconds. Zero is the moment the update returned.
 
 | After the rule is removed | Envoy dataplane | agentgateway dataplane |
 |---|---|---|

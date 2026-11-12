@@ -1,8 +1,10 @@
 # kubectl ate commands
 
-> The `kubectl ate` plugin at v1.0.0 has 11 verbs over seven resources, and each command is one call to the Substrate API.
+> The `kubectl ate` plugin at v1.0.0 has 11 verbs over seven resources, and most commands are one call to the Substrate API.
 
 The plugin is the binary `kubectl-ate`. It finds `ate-api-server` through your kubeconfig and opens a port-forward for each command, unless you pass `--endpoint`. [Section 2.2](#s-kubectl-ate) shows how to install and use it. In our runs we built it from the checkout with `go install ./cmd/kubectl-ate`.
+
+Three kinds of command do more or less than one call. `logs actor` also reads the logs of the worker pod through the Kubernetes API. `proxy actor` sends its traffic through `atenet-router` and not through `ate-api-server`. The `admin` commands write Kubernetes Secrets and call no Substrate API.
 
 ## Global flags
 
@@ -45,6 +47,7 @@ Global Flags:
 | `--token-file` | you act as your own identity. Without it the CLI uses a shared ServiceAccount and prints a warning, as [section 5.1](#s-client-authentication) explains. |
 | `-o yaml` | you need the `uid`, the `version`, or the snapshots of an object |
 | `--preview` | the server has a preview feature on and you want to use it |
+| `--version` | you want the version of the plugin. It is a flag of the root command only, so the help text of a subcommand above does not list it. It has no `-v` short form, because `-v` means `--verbose`. |
 
 ## Actors
 

@@ -2,7 +2,9 @@
 
 > An actor has seven states, a snapshot has two storage states, and a worker has three, and each one changes what a request returns.
 
-The names and numbers below come from the proto file at v1.0.0. The "what a request returned" column comes from our runs on an x86 server guest (24 vCPU, 47 GB, nested KVM), through `kubectl ate proxy`. Store and compare the names. The numbers changed before 1.0.0, as [section 8.4](#s-upgrade-and-stale-advice) explains.
+The names and numbers below come from the proto file at v1.0.0. Store and compare the names. The numbers changed before 1.0.0, as [section 8.4](#s-upgrade-and-stale-advice) explains.
+
+The "what a request returned" column comes from our runs, through `kubectl ate proxy`. Most rows are from the x86 server guest (24 vCPU, 47 GB, nested KVM). The rows for a stopped node and for the database outage are from a second x86 server guest (16 vCPU, 23 GB). Those are `ACTOR_STATE_RESUMING` and `ACTOR_STATE_REVERTING` in the first table, and the stopped-node rows of the second.
 
 ## Actor states
 
@@ -10,7 +12,7 @@ The names and numbers below come from the proto file at v1.0.0. The "what a requ
 |---|---|---|---|
 | 1 | `ACTOR_STATE_RESUMING` | A worker is bound, and the sandbox is being restored. | 504 at the client timeout, then 503 `actor lab-n/u1 unavailable`, for an actor on a stopped node. One other actor stayed in this state after a database outage. |
 | 2 | `ACTOR_STATE_RUNNING` | The actor holds a worker and serves requests. | 200 in 0.06 to 0.09 s |
-| 3 | `ACTOR_STATE_SUSPENDING` | The worker writes a checkpoint. | not recorded |
+| 3 | `ACTOR_STATE_SUSPENDING` | The worker writes a checkpoint. | A request that was open when the suspend started got a 503. A new request in this state was not tested. |
 | 4 | `ACTOR_STATE_SUSPENDED` | The actor holds no worker. It has a snapshot, or it never ran. | 200 in 0.36 s, after a resume |
 | 5 | `ACTOR_STATE_CRASHED` | The sandbox or its worker was lost, or a resume failed. | 503 in 0.06 s, `AssignWorker prerequisite not met` |
 | 6 | `ACTOR_STATE_DELETING` | The workload is being stopped, and the record is removed next. | 503 in 0.06 to 0.08 s, `AssignWorker prerequisite not met` |
@@ -41,14 +43,17 @@ caption: Read from SUSPENDED at the left. The number in each box is the enum val
 | RUNNING | CRASHED | The node restarted. | yes |
 | RUNNING | RUNNING | The process exited and the sandbox stayed. No transition occurs. | yes, for at least 20 min |
 | RUNNING | RUNNING | The node of the actor stopped. No transition occurs. | yes, for at least 10 min |
-| RESUMING | CRASHED | The node of the actor stopped before or during the resume. | yes, after 5 min 44 s with requests |
+| RESUMING | CRASHED | The node of the actor stopped before or during the resume. | yes, 5 min 44 s after the stop command, after 5 min 33 s in RESUMING with requests |
 | RUNNING or CRASHED | REVERTING, then SUSPENDED | `RevertActor` | yes, from CRASHED in 0.22 s |
-| SUSPENDED with a node-local snapshot | REVERTING, then SUSPENDED | `RevertActor`, which discards the snapshot that is not yet durable | from the code |
+| SUSPENDED with a node-local snapshot | REVERTING, then SUSPENDED | `RevertActor`, which discards the copy on the node. The snapshot itself is lost only if its upload is not yet complete. | from the code |
+| REVERTING | REVERTING, then SUSPENDED | A second `RevertActor`, which continues a revert that stopped part-way | from the code, and a run is in progress |
+| RUNNING | RUNNING | `ResumeActor` on a running actor returns it unchanged, with `resumed=false`. The router relies on this for every request. | yes, on every request to a running actor |
 | any | DELETING, then removed | `DeleteActor` | yes |
 
-Three rules follow from the table.
+Four rules follow from the table.
 
-- `ResumeActor` accepts only a suspended actor, or an actor that is already resuming. On a crashed actor it returns `FAILED_PRECONDITION`.
+- `ResumeActor` accepts a suspended actor, an actor that is already resuming, and a running actor, which it returns unchanged. On a crashed actor it returns `FAILED_PRECONDITION`.
+- `RevertActor` accepts an actor that is already reverting, so a second revert is the way out of a revert that stopped.
 - A crashed actor never leaves that state by itself. Something must call `RevertActor` or `DeleteActor`.
 - A revert returns the actor to its last completed durable snapshot. Calls that came after that snapshot are lost.
 
@@ -56,7 +61,7 @@ Three rules follow from the table.
 
 | State | Meaning | How long, in our runs |
 |---|---|---|
-| `SNAPSHOT_STORAGE_STATE_PENDING` | The snapshot is on one node and is not in the bucket. | 5 min 2 s after an asynchronous suspend, with default timers |
+| `SNAPSHOT_STORAGE_STATE_PENDING` | The snapshot is on one node and is not in the bucket. | 5 min 1 s to 5 min 11 s after an asynchronous suspend, with default timers, for four actors |
 | `SNAPSHOT_STORAGE_STATE_COMPLETED` | The snapshot is in the bucket. | reached before a synchronous suspend returns |
 
 The `locality` field of a snapshot names the node that still has a local copy. It was set for 30 minutes after the suspend in our run, and absent after that. The `owner` field is `SNAPSHOT_OWNER_ACTOR` for a snapshot of the actor itself and `SNAPSHOT_OWNER_TAG` for a golden or tagged snapshot.

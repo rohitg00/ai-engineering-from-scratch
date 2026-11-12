@@ -8,7 +8,7 @@ When you finish this section, you can build an agent actor that keeps its conver
 
 ## The agent
 
-The demo agent is one Python file of 90 lines with no dependencies. It serves three paths.
+The demo agent is one Python file of 97 lines with no dependencies. It serves three paths.
 
 - `POST /chat` adds your message to the conversation, calls the model, and stores both messages.
 - `POST /note` keeps a text in a Python variable and in a file under `/tmp`. Nothing durable holds it.
@@ -58,6 +58,8 @@ rules:
     hostnames:
     - mock-llm.demo-agent.svc.cluster.local
     ports:
+      numbers:
+      - 80
 ```
 
 The model in this demo is a mock server in the cluster, not a real model. It answers from the messages that it receives, and it reports which key arrived. In every one of the 16 model calls of our two sessions it reported the real key. [Credential injection](#s-credential-injection) explains the mechanism and its limits.

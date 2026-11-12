@@ -1,6 +1,6 @@
 # Install with ate-setup
 
-> Install from the release images: `deploy ate-system` took 162 s that way and 266 s from source, after a failure that the upstream quickstart does not mention.
+> Install from the release images: that path skips the image builds, the Rust compile, and a failure that the upstream quickstart does not mention.
 
 You follow a quickstart on a clean machine. The third command runs for almost three minutes and then stops with an error from Docker about a flag you never typed. We hit that error on our first install, and you do not need to.
 
@@ -64,7 +64,7 @@ The installer prints every setting first, and then one line for each step. These
 title: the install from the release images
 source: capture/lab/G-dataplane/00-install/20-deploy-ate-system-prebuilt.log
 lang: text
-note: Seven lines from 140. The settings table, the secrets, and the other rollout lines are cut.
+note: Seven lines from 142. The settings table, the secrets, and the other rollout lines are cut.
 ---
 >> Downloading kata-static 4.3.1 (amd64)...
 >> Downloading cloud-hypervisor v53.0 (cloud-hypervisor-static)...
@@ -78,7 +78,7 @@ note: Seven lines from 140. The settings table, the secrets, and the other rollo
   (rollout status deployment/k8s-credential-provider took 0.003s)
 ```
 
-The first two lines show a download that the release images do not remove. The installer fetches the guest files of the microVM class from GitHub on every install. The installer documents `--sandbox-classes=gvisor` to install gVisor only {{docs}}. We ran that flag for one install, on a cluster with three kind nodes, and the system step took 114 s.
+The first two lines show a download that the release images do not remove. The installer fetches the guest files of the microVM class from GitHub on the first install from a directory, and it keeps them under `bin/microvm-assets`. A later install from the same directory skips the download when the files and their version stamp are present {{code}}. The installer documents `--sandbox-classes=gvisor` to install gVisor only {{docs}}. We ran that flag for one install, on a cluster with three kind nodes on the second x86 server guest (16 vCPU, 23 GB). The system step took 114 s.
 
 ## Deploy the counter demo
 
@@ -98,17 +98,17 @@ This step builds two images with ko and pushes them to `kind-registry`, also on 
 id: fig-2-1
 kind: chart
 title: install steps from the release images and from source
-claim: From the release images deploy ate-system took 162 s, and from source it failed after 163 s and then took 266 s.
-caption: Each bar is one step of one install, on an axis in seconds. The two installs ran on two x86 guests of different sizes. The rose bar is the failed step. From capture/lab/summary/install-steps.json.
+claim: From the release images deploy ate-system took 162 s on one guest, and from source on a larger guest it failed, then took 266 s.
+caption: Each bar is one step of one install, on an axis in seconds. The two installs ran on two x86 guests of different sizes, so read each group alone. The rose bar is the failed step. From capture/lab/summary/install-steps.json.
 ```
 
-**We measured** the release-image install once on an x86 server guest with 16 vCPU and 23 GB. The kind cluster took 55 s, `deploy ate-system` took 162 s, and `deploy demo counter` took 94 s. The disk held 13 GB afterwards.
+**We measured** the release-image install once on a second x86 server guest (16 vCPU, 23 GB). The kind cluster took 55 s, `deploy ate-system` took 162 s, and `deploy demo counter` took 94 s. The disk held 13 GB afterwards.
 
-**We measured** the build from source once on an x86 server guest with 24 vCPU and 47 GB. The first `deploy ate-system` failed after 163 s. After we installed one package, the same command took 266 s, and the demo took 47 s. The disk held 18 GB afterwards.
+**We measured** the build from source once on the x86 server guest (24 vCPU, 47 GB, nested KVM). The first `deploy ate-system` failed after 163 s. After we installed one package, the same command took 266 s, and the demo took 47 s. The disk held 18 GB afterwards.
 
 **We measured** the release-image install once on an Apple silicon laptop under Docker Desktop. The kind cluster took 119 s, and `deploy ate-system` took 702 s. The longest wait in its log was 178 s for the object store pod. The kind node held 2.7 GiB of memory after the install.
 
-The two x86 guests differ in size, and the smaller one ran the faster install. So the difference comes from the path. The laptop is another machine on another network, so keep its seconds apart from the seconds of the guests.
+The two x86 installs ran on different guests, so the difference of 104 s between 162 s and 266 s is indicative only. It is not a controlled comparison. What we can state without a number is what each path does. The release-image path skips the image builds and the Rust compile, and the next heading shows both in the source log. The laptop is a third machine on another network, so keep its seconds apart from the seconds of the guests.
 
 ## What the build from source costs
 
@@ -162,7 +162,7 @@ go run ./cmd/ate-setup deploy ate-system \
   --atenet-dataplane=agentgateway
 ```
 
-**We measured** this switch once on the x86 server guest with 16 vCPU. It took 32 s and needed no new cluster. [Section 6.6](#s-the-dataplane-choice) compares the two dataplanes.
+**We measured** this switch once on the second x86 server guest (16 vCPU, 23 GB). It took 32 s and needed no new cluster. [Section 6.6](#s-the-dataplane-choice) compares the two dataplanes.
 
 ## If the install fails
 

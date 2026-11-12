@@ -49,7 +49,7 @@ module.exports = figure('fig-4-5', {
   slots(f, 345, 162, 8, 8, waiting, 28);
   f.text(478, 210, '8 more turns wait for a free CPU', { size: 11, anchor: 'middle', hue: 'amber' });
   f.text(336, 252, '24 turns at once, all completed', { size: 11.5 });
-  f.text(336, 270, 'in 4.3 to 7.8 s on the kagent guest', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(336, 270, 'in 4.3 to 7.8 s in the kagent run', { size: 11, serif: true, hue: 'ink-soft' });
 
   const legend = [[running, 'running actor, 1 CPU', 20], [waiting, 'waits', 180], [refused, 'refused', 244]];
   for (const [style, label, x] of legend) {

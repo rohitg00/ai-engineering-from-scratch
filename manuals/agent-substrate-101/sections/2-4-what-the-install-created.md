@@ -131,7 +131,7 @@ kind-control-plane kindest/node:v1.37.0
 kind-registry registry:3
 ```
 
-The second is a file. `ate-setup` records the settings of each install under `~/.cache/ate-setup/installs/`, one file for each kubeconfig context. Keep that file. It tells you later which flags the running cluster was installed with.
+The second is a file. `ate-setup` records the settings of each install in the cache directory of your user, one file for each kubeconfig context. That is `~/.cache/ate-setup/installs/` on Linux and `~/Library/Caches/ate-setup/installs/` on macOS, and the flag `--record-dir` names another place {{code}}. Keep that file. It tells you later which flags the running cluster was installed with.
 
 ```takeaways
 - Use kubectl for WorkerPools and kubectl ate for everything else.

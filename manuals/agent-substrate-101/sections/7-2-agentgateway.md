@@ -39,7 +39,11 @@ Choose agentgateway when memory on each node matters to you. Before production, 
 
 ## Place B: the dataplane inside the kagent distribution
 
-kagent installs its own distribution of Substrate, as [kagent 1.0 on Substrate](#s-kagent-on-substrate) shows. In that distribution agentgateway is the only dataplane. Our cluster ran agentgateway v1.7.0 in `atenet-router` and in `atenet-egress`, and the charts have no Envoy option {{kagent}}.
+kagent installs its own distribution of Substrate, as [kagent 1.0 on Substrate](#s-kagent-on-substrate) shows. In that distribution agentgateway was the only dataplane that we saw. Our cluster ran agentgateway v1.7.0 in `atenet-router` and in `atenet-egress` {{run}}. The values that the kagent installer passes to the Substrate charts name no dataplane {{kagent}}. The charts themselves are not in the kagent repository, so we could not check them for an Envoy option.
+
+One cost of this dataplane is specific to credentials. The gateway, agentgateway v1.7.0, keeps each fetched credential for 300 seconds. So a rotated Secret can take up to 5 minutes to reach requests {{agentgateway}}. With Envoy and the bundled provider, the next request gets the new value.
+
+This is from the code, and it applies to place A and to place B. A measured check is in progress, and we have no number yet. [Credential injection](#s-credential-injection) has the detail.
 
 We saw the same two costs as in place A. The egress gateway ran with `RUST_LOG=debug`, and 3,376 of its 4,199 log lines in 3 minutes were debug lines. The CA private key was mounted in its container.
 
@@ -106,11 +110,11 @@ The actor can then reach no model host directly, and the second gateway decides 
 
 We did not run this design. We ran its two Substrate parts. In the kagent run, one egress rule replaced the `authorization` header on 10 of 10 calls to a mock model. In the egress tests, the credential swap worked on both dataplanes. We did not run a model gateway behind egress, and we did not use a real model.
 
-Three limits of the egress gateway apply to this design, and [EgressPolicy and default deny](#s-egresspolicy-and-default-deny) proves each one:
+Three limits of the egress gateway apply to this design, and one section proves each:
 
-- The gateway replaces a header only when the request already has that header. A request with no `authorization` header passed unchanged.
-- A WebSocket upgrade returned 403, so the gateway behind egress must use plain HTTP requests or streamed HTTP responses.
-- A removed rule does not close an open connection.
+- The gateway replaces a header only when the request already has that header. A request with no `authorization` header passed unchanged. [Credential injection](#s-credential-injection) has that run.
+- A WebSocket upgrade returned 403, so the gateway behind egress must use plain HTTP requests or streamed HTTP responses. [EgressPolicy and default deny](#s-egresspolicy-and-default-deny) has that run.
+- A removed rule does not close an open connection. [The dataplane choice](#s-the-dataplane-choice) has that run.
 
 ```takeaways
 - Find the place of agentgateway in your cluster before you promise a policy.

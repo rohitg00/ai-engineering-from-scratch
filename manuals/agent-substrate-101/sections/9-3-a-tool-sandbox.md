@@ -10,7 +10,7 @@ When you finish this section, you can run commands that you do not trust inside 
 
 **Tool sandbox:** an actor whose only job is to run commands for an agent. It has no credential, no route out except the ones you list, and no state that you keep.
 
-The demo actor is 35 lines of Python. It accepts a command, runs it with `sh -c` in the directory `/work`, and returns the exit code and the output.
+The demo actor is 38 lines of Python. It accepts a command, runs it with `sh -c` in the directory `/work`, and returns the exit code and the output.
 
 ```python
 task = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
@@ -47,11 +47,14 @@ rules:
       - 80
 ```
 
-The second is the pair of limits in the template: 500 millicores and 256 MiB. The third is the golden snapshot of the template. A new actor starts from it, and `RevertActor` returns the actor to it.
+The second is the pair of limits in the template: 500 millicores and 256 MiB. The third is the golden snapshot of the template. A new actor starts from it.
+
+`RevertActor` returns an actor to its latest durable snapshot {{code}}. That snapshot is the golden snapshot only while the actor has never had a suspend of its own made durable. This demo never suspends the actor, so each revert here returns the golden state. An actor that something suspends, such as an idle suspender, gets its own durable snapshot, and a later revert returns to that one.
 
 ```bash
 kubectl ate create actor task-1 -a demo-tools --template sandbox
 kubectl ate create egress-policy task-1 -a demo-tools -f egress-policy.yaml
+kubectl ate proxy actor task-1 -a demo-tools 8901:80 &
 python3 client.py 8901 'wget -q -O hello.txt http://pkg-mirror.demo-tools.svc.cluster.local/hello-1.0.txt'
 kubectl ate revert actor task-1 -a demo-tools
 ```
@@ -108,7 +111,11 @@ memory hog on a 256 MiB limit	clean-check	RUNNING	200	0.44	{"exit": 0, "stdout":
 
 The memory limit works as a hard stop. A command that allocated 640 MiB ended the whole sandbox. The client got a 503 after 4.52 seconds, the actor was `CRASHED`, and one revert returned a clean actor.
 
-The CPU limit did not slow the command in our run. A loop that used 2.0 seconds of CPU time finished in 2.38 seconds on a limit of 500 millicores. A hard limit of half a CPU would need about 4 seconds. Treat the CPU value of a template as the number that placement counts, and do not rely on it to slow a busy command. We did not test other ways to cap CPU.
+The CPU limit did not slow the command in our run. A loop that used 2.0 seconds of CPU time finished in 2.38 seconds on a limit of 500 millicores. A hard limit of half a CPU would need about 4 seconds.
+
+That result disagrees with the code and the documentation. The worker writes a CPU quota from `cpuMillicores` into the sandbox. For this template the quota is 50 ms of CPU time in each 100 ms period {{code}}. The documentation says that the node kernel slows a gVisor actor to its quota {{docs}}.
+
+We have one run, on one kind node, and we did not find the cause. Read it as an unexplained result that is under test, not as a rule. Until you measure the quota on your own nodes, do not count on it to slow a busy command.
 
 ## What a revert costs
 
@@ -120,21 +127,22 @@ That number depends on the golden snapshot. This actor holds a Python process an
 
 - The actor has no authentication. A caller that can reach it can run commands. Put it behind your agent, and give the router a strict allow list.
 - We did not run a command that starts processes without end.
-- The mirror is one in-cluster server over HTTP. A public package index needs an `https` rule and the trust bundle.
+- The mirror is one in-cluster server over HTTP. A public package index needs a `tlsPassthrough` rule, which needs no trust bundle. Use an `https` rule and the trust bundle only if the gateway must read the request or inject a credential.
 - gVisor is the isolation here. We did not run this demo on the microVM class.
 - A command can fill `/work` and the root file system up to the memory and disk that the worker allows. We did not test a disk limit.
 
 ## What to change for production
 
-Use one actor for each task or each user, and delete it at the end. A new actor starts from the same golden snapshot as a revert, and a new name leaves no doubt about old state. We did not time the two against each other.
+Use one actor for each task or each user, and delete it at the end. Only a new actor is certain to start from the golden snapshot. A revert returns to the latest durable snapshot of the actor, and a suspend during a task can make the state of that task durable. If anything in your system can suspend a sandbox actor, delete it and create a new one after each task. A new name also leaves no doubt about old state. We did not time a revert against a delete and a create.
 
 Write the egress policy before the first command runs. An actor with no policy can reach nothing, which is the safe default. List package hosts by full name, and never add a rule for a host that also holds your data.
 
 ```takeaways
 - Give a sandbox actor one egress rule for each host it needs, and nothing else.
 - Revert the actor after each task, and check that the work directory is empty.
+- Delete and recreate the actor when a suspend could have made the state of a task durable.
 - Set a memory limit that fits the largest tool, and expect a crash above it.
-- Do not use the CPU value of a template to slow a command.
+- Measure the CPU quota on your own nodes before you count on it to slow a command.
 ```
 
-Sources: capture/lab/N-demos/tool-sandbox/tasks.tsv, capture/lab/N-demos/tool-sandbox/egress-policy-live.yaml, capture/lab/N-demos/tool-sandbox/lifecycle.log, capture/lab/summary/demos-x86.json, capture/demos/tool-sandbox/sandbox.py, capture/demos/tool-sandbox/template.yaml, capture/demos/tool-sandbox/run.sh
+Sources: capture/lab/N-demos/tool-sandbox/tasks.tsv, capture/lab/N-demos/tool-sandbox/egress-policy-live.yaml, capture/lab/N-demos/tool-sandbox/lifecycle.log, capture/lab/summary/demos-x86.json, capture/demos/tool-sandbox/sandbox.py, capture/demos/tool-sandbox/template.yaml, capture/demos/tool-sandbox/run.sh; api/ateapi/v1/ateapi.proto (RevertActor, EgressRule), internal/ocispec/ocispec.go (the CPU quota), docs/reference/sandbox-classes.md and docs/guides/egress-trust-bundle.md at v1.0.0

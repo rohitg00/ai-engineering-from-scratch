@@ -15,12 +15,19 @@ The check rebuilds the summaries in a temporary folder and compares them with th
 
 | Name in the manual | Machine | Software |
 |---|---|---|
-| the x86 server guest | a KVM guest on an x86 server, 24 vCPU, 47 GB, nested KVM, Ubuntu 24.04 | Docker 29.1.3, Go 1.27.3, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor, and the microVM class for `L-gaps/microvm` |
-| the second x86 guest | 16 vCPU, 23 GB, same host | Agent Substrate v1.0.0 from the release images, Envoy and then agentgateway v1.7.0. For `L-gaps/multinode`, a second kind cluster with one control plane node and two worker nodes |
-| the kagent guest | 16 vCPU, 31 GB, same host | kagent v1.0.0 with its own Substrate distribution, a mock model server in the cluster |
+| the x86 server guest (24 vCPU, 47 GB, nested KVM) | a KVM guest on an x86 server, 24 vCPU, 47 GB, nested KVM, Ubuntu 24.04 | Docker 29.1.3, Go 1.27.3, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor, and the microVM class for `L-gaps/microvm` |
+| a second x86 server guest (16 vCPU, 23 GB) | 16 vCPU, 23 GB, same host | Agent Substrate v1.0.0 from the release images, Envoy and then agentgateway v1.7.0. For `L-gaps/multinode`, a second kind cluster with one control plane node and two worker nodes |
+| a second x86 server guest (16 vCPU, 31 GB) | 16 vCPU, 31 GB, same host | Two clusters, one after the other. For `K-kagent`: kagent v1.0.0 with its own Substrate distribution, a mock model server in the cluster. For `N-demos`: Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor |
 | the Mac | an Apple silicon laptop under Docker Desktop, 10 CPU and 8 GB for Docker | Agent Substrate v1.0.0 from the release images, gVisor only |
 
-The guests and the Mac are different machines. Do not compare a number from one with a number from another.
+The guests and the Mac are different machines. Do not compare a number from one with a number from another. Two guests have 16 vCPU, so the manual names each one with its memory: 23 GB for `E`, `F`, `G`, and `L-gaps/multinode`, and 31 GB for `K-kagent` and `N-demos`.
+
+| Folder | Machine |
+|---|---|
+| `A-quickstart`, `B-lifecycle`, `C-resume-vs-size`, `D-durability`, `I-capacity`, `J-container-death`, `V-validation`, `L-gaps/microvm`, `L-gaps/restart` | the x86 server guest (24 vCPU, 47 GB, nested KVM) |
+| `E-dependency-loss`, `F-egress`, `G-dataplane`, `L-gaps/multinode` | a second x86 server guest (16 vCPU, 23 GB) |
+| `K-kagent`, `N-demos` | a second x86 server guest (16 vCPU, 31 GB) |
+| `M-mac-arm64` | the Mac |
 
 Each guest kept its disk in memory and reached the network through user-mode NAT. All clusters had one kind node, except the cluster of `L-gaps/multinode`. The object store was rustfs in the same cluster.
 
@@ -61,7 +68,7 @@ Each guest kept its disk in memory and reached the network through user-mode NAT
 
 | File | What it shows |
 |---|---|
-| `10-watch-part1.tsv`, `10-watch-part2.tsv` | five actors after an async suspend with default timers, state every 10 s for 38 minutes, then one resume each |
+| `10-watch-part1.tsv`, `10-watch-part2.tsv` | five actors after an async suspend with default timers, state every 10 s for 42 minutes, then one resume each. The actor `d1000` never got a worker, so four actors have a snapshot of their own |
 | `30-local-loss.tsv` | the node-local snapshot removed before upload, and an atelet restart before upload |
 | `40-node-reboot.tsv`, `46-after-reboot-followup.txt` | the kind node restarted before upload |
 | `32-x1-after-loss.yaml`, `44-r1-after-reboot.yaml` | the actor objects after each loss |
@@ -74,6 +81,8 @@ Each guest kept its disk in memory and reached the network through user-mode NAT
 | `12-probe-incluster.tsv`, `12-probe-proxy.tsv` | one request per second, with code, seconds, and body |
 | `20-analysis.txt` | the counts and the recovery times |
 | `21-nonsteady-actors-after.txt`, `22-actors-5min-later.txt` | the actor that stayed in RESUMING |
+
+The stream totals of `20-analysis.txt` are larger than those of `summary/dependency-loss-x86.json` (186 and 37 against 141 and 28 for kube-apiserver) because the analysis counts from 10 s before each outage to the end of the run, and the summary stops 40 s after the dependency was ready.
 
 ### F-egress: the egress policy on both dataplanes
 
@@ -157,6 +166,18 @@ The credential values in this folder are test values that we made up: `sk-mock-n
 | `80-local.tsv` | create, first call, async suspend, resume, for 0, 50, and 200 MiB |
 | `82-actor-m*.yaml`, `83-lifecycle-m*.log` | the actor objects and their lifecycle logs |
 
+### N-demos: the four demos of Part 9
+
+All four ran on a second x86 server guest (16 vCPU, 31 GB), on their own cluster, installed from the release images with the Envoy dataplane. The demo programs are in `capture/demos/`.
+
+| Folder | What it shows |
+|---|---|
+| `install/steps.tsv` | the install of that cluster, step by step |
+| `idle-suspender/suspender.tsv`, `idle-suspender/requests-*.tsv`, `idle-suspender/capacity-requests-*.tsv` | every decision of the suspender, and each request with and without it |
+| `stateful-agent/session-*.tsv`, `stateful-agent/history-*.json`, `stateful-agent/egress-policy-*-live.yaml` | one session for each of two fidelities, the history after each suspend, and the egress policy with the credential swap |
+| `tool-sandbox/tasks.tsv`, `tool-sandbox/egress-policy-live.yaml`, `tool-sandbox/lifecycle.log` | six commands in one actor, with a revert after each |
+| `failure-drill/drill-run.log` | six failures with the symptom, the fix, and the recovery of each |
+
 ### V-validation: twelve checks of statements that the first draft could not prove
 
 All twelve ran on the x86 server guest, on the cluster of experiments A to D, with a pool `vpool` of two workers that hold 16 one-CPU actors.
@@ -189,7 +210,7 @@ The shell scripts that made the recordings. Each one ran inside a guest, or on t
 
 ## Summary files
 
-`lab/summary/*.json` is the only input of the chart figures. Each file has `machine` and `sources`. A statistic is an object `{median, min, max, n}` in seconds.
+`lab/summary/*.json` is the input of the chart figures, with two exceptions. Figure 1.2b reads `B-lifecycle/10-trace.tsv`, and figure 6.6 reads the container statistics in `G-dataplane/`. `run.py` does not rebuild or check the numbers of those two figures. Each file has `machine` and `sources`. A statistic is an object `{median, min, max, n}` in seconds.
 
 | File | Fields |
 |---|---|

@@ -64,9 +64,9 @@ Four fields carry the meaning {{code}}:
 - `spec.sandboxClasses` takes exactly one entry at v1.0.0, and you cannot change its `name` later. [Sandbox classes](#s-sandbox-classes) compares the two.
 - `spec.template.resources.limits` is the capacity of each worker. It is the most important field in the object.
 
-The label `workload: ballast` sits on the pool object, under `metadata.labels`. An ActorTemplate selects pools with `workerSelector.matchLabels`, and the match reads the labels of the pool object. Labels under `spec.template.labels` go to the pods and do not affect which actors the pool accepts {{docs}}.
+The label `workload: ballast` sits on the pool object, under `metadata.labels`. An ActorTemplate selects pools with `workerSelector.matchLabels`, and the match reads the labels of the pool object. Labels under `spec.template.labels` go to the Deployment and its pods, and they do not affect which actors the pool accepts {{code}}.
 
-A selector is the only link between a template and a pool. The namespace of the pool and Kubernetes RBAC do not limit which templates can select it {{docs}}. Put a label on each pool that only the intended templates use.
+A selector is the only link between a template and a pool. The namespace of the pool and Kubernetes RBAC do not limit which templates can select it {{code}}. An actor can add its own `workerSelector`, which narrows the selector of the template and takes effect at the next resume. Put a label on each pool that only the intended templates use.
 
 ## From the pool to a registered worker
 
@@ -117,13 +117,13 @@ The worker kept 64 MiB of its 3 GiB limit, so it reported 3008Mi. The demo pools
 
 The booked side is the sum of the limits that each running actor declares in its ActorTemplate. Each actor here declared 1000 millicores and 256 MiB. Two actors booked the whole CPU capacity and a sixth of the memory. The worker is full, and CPU is the reason.
 
-Read `cpuMillicores` as the number that the worker books for placement. We did not see it slow an actor.
+`cpuMillicores` has two jobs. The worker books it for placement, and the worker also writes it into the sandbox as a CPU quota for each 100 ms period {{code}}. The documentation says that the node kernel slows the actor to that quota {{docs}}.
 
-**We measured** one command on a second x86 server guest (16 vCPU, 31 GB), with n=1. It used 2.0 seconds of CPU time and finished in 2.38 seconds under a value of 500 millicores. [A tool sandbox](#s-a-tool-sandbox) shows that run.
+**We measured** one command on a second x86 server guest (16 vCPU, 31 GB), with n=1. It used 2.0 seconds of CPU time and finished in 2.38 seconds under a value of 500 millicores. A quota of half a CPU predicts about 4 seconds. We did not find the cause, and the result is under test. Do not conclude from this one run that the value never slows an actor. [A tool sandbox](#s-a-tool-sandbox) shows that run.
 
 A suspended actor books nothing. The command counts running actors only.
 
-Two habits from `kubectl` do not carry over. The command has no `-A` flag, and it lists the workers of every namespace by default. Use `-n` to limit it to one namespace and `-l` to filter by pool labels.
+Two habits from `kubectl` do not carry over. The command has no `-A` flag, and it lists the workers of every namespace by default. It has four filters: `-n` for one Kubernetes namespace, `-l` for pool labels, `-a` for the workers that host actors of one atespace, and `--sandbox-class`.
 
 ## A pool without limits reports the whole node
 

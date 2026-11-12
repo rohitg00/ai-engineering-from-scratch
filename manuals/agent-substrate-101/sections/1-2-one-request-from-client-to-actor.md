@@ -44,7 +44,7 @@ caption: Read the rows from top to bottom. Row 2 is the only one that passes kub
 
 1. `curl` sends the request to `127.0.0.1:8000`, where `kubectl ate proxy` listens.
 2. The proxy opens a port-forward through the Kubernetes API server to `atenet-router`. Inside that port-forward it opens an mTLS CONNECT tunnel to router port 8444, with a client certificate {{code}}.
-3. The router reads the target actor and calls `ResumeActor` on `ate-api-server`. It does so for every request, because it keeps no record of where an actor runs {{code}}.
+3. The router reads the target actor and calls `ResumeActor` on `ate-api-server`. It does so for every request, because it keeps no record of where an actor runs {{code}}. Requests that arrive at the same time for one actor share one call.
 4. `ate-api-server` reads the actor row from Postgres. The state is `ACTOR_STATE_SUSPENDED`.
 5. `ate-api-server` takes a lease on the actor, chooses a worker with room, and writes the assignment to Postgres in one transaction {{code}}.
 6. `ate-api-server` tells `atelet` on that node to restore the snapshot. The worker starts the sandbox from it, and the actor state becomes `ACTOR_STATE_RUNNING`.
@@ -110,7 +110,7 @@ Use the number from the pod when you plan latency. The proxy is a tool for your 
 Three things follow from the path.
 
 - **Postgres and `ate-api-server` are on every request path.** A running actor that needs no resume still fails when either one is down. On our second guest, requests to a running actor failed within seconds of each outage. [Section 8.2](#s-when-a-dependency-is-down) has the timeline.
-- **The Kubernetes API server is on no request path.** Only row 2 of the figure passes it, and that row belongs to the proxy. In the same test, 223 of 223 requests from a pod were served while kube-apiserver was down for 86 s.
+- **The Kubernetes API server is on no request path.** Only row 2 of the figure passes it, and that row belongs to the proxy. In the same test, kube-apiserver was down for 86 s. In that time 103 of 103 requests from a pod were served: 86 to a running actor and 17 resumes.
 - **The object store is on the path only when a snapshot is not on the node.** [Section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) says when that is.
 
 The install runs one `atenet-router` pod and one Postgres pod. Every request to every actor passes both. [Section 8.1](#s-postgres-and-the-object-store) says what to do about Postgres.

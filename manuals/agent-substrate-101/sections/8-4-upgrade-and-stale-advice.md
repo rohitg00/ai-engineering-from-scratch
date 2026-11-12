@@ -28,7 +28,9 @@ The table lists each old instruction that we found in the v0.1.0 tree or in post
 
 Two rows deserve more than a cell.
 
-**The request path changed for security.** At v0.1.0 any pod that reached the router Service could call any actor with a `Host` header. At v1.0.0 the router asks for a client certificate and checks its identity against an allowlist. We probed the old ports on both dataplanes. Ports 80 and 8081 refused the connection, although the Service and the NetworkPolicy still list them.
+**The request path changed for security.** At v0.1.0 any pod that reached the router Service could call any actor with a `Host` header. At v1.0.0 the router asks for a client certificate and checks its identity against an allowlist. We probed the old ports on both dataplanes, and ports 80 and 8081 refused the connection.
+
+The two dataplanes differ in what they list. With Envoy, the router Service has ports 443 and 8444 only. The agentgateway overlay adds ports 80 and 8081 to the Service and to the NetworkPolicy {{code}}. Nothing listened behind them in our install. The gateway configuration that `ate-setup` installed declared ports 8443 and 8444 only, and the agentgateway process listened on those two {{run}}. So on agentgateway the Service lists two ports that refuse every connection.
 
 A tutorial that ends with a plain `curl` to the router cannot work. Do not look for a setting that brings the old path back.
 
@@ -46,7 +48,7 @@ Some statements do not fail with an error. They are wrong, and the system runs.
 | A credential provider requires the Envoy dataplane. | the help text of the installer flag | The installer accepted the provider with agentgateway, and injection worked. |
 | Upgrade with `NEW_RELEASE=v0.4.2`. | the example in the upgrade page at the tag | No v0.4.2 exists, and the same page excludes every 0.x upgrade. |
 
-**We measured** the first two rows on an x86 server guest (24 vCPU, 47 GB, nested KVM). An actor with no requests for 900 s read RUNNING in 60 of 60 samples. After a default suspend, the snapshots of five actors stayed in the pending state for 5 min 2 s before the upload finished. [Section 3.3](#s-suspendactor-and-resumeactor) and [section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) give both runs in full.
+**We measured** the first two rows on an x86 server guest (24 vCPU, 47 GB, nested KVM). An actor with no requests for 900 s read RUNNING in 60 of 60 samples. After a default suspend, the snapshots of four actors stayed in the pending state. The upload finished 5 min 1 s to 5 min 11 s after the suspend. [Section 3.3](#s-suspendactor-and-resumeactor) and [section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) give both runs in full.
 
 **Our position:** date every Substrate instruction before you follow it. If the text was written before 2026-11-05, check each command against the v1.0.0 help output first. The project made its largest breaks in the three weeks before the release. A post from October can be as wrong as one from July.
 
@@ -79,7 +81,7 @@ caption: Read top to bottom. Each row is one step. The left box holds the compon
 1. `podcertificate-controller`, which signs the certificates that components show each other. Running actors see nothing.
 2. `atelet`, one node at a time. Running actors see nothing.
 3. The workers. You change `spec.workerImage` of each WorkerPool, and the pool replaces 10 percent of its workers in each batch.
-4. `ate-api-server` and `ate-idp-server`, then the CRDs and `ate-controller`, then the router and the egress gateway, then the SandboxConfig.
+4. `ate-api-server` and `ate-idp-server`, then the CRDs and `ate-controller`, then the router and the egress gateway, then the SandboxConfig, then the rest of the system bundle.
 
 Step 3 is the one that costs you work. Each actor on an old worker receives `SIGTERM` and has 30 minutes. Substrate does not suspend it in that time. If nothing calls `SuspendActor`, the actor becomes `ACTOR_STATE_CRASHED` and loses its work since the last snapshot. This is the idle suspend rule again: your harness must act on the signal. A spot instance gives between 15 seconds and two minutes, never 30 minutes.
 
@@ -102,4 +104,4 @@ A new kagent release, v1.0.1, appeared on the day of our kagent run. All our kag
 - Upgrade one minor release at a time, in the documented component order.
 ```
 
-Sources: README.md, the ActorState enum and the CLI at v0.1.0 and at v1.0.0 (the old and new commands); cmd/kubectl-ate/internal/cmd/actor.go, api/ateapi/v1/ateapi.proto, manifests/ate-install/generated/ate.dev_workerpools.yaml, cmd/ate-setup/commands.md and go.mod at v1.0.0; docs/guides/upgrade.md, docs/reference/version-skew-policy.md, docs/dev/postgresql-schema-evolution.md and docs/get-started/quickstart.md at v1.0.0; capture/lab/B-lifecycle/10-trace.tsv, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/G-dataplane/envoy/ingress-auth/, capture/lab/G-dataplane/agentgateway/ingress-auth/, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/summary/failures-x86.json, capture/lab/summary/timers-x86.json.
+Sources: README.md, the ActorState enum and the CLI at v0.1.0 and at v1.0.0 (the old and new commands); cmd/kubectl-ate/internal/cmd/actor.go, api/ateapi/v1/ateapi.proto, manifests/ate-install/generated/ate.dev_workerpools.yaml, cmd/ate-setup/commands.md and go.mod at v1.0.0; docs/guides/upgrade.md, docs/reference/version-skew-policy.md, docs/dev/postgresql-schema-evolution.md and docs/get-started/quickstart.md at v1.0.0; capture/lab/B-lifecycle/10-trace.tsv, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/G-dataplane/envoy/ingress-auth/, capture/lab/G-dataplane/agentgateway/ingress-auth/, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/summary/failures-x86.json, capture/lab/summary/timers-x86.json, capture/lab/G-dataplane/agentgateway/06-services.txt, capture/lab/G-dataplane/agentgateway/11-listening.txt, capture/lab/G-dataplane/agentgateway/10-atenet-router-agentgateway-config.yaml, capture/lab/G-dataplane/envoy/06-services.txt; manifests/ate-install/atenet-router.yaml and manifests/ate-install/components/agentgateway/kustomization.yaml at v1.0.0.

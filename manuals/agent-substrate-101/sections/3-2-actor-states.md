@@ -48,15 +48,15 @@ status:
 | `metadata.version` | A counter that rises on every change of the actor. This actor reached 16 in 17 minutes. |
 | `status.state` | One of the seven states. |
 | `status.workerAssignment` | The worker pod that hosts the sandbox. It is set only while a worker holds the actor. |
-| `status.assignedNode` | The node that holds the newest snapshot on its disk. It can stay set after a suspend. |
+| `status.assignedNode` | The node of the worker while the actor runs, and the node that keeps the newest snapshot on its disk after a suspend. |
 | `status.snapshots` | The snapshots that the actor can resume from, at most 16 {{code}}. |
-| `status.crash` | A time and a message. It exists only in `ACTOR_STATE_CRASHED`. |
+| `status.crash` | A time and a message. It is set when the actor enters `ACTOR_STATE_CRASHED`, and a revert clears it {{code}}. |
 
-`workerAssignment` and `assignedNode` answer different questions. The first says where the actor runs now. The second says where its last snapshot is, and [section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) shows how long that lasts.
+`workerAssignment` and `assignedNode` answer different questions. The first says where the actor runs now. The second also says where its last snapshot is after a suspend, and [section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) shows how long that lasts.
 
 ## The seven states
 
-The enum `ActorState` has seven values at v1.0.0 {{code}}. The architecture page of the project draws five of them, so trust the enum.
+The enum `ActorState` has seven values at v1.0.0 {{code}}. The state diagram on the architecture page of the project draws four of them, so trust the enum.
 
 | State | What the actor has | What a request does |
 |---|---|---|
@@ -106,7 +106,7 @@ Look at the version column. A resume moved it from 9 to 11, and the revert moved
 
 The log of `ate-api-server` does show those states. The listing in [section 3.1](#s-actortemplate-and-the-golden-snapshot) has `resuming` before `running`, `suspending` before `suspended`, and `deleting` before `deleted`.
 
-**We measured** the step states on the kagent guest (16 vCPU, 31 GB), where a harness resumes and suspends an actor for every turn. Over 98 turns, the actor spent a median of 0.38 seconds in `ACTOR_STATE_RESUMING`. Over 99 suspends, it spent a median of 0.14 seconds in `ACTOR_STATE_SUSPENDING`. Those actors keep files only, so the times are low.
+**We measured** the step states in the kagent run, on a second x86 server guest (16 vCPU, 31 GB). There a harness resumes and suspends an actor for every turn. Over 98 turns, the actor spent a median of 0.38 seconds in `ACTOR_STATE_RESUMING`. Over 99 suspends, it spent a median of 0.14 seconds in `ACTOR_STATE_SUSPENDING`. Those actors keep files only, so the times are low.
 
 A step state can also last. In our dependency test, one actor was still in `ACTOR_STATE_RESUMING` five minutes after Postgres came back. [Section 8.2](#s-when-a-dependency-is-down) has that case.
 
@@ -115,16 +115,16 @@ A step state can also last. In our dependency test, one actor was still in `ACTO
 | Call | Accepted from | Result | Who calls it |
 |---|---|---|---|
 | `CreateActor` | no actor | `SUSPENDED` | You, or your harness |
-| `ResumeActor` | `SUSPENDED` | `RESUMING`, then `RUNNING` | The router for every request, or `kubectl ate resume actor` |
+| `ResumeActor` | `SUSPENDED`, `RESUMING` (the call continues the resume), and `RUNNING` (no change) | `RESUMING`, then `RUNNING` | The router for every request, or `kubectl ate resume actor` |
 | `SuspendActor` | `RUNNING` | `SUSPENDING`, then `SUSPENDED` | You, or your harness |
-| `RevertActor` | `CRASHED`, `RUNNING`, and `SUSPENDED` with a snapshot on the node | `REVERTING`, then `SUSPENDED` | You, or your harness |
+| `RevertActor` | `CRASHED`, `RUNNING`, `SUSPENDED` with a snapshot on the node, and `REVERTING` (the call continues the revert) | `REVERTING`, then `SUSPENDED` | You, or your harness |
 | `DeleteActor` | every state | `DELETING`, then no actor | You, or your harness |
 
 Substrate itself makes one move: it marks an actor `ACTOR_STATE_CRASHED` when the sandbox, the worker, or a restore is lost. [Section 3.5](#s-crashed-and-revertactor) lists every way that we reached that state.
 
 A call in the wrong state does not wait. `ResumeActor` on a crashed actor returns `FailedPrecondition` at once, and a request gets the same text as a 503. `SuspendActor` on a suspended actor returns the actor with no change {{docs}}.
 
-The router calls `ResumeActor` for every request, also when the actor runs. That is why a plain HTTP request is enough to start a suspended actor. [Section 1.2](#s-one-request-from-client-to-actor) follows one such request.
+The router calls `ResumeActor` for every request, also when the actor runs. On a running actor the call succeeds, changes nothing, and returns `resumed=false` {{code}}. That is why a plain HTTP request is enough to start a suspended actor. [Section 1.2](#s-one-request-from-client-to-actor) follows one such request.
 
 Our position: read the state before you debug the network. `kubectl ate get actors -a <atespace>` costs one call. It separates a crashed actor from a full pool and from a dead process, and each of those needs a different fix.
 

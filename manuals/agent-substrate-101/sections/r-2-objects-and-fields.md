@@ -16,7 +16,8 @@ You manage these three with `kubectl apply`.
 | `spec.workerImage` | the worker image, which decides the sandbox runtime that the pod starts |
 | `spec.sandboxClasses[].name` | `gvisor` or `microvm` |
 | `spec.sandboxClasses[].configRef.name` | a SandboxConfig for that class. Without it the class default applies. |
-| `spec.template.labels` | labels of the pool. A template selects a pool by these. |
+| `metadata.labels` | the labels of the WorkerPool object. A template selects a pool by these, and each worker of the pool reports them. |
+| `spec.template.labels` | labels added to the worker Deployment and its pods. No selector of Substrate reads them. |
 | `spec.template.resources` | requests and limits of the worker container. The limits become the capacity that the worker reports. |
 | `spec.template.nodeSelector`, `tolerations`, `nodeAffinity`, `priorityClassName`, `annotations`, `serviceAccountName` | passed to the worker pods |
 | `status.replicas`, `status.readyReplicas` | observed pods |
@@ -89,13 +90,13 @@ The annotation `sandboxconfig.ate.dev/is-class-default` marks the default config
 |---|---|
 | `actorTemplate.atespace`, `actorTemplate.name` | the template of the actor |
 | `sourceTag` | the tag that the actor started from, if any |
-| `workerSelector.matchLabels` | overrides the selector of the template |
+| `workerSelector.matchLabels` | narrows the selector of the template. A pool must match both selectors (logical AND). A change takes effect at the next resume. |
 | `status.state` | one of seven states, as [the states reference](#s-ref-states) lists |
 | `status.workerAssignment` | present while a worker holds the actor: `workerPod`, `workerPool`, `workerNamespace`, `workerPodIps`, `nodeName`, `workerEpoch`, `sandboxRuntime` |
-| `status.assignedNode` | the node that holds the node-local snapshot. Present for up to 30 minutes after a suspend. |
+| `status.assignedNode` | the node of the worker while the actor runs, or of the local snapshot after a suspend. It stays until the detach (default 30 minutes, `--snapshot-detach-delay`) or a revert. |
 | `status.snapshots[]` | the snapshots of the actor, described below |
-| `status.lastAssignedGeneration` | the generation of the newest snapshot |
-| `status.crash.message`, `status.crash.crashTime` | present on a crashed actor |
+| `status.lastAssignedGeneration` | the last generation that a suspend assigned. A revert does not lower it, so it can be higher than the generation of the newest kept snapshot. |
+| `status.crash.message`, `status.crash.crashTime` | set when the actor enters `ACTOR_STATE_CRASHED`, and cleared by a revert |
 | `status.externalVolumes` | preview: the CSI volumes of the actor |
 
 ### One entry of status.snapshots
@@ -118,10 +119,11 @@ After an asynchronous suspend an actor has two entries: the older completed one 
 
 | Field | Meaning |
 |---|---|
-| `workerSelector.matchLabels` | selects worker pools by label, in any namespace |
+| `workerSelector.matchLabels` | selects worker pools by the `metadata.labels` of the WorkerPool object, in any namespace |
 | `containers[]` | `name`, `image`, `command`, `args`, `env`, `volumeMounts`, `securityContext.capabilities`, `resources` |
 | `containers[].wakeupProbe` | `httpGet.path`, `httpGet.port`, `timeoutSeconds`. The resume waits for one success. |
 | `volumes[]` | a `name` and one source: `durableDir`, `image.reference`, `systemInfo`, or `external` (preview) |
+| `volumes[].systemInfo` | one source: `actorMetadata.items[]` or `trustBundle`. An item has a `path` and a `field`: `ACTOR_METADATA_FIELD_NAME`, `ACTOR_METADATA_FIELD_ATESPACE`, or `ACTOR_METADATA_FIELD_UID`. |
 | `resources.limits.cpuMillicores`, `resources.limits.memoryBytes` | required. The worker reserves both while the actor runs. |
 | `snapshotConfig.preferredFidelity` | the fidelity of each suspend |
 | `snapshotConfig.goldenSnapshotConfig.mode` | `GOLDEN_SNAPSHOT_MODE_ENABLED` or `GOLDEN_SNAPSHOT_MODE_DISABLED` |
@@ -177,7 +179,9 @@ One policy belongs to one actor. It has `metadata` and `rules[]`. Each rule has 
 |---|---|---|
 | Tag | `sourceActor`, `scope`, `status.snapshot` | a named copy of a snapshot. `scope` is `TAG_SCOPE_ATESPACE` or `TAG_SCOPE_PUBLISHED`. |
 | Atespace | `metadata.name` | a name that groups actors, templates, tags, and one access policy |
-| Worker | `workerNamespace`, `workerPool`, `workerPod`, `nodeName`, `labels` | one registered worker pod. Its name is the pod uid. |
+| Worker | `workerNamespace`, `workerPool`, `workerPod`, `nodeName`, `labels` | one registered worker pod. Its name is the pod uid. `labels` is a copy of the `metadata.labels` of its WorkerPool. |
+| Worker | `status.ips` | the IP addresses of the worker pod, at most one for each IP family |
+| Worker | `status.issuedEpoch`, `status.registeredEpoch`, `status.observedEpoch` | the epoch counters of the worker process. A rise of `registeredEpoch` means an earlier process exited, and the server then crashes its actors. |
 | Worker | `status.state` | `WORKER_STATE_ACTIVE`, `WORKER_STATE_DRAINING`, or `WORKER_STATE_UNAVAILABLE` |
 | Worker | `status.capacity`, `status.allocated` | `cpuMillicores`, `memoryBytes`, and `actors`, as `kubectl ate get worker` prints them |
 | Worker | `status.sandboxClasses[]` | the classes and runtime versions that the worker runs and restores |

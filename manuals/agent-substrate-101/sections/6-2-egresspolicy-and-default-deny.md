@@ -113,7 +113,9 @@ note: The answer of update egress-policy to a file that has rules and no metadat
 Error: manifest for actor "f-main" in atespace "lab-f" lacks the metadata.uid and metadata.version preconditions that "get egress-policy -o yaml" prints
 ```
 
-`update egress-policy` replaces the whole policy, and it needs to know which version you edited. Read the policy with `-o yaml`, keep `metadata.uid` and `metadata.version`, change the rules, and send the file back. If the stored policy changed between your read and your update, the CLI refuses the update {{code}}. Read the policy again and repeat the change. We did not run that case.
+`update egress-policy` replaces the whole policy, and it needs to know which version you edited. Read the policy with `-o yaml`, keep `metadata.uid` and `metadata.version`, change the rules, and send the file back.
+
+If the stored policy changed between your read and your update, the server refuses the update. The CLI then tells you to run `get egress-policy -o yaml` again {{code}}. The CLI itself checks only that both values are in the file. Read the policy again and repeat the change. We did not run that case.
 
 The second time, the file had a `tlsPassthrough` rule with no ports.
 

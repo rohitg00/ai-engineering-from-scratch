@@ -4,7 +4,7 @@
 
 `ate-api-server` serves both services on one port, 443 in the Service named `api` in `ate-system`. The proto package is `substrate.ateapi.v1`, so the full name of a method is `/substrate.ateapi.v1.Control/GetActor`. The Go package is `go.ate.dev/substrate/api/ateapi/v1`. A client authenticates as [section 5.1](#s-client-authentication) describes, and each `Control` method is checked against the access policies of [section 5.2](#s-access-policies).
 
-The tables give each method, what it does at v1.0.0, and the `kubectl ate` command that calls it. A dash means that the CLI has no command for it. Our runs called the actor methods except `UpdateActor`, the egress policy methods, and the create, get, and list methods for templates, atespaces, and workers. Our runs created no tag and no access policy.
+The tables give each method, what it does at v1.0.0, and the `kubectl ate` command that calls it. A dash means that the CLI has no command for it. Our runs called every actor method, the egress policy methods, and the create, get, and list methods for templates, atespaces, and workers. `UpdateActor` ran in the template move of [section 3.1](#s-actortemplate-and-the-golden-snapshot). Our runs also created, replaced, and deleted an atespace access policy and read the global one, in [section 5.2](#s-access-policies). Our runs created no tag.
 
 ## Control: actors
 
@@ -15,8 +15,8 @@ The tables give each method, what it does at v1.0.0, and the `kubectl ate` comma
 | `ListActors` | Lists actors in one atespace or in all. | `get actor` |
 | `UpdateActor` | Changes the template or the worker selector of an actor. Needs the `uid` and the `version`. | `update actor` |
 | `SuspendActor` | Checkpoints a running actor to a new snapshot. A suspended actor is returned unchanged. `options.mode` is asynchronous by default. | `suspend actor` |
-| `ResumeActor` | Resumes a suspended actor from its latest snapshot. The router calls it for every request. | `resume actor` |
-| `RevertActor` | Returns an actor to `ACTOR_STATE_SUSPENDED` at its durable snapshot. Accepts a crashed actor, a running actor, and a suspended actor with a node-local snapshot. | `revert actor` |
+| `ResumeActor` | Resumes a suspended actor from its latest snapshot. A running actor is returned unchanged, with `resumed=false`. The router calls it for every request and relies on that reply. | `resume actor` |
+| `RevertActor` | Returns an actor to `ACTOR_STATE_SUSPENDED` at its durable snapshot. Accepts a crashed actor, a running actor, and a suspended actor with a node-local snapshot. Also accepts an actor already in `ACTOR_STATE_REVERTING`, for a retry. That last case is from the code, and a run is in progress. | `revert actor` |
 | `DeleteActor` | Stops the workload, releases the worker, and removes the record. Accepts any state. | `delete actor` |
 | `MintActorJwt` | Issues a token that states the identity of an actor. Only the egress gateway is allowed to call it. | - |
 
@@ -90,7 +90,7 @@ The global policy has no delete method.
 | `SetWorkerSandboxRuntimes` | Reports which sandbox classes and versions the worker can run and restore. |
 | `MintWorkerActorCertificate` | Issues the certificate that an actor shows to the dataplane. |
 | `MintWorkerActorJwt` | Issues an actor token for the worker. |
-| `RequestActorSuspend` | Asks the control plane to suspend an actor on behalf of the worker. Nothing in the v1.0.0 repository calls it. |
+| `RequestActorSuspend` | Asks the control plane to suspend an actor on behalf of the worker. `atelet` forwards the call from a worker-side library, and no binary at v1.0.0 imports that library. So nothing triggers it. |
 | `ReportActorSnapshotState` | Reports that a pending snapshot reached the bucket, or that the actor left the node. |
 | `ReportActorCrashed` | Reports that a sandbox died. The actor moves from running to crashed. |
 

@@ -55,15 +55,15 @@ The atespace is the boundary for access. A role in an atespace covers every acto
 
 ## Pool selection crosses namespaces
 
-A template selects its workers with `workerSelector.matchLabels`. The scheduler compares those labels with the labels on the WorkerPool object. It does not read the labels of the pods, and it does not read the namespace of the pool {{docs}}.
+A template selects its workers with `workerSelector.matchLabels`. The scheduler compares those labels with the labels on the WorkerPool object. It does not read the labels of the pods, and it does not read the namespace of the pool {{code}}. Each worker carries a copy of the labels of its WorkerPool object, and the scheduler matches against that copy.
 
 Three rules follow from the code and the documentation.
 
 - Only equal labels match. No set expressions exist {{code}}.
-- An actor can add its own selector. The scheduler applies both selectors together {{code}}.
+- An actor can add its own selector. The scheduler applies both selectors together, so the selector of the actor only narrows the choice. A change takes effect at the next resume {{code}}.
 - A template with no selector can run on every pool {{docs}}.
 
-So the namespace of a pool is not a fence. A template in any atespace can name the labels of any pool, and Kubernetes RBAC on that namespace does not stop it {{docs}}.
+So the namespace of a pool is not a fence. A template in any atespace can name the labels of any pool, and Kubernetes RBAC on that namespace does not stop it {{code}}. No document at v1.0.0 states this rule. It follows from the code, and our run below confirms it.
 
 We ran it. We created an atespace `xa` and no Kubernetes namespace of that name. A template in `xa` selected `workload: vpool`, the label of a pool in the namespace `lab-v`.
 
@@ -183,4 +183,4 @@ Our position: use one name for the atespace and the namespace when one team owns
 - Do not use the name of a deleted atespace again.
 ```
 
-Sources: capture/lab/_scripts/c1-ballast-setup.sh, capture/lab/C-resume-vs-size/tmpl-200.yaml, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/02-templates.txt, capture/lab/C-resume-vs-size/actor-b200-1-suspended.json, capture/lab/C-resume-vs-size/snapdir-b200-1.txt, capture/lab/A-quickstart/60-state.log, capture/lab/A-quickstart/50-create-actor.log, capture/lab/B-lifecycle/22-actor-after-async-suspend.yaml, capture/lab/B-lifecycle/26-actor-after-revert.yaml, capture/lab/K-kagent/session1/actor-template.yaml, capture/lab/K-kagent/session1/actors-after-turn1.json, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/V-validation/07-cross-namespace-pool/10-cross.tsv, capture/lab/V-validation/07-cross-namespace-pool/12-kubernetes-namespace-xa.txt, capture/lab/V-validation/07-cross-namespace-pool/13-actors.txt, capture/lab/V-validation/07-cross-namespace-pool/15-templates-with-unmatched-selector.txt, capture/lab/V-validation/07-cross-namespace-pool/tmpl-cross-none.yaml, capture/lab/V-validation/10-preview-feature/13-ateapi-lines.log. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ResourceMetadata, Selector, Actor.worker_selector, Worker), docs/reference/glossary.md (Atespace), docs/reference/resource-model.md, docs/reference/api-guide.md (Snapshot Storage Layout, Best Practices), docs/guides/authorization.md (roles and limits).
+Sources: capture/lab/_scripts/c1-ballast-setup.sh, capture/lab/C-resume-vs-size/tmpl-200.yaml, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/02-templates.txt, capture/lab/C-resume-vs-size/actor-b200-1-suspended.json, capture/lab/C-resume-vs-size/snapdir-b200-1.txt, capture/lab/A-quickstart/60-state.log, capture/lab/A-quickstart/50-create-actor.log, capture/lab/B-lifecycle/22-actor-after-async-suspend.yaml, capture/lab/B-lifecycle/26-actor-after-revert.yaml, capture/lab/K-kagent/session1/actor-template.yaml, capture/lab/K-kagent/session1/actors-after-turn1.json, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/V-validation/07-cross-namespace-pool/10-cross.tsv, capture/lab/V-validation/07-cross-namespace-pool/12-kubernetes-namespace-xa.txt, capture/lab/V-validation/07-cross-namespace-pool/13-actors.txt, capture/lab/V-validation/07-cross-namespace-pool/15-templates-with-unmatched-selector.txt, capture/lab/V-validation/07-cross-namespace-pool/tmpl-cross-none.yaml, capture/lab/V-validation/10-preview-feature/13-ateapi-lines.log. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ResourceMetadata, Selector, Actor.worker_selector, Worker), docs/reference/glossary.md (Atespace), docs/reference/resource-model.md, docs/reference/api-guide.md (Snapshot Storage Layout, Best Practices), docs/guides/authorization.md (roles and limits), cmd/atecontroller/internal/workersync/syncer.go (worker labels are the labels of the WorkerPool object).

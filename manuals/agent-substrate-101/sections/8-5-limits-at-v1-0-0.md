@@ -20,7 +20,7 @@ caption: Read each row left to right. The left column is what Substrate does, an
 
 ### No idle suspend
 
-Nothing in Substrate suspends an actor because it has no requests. **The code** has no idle timer in `ate-api-server`, in `atelet`, or in either worker. The worker API has a method for a worker to ask for a suspend, `RequestActorSuspend`, and nothing in the repository calls it.
+Nothing in Substrate suspends an actor because it has no requests. **The code** has no idle timer in `ate-api-server`, in `atelet`, or in either worker. The worker API has a method for a worker to ask for a suspend, `RequestActorSuspend`. `atelet` forwards that call, and a client library for it exists in the repository. No worker at v1.0.0 uses the library, so nothing sends the call.
 
 **We measured** this on an x86 server guest (24 vCPU, 47 GB, nested KVM). One actor received no request for 900 s, and it read RUNNING in 60 of 60 samples. A running actor reserves its full CPU and memory limit on a worker for all that time.
 
@@ -32,7 +32,7 @@ A WorkerPool has a fixed `replicas` number. Nothing in the install changes it. T
 
 Substrate also books each running actor at its full declared limit. A proposal to book less than the limit exists in the public issues, and the maintainers moved it to after the release.
 
-**We measured** the effect on the kagent guest (16 vCPU, 31 GB), in one run of 24 turns at the same time. The single worker reported 16,000 millicores, and each actor reserved 1,000. The worker stopped at 16 running actors, and the other eight turns waited.
+**We measured** the effect in the kagent run, on a second x86 server guest (16 vCPU, 31 GB). One run started 24 turns at the same time. The single worker reported 16,000 millicores, and each actor reserved 1,000. The worker stopped at 16 running actors, and the other eight turns waited.
 
 When a pool is full, a request waits up to 5 s and then gets a 503. [Section 4.5](#s-sizing-a-pool) gives the arithmetic for a pool.
 
@@ -54,7 +54,7 @@ An ActorTemplate at v1.0.0 can declare two resources: `cpuMillicores` and `memor
 | `podcertificate-controller` | 1 | new and renewed certificates |
 | bundled Postgres | 1 | every request, as [section 8.2](#s-when-a-dependency-is-down) measures |
 
-The right column is our reading of the request path, except for the Postgres row, which we ran. The router also keeps its parked requests in memory, so a router restart drops them. We did not measure a router or an egress restart.
+The right column is our reading of the request path, except for the Postgres row, which we ran. The router keeps its parked requests in memory, and a graceful shutdown does not drop them. After the stop signal the router keeps the parked requests until each one gets its full budget and a normal answer {{docs}}. The flag `--drain-timeout` sets that limit, and its default is longer than the parking budget {{code}}. Only a crash, a forced kill, or a drain past `--drain-timeout` drops a parked request. We did not measure a router or an egress restart.
 
 ### Crash detection has a gap
 
@@ -68,7 +68,7 @@ It also does not mark a running actor whose node stops. On a cluster with two wo
 
 A suspended actor is bound to the node of its last suspend, and Substrate v1.0.0 did not release it when that node stopped.
 
-**We measured** this on the second x86 server guest (16 vCPU, 23 GB), with two worker nodes and one actor for each of four cases. An actor with a complete snapshot in the object store stayed in RESUMING on the stopped node for 5 min 33 s. Then it was crashed. The other node had two free workers. A `revert` during the outage failed or had no lasting effect in 3 of 3 attempts.
+**We measured** this on the second x86 server guest (16 vCPU, 23 GB), with two worker nodes and one actor for each of four cases. An actor had a complete snapshot in the object store. It stayed in RESUMING on the stopped node for 5 min 33 s from its first request. It was crashed 5 min 44 s after the stop command. The other node had two free workers. A `revert` during the outage failed or had no lasting effect in 4 of 4 attempts on three actors.
 
 The workers of a stopped node were listed as active for 43 to 51 s after the stop command. A new resume can go to a dead node in that time. Kubernetes moved the worker pods to the other node after 5 minutes and did not move them back. [Section 4.3](#s-placement) has the timeline. We did not verify whether a `revert` sent after the workers are marked unavailable frees the actor.
 
@@ -118,7 +118,7 @@ Our test had two limits. We set the flag on `ate-api-server` only, with an edit 
 
 ### Smaller limits that will reach you
 
-- An open connection outlives its egress rule. Removing a rule stops new requests and leaves open connections alone, as [section 6.2](#s-egresspolicy-and-default-deny) shows.
+- An open connection outlives its egress rule. Removing a rule stops new requests and leaves open connections alone, as [section 6.6](#s-the-dataplane-choice) shows.
 - Names are identities. The documentation tells you never to reuse the name of a deleted atespace. A request that was allowed for the old one can apply to the new one.
 - Postgres is the only store. The maintainers declined a storage plugin before the release.
 - A durable directory has no size limit in the API, so one actor can fill the node disk. This comes from an open issue. We did not test it.

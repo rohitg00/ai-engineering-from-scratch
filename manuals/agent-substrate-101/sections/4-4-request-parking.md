@@ -17,7 +17,7 @@ The router does not return that failure at once. It parks the request and tries 
 - **Retry.** The first retry comes after 100 ms. Each later delay is 1.1 times longer, with a small random part.
 - **Budget.** The router stops retrying after 5 seconds, the value of `--parked-request-budget`. Then the client gets the 503.
 - **One budget for each actor.** Requests for the same actor share one resume call and one budget clock. A request that joins late can fail after less than 5 seconds.
-- **Limit.** At most 1,024 requests can be parked at one time, the value of `--parked-request-max`. The next one gets a 503 at once, with the text `router at capacity`.
+- **Limit.** At most 1,024 requests can be parked at one time, the value of `--parked-request-max`. A request takes a place only when its first resume attempt has failed and it starts to wait. When no place is free, the router sheds the request after that one attempt, with a 503. The body is `actor "<atespace/name>" unavailable: router at capacity`.
 - **No cancel.** A resume that has started when the budget ends is not cancelled. The router waits for its result, so a request can be served after more than 5 seconds.
 
 Set `--parked-request-max=0` to turn parking off. Then a full pool returns the 503 at once.
@@ -151,7 +151,11 @@ Three things follow for your client and your alerts:
 - **Retry.** Retry a 503 with the text `no worker has room` after a pause. Do not retry it in a tight loop, because each retry takes a place among the parked requests.
 - **Alert.** The router counts parked requests in the metric `atenet.router.parking.active` and requests over the limit in `atenet.router.parking.rejected` {{docs}}. Alert when the first one stays above zero.
 
-All of this section is the Envoy dataplane, where the router process of Substrate handles each request. We did not test a full pool on the agentgateway dataplane, and we did not test more than 1,024 parked requests. Our bursts stopped at 32 requests, and each request had its own `kubectl ate proxy`. We did not send a burst through the ingress of the router.
+All of this section is the Envoy dataplane, where the router process of Substrate handles each request. We did not see a 503 from a full pool on the agentgateway dataplane. The kagent run uses agentgateway, and it did fill its one worker: 16 actors ran, and 8 of 24 parallel turns waited and then completed. [Sizing a pool](#s-sizing-a-pool) has that run.
+
+We did not test more than 1,024 parked requests. Our bursts stopped at 32 requests, and each request had its own `kubectl ate proxy`. We did not send a burst through the ingress of the router.
+
+The project site states `500+/s` suspend and resume activations. We did not test at that rate. Our largest burst that was served in full was 16 resumes at one time.
 
 ```takeaways
 - Read a 503 after 5 seconds as a pool that is too small.
@@ -161,4 +165,4 @@ All of this section is the Envoy dataplane, where the router process of Substrat
 - Retry a capacity 503 with a pause, never in a tight loop.
 ```
 
-Sources: capture/lab/I-capacity/13-parking-trace.tsv, capture/lab/I-capacity/16-load-30s.log, capture/lab/I-capacity/17-router-args.txt, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/I-capacity/12-pool-spec.yaml, capture/lab/I-capacity/14-workers-full.txt, capture/lab/I-capacity/15-actors-after.txt, capture/lab/summary/parking-x86.json, capture/lab/summary/validation-parallel-x86.json, capture/lab/V-validation/03-parallel-resume/20-parallel.tsv, capture/lab/V-validation/03-parallel-resume/24-summary.tsv, capture/lab/V-validation/03-parallel-resume/10-parallel-first-run-n16-n32.tsv, capture/lab/V-validation/03-parallel-resume/11-workers-before-32.txt, capture/lab/V-validation/03-parallel-resume/12-ateapi-error-lines-during-bursts.txt, capture/lab/B-lifecycle/20-trace-ops.tsv; cmd/atenet/internal/router/ingress/parking.go, cmd/atenet/internal/router/ingress/resumer.go, cmd/atenet/internal/router/cmd.go at v1.0.0; docs/concepts/request-parking.md at v1.0.0.
+Sources: capture/lab/I-capacity/13-parking-trace.tsv, capture/lab/I-capacity/16-load-30s.log, capture/lab/I-capacity/17-router-args.txt, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/I-capacity/12-pool-spec.yaml, capture/lab/I-capacity/14-workers-full.txt, capture/lab/I-capacity/15-actors-after.txt, capture/lab/summary/parking-x86.json, capture/lab/summary/validation-parallel-x86.json, capture/lab/V-validation/03-parallel-resume/20-parallel.tsv, capture/lab/V-validation/03-parallel-resume/24-summary.tsv, capture/lab/V-validation/03-parallel-resume/10-parallel-first-run-n16-n32.tsv, capture/lab/V-validation/03-parallel-resume/11-workers-before-32.txt, capture/lab/V-validation/03-parallel-resume/12-ateapi-error-lines-during-bursts.txt, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/summary/kagent-turns-x86.json; cmd/atenet/internal/router/ingress/parking.go, cmd/atenet/internal/router/ingress/resumer.go, cmd/atenet/internal/router/cmd.go at v1.0.0; docs/concepts/request-parking.md and site/layouts/_shortcodes/home.html at v1.0.0.

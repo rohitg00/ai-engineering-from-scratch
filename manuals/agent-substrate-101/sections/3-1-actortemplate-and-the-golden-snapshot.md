@@ -136,7 +136,7 @@ note: Four lines of the trace. The actor rc1 is early, and the actor rc2 was cre
 
 So an early actor never adopts the golden snapshot. It gets its own snapshot at its first suspend. Our actor starts in under a second, so the two first calls cost the same. With an application that needs 30 seconds to start, the early actor pays 30 seconds on its first call.
 
-You can turn the golden snapshot off with `goldenSnapshotConfig.mode: GOLDEN_SNAPSHOT_MODE_DISABLED` {{code}}. Every new actor then boots from the image.
+You can turn the golden snapshot off with `snapshotConfig.goldenSnapshotConfig.mode: GOLDEN_SNAPSHOT_MODE_DISABLED` {{code}}. Every new actor then boots from the image.
 
 ## A new actor starts suspended
 

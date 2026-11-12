@@ -100,7 +100,7 @@ caption: Each row is one actor. A green band is the time the actor ran, a dot is
 | requests that found the actor suspended | 7 of 140 |
 | time of those requests, after the first two | 0.24 to 0.26 s |
 | time of a request to a running actor, median | 0.06 s |
-| suspends in the 10 minutes | 6, each 0.33 to 0.39 s at the CLI |
+| suspends by the suspender | 7, each 0.33 to 0.39 s at the CLI. Six came in the 10 minutes, and the seventh came 10 min 34 s after the start |
 | CPU booked on the worker, mean of 58 samples | 1,345 of 2,000 millicores |
 
 The first two resumed requests took 0.44 and 0.49 seconds, because two actors started in the same second. A client that meets a suspended actor pays about 0.2 seconds more than a warm request for this small actor. [SuspendActor and ResumeActor](#s-suspendactor-and-resumeactor) shows how that cost grows with memory.

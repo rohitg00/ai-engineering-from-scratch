@@ -18,7 +18,7 @@ const LOW = 176;
 module.exports = figure('fig-3-2', {
   height: 366,
   title: 'The seven actor states and the transitions between them',
-  desc: `A state figure with the seven states of the ActorState enum at v1.0.0. CreateActor makes an actor in ACTOR_STATE_SUSPENDED. ResumeActor moves it through ACTOR_STATE_RESUMING to ACTOR_STATE_RUNNING. SuspendActor moves it through ACTOR_STATE_SUSPENDING and returns it to ACTOR_STATE_SUSPENDED. A failed restore, a lost worker pod, a memory kill or a failed suspend moves it to ACTOR_STATE_CRASHED, where a request gets 503. The only arrow that leaves ACTOR_STATE_CRASHED is RevertActor, which moves the actor through ACTOR_STATE_REVERTING to ACTOR_STATE_SUSPENDED. DeleteActor moves an actor in every state to ACTOR_STATE_DELETING. On the kagent guest an actor spent a median of ${resume.median.toFixed(2)} s in ACTOR_STATE_RESUMING over ${resume.n} turns and ${suspend.median.toFixed(2)} s in ACTOR_STATE_SUSPENDING over ${suspend.n} suspends. A dotted grey arrow is a transition we read in the code and did not run.`,
+  desc: `A state figure with the seven states of the ActorState enum at v1.0.0. CreateActor makes an actor in ACTOR_STATE_SUSPENDED. ResumeActor moves it through ACTOR_STATE_RESUMING to ACTOR_STATE_RUNNING. SuspendActor moves it through ACTOR_STATE_SUSPENDING and returns it to ACTOR_STATE_SUSPENDED. A failed restore, a lost worker pod, a memory kill or a failed suspend moves it to ACTOR_STATE_CRASHED, where a request gets 503. The only arrow that leaves ACTOR_STATE_CRASHED is RevertActor, which moves the actor through ACTOR_STATE_REVERTING to ACTOR_STATE_SUSPENDED. DeleteActor moves an actor in every state to ACTOR_STATE_DELETING. In the kagent run, on a second x86 server guest with 16 vCPU and 31 GB, an actor spent a median of ${resume.median.toFixed(2)} s in ACTOR_STATE_RESUMING over ${resume.n} turns and ${suspend.median.toFixed(2)} s in ACTOR_STATE_SUSPENDING over ${suspend.n} suspends. A dotted grey arrow is a transition we read in the code and did not run.`,
 }, f => {
   const state = (col, y, name, sub, hue = 'amber', extra = {}) => f.box({ x: COL[col], y, w: W, h: H, hue, titleSize: 11, pad: 2, title: `ACTOR_STATE_${name}`, sub, ...extra });
   const suspended = state(0, TOP, 'SUSPENDED', 'no sandbox, no worker');
@@ -70,7 +70,7 @@ module.exports = figure('fig-3-2', {
   f.path('M14 304 H76', { hue: 'ink-mute', dash: 'dotted', head: false });
   label(84, 308, 'read in the code, not run: RevertActor on a SUSPENDED actor');
   label(14, 326, 'Not drawn, also code only: RevertActor on a RUNNING actor.');
-  label(14, 342, 'Times in RESUMING and SUSPENDING: kagent guest, files-only actors.');
+  label(14, 342, 'Times in RESUMING and SUSPENDING: the kagent run, files-only actors.');
   label(14, 358, 'A process that exits leaves the actor RUNNING. Section 3.5 has that case.');
   void running;
 });

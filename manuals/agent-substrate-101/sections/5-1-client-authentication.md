@@ -84,7 +84,7 @@ We ran each row once on the x86 server guest. The second row is the mistake to e
 
 Three facts from the documentation limit how far you can trust this setup:
 
-- **A token outlives its ServiceAccount.** The server checks the signature and the expiry, and it does not ask Kubernetes if the account still exists. To stop a person at once, remove the person from the access policies.
+- **A token outlives its ServiceAccount.** The server checks the signature and the expiry, and it does not ask Kubernetes if the account still exists. The token works until its expiry time plus five minutes, which the server allows for clock differences. To stop a person at once, remove the person from the access policies.
 - **The CLI needs port-forward rights.** Without `--endpoint`, `kubectl ate` opens a port-forward into `ate-system`. In practice that right covers every pod and port in the namespace, so it also reaches the admin ports of the dataplane.
 - **Issuers are not part of the principal.** If you trust two issuers, either one can issue a token with the `sub` of a principal from the other.
 
@@ -92,7 +92,7 @@ A network rule stands before all of this. In our kagent run, a pod in the namesp
 
 ## The router: a certificate on one list
 
-A request to an actor does not go to the API. It goes to `atenet-router`, and the router demands a client certificate whose SPIFFE ID is on its list. The list is the router flag `--ingress-allowed-spiffe-ids`. In our installs it held one identity, `spiffe://cluster.local/ns/ate-system/sa/atenet-client`.
+A request to an actor does not go to the API. It goes to `atenet-router`, and the router demands a client certificate whose SPIFFE ID is on its list. The list is the router flag `--ingress-allowed-spiffe-ids`. In our `ate-setup` installs it held one identity, `spiffe://cluster.local/ns/ate-system/sa/atenet-client`. A kagent install is different. The kagent installer sets the list to the SPIFFE ID of the kagent controller, and `atenet-client` is not on it {{kagent}}.
 
 We sent the same request from three clients, on the Envoy dataplane and then on the agentgateway dataplane. The target was the actor `my-counter-1` in the atespace `ate-demo-counter`. The figure sets the two checks side by side, with the results of the Envoy dataplane.
 

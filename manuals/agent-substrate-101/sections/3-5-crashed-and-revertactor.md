@@ -136,7 +136,7 @@ A node that stops and stays down gives three more cases, and none of them starts
 | Running | `ACTOR_STATE_RUNNING` | 503 `upstream connect error or disconnect/reset before headers. reset reason: connection termination` |
 | Either one, when you call `revert` | `ACTOR_STATE_RESUMING` or `ACTOR_STATE_REVERTING` | `another operation is in progress for this actor`, or `is not in a revertable state (got: ACTOR_STATE_RESUMING`, or `while calling atelet Terminate` |
 
-**We measured** these cases on the second x86 server guest (16 vCPU, 23 GB), with gVisor and one actor for each case. A suspended actor with a complete snapshot stayed in `ACTOR_STATE_RESUMING` for 5 min 33 s under requests, and then it was crashed. A suspended actor with a pending snapshot was still in `ACTOR_STATE_RESUMING` 10 min 42 s after the stop command. It had received no request in the last 8 min 43 s. A running actor stayed `ACTOR_STATE_RUNNING` for the 10 minutes and the 150 requests of our probe.
+**We measured** these cases on the second x86 server guest (16 vCPU, 23 GB), with gVisor and one actor for each case. A suspended actor with a complete snapshot stayed in `ACTOR_STATE_RESUMING` for 5 min 33 s from its first request. It was crashed 5 min 44 s after the stop command. A suspended actor with a pending snapshot was still in `ACTOR_STATE_RESUMING` 10 min 42 s after the stop command. It had received no request in the last 8 min 43 s. A running actor stayed `ACTOR_STATE_RUNNING` for the 10 minutes and the 150 requests of our probe.
 
 ```listing
 title: a revert is refused twice while the node is down
@@ -156,13 +156,15 @@ Three rules follow from these runs.
 
 - **`ACTOR_STATE_RESUMING` that lasts is a symptom.** A resume of a small actor takes less than a second, and this state lasted for minutes. In the first run the crash came one second after Kubernetes evicted the worker pods, 5 minutes after the node was `NotReady`. Without a request, nothing moved the actor out of the state.
 - **A running actor on a stopped node is not marked crashed.** The caller gets the text of a process that exited. To tell the two cases apart, run `kubectl ate get workers`. On a stopped node the worker is `WORKER_STATE_UNAVAILABLE`, or it is not in the list.
-- **A revert did not help while the node was down.** It failed or had no lasting effect in 3 of 3 attempts. The revert of the running actor left it in `ACTOR_STATE_REVERTING`. Each request then got 503 with `(got: ACTOR_STATE_REVERTING, want ACTOR_STATE_SUSPENDED)`.
+- **A revert did not help while the node was down.** It failed or had no lasting effect in 4 of 4 attempts on three actors. The revert of the running actor left it in `ACTOR_STATE_REVERTING`. Each request then got 503 with `(got: ACTOR_STATE_REVERTING, want ACTOR_STATE_SUSPENDED)`.
 
-We have not verified one path. A revert that you send after the workers are marked unavailable can perhaps free a suspended actor for another node. Our reverts came too early or met a state that refused them.
+A second revert is the way out of `ACTOR_STATE_REVERTING` that lasts. `RevertActor` also accepts an actor that is already in that state, and it continues from the step where the earlier attempt stopped {{code}}. Send the revert again when the node or its `atelet` is back. This statement is from the code. Our runs did not send that second revert, and a run of this path is in progress.
+
+We have not verified one more path. A revert that you send after the workers are marked unavailable can perhaps free a suspended actor for another node. Our reverts came too early or met a state that refused them.
 
 ## RevertActor
 
-**RevertActor:** the call that discards the current execution of an actor and returns it to `ACTOR_STATE_SUSPENDED` at its last completed durable snapshot. It accepts a crashed actor, a running actor, and a suspended actor whose newest snapshot is on a node {{docs}}.
+**RevertActor:** the call that discards the current execution of an actor and returns it to `ACTOR_STATE_SUSPENDED` at its last completed durable snapshot. It accepts a crashed actor, a running actor, and a suspended actor whose newest snapshot is on a node {{docs}}. It also accepts an actor in `ACTOR_STATE_REVERTING`, so that you can send a revert again {{code}}.
 
 A revert stops any sandbox, removes the snapshot files on the node, and deletes an upload that was not complete {{docs}}. The actor comes back with no assigned node, and the next request resumes it from the object store.
 

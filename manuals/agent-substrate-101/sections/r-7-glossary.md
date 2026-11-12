@@ -7,7 +7,7 @@ The meanings come from the Agent Substrate source and documentation at v1.0.0 an
 | Term | Meaning in this manual | Explained in |
 |---|---|---|
 | Access policy | A list of bindings that grants roles on the API, for one atespace or for the whole install | [5.2](#s-access-policies) |
-| Actor | One isolated workload with an identity and a state that Substrate can suspend to a snapshot and resume on any fitting worker | [1.1](#s-what-substrate-does-and-what-it-leaves-to-you) |
+| Actor | One isolated workload with an identity and a state that Substrate can suspend to a snapshot and resume on a fitting worker. While a node holds its last snapshot, it resumes on that node | [1.1](#s-what-substrate-does-and-what-it-leaves-to-you) |
 | Actor JWT | A signed token that states the identity of one actor, which the egress gateway can attach to an outbound request | [5.3](#s-actor-jwts) |
 | `ACTOR_STATE_CRASHED` | The state of an actor whose sandbox, worker, or restore was lost. Only a revert or a delete leaves it. | [3.5](#s-crashed-and-revertactor) |
 | ActorTemplate | The record that describes the containers, the resource limits, and the snapshot fidelity of the actors made from it | [3.1](#s-actortemplate-and-the-golden-snapshot) |
@@ -40,14 +40,14 @@ The meanings come from the Agent Substrate source and documentation at v1.0.0 an
 | First call | The first request to a new actor, which includes a resume from the golden snapshot | [3.1](#s-actortemplate-and-the-golden-snapshot) |
 | Golden snapshot | The snapshot that Substrate takes of one started actor for each template, so that new actors resume from it | [3.1](#s-actortemplate-and-the-golden-snapshot) |
 | Golden tag | The tag under which Substrate stores the golden snapshot of a template | [3.1](#s-actortemplate-and-the-golden-snapshot) |
-| gVisor | The sandbox class that runs an actor under a user-space kernel. The default class. | [4.2](#s-sandbox-classes) |
+| gVisor | The sandbox class that runs an actor under a user-space kernel. The API has no default class: each WorkerPool names exactly one. The pool of the counter demo names gVisor. | [4.2](#s-sandbox-classes) |
 | Harness | The runtime that executes an agent and decides when to suspend its actor. In kagent it is also the object that names the WorkerPool and the snapshot location. | [7.1](#s-kagent-on-substrate) |
 | Ingress allowlist | The list of client identities that the router accepts | [5.1](#s-client-authentication) |
 | Installer | The program `ate-setup`, which installs and removes Agent Substrate from a checkout of the tag | [2.1](#s-install-with-ate-setup) |
 | Interception CA | The certificate authority whose key signs the certificates that the egress gateway shows to an actor for an `https` rule | [6.4](#s-tls-interception) |
 | kagent | An open-source agent framework for Kubernetes. Version 1.0.0 installs its own distribution of Substrate. | [7.1](#s-kagent-on-substrate) |
 | `kubectl ate` | The command-line plugin for the Substrate API | [2.2](#s-kubectl-ate) |
-| Lease | A row in Postgres that gives one workflow the right to change one object for 30 seconds | [8.1](#s-postgres-and-the-object-store) |
+| Lease | A row in Postgres that gives one workflow the right to change one object. The workflow renews it, and it expires 30 seconds after its last renewal. | [8.1](#s-postgres-and-the-object-store) |
 | microVM | The sandbox class that runs an actor in a small virtual machine. It needs KVM on the node. | [4.2](#s-sandbox-classes) |
 | Mock model | The server in our kagent cluster that answers model calls with a fixed reply, so that model time is near zero | [7.1](#s-kagent-on-substrate) |
 | Model gateway | A mode of agentgateway that routes requests to model providers and applies budgets and failover. It is separate from the Substrate dataplane. | [7.2](#s-agentgateway) |
@@ -83,7 +83,7 @@ The meanings come from the Agent Substrate source and documentation at v1.0.0 an
 | Tag | A named copy of the snapshot of a suspended actor, from which new actors can start | [the API reference](#s-ref-api-methods) |
 | TLS interception | The egress gateway ends the TLS connection of the actor and opens its own to the host, so that it can read the request | [6.4](#s-tls-interception) |
 | TLS pass-through | The egress gateway forwards the TLS connection unread, after it checks the server name | [6.4](#s-tls-interception) |
-| Trust bundle | The file in each sandbox that holds the interception CA certificate, so that the actor can verify intercepted connections | [6.4](#s-tls-interception) |
+| Trust bundle | The file that holds the interception CA certificate, so that the actor can verify intercepted connections. A sandbox has it only when its template mounts a `systemInfo` volume with a `trustBundle` source, and the code in the actor must be set to trust it. | [6.4](#s-tls-interception) |
 | Turn | In kagent, one user message and the reply to it. kagent resumes the actor before the turn and suspends it after. | [7.1](#s-kagent-on-substrate) |
 | Wakeup probe | An HTTP check in a template that a resume waits for before the actor counts as running | [3.1](#s-actortemplate-and-the-golden-snapshot) |
 | Warm call | A request to an actor that is already running | [3.3](#s-suspendactor-and-resumeactor) |

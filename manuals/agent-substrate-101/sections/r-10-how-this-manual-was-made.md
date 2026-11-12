@@ -22,16 +22,18 @@ Each fact carries one of four labels, and [the sources page](#s-ref-sources) ran
 
 Our runs rank first. Where a run and the documentation disagree, the manual reports the run and names the disagreement. The clearest case is the idle actor. The quickstart says that Substrate suspends it, and our actor read RUNNING in 60 of 60 samples over 900 s.
 
-## The two test beds
+## The four test beds
 
 | Name in the manual | Machine | What ran on it |
 |---|---|---|
 | an x86 server guest (24 vCPU, 47 GB, nested KVM) | a KVM guest on a shared x86 server, Ubuntu 24.04, Docker 29.1.3, Go 1.27.3 | Agent Substrate built from source, the Envoy dataplane, gVisor: experiments A, B, C, D, I, J, and V. Also the microVM class and the second node restart of experiment L |
 | a second x86 server guest (16 vCPU, 23 GB) | a guest on the same server | Agent Substrate from the release images, Envoy and then agentgateway v1.7.0: experiments E, F, and G. Also a second cluster with three kind nodes for experiment L |
-| an x86 server guest for kagent (16 vCPU, 31 GB) | a guest on the same server | kagent v1.0.0 with its own distribution of Substrate, and a mock model: experiment K |
+| a second x86 server guest (16 vCPU, 31 GB) | a guest on the same server | Two clusters, one after the other. kagent v1.0.0 with its own distribution of Substrate, and a mock model: experiment K. Then a separate install of Agent Substrate from the release images, with the Envoy dataplane, for the four demos of Part 9: experiment N |
 | an Apple silicon laptop under Docker Desktop | 10 CPUs and 8 GB given to Docker | Agent Substrate from the release images, gVisor only: experiment M |
 
-The server and the laptop are different machines. The laptop was two to three times faster on the same test. No section compares a number from one with a number from the other.
+The four are different machines. Two of them have 16 vCPU, so every measured paragraph gives the memory size too. A number from one machine is never a controlled comparison with a number from another.
+
+Three sections show numbers from two machines side by side. [Section 2.1](#s-install-with-ate-setup) has the two installs. [Section 8.2](#s-when-a-dependency-is-down) and [section 9.4](#s-a-failure-drill) have the two Postgres recoveries. Each one names both machines and says that the difference is indicative only.
 
 ## The lab method
 
@@ -39,7 +41,7 @@ The server and the laptop are different machines. The laptop was two to three ti
 - **Disks in memory.** Each guest kept its disk in the memory of the server. Disk writes were faster than on a cloud volume, so our suspend and upload times are lower limits for a real disk.
 - **One node, with one exception.** Every cluster but one had one kind node. The exception had one control plane node and two worker nodes. It gave the placement and node loss results of [section 4.3](#s-placement).
 - **An object store in the cluster.** Snapshots went to rustfs on the same node and the same disk. A bucket across a network adds time to every upload and every resume from the bucket.
-- **Two install paths.** We installed once from source, as the quickstart documents, and once from the release images. The two paths gave us the buildx failure and the install times of [section 2.1](#s-install-with-ate-setup).
+- **Two install paths.** We installed once from source, as the quickstart documents, and once from the release images, on two different guests. The two paths gave us the buildx failure and the install times of [section 2.1](#s-install-with-ate-setup).
 - **A mock model for kagent.** A small server in the cluster answered each model call with a fixed reply. Turn times in [section 7.1](#s-kagent-on-substrate) therefore hold almost no model time. A real model adds its own seconds to each turn.
 - **Client-side times.** Unless a section says otherwise, a time is what the client saw, through `kubectl ate proxy` or from a pod in the cluster. A warm call through the proxy took 0.058 to 0.068 s on the first guest, and that cost is inside every proxy number.
 - **Small samples.** Most points have 5 or 10 samples, and some events were recorded once. Each paragraph gives its count. Treat a result from one run as an observation.
@@ -60,6 +62,7 @@ The server and the laptop are different machines. The laptop was two to three ti
 | K | How does kagent 1.0 use Substrate? | One actor for each session, resumed and suspended on every turn, 98 of 98. |
 | L | How does the microVM class compare with gVisor? What happens on two worker nodes when one stops? How do workers recover after a node restart? | A microVM resume cost about 1 ms for each MiB, against about 2 ms. No actor left a stopped node by itself. After a restart, resumes failed for 10 to 30 s after the control plane returned. |
 | M | Does v1.0.0 work on Apple silicon? | Yes for gVisor actors up to 200 MiB. No KVM, so no microVM class. |
+| N | Do the patterns of Part 9 work on a new install from the release images? | Four demos ran: an idle suspender, a stateful agent, a tool sandbox, and a failure drill. Sections 9.1 to 9.4 report them. |
 | V | Do twelve statements that the first draft marked as not tested hold in a run? | The table below has one row for each. |
 
 The letter H is not in the table. H was a single check that a plain `scratch` image works as an actor. Experiment L closed three gaps of the earlier runs, and the sections of Part 4 report it.

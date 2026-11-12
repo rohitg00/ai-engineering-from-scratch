@@ -75,7 +75,16 @@ Substrate v1.0.0 installs one provider when you pass `--credential-provider='{"n
 ate-secret://k8s.io/default/<namespace>/<secret>/<key>
 ```
 
-The provider reads the Secret for each request and keeps no copy, so a rotated Secret takes effect on the next request {{code}}. The cost is one call to the provider and one read of the Kubernetes API for each request that carries the header.
+The provider reads the Secret for each call that it gets and keeps no copy {{code}}. How soon a rotated Secret takes effect depends on the dataplane, because the gateway decides how often it calls the provider.
+
+| Dataplane | What the gateway does | A rotated Secret takes effect |
+|---|---|---|
+| Envoy | It calls the provider for each request that carries the header, and it keeps no copy {{code}}. | on the next request |
+| agentgateway v1.7.0 | It keeps each fetched credential for 300 seconds, for one actor and one reference. `ate-setup` sets no other value {{agentgateway}}. | after up to 5 minutes |
+
+The agentgateway row covers every kagent install, because that distribution runs agentgateway. Both rows are from the code. A measured check of the rotation delay is in progress, and we have no number yet. Until you have measured it, plan for 5 minutes on agentgateway. Keep the old secret valid at the upstream for that time when you rotate.
+
+On Envoy, the cost is one call to the provider and one read of the Kubernetes API for each request that carries the header. On agentgateway, most requests make no call to the provider.
 
 The provider starts with no access. A ConfigMap, `k8s-credential-provider-namespace-policy`, maps each atespace to the namespaces whose Secrets its actors can use. The install creates it empty.
 
@@ -165,9 +174,10 @@ We ran kagent against a mock model over HTTP in the cluster. We did not test a r
 - Put the credential effect on an `https` rule for any host outside the cluster.
 - Grant each atespace one namespace, and keep only agent Secrets in it.
 - Restart `k8s-credential-provider` after you edit the namespace grant.
+- Keep a rotated secret valid for 5 more minutes at the upstream when the dataplane is agentgateway.
 - Make each client send the placeholder header, and read a `401` as a missing placeholder.
 - Name exact hosts in a rule that carries a credential, never `*`.
 - Assume that the agent can learn any credential whose upstream returns request headers.
 ```
 
-Sources: capture/lab/F-egress/envoy/20-results.txt, capture/lab/F-egress/envoy/P4.yaml, capture/lab/F-egress/envoy/policy-f-main-P4-live.yaml, capture/lab/F-egress/envoy/provider-policy.yaml, capture/lab/F-egress/envoy/04-provider-policy-apply.log, capture/lab/F-egress/envoy/32-marker-in-logs.txt, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/F-egress/agentgateway/32-marker-in-logs.txt, capture/lab/F-egress/agentgateway/50-custom-header.txt, capture/lab/G-dataplane/agentgateway/03-containers-atenet-egress.tsv, capture/lab/K-kagent/session1/egress-policy-actor.yaml, capture/lab/K-kagent/session1/mock.log, capture/lab/K-kagent/session1/turn2.out, capture/lab/K-kagent/session1/actor-template.yaml, api/ateapi/v1/ateapi.proto (HttpRuleEffects, CredentialHeader), cmd/atenet/internal/router/egress/credentials.go, cmd/credential-provider/kubernetes-secrets/kubeprovider.go, docs/guides/egress-credential-injection.md at v1.0.0.
+Sources: capture/lab/F-egress/envoy/20-results.txt, capture/lab/F-egress/envoy/P4.yaml, capture/lab/F-egress/envoy/policy-f-main-P4-live.yaml, capture/lab/F-egress/envoy/provider-policy.yaml, capture/lab/F-egress/envoy/04-provider-policy-apply.log, capture/lab/F-egress/envoy/32-marker-in-logs.txt, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/F-egress/agentgateway/32-marker-in-logs.txt, capture/lab/F-egress/agentgateway/50-custom-header.txt, capture/lab/G-dataplane/agentgateway/03-containers-atenet-egress.tsv, capture/lab/K-kagent/session1/egress-policy-actor.yaml, capture/lab/K-kagent/session1/mock.log, capture/lab/K-kagent/session1/turn2.out, capture/lab/K-kagent/session1/actor-template.yaml, api/ateapi/v1/ateapi.proto (HttpRuleEffects, CredentialHeader), cmd/atenet/internal/router/egress/credentials.go, cmd/credential-provider/kubernetes-secrets/kubeprovider.go, cmd/ate-setup/internal/steps/overlay.go, docs/guides/egress-credential-injection.md at v1.0.0; agentgateway v1.7.0 crates/agentgateway/src/http/substrate/egress.rs (the credential cache of 300 seconds).

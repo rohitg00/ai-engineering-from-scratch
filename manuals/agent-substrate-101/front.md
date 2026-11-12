@@ -31,11 +31,11 @@ The actor answers with a count, and each new request adds one. [Section 2.1](#s-
 
 You need Go 1.27, Docker, `git`, and `kubectl`. The release has no `ate-setup` binary, so the installer runs with `go run` from the checkout. The release does have `kubectl-ate` binaries, and [section 2.2](#s-kubectl-ate) installs one without Go.
 
-**We measured** this install once on an x86 server guest with 16 vCPU and 23 GB. The kind cluster took 55 s, `deploy ate-system` took 162 s, and `deploy demo counter` took 94 s. The whole path took about five minutes.
+**We measured** this install once on a second x86 server guest (16 vCPU, 23 GB). The kind cluster took 55 s, `deploy ate-system` took 162 s, and `deploy demo counter` took 94 s. The whole path took about five minutes.
 
 **We measured** the same install once on an Apple silicon laptop under Docker Desktop, with 10 CPU and 8 GB for Docker. The kind cluster took 119 s, and `deploy ate-system` took 702 s. Suspend and resume worked there with the gVisor sandbox class. The laptop and the server guest are different machines, so do not compare their seconds.
 
-Do not build from source for a first install. The command without `--image-repo` and `--image-tag` builds every image, and it needs the Docker buildx plugin and a Rust compile. On our x86 guest with 24 vCPU it failed once and then took 266 s.
+Do not build from source for a first install. The command without `--image-repo` and `--image-tag` builds every image, and it needs the Docker buildx plugin and a Rust compile. On the x86 server guest (24 vCPU, 47 GB, nested KVM) it failed once and then took 266 s. That guest is another machine than the one above, so the difference in seconds is indicative only.
 
 ## What you can do after this manual
 

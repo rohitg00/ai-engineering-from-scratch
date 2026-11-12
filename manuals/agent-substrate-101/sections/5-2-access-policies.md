@@ -168,9 +168,10 @@ The components of Substrate hold roles that no policy can grant. Each role is bo
 | Role | Held by | Allows |
 |---|---|---|
 | `ingress_router` | `atenet-router` | resume any actor, list actors in all atespaces |
-| `egress_gateway` | `atenet-egress` | read actors and egress policies, mint actor JWTs |
+| `egress_gateway` | `atenet-egress`, and any other identity that you name with the repeatable flag `--egress-gateway-spiffe-id` | read actors and egress policies, mint actor JWTs |
 | `atelet` | `atelet` on every node | read the egress policy of any actor |
-| `controller` | `ate-controller` | create, update and drain workers |
+| `controller` | `ate-controller` | create, get, list, update, delete and drain workers |
+| `api_server_sidecar` | the `ate-api-server` pod, which its sidecars share | read actors, so that the object store plugin can limit a storage credential to one actor {{code}} |
 
 Two rows deserve a second look. The router can resume every actor, which is why the list of the router in [client authentication](#s-client-authentication) matters so much. And only the egress gateway can mint an actor JWT. A global owner cannot, because the token lets its holder act as the actor. [Actor JWTs](#s-actor-jwts) follows that token.
 

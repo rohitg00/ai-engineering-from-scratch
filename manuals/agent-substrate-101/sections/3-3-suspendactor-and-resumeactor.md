@@ -116,7 +116,7 @@ caption: Each dot is one resume, and each line joins the medians of one path. Vi
 | 500 MiB | 1.07 s | 1.00 to 1.34 s | 2.26 s | 1.93 to 2.41 s |
 | 1,000 MiB | 2.16 s | 1.94 to 5.09 s | 4.68 s | 4.23 to 4.97 s |
 
-**We measured** one request to a suspended actor on the x86 server guest (24 vCPU, 47 GB, nested KVM), with gVisor and one kind node. The time is at the client, through `kubectl ate proxy`. A request to a running actor took 0.06 seconds on that path. For the object store column, atelet ran with an upload delay of 3 seconds and a detach delay of 10 seconds. All 40 requests of that run returned 200.
+**We measured** one request to a suspended actor on the x86 server guest (24 vCPU, 47 GB, nested KVM), with gVisor and one kind node. The time is at the client, through `kubectl ate proxy`. A request to a running actor took 0.06 seconds on that path. For the object store column, atelet ran with an upload delay of 3 seconds and a detach delay of 10 seconds. All 55 requests of that run returned 200: 5 first calls, 25 resumes, and 25 calls to a running actor.
 
 The atelet log says where the second column loses its time.
 
@@ -199,16 +199,20 @@ The laptop and the server guest are different machines. Read each table by itsel
 
 ## Our position
 
-Call `SuspendActor` yourself, from the component that knows when a turn ends. Use the asynchronous mode for the normal case, because the caller waits a third as long at 1,000 MiB. Use the synchronous mode before you drain a node, and for any state that you cannot lose. Suspend only an actor that has no open request. Budget the resume from the memory that holds data in your actor, and not from a headline number.
+Call `SuspendActor` yourself, from the component that knows when a turn ends. Use the asynchronous mode for the normal case, because the caller waits a third as long at 1,000 MiB. Use the synchronous mode for any state that you cannot lose, because it makes the snapshot durable before the call returns.
+
+A durable snapshot does not move the actor. In our two-node run a sync-suspended actor resumed on its own node while that node was cordoned. When the node stopped, the actor failed its requests and became `ACTOR_STATE_CRASHED`. We did not test a drain, and [section 4.3](#s-placement) has the runs.
+
+Suspend only an actor that has no open request. Budget the resume from the memory that holds data in your actor, and not from a headline number.
 
 ```takeaways
 - Call SuspendActor from your harness, because Substrate does not suspend an idle actor.
 - Use the default asynchronous mode when the caller must not wait for an upload.
-- Use --mode sync before node maintenance and for state that you cannot lose.
+- Use --mode sync for state that you cannot lose, and do not expect it to move the actor.
 - Suspend an actor only when it has no open request, because the request gets a 503.
 - Budget 0.2 s plus 2 ms for each MiB that holds data, for a resume from the node.
 - Double the cost for each MiB when the snapshot comes from the object store.
 - Measure your own actor, and treat the rule as an upper estimate for a real heap.
 ```
 
-Sources: capture/lab/summary/resume-x86.json, capture/lab/summary/suspend-x86.json, capture/lab/summary/resume-mac.json, capture/lab/summary/failures-x86.json, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/13-workers.txt, capture/lab/C-resume-vs-size/10-local.tsv, capture/lab/C-resume-vs-size/32-object-store.tsv, capture/lab/C-resume-vs-size/31-atelet-args-patched.txt, capture/lab/C-resume-vs-size/33-atelet-upload-detach.log, capture/lab/C-resume-vs-size/main.go, capture/lab/M-mac-arm64/80-local.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/validation-memory-x86.json, capture/lab/V-validation/01-compressible/10-compressible.tsv, capture/lab/V-validation/02-python-runtime/10-python.tsv, capture/lab/V-validation/02-python-runtime/img/app.py, capture/lab/V-validation/02-python-runtime/tmpl-pyagent.yaml, capture/lab/V-validation/12-suspend-during-request/10-inflight.tsv. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (SuspendActorRequest, DurabilityMode, ResumeActorRequest), cmd/ateapi/internal/controlapi/workflow_suspend.go, workflow_resume.go, internal/ateworker/suspend (not imported by any binary), docs/reference/api-guide.md (Eviction, ResumeActor, SuspendActor), docs/get-started/quickstart.md, README.md (the resume claim).
+Sources: capture/lab/L-gaps/multinode/60-sticky-cordon.tsv, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/summary/resume-x86.json, capture/lab/summary/suspend-x86.json, capture/lab/summary/resume-mac.json, capture/lab/summary/failures-x86.json, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/13-workers.txt, capture/lab/C-resume-vs-size/10-local.tsv, capture/lab/C-resume-vs-size/32-object-store.tsv, capture/lab/C-resume-vs-size/31-atelet-args-patched.txt, capture/lab/C-resume-vs-size/33-atelet-upload-detach.log, capture/lab/C-resume-vs-size/main.go, capture/lab/M-mac-arm64/80-local.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/validation-memory-x86.json, capture/lab/V-validation/01-compressible/10-compressible.tsv, capture/lab/V-validation/02-python-runtime/10-python.tsv, capture/lab/V-validation/02-python-runtime/img/app.py, capture/lab/V-validation/02-python-runtime/tmpl-pyagent.yaml, capture/lab/V-validation/12-suspend-during-request/10-inflight.tsv. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (SuspendActorRequest, DurabilityMode, ResumeActorRequest), cmd/ateapi/internal/controlapi/workflow_suspend.go, workflow_resume.go, internal/ateworker/suspend (not imported by any binary), docs/reference/api-guide.md (Eviction, ResumeActor, SuspendActor), docs/get-started/quickstart.md, README.md (the resume claim).

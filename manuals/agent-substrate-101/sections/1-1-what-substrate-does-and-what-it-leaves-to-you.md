@@ -34,7 +34,7 @@ So a pool of three workers can hold hundreds of sessions, as long as few of them
 
 Substrate gives you five things with fixed names.
 
-- **One API.** `ate-api-server` serves one gRPC service for atespaces, templates, actors, snapshots, workers, and policies. The `kubectl ate` plugin is its client {{code}}.
+- **One API.** `ate-api-server` serves the `Control` gRPC service for atespaces, templates, actors, snapshots, workers, and policies. The `kubectl ate` plugin is its client {{code}}. A second service, `WorkerService`, is for `atelet` only.
 - **One lifecycle.** An actor has seven states, and five operations move it between them: create, resume, suspend, revert, and delete. [Section 3.2](#s-actor-states) draws them.
 - **One way to reach an actor.** A client sends a request to `atenet-router` with the header `ate-target-actor` and a client certificate. The router finds the worker {{docs}}.
 - **Two sandbox classes.** An actor runs under gVisor or in a microVM, and the WorkerPool decides which one {{docs}}. We ran both on one machine, and [section 4.2](#s-sandbox-classes) compares them.
@@ -58,7 +58,7 @@ The program that drives the actor has this job. kagent takes it: in our kagent r
 
 Substrate has no autoscaler {{code}}. A WorkerPool has a `spec.replicas` field and a scale subresource, so a Kubernetes autoscaler can change it. Nothing in Substrate does. When every worker is full, a request for one more actor waits and then fails.
 
-**We measured** that failure on the same guest, four times in one day. The request waited 5.06 s and then returned 503 with the text `no worker has room for the actor`. [Section 4.4](#s-request-parking) explains the wait, and [section 4.5](#s-sizing-a-pool) sizes a pool.
+**We measured** that failure on the same guest, in eight requests to four actors of one run. Each request waited 5.06 s at the median (n=8) and then returned 503 with the text `no worker has room for the actor`. [Section 4.4](#s-request-parking) explains the wait, and [section 4.5](#s-sizing-a-pool) sizes a pool.
 
 ### GPU work
 
@@ -72,7 +72,7 @@ Substrate marks an actor as crashed, and then it waits for you. A crashed actor 
 
 Substrate also does not move an actor off a node that stops.
 
-**We measured** this on a second x86 server guest (16 vCPU, 23 GB), on a cluster with two worker nodes, one run for each case. A suspended actor with its snapshot in the object store stayed in `ACTOR_STATE_RESUMING` on the stopped node for 5 min 33 s. Then it was crashed. A running actor read `ACTOR_STATE_RUNNING` for the 10 minutes of our probe. The other node had free workers the whole time. [Section 4.3](#s-placement) has the four cases.
+**We measured** this on a second x86 server guest (16 vCPU, 23 GB), on a cluster with two worker nodes, one run for each case. A suspended actor had its snapshot in the object store. It stayed in `ACTOR_STATE_RESUMING` on the stopped node for 5 min 33 s from its first request. It was crashed 5 min 44 s after the stop command. A running actor read `ACTOR_STATE_RUNNING` for the 10 minutes of our probe. The other node had free workers the whole time, and [section 4.3](#s-placement) has the four cases.
 
 Substrate also has no opinion about the agent. It does not choose a model, run a tool, or keep a conversation. Those belong to the harness.
 
@@ -80,18 +80,18 @@ Substrate also has no opinion about the agent. It does not choose a model, run a
 
 Each position comes from a run on our own clusters. The table is the map of this manual.
 
-**We measured** every number in this table on x86 server guests, one run each unless the section says more. The section in the last column names the machine and the count.
+**We measured** every number in this table on two x86 server guests, one run each unless the section says more. The section in the last column names the machine and the count. The guests are different machines, so do not set a number from one row against a number from another row.
 
 | Position | The number behind it | Section |
 |---|---|---|
 | Substrate does not suspend an idle actor | 60 of 60 samples `RUNNING` in 900 s | [3.3](#s-suspendactor-and-resumeactor), [7.1](#s-kagent-on-substrate) |
 | A suspend is asynchronous, and its snapshot is not durable at once | `PENDING` on one node for 5 minutes | [3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives), [3.5](#s-crashed-and-revertactor) |
-| Postgres and `ate-api-server` are on every request path, and the Kubernetes API server is on none | 223 of 223 requests served with kube-apiserver down for 86 s | [1.2](#s-one-request-from-client-to-actor), [8.2](#s-when-a-dependency-is-down) |
+| Postgres and `ate-api-server` are on every request path, and the Kubernetes API server is on none | 103 of 103 requests from a pod served while kube-apiserver was down for 86 s | [1.2](#s-one-request-from-client-to-actor), [8.2](#s-when-a-dependency-is-down) |
 | Resume time grows with the memory that holds data in an actor | 0.22 s at 0 MiB, 2.16 s at 1000 MiB of random bytes, 0.23 s at 500 MiB of zero bytes | [3.3](#s-suspendactor-and-resumeactor) |
 | agentgateway is a dataplane option of Substrate, and it does authenticate ingress clients | 38 MB against 91 MB at idle | [6.6](#s-the-dataplane-choice), [7.2](#s-agentgateway) |
-| An egress policy allows hosts and ports, and a removed rule does not close an open connection | a second request passed 20 s after the rule was removed | [6.2](#s-egresspolicy-and-default-deny) |
+| An egress policy allows hosts and ports, and a removed rule does not close an open connection | a second request passed 20 s after the rule was removed | [6.2](#s-egresspolicy-and-default-deny) for the policy, [6.6](#s-the-dataplane-choice) for the open connection |
 | A crashed actor is not always marked crashed | `RUNNING` for 20 minutes after the process exited, in 81 of 81 samples | [3.5](#s-crashed-and-revertactor) |
-| Install from the release images | 162 s against 266 s | [2.1](#s-install-with-ate-setup) |
+| Install from the release images | 162 s on the second guest (16 vCPU, 23 GB). The source build took 266 s on the first guest (24 vCPU, 47 GB), after a failed step. Two machines, so the seconds are indicative only. | [2.1](#s-install-with-ate-setup) |
 
 Read the positions as a list of things to check on your own cluster. Your seconds will differ. The states, the error texts, and the order of events must not.
 
@@ -106,7 +106,7 @@ The project site, ate.dev, reached version 1.0 with the release. We read it on 2
 | Idle agents suspend | Not seen. An idle actor stayed `RUNNING` for 900 s. The architecture page says that the caller requests the suspend. | [3.3](#s-suspendactor-and-resumeactor), [9.1](#s-an-idle-suspender) |
 | An actor resumes in under `500ms` | True up to about 200 MiB of data, on gVisor, from the node. 2.16 s at 1,000 MiB. 0.96 s at 200 MiB from the object store. | [3.3](#s-suspendactor-and-resumeactor), [4.2](#s-sandbox-classes) |
 | An actor resumes on any ready worker | Not seen. 5 of 5 resumes stayed on the node that held the snapshot. The actor did not leave a stopped node. | [4.3](#s-placement) |
-| The Kubernetes API is off the request path | Confirmed. 223 of 223 requests were served with kube-apiserver down for 86 s. | [8.2](#s-when-a-dependency-is-down) |
+| The Kubernetes API is off the request path | Confirmed. 103 of 103 requests from a pod were served while kube-apiserver was down for 86 s. | [8.2](#s-when-a-dependency-is-down) |
 | Kubernetes handles recovery | True for nodes and pods. An actor on a stopped node needed an operator. | [4.3](#s-placement), [3.5](#s-crashed-and-revertactor) |
 | Memory and files survive a suspend | Confirmed with the memory fidelity. With the other two fidelities, the process starts again. | [3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) |
 | No inbound access without authentication | Confirmed on both dataplanes. | [6.1](#s-the-router-and-ingress) |

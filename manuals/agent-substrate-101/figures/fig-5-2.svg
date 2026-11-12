@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-5-2-title fig-5-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-5-2-title">Two scopes of access policy, and the roles of each</title>
-  <desc id="fig-5-2-desc">A tree. At the top, the bootstrap owners from the flag --authz-bootstrap-owners always hold owner on the global scope. Below, the global access policy named default grants owner and viewer. Under it, two atespaces named team-a and team-b each have one access policy named default that grants owner, editor and viewer. Workers belong to the global scope. System roles for atenet-router, atenet-egress, atelet and ate-controller come from pod certificates and no policy can grant them.</desc>
+  <desc id="fig-5-2-desc">A tree. At the top, the bootstrap owners from the flag --authz-bootstrap-owners always hold owner on the global scope. Below, the global access policy named default grants owner and viewer. Under it, two atespaces named team-a and team-b each have one access policy named default that grants owner, editor and viewer. Workers belong to the global scope. System roles for atenet-router, atenet-egress, atelet, ate-controller and the ate-api-server pod come from pod certificates and no policy can grant them.</desc>
   <defs><marker id="fig-5-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
   <rect x="20" y="24" width="250" height="56" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
   <text x="145" y="47.25" font-size="12.5" text-anchor="middle" font-weight="700">--authz-bootstrap-owners</text>
@@ -30,18 +30,21 @@
   <line x1="270" y1="153" x2="309" y2="153" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-2-head-ink)"/>
   <text x="470" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SYSTEM ROLES</text>
   <rect x="460" y="28" width="160" height="284" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
-  <rect x="470" y="40" width="140" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="540" y="58.1" font-size="12" text-anchor="middle" font-weight="700">atenet-router</text>
-  <text x="540" y="75.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resumes actors</text>
-  <rect x="470" y="96" width="140" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="540" y="114.1" font-size="12" text-anchor="middle" font-weight="700">atenet-egress</text>
-  <text x="540" y="131.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mints actor JWTs</text>
-  <rect x="470" y="152" width="140" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="540" y="170.1" font-size="12" text-anchor="middle" font-weight="700">atelet</text>
-  <text x="540" y="187.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reads egress policy</text>
-  <rect x="470" y="208" width="140" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="540" y="226.1" font-size="12" text-anchor="middle" font-weight="700">ate-controller</text>
-  <text x="540" y="243.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">manages workers</text>
-  <text x="540" y="280" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">from pod certificates</text>
-  <text x="540" y="296" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no policy grants them</text>
+  <rect x="470" y="38" width="140" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="540" y="55.1" font-size="12" text-anchor="middle" font-weight="700">atenet-router</text>
+  <text x="540" y="72.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resumes actors</text>
+  <rect x="470" y="86" width="140" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="540" y="103.1" font-size="12" text-anchor="middle" font-weight="700">atenet-egress</text>
+  <text x="540" y="120.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mints actor JWTs</text>
+  <rect x="470" y="134" width="140" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="540" y="151.1" font-size="12" text-anchor="middle" font-weight="700">atelet</text>
+  <text x="540" y="168.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reads egress policy</text>
+  <rect x="470" y="182" width="140" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="540" y="199.1" font-size="12" text-anchor="middle" font-weight="700">ate-controller</text>
+  <text x="540" y="216.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">manages workers</text>
+  <rect x="470" y="230" width="140" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="540" y="247.1" font-size="12" text-anchor="middle" font-weight="700">ate-api-server</text>
+  <text x="540" y="264.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sidecars read actors</text>
+  <text x="540" y="290" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">from pod certificates</text>
+  <text x="540" y="305" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no policy grants them</text>
 </svg>

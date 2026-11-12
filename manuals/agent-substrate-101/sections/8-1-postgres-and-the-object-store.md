@@ -34,12 +34,13 @@ Everything else is a row. **The code** creates one schema, named `substrate` by 
 | `workers` | one worker pod that registered | `ate-controller` and `atelet` |
 | `worker_assignments` | which actor holds which worker | resume, suspend, and crash reports |
 | `worker_outbox` | a change feed of worker rows | the same transaction as each worker change |
+| `worker_outbox_trim` | the mark up to which old rows of the feed were removed | the maintenance of the feed |
 | `leases` | one lock on one actor, tag, template, or worker | each workflow, renewed while it runs |
 | `global_access_policy`, `atespace_access_policies` | role bindings | the access policy calls |
 
 The same schema holds five tables of the OpenFGA authorizer that runs inside `ate-api-server`. Grants and actors are in one database, so one backup holds both.
 
-**Lease:** a row in `leases` that gives one workflow the right to change one resource for 30 seconds. The workflow renews it. A workflow that loses its lease stops.
+**Lease:** a row in `leases` that gives one workflow the right to change one resource. The workflow renews it, and the lease expires 30 seconds after its last renewal. A workflow that loses its lease stops.
 
 This design has three results that you will meet.
 
@@ -65,7 +66,7 @@ We did not test an external database. This part comes from the code and the docu
 
 - `ate-api-server` takes two connection strings: `--postgres-owner-connection-string` and `--postgres-read-write-connection-string`. The owner role runs migrations, and the read-write role serves requests. The default role names are `substrate_owner` and `substrate_readwrite`.
 - The repository includes an overlay for Cloud SQL through its proxy. Any other PostgreSQL service is yours to connect.
-- A connection pooler in transaction mode does not work. The API server keeps a session open to listen for worker changes.
+- The Cloud SQL scaling guide of the project says that a connection pooler in transaction mode does not work. Its reason is a session that listens for worker changes {{docs}}. The code at the tag does not match that reason. The worker watch reads the `worker_outbox` table every 50 ms, and the advisory locks last for one transaction {{code}}. We did not test a pooler, so use session mode until you have tested transaction mode yourself.
 - The first replica of a new release migrates the schema, and no migration is rolled back. Take a backup before an upgrade, as [section 8.4](#s-upgrade-and-stale-advice) describes.
 - The largest public load report names Postgres as the limit. With 9,000 sandboxes in use, the database ran at 53 to 60 of 64 cores while the API servers were idle. That number is from an issue against a release candidate, and it is not our result.
 

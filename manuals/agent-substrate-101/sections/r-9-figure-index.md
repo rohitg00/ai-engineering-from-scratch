@@ -2,7 +2,7 @@
 
 > Every figure of this manual, in order, by the one claim that its caption makes.
 
-Each row links to its figure, and the claim is the `claim:` field of the figure block. A measured number in a figure comes from [our recorded runs](manuals/agent-substrate-101/capture/lab), and the chart figures read [the summary files](manuals/agent-substrate-101/capture/lab/summary) directly. The colours follow the palette of the front matter:
+Each row links to its figure, and the claim is the `claim:` field of the figure block. A measured number in a figure comes from [our recorded runs](manuals/agent-substrate-101/capture/lab), and the chart figures read [the summary files](manuals/agent-substrate-101/capture/lab/summary) directly. Two charts are exceptions: figure 1.2b and figure 6.6 read their recordings directly. The colours follow the palette of the front matter:
 
 - blue is the Substrate control plane: `ate-api-server`, `ate-controller`, and `ate-idp-server`
 - violet is workers and sandboxes: `atelet`, worker pods, gVisor, and microVM
