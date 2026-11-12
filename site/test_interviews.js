@@ -128,14 +128,14 @@ test('no page links out of the site, except to the repository', () => {
 });
 
 test('repository links become site links', () => {
-  assert.equal(interviews.siteUrl('phases/17-infrastructure-and-production/06-sglang-radixattention'), '/lesson?path=phases%2F17-infrastructure-and-production%2F06-sglang-radixattention');
+  assert.equal(interviews.siteUrl('phases/17-infrastructure-and-production/06-sglang-radixattention'), '/learn/infrastructure-and-production/sglang-radixattention');
   assert.equal(interviews.siteUrl('manuals/sglang-101/sections/5-1-sglang-benchmark-serving.md', 'goodput-finds-the-knee-that-throughput-hides'), '/manual-sglang-101/sglang-benchmark-serving#s-sglang-benchmark-serving-goodput-finds-the-knee-that-throughput-hides');
   assert.equal(interviews.siteUrl('manuals/vllm-101/sections/r-3-incident-index.md'), '/manual-vllm-101/ref-incident-index');
   assert.equal(interviews.siteUrl('interviews/scenarios/prefix-cache-inflated-benchmark/README.md'), '/interviews/scenarios/prefix-cache-inflated-benchmark');
   assert.equal(interviews.siteUrl('interviews/questions/inference-serving/kv-pool-users-fit.md'), '/interviews/inference-serving/kv-pool-users-fit');
   const html = page('/interviews/inference-serving/prefix-cache-order').html;
   assert.ok(html.includes('href="/manual-sglang-101/prefix-friendly-prompts"'));
-  assert.ok(html.includes('href="/lesson?path=phases%2F17-infrastructure-and-production%2F06-sglang-radixattention"'));
+  assert.ok(html.includes('href="/learn/infrastructure-and-production/sglang-radixattention"'));
 });
 
 test('every page is in the sitemap, and llms.txt lists every item', () => {

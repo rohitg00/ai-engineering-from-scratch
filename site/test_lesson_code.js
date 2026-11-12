@@ -135,7 +135,7 @@ test('the lesson page uses fragments when present and the regex highlighter when
   const render = readCode => new Promise(resolve => {
     const response = { headers: {}, setHeader(name, value) { this.headers[name] = value; }, end(body) { resolve(String(body)); } };
     const handler = lessonApi.createHandler({ loadAssets: () => Object.assign({}, assets, { readCode }) });
-    handler({ method: 'GET', url: `/lesson?path=${encodeURIComponent(lessonPath)}`, headers: {} }, response);
+    handler({ method: 'GET', url: '/learn/deep-learning-core/the-perceptron', headers: {} }, response);
   });
   const withCode = await render(() => ({ [markdown.codeKey(fenced[2], fenced[1])]: marker }));
   assert.match(withCode, /data-server-rendered="true"/);

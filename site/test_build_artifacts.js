@@ -600,7 +600,9 @@ test('build-time SEO manifests cover every readable lesson and expose canonical 
     assert.ok(entry.seoTitle.length <= 60);
     assert.ok(entry.description.length <= 160);
     assert.ok(entry.excerpt.split(/\s+/).length <= 220);
-    assert.match(entry.canonicalUrl, /^https:\/\/aiengineeringfromscratch\.com\/lesson\?path=/);
+    assert.match(entry.canonicalUrl, entry.context.kind === 'course'
+      ? /^https:\/\/aiengineeringfromscratch\.com\/learn\/[a-z0-9-]+\/[a-z0-9-]+$/
+      : /^https:\/\/aiengineeringfromscratch\.com\/lesson\?path=/);
     assert.doesNotMatch(entry.canonicalUrl, /lesson\.html|[&?](?:track|learningPath)=/);
     assert.match(entry.sourceUrl, /^https:\/\/github\.com\/rohitg00\/ai-engineering-from-scratch\//);
     assert.ok(['course', 'certification'].includes(entry.context.kind));
@@ -1672,9 +1674,21 @@ test('TTS continuation accepts canonical and legacy lesson routes under one rout
 
   const query = 'path=phases%2F00-setup-and-tooling%2F01-dev-environment&learningPath=software-engineering-fundamentals';
   assert.equal(context.routeKey(origin + '/lesson.html?' + query), context.routeKey(origin + '/lesson?' + query));
+  assert.equal(
+    context.routeKey(origin + '/lesson?' + query),
+    context.routeKey(origin + '/learn/setup-and-tooling/dev-environment?learningPath=software-engineering-fundamentals')
+  );
+  assert.equal(
+    context.routeKey(origin + '/lesson?path=certifications%2Fclaude%2Flessons%2F01-intro'),
+    '/lesson?path=certifications%2Fclaude%2Flessons%2F01-intro'
+  );
   const link = href => ({ href, matches: selector => selector === '.lesson-nav-btn,.continue-link' });
   assert.equal(context.isLessonContinuationLink(link(origin + '/lesson?' + query)), true);
   assert.equal(context.isLessonContinuationLink(link(origin + '/lesson.html?' + query)), true);
+  assert.equal(context.isLessonContinuationLink(link(origin + '/learn/math-foundations/vectors')), true);
+  assert.equal(context.isLessonContinuationLink(link(origin + '/learn/math-foundations/vectors?lang=hi')), true);
+  assert.equal(context.isLessonContinuationLink(link(origin + '/learn/math-foundations')), false);
+  assert.equal(context.isLessonContinuationLink(link('https://example.com/learn/math-foundations/vectors')), false);
   assert.equal(context.isLessonContinuationLink(link(origin + '/certification?id=claude-architect')), false);
 });
 

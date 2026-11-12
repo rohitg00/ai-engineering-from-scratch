@@ -69,6 +69,10 @@
       "destination": "/api/lesson"
     },
     {
+      "source": "/learn/:cleanPhase([a-z0-9-]+)/:cleanLesson([a-z0-9-]+)",
+      "destination": "/api/lesson?cleanPhase=:cleanPhase&cleanLesson=:cleanLesson"
+    },
+    {
       "source": "/certification",
       "destination": "/api/certification"
     },

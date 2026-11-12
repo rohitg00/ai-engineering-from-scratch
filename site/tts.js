@@ -160,6 +160,11 @@
       var parsed = new URL(url, location.href);
       if (parsed.origin !== location.origin) return '';
       var pathname = parsed.pathname.replace(/\/lesson\.html$/, '/lesson');
+      var course = pathname === '/lesson' ? /^phases\/([a-z0-9][a-z0-9-]*)\/([a-z0-9][a-z0-9-]*)$/.exec(parsed.searchParams.get('path') || '') : null;
+      if (course) {
+        pathname = '/learn/' + course[1].replace(/^\d+-/, '') + '/' + course[2].replace(/^\d+-/, '');
+        parsed.searchParams.delete('path');
+      }
       var entries = Array.from(parsed.searchParams.entries()).sort(function (a, b) {
         return a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0;
       });
@@ -1033,7 +1038,9 @@
     if (!link || !link.matches('.lesson-nav-btn,.continue-link')) return false;
     try {
       var url = new URL(link.href, location.href);
-      return url.origin === location.origin && /\/lesson(?:\.html)?$/.test(url.pathname) && !!url.searchParams.get('path');
+      if (url.origin !== location.origin) return false;
+      if (/^\/learn\/[a-z0-9][a-z0-9-]*\/[a-z0-9][a-z0-9-]*$/.test(url.pathname)) return true;
+      return /\/lesson(?:\.html)?$/.test(url.pathname) && !!url.searchParams.get('path');
     } catch (e) {
       return false;
     }

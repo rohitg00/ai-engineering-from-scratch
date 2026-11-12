@@ -35,6 +35,24 @@
       hostname === '[::1]';
   }
 
+  function cleanLessonHref(pathname, suffix) {
+    if (!/(^|\/)lesson$/.test(pathname) || suffix.charAt(0) !== '?') return '';
+    var hashIndex = suffix.indexOf('#');
+    var hash = hashIndex < 0 ? '' : suffix.slice(hashIndex);
+    var params;
+    try {
+      params = new URLSearchParams(hashIndex < 0 ? suffix : suffix.slice(0, hashIndex));
+    } catch (_) {
+      return '';
+    }
+    var match = /^phases\/([a-z0-9][a-z0-9-]*)\/([a-z0-9][a-z0-9-]*)$/.exec(params.get('path') || '');
+    if (!match || params.has('track')) return '';
+    params.delete('path');
+    var query = params.toString();
+    var base = pathname.slice(0, -'lesson'.length) || '/';
+    return base + 'learn/' + match[1].replace(/^\d+-/, '') + '/' + match[2].replace(/^\d+-/, '') + (query ? '?' + query : '') + hash;
+  }
+
   function adaptRouteHref(href, locationValue) {
     if (typeof href !== 'string') return href;
     if (/^[a-z][a-z\d+.-]*:/i.test(href) || href.indexOf('//') === 0) {
@@ -52,9 +70,10 @@
     if (isStaticPreview(locationValue)) {
       return pathname.replace(new RegExp('(^|/)' + pages + '$'), '$1$2.html') + suffix;
     }
-    return pathname.replace(new RegExp('(^|/)' + pages + '\\.html$'), function (_, prefix, page) {
+    var cleanPathname = pathname.replace(new RegExp('(^|/)' + pages + '\\.html$'), function (_, prefix, page) {
       return page === 'index' ? (prefix || './') : prefix + page;
-    }) + suffix;
+    });
+    return cleanLessonHref(cleanPathname, suffix) || cleanPathname + suffix;
   }
 
   function adaptRouteLink(link) {

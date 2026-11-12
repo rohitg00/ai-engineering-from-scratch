@@ -182,11 +182,15 @@ def main() -> None:
     assert all(entry["path"] == lesson_path for lesson_path, entry in lessons.items())
     assert all(
         entry["canonicalUrl"].startswith(
-            "https://aiengineeringfromscratch.com/lesson?path="
+            "https://aiengineeringfromscratch.com/learn/"
+            if entry["context"]["kind"] == "course"
+            else "https://aiengineeringfromscratch.com/lesson?path=certifications"
         )
         and "/lesson.html?" not in entry["canonicalUrl"]
         for entry in lessons.values()
     )
+    course_urls = [entry["canonicalUrl"] for entry in lessons.values() if entry["context"]["kind"] == "course"]
+    assert len(set(course_urls)) == len(course_urls), "two course lessons share one clean URL"
 
     certification_manifest = json.loads((SITE / "certification-seo.json").read_text(encoding="utf-8"))
     tracks = certification_manifest["tracks"]
@@ -201,12 +205,16 @@ def main() -> None:
     )
 
     sitemap = (SITE / "sitemap.xml").read_text(encoding="utf-8")
-    assert sitemap.count("/lesson?path=") == len(lessons)
-    sitemap_lessons = {
+    sitemap_locs = set(re.findall(r"<loc>([^<]+)</loc>", sitemap))
+    assert all(entry["canonicalUrl"] in sitemap_locs for entry in lessons.values())
+    assert len(re.findall(r"<loc>https://aiengineeringfromscratch\.com/learn/[a-z0-9-]+/[a-z0-9-]+</loc>", sitemap)) == len(course_urls)
+    sitemap_certification_lessons = {
         unquote(value)
         for value in re.findall(r"/lesson\?path=([^<&]+)", sitemap)
     }
-    assert sitemap_lessons == set(lessons)
+    assert sitemap_certification_lessons == {
+        lesson_path for lesson_path, entry in lessons.items() if entry["context"]["kind"] != "course"
+    }
     assert sitemap.count("/certification?id=") == len(tracks)
     assert "/lesson.html?" not in sitemap
     assert "/certification.html?" not in sitemap

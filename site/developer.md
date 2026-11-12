@@ -96,7 +96,7 @@ names `text/markdown`, including their `.html` URLs. HTML remains the default fo
 browsers and wildcard Accept. Both representations are static files served from
 the CDN, and responses send `Vary: Accept, Accept-Encoding`. For full quality-value
 negotiation, including 406 for rejected types, use `/api/v1/markdown?path=/docs`.
-Lesson pages at `/lesson?path=...` also return the lesson Markdown when `Accept`
+Lesson pages at `/learn/<phase>/<lesson>` also return the lesson Markdown when `Accept`
 prefers `text/markdown`, and send `Vary: Accept, Accept-Encoding`. Lesson source is
 also available through `/api/v1/resource`. Certification routes keep their HTML
 rendering and canonical redirects.
@@ -113,7 +113,7 @@ fr, pt, pt-BR, tr, vi, and fa. The translations live on the public `translations
 branch, never on main. The exact list per lesson comes from that branch's
 translation records and appears as `translations` in catalog and resource results.
 
-- Reader page: `/lesson?path=<lesson path>&lang=<code>`. It renders the translation,
+- Reader page: `/learn/<phase>/<lesson>?lang=<code>`. It renders the translation,
   sets `lang` and `dir` on the page, uses its own canonical URL, and lists hreflang
   alternates for English, `x-default`, and every translation of that lesson.
 - Markdown: request the reader page with `Accept: text/markdown`, or call

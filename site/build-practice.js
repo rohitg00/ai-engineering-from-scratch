@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const markdown = require('./lesson-markdown');
 const code = require('./lib/code');
-const { phaseSlug } = require('../lib/hub-routes');
+const { phaseSlug, lessonCleanPath } = require('../lib/hub-routes');
 const { SITE_HEADER } = require('./build-hubs');
 const { versionHtml } = require('./version-assets');
 
@@ -182,7 +182,7 @@ function citationHtml(paper) {
 }
 
 function lessonHref(lesson) {
-  return `/lesson?path=${encodeURIComponent(lesson)}`;
+  return lessonCleanPath(lesson) || `/lesson?path=${encodeURIComponent(lesson)}`;
 }
 
 function footer() {

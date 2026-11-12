@@ -32,9 +32,12 @@ test('served routing preserves HTML, negotiates every navigation page, and recov
   for (const route of ['/llms.txt','/developer.md','/sitemap.xml','/style.css?v=old','/header.js?v=old','/projects-data.js']) {
     const response = await fetch(base + route); assert.equal(response.status,200,route); assert.ok((await response.text()).length > 50);
   }
-  const lesson = '/lesson?path=phases%2F00-setup-and-tooling%2F01-dev-environment';
+  const lesson = '/learn/setup-and-tooling/dev-environment';
   assert.equal((await fetch(base + lesson)).status,200);
-  const legacy = await fetch(base + lesson.replace('/lesson?','/lesson.html?'), { redirect:'manual' }); assert.equal(legacy.status,308); assert.match(legacy.headers.get('location'),/^\/lesson\?/);
+  const legacyQuery = '?path=phases%2F00-setup-and-tooling%2F01-dev-environment';
+  for (const legacyRoute of ['/lesson','/lesson.html']) {
+    const legacy = await fetch(base + legacyRoute + legacyQuery, { redirect:'manual' }); assert.equal(legacy.status,308); assert.equal(legacy.headers.get('location'),lesson);
+  }
   const json = await fetch(base + '/api/v1/catalog?q=attention&limit=1'); assert.equal(json.status,200); const catalog = await json.json();
   const source = await fetch(base + '/api/v1/resource?path=' + encodeURIComponent(catalog.items[0].path)); assert.ok((await source.json()).markdown);
   const duplicate = await fetch(base + '/api/v1/catalog?limit=1&limit=2'); assert.equal(duplicate.status,400);

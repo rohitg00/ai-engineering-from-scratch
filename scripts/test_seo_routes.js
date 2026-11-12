@@ -13,11 +13,13 @@ const manuals = require('../site/build-manuals.js');
 const { buildData: buildProjectData } = require('../site/build-projects.js');
 const translations = require('../lib/lesson-translations');
 const build = require('../site/build.js');
+const { lessonCleanPath } = require('../lib/hub-routes');
 const { collectCoverage } = require('../site/fetch-translation-coverage.js');
 const { compareCoverage, compareBuildCoverage } = require('../scripts/check_translation_coverage.js');
 
 const ROOT = path.join(__dirname, '..');
 const PERCEPTRON = 'phases/03-deep-learning-core/01-the-perceptron';
+const PERCEPTRON_CLEAN = '/learn/deep-learning-core/the-perceptron';
 
 function makeAssets() {
   return {
@@ -45,7 +47,7 @@ function makeAssets() {
             learningPathIds: ['math', 'model-context-protocol'],
             fromTrackIds: ['claude-example'],
             sourceUrl: 'https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/01-math/01-vectors',
-            canonicalUrl: 'https://aiengineeringfromscratch.com/lesson?path=phases%2F01-math%2F01-vectors',
+            canonicalUrl: 'https://aiengineeringfromscratch.com/learn/math/vectors',
           },
           'phases/07-transformers/09-vectors': {
             path: 'phases/07-transformers/09-vectors',
@@ -58,7 +60,7 @@ function makeAssets() {
             next: null,
             learningPathIds: [],
             fromTrackIds: [],
-            canonicalUrl: 'https://aiengineeringfromscratch.com/lesson?path=phases%2F07-transformers%2F09-vectors',
+            canonicalUrl: 'https://aiengineeringfromscratch.com/learn/transformers/vectors',
           },
           'certifications/claude/lessons/01-models': {
             path: 'certifications/claude/lessons/01-models',
@@ -196,22 +198,24 @@ test('lesson route renders unique crawlable HTML with a path-only canonical', fu
   const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
   const response = invoke(handler, {
     method: 'GET',
-    url: '/lesson?path=phases%2F01-math%2F01-vectors&learningPath=math&lang=hi',
-    query: { path: 'phases/01-math/01-vectors', learningPath: 'math', lang: 'hi' },
+    url: '/learn/math/vectors?learningPath=math&lang=hi',
+    query: { learningPath: 'math', lang: 'hi' },
   });
 
   assert.equal(response.statusCode, 200);
   assert.match(response.headers['cache-control'], /s-maxage=86400/);
   assert.match(response.body, /<title>Vectors &amp; Matrices - AI Engineering from Scratch<\/title>/);
-  assert.match(response.body, /rel="canonical" href="https:\/\/aiengineeringfromscratch\.com\/lesson\?path=phases%2F01-math%2F01-vectors"/);
+  assert.match(response.body, /rel="canonical" href="https:\/\/aiengineeringfromscratch\.com\/learn\/math\/vectors"/);
   assert.doesNotMatch(response.body, /canonical"[^>]+learningPath=/);
+  assert.match(response.body, /<head>\n  <base href="\/">\n  <meta name="aifs-lesson-path" content="phases\/01-math\/01-vectors">/);
   assert.equal((response.body.match(/<h1(?:\s|>)/g) || []).length, 1);
   assert.match(response.body, /<h1>Vectors &amp; &lt;Matrices&gt; - Math Foundations<\/h1>/);
   assert.match(response.body, /"@type":"LearningResource"/);
   assert.match(response.body, /"@type":"BreadcrumbList"/);
   assert.doesNotMatch(response.body, /"@type":"Person"|#person|rohitghumare\.com/);
   assert.doesNotMatch(response.body, /<script>Vectors/);
-  assert.match(response.body, /path=phases%2F01-math%2F02-calculus/);
+  assert.match(response.body, /href="\/learn\/math\/calculus\?learningPath=math&amp;lang=hi"/);
+  assert.doesNotMatch(response.body, /path=phases%2F01-math%2F02-calculus/);
 });
 
 test('lesson route keeps certification navigation inside the selected track', function () {
@@ -246,8 +250,8 @@ test('lesson route serves every certification program and keeps its track naviga
 test('lesson route disambiguates duplicate H1 values across pages', function () {
   const assets = makeAssets();
   const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
-  const first = invoke(handler, { method: 'GET', query: { path: 'phases/01-math/01-vectors' } });
-  const second = invoke(handler, { method: 'GET', query: { path: 'phases/07-transformers/09-vectors' } });
+  const first = invoke(handler, { method: 'GET', url: '/learn/math/vectors' });
+  const second = invoke(handler, { method: 'GET', url: '/learn/transformers/vectors' });
   const firstHeading = first.body.match(/<h1>(.*?)<\/h1>/)[1];
   const secondHeading = second.body.match(/<h1>(.*?)<\/h1>/)[1];
 
@@ -291,7 +295,7 @@ test('legacy lesson route keeps one navigation mode plus language and local TTS 
   });
 
   assert.equal(response.statusCode, 308);
-  assert.equal(response.headers.location, '/lesson?path=phases%2F01-math%2F01-vectors&learningPath=math&lang=hi&ttsTest=silent');
+  assert.equal(response.headers.location, '/learn/math/vectors?learningPath=math&lang=hi&ttsTest=silent');
   assert.equal(response.body, '');
 });
 
@@ -303,13 +307,21 @@ test('lesson route normalizes unknown or unsupported query context before cachin
     url: '/lesson?path=phases%2F01-math%2F01-vectors&learningPath=math&lang=hi&ttsTest=silent&utm_source=random',
   });
   assert.equal(unknown.statusCode, 308);
-  assert.equal(unknown.headers.location, '/lesson?path=phases%2F01-math%2F01-vectors&learningPath=math&lang=hi');
+  assert.equal(unknown.headers.location, '/learn/math/vectors?learningPath=math&lang=hi');
   assert.equal(unknown.body, '');
+
+  const unknownClean = invoke(handler, {
+    method: 'GET',
+    url: '/learn/math/vectors?learningPath=math&lang=hi&ttsTest=silent&utm_source=random',
+  });
+  assert.equal(unknownClean.statusCode, 308);
+  assert.equal(unknownClean.headers.location, '/learn/math/vectors?learningPath=math&lang=hi');
+  assert.equal(unknownClean.body, '');
 
   const unsupported = invoke(handler, {
     method: 'GET',
+    url: '/learn/math/vectors?fromTrack=missing-track&learningPath=missing-path&lang=zz&ttsTest=verbose',
     query: {
-      path: 'phases/01-math/01-vectors',
       fromTrack: 'missing-track',
       learningPath: 'missing-path',
       lang: 'zz',
@@ -317,7 +329,7 @@ test('lesson route normalizes unknown or unsupported query context before cachin
     },
   });
   assert.equal(unsupported.statusCode, 308);
-  assert.equal(unsupported.headers.location, '/lesson?path=phases%2F01-math%2F01-vectors');
+  assert.equal(unsupported.headers.location, '/learn/math/vectors');
 
   const certificationLanguage = invoke(handler, {
     method: 'GET',
@@ -332,18 +344,27 @@ test('lesson route normalizes unknown or unsupported query context before cachin
 
   const silentTts = invoke(handler, {
     method: 'GET',
-    query: { path: 'phases/01-math/01-vectors', ttsTest: 'silent' },
+    url: '/learn/math/vectors?ttsTest=silent',
+    query: { ttsTest: 'silent' },
     headers: { host: 'localhost:4277' },
   });
   assert.equal(silentTts.statusCode, 200);
 
   const deployedTts = invoke(handler, {
     method: 'GET',
-    url: '/lesson?path=phases%2F01-math%2F01-vectors&ttsTest=silent',
+    url: '/learn/math/vectors?ttsTest=silent',
     headers: { host: 'aiengineeringfromscratch.com' },
   });
   assert.equal(deployedTts.statusCode, 308);
-  assert.equal(deployedTts.headers.location, '/lesson?path=phases%2F01-math%2F01-vectors');
+  assert.equal(deployedTts.headers.location, '/learn/math/vectors');
+
+  const legacyDeployedTts = invoke(handler, {
+    method: 'GET',
+    url: '/lesson?path=phases%2F01-math%2F01-vectors&ttsTest=silent',
+    headers: { host: 'aiengineeringfromscratch.com' },
+  });
+  assert.equal(legacyDeployedTts.statusCode, 308);
+  assert.equal(legacyDeployedTts.headers.location, '/learn/math/vectors');
 });
 
 test('lesson route canonicalizes valid query parameter order before caching HTML', function () {
@@ -351,12 +372,21 @@ test('lesson route canonicalizes valid query parameter order before caching HTML
   const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
   const response = invoke(handler, {
     method: 'GET',
-    url: '/lesson?lang=hi&path=phases/01-math/01-vectors&learningPath=math',
+    url: '/learn/math/vectors?lang=hi&learningPath=math',
   });
 
   assert.equal(response.statusCode, 308);
-  assert.equal(response.headers.location, '/lesson?path=phases%2F01-math%2F01-vectors&learningPath=math&lang=hi');
+  assert.equal(response.headers.location, '/learn/math/vectors?learningPath=math&lang=hi');
   assert.equal(response.body, '');
+
+  const legacy = invoke(handler, {
+    method: 'GET',
+    url: '/lesson?lang=hi&path=phases/01-math/01-vectors&learningPath=math',
+  });
+
+  assert.equal(legacy.statusCode, 308);
+  assert.equal(legacy.headers.location, '/learn/math/vectors?learningPath=math&lang=hi');
+  assert.equal(legacy.body, '');
 });
 
 test('lesson route keeps certification return context on supplemental course lessons', function () {
@@ -364,7 +394,7 @@ test('lesson route keeps certification return context on supplemental course les
   const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
   const response = invoke(handler, {
     method: 'GET',
-    url: '/lesson?path=phases%2F01-math%2F01-vectors&fromTrack=claude-example&lang=hi',
+    url: '/learn/math/vectors?fromTrack=claude-example&lang=hi',
   });
 
   assert.equal(response.statusCode, 200);
@@ -376,11 +406,11 @@ test('lesson route rejects certification return context outside its actual suppl
   const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
   const response = invoke(handler, {
     method: 'GET',
-    url: '/lesson?path=phases%2F07-transformers%2F09-vectors&fromTrack=claude-example',
+    url: '/learn/transformers/vectors?fromTrack=claude-example',
   });
 
   assert.equal(response.statusCode, 308);
-  assert.equal(response.headers.location, '/lesson?path=phases%2F07-transformers%2F09-vectors');
+  assert.equal(response.headers.location, '/learn/transformers/vectors');
 });
 
 test('lesson route rejects learning paths that do not contain the lesson', function () {
@@ -388,11 +418,11 @@ test('lesson route rejects learning paths that do not contain the lesson', funct
   const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
   const response = invoke(handler, {
     method: 'GET',
-    url: '/lesson?path=phases%2F01-math%2F01-vectors&learningPath=using-coding-agents',
+    url: '/learn/math/vectors?learningPath=using-coding-agents',
   });
 
   assert.equal(response.statusCode, 308);
-  assert.equal(response.headers.location, '/lesson?path=phases%2F01-math%2F01-vectors');
+  assert.equal(response.headers.location, '/learn/math/vectors');
 });
 
 test('lesson route redirects the former MCP path name to the canonical path ID', function () {
@@ -400,11 +430,11 @@ test('lesson route redirects the former MCP path name to the canonical path ID',
   const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
   const response = invoke(handler, {
     method: 'GET',
-    url: '/lesson?path=phases%2F01-math%2F01-vectors&learningPath=mcp-engineering',
+    url: '/learn/math/vectors?learningPath=mcp-engineering',
   });
 
   assert.equal(response.statusCode, 308);
-  assert.equal(response.headers.location, '/lesson?path=phases%2F01-math%2F01-vectors&learningPath=model-context-protocol');
+  assert.equal(response.headers.location, '/learn/math/vectors?learningPath=model-context-protocol');
 });
 
 test('lesson route redirects equivalent raw path encodings to one cache key', function () {
@@ -416,19 +446,42 @@ test('lesson route redirects equivalent raw path encodings to one cache key', fu
       url: `/lesson?path=${encodedPath}`,
     });
     assert.equal(response.statusCode, 308);
-    assert.equal(response.headers.location, '/lesson?path=phases%2F01-math%2F01-vectors');
+    assert.equal(response.headers.location, '/learn/math/vectors');
   }
+});
+
+test('clean lesson route accepts every request shape the host rewrite can produce', function () {
+  const assets = makeAssets();
+  const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
+  const query = { cleanPhase: 'math', cleanLesson: 'vectors' };
+  const shapes = [
+    { url: '/learn/math/vectors' },
+    { url: '/learn/math/vectors', query },
+    { url: '/learn/math/vectors?cleanPhase=math&cleanLesson=vectors', query },
+    { url: '/api/lesson?cleanPhase=math&cleanLesson=vectors', query },
+    { url: '/learn/math/vectors', query: { cleanPhase: ['math', 'math'], cleanLesson: ['vectors', 'vectors'] } },
+  ];
+  for (const shape of shapes) {
+    const response = invoke(handler, Object.assign({ method: 'GET' }, shape));
+    assert.equal(response.statusCode, 200, JSON.stringify(shape));
+  }
+  const config = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
+  const rewrite = config.rewrites.find(function (rule) { return rule.source.startsWith('/learn/'); });
+  assert.equal(rewrite.source, '/learn/:cleanPhase([a-z0-9-]+)/:cleanLesson([a-z0-9-]+)');
+  assert.equal(rewrite.destination, '/api/lesson?cleanPhase=:cleanPhase&cleanLesson=:cleanLesson');
+  const spoofed = invoke(handler, { method: 'GET', url: '/lesson?cleanPhase=math&cleanLesson=vectors', query });
+  assert.equal(spoofed.statusCode, 404);
 });
 
 test('lesson route supports HEAD and rejects unsupported methods', function () {
   const assets = makeAssets();
   const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
-  const head = invoke(handler, { method: 'HEAD', query: { path: 'phases/01-math/01-vectors' } });
+  const head = invoke(handler, { method: 'HEAD', url: '/learn/math/vectors' });
   assert.equal(head.statusCode, 200);
   assert.equal(head.body, '');
   assert.ok(Number(head.headers['content-length']) > 0);
 
-  const post = invoke(handler, { method: 'POST', query: { path: 'phases/01-math/01-vectors' } });
+  const post = invoke(handler, { method: 'POST', url: '/learn/math/vectors' });
   assert.equal(post.statusCode, 405);
   assert.equal(post.headers.allow, 'GET, HEAD');
   assert.equal(post.headers['cache-control'], 'no-store');
@@ -443,7 +496,7 @@ test('lesson route returns recoverable 404s and reloads injected fixture assets'
       return assets.lesson;
     },
   });
-  const missing = invoke(handler, { method: 'GET', query: { path: 'phases/01-math/99-missing' } });
+  const missing = invoke(handler, { method: 'GET', url: '/learn/math/missing' });
   assert.equal(missing.statusCode, 404);
   assert.equal(missing.headers['cache-control'], 'no-store');
   assert.match(missing.body, /href="\/sitemap\.xml"/);
@@ -452,11 +505,11 @@ test('lesson route returns recoverable 404s and reloads injected fixture assets'
   const traversal = invoke(handler, { method: 'GET', query: { path: '../site/lesson' } });
   assert.equal(traversal.statusCode, 404);
 
-  const initial = invoke(handler, { method: 'GET', query: { path: 'phases/01-math/01-vectors' } });
+  const initial = invoke(handler, { method: 'GET', url: '/learn/math/vectors' });
   assert.equal(initial.statusCode, 200);
 
   assets.lesson.template = '<!DOCTYPE html><html><body>marker missing</body></html>';
-  const broken = invoke(handler, { method: 'GET', query: { path: 'phases/01-math/01-vectors' } });
+  const broken = invoke(handler, { method: 'GET', url: '/learn/math/vectors' });
   assert.equal(broken.statusCode, 500);
   assert.equal(broken.headers['cache-control'], 'no-store');
   assert.equal(loadCount, 3);
@@ -486,7 +539,7 @@ function productionAssets(readMarkdown) {
 }
 
 test('lesson route serves the full lesson body, headings, and code to crawlers', function () {
-  const lessonUrl = '/lesson?path=' + encodeURIComponent(PERCEPTRON);
+  const lessonUrl = PERCEPTRON_CLEAN;
   const full = invoke(lessonApi, { method: 'GET', url: lessonUrl, headers: { host: 'aiengineeringfromscratch.com' } });
   const summary = invoke(lessonApi.createHandler({ loadAssets: function () { return productionAssets(); } }), { method: 'GET', url: lessonUrl });
   assert.equal(full.statusCode, 200);
@@ -509,7 +562,7 @@ test('lesson route serves the full lesson body, headings, and code to crawlers',
   assert.ok(visibleWords(region) > 1500, 'full lesson text');
   assert.ok(visibleWords(region) > 5 * visibleWords(fallbackRegion(summary.body)), 'much longer than the summary fallback');
   assert.deepEqual(JSON.parse(embeddedMarkdown(full.body)), { path: PERCEPTRON, lang: 'en', markdown });
-  assert.match(full.body, /<link rel="canonical" href="https:\/\/aiengineeringfromscratch\.com\/lesson\?path=phases%2F03-deep-learning-core%2F01-the-perceptron">/);
+  assert.match(full.body, /<link rel="canonical" href="https:\/\/aiengineeringfromscratch\.com\/learn\/deep-learning-core\/the-perceptron">/);
   assert.match(full.body, /"@type":"LearningResource"/);
 });
 
@@ -520,10 +573,10 @@ test('lesson route keeps the summary fallback when Markdown is unreadable', func
       reads.push(lessonPath);
       throw new Error('ENOENT');
     });
-  } }), { method: 'GET', url: '/lesson?path=' + encodeURIComponent(PERCEPTRON) });
+  } }), { method: 'GET', url: PERCEPTRON_CLEAN });
   const summary = invoke(lessonApi.createHandler({ loadAssets: function () { return productionAssets(); } }), {
     method: 'GET',
-    url: '/lesson?path=' + encodeURIComponent(PERCEPTRON),
+    url: PERCEPTRON_CLEAN,
   });
   assert.deepEqual(reads, [PERCEPTRON]);
   assert.equal(unreadable.statusCode, 200);
@@ -531,9 +584,13 @@ test('lesson route keeps the summary fallback when Markdown is unreadable', func
   assert.equal(embeddedMarkdown(unreadable.body), null);
   assert.match(fallbackRegion(unreadable.body), /<p class="motto">/);
 
-  const english = invoke(lessonApi, { method: 'GET', url: '/lesson?path=' + encodeURIComponent(PERCEPTRON) + '&lang=en' });
+  const english = invoke(lessonApi, { method: 'GET', url: PERCEPTRON_CLEAN + '?lang=en' });
   assert.equal(english.statusCode, 308);
-  assert.equal(english.headers.location, '/lesson?path=' + encodeURIComponent(PERCEPTRON));
+  assert.equal(english.headers.location, PERCEPTRON_CLEAN);
+
+  const legacy = invoke(lessonApi, { method: 'GET', url: '/lesson?path=' + encodeURIComponent(PERCEPTRON) + '&lang=en' });
+  assert.equal(legacy.statusCode, 308);
+  assert.equal(legacy.headers.location, PERCEPTRON_CLEAN);
 });
 
 test('lesson route never reads Markdown for paths outside the manifest', function () {
@@ -575,7 +632,7 @@ test('embedded lesson Markdown cannot close its script tag', function () {
   ].join('\n');
   assets.lesson.readMarkdown = function () { return markdown; };
   const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
-  const response = invoke(handler, { method: 'GET', url: '/lesson?path=phases%2F01-math%2F01-vectors' });
+  const response = invoke(handler, { method: 'GET', url: '/learn/math/vectors' });
   assert.equal(response.statusCode, 200);
 
   const embedded = embeddedMarkdown(response.body);
@@ -860,7 +917,7 @@ test('server and browser source links honor generated repository identity', func
   const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
   const response = invoke(handler, {
     method: 'GET',
-    url: '/lesson?path=phases%2F01-math%2F01-vectors',
+    url: '/learn/math/vectors',
   });
   assert.equal(response.statusCode, 200);
   assert.match(response.body, /https:\/\/github\.com\/preview-owner\/preview-repo\/tree\/0123456789abcdef/);
@@ -905,7 +962,7 @@ function alternateLinks(html) {
   });
 }
 
-const PERCEPTRON_URL = 'https://aiengineeringfromscratch.com/lesson?path=phases%2F03-deep-learning-core%2F01-the-perceptron';
+const PERCEPTRON_URL = 'https://aiengineeringfromscratch.com' + PERCEPTRON_CLEAN;
 
 test('translated lesson pages render the translation with a self canonical, hreflang, lang, and dir', async function () {
   const reads = [];
@@ -916,19 +973,19 @@ test('translated lesson pages render the translation with a self canonical, href
       return Promise.resolve(lang === 'ar' ? ARABIC : HINDI);
     },
   });
-  const hindi = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi` });
+  const hindi = await invokeAsync(handler, { method: 'GET', url: `${PERCEPTRON_CLEAN}?lang=hi` });
   assert.equal(hindi.statusCode, 200);
   assert.match(hindi.body, /<html lang="hi" dir="ltr" data-theme="light">/);
-  assert.match(hindi.body, /<link rel="canonical" href="https:\/\/aiengineeringfromscratch\.com\/lesson\?path=phases%2F03-deep-learning-core%2F01-the-perceptron&amp;lang=hi">/);
-  assert.match(hindi.body, /<meta property="og:url" content="[^"]+&amp;lang=hi">/);
+  assert.match(hindi.body, /<link rel="canonical" href="https:\/\/aiengineeringfromscratch\.com\/learn\/deep-learning-core\/the-perceptron\?lang=hi">/);
+  assert.match(hindi.body, /<meta property="og:url" content="[^"]+\?lang=hi">/);
   assert.match(hindi.body, /<meta property="og:locale" content="hi_IN">/);
   assert.match(hindi.body, /<title>पर्सेप्ट्रोन \| AI Engineering from Scratch<\/title>/);
   assert.match(hindi.body, /<meta name="description" content="पर्सेप्ट्रोन: पर्सेप्ट्रॉन तंत्रिका नेटवर्क का परमाणु है।/);
   assert.deepEqual(alternateLinks(hindi.body), [
     ['en', PERCEPTRON_URL],
     ['x-default', PERCEPTRON_URL],
-    ['hi', PERCEPTRON_URL + '&lang=hi'],
-    ['ar', PERCEPTRON_URL + '&lang=ar'],
+    ['hi', PERCEPTRON_URL + '?lang=hi'],
+    ['ar', PERCEPTRON_URL + '?lang=ar'],
   ]);
   const jsonLd = JSON.parse(hindi.body.match(/<script type="application\/ld\+json" id="lessonJsonLd">([\s\S]*?)<\/script>/)[1]);
   assert.equal(jsonLd['@graph'][0].inLanguage, 'hi');
@@ -937,15 +994,15 @@ test('translated lesson pages render the translation with a self canonical, href
   assert.equal((region.match(/<h1(?:\s|>)/g) || []).length, 1);
   assert.match(region, /<h1>पर्सेप्ट्रोन<\/h1>/);
   assert.match(region, /<h2 id="[^"]*" class="">अवधारणा<\/h2>/);
-  assert.match(region, /<a href="\/lesson\?path=phases%2F03-deep-learning-core%2F01-the-perceptron&amp;lang=hi" hreflang="hi" lang="hi" aria-current="page">हिन्दी<\/a>/);
-  assert.match(region, /<a href="\/lesson\?path=phases%2F03-deep-learning-core%2F01-the-perceptron" hreflang="en" lang="en">English<\/a>/);
+  assert.match(region, /<a href="\/learn\/deep-learning-core\/the-perceptron\?lang=hi" hreflang="hi" lang="hi" aria-current="page">हिन्दी<\/a>/);
+  assert.match(region, /<a href="\/learn\/deep-learning-core\/the-perceptron" hreflang="en" lang="en">English<\/a>/);
   assert.doesNotMatch(region, /XOR was unsolvable/);
   assert.deepEqual(JSON.parse(embeddedMarkdown(hindi.body)), { path: PERCEPTRON, lang: 'hi', markdown: HINDI });
   assert.equal(hindi.headers['cache-control'], 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800');
   assert.equal(hindi.headers['content-language'], 'hi');
   assert.equal(hindi.headers.vary, 'Accept, Accept-Encoding');
 
-  const arabic = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=ar` });
+  const arabic = await invokeAsync(handler, { method: 'GET', url: `${PERCEPTRON_CLEAN}?lang=ar` });
   assert.match(arabic.body, /<html lang="ar" dir="rtl" data-theme="light">/);
   assert.match(arabic.body, /<meta property="og:locale" content="ar_AR">/);
   assert.match(fallbackRegion(arabic.body), /<h1>البيرسبترون<\/h1>/);
@@ -960,7 +1017,7 @@ test('translated lesson URLs fall back to the English page and canonical', async
     function () { return Promise.reject(new Error('network')); },
   ]) {
     const handler = lessonApi.createHandler({ loadAssets: function () { return withTranslations(['hi']); }, readTranslation: reader });
-    const response = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi` });
+    const response = await invokeAsync(handler, { method: 'GET', url: `${PERCEPTRON_CLEAN}?lang=hi` });
     assert.equal(response.statusCode, 200);
     assert.match(response.body, /<html lang="en" data-theme="light">/);
     assert.ok(response.body.includes(`<link rel="canonical" href="${PERCEPTRON_URL}">`));
@@ -975,7 +1032,7 @@ test('translated lesson URLs fall back to the English page and canonical', async
     loadAssets: function () { return withTranslations(['hi']); },
     readTranslation: function (lang) { reads.push(lang); return Promise.resolve(HINDI); },
   });
-  const french = await invokeAsync(uncovered, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=fr` });
+  const french = await invokeAsync(uncovered, { method: 'GET', url: `${PERCEPTRON_CLEAN}?lang=fr` });
   assert.equal(french.statusCode, 200);
   assert.deepEqual(reads, []);
   assert.match(french.body, /<html lang="en" data-theme="light">/);
@@ -988,14 +1045,14 @@ test('lesson URLs return Markdown when Accept prefers text/markdown', async func
     loadAssets: function () { return withTranslations(['hi']); },
     readTranslation: function () { return Promise.resolve(HINDI); },
   });
-  const url = `/lesson?path=${encodeURIComponent(PERCEPTRON)}`;
+  const url = PERCEPTRON_CLEAN;
   const markdown = invoke(handler, { method: 'GET', url, headers: { accept: 'text/markdown, text/html;q=0.8' } });
   assert.equal(markdown.statusCode, 200);
   assert.equal(markdown.headers['content-type'], 'text/markdown; charset=utf-8');
   assert.equal(markdown.headers.vary, 'Accept, Accept-Encoding');
   assert.equal(markdown.body, english);
 
-  const translated = await invokeAsync(handler, { method: 'GET', url: url + '&lang=hi', headers: { accept: 'text/markdown' } });
+  const translated = await invokeAsync(handler, { method: 'GET', url: url + '?lang=hi', headers: { accept: 'text/markdown' } });
   assert.equal(translated.headers['content-type'], 'text/markdown; charset=utf-8');
   assert.equal(translated.headers['content-language'], 'hi');
   assert.equal(translated.body, HINDI);
@@ -1007,7 +1064,7 @@ test('lesson URLs return Markdown when Accept prefers text/markdown', async func
 test('hreflang alternates appear only on course lessons, never on English-only pages', function () {
   const assets = makeAssets();
   const handler = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
-  const course = invoke(handler, { method: 'GET', query: { path: 'phases/01-math/01-vectors' } });
+  const course = invoke(handler, { method: 'GET', url: '/learn/math/vectors' });
   assert.deepEqual(alternateLinks(course.body).map(function (link) { return link[0]; }), ['en', 'x-default']);
   assert.doesNotMatch(course.body, /class="lesson-languages"/);
   const certification = invoke(handler, { method: 'GET', query: { path: 'certifications/claude/lessons/01-models' } });
@@ -1067,7 +1124,8 @@ test('translation reader builds allowlisted URLs, caps size, and caches results'
   time += 11 * 60 * 1000;
   assert.equal(await flaky('hi', PERCEPTRON), HINDI, 'keeps the last good translation when a refresh fails');
   assert.equal(translations.translationSourceUrl('hi', PERCEPTRON), `https://github.com/rohitg00/ai-engineering-from-scratch/blob/translations/i18n/hi/${PERCEPTRON}/docs/hi.md`);
-  assert.equal(translations.lessonUrl(PERCEPTRON, 'pt-BR'), PERCEPTRON_URL + '&lang=pt-BR');
+  assert.equal(translations.lessonUrl(PERCEPTRON, 'pt-BR'), PERCEPTRON_URL + '?lang=pt-BR');
+  assert.equal(translations.lessonUrl('certifications/claude/lessons/01-models', 'pt-BR'), 'https://aiengineeringfromscratch.com/lesson?path=certifications%2Fclaude%2Flessons%2F01-models&lang=pt-BR');
   assert.equal(translations.lessonUrl(PERCEPTRON, 'en'), PERCEPTRON_URL);
 });
 
@@ -1118,7 +1176,7 @@ test('translation coverage comes from translation records and never fails the bu
   fs.writeFileSync(path.join(site, 'sitemap-lessons-fa.xml'), 'stale');
   assert.deepEqual(build.writeLanguageSitemaps(manifest, site), ['sitemap-lessons-hi.xml', 'sitemap-lessons-ar.xml']);
   assert.equal(fs.existsSync(path.join(site, 'sitemap-lessons-fa.xml')), false);
-  assert.match(fs.readFileSync(path.join(site, 'sitemap-lessons-hi.xml'), 'utf8'), /<loc>https:\/\/aiengineeringfromscratch\.com\/lesson\?path=phases%2F01-a%2F01-x&amp;lang=hi<\/loc>/);
+  assert.match(fs.readFileSync(path.join(site, 'sitemap-lessons-hi.xml'), 'utf8'), /<loc>https:\/\/aiengineeringfromscratch\.com\/learn\/a\/x\?lang=hi<\/loc>/);
   const index = fs.readFileSync(path.join(site, 'sitemap-index.xml'), 'utf8');
   assert.deepEqual(Array.from(index.matchAll(/<loc>([^<]+)<\/loc>/g), function (match) { return match[1]; }), [
     'https://aiengineeringfromscratch.com/sitemap.xml',
@@ -1148,7 +1206,8 @@ test('llms.txt and the API docs state the translation languages and URL pattern'
   const manifest = { lessons: { [PERCEPTRON]: { path: PERCEPTRON, context: { kind: 'course' }, translations: ['hi', 'ar'] } } };
   const section = build.translationLlms(manifest);
   assert.match(section, /in 2 languages: hi \(हिन्दी, 1 lessons\), ar \(العربية, 1 lessons\)/);
-  assert.match(section, /\/lesson\?path=<lesson path>&lang=<code>/);
+  assert.match(section, /\/learn\/<phase>\/<lesson>\?lang=<code>/);
+  assert.doesNotMatch(section, /\/lesson\?path=/);
   assert.match(section, /\/api\/v1\/resource\?path=<lesson path>&lang=<code>/);
   assert.match(section, /translations\/i18n\/<code>\/<lesson path>\/docs\/<code>\.md/);
   const docs = fs.readFileSync(path.join(ROOT, 'site', 'developer.md'), 'utf8');
@@ -1157,11 +1216,12 @@ test('llms.txt and the API docs state the translation languages and URL pattern'
   const html = fs.readFileSync(path.join(ROOT, 'site', 'developer.html'), 'utf8');
   assert.deepEqual(html.match(/also published in ([^.]+) at/)[1].replace(', and ', ', ').split(', '), translations.TRANSLATION_LANGUAGES);
   const spec = JSON.parse(fs.readFileSync(path.join(ROOT, 'site', 'openapi.json'), 'utf8'));
-  for (const route of ['/lesson', '/api/v1/resource']) {
+  for (const route of ['/learn/{phase}/{lesson}', '/lesson', '/api/v1/resource']) {
     const lang = spec.paths[route].parameters.find(function (parameter) { return parameter.name === 'lang'; });
     assert.deepEqual(lang.schema.enum, ['en'].concat(translations.TRANSLATION_LANGUAGES), route);
   }
-  assert.match(docs, /`\/lesson\?path=<lesson path>&lang=<code>`/);
+  assert.match(docs, /`\/learn\/<phase>\/<lesson>\?lang=<code>`/);
+  assert.doesNotMatch(docs, /\/lesson\?path=<lesson path>/);
   const robots = fs.readFileSync(path.join(ROOT, 'site', 'robots.txt'), 'utf8');
   assert.match(robots, /^Sitemap: https:\/\/aiengineeringfromscratch\.com\/sitemap-index\.xml$/m);
 });
@@ -1181,10 +1241,10 @@ test('a language with index false stays out of hreflang and the lesson sitemaps,
     loadAssets: function () { return withTranslations(['hi', 'ar']); },
     readTranslation: function (lang) { return Promise.resolve(lang === 'ar' ? ARABIC : HINDI); },
   });
-  const hindi = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi` });
+  const hindi = await invokeAsync(handler, { method: 'GET', url: `${PERCEPTRON_CLEAN}?lang=hi` });
   assert.deepEqual(alternateLinks(hindi.body).map(function (link) { return link[0]; }), ['en', 'x-default', 'hi']);
   assert.doesNotMatch(hindi.body, /<meta name="robots"/);
-  const arabicPage = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=ar` });
+  const arabicPage = await invokeAsync(handler, { method: 'GET', url: `${PERCEPTRON_CLEAN}?lang=ar` });
   assert.equal(arabicPage.statusCode, 200);
   assert.match(arabicPage.body, /<html lang="ar" dir="rtl"/);
   assert.match(arabicPage.body, /<meta name="robots" content="noindex">/);
@@ -1319,7 +1379,7 @@ test('social card route redirects stale URLs and refuses unknown or forged input
 test('lesson and certification heads point at their own versioned cards', async function () {
   const assets = makeAssets();
   const lessons = lessonApi.createHandler({ loadAssets: function () { return assets.lesson; } });
-  const english = metaTags(invoke(lessons, { method: 'GET', url: '/lesson?path=phases%2F01-math%2F01-vectors', query: { path: 'phases/01-math/01-vectors' } }).body);
+  const english = metaTags(invoke(lessons, { method: 'GET', url: '/learn/math/vectors' }).body);
   assert.match(english['og:image'], /^https:\/\/aiengineeringfromscratch\.com\/og\/lesson\/phases\/01-math\/01-vectors\.png\?v=[0-9a-f]{12}$/);
   assert.equal(english['twitter:image'], english['og:image']);
   assert.equal(english['og:image:width'], '1200');
@@ -1331,7 +1391,7 @@ test('lesson and certification heads point at their own versioned cards', async 
     loadAssets: function () { return withTranslations(['hi']); },
     readTranslation: function () { return Promise.resolve(HINDI); },
   });
-  const hindi = metaTags((await invokeAsync(translated, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi` })).body);
+  const hindi = metaTags((await invokeAsync(translated, { method: 'GET', url: `${PERCEPTRON_CLEAN}?lang=hi` })).body);
   assert.match(hindi['og:image'], /\/og\/lesson\/phases\/03-deep-learning-core\/01-the-perceptron\.png\?lang=hi&v=[0-9a-f]{12}$/);
   assert.equal(hindi['twitter:image'], hindi['og:image']);
 
@@ -1351,12 +1411,21 @@ test('every page type in the sitemap carries full social card tags that resolve 
   manuals.writeWeb(manuals.loadAll().filter(function (manual) { return manual.status === 'ready'; }), site);
   const sitemap = fs.readFileSync(path.join(ROOT, 'site', 'sitemap.xml'), 'utf8');
   const seen = {};
+  const lessonPathsByCleanPath = new Map(Object.keys(lessonApi.loadProductionAssets().manifest.lessons).filter(function (lessonPath) { return lessonCleanPath(lessonPath); }).map(function (lessonPath) { return [lessonCleanPath(lessonPath), lessonPath]; }));
+  assert.doesNotMatch(sitemap, /\/lesson\?path=phases/);
   for (const match of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
     const url = new URL(match[1].replace(/&amp;/g, '&'));
     const name = url.pathname.slice(1).replace(/\.html$/, '') || 'index';
     let html;
     let card;
-    if (name === 'lesson') {
+    if (name.startsWith('learn/')) {
+      const lessonPath = lessonPathsByCleanPath.get(url.pathname);
+      assert.ok(lessonPath, url.href);
+      html = invoke(lessons, { method: 'GET', url: url.pathname + url.search }).body;
+      assert.ok(html.includes(`<meta name="aifs-lesson-path" content="${lessonPath}">`), url.href);
+      card = `lesson/${lessonPath}`;
+    } else if (name === 'lesson') {
+      assert.match(url.searchParams.get('path'), /^certifications\//, url.href);
       html = invoke(lessons, { method: 'GET', url: url.pathname + url.search }).body;
       card = `lesson/${url.searchParams.get('path')}`;
     } else if (name === 'certification') {
@@ -1541,7 +1610,7 @@ test('phase hubs state real lesson counts, link every lesson, and answer a visib
     titles.add(title);
     assert.equal(textOf(page.html.match(/<h1>([\s\S]*?)<\/h1>/)[1]), title);
     assert.equal(page.html.match(/<link rel="canonical" href="([^"]+)">/)[1], canonical);
-    for (const lessonPath of lessons) assert.ok(page.html.includes('href="/lesson?path=' + encodeURIComponent(lessonPath) + '"'), lessonPath);
+    for (const lessonPath of lessons) assert.ok(page.html.includes('href="' + lessonCleanPath(lessonPath) + '"'), lessonPath);
     const graph = hubGraph(page.html);
     assert.deepEqual(graph.map(function (node) { return node['@type']; }), ['Course', 'BreadcrumbList', 'FAQPage']);
     assert.equal(graph[0].hasPart.length, lessons.length);
@@ -1596,8 +1665,8 @@ test('translated lesson pages keep the hub breadcrumb but leave out the English 
     loadAssets: function () { return withTranslations(['hi']); },
     readTranslation: function () { return Promise.resolve(HINDI); },
   });
-  const english = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}` });
-  const hindi = await invokeAsync(handler, { method: 'GET', url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi` });
+  const english = await invokeAsync(handler, { method: 'GET', url: PERCEPTRON_CLEAN });
+  const hindi = await invokeAsync(handler, { method: 'GET', url: `${PERCEPTRON_CLEAN}?lang=hi` });
   assert.match(english.body, /<nav class="lesson-hub-links"/);
   assert.match(hindi.body, /<html lang="hi"/);
   assert.doesNotMatch(hindi.body, /<nav class="lesson-hub-links"/);
@@ -1617,7 +1686,7 @@ test('lesson route breadcrumbs point to the phase hub and list the terms the les
     const graph = JSON.parse(body.match(/<script type="application\/ld\+json" id="lessonJsonLd">([\s\S]*?)<\/script>/)[1])['@graph'];
     return graph.find(function (node) { return node['@type'] === 'BreadcrumbList'; }).itemListElement;
   };
-  const course = invoke(handler, { method: 'GET', url: '/lesson?path=phases%2F01-math%2F01-vectors', query: { path: 'phases/01-math/01-vectors' } });
+  const course = invoke(handler, { method: 'GET', url: '/learn/math/vectors' });
   assert.equal(course.statusCode, 200);
   assert.deepEqual(breadcrumbs(course.body)[1], { '@type': 'ListItem', position: 2, name: 'Phase 01: Math Foundations', item: 'https://aiengineeringfromscratch.com/phase/math' });
   assert.match(course.body, /<nav class="lesson-hub-links"[^>]*>[\s\S]*<a href="\/phase\/math">Phase 01: Math Foundations<\/a>/);
@@ -1634,7 +1703,7 @@ test('lesson route breadcrumbs point to the phase hub and list the terms the les
   assert.equal(breadcrumbs(certification.body)[1].name, 'Certifications');
   assert.doesNotMatch(certification.body, /<nav class="lesson-hub-links"/);
 
-  const withoutTerms = invoke(lessonApi.createHandler({ loadAssets: function () { return makeAssets().lesson; } }), { method: 'GET', url: '/lesson?path=phases%2F01-math%2F01-vectors', query: { path: 'phases/01-math/01-vectors' } });
+  const withoutTerms = invoke(lessonApi.createHandler({ loadAssets: function () { return makeAssets().lesson; } }), { method: 'GET', url: '/learn/math/vectors' });
   assert.equal(withoutTerms.statusCode, 200);
   assert.match(withoutTerms.body, /<a href="\/phase\/math">/);
   assert.doesNotMatch(withoutTerms.body, /Terms in this lesson/);

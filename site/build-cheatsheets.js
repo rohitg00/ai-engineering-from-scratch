@@ -6,7 +6,7 @@ const path = require('node:path');
 const { execFileSync } = require('node:child_process');
 const markdown = require('./lesson-markdown');
 const code = require('./lib/code');
-const { phaseSlug } = require('../lib/hub-routes');
+const { phaseSlug, lessonCleanPath } = require('../lib/hub-routes');
 const { SITE_HEADER } = require('./build-hubs');
 const { versionHtml } = require('./version-assets');
 const topicMap = require('./cheatsheet-topics');
@@ -658,7 +658,7 @@ function listHtml(block) {
 function sourceLink(source) {
   const lesson = /^phases\/(\d+)-[^/]+\/(\d+)-[^/]+(?:\/(.*))?$/.exec(source);
   const lessonDir = /^(phases\/[^/]+\/[^/]+)/.exec(source);
-  if (lesson && (!lesson[3] || lesson[3] === 'docs/en.md')) return { href: `/lesson?path=${lessonDir[1]}`, label: `Lesson ${lesson[1]}.${lesson[2]}` };
+  if (lesson && (!lesson[3] || lesson[3] === 'docs/en.md')) return { href: lessonCleanPath(lessonDir[1]), label: `Lesson ${lesson[1]}.${lesson[2]}` };
   if (lesson) return { href: `${REPO}/blob/main/${source}`, label: `${lesson[1]}.${lesson[2]} ${lesson[3]}` };
   const section = /^manuals\/([^/]+)\/sections\/((?:r-)?\d+(?:-\d+)?)-[^/]+\.md$/.exec(source);
   if (section) {
@@ -1233,8 +1233,24 @@ function qualityReport(topic) {
   return { id: topic.id, kind: topic.kind, score: Math.round((passed / checks.length) * 100), pass: passed === checks.length, failures: checks.filter(check => !check.pass).map(check => `${check.name}: ${check.detail}`) };
 }
 
+function publishedLessonPaths(root) {
+  const phasesDir = path.join(root, 'phases');
+  const lessons = new Set();
+  if (!fs.existsSync(phasesDir)) return lessons;
+  for (const phase of fs.readdirSync(phasesDir, { withFileTypes: true })) {
+    if (!phase.isDirectory()) continue;
+    for (const lesson of fs.readdirSync(path.join(phasesDir, phase.name), { withFileTypes: true })) {
+      if (lesson.isDirectory() && fs.existsSync(path.join(phasesDir, phase.name, lesson.name, 'docs', 'en.md'))) {
+        lessons.add(lessonCleanPath(`phases/${phase.name}/${lesson.name}`));
+      }
+    }
+  }
+  return lessons;
+}
+
 function checkLinks(built, root = REPO_ROOT) {
   const known = new Set(built.pages.map(page => page.href));
+  const lessons = publishedLessonPaths(root);
   const fixed = new Set(['/', '/catalog', '/roadmap', '/glossary', '/about', BASE]);
   const broken = [];
   const manuals = new Set(fs.existsSync(path.join(root, 'manuals')) ? fs.readdirSync(path.join(root, 'manuals')) : []);
@@ -1254,8 +1270,7 @@ function checkLinks(built, root = REPO_ROOT) {
       if (/^https?:/.test(href)) continue;
       const target = href.split('#')[0];
       if (!target || known.has(target) || fixed.has(target)) continue;
-      const lesson = /^\/lesson\?path=(phases\/[a-z0-9-]+\/[a-z0-9-]+)$/.exec(target);
-      if (lesson && fs.existsSync(path.join(root, lesson[1], 'docs', 'en.md'))) continue;
+      if (lessons.has(target)) continue;
       const phase = /^\/phase\/([a-z0-9-]+)$/.exec(target);
       if (phase) continue;
       const manual = /^\/manual-([a-z0-9-]+)$/.exec(target);

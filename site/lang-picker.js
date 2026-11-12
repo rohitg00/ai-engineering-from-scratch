@@ -13,7 +13,7 @@
 
   function isCertificationLesson() {
     try {
-      var path = new URLSearchParams(location.search).get('path') || '';
+      var path = new URLSearchParams(location.search).get('path') || (document.querySelector('meta[name="aifs-lesson-path"]') || {}).content || '';
       return /^certifications\/[a-z0-9][a-z0-9-]*\/lessons\//.test(path);
     } catch (_) {
       return false;

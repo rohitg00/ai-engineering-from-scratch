@@ -208,6 +208,129 @@
         "description": "Read canonical public URLs. Public read-only resource."
       }
     },
+    "/learn/{phase}/{lesson}": {
+      "parameters": [
+        {
+          "name": "phase",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          },
+          "description": "Phase slug: the phase directory name without its number prefix, for example math-foundations"
+        },
+        {
+          "name": "lesson",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          },
+          "description": "Lesson slug: the lesson directory name without its number prefix, for example linear-algebra-intuition"
+        },
+        {
+          "name": "lang",
+          "in": "query",
+          "required": false,
+          "description": "Optional translation language. Lessons listed in a language sitemap render that translation with a self-referencing canonical URL and hreflang alternates; otherwise the English lesson is served with the English canonical URL.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "en",
+              "zh",
+              "hi",
+              "es",
+              "ar",
+              "fr",
+              "pt",
+              "pt-BR",
+              "tr",
+              "vi",
+              "fa"
+            ]
+          }
+        }
+      ],
+      "get": {
+        "summary": "Open a crawlable rendered course lesson",
+        "operationId": "getCourseLesson",
+        "responses": {
+          "200": {
+            "description": "Rendered lesson page with lesson-specific metadata and visible content, or the lesson Markdown when Accept prefers text/markdown",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/markdown": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "308": {
+            "$ref": "#/components/responses/PermanentRedirect"
+          },
+          "404": {
+            "description": "Missing, invalid, or unknown lesson path",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed; use GET or HEAD",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Lesson page could not be assembled",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "description": "Open a crawlable rendered course lesson at its canonical URL. Public read-only resource."
+      },
+      "head": {
+        "summary": "Read lesson response metadata",
+        "operationId": "headCourseLesson",
+        "responses": {
+          "200": {
+            "description": "Lesson exists"
+          },
+          "308": {
+            "$ref": "#/components/responses/PermanentRedirect"
+          },
+          "404": {
+            "description": "Missing, invalid, or unknown lesson path"
+          },
+          "405": {
+            "description": "Method not allowed; use GET or HEAD"
+          },
+          "500": {
+            "description": "Lesson page could not be assembled"
+          }
+        },
+        "description": "Read lesson response metadata. Returns no response body."
+      }
+    },
     "/lesson": {
       "parameters": [
         {
@@ -296,7 +419,7 @@
             }
           }
         },
-        "description": "Open a crawlable rendered lesson. Public read-only resource."
+        "description": "Open a crawlable rendered certification lesson. Course lesson paths answer 308 to /learn/{phase}/{lesson}. Public read-only resource."
       },
       "head": {
         "summary": "Read lesson response metadata",
