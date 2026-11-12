@@ -2581,7 +2581,7 @@ body[data-palette-open] {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 850;
+    z-index: 150;
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -2616,6 +2616,12 @@ body[data-palette-open] {
 
   body.has-site-tabbar .tts-bar {
     bottom: calc(68px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 720px) {
+  body.has-site-tabbar.tts-active {
+    padding-bottom: calc(var(--tts-bar-height, 112px) + 84px + env(safe-area-inset-bottom, 0px));
   }
 }
 

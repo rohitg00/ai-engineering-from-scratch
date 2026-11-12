@@ -1583,7 +1583,11 @@
     .phase-card:hover,
     .phase-card:focus-visible {
       border-color: var(--blueprint);
-      outline: none;
+    }
+
+    .phase-card:focus-visible {
+      outline: 2px solid var(--blueprint);
+      outline-offset: 3px;
     }
 
     .phase-card:active { transform: scale(0.99); }
@@ -2903,19 +2907,50 @@
   <script src="progress.js?v=20260822a"></script>
   <script>
     (function () {
-      try {
-        var state = JSON.parse(localStorage.getItem('aifs:progress:v2') || 'null');
+      var link = document.getElementById('mastheadStart');
+      var label = document.getElementById('mastheadStartLabel');
+      if (!link || !label) return;
+      var startHref = link.getAttribute('href');
+      var startLabel = label.textContent;
+
+      function publishedLessons() {
+        var published = {};
+        if (typeof PHASES === 'undefined' || !Array.isArray(PHASES) || !window.AIFSProgress) return null;
+        for (var i = 0; i < PHASES.length; i++) {
+          var lessons = PHASES[i].lessons || [];
+          for (var j = 0; j < lessons.length; j++) {
+            var path = lessons[j].url ? window.AIFSProgress.extractPath(lessons[j].url) : '';
+            if (path) published[path] = true;
+          }
+        }
+        return published;
+      }
+
+      function lastVisitedLesson() {
+        var state = null;
+        try { state = JSON.parse(localStorage.getItem('aifs:progress:v2') || 'null'); } catch (_) {}
         var lessons = state && state.lessons || {};
+        var published = publishedLessons();
         var last = '';
         var at = 0;
         for (var path in lessons) {
           var visited = lessons[path] && lessons[path].visitedAt || 0;
-          if (visited > at && /^phases\/[a-z0-9-]+\/[a-z0-9-]+$/.test(path)) { at = visited; last = path; }
+          if (visited <= at || !/^phases\/[a-z0-9-]+\/[a-z0-9-]+$/.test(path)) continue;
+          if (published && !published[path]) continue;
+          at = visited;
+          last = path;
         }
-        if (!last) return;
-        document.getElementById('mastheadStart').href = 'lesson?path=' + last;
-        document.getElementById('mastheadStartLabel').textContent = 'Continue where you left off';
-      } catch (_) {}
+        return last;
+      }
+
+      function syncStartLink() {
+        var last = lastVisitedLesson();
+        link.setAttribute('href', last ? 'lesson?path=' + last : startHref);
+        label.textContent = last ? 'Continue where you left off' : startLabel;
+      }
+
+      syncStartLink();
+      if (window.AIFSProgress) window.AIFSProgress.onChange(syncStartLink);
     })();
   </script>
   <script src="header.js?v=20261103a" defer></script>
